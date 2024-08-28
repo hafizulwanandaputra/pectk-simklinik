@@ -61,11 +61,8 @@ PWA contents:
   const CACHE_URLS = [
      '/',
      '/index.php',
-     '/favicon-1.png', // 16x16 icons
-     '/favicon-2.png', // 32x32 icons
-     '/favicon-3.png', // 144x144 icons
-     '/wide-screenshot.png', // Wide Screenshot
-     '/normal-screenshot.jpeg' // Normal Screenshot
+     '/favicon.png', // Icons
+     '/Screenshot.png', // Screenshot
   ];
   ```
 
