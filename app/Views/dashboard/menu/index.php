@@ -52,7 +52,7 @@
                     <input type="hidden" id="menuId" name="id_menu">
                     <input type="hidden" id="jumlah" name="jumlah">
                     <input type="hidden" id="id_petugas_lama" name="id_petugas_lama">
-                    <fieldset class="border rounded-3 px-1 py-0 mt-1 mb-1">
+                    <fieldset class="border rounded-3 px-1 py-0 my-2">
                         <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Menu Makanan (wajib diisi)</legend>
                         <div class="form-floating mb-1 mt-1">
                             <input type="date" class="form-control" autocomplete="off" dir="auto" placeholder="tanggal" id="tanggal" name="tanggal">
@@ -83,7 +83,7 @@
                             <div class="invalid-feedback"></div>
                         </div>
                     </fieldset>
-                    <fieldset class="border rounded-3 px-1 py-0 mt-1 mb-1">
+                    <fieldset class="border rounded-3 px-1 py-0 my-2">
                         <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Gizi (opsional)</legend>
                         <div class="form-floating mt-1 mb-1">
                             <input type="text" class="form-control rounded-3" id="protein_hewani" name="protein_hewani" autocomplete="off" dir="auto" placeholder="protein_hewani">
