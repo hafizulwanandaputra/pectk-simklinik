@@ -366,7 +366,7 @@
             $('#nama_petugas').text(data.nama_petugas);
             $('#jumlah').text(data.jumlah);
         } catch (error) {
-            showFailedToast('Gagal memuat data menu. Silakan coba lagi.');
+            showFailedToast('Gagal memuat data menu. Silakan coba lagi.<br>' + error);
         } finally {
             // Hide the spinner when done
             $('#loadingSpinner').hide();
@@ -594,7 +594,7 @@
                 $('#keterangan').val(data.keterangan);
                 $('#demandModal').modal('show');
             } catch (error) {
-                showFailedToast('Terjadi kesalahan. Silakan coba lagi.');
+                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
             } finally {
                 $this.prop('disabled', false).html(`<i class="fa-solid fa-pen-to-square"></i>`);
             }
@@ -629,7 +629,7 @@
                 $('#printeticket').attr('onclick', `window.open("<?= base_url('/permintaan/eticketprint') ?>/${id}", "Window","status=1,toolbar=1,width=500,height=400,resizable=yes")`);
                 $('#demandDetails').modal('show');
             } catch (error) {
-                showFailedToast('Terjadi kesalahan. Silakan coba lagi.');
+                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
             } finally {
                 $this.prop('disabled', false).html(`<i class="fa-solid fa-circle-info"></i>`);
             }
@@ -658,7 +658,7 @@
                 table.ajax.reload();
                 fetchMenuDetails();
             } catch (error) {
-                showFailedToast('Terjadi kesalahan. Silakan coba lagi.');
+                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
             } finally {
                 $('#deleteModal').modal('hide');
                 $('#deleteModal button').prop('disabled', false);
@@ -745,7 +745,7 @@
                     console.error('Perbaiki kesalahan pada formulir.');
                 }
             } catch (error) {
-                showFailedToast('Terjadi kesalahan. Silakan coba lagi.');
+                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
             } finally {
                 $('#submitButton').prop('disabled', false).html(`
                     <i class="fa-solid fa-floppy-disk"></i> Simpan
