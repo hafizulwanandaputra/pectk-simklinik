@@ -29,7 +29,7 @@ The user guide corresponding to the latest version of the framework can be found
 3. Run `php spark migrate` to migrate database.
 4. Run `php spark db:seed UserSeeder` to seed the database items.
 5. For development use, run `php spark serve` to start the server. Usually [http://localhost:8080](http://localhost:8080). You can use different port by using `php spark serve --port 8081`. Replace `8081` with the desired port number. You need to modify `app.baseURL` in `.env` to match with the desired port number.
-6. For production use such as Apache, just open it from URL like `http://localhost/pec_permintaanmakanan` or others. You need to modify `app.baseURL` in `.env` to match with the desired URL address.
+6. For production use such as Apache, just open it from URL like [http://localhost/pec_permintaanmakanan](http://localhost/pec_permintaanmakanan) or others. You need to modify `app.baseURL` in `.env` to match with the desired URL address.
 7. Sign in using username `admin` and password `12345`.
 
 ## Progressive Web App (PWA) Setup
