@@ -1,0 +1,97 @@
+{
+  "name": "Sistem Informasi Permintaan Makanan Pasien Rawat Inap RSKM Padang Eye Center",
+  "short_name": "Sistem Permintaan Makanan Pasien Rawat Inap PEC",
+  "start_url": "/pec_permintaanmakanan",
+  "display": "standalone",
+  "background_color": "#5eba00",
+  "theme_color": "#5eba00",
+  "icons": [
+    {
+      "src": "/pec_permintaanmakanan/favicon.png",
+      "sizes": "144x144",
+      "type": "image/png"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/pec_permintaanmakanan/Screenshot.png",
+      "sizes": "1366x768",
+      "type": "image/png",
+      "label": "Wide Screenshot",
+      "form_factor": "wide"
+    },
+    {
+      "src": "/pec_permintaanmakanan/Screenshot.png",
+      "sizes": "1366x768",
+      "type": "image/jpeg",
+      "label": "Normal Screenshot"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Beranda",
+      "short_name": "Beranda",
+      "description": "Beranda",
+      "url": "/home",
+      "icons": [
+        {
+          "src": "/pec_permintaanmakanan/favicon.png",
+          "sizes": "144x144",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Petugas Gizi",
+      "short_name": "Petugas Gizi",
+      "description": "Petugas Gizi",
+      "url": "/petugas",
+      "icons": [
+        {
+          "src": "/pec_permintaanmakanan/favicon.png",
+          "sizes": "144x144",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Menu Makanan",
+      "short_name": "Menu Makanan",
+      "description": "Menu Makanan",
+      "url": "/menu",
+      "icons": [
+        {
+          "src": "/pec_permintaanmakanan/favicon.png",
+          "sizes": "144x144",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Permintaan Makanan",
+      "short_name": "Permintaan Makanan",
+      "description": "Permintaan Makanan",
+      "url": "/permintaan",
+      "icons": [
+        {
+          "src": "/pec_permintaanmakanan/favicon.png",
+          "sizes": "144x144",
+          "type": "image/png"
+        }
+      ]
+    },
+    {
+      "name": "Admin",
+      "short_name": "Admin",
+      "description": "Admin",
+      "url": "/admin",
+      "icons": [
+        {
+          "src": "/pec_permintaanmakanan/favicon.png",
+          "sizes": "144x144",
+          "type": "image/png"
+        }
+      ]
+    }
+  ]
+}
