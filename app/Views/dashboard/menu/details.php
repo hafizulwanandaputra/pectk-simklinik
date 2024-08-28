@@ -318,6 +318,35 @@
 <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.colVis.min.js"></script>
 <script>
+    async function startDownload() {
+        $('#loadingSpinner').show(); // Menampilkan spinner
+
+        try {
+            // Mengambil file dari server
+            const response = await axios.get('<?= base_url('permintaan/exportexcel?keyword=' . $menu['id_menu']); ?>', {
+                responseType: 'blob' // Mendapatkan data sebagai blob
+            });
+
+            // Mendapatkan nama file dari header Content-Disposition
+            const disposition = response.headers['content-disposition'];
+            const filename = disposition ? disposition.split('filename=')[1].split(';')[0].replace(/"/g, '') : '.xlsx';
+
+            // Membuat URL unduhan
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename; // Menggunakan nama file dari header
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+
+            window.URL.revokeObjectURL(url); // Membebaskan URL yang dibuat
+        } catch (error) {
+            showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+        } finally {
+            $('#loadingSpinner').hide(); // Menyembunyikan spinner setelah unduhan selesai
+        }
+    }
     async function fetchMenuDetails() {
         $('#loadingSpinner').show();
 
@@ -428,7 +457,7 @@
                 },
             }, {
                 action: function(e, dt, node, config) {
-                    window.location.href = '<?= base_url('permintaan/exportexcel?keyword=' . $menu['id_menu']); ?>';
+                    startDownload();
                 },
                 text: '<i class="fa-solid fa-file-excel"></i> Ekspor Excel',
                 className: 'btn-success btn-sm bg-gradient rounded-end-3',
