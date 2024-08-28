@@ -90,11 +90,70 @@
 <?= $this->section('chartjs'); ?>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js" integrity="sha512-SIMGYRUjwY8+gKg7nn9EItdD8LCADSDfJNutF9TPrvEo86sQmFMh6MyralfIyhADlajSxqc7G0gs7+MwWF/ogQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
-    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-        Chart.defaults.color = "#ADBABD";
-        Chart.defaults.borderColor = "rgba(255,255,255,0.1)";
-        Chart.defaults.backgroundColor = "rgba(255,255,0,0.1)";
-        Chart.defaults.elements.line.borderColor = "rgba(255,255,0,0.4)";
+    // Array to keep track of chart instances
+    const chartInstances = [];
+
+    // Function to initialize a chart and add it to the instances array
+    function createChart(ctx, config) {
+        const chart = new Chart(ctx, config);
+        chartInstances.push(chart);
+        return chart;
+    }
+
+    // Function to update chart configurations based on the color scheme
+    function updateChartOptions() {
+        const isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+        const colorSettings = {
+            color: isDarkMode ? "#ADBABD" : "#000000",
+            borderColor: isDarkMode ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)",
+            backgroundColor: isDarkMode ? "rgba(255,255,0,0.1)" : "rgba(0,255,0,0.1)",
+            lineBorderColor: isDarkMode ? "rgba(255,255,0,0.4)" : "rgba(0,255,0,0.4)",
+            gridColor: isDarkMode ? "rgba(255,255,255,0.2)" : "rgba(0,0,0,0.2)"
+        };
+
+        chartInstances.forEach(chart => {
+            if (chart.options.scales) {
+                // Update X-axis
+                if (chart.options.scales.x) {
+                    if (chart.options.scales.x.ticks) {
+                        chart.options.scales.x.ticks.color = colorSettings.color;
+                    }
+                    if (chart.options.scales.x.title) {
+                        chart.options.scales.x.title.color = colorSettings.color;
+                    }
+                    if (chart.options.scales.x.grid) {
+                        chart.options.scales.x.grid.color = colorSettings.gridColor;
+                    }
+                }
+
+                // Update Y-axis
+                if (chart.options.scales.y) {
+                    if (chart.options.scales.y.ticks) {
+                        chart.options.scales.y.ticks.color = colorSettings.color;
+                    }
+                    if (chart.options.scales.y.title) {
+                        chart.options.scales.y.title.color = colorSettings.color;
+                    }
+                    if (chart.options.scales.y.grid) {
+                        chart.options.scales.y.grid.color = colorSettings.gridColor;
+                    }
+                }
+            }
+
+            // Update line chart specific settings
+            if (chart.options.elements && chart.options.elements.line) {
+                chart.options.elements.line.borderColor = colorSettings.lineBorderColor;
+            }
+
+            // Update doughnut chart legend
+            if (chart.config.type === 'doughnut' && chart.options.plugins && chart.options.plugins.legend) {
+                chart.options.plugins.legend.labels.color = colorSettings.color;
+            }
+
+            // Redraw the chart with updated settings
+            chart.update();
+        });
     }
     Chart.defaults.font.family = 'Geist, system-ui, -apple-system, BlinkMacSystemFont, "Noto Sans", "Noto Sans Arabic", "Noto Color Emoji", sans-serif';
     const data_permintaangraph = [];
@@ -145,7 +204,7 @@
         }]
     }
 
-    var chart_permintaangraph = new Chart('permintaangraph', {
+    var chart_permintaangraph = createChart(document.getElementById('permintaangraph').getContext('2d'), {
         type: 'doughnut',
         data: data_content_permintaangraph,
         options: {
@@ -166,7 +225,7 @@
         }
     })
 
-    var chart_petugasgraph = new Chart('petugasgraph', {
+    var chart_petugasgraph = createChart(document.getElementById('petugasgraph').getContext('2d'), {
         type: 'doughnut',
         data: data_content_petugasgraph,
         options: {
@@ -187,7 +246,7 @@
         }
     })
 
-    var chart_permintaanperbulangraph = new Chart('permintaanperbulangraph', {
+    var chart_permintaanperbulangraph = createChart(document.getElementById('permintaanperbulangraph').getContext('2d'), {
         type: 'line',
         data: data_content_permintaanperbulangraph,
         options: {
@@ -217,5 +276,14 @@
             }
         }
     })
+
+    // Initial setup
+    updateChartOptions();
+
+    // Watch for changes in color scheme preference
+    const mediaQueryList = window.matchMedia("(prefers-color-scheme: dark)");
+    mediaQueryList.addEventListener("change", () => {
+        updateChartOptions();
+    });
 </script>
 <?= $this->endSection(); ?>
