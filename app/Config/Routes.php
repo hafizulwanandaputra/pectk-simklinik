@@ -54,13 +54,15 @@ $routes->post('/(?i)petugas/(?i)create', 'Petugas::create');
 $routes->post('/(?i)petugas/(?i)update', 'Petugas::update');
 $routes->delete('/(?i)petugas/(?i)delete/(:any)', 'Petugas::delete/$1');
 
-// ADMIN
+// PENGGUNA
 $routes->get('/(?i)admin', 'Admin::index');
 $routes->post('/(?i)admin/(?i)adminlist', 'Admin::adminlist');
 $routes->get('/(?i)admin/(?i)admin/(:any)', 'Admin::admin/$1');
 $routes->post('/(?i)admin/(?i)create', 'Admin::create');
 $routes->post('/(?i)admin/(?i)update', 'Admin::update');
 $routes->post('/(?i)admin/(?i)resetpassword/(:any)', 'Admin::resetpassword/$1');
+$routes->post('/(?i)admin/(?i)activate/(:any)', 'Admin::activate/$1');
+$routes->post('/(?i)admin/(?i)deactivate/(:any)', 'Admin::deactivate/$1');
 $routes->delete('/(?i)admin/(?i)delete/(:any)', 'Admin::delete/$1');
 
 // SETTINGS

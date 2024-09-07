@@ -17,11 +17,11 @@ class Admin extends BaseController
     public function index()
     {
         $data = [
-            'title' => 'Admin - ' . $this->systemName,
-            'headertitle' => 'Admin',
+            'title' => 'Pengguna - ' . $this->systemName,
+            'headertitle' => 'Pengguna',
             'agent' => $this->request->getUserAgent()
         ];
-        if (session()->get('role') == "Master Admin") {
+        if (session()->get('role') == "Admin") {
             return view('dashboard/admin/index', $data);
         } else {
             throw PageNotFoundException::forPageNotFound();
@@ -30,7 +30,7 @@ class Admin extends BaseController
 
     public function adminlist()
     {
-        if (session()->get('role') == 'Master Admin') {
+        if (session()->get('role') == 'Admin') {
             $request = $this->request->getPost();
             $search = $request['search']['value']; // Search value
             $start = $request['start']; // Start index for pagination
@@ -96,7 +96,7 @@ class Admin extends BaseController
 
     public function admin($id)
     {
-        if (session()->get('role') == 'Master Admin') {
+        if (session()->get('role') == 'Admin') {
             $data = $this->AuthModel->where('id_user !=', session()->get('id_user'))->find($id);
             return $this->response->setJSON($data);
         } else {
@@ -106,7 +106,7 @@ class Admin extends BaseController
 
     public function create()
     {
-        if (session()->get('role') == 'Master Admin') {
+        if (session()->get('role') == 'Admin') {
             // Validate
             $validation = \Config\Services::validation();
             // Set base validation rules
@@ -125,10 +125,12 @@ class Admin extends BaseController
                 'fullname' => $this->request->getPost('fullname'),
                 'username' => $this->request->getPost('username'),
                 'password' => password_hash($this->request->getPost('username'), PASSWORD_DEFAULT),
-                'role' => $this->request->getPost('role')
+                'role' => $this->request->getPost('role'),
+                'active' => 0,
+                'registered' => date('Y-m-d H:i:s')
             ];
             $this->AuthModel->save($data);
-            return $this->response->setJSON(['success' => true, 'message' => 'Admin berhasil ditambahkan']);
+            return $this->response->setJSON(['success' => true, 'message' => 'Pengguna berhasil ditambahkan']);
         } else {
             throw PageNotFoundException::forPageNotFound();
         }
@@ -136,9 +138,8 @@ class Admin extends BaseController
 
     public function update()
     {
-        if (session()->get('role') == 'Master Admin') {
+        if (session()->get('role') == 'Admin') {
             $validation = \Config\Services::validation();
-            $userId = $this->request->getPost('id_user');
             // Set base validation rules
             $validation->setRules([
                 'fullname' => 'required|min_length[3]',
@@ -158,11 +159,11 @@ class Admin extends BaseController
                 'id_user' => $this->request->getPost('id_user'),
                 'fullname' => $this->request->getPost('fullname'),
                 'username' => $this->request->getPost('username'),
-                'role' => $this->request->getPost('role')
+                'role' => $this->request->getPost('role'),
             ];
             $AuthModelEdit = new AuthModelEdit();
             $AuthModelEdit->save($data);
-            return $this->response->setJSON(['success' => true, 'message' => 'Admin berhasil diedit']);
+            return $this->response->setJSON(['success' => true, 'message' => 'Pengguna berhasil diedit']);
         } else {
             throw PageNotFoundException::forPageNotFound();
         }
@@ -170,11 +171,33 @@ class Admin extends BaseController
 
     public function resetpassword($id)
     {
-        if (session()->get('role') == 'Master Admin') {
+        if (session()->get('role') == 'Admin') {
             $db = db_connect();
             $user = $this->AuthModel->find($id);
             $db->table('user')->set('password', password_hash($user['username'], PASSWORD_DEFAULT))->where('id_user', $id)->update();
-            return $this->response->setJSON(['success' => true, 'message' => 'Kata sandi admin berhasil diatur ulang']);
+            return $this->response->setJSON(['success' => true, 'message' => 'Kata sandi pengguna berhasil diatur ulang']);
+        } else {
+            throw PageNotFoundException::forPageNotFound();
+        }
+    }
+
+    public function activate($id)
+    {
+        if (session()->get('role') == 'Admin') {
+            $db = db_connect();
+            $db->table('user')->set('active', 1)->where('id_user', $id)->update();
+            return $this->response->setJSON(['success' => true, 'message' => 'Pengguna berhasil diaktifkan']);
+        } else {
+            throw PageNotFoundException::forPageNotFound();
+        }
+    }
+
+    public function deactivate($id)
+    {
+        if (session()->get('role') == 'Admin') {
+            $db = db_connect();
+            $db->table('user')->set('active', 0)->where('id_user', $id)->update();
+            return $this->response->setJSON(['success' => true, 'message' => 'Pengguna berhasil dinonaktifkan']);
         } else {
             throw PageNotFoundException::forPageNotFound();
         }
@@ -182,12 +205,12 @@ class Admin extends BaseController
 
     public function delete($id)
     {
-        if (session()->get('role') == 'Master Admin') {
+        if (session()->get('role') == 'Admin') {
             $this->AuthModel->delete($id);
             $db = db_connect();
             // Reset Auto Increment Value
             $db->query('ALTER TABLE `user` auto_increment = 1');
-            return $this->response->setJSON(['message' => 'Admin berhasil dihapus']);
+            return $this->response->setJSON(['message' => 'Pengguna berhasil dihapus']);
         } else {
             throw PageNotFoundException::forPageNotFound();
         }

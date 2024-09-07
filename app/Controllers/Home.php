@@ -61,25 +61,25 @@ class Home extends BaseController
         // END GREETINGS
 
         $db = db_connect();
-        $menu = $db->table('menu');
-        $permintaan = $db->table('permintaan');
-        $petugas = $db->table('petugas');
-        $admin = $db->table('user');
-        $totalmenu = $menu->countAllResults();
-        $totalpermintaan = $permintaan->countAllResults();
-        $totalpetugas = $petugas->countAllResults();
-        $totaladmin = $admin->countAllResults();
-        $permintaangraph = $db->query('SELECT `nama_menu`, `jumlah` FROM `menu`;');
-        $petugasgraph = $db->query('SELECT `nama_petugas`, `jumlah_menu` FROM `petugas`;');
-        $permintaanperbulangraph = $permintaan->select('DATE_FORMAT(menu.tanggal, "%Y-%m") AS bulan, COUNT(*) AS jumlah_permintaan')->join('menu', 'menu.id_menu = permintaan.id_menu', 'inner')->groupBy('DATE_FORMAT(menu.tanggal, "%Y-%m")')->get();
+        // $menu = $db->table('menu');
+        // $permintaan = $db->table('permintaan');
+        // $petugas = $db->table('petugas');
+        // $admin = $db->table('user');
+        // $totalmenu = $menu->countAllResults();
+        // $totalpermintaan = $permintaan->countAllResults();
+        // $totalpetugas = $petugas->countAllResults();
+        // $totaladmin = $admin->countAllResults();
+        // $permintaangraph = $db->query('SELECT `nama_menu`, `jumlah` FROM `menu`;');
+        // $petugasgraph = $db->query('SELECT `nama_petugas`, `jumlah_menu` FROM `petugas`;');
+        // $permintaanperbulangraph = $permintaan->select('DATE_FORMAT(menu.tanggal, "%Y-%m") AS bulan, COUNT(*) AS jumlah_permintaan')->join('menu', 'menu.id_menu = permintaan.id_menu', 'inner')->groupBy('DATE_FORMAT(menu.tanggal, "%Y-%m")')->get();
         $data = [
-            'totalmenu' => $totalmenu,
-            'totalpermintaan' => $totalpermintaan,
-            'totalpetugas' => $totalpetugas,
-            'totaladmin' => $totaladmin,
-            'permintaanperbulangraph' => $permintaanperbulangraph,
-            'permintaangraph' => $permintaangraph,
-            'petugasgraph' => $petugasgraph,
+            // 'totalmenu' => $totalmenu,
+            // 'totalpermintaan' => $totalpermintaan,
+            // 'totalpetugas' => $totalpetugas,
+            // 'totaladmin' => $totaladmin,
+            // 'permintaanperbulangraph' => $permintaanperbulangraph,
+            // 'permintaangraph' => $permintaangraph,
+            // 'petugasgraph' => $petugasgraph,
             'txtgreeting' => $txtGreeting,
             'title' => 'Beranda - ' . $this->systemName,
             'headertitle' => 'Beranda',

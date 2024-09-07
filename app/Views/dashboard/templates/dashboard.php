@@ -9,8 +9,8 @@
     <meta name="theme-color" content="#5eba00">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <!-- Favicons -->
-    <link href="https://padangeyecenter.com/assets/logo/logo_pec.png" rel="icon" />
-    <link href="https://padangeyecenter.com/assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
+    <link href="<?= base_url(); ?>favicon.png" rel="icon" />
+    <link href="<?= base_url(); ?>favicon.png" rel="apple-touch-icon" />
     <link href="<?= base_url(); ?>assets/css/dashboard/dashboard.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/css/main.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/css/JawiDubai.css" rel="stylesheet">
@@ -279,9 +279,10 @@
     <div class="wrapper">
         <!-- HEADER -->
         <header class="navbar sticky-top flex-md-nowrap p-0 shadow-sm text-white header" style="border-bottom: 1px solid var(--bs-border-color-translucent); background-color: #5eba00;" data-bs-theme="dark">
-            <div class="d-flex justify-content-center align-items-center col-md-3 col-lg-2 me-0 px-3 py-md-1" style="min-height: 48px;">
-                <span class="navbar-brand mx-0 text-start text-md-center lh-1 fw-bold" style="font-size: 9pt;">
-                    PADANG EYE CENTER
+            <div class="d-flex justify-content-center align-items-center col-md-3 col-lg-2 me-0 px-3 py-md-1" style="min-height: 48px; max-height: 48px;">
+                <span class="navbar-brand mx-0 text-start text-md-center lh-1 d-flex justify-content-center" style="font-size: 8pt;">
+                    <img src="<?= base_url('/assets/images/logo_pec.png'); ?>" alt="KLINIK MATA PECTK" height="32px" style="filter: drop-shadow(0 0 0.25rem white);">
+                    <div class="ps-2 text-start">KLINIK UTAMA MATA<br><span class="fw-bold">PADANG EYE CENTER</span><br>TELUK KUANTAN</div>
                 </span>
             </div>
             <button class="navbar-toggler position-absolute text-white d-md-none bg-gradient rounded-3 border-white collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
@@ -361,43 +362,7 @@
                                 </div>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link p-2 <?= (strpos(uri_string(), 'petugas') === 0) ? 'active bg-light' : '' ?>" href=" <?= base_url('/petugas'); ?>">
-                                <div class="d-flex align-items-start <?= (strpos(uri_string(), 'petugas') === 0) ? 'link-dark' : 'link-light' ?>">
-                                    <div style="min-width: 24px; max-width: 24px; text-align: center;">
-                                        <i class="fa-solid fa-user-nurse"></i>
-                                    </div>
-                                    <div class="flex-fill ms-2">
-                                        Petugas Gizi
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link p-2 <?= (strpos(uri_string(), 'menu') === 0) ? 'active bg-light' : '' ?>" href="<?= base_url('/menu'); ?>">
-                                <div class="d-flex align-items-start <?= (strpos(uri_string(), 'menu') === 0) ? 'link-dark' : 'link-light' ?>">
-                                    <div style="min-width: 24px; max-width: 24px; text-align: center;">
-                                        <i class="fa-solid fa-utensils"></i>
-                                    </div>
-                                    <div class="flex-fill ms-2">
-                                        Menu Makanan
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link p-2 <?= (strpos(uri_string(), 'permintaan') === 0) ? 'active bg-light' : '' ?>" href=" <?= base_url('/permintaan'); ?>">
-                                <div class="d-flex align-items-start <?= (strpos(uri_string(), 'permintaan') === 0) ? 'link-dark' : 'link-light' ?>">
-                                    <div style="min-width: 24px; max-width: 24px; text-align: center;">
-                                        <i class="fa-solid fa-truck-medical"></i>
-                                    </div>
-                                    <div class="flex-fill ms-2">
-                                        Permintaan
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <?php if (session()->get('role') == "Master Admin") : ?>
+                        <?php if (session()->get('role') == "Admin") : ?>
                             <li class="nav-item">
                                 <a class="nav-link p-2 <?= (strpos(uri_string(), 'admin') === 0) ? 'active bg-light' : '' ?>" href=" <?= base_url('/admin'); ?>">
                                     <div class="d-flex align-items-start <?= (strpos(uri_string(), 'admin') === 0) ? 'link-dark' : 'link-light' ?>">
@@ -405,7 +370,7 @@
                                             <i class="fa-solid fa-users"></i>
                                         </div>
                                         <div class="flex-fill ms-2">
-                                            Admin
+                                            Pengguna
                                         </div>
                                     </div>
                                 </a>

@@ -19,6 +19,7 @@
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Nama Lengkap</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Nama Pengguna</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Jenis Pengguna</th>
+                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Aktif Sejak</th>
                 </tr>
             </thead>
             <tbody class="align-top">
@@ -52,11 +53,39 @@
             </div>
         </div>
     </div>
+    <div class="modal modal-sheet p-4 py-md-5 fade" id="activateModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="activateModalLabel" aria-hidden="true" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content bg-body rounded-4 shadow-lg transparent-blur">
+                <div class="modal-body p-4 text-center">
+                    <h5 id="activateMessage"></h5>
+                    <h6 class="mb-0" id="activateSubmessage"></h6>
+                </div>
+                <div class="modal-footer flex-nowrap p-0" style="border-top: 1px solid var(--bs-border-color-translucent);">
+                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end" style="border-right: 1px solid var(--bs-border-color-translucent)!important;" data-bs-dismiss="modal">Tidak</button>
+                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0" id="confirmActivateBtn">Ya</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal modal-sheet p-4 py-md-5 fade" id="deactivateModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deactivateModalLabel" aria-hidden="true" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content bg-body rounded-4 shadow-lg transparent-blur">
+                <div class="modal-body p-4 text-center">
+                    <h5 id="deactivateMessage"></h5>
+                    <h6 class="mb-0" id="deactivateSubmessage"></h6>
+                </div>
+                <div class="modal-footer flex-nowrap p-0" style="border-top: 1px solid var(--bs-border-color-translucent);">
+                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end" style="border-right: 1px solid var(--bs-border-color-translucent)!important;" data-bs-dismiss="modal">Tidak</button>
+                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0" id="confirmDeactivateBtn">Ya</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="modal fade" id="userModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable rounded-3">
             <form id="userForm" enctype="multipart/form-data" class="modal-content bg-body shadow-lg transparent-blur">
                 <div class="modal-header justify-content-between pt-2 pb-2" style="border-bottom: 1px solid var(--bs-border-color-translucent);">
-                    <h6 class="pe-2 modal-title fs-6 text-truncate" id="userModalLabel" style="font-weight: bold;">Tambah Admin</h6>
+                    <h6 class="pe-2 modal-title fs-6 text-truncate" id="userModalLabel" style="font-weight: bold;">Tambah Pengguna</h6>
                     <button type="button" class="btn btn-danger btn-sm bg-gradient ps-0 pe-0 pt-0 pb-0 rounded-3" data-bs-dismiss="modal" aria-label="Close"><span data-feather="x" class="mb-0" style="width: 30px; height: 30px;"></span></button>
                 </div>
                 <div class="modal-body py-2">
@@ -75,8 +104,10 @@
                     <div class="form-floating mb-1 mt-1">
                         <select class="form-select" id="role" name="role" aria-label="role">
                             <option value="">-- Pilih Jenis Pengguna --</option>
-                            <option value="Master Admin">Master Admin</option>
                             <option value="Admin">Admin</option>
+                            <option value="Apoteker">Apoteker</option>
+                            <option value="Dokter">Dokter</option>
+                            <option value="Keuangan">Keuangan</option>
                         </select>
                         <label for="role">Jenis Pengguna</label>
                         <div class="invalid-feedback"></div>
@@ -108,17 +139,17 @@
         var table = $('#tabel').DataTable({
             "oLanguage": {
                 "sDecimal": ",",
-                "sEmptyTable": 'Tidak ada admin. Klik "Tambah Admin" untuk menambahkan admin.',
-                "sInfo": "Menampilkan _START_ hingga _END_ dari _TOTAL_ admin",
-                "sInfoEmpty": "Menampilkan 0 hingga 0 dari 0 admin",
-                "sInfoFiltered": "(di-filter dari _MAX_ admin)",
+                "sEmptyTable": 'Tidak ada pengguna. Klik "Tambah Pengguna" untuk menambahkan admin.',
+                "sInfo": "Menampilkan _START_ hingga _END_ dari _TOTAL_ pengguna",
+                "sInfoEmpty": "Menampilkan 0 hingga 0 dari 0 pengguna",
+                "sInfoFiltered": "(di-filter dari _MAX_ pengguna)",
                 "sInfoPostFix": "",
                 "sThousands": ".",
-                "sLengthMenu": "Tampilkan _MENU_ admin",
+                "sLengthMenu": "Tampilkan _MENU_ pengguna",
                 "sLoadingRecords": "Memuat...",
                 "sProcessing": "",
                 "sSearch": "Cari:",
-                "sZeroRecords": "Admin yang Anda cari tidak ditemukan",
+                "sZeroRecords": "Pengguna yang Anda cari tidak ditemukan",
                 "oAria": {
                     "sOrderable": "Urutkan menurut kolom ini",
                     "sOrderableReverse": "Urutkan terbalik kolom ini"
@@ -173,7 +204,7 @@
                     $(node).removeClass('btn-secondary')
                 },
             }, {
-                text: '<i class="fa-solid fa-plus"></i> Tambah Admin',
+                text: '<i class="fa-solid fa-plus"></i> Tambah Pengguna',
                 className: 'btn-primary btn-sm bg-gradient rounded-end-3',
                 attr: {
                     id: 'addUserBtn'
@@ -223,21 +254,39 @@
                 {
                     data: null,
                     render: function(data, type, row) {
+                        let statusBtn = row.active == 1 ?
+                            `<button class="btn btn-danger text-nowrap bg-gradient rounded-start-3 deactivate-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${row.id_user}" data-username="${row.username}"data-bs-toggle="tooltip" data-bs-title="Nonaktifkan"><i class="fa-solid fa-user-slash"></i></button>` :
+                            `<button class="btn btn-success text-nowrap bg-gradient rounded-start-3 activate-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${row.id_user}" data-username="${row.username}"data-bs-toggle="tooltip" data-bs-title="Aktifkan"><i class="fa-solid fa-user-check"></i></i></button>`;
+
                         return `<div class="btn-group" role="group">
-                                    <button class="btn btn-warning text-nowrap bg-gradient rounded-start-3 resetpwd-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${row.id_user}" data-username="${row.username}"data-bs-toggle="tooltip" data-bs-title="Atur ulang kata sandi"><i class="fa-solid fa-key"></i></button>
+                                    ${statusBtn}
+                                    <button class="btn btn-warning text-nowrap bg-gradient  resetpwd-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${row.id_user}" data-username="${row.username}"data-bs-toggle="tooltip" data-bs-title="Atur ulang kata sandi"><i class="fa-solid fa-key"></i></button>
                                     <button class="btn btn-secondary text-nowrap bg-gradient edit-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${row.id_user}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
                                     <button class="btn btn-danger text-nowrap bg-gradient rounded-end-3 delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${row.id_user}" data-username="${row.username}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
                                 </div>`;
                     }
                 },
                 {
-                    data: 'fullname'
+                    data: 'fullname',
+                    render: function(data, type, row) {
+                        let statusBadge = row.active == 1 ?
+                            '<span class="badge bg-success bg-gradient">Aktif</span>' :
+                            '<span class="badge bg-danger bg-gradient">Tidak Aktif</span>';
+
+                        return `${data} ${statusBadge}`;
+                    }
                 },
                 {
                     data: 'username'
                 },
                 {
                     data: 'role'
+                },
+                {
+                    data: 'registered',
+                    render: function(data, type, row) {
+                        return `<span class="text-nowrap">${data}</span>`;
+                    }
                 },
             ],
             "order": [
@@ -250,7 +299,7 @@
                 "target": [0, 1],
                 "width": "0%"
             }, {
-                "target": [2, 3],
+                "target": [2, 3, 4],
                 "width": "50%"
             }],
         });
@@ -262,7 +311,7 @@
         });
         // Show add user modal
         $('#addUserBtn').click(function() {
-            $('#userModalLabel').text('Tambah Admin');
+            $('#userModalLabel').text('Tambah Pengguna');
             $('#userForm')[0].reset();
             $('#userId').val('');
             $('#original_username').val('');
@@ -280,7 +329,7 @@
                 const response = await axios.get(`<?= base_url('/admin/admin') ?>/${id}`);
 
                 // Update the modal fields
-                $('#userModalLabel').text('Edit Admin');
+                $('#userModalLabel').text('Edit Pengguna');
                 $('#userId').val(response.data.id_user);
                 $('#fullname').val(response.data.fullname);
                 $('#username').val(response.data.username);
@@ -311,6 +360,22 @@
             $('#deleteModal').modal('show');
         });
 
+        $(document).on('click', '.activate-btn', function() {
+            userId = $(this).data('id');
+            userName = $(this).data('username');
+            $('[data-bs-toggle="tooltip"]').tooltip('hide');
+            $('#activateMessage').html(`Aktifkan @` + userName + `?`);
+            $('#activateModal').modal('show');
+        });
+
+        $(document).on('click', '.deactivate-btn', function() {
+            userId = $(this).data('id');
+            userName = $(this).data('username');
+            $('[data-bs-toggle="tooltip"]').tooltip('hide');
+            $('#deactivateMessage').html(`Nonaktifkan @` + userName + `?`);
+            $('#deactivateModal').modal('show');
+        });
+
         $(document).on('click', '.resetpwd-btn', function() {
             userId = $(this).data('id');
             userName = $(this).data('username');
@@ -334,6 +399,38 @@
             } finally {
                 $('#deleteModal').modal('hide');
                 $('#deleteModal button').prop('disabled', false);
+            }
+        });
+
+        $('#confirmActivateBtn').click(async function() {
+            $('#activateModal button').prop('disabled', true);
+            $('#activateMessage').html('Mengapus, silakan tunggu...');
+
+            try {
+                await axios.post(`<?= base_url('/admin/activate') ?>/${userId}`);
+                showSuccessToast('User berhasil diaktifkan.');
+                table.ajax.reload();
+            } catch (error) {
+                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+            } finally {
+                $('#activateModal').modal('hide');
+                $('#activateModal button').prop('disabled', false);
+            }
+        });
+
+        $('#confirmDeactivateBtn').click(async function() {
+            $('#deactivateModal button').prop('disabled', true);
+            $('#deactivateMessage').html('Mengapus, silakan tunggu...');
+
+            try {
+                await axios.post(`<?= base_url('/admin/deactivate') ?>/${userId}`);
+                showSuccessToast('User berhasil dinonaktifkan.');
+                table.ajax.reload();
+            } catch (error) {
+                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+            } finally {
+                $('#deactivateModal').modal('hide');
+                $('#deactivateModal button').prop('disabled', false);
             }
         });
 

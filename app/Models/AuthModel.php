@@ -9,7 +9,7 @@ class AuthModel extends Model
     protected $table = 'user';
     protected $primaryKey = 'id_user';
     protected $useTimestamps = false;
-    protected $allowedFields = ['fullname', 'username', 'password', 'role', 'active'];
+    protected $allowedFields = ['fullname', 'username', 'password', 'role', 'active', 'registered'];
     public function login($username)
     {
         return $this->db->table('user')->where([

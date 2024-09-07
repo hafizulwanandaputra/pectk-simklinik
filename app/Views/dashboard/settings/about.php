@@ -148,7 +148,7 @@ if (stripos($browser, 'Chrome') !== false) {
     </ul>
     <hr>
     <div>
-        <p><strong>Sistem Informasi Permintaan Makanan Pasien Rawat Inap</strong><br>&copy; 2024 <?= (date('Y') !== "2024") ? "- " . date('Y') : ''; ?> Rumah Sakit Khusus Mata Padang Eye Center<br><a class="text-decoration-none" href="https://padangeyecenter.com/" target="_blank">padangeyecenter.com</a></p>
+        <p><strong>Sistem Informasi Kasir dan Farmasi</strong><br>&copy; 2024 <?= (date('Y') !== "2024") ? "- " . date('Y') : ''; ?> Klinik Utama Mata Padang Eye Center Teluk Kuantan<br><strong>Melayani dengan Hati</strong></p>
         <p>Template aplikasi ini didasarkan pada <a class="text-decoration-none" href="https://github.com/hafizulwanandaputra/hwpweb-admin-template" target="_blank">Repositori GitHub</a> ini.</p>
     </div>
 </main>
