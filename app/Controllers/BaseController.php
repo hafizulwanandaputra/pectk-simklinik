@@ -48,7 +48,7 @@ abstract class BaseController extends Controller
      *
      * @var string
      */
-    protected $systemName = "Sistem Permintaan Makanan Pasien Rawat Inap RSKM PEC";
+    protected $systemName = "Kasir dan Farmasi Klinik Utama Mata Padang Eye Center Teluk Kuantan";
 
     /**
      * @return void
