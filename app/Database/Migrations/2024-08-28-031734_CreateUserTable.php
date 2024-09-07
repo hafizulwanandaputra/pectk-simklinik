@@ -36,6 +36,12 @@ class CreateUserTable extends Migration
                 'type' => 'VARCHAR',
                 'constraint' => '128',
             ],
+            'active' => [
+                'type' => 'BOOLEAN',
+            ],
+            'registered' => [
+                'type' => 'DATETIME',
+            ],
         ]);
         $this->forge->addKey('id_user', true);
         $this->forge->createTable('user');
