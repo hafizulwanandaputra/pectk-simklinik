@@ -49,15 +49,20 @@ class Auth extends BaseController
         $check = $this->AuthModel->login($username);
         if ($check) {
             if (password_verify($password, $check['password'])) {
-                session()->set('log', true);
-                session()->set('id_user', $check['id_user']);
-                session()->set('fullname', $check['fullname']);
-                session()->set('username', $check['username']);
-                session()->set('password', $check['password']);
-                session()->set('profilephoto', $check['profilephoto']);
-                session()->set('role', $check['role']);
-                session()->set('url', $url);
-                return redirect()->to($url);
+                if ($check['active'] == '1') {
+                    session()->set('log', true);
+                    session()->set('id_user', $check['id_user']);
+                    session()->set('fullname', $check['fullname']);
+                    session()->set('username', $check['username']);
+                    session()->set('password', $check['password']);
+                    session()->set('profilephoto', $check['profilephoto']);
+                    session()->set('role', $check['role']);
+                    session()->set('url', $url);
+                    return redirect()->to($url);
+                } else {
+                    session()->setFlashdata('error', 'Akun tidak aktif');
+                    return redirect()->back();
+                }
             } else {
                 session()->setFlashdata('error', 'Kata sandi salah');
                 return redirect()->back();
@@ -70,7 +75,6 @@ class Auth extends BaseController
 
     public function logout()
     {
-        $db = db_connect();
         session()->remove('log');
         session()->remove('id_user');
         session()->remove('fullname');

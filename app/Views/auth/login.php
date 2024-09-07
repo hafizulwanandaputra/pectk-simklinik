@@ -6,11 +6,11 @@
             <div class="modal-content bg-body rounded-4 shadow-lg transparent-blur">
                 <div class="modal-body">
                     <?= form_open('check-login', 'id="loginForm"'); ?>
-                    <img class="rounded-pill mb-2" src="<?= base_url('/assets/images/logo_pec.png'); ?>" width="96px" style="border: var(--bs-modal-border-width) solid var(--bs-modal-border-color);">
+                    <img class="mb-2" src="<?= base_url('/assets/images/logo_pec.png'); ?>" width="96px">
                     <h1 class="h3 mb-2 fw-normal">
-                        Sistem Informasi Permintaan Makanan Pasien Rawat Inap
+                        Kasir dan Farmasi
                     </h1>
-                    <h6>Rumah Sakit Khusus Mata Padang Eye Center</h6>
+                    <h6>Klinik Utama Mata Padang Eye Center Teluk Kuantan</h6>
                     <div class="form-floating">
                         <input type="text" class="form-control username rounded-top-3 <?= (validation_show_error('username')) ? 'is-invalid' : ''; ?>" id="floatingInput" name="username" placeholder="Username" value="" autocomplete="off" list="username">
                         <datalist id="username">
@@ -50,7 +50,7 @@
                 </div>
                 <!-- FOOTER -->
                 <div class="modal-footer d-block" style="font-size: 9pt; border-top: 1px solid var(--bs-border-color-translucent);">
-                    <span class="text-center">&copy; 2024 <?= (date('Y') !== "2024") ? "- " . date('Y') : ''; ?> Rumah Sakit Khusus Mata Padang Eye Center<br><a class="text-decoration-none" href="https://padangeyecenter.com/" target="_blank">padangeyecenter.com</a></span>
+                    <span class="text-center">&copy; 2024 <?= (date('Y') !== "2024") ? "- " . date('Y') : ''; ?> Klinik Utama Mata Padang Eye Center Teluk Kuantan</span>
                 </div>
             </div>
         </div>
