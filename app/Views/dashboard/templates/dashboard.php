@@ -280,8 +280,8 @@
         <!-- HEADER -->
         <header class="navbar sticky-top flex-md-nowrap p-0 shadow-sm text-white header" style="border-bottom: 1px solid var(--bs-border-color-translucent); background-color: #5eba00;" data-bs-theme="dark">
             <div class="d-flex justify-content-center align-items-center col-md-3 col-lg-2 me-0 px-3 py-md-1" style="min-height: 48px; max-height: 48px;">
-                <span class="navbar-brand mx-0 text-start text-md-center lh-1 d-flex justify-content-center" style="font-size: 8pt;">
-                    <img src="<?= base_url('/assets/images/logo_pec.png'); ?>" alt="KLINIK MATA PECTK" height="32px" style="filter: drop-shadow(0 0 0.25rem white);">
+                <span class="navbar-brand mx-0 text-start text-md-center lh-1 d-flex justify-content-center align-items-center" style="font-size: 7pt;">
+                    <img src="<?= base_url('/assets/images/logo_pec.png'); ?>" alt="KLINIK MATA PECTK" height="24px" style="filter: drop-shadow(0 0 0.25rem white);">
                     <div class="ps-2 text-start">KLINIK UTAMA MATA<br><span class="fw-bold">PADANG EYE CENTER</span><br>TELUK KUANTAN</div>
                 </span>
             </div>
