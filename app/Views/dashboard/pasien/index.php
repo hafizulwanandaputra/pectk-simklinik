@@ -16,8 +16,13 @@
                 <tr class="align-middle">
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">No</th>
                     <th scope="col" class="bg-body-secondary border-secondary text-nowrap" style="border-bottom-width: 2px;">Tindakan</th>
-                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Nama Petugas</th>
-                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Jumlah Menu</th>
+                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Nama</th>
+                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Nomor Rekam Medis</th>
+                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Nomor Registrasi</th>
+                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Jenis</th>
+                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Tanggal Lahir</th>
+                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Alamat</th>
+                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Tanggal Pendaftaran</th>
                 </tr>
             </thead>
             <tbody class="align-top">
@@ -38,20 +43,37 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="officerModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="officerModalLabel" aria-hidden="true">
+    <div class="modal fade" id="pasienModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="pasienModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable rounded-3">
-            <form id="officerForm" enctype="multipart/form-data" class="modal-content bg-body shadow-lg transparent-blur">
+            <form id="pasienForm" enctype="multipart/form-data" class="modal-content bg-body shadow-lg transparent-blur">
                 <div class="modal-header justify-content-between pt-2 pb-2" style="border-bottom: 1px solid var(--bs-border-color-translucent);">
-                    <h6 class="pe-2 modal-title fs-6 text-truncate" id="officerModalLabel" style="font-weight: bold;">Tambah Petugas Gizi</h6>
+                    <h6 class="pe-2 modal-title fs-6 text-truncate" id="pasienModalLabel" style="font-weight: bold;"></h6>
                     <button type="button" class="btn btn-danger btn-sm bg-gradient ps-0 pe-0 pt-0 pb-0 rounded-3" data-bs-dismiss="modal" aria-label="Close"><span data-feather="x" class="mb-0" style="width: 30px; height: 30px;"></span></button>
                 </div>
                 <div class="modal-body py-2">
-                    <input type="hidden" id="officerId" name="id_petugas">
-                    <input type="hidden" id="nama_petugas_lama" name="nama_petugas_lama">
-                    <input type="hidden" id="jumlah_menu" name="jumlah_menu">
+                    <input type="hidden" id="id_pasien" name="id_pasien">
                     <div class="form-floating mb-1 mt-1">
-                        <input type="text" class="form-control" autocomplete="off" dir="auto" placeholder="nama_petugas" id="nama_petugas" name="nama_petugas">
-                        <label for="nama_petugas">Nama Petugas*</label>
+                        <input type="text" class="form-control" autocomplete="off" dir="auto" placeholder="nama_pasien" id="nama_pasien" name="nama_pasien">
+                        <label for="nama_pasien">Nama*</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="form-floating mt-1 mb-1">
+                        <select class="form-select rounded-3" id="jenis_pasien" name="jenis_pasien" aria-label="jenis_pasien">
+                            <option value="">-- Pilih Jenis Pasien --</option>
+                            <option value="Umum">Umum</option>
+                            <option value="BPJS">BPJS</option>
+                        </select>
+                        <label for="jenis_pasien">Jenis Pasien*</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="form-floating mb-1 mt-1">
+                        <input type="date" class="form-control" autocomplete="off" dir="auto" placeholder="tanggal_lahir" id="tanggal_lahir" name="tanggal_lahir">
+                        <label for="tanggal_lahir">Tanggal Lahir*</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="form-floating mb-1 mt-1">
+                        <input type="text" class="form-control" autocomplete="off" dir="auto" placeholder="alamat_pasien" id="alamat_pasien" name="alamat_pasien">
+                        <label for="alamat_pasien">Alamat*</label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
@@ -78,17 +100,17 @@
         var table = $('#tabel').DataTable({
             "oLanguage": {
                 "sDecimal": ",",
-                "sEmptyTable": 'Tidak ada petugas gizi. Klik "Tambah Petugas" untuk menambahkan petugas.',
-                "sInfo": "Menampilkan _START_ hingga _END_ dari _TOTAL_ petugas",
-                "sInfoEmpty": "Menampilkan 0 hingga 0 dari 0 petugas",
-                "sInfoFiltered": "(di-filter dari _MAX_ petugas)",
+                "sEmptyTable": 'Tidak ada pasien. Klik "Tambah Pasien" untuk menambahkan pasien.',
+                "sInfo": "Menampilkan _START_ hingga _END_ dari _TOTAL_ pasien",
+                "sInfoEmpty": "Menampilkan 0 hingga 0 dari 0 pasien",
+                "sInfoFiltered": "(di-filter dari _MAX_ pasien)",
                 "sInfoPostFix": "",
                 "sThousands": ".",
-                "sLengthMenu": "Tampilkan _MENU_ petugas",
+                "sLengthMenu": "Tampilkan _MENU_ pasien",
                 "sLoadingRecords": "Memuat...",
                 "sProcessing": "",
                 "sSearch": "Cari:",
-                "sZeroRecords": "Petugas gizi yang Anda cari tidak ditemukan",
+                "sZeroRecords": "Pasien yang Anda cari tidak ditemukan",
                 "oAria": {
                     "sOrderable": "Urutkan menurut kolom ini",
                     "sOrderableReverse": "Urutkan terbalik kolom ini"
@@ -143,10 +165,10 @@
                     $(node).removeClass('btn-secondary')
                 },
             }, {
-                text: '<i class="fa-solid fa-plus"></i> Tambah Petugas',
+                text: '<i class="fa-solid fa-plus"></i> Tambah Pasien',
                 className: 'btn-primary btn-sm bg-gradient rounded-end-3',
                 attr: {
-                    id: 'addOfficerBtn'
+                    id: 'addPasienBtn'
                 },
                 init: function(api, node, config) {
                     $(node).removeClass('btn-secondary')
@@ -164,7 +186,7 @@
             "processing": false,
             "serverSide": true,
             "ajax": {
-                "url": "<?= base_url('/petugas/petugaslist') ?>",
+                "url": "<?= base_url('/pasien/pasienlist') ?>",
                 "type": "POST",
                 "data": function(d) {
                     // Additional parameters
@@ -194,29 +216,56 @@
                     data: null,
                     render: function(data, type, row) {
                         return `<div class="btn-group" role="group">
-                                    <button class="btn btn-secondary text-nowrap bg-gradient rounded-start-3 edit-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${row.id_petugas}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
-                                    <button class="btn btn-danger text-nowrap bg-gradient rounded-end-3 delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${row.id_petugas}" data-name="${row.nama_petugas}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
+                                    <button class="btn btn-secondary text-nowrap bg-gradient rounded-start-3 edit-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${row.id_pasien}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
+                                    <button class="btn btn-danger text-nowrap bg-gradient rounded-end-3 delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${row.id_pasien}" data-name="${row.nama_pasien}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
                                 </div>`;
                     }
                 },
                 {
-                    data: 'nama_petugas'
+                    data: 'nama_pasien'
                 },
                 {
-                    data: 'jumlah_menu'
-                }
+                    data: 'no_mr',
+                    render: function(data, type, row) {
+                        return `<span class="date text-nowrap">${data}</div>`;
+                    }
+                },
+                {
+                    data: 'no_registrasi',
+                    render: function(data, type, row) {
+                        return `<span class="date text-nowrap">${data}</div>`;
+                    }
+                },
+                {
+                    data: 'jenis_pasien'
+                },
+                {
+                    data: 'tanggal_lahir',
+                    render: function(data, type, row) {
+                        return `<span class="date text-nowrap">${data}</div>`;
+                    }
+                },
+                {
+                    data: 'alamat_pasien'
+                },
+                {
+                    data: 'tgl_pendaftaran',
+                    render: function(data, type, row) {
+                        return `<span class="date text-nowrap">${data}</div>`;
+                    }
+                },
             ],
             "order": [
-                [2, 'asc']
+                [1, 'desc']
             ],
             "columnDefs": [{
                 "target": [0, 1],
                 "orderable": false
             }, {
-                "target": [0, 1, 3],
+                "target": [0, 1, 3, 4, 5, 6, 8],
                 "width": "0%"
             }, {
-                "target": [2],
+                "target": [2, 7],
                 "width": "50%"
             }]
         });
@@ -227,13 +276,9 @@
             $('[data-bs-toggle="tooltip"]').tooltip();
         });
         // Show add user modal
-        $('#addOfficerBtn').click(function() {
-            $('#officerModalLabel').text('Tambah Petugas Gizi');
-            $('#officerForm')[0].reset();
-            $('#officerId').val('');
-            $('#nama_petugas_lama').val('');
-            $('#jumlah_menu').val('');
-            $('#officerModal').modal('show');
+        $('#addPasienBtn').click(function() {
+            $('#pasienModalLabel').text('Tambah Pasien');
+            $('#pasienModal').modal('show');
         });
 
         $(document).on('click', '.edit-btn', async function() {
@@ -243,13 +288,14 @@
             $this.prop('disabled', true).html(`<span class="spinner-border" style="width: 11px; height: 11px;" aria-hidden="true"></span>`);
 
             try {
-                const response = await axios.get(`<?= base_url('/petugas/petugas') ?>/${id}`);
-                $('#officerModalLabel').text('Edit Petugas Gizi');
-                $('#officerId').val(response.data.id_petugas);
-                $('#nama_petugas_lama').val(response.data.nama_petugas);
-                $('#nama_petugas').val(response.data.nama_petugas);
-                $('#jumlah_menu').val(response.data.jumlah_menu);
-                $('#officerModal').modal('show');
+                const response = await axios.get(`<?= base_url('/pasien/pasien') ?>/${id}`);
+                $('#pasienModalLabel').text('Edit Petugas Gizi');
+                $('#id_pasien').val(response.data.id_pasien);
+                $('#nama_pasien').val(response.data.nama_pasien);
+                $('#jenis_pasien').val(response.data.jenis_pasien);
+                $('#tanggal_lahir').val(response.data.tanggal_lahir);
+                $('#alamat_pasien').val(response.data.alamat_pasien);
+                $('#pasienModal').modal('show');
             } catch (error) {
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
             } finally {
@@ -258,16 +304,16 @@
         });
 
         // Store the ID of the user to be deleted
-        var officerId;
-        var officerName;
+        var pasienId;
+        var pasienName;
 
         // Show delete confirmation modal
         $(document).on('click', '.delete-btn', function() {
-            officerId = $(this).data('id');
-            officerName = $(this).data('name');
+            pasienId = $(this).data('id');
+            pasienName = $(this).data('name');
             $('[data-bs-toggle="tooltip"]').tooltip('hide');
-            $('#deleteMessage').html(`Hapus "` + officerName + `"?`);
-            $('#deleteSubmessage').html(`Mengapus petugas gizi juga akan menghapus menu dan permintaan yang menggunakan petugas ini`);
+            $('#deleteMessage').html(`Hapus "` + pasienName + `"?`);
+            $('#deleteSubmessage').html(``);
             $('#deleteModal').modal('show');
         });
 
@@ -277,8 +323,8 @@
             $('#deleteSubmessage').hide();
 
             try {
-                await axios.delete(`<?= base_url('/petugas/delete') ?>/${officerId}`);
-                showSuccessToast('Petugas berhasil dihapus.');
+                await axios.delete(`<?= base_url('/pasien/delete') ?>/${pasienId}`);
+                showSuccessToast('Pasien berhasil dihapus.');
                 table.ajax.reload();
             } catch (error) {
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
@@ -290,24 +336,24 @@
             }
         });
 
-        $('#officerForm').submit(async function(e) {
+        $('#pasienForm').submit(async function(e) {
             e.preventDefault();
 
-            const url = $('#officerId').val() ? '<?= base_url('/petugas/update') ?>' : '<?= base_url('/petugas/create') ?>';
+            const url = $('#id_pasien').val() ? '<?= base_url('/pasien/update') ?>' : '<?= base_url('/pasien/create') ?>';
             const formData = new FormData(this);
             console.log("Form URL:", url);
             console.log("Form Data:", $(this).serialize());
 
             // Clear previous validation states
-            $('#officerForm .is-invalid').removeClass('is-invalid');
-            $('#officerForm .invalid-feedback').text('').hide();
+            $('#pasienForm .is-invalid').removeClass('is-invalid');
+            $('#pasienForm .invalid-feedback').text('').hide();
             $('#submitButton').prop('disabled', true).html(`
                 <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
                 <span role="status">Memproses, silakan tunggu...</span>
             `);
 
             // Disable form inputs
-            $('#officerForm input, #officerForm select, #closeBtn').prop('disabled', true);
+            $('#pasienForm input, #pasienForm select, #closeBtn').prop('disabled', true);
 
             try {
                 const response = await axios.post(url, formData, {
@@ -318,14 +364,14 @@
 
                 if (response.data.success) {
                     showSuccessToast(response.data.message, 'success');
-                    $('#officerModal').modal('hide');
+                    $('#pasienModal').modal('hide');
                     table.ajax.reload();
                 } else {
                     console.log("Validation Errors:", response.data.errors);
 
                     // Clear previous validation states
-                    $('#officerForm .is-invalid').removeClass('is-invalid');
-                    $('#officerForm .invalid-feedback').text('').hide();
+                    $('#pasienForm .is-invalid').removeClass('is-invalid');
+                    $('#pasienForm .invalid-feedback').text('').hide();
 
                     // Display new validation errors
                     for (const field in response.data.errors) {
@@ -358,14 +404,19 @@
                 $('#submitButton').prop('disabled', false).html(`
                     <i class="fa-solid fa-floppy-disk"></i> Simpan
                 `);
-                $('#officerForm input, #officerForm select, #closeBtn').prop('disabled', false);
+                $('#pasienForm input, #pasienForm select, #closeBtn').prop('disabled', false);
             }
         });
 
-        $('#officerModal').on('hidden.bs.modal', function() {
-            $('#officerForm')[0].reset();
-            $('.is-invalid').removeClass('is-invalid');
-            $('.invalid-feedback').text('').hide();
+        $('#pasienModal').on('hidden.bs.modal', function() {
+            $('#pasienForm')[0].reset();
+            $('#id_pasien').val('');
+            $('#nama_pasien').val('');
+            $('#jenis_pasien').val('');
+            $('#tanggal_lahir').val('');
+            $('#alamat_pasien').val('');
+            $('#pasienForm .is-invalid').removeClass('is-invalid');
+            $('#pasienForm .invalid-feedback').text('').hide();
         });
         // Show toast notification
         function showSuccessToast(message) {
