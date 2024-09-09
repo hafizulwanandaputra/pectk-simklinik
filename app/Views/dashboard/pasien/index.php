@@ -17,11 +17,16 @@
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">No</th>
                     <th scope="col" class="bg-body-secondary border-secondary text-nowrap" style="border-bottom-width: 2px;">Tindakan</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Nama</th>
+                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Dokter</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Nomor Rekam Medis</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Nomor Registrasi</th>
+                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">NIK</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Jenis</th>
-                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Tanggal Lahir</th>
+                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Tempat dan Tanggal Lahir</th>
+                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Agama</th>
+                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Nomor Ponsel</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Alamat</th>
+                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Status Kawin</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Tanggal Pendaftaran</th>
                 </tr>
             </thead>
@@ -60,7 +65,7 @@
                     <div class="form-floating mt-1 mb-1">
                         <select class="form-select rounded-3" id="jenis_pasien" name="jenis_pasien" aria-label="jenis_pasien">
                             <option value="">-- Pilih Jenis Pasien --</option>
-                            <option value="Umum">Umum</option>
+                            <option value="UMUM">Umum</option>
                             <option value="BPJS">BPJS</option>
                         </select>
                         <label for="jenis_pasien">Jenis Pasien*</label>
@@ -222,51 +227,90 @@
                     }
                 },
                 {
-                    data: 'nama_pasien'
+                    data: 'nama_pasien',
+                    render: function(data, type, row) {
+                        return `<span class="text-nowrap">${data}</span>`;
+                    }
+                },
+                {
+                    data: 'nama_dokter',
+                    render: function(data, type, row) {
+                        return `<span class="text-nowrap">${data}</span>`;
+                    }
                 },
                 {
                     data: 'no_mr',
                     render: function(data, type, row) {
-                        return `<span class="date text-nowrap">${data}</div>`;
+                        return `<span class="date text-nowrap">${data}</span>`;
                     }
                 },
                 {
                     data: 'no_registrasi',
                     render: function(data, type, row) {
-                        return `<span class="date text-nowrap">${data}</div>`;
+                        return `<span class="date text-nowrap">${data}</span>`;
                     }
                 },
                 {
-                    data: 'jenis_pasien'
+                    data: 'nik',
+                    render: function(data, type, row) {
+                        return `<span class="date text-nowrap">${data}</span>`;
+                    }
+                },
+                {
+                    data: 'jenis_pasien',
+                    render: function(data, type, row) {
+                        return `<span class="text-nowrap">${data}</span>`;
+                    }
                 },
                 {
                     data: 'tanggal_lahir',
                     render: function(data, type, row) {
-                        return `<span class="date text-nowrap">${data}</div>`;
+                        return `<span class="date text-nowrap">${row.tempat_lahir}<br><small>${data}</small></span>`;
                     }
                 },
                 {
-                    data: 'alamat_pasien'
+                    data: 'agama_pasien',
+                    render: function(data, type, row) {
+                        return `<span class="text-nowrap">${data}</span>`;
+                    }
+                },
+                {
+                    data: 'no_hp_pasien',
+                    render: function(data, type, row) {
+                        return `<span class="date text-nowrap">${data}</span>`;
+                    }
+                },
+                {
+                    data: 'alamat_pasien',
+                    render: function(data, type, row) {
+                        return `<span class="text-nowrap">${data}<br><small>${row.desa}, ${row.kecamatan}, ${row.kota}, ${row.provinsi}</small></span>`;
+                    }
+                },
+                {
+                    data: 'status_kawin',
+                    render: function(data, type, row) {
+                        return `<span class="text-nowrap">${data}</span>`;
+                    }
                 },
                 {
                     data: 'tgl_pendaftaran',
                     render: function(data, type, row) {
-                        return `<span class="date text-nowrap">${data}</div>`;
+                        return `<span class="date text-nowrap">${data}</span>`;
                     }
                 },
             ],
             "order": [
-                [1, 'desc']
+                [0, 'desc']
             ],
             "columnDefs": [{
                 "target": [0, 1],
                 "orderable": false
             }, {
-                "target": [0, 1, 3, 4, 5, 6, 8],
+                "target": [0, 1, 4, 5, 6, 7, 8, 9, 10, 12, 13],
                 "width": "0%"
             }, {
-                "target": [2, 7],
-                "width": "50%"
+                "target": [2, 3, 11],
+                "width": "33%"
             }]
         });
         // Initialize Bootstrap tooltips

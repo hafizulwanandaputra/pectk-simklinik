@@ -40,12 +40,17 @@ class Pasien extends BaseController
             0 => 'id_pasien',
             1 => 'id_pasien',
             2 => 'nama_pasien',
-            3 => 'no_mr',
-            4 => 'no_registrasi',
-            5 => 'jenis_pasien',
-            6 => 'tanggal_lahir',
-            7 => 'alamat_pasien',
-            8 => 'tgl_pendaftaran',
+            3 => 'nama_dokter',
+            4 => 'no_mr',
+            5 => 'no_registrasi',
+            6 => 'nik',
+            7 => 'jenis_pasien',
+            8 => 'tanggal_lahir',
+            9 => 'agama_pasien',
+            10 => 'no_hp_pasien',
+            11 => 'alamat_pasien',
+            12 => 'status_kawin',
+            13 => 'tgl_pendaftaran',
         ];
 
         // Get the column to sort by
@@ -66,6 +71,7 @@ class Pasien extends BaseController
 
         // Fetch the data
         $pasien = $this->PasienModel
+            ->join('dokter', 'dokter.id_dokter = pasien.id_dokter', 'inner')
             ->orderBy($sortColumn, $sortDirection)
             ->findAll($length, $start);
 
@@ -98,13 +104,35 @@ class Pasien extends BaseController
         $validation->setRules([
             'nama_pasien' => 'required',
             'jenis_pasien' => 'required',
+            'tempat_lahir' => 'required',
             'tanggal_lahir' => 'required',
+            'agama_pasien' => 'required',
             'alamat_pasien' => 'required',
+            'provinsi' => 'required',
+            'kota' => 'required',
+            'kecamatan' => 'required',
+            'desa' => 'required',
+            'id_dokter' => 'required',
         ]);
 
         if (!$this->validate($validation->getRules())) {
             return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
         }
+
+        // Generate nomor registrasi
+        $jenis_pasien = $this->request->getPost('jenis_pasien'); // 'UMUM' or 'BPJS'
+        $date = new \DateTime(); // Get current date and time
+        $tanggal = $date->format('d'); // Day (2 digit)
+        $bulan = $date->format('m'); // Month (2 digit)
+        $tahun = $date->format('y'); // Year (2 digit)
+
+        // Get last registration number to increment
+        $lastNoReg = $this->PasienModel->getLastNoReg($jenis_pasien, $tahun, $bulan, $tanggal);
+        $lastNumber = $lastNoReg ? intval(substr($lastNoReg, -3)) : 0;
+        $nextNumber = str_pad($lastNumber + 1, 3, '0', STR_PAD_LEFT);
+
+        // Format the nomor registrasi
+        $no_registrasi = sprintf('RJ%s%s%s%s-%s', $jenis_pasien, $tanggal, $bulan, $tahun, $nextNumber);
 
         $no_mr = $this->generateNoMr();
 
@@ -112,7 +140,7 @@ class Pasien extends BaseController
         $data = [
             'nama_pasien' => $this->request->getPost('nama_pasien'),
             'no_mr' => $no_mr,
-            'no_registrasi' => '',
+            'no_registrasi' => $no_registrasi,
             'jenis_pasien' => $this->request->getPost('jenis_pasien'),
             'tanggal_lahir' => $this->request->getPost('tanggal_lahir'),
             'alamat_pasien' => $this->request->getPost('alamat_pasien'),
