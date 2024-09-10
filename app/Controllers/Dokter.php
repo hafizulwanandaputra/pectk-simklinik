@@ -45,7 +45,7 @@ class Dokter extends BaseController
         ];
 
         // Get the column to sort by
-        $sortColumn = $columnMapping[$sortColumnIndex] ?? 'id_pasien';
+        $sortColumn = $columnMapping[$sortColumnIndex] ?? 'id_dokter';
 
         // Get total records count
         $totalRecords = $this->DokterModel->countAllResults(true);

@@ -36,6 +36,17 @@ class Obat extends Migration
                 'type' => 'BIGINT',
                 'constraint' => 24,
             ],
+            'jumlah_masuk' => [
+                'type' => 'BIGINT',
+                'constraint' => 24,
+            ],
+            'jumlah_keluar' => [
+                'type' => 'BIGINT',
+                'constraint' => 24,
+            ],
+            'updated_at' => [
+                'type' => 'DATE',
+            ],
         ]);
         $this->forge->addKey('id_obat', true);
         $this->forge->addForeignKey('id_supplier', 'supplier', 'id_supplier', 'CASCADE', 'CASCADE');

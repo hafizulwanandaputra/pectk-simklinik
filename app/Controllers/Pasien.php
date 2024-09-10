@@ -230,16 +230,16 @@ class Pasien extends BaseController
             return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
         }
 
-        $data = $this->PasienModel->find($this->request->getPost('id_pasien'));
+        $pasien = $this->PasienModel->find($this->request->getPost('id_pasien'));
 
         // Save Data
         $data = [
             'id_pasien' => $this->request->getPost('id_pasien'),
             'nama_pasien' => $this->request->getPost('nama_pasien'),
-            'no_mr' => $data['no_mr'],
-            'no_registrasi' => $data['no_registrasi'],
+            'no_mr' => $pasien['no_mr'],
+            'no_registrasi' => $pasien['no_registrasi'],
             'nik' => $this->request->getPost('nik'),
-            'jenis_pasien' => $data['jenis_pasien'],
+            'jenis_pasien' => $pasien['jenis_pasien'],
             'tempat_lahir' => $this->request->getPost('tempat_lahir'),
             'tanggal_lahir' => $this->request->getPost('tanggal_lahir'),
             'agama_pasien' => $this->request->getPost('agama_pasien'),
@@ -250,7 +250,7 @@ class Pasien extends BaseController
             'kecamatan' => $this->request->getPost('kecamatan'),
             'desa' => $this->request->getPost('desa'),
             'id_dokter' => $this->request->getPost('id_dokter'),
-            'tgl_pendaftaran' => $data['tgl_pendaftaran']
+            'tgl_pendaftaran' => $pasien['tgl_pendaftaran']
         ];
         $this->PasienModel->save($data);
         return $this->response->setJSON(['success' => true, 'message' => 'Pasien berhasil diedit']);

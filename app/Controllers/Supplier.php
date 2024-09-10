@@ -45,7 +45,7 @@ class Supplier extends BaseController
         ];
 
         // Get the column to sort by
-        $sortColumn = $columnMapping[$sortColumnIndex] ?? 'id_pasien';
+        $sortColumn = $columnMapping[$sortColumnIndex] ?? 'id_supplier';
 
         // Get total records count
         $totalRecords = $this->SupplierModel->countAllResults(true);

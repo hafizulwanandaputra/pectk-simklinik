@@ -42,6 +42,7 @@ $routes->delete('/(?i)supplier/(?i)delete/(:any)', 'Supplier::delete/$1');
 // OBAT
 $routes->get('/(?i)obat', 'Obat::index');
 $routes->post('/(?i)obat/(?i)obatlist', 'Obat::obatlist');
+$routes->get('/(?i)obat/(?i)supplierlist', 'Obat::supplierlist');
 $routes->get('/(?i)obat/(?i)obat/(:any)', 'Obat::obat/$1');
 $routes->get('/(?i)obat/(?i)stokobat/(:any)', 'Obat::stokobat/$1');
 $routes->post('/(?i)obat/(?i)create', 'Obat::create');
