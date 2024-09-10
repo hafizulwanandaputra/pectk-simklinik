@@ -45,7 +45,7 @@ class Obat extends Migration
                 'constraint' => 24,
             ],
             'updated_at' => [
-                'type' => 'DATE',
+                'type' => 'DATETIME',
             ],
         ]);
         $this->forge->addKey('id_obat', true);
