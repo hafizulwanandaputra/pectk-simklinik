@@ -39,28 +39,28 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="dokterModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="dokterModalLabel" aria-hidden="true">
+    <div class="modal fade" id="supplierModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="supplierModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable rounded-3">
-            <form id="dokterForm" enctype="multipart/form-data" class="modal-content bg-body shadow-lg transparent-blur">
+            <form id="supplierForm" enctype="multipart/form-data" class="modal-content bg-body shadow-lg transparent-blur">
                 <div class="modal-header justify-content-between pt-2 pb-2" style="border-bottom: 1px solid var(--bs-border-color-translucent);">
-                    <h6 class="pe-2 modal-title fs-6 text-truncate" id="dokterModalLabel" style="font-weight: bold;"></h6>
+                    <h6 class="pe-2 modal-title fs-6 text-truncate" id="supplierModalLabel" style="font-weight: bold;"></h6>
                     <button type="button" class="btn btn-danger btn-sm bg-gradient ps-0 pe-0 pt-0 pb-0 rounded-3" data-bs-dismiss="modal" aria-label="Close"><span data-feather="x" class="mb-0" style="width: 30px; height: 30px;"></span></button>
                 </div>
                 <div class="modal-body py-2">
-                    <input type="hidden" id="id_dokter" name="id_dokter">
+                    <input type="hidden" id="id_supplier" name="id_supplier">
                     <div class="form-floating mb-1 mt-1">
-                        <input type="text" class="form-control" autocomplete="off" dir="auto" placeholder="nama_dokter" id="nama_dokter" name="nama_dokter">
-                        <label for="nama_dokter">Nama*</label>
+                        <input type="text" class="form-control" autocomplete="off" dir="auto" placeholder="nama_supplier" id="nama_supplier" name="nama_supplier">
+                        <label for="nama_supplier">Nama*</label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
-                        <input type="text" class="form-control" autocomplete="off" dir="auto" placeholder="alamat_dokter" id="alamat_dokter" name="alamat_dokter">
+                        <input type="text" class="form-control" autocomplete="off" dir="auto" placeholder="alamat_supplier" id="alamat_supplier" name="alamat_supplier">
                         <label for="alamat_pasien">Alamat*</label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
-                        <input type="number" class="form-control" autocomplete="off" dir="auto" placeholder="kontak_dokter" id="kontak_dokter" name="kontak_dokter">
-                        <label for="kontak_dokter">Nomor Ponsel*</label>
+                        <input type="number" class="form-control" autocomplete="off" dir="auto" placeholder="kontak_supplier" id="kontak_supplier" name="kontak_supplier">
+                        <label for="kontak_supplier">Nomor Ponsel*</label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
@@ -87,17 +87,17 @@
         var table = $('#tabel').DataTable({
             "oLanguage": {
                 "sDecimal": ",",
-                "sEmptyTable": 'Tidak ada dokter. Klik "Tambah Dokter" untuk menambahkan dokter.',
-                "sInfo": "Menampilkan _START_ hingga _END_ dari _TOTAL_ dokter",
-                "sInfoEmpty": "Menampilkan 0 hingga 0 dari 0 dokter",
-                "sInfoFiltered": "(di-filter dari _MAX_ dokter)",
+                "sEmptyTable": 'Tidak ada supplier. Klik "Tambah Supplier" untuk menambahkan supplier.',
+                "sInfo": "Menampilkan _START_ hingga _END_ dari _TOTAL_ supplier",
+                "sInfoEmpty": "Menampilkan 0 hingga 0 dari 0 supplier",
+                "sInfoFiltered": "(di-filter dari _MAX_ supplier)",
                 "sInfoPostFix": "",
                 "sThousands": ".",
-                "sLengthMenu": "Tampilkan _MENU_ dokter",
+                "sLengthMenu": "Tampilkan _MENU_ supplier",
                 "sLoadingRecords": "Memuat...",
                 "sProcessing": "",
                 "sSearch": "Cari:",
-                "sZeroRecords": "Dokter yang Anda cari tidak ditemukan",
+                "sZeroRecords": "Supplier yang Anda cari tidak ditemukan",
                 "oAria": {
                     "sOrderable": "Urutkan menurut kolom ini",
                     "sOrderableReverse": "Urutkan terbalik kolom ini"
@@ -152,10 +152,10 @@
                     $(node).removeClass('btn-secondary')
                 },
             }, {
-                text: '<i class="fa-solid fa-plus"></i> Tambah Dokter',
+                text: '<i class="fa-solid fa-plus"></i> Tambah Supplier',
                 className: 'btn-primary btn-sm bg-gradient rounded-end-3',
                 attr: {
-                    id: 'addDokterBtn'
+                    id: 'addSupplierBtn'
                 },
                 init: function(api, node, config) {
                     $(node).removeClass('btn-secondary')
@@ -173,7 +173,7 @@
             "processing": false,
             "serverSide": true,
             "ajax": {
-                "url": "<?= base_url('/dokter/dokterlist') ?>",
+                "url": "<?= base_url('/supplier/supplierlist') ?>",
                 "type": "POST",
                 "data": function(d) {
                     // Additional parameters
@@ -203,25 +203,25 @@
                     data: null,
                     render: function(data, type, row) {
                         return `<div class="btn-group" role="group">
-                                    <button class="btn btn-secondary text-nowrap bg-gradient rounded-start-3 edit-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${row.id_dokter}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
-                                    <button class="btn btn-danger text-nowrap bg-gradient rounded-end-3 delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${row.id_dokter}" data-name="${row.nama_dokter}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
+                                    <button class="btn btn-secondary text-nowrap bg-gradient rounded-start-3 edit-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${row.id_supplier}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
+                                    <button class="btn btn-danger text-nowrap bg-gradient rounded-end-3 delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${row.id_supplier}" data-name="${row.nama_supplier}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
                                 </div>`;
                     }
                 },
                 {
-                    data: 'nama_dokter',
+                    data: 'nama_supplier',
                     render: function(data, type, row) {
                         return `<span class="text-nowrap">${data}</span>`;
                     }
                 },
                 {
-                    data: 'alamat_dokter',
+                    data: 'alamat_supplier',
                     render: function(data, type, row) {
                         return `<span class="text-nowrap">${data}</span>`;
                     }
                 },
                 {
-                    data: 'kontak_dokter',
+                    data: 'kontak_supplier',
                     render: function(data, type, row) {
                         return `<span class="date text-nowrap">${data}</span>`;
                     }
@@ -248,9 +248,9 @@
             $('[data-bs-toggle="tooltip"]').tooltip();
         });
         // Show add user modal
-        $('#addDokterBtn').click(function() {
-            $('#dokterModalLabel').text('Tambah Dokter');
-            $('#dokterModal').modal('show');
+        $('#addSupplierBtn').click(function() {
+            $('#supplierModalLabel').text('Tambah Supplier');
+            $('#supplierModal').modal('show');
         });
 
         $(document).on('click', '.edit-btn', async function() {
@@ -260,13 +260,13 @@
             $this.prop('disabled', true).html(`<span class="spinner-border" style="width: 11px; height: 11px;" aria-hidden="true"></span>`);
 
             try {
-                const response = await axios.get(`<?= base_url('/dokter/dokter') ?>/${id}`);
-                $('#dokterModalLabel').text('Edit Dokter');
-                $('#id_dokter').val(response.data.id_dokter);
-                $('#nama_dokter').val(response.data.nama_dokter);
-                $('#alamat_dokter').val(response.data.alamat_dokter);
-                $('#kontak_dokter').val(response.data.kontak_dokter);
-                $('#dokterModal').modal('show');
+                const response = await axios.get(`<?= base_url('/supplier/supplier') ?>/${id}`);
+                $('#supplierModalLabel').text('Edit Supplier');
+                $('#id_supplier').val(response.data.id_supplier);
+                $('#nama_supplier').val(response.data.nama_supplier);
+                $('#alamat_supplier').val(response.data.alamat_supplier);
+                $('#kontak_supplier').val(response.data.kontak_supplier);
+                $('#supplierModal').modal('show');
             } catch (error) {
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
             } finally {
@@ -275,15 +275,15 @@
         });
 
         // Store the ID of the user to be deleted
-        var dokterId;
-        var dokterName;
+        var supplierId;
+        var supplierName;
 
         // Show delete confirmation modal
         $(document).on('click', '.delete-btn', function() {
-            dokterId = $(this).data('id');
-            dokterName = $(this).data('name');
+            supplierId = $(this).data('id');
+            supplierName = $(this).data('name');
             $('[data-bs-toggle="tooltip"]').tooltip('hide');
-            $('#deleteMessage').html(`Hapus "` + dokterName + `"?`);
+            $('#deleteMessage').html(`Hapus "` + supplierName + `"?`);
             $('#deleteSubmessage').html(``);
             $('#deleteModal').modal('show');
         });
@@ -294,8 +294,8 @@
             $('#deleteSubmessage').hide();
 
             try {
-                await axios.delete(`<?= base_url('/dokter/delete') ?>/${dokterId}`);
-                showSuccessToast('Dokter berhasil dihapus.');
+                await axios.delete(`<?= base_url('/supplier/delete') ?>/${supplierId}`);
+                showSuccessToast('Supplier berhasil dihapus.');
                 table.ajax.reload();
             } catch (error) {
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
@@ -307,24 +307,24 @@
             }
         });
 
-        $('#dokterForm').submit(async function(e) {
+        $('#supplierForm').submit(async function(e) {
             e.preventDefault();
 
-            const url = $('#id_dokter').val() ? '<?= base_url('/dokter/update') ?>' : '<?= base_url('/dokter/create') ?>';
+            const url = $('#id_supplier').val() ? '<?= base_url('/supplier/update') ?>' : '<?= base_url('/supplier/create') ?>';
             const formData = new FormData(this);
             console.log("Form URL:", url);
             console.log("Form Data:", $(this).serialize());
 
             // Clear previous validation states
-            $('#dokterForm .is-invalid').removeClass('is-invalid');
-            $('#dokterForm .invalid-feedback').text('').hide();
+            $('#supplierForm .is-invalid').removeClass('is-invalid');
+            $('#supplierForm .invalid-feedback').text('').hide();
             $('#submitButton').prop('disabled', true).html(`
                 <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
                 <span role="status">Memproses, silakan tunggu...</span>
             `);
 
             // Disable form inputs
-            $('#dokterForm input, #dokterForm select, #closeBtn').prop('disabled', true);
+            $('#supplierForm input, #supplierForm select, #closeBtn').prop('disabled', true);
 
             try {
                 const response = await axios.post(url, formData, {
@@ -335,14 +335,14 @@
 
                 if (response.data.success) {
                     showSuccessToast(response.data.message, 'success');
-                    $('#dokterModal').modal('hide');
+                    $('#supplierModal').modal('hide');
                     table.ajax.reload();
                 } else {
                     console.log("Validation Errors:", response.data.errors);
 
                     // Clear previous validation states
-                    $('#dokterForm .is-invalid').removeClass('is-invalid');
-                    $('#dokterForm .invalid-feedback').text('').hide();
+                    $('#supplierForm .is-invalid').removeClass('is-invalid');
+                    $('#supplierForm .invalid-feedback').text('').hide();
 
                     // Display new validation errors
                     for (const field in response.data.errors) {
@@ -375,18 +375,18 @@
                 $('#submitButton').prop('disabled', false).html(`
                     <i class="fa-solid fa-floppy-disk"></i> Simpan
                 `);
-                $('#dokterForm input, #dokterForm select, #closeBtn').prop('disabled', false);
+                $('#supplierForm input, #supplierForm select, #closeBtn').prop('disabled', false);
             }
         });
 
-        $('#dokterModal').on('hidden.bs.modal', function() {
-            $('#dokterForm')[0].reset();
-            $('#id_dokter').val('');
-            $('#nama_dokter').val('');
-            $('#alamat_dokter').val('');
-            $('#kontak_dokter').val('');
-            $('#dokterForm .is-invalid').removeClass('is-invalid');
-            $('#dokterForm .invalid-feedback').text('').hide();
+        $('#supplierModal').on('hidden.bs.modal', function() {
+            $('#supplierForm')[0].reset();
+            $('#id_supplier').val('');
+            $('#nama_supplier').val('');
+            $('#alamat_supplier').val('');
+            $('#kontak_supplier').val('');
+            $('#supplierForm .is-invalid').removeClass('is-invalid');
+            $('#supplierForm .invalid-feedback').text('').hide();
         });
         // Show toast notification
         function showSuccessToast(message) {
