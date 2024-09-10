@@ -14,14 +14,6 @@ $routes->get('/(?i)logout', 'Auth::logout');
 // HOME
 $routes->get('/(?i)home', 'Home::index');
 
-// PASIEN
-$routes->get('/(?i)pasien', 'Pasien::index');
-$routes->post('/(?i)pasien/(?i)pasienlist', 'Pasien::pasienlist');
-$routes->get('/(?i)pasien/(?i)pasien/(:any)', 'Pasien::pasien/$1');
-$routes->post('/(?i)pasien/(?i)create', 'Pasien::create');
-$routes->post('/(?i)pasien/(?i)update', 'Pasien::update');
-$routes->delete('/(?i)pasien/(?i)delete/(:any)', 'Pasien::delete/$1');
-
 // DOKTER
 $routes->get('/(?i)dokter', 'Dokter::index');
 $routes->post('/(?i)dokter/(?i)dokterlist', 'Dokter::dokterlist');
@@ -29,6 +21,15 @@ $routes->get('/(?i)dokter/(?i)dokter/(:any)', 'Dokter::dokter/$1');
 $routes->post('/(?i)dokter/(?i)create', 'Dokter::create');
 $routes->post('/(?i)dokter/(?i)update', 'Dokter::update');
 $routes->delete('/(?i)dokter/(?i)delete/(:any)', 'Dokter::delete/$1');
+
+// PASIEN
+$routes->get('/(?i)pasien', 'Pasien::index');
+$routes->post('/(?i)pasien/(?i)pasienlist', 'Pasien::pasienlist');
+$routes->get('/(?i)pasien/(?i)dokterlist', 'Pasien::dokterlist');
+$routes->get('/(?i)pasien/(?i)pasien/(:any)', 'Pasien::pasien/$1');
+$routes->post('/(?i)pasien/(?i)create', 'Pasien::create');
+$routes->post('/(?i)pasien/(?i)update', 'Pasien::update');
+$routes->delete('/(?i)pasien/(?i)delete/(:any)', 'Pasien::delete/$1');
 
 // SUPPLIER
 $routes->get('/(?i)supplier', 'Supplier::index');

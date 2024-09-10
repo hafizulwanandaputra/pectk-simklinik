@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Models\DokterModel;
 use App\Models\PasienModel;
 
 class Pasien extends BaseController
@@ -78,6 +79,7 @@ class Pasien extends BaseController
         // Format the data
         $data = [];
         foreach ($pasien as $item) {
+            $item['no_mr'] = $this->formatNoMr($item['no_mr']);
             $data[] = $item;
         }
 
@@ -93,7 +95,39 @@ class Pasien extends BaseController
     public function pasien($id)
     {
         $data = $this->PasienModel->find($id);
+        $data['no_mr'] = $this->formatNoMr($data['no_mr']);
         return $this->response->setJSON($data);
+    }
+
+    private function formatNoMr($no_mr)
+    {
+        // Format no_mr ke xx-xx-xx
+        $part1 = substr($no_mr, 0, 2);  // Ambil 2 digit pertama
+        $part2 = substr($no_mr, 2, 2);  // Ambil 2 digit kedua
+        $part3 = substr($no_mr, 4, 2);  // Ambil 2 digit terakhir
+
+        // Gabungkan menjadi xx-xx-xx
+        return "{$part1}-{$part2}-{$part3}";
+    }
+
+    public function dokterlist()
+    {
+        $DokterModel = new DokterModel();
+
+        $results = $DokterModel->orderBy('nama_dokter', 'DESC')->findAll();
+
+        $options = [];
+        foreach ($results as $row) {
+            $options[] = [
+                'value' => $row['id_dokter'],
+                'text' => $row['nama_dokter']
+            ];
+        }
+
+        return $this->response->setJSON([
+            'success' => true,
+            'data' => $options,
+        ]);
     }
 
     public function create()
@@ -141,9 +175,18 @@ class Pasien extends BaseController
             'nama_pasien' => $this->request->getPost('nama_pasien'),
             'no_mr' => $no_mr,
             'no_registrasi' => $no_registrasi,
+            'nik' => $this->request->getPost('nik'),
             'jenis_pasien' => $this->request->getPost('jenis_pasien'),
+            'tempat_lahir' => $this->request->getPost('tempat_lahir'),
             'tanggal_lahir' => $this->request->getPost('tanggal_lahir'),
+            'agama_pasien' => $this->request->getPost('agama_pasien'),
+            'no_hp_pasien' => $this->request->getPost('no_hp_pasien'),
             'alamat_pasien' => $this->request->getPost('alamat_pasien'),
+            'provinsi' => $this->request->getPost('provinsi'),
+            'kota' => $this->request->getPost('kota'),
+            'kecamatan' => $this->request->getPost('kecamatan'),
+            'desa' => $this->request->getPost('desa'),
+            'id_dokter' => $this->request->getPost('id_dokter'),
             'tgl_pendaftaran' => date('Y-m-d H:i:s')
         ];
         $this->PasienModel->save($data);
@@ -152,22 +195,18 @@ class Pasien extends BaseController
 
     private function generateNoMr()
     {
-        $model = $this->PasienModel;
+        $model = new \App\Models\PasienModel();
 
-        // Get the latest record to increment
+        // Dapatkan nomor MR terakhir dari database
         $latest = $model->select('no_mr')->orderBy('id_pasien', 'DESC')->first();
-        $latestNoMr = $latest ? $latest['no_mr'] : '00-00-00';
 
-        // Extract the parts of the latest no_mr
-        list($year, $month, $number) = explode('-', $latestNoMr);
+        // Tentukan no_mr awal jika belum ada data
+        $latestNoMr = $latest ? $latest['no_mr'] : '000000';
 
-        // Increment the number
-        $newNumber = str_pad((int)$number + 1, 2, '0', STR_PAD_LEFT);
+        // Convert to integer and increment
+        $newNumber = str_pad((int)$latestNoMr + 1, 6, '0', STR_PAD_LEFT);
 
-        // Construct the new no_mr
-        $newNoMr = "{$year}-{$month}-{$newNumber}";
-
-        return $newNoMr;
+        return $newNumber;
     }
 
     public function update()
@@ -177,9 +216,15 @@ class Pasien extends BaseController
         // Set base validation rules
         $validation->setRules([
             'nama_pasien' => 'required',
-            'jenis_pasien' => 'required',
+            'tempat_lahir' => 'required',
             'tanggal_lahir' => 'required',
+            'agama_pasien' => 'required',
             'alamat_pasien' => 'required',
+            'provinsi' => 'required',
+            'kota' => 'required',
+            'kecamatan' => 'required',
+            'desa' => 'required',
+            'id_dokter' => 'required',
         ]);
         if (!$this->validate($validation->getRules())) {
             return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
@@ -193,9 +238,18 @@ class Pasien extends BaseController
             'nama_pasien' => $this->request->getPost('nama_pasien'),
             'no_mr' => $data['no_mr'],
             'no_registrasi' => $data['no_registrasi'],
-            'jenis_pasien' => $this->request->getPost('jenis_pasien'),
+            'nik' => $this->request->getPost('nik'),
+            'jenis_pasien' => $data['jenis_pasien'],
+            'tempat_lahir' => $this->request->getPost('tempat_lahir'),
             'tanggal_lahir' => $this->request->getPost('tanggal_lahir'),
+            'agama_pasien' => $this->request->getPost('agama_pasien'),
+            'no_hp_pasien' => $this->request->getPost('no_hp_pasien'),
             'alamat_pasien' => $this->request->getPost('alamat_pasien'),
+            'provinsi' => $this->request->getPost('provinsi'),
+            'kota' => $this->request->getPost('kota'),
+            'kecamatan' => $this->request->getPost('kecamatan'),
+            'desa' => $this->request->getPost('desa'),
+            'id_dokter' => $this->request->getPost('id_dokter'),
             'tgl_pendaftaran' => $data['tgl_pendaftaran']
         ];
         $this->PasienModel->save($data);

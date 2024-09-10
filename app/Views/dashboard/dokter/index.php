@@ -17,17 +17,8 @@
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">No</th>
                     <th scope="col" class="bg-body-secondary border-secondary text-nowrap" style="border-bottom-width: 2px;">Tindakan</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Nama</th>
-                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Dokter</th>
-                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Nomor Rekam Medis</th>
-                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Nomor Registrasi</th>
-                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">NIK</th>
-                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Jenis</th>
-                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Tempat dan Tanggal Lahir</th>
-                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Agama</th>
-                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Nomor Ponsel</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Alamat</th>
-                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Status Kawin</th>
-                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Tanggal Pendaftaran</th>
+                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Nomor Ponsel</th>
                 </tr>
             </thead>
             <tbody class="align-top">
@@ -48,92 +39,28 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="pasienModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="pasienModalLabel" aria-hidden="true">
+    <div class="modal fade" id="dokterModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="dokterModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable rounded-3">
-            <form id="pasienForm" enctype="multipart/form-data" class="modal-content bg-body shadow-lg transparent-blur">
+            <form id="dokterForm" enctype="multipart/form-data" class="modal-content bg-body shadow-lg transparent-blur">
                 <div class="modal-header justify-content-between pt-2 pb-2" style="border-bottom: 1px solid var(--bs-border-color-translucent);">
-                    <h6 class="pe-2 modal-title fs-6 text-truncate" id="pasienModalLabel" style="font-weight: bold;"></h6>
+                    <h6 class="pe-2 modal-title fs-6 text-truncate" id="dokterModalLabel" style="font-weight: bold;"></h6>
                     <button type="button" class="btn btn-danger btn-sm bg-gradient ps-0 pe-0 pt-0 pb-0 rounded-3" data-bs-dismiss="modal" aria-label="Close"><span data-feather="x" class="mb-0" style="width: 30px; height: 30px;"></span></button>
                 </div>
                 <div class="modal-body py-2">
-                    <input type="hidden" id="id_pasien" name="id_pasien">
+                    <input type="hidden" id="id_dokter" name="id_dokter">
                     <div class="form-floating mb-1 mt-1">
-                        <input type="text" class="form-control" autocomplete="off" dir="auto" placeholder="nama_pasien" id="nama_pasien" name="nama_pasien">
-                        <label for="nama_pasien">Nama*</label>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                    <div class="form-floating mb-1 mt-1">
-                        <input type="number" class="form-control" autocomplete="off" dir="auto" placeholder="nik" id="nik" name="nik">
-                        <label for="nik">NIK*</label>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                    <div class="form-floating mt-1 mb-1" id="jenis_pasien_container">
-                        <select class="form-select rounded-3" id="jenis_pasien" name="jenis_pasien" aria-label="jenis_pasien">
-                            <option value="">-- Pilih Jenis Pasien --</option>
-                            <option value="UMUM">Umum</option>
-                            <option value="BPJS">BPJS</option>
-                        </select>
-                        <label for="jenis_pasien">Jenis Pasien*</label>
+                        <input type="text" class="form-control" autocomplete="off" dir="auto" placeholder="nama_dokter" id="nama_dokter" name="nama_dokter">
+                        <label for="nama_dokter">Nama*</label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
-                        <input type="text" class="form-control" autocomplete="off" dir="auto" placeholder="tempat_lahir" id="tempat_lahir" name="tempat_lahir">
-                        <label for="tempat_lahir">Tempat Lahir*</label>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                    <div class="form-floating mb-1 mt-1">
-                        <input type="date" class="form-control" autocomplete="off" dir="auto" placeholder="tanggal_lahir" id="tanggal_lahir" name="tanggal_lahir">
-                        <label for="tanggal_lahir">Tanggal Lahir*</label>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                    <div class="form-floating mt-1 mb-1">
-                        <select class="form-select rounded-3" id="agama_pasien" name="agama_pasien" aria-label="agama_pasien">
-                            <option value="">-- Pilih Agama --</option>
-                            <option value="Islam">Islam</option>
-                            <option value="Kristen Protestan">Kristen Protestan</option>
-                            <option value="Kristen Katolik">Kristen Katolik</option>
-                            <option value="Hindu">Hindu</option>
-                            <option value="Buddha">Buddha</option>
-                            <option value="Konghucu">Konghucu</option>
-                        </select>
-                        <label for="agama_pasien">Agama*</label>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                    <div class="form-floating mb-1 mt-1">
-                        <input type="number" class="form-control" autocomplete="off" dir="auto" placeholder="no_hp_pasien" id="no_hp_pasien" name="no_hp_pasien">
-                        <label for="no_hp_pasien">Nomor Ponsel*</label>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                    <div class="form-floating mb-1 mt-1">
-                        <input type="text" class="form-control" autocomplete="off" dir="auto" placeholder="alamat_pasien" id="alamat_pasien" name="alamat_pasien">
+                        <input type="text" class="form-control" autocomplete="off" dir="auto" placeholder="alamat_dokter" id="alamat_dokter" name="alamat_dokter">
                         <label for="alamat_pasien">Alamat*</label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
-                        <input type="text" class="form-control" dir="auto" placeholder="provinsi" id="provinsi" name="provinsi">
-                        <label for="provinsi">Provinsi*</label>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                    <div class="form-floating mb-1 mt-1">
-                        <input type="text" class="form-control" dir="auto" placeholder="kota" id="kota" name="kota">
-                        <label for="kota">Kabupaten/Kota*</label>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                    <div class="form-floating mb-1 mt-1">
-                        <input type="text" class="form-control" dir="auto" placeholder="kecamatan" id="kecamatan" name="kecamatan">
-                        <label for="kecamatan">Kecamatan*</label>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                    <div class="form-floating mb-1 mt-1">
-                        <input type="text" class="form-control" dir="auto" placeholder="desa" id="desa" name="desa">
-                        <label for="desa">Desa/Kelurahan*</label>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                    <div class="form-floating mt-1 mb-1">
-                        <select class="form-select rounded-3" id="id_dokter" name="id_dokter" aria-label="id_dokter">
-                            <option value="">-- Pilih Dokter --</option>
-                        </select>
-                        <label for="id_dokter">Dokter*</label>
+                        <input type="number" class="form-control" autocomplete="off" dir="auto" placeholder="kontak_dokter" id="kontak_dokter" name="kontak_dokter">
+                        <label for="kontak_dokter">Nomor Ponsel*</label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
@@ -160,17 +87,17 @@
         var table = $('#tabel').DataTable({
             "oLanguage": {
                 "sDecimal": ",",
-                "sEmptyTable": 'Tidak ada pasien. Klik "Tambah Pasien" untuk menambahkan pasien.',
-                "sInfo": "Menampilkan _START_ hingga _END_ dari _TOTAL_ pasien",
-                "sInfoEmpty": "Menampilkan 0 hingga 0 dari 0 pasien",
-                "sInfoFiltered": "(di-filter dari _MAX_ pasien)",
+                "sEmptyTable": 'Tidak ada dokter. Klik "Tambah Dokter" untuk menambahkan dokter.',
+                "sInfo": "Menampilkan _START_ hingga _END_ dari _TOTAL_ dokter",
+                "sInfoEmpty": "Menampilkan 0 hingga 0 dari 0 dokter",
+                "sInfoFiltered": "(di-filter dari _MAX_ dokter)",
                 "sInfoPostFix": "",
                 "sThousands": ".",
-                "sLengthMenu": "Tampilkan _MENU_ pasien",
+                "sLengthMenu": "Tampilkan _MENU_ dokter",
                 "sLoadingRecords": "Memuat...",
                 "sProcessing": "",
                 "sSearch": "Cari:",
-                "sZeroRecords": "Pasien yang Anda cari tidak ditemukan",
+                "sZeroRecords": "Dokter yang Anda cari tidak ditemukan",
                 "oAria": {
                     "sOrderable": "Urutkan menurut kolom ini",
                     "sOrderableReverse": "Urutkan terbalik kolom ini"
@@ -225,10 +152,10 @@
                     $(node).removeClass('btn-secondary')
                 },
             }, {
-                text: '<i class="fa-solid fa-plus"></i> Tambah Pasien',
+                text: '<i class="fa-solid fa-plus"></i> Tambah Dokter',
                 className: 'btn-primary btn-sm bg-gradient rounded-end-3',
                 attr: {
-                    id: 'addPasienBtn'
+                    id: 'addDokterBtn'
                 },
                 init: function(api, node, config) {
                     $(node).removeClass('btn-secondary')
@@ -246,7 +173,7 @@
             "processing": false,
             "serverSide": true,
             "ajax": {
-                "url": "<?= base_url('/pasien/pasienlist') ?>",
+                "url": "<?= base_url('/dokter/dokterlist') ?>",
                 "type": "POST",
                 "data": function(d) {
                     // Additional parameters
@@ -276,15 +203,9 @@
                     data: null,
                     render: function(data, type, row) {
                         return `<div class="btn-group" role="group">
-                                    <button class="btn btn-secondary text-nowrap bg-gradient rounded-start-3 edit-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${row.id_pasien}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
-                                    <button class="btn btn-danger text-nowrap bg-gradient rounded-end-3 delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${row.id_pasien}" data-name="${row.nama_pasien}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
+                                    <button class="btn btn-secondary text-nowrap bg-gradient rounded-start-3 edit-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${row.id_dokter}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
+                                    <button class="btn btn-danger text-nowrap bg-gradient rounded-end-3 delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${row.id_dokter}" data-name="${row.nama_dokter}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
                                 </div>`;
-                    }
-                },
-                {
-                    data: 'nama_pasien',
-                    render: function(data, type, row) {
-                        return `<span class="text-nowrap">${data}</span>`;
                     }
                 },
                 {
@@ -294,78 +215,30 @@
                     }
                 },
                 {
-                    data: 'no_mr',
-                    render: function(data, type, row) {
-                        return `<span class="date text-nowrap">${data}</span>`;
-                    }
-                },
-                {
-                    data: 'no_registrasi',
-                    render: function(data, type, row) {
-                        return `<span class="date text-nowrap">${data}</span>`;
-                    }
-                },
-                {
-                    data: 'nik',
-                    render: function(data, type, row) {
-                        return `<span class="date text-nowrap">${data}</span>`;
-                    }
-                },
-                {
-                    data: 'jenis_pasien',
+                    data: 'alamat_dokter',
                     render: function(data, type, row) {
                         return `<span class="text-nowrap">${data}</span>`;
                     }
                 },
                 {
-                    data: 'tanggal_lahir',
-                    render: function(data, type, row) {
-                        return `<span class="date text-nowrap">${row.tempat_lahir}<br><small>${data}</small></span>`;
-                    }
-                },
-                {
-                    data: 'agama_pasien',
-                    render: function(data, type, row) {
-                        return `<span class="text-nowrap">${data}</span>`;
-                    }
-                },
-                {
-                    data: 'no_hp_pasien',
-                    render: function(data, type, row) {
-                        return `<span class="date text-nowrap">${data}</span>`;
-                    }
-                },
-                {
-                    data: 'alamat_pasien',
-                    render: function(data, type, row) {
-                        return `<span class="text-nowrap">${data}<br><small>${row.desa}, ${row.kecamatan}, ${row.kota}, ${row.provinsi}</small></span>`;
-                    }
-                },
-                {
-                    data: 'status_kawin',
-                    render: function(data, type, row) {
-                        return `<span class="text-nowrap">${data}</span>`;
-                    }
-                },
-                {
-                    data: 'tgl_pendaftaran',
+                    data: 'kontak_dokter',
                     render: function(data, type, row) {
                         return `<span class="date text-nowrap">${data}</span>`;
                     }
                 },
             ],
             "order": [
-                [0, 'desc']
+                [2, 'desc']
             ],
             "columnDefs": [{
-                "target": [1],
+                "target": [0, 1],
                 "orderable": false
             }, {
-                "target": [0, 1, 4, 5, 6, 7, 8, 9, 10, 12, 13],
+                "target": [0, 1, 4],
                 "width": "0%"
             }, {
-                "target": [2, 3, 11],
-                "width": "33%"
+                "target": [2, 3],
+                "width": "50%"
             }]
         });
         // Initialize Bootstrap tooltips
@@ -374,32 +247,10 @@
         table.on('draw', function() {
             $('[data-bs-toggle="tooltip"]').tooltip();
         });
-        async function fetchDokterOptions() {
-            try {
-                const response = await axios.get('<?= base_url('pasien/dokterlist') ?>');
-
-                if (response.data.success) {
-                    const options = response.data.data;
-                    const select = $('#id_dokter');
-
-                    // Clear existing options except the first one
-                    select.find('option:not(:first)').remove();
-
-                    // Loop through the options and append them to the select element
-                    options.forEach(option => {
-                        select.append(`<option value="${option.value}">${option.text}</option>`);
-                    });
-                }
-            } catch (error) {
-                showFailedToast('Gagal mendapatkan dokter.<br>' + error);
-            }
-        }
-        // Call the function to fetch and populate the menu options
-        fetchDokterOptions();
         // Show add user modal
-        $('#addPasienBtn').click(function() {
-            $('#pasienModalLabel').text('Tambah Pasien');
-            $('#pasienModal').modal('show');
+        $('#addDokterBtn').click(function() {
+            $('#dokterModalLabel').text('Tambah Dokter');
+            $('#dokterModal').modal('show');
         });
 
         $(document).on('click', '.edit-btn', async function() {
@@ -409,23 +260,13 @@
             $this.prop('disabled', true).html(`<span class="spinner-border" style="width: 11px; height: 11px;" aria-hidden="true"></span>`);
 
             try {
-                const response = await axios.get(`<?= base_url('/pasien/pasien') ?>/${id}`);
-                $('#pasienModalLabel').text('Edit Pasien');
-                $('#id_pasien').val(response.data.id_pasien);
-                $('#nama_pasien').val(response.data.nama_pasien);
-                $('#jenis_pasien_container').val('').hide();
-                $('#nik').val(response.data.nik);
-                $('#tempat_lahir').val(response.data.tempat_lahir);
-                $('#tanggal_lahir').val(response.data.tanggal_lahir);
-                $('#agama_pasien').val(response.data.agama_pasien);
-                $('#no_hp_pasien').val(response.data.no_hp_pasien);
-                $('#alamat_pasien').val(response.data.alamat_pasien);
-                $('#provinsi').val(response.data.provinsi);
-                $('#kota').val(response.data.kota);
-                $('#kecamatan').val(response.data.kecamatan);
-                $('#desa').val(response.data.desa);
+                const response = await axios.get(`<?= base_url('/dokter/dokter') ?>/${id}`);
+                $('#dokterModalLabel').text('Edit Petugas Gizi');
                 $('#id_dokter').val(response.data.id_dokter);
-                $('#pasienModal').modal('show');
+                $('#nama_dokter').val(response.data.nama_dokter);
+                $('#alamat_dokter').val(response.data.alamat_dokter);
+                $('#kontak_dokter').val(response.data.kontak_dokter);
+                $('#dokterModal').modal('show');
             } catch (error) {
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
             } finally {
@@ -434,15 +275,15 @@
         });
 
         // Store the ID of the user to be deleted
-        var pasienId;
-        var pasienName;
+        var dokterId;
+        var dokterName;
 
         // Show delete confirmation modal
         $(document).on('click', '.delete-btn', function() {
-            pasienId = $(this).data('id');
-            pasienName = $(this).data('name');
+            dokterId = $(this).data('id');
+            dokterName = $(this).data('name');
             $('[data-bs-toggle="tooltip"]').tooltip('hide');
-            $('#deleteMessage').html(`Hapus "` + pasienName + `"?`);
+            $('#deleteMessage').html(`Hapus "` + dokterName + `"?`);
             $('#deleteSubmessage').html(``);
             $('#deleteModal').modal('show');
         });
@@ -453,7 +294,7 @@
             $('#deleteSubmessage').hide();
 
             try {
-                await axios.delete(`<?= base_url('/pasien/delete') ?>/${pasienId}`);
+                await axios.delete(`<?= base_url('/dokter/delete') ?>/${dokterId}`);
                 showSuccessToast('Pasien berhasil dihapus.');
                 table.ajax.reload();
             } catch (error) {
@@ -466,24 +307,24 @@
             }
         });
 
-        $('#pasienForm').submit(async function(e) {
+        $('#dokterForm').submit(async function(e) {
             e.preventDefault();
 
-            const url = $('#id_pasien').val() ? '<?= base_url('/pasien/update') ?>' : '<?= base_url('/pasien/create') ?>';
+            const url = $('#id_dokter').val() ? '<?= base_url('/dokter/update') ?>' : '<?= base_url('/dokter/create') ?>';
             const formData = new FormData(this);
             console.log("Form URL:", url);
             console.log("Form Data:", $(this).serialize());
 
             // Clear previous validation states
-            $('#pasienForm .is-invalid').removeClass('is-invalid');
-            $('#pasienForm .invalid-feedback').text('').hide();
+            $('#dokterForm .is-invalid').removeClass('is-invalid');
+            $('#dokterForm .invalid-feedback').text('').hide();
             $('#submitButton').prop('disabled', true).html(`
                 <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
                 <span role="status">Memproses, silakan tunggu...</span>
             `);
 
             // Disable form inputs
-            $('#pasienForm input, #pasienForm select, #closeBtn').prop('disabled', true);
+            $('#dokterForm input, #dokterForm select, #closeBtn').prop('disabled', true);
 
             try {
                 const response = await axios.post(url, formData, {
@@ -494,14 +335,14 @@
 
                 if (response.data.success) {
                     showSuccessToast(response.data.message, 'success');
-                    $('#pasienModal').modal('hide');
+                    $('#dokterModal').modal('hide');
                     table.ajax.reload();
                 } else {
                     console.log("Validation Errors:", response.data.errors);
 
                     // Clear previous validation states
-                    $('#pasienForm .is-invalid').removeClass('is-invalid');
-                    $('#pasienForm .invalid-feedback').text('').hide();
+                    $('#dokterForm .is-invalid').removeClass('is-invalid');
+                    $('#dokterForm .invalid-feedback').text('').hide();
 
                     // Display new validation errors
                     for (const field in response.data.errors) {
@@ -534,28 +375,18 @@
                 $('#submitButton').prop('disabled', false).html(`
                     <i class="fa-solid fa-floppy-disk"></i> Simpan
                 `);
-                $('#pasienForm input, #pasienForm select, #closeBtn').prop('disabled', false);
+                $('#dokterForm input, #dokterForm select, #closeBtn').prop('disabled', false);
             }
         });
 
-        $('#pasienModal').on('hidden.bs.modal', function() {
-            $('#pasienForm')[0].reset();
-            $('#id_pasien').val('');
-            $('#nama_pasien').val('');
-            $('#jenis_pasien_container').val('').show();
-            $('#nik').val('');
-            $('#tempat_lahir').val('');
-            $('#tanggal_lahir').val('');
-            $('#agama_pasien').val('');
-            $('#no_hp_pasien').val('');
-            $('#alamat_pasien').val('');
-            $('#provinsi').val('');
-            $('#kota').val('');
-            $('#kecamatan').val('');
-            $('#desa').val('');
+        $('#dokterModal').on('hidden.bs.modal', function() {
+            $('#dokterForm')[0].reset();
             $('#id_dokter').val('');
-            $('#pasienForm .is-invalid').removeClass('is-invalid');
-            $('#pasienForm .invalid-feedback').text('').hide();
+            $('#nama_dokter').val('');
+            $('#alamat_dokter').val('');
+            $('#kontak_dokter').val('');
+            $('#dokterForm .is-invalid').removeClass('is-invalid');
+            $('#dokterForm .invalid-feedback').text('').hide();
         });
         // Show toast notification
         function showSuccessToast(message) {
