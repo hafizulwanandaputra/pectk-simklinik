@@ -92,12 +92,9 @@
                         <label for="bentuk_obat">Bentuk*</label>
                         <div class="invalid-feedback"></div>
                     </div>
-                    <div class="input-group mb-1 mt-1">
-                        <span class="input-group-text rounded-start-3" id="basic-addon1">Rp</span>
-                        <div class="form-floating">
-                            <input type="number" class="form-control rounded-end-3 rounded-start-0" autocomplete="off" dir="auto" placeholder="harga_obat" id="harga_obat" name="harga_obat">
-                            <label for="harga_obat">Harga*</label>
-                        </div>
+                    <div class="form-floating mb-1 mt-1">
+                        <input type="number" class="form-control" autocomplete="off" dir="auto" placeholder="harga_obat" id="harga_obat" name="harga_obat">
+                        <label for="harga_obat">Harga (Rp)*</label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
