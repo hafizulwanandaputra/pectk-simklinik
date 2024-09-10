@@ -141,6 +141,8 @@ class Supplier extends BaseController
         $db = db_connect();
         $this->SupplierModel->delete($id);
         $db->query('ALTER TABLE `supplier` auto_increment = 1');
+        $db->query('ALTER TABLE `obat` auto_increment = 1');
+        $db->query('ALTER TABLE `pembelian_obat` auto_increment = 1');
         return $this->response->setJSON(['message' => 'Supplier berhasil dihapus']);
     }
 }

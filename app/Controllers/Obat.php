@@ -184,6 +184,7 @@ class Obat extends BaseController
         $db = db_connect();
         $this->ObatModel->delete($id);
         $db->query('ALTER TABLE `obat` auto_increment = 1');
+        $db->query('ALTER TABLE `detail_pembelian_obat` auto_increment = 1');
         return $this->response->setJSON(['message' => 'Obat berhasil dihapus']);
     }
 }

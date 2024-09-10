@@ -410,6 +410,18 @@
                                 </div>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link p-2 <?= (strpos(uri_string(), 'pembelianobat') === 0) ? 'active bg-light' : '' ?>" href=" <?= base_url('/pembelianobat'); ?>">
+                                <div class="d-flex align-items-start <?= (strpos(uri_string(), 'pembelianobat') === 0) ? 'link-dark' : 'link-light' ?>">
+                                    <div style="min-width: 24px; max-width: 24px; text-align: center;">
+                                        <i class="fa-solid fa-cart-shopping"></i>
+                                    </div>
+                                    <div class="flex-fill ms-2">
+                                        Pembelian Obat
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
                         <?php if (session()->get('role') == "Admin") : ?>
                             <li class="nav-item">
                                 <a class="nav-link p-2 <?= (strpos(uri_string(), 'admin') === 0) ? 'active bg-light' : '' ?>" href=" <?= base_url('/admin'); ?>">

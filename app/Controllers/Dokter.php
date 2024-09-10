@@ -141,6 +141,7 @@ class Dokter extends BaseController
         $db = db_connect();
         $this->DokterModel->delete($id);
         $db->query('ALTER TABLE `dokter` auto_increment = 1');
+        $db->query('ALTER TABLE `pasien` auto_increment = 1');
         return $this->response->setJSON(['message' => 'Dokter berhasil dihapus']);
     }
 }
