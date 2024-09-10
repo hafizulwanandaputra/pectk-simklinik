@@ -148,6 +148,7 @@ class Pasien extends BaseController
             'kota' => 'required',
             'kecamatan' => 'required',
             'desa' => 'required',
+            'status_kawin' => 'required',
             'id_dokter' => 'required',
         ]);
 
@@ -189,6 +190,7 @@ class Pasien extends BaseController
             'kota' => $this->request->getPost('kota'),
             'kecamatan' => $this->request->getPost('kecamatan'),
             'desa' => $this->request->getPost('desa'),
+            'status_kawin' => $this->request->getPost('status_kawin'),
             'id_dokter' => $this->request->getPost('id_dokter'),
             'tgl_pendaftaran' => date('Y-m-d H:i:s')
         ];
@@ -228,6 +230,7 @@ class Pasien extends BaseController
             'kota' => 'required',
             'kecamatan' => 'required',
             'desa' => 'required',
+            'status_kawin' => 'required',
             'id_dokter' => 'required',
         ]);
         if (!$this->validate($validation->getRules())) {
@@ -254,6 +257,7 @@ class Pasien extends BaseController
             'kota' => $this->request->getPost('kota'),
             'kecamatan' => $this->request->getPost('kecamatan'),
             'desa' => $this->request->getPost('desa'),
+            'status_kawin' => $this->request->getPost('status_kawin'),
             'id_dokter' => $this->request->getPost('id_dokter'),
             'tgl_pendaftaran' => $pasien['tgl_pendaftaran']
         ];

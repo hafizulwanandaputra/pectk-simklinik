@@ -151,6 +151,17 @@
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mt-1 mb-1">
+                        <select class="form-select rounded-3" id="status_kawin" name="status_kawin" aria-label="status_kawin">
+                            <option value="">-- Pilih Status Kawin --</option>
+                            <option value="Kawin">Kawin</option>
+                            <option value="Belum Kawin">Belum Kawin</option>
+                            <option value="Cerai Hidup">Cerai Hidup</option>
+                            <option value="Cerai Mati">Cerai Mati</option>
+                        </select>
+                        <label for="status_kawin">Agama*</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="form-floating mt-1 mb-1">
                         <select class="form-select rounded-3" id="id_dokter" name="id_dokter" aria-label="id_dokter">
                             <option value="">-- Pilih Dokter --</option>
                         </select>
@@ -455,6 +466,7 @@
                 $('#kota').val(response.data.kota);
                 $('#kecamatan').val(response.data.kecamatan);
                 $('#desa').val(response.data.desa);
+                $('#status_kawin').val(response.data.status_kawin);
                 $('#id_dokter').val(response.data.id_dokter);
                 $('#pasienModal').modal('show');
             } catch (error) {
@@ -599,6 +611,7 @@
             $('#kota').val('');
             $('#kecamatan').val('');
             $('#desa').val('');
+            $('#status_kawin').val('');
             $('#id_dokter').val('');
             $('#pasienForm .is-invalid').removeClass('is-invalid');
             $('#pasienForm .invalid-feedback').text('').hide();
