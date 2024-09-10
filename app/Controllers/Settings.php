@@ -3,16 +3,13 @@
 namespace App\Controllers;
 
 use App\Models\SettingsModel;
-use App\Models\DataTables;
 
 class Settings extends BaseController
 {
     protected $SettingsModel;
-    protected $DataTables;
     public function __construct()
     {
         $this->SettingsModel = new SettingsModel();
-        $this->DataTables = new DataTables();
     }
 
     public function index()
