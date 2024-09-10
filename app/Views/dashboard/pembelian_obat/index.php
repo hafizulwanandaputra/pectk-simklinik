@@ -170,7 +170,7 @@
                 </div>
                 <hr>
                 <div class="d-grid gap-2 d-flex justify-content-end">
-                    <button type="button" class="btn btn-danger bg-gradient rounded-3 delete-btn" data-id="${pembelian_obat.id_pembelian_obat}" data-name="${pembelian_obat.supplier_nama_supplier}" data-date="${pembelian_obat.tgl_pembelian}">
+                    <button type="button" class="btn btn-danger btn-sm bg-gradient rounded-3 delete-btn" data-id="${pembelian_obat.id_pembelian_obat}" data-name="${pembelian_obat.supplier_nama_supplier}" data-date="${pembelian_obat.tgl_pembelian}">
                         <i class="fa-solid fa-trash"></i> Hapus
                     </button>
                 </div>
@@ -364,9 +364,9 @@
             }
         });
         $('#refreshButton').on('click', function() {
-            $('#articlesContainer').empty();
+            $('#pembelianObatContainer').empty();
             for (let i = 0; i < limit; i++) {
-                $('#articlesContainer').append(placeholder);
+                $('#pembelianObatContainer').append(placeholder);
             }
             fetchPembelianObat(); // Refresh articles on button click
         });
