@@ -41,17 +41,18 @@ class Pasien extends BaseController
             0 => 'id_pasien',
             1 => 'id_pasien',
             2 => 'nama_pasien',
-            3 => 'nama_dokter',
-            4 => 'no_mr',
-            5 => 'no_registrasi',
-            6 => 'nik',
-            7 => 'jenis_pasien',
-            8 => 'tanggal_lahir',
-            9 => 'agama_pasien',
-            10 => 'no_hp_pasien',
-            11 => 'alamat_pasien',
-            12 => 'status_kawin',
-            13 => 'tgl_pendaftaran',
+            3 => 'jenis_kelamin',
+            4 => 'nama_dokter',
+            5 => 'no_mr',
+            6 => 'no_registrasi',
+            7 => 'nik',
+            8 => 'jenis_pasien',
+            9 => 'tanggal_lahir',
+            10 => 'agama_pasien',
+            11 => 'no_hp_pasien',
+            12 => 'alamat_pasien',
+            13 => 'status_kawin',
+            14 => 'tgl_pendaftaran',
         ];
 
         // Get the column to sort by
@@ -137,6 +138,7 @@ class Pasien extends BaseController
         // Set base validation rules
         $validation->setRules([
             'nama_pasien' => 'required',
+            'jenis_kelamin' => 'required',
             'jenis_pasien' => 'required',
             'tempat_lahir' => 'required',
             'tanggal_lahir' => 'required',
@@ -173,6 +175,7 @@ class Pasien extends BaseController
         // Save Data
         $data = [
             'nama_pasien' => $this->request->getPost('nama_pasien'),
+            'jenis_kelamin' => $this->request->getPost('jenis_kelamin'),
             'no_mr' => $no_mr,
             'no_registrasi' => $no_registrasi,
             'nik' => $this->request->getPost('nik'),
@@ -216,6 +219,7 @@ class Pasien extends BaseController
         // Set base validation rules
         $validation->setRules([
             'nama_pasien' => 'required',
+            'jenis_kelamin' => 'required',
             'tempat_lahir' => 'required',
             'tanggal_lahir' => 'required',
             'agama_pasien' => 'required',
@@ -236,6 +240,7 @@ class Pasien extends BaseController
         $data = [
             'id_pasien' => $this->request->getPost('id_pasien'),
             'nama_pasien' => $this->request->getPost('nama_pasien'),
+            'jenis_kelamin' => $this->request->getPost('jenis_kelamin'),
             'no_mr' => $pasien['no_mr'],
             'no_registrasi' => $pasien['no_registrasi'],
             'nik' => $this->request->getPost('nik'),

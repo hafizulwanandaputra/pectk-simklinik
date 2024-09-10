@@ -24,6 +24,10 @@ class Pasien extends Migration
                 'type' => 'VARCHAR',
                 'constraint' => 256,
             ],
+            'jenis_kelamin' => [
+                'type' => 'VARCHAR',
+                'constraint' => 24,
+            ],
             'no_mr' => [
                 'type' => 'VARCHAR',
                 'constraint' => 128,

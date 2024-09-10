@@ -17,6 +17,7 @@
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">No</th>
                     <th scope="col" class="bg-body-secondary border-secondary text-nowrap" style="border-bottom-width: 2px;">Tindakan</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Nama</th>
+                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Jenis Kelamin</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Dokter</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Nomor Rekam Medis</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Nomor Registrasi</th>
@@ -61,6 +62,26 @@
                         <input type="text" class="form-control" autocomplete="off" dir="auto" placeholder="nama_pasien" id="nama_pasien" name="nama_pasien">
                         <label for="nama_pasien">Nama*</label>
                         <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="mt-1 mb-1 row">
+                        <label for="jenis_kelamin" class="col-xl-3 col-form-label">Jenis Kelamin*</label>
+                        <div class="col-lg col-form-label">
+                            <div class="d-flex align-items-center justify-content-evenly justify-content-xl-start">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="jenis_kelamin" id="jenis_kelamin1" value="Laki-Laki">
+                                    <label class="form-check-label" for="jenis_kelamin1">
+                                        Laki-Laki
+                                    </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="jenis_kelamin" id="jenis_kelamin2" value="Perempuan">
+                                    <label class="form-check-label" for="jenis_kelamin2">
+                                        Perempuan
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="invalid-feedback"></div>
+                        </div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
                         <input type="number" class="form-control" autocomplete="off" dir="auto" placeholder="nik" id="nik" name="nik">
@@ -288,6 +309,12 @@
                     }
                 },
                 {
+                    data: 'jenis_kelamin',
+                    render: function(data, type, row) {
+                        return `<span class="text-nowrap">${data}</span>`;
+                    }
+                },
+                {
                     data: 'nama_dokter',
                     render: function(data, type, row) {
                         return `<span class="text-nowrap">${data}</span>`;
@@ -361,11 +388,11 @@
                 "target": [1],
                 "orderable": false
             }, {
-                "target": [0, 1, 4, 5, 6, 7, 8, 9, 10, 12, 13],
+                "target": [0, 1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 14],
                 "width": "0%"
             }, {
-                "target": [2, 3, 11],
-                "width": "33%"
+                "target": [2, 12],
+                "width": "50%"
             }]
         });
         // Initialize Bootstrap tooltips
@@ -413,6 +440,10 @@
                 $('#pasienModalLabel').text('Edit Pasien');
                 $('#id_pasien').val(response.data.id_pasien);
                 $('#nama_pasien').val(response.data.nama_pasien);
+                const selectedGender = response.data.jenis_kelamin;
+                if (selectedGender) {
+                    $("input[name='jenis_kelamin'][value='" + selectedGender + "']").prop('checked', true);
+                }
                 $('#jenis_pasien_container').val('').hide();
                 $('#nik').val(response.data.nik);
                 $('#tempat_lahir').val(response.data.tempat_lahir);
@@ -507,22 +538,37 @@
                     for (const field in response.data.errors) {
                         if (response.data.errors.hasOwnProperty(field)) {
                             const fieldElement = $('#' + field);
-                            const feedbackElement = fieldElement.siblings('.invalid-feedback');
 
-                            console.log("Target Field:", fieldElement);
-                            console.log("Target Feedback:", feedbackElement);
+                            // Handle radio button group separately
+                            if (field === 'jenis_kelamin') {
+                                const radioGroup = $("input[name='jenis_kelamin']");
+                                const feedbackElement = radioGroup.closest('.col-form-label').find('.invalid-feedback');
 
-                            if (fieldElement.length > 0 && feedbackElement.length > 0) {
-                                fieldElement.addClass('is-invalid');
-                                feedbackElement.text(response.data.errors[field]).show();
+                                if (radioGroup.length > 0 && feedbackElement.length > 0) {
+                                    radioGroup.addClass('is-invalid');
+                                    feedbackElement.text(response.data.errors[field]).show();
 
-                                // Remove error message when the user corrects the input
-                                fieldElement.on('input change', function() {
-                                    $(this).removeClass('is-invalid');
-                                    $(this).siblings('.invalid-feedback').text('').hide();
-                                });
+                                    // Remove error message when the user selects any radio button in the group
+                                    radioGroup.on('change', function() {
+                                        $("input[name='jenis_kelamin']").removeClass('is-invalid');
+                                        feedbackElement.removeAttr('style').hide();
+                                    });
+                                }
                             } else {
-                                console.warn("Elemen tidak ditemukan pada field:", field);
+                                const feedbackElement = fieldElement.siblings('.invalid-feedback');
+
+                                if (fieldElement.length > 0 && feedbackElement.length > 0) {
+                                    fieldElement.addClass('is-invalid');
+                                    feedbackElement.text(response.data.errors[field]).show();
+
+                                    // Remove error message when the user corrects the input
+                                    fieldElement.on('input change', function() {
+                                        $(this).removeClass('is-invalid');
+                                        $(this).siblings('.invalid-feedback').text('').hide();
+                                    });
+                                } else {
+                                    console.warn("Element not found for field:", field);
+                                }
                             }
                         }
                     }
