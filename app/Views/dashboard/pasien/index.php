@@ -64,7 +64,7 @@
                     </div>
                     <div class="form-floating mb-1 mt-1">
                         <input type="number" class="form-control" autocomplete="off" dir="auto" placeholder="nik" id="nik" name="nik">
-                        <label for="nik">NIK*</label>
+                        <label for="nik">NIK</label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mt-1 mb-1" id="jenis_pasien_container">
@@ -101,7 +101,7 @@
                     </div>
                     <div class="form-floating mb-1 mt-1">
                         <input type="number" class="form-control" autocomplete="off" dir="auto" placeholder="no_hp_pasien" id="no_hp_pasien" name="no_hp_pasien">
-                        <label for="no_hp_pasien">Nomor Ponsel*</label>
+                        <label for="no_hp_pasien">Nomor Ponsel</label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
