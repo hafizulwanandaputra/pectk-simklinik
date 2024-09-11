@@ -45,17 +45,14 @@ class PembelianObat extends BaseController
         // Count total results
         $total = $PembelianObatModel->countAllResults(false);
 
+        // Get paginated results
         $PembelianObat = $PembelianObatModel
             ->select('pembelian_obat.*, 
                 supplier.nama_supplier as supplier_nama_supplier, 
                 user.fullname as user_fullname, 
-                user.username as user_username,
-                SUM(obat.harga_obat * detail_pembelian_obat.jumlah) as total_harga')
+                user.username as user_username')
             ->join('supplier', 'supplier.id_supplier = pembelian_obat.id_supplier', 'inner')
             ->join('user', 'user.id_user = pembelian_obat.id_user', 'inner')
-            ->join('detail_pembelian_obat', 'detail_pembelian_obat.id_pembelian_obat = pembelian_obat.id_pembelian_obat', 'inner')
-            ->join('obat', 'obat.id_obat = detail_pembelian_obat.id_obat', 'inner')
-            ->groupBy('pembelian_obat.id_pembelian_obat') // Group by pembelian to calculate the sum per transaction
             ->orderBy('tgl_pembelian', 'DESC')
             ->findAll($limit, $offset);
 

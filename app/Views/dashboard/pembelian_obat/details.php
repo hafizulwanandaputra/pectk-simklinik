@@ -139,15 +139,15 @@
 
             data.forEach(function(detail_pembelian_obat) {
                 const jumlah = parseInt(detail_pembelian_obat.jumlah); // Konversi jumlah ke integer
-                const harga_obat = parseInt(detail_pembelian_obat.harga_obat); // Konversi harga obat ke integer
-                const total_harga = jumlah * harga_obat; // Hitung total harga
+                const harga_satuan = parseInt(detail_pembelian_obat.harga_satuan); // Konversi harga obat ke integer
+                const total_harga = jumlah * harga_satuan; // Hitung total harga
                 totalKeseluruhan += total_harga;
                 const detail_pembelian_obatElement = `
                     <tr>
                         <td></td>
                         <td>${detail_pembelian_obat.nama_obat}</td>
                         <td class="date text-end">${jumlah.toLocaleString('id-ID')}</td>
-                        <td class="date text-end">Rp${harga_obat.toLocaleString('id-ID')}</td>
+                        <td class="date text-end">Rp${harga_satuan.toLocaleString('id-ID')}</td>
                         <td class="date text-end">Rp${total_harga.toLocaleString('id-ID')}</td>
                     </tr>
                 `;
