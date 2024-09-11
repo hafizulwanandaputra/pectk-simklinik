@@ -170,6 +170,9 @@
                 </div>
                 <hr>
                 <div class="d-grid gap-2 d-flex justify-content-end">
+                    <button type="button" class="btn btn-info btn-sm bg-gradient rounded-3" onclick="window.location.href = '<?= base_url('pembelianobat/detailpembelianobat') ?>/${pembelian_obat.id_pembelian_obat}';">
+                        <i class="fa-solid fa-circle-info"></i> Detail
+                    </button>
                     <button type="button" class="btn btn-danger btn-sm bg-gradient rounded-3 delete-btn" data-id="${pembelian_obat.id_pembelian_obat}" data-name="${pembelian_obat.supplier_nama_supplier}" data-date="${pembelian_obat.tgl_pembelian}">
                         <i class="fa-solid fa-trash"></i> Hapus
                     </button>

@@ -4,13 +4,16 @@ namespace App\Controllers;
 
 use App\Models\PembelianObatModel;
 use App\Models\SupplierModel;
+use App\Models\DetailPembelianObatModel;
 
 class PembelianObat extends BaseController
 {
     protected $PembelianObatModel;
+    protected $DetailPembelianObatModel;
     public function __construct()
     {
         $this->PembelianObatModel = new PembelianObatModel();
+        $this->DetailPembelianObatModel = new DetailPembelianObatModel();
     }
 
     public function index()
@@ -117,5 +120,35 @@ class PembelianObat extends BaseController
         $this->PembelianObatModel->delete($id);
         $db->query('ALTER TABLE `pembelian_obat` auto_increment = 1');
         return $this->response->setJSON(['message' => 'Obat berhasil dihapus']);
+    }
+
+    // DETAIL PEMBELIAN OBAT
+    public function detailpembelianobat($id)
+    {
+        $pembelianobat = $this->PembelianObatModel
+            ->join('supplier', 'supplier.id_supplier = pembelian_obat.id_supplier', 'inner')
+            ->join('user', 'user.id_user = pembelian_obat.id_user', 'inner')
+            ->find($id);
+        // dd($pembelianobat);
+        // die;
+        $data = [
+            'pembelianobat' => $pembelianobat,
+            'title' => 'Detail Pembelian Obat dengan ID ' . $id . ' - ' . $this->systemName,
+            'headertitle' => 'Detail Pembelian Obat',
+            'agent' => $this->request->getUserAgent()
+        ];
+        return view('dashboard/pembelian_obat/details', $data);
+    }
+
+    public function detailpembelianobatlist($id)
+    {
+        $data = $this->DetailPembelianObatModel
+            ->where('detail_pembelian_obat.id_pembelian_obat', $id)
+            ->join('pembelian_obat', 'pembelian_obat.id_pembelian_obat = detail_pembelian_obat.id_pembelian_obat', 'inner')
+            ->join('obat', 'obat.id_obat = detail_pembelian_obat.id_obat', 'inner')
+            ->orderBy('id_detail_pembelian_obat', 'ASC')
+            ->findAll();
+
+        return $this->response->setJSON($data);
     }
 }
