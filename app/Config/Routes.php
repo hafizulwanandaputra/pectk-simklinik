@@ -59,6 +59,8 @@ $routes->delete('/(?i)pembelianobat/(?i)delete/(:any)', 'PembelianObat::delete/$
 // DETAIL PEMBELIAN OBAT
 $routes->get('/(?i)pembelianobat/(?i)detailpembelianobat/(:any)', 'PembelianObat::detailpembelianobat/$1');
 $routes->get('/(?i)pembelianobat/(?i)detailpembelianobatlist/(:any)', 'PembelianObat::detailpembelianobatlist/$1');
+$routes->get('/(?i)pembelianobat/(?i)detailpembelianobatitem/(:any)', 'PembelianObat::detailpembelianobatitem/$1');
+$routes->get('/(?i)pembelianobat/(?i)obatlist/(:any)/(:any)', 'PembelianObat::obatlist/$1/$2');
 $routes->post('/(?i)pembelianobat/(?i)tambahdetailpembelianobat/(:any)', 'PembelianObat::tambahdetailpembelianobat/$1');
 $routes->post('/(?i)pembelianobat/(?i)perbaruidetailpembelianobat/(:any)', 'PembelianObat::perbaruidetailpembelianobat/$1');
 $routes->delete('/(?i)pembelianobat/(?i)hapusdetailpembelianobat/(:any)', 'PembelianObat::hapusdetailpembelianobat/$1');

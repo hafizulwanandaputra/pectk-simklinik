@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Models\PembelianObatModel;
 use App\Models\SupplierModel;
 use App\Models\DetailPembelianObatModel;
+use App\Models\ObatModel;
 
 class PembelianObat extends BaseController
 {
@@ -108,6 +109,8 @@ class PembelianObat extends BaseController
             'id_supplier' => $this->request->getPost('id_supplier'),
             'id_user' => session()->get('id_user'),
             'tgl_pembelian' => date('Y-m-d H:i:s'),
+            'total_qty' => 0,
+            'total_biaya' => 0,
         ];
         $this->PembelianObatModel->save($data);
         return $this->response->setJSON(['success' => true, 'message' => 'Pembelian berhasil ditambahkan']);
@@ -149,5 +152,176 @@ class PembelianObat extends BaseController
             ->findAll();
 
         return $this->response->setJSON($data);
+    }
+
+    public function detailpembelianobatitem($id)
+    {
+        $data = $this->DetailPembelianObatModel
+            ->where('id_detail_pembelian_obat', $id)
+            ->orderBy('id_detail_pembelian_obat', 'ASC')
+            ->find($id);
+
+        return $this->response->setJSON($data);
+    }
+
+    public function obatlist($id_supplier, $id_pembelian_obat)
+    {
+        $ObatModel = new ObatModel();
+        $DetailPembelianObatModel = new DetailPembelianObatModel(); // Model untuk tabel detail_pembelian_obat
+
+        // Ambil semua obat berdasarkan id_supplier
+        $results = $ObatModel->where('id_supplier', $id_supplier)->orderBy('nama_obat', 'DESC')->findAll();
+
+        $options = [];
+        foreach ($results as $row) {
+            // Cek apakah id_obat sudah ada di tabel detail_pembelian_obat dengan id_pembelian_obat yang sama
+            $isUsed = $DetailPembelianObatModel->where('id_obat', $row['id_obat'])
+                ->where('id_pembelian_obat', $id_pembelian_obat) // Pastikan sesuai dengan id_pembelian_obat yang sedang digunakan
+                ->first();
+
+            // Jika belum ada pada pembelian yang sama, tambahkan ke options
+            if (!$isUsed) {
+                $options[] = [
+                    'value' => $row['id_obat'],
+                    'text' => $row['nama_obat']
+                ];
+            }
+        }
+
+        return $this->response->setJSON([
+            'success' => true,
+            'data' => $options,
+        ]);
+    }
+
+    public function tambahdetailpembelianobat($id)
+    {
+        // Validate
+        $validation = \Config\Services::validation();
+        // Set base validation rules
+        $validation->setRules([
+            'id_obat' => 'required',
+            'jumlah' => 'required',
+        ]);
+
+        if (!$this->validate($validation->getRules())) {
+            return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
+        }
+
+        $ObatModel = new ObatModel();
+        $obat = $ObatModel->find($this->request->getPost('id_obat'));
+
+        // Save Data
+        $data = [
+            'id_pembelian_obat' => $id,
+            'id_obat' => $this->request->getPost('id_obat'),
+            'jumlah' => $this->request->getPost('jumlah'),
+            'harga_satuan' => $obat['harga_obat'],
+        ];
+        $this->DetailPembelianObatModel->save($data);
+
+        $db = db_connect();
+
+        // Calculate total_qty and total_biaya
+        $builder = $db->table('detail_pembelian_obat');
+        $builder->select('SUM(jumlah) as total_qty, SUM(jumlah * harga_satuan) as total_biaya');
+        $builder->where('id_pembelian_obat', $id);
+        $result = $builder->get()->getRow();
+
+        $total_qty = $result->total_qty;
+        $total_biaya = $result->total_biaya;
+
+        // Update pembelian_obat table
+        $pembelianObatBuilder = $db->table('pembelian_obat');
+        $pembelianObatBuilder->where('id_pembelian_obat', $id);
+        $pembelianObatBuilder->update([
+            'total_qty' => $total_qty,
+            'total_biaya' => $total_biaya,
+        ]);
+
+        return $this->response->setJSON(['success' => true, 'message' => 'Item pembelian berhasil ditambahkan']);
+    }
+
+    public function perbaruidetailpembelianobat($id)
+    {
+        // Validate
+        $validation = \Config\Services::validation();
+        // Set base validation rules
+        $validation->setRules([
+            'jumlah_edit' => 'required',
+        ]);
+
+        if (!$this->validate($validation->getRules())) {
+            return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
+        }
+
+        $ObatModel = new ObatModel();
+        $obat = $ObatModel->find($this->request->getPost('id_obat_edit'));
+
+        // Save Data
+        $data = [
+            'id_detail_pembelian_obat' => $this->request->getPost('id_detail_pembelian_obat'),
+            'id_pembelian_obat' => $id,
+            'id_obat' => $this->request->getPost('id_obat_edit'),
+            'jumlah' => $this->request->getPost('jumlah_edit'),
+            'harga_satuan' => $obat['harga_obat'],
+        ];
+        $this->DetailPembelianObatModel->save($data);
+
+        $db = db_connect();
+
+        // Calculate total_qty and total_biaya
+        $builder = $db->table('detail_pembelian_obat');
+        $builder->select('SUM(jumlah) as total_qty, SUM(jumlah * harga_satuan) as total_biaya');
+        $builder->where('id_pembelian_obat', $id);
+        $result = $builder->get()->getRow();
+
+        $total_qty = $result->total_qty;
+        $total_biaya = $result->total_biaya;
+
+        // Update pembelian_obat table
+        $pembelianObatBuilder = $db->table('pembelian_obat');
+        $pembelianObatBuilder->where('id_pembelian_obat', $id);
+        $pembelianObatBuilder->update([
+            'total_qty' => $total_qty,
+            'total_biaya' => $total_biaya,
+        ]);
+
+        return $this->response->setJSON(['success' => true, 'message' => 'Item pembelian berhasil diperbarui']);
+    }
+
+    public function hapusdetailpembelianobat($id)
+    {
+        $db = db_connect();
+
+        // Find the detail pembelian obat before deletion to get id_pembelian_obat
+        $detail = $this->DetailPembelianObatModel->find($id);
+
+        $id_pembelian_obat = $detail['id_pembelian_obat'];
+
+        // Delete the detail pembelian obat
+        $this->DetailPembelianObatModel->delete($id);
+
+        // Reset auto_increment
+        $db->query('ALTER TABLE `detail_pembelian_obat` auto_increment = 1');
+
+        // Recalculate total_qty and total_biaya after deletion
+        $builder = $db->table('detail_pembelian_obat');
+        $builder->select('SUM(jumlah) as total_qty, SUM(jumlah * harga_satuan) as total_biaya');
+        $builder->where('id_pembelian_obat', $id_pembelian_obat);
+        $result = $builder->get()->getRow();
+
+        $total_qty = $result->total_qty ?? 0; // Handle case when no rows are left
+        $total_biaya = $result->total_biaya ?? 0;
+
+        // Update pembelian_obat table
+        $pembelianObatBuilder = $db->table('pembelian_obat');
+        $pembelianObatBuilder->where('id_pembelian_obat', $id_pembelian_obat);
+        $pembelianObatBuilder->update([
+            'total_qty' => $total_qty,
+            'total_biaya' => $total_biaya,
+        ]);
+
+        return $this->response->setJSON(['message' => 'Item pembelian berhasil dihapus']);
     }
 }

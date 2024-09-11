@@ -155,6 +155,7 @@
                 $('#paginationNav ul').empty();
             } else {
                 data.pembelian_obat.forEach(function(pembelian_obat) {
+                    const total_qty = parseInt(pembelian_obat.total_qty);
                     const total_biaya = parseInt(pembelian_obat.total_biaya);
                     const pembelian_obatElement = `
             <li class="list-group-item bg-body-tertiary pb-3 pt-3">
@@ -166,10 +167,11 @@
                         <h6 class="card-subtitle mb-2">
                             ${pembelian_obat.user_fullname} (@${pembelian_obat.user_username})
                         </h6>
-                        <p class="card-text date">
-                            <small>
-                                ID Pembelian:${pembelian_obat.id_pembelian_obat}<br>
+                        <p class="card-text">
+                            <small class="date">
+                                ID Pembelian: ${pembelian_obat.id_pembelian_obat}<br>
                                 Tanggal dan Waktu Pembelian: ${pembelian_obat.tgl_pembelian}<br>
+                                Total Item: ${total_qty.toLocaleString('id-ID')}<br>
                                 Total Harga: Rp${total_biaya.toLocaleString('id-ID')}
                             </small>
                         </p>

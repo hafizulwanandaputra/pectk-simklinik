@@ -58,6 +58,27 @@
         </div>
     </fieldset>
 
+    <fieldset class="border rounded-3 px-2 py-0 mb-3">
+        <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Tambah Detail Pembelian</legend>
+        <form id="tambahDetail" enctype="multipart/form-data" class="d-flex flex-column flex-lg-row mb-2 gap-2">
+            <div class="flex-fill">
+                <select class="form-select rounded-3" id="id_obat" name="id_obat" aria-label="id_obat">
+                    <option value="">-- Pilih Obat --</option>
+                </select>
+                <div class="invalid-feedback"></div>
+            </div>
+            <div class="w-auto">
+                <input type="number" id="jumlah" name="jumlah" class="form-control rounded-start-3" placeholder="Jumlah">
+                <div class="invalid-feedback"></div>
+            </div>
+            <div class="d-grid w-auto">
+                <button type="submit" id="addButton" class="btn btn-primary bg-gradient rounded-3">
+                    <i class="fa-solid fa-plus"></i> Tambah
+                </button>
+            </div>
+        </form>
+    </fieldset>
+
     <div class="mb-2">
         <table class="table table-sm table-hover table-responsive" style="width:100%; font-size: 9pt;">
             <thead>
@@ -71,10 +92,14 @@
             </thead>
             <tbody class="align-top" id="detail_pembelian_obat">
             </tbody>
+            <tbody class="align-top">
+            </tbody>
             <thead>
                 <tr>
-                    <th scope="col" class="bg-body-secondary border-secondary text-nowrap" style="border-bottom-width: 0; border-top-width: 2px;" colspan="3"></th>
+                    <th scope="col" class="bg-body-secondary border-secondary text-nowrap" style="border-bottom-width: 0; border-top-width: 2px;" colspan="1"></th>
                     <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 2px;">Total</th>
+                    <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="total_qty"></th>
+                    <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;"></th>
                     <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="total_harga"></th>
                 </tr>
             </thead>
@@ -106,26 +131,26 @@
 <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.colVis.min.js"></script>
 <script>
-    // async function fetchSupplierOptions() {
-    //     try {
-    //         const response = await axios.get('<?= base_url('obat/supplierlist') ?>');
+    async function fetchObatOptions() {
+        try {
+            const response = await axios.get('<?= base_url('pembelianobat/obatlist/' . $pembelianobat['id_supplier'] . '/' . $pembelianobat['id_pembelian_obat']) ?>');
 
-    //         if (response.data.success) {
-    //             const options = response.data.data;
-    //             const select = $('#id_supplier');
+            if (response.data.success) {
+                const options = response.data.data;
+                const select = $('#id_obat');
 
-    //             // Clear existing options except the first one
-    //             select.find('option:not(:first)').remove();
+                // Clear existing options except the first one
+                select.find('option:not(:first)').remove();
 
-    //             // Loop through the options and append them to the select element
-    //             options.forEach(option => {
-    //                 select.append(`<option value="${option.value}">${option.text}</option>`);
-    //             });
-    //         }
-    //     } catch (error) {
-    //         showFailedToast('Gagal mendapatkan dokter.<br>' + error);
-    //     }
-    // }
+                // Loop through the options and append them to the select element
+                options.forEach(option => {
+                    select.append(`<option value="${option.value}">${option.text}</option>`);
+                });
+            }
+        } catch (error) {
+            showFailedToast('Gagal mendapatkan obat.<br>' + error);
+        }
+    }
     async function fetchDetailPembelianObat() {
         $('#loadingSpinner').show();
 
@@ -135,16 +160,23 @@
             const data = response.data;
             $('#detail_pembelian_obat').empty();
 
-            let totalKeseluruhan = 0;
+            let totalQty = 0;
+            let totalHarga = 0;
 
             data.forEach(function(detail_pembelian_obat) {
                 const jumlah = parseInt(detail_pembelian_obat.jumlah); // Konversi jumlah ke integer
                 const harga_satuan = parseInt(detail_pembelian_obat.harga_satuan); // Konversi harga obat ke integer
                 const total_harga = jumlah * harga_satuan; // Hitung total harga
-                totalKeseluruhan += total_harga;
+                totalHarga += total_harga;
+                totalQty += jumlah;
                 const detail_pembelian_obatElement = `
                     <tr>
-                        <td></td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <button class="btn btn-secondary text-nowrap bg-gradient rounded-start-3 edit-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${detail_pembelian_obat.id_detail_pembelian_obat}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
+                                <button class="btn btn-danger text-nowrap bg-gradient rounded-end-3 delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${detail_pembelian_obat.id_detail_pembelian_obat}" data-name="${detail_pembelian_obat.nama_obat}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        </td>
                         <td>${detail_pembelian_obat.nama_obat}</td>
                         <td class="date text-end">${jumlah.toLocaleString('id-ID')}</td>
                         <td class="date text-end">Rp${harga_satuan.toLocaleString('id-ID')}</td>
@@ -154,8 +186,10 @@
 
                 $('#detail_pembelian_obat').append(detail_pembelian_obatElement);
             });
-            const totalKeseluruhanElement = `Rp${totalKeseluruhan.toLocaleString('id-ID')}`;
-            $('#total_harga').append(totalKeseluruhanElement);
+            const totalHargaElement = `Rp${totalHarga.toLocaleString('id-ID')}`;
+            const totalQtyElement = `${totalQty.toLocaleString('id-ID')}`;
+            $('#total_harga').text(totalHargaElement);
+            $('#total_qty').text(totalQtyElement);
         } catch (error) {
             showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
             $('#detail_pembelian_obat').empty();
@@ -166,122 +200,238 @@
     }
 
     $(document).ready(function() {
+        $('[data-bs-toggle="tooltip"]').tooltip();
         // Store the ID of the user to be deleted
-        var pembelianObatId;
-        var pembelianObatName;
-        var pembelianObatDate;
+        var detailPembelianObatId;
+        var detailPembelianObatName;
 
-        // // Show delete confirmation modal
-        // $(document).on('click', '.delete-btn', function() {
-        //     pembelianObatId = $(this).data('id');
-        //     pembelianObatName = $(this).data('name');
-        //     pembelianObatDate = $(this).data('date');
-        //     $('[data-bs-toggle="tooltip"]').tooltip('hide');
-        //     $('#deleteMessage').html(`Hapus pembelian dari "` + pembelianObatName + `?`);
-        //     $('#deleteSubmessage').html(`Tanggal Pembelian: ` + pembelianObatDate);
-        //     $('#deleteModal').modal('show');
-        // });
+        // Show delete confirmation modal
+        $(document).on('click', '.delete-btn', function() {
+            detailPembelianObatId = $(this).data('id');
+            detailPembelianObatName = $(this).data('name');
+            $('[data-bs-toggle="tooltip"]').tooltip('hide');
+            $('#deleteMessage').html(`Hapus item "` + detailPembelianObatName + `?`);
+            $('#deleteSubmessage').html(``);
+            $('#deleteModal').modal('show');
+        });
 
-        // $('#confirmDeleteBtn').click(async function() {
-        //     $('#deleteModal button').prop('disabled', true);
-        //     $('#deleteMessage').addClass('mb-0').html('Mengapus, silakan tunggu...');
-        //     $('#deleteSubmessage').hide();
+        $('#confirmDeleteBtn').click(async function() {
+            $('#deleteModal button').prop('disabled', true);
+            $('#deleteMessage').addClass('mb-0').html('Menghapus, silakan tunggu...');
+            $('#deleteSubmessage').hide();
 
-        //     try {
-        //         await axios.delete(`<?= base_url('/pembelianobat/delete') ?>/${pembelianObatId}`);
-        //         showSuccessToast('Pembelian obat berhasil dihapus.');
-        //         fetchPembelianObat();
-        //     } catch (error) {
-        //         showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
-        //     } finally {
-        //         $('#deleteModal').modal('hide');
-        //         $('#deleteMessage').removeClass('mb-0');
-        //         $('#deleteSubmessage').show();
-        //         $('#deleteModal button').prop('disabled', false);
-        //     }
-        // });
+            try {
+                await axios.delete(`<?= base_url('/pembelianobat/hapusdetailpembelianobat') ?>/${detailPembelianObatId}`);
+                fetchDetailPembelianObat();
+                fetchObatOptions();
+            } catch (error) {
+                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+            } finally {
+                $('#deleteModal').modal('hide');
+                $('#deleteMessage').removeClass('mb-0');
+                $('#deleteSubmessage').show();
+                $('#deleteModal button').prop('disabled', false);
+            }
+        });
 
-        // $('#pembelianObatForm').submit(async function(e) {
-        //     e.preventDefault();
+        $(document).on('click', '.edit-btn', async function() {
+            const $this = $(this);
+            const id = $(this).data('id');
+            const $row = $this.closest('tr');
+            $('[data-bs-toggle="tooltip"]').tooltip('hide');
+            $this.prop('disabled', true).html(`<span class="spinner-border" style="width: 11px; height: 11px;" aria-hidden="true"></span>`);
+            $('#editDetailPembelian').remove();
+            try {
+                const response = await axios.get(`<?= base_url('/pembelianobat/detailpembelianobatitem') ?>/${id}`);
+                const formHtml = `
+                <tr id="editDetailPembelian">
+                    <td colspan="5">
+                        <form id="editDetail" enctype="multipart/form-data">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <div class="fw-bold">Edit Total</div>
+                                <button type="button" class="text-end btn-close ms-auto cancel-edit"></button>
+                            </div>
+                            <div class="d-flex flex-column flex-lg-row gap-1">
+                                <input type="hidden" id="id_detail_pembelian_obat" name="id_detail_pembelian_obat" value="${response.data.id_detail_pembelian_obat}">
+                                <input type="hidden" id="id_obat_edit" name="id_obat_edit" value="${response.data.id_obat}">
+                                <div class="flex-fill">
+                                    <input type="number" id="jumlah_edit" name="jumlah_edit" class="form-control rounded-start-3" placeholder="Jumlah" value="${response.data.jumlah}">
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                                <div class="d-grid w-auto">
+                                    <button type="submit" id="editButton" class="btn btn-primary bg-gradient rounded-3">
+                                        <i class="fa-solid fa-pen-to-square"></i> Edit
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </td>
+                </tr>
+                `;
+                // Append the new row with the form directly after the current data row
+                $row.after(formHtml);
 
-        //     const formData = new FormData(this);
-        //     console.log("Form Data:", $(this).serialize());
+                // Handle form submission
+                $('#editDetail').on('submit', async function(e) {
+                    e.preventDefault();
 
-        //     // Clear previous validation states
-        //     $('#pembelianObatForm .is-invalid').removeClass('is-invalid');
-        //     $('#pembelianObatForm .invalid-feedback').text('').hide();
-        //     $('#submitButton').prop('disabled', true).html(`
-        //         <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
-        //     `);
+                    const formData = new FormData(this);
+                    console.log("Form Data:", $(this).serialize());
 
-        //     // Disable form inputs
-        //     $('#pembelianObatForm select').prop('disabled', true);
+                    // Clear previous validation states
+                    $('#editDetail .is-invalid').removeClass('is-invalid');
+                    $('#editDetail .invalid-feedback').text('').hide();
+                    $('#editButton').prop('disabled', true).html(`
+                        <span class="spinner-border spinner-border-sm" aria-hidden="true"></span> Edit
+                    `);
 
-        //     try {
-        //         const response = await axios.post(`<?= base_url('/pembelianobat/create') ?>`, formData, {
-        //             headers: {
-        //                 'Content-Type': 'multipart/form-data'
-        //             }
-        //         });
+                    // Disable form inputs
+                    $('#editDetail input, #editDetail select').prop('disabled', true);
 
-        //         if (response.data.success) {
-        //             showSuccessToast(response.data.message, 'success');
-        //             $('#pembelianObatForm')[0].reset();
-        //             $('#id_supplier').val('');
-        //             $('#pembelianObatForm .is-invalid').removeClass('is-invalid');
-        //             $('#pembelianObatForm .invalid-feedback').text('').hide();
-        //             $('#submitButtonContainer').hide();
-        //             fetchPembelianObat();
-        //         } else {
-        //             console.log("Validation Errors:", response.data.errors);
+                    try {
+                        const response = await axios.post(`<?= base_url('/pembelianobat/perbaruidetailpembelianobat/' . $pembelianobat['id_pembelian_obat']) ?>`, formData, {
+                            headers: {
+                                'Content-Type': 'multipart/form-data'
+                            }
+                        });
 
-        //             // Clear previous validation states
-        //             $('#pembelianObatForm .is-invalid').removeClass('is-invalid');
-        //             $('#pembelianObatForm .invalid-feedback').text('').hide();
+                        if (response.data.success) {
+                            $('#editDetail')[0].reset();
+                            $('#editDetail .is-invalid').removeClass('is-invalid');
+                            $('#editDetail .invalid-feedback').text('').hide();
+                            $('#editDetailPembelian').remove();
+                            fetchDetailPembelianObat();
+                            fetchObatOptions();
+                        } else {
+                            console.log("Validation Errors:", response.data.errors);
 
-        //             // Display new validation errors
-        //             for (const field in response.data.errors) {
-        //                 if (response.data.errors.hasOwnProperty(field)) {
-        //                     const fieldElement = $('#' + field);
-        //                     const feedbackElement = fieldElement.siblings('.invalid-feedback');
+                            // Clear previous validation states
+                            $('#editDetail .is-invalid').removeClass('is-invalid');
+                            $('#editDetail .invalid-feedback').text('').hide();
 
-        //                     console.log("Target Field:", fieldElement);
-        //                     console.log("Target Feedback:", feedbackElement);
+                            // Display new validation errors
+                            for (const field in response.data.errors) {
+                                if (response.data.errors.hasOwnProperty(field)) {
+                                    const fieldElement = $('#' + field);
+                                    const feedbackElement = fieldElement.siblings('.invalid-feedback');
 
-        //                     if (fieldElement.length > 0 && feedbackElement.length > 0) {
-        //                         fieldElement.addClass('is-invalid');
-        //                         feedbackElement.text(response.data.errors[field]).show();
+                                    console.log("Target Field:", fieldElement);
+                                    console.log("Target Feedback:", feedbackElement);
 
-        //                         // Remove error message when the user corrects the input
-        //                         fieldElement.on('input change', function() {
-        //                             $(this).removeClass('is-invalid');
-        //                             $(this).siblings('.invalid-feedback').text('').hide();
-        //                         });
-        //                     } else {
-        //                         console.warn("Elemen tidak ditemukan pada field:", field);
-        //                     }
-        //                 }
-        //             }
-        //             console.error('Perbaiki kesalahan pada formulir.');
-        //         }
-        //     } catch (error) {
-        //         showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
-        //     } finally {
-        //         $('#submitButton').prop('disabled', false).html(`
-        //             <i class="fa-solid fa-plus"></i>
-        //         `);
-        //         $('#pembelianObatForm select').prop('disabled', false);
-        //     }
-        // });
-        // $('#refreshButton').on('click', function() {
-        //     $('#pembelianObatContainer').empty();
-        //     for (let i = 0; i < limit; i++) {
-        //         $('#pembelianObatContainer').append(placeholder);
-        //     }
-        //     fetchPembelianObat(); // Refresh articles on button click
-        // });
+                                    if (fieldElement.length > 0 && feedbackElement.length > 0) {
+                                        fieldElement.addClass('is-invalid');
+                                        feedbackElement.text(response.data.errors[field]).show();
+
+                                        // Remove error message when the user corrects the input
+                                        fieldElement.on('input change', function() {
+                                            $(this).removeClass('is-invalid');
+                                            $(this).siblings('.invalid-feedback').text('').hide();
+                                        });
+                                    } else {
+                                        console.warn("Elemen tidak ditemukan pada field:", field);
+                                    }
+                                }
+                            }
+                            console.error('Perbaiki kesalahan pada formulir.');
+                        }
+                    } catch (error) {
+                        showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                    } finally {
+                        $('#editButton').prop('disabled', false).html(`
+                            <i class="fa-solid fa-pen-to-square"></i> Edit
+                        `);
+                        $('#editDetail input, #editDetail select').prop('disabled', false);
+                    }
+                });
+
+                // Handle cancel button
+                $('.cancel-edit').on('click', function() {
+                    $('#editDetailPembelian').remove();
+                });
+            } catch (error) {
+                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                console.error(error);
+            } finally {
+                $this.prop('disabled', false).html(`<i class="fa-solid fa-pen-to-square"></i>`);
+            }
+        });
+
+        $('#tambahDetail').submit(async function(e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+            console.log("Form Data:", $(this).serialize());
+
+            // Clear previous validation states
+            $('#tambahDetail .is-invalid').removeClass('is-invalid');
+            $('#tambahDetail .invalid-feedback').text('').hide();
+            $('#submitButton').prop('disabled', true).html(`
+                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span> Tambah
+            `);
+
+            // Disable form inputs
+            $('#tambahDetail input, #tambahDetail select').prop('disabled', true);
+
+            try {
+                const response = await axios.post(`<?= base_url('/pembelianobat/tambahdetailpembelianobat/' . $pembelianobat['id_pembelian_obat']) ?>`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
+
+                if (response.data.success) {
+                    $('#tambahDetail')[0].reset();
+                    $('#id_obat').val('');
+                    $('#jumlah').val('');
+                    $('#tambahDetail .is-invalid').removeClass('is-invalid');
+                    $('#tambahDetail .invalid-feedback').text('').hide();
+                    $('#submitButtonContainer').hide();
+                    fetchDetailPembelianObat();
+                    fetchObatOptions();
+                } else {
+                    console.log("Validation Errors:", response.data.errors);
+
+                    // Clear previous validation states
+                    $('#tambahDetail .is-invalid').removeClass('is-invalid');
+                    $('#tambahDetail .invalid-feedback').text('').hide();
+
+                    // Display new validation errors
+                    for (const field in response.data.errors) {
+                        if (response.data.errors.hasOwnProperty(field)) {
+                            const fieldElement = $('#' + field);
+                            const feedbackElement = fieldElement.siblings('.invalid-feedback');
+
+                            console.log("Target Field:", fieldElement);
+                            console.log("Target Feedback:", feedbackElement);
+
+                            if (fieldElement.length > 0 && feedbackElement.length > 0) {
+                                fieldElement.addClass('is-invalid');
+                                feedbackElement.text(response.data.errors[field]).show();
+
+                                // Remove error message when the user corrects the input
+                                fieldElement.on('input change', function() {
+                                    $(this).removeClass('is-invalid');
+                                    $(this).siblings('.invalid-feedback').text('').hide();
+                                });
+                            } else {
+                                console.warn("Elemen tidak ditemukan pada field:", field);
+                            }
+                        }
+                    }
+                    console.error('Perbaiki kesalahan pada formulir.');
+                }
+            } catch (error) {
+                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+            } finally {
+                $('#submitButton').prop('disabled', false).html(`
+                    <i class="fa-solid fa-plus"></i> Tambah
+                `);
+                $('#tambahDetail input, #tambahDetail select').prop('disabled', false);
+            }
+        });
 
         fetchDetailPembelianObat();
+        fetchObatOptions();
     });
     // Show toast notification
     function showSuccessToast(message) {
