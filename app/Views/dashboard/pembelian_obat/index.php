@@ -16,7 +16,7 @@
             <button class="btn btn-success btn-sm bg-gradient rounded-end-3" type="button" id="refreshButton"><i class="fa-solid fa-sync"></i></button>
         </div>
     </div>
-    <form id="pembelianObatForm" enctype="multipart/form-data" class="d-flex flex-column flex-lg-row mb-1 gap-2 mb-3">
+    <form id="pembelianObatForm" enctype="multipart/form-data" class="d-flex flex-row mb-1 gap-2 mb-3">
         <div class="flex-fill">
             <select class="form-select rounded-3" id="id_supplier" name="id_supplier" aria-label="id_supplier">
                 <option value="">-- Pilih Supplier --</option>
