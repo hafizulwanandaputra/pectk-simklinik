@@ -43,6 +43,7 @@
                         <p class="card-text placeholder-glow">
                             <small>
                                 <span class="placeholder" style="width: 12.5%;"></span><br>
+                                <span class="placeholder" style="width: 12.5%;"></span><br>
                                 <span class="placeholder" style="width: 12.5%;"></span>
                             </small>
                         </p>
@@ -99,6 +100,7 @@
                         <p class="card-text placeholder-glow">
                             <small>
                                 <span class="placeholder" style="width: 12.5%;"></span><br>
+                                <span class="placeholder" style="width: 12.5%;"></span><br>
                                 <span class="placeholder" style="width: 12.5%;"></span>
                             </small>
                         </p>
@@ -153,6 +155,7 @@
                 $('#paginationNav ul').empty();
             } else {
                 data.pembelian_obat.forEach(function(pembelian_obat) {
+                    const total_harga = parseInt(pembelian_obat.total_harga);
                     const pembelian_obatElement = `
             <li class="list-group-item bg-body-tertiary pb-3 pt-3">
                 <div class="d-flex">
@@ -164,7 +167,11 @@
                             ${pembelian_obat.user_fullname} (@${pembelian_obat.user_username})
                         </h6>
                         <p class="card-text date">
-                            <small>ID Pembelian:${pembelian_obat.id_pembelian_obat}<br>Tanggal dan Waktu Pembelian: ${pembelian_obat.tgl_pembelian}</small>
+                            <small>
+                                ID Pembelian:${pembelian_obat.id_pembelian_obat}<br>
+                                Tanggal dan Waktu Pembelian: ${pembelian_obat.tgl_pembelian}<br>
+                                Total Harga: Rp${total_harga.toLocaleString('id-ID')}
+                            </small>
                         </p>
                     </div>
                 </div>
