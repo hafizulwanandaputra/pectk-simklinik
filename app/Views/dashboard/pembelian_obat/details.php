@@ -260,6 +260,7 @@
             const totalQtyElement = `${totalQty.toLocaleString('id-ID')}`;
             $('#total_harga').text(totalHargaElement);
             $('#total_qty').text(totalQtyElement);
+            $('[data-bs-toggle="tooltip"]').tooltip();
         } catch (error) {
             showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
             $('#detail_pembelian_obat').empty();
