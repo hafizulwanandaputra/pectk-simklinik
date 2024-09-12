@@ -18,7 +18,7 @@
                     <th scope="col" class="bg-body-secondary border-secondary text-nowrap" style="border-bottom-width: 2px;">Tindakan</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Nama</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Alamat</th>
-                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Nomor Ponsel</th>
+                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Nomor Telepon</th>
                 </tr>
             </thead>
             <tbody class="align-top">
@@ -60,7 +60,7 @@
                     </div>
                     <div class="form-floating mb-1 mt-1">
                         <input type="number" class="form-control" autocomplete="off" dir="auto" placeholder="kontak_supplier" id="kontak_supplier" name="kontak_supplier">
-                        <label for="kontak_supplier">Nomor Ponsel*</label>
+                        <label for="kontak_supplier">Nomor Telepon*</label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>

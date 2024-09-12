@@ -43,7 +43,7 @@
                 </div>
             </div>
             <div class="mb-2 row">
-                <div class="col-lg-3 fw-medium">Kontak Supplier</div>
+                <div class="col-lg-3 fw-medium">Nomor Telepon Supplier</div>
                 <div class="col-lg">
                     <div class="date">
                         <?= $pembelianobat['kontak_supplier'] ?>
