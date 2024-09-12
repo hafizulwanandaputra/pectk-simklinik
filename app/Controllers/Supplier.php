@@ -42,6 +42,7 @@ class Supplier extends BaseController
             2 => 'nama_supplier',
             3 => 'alamat_supplier',
             4 => 'kontak_supplier',
+            5 => 'jumlah_obat',
         ];
 
         // Get the column to sort by
@@ -62,6 +63,7 @@ class Supplier extends BaseController
 
         // Fetch the data
         $supplier = $this->SupplierModel
+            ->select('supplier.*, (SELECT COUNT(*) FROM obat WHERE obat.id_supplier = supplier.id_supplier) as jumlah_obat')
             ->orderBy($sortColumn, $sortDirection)
             ->findAll($length, $start);
 

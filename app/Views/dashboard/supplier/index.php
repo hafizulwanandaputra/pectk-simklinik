@@ -19,6 +19,7 @@
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Nama</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Alamat</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Nomor Telepon</th>
+                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Jumlah Obat</th>
                 </tr>
             </thead>
             <tbody class="align-top">
@@ -226,6 +227,12 @@
                         return `<span class="date text-nowrap">${data}</span>`;
                     }
                 },
+                {
+                    data: 'jumlah_obat',
+                    render: function(data, type, row) {
+                        return `<div class="date text-nowrap text-end">${data}</div>`;
+                    }
+                },
             ],
             "order": [
                 [2, 'desc']
@@ -234,7 +241,7 @@
                 "target": [0, 1],
                 "orderable": false
             }, {
-                "target": [0, 1, 4],
+                "target": [0, 1, 4, 5],
                 "width": "0%"
             }, {
                 "target": [2, 3],
