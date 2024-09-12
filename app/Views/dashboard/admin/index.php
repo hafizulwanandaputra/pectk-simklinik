@@ -103,7 +103,7 @@
                     </div>
                     <div class="form-floating mb-1 mt-1">
                         <select class="form-select" id="role" name="role" aria-label="role">
-                            <option value="">-- Pilih Jenis Pengguna --</option>
+                            <option value="" disabled selected>-- Pilih Jenis Pengguna --</option>
                             <option value="Admin">Admin</option>
                             <option value="Apoteker">Apoteker</option>
                             <option value="Dokter">Dokter</option>
