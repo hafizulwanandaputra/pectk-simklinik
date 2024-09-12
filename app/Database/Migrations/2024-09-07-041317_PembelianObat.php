@@ -26,11 +26,18 @@ class PembelianObat extends Migration
                 'unsigned' => true
             ],
             'tgl_pembelian' => [
-                'type' => 'DATE',
+                'type' => 'DATETIME',
+            ],
+            'total_qty' => [
+                'type' => 'BIGINT',
+                'constraint' => 24,
             ],
             'total_biaya' => [
                 'type' => 'BIGINT',
                 'constraint' => 24,
+            ],
+            'diterima' => [
+                'type' => 'BOOLEAN'
             ],
         ]);
         $this->forge->addKey('id_pembelian_obat', true);

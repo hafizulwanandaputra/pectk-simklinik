@@ -38,22 +38,29 @@ class PembelianObat extends BaseController
 
         $PembelianObatModel = $this->PembelianObatModel;
 
-        // Apply search filter
-        $PembelianObatModel->groupStart()
-            ->like('tgl_pembelian', $search)
-            ->groupEnd();
+        // Join tables before applying search filter
+        $PembelianObatModel
+            ->select('pembelian_obat.*, 
+            supplier.nama_supplier as supplier_nama_supplier, 
+            user.fullname as user_fullname, 
+            user.username as user_username')
+            ->join('supplier', 'supplier.id_supplier = pembelian_obat.id_supplier', 'inner')
+            ->join('user', 'user.id_user = pembelian_obat.id_user', 'inner');
+
+        // Apply search filter on supplier name or purchase date
+        if ($search) {
+            $PembelianObatModel
+                ->groupStart()
+                ->like('supplier.nama_supplier', $search)  // Search in the supplier's name
+                ->orLike('tgl_pembelian', $search)         // Search in the purchase date
+                ->groupEnd();
+        }
 
         // Count total results
         $total = $PembelianObatModel->countAllResults(false);
 
         // Get paginated results
         $PembelianObat = $PembelianObatModel
-            ->select('pembelian_obat.*, 
-                supplier.nama_supplier as supplier_nama_supplier, 
-                user.fullname as user_fullname, 
-                user.username as user_username')
-            ->join('supplier', 'supplier.id_supplier = pembelian_obat.id_supplier', 'inner')
-            ->join('user', 'user.id_user = pembelian_obat.id_user', 'inner')
             ->orderBy('tgl_pembelian', 'DESC')
             ->findAll($limit, $offset);
 
@@ -111,6 +118,7 @@ class PembelianObat extends BaseController
             'tgl_pembelian' => date('Y-m-d H:i:s'),
             'total_qty' => 0,
             'total_biaya' => 0,
+            'diterima' => 0,
         ];
         $this->PembelianObatModel->save($data);
         return $this->response->setJSON(['success' => true, 'message' => 'Pembelian berhasil ditambahkan']);
@@ -121,7 +129,35 @@ class PembelianObat extends BaseController
         $db = db_connect();
         $this->PembelianObatModel->delete($id);
         $db->query('ALTER TABLE `pembelian_obat` auto_increment = 1');
+        $db->query('ALTER TABLE `detail_pembelian_obat` auto_increment = 1');
         return $this->response->setJSON(['message' => 'Obat berhasil dihapus']);
+    }
+
+    public function complete($id)
+    {
+        $db = db_connect();
+        $db->table('pembelian_obat')
+            ->set('diterima', 1)
+            ->where('id_pembelian_obat', $id)
+            ->update();
+        // Ambil detail pembelian obat berdasarkan id_pembelian_obat
+        $details = $db->table('detail_pembelian_obat')
+            ->where('id_pembelian_obat', $id)
+            ->get()
+            ->getResultArray();
+
+        // Update jumlah_masuk di tabel obat untuk setiap id_obat di detail_pembelian_obat
+        foreach ($details as $detail) {
+            $id_obat = $detail['id_obat'];
+            $jumlah_masuk = $detail['jumlah'];
+
+            // Update jumlah_masuk di tabel obat
+            $db->table('obat')
+                ->set('jumlah_masuk', "jumlah_masuk + $jumlah_masuk", false) // false untuk menghindari quoting otomatis
+                ->where('id_obat', $id_obat)
+                ->update();
+        }
+        return $this->response->setJSON(['message' => 'Obat sudah diterima. Periksa jumlah masuk di menu obat.']);
     }
 
     // DETAIL PEMBELIAN OBAT
@@ -131,8 +167,6 @@ class PembelianObat extends BaseController
             ->join('supplier', 'supplier.id_supplier = pembelian_obat.id_supplier', 'inner')
             ->join('user', 'user.id_user = pembelian_obat.id_user', 'inner')
             ->find($id);
-        // dd($pembelianobat);
-        // die;
         $data = [
             'pembelianobat' => $pembelianobat,
             'title' => 'Detail Pembelian Obat dengan ID ' . $id . ' - ' . $this->systemName,
@@ -140,6 +174,16 @@ class PembelianObat extends BaseController
             'agent' => $this->request->getUserAgent()
         ];
         return view('dashboard/pembelian_obat/details', $data);
+    }
+
+    // DETAIL PEMBELIAN OBAT
+    public function pembelianobat($id)
+    {
+        $data = $this->PembelianObatModel
+            ->join('supplier', 'supplier.id_supplier = pembelian_obat.id_supplier', 'inner')
+            ->join('user', 'user.id_user = pembelian_obat.id_user', 'inner')
+            ->find($id);
+        return $this->response->setJSON($data);
     }
 
     public function detailpembelianobatlist($id)
@@ -174,6 +218,8 @@ class PembelianObat extends BaseController
 
         $options = [];
         foreach ($results as $row) {
+            $harga_obat = (int) $row['harga_obat'];
+            $harga_obat_terformat = number_format($harga_obat, 0, ',', '.');
             // Cek apakah id_obat sudah ada di tabel detail_pembelian_obat dengan id_pembelian_obat yang sama
             $isUsed = $DetailPembelianObatModel->where('id_obat', $row['id_obat'])
                 ->where('id_pembelian_obat', $id_pembelian_obat) // Pastikan sesuai dengan id_pembelian_obat yang sedang digunakan
@@ -183,7 +229,7 @@ class PembelianObat extends BaseController
             if (!$isUsed) {
                 $options[] = [
                     'value' => $row['id_obat'],
-                    'text' => $row['nama_obat']
+                    'text' => $row['nama_obat'] . ' (' . $row['kategori_obat'] . ' • ' . $row['bentuk_obat'] . ' • Rp' . $harga_obat_terformat . ')'
                 ];
             }
         }
@@ -255,8 +301,7 @@ class PembelianObat extends BaseController
             return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
         }
 
-        $ObatModel = new ObatModel();
-        $obat = $ObatModel->find($this->request->getPost('id_obat_edit'));
+        $harga_satuan = $this->DetailPembelianObatModel->find($this->request->getPost('id_detail_pembelian_obat'));
 
         // Save Data
         $data = [
@@ -264,7 +309,7 @@ class PembelianObat extends BaseController
             'id_pembelian_obat' => $id,
             'id_obat' => $this->request->getPost('id_obat_edit'),
             'jumlah' => $this->request->getPost('jumlah_edit'),
-            'harga_satuan' => $obat['harga_obat'],
+            'harga_satuan' => $harga_satuan['harga_satuan'],
         ];
         $this->DetailPembelianObatModel->save($data);
 

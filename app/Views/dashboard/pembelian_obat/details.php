@@ -58,7 +58,7 @@
         </div>
     </fieldset>
 
-    <fieldset class="border rounded-3 px-2 py-0 mb-3">
+    <fieldset id="tambahDetailContainer" class="border rounded-3 px-2 py-0 mb-3" style="display: none;">
         <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Tambah Detail Pembelian</legend>
         <form id="tambahDetail" enctype="multipart/form-data" class="d-flex flex-column flex-lg-row mb-2 gap-2">
             <div class="flex-fill">
@@ -68,7 +68,7 @@
                 <div class="invalid-feedback"></div>
             </div>
             <div class="w-auto">
-                <input type="number" id="jumlah" name="jumlah" class="form-control rounded-start-3" placeholder="Jumlah">
+                <input type="number" id="jumlah" name="jumlah" class="form-control rounded-3" placeholder="Jumlah">
                 <div class="invalid-feedback"></div>
             </div>
             <div class="d-grid w-auto">
@@ -83,7 +83,7 @@
         <table class="table table-sm table-hover table-responsive" style="width:100%; font-size: 9pt;">
             <thead>
                 <tr class="align-middle">
-                    <th scope="col" class="bg-body-secondary border-secondary text-nowrap" style="border-bottom-width: 2px; width: 0%;">Tindakan</th>
+                    <th scope="col" class="bg-body-secondary border-secondary text-nowrap tindakan" style="border-bottom-width: 2px; width: 0%;">Tindakan</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">Nama Obat</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Jumlah</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Harga Satuan</th>
@@ -91,6 +91,9 @@
                 </tr>
             </thead>
             <tbody class="align-top" id="detail_pembelian_obat">
+                <tr>
+                    <td colspan="5" class="text-center">Memuat detail pembelian...</td>
+                </tr>
             </tbody>
             <tbody class="align-top">
             </tbody>
@@ -106,16 +109,36 @@
         </table>
     </div>
 
+    <div id="terimaObat">
+        <hr>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
+            <button class="btn btn-primary rounded-3 bg-gradient" type="button" id="completeBtn" data-id="<?= $pembelianobat['id_pembelian_obat'] ?>" disabled><i class="fa-solid fa-check-double"></i> Terima Obat</button>
+        </div>
+    </div>
+
     <div class="modal modal-sheet p-4 py-md-5 fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content bg-body rounded-4 shadow-lg transparent-blur">
                 <div class="modal-body p-4 text-center">
-                    <h5 id="deleteMessage"></h5>
-                    <h6 class="mb-0" id="deleteSubmessage"></h6>
+                    <h5 class="mb-0" id="deleteMessage"></h5>
                 </div>
                 <div class="modal-footer flex-nowrap p-0" style="border-top: 1px solid var(--bs-border-color-translucent);">
                     <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end" style="border-right: 1px solid var(--bs-border-color-translucent)!important;" data-bs-dismiss="modal">Tidak</button>
                     <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0" id="confirmDeleteBtn">Ya</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal modal-sheet p-4 py-md-5 fade" id="completeModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="completeModalLabel" aria-hidden="true" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content bg-body rounded-4 shadow-lg transparent-blur">
+                <div class="modal-body p-4 text-center">
+                    <h5 class="mb-0" id="completeMessage"></h5>
+                </div>
+                <div class="modal-footer flex-nowrap p-0" style="border-top: 1px solid var(--bs-border-color-translucent);">
+                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end" style="border-right: 1px solid var(--bs-border-color-translucent)!important;" data-bs-dismiss="modal">Tidak</button>
+                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0" id="confirmCompleteBtn">Ya</button>
                 </div>
             </div>
         </div>
@@ -151,6 +174,33 @@
             showFailedToast('Gagal mendapatkan obat.<br>' + error);
         }
     }
+
+    async function fetchStatusPembelian() {
+        $('#loadingSpinner').show();
+
+        try {
+            const response = await axios.get('<?= base_url('pembelianobat/pembelianobat/') . $pembelianobat['id_pembelian_obat'] ?>');
+
+            const data = response.data;
+
+            // Cek status `diterima`
+            if (data.diterima === "1") {
+                // Nonaktifkan tombol jika sudah diterima
+                $('#completeBtn').prop('disabled', true);
+                $('#tambahDetailContainer').hide();
+            } else if (data.diterima === "0") {
+                // Aktifkan tombol jika belum diterima
+                $('#completeBtn').prop('disabled', false);
+                $('#tambahDetailContainer').show();
+            }
+        } catch (error) {
+            showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+        } finally {
+            // Hide the spinner when done
+            $('#loadingSpinner').hide();
+        }
+    }
+
     async function fetchDetailPembelianObat() {
         $('#loadingSpinner').show();
 
@@ -163,29 +213,47 @@
             let totalQty = 0;
             let totalHarga = 0;
 
-            data.forEach(function(detail_pembelian_obat) {
-                const jumlah = parseInt(detail_pembelian_obat.jumlah); // Konversi jumlah ke integer
-                const harga_satuan = parseInt(detail_pembelian_obat.harga_satuan); // Konversi harga obat ke integer
-                const total_harga = jumlah * harga_satuan; // Hitung total harga
-                totalHarga += total_harga;
-                totalQty += jumlah;
-                const detail_pembelian_obatElement = `
+            if (data.length === 0) {
+                // Tampilkan pesan jika tidak ada data
+                const emptyRow = `
+                <tr>
+                    <td colspan="5" class="text-center">Tidak ada data pembelian obat</td>
+                </tr>
+            `;
+                $('#detail_pembelian_obat').append(emptyRow);
+                $('#completeBtn').prop('disabled', true);
+            } else {
+                data.forEach(function(detail_pembelian_obat) {
+                    const jumlah = parseInt(detail_pembelian_obat.jumlah); // Konversi jumlah ke integer
+                    const harga_satuan = parseInt(detail_pembelian_obat.harga_satuan); // Konversi harga obat ke integer
+                    const total_harga = jumlah * harga_satuan; // Hitung total harga
+                    totalHarga += total_harga;
+                    totalQty += jumlah;
+                    const detail_pembelian_obatElement = `
                     <tr>
-                        <td>
+                        <td class="tindakan">
                             <div class="btn-group" role="group">
                                 <button class="btn btn-secondary text-nowrap bg-gradient rounded-start-3 edit-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${detail_pembelian_obat.id_detail_pembelian_obat}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
                                 <button class="btn btn-danger text-nowrap bg-gradient rounded-end-3 delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${detail_pembelian_obat.id_detail_pembelian_obat}" data-name="${detail_pembelian_obat.nama_obat}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
                             </div>
                         </td>
-                        <td>${detail_pembelian_obat.nama_obat}</td>
+                        <td>${detail_pembelian_obat.nama_obat}<br><small>${detail_pembelian_obat.kategori_obat} • ${detail_pembelian_obat.bentuk_obat}</small></td>
                         <td class="date text-end">${jumlah.toLocaleString('id-ID')}</td>
                         <td class="date text-end">Rp${harga_satuan.toLocaleString('id-ID')}</td>
                         <td class="date text-end">Rp${total_harga.toLocaleString('id-ID')}</td>
                     </tr>
                 `;
 
-                $('#detail_pembelian_obat').append(detail_pembelian_obatElement);
-            });
+                    $('#detail_pembelian_obat').append(detail_pembelian_obatElement);
+                    if (detail_pembelian_obat.diterima === "1") {
+                        $('.edit-btn').prop('disabled', true);
+                        $('.delete-btn').prop('disabled', true);
+                    } else if (detail_pembelian_obat.diterima === "0") {
+                        $('.edit-btn').prop('disabled', false);
+                        $('.delete-btn').prop('disabled', false);
+                    }
+                });
+            }
             const totalHargaElement = `Rp${totalHarga.toLocaleString('id-ID')}`;
             const totalQtyElement = `${totalQty.toLocaleString('id-ID')}`;
             $('#total_harga').text(totalHargaElement);
@@ -201,9 +269,32 @@
 
     $(document).ready(function() {
         $('[data-bs-toggle="tooltip"]').tooltip();
-        // Store the ID of the user to be deleted
         var detailPembelianObatId;
         var detailPembelianObatName;
+        var pembelianObatId;
+
+        $(document).on('click', '#completeBtn', function() {
+            pembelianObatId = $(this).data('id');
+            $('#completeMessage').html(`Apakah Anda akan menerima obat-obat ini?`);
+            $('#completeModal').modal('show');
+        });
+
+        $('#confirmCompleteBtn').click(async function() {
+            $('#completeModal button').prop('disabled', true);
+            $('#completeMessage').html('Memproses data, silakan tunggu...');
+            try {
+                const response = await axios.post(`<?= base_url('pembelianobat/complete') ?>/${pembelianObatId}`);
+                showSuccessToast(response.data.message);
+                fetchDetailPembelianObat();
+                fetchObatOptions();
+                fetchStatusPembelian();
+            } catch (error) {
+                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+            } finally {
+                $('#completeModal').modal('hide');
+                $('#completeModal button').prop('disabled', false);
+            }
+        });
 
         // Show delete confirmation modal
         $(document).on('click', '.delete-btn', function() {
@@ -211,25 +302,22 @@
             detailPembelianObatName = $(this).data('name');
             $('[data-bs-toggle="tooltip"]').tooltip('hide');
             $('#deleteMessage').html(`Hapus item "` + detailPembelianObatName + `?`);
-            $('#deleteSubmessage').html(``);
             $('#deleteModal').modal('show');
         });
 
         $('#confirmDeleteBtn').click(async function() {
             $('#deleteModal button').prop('disabled', true);
-            $('#deleteMessage').addClass('mb-0').html('Menghapus, silakan tunggu...');
-            $('#deleteSubmessage').hide();
+            $('#deleteMessage').html('Menghapus, silakan tunggu...');
 
             try {
                 await axios.delete(`<?= base_url('/pembelianobat/hapusdetailpembelianobat') ?>/${detailPembelianObatId}`);
                 fetchDetailPembelianObat();
                 fetchObatOptions();
+                fetchStatusPembelian();
             } catch (error) {
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
             } finally {
                 $('#deleteModal').modal('hide');
-                $('#deleteMessage').removeClass('mb-0');
-                $('#deleteSubmessage').show();
                 $('#deleteModal button').prop('disabled', false);
             }
         });
@@ -248,14 +336,14 @@
                     <td colspan="5">
                         <form id="editDetail" enctype="multipart/form-data">
                             <div class="d-flex justify-content-between align-items-center mb-1">
-                                <div class="fw-bold">Edit Total</div>
+                                <div class="fw-bold">Edit Jumlah</div>
                                 <button type="button" class="text-end btn-close ms-auto cancel-edit"></button>
                             </div>
                             <div class="d-flex flex-column flex-lg-row gap-1">
                                 <input type="hidden" id="id_detail_pembelian_obat" name="id_detail_pembelian_obat" value="${response.data.id_detail_pembelian_obat}">
                                 <input type="hidden" id="id_obat_edit" name="id_obat_edit" value="${response.data.id_obat}">
                                 <div class="flex-fill">
-                                    <input type="number" id="jumlah_edit" name="jumlah_edit" class="form-control rounded-start-3" placeholder="Jumlah" value="${response.data.jumlah}">
+                                    <input type="number" id="jumlah_edit" name="jumlah_edit" class="form-control rounded-3" placeholder="Jumlah" value="${response.data.jumlah}">
                                     <div class="invalid-feedback"></div>
                                 </div>
                                 <div class="d-grid w-auto">
@@ -302,6 +390,7 @@
                             $('#editDetailPembelian').remove();
                             fetchDetailPembelianObat();
                             fetchObatOptions();
+                            fetchStatusPembelian();
                         } else {
                             console.log("Validation Errors:", response.data.errors);
 
@@ -365,7 +454,7 @@
             // Clear previous validation states
             $('#tambahDetail .is-invalid').removeClass('is-invalid');
             $('#tambahDetail .invalid-feedback').text('').hide();
-            $('#submitButton').prop('disabled', true).html(`
+            $('#addButton').prop('disabled', true).html(`
                 <span class="spinner-border spinner-border-sm" aria-hidden="true"></span> Tambah
             `);
 
@@ -385,9 +474,9 @@
                     $('#jumlah').val('');
                     $('#tambahDetail .is-invalid').removeClass('is-invalid');
                     $('#tambahDetail .invalid-feedback').text('').hide();
-                    $('#submitButtonContainer').hide();
                     fetchDetailPembelianObat();
                     fetchObatOptions();
+                    fetchStatusPembelian();
                 } else {
                     console.log("Validation Errors:", response.data.errors);
 
@@ -423,7 +512,7 @@
             } catch (error) {
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
             } finally {
-                $('#submitButton').prop('disabled', false).html(`
+                $('#addButton').prop('disabled', false).html(`
                     <i class="fa-solid fa-plus"></i> Tambah
                 `);
                 $('#tambahDetail input, #tambahDetail select').prop('disabled', false);
@@ -432,6 +521,7 @@
 
         fetchDetailPembelianObat();
         fetchObatOptions();
+        fetchStatusPembelian();
     });
     // Show toast notification
     function showSuccessToast(message) {

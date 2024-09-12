@@ -157,6 +157,9 @@
                 data.pembelian_obat.forEach(function(pembelian_obat) {
                     const total_qty = parseInt(pembelian_obat.total_qty);
                     const total_biaya = parseInt(pembelian_obat.total_biaya);
+                    const statusBadge = pembelian_obat.diterima == '1' ?
+                        `<span class="badge bg-success bg-gradient">Diterima</span>` :
+                        `<span class="badge bg-danger bg-gradient">Belum Diterima</span>`;
                     const pembelian_obatElement = `
             <li class="list-group-item bg-body-tertiary pb-3 pt-3">
                 <div class="d-flex">
@@ -172,7 +175,8 @@
                                 ID Pembelian: ${pembelian_obat.id_pembelian_obat}<br>
                                 Tanggal dan Waktu Pembelian: ${pembelian_obat.tgl_pembelian}<br>
                                 Total Item: ${total_qty.toLocaleString('id-ID')}<br>
-                                Total Harga: Rp${total_biaya.toLocaleString('id-ID')}
+                                Total Harga: Rp${total_biaya.toLocaleString('id-ID')}<br>
+                                ${statusBadge}
                             </small>
                         </p>
                     </div>
