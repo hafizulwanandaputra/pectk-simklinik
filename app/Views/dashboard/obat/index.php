@@ -1,4 +1,7 @@
 <?= $this->extend('dashboard/templates/dashboard'); ?>
+<?= $this->section('css'); ?>
+<?= $this->include('select2/floating'); ?>
+<?= $this->endSection(); ?>
 <?= $this->section('title'); ?>
 <div class="d-flex justify-content-start align-items-center">
     <span class="fw-medium fs-5 flex-fill text-truncate"><?= $headertitle; ?></span>
@@ -55,7 +58,7 @@
                     <input type="hidden" id="id_obat" name="id_obat">
                     <div class="form-floating mt-1 mb-1">
                         <select class="form-select rounded-3" id="id_supplier" name="id_supplier" aria-label="id_supplier">
-                            <option value="">-- Pilih Supplier --</option>
+                            <option value="" disabled selected>-- Pilih Supplier --</option>
                         </select>
                         <label for="id_dokter">Supplier*</label>
                         <div class="invalid-feedback"></div>
@@ -67,7 +70,7 @@
                     </div>
                     <div class="form-floating mt-1 mb-1">
                         <select class="form-select rounded-3" id="kategori_obat" name="kategori_obat" aria-label="kategori_obat">
-                            <option value="">-- Pilih Kategori --</option>
+                            <option value="" disabled selected>-- Pilih Kategori --</option>
                             <option value="Antibiotik">Antibiotik</option>
                             <option value="Antiinflamasi">Antiinflamasi</option>
                             <option value="Antihistamin">Antihistamin</option>
@@ -82,7 +85,7 @@
                     </div>
                     <div class="form-floating mt-1 mb-1">
                         <select class="form-select rounded-3" id="bentuk_obat" name="bentuk_obat" aria-label="bentuk_obat">
-                            <option value="">-- Pilih Bentuk --</option>
+                            <option value="" disabled selected>-- Pilih Bentuk --</option>
                             <option value="Tetes">Tetes</option>
                             <option value="Salep">Salep</option>
                             <option value="Gel">Gel</option>
@@ -344,6 +347,15 @@
         $('#addObatBtn').click(function() {
             $('#obatModalLabel').text('Tambah Obat');
             $('#obatModal').modal('show');
+        });
+
+        $('#obatModal').on('shown.bs.modal', function() {
+            $('#id_supplier').select2({
+                dropdownParent: $('#obatModal'),
+                theme: "bootstrap-5",
+                width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+                placeholder: $(this).data('placeholder'),
+            });
         });
 
         $(document).on('click', '.edit-btn', async function() {

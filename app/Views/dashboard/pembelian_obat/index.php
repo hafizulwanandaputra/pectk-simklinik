@@ -1,4 +1,7 @@
 <?= $this->extend('dashboard/templates/dashboard'); ?>
+<?= $this->section('css'); ?>
+<?= $this->include('select2/normal'); ?>
+<?= $this->endSection(); ?>
 <?= $this->section('title'); ?>
 <div class="d-flex justify-content-start align-items-center">
     <span class="fw-medium fs-5 flex-fill text-truncate"><?= $headertitle; ?></span>
@@ -26,11 +29,11 @@
         <form id="pembelianObatForm" enctype="multipart/form-data" class="d-flex flex-row mb-2 gap-2">
             <div class="flex-fill">
                 <select class="form-select rounded-3" id="id_supplier" name="id_supplier" aria-label="id_supplier">
-                    <option value="">-- Pilih Supplier --</option>
+                    <option value="" disabled selected>-- Pilih Supplier --</option>
                 </select>
                 <div class="invalid-feedback"></div>
             </div>
-            <div class="w-auto" id="submitButtonContainer">
+            <div class="w-auto" id="submitButtonContainer" style="display: none;">
                 <button type="submit" id="submitButton" class="btn btn-primary bg-gradient rounded-3">
                     <i class="fa-solid fa-plus"></i>
                 </button>
@@ -281,16 +284,22 @@
 
     function toggleSubmitButton() {
         var selectedValue = $('#id_supplier').val();
-        if (selectedValue === "") {
+        if (selectedValue === null || selectedValue === "") {
             $('#submitButtonContainer').hide();
         } else {
             $('#submitButtonContainer').show();
         }
     }
-    $('#id_supplier').on('change', function() {
+    $('#id_supplier').on('change.select2', function() {
         toggleSubmitButton();
     });
     $(document).ready(function() {
+        $('#id_supplier').select2({
+            dropdownParent: $('#pembelianObatContainer'),
+            theme: "bootstrap-5",
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+        });
         $('#searchInput').on('input', function() {
             currentPage = 1;
             fetchPembelianObat();

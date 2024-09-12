@@ -1,4 +1,7 @@
 <?= $this->extend('dashboard/templates/dashboard'); ?>
+<?= $this->section('css'); ?>
+<?= $this->include('select2/normal'); ?>
+<?= $this->endSection(); ?>
 <?= $this->section('title'); ?>
 <div class="d-flex justify-content-start align-items-center">
     <a class="fs-5 me-3 link-body-emphasis" href="<?= base_url('/pembelianobat'); ?>"><i class="fa-solid fa-arrow-left"></i></a>
@@ -63,7 +66,7 @@
         <form id="tambahDetail" enctype="multipart/form-data" class="d-flex flex-column flex-lg-row mb-2 gap-2">
             <div class="flex-fill">
                 <select class="form-select rounded-3" id="id_obat" name="id_obat" aria-label="id_obat">
-                    <option value="">-- Pilih Obat --</option>
+                    <option value="" disabled selected>-- Pilih Obat --</option>
                 </select>
                 <div class="invalid-feedback"></div>
             </div>
@@ -270,6 +273,12 @@
 
     $(document).ready(function() {
         $('[data-bs-toggle="tooltip"]').tooltip();
+        $('#id_obat').select2({
+            dropdownParent: $('#tambahDetail'),
+            theme: "bootstrap-5",
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+        });
         var detailPembelianObatId;
         var detailPembelianObatName;
         var pembelianObatId;

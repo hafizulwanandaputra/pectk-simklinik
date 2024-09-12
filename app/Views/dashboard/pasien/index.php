@@ -1,4 +1,7 @@
 <?= $this->extend('dashboard/templates/dashboard'); ?>
+<?= $this->section('css'); ?>
+<?= $this->include('select2/floating'); ?>
+<?= $this->endSection(); ?>
 <?= $this->section('title'); ?>
 <div class="d-flex justify-content-start align-items-center">
     <span class="fw-medium fs-5 flex-fill text-truncate"><?= $headertitle; ?></span>
@@ -90,7 +93,7 @@
                     </div>
                     <div class="form-floating mt-1 mb-1" id="jenis_pasien_container">
                         <select class="form-select rounded-3" id="jenis_pasien" name="jenis_pasien" aria-label="jenis_pasien">
-                            <option value="">-- Pilih Jenis Pasien --</option>
+                            <option value="" disabled selected>-- Pilih Jenis Pasien --</option>
                             <option value="UMUM">Umum</option>
                             <option value="BPJS">BPJS</option>
                         </select>
@@ -109,7 +112,7 @@
                     </div>
                     <div class="form-floating mt-1 mb-1">
                         <select class="form-select rounded-3" id="agama_pasien" name="agama_pasien" aria-label="agama_pasien">
-                            <option value="">-- Pilih Agama --</option>
+                            <option value="" disabled selected>-- Pilih Agama --</option>
                             <option value="Islam">Islam</option>
                             <option value="Kristen Protestan">Kristen Protestan</option>
                             <option value="Kristen Katolik">Kristen Katolik</option>
@@ -152,7 +155,7 @@
                     </div>
                     <div class="form-floating mt-1 mb-1">
                         <select class="form-select rounded-3" id="status_kawin" name="status_kawin" aria-label="status_kawin">
-                            <option value="">-- Pilih Status Kawin --</option>
+                            <option value="" disabled selected>-- Pilih Status Kawin --</option>
                             <option value="Kawin">Kawin</option>
                             <option value="Belum Kawin">Belum Kawin</option>
                             <option value="Cerai Hidup">Cerai Hidup</option>
@@ -163,7 +166,7 @@
                     </div>
                     <div class="form-floating mt-1 mb-1">
                         <select class="form-select rounded-3" id="id_dokter" name="id_dokter" aria-label="id_dokter">
-                            <option value="">-- Pilih Dokter --</option>
+                            <option value="" disabled selected>-- Pilih Dokter --</option>
                         </select>
                         <label for="id_dokter">Dokter*</label>
                         <div class="invalid-feedback"></div>
@@ -438,6 +441,15 @@
         $('#addPasienBtn').click(function() {
             $('#pasienModalLabel').text('Tambah Pasien');
             $('#pasienModal').modal('show');
+        });
+
+        $('#pasienModal').on('shown.bs.modal', function() {
+            $('#id_dokter').select2({
+                dropdownParent: $('#pasienModal'),
+                theme: "bootstrap-5",
+                width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+                placeholder: $(this).data('placeholder'),
+            });
         });
 
         $(document).on('click', '.edit-btn', async function() {
