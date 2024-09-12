@@ -162,6 +162,7 @@ class PembelianObat extends BaseController
             // Update jumlah_masuk di tabel obat
             $db->table('obat')
                 ->set('jumlah_masuk', "jumlah_masuk + $jumlah_masuk", false) // false untuk menghindari quoting otomatis
+                ->set('updated_at', date('Y-m-d H:i:s'))
                 ->where('id_obat', $id_obat)
                 ->update();
         }
