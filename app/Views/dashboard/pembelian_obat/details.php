@@ -115,7 +115,7 @@
     <div id="terimaObat">
         <hr>
         <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
-            <button class="btn btn-primary rounded-3 bg-gradient" type="button" id="completeBtn" data-id="<?= $pembelianobat['id_pembelian_obat'] ?>" disabled><i class="fa-solid fa-check-double"></i> Terima Obat</button>
+            <button class="btn btn-success rounded-3 bg-gradient" type="button" id="completeBtn" data-id="<?= $pembelianobat['id_pembelian_obat'] ?>" disabled><i class="fa-solid fa-check-double"></i> Terima Obat</button>
         </div>
     </div>
 
