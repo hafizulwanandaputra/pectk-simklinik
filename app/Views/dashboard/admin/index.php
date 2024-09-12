@@ -137,7 +137,7 @@
         var table = $('#tabel').DataTable({
             "oLanguage": {
                 "sDecimal": ",",
-                "sEmptyTable": 'Tidak ada pengguna. Klik "Tambah Pengguna" untuk menambahkan admin.',
+                "sEmptyTable": 'Tidak ada pengguna. Klik "Tambah Pengguna" untuk menambahkan pengguna.',
                 "sInfo": "Menampilkan _START_ hingga _END_ dari _TOTAL_ pengguna",
                 "sInfoEmpty": "Menampilkan 0 hingga 0 dari 0 pengguna",
                 "sInfoFiltered": "(di-filter dari _MAX_ pengguna)",
