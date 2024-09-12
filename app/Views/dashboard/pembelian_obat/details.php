@@ -134,7 +134,8 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content bg-body rounded-4 shadow-lg transparent-blur">
                 <div class="modal-body p-4 text-center">
-                    <h5 class="mb-0" id="completeMessage"></h5>
+                    <h5 id="completeMessage"></h5>
+                    <h6 class="mb-0" id="completeSubmessage"></h6>
                 </div>
                 <div class="modal-footer flex-nowrap p-0" style="border-top: 1px solid var(--bs-border-color-translucent);">
                     <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end" style="border-right: 1px solid var(--bs-border-color-translucent)!important;" data-bs-dismiss="modal">Tidak</button>
@@ -275,13 +276,15 @@
 
         $(document).on('click', '#completeBtn', function() {
             pembelianObatId = $(this).data('id');
-            $('#completeMessage').html(`Apakah Anda akan menerima obat-obat ini?`);
+            $('#completeMessage').html(`Apakah Anda telah menerima obat-obat ini?`);
+            $('#completeSubmessage').html(`Silakan periksa informasi pembelian ini! Detail pembelian tidak dapat diubah setelah menerima obat-obat ini!`);
             $('#completeModal').modal('show');
         });
 
         $('#confirmCompleteBtn').click(async function() {
             $('#completeModal button').prop('disabled', true);
-            $('#completeMessage').html('Memproses data, silakan tunggu...');
+            $('#completeMessage').addClass('mb-0').html('Memproses data, silakan tunggu...');
+            $('#completeSubmessage').hide();
             try {
                 const response = await axios.post(`<?= base_url('pembelianobat/complete') ?>/${pembelianObatId}`);
                 showSuccessToast(response.data.message);
@@ -292,6 +295,8 @@
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
             } finally {
                 $('#completeModal').modal('hide');
+                $('#completeMessage').removeClass('mb-0');
+                $('#completeSubmessage').show();
                 $('#completeModal button').prop('disabled', false);
             }
         });
