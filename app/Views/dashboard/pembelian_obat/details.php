@@ -217,7 +217,7 @@
                 // Tampilkan pesan jika tidak ada data
                 const emptyRow = `
                     <tr>
-                        <td colspan="5" class="text-center">Tidak ada data pembelian obat</td>
+                        <td colspan="5" class="text-center">Tidak ada obat yang akan dibeli</td>
                     </tr>
                 `;
                 $('#detail_pembelian_obat').append(emptyRow);
