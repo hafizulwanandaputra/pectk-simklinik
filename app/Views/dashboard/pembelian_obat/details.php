@@ -189,12 +189,8 @@
 
             // Cek status `diterima`
             if (data.diterima === "1") {
-                // Nonaktifkan tombol jika sudah diterima
-                $('#completeBtn').prop('disabled', true);
                 $('#tambahDetailContainer').hide();
             } else if (data.diterima === "0") {
-                // Aktifkan tombol jika belum diterima
-                $('#completeBtn').prop('disabled', false);
                 $('#tambahDetailContainer').show();
             }
         } catch (error) {
@@ -220,10 +216,10 @@
             if (data.length === 0) {
                 // Tampilkan pesan jika tidak ada data
                 const emptyRow = `
-                <tr>
-                    <td colspan="5" class="text-center">Tidak ada data pembelian obat</td>
-                </tr>
-            `;
+                    <tr>
+                        <td colspan="5" class="text-center">Tidak ada data pembelian obat</td>
+                    </tr>
+                `;
                 $('#detail_pembelian_obat').append(emptyRow);
                 $('#completeBtn').prop('disabled', true);
             } else {
@@ -252,9 +248,11 @@
                     if (detail_pembelian_obat.diterima === "1") {
                         $('.edit-btn').prop('disabled', true);
                         $('.delete-btn').prop('disabled', true);
+                        $('#completeBtn').prop('disabled', true);
                     } else if (detail_pembelian_obat.diterima === "0") {
                         $('.edit-btn').prop('disabled', false);
                         $('.delete-btn').prop('disabled', false);
+                        $('#completeBtn').prop('disabled', false);
                     }
                 });
             }
