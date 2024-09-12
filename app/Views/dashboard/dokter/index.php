@@ -284,7 +284,7 @@
             dokterName = $(this).data('name');
             $('[data-bs-toggle="tooltip"]').tooltip('hide');
             $('#deleteMessage').html(`Hapus "` + dokterName + `"?`);
-            $('#deleteSubmessage').html(``);
+            $('#deleteSubmessage').html(`Pasien yang menggunakan dokter ini juga ikut dihapus`);
             $('#deleteModal').modal('show');
         });
 

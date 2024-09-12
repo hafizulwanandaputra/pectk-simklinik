@@ -37,8 +37,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content bg-body rounded-4 shadow-lg transparent-blur">
                 <div class="modal-body p-4 text-center">
-                    <h5 id="deleteMessage"></h5>
-                    <h6 class="mb-0" id="deleteSubmessage"></h6>
+                    <h5 class="mb-0" id="deleteMessage"></h5>
                 </div>
                 <div class="modal-footer flex-nowrap p-0" style="border-top: 1px solid var(--bs-border-color-translucent);">
                     <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end" style="border-right: 1px solid var(--bs-border-color-translucent)!important;" data-bs-dismiss="modal">Tidak</button>
@@ -391,25 +390,21 @@
             obatName = $(this).data('name');
             $('[data-bs-toggle="tooltip"]').tooltip('hide');
             $('#deleteMessage').html(`Hapus "` + obatName + `"?`);
-            $('#deleteSubmessage').html(``);
             $('#deleteModal').modal('show');
         });
 
         $('#confirmDeleteBtn').click(async function() {
             $('#deleteModal button').prop('disabled', true);
-            $('#deleteMessage').addClass('mb-0').html('Mengapus, silakan tunggu...');
-            $('#deleteSubmessage').hide();
+            $('#deleteMessage').html('Mengapus, silakan tunggu...');
 
             try {
                 await axios.delete(`<?= base_url('/obat/delete') ?>/${obatId}`);
-                showSuccessToast('Pasien berhasil dihapus.');
+                showSuccessToast('Obat berhasil dihapus.');
                 table.ajax.reload();
             } catch (error) {
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
             } finally {
                 $('#deleteModal').modal('hide');
-                $('#deleteMessage').removeClass('mb-0');
-                $('#deleteSubmessage').show();
                 $('#deleteModal button').prop('disabled', false);
             }
         });

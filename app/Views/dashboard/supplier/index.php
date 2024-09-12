@@ -284,7 +284,7 @@
             supplierName = $(this).data('name');
             $('[data-bs-toggle="tooltip"]').tooltip('hide');
             $('#deleteMessage').html(`Hapus "` + supplierName + `"?`);
-            $('#deleteSubmessage').html(``);
+            $('#deleteSubmessage').html(`Obat yang berasal dari supplier ini juga ikut dihapus`);
             $('#deleteModal').modal('show');
         });
 

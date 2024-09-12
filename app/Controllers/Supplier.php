@@ -139,10 +139,35 @@ class Supplier extends BaseController
     public function delete($id)
     {
         $db = db_connect();
+
+        // Dapatkan id_pembelian dari detail pembelian obat yang akan dihapus
+        $obatDetail = $db->query("SELECT id_pembelian_obat FROM detail_pembelian_obat WHERE id_obat = ?", [$id])->getRow();
+
         $this->SupplierModel->delete($id);
         $db->query('ALTER TABLE `supplier` auto_increment = 1');
         $db->query('ALTER TABLE `obat` auto_increment = 1');
         $db->query('ALTER TABLE `pembelian_obat` auto_increment = 1');
+        $db->query('ALTER TABLE `detail_pembelian_obat` auto_increment = 1');
+
+        // Perbarui total_qty dan total_biaya di tabel pembelian_obat setelah penghapusan
+        if ($obatDetail) {
+            $id_pembelian_obat = $obatDetail->id_pembelian_obat;
+
+            // Hitung ulang total_qty dan total_biaya berdasarkan detail pembelian yang tersisa
+            $result = $db->query("
+            SELECT SUM(jumlah) as total_qty, SUM(harga_satuan * jumlah) as total_biaya 
+            FROM detail_pembelian_obat 
+            WHERE id_pembelian_obat = ?", [$id_pembelian_obat])->getRow();
+
+            $total_qty = $result->total_qty ?? 0;
+            $total_biaya = $result->total_biaya ?? 0;
+
+            // Update tabel pembelian_obat dengan total_qty dan total_biaya yang baru
+            $db->query("
+            UPDATE pembelian_obat 
+            SET total_qty = ?, total_biaya = ? 
+            WHERE id_pembelian_obat = ?", [$total_qty, $total_biaya, $id_pembelian_obat]);
+        }
         return $this->response->setJSON(['message' => 'Supplier berhasil dihapus']);
     }
 }
