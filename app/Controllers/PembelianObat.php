@@ -32,6 +32,7 @@ class PembelianObat extends BaseController
         $search = $this->request->getGet('search');
         $limit = $this->request->getGet('limit');
         $offset = $this->request->getGet('offset');
+        $status = $this->request->getGet('status');
 
         $limit = $limit ? intval($limit) : 0;
         $offset = $offset ? intval($offset) : 0;
@@ -46,6 +47,13 @@ class PembelianObat extends BaseController
             user.username as user_username')
             ->join('supplier', 'supplier.id_supplier = pembelian_obat.id_supplier', 'inner')
             ->join('user', 'user.id_user = pembelian_obat.id_user', 'inner');
+
+        // Apply status filter if provided
+        if ($status === '1') {
+            $PembelianObatModel->where('diterima', 1);
+        } elseif ($status === '0') {
+            $PembelianObatModel->where('diterima', 0);
+        }
 
         // Apply search filter on supplier name or purchase date
         if ($search) {
