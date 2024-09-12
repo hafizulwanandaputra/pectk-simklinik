@@ -70,6 +70,20 @@
     <nav id="paginationNav" class="d-flex justify-content-center justify-content-lg-end mt-3 overflow-auto w-100">
         <ul class="pagination pagination-sm" style="--bs-pagination-border-radius: var(--bs-border-radius-lg);"></ul>
     </nav>
+    <div class="modal modal-sheet p-4 py-md-5 fade" id="cancelModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="cancelModalLabel" aria-hidden="true" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content bg-body rounded-4 shadow-lg transparent-blur">
+                <div class="modal-body p-4 text-center">
+                    <h5 id="cancelMessage"></h5>
+                    <h6 class="mb-0" id="cancelSubmessage"></h6>
+                </div>
+                <div class="modal-footer flex-nowrap p-0" style="border-top: 1px solid var(--bs-border-color-translucent);">
+                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end" style="border-right: 1px solid var(--bs-border-color-translucent)!important;" data-bs-dismiss="modal">Tidak</button>
+                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0" id="confirmCancelBtn">Ya</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="modal modal-sheet p-4 py-md-5 fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content bg-body rounded-4 shadow-lg transparent-blur">
@@ -178,6 +192,12 @@
                     const statusBadge = pembelian_obat.diterima == '1' ?
                         `<span class="badge bg-success bg-gradient">Diterima</span>` :
                         `<span class="badge bg-danger bg-gradient">Belum Diterima</span>`;
+                    const statusDelete = pembelian_obat.diterima == '1' ?
+                        `disabled` :
+                        ``;
+                    const statusCancel = pembelian_obat.diterima == '1' ?
+                        `` :
+                        `disabled`;
                     const pembelian_obatElement = `
             <li class="list-group-item bg-body-tertiary pb-3 pt-3">
                 <div class="d-flex">
@@ -201,10 +221,13 @@
                 </div>
                 <hr>
                 <div class="d-grid gap-2 d-flex justify-content-end">
+                    <button type="button" class="btn btn-danger btn-sm bg-gradient rounded-3 cancel-btn" data-id="${pembelian_obat.id_pembelian_obat}" data-name="${pembelian_obat.supplier_nama_supplier}" data-date="${pembelian_obat.tgl_pembelian}" ${statusCancel}>
+                        <i class="fa-solid fa-xmark"></i> Batalkan
+                    </button>
                     <button type="button" class="btn btn-info btn-sm bg-gradient rounded-3" onclick="window.location.href = '<?= base_url('pembelianobat/detailpembelianobat') ?>/${pembelian_obat.id_pembelian_obat}';">
                         <i class="fa-solid fa-circle-info"></i> Detail
                     </button>
-                    <button type="button" class="btn btn-danger btn-sm bg-gradient rounded-3 delete-btn" data-id="${pembelian_obat.id_pembelian_obat}" data-name="${pembelian_obat.supplier_nama_supplier}" data-date="${pembelian_obat.tgl_pembelian}">
+                    <button type="button" class="btn btn-danger btn-sm bg-gradient rounded-3 delete-btn" data-id="${pembelian_obat.id_pembelian_obat}" data-name="${pembelian_obat.supplier_nama_supplier}" data-date="${pembelian_obat.tgl_pembelian}" ${statusDelete}>
                         <i class="fa-solid fa-trash"></i> Hapus
                     </button>
                 </div>
@@ -337,6 +360,35 @@
                 $('#deleteMessage').removeClass('mb-0');
                 $('#deleteSubmessage').show();
                 $('#deleteModal button').prop('disabled', false);
+            }
+        });
+
+        $(document).on('click', '.cancel-btn', function() {
+            pembelianObatId = $(this).data('id');
+            pembelianObatName = $(this).data('name');
+            pembelianObatDate = $(this).data('date');
+            $('[data-bs-toggle="tooltip"]').tooltip('hide');
+            $('#cancelMessage').html(`Batalkan pembelian dari "` + pembelianObatName + `?`);
+            $('#cancelSubmessage').html(`Tanggal Pembelian: ` + pembelianObatDate);
+            $('#cancelModal').modal('show');
+        });
+
+        $('#confirmCancelBtn').click(async function() {
+            $('#cancelModal button').prop('disabled', true);
+            $('#cancelMessage').addClass('mb-0').html('Membatalkan, silakan tunggu...');
+            $('#cancelSubmessage').hide();
+
+            try {
+                await axios.post(`<?= base_url('/pembelianobat/cancel') ?>/${pembelianObatId}`);
+                showSuccessToast('Pembelian obat telah dibatalkan. Jumlah masuk obat telah dikurangi.');
+                fetchPembelianObat();
+            } catch (error) {
+                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+            } finally {
+                $('#cancelModal').modal('hide');
+                $('#cancelMessage').removeClass('mb-0');
+                $('#cancelSubmessage').show();
+                $('#cancelModal button').prop('disabled', false);
             }
         });
 

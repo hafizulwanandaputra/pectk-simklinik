@@ -148,7 +148,7 @@ class PembelianObat extends BaseController
             ->set('diterima', 1)
             ->where('id_pembelian_obat', $id)
             ->update();
-        // Ambil detail pembelian obat berdasarkan id_pembelian_obat
+
         $details = $db->table('detail_pembelian_obat')
             ->where('id_pembelian_obat', $id)
             ->get()
@@ -167,6 +167,32 @@ class PembelianObat extends BaseController
                 ->update();
         }
         return $this->response->setJSON(['message' => 'Obat sudah diterima. Periksa jumlah masuk di menu obat.']);
+    }
+
+    public function cancel($id)
+    {
+        $db = db_connect();
+        $details = $db->table('detail_pembelian_obat')
+            ->where('id_pembelian_obat', $id)
+            ->get()
+            ->getResultArray();
+
+        foreach ($details as $detail) {
+            $id_obat = $detail['id_obat'];
+            $jumlah_masuk = $detail['jumlah'];
+            $db->table('obat')
+                ->set('jumlah_masuk', "jumlah_masuk - $jumlah_masuk", false) // false untuk menghindari quoting otomatis
+                ->set('updated_at', date('Y-m-d H:i:s'))
+                ->where('id_obat', $id_obat)
+                ->update();
+        }
+
+        $db->table('pembelian_obat')
+            ->set('diterima', 0)
+            ->where('id_pembelian_obat', $id)
+            ->update();
+
+        return $this->response->setJSON(['message' => 'Pembelian obat telah dibatalkan. Jumlah masuk obat telah dikurangi.']);
     }
 
     // DETAIL PEMBELIAN OBAT
