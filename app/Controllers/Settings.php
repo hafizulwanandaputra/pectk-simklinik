@@ -80,8 +80,17 @@ class Settings extends BaseController
 
     public function about()
     {
+        $db = db_connect();
+        $php_extensions = get_loaded_extensions();
+        $query_version = $db->query('SELECT VERSION() as version');
+        $query_comment = $db->query('SHOW VARIABLES LIKE "version_comment"');
+        $row_version = $query_version->getRow();
+        $row_comment = $query_comment->getRow();
         $agent = $this->request->getUserAgent();
         $data = [
+            'php_extensions' => implode(', ', $php_extensions),
+            'version' => $row_version->version,
+            'version_comment' => $row_comment->Value,
             'agent' => $agent,
             'title' => 'Tentang ' . $this->systemName,
             'headertitle' => 'Tentang Sistem',
