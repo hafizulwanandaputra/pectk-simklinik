@@ -36,6 +36,22 @@ class Obat extends Migration
                 'type' => 'BIGINT',
                 'constraint' => 24,
             ],
+            'harga_jual' => [
+                'type' => 'BIGINT',
+                'constraint' => 24,
+            ],
+            'dosis_kali' => [
+                'type' => 'INT',
+                'constraint' => 24,
+            ],
+            'dosis_hari' => [
+                'type' => 'INT',
+                'constraint' => 24,
+            ],
+            'cara_pakai' => [
+                'type' => 'VARCHAR',
+                'constraint' => 128,
+            ],
             'jumlah_masuk' => [
                 'type' => 'BIGINT',
                 'constraint' => 24,

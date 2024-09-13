@@ -23,7 +23,10 @@
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Nama</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Kategori</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Bentuk</th>
-                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Harga</th>
+                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Harga Beli</th>
+                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Harga Jual</th>
+                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Dosis</th>
+                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Cara Pakai</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Jumlah Masuk</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Jumlah Keluar</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Terakhir Diperbarui</th>
@@ -96,7 +99,44 @@
                     </div>
                     <div class="form-floating mb-1 mt-1">
                         <input type="number" class="form-control" autocomplete="off" dir="auto" placeholder="harga_obat" id="harga_obat" name="harga_obat">
-                        <label for="harga_obat">Harga (Rp)*</label>
+                        <label for="harga_obat">Harga Beli (Rp)*</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="form-floating mb-1 mt-1">
+                        <input type="number" class="form-control" autocomplete="off" dir="auto" placeholder="harga_jual" id="harga_jual" name="harga_jual">
+                        <label for="harga_jual">Harga Jual (Rp)*</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="d-flex mb-1 mt-1">
+                        <div class="w-100">
+                            <div class="form-floating">
+                                <input type="number" class="form-control" autocomplete="off" dir="auto" placeholder="dosis_kali" id="dosis_kali" name="dosis_kali">
+                                <label for="dosis_kali">Dosis*</label>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                        </div>
+                        <div class="flex-shrink-1 align-self-center">
+                            <span class="fs-2 px-2">×</span>
+                        </div>
+                        <div class="w-100">
+                            <div class="form-floating">
+                                <input type="number" class="form-control" autocomplete="off" dir="auto" placeholder="dosis_hari" id="dosis_hari" name="dosis_hari">
+                                <label for="dosis_hari">Hari*</label>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-floating mt-1 mb-1">
+                        <select class="form-select rounded-3" id="cara_pakai" name="cara_pakai" aria-label="cara_pakai">
+                            <option value="" disabled selected>-- Pilih Cara Pakai --</option>
+                            <option value="Mata Kanan">Mata Kanan</option>
+                            <option value="Mata Kiri">Mata Kiri</option>
+                            <option value="Kedua Mata">Kedua Mata</option>
+                            <option value="Sebelum Makan">Sebelum Makan</option>
+                            <option value="Sesudah Makan">Sesudah Makan</option>
+                            <option value="Sendok Teh">Sendok Teh</option>
+                        </select>
+                        <label for="cara_pakai">Cara Pakai*</label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
@@ -281,6 +321,30 @@
                     }
                 },
                 {
+                    data: 'harga_jual',
+                    render: function(data, type, row) {
+                        // Format harga_obat using number_format equivalent in JavaScript
+                        let formattedHarga = new Intl.NumberFormat('id-ID', {
+                            style: 'decimal',
+                            minimumFractionDigits: 0
+                        }).format(data);
+
+                        return `<span class="date text-nowrap">Rp${formattedHarga}</span>`;
+                    }
+                },
+                {
+                    data: 'dosis_kali',
+                    render: function(data, type, row) {
+                        return `<span class="date text-nowrap">${row.dosis_kali} × ${row.dosis_hari} hari</span>`;
+                    }
+                },
+                {
+                    data: 'cara_pakai',
+                    render: function(data, type, row) {
+                        return `<span class="text-nowrap">${data}</span>`;
+                    }
+                },
+                {
                     data: 'jumlah_masuk',
                     render: function(data, type, row) {
                         return `<span class="date text-nowrap">${data}</span>`;
@@ -307,7 +371,7 @@
                 "target": [1],
                 "orderable": false
             }, {
-                "target": [0, 1, 2, 4, 5, 6, 7, 8, 9],
+                "target": [0, 1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12],
                 "width": "0%"
             }, {
                 "target": [3],
@@ -372,6 +436,10 @@
                 $('#kategori_obat').val(response.data.kategori_obat);
                 $('#bentuk_obat').val(response.data.bentuk_obat);
                 $('#harga_obat').val(response.data.harga_obat);
+                $('#harga_jual').val(response.data.harga_jual);
+                $('#dosis_kali').val(response.data.dosis_kali);
+                $('#dosis_hari').val(response.data.dosis_hari);
+                $('#cara_pakai').val(response.data.cara_pakai);
                 $('#obatModal').modal('show');
             } catch (error) {
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);

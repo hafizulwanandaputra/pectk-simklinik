@@ -45,13 +45,16 @@ class Obat extends BaseController
             4 => 'kategori_obat',
             5 => 'bentuk_obat',
             6 => 'harga_obat',
-            7 => 'jumlah_masuk',
-            8 => 'jumlah_keluar',
-            9 => 'updated_at',
+            7 => 'harga_jual',
+            8 => 'dosis_kali',
+            9 => 'cara_pakai',
+            10 => 'jumlah_masuk',
+            11 => 'jumlah_keluar',
+            12 => 'updated_at',
         ];
 
         // Get the column to sort by
-        $sortColumn = $columnMapping[$sortColumnIndex] ?? 'id_supplier';
+        $sortColumn = $columnMapping[$sortColumnIndex] ?? 'id_obat';
 
         // Get total records count
         $totalRecords = $this->ObatModel->countAllResults(true);
@@ -124,6 +127,10 @@ class Obat extends BaseController
             'kategori_obat' => 'required',
             'bentuk_obat' => 'required',
             'harga_obat' => 'required|numeric',
+            'harga_jual' => 'required|numeric',
+            'dosis_kali' => 'required|numeric',
+            'dosis_hari' => 'required|numeric',
+            'cara_pakai' => 'required',
         ]);
 
         if (!$this->validate($validation->getRules())) {
@@ -137,6 +144,10 @@ class Obat extends BaseController
             'kategori_obat' => $this->request->getPost('kategori_obat'),
             'bentuk_obat' => $this->request->getPost('bentuk_obat'),
             'harga_obat' => $this->request->getPost('harga_obat'),
+            'harga_jual' => $this->request->getPost('harga_jual'),
+            'dosis_kali' => $this->request->getPost('dosis_kali'),
+            'dosis_hari' => $this->request->getPost('dosis_hari'),
+            'cara_pakai' => $this->request->getPost('cara_pakai'),
             'jumlah_masuk' => 0,
             'jumlah_keluar' => 0,
             'updated_at' => date('Y-m-d H:i:s'),
@@ -156,6 +167,10 @@ class Obat extends BaseController
             'kategori_obat' => 'required',
             'bentuk_obat' => 'required',
             'harga_obat' => 'required|numeric',
+            'harga_jual' => 'required|numeric',
+            'dosis_kali' => 'required|numeric',
+            'dosis_hari' => 'required|numeric',
+            'cara_pakai' => 'required',
         ]);
         if (!$this->validate($validation->getRules())) {
             return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
@@ -171,6 +186,10 @@ class Obat extends BaseController
             'kategori_obat' => $this->request->getPost('kategori_obat'),
             'bentuk_obat' => $this->request->getPost('bentuk_obat'),
             'harga_obat' => $this->request->getPost('harga_obat'),
+            'harga_jual' => $this->request->getPost('harga_jual'),
+            'dosis_kali' => $this->request->getPost('dosis_kali'),
+            'dosis_hari' => $this->request->getPost('dosis_hari'),
+            'cara_pakai' => $this->request->getPost('cara_pakai'),
             'jumlah_masuk' => $obat['jumlah_masuk'],
             'jumlah_keluar' => $obat['jumlah_keluar'],
             'updated_at' => $obat['updated_at'],

@@ -264,7 +264,7 @@ class PembelianObat extends BaseController
             if (!$isUsed) {
                 $options[] = [
                     'value' => $row['id_obat'],
-                    'text' => $row['nama_obat'] . ' (' . $row['kategori_obat'] . ' • ' . $row['bentuk_obat'] . ' • Rp' . $harga_obat_terformat . ')'
+                    'text' => $row['nama_obat'] . ' (' . $row['kategori_obat'] . ' • ' . $row['bentuk_obat'] . ' • Rp' . $harga_obat_terformat . ' • ' . $row['dosis_kali'] . ' × ' . $row['dosis_hari'] . ' hari • ' . $row['cara_pakai'] . ')'
                 ];
             }
         }
