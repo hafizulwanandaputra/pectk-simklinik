@@ -135,7 +135,7 @@ if (stripos($browser, 'Chrome') !== false) {
                 </a>
                 <div class="align-self-center flex-fill ps-1 text-wrap overflow-hidden" style="text-overflow: ellipsis;">
                     <h5 class="card-title">Hostname dan Alamat IP Peladen</h5>
-                    <span><?= ($_SERVER['SERVER_NAME'] == $_SERVER['SERVER_ADDR']) ? $_SERVER['SERVER_ADDR'] : $_SERVER['SERVER_NAME'] . ' (' . $_SERVER['SERVER_ADDR'] . ')'; ?> melalui port <?= $_SERVER['SERVER_PORT'] ?></span>
+                    <span><?= ($_SERVER['SERVER_NAME'] == $_SERVER['SERVER_ADDR']) ? $_SERVER['SERVER_ADDR'] : '<span class="text-nowrap">' . $_SERVER['SERVER_NAME'] . '</span> (' . $_SERVER['SERVER_ADDR'] . ')'; ?> melalui port <?= $_SERVER['SERVER_PORT'] ?></span>
                 </div>
             </div>
         </li>
