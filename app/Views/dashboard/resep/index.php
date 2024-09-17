@@ -34,6 +34,11 @@
 <?= $this->section('content'); ?>
 <main class="col-md-9 ms-sm-auto col-lg-10 px-3 px-md-4 pt-3">
     <div class="d-flex flex-column flex-lg-row mb-1 gap-2 mb-3">
+        <select id="statusFilter" class="form-select form-select-sm w-auto rounded-3">
+            <option value="">Semua</option>
+            <option value="1">Diproses</option>
+            <option value="0">Belum Diproses</option>
+        </select>
         <div class="input-group input-group-sm flex-fill">
             <input type="search" id="searchInput" class="form-control rounded-start-3" placeholder="Cari pasien, dokter, dan tanggal resep...">
             <button class="btn btn-success btn-sm bg-gradient" type="button" id="refreshButton"><i class="fa-solid fa-sync"></i></button>
@@ -215,6 +220,7 @@
                     search: search,
                     limit: limit,
                     offset: offset,
+                    status: status
                 }
             });
 
@@ -231,6 +237,13 @@
             } else {
                 data.resep.forEach(function(resep) {
                     const jumlah_resep = parseInt(resep.jumlah_resep);
+                    const total_biaya = parseInt(resep.total_biaya);
+                    const statusBadge = resep.status == '1' ?
+                        `<span class="badge bg-success bg-gradient">Transaksi Diproses</span>` :
+                        `<span class="badge bg-danger bg-gradient">Transaksi Belum Diproses</span>`;
+                    const statusButtons = resep.status == '1' ?
+                        `disabled` :
+                        ``;
                     const resepElement = `
             <li class="list-group-item bg-body-tertiary pb-3 pt-3">
                 <div class="d-flex">
@@ -246,6 +259,8 @@
                                 ID Resep: ${resep.id_resep}<br>
                                 Tanggal dan Waktu Resep: ${resep.tanggal_resep}<br>
                                 Total Resep: ${jumlah_resep.toLocaleString('id-ID')}<br>
+                                Total Harga: Rp${total_biaya.toLocaleString('id-ID')}<br>
+                                ${statusBadge}
                             </small>
                         </p>
                     </div>
@@ -255,10 +270,10 @@
                     <button type="button" class="btn btn-info btn-sm bg-gradient rounded-3" onclick="window.location.href = '<?= base_url('resep/detailresep') ?>/${resep.id_resep}';">
                         <i class="fa-solid fa-circle-info"></i> Detail
                     </button>
-                    <button type="button" class="btn btn-secondary btn-sm bg-gradient rounded-3 edit-btn" data-id="${resep.id_resep}" data-name="${resep.pasien_nama_pasien}">
+                    <button type="button" class="btn btn-secondary btn-sm bg-gradient rounded-3 edit-btn" data-id="${resep.id_resep}" data-name="${resep.pasien_nama_pasien}" ${statusButtons}>
                         <i class="fa-solid fa-pen-to-square"></i> Edit
                     </button>
-                    <button type="button" class="btn btn-danger btn-sm bg-gradient rounded-3 delete-btn" data-id="${resep.id_resep}" data-name="${resep.pasien_nama_pasien}" data-date="${resep.tanggal_resep}">
+                    <button type="button" class="btn btn-danger btn-sm bg-gradient rounded-3 delete-btn" data-id="${resep.id_resep}" data-name="${resep.pasien_nama_pasien}" data-date="${resep.tanggal_resep}" ${statusButtons}>
                         <i class="fa-solid fa-trash"></i> Hapus
                     </button>
                 </div>
@@ -326,6 +341,14 @@
             currentPage = page;
             fetchResep();
         }
+    });
+
+    $('#statusFilter').on('change', function() {
+        $('#resepContainer').empty();
+        for (let i = 0; i < limit; i++) {
+            $('#resepContainer').append(placeholder);
+        }
+        fetchResep();
     });
 
     $(document).ready(function() {

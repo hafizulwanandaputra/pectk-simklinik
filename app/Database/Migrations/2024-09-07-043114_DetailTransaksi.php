@@ -15,7 +15,7 @@ class DetailTransaksi extends Migration
                 'unsigned' => true,
                 'auto_increment' => true,
             ],
-            'id_obat' => [
+            'id_resep' => [
                 'type' => 'BIGINT',
                 'constraint' => 24,
                 'unsigned' => true
@@ -39,7 +39,7 @@ class DetailTransaksi extends Migration
             ],
         ]);
         $this->forge->addKey('id_detail_transaksi', true);
-        $this->forge->addForeignKey('id_obat', 'obat', 'id_obat', 'CASCADE', 'CASCADE');
+        $this->forge->addForeignKey('id_resep', 'resep', 'id_resep', 'CASCADE', 'CASCADE');
         $this->forge->addForeignKey('id_transaksi', 'transaksi', 'id_transaksi', 'CASCADE', 'CASCADE');
         $this->forge->createTable('detail_transaksi');
     }

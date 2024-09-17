@@ -29,6 +29,10 @@ class DetailResep extends Migration
                 'type' => 'INT',
                 'constraint' => 24,
             ],
+            'harga_satuan' => [
+                'type' => 'INT',
+                'constraint' => 24,
+            ],
         ]);
         $this->forge->addKey('id_detail_resep', true);
         $this->forge->addForeignKey('id_resep', 'resep', 'id_resep', 'CASCADE', 'CASCADE');

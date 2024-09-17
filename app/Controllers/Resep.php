@@ -33,6 +33,7 @@ class Resep extends BaseController
         $search = $this->request->getGet('search');
         $limit = $this->request->getGet('limit');
         $offset = $this->request->getGet('offset');
+        $status = $this->request->getGet('status');
 
         $limit = $limit ? intval($limit) : 0;
         $offset = $offset ? intval($offset) : 0;
@@ -46,6 +47,13 @@ class Resep extends BaseController
             dokter.nama_dokter as dokter_nama_dokter')
             ->join('pasien', 'pasien.id_pasien = resep.id_pasien', 'inner')
             ->join('dokter', 'dokter.id_dokter = resep.id_dokter', 'inner');
+
+        // Apply status filter if provided
+        if ($status === '1') {
+            $ResepModel->where('status', 1);
+        } elseif ($status === '0') {
+            $ResepModel->where('status', 0);
+        }
 
         // Apply search filter on supplier name or purchase date
         if ($search) {
@@ -160,6 +168,7 @@ class Resep extends BaseController
             'id_dokter' => $this->request->getPost('id_dokter'),
             'tanggal_resep' => date('Y-m-d H:i:s'),
             'jumlah_resep' => 0,
+            'total_biaya' => 0,
             'keterangan' => '',
         ];
         $this->ResepModel->save($data);
@@ -188,6 +197,7 @@ class Resep extends BaseController
             'id_pasien' => $this->request->getPost('id_pasien'),
             'id_dokter' => $this->request->getPost('id_dokter'),
             'tanggal_resep' => $resep['tanggal_resep'],
+            'total_biaya' => $resep['total_biaya'],
             'jumlah_resep' => $resep['jumlah_resep'],
             'keterangan' => $resep['keterangan'],
         ];
@@ -204,13 +214,14 @@ class Resep extends BaseController
         return $this->response->setJSON(['message' => 'Resep berhasil dihapus']);
     }
 
-    // DETAIL PEMBELIAN OBAT
-    public function detailpembelianobat($id)
+    // DETAIL RESEP
+    public function detailresep($id)
     {
         $resep = $this->ResepModel
-            ->join('id_pasien', 'id_pasien.id_pasien = resep.id_pasien', 'inner')
-            ->join('id_dokter', 'id_dokter.id_dokter = resep.id_dokter', 'inner')
+            ->join('pasien', 'pasien.id_pasien = resep.id_pasien', 'inner')
+            ->join('dokter', 'dokter.id_dokter = resep.id_dokter', 'inner')
             ->find($id);
+        $resep['no_mr'] = $this->formatNoMr($resep['no_mr']);
         $data = [
             'resep' => $resep,
             'title' => 'Detail Resep ' . $id . ' - ' . $this->systemName,
@@ -220,60 +231,62 @@ class Resep extends BaseController
         return view('dashboard/resep/details', $data);
     }
 
-    // DETAIL PEMBELIAN OBAT
-    public function pembelianobat($id)
+    public function detailreseplist($id)
     {
-        $data = $this->PembelianObatModel
-            ->join('supplier', 'supplier.id_supplier = pembelian_obat.id_supplier', 'inner')
-            ->join('user', 'user.id_user = pembelian_obat.id_user', 'inner')
-            ->find($id);
-        return $this->response->setJSON($data);
-    }
-
-    public function detailpembelianobatlist($id)
-    {
-        $data = $this->DetailPembelianObatModel
-            ->where('detail_pembelian_obat.id_pembelian_obat', $id)
-            ->join('pembelian_obat', 'pembelian_obat.id_pembelian_obat = detail_pembelian_obat.id_pembelian_obat', 'inner')
-            ->join('obat', 'obat.id_obat = detail_pembelian_obat.id_obat', 'inner')
-            ->orderBy('id_detail_pembelian_obat', 'ASC')
+        $data = $this->DetailResepModel
+            ->where('detail_resep.id_resep', $id)
+            ->join('resep', 'resep.id_resep = detail_resep.id_resep', 'inner')
+            ->join('obat', 'obat.id_obat = detail_resep.id_obat', 'inner')
+            ->orderBy('id_detail_resep', 'ASC')
             ->findAll();
 
         return $this->response->setJSON($data);
     }
 
-    public function detailpembelianobatitem($id)
+    public function detailresepitem($id)
     {
-        $data = $this->DetailPembelianObatModel
-            ->where('id_detail_pembelian_obat', $id)
-            ->orderBy('id_detail_pembelian_obat', 'ASC')
+        $data = $this->DetailResepModel
+            ->where('id_detail_resep', $id)
+            ->orderBy('id_detail_resep', 'ASC')
             ->find($id);
 
         return $this->response->setJSON($data);
     }
 
-    public function obatlist($id_supplier, $id_pembelian_obat)
+    public function editketerangan($id)
+    {
+        $db = db_connect();
+        $resepBuilder = $db->table('resep');
+        $resepBuilder->where('id_resep', $id);
+        $resepBuilder->update([
+            'keterangan' => $this->request->getPost('keterangan'),
+        ]);
+
+        return $this->response->setJSON(['success' => true, 'message' => 'Keterangan resep berhasil diperbarui']);
+    }
+
+    public function obatlist($id_resep)
     {
         $ObatModel = new ObatModel();
-        $DetailPembelianObatModel = new DetailPembelianObatModel(); // Model untuk tabel detail_pembelian_obat
+        $DetailResepModel = new DetailResepModel(); // Model untuk tabel detail_resep
 
         // Ambil semua obat berdasarkan id_supplier
-        $results = $ObatModel->where('id_supplier', $id_supplier)->orderBy('nama_obat', 'DESC')->findAll();
+        $results = $ObatModel->orderBy('nama_obat', 'DESC')->findAll();
 
         $options = [];
         foreach ($results as $row) {
             $harga_obat = (int) $row['harga_obat'];
             $harga_obat_terformat = number_format($harga_obat, 0, ',', '.');
-            // Cek apakah id_obat sudah ada di tabel detail_pembelian_obat dengan id_pembelian_obat yang sama
-            $isUsed = $DetailPembelianObatModel->where('id_obat', $row['id_obat'])
-                ->where('id_pembelian_obat', $id_pembelian_obat) // Pastikan sesuai dengan id_pembelian_obat yang sedang digunakan
+            // Cek apakah id_resep sudah ada di tabel detail_resep dengan id_resep yang sama
+            $isUsed = $DetailResepModel->where('id_obat', $row['id_obat'])
+                ->where('id_resep', $id_resep) // Pastikan sesuai dengan id_resep yang sedang digunakan
                 ->first();
 
             // Jika belum ada pada pembelian yang sama, tambahkan ke options
-            if (!$isUsed) {
+            if ($row['jumlah_masuk'] > 0 && !$isUsed) {
                 $options[] = [
                     'value' => $row['id_obat'],
-                    'text' => $row['nama_obat'] . ' (' . $row['kategori_obat'] . ' • ' . $row['bentuk_obat'] . ' • Rp' . $harga_obat_terformat . ' • ' . $row['dosis_kali'] . ' × ' . $row['dosis_hari'] . ' hari • ' . $row['cara_pakai'] . ')'
+                    'text' => $row['nama_obat'] . ' (' . $row['kategori_obat'] . ' • ' . $row['bentuk_obat'] . ' • Rp' . $harga_obat_terformat . ' • ' . $row['dosis_kali'] . ' × ' . $row['dosis_hari'] . ' hari • ' . $row['cara_pakai'] . ' • ' . $row['jumlah_masuk'] . ')'
                 ];
             }
         }
@@ -284,7 +297,7 @@ class Resep extends BaseController
         ]);
     }
 
-    public function tambahdetailpembelianobat($id)
+    public function tambahdetailresep($id)
     {
         // Validate
         $validation = \Config\Services::validation();
@@ -303,36 +316,36 @@ class Resep extends BaseController
 
         // Save Data
         $data = [
-            'id_pembelian_obat' => $id,
+            'id_resep' => $id,
             'id_obat' => $this->request->getPost('id_obat'),
             'jumlah' => $this->request->getPost('jumlah'),
-            'harga_satuan' => $obat['harga_obat'],
+            'harga_satuan' => $obat['harga_jual'],
         ];
-        $this->DetailPembelianObatModel->save($data);
+        $this->DetailResepModel->save($data);
 
         $db = db_connect();
 
-        // Calculate total_qty and total_biaya
-        $builder = $db->table('detail_pembelian_obat');
-        $builder->select('SUM(jumlah) as total_qty, SUM(jumlah * harga_satuan) as total_biaya');
-        $builder->where('id_pembelian_obat', $id);
+        // Calculate jumlah_resep
+        $builder = $db->table('detail_resep');
+        $builder->select('SUM(jumlah) as jumlah_resep, SUM(jumlah * harga_satuan) as total_biaya');
+        $builder->where('id_resep', $id);
         $result = $builder->get()->getRow();
 
-        $total_qty = $result->total_qty;
+        $jumlah_resep = $result->jumlah_resep;
         $total_biaya = $result->total_biaya;
 
-        // Update pembelian_obat table
-        $pembelianObatBuilder = $db->table('pembelian_obat');
-        $pembelianObatBuilder->where('id_pembelian_obat', $id);
-        $pembelianObatBuilder->update([
-            'total_qty' => $total_qty,
+        // Update resep table
+        $resepBuilder = $db->table('resep');
+        $resepBuilder->where('id_resep', $id);
+        $resepBuilder->update([
+            'jumlah_resep' => $jumlah_resep,
             'total_biaya' => $total_biaya,
         ]);
 
-        return $this->response->setJSON(['success' => true, 'message' => 'Item pembelian berhasil ditambahkan']);
+        return $this->response->setJSON(['success' => true, 'message' => 'Item resep berhasil ditambahkan']);
     }
 
-    public function perbaruidetailpembelianobat($id)
+    public function perbaruidetailresep($id)
     {
         // Validate
         $validation = \Config\Services::validation();
@@ -345,72 +358,72 @@ class Resep extends BaseController
             return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
         }
 
-        $harga_satuan = $this->DetailPembelianObatModel->find($this->request->getPost('id_detail_pembelian_obat'));
+        $detail_resep = $this->DetailResepModel->find($this->request->getPost('id_detail_resep'));
 
         // Save Data
         $data = [
-            'id_detail_pembelian_obat' => $this->request->getPost('id_detail_pembelian_obat'),
-            'id_pembelian_obat' => $id,
-            'id_obat' => $this->request->getPost('id_obat_edit'),
+            'id_detail_resep' => $this->request->getPost('id_detail_resep'),
+            'id_resep' => $id,
+            'id_obat' => $detail_resep['id_obat'],
             'jumlah' => $this->request->getPost('jumlah_edit'),
-            'harga_satuan' => $harga_satuan['harga_satuan'],
+            'harga_satuan' => $detail_resep['harga_satuan'],
         ];
-        $this->DetailPembelianObatModel->save($data);
+        $this->DetailResepModel->save($data);
 
         $db = db_connect();
 
-        // Calculate total_qty and total_biaya
-        $builder = $db->table('detail_pembelian_obat');
-        $builder->select('SUM(jumlah) as total_qty, SUM(jumlah * harga_satuan) as total_biaya');
-        $builder->where('id_pembelian_obat', $id);
+        // Calculate jumlah_resep
+        $builder = $db->table('detail_resep');
+        $builder->select('SUM(jumlah) as jumlah_resep, SUM(jumlah * harga_satuan) as total_biaya');
+        $builder->where('id_resep', $id);
         $result = $builder->get()->getRow();
 
-        $total_qty = $result->total_qty;
+        $jumlah_resep = $result->jumlah_resep;
         $total_biaya = $result->total_biaya;
 
-        // Update pembelian_obat table
-        $pembelianObatBuilder = $db->table('pembelian_obat');
-        $pembelianObatBuilder->where('id_pembelian_obat', $id);
-        $pembelianObatBuilder->update([
-            'total_qty' => $total_qty,
+        // Update resep table
+        $resepBuilder = $db->table('resep');
+        $resepBuilder->where('id_resep', $id);
+        $resepBuilder->update([
+            'jumlah_resep' => $jumlah_resep,
             'total_biaya' => $total_biaya,
         ]);
 
-        return $this->response->setJSON(['success' => true, 'message' => 'Item pembelian berhasil diperbarui']);
+        return $this->response->setJSON(['success' => true, 'message' => 'Item resep berhasil diperbarui']);
     }
 
-    public function hapusdetailpembelianobat($id)
+    public function hapusdetailresep($id)
     {
         $db = db_connect();
 
-        // Find the detail pembelian obat before deletion to get id_pembelian_obat
-        $detail = $this->DetailPembelianObatModel->find($id);
+        // Find the detail pembelian obat before deletion to get id_resep
+        $detail = $this->DetailResepModel->find($id);
 
-        $id_pembelian_obat = $detail['id_pembelian_obat'];
+        $id_resep = $detail['id_resep'];
 
         // Delete the detail pembelian obat
-        $this->DetailPembelianObatModel->delete($id);
+        $this->DetailResepModel->delete($id);
 
         // Reset auto_increment
-        $db->query('ALTER TABLE `detail_pembelian_obat` auto_increment = 1');
+        $db->query('ALTER TABLE `detail_resep` auto_increment = 1');
 
-        // Recalculate total_qty and total_biaya after deletion
-        $builder = $db->table('detail_pembelian_obat');
-        $builder->select('SUM(jumlah) as total_qty, SUM(jumlah * harga_satuan) as total_biaya');
-        $builder->where('id_pembelian_obat', $id_pembelian_obat);
+        // Calculate jumlah_resep
+        $builder = $db->table('detail_resep');
+        $builder->select('SUM(jumlah) as jumlah_resep, SUM(jumlah * harga_satuan) as total_biaya');
+        $builder->where('id_resep', $id_resep);
         $result = $builder->get()->getRow();
 
-        $total_qty = $result->total_qty ?? 0; // Handle case when no rows are left
-        $total_biaya = $result->total_biaya ?? 0;
+        $jumlah_resep = $result->jumlah_resep;
+        $total_biaya = $result->total_biaya;
 
-        // Update pembelian_obat table
-        $pembelianObatBuilder = $db->table('pembelian_obat');
-        $pembelianObatBuilder->where('id_pembelian_obat', $id_pembelian_obat);
-        $pembelianObatBuilder->update([
-            'total_qty' => $total_qty,
+        // Update resep table
+        $resepBuilder = $db->table('resep');
+        $resepBuilder->where('id_resep', $id_resep);
+        $resepBuilder->update([
+            'jumlah_resep' => $jumlah_resep,
             'total_biaya' => $total_biaya,
         ]);
 
-        return $this->response->setJSON(['message' => 'Item pembelian berhasil dihapus']);
+        return $this->response->setJSON(['message' => 'Item resep berhasil dihapus']);
     }
 }

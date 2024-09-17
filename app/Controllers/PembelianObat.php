@@ -106,6 +106,15 @@ class PembelianObat extends BaseController
         ]);
     }
 
+    public function pembelianobat($id)
+    {
+        $data = $this->PembelianObatModel
+            ->join('supplier', 'supplier.id_supplier = pembelian_obat.id_supplier', 'inner')
+            ->join('user', 'user.id_user = pembelian_obat.id_user', 'inner')
+            ->find($id);
+        return $this->response->setJSON($data);
+    }
+
     public function create()
     {
         // Validate
@@ -209,16 +218,6 @@ class PembelianObat extends BaseController
             'agent' => $this->request->getUserAgent()
         ];
         return view('dashboard/pembelian_obat/details', $data);
-    }
-
-    // DETAIL PEMBELIAN OBAT
-    public function pembelianobat($id)
-    {
-        $data = $this->PembelianObatModel
-            ->join('supplier', 'supplier.id_supplier = pembelian_obat.id_supplier', 'inner')
-            ->join('user', 'user.id_user = pembelian_obat.id_user', 'inner')
-            ->find($id);
-        return $this->response->setJSON($data);
     }
 
     public function detailpembelianobatlist($id)
@@ -336,15 +335,15 @@ class PembelianObat extends BaseController
             return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
         }
 
-        $harga_satuan = $this->DetailPembelianObatModel->find($this->request->getPost('id_detail_pembelian_obat'));
+        $detail_pembelian_obat = $this->DetailPembelianObatModel->find($this->request->getPost('id_detail_pembelian_obat'));
 
         // Save Data
         $data = [
             'id_detail_pembelian_obat' => $this->request->getPost('id_detail_pembelian_obat'),
             'id_pembelian_obat' => $id,
-            'id_obat' => $this->request->getPost('id_obat_edit'),
+            'id_obat' => $detail_pembelian_obat['id_obat'],
             'jumlah' => $this->request->getPost('jumlah_edit'),
-            'harga_satuan' => $harga_satuan['harga_satuan'],
+            'harga_satuan' => $detail_pembelian_obat['harga_satuan'],
         ];
         $this->DetailPembelianObatModel->save($data);
 

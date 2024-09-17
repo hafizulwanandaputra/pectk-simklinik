@@ -32,8 +32,15 @@ class Resep extends Migration
                 'type' => 'INT',
                 'constraint' => 24,
             ],
+            'total_biaya' => [
+                'type' => 'INT',
+                'constraint' => 24,
+            ],
             'keterangan' => [
                 'type' => 'TEXT'
+            ],
+            'status' => [
+                'type' => 'BOOLEAN'
             ],
         ]);
         $this->forge->addKey('id_resep', true);

@@ -82,9 +82,11 @@ $routes->delete('/(?i)resep/(?i)delete/(:any)', 'Resep::delete/$1');
 $routes->get('/(?i)resep/(?i)detailresep/(:any)', 'Resep::detailresep/$1');
 $routes->get('/(?i)resep/(?i)detailreseplist/(:any)', 'Resep::detailreseplist/$1');
 $routes->get('/(?i)resep/(?i)detailresepitem/(:any)', 'Resep::detailresepitem/$1');
+$routes->get('/(?i)resep/(?i)obatlist/(:any)', 'Resep::obatlist/$1');
 $routes->post('/(?i)resep/(?i)tambahdetailresep/(:any)', 'Resep::tambahdetailresep/$1');
 $routes->post('/(?i)resep/(?i)perbaruidetailresep/(:any)', 'Resep::perbaruidetailresep/$1');
 $routes->delete('/(?i)resep/(?i)hapusdetailresep/(:any)', 'Resep::hapusdetailresep/$1');
+$routes->get('/(?i)resep/(?i)editketerangan/(:any)', 'Resep::editketerangan/$1');
 
 // TRANSAKSI
 $routes->get('/(?i)transaksi', 'Transaksi::index');
