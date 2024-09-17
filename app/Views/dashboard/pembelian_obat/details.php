@@ -350,7 +350,7 @@
                         <form id="editDetail" enctype="multipart/form-data">
                             <div class="d-flex justify-content-between align-items-center mb-1">
                                 <div class="fw-bold">Edit Jumlah</div>
-                                <button type="button" class="text-end btn-close ms-auto cancel-edit"></button>
+                                <button id="closeBtn" type="button" class="text-end btn-close ms-auto cancel-edit"></button>
                             </div>
                             <div class="d-flex flex-column flex-lg-row gap-1">
                                 <input type="hidden" id="id_detail_pembelian_obat" name="id_detail_pembelian_obat" value="${response.data.id_detail_pembelian_obat}">
@@ -387,7 +387,7 @@
                     `);
 
                     // Disable form inputs
-                    $('#editDetail input, #editDetail select').prop('disabled', true);
+                    $('#editDetail input, #editDetail select, #closeBtn').prop('disabled', true);
 
                     try {
                         const response = await axios.post(`<?= base_url('/pembelianobat/perbaruidetailpembelianobat/' . $pembelianobat['id_pembelian_obat']) ?>`, formData, {
@@ -442,7 +442,7 @@
                         $('#editButton').prop('disabled', false).html(`
                             <i class="fa-solid fa-pen-to-square"></i> Edit
                         `);
-                        $('#editDetail input, #editDetail select').prop('disabled', false);
+                        $('#editDetail input, #editDetail select, #closeBtn').prop('disabled', false);
                     }
                 });
 

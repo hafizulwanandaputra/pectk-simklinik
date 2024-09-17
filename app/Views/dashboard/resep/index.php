@@ -419,7 +419,7 @@
             $('#resepForm .is-invalid').removeClass('is-invalid');
             $('#resepForm .invalid-feedback').text('').hide();
             $('#submitButton').prop('disabled', true).html(`
-                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span> <span role="status">Memproses...</span>
             `);
 
             // Disable form inputs
