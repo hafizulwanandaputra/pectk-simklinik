@@ -1,6 +1,26 @@
 <?= $this->extend('dashboard/templates/dashboard'); ?>
 <?= $this->section('css'); ?>
 <?= $this->include('select2/normal'); ?>
+<style>
+    #pembelianObatContainer {
+        height: calc(100vh - 350px);
+        min-height: 100px;
+    }
+
+    @media (max-width: 767.98px) {
+        #pembelianObatContainer {
+            height: calc(100vh - 303px);
+            min-height: 100px;
+        }
+    }
+
+    @media (min-width: 991.98px) {
+        #pembelianObatContainer {
+            height: calc(100vh - 264px);
+            min-height: 100px;
+        }
+    }
+</style>
 <?= $this->endSection(); ?>
 <?= $this->section('title'); ?>
 <div class="d-flex justify-content-start align-items-center">
@@ -40,7 +60,7 @@
             </div>
         </form>
     </fieldset>
-    <ul id="pembelianObatContainer" class="list-group shadow-sm rounded-3 mt-1">
+    <ul id="pembelianObatContainer" class="list-group shadow-sm rounded-3 mt-1 overflow-auto">
         <?php for ($i = 0; $i < 12; $i++) : ?>
             <li class="list-group-item bg-body-tertiary pb-3 pt-3">
                 <div class="d-flex">

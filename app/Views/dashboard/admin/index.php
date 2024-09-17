@@ -164,7 +164,7 @@
                 "<'row'<'col-md-12'tr>>" +
                 "<'d-lg-flex justify-content-lg-between align-items-lg-center'<'text-md-center text-lg-start'><'d-md-flex justify-content-md-center d-lg-block'p>>",
             'initComplete': function(settings, json) {
-                $("#tabel").wrap("<div class='overflow-auto position-relative'></div>");
+                $("#tabel").wrap("<div class='overflow-auto position-relative datatables-height'></div>");
                 $('.dataTables_filter input[type="search"]').css({
                     'width': '220px'
                 });

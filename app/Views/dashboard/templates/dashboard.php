@@ -223,6 +223,11 @@
             box-shadow: inset 0 0 0 1px var(--bs-light);
         }
 
+        .datatables-height {
+            height: calc(100vh - 252px);
+            min-height: 100px;
+        }
+
         @media (prefers-reduced-transparency) {
             div.dataTables_wrapper div.dataTables_processing.card {
                 --bs-bg-opacity: 1;
@@ -261,6 +266,11 @@
                 transform: translateY(0);
             }
 
+            .datatables-height {
+                height: calc(100vh - 300px);
+                min-height: 100px;
+            }
+
             @media (prefers-reduced-motion: reduce) {
                 #sidebarMenu {
                     transition: none;
@@ -272,6 +282,13 @@
                     --bs-bg-opacity: 1;
                     backdrop-filter: none;
                 }
+            }
+        }
+
+        @media (min-width: 991.98px) {
+            .datatables-height {
+                height: calc(100vh - 181px);
+                min-height: 100px;
             }
         }
     </style>
