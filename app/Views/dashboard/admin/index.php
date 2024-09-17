@@ -197,7 +197,7 @@
                     dt.ajax.reload(null, false);
                 },
                 text: '<i class="fa-solid fa-arrows-rotate"></i> Refresh',
-                className: 'btn-primary btn-sm bg-gradient rounded-start-3',
+                className: 'btn-success btn-sm bg-gradient rounded-start-3',
                 init: function(api, node, config) {
                     $(node).removeClass('btn-secondary')
                 },
