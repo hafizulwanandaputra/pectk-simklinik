@@ -76,6 +76,7 @@
                                 <small>
                                     <span class="placeholder" style="width: 12.5%;"></span><br>
                                     <span class="placeholder" style="width: 12.5%;"></span><br>
+                                    <span class="placeholder" style="width: 12.5%;"></span><br>
                                     <span class="placeholder" style="width: 12.5%;"></span>
                                 </small>
                             </p>
@@ -148,6 +149,7 @@
                         </h6>
                         <p class="card-text placeholder-glow">
                             <small>
+                                <span class="placeholder" style="width: 12.5%;"></span><br>
                                 <span class="placeholder" style="width: 12.5%;"></span><br>
                                 <span class="placeholder" style="width: 12.5%;"></span><br>
                                 <span class="placeholder" style="width: 12.5%;"></span>
