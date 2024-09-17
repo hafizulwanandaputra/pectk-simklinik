@@ -29,14 +29,6 @@ class DetailResep extends Migration
                 'type' => 'BIGINT',
                 'constraint' => 24,
             ],
-            'dosis_kali' => [
-                'type' => 'BIGINT',
-                'constraint' => 24,
-            ],
-            'dosis_sehari' => [
-                'type' => 'BIGINT',
-                'constraint' => 24,
-            ],
         ]);
         $this->forge->addKey('id_detail_resep', true);
         $this->forge->addForeignKey('id_resep', 'resep', 'id_resep', 'CASCADE', 'CASCADE');

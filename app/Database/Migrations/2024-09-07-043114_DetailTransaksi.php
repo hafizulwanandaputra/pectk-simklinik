@@ -37,10 +37,6 @@ class DetailTransaksi extends Migration
                 'type' => 'BIGINT',
                 'constraint' => 24,
             ],
-            'total_harga' => [
-                'type' => 'BIGINT',
-                'constraint' => 24,
-            ],
         ]);
         $this->forge->addKey('id_detail_transaksi', true);
         $this->forge->addForeignKey('id_obat', 'obat', 'id_obat', 'CASCADE', 'CASCADE');

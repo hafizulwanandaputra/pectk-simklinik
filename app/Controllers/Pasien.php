@@ -42,17 +42,16 @@ class Pasien extends BaseController
             1 => 'id_pasien',
             2 => 'nama_pasien',
             3 => 'jenis_kelamin',
-            4 => 'nama_dokter',
-            5 => 'no_mr',
-            6 => 'no_registrasi',
-            7 => 'nik',
-            8 => 'jenis_pasien',
-            9 => 'tanggal_lahir',
-            10 => 'agama_pasien',
-            11 => 'no_hp_pasien',
-            12 => 'alamat_pasien',
-            13 => 'status_kawin',
-            14 => 'tgl_pendaftaran',
+            4 => 'no_mr',
+            5 => 'no_registrasi',
+            6 => 'nik',
+            7 => 'jenis_pasien',
+            8 => 'tanggal_lahir',
+            9 => 'agama_pasien',
+            10 => 'no_hp_pasien',
+            11 => 'alamat_pasien',
+            12 => 'status_kawin',
+            13 => 'tgl_pendaftaran',
         ];
 
         // Get the column to sort by
@@ -73,7 +72,6 @@ class Pasien extends BaseController
 
         // Fetch the data
         $pasien = $this->PasienModel
-            ->join('dokter', 'dokter.id_dokter = pasien.id_dokter', 'inner')
             ->orderBy($sortColumn, $sortDirection)
             ->findAll($length, $start);
 
@@ -111,26 +109,6 @@ class Pasien extends BaseController
         return "{$part1}-{$part2}-{$part3}";
     }
 
-    public function dokterlist()
-    {
-        $DokterModel = new DokterModel();
-
-        $results = $DokterModel->orderBy('nama_dokter', 'DESC')->findAll();
-
-        $options = [];
-        foreach ($results as $row) {
-            $options[] = [
-                'value' => $row['id_dokter'],
-                'text' => $row['nama_dokter']
-            ];
-        }
-
-        return $this->response->setJSON([
-            'success' => true,
-            'data' => $options,
-        ]);
-    }
-
     public function create()
     {
         // Validate
@@ -149,7 +127,6 @@ class Pasien extends BaseController
             'kecamatan' => 'required',
             'desa' => 'required',
             'status_kawin' => 'required',
-            'id_dokter' => 'required',
         ]);
 
         if (!$this->validate($validation->getRules())) {
@@ -191,7 +168,6 @@ class Pasien extends BaseController
             'kecamatan' => $this->request->getPost('kecamatan'),
             'desa' => $this->request->getPost('desa'),
             'status_kawin' => $this->request->getPost('status_kawin'),
-            'id_dokter' => $this->request->getPost('id_dokter'),
             'tgl_pendaftaran' => date('Y-m-d H:i:s')
         ];
         $this->PasienModel->save($data);
@@ -231,7 +207,6 @@ class Pasien extends BaseController
             'kecamatan' => 'required',
             'desa' => 'required',
             'status_kawin' => 'required',
-            'id_dokter' => 'required',
         ]);
         if (!$this->validate($validation->getRules())) {
             return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
@@ -258,7 +233,6 @@ class Pasien extends BaseController
             'kecamatan' => $this->request->getPost('kecamatan'),
             'desa' => $this->request->getPost('desa'),
             'status_kawin' => $this->request->getPost('status_kawin'),
-            'id_dokter' => $this->request->getPost('id_dokter'),
             'tgl_pendaftaran' => $pasien['tgl_pendaftaran']
         ];
         $this->PasienModel->save($data);

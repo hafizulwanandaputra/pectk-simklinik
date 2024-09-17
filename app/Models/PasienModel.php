@@ -9,7 +9,7 @@ class PasienModel extends Model
     protected $table = 'pasien';
     protected $primaryKey = 'id_pasien';
     protected $useTimestamps = false;
-    protected $allowedFields = ['id_dokter', 'nama_pasien', 'jenis_kelamin', 'no_mr', 'no_registrasi', 'nik', 'jenis_pasien', 'tempat_lahir', 'tanggal_lahir', 'agama_pasien', 'no_hp_pasien', 'alamat_pasien', 'provinsi', 'kota', 'kecamatan', 'desa', 'status_kawin', 'tgl_pendaftaran'];
+    protected $allowedFields = ['nama_pasien', 'jenis_kelamin', 'no_mr', 'no_registrasi', 'nik', 'jenis_pasien', 'tempat_lahir', 'tanggal_lahir', 'agama_pasien', 'no_hp_pasien', 'alamat_pasien', 'provinsi', 'kota', 'kecamatan', 'desa', 'status_kawin', 'tgl_pendaftaran'];
 
     public function getLastNoReg($jenis_pasien, $tahun, $bulan, $tanggal)
     {

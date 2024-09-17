@@ -1,7 +1,4 @@
 <?= $this->extend('dashboard/templates/dashboard'); ?>
-<?= $this->section('css'); ?>
-<?= $this->include('select2/floating'); ?>
-<?= $this->endSection(); ?>
 <?= $this->section('title'); ?>
 <div class="d-flex justify-content-start align-items-center">
     <span class="fw-medium fs-5 flex-fill text-truncate"><?= $headertitle; ?></span>
@@ -21,7 +18,6 @@
                     <th scope="col" class="bg-body-secondary border-secondary text-nowrap" style="border-bottom-width: 2px;">Tindakan</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Nama</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Jenis Kelamin</th>
-                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Dokter</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Nomor Rekam Medis</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Nomor Registrasi</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">NIK</th>
@@ -162,13 +158,6 @@
                             <option value="Cerai Mati">Cerai Mati</option>
                         </select>
                         <label for="status_kawin">Agama*</label>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                    <div class="form-floating mt-1 mb-1">
-                        <select class="form-select rounded-3" id="id_dokter" name="id_dokter" aria-label="id_dokter">
-                            <option value="" disabled selected>-- Pilih Dokter --</option>
-                        </select>
-                        <label for="id_dokter">Dokter*</label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
@@ -329,12 +318,6 @@
                     }
                 },
                 {
-                    data: 'nama_dokter',
-                    render: function(data, type, row) {
-                        return `<span class="text-nowrap">${data}</span>`;
-                    }
-                },
-                {
                     data: 'no_mr',
                     render: function(data, type, row) {
                         return `<span class="date text-nowrap">${data}</span>`;
@@ -402,10 +385,10 @@
                 "target": [1],
                 "orderable": false
             }, {
-                "target": [0, 1, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 14],
+                "target": [0, 1, 3, 4, 5, 6, 7, 8, 9, 10, 12, 13],
                 "width": "0%"
             }, {
-                "target": [2, 12],
+                "target": [2, 11],
                 "width": "50%"
             }]
         });
@@ -415,41 +398,10 @@
         table.on('draw', function() {
             $('[data-bs-toggle="tooltip"]').tooltip();
         });
-        async function fetchDokterOptions() {
-            try {
-                const response = await axios.get('<?= base_url('pasien/dokterlist') ?>');
-
-                if (response.data.success) {
-                    const options = response.data.data;
-                    const select = $('#id_dokter');
-
-                    // Clear existing options except the first one
-                    select.find('option:not(:first)').remove();
-
-                    // Loop through the options and append them to the select element
-                    options.forEach(option => {
-                        select.append(`<option value="${option.value}">${option.text}</option>`);
-                    });
-                }
-            } catch (error) {
-                showFailedToast('Gagal mendapatkan dokter.<br>' + error);
-            }
-        }
-        // Call the function to fetch and populate the menu options
-        fetchDokterOptions();
         // Show add user modal
         $('#addPasienBtn').click(function() {
             $('#pasienModalLabel').text('Tambah Pasien');
             $('#pasienModal').modal('show');
-        });
-
-        $('#pasienModal').on('shown.bs.modal', function() {
-            $('#id_dokter').select2({
-                dropdownParent: $('#pasienModal'),
-                theme: "bootstrap-5",
-                width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
-                placeholder: $(this).data('placeholder'),
-            });
         });
 
         $(document).on('click', '.edit-btn', async function() {

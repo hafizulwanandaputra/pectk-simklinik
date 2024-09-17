@@ -15,11 +15,6 @@ class Pasien extends Migration
                 'unsigned' => true,
                 'auto_increment' => true,
             ],
-            'id_dokter' => [
-                'type' => 'BIGINT',
-                'constraint' => 24,
-                'unsigned' => true,
-            ],
             'nama_pasien' => [
                 'type' => 'VARCHAR',
                 'constraint' => 256,
@@ -88,7 +83,6 @@ class Pasien extends Migration
             ],
         ]);
         $this->forge->addKey('id_pasien', true);
-        $this->forge->addForeignKey('id_dokter', 'dokter', 'id_dokter', 'CASCADE', 'CASCADE');
         $this->forge->createTable('pasien');
     }
 
