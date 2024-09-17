@@ -3,9 +3,10 @@
 namespace App\Controllers;
 
 use App\Models\ResepModel;
-use App\Models\SupplierModel;
 use App\Models\DetailResepModel;
+use App\Models\DokterModel;
 use App\Models\ObatModel;
+use App\Models\PasienModel;
 
 class Resep extends BaseController
 {
@@ -27,76 +28,68 @@ class Resep extends BaseController
         return view('dashboard/resep/index', $data);
     }
 
-    public function pembelianobatlist()
+    public function listresep()
     {
         $search = $this->request->getGet('search');
         $limit = $this->request->getGet('limit');
         $offset = $this->request->getGet('offset');
-        $status = $this->request->getGet('status');
 
         $limit = $limit ? intval($limit) : 0;
         $offset = $offset ? intval($offset) : 0;
 
-        $PembelianObatModel = $this->PembelianObatModel;
+        $ResepModel = $this->ResepModel;
 
         // Join tables before applying search filter
-        $PembelianObatModel
-            ->select('pembelian_obat.*, 
-            supplier.nama_supplier as supplier_nama_supplier, 
-            user.fullname as user_fullname, 
-            user.username as user_username')
-            ->join('supplier', 'supplier.id_supplier = pembelian_obat.id_supplier', 'inner')
-            ->join('user', 'user.id_user = pembelian_obat.id_user', 'inner');
-
-        // Apply status filter if provided
-        if ($status === '1') {
-            $PembelianObatModel->where('diterima', 1);
-        } elseif ($status === '0') {
-            $PembelianObatModel->where('diterima', 0);
-        }
+        $ResepModel
+            ->select('resep.*, 
+            pasien.nama_pasien as pasien_nama_pasien, 
+            dokter.nama_dokter as dokter_nama_dokter')
+            ->join('pasien', 'pasien.id_pasien = resep.id_pasien', 'inner')
+            ->join('dokter', 'dokter.id_dokter = resep.id_dokter', 'inner');
 
         // Apply search filter on supplier name or purchase date
         if ($search) {
-            $PembelianObatModel
+            $ResepModel
                 ->groupStart()
-                ->like('supplier.nama_supplier', $search)  // Search in the supplier's name
-                ->orLike('tgl_pembelian', $search)         // Search in the purchase date
+                ->like('pasien.nama_pasien', $search)
+                ->orLike('dokter.nama_dokter', $search)
+                ->orLike('tanggal_resep', $search)
                 ->groupEnd();
         }
 
         // Count total results
-        $total = $PembelianObatModel->countAllResults(false);
+        $total = $ResepModel->countAllResults(false);
 
         // Get paginated results
-        $PembelianObat = $PembelianObatModel
-            ->orderBy('tgl_pembelian', 'DESC')
+        $Resep = $ResepModel
+            ->orderBy('id_resep', 'DESC')
             ->findAll($limit, $offset);
 
         // Calculate the starting number for the current page
         $startNumber = $offset + 1;
 
-        $dataPembelianObat = array_map(function ($data, $index) use ($startNumber) {
+        $dataResep = array_map(function ($data, $index) use ($startNumber) {
             $data['number'] = $startNumber + $index;
             return $data;
-        }, $PembelianObat, array_keys($PembelianObat));
+        }, $Resep, array_keys($Resep));
 
         return $this->response->setJSON([
-            'pembelian_obat' => $dataPembelianObat,
+            'resep' => $dataResep,
             'total' => $total
         ]);
     }
 
-    public function supplierlist()
+    public function pasienlist()
     {
-        $SupplierModel = new SupplierModel();
+        $PasienModel = new PasienModel();
 
-        $results = $SupplierModel->orderBy('nama_supplier', 'DESC')->findAll();
+        $results = $PasienModel->orderBy('nama_pasien', 'DESC')->findAll();
 
         $options = [];
         foreach ($results as $row) {
             $options[] = [
-                'value' => $row['id_supplier'],
-                'text' => $row['nama_supplier']
+                'value' => $row['id_pasien'],
+                'text' => $row['nama_pasien'] . ' (' . $this->formatNoMr($row['no_mr']) . ' - ' . $row['no_registrasi'] . ')'
             ];
         }
 
@@ -106,13 +99,55 @@ class Resep extends BaseController
         ]);
     }
 
+    private function formatNoMr($no_mr)
+    {
+        // Format no_mr ke xx-xx-xx
+        $part1 = substr($no_mr, 0, 2);  // Ambil 2 digit pertama
+        $part2 = substr($no_mr, 2, 2);  // Ambil 2 digit kedua
+        $part3 = substr($no_mr, 4, 2);  // Ambil 2 digit terakhir
+
+        // Gabungkan menjadi xx-xx-xx
+        return "{$part1}-{$part2}-{$part3}";
+    }
+
+    public function dokterlist()
+    {
+        $DokterModel = new DokterModel();
+
+        $results = $DokterModel->orderBy('nama_dokter', 'DESC')->findAll();
+
+        $options = [];
+        foreach ($results as $row) {
+            $options[] = [
+                'value' => $row['id_dokter'],
+                'text' => $row['nama_dokter']
+            ];
+        }
+
+        return $this->response->setJSON([
+            'success' => true,
+            'data' => $options,
+        ]);
+    }
+
+    public function resep($id)
+    {
+        $data = $this->ResepModel
+            ->select('resep.*, pasien.nama_pasien as pasien_nama_pasien, dokter.nama_dokter as dokter_nama_dokter')
+            ->join('pasien', 'pasien.id_pasien = resep.id_pasien', 'inner')
+            ->join('dokter', 'dokter.id_dokter = resep.id_dokter', 'inner')
+            ->find($id);
+        return $this->response->setJSON($data);
+    }
+
     public function create()
     {
         // Validate
         $validation = \Config\Services::validation();
         // Set base validation rules
         $validation->setRules([
-            'id_supplier' => 'required',
+            'id_pasien' => 'required',
+            'id_dokter' => 'required',
         ]);
 
         if (!$this->validate($validation->getRules())) {
@@ -121,94 +156,68 @@ class Resep extends BaseController
 
         // Save Data
         $data = [
-            'id_supplier' => $this->request->getPost('id_supplier'),
-            'id_user' => session()->get('id_user'),
-            'tgl_pembelian' => date('Y-m-d H:i:s'),
-            'total_qty' => 0,
-            'total_biaya' => 0,
-            'diterima' => 0,
+            'id_pasien' => $this->request->getPost('id_pasien'),
+            'id_dokter' => $this->request->getPost('id_dokter'),
+            'tanggal_resep' => date('Y-m-d H:i:s'),
+            'jumlah_resep' => 0,
+            'keterangan' => '',
         ];
-        $this->PembelianObatModel->save($data);
-        return $this->response->setJSON(['success' => true, 'message' => 'Pembelian berhasil ditambahkan']);
+        $this->ResepModel->save($data);
+        return $this->response->setJSON(['success' => true, 'message' => 'Resep berhasil ditambahkan']);
+    }
+
+    public function update()
+    {
+        // Validate
+        $validation = \Config\Services::validation();
+        // Set base validation rules
+        $validation->setRules([
+            'id_pasien' => 'required',
+            'id_dokter' => 'required',
+        ]);
+
+        if (!$this->validate($validation->getRules())) {
+            return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
+        }
+
+        $resep = $this->ResepModel->find($this->request->getPost('id_resep'));
+
+        // Save Data
+        $data = [
+            'id_resep' => $this->request->getPost('id_resep'),
+            'id_pasien' => $this->request->getPost('id_pasien'),
+            'id_dokter' => $this->request->getPost('id_dokter'),
+            'tanggal_resep' => $resep['tanggal_resep'],
+            'jumlah_resep' => $resep['jumlah_resep'],
+            'keterangan' => $resep['keterangan'],
+        ];
+        $this->ResepModel->save($data);
+        return $this->response->setJSON(['success' => true, 'message' => 'Resep berhasil diedit']);
     }
 
     public function delete($id)
     {
         $db = db_connect();
-        $this->PembelianObatModel->delete($id);
-        $db->query('ALTER TABLE `pembelian_obat` auto_increment = 1');
-        $db->query('ALTER TABLE `detail_pembelian_obat` auto_increment = 1');
-        return $this->response->setJSON(['message' => 'Obat berhasil dihapus']);
-    }
-
-    public function complete($id)
-    {
-        $db = db_connect();
-        $db->table('pembelian_obat')
-            ->set('diterima', 1)
-            ->where('id_pembelian_obat', $id)
-            ->update();
-
-        $details = $db->table('detail_pembelian_obat')
-            ->where('id_pembelian_obat', $id)
-            ->get()
-            ->getResultArray();
-
-        // Update jumlah_masuk di tabel obat untuk setiap id_obat di detail_pembelian_obat
-        foreach ($details as $detail) {
-            $id_obat = $detail['id_obat'];
-            $jumlah_masuk = $detail['jumlah'];
-
-            // Update jumlah_masuk di tabel obat
-            $db->table('obat')
-                ->set('jumlah_masuk', "jumlah_masuk + $jumlah_masuk", false) // false untuk menghindari quoting otomatis
-                ->set('updated_at', date('Y-m-d H:i:s'))
-                ->where('id_obat', $id_obat)
-                ->update();
-        }
-        return $this->response->setJSON(['message' => 'Obat sudah diterima. Periksa jumlah masuk di menu obat.']);
-    }
-
-    public function cancel($id)
-    {
-        $db = db_connect();
-        $details = $db->table('detail_pembelian_obat')
-            ->where('id_pembelian_obat', $id)
-            ->get()
-            ->getResultArray();
-
-        foreach ($details as $detail) {
-            $id_obat = $detail['id_obat'];
-            $jumlah_masuk = $detail['jumlah'];
-            $db->table('obat')
-                ->set('jumlah_masuk', "jumlah_masuk - $jumlah_masuk", false) // false untuk menghindari quoting otomatis
-                ->set('updated_at', date('Y-m-d H:i:s'))
-                ->where('id_obat', $id_obat)
-                ->update();
-        }
-
-        $db->table('pembelian_obat')
-            ->set('diterima', 0)
-            ->where('id_pembelian_obat', $id)
-            ->update();
-
-        return $this->response->setJSON(['message' => 'Pembelian obat telah dibatalkan. Jumlah masuk obat telah dikurangi.']);
+        $this->ResepModel->delete($id);
+        $db->query('ALTER TABLE `resep` auto_increment = 1');
+        $db->query('ALTER TABLE `detail_resep` auto_increment = 1');
+        return $this->response->setJSON(['message' => 'Resep berhasil dihapus']);
     }
 
     // DETAIL PEMBELIAN OBAT
     public function detailpembelianobat($id)
     {
-        $pembelianobat = $this->PembelianObatModel
-            ->join('supplier', 'supplier.id_supplier = pembelian_obat.id_supplier', 'inner')
-            ->join('user', 'user.id_user = pembelian_obat.id_user', 'inner')
+        $resep = $this->ResepModel
+            ->join('id_pasien', 'id_pasien.id_pasien = resep.id_pasien', 'inner')
+            ->join('id_dokter', 'id_dokter.id_dokter = resep.id_dokter', 'inner')
             ->find($id);
         $data = [
-            'pembelianobat' => $pembelianobat,
-            'title' => 'Detail Pembelian Obat dengan ID ' . $id . ' - ' . $this->systemName,
-            'headertitle' => 'Detail Pembelian Obat',
+            'resep' => $resep,
+            'title' => 'Detail Resep ' . $id . ' - ' . $this->systemName,
+            'headertitle' => 'Detail Resep',
             'agent' => $this->request->getUserAgent()
         ];
-        return view('dashboard/pembelian_obat/details', $data);
+        return view('dashboard/resep/details', $data);
     }
 
     // DETAIL PEMBELIAN OBAT

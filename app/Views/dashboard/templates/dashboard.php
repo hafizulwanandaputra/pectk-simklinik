@@ -442,6 +442,18 @@
                                 </div>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link p-2 <?= (strpos(uri_string(), 'resep') === 0) ? 'active bg-light' : '' ?>" href=" <?= base_url('/resep'); ?>">
+                                <div class="d-flex align-items-start <?= (strpos(uri_string(), 'resep') === 0) ? 'link-dark' : 'link-light' ?>">
+                                    <div style="min-width: 24px; max-width: 24px; text-align: center;">
+                                        <i class="fa-solid fa-prescription"></i>
+                                    </div>
+                                    <div class="flex-fill ms-2">
+                                        Resep
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
                         <?php if (session()->get('role') == "Admin") : ?>
                             <li class="nav-item">
                                 <a class="nav-link p-2 <?= (strpos(uri_string(), 'admin') === 0) ? 'active bg-light' : '' ?>" href=" <?= base_url('/admin'); ?>">

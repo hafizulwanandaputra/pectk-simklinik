@@ -70,7 +70,7 @@ $routes->delete('/(?i)pembelianobat/(?i)hapusdetailpembelianobat/(:any)', 'Pembe
 
 // RESEP
 $routes->get('/(?i)resep', 'Resep::index');
-$routes->post('/(?i)resep/(?i)listresep', 'Resep::listresep');
+$routes->get('/(?i)resep/(?i)listresep', 'Resep::listresep');
 $routes->get('/(?i)resep/(?i)pasienlist', 'Resep::pasienlist');
 $routes->get('/(?i)resep/(?i)dokterlist', 'Resep::dokterlist');
 $routes->get('/(?i)resep/(?i)resep/(:any)', 'Resep::resep/$1');
@@ -79,8 +79,9 @@ $routes->post('/(?i)resep/(?i)update', 'Resep::update');
 $routes->delete('/(?i)resep/(?i)delete/(:any)', 'Resep::delete/$1');
 
 // DETAIL RESEP
-$routes->get('/(?i)resep/(?i)detailreseplist/(:any)', 'Resep::detailreseplist/$1');
 $routes->get('/(?i)resep/(?i)detailresep/(:any)', 'Resep::detailresep/$1');
+$routes->get('/(?i)resep/(?i)detailreseplist/(:any)', 'Resep::detailreseplist/$1');
+$routes->get('/(?i)resep/(?i)detailresepitem/(:any)', 'Resep::detailresepitem/$1');
 $routes->post('/(?i)resep/(?i)tambahdetailresep/(:any)', 'Resep::tambahdetailresep/$1');
 $routes->post('/(?i)resep/(?i)perbaruidetailresep/(:any)', 'Resep::perbaruidetailresep/$1');
 $routes->delete('/(?i)resep/(?i)hapusdetailresep/(:any)', 'Resep::hapusdetailresep/$1');
