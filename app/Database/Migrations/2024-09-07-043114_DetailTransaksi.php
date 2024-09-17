@@ -26,15 +26,15 @@ class DetailTransaksi extends Migration
                 'unsigned' => true
             ],
             'jumlah' => [
-                'type' => 'BIGINT',
+                'type' => 'INT',
                 'constraint' => 24,
             ],
             'harga_satuan' => [
-                'type' => 'BIGINT',
+                'type' => 'INT',
                 'constraint' => 24,
             ],
             'diskon' => [
-                'type' => 'BIGINT',
+                'type' => 'INT',
                 'constraint' => 24,
             ],
         ]);

@@ -33,11 +33,11 @@ class Obat extends Migration
                 'constraint' => 128,
             ],
             'harga_obat' => [
-                'type' => 'BIGINT',
+                'type' => 'INT',
                 'constraint' => 24,
             ],
             'harga_jual' => [
-                'type' => 'BIGINT',
+                'type' => 'INT',
                 'constraint' => 24,
             ],
             'dosis_kali' => [
@@ -53,11 +53,11 @@ class Obat extends Migration
                 'constraint' => 128,
             ],
             'jumlah_masuk' => [
-                'type' => 'BIGINT',
+                'type' => 'INT',
                 'constraint' => 24,
             ],
             'jumlah_keluar' => [
-                'type' => 'BIGINT',
+                'type' => 'INT',
                 'constraint' => 24,
             ],
             'updated_at' => [

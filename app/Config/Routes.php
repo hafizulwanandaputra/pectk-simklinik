@@ -71,8 +71,8 @@ $routes->delete('/(?i)pembelianobat/(?i)hapusdetailpembelianobat/(:any)', 'Pembe
 // RESEP
 $routes->get('/(?i)resep', 'Resep::index');
 $routes->post('/(?i)resep/(?i)listresep', 'Resep::listresep');
-$routes->get('/(?i)resep/(?i)pasienlist', 'Obat::pasienlist');
-$routes->get('/(?i)resep/(?i)pasienlist', 'Obat::pasienlist');
+$routes->get('/(?i)resep/(?i)pasienlist', 'Resep::pasienlist');
+$routes->get('/(?i)resep/(?i)dokterlist', 'Resep::dokterlist');
 $routes->get('/(?i)resep/(?i)resep/(:any)', 'Resep::resep/$1');
 $routes->post('/(?i)resep/(?i)create', 'Resep::create');
 $routes->post('/(?i)resep/(?i)update', 'Resep::update');

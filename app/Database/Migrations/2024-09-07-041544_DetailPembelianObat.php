@@ -26,11 +26,11 @@ class DetailPembelianObat extends Migration
                 'unsigned' => true
             ],
             'jumlah' => [
-                'type' => 'BIGINT',
+                'type' => 'INT',
                 'constraint' => 24,
             ],
             'harga_satuan' => [
-                'type' => 'BIGINT',
+                'type' => 'INT',
                 'constraint' => 24,
             ],
         ]);

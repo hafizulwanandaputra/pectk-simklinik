@@ -29,11 +29,11 @@ class PembelianObat extends Migration
                 'type' => 'DATETIME',
             ],
             'total_qty' => [
-                'type' => 'BIGINT',
+                'type' => 'INT',
                 'constraint' => 24,
             ],
             'total_biaya' => [
-                'type' => 'BIGINT',
+                'type' => 'INT',
                 'constraint' => 24,
             ],
             'diterima' => [

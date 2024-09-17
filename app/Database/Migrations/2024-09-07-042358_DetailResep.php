@@ -26,7 +26,7 @@ class DetailResep extends Migration
                 'unsigned' => true
             ],
             'jumlah' => [
-                'type' => 'BIGINT',
+                'type' => 'INT',
                 'constraint' => 24,
             ],
         ]);

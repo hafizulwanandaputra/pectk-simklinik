@@ -28,6 +28,10 @@ class Resep extends Migration
             'tanggal_resep' => [
                 'type' => 'DATE'
             ],
+            'jumlah_resep' => [
+                'type' => 'INT',
+                'constraint' => 24,
+            ],
             'keterangan' => [
                 'type' => 'TEXT'
             ],

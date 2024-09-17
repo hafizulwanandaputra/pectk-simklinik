@@ -34,7 +34,7 @@ class Transaksi extends Migration
                 'type' => 'DATE',
             ],
             'total_pembayaran' => [
-                'type' => 'BIGINT',
+                'type' => 'INT',
                 'constraint' => 24,
             ],
             'metode_pembayaran' => [
