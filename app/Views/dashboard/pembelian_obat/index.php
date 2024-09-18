@@ -3,20 +3,20 @@
 <?= $this->include('select2/normal'); ?>
 <style>
     .list-group-container {
-        height: calc(100vh - 350px);
+        height: calc(100vh - 300px);
         min-height: 100px;
     }
 
     @media (max-width: 767.98px) {
         .list-group-container {
-            height: calc(100vh - 303px);
+            height: calc(100vh - 349px);
             min-height: 100px;
         }
     }
 
     @media (min-width: 991.98px) {
         .list-group-container {
-            height: calc(100vh - 264px);
+            height: calc(100vh - 262px);
             min-height: 100px;
         }
     }
