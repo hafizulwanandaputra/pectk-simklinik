@@ -493,7 +493,7 @@
                     `);
 
                     // Disable form inputs
-                    $('#editDetail input, #editDetail select').prop('disabled', true);
+                    $('#editDetail input, .btn-close').prop('disabled', true);
 
                     try {
                         const response = await axios.post(`<?= base_url('/resep/perbaruidetailresep/' . $resep['id_resep']) ?>`, formData, {
@@ -548,7 +548,7 @@
                         $('#editButton').prop('disabled', false).html(`
                             <i class="fa-solid fa-pen-to-square"></i> Edit
                         `);
-                        $('#editDetail input, #editDetail select').prop('disabled', false);
+                        $('#editDetail input, .btn-close').prop('disabled', false);
                     }
                 });
 
