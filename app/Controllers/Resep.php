@@ -7,6 +7,7 @@ use App\Models\DetailResepModel;
 use App\Models\DokterModel;
 use App\Models\ObatModel;
 use App\Models\PasienModel;
+use CodeIgniter\Exceptions\PageNotFoundException;
 
 class Resep extends BaseController
 {
@@ -41,14 +42,24 @@ class Resep extends BaseController
         $ResepModel = $this->ResepModel;
 
         // Join tables before applying search filter
-        $ResepModel
-            ->select('resep.*, 
-            pasien.nama_pasien as pasien_nama_pasien, 
-            user.fullname as user_fullname,
-            user.username as user_username')
-            ->where('resep.id_user', session()->get('id_user'))
-            ->join('pasien', 'pasien.id_pasien = resep.id_pasien', 'inner')
-            ->join('user', 'user.id_user = resep.id_user', 'inner');
+        if (session()->get('role') == 'Admin') {
+            $ResepModel
+                ->select('resep.*, 
+                pasien.nama_pasien as pasien_nama_pasien, 
+                user.fullname as user_fullname,
+                user.username as user_username')
+                ->join('pasien', 'pasien.id_pasien = resep.id_pasien', 'inner')
+                ->join('user', 'user.id_user = resep.id_user', 'inner');
+        } else {
+            $ResepModel
+                ->select('resep.*, 
+                pasien.nama_pasien as pasien_nama_pasien, 
+                user.fullname as user_fullname,
+                user.username as user_username')
+                ->where('resep.id_user', session()->get('id_user'))
+                ->join('pasien', 'pasien.id_pasien = resep.id_pasien', 'inner')
+                ->join('user', 'user.id_user = resep.id_user', 'inner');
+        }
 
         // Apply status filter if provided
         if ($status === '1') {
@@ -123,11 +134,18 @@ class Resep extends BaseController
 
     public function resep($id)
     {
-        $data = $this->ResepModel
-            ->where('resep.id_user', session()->get('id_user'))
-            ->join('pasien', 'pasien.id_pasien = resep.id_pasien', 'inner')
-            ->join('user', 'user.id_user = resep.id_user', 'inner')
-            ->find($id);
+        if (session()->get('role') == 'Admin') {
+            $data = $this->ResepModel
+                ->join('pasien', 'pasien.id_pasien = resep.id_pasien', 'inner')
+                ->join('user', 'user.id_user = resep.id_user', 'inner')
+                ->find($id);
+        } else {
+            $data = $this->ResepModel
+                ->where('resep.id_user', session()->get('id_user'))
+                ->join('pasien', 'pasien.id_pasien = resep.id_pasien', 'inner')
+                ->join('user', 'user.id_user = resep.id_user', 'inner')
+                ->find($id);
+        }
         return $this->response->setJSON($data);
     }
 
@@ -198,18 +216,30 @@ class Resep extends BaseController
     // DETAIL RESEP
     public function detailresep($id)
     {
-        $resep = $this->ResepModel
-            ->join('pasien', 'pasien.id_pasien = resep.id_pasien', 'inner')
-            ->join('user', 'user.id_user = resep.id_user', 'inner')
-            ->find($id);
-        $resep['no_mr'] = $this->formatNoMr($resep['no_mr']);
-        $data = [
-            'resep' => $resep,
-            'title' => 'Detail Resep ' . $id . ' - ' . $this->systemName,
-            'headertitle' => 'Detail Resep',
-            'agent' => $this->request->getUserAgent()
-        ];
-        return view('dashboard/resep/details', $data);
+        if (session()->get('role') == 'Admin') {
+            $resep = $this->ResepModel
+                ->join('pasien', 'pasien.id_pasien = resep.id_pasien', 'inner')
+                ->join('user', 'user.id_user = resep.id_user', 'inner')
+                ->find($id);
+        } else {
+            $resep = $this->ResepModel
+                ->where('resep.id_user', session()->get('id_user'))
+                ->join('pasien', 'pasien.id_pasien = resep.id_pasien', 'inner')
+                ->join('user', 'user.id_user = resep.id_user', 'inner')
+                ->find($id);
+        }
+        if (!empty($resep)) {
+            $resep['no_mr'] = $this->formatNoMr($resep['no_mr']);
+            $data = [
+                'resep' => $resep,
+                'title' => 'Detail Resep ' . $id . ' - ' . $this->systemName,
+                'headertitle' => 'Detail Resep',
+                'agent' => $this->request->getUserAgent()
+            ];
+            return view('dashboard/resep/details', $data);
+        } else {
+            throw PageNotFoundException::forPageNotFound();
+        }
     }
 
     public function detailreseplist($id)
@@ -236,9 +266,16 @@ class Resep extends BaseController
 
     public function keterangan($id)
     {
-        $data = $this->ResepModel
-            ->select('keterangan, status')
-            ->find($id);
+        if (session()->get('role') == 'Admin') {
+            $data = $this->ResepModel
+                ->select('keterangan, status')
+                ->find($id);
+        } else {
+            $data = $this->ResepModel
+                ->select('keterangan, status')
+                ->where('id_user', session()->get('id_user'))
+                ->find($id);
+        }
         return $this->response->setJSON($data);
     }
 
@@ -247,6 +284,9 @@ class Resep extends BaseController
         $db = db_connect();
         $resepBuilder = $db->table('resep');
         $resepBuilder->where('id_resep', $id);
+        if (session()->get('role') != 'Admin') {
+            $resepBuilder->where('id_user', session()->get('id_user'));
+        }
         $resepBuilder->update([
             'keterangan' => $this->request->getPost('keterangan'),
         ]);
