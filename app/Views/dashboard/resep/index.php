@@ -1,26 +1,6 @@
 <?= $this->extend('dashboard/templates/dashboard'); ?>
 <?= $this->section('css'); ?>
 <?= $this->include('select2/normal'); ?>
-<style>
-    .list-group-container {
-        height: calc(100vh - 347px);
-        min-height: 100px;
-    }
-
-    @media (max-width: 767.98px) {
-        .list-group-container {
-            height: calc(100vh - 395px);
-            min-height: 100px;
-        }
-    }
-
-    @media (min-width: 991.98px) {
-        .list-group-container {
-            height: calc(100vh - 262px);
-            min-height: 100px;
-        }
-    }
-</style>
 <?= $this->endSection(); ?>
 <?= $this->section('title'); ?>
 <div class="d-flex justify-content-start align-items-center">

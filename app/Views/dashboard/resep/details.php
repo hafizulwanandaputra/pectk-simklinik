@@ -1,19 +1,6 @@
 <?= $this->extend('dashboard/templates/dashboard'); ?>
 <?= $this->section('css'); ?>
 <?= $this->include('select2/normal'); ?>
-<style>
-    #editKeteranganText {
-        height: calc(100vh - 194px);
-        resize: none;
-    }
-
-    @media (max-width: 767.98px) {
-        #editKeteranganText {
-            height: calc(100vh - 136px);
-            resize: none;
-        }
-    }
-</style>
 <?= $this->endSection(); ?>
 <?= $this->section('title'); ?>
 <div class="d-flex justify-content-start align-items-center">
@@ -94,7 +81,7 @@
                 </div>
                 <div class="modal-body py-2">
                     <div class="mb-1 mt-1">
-                        <textarea class="form-control font-monospace rounded-3" autocomplete="off" dir="auto" id="editKeteranganText" name="keterangan" rows="2"></textarea>
+                        <textarea class="form-control font-monospace rounded-3" autocomplete="off" dir="auto" id="editKeteranganText" name="keterangan" style="resize: none;"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer justify-content-end pt-2 pb-2" style="border-top: 1px solid var(--bs-border-color-translucent);">
@@ -315,6 +302,11 @@
         }
     }
 
+    function autoResizeTextarea() {
+        $('#editKeteranganText').css('height', 'auto'); // Reset the height
+        $('#editKeteranganText').css('height', ($('#editKeteranganText')[0].scrollHeight + 2) + 'px');
+    }
+
     $(document).ready(function() {
         $('[data-bs-toggle="tooltip"]').tooltip();
         $('#id_obat').select2({
@@ -322,6 +314,20 @@
             theme: "bootstrap-5",
             width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
             placeholder: $(this).data('placeholder'),
+        });
+
+        // Auto resize on input
+        $('#editKeteranganText').on('input', function() {
+            autoResizeTextarea();
+        });
+
+        // Auto resize on window resize
+        $(window).on('resize', function() {
+            autoResizeTextarea();
+        });
+
+        $('#editKeterangan').on('shown.bs.modal', function() {
+            autoResizeTextarea();
         });
 
         $(document).on('click', '#editKeteranganBtn', async function() {
@@ -645,6 +651,7 @@
         fetchObatOptions();
         fetchStatusResep();
         fetchKeterangan();
+        autoResizeTextarea();
     });
     // Show toast notification
     function showSuccessToast(message) {
