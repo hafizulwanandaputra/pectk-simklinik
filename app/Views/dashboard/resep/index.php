@@ -3,13 +3,13 @@
 <?= $this->include('select2/normal'); ?>
 <style>
     .list-group-container {
-        height: calc(100vh - 300px);
+        height: calc(100vh - 347px);
         min-height: 100px;
     }
 
     @media (max-width: 767.98px) {
         .list-group-container {
-            height: calc(100vh - 349px);
+            height: calc(100vh - 395px);
             min-height: 100px;
         }
     }
@@ -46,16 +46,16 @@
     </div>
     <fieldset class="border rounded-3 px-2 py-0 mb-3">
         <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Tambah Pasien</legend>
-        <form id="resepForm" enctype="multipart/form-data" class="d-flex flex-row mb-2 gap-2">
+        <form id="resepForm" enctype="multipart/form-data" class="d-flex flex-column flex-lg-row mb-2 gap-2">
             <div class="flex-fill">
                 <select class="form-select rounded-3" id="id_pasien" name="id_pasien" aria-label="id_pasien">
                     <option value="" disabled selected>-- Pilih Pasien --</option>
                 </select>
                 <div class="invalid-feedback"></div>
             </div>
-            <div class="w-auto" id="submitButtonContainer" style="display: none;">
-                <button type="submit" id="submitButton" class="btn btn-primary bg-gradient rounded-3">
-                    <i class="fa-solid fa-plus"></i>
+            <div class="d-grid w-auto" id="submitButtonContainer">
+                <button type="submit" id="submitButton" class="btn btn-primary bg-gradient rounded-3" disabled>
+                    <i class="fa-solid fa-plus"></i> Tambah
                 </button>
             </div>
         </form>
@@ -314,9 +314,9 @@
     function toggleSubmitButton() {
         var selectedValue = $('#id_pasien').val();
         if (selectedValue === null || selectedValue === "") {
-            $('#submitButtonContainer').hide();
+            $('#submitButton').prop('disabled', true);
         } else {
-            $('#submitButtonContainer').show();
+            $('#submitButton').prop('disabled', false);
         }
     }
     $('#id_pasien').on('change.select2', function() {
@@ -380,7 +380,7 @@
             $('#resepForm .is-invalid').removeClass('is-invalid');
             $('#resepForm .invalid-feedback').text('').hide();
             $('#submitButton').prop('disabled', true).html(`
-                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span> Tambah
             `);
 
             // Disable form inputs
@@ -399,7 +399,7 @@
                     $('#id_pasien').val(null).trigger('change');
                     $('#resepForm .is-invalid').removeClass('is-invalid');
                     $('#resepForm .invalid-feedback').text('').hide();
-                    $('#submitButtonContainer').hide();
+                    $('#submitButton').prop('disabled', true);
                     fetchResep();
                 } else {
                     console.log("Validation Errors:", response.data.errors);
@@ -435,9 +435,10 @@
                 }
             } catch (error) {
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                $('#submitButton').prop('disabled', false);
             } finally {
-                $('#submitButton').prop('disabled', false).html(`
-                    <i class="fa-solid fa-plus"></i>
+                $('#submitButton').html(`
+                    <i class="fa-solid fa-plus"></i> Tambah
                 `);
                 $('#resepForm select').prop('disabled', false);
             }

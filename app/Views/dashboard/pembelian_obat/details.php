@@ -74,7 +74,7 @@
                 <input type="number" id="jumlah" name="jumlah" class="form-control rounded-3" placeholder="Jumlah">
                 <div class="invalid-feedback"></div>
             </div>
-            <div class="d-grid w-auto">
+            <div class="d-grid d-lg-block w-auto">
                 <button type="submit" id="addButton" class="btn btn-primary bg-gradient rounded-3">
                     <i class="fa-solid fa-plus"></i> Tambah
                 </button>

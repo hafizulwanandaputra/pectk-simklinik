@@ -3,13 +3,13 @@
 <?= $this->include('select2/normal'); ?>
 <style>
     .list-group-container {
-        height: calc(100vh - 300px);
+        height: calc(100vh - 347px);
         min-height: 100px;
     }
 
     @media (max-width: 767.98px) {
         .list-group-container {
-            height: calc(100vh - 349px);
+            height: calc(100vh - 395px);
             min-height: 100px;
         }
     }
@@ -46,16 +46,16 @@
     </div>
     <fieldset class="border rounded-3 px-2 py-0 mb-3">
         <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Tambah Pembelian</legend>
-        <form id="pembelianObatForm" enctype="multipart/form-data" class="d-flex flex-row mb-2 gap-2">
+        <form id="pembelianObatForm" enctype="multipart/form-data" class="d-flex flex-column flex-lg-row mb-2 gap-2">
             <div class="flex-fill">
                 <select class="form-select rounded-3" id="id_supplier" name="id_supplier" aria-label="id_supplier">
                     <option value="" disabled selected>-- Pilih Supplier --</option>
                 </select>
                 <div class="invalid-feedback"></div>
             </div>
-            <div class="w-auto" id="submitButtonContainer" style="display: none;">
-                <button type="submit" id="submitButton" class="btn btn-primary bg-gradient rounded-3">
-                    <i class="fa-solid fa-plus"></i>
+            <div class="d-grid w-auto" id="submitButtonContainer">
+                <button type="submit" id="submitButton" class="btn btn-primary bg-gradient rounded-3" disabled>
+                    <i class="fa-solid fa-plus"></i> Tambah
                 </button>
             </div>
         </form>
@@ -336,9 +336,9 @@
     function toggleSubmitButton() {
         var selectedValue = $('#id_supplier').val();
         if (selectedValue === null || selectedValue === "") {
-            $('#submitButtonContainer').hide();
+            $('#submitButton').prop('disabled', true);
         } else {
-            $('#submitButtonContainer').show();
+            $('#submitButton').prop('disabled', false);
         }
     }
     $('#id_supplier').on('change.select2', function() {
@@ -430,7 +430,7 @@
             $('#pembelianObatForm .is-invalid').removeClass('is-invalid');
             $('#pembelianObatForm .invalid-feedback').text('').hide();
             $('#submitButton').prop('disabled', true).html(`
-                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span> Tambah
             `);
 
             // Disable form inputs
@@ -448,7 +448,7 @@
                     $('#id_supplier').val(null).trigger('change');
                     $('#pembelianObatForm .is-invalid').removeClass('is-invalid');
                     $('#pembelianObatForm .invalid-feedback').text('').hide();
-                    $('#submitButtonContainer').hide();
+                    $('#submitButton').prop('disabled', true);
                     fetchPembelianObat();
                 } else {
                     console.log("Validation Errors:", response.data.errors);
@@ -484,9 +484,10 @@
                 }
             } catch (error) {
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                $('#submitButton').prop('disabled', false)
             } finally {
-                $('#submitButton').prop('disabled', false).html(`
-                    <i class="fa-solid fa-plus"></i>
+                $('#submitButton').html(`
+                    <i class="fa-solid fa-plus"></i> Tambah
                 `);
                 $('#pembelianObatForm select').prop('disabled', false);
             }
