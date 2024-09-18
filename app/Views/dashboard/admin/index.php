@@ -105,7 +105,7 @@
                             <option value="Admin">Admin</option>
                             <option value="Apoteker">Apoteker</option>
                             <option value="Dokter">Dokter</option>
-                            <option value="Keuangan">Keuangan</option>
+                            <option value="Kasir">Kasir</option>
                         </select>
                         <label for="role">Jenis Pengguna</label>
                         <div class="invalid-feedback"></div>
