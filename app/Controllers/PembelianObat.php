@@ -59,8 +59,10 @@ class PembelianObat extends BaseController
         if ($search) {
             $PembelianObatModel
                 ->groupStart()
-                ->like('supplier.nama_supplier', $search)  // Search in the supplier's name
-                ->orLike('tgl_pembelian', $search)         // Search in the purchase date
+                ->like('supplier.nama_supplier', $search)
+                ->orLike('user.fullname', $search)
+                ->orLike('user.username', $search)
+                ->orLike('tgl_pembelian', $search)
                 ->groupEnd();
         }
 

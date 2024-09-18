@@ -31,7 +31,7 @@ class Transaksi extends Migration
                 'unsigned' => true
             ],
             'tgl_transaksi' => [
-                'type' => 'DATE',
+                'type' => 'DATETIME',
             ],
             'total_pembayaran' => [
                 'type' => 'INT',

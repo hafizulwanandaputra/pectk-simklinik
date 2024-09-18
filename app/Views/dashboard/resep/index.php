@@ -1,22 +1,22 @@
 <?= $this->extend('dashboard/templates/dashboard'); ?>
 <?= $this->section('css'); ?>
-<?= $this->include('select2/floating'); ?>
+<?= $this->include('select2/normal'); ?>
 <style>
     .list-group-container {
-        height: calc(100vh - 218px);
+        height: calc(100vh - 350px);
         min-height: 100px;
     }
 
     @media (max-width: 767.98px) {
         .list-group-container {
-            height: calc(100vh - 265px);
+            height: calc(100vh - 303px);
             min-height: 100px;
         }
     }
 
     @media (min-width: 991.98px) {
         .list-group-container {
-            height: calc(100vh - 177px);
+            height: calc(100vh - 264px);
             min-height: 100px;
         }
     }
@@ -41,10 +41,25 @@
         </select>
         <div class="input-group input-group-sm flex-fill">
             <input type="search" id="searchInput" class="form-control rounded-start-3" placeholder="Cari pasien, dokter, dan tanggal resep...">
-            <button class="btn btn-success btn-sm bg-gradient" type="button" id="refreshButton"><i class="fa-solid fa-sync"></i></button>
-            <button class="btn btn-primary btn-sm bg-gradient rounded-end-3" type="button" id="addButton"><i class="fa-solid fa-plus"></i></button>
+            <button class="btn btn-success btn-sm bg-gradient rounded-end-3" type="button" id="refreshButton"><i class="fa-solid fa-sync"></i></button>
         </div>
     </div>
+    <fieldset class="border rounded-3 px-2 py-0 mb-3">
+        <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Tambah Pasien</legend>
+        <form id="resepForm" enctype="multipart/form-data" class="d-flex flex-row mb-2 gap-2">
+            <div class="flex-fill">
+                <select class="form-select rounded-3" id="id_pasien" name="id_pasien" aria-label="id_pasien">
+                    <option value="" disabled selected>-- Pilih Pasien --</option>
+                </select>
+                <div class="invalid-feedback"></div>
+            </div>
+            <div class="w-auto" id="submitButtonContainer" style="display: none;">
+                <button type="submit" id="submitButton" class="btn btn-primary bg-gradient rounded-3">
+                    <i class="fa-solid fa-plus"></i>
+                </button>
+            </div>
+        </form>
+    </fieldset>
     <div class="list-group-container overflow-auto">
         <ul id="resepContainer" class="list-group shadow-sm rounded-3 mt-1">
             <?php for ($i = 0; $i < 12; $i++) : ?>
@@ -79,38 +94,6 @@
     <nav id="paginationNav" class="d-flex justify-content-center justify-content-lg-end mt-3 overflow-auto w-100">
         <ul class="pagination pagination-sm" style="--bs-pagination-border-radius: var(--bs-border-radius-lg);"></ul>
     </nav>
-    <div class="modal fade" id="resepModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="resepModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable rounded-3">
-            <form id="resepForm" enctype="multipart/form-data" class="modal-content bg-body shadow-lg transparent-blur">
-                <div class="modal-header justify-content-between pt-2 pb-2" style="border-bottom: 1px solid var(--bs-border-color-translucent);">
-                    <h6 class="pe-2 modal-title fs-6 text-truncate" id="resepModalLabel" style="font-weight: bold;"></h6>
-                    <button id="closeBtn" type="button" class="btn btn-danger btn-sm bg-gradient ps-0 pe-0 pt-0 pb-0 rounded-3" data-bs-dismiss="modal" aria-label="Close"><span data-feather="x" class="mb-0" style="width: 30px; height: 30px;"></span></button>
-                </div>
-                <div class="modal-body py-2">
-                    <input type="hidden" id="id_resep" name="id_resep">
-                    <div class="form-floating mt-1 mb-1">
-                        <select class="form-select rounded-3" id="id_pasien" name="id_pasien" aria-label="id_pasien">
-                            <option value="" disabled selected>-- Pilih Pasien --</option>
-                        </select>
-                        <label for="id_pasien">Pasien*</label>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                    <div class="form-floating mt-1 mb-1">
-                        <select class="form-select rounded-3" id="id_dokter" name="id_dokter" aria-label="id_dokter">
-                            <option value="" disabled selected>-- Pilih Dokter --</option>
-                        </select>
-                        <label for="id_dokter">Dokter*</label>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                </div>
-                <div class="modal-footer justify-content-end pt-2 pb-2" style="border-top: 1px solid var(--bs-border-color-translucent);">
-                    <button type="submit" id="submitButton" class="btn btn-primary bg-gradient rounded-3">
-                        <i class="fa-solid fa-floppy-disk"></i> Simpan
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
     <div class="modal modal-sheet p-4 py-md-5 fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content bg-body rounded-4 shadow-lg transparent-blur">
@@ -186,26 +169,6 @@
             showFailedToast('Gagal mendapatkan pasien.<br>' + error);
         }
     }
-    async function fetchDokterOptions() {
-        try {
-            const response = await axios.get('<?= base_url('resep/dokterlist') ?>');
-
-            if (response.data.success) {
-                const options = response.data.data;
-                const select = $('#id_dokter');
-
-                // Clear existing options except the first one
-                select.find('option:not(:first)').remove();
-
-                // Loop through the options and append them to the select element
-                options.forEach(option => {
-                    select.append(`<option value="${option.value}">${option.text}</option>`);
-                });
-            }
-        } catch (error) {
-            showFailedToast('Gagal mendapatkan dokter.<br>' + error);
-        }
-    }
     async function fetchResep() {
         const search = $('#searchInput').val();
         const offset = (currentPage - 1) * limit;
@@ -252,7 +215,7 @@
                             ${resep.pasien_nama_pasien}
                         </h5>
                         <h6 class="card-subtitle mb-2">
-                            ${resep.dokter_nama_dokter}
+                            ${resep.user_fullname} (@${resep.user_username})
                         </h6>
                         <p class="card-text">
                             <small class="date">
@@ -269,9 +232,6 @@
                 <div class="d-grid gap-2 d-flex justify-content-end">
                     <button type="button" class="btn btn-info btn-sm bg-gradient rounded-3" onclick="window.location.href = '<?= base_url('resep/detailresep') ?>/${resep.id_resep}';">
                         <i class="fa-solid fa-circle-info"></i> Detail
-                    </button>
-                    <button type="button" class="btn btn-secondary btn-sm bg-gradient rounded-3 edit-btn" data-id="${resep.id_resep}" data-name="${resep.pasien_nama_pasien}" ${statusButtons}>
-                        <i class="fa-solid fa-pen-to-square"></i> Edit
                     </button>
                     <button type="button" class="btn btn-danger btn-sm bg-gradient rounded-3 delete-btn" data-id="${resep.id_resep}" data-name="${resep.pasien_nama_pasien}" data-date="${resep.tanggal_resep}" ${statusButtons}>
                         <i class="fa-solid fa-trash"></i> Hapus
@@ -351,20 +311,24 @@
         fetchResep();
     });
 
+    function toggleSubmitButton() {
+        var selectedValue = $('#id_pasien').val();
+        if (selectedValue === null || selectedValue === "") {
+            $('#submitButtonContainer').hide();
+        } else {
+            $('#submitButtonContainer').show();
+        }
+    }
+    $('#id_pasien').on('change.select2', function() {
+        toggleSubmitButton();
+    });
+
     $(document).ready(function() {
-        $('#resepModal').on('shown.bs.modal', function() {
-            $('#id_pasien').select2({
-                dropdownParent: $('#resepModal'),
-                theme: "bootstrap-5",
-                width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
-                placeholder: $(this).data('placeholder'),
-            });
-            $('#id_dokter').select2({
-                dropdownParent: $('#resepModal'),
-                theme: "bootstrap-5",
-                width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
-                placeholder: $(this).data('placeholder'),
-            });
+        $('#id_pasien').select2({
+            dropdownParent: $('#resepForm'),
+            theme: "bootstrap-5",
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
         });
         $('#searchInput').on('input', function() {
             currentPage = 1;
@@ -375,31 +339,6 @@
         var resepId;
         var resepName;
         var resepDate;
-
-        $('#addButton').click(function() {
-            $('#resepModalLabel').text('Tambah Resep');
-            $('#resepModal').modal('show');
-        });
-
-        $(document).on('click', '.edit-btn', async function() {
-            const $this = $(this);
-            const id = $(this).data('id');
-            $('[data-bs-toggle="tooltip"]').tooltip('hide');
-            $this.prop('disabled', true).html(`<span class="spinner-border" style="width: 14px; height: 14px;" aria-hidden="true"></span> Edit`);
-
-            try {
-                const response = await axios.get(`<?= base_url('/resep/resep') ?>/${id}`);
-                $('#resepModalLabel').text('Edit Resep');
-                $('#id_resep').val(response.data.id_resep);
-                $('#id_pasien').val(response.data.id_pasien);
-                $('#id_dokter').val(response.data.id_dokter);
-                $('#resepModal').modal('show');
-            } catch (error) {
-                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
-            } finally {
-                $this.prop('disabled', false).html(`<i class="fa-solid fa-pen-to-square"></i> Edit`);
-            }
-        });
 
         // Show delete confirmation modal
         $(document).on('click', '.delete-btn', function() {
@@ -434,7 +373,6 @@
         $('#resepForm').submit(async function(e) {
             e.preventDefault();
 
-            const url = $('#id_resep').val() ? '<?= base_url('resep/update') ?>' : '<?= base_url('resep/create') ?>';
             const formData = new FormData(this);
             console.log("Form Data:", $(this).serialize());
 
@@ -442,14 +380,14 @@
             $('#resepForm .is-invalid').removeClass('is-invalid');
             $('#resepForm .invalid-feedback').text('').hide();
             $('#submitButton').prop('disabled', true).html(`
-                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span> <span role="status">Memproses...</span>
+                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
             `);
 
             // Disable form inputs
-            $('#resepForm select, #closeBtn').prop('disabled', true);
+            $('#resepForm select').prop('disabled', true);
 
             try {
-                const response = await axios.post(url, formData, {
+                const response = await axios.post(`<?= base_url('resep/create') ?>`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }
@@ -457,7 +395,11 @@
 
                 if (response.data.success) {
                     showSuccessToast(response.data.message, 'success');
-                    $('#resepModal').modal('hide');
+                    $('#resepForm')[0].reset();
+                    $('#id_pasien').val(null).trigger('change');
+                    $('#resepForm .is-invalid').removeClass('is-invalid');
+                    $('#resepForm .invalid-feedback').text('').hide();
+                    $('#submitButtonContainer').hide();
                     fetchResep();
                 } else {
                     console.log("Validation Errors:", response.data.errors);
@@ -495,18 +437,10 @@
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
             } finally {
                 $('#submitButton').prop('disabled', false).html(`
-                    <i class="fa-solid fa-floppy-disk"></i> Simpan
+                    <i class="fa-solid fa-plus"></i>
                 `);
-                $('#resepForm select, #closeBtn').prop('disabled', false);
+                $('#resepForm select').prop('disabled', false);
             }
-        });
-        $('#resepModal').on('hidden.bs.modal', function() {
-            $('#resepForm')[0].reset();
-            $('#id_resep').val('');
-            $('#id_pasien').val('');
-            $('#id_dokter').val('');
-            $('#resepForm .is-invalid').removeClass('is-invalid');
-            $('#resepForm .invalid-feedback').text('').hide();
         });
         $('#refreshButton').on('click', function() {
             $('#resepContainer').empty();
@@ -518,7 +452,7 @@
 
         fetchResep();
         fetchPasienOptions();
-        fetchDokterOptions();
+        toggleSubmitButton();
     });
     // Show toast notification
     function showSuccessToast(message) {

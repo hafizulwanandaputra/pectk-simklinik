@@ -67,7 +67,7 @@
                 <div class="col-lg-3 fw-medium">Dokter</div>
                 <div class="col-lg">
                     <div class="date">
-                        <?= $resep['nama_dokter'] ?>
+                        <?= $resep['fullname'] ?>
                     </div>
                 </div>
             </div>
@@ -347,7 +347,7 @@
             // Clear previous validation states
             $('#editKeteranganForm .is-invalid').removeClass('is-invalid');
             $('#editKeteranganForm .invalid-feedback').text('').hide();
-            $('#addButton').prop('disabled', true).html(`
+            $('#submitKeteranganButton').prop('disabled', true).html(`
                 <span class="spinner-border spinner-border-sm" aria-hidden="true"></span> Memproses
             `);
 
@@ -399,7 +399,7 @@
             } catch (error) {
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
             } finally {
-                $('#addButton').prop('disabled', false).html(`
+                $('#submitKeteranganButton').prop('disabled', false).html(`
                     <i class="fa-solid fa-floppy-disk"></i> Simpan
                 `);
                 $('#editKeteranganForm textarea, .closeBtn').prop('disabled', false);

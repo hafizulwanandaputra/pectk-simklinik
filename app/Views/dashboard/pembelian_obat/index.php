@@ -346,7 +346,7 @@
     });
     $(document).ready(function() {
         $('#id_supplier').select2({
-            dropdownParent: $('#pembelianObatContainer'),
+            dropdownParent: $('#pembelianObatForm'),
             theme: "bootstrap-5",
             width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
             placeholder: $(this).data('placeholder'),
@@ -445,8 +445,7 @@
 
                 if (response.data.success) {
                     showSuccessToast(response.data.message, 'success');
-                    $('#pembelianObatForm')[0].reset();
-                    $('#id_supplier').val('');
+                    $('#id_supplier').val(null).trigger('change');
                     $('#pembelianObatForm .is-invalid').removeClass('is-invalid');
                     $('#pembelianObatForm .invalid-feedback').text('').hide();
                     $('#submitButtonContainer').hide();

@@ -44,9 +44,11 @@ class Resep extends BaseController
         $ResepModel
             ->select('resep.*, 
             pasien.nama_pasien as pasien_nama_pasien, 
-            dokter.nama_dokter as dokter_nama_dokter')
+            user.fullname as user_fullname,
+            user.username as user_username')
+            ->where('resep.id_user', session()->get('id_user'))
             ->join('pasien', 'pasien.id_pasien = resep.id_pasien', 'inner')
-            ->join('dokter', 'dokter.id_dokter = resep.id_dokter', 'inner');
+            ->join('user', 'user.id_user = resep.id_user', 'inner');
 
         // Apply status filter if provided
         if ($status === '1') {
@@ -60,7 +62,8 @@ class Resep extends BaseController
             $ResepModel
                 ->groupStart()
                 ->like('pasien.nama_pasien', $search)
-                ->orLike('dokter.nama_dokter', $search)
+                ->orLike('user.fullname', $search)
+                ->orLike('user.username', $search)
                 ->orLike('tanggal_resep', $search)
                 ->groupEnd();
         }
@@ -118,32 +121,12 @@ class Resep extends BaseController
         return "{$part1}-{$part2}-{$part3}";
     }
 
-    public function dokterlist()
-    {
-        $DokterModel = new DokterModel();
-
-        $results = $DokterModel->orderBy('nama_dokter', 'DESC')->findAll();
-
-        $options = [];
-        foreach ($results as $row) {
-            $options[] = [
-                'value' => $row['id_dokter'],
-                'text' => $row['nama_dokter']
-            ];
-        }
-
-        return $this->response->setJSON([
-            'success' => true,
-            'data' => $options,
-        ]);
-    }
-
     public function resep($id)
     {
         $data = $this->ResepModel
-            ->select('resep.*, pasien.nama_pasien as pasien_nama_pasien, dokter.nama_dokter as dokter_nama_dokter')
+            ->where('resep.id_user', session()->get('id_user'))
             ->join('pasien', 'pasien.id_pasien = resep.id_pasien', 'inner')
-            ->join('dokter', 'dokter.id_dokter = resep.id_dokter', 'inner')
+            ->join('user', 'user.id_user = resep.id_user', 'inner')
             ->find($id);
         return $this->response->setJSON($data);
     }
@@ -155,7 +138,6 @@ class Resep extends BaseController
         // Set base validation rules
         $validation->setRules([
             'id_pasien' => 'required',
-            'id_dokter' => 'required',
         ]);
 
         if (!$this->validate($validation->getRules())) {
@@ -165,7 +147,7 @@ class Resep extends BaseController
         // Save Data
         $data = [
             'id_pasien' => $this->request->getPost('id_pasien'),
-            'id_dokter' => $this->request->getPost('id_dokter'),
+            'id_user' => session()->get('id_user'),
             'tanggal_resep' => date('Y-m-d H:i:s'),
             'jumlah_resep' => 0,
             'total_biaya' => 0,
@@ -182,7 +164,6 @@ class Resep extends BaseController
         // Set base validation rules
         $validation->setRules([
             'id_pasien' => 'required',
-            'id_dokter' => 'required',
         ]);
 
         if (!$this->validate($validation->getRules())) {
@@ -195,7 +176,7 @@ class Resep extends BaseController
         $data = [
             'id_resep' => $this->request->getPost('id_resep'),
             'id_pasien' => $this->request->getPost('id_pasien'),
-            'id_dokter' => $this->request->getPost('id_dokter'),
+            'id_user' => $resep['id_user'],
             'tanggal_resep' => $resep['tanggal_resep'],
             'total_biaya' => $resep['total_biaya'],
             'jumlah_resep' => $resep['jumlah_resep'],
@@ -219,7 +200,7 @@ class Resep extends BaseController
     {
         $resep = $this->ResepModel
             ->join('pasien', 'pasien.id_pasien = resep.id_pasien', 'inner')
-            ->join('dokter', 'dokter.id_dokter = resep.id_dokter', 'inner')
+            ->join('user', 'user.id_user = resep.id_user', 'inner')
             ->find($id);
         $resep['no_mr'] = $this->formatNoMr($resep['no_mr']);
         $data = [
