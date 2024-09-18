@@ -3,13 +3,13 @@
 <?= $this->include('select2/floating'); ?>
 <style>
     .list-group-container {
-        height: calc(100vh - 177px);
+        height: calc(100vh - 218px);
         min-height: 100px;
     }
 
     @media (max-width: 767.98px) {
         .list-group-container {
-            height: calc(100vh - 226px);
+            height: calc(100vh - 265px);
             min-height: 100px;
         }
     }
