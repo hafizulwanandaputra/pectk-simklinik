@@ -253,6 +253,14 @@ class Resep extends BaseController
         return $this->response->setJSON($data);
     }
 
+    public function keterangan($id)
+    {
+        $data = $this->ResepModel
+            ->select('keterangan, status')
+            ->find($id);
+        return $this->response->setJSON($data);
+    }
+
     public function editketerangan($id)
     {
         $db = db_connect();

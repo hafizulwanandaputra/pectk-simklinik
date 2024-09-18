@@ -204,6 +204,7 @@ class Obat extends BaseController
 
         // Dapatkan id_pembelian dari detail pembelian obat yang akan dihapus
         $obatDetail = $db->query("SELECT id_pembelian_obat FROM detail_pembelian_obat WHERE id_obat = ?", [$id])->getRow();
+        $resepDetail = $db->query("SELECT id_resep FROM detail_resep WHERE id_obat = ?", [$id])->getRow();
 
         // Hapus obat dari tabel obat
         $this->ObatModel->delete($id);
@@ -211,6 +212,7 @@ class Obat extends BaseController
         // Set ulang auto_increment
         $db->query('ALTER TABLE `obat` auto_increment = 1');
         $db->query('ALTER TABLE `detail_pembelian_obat` auto_increment = 1');
+        $db->query('ALTER TABLE `detail_resep` auto_increment = 1');
 
         // Perbarui total_qty dan total_biaya di tabel pembelian_obat setelah penghapusan
         if ($obatDetail) {
@@ -230,6 +232,24 @@ class Obat extends BaseController
             UPDATE pembelian_obat 
             SET total_qty = ?, total_biaya = ? 
             WHERE id_pembelian_obat = ?", [$total_qty, $total_biaya, $id_pembelian_obat]);
+        }
+        if ($resepDetail) {
+            $id_resep = $resepDetail->id_resep;
+
+            // Hitung ulang jumlah_resep dan total_biaya berdasarkan detail pembelian yang tersisa
+            $result = $db->query("
+            SELECT SUM(jumlah) as jumlah_resep, SUM(harga_satuan * jumlah) as total_biaya 
+            FROM detail_resep 
+            WHERE id_resep = ?", [$id_resep])->getRow();
+
+            $jumlah_resep = $result->jumlah_resep ?? 0;
+            $total_biaya = $result->total_biaya ?? 0;
+
+            // Update tabel resep dengan jumlah_resep dan total_biaya yang baru
+            $db->query("
+            UPDATE resep 
+            SET jumlah_resep = ?, total_biaya = ? 
+            WHERE id_resep = ?", [$jumlah_resep, $total_biaya, $id_resep]);
         }
         return $this->response->setJSON(['message' => 'Obat berhasil dihapus']);
     }

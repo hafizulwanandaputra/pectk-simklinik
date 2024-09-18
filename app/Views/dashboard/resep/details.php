@@ -1,6 +1,19 @@
 <?= $this->extend('dashboard/templates/dashboard'); ?>
 <?= $this->section('css'); ?>
 <?= $this->include('select2/normal'); ?>
+<style>
+    #editKeteranganText {
+        height: calc(100vh - 194px);
+        resize: none;
+    }
+
+    @media (max-width: 767.98px) {
+        #editKeteranganText {
+            height: calc(100vh - 136px);
+            resize: none;
+        }
+    }
+</style>
 <?= $this->endSection(); ?>
 <?= $this->section('title'); ?>
 <div class="d-flex justify-content-start align-items-center">
@@ -61,13 +74,37 @@
             <div class="mb-2 row">
                 <div class="col-lg-3 fw-medium">Keterangan</div>
                 <div class="col-lg">
-                    <div class="date" id="keterangan_detail">
-                        <?= $resep['keterangan'] ?>
+                    <div class="date placeholder-glow">
+                        <span id="keterangan_detail"><span class="placeholder w-100"></span></span><br>
+                        <button type="button" class="btn btn-secondary btn-sm bg-gradient rounded-3" id="editKeteranganBtn" style="display: none;">
+                            <i class="fa-solid fa-pen-to-square"></i> Edit Keterangan
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
     </fieldset>
+
+    <div class="modal fade" id="editKeterangan" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editKeteranganLabel" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen-md-down modal-lg modal-dialog-centered modal-dialog-scrollable rounded-3">
+            <form id="editKeteranganForm" enctype="multipart/form-data" class="modal-content bg-body shadow-lg transparent-blur">
+                <div class="modal-header justify-content-between pt-2 pb-2" style="border-bottom: 1px solid var(--bs-border-color-translucent);">
+                    <h6 class="pe-2 modal-title fs-6 text-truncate" id="editKeteranganLabel" style="font-weight: bold;">Keterangan</h6>
+                    <button type="button" class="btn btn-danger btn-sm bg-gradient ps-0 pe-0 pt-0 pb-0 rounded-3 closeBtn" data-bs-dismiss="modal" aria-label="Close"><span data-feather="x" class="mb-0" style="width: 30px; height: 30px;"></span></button>
+                </div>
+                <div class="modal-body py-2">
+                    <div class="mb-1 mt-1">
+                        <textarea class="form-control font-monospace rounded-3" autocomplete="off" dir="auto" id="editKeteranganText" name="keterangan" rows="2"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-end pt-2 pb-2" style="border-top: 1px solid var(--bs-border-color-translucent);">
+                    <button type="submit" id="submitKeteranganButton" class="btn btn-primary bg-gradient rounded-3">
+                        <i class="fa-solid fa-floppy-disk"></i> Simpan
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <fieldset id="tambahDetailContainer" class="border rounded-3 px-2 py-0 mb-3" style="display: none;">
         <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Tambah Detail Resep</legend>
@@ -230,14 +267,12 @@
                 `;
 
                     $('#detail_resep').append(detail_resepElement);
-                    if (detail_resep.diterima === "1") {
+                    if (detail_resep.status === "1") {
                         $('.edit-btn').prop('disabled', true);
                         $('.delete-btn').prop('disabled', true);
-                        $('#completeBtn').prop('disabled', true);
-                    } else if (detail_resep.diterima === "0") {
+                    } else if (detail_resep.status === "0") {
                         $('.edit-btn').prop('disabled', false);
                         $('.delete-btn').prop('disabled', false);
-                        $('#completeBtn').prop('disabled', false);
                     }
                 });
             }
@@ -255,6 +290,29 @@
         }
     }
 
+    async function fetchKeterangan() {
+        $('#loadingSpinner').show();
+
+        try {
+            const response = await axios.get('<?= base_url('/resep/keterangan/') . $resep['id_resep'] ?>');
+            if (response.data.keterangan === "") {
+                $('#keterangan_detail').html('<em>Belum Ada Keterangan</em>');
+            } else {
+                $('#keterangan_detail').text(response.data.keterangan);
+            }
+            if (response.data.status === "0") {
+                $('#editKeteranganBtn').show();
+            } else {
+                $('#editKeteranganBtn').hide();
+            }
+        } catch (error) {
+            showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+        } finally {
+            // Hide the spinner when done
+            $('#loadingSpinner').hide();
+        }
+    }
+
     $(document).ready(function() {
         $('[data-bs-toggle="tooltip"]').tooltip();
         $('#id_obat').select2({
@@ -263,6 +321,98 @@
             width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
             placeholder: $(this).data('placeholder'),
         });
+
+        $(document).on('click', '#editKeteranganBtn', async function() {
+            const $this = $(this);
+            $('[data-bs-toggle="tooltip"]').tooltip('hide');
+            $(this).prop('disabled', true).html(`<span class="spinner-border" style="width: 11px; height: 11px;" aria-hidden="true"></span> Edit Keterangan`);
+            try {
+                const response = await axios.get(`<?= base_url('/resep/keterangan/') . $resep['id_resep'] ?>`);
+                $('#editKeteranganText').val(response.data.keterangan);
+                $('#editKeterangan').modal('show');
+            } catch (error) {
+                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                console.error(error);
+            } finally {
+                $this.prop('disabled', false).html(`<i class="fa-solid fa-pen-to-square"></i> Edit Keterangan`);
+            }
+        });
+
+        $('#editKeteranganForm').submit(async function(e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+            console.log("Form Data:", $(this).serialize());
+
+            // Clear previous validation states
+            $('#editKeteranganForm .is-invalid').removeClass('is-invalid');
+            $('#editKeteranganForm .invalid-feedback').text('').hide();
+            $('#addButton').prop('disabled', true).html(`
+                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span> Memproses
+            `);
+
+            // Disable form inputs
+            $('#editKeteranganForm textarea, .closeBtn').prop('disabled', true);
+
+            try {
+                const response = await axios.post(`<?= base_url('/resep/editketerangan/' . $resep['id_resep']) ?>`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
+
+                if (response.data.success) {
+                    $('#editKeterangan').modal('hide');
+                    fetchKeterangan();
+                } else {
+                    console.log("Validation Errors:", response.data.errors);
+
+                    // Clear previous validation states
+                    $('#editKeteranganForm .is-invalid').removeClass('is-invalid');
+                    $('#editKeteranganForm .invalid-feedback').text('').hide();
+
+                    // Display new validation errors
+                    for (const field in response.data.errors) {
+                        if (response.data.errors.hasOwnProperty(field)) {
+                            const fieldElement = $('#' + field);
+                            const feedbackElement = fieldElement.siblings('.invalid-feedback');
+
+                            console.log("Target Field:", fieldElement);
+                            console.log("Target Feedback:", feedbackElement);
+
+                            if (fieldElement.length > 0 && feedbackElement.length > 0) {
+                                fieldElement.addClass('is-invalid');
+                                feedbackElement.text(response.data.errors[field]).show();
+
+                                // Remove error message when the user corrects the input
+                                fieldElement.on('input change', function() {
+                                    $(this).removeClass('is-invalid');
+                                    $(this).siblings('.invalid-feedback').text('').hide();
+                                });
+                            } else {
+                                console.warn("Elemen tidak ditemukan pada field:", field);
+                            }
+                        }
+                    }
+                    console.error('Perbaiki kesalahan pada formulir.');
+                }
+            } catch (error) {
+                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+            } finally {
+                $('#addButton').prop('disabled', false).html(`
+                    <i class="fa-solid fa-floppy-disk"></i> Simpan
+                `);
+                $('#editKeteranganForm textarea, .closeBtn').prop('disabled', false);
+            }
+        });
+
+        $('#editKeterangan').on('hidden.bs.modal', function() {
+            $('#editKeteranganForm')[0].reset();
+            $('#editKeteranganText').val('');
+            $('#editKeteranganForm .is-invalid').removeClass('is-invalid');
+            $('#editKeteranganForm .invalid-feedback').text('').hide();
+        });
+
         var detailResepId;
         var detailResepName;
 
@@ -491,6 +641,7 @@
         fetchDetailResep();
         fetchObatOptions();
         fetchStatusResep();
+        fetchKeterangan();
     });
     // Show toast notification
     function showSuccessToast(message) {
