@@ -63,21 +63,23 @@
 
     <fieldset id="tambahDetailContainer" class="border rounded-3 px-2 py-0 mb-3" style="display: none;">
         <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Tambah Detail Pembelian</legend>
-        <form id="tambahDetail" enctype="multipart/form-data" class="d-flex flex-column flex-lg-row mb-2 gap-2">
-            <div class="flex-fill">
+        <form id="tambahDetail" enctype="multipart/form-data">
+            <div class="mb-2">
                 <select class="form-select rounded-3" id="id_obat" name="id_obat" aria-label="id_obat">
                     <option value="" disabled selected>-- Pilih Obat --</option>
                 </select>
                 <div class="invalid-feedback"></div>
             </div>
-            <div class="w-auto">
-                <input type="number" id="jumlah" name="jumlah" class="form-control rounded-3" placeholder="Jumlah">
-                <div class="invalid-feedback"></div>
-            </div>
-            <div class="d-grid d-lg-block w-auto">
-                <button type="submit" id="addButton" class="btn btn-primary bg-gradient rounded-3">
-                    <i class="fa-solid fa-plus"></i> Tambah
-                </button>
+            <div class="d-flex flex-column flex-lg-row mb-2 gap-2">
+                <div class="flex-fill">
+                    <input type="number" id="jumlah" name="jumlah" class="form-control rounded-3" placeholder="Jumlah">
+                    <div class="invalid-feedback"></div>
+                </div>
+                <div class="d-grid d-lg-block w-auto">
+                    <button type="submit" id="addButton" class="btn btn-primary bg-gradient rounded-3 text-nowrap">
+                        <i class="fa-solid fa-plus"></i> Tambah
+                    </button>
+                </div>
             </div>
         </form>
     </fieldset>
@@ -398,6 +400,7 @@
 
                         if (response.data.success) {
                             $('#editDetail')[0].reset();
+                            $('#id_obat').val(null).trigger('change');
                             $('#editDetail .is-invalid').removeClass('is-invalid');
                             $('#editDetail .invalid-feedback').text('').hide();
                             $('#editDetailPembelian').remove();
