@@ -81,7 +81,7 @@
                 </div>
                 <div class="modal-body py-2">
                     <div class="mb-1 mt-1">
-                        <textarea class="form-control font-monospace rounded-3" autocomplete="off" dir="auto" id="editKeteranganText" name="keterangan" style="resize: none;"></textarea>
+                        <textarea class="form-control font-monospace rounded-3" autocomplete="off" dir="auto" id="editKeteranganText" name="keterangan" row="2" style="resize: none;"></textarea>
                     </div>
                 </div>
                 <div class="modal-footer justify-content-end pt-2 pb-2" style="border-top: 1px solid var(--bs-border-color-translucent);">
@@ -651,7 +651,6 @@
         fetchObatOptions();
         fetchStatusResep();
         fetchKeterangan();
-        autoResizeTextarea();
     });
     // Show toast notification
     function showSuccessToast(message) {
