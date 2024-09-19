@@ -307,7 +307,7 @@ class Resep extends BaseController
             if ($row['jumlah_masuk'] > 0 && !$isUsed) {
                 $options[] = [
                     'value' => $row['id_obat'],
-                    'text' => $row['nama_obat'] . ' (' . $row['kategori_obat'] . ' • ' . $row['bentuk_obat'] . ' • Rp' . $harga_obat_terformat . ' • ' . $row['dosis_kali'] . ' × ' . $row['dosis_hari'] . ' hari • ' . $row['cara_pakai'] . ' • ' . $row['jumlah_masuk'] . ')'
+                    'text' => $row['nama_obat'] . ' (' . $row['kategori_obat'] . ' • ' . $row['bentuk_obat'] . ' • Rp' . $harga_obat_terformat . ' • ' . $row['dosis_kali'] . ' × ' . $row['dosis_hari'] . ' hari • ' . $row['cara_pakai'] . ' • ' . ($row['jumlah_masuk'] - $row['jumlah_keluar']) . ')'
                 ];
             }
         }
@@ -325,45 +325,55 @@ class Resep extends BaseController
         // Set base validation rules
         $validation->setRules([
             'id_obat' => 'required',
-            'jumlah' => 'required',
+            'jumlah' => 'required|numeric|greater_than[0]',
         ]);
 
         if (!$this->validate($validation->getRules())) {
-            return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
+            return $this->response->setJSON(['success' => false, 'message' => NULL, 'errors' => $validation->getErrors()]);
         }
-
-        $ObatModel = new ObatModel();
-        $obat = $ObatModel->find($this->request->getPost('id_obat'));
-
-        // Save Data
-        $data = [
-            'id_resep' => $id,
-            'id_obat' => $this->request->getPost('id_obat'),
-            'jumlah' => $this->request->getPost('jumlah'),
-            'harga_satuan' => $obat['harga_jual'],
-        ];
-        $this->DetailResepModel->save($data);
 
         $db = db_connect();
 
-        // Calculate jumlah_resep
-        $builder = $db->table('detail_resep');
-        $builder->select('SUM(jumlah) as jumlah_resep, SUM(jumlah * harga_satuan) as total_biaya');
-        $builder->where('id_resep', $id);
-        $result = $builder->get()->getRow();
+        $builderObat = $db->table('obat');
+        $obat = $builderObat->where('id_obat', $this->request->getPost('id_obat'))->get()->getRowArray();
 
-        $jumlah_resep = $result->jumlah_resep;
-        $total_biaya = $result->total_biaya;
+        if ($this->request->getPost('jumlah') > ($obat['jumlah_masuk'] - $obat['jumlah_keluar'])) {
+            return $this->response->setJSON(['success' => false, 'message' => 'Jumlah obat melebihi stok', 'errors' => NULL]);
+        } else {
+            // Save Data
+            $data = [
+                'id_resep' => $id,
+                'id_obat' => $this->request->getPost('id_obat'),
+                'jumlah' => $this->request->getPost('jumlah'),
+                'harga_satuan' => $obat['harga_jual'],
+            ];
+            $this->DetailResepModel->save($data);
 
-        // Update resep table
-        $resepBuilder = $db->table('resep');
-        $resepBuilder->where('id_resep', $id);
-        $resepBuilder->update([
-            'jumlah_resep' => $jumlah_resep,
-            'total_biaya' => $total_biaya,
-        ]);
+            if ($obat) {
+                // Mengurangi jumlah_keluar
+                $new_jumlah_keluar = $obat['jumlah_keluar'] + $this->request->getPost('jumlah');
+                $builderObat->where('id_obat', $this->request->getPost('id_obat'))->update(['jumlah_keluar' => $new_jumlah_keluar]);
+            }
 
-        return $this->response->setJSON(['success' => true, 'message' => 'Item resep berhasil ditambahkan']);
+            // Calculate jumlah_resep
+            $builder = $db->table('detail_resep');
+            $builder->select('SUM(jumlah) as jumlah_resep, SUM(jumlah * harga_satuan) as total_biaya');
+            $builder->where('id_resep', $id);
+            $result = $builder->get()->getRow();
+
+            $jumlah_resep = $result->jumlah_resep;
+            $total_biaya = $result->total_biaya;
+
+            // Update resep table
+            $resepBuilder = $db->table('resep');
+            $resepBuilder->where('id_resep', $id);
+            $resepBuilder->update([
+                'jumlah_resep' => $jumlah_resep,
+                'total_biaya' => $total_biaya,
+            ]);
+
+            return $this->response->setJSON(['success' => true, 'message' => 'Item resep berhasil ditambahkan']);
+        }
     }
 
     public function perbaruidetailresep($id)
@@ -372,79 +382,113 @@ class Resep extends BaseController
         $validation = \Config\Services::validation();
         // Set base validation rules
         $validation->setRules([
-            'jumlah_edit' => 'required',
+            'jumlah_edit' => 'required|numeric|greater_than[0]',
         ]);
 
         if (!$this->validate($validation->getRules())) {
-            return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
+            return $this->response->setJSON(['success' => false, 'message' => NULL, 'errors' => $validation->getErrors()]);
         }
 
         $detail_resep = $this->DetailResepModel->find($this->request->getPost('id_detail_resep'));
+        $ObatModel = new ObatModel();
+        $obat = $ObatModel->find($detail_resep['id_obat']);
 
-        // Save Data
-        $data = [
-            'id_detail_resep' => $this->request->getPost('id_detail_resep'),
-            'id_resep' => $id,
-            'id_obat' => $detail_resep['id_obat'],
-            'jumlah' => $this->request->getPost('jumlah_edit'),
-            'harga_satuan' => $detail_resep['harga_satuan'],
-        ];
-        $this->DetailResepModel->save($data);
+        if ($this->request->getPost('jumlah_edit') > ($obat['jumlah_masuk'] - $obat['jumlah_keluar'])) {
+            return $this->response->setJSON(['success' => false, 'message' => 'Jumlah obat melebihi stok', 'errors' => NULL]);
+        } else {
+            $db = db_connect();
+            $obatBuilder = $db->table('obat');
+            $obat2 = $obatBuilder->where('id_obat', $detail_resep['id_obat'])->get()->getRowArray();
+            // Calculate the difference in quantity
+            $jumlah_lama = $detail_resep['jumlah'];
+            $jumlah_baru = $this->request->getPost('jumlah_edit');
+            $selisih_jumlah = $jumlah_baru - $jumlah_lama;
 
-        $db = db_connect();
+            // Update `jumlah_keluar` in `obat` table
+            $new_jumlah_keluar = $obat2['jumlah_keluar'] + $selisih_jumlah;
+            $obatBuilder->where('id_obat', $detail_resep['id_obat'])->update([
+                'jumlah_keluar' => $new_jumlah_keluar
+            ]);
 
-        // Calculate jumlah_resep
-        $builder = $db->table('detail_resep');
-        $builder->select('SUM(jumlah) as jumlah_resep, SUM(jumlah * harga_satuan) as total_biaya');
-        $builder->where('id_resep', $id);
-        $result = $builder->get()->getRow();
+            // Save Data
+            $data = [
+                'id_detail_resep' => $this->request->getPost('id_detail_resep'),
+                'id_resep' => $id,
+                'id_obat' => $detail_resep['id_obat'],
+                'jumlah' => $this->request->getPost('jumlah_edit'),
+                'harga_satuan' => $detail_resep['harga_satuan'],
+            ];
+            $this->DetailResepModel->save($data);
 
-        $jumlah_resep = $result->jumlah_resep;
-        $total_biaya = $result->total_biaya;
+            // Calculate jumlah_resep
+            $builder = $db->table('detail_resep');
+            $builder->select('SUM(jumlah) as jumlah_resep, SUM(jumlah * harga_satuan) as total_biaya');
+            $builder->where('id_resep', $id);
+            $result = $builder->get()->getRow();
 
-        // Update resep table
-        $resepBuilder = $db->table('resep');
-        $resepBuilder->where('id_resep', $id);
-        $resepBuilder->update([
-            'jumlah_resep' => $jumlah_resep,
-            'total_biaya' => $total_biaya,
-        ]);
+            $jumlah_resep = $result->jumlah_resep;
+            $total_biaya = $result->total_biaya;
 
-        return $this->response->setJSON(['success' => true, 'message' => 'Item resep berhasil diperbarui']);
+            // Update resep table
+            $resepBuilder = $db->table('resep');
+            $resepBuilder->where('id_resep', $id);
+            $resepBuilder->update([
+                'jumlah_resep' => $jumlah_resep,
+                'total_biaya' => $total_biaya,
+            ]);
+
+            return $this->response->setJSON(['success' => true, 'message' => 'Item resep berhasil diperbarui']);
+        }
     }
 
     public function hapusdetailresep($id)
     {
         $db = db_connect();
 
-        // Find the detail pembelian obat before deletion to get id_resep
-        $detail = $this->DetailResepModel->find($id);
+        $builderDetail = $db->table('detail_resep');
+        $detail = $builderDetail->where('id_detail_resep', $id)->get()->getRowArray();
 
-        $id_resep = $detail['id_resep'];
+        if ($detail) {
+            $id_resep = $detail['id_resep'];
+            $id_obat = $detail['id_obat'];
+            $jumlah_obat = $detail['jumlah'];
 
-        // Delete the detail pembelian obat
-        $this->DetailResepModel->delete($id);
+            // Get the current `jumlah_keluar` from obat table
+            $builderObat = $db->table('obat');
+            $obat = $builderObat->where('id_obat', $id_obat)->get()->getRowArray();
 
-        // Reset auto_increment
-        $db->query('ALTER TABLE `detail_resep` auto_increment = 1');
+            if ($obat) {
+                // Update `jumlah_keluar` in obat table (reduce the stock based on deleted detail)
+                $new_jumlah_keluar = $obat['jumlah_keluar'] - $jumlah_obat;
+                $builderObat->where('id_obat', $id_obat)->update(['jumlah_keluar' => $new_jumlah_keluar]);
 
-        // Calculate jumlah_resep
-        $builder = $db->table('detail_resep');
-        $builder->select('SUM(jumlah) as jumlah_resep, SUM(jumlah * harga_satuan) as total_biaya');
-        $builder->where('id_resep', $id_resep);
-        $result = $builder->get()->getRow();
+                // Delete the detail pembelian obat
+                $builderDetail->where('id_detail_resep', $id)->delete();
 
-        $jumlah_resep = $result->jumlah_resep;
-        $total_biaya = $result->total_biaya;
+                // Reset auto_increment (optional, not usually recommended in production)
+                $db->query('ALTER TABLE `detail_resep` auto_increment = 1');
 
-        // Update resep table
-        $resepBuilder = $db->table('resep');
-        $resepBuilder->where('id_resep', $id_resep);
-        $resepBuilder->update([
-            'jumlah_resep' => $jumlah_resep,
-            'total_biaya' => $total_biaya,
-        ]);
+                // Calculate jumlah_resep and total_biaya for resep
+                $builder = $db->table('detail_resep');
+                $builder->select('SUM(jumlah) as jumlah_resep, SUM(jumlah * harga_satuan) as total_biaya');
+                $builder->where('id_resep', $id_resep);
+                $result = $builder->get()->getRow();
 
-        return $this->response->setJSON(['message' => 'Item resep berhasil dihapus']);
+                $jumlah_resep = $result->jumlah_resep ?? 0;  // Handle null in case no rows are left
+                $total_biaya = $result->total_biaya ?? 0;
+
+                // Update resep table
+                $resepBuilder = $db->table('resep');
+                $resepBuilder->where('id_resep', $id_resep);
+                $resepBuilder->update([
+                    'jumlah_resep' => $jumlah_resep,
+                    'total_biaya' => $total_biaya,
+                ]);
+
+                return $this->response->setJSON(['message' => 'Item resep berhasil dihapus']);
+            }
+        }
+
+        return $this->response->setJSON(['message' => 'Detail resep tidak ditemukan'], 404);
     }
 }

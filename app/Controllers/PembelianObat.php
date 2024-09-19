@@ -283,7 +283,7 @@ class PembelianObat extends BaseController
         // Set base validation rules
         $validation->setRules([
             'id_obat' => 'required',
-            'jumlah' => 'required',
+            'jumlah' => 'required|numeric|greater_than[0]',
         ]);
 
         if (!$this->validate($validation->getRules())) {
@@ -330,7 +330,7 @@ class PembelianObat extends BaseController
         $validation = \Config\Services::validation();
         // Set base validation rules
         $validation->setRules([
-            'jumlah_edit' => 'required',
+            'jumlah_edit' => 'required|numeric|greater_than[0]',
         ]);
 
         if (!$this->validate($validation->getRules())) {

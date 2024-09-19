@@ -429,4 +429,60 @@ class Transaksi extends BaseController
 
         return $this->response->setJSON(['message' => 'Item transaksi berhasil dihapus']);
     }
+
+    public function process($id_transaksi, $id_pasien)
+    {
+        // Validate
+        $validation = \Config\Services::validation();
+        // Set base validation rules
+        $validation->setRules([
+            'terima_uang' => 'required|numeric|greater_than[0]',
+            'metode_pembayaran' => 'required',
+        ]);
+
+        if (!$this->validate($validation->getRules())) {
+            return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
+        }
+
+        $db = db_connect();
+        $db->transBegin();  // Start transaction
+
+        // Update transaksi
+        $transaksi = $db->table('transaksi');
+        $transaksi->where('id_transaksi', $id_transaksi);
+        $transaksi->update([
+            'terima_uang' => $this->request->getPost('terima_uang'),
+            'metode_pembayaran' => $this->request->getPost('metode_pembayaran'),
+            'lunas' => 1,
+        ]);
+
+        // Update resep status
+        $resep = $db->table('resep');
+        $resep->where('id_pasien', $id_pasien);
+        $resep->update([
+            'status' => 1,
+        ]);
+
+        // Get the prescription details
+        $detailResep = $db->table('detail_resep')
+            ->where('id_transaksi', $id_transaksi)
+            ->get()
+            ->getResult();
+
+        // Update jumlah_keluar for each obat
+        foreach ($detailResep as $detail) {
+            $obat = $db->table('obat');
+            $obat->where('id_obat', $detail->id_obat);
+            $obat->set('jumlah_keluar', 'jumlah_keluar + ' . $detail->jumlah, false); // Update jumlah_keluar
+            $obat->update();
+        }
+
+        if ($db->transStatus() === false) {
+            $db->transRollback();  // Rollback if there is any issue
+            return $this->response->setJSON(['success' => false, 'message' => 'Gagal memproses transaksi']);
+        } else {
+            $db->transCommit();  // Commit the transaction if everything is fine
+            return $this->response->setJSON(['success' => true, 'message' => 'Transaksi berhasil diproses. Silakan cetak struk transaksi.']);
+        }
+    }
 }

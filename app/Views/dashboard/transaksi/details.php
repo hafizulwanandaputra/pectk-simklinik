@@ -199,7 +199,6 @@
                 `;
                 $('#detail_transaksi').append(emptyRow);
             } else {
-
                 data.forEach(function(detail_transaksi) {
                     const diskon = parseInt(detail_transaksi.diskon); // Konversi jumlah ke integer
                     const harga_resep = parseInt(detail_transaksi.harga_resep); // Konversi harga satuan ke integer
@@ -237,7 +236,7 @@
                             const total_harga = jumlah * harga_satuan; // Hitung total harga
 
                             const detail_transaksiElement = `
-                                <li>${obat.nama_obat}<br><small>${obat.kategori_obat} • ${obat.bentuk_obat} • ${obat.dosis_kali} × ${obat.dosis_hari} hari • ${obat.cara_pakai} • ${jumlah.toLocaleString('id-ID')} • Rp${total_harga.toLocaleString('id-ID')}</small></li>
+                                <li>${obat.nama_obat}<br><small>${obat.kategori_obat} • ${obat.bentuk_obat} • ${obat.dosis_kali} × ${obat.dosis_hari} hari • ${obat.cara_pakai} • ${jumlah.toLocaleString('id-ID')} × Rp${harga_satuan.toLocaleString('id-ID')} = Rp${total_harga.toLocaleString('id-ID')}</small></li>
                             `;
 
                             $(`#obat-${detail_transaksi.id_detail_transaksi}`).append(detail_transaksiElement);

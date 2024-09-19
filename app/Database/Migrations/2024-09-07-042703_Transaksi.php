@@ -32,6 +32,14 @@ class Transaksi extends Migration
                 'type' => 'INT',
                 'constraint' => 24,
             ],
+            'terima_uang' => [
+                'type' => 'INT',
+                'constraint' => 24,
+            ],
+            'uang_kembali' => [
+                'type' => 'INT',
+                'constraint' => 24,
+            ],
             'metode_pembayaran' => [
                 'type' => 'VARCHAR',
                 'constraint' => 128,

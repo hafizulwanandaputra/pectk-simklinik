@@ -519,7 +519,9 @@
                             fetchDetailResep();
                             fetchObatOptions();
                             fetchStatusResep();
-                        } else {
+                        } else if (response.data.success == false && response.data.message) {
+                            showFailedToast(response.data.message);
+                        } else if (response.data.success == false && response.data.errors) {
                             console.log("Validation Errors:", response.data.errors);
 
                             // Clear previous validation states
@@ -606,36 +608,43 @@
                     fetchObatOptions();
                     fetchStatusResep();
                 } else {
-                    console.log("Validation Errors:", response.data.errors);
+                    if (response.data.errors == null) {
+                        showFailedToast(response.data.message);
+                    } else if (response.data.message == null) {
+                        console.log("Validation Errors:", response.data.errors);
 
-                    // Clear previous validation states
-                    $('#tambahDetail .is-invalid').removeClass('is-invalid');
-                    $('#tambahDetail .invalid-feedback').text('').hide();
+                        // Clear previous validation states
+                        $('#tambahDetail .is-invalid').removeClass('is-invalid');
+                        $('#tambahDetail .invalid-feedback').text('').hide();
 
-                    // Display new validation errors
-                    for (const field in response.data.errors) {
-                        if (response.data.errors.hasOwnProperty(field)) {
-                            const fieldElement = $('#' + field);
-                            const feedbackElement = fieldElement.siblings('.invalid-feedback');
+                        // Display new validation errors
+                        for (const field in response.data.errors) {
+                            if (response.data.errors.hasOwnProperty(field)) {
+                                const fieldElement = $('#' + field);
+                                const feedbackElement = fieldElement.siblings('.invalid-feedback');
 
-                            console.log("Target Field:", fieldElement);
-                            console.log("Target Feedback:", feedbackElement);
+                                console.log("Target Field:", fieldElement);
+                                console.log("Target Feedback:", feedbackElement);
 
-                            if (fieldElement.length > 0 && feedbackElement.length > 0) {
-                                fieldElement.addClass('is-invalid');
-                                feedbackElement.text(response.data.errors[field]).show();
+                                if (fieldElement.length > 0 && feedbackElement.length > 0) {
+                                    fieldElement.addClass('is-invalid');
+                                    feedbackElement.text(response.data.errors[field]).show();
 
-                                // Remove error message when the user corrects the input
-                                fieldElement.on('input change', function() {
-                                    $(this).removeClass('is-invalid');
-                                    $(this).siblings('.invalid-feedback').text('').hide();
-                                });
-                            } else {
-                                console.warn("Elemen tidak ditemukan pada field:", field);
+                                    // Remove error message when the user corrects the input
+                                    fieldElement.on('input change', function() {
+                                        $(this).removeClass('is-invalid');
+                                        $(this).siblings('.invalid-feedback').text('').hide();
+                                    });
+                                } else {
+                                    console.warn("Elemen tidak ditemukan pada field:", field);
+                                }
                             }
                         }
+                        console.error('Perbaiki kesalahan pada formulir.');
+                        // Jika tidak ada 'errors' dan 'message', mungkin ada masalah lain
+                    } else {
+                        console.error('Kesalahan tidak teridentifikasi.');
                     }
-                    console.error('Perbaiki kesalahan pada formulir.');
                 }
             } catch (error) {
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);

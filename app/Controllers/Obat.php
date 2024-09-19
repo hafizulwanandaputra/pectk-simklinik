@@ -126,10 +126,10 @@ class Obat extends BaseController
             'nama_obat' => 'required',
             'kategori_obat' => 'required',
             'bentuk_obat' => 'required',
-            'harga_obat' => 'required|numeric',
-            'harga_jual' => 'required|numeric',
-            'dosis_kali' => 'required|numeric',
-            'dosis_hari' => 'required|numeric',
+            'harga_obat' => 'required|numeric|greater_than[0]',
+            'harga_jual' => 'required|numeric|greater_than[0]',
+            'dosis_kali' => 'required|numeric|greater_than[0]',
+            'dosis_hari' => 'required|numeric|greater_than[0]',
             'cara_pakai' => 'required',
         ]);
 
@@ -166,10 +166,10 @@ class Obat extends BaseController
             'nama_obat' => 'required',
             'kategori_obat' => 'required',
             'bentuk_obat' => 'required',
-            'harga_obat' => 'required|numeric',
-            'harga_jual' => 'required|numeric',
-            'dosis_kali' => 'required|numeric',
-            'dosis_hari' => 'required|numeric',
+            'harga_obat' => 'required|numeric|greater_than[0]',
+            'harga_jual' => 'required|numeric|greater_than[0]',
+            'dosis_kali' => 'required|numeric|greater_than[0]',
+            'dosis_hari' => 'required|numeric|greater_than[0]',
             'cara_pakai' => 'required',
         ]);
         if (!$this->validate($validation->getRules())) {
