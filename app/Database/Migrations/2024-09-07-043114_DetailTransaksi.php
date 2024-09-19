@@ -25,7 +25,7 @@ class DetailTransaksi extends Migration
                 'constraint' => 24,
                 'unsigned' => true
             ],
-            'harga_satuan' => [
+            'harga_resep' => [
                 'type' => 'INT',
                 'constraint' => 24,
             ],

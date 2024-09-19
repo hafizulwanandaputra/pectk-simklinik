@@ -92,8 +92,10 @@ class Transaksi extends BaseController
     {
         $PasienModel = new PasienModel();
 
-        $results = $PasienModel->join('resep', 'resep.id_pasien = pasien.id_pasien')
-            ->orderBy('nama_pasien', 'DESC')
+        $results = $PasienModel->select('pasien.id_pasien, pasien.nama_pasien, pasien.no_mr, pasien.no_registrasi')
+            ->join('resep', 'resep.id_pasien = pasien.id_pasien')
+            ->groupBy('pasien.id_pasien')
+            ->orderBy('pasien.nama_pasien', 'DESC')
             ->findAll();
 
         $options = [];
@@ -165,109 +167,134 @@ class Transaksi extends BaseController
         return $this->response->setJSON(['message' => 'Transaksi berhasil dihapus']);
     }
 
-    // DETAIL RESEP
-    public function detailresep($id)
+    // DETAIL TRANSAKSI
+    public function detailtransaksi($id)
     {
-        if (session()->get('role') == 'Admin') {
-            $resep = $this->ResepModel
-                ->join('pasien', 'pasien.id_pasien = resep.id_pasien', 'inner')
-                ->join('user', 'user.id_user = resep.id_user', 'inner')
-                ->find($id);
-        } else {
-            $resep = $this->ResepModel
-                ->where('resep.id_user', session()->get('id_user'))
-                ->join('pasien', 'pasien.id_pasien = resep.id_pasien', 'inner')
-                ->join('user', 'user.id_user = resep.id_user', 'inner')
-                ->find($id);
-        }
-        if (!empty($resep)) {
-            $resep['no_mr'] = $this->formatNoMr($resep['no_mr']);
+        $transaksi = $this->TransaksiModel
+            ->join('pasien', 'pasien.id_pasien = transaksi.id_pasien', 'inner')
+            ->join('user', 'user.id_user = transaksi.id_user', 'inner')
+            ->find($id);
+        if (!empty($transaksi)) {
+            $transaksi['no_mr'] = $this->formatNoMr($transaksi['no_mr']);
             $data = [
-                'resep' => $resep,
-                'title' => 'Detail Resep ' . $id . ' - ' . $this->systemName,
-                'headertitle' => 'Detail Resep',
+                'transaksi' => $transaksi,
+                'title' => 'Detail Transaksi ' . $id . ' - ' . $this->systemName,
+                'headertitle' => 'Detail Transaksi',
                 'agent' => $this->request->getUserAgent()
             ];
-            return view('dashboard/resep/details', $data);
+            return view('dashboard/transaksi/details', $data);
         } else {
             throw PageNotFoundException::forPageNotFound();
         }
     }
 
-    public function detailreseplist($id)
+    public function detailtransaksilist($id)
     {
-        $data = $this->DetailResepModel
-            ->where('detail_resep.id_resep', $id)
-            ->join('resep', 'resep.id_resep = detail_resep.id_resep', 'inner')
-            ->join('obat', 'obat.id_obat = detail_resep.id_obat', 'inner')
-            ->orderBy('id_detail_resep', 'ASC')
+        $transaksi = $this->DetailTransaksiModel
+            ->where('detail_transaksi.id_transaksi', $id)
+            ->join('resep', 'resep.id_resep = detail_transaksi.id_resep', 'inner')
+            ->join('user', 'resep.id_user = user.id_user', 'inner')
+            ->join('detail_resep', 'resep.id_resep = detail_resep.id_resep', 'inner')
+            ->join('obat', 'detail_resep.id_obat = obat.id_obat', 'inner')
+            ->orderBy('id_detail_transaksi', 'ASC')
             ->findAll();
 
-        return $this->response->setJSON($data);
+        // Array untuk menyimpan hasil terstruktur
+        $result = [];
+
+        // Untuk memetakan setiap transaksi
+        foreach ($transaksi as $row) {
+            // Jika transaksi ini belum ada dalam array $result, tambahkan
+            if (!isset($result[$row['id_detail_transaksi']])) {
+                $result[$row['id_detail_transaksi']] = [
+                    'id_detail_transaksi' => $row['id_detail_transaksi'],
+                    'id_resep' => $row['id_resep'],
+                    'id_transaksi' => $row['id_transaksi'],
+                    'harga_resep' => $row['harga_resep'],
+                    'diskon' => $row['diskon'],
+                    'resep' => [
+                        'id_resep' => $row['id_resep'],
+                        'id_user' => $row['id_user'],
+                        'id_pasien' => $row['id_pasien'],
+                        'tanggal_resep' => $row['tanggal_resep'],
+                        'jumlah_resep' => $row['jumlah_resep'],
+                        'total_biaya' => $row['total_biaya'],
+                        'keterangan' => $row['keterangan'],
+                        'status' => $row['status'],
+                        'user' => [
+                            'id_user' => $row['id_user'],
+                            'fullname' => $row['fullname'],
+                            'username' => $row['username'],
+                        ],
+                        'detail_resep' => []
+                    ],
+                ];
+            }
+
+            // Tambahkan detail_resep ke transaksi
+            $result[$row['id_detail_transaksi']]['resep']['detail_resep'][] = [
+                'id_detail_resep' => $row['id_detail_resep'],
+                'id_resep' => $row['id_resep'],
+                'id_obat' => $row['id_obat'],
+                'jumlah' => $row['jumlah'],
+                'harga_satuan' => $row['harga_satuan'],
+                'obat' => [
+                    [
+                        'id_obat' => $row['id_obat'],
+                        'id_supplier' => $row['id_supplier'],
+                        'nama_obat' => $row['nama_obat'],
+                        'kategori_obat' => $row['kategori_obat'],
+                        'bentuk_obat' => $row['bentuk_obat'],
+                        'harga_obat' => $row['harga_obat'],
+                        'harga_jual' => $row['harga_jual'],
+                        'dosis_kali' => $row['dosis_kali'],
+                        'dosis_hari' => $row['dosis_hari'],
+                        'cara_pakai' => $row['cara_pakai'],
+                        'jumlah_masuk' => $row['jumlah_masuk'],
+                        'jumlah_keluar' => $row['jumlah_keluar'],
+                        'updated_at' => $row['updated_at']
+                    ]
+                ],
+            ];
+        }
+
+        // Mengembalikan hasil dalam bentuk JSON
+        return $this->response->setJSON(array_values($result));
     }
 
-    public function detailresepitem($id)
+    public function detailtransaksiitem($id)
     {
-        $data = $this->DetailResepModel
-            ->where('id_detail_resep', $id)
-            ->orderBy('id_detail_resep', 'ASC')
+        $data = $this->DetailTransaksiModel
+            ->where('id_detail_transaksi', $id)
+            ->orderBy('id_detail_transaksi', 'ASC')
             ->find($id);
 
         return $this->response->setJSON($data);
     }
 
-    public function keterangan($id)
+    public function reseplist($id_transaksi, $id_pasien)
     {
-        if (session()->get('role') == 'Admin') {
-            $data = $this->ResepModel
-                ->select('keterangan, status')
-                ->find($id);
-        } else {
-            $data = $this->ResepModel
-                ->select('keterangan, status')
-                ->where('id_user', session()->get('id_user'))
-                ->find($id);
-        }
-        return $this->response->setJSON($data);
-    }
+        $ResepModel = new ResepModel();
+        $DetailTransaksiModel = new DetailTransaksiModel();
 
-    public function editketerangan($id)
-    {
-        $db = db_connect();
-        $resepBuilder = $db->table('resep');
-        $resepBuilder->where('id_resep', $id);
-        if (session()->get('role') != 'Admin') {
-            $resepBuilder->where('id_user', session()->get('id_user'));
-        }
-        $resepBuilder->update([
-            'keterangan' => $this->request->getPost('keterangan'),
-        ]);
-
-        return $this->response->setJSON(['success' => true, 'message' => 'Keterangan resep berhasil diperbarui']);
-    }
-
-    public function obatlist($id_resep)
-    {
-        $ObatModel = new ObatModel();
-        $DetailResepModel = new DetailResepModel(); // Model untuk tabel detail_resep
-
-        // Ambil semua obat berdasarkan id_supplier
-        $results = $ObatModel->orderBy('nama_obat', 'DESC')->findAll();
+        $results = $ResepModel
+            ->where('id_pasien', $id_pasien)
+            ->where('status', 0)
+            ->orderBy('resep.id_resep', 'DESC')->findAll();
 
         $options = [];
         foreach ($results as $row) {
-            $harga_obat = (int) $row['harga_obat'];
-            $harga_obat_terformat = number_format($harga_obat, 0, ',', '.');
-            // Cek apakah id_resep sudah ada di tabel detail_resep dengan id_resep yang sama
-            $isUsed = $DetailResepModel->where('id_obat', $row['id_obat'])
-                ->where('id_resep', $id_resep) // Pastikan sesuai dengan id_resep yang sedang digunakan
+            $total_biaya = (int) $row['total_biaya'];
+            $total_biaya_terformat = number_format($total_biaya, 0, ',', '.');
+
+            $isUsed = $DetailTransaksiModel->where('id_resep', $row['id_resep'])
+                ->where('id_transaksi', $id_transaksi)
                 ->first();
 
-            // Jika belum ada pada pembelian yang sama, tambahkan ke options
-            if ($row['jumlah_masuk'] > 0 && !$isUsed) {
+            if (!$isUsed) {
                 $options[] = [
-                    'value' => $row['id_obat'],
-                    'text' => $row['nama_obat'] . ' (' . $row['kategori_obat'] . ' • ' . $row['bentuk_obat'] . ' • Rp' . $harga_obat_terformat . ' • ' . $row['dosis_kali'] . ' × ' . $row['dosis_hari'] . ' hari • ' . $row['cara_pakai'] . ' • ' . $row['jumlah_masuk'] . ')'
+                    'value' => $row['id_resep'],
+                    'text' => $row['tanggal_resep'] . ' (Rp' . $total_biaya_terformat . ')'
                 ];
             }
         }
@@ -278,133 +305,128 @@ class Transaksi extends BaseController
         ]);
     }
 
-    public function tambahdetailresep($id)
+    public function tambahdetailtransaksi($id)
     {
         // Validate
         $validation = \Config\Services::validation();
         // Set base validation rules
         $validation->setRules([
-            'id_obat' => 'required',
-            'jumlah' => 'required',
+            'id_resep' => 'required',
+            'diskon' => 'required|numeric|greater_than_equal_to[0]|less_than[100]',
         ]);
 
         if (!$this->validate($validation->getRules())) {
             return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
         }
 
-        $ObatModel = new ObatModel();
-        $obat = $ObatModel->find($this->request->getPost('id_obat'));
+        $ResepModel = new ResepModel();
+        $resep = $ResepModel->find($this->request->getPost('id_resep'));
 
         // Save Data
         $data = [
-            'id_resep' => $id,
-            'id_obat' => $this->request->getPost('id_obat'),
-            'jumlah' => $this->request->getPost('jumlah'),
-            'harga_satuan' => $obat['harga_jual'],
+            'id_resep' => $this->request->getPost('id_resep'),
+            'id_transaksi' => $id,
+            'harga_resep' => $resep['total_biaya'],
+            'diskon' => $this->request->getPost('diskon'),
         ];
-        $this->DetailResepModel->save($data);
+        $this->DetailTransaksiModel->save($data);
 
         $db = db_connect();
 
-        // Calculate jumlah_resep
-        $builder = $db->table('detail_resep');
-        $builder->select('SUM(jumlah) as jumlah_resep, SUM(jumlah * harga_satuan) as total_biaya');
-        $builder->where('id_resep', $id);
+        // Calculate total_pembayaran
+        $builder = $db->table('detail_transaksi');
+        $builder->select('SUM(harga_resep * (1 - (diskon / 100))) as total_pembayaran');
+        $builder->where('id_transaksi', $id);
         $result = $builder->get()->getRow();
 
-        $jumlah_resep = $result->jumlah_resep;
-        $total_biaya = $result->total_biaya;
+        $total_pembayaran = $result->total_pembayaran;
 
-        // Update resep table
-        $resepBuilder = $db->table('resep');
-        $resepBuilder->where('id_resep', $id);
-        $resepBuilder->update([
-            'jumlah_resep' => $jumlah_resep,
-            'total_biaya' => $total_biaya,
+        // Update transaksi table
+        $transaksiBuilder = $db->table('transaksi');
+        $transaksiBuilder->where('id_transaksi', $id);
+        $transaksiBuilder->update([
+            'total_pembayaran' => $total_pembayaran,
         ]);
 
-        return $this->response->setJSON(['success' => true, 'message' => 'Item resep berhasil ditambahkan']);
+        return $this->response->setJSON(['success' => true, 'message' => 'Item transaksi berhasil ditambahkan']);
     }
 
-    public function perbaruidetailresep($id)
+    public function perbaruidetailtransaksi($id)
     {
         // Validate
         $validation = \Config\Services::validation();
         // Set base validation rules
         $validation->setRules([
-            'jumlah_edit' => 'required',
+            'diskon_edit' => 'required|numeric|greater_than_equal_to[0]|less_than[100]',
         ]);
 
         if (!$this->validate($validation->getRules())) {
             return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
         }
 
-        $detail_resep = $this->DetailResepModel->find($this->request->getPost('id_detail_resep'));
+        $detail_transaksi = $this->DetailTransaksiModel->find($this->request->getPost('id_detail_transaksi'));
 
         // Save Data
         $data = [
-            'id_detail_resep' => $this->request->getPost('id_detail_resep'),
-            'id_resep' => $id,
-            'id_obat' => $detail_resep['id_obat'],
-            'jumlah' => $this->request->getPost('jumlah_edit'),
-            'harga_satuan' => $detail_resep['harga_satuan'],
+            'id_detail_transaksi' => $this->request->getPost('id_detail_transaksi'),
+            'id_obat' => $detail_transaksi['id_obat'],
+            'id_transaksi' => $id,
+            'harga_resep' => $detail_transaksi['harga_resep'],
+            'diskon' => $this->request->getPost('diskon_edit'),
         ];
-        $this->DetailResepModel->save($data);
+        $this->DetailTransaksiModel->save($data);
 
         $db = db_connect();
 
-        // Calculate jumlah_resep
-        $builder = $db->table('detail_resep');
-        $builder->select('SUM(jumlah) as jumlah_resep, SUM(jumlah * harga_satuan) as total_biaya');
-        $builder->where('id_resep', $id);
+        // Calculate total_pembayaran
+        $builder = $db->table('detail_transaksi');
+        $builder->select('SUM(harga_resep * (1 - (diskon / 100))) as total_pembayaran');
+        $builder->where('id_transaksi', $id);
         $result = $builder->get()->getRow();
 
-        $jumlah_resep = $result->jumlah_resep;
-        $total_biaya = $result->total_biaya;
+        $total_pembayaran = $result->total_pembayaran;
 
-        // Update resep table
-        $resepBuilder = $db->table('resep');
-        $resepBuilder->where('id_resep', $id);
-        $resepBuilder->update([
-            'jumlah_resep' => $jumlah_resep,
-            'total_biaya' => $total_biaya,
+        // Update transaksi table
+        $transaksiBuilder = $db->table('transaksi');
+        $transaksiBuilder->where('id_transaksi', $id);
+        $transaksiBuilder->update([
+            'total_pembayaran' => $total_pembayaran,
         ]);
 
-        return $this->response->setJSON(['success' => true, 'message' => 'Item resep berhasil diperbarui']);
+
+        return $this->response->setJSON(['success' => true, 'message' => 'Item transaksi berhasil diperbarui']);
     }
 
-    public function hapusdetailresep($id)
+    public function hapusdetailtransaksi($id)
     {
         $db = db_connect();
 
-        // Find the detail pembelian obat before deletion to get id_resep
-        $detail = $this->DetailResepModel->find($id);
+        // Find the detail pembelian obat before deletion to get id_transaksi
+        $detail = $this->DetailTransaksiModel->find($id);
 
-        $id_resep = $detail['id_resep'];
+        $id_transaksi = $detail['id_transaksi'];
 
         // Delete the detail pembelian obat
-        $this->DetailResepModel->delete($id);
+        $this->DetailTransaksiModel->delete($id);
 
         // Reset auto_increment
         $db->query('ALTER TABLE `detail_resep` auto_increment = 1');
 
-        // Calculate jumlah_resep
-        $builder = $db->table('detail_resep');
-        $builder->select('SUM(jumlah) as jumlah_resep, SUM(jumlah * harga_satuan) as total_biaya');
-        $builder->where('id_resep', $id_resep);
+        // Calculate total_pembayaran
+        $builder = $db->table('detail_transaksi');
+        $builder->select('SUM(harga_resep * (1 - (diskon / 100))) as total_pembayaran');
+        $builder->where('id_transaksi', $id_transaksi);
         $result = $builder->get()->getRow();
 
-        $jumlah_resep = $result->jumlah_resep;
-        $total_biaya = $result->total_biaya;
+        $total_pembayaran = $result->total_pembayaran;
 
-        // Update resep table
-        $resepBuilder = $db->table('resep');
-        $resepBuilder->where('id_resep', $id_resep);
-        $resepBuilder->update([
-            'jumlah_resep' => $jumlah_resep,
-            'total_biaya' => $total_biaya,
+        // Update transaksi table
+        $transaksiBuilder = $db->table('transaksi');
+        $transaksiBuilder->where('id_transaksi', $id_transaksi);
+        $transaksiBuilder->update([
+            'total_pembayaran' => $total_pembayaran,
         ]);
 
-        return $this->response->setJSON(['message' => 'Item resep berhasil dihapus']);
+        return $this->response->setJSON(['message' => 'Item transaksi berhasil dihapus']);
     }
 }

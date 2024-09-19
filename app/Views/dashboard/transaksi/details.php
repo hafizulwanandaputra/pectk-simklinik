@@ -4,7 +4,7 @@
 <?= $this->endSection(); ?>
 <?= $this->section('title'); ?>
 <div class="d-flex justify-content-start align-items-center">
-    <a class="fs-5 me-3 link-body-emphasis" href="<?= base_url('/resep'); ?>"><i class="fa-solid fa-arrow-left"></i></a>
+    <a class="fs-5 me-3 link-body-emphasis" href="<?= base_url('/transaksi'); ?>"><i class="fa-solid fa-arrow-left"></i></a>
     <span class="fw-medium fs-5 flex-fill text-truncate"><?= $headertitle; ?></span>
     <div id="loadingSpinner" class="spinner-border spinner-border-sm" role="status">
         <span class="visually-hidden">Loading...</span>
@@ -16,13 +16,13 @@
 <main class="col-md-9 ms-sm-auto col-lg-10 px-3 px-md-4 pt-3">
 
     <fieldset class="border rounded-3 px-2 py-0 mb-3">
-        <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Informasi Resep</legend>
+        <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Informasi Transaksi</legend>
         <div style="font-size: 9pt;">
             <div class="mb-2 row">
                 <div class="col-lg-3 fw-medium">Tanggal dan Waktu</div>
                 <div class="col-lg">
                     <div class="date">
-                        <?= $resep['tanggal_resep'] ?>
+                        <?= $transaksi['tgl_transaksi'] ?>
                     </div>
                 </div>
             </div>
@@ -30,7 +30,7 @@
                 <div class="col-lg-3 fw-medium">Nama Pasien</div>
                 <div class="col-lg">
                     <div class="date">
-                        <?= $resep['nama_pasien'] ?>
+                        <?= $transaksi['nama_pasien'] ?>
                     </div>
                 </div>
             </div>
@@ -38,7 +38,7 @@
                 <div class="col-lg-3 fw-medium">Nomor MR</div>
                 <div class="col-lg">
                     <div class="date">
-                        <?= $resep['no_mr'] ?>
+                        <?= $transaksi['no_mr'] ?>
                     </div>
                 </div>
             </div>
@@ -46,65 +46,33 @@
                 <div class="col-lg-3 fw-medium">Nomor Registrasi</div>
                 <div class="col-lg">
                     <div class="date">
-                        <?= $resep['no_registrasi'] ?>
+                        <?= $transaksi['no_registrasi'] ?>
                     </div>
                 </div>
             </div>
             <div class="mb-2 row">
-                <div class="col-lg-3 fw-medium">Dokter</div>
+                <div class="col-lg-3 fw-medium">Kasir</div>
                 <div class="col-lg">
                     <div class="date">
-                        <?= $resep['fullname'] ?>
-                    </div>
-                </div>
-            </div>
-            <div class="mb-2 row">
-                <div class="col-lg-3 fw-medium">Keterangan</div>
-                <div class="col-lg">
-                    <div class="date placeholder-glow">
-                        <span id="keterangan_detail"><span class="placeholder w-100"></span></span><br>
-                        <button type="button" class="btn btn-secondary btn-sm bg-gradient rounded-3" id="editKeteranganBtn" style="display: none;">
-                            <i class="fa-solid fa-pen-to-square"></i> Edit Keterangan
-                        </button>
+                        <?= $transaksi['fullname'] ?>
                     </div>
                 </div>
             </div>
         </div>
     </fieldset>
 
-    <div class="modal fade" id="editKeterangan" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editKeteranganLabel" aria-hidden="true">
-        <div class="modal-dialog modal-fullscreen-md-down modal-lg modal-dialog-centered modal-dialog-scrollable rounded-3">
-            <form id="editKeteranganForm" enctype="multipart/form-data" class="modal-content bg-body shadow-lg transparent-blur">
-                <div class="modal-header justify-content-between pt-2 pb-2" style="border-bottom: 1px solid var(--bs-border-color-translucent);">
-                    <h6 class="pe-2 modal-title fs-6 text-truncate" id="editKeteranganLabel" style="font-weight: bold;">Keterangan</h6>
-                    <button type="button" class="btn btn-danger btn-sm bg-gradient ps-0 pe-0 pt-0 pb-0 rounded-3 closeBtn" data-bs-dismiss="modal" aria-label="Close"><span data-feather="x" class="mb-0" style="width: 30px; height: 30px;"></span></button>
-                </div>
-                <div class="modal-body py-2">
-                    <div class="mb-1 mt-1">
-                        <textarea class="form-control font-monospace rounded-3" autocomplete="off" dir="auto" id="editKeteranganText" name="keterangan" row="2" style="resize: none;"></textarea>
-                    </div>
-                </div>
-                <div class="modal-footer justify-content-end pt-2 pb-2" style="border-top: 1px solid var(--bs-border-color-translucent);">
-                    <button type="submit" id="submitKeteranganButton" class="btn btn-primary bg-gradient rounded-3">
-                        <i class="fa-solid fa-floppy-disk"></i> Simpan
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-
     <fieldset id="tambahDetailContainer" class="border rounded-3 px-2 py-0 mb-3" style="display: none;">
-        <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Tambah Detail Resep</legend>
+        <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Tambah Detail Transaksi</legend>
         <form id="tambahDetail" enctype="multipart/form-data">
             <div class="mb-2">
-                <select class="form-select rounded-3" id="id_obat" name="id_obat" aria-label="id_obat">
-                    <option value="" disabled selected>-- Pilih Obat --</option>
+                <select class="form-select rounded-3" id="id_resep" name="id_resep" aria-label="id_resep">
+                    <option value="" disabled selected>-- Pilih Resep --</option>
                 </select>
                 <div class="invalid-feedback"></div>
             </div>
             <div class="d-flex flex-column flex-lg-row mb-2 gap-2">
                 <div class="flex-fill">
-                    <input type="number" id="jumlah" name="jumlah" class="form-control rounded-3" placeholder="Jumlah">
+                    <input type="number" id="diskon" name="diskon" class="form-control rounded-3" placeholder="Diskon (%)">
                     <div class="invalid-feedback"></div>
                 </div>
                 <div class="d-grid d-lg-block w-auto">
@@ -121,15 +89,15 @@
             <thead>
                 <tr class="align-middle">
                     <th scope="col" class="bg-body-secondary border-secondary text-nowrap tindakan" style="border-bottom-width: 2px; width: 0%;">Tindakan</th>
-                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">Nama Obat</th>
-                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Jumlah</th>
-                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Harga Satuan</th>
-                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Harga</th>
+                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">Resep</th>
+                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Harga</th>
+                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Diskon</th>
+                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Pembayaran</th>
                 </tr>
             </thead>
-            <tbody class="align-top" id="detail_resep">
+            <tbody class="align-top" id="detail_transaksi">
                 <tr>
-                    <td colspan="5" class="text-center">Memuat detail resep...</td>
+                    <td colspan="5" class="text-center">Memuat detail transaksi...</td>
                 </tr>
             </tbody>
             <tbody class="align-top">
@@ -138,9 +106,7 @@
                 <tr>
                     <th scope="col" class="bg-body-secondary border-secondary text-nowrap" style="border-bottom-width: 0; border-top-width: 2px;" colspan="1"></th>
                     <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 2px;">Total</th>
-                    <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="jumlah_resep"></th>
-                    <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;"></th>
-                    <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="total_harga"></th>
+                    <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" colspan="3" id="total_pembayaran"></th>
                 </tr>
             </thead>
         </table>
@@ -170,13 +136,13 @@
 <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.colVis.min.js"></script>
 <script>
-    async function fetchObatOptions() {
+    async function fetchResepOptions() {
         try {
-            const response = await axios.get('<?= base_url('resep/obatlist/' . $resep['id_resep']) ?>');
+            const response = await axios.get('<?= base_url('transaksi/reseplist/' . $transaksi['id_transaksi'] . '/' . $transaksi['id_pasien']) ?>) ?>');
 
             if (response.data.success) {
                 const options = response.data.data;
-                const select = $('#id_obat');
+                const select = $('#id_resep');
 
                 // Clear existing options except the first one
                 select.find('option:not(:first)').remove();
@@ -187,22 +153,22 @@
                 });
             }
         } catch (error) {
-            showFailedToast('Gagal mendapatkan obat.<br>' + error);
+            showFailedToast('Gagal mendapatkan resep.<br>' + error);
         }
     }
 
-    async function fetchStatusResep() {
+    async function fetchStatusTransaksi() {
         $('#loadingSpinner').show();
 
         try {
-            const response = await axios.get('<?= base_url('resep/resep/') . $resep['id_resep'] ?>');
+            const response = await axios.get('<?= base_url('transaksi/transaksi/') . $transaksi['id_transaksi'] ?>');
 
             const data = response.data;
 
-            // Cek status `status`
-            if (data.status === "1") {
+            // Cek status `lunas`
+            if (data.lunas === "1") {
                 $('#tambahDetailContainer').hide();
-            } else if (data.status === "0") {
+            } else if (data.lunas === "0") {
                 $('#tambahDetailContainer').show();
             }
         } catch (error) {
@@ -213,223 +179,100 @@
         }
     }
 
-    async function fetchDetailResep() {
+    async function fetchDetailTransaksi() {
         $('#loadingSpinner').show();
 
         try {
-            const response = await axios.get('<?= base_url('resep/detailreseplist/') . $resep['id_resep'] ?>');
+            const response = await axios.get('<?= base_url('transaksi/detailtransaksilist/') . $transaksi['id_transaksi'] ?>');
 
             const data = response.data;
-            $('#detail_resep').empty();
+            $('#detail_transaksi').empty();
 
-            let jumlahResep = 0;
-            let totalHarga = 0;
+            let totalPembayaran = 0;
 
             if (data.length === 0) {
                 // Tampilkan pesan jika tidak ada data
                 const emptyRow = `
                     <tr>
-                        <td colspan="5" class="text-center">Tidak ada obat yang akan dijadikan resep</td>
+                        <td colspan="5" class="text-center">Tidak ada resep yang akan ditransaksikan</td>
                     </tr>
                 `;
-                $('#detail_resep').append(emptyRow);
+                $('#detail_transaksi').append(emptyRow);
             } else {
-                data.forEach(function(detail_resep) {
-                    const jumlah = parseInt(detail_resep.jumlah); // Konversi jumlah ke integer
-                    const harga_satuan = parseInt(detail_resep.harga_satuan); // Konversi harga obat ke integer
-                    const total_harga = jumlah * harga_satuan; // Hitung total harga
-                    totalHarga += total_harga;
-                    jumlahResep += jumlah;
-                    const detail_resepElement = `
-                    <tr>
-                        <td class="tindakan">
+
+                data.forEach(function(detail_transaksi) {
+                    const diskon = parseInt(detail_transaksi.diskon); // Konversi jumlah ke integer
+                    const harga_resep = parseInt(detail_transaksi.harga_resep); // Konversi harga satuan ke integer
+                    const total_pembayaran = harga_resep * (1 - (diskon / 100)); // Hitung total harga
+                    totalPembayaran += total_pembayaran;
+                    const keterangan = detail_transaksi.resep.keterangan == '' ?
+                        `<em>Tidak ada keterangan</em>` :
+                        `${detail_transaksi.resep.keterangan}`;
+                    const tindakanElement = `
+                        <tr>
+                            <td class="tindakan" rowspan="1">
                             <div class="btn-group" role="group">
-                                <button class="btn btn-secondary text-nowrap bg-gradient rounded-start-3 edit-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${detail_resep.id_detail_resep}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
-                                <button class="btn btn-danger text-nowrap bg-gradient rounded-end-3 delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${detail_resep.id_detail_resep}" data-name="${detail_resep.nama_obat}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
+                                <button class="btn btn-secondary text-nowrap bg-gradient rounded-start-3 edit-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${detail_transaksi.id_detail_transaksi}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
+                                <button class="btn btn-danger text-nowrap bg-gradient rounded-end-3 delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${detail_transaksi.id_detail_transaksi}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
                             </div>
                         </td>
-                        <td>${detail_resep.nama_obat}<br><small>${detail_resep.kategori_obat} • ${detail_resep.bentuk_obat} • ${detail_resep.dosis_kali} × ${detail_resep.dosis_hari} hari • ${detail_resep.cara_pakai}</small></td>
-                        <td class="date text-end">${jumlah.toLocaleString('id-ID')}</td>
-                        <td class="date text-end">Rp${harga_satuan.toLocaleString('id-ID')}</td>
-                        <td class="date text-end">Rp${total_harga.toLocaleString('id-ID')}</td>
-                    </tr>
-                `;
+                        <td>
+                            <span>${detail_transaksi.resep.user.fullname}</span>
+                            <ul class="mb-0" id="obat-${detail_transaksi.id_detail_transaksi}">
+                            </ul>
+                            <span>${keterangan}</span>
+                        </td>
+                        <td class="date text-end">Rp${harga_resep.toLocaleString('id-ID')}</td>
+                        <td class="date text-end">${diskon.toLocaleString('id-ID')}%</td>
+                        <td class="date text-end">Rp${total_pembayaran.toLocaleString('id-ID')}</td>
+                        </tr>
+                    `;
+                    $('#detail_transaksi').append(tindakanElement);
+                    // Iterasi untuk setiap resep
+                    detail_transaksi.resep.detail_resep.forEach(function(detail_resep) {
+                        // Iterasi untuk setiap obat di detail resep
+                        detail_resep.obat.forEach(function(obat) {
+                            const jumlah = parseInt(detail_resep.jumlah); // Konversi jumlah ke integer
+                            const harga_satuan = parseInt(detail_resep.harga_satuan); // Konversi harga satuan ke integer
+                            const total_harga = jumlah * harga_satuan; // Hitung total harga
 
-                    $('#detail_resep').append(detail_resepElement);
-                    if (detail_resep.status === "1") {
-                        $('.edit-btn').prop('disabled', true);
-                        $('.delete-btn').prop('disabled', true);
-                    } else if (detail_resep.status === "0") {
-                        $('.edit-btn').prop('disabled', false);
-                        $('.delete-btn').prop('disabled', false);
-                    }
+                            const detail_transaksiElement = `
+                                <li>${obat.nama_obat}<br><small>${obat.kategori_obat} • ${obat.bentuk_obat} • ${obat.dosis_kali} × ${obat.dosis_hari} hari • ${obat.cara_pakai} • ${jumlah.toLocaleString('id-ID')} • Rp${total_harga.toLocaleString('id-ID')}</small></li>
+                            `;
+
+                            $(`#obat-${detail_transaksi.id_detail_transaksi}`).append(detail_transaksiElement);
+                        });
+                    });
                 });
             }
-            const totalHargaElement = `Rp${totalHarga.toLocaleString('id-ID')}`;
-            const jumlahResepElement = `${jumlahResep.toLocaleString('id-ID')}`;
-            $('#total_harga').text(totalHargaElement);
-            $('#jumlah_resep').text(jumlahResepElement);
+            const totalPembayaranElement = `Rp${totalPembayaran.toLocaleString('id-ID')}`;
+            $('#total_pembayaran').text(totalPembayaranElement);
             $('[data-bs-toggle="tooltip"]').tooltip();
         } catch (error) {
             showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
-            $('#detail_resep').empty();
+            $('#detail_transaksi').empty();
         } finally {
             // Hide the spinner when done
             $('#loadingSpinner').hide();
         }
-    }
-
-    async function fetchKeterangan() {
-        $('#loadingSpinner').show();
-
-        try {
-            const response = await axios.get('<?= base_url('/resep/keterangan/') . $resep['id_resep'] ?>');
-            if (response.data.keterangan === "") {
-                $('#keterangan_detail').html('<em>Belum Ada Keterangan</em>');
-            } else {
-                $('#keterangan_detail').text(response.data.keterangan);
-            }
-            if (response.data.status === "0") {
-                $('#editKeteranganBtn').show();
-            } else {
-                $('#editKeteranganBtn').hide();
-            }
-        } catch (error) {
-            showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
-        } finally {
-            // Hide the spinner when done
-            $('#loadingSpinner').hide();
-        }
-    }
-
-    function autoResizeTextarea() {
-        $('#editKeteranganText').css('height', 'auto'); // Reset the height
-        $('#editKeteranganText').css('height', ($('#editKeteranganText')[0].scrollHeight + 2) + 'px');
     }
 
     $(document).ready(function() {
         $('[data-bs-toggle="tooltip"]').tooltip();
-        $('#id_obat').select2({
+        $('#id_resep').select2({
             dropdownParent: $('#tambahDetail'),
             theme: "bootstrap-5",
             width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
             placeholder: $(this).data('placeholder'),
         });
 
-        // Auto resize on input
-        $('#editKeteranganText').on('input', function() {
-            autoResizeTextarea();
-        });
-
-        // Auto resize on window resize
-        $(window).on('resize', function() {
-            autoResizeTextarea();
-        });
-
-        $('#editKeterangan').on('shown.bs.modal', function() {
-            autoResizeTextarea();
-        });
-
-        $(document).on('click', '#editKeteranganBtn', async function() {
-            const $this = $(this);
-            $('[data-bs-toggle="tooltip"]').tooltip('hide');
-            $(this).prop('disabled', true).html(`<span class="spinner-border" style="width: 11px; height: 11px;" aria-hidden="true"></span> Edit Keterangan`);
-            try {
-                const response = await axios.get(`<?= base_url('/resep/keterangan/') . $resep['id_resep'] ?>`);
-                $('#editKeteranganText').val(response.data.keterangan);
-                $('#editKeterangan').modal('show');
-            } catch (error) {
-                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
-                console.error(error);
-            } finally {
-                $this.prop('disabled', false).html(`<i class="fa-solid fa-pen-to-square"></i> Edit Keterangan`);
-            }
-        });
-
-        $('#editKeteranganForm').submit(async function(e) {
-            e.preventDefault();
-
-            const formData = new FormData(this);
-            console.log("Form Data:", $(this).serialize());
-
-            // Clear previous validation states
-            $('#editKeteranganForm .is-invalid').removeClass('is-invalid');
-            $('#editKeteranganForm .invalid-feedback').text('').hide();
-            $('#submitKeteranganButton').prop('disabled', true).html(`
-                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span> Memproses
-            `);
-
-            // Disable form inputs
-            $('#editKeteranganForm textarea, .closeBtn').prop('disabled', true);
-
-            try {
-                const response = await axios.post(`<?= base_url('/resep/editketerangan/' . $resep['id_resep']) ?>`, formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                });
-
-                if (response.data.success) {
-                    $('#editKeterangan').modal('hide');
-                    fetchKeterangan();
-                } else {
-                    console.log("Validation Errors:", response.data.errors);
-
-                    // Clear previous validation states
-                    $('#editKeteranganForm .is-invalid').removeClass('is-invalid');
-                    $('#editKeteranganForm .invalid-feedback').text('').hide();
-
-                    // Display new validation errors
-                    for (const field in response.data.errors) {
-                        if (response.data.errors.hasOwnProperty(field)) {
-                            const fieldElement = $('#' + field);
-                            const feedbackElement = fieldElement.siblings('.invalid-feedback');
-
-                            console.log("Target Field:", fieldElement);
-                            console.log("Target Feedback:", feedbackElement);
-
-                            if (fieldElement.length > 0 && feedbackElement.length > 0) {
-                                fieldElement.addClass('is-invalid');
-                                feedbackElement.text(response.data.errors[field]).show();
-
-                                // Remove error message when the user corrects the input
-                                fieldElement.on('input change', function() {
-                                    $(this).removeClass('is-invalid');
-                                    $(this).siblings('.invalid-feedback').text('').hide();
-                                });
-                            } else {
-                                console.warn("Elemen tidak ditemukan pada field:", field);
-                            }
-                        }
-                    }
-                    console.error('Perbaiki kesalahan pada formulir.');
-                }
-            } catch (error) {
-                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
-            } finally {
-                $('#submitKeteranganButton').prop('disabled', false).html(`
-                    <i class="fa-solid fa-floppy-disk"></i> Simpan
-                `);
-                $('#editKeteranganForm textarea, .closeBtn').prop('disabled', false);
-            }
-        });
-
-        $('#editKeterangan').on('hidden.bs.modal', function() {
-            $('#editKeteranganForm')[0].reset();
-            $('#editKeteranganText').val('');
-            $('#editKeteranganForm .is-invalid').removeClass('is-invalid');
-            $('#editKeteranganForm .invalid-feedback').text('').hide();
-        });
-
-        var detailResepId;
-        var detailResepName;
+        var detailTransaksiId;
 
         // Show delete confirmation modal
         $(document).on('click', '.delete-btn', function() {
-            detailResepId = $(this).data('id');
-            detailResepName = $(this).data('name');
+            detailTransaksiId = $(this).data('id');
             $('[data-bs-toggle="tooltip"]').tooltip('hide');
-            $('#deleteMessage').html(`Hapus item "` + detailResepName + `?`);
+            $('#deleteMessage').html(`Hapus item ini?`);
             $('#deleteModal').modal('show');
         });
 
@@ -438,10 +281,10 @@
             $('#deleteMessage').html('Menghapus, silakan tunggu...');
 
             try {
-                await axios.delete(`<?= base_url('/resep/hapusdetailresep') ?>/${detailResepId}`);
-                fetchDetailResep();
-                fetchObatOptions();
-                fetchStatusResep();
+                await axios.delete(`<?= base_url('/transaksi/hapusdetailtransaksi') ?>/${detailTransaksiId}`);
+                fetchDetailTransaksi();
+                fetchResepOptions();
+                fetchStatusTransaksi();
             } catch (error) {
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
             } finally {
@@ -456,11 +299,11 @@
             const $row = $this.closest('tr');
             $('[data-bs-toggle="tooltip"]').tooltip('hide');
             $this.prop('disabled', true).html(`<span class="spinner-border" style="width: 11px; height: 11px;" aria-hidden="true"></span>`);
-            $('#editDetailResep').remove();
+            $('#editDetailTransaksi').remove();
             try {
-                const response = await axios.get(`<?= base_url('/resep/detailresepitem') ?>/${id}`);
+                const response = await axios.get(`<?= base_url('/transaksi/detailtransaksiitem') ?>/${id}`);
                 const formHtml = `
-                <tr id="editDetailResep">
+                <tr id="editDetailTransaksi">
                     <td colspan="5">
                         <form id="editDetail" enctype="multipart/form-data">
                             <div class="d-flex justify-content-between align-items-center mb-1">
@@ -468,9 +311,9 @@
                                 <button type="button" class="text-end btn-close ms-auto cancel-edit"></button>
                             </div>
                             <div class="d-flex flex-column flex-lg-row gap-1">
-                                <input type="hidden" id="id_detail_resep" name="id_detail_resep" value="${response.data.id_detail_resep}">
+                                <input type="hidden" id="id_detail_transaksi" name="id_detail_transaksi" value="${response.data.id_detail_transaksi}">
                                 <div class="flex-fill">
-                                    <input type="number" id="jumlah_edit" name="jumlah_edit" class="form-control rounded-3" placeholder="Jumlah" value="${response.data.jumlah}">
+                                    <input type="number" id="diskon_edit" name="diskon_edit" class="form-control rounded-3" placeholder="Diskon (%)" value="${response.data.diskon}">
                                     <div class="invalid-feedback"></div>
                                 </div>
                                 <div class="d-grid w-auto">
@@ -504,7 +347,7 @@
                     $('#editDetail input, .btn-close').prop('disabled', true);
 
                     try {
-                        const response = await axios.post(`<?= base_url('/resep/perbaruidetailresep/' . $resep['id_resep']) ?>`, formData, {
+                        const response = await axios.post(`<?= base_url('/transaksi/perbaruidetailtransaksi/' . $transaksi['id_transaksi']) ?>`, formData, {
                             headers: {
                                 'Content-Type': 'multipart/form-data'
                             }
@@ -512,13 +355,12 @@
 
                         if (response.data.success) {
                             $('#editDetail')[0].reset();
-                            $('#id_obat').val(null).trigger('change');
                             $('#editDetail .is-invalid').removeClass('is-invalid');
                             $('#editDetail .invalid-feedback').text('').hide();
-                            $('#editDetailResep').remove();
-                            fetchDetailResep();
-                            fetchObatOptions();
-                            fetchStatusResep();
+                            $('#editDetailTransaksi').remove();
+                            fetchDetailTransaksi();
+                            fetchResepOptions();
+                            fetchStatusTransaksi();
                         } else {
                             console.log("Validation Errors:", response.data.errors);
 
@@ -563,7 +405,7 @@
 
                 // Handle cancel button
                 $('.cancel-edit').on('click', function() {
-                    $('#editDetailResep').remove();
+                    $('#editDetailTransaksi').remove();
                 });
             } catch (error) {
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
@@ -590,7 +432,7 @@
             $('#tambahDetail input, #tambahDetail select').prop('disabled', true);
 
             try {
-                const response = await axios.post(`<?= base_url('/resep/tambahdetailresep/' . $resep['id_resep']) ?>`, formData, {
+                const response = await axios.post(`<?= base_url('/transaksi/tambahdetailtransaksi/' . $transaksi['id_transaksi']) ?>`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }
@@ -598,13 +440,13 @@
 
                 if (response.data.success) {
                     $('#tambahDetail')[0].reset();
-                    $('#id_obat').val('');
-                    $('#jumlah').val('');
+                    $('#id_resep').val('');
+                    $('#diskon').val('');
                     $('#tambahDetail .is-invalid').removeClass('is-invalid');
                     $('#tambahDetail .invalid-feedback').text('').hide();
-                    fetchDetailResep();
-                    fetchObatOptions();
-                    fetchStatusResep();
+                    fetchDetailTransaksi();
+                    fetchResepOptions();
+                    fetchStatusTransaksi();
                 } else {
                     console.log("Validation Errors:", response.data.errors);
 
@@ -647,10 +489,9 @@
             }
         });
 
-        fetchDetailResep();
-        fetchObatOptions();
-        fetchStatusResep();
-        fetchKeterangan();
+        fetchDetailTransaksi();
+        fetchResepOptions();
+        fetchStatusTransaksi();
     });
     // Show toast notification
     function showSuccessToast(message) {
