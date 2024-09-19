@@ -25,11 +25,6 @@ class Transaksi extends Migration
                 'constraint' => 24,
                 'unsigned' => true
             ],
-            'id_dokter' => [
-                'type' => 'BIGINT',
-                'constraint' => 24,
-                'unsigned' => true
-            ],
             'tgl_transaksi' => [
                 'type' => 'DATETIME',
             ],
@@ -48,7 +43,6 @@ class Transaksi extends Migration
         $this->forge->addKey('id_transaksi', true);
         $this->forge->addForeignKey('id_user', 'user', 'id_user', 'CASCADE', 'CASCADE');
         $this->forge->addForeignKey('id_pasien', 'pasien', 'id_pasien', 'CASCADE', 'CASCADE');
-        $this->forge->addForeignKey('id_dokter', 'dokter', 'id_dokter', 'CASCADE', 'CASCADE');
         $this->forge->createTable('transaksi');
     }
 

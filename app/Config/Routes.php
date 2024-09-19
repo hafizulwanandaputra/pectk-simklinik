@@ -72,10 +72,8 @@ $routes->delete('/(?i)pembelianobat/(?i)hapusdetailpembelianobat/(:any)', 'Pembe
 $routes->get('/(?i)resep', 'Resep::index');
 $routes->get('/(?i)resep/(?i)listresep', 'Resep::listresep');
 $routes->get('/(?i)resep/(?i)pasienlist', 'Resep::pasienlist');
-$routes->get('/(?i)resep/(?i)dokterlist', 'Resep::dokterlist');
 $routes->get('/(?i)resep/(?i)resep/(:any)', 'Resep::resep/$1');
 $routes->post('/(?i)resep/(?i)create', 'Resep::create');
-$routes->post('/(?i)resep/(?i)update', 'Resep::update');
 $routes->delete('/(?i)resep/(?i)delete/(:any)', 'Resep::delete/$1');
 
 // DETAIL RESEP
@@ -91,7 +89,8 @@ $routes->post('/(?i)resep/(?i)editketerangan/(:any)', 'Resep::editketerangan/$1'
 
 // TRANSAKSI
 $routes->get('/(?i)transaksi', 'Transaksi::index');
-$routes->post('/(?i)transaksi/(?i)listtransaksi', 'Transaksi::listtransaksi');
+$routes->get('/(?i)transaksi/(?i)listtransaksi', 'Transaksi::listtransaksi');
+$routes->get('/(?i)transaksi/(?i)pasienlist', 'Transaksi::pasienlist');
 $routes->get('/(?i)transaksi/(?i)transaksi/(:any)', 'Transaksi::transaksi/$1');
 $routes->post('/(?i)transaksi/(?i)create', 'Transaksi::create');
 $routes->post('/(?i)transaksi/(?i)update', 'Transaksi::update');
@@ -99,11 +98,12 @@ $routes->post('/(?i)transaksi/(?i)process', 'Transaksi::process');
 $routes->delete('/(?i)transaksi/(?i)delete/(:any)', 'Transaksi::delete/$1');
 
 // DETAIL TRANSAKSI
-$routes->get('/(?i)transaksi/(?i)detailtransaksilist/(:any)', 'PembelianObat::detailtransaksilist/$1');
-$routes->get('/(?i)transaksi/(?i)detailtransaksi/(:any)', 'PembelianObat::detailtransaksi/$1');
-$routes->post('/(?i)transaksi/(?i)tambahdetailtransaksi/(:any)', 'PembelianObat::tambahdetailtransaksi/$1');
-$routes->post('/(?i)transaksi/(?i)perbaruidetailtransaksi/(:any)', 'PembelianObat::perbaruidetailtransaksi/$1');
-$routes->delete('/(?i)transaksi/(?i)hapusdetailtransaksi/(:any)', 'PembelianObat::hapusdetailtransaksi/$1');
+$routes->get('/(?i)transaksi/(?i)detailtransaksi/(:any)', 'Transaksi::detailtransaksi/$1');
+$routes->get('/(?i)transaksi/(?i)detailtransaksilist/(:any)', 'Transaksi::detailtransaksilist/$1');
+$routes->get('/(?i)transaksi/(?i)detailtransaksiitem/(:any)', 'Transaksi::detailtransaksiitem/$1');
+$routes->get('/(?i)transaksi/(?i)reseplist/(:any)', 'Transaksi::reseplist/$1');
+$routes->post('/(?i)transaksi/(?i)tambahdetailtransaksi/(:any)', 'Transaksi::tambahdetailtransaksi/$1');
+$routes->delete('/(?i)transaksi/(?i)hapusdetailtransaksi/(:any)', 'Transaksi::hapusdetailtransaksi/$1');
 
 // PENGGUNA
 $routes->get('/(?i)admin', 'Admin::index');

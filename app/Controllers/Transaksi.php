@@ -2,33 +2,33 @@
 
 namespace App\Controllers;
 
+use App\Models\TransaksiModel;
+use App\Models\DetailTransaksiModel;
 use App\Models\ResepModel;
-use App\Models\DetailResepModel;
-use App\Models\ObatModel;
 use App\Models\PasienModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
 
-class Resep extends BaseController
+class Transaksi extends BaseController
 {
-    protected $ResepModel;
-    protected $DetailResepModel;
+    protected $TransaksiModel;
+    protected $DetailTransaksiModel;
     public function __construct()
     {
-        $this->ResepModel = new ResepModel();
-        $this->DetailResepModel = new DetailResepModel();
+        $this->TransaksiModel = new TransaksiModel();
+        $this->DetailTransaksiModel = new DetailTransaksiModel();
     }
 
     public function index()
     {
         $data = [
-            'title' => 'Resep - ' . $this->systemName,
-            'headertitle' => 'Resep',
+            'title' => 'Kasir - ' . $this->systemName,
+            'headertitle' => 'Kasir',
             'agent' => $this->request->getUserAgent()
         ];
-        return view('dashboard/resep/index', $data);
+        return view('dashboard/transaksi/index', $data);
     }
 
-    public function listresep()
+    public function listtransaksi()
     {
         $search = $this->request->getGet('search');
         $limit = $this->request->getGet('limit');
@@ -38,64 +38,52 @@ class Resep extends BaseController
         $limit = $limit ? intval($limit) : 0;
         $offset = $offset ? intval($offset) : 0;
 
-        $ResepModel = $this->ResepModel;
+        $TransaksiModel = $this->TransaksiModel;
 
-        // Join tables before applying search filter
-        if (session()->get('role') == 'Admin') {
-            $ResepModel
-                ->select('resep.*, 
+        $TransaksiModel
+            ->select('transaksi.*, 
                 pasien.nama_pasien as pasien_nama_pasien, 
                 user.fullname as user_fullname,
                 user.username as user_username')
-                ->join('pasien', 'pasien.id_pasien = resep.id_pasien', 'inner')
-                ->join('user', 'user.id_user = resep.id_user', 'inner');
-        } else {
-            $ResepModel
-                ->select('resep.*, 
-                pasien.nama_pasien as pasien_nama_pasien, 
-                user.fullname as user_fullname,
-                user.username as user_username')
-                ->where('resep.id_user', session()->get('id_user'))
-                ->join('pasien', 'pasien.id_pasien = resep.id_pasien', 'inner')
-                ->join('user', 'user.id_user = resep.id_user', 'inner');
-        }
+            ->join('pasien', 'pasien.id_pasien = transaksi.id_pasien', 'inner')
+            ->join('user', 'user.id_user = transaksi.id_user', 'inner');
 
         // Apply status filter if provided
         if ($status === '1') {
-            $ResepModel->where('status', 1);
+            $TransaksiModel->where('lunas', 1);
         } elseif ($status === '0') {
-            $ResepModel->where('status', 0);
+            $TransaksiModel->where('lunas', 0);
         }
 
         // Apply search filter on supplier name or purchase date
         if ($search) {
-            $ResepModel
+            $TransaksiModel
                 ->groupStart()
                 ->like('pasien.nama_pasien', $search)
                 ->orLike('user.fullname', $search)
                 ->orLike('user.username', $search)
-                ->orLike('tanggal_resep', $search)
+                ->orLike('tgl_transaksi', $search)
                 ->groupEnd();
         }
 
         // Count total results
-        $total = $ResepModel->countAllResults(false);
+        $total = $TransaksiModel->countAllResults(false);
 
         // Get paginated results
-        $Resep = $ResepModel
-            ->orderBy('id_resep', 'DESC')
+        $Transaksi = $TransaksiModel
+            ->orderBy('id_transaksi', 'DESC')
             ->findAll($limit, $offset);
 
         // Calculate the starting number for the current page
         $startNumber = $offset + 1;
 
-        $dataResep = array_map(function ($data, $index) use ($startNumber) {
+        $dataTransaksi = array_map(function ($data, $index) use ($startNumber) {
             $data['number'] = $startNumber + $index;
             return $data;
-        }, $Resep, array_keys($Resep));
+        }, $Transaksi, array_keys($Transaksi));
 
         return $this->response->setJSON([
-            'resep' => $dataResep,
+            'transaksi' => $dataTransaksi,
             'total' => $total
         ]);
     }
@@ -104,7 +92,9 @@ class Resep extends BaseController
     {
         $PasienModel = new PasienModel();
 
-        $results = $PasienModel->orderBy('nama_pasien', 'DESC')->findAll();
+        $results = $PasienModel->join('resep', 'resep.id_pasien = pasien.id_pasien')
+            ->orderBy('nama_pasien', 'DESC')
+            ->findAll();
 
         $options = [];
         foreach ($results as $row) {
@@ -131,20 +121,12 @@ class Resep extends BaseController
         return "{$part1}-{$part2}-{$part3}";
     }
 
-    public function resep($id)
+    public function transaksi($id)
     {
-        if (session()->get('role') == 'Admin') {
-            $data = $this->ResepModel
-                ->join('pasien', 'pasien.id_pasien = resep.id_pasien', 'inner')
-                ->join('user', 'user.id_user = resep.id_user', 'inner')
-                ->find($id);
-        } else {
-            $data = $this->ResepModel
-                ->where('resep.id_user', session()->get('id_user'))
-                ->join('pasien', 'pasien.id_pasien = resep.id_pasien', 'inner')
-                ->join('user', 'user.id_user = resep.id_user', 'inner')
-                ->find($id);
-        }
+        $data = $this->TransaksiModel
+            ->join('pasien', 'pasien.id_pasien = transaksi.id_pasien', 'inner')
+            ->join('user', 'user.id_user = transaksi.id_user', 'inner')
+            ->find($id);
         return $this->response->setJSON($data);
     }
 
@@ -163,46 +145,24 @@ class Resep extends BaseController
 
         // Save Data
         $data = [
-            'id_pasien' => $this->request->getPost('id_pasien'),
             'id_user' => session()->get('id_user'),
-            'tanggal_resep' => date('Y-m-d H:i:s'),
-            'jumlah_resep' => 0,
-            'total_biaya' => 0,
-            'keterangan' => '',
+            'id_pasien' => $this->request->getPost('id_pasien'),
+            'tgl_transaksi' => date('Y-m-d H:i:s'),
+            'total_pembayaran' => 0,
+            'metode_pembayaran' => '',
+            'lunas' => 0,
         ];
-        $this->ResepModel->save($data);
-        return $this->response->setJSON(['success' => true, 'message' => 'Resep berhasil ditambahkan']);
+        $this->TransaksiModel->save($data);
+        return $this->response->setJSON(['success' => true, 'message' => 'Transaksi berhasil ditambahkan']);
     }
 
     public function delete($id)
     {
         $db = db_connect();
-
-        $transaksiDetail = $db->query("SELECT id_transaksi FROM detail_transaksi WHERE id_resep = ?", [$id])->getRow();
-
-        $this->ResepModel->delete($id);
-        $db->query('ALTER TABLE `resep` auto_increment = 1');
-        $db->query('ALTER TABLE `detail_resep` auto_increment = 1');
-
-        if ($transaksiDetail) {
-            $id_transaksi = $transaksiDetail->id_transaksi;
-
-            // Hitung ulang total_qty dan total_biaya berdasarkan detail pembelian yang tersisa
-            $result = $db->query("
-            SELECT SUM(harga_satuan) as total_pembayaran 
-            FROM detail_transaksi 
-            WHERE id_transaksi = ?", [$id_transaksi])->getRow();
-
-            $total_pembayaran = $result->total_pembayaran ?? 0;
-
-            // Update tabel pembelian_obat dengan total_qty dan total_pembayaran yang baru
-            $db->query("
-            UPDATE transaksi 
-            SET total_pembayaran = ? 
-            WHERE id_transaksi = ?", [$total_pembayaran, $id_transaksi]);
-        }
-
-        return $this->response->setJSON(['message' => 'Resep berhasil dihapus']);
+        $this->TransaksiModel->delete($id);
+        $db->query('ALTER TABLE `transaksi` auto_increment = 1');
+        $db->query('ALTER TABLE `detail_transaksi` auto_increment = 1');
+        return $this->response->setJSON(['message' => 'Transaksi berhasil dihapus']);
     }
 
     // DETAIL RESEP
