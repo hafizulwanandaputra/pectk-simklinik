@@ -307,7 +307,7 @@
                     <td colspan="5">
                         <form id="editDetail" enctype="multipart/form-data">
                             <div class="d-flex justify-content-between align-items-center mb-1">
-                                <div class="fw-bold">Edit Jumlah</div>
+                                <div class="fw-bold">Edit Diskon (%)</div>
                                 <button type="button" class="text-end btn-close ms-auto cancel-edit"></button>
                             </div>
                             <div class="d-flex flex-column flex-lg-row gap-1">

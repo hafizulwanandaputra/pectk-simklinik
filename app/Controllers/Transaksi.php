@@ -369,7 +369,7 @@ class Transaksi extends BaseController
         // Save Data
         $data = [
             'id_detail_transaksi' => $this->request->getPost('id_detail_transaksi'),
-            'id_obat' => $detail_transaksi['id_obat'],
+            'id_resep' => $detail_transaksi['id_resep'],
             'id_transaksi' => $id,
             'harga_resep' => $detail_transaksi['harga_resep'],
             'diskon' => $this->request->getPost('diskon_edit'),

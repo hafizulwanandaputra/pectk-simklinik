@@ -103,6 +103,7 @@ $routes->get('/(?i)transaksi/(?i)detailtransaksilist/(:any)', 'Transaksi::detail
 $routes->get('/(?i)transaksi/(?i)detailtransaksiitem/(:any)', 'Transaksi::detailtransaksiitem/$1');
 $routes->get('/(?i)transaksi/(?i)reseplist/(:any)/(:any)', 'Transaksi::reseplist/$1/$2');
 $routes->post('/(?i)transaksi/(?i)tambahdetailtransaksi/(:any)', 'Transaksi::tambahdetailtransaksi/$1');
+$routes->post('/(?i)transaksi/(?i)perbaruidetailtransaksi/(:any)', 'Transaksi::perbaruidetailtransaksi/$1');
 $routes->delete('/(?i)transaksi/(?i)hapusdetailtransaksi/(:any)', 'Transaksi::hapusdetailtransaksi/$1');
 
 // PENGGUNA
