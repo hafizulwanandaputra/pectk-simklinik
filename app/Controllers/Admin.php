@@ -16,12 +16,12 @@ class Admin extends BaseController
 
     public function index()
     {
-        $data = [
-            'title' => 'Pengguna - ' . $this->systemName,
-            'headertitle' => 'Pengguna',
-            'agent' => $this->request->getUserAgent()
-        ];
         if (session()->get('role') == "Admin") {
+            $data = [
+                'title' => 'Pengguna - ' . $this->systemName,
+                'headertitle' => 'Pengguna',
+                'agent' => $this->request->getUserAgent()
+            ];
             return view('dashboard/admin/index', $data);
         } else {
             throw PageNotFoundException::forPageNotFound();
@@ -90,7 +90,9 @@ class Admin extends BaseController
                 'data' => $data
             ]);
         } else {
-            throw PageNotFoundException::forPageNotFound();
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
         }
     }
 
@@ -100,7 +102,9 @@ class Admin extends BaseController
             $data = $this->AuthModel->where('id_user !=', session()->get('id_user'))->find($id);
             return $this->response->setJSON($data);
         } else {
-            throw PageNotFoundException::forPageNotFound();
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
         }
     }
 
@@ -132,7 +136,9 @@ class Admin extends BaseController
             $this->AuthModel->save($data);
             return $this->response->setJSON(['success' => true, 'message' => 'Pengguna berhasil ditambahkan']);
         } else {
-            throw PageNotFoundException::forPageNotFound();
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
         }
     }
 
@@ -165,7 +171,9 @@ class Admin extends BaseController
             $AuthModelEdit->save($data);
             return $this->response->setJSON(['success' => true, 'message' => 'Pengguna berhasil diedit']);
         } else {
-            throw PageNotFoundException::forPageNotFound();
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
         }
     }
 
@@ -177,7 +185,9 @@ class Admin extends BaseController
             $db->table('user')->set('password', password_hash($user['username'], PASSWORD_DEFAULT))->where('id_user', $id)->update();
             return $this->response->setJSON(['success' => true, 'message' => 'Kata sandi pengguna berhasil diatur ulang']);
         } else {
-            throw PageNotFoundException::forPageNotFound();
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
         }
     }
 
@@ -188,7 +198,9 @@ class Admin extends BaseController
             $db->table('user')->set('active', 1)->where('id_user', $id)->update();
             return $this->response->setJSON(['success' => true, 'message' => 'Pengguna berhasil diaktifkan']);
         } else {
-            throw PageNotFoundException::forPageNotFound();
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
         }
     }
 
@@ -199,7 +211,9 @@ class Admin extends BaseController
             $db->table('user')->set('active', 0)->where('id_user', $id)->update();
             return $this->response->setJSON(['success' => true, 'message' => 'Pengguna berhasil dinonaktifkan']);
         } else {
-            throw PageNotFoundException::forPageNotFound();
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
         }
     }
 
@@ -212,7 +226,9 @@ class Admin extends BaseController
             $db->query('ALTER TABLE `user` auto_increment = 1');
             return $this->response->setJSON(['message' => 'Pengguna berhasil dihapus']);
         } else {
-            throw PageNotFoundException::forPageNotFound();
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
         }
     }
 }
