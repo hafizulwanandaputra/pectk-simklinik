@@ -71,6 +71,38 @@
   <script src="<?= base_url(); ?>assets_public/fontawesome/js/all.js"></script>
   <script>
     $(document).ready(function() {
+      // Show toast messages if they exist
+      if ($('#infoToast').length) {
+        var infoToast = new bootstrap.Toast($('#infoToast')[0]);
+        infoToast.show();
+      }
+
+      if ($('#msgToast').length) {
+        var msgToast = new bootstrap.Toast($('#msgToast')[0]);
+        msgToast.show();
+      }
+
+      if ($('#errorToast').length) {
+        var errorToast = new bootstrap.Toast($('#errorToast')[0]);
+        errorToast.show();
+      }
+
+      setTimeout(function() {
+        if ($('#infoToast').length) {
+          var infoToast = new bootstrap.Toast($('#infoToast')[0]);
+          infoToast.hide();
+        }
+
+        if ($('#msgToast').length) {
+          var msgToast = new bootstrap.Toast($('#msgToast')[0]);
+          msgToast.hide();
+        }
+
+        if ($('#errorToast').length) {
+          var errorToast = new bootstrap.Toast($('#errorToast')[0]);
+          errorToast.hide();
+        }
+      }, 5000);
       $('input.form-control').on('input', function() {
         // Remove the is-invalid class for the current input field
         $(this).removeClass('is-invalid');
