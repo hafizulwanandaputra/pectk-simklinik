@@ -320,7 +320,9 @@ class Transaksi extends BaseController
             // Mengembalikan hasil dalam bentuk JSON
             return $this->response->setJSON(array_values($result));
         } else {
-            throw PageNotFoundException::forPageNotFound();
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
         }
     }
 
@@ -334,7 +336,9 @@ class Transaksi extends BaseController
 
             return $this->response->setJSON($data);
         } else {
-            throw PageNotFoundException::forPageNotFound();
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
         }
     }
 
@@ -372,7 +376,9 @@ class Transaksi extends BaseController
                 'data' => $options,
             ]);
         } else {
-            throw PageNotFoundException::forPageNotFound();
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
         }
     }
 
@@ -422,7 +428,9 @@ class Transaksi extends BaseController
 
             return $this->response->setJSON(['success' => true, 'message' => 'Item transaksi berhasil ditambahkan']);
         } else {
-            throw PageNotFoundException::forPageNotFound();
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
         }
     }
 
@@ -472,7 +480,9 @@ class Transaksi extends BaseController
 
             return $this->response->setJSON(['success' => true, 'message' => 'Item transaksi berhasil diperbarui']);
         } else {
-            throw PageNotFoundException::forPageNotFound();
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
         }
     }
 
@@ -509,7 +519,9 @@ class Transaksi extends BaseController
 
             return $this->response->setJSON(['message' => 'Item transaksi berhasil dihapus']);
         } else {
-            throw PageNotFoundException::forPageNotFound();
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
         }
     }
 
@@ -575,7 +587,9 @@ class Transaksi extends BaseController
                 return $this->response->setJSON(['success' => true, 'message' => 'Transaksi berhasil diproses. Silakan cetak struk transaksi.']);
             }
         } else {
-            throw PageNotFoundException::forPageNotFound();
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
         }
     }
 }
