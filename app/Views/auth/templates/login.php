@@ -72,9 +72,9 @@
   <script>
     $(document).ready(function() {
       // Show toast messages if they exist
-      if ($('#infoToast').length) {
-        var infoToast = new bootstrap.Toast($('#infoToast')[0]);
-        infoToast.show();
+      if ($('#redirectToast').length) {
+        var redirectToast = new bootstrap.Toast($('#redirectToast')[0]);
+        redirectToast.show();
       }
 
       if ($('#msgToast').length) {
@@ -87,10 +87,15 @@
         errorToast.show();
       }
 
+      if ($('#validationToast').length) {
+        var validationToast = new bootstrap.Toast($('#validationToast')[0]);
+        validationToast.show();
+      }
+
       setTimeout(function() {
-        if ($('#infoToast').length) {
-          var infoToast = new bootstrap.Toast($('#infoToast')[0]);
-          infoToast.hide();
+        if ($('#redirectToast').length) {
+          var redirectToast = new bootstrap.Toast($('#redirectToast')[0]);
+          redirectToast.hide();
         }
 
         if ($('#msgToast').length) {
@@ -101,6 +106,11 @@
         if ($('#errorToast').length) {
           var errorToast = new bootstrap.Toast($('#errorToast')[0]);
           errorToast.hide();
+        }
+
+        if ($('#validationToast').length) {
+          var validationToast = new bootstrap.Toast($('#validationToast')[0]);
+          validationToast.hide();
         }
       }, 5000);
       $('input.form-control').on('input', function() {

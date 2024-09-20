@@ -57,20 +57,6 @@
     </div>
 </main>
 <div class="toast-container position-fixed top-0 start-50 translate-middle-x p-3">
-    <?php if (session()->getFlashdata('info')) : ?>
-        <div id="infoToast" class="toast align-items-center text-bg-info border border-info rounded-3 transparent-blur" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="toast-body d-flex align-items-start">
-                <div style="width: 24px; text-align: center;">
-                    <i class="fa-solid fa-circle-info"></i>
-                </div>
-                <div class="w-100 mx-2 text-start">
-                    <?= session()->getFlashdata('info'); ?>
-                </div>
-                <button type="button" class="btn-close btn-close-black" data-bs-dismiss="toast" aria-label="Close"></button>
-            </div>
-        </div>
-    <?php endif; ?>
-
     <?php if (session()->getFlashdata('msg')) : ?>
         <div id="msgToast" class="toast align-items-center text-bg-success border border-success rounded-3 transparent-blur" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-body d-flex align-items-start">
@@ -84,7 +70,19 @@
             </div>
         </div>
     <?php endif; ?>
-
+    <?php if (isset($_GET['redirect'])) : ?>
+        <div id="redirectToast" class="toast align-items-center text-bg-danger border border-danger rounded-3 transparent-blur" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-body d-flex align-items-start">
+                <div style="width: 24px; text-align: center;">
+                    <i class="fa-solid fa-circle-xmark"></i>
+                </div>
+                <div class="w-100 mx-2 text-start">
+                    Silakan masuk sebelum mengunjungi "<?= urldecode($_GET['redirect']); ?>"
+                </div>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    <?php endif; ?>
     <?php if (session()->getFlashdata('error')) : ?>
         <div id="errorToast" class="toast align-items-center text-bg-danger border border-danger rounded-3 transparent-blur" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-body d-flex align-items-start">
@@ -93,6 +91,19 @@
                 </div>
                 <div class="w-100 mx-2 text-start">
                     <?= session()->getFlashdata('error'); ?>
+                </div>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    <?php endif; ?>
+    <?php if (validation_show_error('username') || validation_show_error('password')) : ?>
+        <div id="validationToast" class="toast align-items-center text-bg-danger border border-danger rounded-3 transparent-blur" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-body d-flex align-items-start">
+                <div style="width: 24px; text-align: center;">
+                    <i class="fa-solid fa-circle-xmark"></i>
+                </div>
+                <div class="w-100 mx-2 text-start">
+                    Gagal masuk:<br><?= validation_show_error('username') ?><br><?= validation_show_error('password') ?>
                 </div>
                 <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
             </div>
