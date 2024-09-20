@@ -283,7 +283,7 @@
                 {
                     data: 'registered',
                     render: function(data, type, row) {
-                        return `<span class="text-nowrap">${data}</span>`;
+                        return `<span class="date text-nowrap">${data}</span>`;
                     }
                 },
             ],

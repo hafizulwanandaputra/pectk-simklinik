@@ -365,90 +365,98 @@
                                 </div>
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link p-2 <?= (strpos(uri_string(), 'dokter') === 0) ? 'active bg-light' : '' ?>" href=" <?= base_url('/dokter'); ?>">
-                                <div class="d-flex align-items-start <?= (strpos(uri_string(), 'dokter') === 0) ? 'link-dark' : 'link-light' ?>">
-                                    <div style="min-width: 24px; max-width: 24px; text-align: center;">
-                                        <i class="fa-solid fa-user-doctor"></i>
+                        <?php if (session()->get('role') == "Admin") : ?>
+                            <li class="nav-item">
+                                <a class="nav-link p-2 <?= (strpos(uri_string(), 'dokter') === 0) ? 'active bg-light' : '' ?>" href=" <?= base_url('/dokter'); ?>">
+                                    <div class="d-flex align-items-start <?= (strpos(uri_string(), 'dokter') === 0) ? 'link-dark' : 'link-light' ?>">
+                                        <div style="min-width: 24px; max-width: 24px; text-align: center;">
+                                            <i class="fa-solid fa-user-doctor"></i>
+                                        </div>
+                                        <div class="flex-fill ms-2">
+                                            Dokter
+                                        </div>
                                     </div>
-                                    <div class="flex-fill ms-2">
-                                        Dokter
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link p-2 <?= (strpos(uri_string(), 'pasien') === 0) ? 'active bg-light' : '' ?>" href=" <?= base_url('/pasien'); ?>">
+                                    <div class="d-flex align-items-start <?= (strpos(uri_string(), 'pasien') === 0) ? 'link-dark' : 'link-light' ?>">
+                                        <div style="min-width: 24px; max-width: 24px; text-align: center;">
+                                            <i class="fa-solid fa-hospital-user"></i>
+                                        </div>
+                                        <div class="flex-fill ms-2">
+                                            Pasien
+                                        </div>
                                     </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link p-2 <?= (strpos(uri_string(), 'pasien') === 0) ? 'active bg-light' : '' ?>" href=" <?= base_url('/pasien'); ?>">
-                                <div class="d-flex align-items-start <?= (strpos(uri_string(), 'pasien') === 0) ? 'link-dark' : 'link-light' ?>">
-                                    <div style="min-width: 24px; max-width: 24px; text-align: center;">
-                                        <i class="fa-solid fa-hospital-user"></i>
+                                </a>
+                            </li>
+                        <?php endif; ?>
+                        <?php if (session()->get('role') == "Apoteker" || session()->get('role') == "Admin") : ?>
+                            <li class="nav-item">
+                                <a class="nav-link p-2 <?= (strpos(uri_string(), 'supplier') === 0) ? 'active bg-light' : '' ?>" href=" <?= base_url('/supplier'); ?>">
+                                    <div class="d-flex align-items-start <?= (strpos(uri_string(), 'supplier') === 0) ? 'link-dark' : 'link-light' ?>">
+                                        <div style="min-width: 24px; max-width: 24px; text-align: center;">
+                                            <i class="fa-solid fa-truck-field"></i>
+                                        </div>
+                                        <div class="flex-fill ms-2">
+                                            Supplier
+                                        </div>
                                     </div>
-                                    <div class="flex-fill ms-2">
-                                        Pasien
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link p-2 <?= (strpos(uri_string(), 'obat') === 0) ? 'active bg-light' : '' ?>" href=" <?= base_url('/obat'); ?>">
+                                    <div class="d-flex align-items-start <?= (strpos(uri_string(), 'obat') === 0) ? 'link-dark' : 'link-light' ?>">
+                                        <div style="min-width: 24px; max-width: 24px; text-align: center;">
+                                            <i class="fa-solid fa-prescription-bottle-medical"></i>
+                                        </div>
+                                        <div class="flex-fill ms-2">
+                                            Obat
+                                        </div>
                                     </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link p-2 <?= (strpos(uri_string(), 'supplier') === 0) ? 'active bg-light' : '' ?>" href=" <?= base_url('/supplier'); ?>">
-                                <div class="d-flex align-items-start <?= (strpos(uri_string(), 'supplier') === 0) ? 'link-dark' : 'link-light' ?>">
-                                    <div style="min-width: 24px; max-width: 24px; text-align: center;">
-                                        <i class="fa-solid fa-truck-field"></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link p-2 <?= (strpos(uri_string(), 'pembelianobat') === 0) ? 'active bg-light' : '' ?>" href=" <?= base_url('/pembelianobat'); ?>">
+                                    <div class="d-flex align-items-start <?= (strpos(uri_string(), 'pembelianobat') === 0) ? 'link-dark' : 'link-light' ?>">
+                                        <div style="min-width: 24px; max-width: 24px; text-align: center;">
+                                            <i class="fa-solid fa-cart-shopping"></i>
+                                        </div>
+                                        <div class="flex-fill ms-2">
+                                            Pembelian Obat
+                                        </div>
                                     </div>
-                                    <div class="flex-fill ms-2">
-                                        Supplier
+                                </a>
+                            </li>
+                        <?php endif; ?>
+                        <?php if (session()->get('role') == "Dokter" || session()->get('role') == "Admin") : ?>
+                            <li class="nav-item">
+                                <a class="nav-link p-2 <?= (strpos(uri_string(), 'resep') === 0) ? 'active bg-light' : '' ?>" href=" <?= base_url('/resep'); ?>">
+                                    <div class="d-flex align-items-start <?= (strpos(uri_string(), 'resep') === 0) ? 'link-dark' : 'link-light' ?>">
+                                        <div style="min-width: 24px; max-width: 24px; text-align: center;">
+                                            <i class="fa-solid fa-prescription"></i>
+                                        </div>
+                                        <div class="flex-fill ms-2">
+                                            Resep
+                                        </div>
                                     </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link p-2 <?= (strpos(uri_string(), 'obat') === 0) ? 'active bg-light' : '' ?>" href=" <?= base_url('/obat'); ?>">
-                                <div class="d-flex align-items-start <?= (strpos(uri_string(), 'obat') === 0) ? 'link-dark' : 'link-light' ?>">
-                                    <div style="min-width: 24px; max-width: 24px; text-align: center;">
-                                        <i class="fa-solid fa-prescription-bottle-medical"></i>
+                                </a>
+                            </li>
+                        <?php endif; ?>
+                        <?php if (session()->get('role') == "Kasir" || session()->get('role') == "Admin") : ?>
+                            <li class="nav-item">
+                                <a class="nav-link p-2 <?= (strpos(uri_string(), 'transaksi') === 0) ? 'active bg-light' : '' ?>" href=" <?= base_url('/transaksi'); ?>">
+                                    <div class="d-flex align-items-start <?= (strpos(uri_string(), 'transaksi') === 0) ? 'link-dark' : 'link-light' ?>">
+                                        <div style="min-width: 24px; max-width: 24px; text-align: center;">
+                                            <i class="fa-solid fa-cash-register"></i>
+                                        </div>
+                                        <div class="flex-fill ms-2">
+                                            Kasir
+                                        </div>
                                     </div>
-                                    <div class="flex-fill ms-2">
-                                        Obat
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link p-2 <?= (strpos(uri_string(), 'pembelianobat') === 0) ? 'active bg-light' : '' ?>" href=" <?= base_url('/pembelianobat'); ?>">
-                                <div class="d-flex align-items-start <?= (strpos(uri_string(), 'pembelianobat') === 0) ? 'link-dark' : 'link-light' ?>">
-                                    <div style="min-width: 24px; max-width: 24px; text-align: center;">
-                                        <i class="fa-solid fa-cart-shopping"></i>
-                                    </div>
-                                    <div class="flex-fill ms-2">
-                                        Pembelian Obat
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link p-2 <?= (strpos(uri_string(), 'resep') === 0) ? 'active bg-light' : '' ?>" href=" <?= base_url('/resep'); ?>">
-                                <div class="d-flex align-items-start <?= (strpos(uri_string(), 'resep') === 0) ? 'link-dark' : 'link-light' ?>">
-                                    <div style="min-width: 24px; max-width: 24px; text-align: center;">
-                                        <i class="fa-solid fa-prescription"></i>
-                                    </div>
-                                    <div class="flex-fill ms-2">
-                                        Resep
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link p-2 <?= (strpos(uri_string(), 'transaksi') === 0) ? 'active bg-light' : '' ?>" href=" <?= base_url('/transaksi'); ?>">
-                                <div class="d-flex align-items-start <?= (strpos(uri_string(), 'transaksi') === 0) ? 'link-dark' : 'link-light' ?>">
-                                    <div style="min-width: 24px; max-width: 24px; text-align: center;">
-                                        <i class="fa-solid fa-cash-register"></i>
-                                    </div>
-                                    <div class="flex-fill ms-2">
-                                        Kasir
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
+                                </a>
+                            </li>
+                        <?php endif; ?>
                         <?php if (session()->get('role') == "Admin") : ?>
                             <li class="nav-item">
                                 <a class="nav-link p-2 <?= (strpos(uri_string(), 'admin') === 0) ? 'active bg-light' : '' ?>" href=" <?= base_url('/admin'); ?>">
