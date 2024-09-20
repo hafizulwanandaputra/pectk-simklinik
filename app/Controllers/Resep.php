@@ -193,6 +193,10 @@ class Resep extends BaseController
                 // Kurangi jumlah_keluar
                 $new_jumlah_keluar = $obat['jumlah_keluar'] - $jumlah;
 
+                if ($new_jumlah_keluar < 0) {
+                    $new_jumlah_keluar = 0;
+                }
+
                 // Update jumlah_keluar di tabel obat
                 $db->query("UPDATE obat SET jumlah_keluar = ? WHERE id_obat = ?", [$new_jumlah_keluar, $id_obat]);
             }
@@ -483,6 +487,9 @@ class Resep extends BaseController
             if ($obat) {
                 // Update `jumlah_keluar` in obat table (reduce the stock based on deleted detail)
                 $new_jumlah_keluar = $obat['jumlah_keluar'] - $jumlah_obat;
+                if ($new_jumlah_keluar < 0) {
+                    $new_jumlah_keluar = 0;
+                }
                 $builderObat->where('id_obat', $id_obat)->update(['jumlah_keluar' => $new_jumlah_keluar]);
 
                 // Delete the detail pembelian obat
