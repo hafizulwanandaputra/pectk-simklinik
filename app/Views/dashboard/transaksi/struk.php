@@ -5,7 +5,7 @@ use CodeIgniter\I18n\Time;
 $tanggal = Time::parse($permintaan['tanggal']);
 $tanggal_lahir = Time::parse($permintaan['tanggal_lahir']);
 ?>
-<?= $this->extend('dashboard/templates/eticket'); ?>
+<?= $this->extend('dashboard/templates/struk'); ?>
 <?= $this->section('content'); ?>
 <div class="container-fluid my-3">
     <footer style="font-family: sans-serif; font-size: 9pt;">
