@@ -130,6 +130,7 @@
     <div id="prosesTransaksi">
         <hr>
         <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
+            <button class="btn btn-primary rounded-3 bg-gradient" type="button" id="printBtn" onclick="window.open(`<?= base_url('/transaksi/struk/' . $transaksi['id_transaksi']) ?>`)" disabled><i class="fa-solid fa-print"></i> Cetak Struk</button>
             <button class="btn btn-success rounded-3 bg-gradient" type="button" id="processBtn" data-id="<?= $transaksi['id_transaksi'] ?>" disabled><i class="fa-solid fa-money-bills"></i> Proses Transaksi</button>
         </div>
     </div>
@@ -229,8 +230,10 @@
             // Cek status `lunas`
             if (data.lunas === "1") {
                 $('#tambahDetailContainer').hide();
+                $('#printBtn').prop('disabled', false);
             } else if (data.lunas === "0") {
                 $('#tambahDetailContainer').show();
+                $('#printBtn').prop('disabled', true);
             }
         } catch (error) {
             showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);

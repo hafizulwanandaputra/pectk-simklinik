@@ -7,6 +7,7 @@ use App\Models\DetailTransaksiModel;
 use App\Models\ResepModel;
 use App\Models\PasienModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
+use Dompdf\Dompdf;
 
 class Transaksi extends BaseController
 {
@@ -590,6 +591,107 @@ class Transaksi extends BaseController
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan',
             ]);
+        }
+    }
+
+    public function struk($id)
+    {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+            $transaksi = $this->TransaksiModel
+                ->join('pasien', 'pasien.id_pasien = transaksi.id_pasien', 'inner')
+                ->join('user', 'user.id_user = transaksi.id_user', 'inner')
+                ->find($id);
+            $detail_transaksi = $this->DetailTransaksiModel
+                ->where('detail_transaksi.id_transaksi', $id)
+                ->join('transaksi', 'transaksi.id_transaksi = detail_transaksi.id_transaksi', 'inner')
+                ->join('resep', 'resep.id_resep = detail_transaksi.id_resep', 'inner')
+                ->join('user', 'resep.id_user = user.id_user', 'inner')
+                ->join('detail_resep', 'resep.id_resep = detail_resep.id_resep', 'inner')
+                ->join('obat', 'detail_resep.id_obat = obat.id_obat', 'inner')
+                ->orderBy('id_detail_transaksi', 'ASC')
+                ->findAll();
+            // Array untuk menyimpan hasil terstruktur
+            $result = [];
+
+            // Untuk memetakan setiap transaksi
+            foreach ($detail_transaksi as $row) {
+                // Jika transaksi ini belum ada dalam array $result, tambahkan
+                if (!isset($result[$row['id_detail_transaksi']])) {
+                    $result[$row['id_detail_transaksi']] = [
+                        'id_detail_transaksi' => $row['id_detail_transaksi'],
+                        'id_resep' => $row['id_resep'],
+                        'id_transaksi' => $row['id_transaksi'],
+                        'harga_resep' => $row['harga_resep'],
+                        'diskon' => $row['diskon'],
+                        'lunas' => $row['lunas'],
+                        'resep' => [
+                            'id_resep' => $row['id_resep'],
+                            'id_user' => $row['id_user'],
+                            'id_pasien' => $row['id_pasien'],
+                            'tanggal_resep' => $row['tanggal_resep'],
+                            'jumlah_resep' => $row['jumlah_resep'],
+                            'total_biaya' => $row['total_biaya'],
+                            'keterangan' => $row['keterangan'],
+                            'status' => $row['status'],
+                            'user' => [
+                                'id_user' => $row['id_user'],
+                                'fullname' => $row['fullname'],
+                                'username' => $row['username'],
+                            ],
+                            'detail_resep' => []
+                        ],
+                    ];
+                }
+
+                // Tambahkan detail_resep ke transaksi
+                $result[$row['id_detail_transaksi']]['resep']['detail_resep'][] = [
+                    'id_detail_resep' => $row['id_detail_resep'],
+                    'id_resep' => $row['id_resep'],
+                    'id_obat' => $row['id_obat'],
+                    'jumlah' => $row['jumlah'],
+                    'harga_satuan' => $row['harga_satuan'],
+                    'obat' => [
+                        [
+                            'id_obat' => $row['id_obat'],
+                            'id_supplier' => $row['id_supplier'],
+                            'nama_obat' => $row['nama_obat'],
+                            'kategori_obat' => $row['kategori_obat'],
+                            'bentuk_obat' => $row['bentuk_obat'],
+                            'harga_obat' => $row['harga_obat'],
+                            'harga_jual' => $row['harga_jual'],
+                            'dosis_kali' => $row['dosis_kali'],
+                            'dosis_hari' => $row['dosis_hari'],
+                            'cara_pakai' => $row['cara_pakai'],
+                            'jumlah_masuk' => $row['jumlah_masuk'],
+                            'jumlah_keluar' => $row['jumlah_keluar'],
+                            'updated_at' => $row['updated_at']
+                        ]
+                    ],
+                ];
+            }
+            if (!empty($transaksi) && $transaksi['lunas'] == 1) {
+                // dd(array_values($result));
+                // die;
+                $transaksi['no_mr'] = $this->formatNoMr($transaksi['no_mr']);
+                $data = [
+                    'transaksi' => $transaksi,
+                    'detail_transaksi' => array_values($result),
+                    'title' => 'Detail Transaksi ' . $id . ' - ' . $this->systemName
+                ];
+                // return view('dashboard/transaksi/struk', $data);
+                // die;
+                $dompdf = new Dompdf();
+                $html = view('dashboard/transaksi/struk', $data);
+                $dompdf->loadHtml($html);
+                $dompdf->render();
+                $dompdf->stream('eticket-id-' . $transaksi['id_transaksi'] . '-' . $transaksi['tgl_transaksi'] . '-' . urlencode($transaksi['nama_pasien']) . '.pdf', [
+                    'Attachment' => FALSE
+                ]);
+            } else {
+                throw PageNotFoundException::forPageNotFound();
+            }
+        } else {
+            throw PageNotFoundException::forPageNotFound();
         }
     }
 }
