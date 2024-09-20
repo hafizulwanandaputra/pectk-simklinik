@@ -94,6 +94,7 @@ class Transaksi extends BaseController
 
         $results = $PasienModel->select('pasien.id_pasien, pasien.nama_pasien, pasien.no_mr, pasien.no_registrasi')
             ->join('resep', 'resep.id_pasien = pasien.id_pasien')
+            ->where('resep.status', 0)
             ->groupBy('pasien.id_pasien')
             ->orderBy('pasien.nama_pasien', 'DESC')
             ->findAll();
@@ -161,11 +162,28 @@ class Transaksi extends BaseController
     public function delete($id)
     {
         $db = db_connect();
+
+        // Find all `id_resep` related to the transaction being deleted
+        $query = $db->query('SELECT DISTINCT id_resep FROM detail_transaksi WHERE id_transaksi = ?', [$id]);
+        $results = $query->getResult();
+
+        if (!empty($results)) {
+            // Loop through each related `id_resep` and update its status to 0
+            foreach ($results as $row) {
+                $db->query('UPDATE resep SET status = 0 WHERE id_resep = ?', [$row->id_resep]);
+            }
+        }
+
+        // Delete the transaction
         $this->TransaksiModel->delete($id);
+
+        // Reset auto increment
         $db->query('ALTER TABLE `transaksi` auto_increment = 1');
         $db->query('ALTER TABLE `detail_transaksi` auto_increment = 1');
+
         return $this->response->setJSON(['message' => 'Transaksi berhasil dihapus']);
     }
+
 
     // DETAIL TRANSAKSI
     public function detailtransaksi($id)
@@ -192,6 +210,7 @@ class Transaksi extends BaseController
     {
         $transaksi = $this->DetailTransaksiModel
             ->where('detail_transaksi.id_transaksi', $id)
+            ->join('transaksi', 'transaksi.id_transaksi = detail_transaksi.id_transaksi', 'inner')
             ->join('resep', 'resep.id_resep = detail_transaksi.id_resep', 'inner')
             ->join('user', 'resep.id_user = user.id_user', 'inner')
             ->join('detail_resep', 'resep.id_resep = detail_resep.id_resep', 'inner')
@@ -212,6 +231,7 @@ class Transaksi extends BaseController
                     'id_transaksi' => $row['id_transaksi'],
                     'harga_resep' => $row['harga_resep'],
                     'diskon' => $row['diskon'],
+                    'lunas' => $row['lunas'],
                     'resep' => [
                         'id_resep' => $row['id_resep'],
                         'id_user' => $row['id_user'],
@@ -280,6 +300,7 @@ class Transaksi extends BaseController
         $results = $ResepModel
             ->where('id_pasien', $id_pasien)
             ->where('status', 0)
+            ->where('total_biaya >', 0)
             ->orderBy('resep.id_resep', 'DESC')->findAll();
 
         $options = [];
@@ -441,18 +462,38 @@ class Transaksi extends BaseController
         ]);
 
         if (!$this->validate($validation->getRules())) {
-            return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
+            return $this->response->setJSON(['success' => false, 'message' => NULL, 'errors' => $validation->getErrors()]);
         }
+
+        $terima_uang = $this->request->getPost('terima_uang');
 
         $db = db_connect();
         $db->transBegin();  // Start transaction
+
+        // Get total_pembayaran from transaksi table
+        $transaksi = $db->table('transaksi')
+            ->select('total_pembayaran')
+            ->where('id_transaksi', $id_transaksi)
+            ->get()
+            ->getRow();
+
+        $total_pembayaran = $transaksi->total_pembayaran;
+
+        // Check if terima_uang is less than total_pembayaran
+        if ($terima_uang < $total_pembayaran) {
+            return $this->response->setJSON(['success' => false, 'message' => 'Uang yang diterima kurang dari total pembayaran', 'errors' => NULL]);
+        }
+
+        // Calculate uang_kembali if terima_uang is greater than total_pembayaran
+        $uang_kembali = $terima_uang > $total_pembayaran ? $terima_uang - $total_pembayaran : 0;
 
         // Update transaksi
         $transaksi = $db->table('transaksi');
         $transaksi->where('id_transaksi', $id_transaksi);
         $transaksi->update([
-            'terima_uang' => $this->request->getPost('terima_uang'),
+            'terima_uang' => $terima_uang,
             'metode_pembayaran' => $this->request->getPost('metode_pembayaran'),
+            'uang_kembali' => $uang_kembali,
             'lunas' => 1,
         ]);
 
@@ -463,23 +504,9 @@ class Transaksi extends BaseController
             'status' => 1,
         ]);
 
-        // Get the prescription details
-        $detailResep = $db->table('detail_resep')
-            ->where('id_transaksi', $id_transaksi)
-            ->get()
-            ->getResult();
-
-        // Update jumlah_keluar for each obat
-        foreach ($detailResep as $detail) {
-            $obat = $db->table('obat');
-            $obat->where('id_obat', $detail->id_obat);
-            $obat->set('jumlah_keluar', 'jumlah_keluar + ' . $detail->jumlah, false); // Update jumlah_keluar
-            $obat->update();
-        }
-
         if ($db->transStatus() === false) {
             $db->transRollback();  // Rollback if there is any issue
-            return $this->response->setJSON(['success' => false, 'message' => 'Gagal memproses transaksi']);
+            return $this->response->setJSON(['success' => false, 'message' => 'Gagal memproses transaksi', 'errors' => NULL]);
         } else {
             $db->transCommit();  // Commit the transaction if everything is fine
             return $this->response->setJSON(['success' => true, 'message' => 'Transaksi berhasil diproses. Silakan cetak struk transaksi.']);

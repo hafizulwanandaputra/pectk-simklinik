@@ -178,28 +178,51 @@ class Resep extends BaseController
     {
         $db = db_connect();
 
+        // Ambil semua id_obat dan jumlah dari detail_resep yang terkait dengan resep yang dihapus
+        $detailResep = $db->query("SELECT id_obat, jumlah FROM detail_resep WHERE id_resep = ?", [$id])->getResultArray();
+
+        // Kurangi jumlah_keluar pada tabel obat
+        foreach ($detailResep as $detail) {
+            $id_obat = $detail['id_obat'];
+            $jumlah = $detail['jumlah'];
+
+            // Ambil jumlah_keluar dari tabel obat
+            $obat = $db->query("SELECT jumlah_keluar FROM obat WHERE id_obat = ?", [$id_obat])->getRowArray();
+
+            if ($obat) {
+                // Kurangi jumlah_keluar
+                $new_jumlah_keluar = $obat['jumlah_keluar'] - $jumlah;
+
+                // Update jumlah_keluar di tabel obat
+                $db->query("UPDATE obat SET jumlah_keluar = ? WHERE id_obat = ?", [$new_jumlah_keluar, $id_obat]);
+            }
+        }
+
+        // Lanjutkan penghapusan resep
         $transaksiDetail = $db->query("SELECT id_transaksi FROM detail_transaksi WHERE id_resep = ?", [$id])->getRow();
 
+        // Hapus resep dan detail terkait
         $this->ResepModel->delete($id);
         $db->query('ALTER TABLE `resep` auto_increment = 1');
         $db->query('ALTER TABLE `detail_resep` auto_increment = 1');
 
+        // Jika ada transaksi terkait, hitung ulang total_pembayaran
         if ($transaksiDetail) {
             $id_transaksi = $transaksiDetail->id_transaksi;
 
-            // Hitung ulang total_qty dan total_biaya berdasarkan detail pembelian yang tersisa
+            // Hitung ulang total_pembayaran berdasarkan detail transaksi yang tersisa
             $result = $db->query("
-            SELECT SUM(harga_satuan) as total_pembayaran 
-            FROM detail_transaksi 
-            WHERE id_transaksi = ?", [$id_transaksi])->getRow();
+        SELECT SUM(harga_satuan) as total_pembayaran 
+        FROM detail_transaksi 
+        WHERE id_transaksi = ?", [$id_transaksi])->getRow();
 
             $total_pembayaran = $result->total_pembayaran ?? 0;
 
-            // Update tabel pembelian_obat dengan total_qty dan total_pembayaran yang baru
+            // Update tabel transaksi dengan total_pembayaran yang baru
             $db->query("
-            UPDATE transaksi 
-            SET total_pembayaran = ? 
-            WHERE id_transaksi = ?", [$total_pembayaran, $id_transaksi]);
+        UPDATE transaksi 
+        SET total_pembayaran = ? 
+        WHERE id_transaksi = ?", [$total_pembayaran, $id_transaksi]);
         }
 
         return $this->response->setJSON(['message' => 'Resep berhasil dihapus']);

@@ -108,8 +108,30 @@
                     <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 2px;">Total</th>
                     <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" colspan="3" id="total_pembayaran"></th>
                 </tr>
+                <tr>
+                    <th scope="col" class="bg-body-secondary border-secondary text-nowrap" style="border-bottom-width: 0; border-top-width: 0px;" colspan="1"></th>
+                    <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 0px;">Terima Uang</th>
+                    <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 0px;" colspan="3" id="terima_uang_table"></th>
+                </tr>
+                <tr>
+                    <th scope="col" class="bg-body-secondary border-secondary text-nowrap" style="border-bottom-width: 0; border-top-width: 0px;" colspan="1"></th>
+                    <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 0px;">Uang Kembali</th>
+                    <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 0px;" colspan="3" id="uang_kembali_table"></th>
+                </tr>
+                <tr>
+                    <th scope="col" class="bg-body-secondary border-secondary text-nowrap" style="border-bottom-width: 0; border-top-width: 0px;" colspan="1"></th>
+                    <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 0px;">Metode Bayar</th>
+                    <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 0px;" colspan="3" id="metode_pembayaran_table"></th>
+                </tr>
             </thead>
         </table>
+    </div>
+
+    <div id="prosesTransaksi">
+        <hr>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
+            <button class="btn btn-success rounded-3 bg-gradient" type="button" id="processBtn" data-id="<?= $transaksi['id_transaksi'] ?>" disabled><i class="fa-solid fa-money-bills"></i> Proses Transaksi</button>
+        </div>
     </div>
 
     <div class="modal modal-sheet p-4 py-md-5 fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" role="dialog">
@@ -123,6 +145,38 @@
                     <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0" id="confirmDeleteBtn">Ya</button>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="transaksiModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="transaksiModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable rounded-3">
+            <form id="transaksiForm" enctype="multipart/form-data" class="modal-content bg-body shadow-lg transparent-blur">
+                <div class="modal-header justify-content-between pt-2 pb-2" style="border-bottom: 1px solid var(--bs-border-color-translucent);">
+                    <h6 class="pe-2 modal-title fs-6 text-truncate" id="transaksiModalLabel" style="font-weight: bold;"></h6>
+                    <button id="closeBtn" type="button" class="btn btn-danger btn-sm bg-gradient ps-0 pe-0 pt-0 pb-0 rounded-3" data-bs-dismiss="modal" aria-label="Close"><span data-feather="x" class="mb-0" style="width: 30px; height: 30px;"></span></button>
+                </div>
+                <div class="modal-body py-2">
+                    <div class="form-floating mb-1 mt-1">
+                        <input type="number" class="form-control" autocomplete="off" dir="auto" placeholder="terima_uang" id="terima_uang" name="terima_uang">
+                        <label for="terima_uang">Terima Uang (Rp)*</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="form-floating mt-1 mb-1">
+                        <select class="form-select rounded-3" id="metode_pembayaran" name="metode_pembayaran" aria-label="metode_pembayaran">
+                            <option value="" disabled selected>-- Pilih Metode Pembayaran --</option>
+                            <option value="Tunai">Tunai</option>
+                            <option value="QRIS">QRIS</option>
+                        </select>
+                        <label for="metode_pembayaran">Metode Pembayaran*</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-end pt-2 pb-2" style="border-top: 1px solid var(--bs-border-color-translucent);">
+                    <button type="submit" id="submitButton" class="btn btn-primary bg-gradient rounded-3">
+                        <i class="fa-solid fa-money-bill-transfer"></i> Proses
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </main>
@@ -165,6 +219,13 @@
 
             const data = response.data;
 
+            const terima_uang = parseInt(data.terima_uang);
+            const uang_kembali = parseInt(data.uang_kembali);
+
+            $('#terima_uang_table').text(`Rp${terima_uang.toLocaleString('id-ID')}`);
+            $('#uang_kembali_table').text(`Rp${uang_kembali.toLocaleString('id-ID')}`);
+            $('#metode_pembayaran_table').text(data.metode_pembayaran);
+
             // Cek status `lunas`
             if (data.lunas === "1") {
                 $('#tambahDetailContainer').hide();
@@ -198,6 +259,7 @@
                     </tr>
                 `;
                 $('#detail_transaksi').append(emptyRow);
+                $('#processBtn').prop('disabled', true);
             } else {
                 data.forEach(function(detail_transaksi) {
                     const diskon = parseInt(detail_transaksi.diskon); // Konversi jumlah ke integer
@@ -242,6 +304,16 @@
                             $(`#obat-${detail_transaksi.id_detail_transaksi}`).append(detail_transaksiElement);
                         });
                     });
+                    // Cek status `lunas`
+                    if (detail_transaksi.lunas === "1") {
+                        $('.edit-btn').prop('disabled', true);
+                        $('.delete-btn').prop('disabled', true);
+                        $('#processBtn').prop('disabled', true);
+                    } else if (detail_transaksi.lunas === "0") {
+                        $('.edit-btn').prop('disabled', false);
+                        $('.delete-btn').prop('disabled', false);
+                        $('#processBtn').prop('disabled', false);
+                    }
                 });
             }
             const totalPembayaranElement = `Rp${totalPembayaran.toLocaleString('id-ID')}`;
@@ -486,6 +558,94 @@
                 `);
                 $('#tambahDetail input, #tambahDetail select').prop('disabled', false);
             }
+        });
+
+        $('#processBtn').click(function() {
+            $('#transaksiModalLabel').text('Proses Transaksi');
+            $('#transaksiModal').modal('show');
+        });
+
+        $('#transaksiForm').submit(async function(e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+            console.log("Form Data:", $(this).serialize());
+
+            // Clear previous validation states
+            $('#transaksiForm .is-invalid').removeClass('is-invalid');
+            $('#transaksiForm .invalid-feedback').text('').hide();
+            $('#submitButton').prop('disabled', true).html(`
+                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                <span role="status">Memproses...</span>
+            `);
+
+            // Disable form inputs
+            $('#transaksiForm input, #transaksiForm select, #closeBtn').prop('disabled', true);
+
+            try {
+                const response = await axios.post(`<?= base_url('/transaksi/process/' . $transaksi['id_transaksi'] . '/' . $transaksi['id_pasien']) ?>`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
+
+                if (response.data.success) {
+                    showSuccessToast(response.data.message, 'success');
+                    $('#transaksiModal').modal('hide');
+                    fetchDetailTransaksi();
+                    fetchStatusTransaksi();
+                } else {
+                    if (response.data.errors == null) {
+                        showFailedToast(response.data.message);
+                    } else if (response.data.message == null) {
+                        console.log("Validation Errors:", response.data.errors);
+
+                        // Clear previous validation states
+                        $('#transaksiForm .is-invalid').removeClass('is-invalid');
+                        $('#transaksiForm .invalid-feedback').text('').hide();
+
+                        // Display new validation errors
+                        for (const field in response.data.errors) {
+                            if (response.data.errors.hasOwnProperty(field)) {
+                                const fieldElement = $('#' + field);
+                                const feedbackElement = fieldElement.siblings('.invalid-feedback');
+
+                                console.log("Target Field:", fieldElement);
+                                console.log("Target Feedback:", feedbackElement);
+
+                                if (fieldElement.length > 0 && feedbackElement.length > 0) {
+                                    fieldElement.addClass('is-invalid');
+                                    feedbackElement.text(response.data.errors[field]).show();
+
+                                    // Remove error message when the user corrects the input
+                                    fieldElement.on('input change', function() {
+                                        $(this).removeClass('is-invalid');
+                                        $(this).siblings('.invalid-feedback').text('').hide();
+                                    });
+                                } else {
+                                    console.warn("Elemen tidak ditemukan pada field:", field);
+                                }
+                            }
+                        }
+                        console.error('Perbaiki kesalahan pada formulir.');
+                    }
+                }
+            } catch (error) {
+                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+            } finally {
+                $('#submitButton').prop('disabled', false).html(`
+                    <i class="fa-solid fa-floppy-disk"></i> Simpan
+                `);
+                $('#transaksiForm input, #transaksiForm select, #closeBtn').prop('disabled', false);
+            }
+        });
+
+        $('#transaksiModal').on('hidden.bs.modal', function() {
+            $('#transaksiForm')[0].reset();
+            $('#terima_uang').val('');
+            $('#metode_pembayaran').val('');
+            $('#transaksiForm .is-invalid').removeClass('is-invalid');
+            $('#transaksiForm .invalid-feedback').text('').hide();
         });
 
         fetchDetailTransaksi();

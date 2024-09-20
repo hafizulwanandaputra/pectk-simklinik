@@ -551,7 +551,7 @@
 
         $('#obatModal').on('hidden.bs.modal', function() {
             $('#obatForm')[0].reset();
-            $('#id_obat').val(null).trigger('change');;
+            $('#id_obat').val(null).trigger('change');
             $('#id_supplier').val('');
             $('#nama_obat').val('');
             $('#kategori_obat').val('');

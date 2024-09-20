@@ -180,15 +180,12 @@
             } else {
                 data.transaksi.forEach(function(transaksi) {
                     const total_pembayaran = parseInt(transaksi.total_pembayaran);
-                    const statusBadge = transaksi.status == '1' ?
+                    const statusBadge = transaksi.lunas == '1' ?
                         `<span class="badge bg-success bg-gradient">Transaksi Diproses</span>` :
                         `<span class="badge bg-danger bg-gradient">Transaksi Belum Diproses</span>`;
                     const metode_pembayaran = transaksi.metode_pembayaran == '' ?
                         `<em>Belum ada</em>` :
                         `${transaksi.metode_pembayaran}`;
-                    const statusButtons = transaksi.status == '1' ?
-                        `disabled` :
-                        ``;
                     const transaksiElement = `
             <li class="list-group-item bg-body-tertiary pb-3 pt-3">
                 <div class="d-flex">
@@ -215,7 +212,7 @@
                     <button type="button" class="btn btn-info btn-sm bg-gradient rounded-3" onclick="window.location.href = '<?= base_url('transaksi/detailtransaksi') ?>/${transaksi.id_transaksi}';">
                         <i class="fa-solid fa-circle-info"></i> Detail
                     </button>
-                    <button type="button" class="btn btn-danger btn-sm bg-gradient rounded-3 delete-btn" data-id="${transaksi.id_transaksi}" data-name="${transaksi.pasien_nama_pasien}" data-date="${transaksi.tgl_transaksi}" ${statusButtons}>
+                    <button type="button" class="btn btn-danger btn-sm bg-gradient rounded-3 delete-btn" data-id="${transaksi.id_transaksi}" data-name="${transaksi.pasien_nama_pasien}" data-date="${transaksi.tgl_transaksi}">
                         <i class="fa-solid fa-trash"></i> Hapus
                     </button>
                 </div>
