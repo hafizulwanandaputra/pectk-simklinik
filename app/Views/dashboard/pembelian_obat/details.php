@@ -51,7 +51,7 @@
                 </div>
             </div>
             <div class="mb-2 row">
-                <div class="col-lg-3 fw-medium">Pengguna</div>
+                <div class="col-lg-3 fw-medium">Apoteker</div>
                 <div class="col-lg">
                     <div class="date">
                         <?= $pembelianobat['fullname'] ?> (@<?= $pembelianobat['username'] ?>)
