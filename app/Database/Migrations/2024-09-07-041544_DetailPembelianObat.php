@@ -25,6 +25,13 @@ class DetailPembelianObat extends Migration
                 'constraint' => 24,
                 'unsigned' => true
             ],
+            'no_batch' => [
+                'type' => 'VARCHAR',
+                'constraint' => 64,
+            ],
+            'expired' => [
+                'type' => 'DATE'
+            ],
             'jumlah' => [
                 'type' => 'INT',
                 'constraint' => 24,

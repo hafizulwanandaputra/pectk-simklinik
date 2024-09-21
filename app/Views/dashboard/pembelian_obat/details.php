@@ -54,7 +54,7 @@
                 <div class="col-lg-3 fw-medium">Apoteker</div>
                 <div class="col-lg">
                     <div class="date">
-                        <?= $pembelianobat['fullname'] ?> (@<?= $pembelianobat['username'] ?>)
+                        <?= $pembelianobat['fullname'] ?>
                     </div>
                 </div>
             </div>
@@ -117,6 +117,7 @@
     <div id="terimaObat">
         <hr>
         <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
+            <button class="btn btn-primary rounded-3 bg-gradient" type="button" id="printBtn" onclick="startDownload()" disabled><i class="fa-solid fa-print"></i> Cetak Faktur</button>
             <button class="btn btn-success rounded-3 bg-gradient" type="button" id="completeBtn" data-id="<?= $pembelianobat['id_pembelian_obat'] ?>" disabled><i class="fa-solid fa-check-double"></i> Terima Obat</button>
         </div>
     </div>
@@ -160,6 +161,35 @@
 <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.colVis.min.js"></script>
 <script>
+    async function startDownload() {
+        $('#loadingSpinner').show(); // Menampilkan spinner
+
+        try {
+            // Mengambil file dari server
+            const response = await axios.get('<?= base_url('pembelianobat/fakturpembelianobat/' . $pembelianobat['id_pembelian_obat']); ?>', {
+                responseType: 'blob' // Mendapatkan data sebagai blob
+            });
+
+            // Mendapatkan nama file dari header Content-Disposition
+            const disposition = response.headers['content-disposition'];
+            const filename = disposition ? disposition.split('filename=')[1].split(';')[0].replace(/"/g, '') : '.xlsx';
+
+            // Membuat URL unduhan
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename; // Menggunakan nama file dari header
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+
+            window.URL.revokeObjectURL(url); // Membebaskan URL yang dibuat
+        } catch (error) {
+            showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+        } finally {
+            $('#loadingSpinner').hide(); // Menyembunyikan spinner setelah unduhan selesai
+        }
+    }
     async function fetchObatOptions() {
         try {
             const response = await axios.get('<?= base_url('pembelianobat/obatlist/' . $pembelianobat['id_supplier'] . '/' . $pembelianobat['id_pembelian_obat']) ?>');
@@ -224,6 +254,7 @@
                 `;
                 $('#detail_pembelian_obat').append(emptyRow);
                 $('#completeBtn').prop('disabled', true);
+                $('#printBtn').prop('disabled', true);
             } else {
                 data.forEach(function(detail_pembelian_obat) {
                     const jumlah = parseInt(detail_pembelian_obat.jumlah); // Konversi jumlah ke integer
@@ -256,6 +287,7 @@
                         $('.delete-btn').prop('disabled', false);
                         $('#completeBtn').prop('disabled', false);
                     }
+                    $('#printBtn').prop('disabled', false);
                 });
             }
             const totalHargaElement = `Rp${totalHarga.toLocaleString('id-ID')}`;
