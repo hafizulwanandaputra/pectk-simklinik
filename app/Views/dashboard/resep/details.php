@@ -116,8 +116,8 @@
         </form>
     </fieldset>
 
-    <div class="mb-2">
-        <table class="table table-sm table-hover table-responsive" style="width:100%; font-size: 9pt;">
+    <div class="table-responsive">
+        <table class="table table-sm table-hover mb-0" style="width:100%; font-size: 9pt;">
             <thead>
                 <tr class="align-middle">
                     <th scope="col" class="bg-body-secondary border-secondary text-nowrap tindakan" style="border-bottom-width: 2px; width: 0%;">Tindakan</th>

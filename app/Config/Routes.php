@@ -67,6 +67,7 @@ $routes->get('/(?i)pembelianobat/(?i)obatlist/(:any)/(:any)', 'PembelianObat::ob
 $routes->post('/(?i)pembelianobat/(?i)tambahdetailpembelianobat/(:any)', 'PembelianObat::tambahdetailpembelianobat/$1');
 $routes->post('/(?i)pembelianobat/(?i)perbaruidetailpembelianobat/(:any)', 'PembelianObat::perbaruidetailpembelianobat/$1');
 $routes->delete('/(?i)pembelianobat/(?i)hapusdetailpembelianobat/(:any)', 'PembelianObat::hapusdetailpembelianobat/$1');
+$routes->post('/(?i)pembelianobat/(?i)inputbatchexpired/(:any)', 'PembelianObat::inputbatchexpired/$1');
 $routes->get('/(?i)pembelianobat/(?i)fakturpembelianobat/(:any)', 'PembelianObat::fakturpembelianobat/$1');
 
 // RESEP

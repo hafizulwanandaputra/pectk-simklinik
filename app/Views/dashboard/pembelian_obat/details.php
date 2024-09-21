@@ -84,12 +84,14 @@
         </form>
     </fieldset>
 
-    <div class="mb-2">
-        <table class="table table-sm table-hover table-responsive" style="width:100%; font-size: 9pt;">
+    <div class="table-responsive">
+        <table class="table table-sm table-hover mb-0" style="width:100%; font-size: 9pt;">
             <thead>
                 <tr class="align-middle">
                     <th scope="col" class="bg-body-secondary border-secondary text-nowrap tindakan" style="border-bottom-width: 2px; width: 0%;">Tindakan</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">Nama Obat</th>
+                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">No Batch</th>
+                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Kadaluwarsa</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Jumlah</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Harga Satuan</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Harga</th>
@@ -97,14 +99,14 @@
             </thead>
             <tbody class="align-top" id="detail_pembelian_obat">
                 <tr>
-                    <td colspan="5" class="text-center">Memuat detail pembelian...</td>
+                    <td colspan="7" class="text-center">Memuat detail pembelian...</td>
                 </tr>
             </tbody>
             <tbody class="align-top">
             </tbody>
             <thead>
                 <tr>
-                    <th scope="col" class="bg-body-secondary border-secondary text-nowrap" style="border-bottom-width: 0; border-top-width: 2px;" colspan="1"></th>
+                    <th scope="col" class="bg-body-secondary border-secondary text-nowrap" style="border-bottom-width: 0; border-top-width: 2px;" colspan="3"></th>
                     <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 2px;">Total</th>
                     <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="total_qty"></th>
                     <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;"></th>
@@ -249,7 +251,7 @@
                 // Tampilkan pesan jika tidak ada data
                 const emptyRow = `
                     <tr>
-                        <td colspan="5" class="text-center">Tidak ada obat yang akan dibeli</td>
+                        <td colspan="7" class="text-center">Tidak ada obat yang akan dibeli</td>
                     </tr>
                 `;
                 $('#detail_pembelian_obat').append(emptyRow);
@@ -262,15 +264,19 @@
                     const total_harga = jumlah * harga_satuan; // Hitung total harga
                     totalHarga += total_harga;
                     totalQty += jumlah;
+                    const expired = (detail_pembelian_obat.expired == null) ? '' : detail_pembelian_obat.expired;
                     const detail_pembelian_obatElement = `
                     <tr>
                         <td class="tindakan">
                             <div class="btn-group" role="group">
-                                <button class="btn btn-secondary text-nowrap bg-gradient rounded-start-3 edit-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${detail_pembelian_obat.id_detail_pembelian_obat}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
+                                <button class="btn btn-secondary text-nowrap bg-gradient rounded-start-3 input-batch-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${detail_pembelian_obat.id_detail_pembelian_obat}" data-bs-toggle="tooltip" data-bs-title="Input Batch dan Kadaluwarsa"><i class="fa-solid fa-list-check"></i></button>
+                                <button class="btn btn-secondary text-nowrap bg-gradient edit-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${detail_pembelian_obat.id_detail_pembelian_obat}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
                                 <button class="btn btn-danger text-nowrap bg-gradient rounded-end-3 delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${detail_pembelian_obat.id_detail_pembelian_obat}" data-name="${detail_pembelian_obat.nama_obat}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
                             </div>
                         </td>
                         <td>${detail_pembelian_obat.nama_obat}<br><small>${detail_pembelian_obat.kategori_obat} • ${detail_pembelian_obat.bentuk_obat} • ${detail_pembelian_obat.dosis_kali} × ${detail_pembelian_obat.dosis_hari} hari • ${detail_pembelian_obat.cara_pakai}</small></td>
+                        <td class="date">${detail_pembelian_obat.no_batch}</td>
+                        <td class="date">${expired}</td>
                         <td class="date text-end">${jumlah.toLocaleString('id-ID')}</td>
                         <td class="date text-end">Rp${harga_satuan.toLocaleString('id-ID')}</td>
                         <td class="date text-end">Rp${total_harga.toLocaleString('id-ID')}</td>
@@ -279,10 +285,12 @@
 
                     $('#detail_pembelian_obat').append(detail_pembelian_obatElement);
                     if (detail_pembelian_obat.diterima === "1") {
+                        $('.input-batch-btn').prop('disabled', true);
                         $('.edit-btn').prop('disabled', true);
                         $('.delete-btn').prop('disabled', true);
                         $('#completeBtn').prop('disabled', true);
                     } else if (detail_pembelian_obat.diterima === "0") {
+                        $('.input-batch-btn').prop('disabled', false);
                         $('.edit-btn').prop('disabled', false);
                         $('.delete-btn').prop('disabled', false);
                         $('#completeBtn').prop('disabled', false);
@@ -329,10 +337,15 @@
             $('#completeSubmessage').hide();
             try {
                 const response = await axios.post(`<?= base_url('pembelianobat/complete') ?>/${pembelianObatId}`);
-                showSuccessToast(response.data.message);
-                fetchDetailPembelianObat();
-                fetchObatOptions();
-                fetchStatusPembelian();
+                if (response.data.success == true) {
+                    showSuccessToast(response.data.message);
+                    fetchDetailPembelianObat();
+                    fetchObatOptions();
+                    fetchStatusPembelian();
+                } else if (response.data.success == false) {
+                    showFailedToast(response.data.message);
+                }
+
             } catch (error) {
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
             } finally {
@@ -376,15 +389,16 @@
             $('[data-bs-toggle="tooltip"]').tooltip('hide');
             $this.prop('disabled', true).html(`<span class="spinner-border" style="width: 11px; height: 11px;" aria-hidden="true"></span>`);
             $('#editDetailPembelian').remove();
+            $('#inputBatchPembelian').remove();
             try {
                 const response = await axios.get(`<?= base_url('/pembelianobat/detailpembelianobatitem') ?>/${id}`);
                 const formHtml = `
                 <tr id="editDetailPembelian">
-                    <td colspan="5">
+                    <td colspan="7">
                         <form id="editDetail" enctype="multipart/form-data">
                             <div class="d-flex justify-content-between align-items-center mb-1">
                                 <div class="fw-bold">Edit Jumlah</div>
-                                <button id="closeBtn" type="button" class="text-end btn-close ms-auto cancel-edit"></button>
+                                <button type="button" class="text-end btn-close ms-auto cancel-edit"></button>
                             </div>
                             <div class="d-flex flex-column flex-lg-row gap-1">
                                 <input type="hidden" id="id_detail_pembelian_obat" name="id_detail_pembelian_obat" value="${response.data.id_detail_pembelian_obat}">
@@ -490,6 +504,133 @@
                 console.error(error);
             } finally {
                 $this.prop('disabled', false).html(`<i class="fa-solid fa-pen-to-square"></i>`);
+            }
+        });
+
+        $(document).on('click', '.input-batch-btn', async function() {
+            const $this = $(this);
+            const id = $(this).data('id');
+            const $row = $this.closest('tr');
+            $('[data-bs-toggle="tooltip"]').tooltip('hide');
+            $this.prop('disabled', true).html(`<span class="spinner-border" style="width: 11px; height: 11px;" aria-hidden="true"></span>`);
+            $('#editDetailPembelian').remove();
+            $('#inputBatchPembelian').remove();
+            try {
+                const response = await axios.get(`<?= base_url('/pembelianobat/detailpembelianobatitem') ?>/${id}`);
+                const formHtml = `
+                <tr id="inputBatchPembelian">
+                    <td colspan="7">
+                        <form id="inputBatch" enctype="multipart/form-data">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <div class="fw-bold">Input No Batch dan Tanggal Kadaluwarsa</div>
+                                <button type="button" class="text-end btn-close ms-auto cancel-input-batch"></button>
+                            </div>
+                            <div class="d-flex flex-column flex-lg-row gap-1">
+                                <div class="flex-fill">
+                                    <input type="text" id="no_batch" name="no_batch" class="form-control rounded-3" placeholder="Nomor Batch" value="${response.data.no_batch}">
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                                <div class="flex-fill">
+                                    <input type="date" id="expired" name="expired" class="form-control rounded-3" placeholder="Jumlah" value="${response.data.expired}">
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                                <div class="d-grid w-auto">
+                                    <button type="submit" id="inputBatchButton" class="btn btn-primary bg-gradient rounded-3">
+                                        <i class="fa-solid fa-floppy-disk"></i> Simpan
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </td>
+                </tr>
+                `;
+                // Append the new row with the form directly after the current data row
+                $row.after(formHtml);
+
+                // Handle form submission
+                $('#inputBatch').on('submit', async function(e) {
+                    e.preventDefault();
+
+                    const formData = new FormData(this);
+                    console.log("Form Data:", $(this).serialize());
+
+                    // Clear previous validation states
+                    $('#inputBatch .is-invalid').removeClass('is-invalid');
+                    $('#inputBatch .invalid-feedback').text('').hide();
+                    $('#inputBatchButton').prop('disabled', true).html(`
+                        <span class="spinner-border spinner-border-sm" aria-hidden="true"></span> Simpan
+                    `);
+
+                    // Disable form inputs
+                    $('#inputBatch input, .btn-close').prop('disabled', true);
+
+                    try {
+                        const response = await axios.post(`<?= base_url('/pembelianobat/inputbatchexpired') ?>/${id}`, formData, {
+                            headers: {
+                                'Content-Type': 'multipart/form-data'
+                            }
+                        });
+
+                        if (response.data.success) {
+                            $('#inputBatch')[0].reset();
+                            $('#id_obat').val(null).trigger('change');
+                            $('#inputBatch .is-invalid').removeClass('is-invalid');
+                            $('#inputBatch .invalid-feedback').text('').hide();
+                            $('#inputBatchPembelian').remove();
+                            fetchDetailPembelianObat();
+                            fetchObatOptions();
+                            fetchStatusPembelian();
+                        } else {
+                            console.log("Validation Errors:", response.data.errors);
+
+                            // Clear previous validation states
+                            $('#inputBatch .is-invalid').removeClass('is-invalid');
+                            $('#inputBatch .invalid-feedback').text('').hide();
+
+                            // Display new validation errors
+                            for (const field in response.data.errors) {
+                                if (response.data.errors.hasOwnProperty(field)) {
+                                    const fieldElement = $('#' + field);
+                                    const feedbackElement = fieldElement.siblings('.invalid-feedback');
+
+                                    console.log("Target Field:", fieldElement);
+                                    console.log("Target Feedback:", feedbackElement);
+
+                                    if (fieldElement.length > 0 && feedbackElement.length > 0) {
+                                        fieldElement.addClass('is-invalid');
+                                        feedbackElement.text(response.data.errors[field]).show();
+
+                                        // Remove error message when the user corrects the input
+                                        fieldElement.on('input change', function() {
+                                            $(this).removeClass('is-invalid');
+                                            $(this).siblings('.invalid-feedback').text('').hide();
+                                        });
+                                    } else {
+                                        console.warn("Elemen tidak ditemukan pada field:", field);
+                                    }
+                                }
+                            }
+                            console.error('Perbaiki kesalahan pada formulir.');
+                        }
+                    } catch (error) {
+                        showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                    } finally {
+                        $('#inputBatchButton').prop('disabled', false).html(`
+                            <i class="fa-solid fa-floppy-disk"></i> Simpan
+                        `);
+                        $('#inputBatch input, .btn-close').prop('disabled', false);
+                    }
+                });
+
+                // Handle cancel button
+                $('.cancel-input-batch').on('click', function() {
+                    $('#inputBatchPembelian').remove();
+                });
+            } catch (error) {
+                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                console.error(error);
+            } finally {
+                $this.prop('disabled', false).html(`<i class="fa-solid fa-list-check"></i>`);
             }
         });
 

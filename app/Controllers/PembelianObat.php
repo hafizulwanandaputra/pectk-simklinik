@@ -194,6 +194,20 @@ class PembelianObat extends BaseController
     {
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
             $db = db_connect();
+
+            // Get details of the purchase
+            $details = $db->table('detail_pembelian_obat')
+                ->where('id_pembelian_obat', $id)
+                ->get()
+                ->getResultArray();
+
+            // Check if batch number and expiration date are filled
+            foreach ($details as $detail) {
+                if (empty($detail['no_batch']) || empty($detail['expired'])) {
+                    return $this->response->setJSON(['success' => false, 'message' => 'Nomor batch dan tanggal kadaluwarsa wajib diisi untuk semua obat.']);
+                }
+            }
+
             $db->table('pembelian_obat')
                 ->set('diterima', 1)
                 ->where('id_pembelian_obat', $id)
@@ -216,7 +230,7 @@ class PembelianObat extends BaseController
                     ->where('id_obat', $id_obat)
                     ->update();
             }
-            return $this->response->setJSON(['message' => 'Obat sudah diterima. Periksa jumlah masuk di menu obat.']);
+            return $this->response->setJSON(['success' => true, 'message' => 'Obat sudah diterima. Periksa jumlah masuk di menu obat.']);
         } else {
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan',
@@ -459,6 +473,38 @@ class PembelianObat extends BaseController
         }
     }
 
+    public function inputbatchexpired($id)
+    {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+            // Validate
+            $validation = \Config\Services::validation();
+            // Set base validation rules
+            $validation->setRules([
+                'no_batch' => 'required',
+                'expired' => 'required',
+            ]);
+
+            if (!$this->validate($validation->getRules())) {
+                return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
+            }
+
+            $db = db_connect();
+
+            $detailBuilder = $db->table('detail_pembelian_obat');
+            $detailBuilder->where('id_detail_pembelian_obat', $id);
+            $detailBuilder->update([
+                'no_batch' => $this->request->getPost('no_batch'),
+                'expired' => $this->request->getPost('expired'),
+            ]);
+
+            return $this->response->setJSON(['success' => true, 'message' => 'Nomor batch dan tanggal kadaluwarsa berhasil diinput']);
+        } else {
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
+        }
+    }
+
     public function hapusdetailpembelianobat($id)
     {
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
@@ -542,15 +588,13 @@ class PembelianObat extends BaseController
                 $sheet->setCellValue('B10', 'Nama Obat');
                 $sheet->setCellValue('C10', 'Kategori Obat');
                 $sheet->setCellValue('D10', 'Bentuk Obat');
-                $sheet->setCellValue('E10', 'Dosis');
-                $sheet->setCellValue('F10', 'Cara Pakai');
-                $sheet->setCellValue('G10', 'Harga Satuan');
-                $sheet->setCellValue('H10', 'Qty');
-                $sheet->setCellValue('I10', 'Total Harga');
+                $sheet->setCellValue('E10', 'Harga Satuan');
+                $sheet->setCellValue('F10', 'Qty');
+                $sheet->setCellValue('G10', 'Total Harga');
 
-                $spreadsheet->getActiveSheet()->mergeCells('A1:I1');
-                $spreadsheet->getActiveSheet()->mergeCells('A2:I2');
-                $spreadsheet->getActiveSheet()->mergeCells('A3:I3');
+                $spreadsheet->getActiveSheet()->mergeCells('A1:G1');
+                $spreadsheet->getActiveSheet()->mergeCells('A2:G2');
+                $spreadsheet->getActiveSheet()->mergeCells('A3:G3');
                 $spreadsheet->getActiveSheet()->getPageSetup()
                     ->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
                 $spreadsheet->getActiveSheet()->getPageSetup()
@@ -564,32 +608,30 @@ class PembelianObat extends BaseController
                     $sheet->setCellValue('B' . $column, $list['nama_obat']);
                     $sheet->setCellValue('C' . $column, $list['kategori_obat']);
                     $sheet->setCellValue('D' . $column, $list['bentuk_obat']);
-                    $sheet->setCellValue('E' . $column, $list['dosis_kali'] . '×' . $list['dosis_hari'] . ' hari');
-                    $sheet->setCellValue('F' . $column, $list['cara_pakai']);
-                    $sheet->setCellValue('G' . $column, $list['harga_satuan']);
-                    $sheet->getStyle('G' . $column)->getNumberFormat()->setFormatCode('_\Rp * #,##0_-;[Red]_\Rp * -#,##0_-;_-_\Rp * \"-\"_-;_-@_-');
-                    $sheet->setCellValue('H' . $column, $list['jumlah']);
+                    $sheet->setCellValue('E' . $column, $list['harga_satuan']);
+                    $sheet->getStyle('E' . $column)->getNumberFormat()->setFormatCode('_\Rp * #,##0_-;[Red]_\Rp * -#,##0_-;_-_\Rp * \"-\"_-;_-@_-');
+                    $sheet->setCellValue('F' . $column, $list['jumlah']);
                     $total = $list['harga_satuan'] * $list['jumlah'];
-                    $sheet->setCellValue('I' . $column, $total);
-                    $sheet->getStyle('I' . $column)->getNumberFormat()->setFormatCode('_\Rp * #,##0_-;[Red]_\Rp * -#,##0_-;_-_\Rp * \"-\"_-;_-@_-');
-                    $sheet->getStyle('B' . $column . ':I' . $column)->getAlignment()->setWrapText(true);
+                    $sheet->setCellValue('G' . $column, $total);
+                    $sheet->getStyle('G' . $column)->getNumberFormat()->setFormatCode('_\Rp * #,##0_-;[Red]_\Rp * -#,##0_-;_-_\Rp * \"-\"_-;_-@_-');
+                    $sheet->getStyle('B' . $column . ':G' . $column)->getAlignment()->setWrapText(true);
                     $column++;
                 }
                 $sheet->setCellValue('A' . ($column), 'Total Pembelian');
-                $spreadsheet->getActiveSheet()->mergeCells('A' . ($column) . ':G' . ($column));
-                $sheet->setCellValue('H' . ($column), $pembelianobat['total_qty']);
-                $sheet->setCellValue('I' . ($column), $pembelianobat['total_biaya']);
-                $sheet->getStyle('I' . ($column))->getNumberFormat()->setFormatCode('_\Rp * #,##0_-;[Red]_\Rp * -#,##0_-;_-_\Rp * \"-\"_-;_-@_-');
+                $spreadsheet->getActiveSheet()->mergeCells('A' . ($column) . ':E' . ($column));
+                $sheet->setCellValue('F' . ($column), $pembelianobat['total_qty']);
+                $sheet->setCellValue('G' . ($column), $pembelianobat['total_biaya']);
+                $sheet->getStyle('G' . ($column))->getNumberFormat()->setFormatCode('_\Rp * #,##0_-;[Red]_\Rp * -#,##0_-;_-_\Rp * \"-\"_-;_-@_-');
 
                 $sheet->getStyle('A1')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
                 $sheet->getStyle('A2')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
                 $sheet->getStyle('A3')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
                 $sheet->getStyle('C4:C9')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT);
-                $sheet->getStyle('A10:I10')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+                $sheet->getStyle('A10:G10')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
                 $sheet->getStyle('A' . ($column))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT);
 
                 $sheet->getStyle('A1:A9')->getFont()->setBold(TRUE);
-                $sheet->getStyle('A10:I10')->getFont()->setBold(TRUE);
+                $sheet->getStyle('A10:G10')->getFont()->setBold(TRUE);
                 $sheet->getStyle('A' . ($column) . ':I' . ($column))->getFont()->setBold(TRUE);
 
                 $headerBorder1 = [
@@ -600,7 +642,7 @@ class PembelianObat extends BaseController
                         ]
                     ]
                 ];
-                $sheet->getStyle('A2:I2')->applyFromArray($headerBorder1);
+                $sheet->getStyle('A2:G2')->applyFromArray($headerBorder1);
                 $tableBorder = [
                     'borders' => [
                         'allBorders' => [
@@ -609,17 +651,15 @@ class PembelianObat extends BaseController
                         ]
                     ]
                 ];
-                $sheet->getStyle('A10:I' . ($column))->applyFromArray($tableBorder);
+                $sheet->getStyle('A10:G' . ($column))->applyFromArray($tableBorder);
 
                 $sheet->getColumnDimension('A')->setWidth(50, 'px');
                 $sheet->getColumnDimension('B')->setWidth(210, 'px');
                 $sheet->getColumnDimension('C')->setWidth(120, 'px');
                 $sheet->getColumnDimension('D')->setWidth(120, 'px');
-                $sheet->getColumnDimension('E')->setWidth(120, 'px');
-                $sheet->getColumnDimension('F')->setWidth(120, 'px');
+                $sheet->getColumnDimension('E')->setWidth(180, 'px');
+                $sheet->getColumnDimension('F')->setWidth(50, 'px');
                 $sheet->getColumnDimension('G')->setWidth(180, 'px');
-                $sheet->getColumnDimension('H')->setWidth(50, 'px');
-                $sheet->getColumnDimension('I')->setWidth(180, 'px');
 
                 $writer = new Xlsx($spreadsheet);
                 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheet.sheet');
