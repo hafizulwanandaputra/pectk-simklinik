@@ -550,6 +550,7 @@ class PembelianObat extends BaseController
     {
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
             $pembelianobat = $this->PembelianObatModel
+                ->where('diterima', 0)
                 ->join('supplier', 'supplier.id_supplier = pembelian_obat.id_supplier', 'inner')
                 ->join('user', 'user.id_user = pembelian_obat.id_user', 'inner')
                 ->find($id);

@@ -390,7 +390,7 @@
                                     <input type="number" id="diskon_edit" name="diskon_edit" class="form-control rounded-3" placeholder="Diskon (%)" value="${response.data.diskon}">
                                     <div class="invalid-feedback"></div>
                                 </div>
-                                <div class="d-grid w-auto">
+                                <div class="d-grid d-lg-block w-auto">
                                     <button type="submit" id="editButton" class="btn btn-primary bg-gradient rounded-3">
                                         <i class="fa-solid fa-pen-to-square"></i> Edit
                                     </button>

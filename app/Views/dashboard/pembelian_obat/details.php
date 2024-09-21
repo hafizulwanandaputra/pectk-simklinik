@@ -274,7 +274,7 @@
                                 <button class="btn btn-danger text-nowrap bg-gradient rounded-end-3 delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${detail_pembelian_obat.id_detail_pembelian_obat}" data-name="${detail_pembelian_obat.nama_obat}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
                             </div>
                         </td>
-                        <td>${detail_pembelian_obat.nama_obat}<br><small>${detail_pembelian_obat.kategori_obat} • ${detail_pembelian_obat.bentuk_obat} • ${detail_pembelian_obat.dosis_kali} × ${detail_pembelian_obat.dosis_hari} hari • ${detail_pembelian_obat.cara_pakai}</small></td>
+                        <td class="text-nowrap">${detail_pembelian_obat.nama_obat}<br><small>${detail_pembelian_obat.kategori_obat} • ${detail_pembelian_obat.bentuk_obat} • ${detail_pembelian_obat.dosis_kali} × ${detail_pembelian_obat.dosis_hari} hari • ${detail_pembelian_obat.cara_pakai}</small></td>
                         <td class="date">${detail_pembelian_obat.no_batch}</td>
                         <td class="date">${expired}</td>
                         <td class="date text-end">${jumlah.toLocaleString('id-ID')}</td>
@@ -288,14 +288,15 @@
                         $('.input-batch-btn').prop('disabled', true);
                         $('.edit-btn').prop('disabled', true);
                         $('.delete-btn').prop('disabled', true);
+                        $('#printBtn').prop('disabled', true);
                         $('#completeBtn').prop('disabled', true);
                     } else if (detail_pembelian_obat.diterima === "0") {
                         $('.input-batch-btn').prop('disabled', false);
                         $('.edit-btn').prop('disabled', false);
                         $('.delete-btn').prop('disabled', false);
+                        $('#printBtn').prop('disabled', false);
                         $('#completeBtn').prop('disabled', false);
                     }
-                    $('#printBtn').prop('disabled', false);
                 });
             }
             const totalHargaElement = `Rp${totalHarga.toLocaleString('id-ID')}`;
@@ -407,7 +408,7 @@
                                     <input type="number" id="jumlah_edit" name="jumlah_edit" class="form-control rounded-3" placeholder="Jumlah" value="${response.data.jumlah}">
                                     <div class="invalid-feedback"></div>
                                 </div>
-                                <div class="d-grid w-auto">
+                                <div class="d-grid d-lg-block w-auto">
                                     <button type="submit" id="editButton" class="btn btn-primary bg-gradient rounded-3">
                                         <i class="fa-solid fa-pen-to-square"></i> Edit
                                     </button>
@@ -534,7 +535,7 @@
                                     <input type="date" id="expired" name="expired" class="form-control rounded-3" placeholder="Jumlah" value="${response.data.expired}">
                                     <div class="invalid-feedback"></div>
                                 </div>
-                                <div class="d-grid w-auto">
+                                <div class="d-grid d-lg-block w-auto">
                                     <button type="submit" id="inputBatchButton" class="btn btn-primary bg-gradient rounded-3">
                                         <i class="fa-solid fa-floppy-disk"></i> Simpan
                                     </button>

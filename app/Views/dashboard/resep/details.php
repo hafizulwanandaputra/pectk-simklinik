@@ -248,7 +248,7 @@
                                 <button class="btn btn-danger text-nowrap bg-gradient rounded-end-3 delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${detail_resep.id_detail_resep}" data-name="${detail_resep.nama_obat}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
                             </div>
                         </td>
-                        <td>${detail_resep.nama_obat}<br><small>${detail_resep.kategori_obat} • ${detail_resep.bentuk_obat} • ${detail_resep.dosis_kali} × ${detail_resep.dosis_hari} hari • ${detail_resep.cara_pakai}</small></td>
+                        <td class="text-nowrap">${detail_resep.nama_obat}<br><small>${detail_resep.kategori_obat} • ${detail_resep.bentuk_obat} • ${detail_resep.dosis_kali} × ${detail_resep.dosis_hari} hari • ${detail_resep.cara_pakai}</small></td>
                         <td class="date text-end">${jumlah.toLocaleString('id-ID')}</td>
                         <td class="date text-end">Rp${harga_satuan.toLocaleString('id-ID')}</td>
                         <td class="date text-end">Rp${total_harga.toLocaleString('id-ID')}</td>
@@ -473,7 +473,7 @@
                                     <input type="number" id="jumlah_edit" name="jumlah_edit" class="form-control rounded-3" placeholder="Jumlah" value="${response.data.jumlah}">
                                     <div class="invalid-feedback"></div>
                                 </div>
-                                <div class="d-grid w-auto">
+                                <div class="d-grid d-lg-block w-auto">
                                     <button type="submit" id="editButton" class="btn btn-primary bg-gradient rounded-3">
                                         <i class="fa-solid fa-pen-to-square"></i> Edit
                                     </button>
