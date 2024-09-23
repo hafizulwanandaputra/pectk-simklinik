@@ -464,7 +464,8 @@
                 // Check if the error has a response and extract the message
                 let errorMessage = 'Terjadi kesalahan. Silakan coba lagi.<br>' + error;
                 if (error.response && error.response.data && error.response.data.error) {
-                    errorMessage = 'Terjadi kesalahan. Silakan coba lagi.<br>' + error.response.data.error; // Get the specific error message
+                    console.error(error.response.data.error);
+                    errorMessage = 'Tidak dapat menghapus data ini karena sedang digunakan.'
                 }
                 showFailedToast(errorMessage);
             } finally {
