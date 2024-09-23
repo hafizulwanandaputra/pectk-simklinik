@@ -4,7 +4,7 @@
 <?= $this->endSection(); ?>
 <?= $this->section('title'); ?>
 <div class="d-flex justify-content-start align-items-center">
-    <span class="fw-medium fs-5 flex-fill text-truncate"><?= $headertitle; ?></span>
+    <span class="fw-medium fs-5 flex-fill text-truncate"><?= $headertitle; ?> <span id="totalRecords" class="date"></span></span></span>
     <div id="loadingSpinner" class="spinner-border spinner-border-sm" role="status">
         <span class="visually-hidden">Loading...</span>
     </div>
@@ -169,6 +169,7 @@
 
             const data = response.data;
             $('#resepContainer').empty();
+            $('#totalRecords').text(`(${data.total})`);
 
             if (data.total === 0) {
                 $('#paginationNav ul').empty();
