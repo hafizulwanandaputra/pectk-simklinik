@@ -64,7 +64,6 @@
                     </div>
                     <hr>
                     <div class="d-grid gap-2 d-flex justify-content-end">
-                        <a class="btn btn-danger bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
                         <a class="btn btn-info bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
                         <a class="btn btn-danger bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
                     </div>
@@ -139,7 +138,6 @@
                 </div>
                 <hr>
                 <div class="d-grid gap-2 d-flex justify-content-end">
-                    <a class="btn btn-danger bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
                     <a class="btn btn-info bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
                     <a class="btn btn-danger bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
                 </div>
@@ -203,9 +201,6 @@
                     const statusDelete = pembelian_obat.diterima == '1' ?
                         `disabled` :
                         ``;
-                    const statusCancel = pembelian_obat.diterima == '1' ?
-                        `` :
-                        `disabled`;
                     const pembelian_obatElement = `
             <li class="list-group-item bg-body-tertiary pb-3 pt-3">
                 <div class="d-flex">
@@ -229,9 +224,6 @@
                 </div>
                 <hr>
                 <div class="d-grid gap-2 d-flex justify-content-end">
-                    <button type="button" class="btn btn-danger btn-sm bg-gradient rounded-3 cancel-btn" data-id="${pembelian_obat.id_pembelian_obat}" data-name="${pembelian_obat.supplier_nama_supplier}" data-date="${pembelian_obat.tgl_pembelian}" ${statusCancel}>
-                        <i class="fa-solid fa-xmark"></i> Batalkan
-                    </button>
                     <button type="button" class="btn btn-info btn-sm bg-gradient rounded-3" onclick="window.location.href = '<?= base_url('pembelianobat/detailpembelianobat') ?>/${pembelian_obat.id_pembelian_obat}';">
                         <i class="fa-solid fa-circle-info"></i> Detail
                     </button>
@@ -368,35 +360,6 @@
                 $('#deleteMessage').removeClass('mb-0');
                 $('#deleteSubmessage').show();
                 $('#deleteModal button').prop('disabled', false);
-            }
-        });
-
-        $(document).on('click', '.cancel-btn', function() {
-            pembelianObatId = $(this).data('id');
-            pembelianObatName = $(this).data('name');
-            pembelianObatDate = $(this).data('date');
-            $('[data-bs-toggle="tooltip"]').tooltip('hide');
-            $('#cancelMessage').html(`Batalkan pembelian dari "` + pembelianObatName + `?`);
-            $('#cancelSubmessage').html(`Tanggal Pembelian: ` + pembelianObatDate);
-            $('#cancelModal').modal('show');
-        });
-
-        $('#confirmCancelBtn').click(async function() {
-            $('#cancelModal button').prop('disabled', true);
-            $('#cancelMessage').addClass('mb-0').html('Membatalkan, silakan tunggu...');
-            $('#cancelSubmessage').hide();
-
-            try {
-                await axios.post(`<?= base_url('/pembelianobat/cancel') ?>/${pembelianObatId}`);
-                showSuccessToast('Pembelian obat telah dibatalkan. Jumlah masuk obat telah dikurangi.');
-                fetchPembelianObat();
-            } catch (error) {
-                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
-            } finally {
-                $('#cancelModal').modal('hide');
-                $('#cancelMessage').removeClass('mb-0');
-                $('#cancelSubmessage').show();
-                $('#cancelModal button').prop('disabled', false);
             }
         });
 

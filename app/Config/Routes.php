@@ -14,14 +14,6 @@ $routes->get('/(?i)logout', 'Auth::logout');
 // HOME
 $routes->get('/(?i)home', 'Home::index');
 
-// DOKTER
-$routes->get('/(?i)dokter', 'Dokter::index');
-$routes->post('/(?i)dokter/(?i)dokterlist', 'Dokter::dokterlist');
-$routes->get('/(?i)dokter/(?i)dokter/(:any)', 'Dokter::dokter/$1');
-$routes->post('/(?i)dokter/(?i)create', 'Dokter::create');
-$routes->post('/(?i)dokter/(?i)update', 'Dokter::update');
-$routes->delete('/(?i)dokter/(?i)delete/(:any)', 'Dokter::delete/$1');
-
 // PASIEN
 $routes->get('/(?i)pasien', 'Pasien::index');
 $routes->post('/(?i)pasien/(?i)pasienlist', 'Pasien::pasienlist');
@@ -57,7 +49,6 @@ $routes->get('/(?i)pembelianobat/(?i)pembelianobatlist', 'PembelianObat::pembeli
 $routes->post('/(?i)pembelianobat/(?i)create', 'PembelianObat::create');
 $routes->delete('/(?i)pembelianobat/(?i)delete/(:any)', 'PembelianObat::delete/$1');
 $routes->post('/(?i)pembelianobat/(?i)complete/(:any)', 'PembelianObat::complete/$1');
-$routes->post('/(?i)pembelianobat/(?i)cancel/(:any)', 'PembelianObat::cancel/$1');
 
 // DETAIL PEMBELIAN OBAT
 $routes->get('/(?i)pembelianobat/(?i)detailpembelianobat/(:any)', 'PembelianObat::detailpembelianobat/$1');

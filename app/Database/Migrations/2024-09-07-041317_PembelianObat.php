@@ -41,8 +41,8 @@ class PembelianObat extends Migration
             ],
         ]);
         $this->forge->addKey('id_pembelian_obat', true);
-        $this->forge->addForeignKey('id_supplier', 'supplier', 'id_supplier', 'CASCADE', 'CASCADE');
-        $this->forge->addForeignKey('id_user', 'user', 'id_user', 'CASCADE', 'CASCADE');
+        $this->forge->addForeignKey('id_supplier', 'supplier', 'id_supplier', 'CASCADE', 'NO ACTION');
+        $this->forge->addForeignKey('id_user', 'user', 'id_user', 'CASCADE', 'NO ACTION');
         $this->forge->createTable('pembelian_obat');
     }
 

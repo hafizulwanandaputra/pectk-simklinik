@@ -326,7 +326,7 @@
             transaksiDate = $(this).data('date');
             $('[data-bs-toggle="tooltip"]').tooltip('hide');
             $('#deleteMessage').html(`Hapus transaksi dari "` + transaksiName + `?`);
-            $('#deleteSubmessage').html(`Tanggal Resep: ` + transaksiDate);
+            $('#deleteSubmessage').html(`Tanggal Transaksi: ` + transaksiDate);
             $('#deleteModal').modal('show');
         });
 

@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\SupplierModel;
+use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Exceptions\PageNotFoundException;
 
 class Supplier extends BaseController
@@ -172,35 +173,19 @@ class Supplier extends BaseController
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
             $db = db_connect();
 
-            // Dapatkan id_pembelian dari detail pembelian obat yang akan dihapus
-            $obatDetail = $db->query("SELECT id_pembelian_obat FROM detail_pembelian_obat WHERE id_obat = ?", [$id])->getRow();
+            try {
+                $this->SupplierModel->delete($id);
+                $db->query('ALTER TABLE `supplier` auto_increment = 1');
+                return $this->response->setJSON(['message' => 'Supplier berhasil dihapus']);
+            } catch (DatabaseException $e) {
+                // Log the error message
+                log_message('error', $e->getMessage());
 
-            $this->SupplierModel->delete($id);
-            $db->query('ALTER TABLE `supplier` auto_increment = 1');
-            $db->query('ALTER TABLE `obat` auto_increment = 1');
-            $db->query('ALTER TABLE `pembelian_obat` auto_increment = 1');
-            $db->query('ALTER TABLE `detail_pembelian_obat` auto_increment = 1');
-
-            // Perbarui total_qty dan total_biaya di tabel pembelian_obat setelah penghapusan
-            if ($obatDetail) {
-                $id_pembelian_obat = $obatDetail->id_pembelian_obat;
-
-                // Hitung ulang total_qty dan total_biaya berdasarkan detail pembelian yang tersisa
-                $result = $db->query("
-            SELECT SUM(jumlah) as total_qty, SUM(harga_satuan * jumlah) as total_biaya 
-            FROM detail_pembelian_obat 
-            WHERE id_pembelian_obat = ?", [$id_pembelian_obat])->getRow();
-
-                $total_qty = $result->total_qty ?? 0;
-                $total_biaya = $result->total_biaya ?? 0;
-
-                // Update tabel pembelian_obat dengan total_qty dan total_biaya yang baru
-                $db->query("
-            UPDATE pembelian_obat 
-            SET total_qty = ?, total_biaya = ? 
-            WHERE id_pembelian_obat = ?", [$total_qty, $total_biaya, $id_pembelian_obat]);
+                // Return a generic error message
+                return $this->response->setStatusCode(500)->setJSON([
+                    'error' => $e->getMessage(),
+                ]);
             }
-            return $this->response->setJSON(['message' => 'Supplier berhasil dihapus']);
         } else {
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan',

@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\AuthModel;
 use App\Models\AuthModelEdit;
+use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Exceptions\PageNotFoundException;
 
 class Admin extends BaseController
@@ -220,11 +221,21 @@ class Admin extends BaseController
     public function delete($id)
     {
         if (session()->get('role') == 'Admin') {
-            $this->AuthModel->delete($id);
-            $db = db_connect();
-            // Reset Auto Increment Value
-            $db->query('ALTER TABLE `user` auto_increment = 1');
-            return $this->response->setJSON(['message' => 'Pengguna berhasil dihapus']);
+            try {
+                $this->AuthModel->delete($id);
+                $db = db_connect();
+                // Reset Auto Increment Value
+                $db->query('ALTER TABLE `user` auto_increment = 1');
+                return $this->response->setJSON(['message' => 'Pengguna berhasil dihapus']);
+            } catch (DatabaseException $e) {
+                // Log the error message
+                log_message('error', $e->getMessage());
+
+                // Return a generic error message
+                return $this->response->setStatusCode(500)->setJSON([
+                    'error' => $e->getMessage(),
+                ]);
+            }
         } else {
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan',

@@ -40,18 +40,6 @@ class Obat extends Migration
                 'type' => 'INT',
                 'constraint' => 24,
             ],
-            'dosis_kali' => [
-                'type' => 'INT',
-                'constraint' => 24,
-            ],
-            'dosis_hari' => [
-                'type' => 'INT',
-                'constraint' => 24,
-            ],
-            'cara_pakai' => [
-                'type' => 'VARCHAR',
-                'constraint' => 128,
-            ],
             'jumlah_masuk' => [
                 'type' => 'INT',
                 'constraint' => 24,
@@ -65,7 +53,7 @@ class Obat extends Migration
             ],
         ]);
         $this->forge->addKey('id_obat', true);
-        $this->forge->addForeignKey('id_supplier', 'supplier', 'id_supplier', 'CASCADE', 'CASCADE');
+        $this->forge->addForeignKey('id_supplier', 'supplier', 'id_supplier', 'CASCADE', 'NO ACTION');
         $this->forge->createTable('obat');
     }
 

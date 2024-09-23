@@ -6,6 +6,10 @@
         border-radius: var(--bs-border-radius-lg);
     }
 
+    .form-select-sm~.select2-container--bootstrap-5 .select2-selection {
+        border-radius: var(--bs-border-radius-lg);
+    }
+
     .select2-container--bootstrap-5.select2-container--disabled .select2-selection,
     .select2-container--bootstrap-5.select2-container--disabled.select2-container--focus .select2-selection {
         color: var(--bs-body-color);

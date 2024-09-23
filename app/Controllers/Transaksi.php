@@ -85,6 +85,21 @@ class Transaksi extends BaseController
 
             $dataTransaksi = array_map(function ($data, $index) use ($startNumber) {
                 $data['number'] = $startNumber + $index;
+                $db = db_connect();
+                // Calculate total_pembayaran
+                $builder = $db->table('detail_transaksi');
+                $builder->select('SUM(harga_resep * (1 - (diskon / 100))) as total_pembayaran');
+                $builder->where('id_transaksi', $data['id_transaksi']);
+                $result = $builder->get()->getRow();
+
+                $total_pembayaran = $result->total_pembayaran;
+
+                // Update transaksi table
+                $transaksiBuilder = $db->table('transaksi');
+                $transaksiBuilder->where('id_transaksi', $data['id_transaksi']);
+                $transaksiBuilder->update([
+                    'total_pembayaran' => $total_pembayaran,
+                ]);
                 return $data;
             }, $Transaksi, array_keys($Transaksi));
 

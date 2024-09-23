@@ -96,18 +96,38 @@
     <fieldset id="tambahDetailContainer" class="border rounded-3 px-2 py-0 mb-3" style="display: none;">
         <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Tambah Detail Resep</legend>
         <form id="tambahDetail" enctype="multipart/form-data">
-            <div class="mb-2">
-                <select class="form-select rounded-3" id="id_obat" name="id_obat" aria-label="id_obat">
-                    <option value="" disabled selected>-- Pilih Obat --</option>
-                </select>
-                <div class="invalid-feedback"></div>
-            </div>
-            <div class="d-flex flex-column flex-lg-row mb-2 gap-2">
-                <div class="flex-fill">
-                    <input type="number" id="jumlah" name="jumlah" class="form-control rounded-3" placeholder="Jumlah">
+            <div class="row g-2">
+                <div class="col-12">
+                    <select class="form-select form-select-sm rounded-3" id="id_obat" name="id_obat" aria-label="id_obat">
+                        <option value="" disabled selected>-- Pilih Obat --</option>
+                    </select>
                     <div class="invalid-feedback"></div>
                 </div>
-                <div class="d-grid d-lg-block w-auto">
+                <div class="col-6">
+                    <input type="number" id="dosis_kali" name="dosis_kali" class="form-control form-control-sm rounded-3" placeholder="Dosis berapa kali?">
+                    <div class="invalid-feedback"></div>
+                </div>
+                <div class="col-6">
+                    <input type="number" id="dosis_hari" name="dosis_hari" class="form-control form-control-sm rounded-3" placeholder="Dalam berapa hari?">
+                    <div class="invalid-feedback"></div>
+                </div>
+                <div class="col-6">
+                    <select class="form-select form-select-sm  rounded-3" id="cara_pakai" name="cara_pakai" aria-label="cara_pakai">
+                        <option value="" disabled selected>-- Pilih Cara Pakai --</option>
+                        <option value="Mata Kanan">Mata Kanan</option>
+                        <option value="Mata Kiri">Mata Kiri</option>
+                        <option value="Kedua Mata">Kedua Mata</option>
+                        <option value="Sebelum Makan">Sebelum Makan</option>
+                        <option value="Sesudah Makan">Sesudah Makan</option>
+                        <option value="Sendok Teh">Sendok Teh</option>
+                    </select>
+                    <div class="invalid-feedback"></div>
+                </div>
+                <div class="col-6">
+                    <input type="number" id="jumlah" name="jumlah" class="form-control form-control-sm rounded-3" placeholder="Jumlah">
+                    <div class="invalid-feedback"></div>
+                </div>
+                <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-2">
                     <button type="submit" id="addButton" class="btn btn-primary bg-gradient rounded-3 text-nowrap">
                         <i class="fa-solid fa-plus"></i> Tambah
                     </button>
@@ -463,28 +483,49 @@
                 <tr id="editDetailResep">
                     <td colspan="5">
                         <form id="editDetail" enctype="multipart/form-data">
-                            <div class="d-flex justify-content-between align-items-center mb-1">
-                                <div class="fw-bold">Edit Jumlah</div>
-                                <button type="button" class="text-end btn-close ms-auto cancel-edit"></button>
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <div class="fw-bold">Edit Resep (Jumlah maksimum: ${response.data.jumlah_masuk})</div>
+                            <button type="button" class="text-end btn-close ms-auto cancel-edit"></button>
+                        </div>
+                        <input type="hidden" id="id_detail_resep" name="id_detail_resep" value="${response.data.id_detail_resep}">
+                        <div class="row g-2">
+                            <div class="col-6">
+                                <input type="number" id="dosis_kali_edit" name="dosis_kali_edit" class="form-control form-control-sm rounded-3" placeholder="Dosis berapa kali?" value="${response.data.dosis_kali}">
+                                <div class="invalid-feedback"></div>
                             </div>
-                            <div class="d-flex flex-column flex-lg-row gap-1">
-                                <input type="hidden" id="id_detail_resep" name="id_detail_resep" value="${response.data.id_detail_resep}">
-                                <div class="flex-fill">
-                                    <input type="number" id="jumlah_edit" name="jumlah_edit" class="form-control rounded-3" placeholder="Jumlah" value="${response.data.jumlah}">
-                                    <div class="invalid-feedback"></div>
-                                </div>
-                                <div class="d-grid d-lg-block w-auto">
-                                    <button type="submit" id="editButton" class="btn btn-primary bg-gradient rounded-3">
-                                        <i class="fa-solid fa-pen-to-square"></i> Edit
-                                    </button>
-                                </div>
+                            <div class="col-6">
+                                <input type="number" id="dosis_hari_edit" name="dosis_hari_edit" class="form-control form-control-sm rounded-3" placeholder="Dalam berapa hari?" value="${response.data.dosis_hari}">
+                                <div class="invalid-feedback"></div>
                             </div>
+                            <div class="col-6">
+                                <select class="form-select form-select-sm  rounded-3" id="cara_pakai_edit" name="cara_pakai_edit" aria-label="cara_pakai">
+                                    <option value="" disabled selected>-- Pilih Cara Pakai --</option>
+                                    <option value="Mata Kanan">Mata Kanan</option>
+                                    <option value="Mata Kiri">Mata Kiri</option>
+                                    <option value="Kedua Mata">Kedua Mata</option>
+                                    <option value="Sebelum Makan">Sebelum Makan</option>
+                                    <option value="Sesudah Makan">Sesudah Makan</option>
+                                    <option value="Sendok Teh">Sendok Teh</option>
+                                </select>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="col-6">
+                                <input type="number" id="jumlah_edit" name="jumlah_edit" class="form-control form-control-sm rounded-3" placeholder="Jumlah" value="${response.data.jumlah}">
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-2">
+                                <button type="submit" id="addButton" class="btn btn-primary bg-gradient rounded-3 text-nowrap">
+                                    <i class="fa-solid fa-pen-to-square"></i> Edit
+                                </button>
+                            </div>
+                        </div>
                         </form>
                     </td>
                 </tr>
                 `;
                 // Append the new row with the form directly after the current data row
                 $row.after(formHtml);
+                $('#cara_pakai_edit').val(response.data.cara_pakai);
 
                 // Handle form submission
                 $('#editDetail').on('submit', async function(e) {
@@ -501,7 +542,7 @@
                     `);
 
                     // Disable form inputs
-                    $('#editDetail input, .btn-close').prop('disabled', true);
+                    $('#editDetail input, #editDetail select, .btn-close').prop('disabled', true);
 
                     try {
                         const response = await axios.post(`<?= base_url('/resep/perbaruidetailresep/' . $resep['id_resep']) ?>`, formData, {
@@ -559,7 +600,7 @@
                         $('#editButton').prop('disabled', false).html(`
                             <i class="fa-solid fa-pen-to-square"></i> Edit
                         `);
-                        $('#editDetail input, .btn-close').prop('disabled', false);
+                        $('#editDetail input, #editDetail select, .btn-close').prop('disabled', false);
                     }
                 });
 

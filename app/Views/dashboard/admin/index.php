@@ -393,7 +393,12 @@
                 showSuccessToast('User berhasil dihapus.');
                 table.ajax.reload();
             } catch (error) {
-                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                // Check if the error has a response and extract the message
+                let errorMessage = 'Terjadi kesalahan. Silakan coba lagi.<br>' + error;
+                if (error.response && error.response.data && error.response.data.error) {
+                    errorMessage = 'Terjadi kesalahan. Silakan coba lagi.<br>' + error.response.data.error; // Get the specific error message
+                }
+                showFailedToast(errorMessage);
             } finally {
                 $('#deleteModal').modal('hide');
                 $('#deleteModal button').prop('disabled', false);

@@ -30,7 +30,8 @@ class DetailPembelianObat extends Migration
                 'constraint' => 64,
             ],
             'expired' => [
-                'type' => 'DATE'
+                'type' => 'DATE',
+                'null' => TRUE,
             ],
             'jumlah' => [
                 'type' => 'INT',
@@ -43,7 +44,7 @@ class DetailPembelianObat extends Migration
         ]);
         $this->forge->addKey('id_detail_pembelian_obat', true);
         $this->forge->addForeignKey('id_pembelian_obat', 'pembelian_obat', 'id_pembelian_obat', 'CASCADE', 'CASCADE');
-        $this->forge->addForeignKey('id_obat', 'obat', 'id_obat', 'CASCADE', 'CASCADE');
+        $this->forge->addForeignKey('id_obat', 'obat', 'id_obat', 'CASCADE', 'NO ACTION');
         $this->forge->createTable('detail_pembelian_obat');
     }
 

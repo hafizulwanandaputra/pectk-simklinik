@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\ObatModel;
 use App\Models\SupplierModel;
+use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Exceptions\PageNotFoundException;
 
 class Obat extends BaseController
@@ -52,11 +53,9 @@ class Obat extends BaseController
                 5 => 'bentuk_obat',
                 6 => 'harga_obat',
                 7 => 'harga_jual',
-                8 => 'dosis_kali',
-                9 => 'cara_pakai',
-                10 => 'jumlah_masuk',
-                11 => 'jumlah_keluar',
-                12 => 'updated_at',
+                8 => 'jumlah_masuk',
+                9 => 'jumlah_keluar',
+                10 => 'updated_at',
             ];
 
             // Get the column to sort by
@@ -152,9 +151,6 @@ class Obat extends BaseController
                 'bentuk_obat' => 'required',
                 'harga_obat' => 'required|numeric|greater_than[0]',
                 'harga_jual' => 'required|numeric|greater_than[0]',
-                'dosis_kali' => 'required|numeric|greater_than[0]',
-                'dosis_hari' => 'required|numeric|greater_than[0]',
-                'cara_pakai' => 'required',
             ]);
 
             if (!$this->validate($validation->getRules())) {
@@ -169,9 +165,6 @@ class Obat extends BaseController
                 'bentuk_obat' => $this->request->getPost('bentuk_obat'),
                 'harga_obat' => $this->request->getPost('harga_obat'),
                 'harga_jual' => $this->request->getPost('harga_jual'),
-                'dosis_kali' => $this->request->getPost('dosis_kali'),
-                'dosis_hari' => $this->request->getPost('dosis_hari'),
-                'cara_pakai' => $this->request->getPost('cara_pakai'),
                 'jumlah_masuk' => 0,
                 'jumlah_keluar' => 0,
                 'updated_at' => date('Y-m-d H:i:s'),
@@ -198,9 +191,6 @@ class Obat extends BaseController
                 'bentuk_obat' => 'required',
                 'harga_obat' => 'required|numeric|greater_than[0]',
                 'harga_jual' => 'required|numeric|greater_than[0]',
-                'dosis_kali' => 'required|numeric|greater_than[0]',
-                'dosis_hari' => 'required|numeric|greater_than[0]',
-                'cara_pakai' => 'required',
             ]);
             if (!$this->validate($validation->getRules())) {
                 return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
@@ -217,9 +207,6 @@ class Obat extends BaseController
                 'bentuk_obat' => $this->request->getPost('bentuk_obat'),
                 'harga_obat' => $this->request->getPost('harga_obat'),
                 'harga_jual' => $this->request->getPost('harga_jual'),
-                'dosis_kali' => $this->request->getPost('dosis_kali'),
-                'dosis_hari' => $this->request->getPost('dosis_hari'),
-                'cara_pakai' => $this->request->getPost('cara_pakai'),
                 'jumlah_masuk' => $obat['jumlah_masuk'],
                 'jumlah_keluar' => $obat['jumlah_keluar'],
                 'updated_at' => $obat['updated_at'],
@@ -238,56 +225,19 @@ class Obat extends BaseController
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
             $db = db_connect();
 
-            // Dapatkan id_pembelian dari detail pembelian obat yang akan dihapus
-            $obatDetail = $db->query("SELECT id_pembelian_obat FROM detail_pembelian_obat WHERE id_obat = ?", [$id])->getRow();
-            $resepDetail = $db->query("SELECT id_resep FROM detail_resep WHERE id_obat = ?", [$id])->getRow();
+            try {
+                $this->ObatModel->delete($id);
+                $db->query('ALTER TABLE `obat` auto_increment = 1');
+                return $this->response->setJSON(['message' => 'Obat berhasil dihapus']);
+            } catch (DatabaseException $e) {
+                // Log the error message
+                log_message('error', $e->getMessage());
 
-            // Hapus obat dari tabel obat
-            $this->ObatModel->delete($id);
-
-            // Set ulang auto_increment
-            $db->query('ALTER TABLE `obat` auto_increment = 1');
-            $db->query('ALTER TABLE `detail_pembelian_obat` auto_increment = 1');
-            $db->query('ALTER TABLE `detail_resep` auto_increment = 1');
-
-            // Perbarui total_qty dan total_biaya di tabel pembelian_obat setelah penghapusan
-            if ($obatDetail) {
-                $id_pembelian_obat = $obatDetail->id_pembelian_obat;
-
-                // Hitung ulang total_qty dan total_biaya berdasarkan detail pembelian yang tersisa
-                $result = $db->query("
-            SELECT SUM(jumlah) as total_qty, SUM(harga_satuan * jumlah) as total_biaya 
-            FROM detail_pembelian_obat 
-            WHERE id_pembelian_obat = ?", [$id_pembelian_obat])->getRow();
-
-                $total_qty = $result->total_qty ?? 0;
-                $total_biaya = $result->total_biaya ?? 0;
-
-                // Update tabel pembelian_obat dengan total_qty dan total_biaya yang baru
-                $db->query("
-            UPDATE pembelian_obat 
-            SET total_qty = ?, total_biaya = ? 
-            WHERE id_pembelian_obat = ?", [$total_qty, $total_biaya, $id_pembelian_obat]);
+                // Return a generic error message
+                return $this->response->setStatusCode(500)->setJSON([
+                    'error' => $e->getMessage(),
+                ]);
             }
-            if ($resepDetail) {
-                $id_resep = $resepDetail->id_resep;
-
-                // Hitung ulang jumlah_resep dan total_biaya berdasarkan detail pembelian yang tersisa
-                $result = $db->query("
-            SELECT SUM(jumlah) as jumlah_resep, SUM(harga_satuan * jumlah) as total_biaya 
-            FROM detail_resep 
-            WHERE id_resep = ?", [$id_resep])->getRow();
-
-                $jumlah_resep = $result->jumlah_resep ?? 0;
-                $total_biaya = $result->total_biaya ?? 0;
-
-                // Update tabel resep dengan jumlah_resep dan total_biaya yang baru
-                $db->query("
-            UPDATE resep 
-            SET jumlah_resep = ?, total_biaya = ? 
-            WHERE id_resep = ?", [$jumlah_resep, $total_biaya, $id_resep]);
-            }
-            return $this->response->setJSON(['message' => 'Obat berhasil dihapus']);
         } else {
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan',

@@ -179,7 +179,7 @@ class PembelianObat extends BaseController
     {
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
             $db = db_connect();
-            $this->PembelianObatModel->delete($id);
+            $this->PembelianObatModel->where('diterima', 0)->delete($id);
             $db->query('ALTER TABLE `pembelian_obat` auto_increment = 1');
             $db->query('ALTER TABLE `detail_pembelian_obat` auto_increment = 1');
             return $this->response->setJSON(['message' => 'Obat berhasil dihapus']);
@@ -231,38 +231,6 @@ class PembelianObat extends BaseController
                     ->update();
             }
             return $this->response->setJSON(['success' => true, 'message' => 'Obat sudah diterima. Periksa jumlah masuk di menu obat.']);
-        } else {
-            return $this->response->setStatusCode(404)->setJSON([
-                'error' => 'Halaman tidak ditemukan',
-            ]);
-        }
-    }
-
-    public function cancel($id)
-    {
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
-            $db = db_connect();
-            $details = $db->table('detail_pembelian_obat')
-                ->where('id_pembelian_obat', $id)
-                ->get()
-                ->getResultArray();
-
-            foreach ($details as $detail) {
-                $id_obat = $detail['id_obat'];
-                $jumlah_masuk = $detail['jumlah'];
-                $db->table('obat')
-                    ->set('jumlah_masuk', "jumlah_masuk - $jumlah_masuk", false) // false untuk menghindari quoting otomatis
-                    ->set('updated_at', date('Y-m-d H:i:s'))
-                    ->where('id_obat', $id_obat)
-                    ->update();
-            }
-
-            $db->table('pembelian_obat')
-                ->set('diterima', 0)
-                ->where('id_pembelian_obat', $id)
-                ->update();
-
-            return $this->response->setJSON(['message' => 'Pembelian obat telah dibatalkan. Jumlah masuk obat telah dikurangi.']);
         } else {
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan',
@@ -346,7 +314,7 @@ class PembelianObat extends BaseController
                 if (!$isUsed) {
                     $options[] = [
                         'value' => $row['id_obat'],
-                        'text' => $row['nama_obat'] . ' (' . $row['kategori_obat'] . ' • ' . $row['bentuk_obat'] . ' • Rp' . $harga_obat_terformat . ' • ' . $row['dosis_kali'] . ' × ' . $row['dosis_hari'] . ' hari • ' . $row['cara_pakai'] . ')'
+                        'text' => $row['nama_obat'] . ' (' . $row['kategori_obat'] . ' • ' . $row['bentuk_obat'] . ' • Rp' . $harga_obat_terformat . ')'
                     ];
                 }
             }

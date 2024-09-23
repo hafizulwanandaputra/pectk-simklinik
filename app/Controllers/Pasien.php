@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\PasienModel;
+use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Exceptions\PageNotFoundException;
 
 class Pasien extends BaseController
@@ -271,9 +272,19 @@ class Pasien extends BaseController
     {
         if (session()->get('role') == 'Admin') {
             $db = db_connect();
-            $this->PasienModel->delete($id);
-            $db->query('ALTER TABLE `pasien` auto_increment = 1');
-            return $this->response->setJSON(['message' => 'Pasien berhasil dihapus']);
+            try {
+                $this->PasienModel->delete($id);
+                $db->query('ALTER TABLE `pasien` auto_increment = 1');
+                return $this->response->setJSON(['message' => 'Pasien berhasil dihapus']);
+            } catch (DatabaseException $e) {
+                // Log the error message
+                log_message('error', $e->getMessage());
+
+                // Return a generic error message
+                return $this->response->setStatusCode(500)->setJSON([
+                    'error' => $e->getMessage(),
+                ]);
+            }
         } else {
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan',
