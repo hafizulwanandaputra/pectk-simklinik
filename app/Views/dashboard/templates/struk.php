@@ -12,8 +12,23 @@
         }
 
         body {
-            font-family: Arial, Helvetica, sans-serif;
-            font-size: 10pt;
+            font-family: Helvetica, Arial, sans-serif;
+            font-size: 9pt;
+        }
+
+        #listTable {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+
+        #listTable tr {
+            border: none;
+        }
+
+        #listTable th,
+        #listTable td {
+            border-right: solid 1px;
+            border-left: solid 1px;
         }
     </style>
     <?= $this->renderSection('css'); ?>

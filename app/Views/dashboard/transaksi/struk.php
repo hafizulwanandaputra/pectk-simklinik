@@ -7,21 +7,23 @@ $tanggal = Time::parse($transaksi['tgl_transaksi']);
 <?= $this->extend('dashboard/templates/struk'); ?>
 <?= $this->section('content'); ?>
 <div class="container-fluid my-3">
-    <table class="table table-borderless" style="width: 100%; margin-bottom: 4px;">
+    <table class="table table-borderless" style="width: 100%; margin-bottom: 4px; border-bottom: 2px solid black;">
         <thead>
             <tr>
-                <th>
-                    <div style="margin: 0;">KLINIK MATA PECTK</div>
+                <th style="width: 0%;">
+                    <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/logo_pec.png')) ?>" width="64px" alt="">
                 </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td style="border-bottom: 1px solid black; text-align: center;">
-                    <div style="margin: 0;">Jl. Rusdi S. Abrus LK III Sinambek, Kelurahan Sungai Jering, Kecamatan Kuantan Tengah, Kabupaten Kuantan Singingi, Riau.</div>
+                <td style="width: 100%;">
+                    <h2 style="margin: 0; padding: 0;">KLINIK MATA PECTK</h2>
+                    <div>
+                        <div>Jl. Rusdi S. Abrus LK III Sinambek, Kelurahan Sungai Jering, Kecamatan Kuantan Tengah, Kabupaten Kuantan Singingi, Riau.</div>
+                    </div>
+                </td>
+                <td style="width: 0%;">
+                    <div style="font-size: 18pt;">KWITANSI</div>
                 </td>
             </tr>
-        </tbody>
+        </thead>
     </table>
     <table class="table table-borderless" style="width: 100%; margin-bottom: 4px;">
         <tbody>
@@ -71,36 +73,102 @@ $tanggal = Time::parse($transaksi['tgl_transaksi']);
             </tr>
         </tbody>
     </table>
-    <table class="table table-borderless" style="width: 100%; margin-bottom: 4px;">
+    <table id="listTable" class="table table-borderless" style="width: 100%; margin-bottom: 4px;">
         <thead>
-            <tr>
-                <th colspan="4" style="vertical-align: top; padding: 0; text-align: left;">Obat dan Alkes</th>
+            <tr style="border: 1px solid">
+                <th colspan="5" style="vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: left;">Tindakan</th>
             </tr>
-            <tr>
-                <th colspan="4" style="border-bottom: 1px solid black;"></th>
-            </tr>
-            <tr>
-                <th style="width: 100%; vertical-align: top; padding: 0; text-align: left;">
+            <tr style="border: 1px solid">
+                <th style="width: 100%; vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: left;">
                     Deskripsi
                 </th>
-                <th style="width: 0%; vertical-align: top; padding: 0; text-align: center;">
+                <th style="width: 0%; vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: center;">
+                    Qty
+                </th>
+                <th style="width: 0%; vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: center;">
                     Biaya
                 </th>
-                <th style="width: 0%; vertical-align: top; padding: 0; text-align: center; white-space: nowrap;">
+                <th style="width: 0%; vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: center; white-space: nowrap;">
                     Disc %
                 </th>
-                <th style="width: 0%; vertical-align: top; padding: 0; text-align: center; white-space: nowrap;">
+                <th style="width: 0%; vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: center; white-space: nowrap;">
                     Sub Total
                 </th>
             </tr>
-            <tr>
-                <th colspan="4" style="border-bottom: 1px solid black;"></th>
+        </thead>
+        <tbody>
+            <tr style="border: 1px solid">
+                <td style="vertical-align: top; padding-left: 2px; padding-right: 2px;">
+                    <ol style="margin: 0; padding-left: 2rem;">
+                        <?php foreach ($layanan as $list) : ?>
+                            <li><?= $list['layanan']['nama_layanan'] ?></li>
+                        <?php endforeach; ?>
+                        </ul>
+                    </ol>
+                </td>
+                <td style="vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
+                    <ul style="margin: 0; padding-left: 0; list-style-type:none;">
+                        <?php foreach ($layanan as $list) : ?>
+                            <li><?= $list['qty_transaksi'] ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </td>
+                <td style="vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
+                    <ul style="margin: 0; padding-left: 0; list-style-type:none;">
+                        <?php foreach ($layanan as $list) : ?>
+                            <li><?= 'Rp' . number_format($list['harga_transaksi'], 0, ',', '.') ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </td>
+                <td style="vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
+                    <ul style="margin: 0; padding-left: 0; list-style-type:none;">
+                        <?php foreach ($layanan as $list) : ?>
+                            <li><?= $list['diskon'] ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </td>
+                <td style="vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
+                    <ul style="margin: 0; padding-left: 0; list-style-type:none;">
+                        <?php foreach ($layanan as $list) : ?>
+                            <li><?= 'Rp' . number_format(($list['harga_transaksi'] * $list['qty_transaksi']) * (1 - ($list['diskon'] / 100)), 0, ',', '.') ?></li>
+                        <?php endforeach; ?>
+                    </ul>
+                </td>
+            </tr>
+            <tr style="border: 1px solid">
+                <th colspan="4" style="vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
+                    Sub Total
+                </th>
+                <th style="vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
+                    <?= 'Rp' . number_format($total_layanan['harga_transaksi'], 0, ',', '.') ?>
+                </th>
+            </tr>
+        </tbody>
+    </table>
+    <table id="listTable" class="table table-borderless" style="width: 100%; margin-bottom: 4px;">
+        <thead>
+            <tr style="border: 1px solid">
+                <th colspan="4" style="vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: left;">Obat dan Alkes</th>
+            </tr>
+            <tr style="border: 1px solid">
+                <th style="width: 100%; vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: left;">
+                    Deskripsi
+                </th>
+                <th style="width: 0%; vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: center;">
+                    Biaya
+                </th>
+                <th style="width: 0%; vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: center; white-space: nowrap;">
+                    Disc %
+                </th>
+                <th style="width: 0%; vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: center; white-space: nowrap;">
+                    Sub Total
+                </th>
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($detail_transaksi as $list) : ?>
-                <tr>
-                    <td style="vertical-align: top; padding: 0;">
+            <?php foreach ($obatalkes as $list) : ?>
+                <tr style="border: 1px solid">
+                    <td style="vertical-align: top; padding-left: 2px; padding-right: 2px;">
                         <ol style="margin: 0; padding-left: 2rem;">
                             <?php foreach ($list['resep']['detail_resep'] as $resep) : ?>
                                 <?php foreach ($resep['obat'] as $obat) : ?>
@@ -109,7 +177,7 @@ $tanggal = Time::parse($transaksi['tgl_transaksi']);
                             <?php endforeach; ?>
                         </ol>
                     </td>
-                    <td style="vertical-align: top; padding: 0; text-align: right; white-space: nowrap;">
+                    <td style="vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
                         <ul style="margin: 0; padding-left: 0; list-style-type:none;">
                             <?php foreach ($list['resep']['detail_resep'] as $resep) : ?>
                                 <?php foreach ($resep['obat'] as $obat) : ?>
@@ -118,50 +186,75 @@ $tanggal = Time::parse($transaksi['tgl_transaksi']);
                             <?php endforeach; ?>
                         </ul>
                     </td>
-                    <!-- <td style="vertical-align: top; padding: 0; text-align: right; white-space: nowrap;">
-                        <?= 'Rp' . number_format($list['harga_resep'], 0, ',', '.') ?>
+                    <!-- <td style="vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
+                        <?= 'Rp' . number_format($list['harga_transaksi'], 0, ',', '.') ?>
                     </td> -->
-                    <td style="vertical-align: top; padding: 0; text-align: right; white-space: nowrap;">
+                    <td style="vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
                         <?= $list['diskon'] ?>
                     </td>
-                    <td style="vertical-align: top; padding: 0; text-align: right; white-space: nowrap;">
-                        <?= 'Rp' . number_format($list['harga_resep'] * (1 - ($list['diskon'] / 100)), 0, ',', '.') ?>
+                    <td style="vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
+                        <?= 'Rp' . number_format($list['harga_transaksi'] * (1 - ($list['diskon'] / 100)), 0, ',', '.') ?>
                     </td>
-                </tr>
-                <tr>
-                    <th colspan="5" style="border-bottom: 1px solid black;"></th>
                 </tr>
             <?php endforeach; ?>
             <tr>
-                <th colspan="2" style="vertical-align: top; padding: 0; text-align: right; white-space: nowrap;">
-                    Total
+                <th colspan="3" style="vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
+                    Sub Total
                 </th>
-                <th colspan="2" style="vertical-align: top; padding: 0; text-align: right; white-space: nowrap;">
+                <th style="vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
+                    <?= 'Rp' . number_format($total_obatalkes['harga_transaksi'], 0, ',', '.') ?>
+                </th>
+            </tr>
+            <tr>
+                <th colspan="3" style="vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
+                    Grand Total
+                </th>
+                <th style="vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
                     <?= 'Rp' . number_format($transaksi['total_pembayaran'], 0, ',', '.') ?>
                 </th>
             </tr>
             <tr>
-                <td colspan="2" style="vertical-align: top; padding: 0; text-align: right; white-space: nowrap;">
+                <td colspan="3" style="vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
                     Terima Uang
                 </td>
-                <td colspan="2" style="vertical-align: top; padding: 0; text-align: right; white-space: nowrap;">
+                <td style="vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
                     <?= 'Rp' . number_format($transaksi['terima_uang'], 0, ',', '.') ?>
                 </td>
             </tr>
             <tr>
-                <td colspan="2" style="vertical-align: top; padding: 0; text-align: right; white-space: nowrap;">
+                <td colspan="3" style="vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
                     Uang Kembali
                 </td>
-                <td colspan="2" style="vertical-align: top; padding: 0; text-align: right; white-space: nowrap;">
+                <td style="vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
                     <?= 'Rp' . number_format($transaksi['uang_kembali'], 0, ',', '.') ?>
                 </td>
             </tr>
             <tr>
-                <td colspan="2" style="vertical-align: top; padding: 0; text-align: right; white-space: nowrap;">
+                <td colspan="3" style="vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
                     Metode Bayar
                 </td>
-                <td colspan="2" style="vertical-align: top; padding: 0; text-align: right; white-space: nowrap;">
+                <td style="vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
                     <?= $transaksi['metode_pembayaran'] ?>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-borderless" style="width: 100%; margin-bottom: 4px;">
+        <tbody>
+            <tr>
+                <td style="width: 50%; text-align: center; vertical-align: top; padding-bottom: 1.25cm;">
+                    <div>Penerima</div>
+                </td>
+                <td style="width: 50%; text-align: center; vertical-align: top; padding-bottom: 1.25cm;">
+                    <div>Kasir</div>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 50%; text-align: center; vertical-align: top;">
+                    <div><?= $transaksi['nama_pasien'] ?></div>
+                </td>
+                <td style="width: 50%; text-align: center; vertical-align: top;">
+                    <div><?= $transaksi['fullname'] ?></div>
                 </td>
             </tr>
         </tbody>

@@ -342,6 +342,7 @@
             try {
                 await axios.delete(`<?= base_url('/transaksi/delete') ?>/${transaksiId}`);
                 showSuccessToast('Transaksi berhasil dihapus.');
+                fetchPasienOptions();
                 fetchTransaksi();
             } catch (error) {
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);

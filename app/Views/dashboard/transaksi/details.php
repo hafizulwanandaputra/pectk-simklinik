@@ -17,109 +17,165 @@
 
     <fieldset class="border rounded-3 px-2 py-0 mb-3">
         <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Informasi Transaksi</legend>
-        <div style="font-size: 9pt;">
-            <div class="mb-2 row">
-                <div class="col-lg-3 fw-medium">Nomor Kwitansi</div>
-                <div class="col-lg">
-                    <div class="date">
-                        <?= $transaksi['no_kwitansi'] ?>
+        <div class="row">
+            <div class="col-lg-6" style="font-size: 9pt;">
+                <div class="mb-2 row">
+                    <div class="col-lg-4 fw-medium">Nama Pasien</div>
+                    <div class="col-lg">
+                        <div>
+                            <?= $transaksi['nama_pasien'] ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-2 row">
+                    <div class="col-lg-4 fw-medium">Nomor MR</div>
+                    <div class="col-lg">
+                        <div class="date">
+                            <?= $transaksi['no_mr'] ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-2 row">
+                    <div class="col-lg-4 fw-medium">Alamat</div>
+                    <div class="col-lg">
+                        <div>
+                            <?= $transaksi['alamat_pasien'] ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-2 row">
+                    <div class="col-lg-4 fw-medium">Nomor HP</div>
+                    <div class="col-lg">
+                        <div class="date">
+                            <?= $transaksi['no_hp_pasien'] ?>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="mb-2 row">
-                <div class="col-lg-3 fw-medium">Tanggal dan Waktu</div>
-                <div class="col-lg">
-                    <div class="date">
-                        <?= $transaksi['tgl_transaksi'] ?>
+            <div class="col-lg-6" style="font-size: 9pt;">
+                <div class="mb-2 row">
+                    <div class="col-lg-4 fw-medium">Nomor Kwitansi</div>
+                    <div class="col-lg">
+                        <div class="date">
+                            <?= $transaksi['no_kwitansi'] ?>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="mb-2 row">
-                <div class="col-lg-3 fw-medium">Nama Pasien</div>
-                <div class="col-lg">
-                    <div>
-                        <?= $transaksi['nama_pasien'] ?>
+                <div class="mb-2 row">
+                    <div class="col-lg-4 fw-medium">Tanggal dan Waktu</div>
+                    <div class="col-lg">
+                        <div class="date">
+                            <?= $transaksi['tgl_transaksi'] ?>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="mb-2 row">
-                <div class="col-lg-3 fw-medium">Nomor MR</div>
-                <div class="col-lg">
-                    <div class="date">
-                        <?= $transaksi['no_mr'] ?>
-                    </div>
-                </div>
-            </div>
-            <div class="mb-2 row">
-                <div class="col-lg-3 fw-medium">Nomor Registrasi</div>
-                <div class="col-lg">
-                    <div class="date">
-                        <?= $transaksi['no_registrasi'] ?>
-                    </div>
-                </div>
-            </div>
-            <div class="mb-2 row">
-                <div class="col-lg-3 fw-medium">Alamat</div>
-                <div class="col-lg">
-                    <div>
-                        <?= $transaksi['alamat_pasien'] ?>
-                    </div>
-                </div>
-            </div>
-            <div class="mb-2 row">
-                <div class="col-lg-3 fw-medium">Nomor HP</div>
-                <div class="col-lg">
-                    <div class="date">
-                        <?= $transaksi['no_hp_pasien'] ?>
-                    </div>
-                </div>
-            </div>
-            <div class="mb-2 row">
-                <div class="col-lg-3 fw-medium">Kasir</div>
-                <div class="col-lg">
-                    <div>
-                        <?= $transaksi['fullname'] ?>
+                <div class="mb-2 row">
+                    <div class="col-lg-4 fw-medium">Kasir</div>
+                    <div class="col-lg">
+                        <div>
+                            <?= $transaksi['fullname'] ?>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </fieldset>
 
-    <fieldset id="tambahObatAlkesContainer" class="border rounded-3 px-2 py-0 mb-3" style="display: none;">
-        <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Tambah Obat dan Alkes</legend>
-        <form id="tambahObatAlkes" enctype="multipart/form-data">
-            <div class="mb-2">
-                <select class="form-select rounded-3" id="id_resep" name="id_resep" aria-label="id_resep">
-                    <option value="" disabled selected>-- Pilih Resep --</option>
-                </select>
-                <div class="invalid-feedback"></div>
-            </div>
-            <div class="d-flex flex-column flex-lg-row mb-2 gap-2">
-                <div class="flex-fill">
-                    <input type="number" id="diskon" name="diskon" class="form-control rounded-3" placeholder="Diskon (%)">
-                    <div class="invalid-feedback"></div>
-                </div>
-                <div class="d-grid d-lg-block w-auto">
-                    <button type="submit" id="addButton" class="btn btn-primary bg-gradient rounded-3 text-nowrap">
-                        <i class="fa-solid fa-plus"></i> Tambah
-                    </button>
-                </div>
-            </div>
-        </form>
-    </fieldset>
+    <div class="row">
+        <div class="col-lg-6">
+            <fieldset id="tambahLayananContainer" class="border rounded-3 px-2 py-0 mb-3" style="display: none;">
+                <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Tambah Tindakan</legend>
+                <form id="tambahLayanan" enctype="multipart/form-data">
+                    <div class="mb-2">
+                        <select class="form-select rounded-3" id="id_layanan" name="id_layanan" aria-label="id_layanan">
+                            <option value="" disabled selected>-- Pilih Tindakan --</option>
+                        </select>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="d-flex flex-column flex-lg-row mb-2 gap-2">
+                        <div class="flex-fill">
+                            <input type="number" id="qty_transaksi" name="qty_transaksi" class="form-control rounded-3" placeholder="Qty">
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="flex-fill">
+                            <input type="number" id="diskon_layanan" name="diskon_layanan" class="form-control rounded-3" placeholder="Diskon (%)">
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="d-grid d-lg-block w-auto">
+                            <button type="submit" id="addLayananButton" class="btn btn-primary bg-gradient rounded-3 text-nowrap">
+                                <i class="fa-solid fa-plus"></i> Tambah
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </fieldset>
+        </div>
+        <div class="col-lg-6">
+            <fieldset id="tambahObatAlkesContainer" class="border rounded-3 px-2 py-0 mb-3" style="display: none;">
+                <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Tambah Obat dan Alkes</legend>
+                <form id="tambahObatAlkes" enctype="multipart/form-data">
+                    <div class="mb-2">
+                        <select class="form-select rounded-3" id="id_resep" name="id_resep" aria-label="id_resep">
+                            <option value="" disabled selected>-- Pilih Resep --</option>
+                        </select>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="d-flex flex-column flex-lg-row mb-2 gap-2">
+                        <div class="flex-fill">
+                            <input type="number" id="diskon_obatalkes" name="diskon_obatalkes" class="form-control rounded-3" placeholder="Diskon (%)">
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="d-grid d-lg-block w-auto">
+                            <button type="submit" id="addObatAlkesButton" class="btn btn-primary bg-gradient rounded-3 text-nowrap">
+                                <i class="fa-solid fa-plus"></i> Tambah
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </fieldset>
+        </div>
+    </div>
 
     <div class="table-responsive">
         <table class="table table-sm table-hover mb-0" style="width:100%; font-size: 9pt;">
             <thead>
                 <tr class="align-middle">
-                    <th scope="col" class="bg-body-secondary border-secondary text-nowrap tindakan" style="border-bottom-width: 2px; width: 0%;">Tindakan</th>
-                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">Resep</th>
+                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;" colspan="2">Tindakan</th>
+                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Qty</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Harga</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Diskon</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Pembayaran</th>
                 </tr>
             </thead>
-            <tbody class="align-top" id="detail_transaksi">
+            <tbody class="align-top" id="list_layanan">
+                <tr>
+                    <td colspan="6" class="text-center">Memuat detail transaksi...</td>
+                </tr>
+            </tbody>
+            <tbody class="align-top">
+            </tbody>
+            <thead>
+                <tr>
+                    <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 2px;" colspan="5">Sub Total</th>
+                    <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="subtotal_layanan"></th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+
+    <div class="my-3"></div>
+
+    <div class="table-responsive">
+        <table class="table table-sm table-hover mb-0" style="width:100%; font-size: 9pt;">
+            <thead>
+                <tr class="align-middle">
+                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;" colspan="2">Obat dan Alkes</th>
+                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Harga</th>
+                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Diskon</th>
+                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Pembayaran</th>
+                </tr>
+            </thead>
+            <tbody class="align-top" id="list_obat_alkes">
                 <tr>
                     <td colspan="5" class="text-center">Memuat detail transaksi...</td>
                 </tr>
@@ -128,24 +184,24 @@
             </tbody>
             <thead>
                 <tr>
-                    <th scope="col" class="bg-body-secondary border-secondary text-nowrap" style="border-bottom-width: 0; border-top-width: 2px;" colspan="1"></th>
-                    <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 2px;">Total</th>
-                    <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" colspan="3" id="total_pembayaran"></th>
+                    <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 2px;" colspan="4">Sub Total</th>
+                    <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="subtotal_obat_alkes"></th>
                 </tr>
                 <tr>
-                    <th scope="col" class="bg-body-secondary border-secondary text-nowrap" style="border-bottom-width: 0; border-top-width: 0px;" colspan="1"></th>
-                    <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 0px;">Terima Uang</th>
-                    <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 0px;" colspan="3" id="terima_uang_table"></th>
+                    <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 0px;" colspan="4">Grand Total</th>
+                    <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 0px;" id="total_pembayaran"></th>
                 </tr>
                 <tr>
-                    <th scope="col" class="bg-body-secondary border-secondary text-nowrap" style="border-bottom-width: 0; border-top-width: 0px;" colspan="1"></th>
-                    <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 0px;">Uang Kembali</th>
-                    <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 0px;" colspan="3" id="uang_kembali_table"></th>
+                    <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 0px;" colspan="4">Terima Uang</th>
+                    <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 0px;" id="terima_uang_table"></th>
                 </tr>
                 <tr>
-                    <th scope="col" class="bg-body-secondary border-secondary text-nowrap" style="border-bottom-width: 0; border-top-width: 0px;" colspan="1"></th>
-                    <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 0px;">Metode Bayar</th>
-                    <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 0px;" colspan="3" id="metode_pembayaran_table"></th>
+                    <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 0px;" colspan="4">Uang Kembali</th>
+                    <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 0px;" id="uang_kembali_table"></th>
+                </tr>
+                <tr>
+                    <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 0px;" colspan="4">Metode Bayar</th>
+                    <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 0px;" id="metode_pembayaran_table"></th>
                 </tr>
             </thead>
         </table>
@@ -195,6 +251,16 @@
                         <label for="metode_pembayaran">Metode Pembayaran*</label>
                         <div class="invalid-feedback"></div>
                     </div>
+                    <div id="mediaAlert" class="alert alert-info bg-gradient rounded-3 mb-1 mt-1" role="alert">
+                        <div class="d-flex align-items-start">
+                            <div style="width: 12px; text-align: center;">
+                                <i class="fa-solid fa-circle-info"></i>
+                            </div>
+                            <div class="w-100 ms-3">
+                                Pastikan Anda telah memasukkan nominal transaksi sesuai dengan grand total yang diminta dan telah menyelesaikan proses pembayaran.
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer justify-content-end pt-2 pb-2" style="border-top: 1px solid var(--bs-border-color-translucent);">
                     <button type="submit" id="submitButton" class="btn btn-primary bg-gradient rounded-3">
@@ -215,6 +281,27 @@
 <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.colVis.min.js"></script>
 <script>
+    async function fetchTindakanOptions() {
+        try {
+            const response = await axios.get('<?= base_url('transaksi/layananlist/' . $transaksi['id_transaksi']) ?>) ?>');
+
+            if (response.data.success) {
+                const options = response.data.data;
+                const select = $('#id_layanan');
+
+                // Clear existing options except the first one
+                select.find('option:not(:first)').remove();
+
+                // Loop through the options and append them to the select element
+                options.forEach(option => {
+                    select.append(`<option value="${option.value}">${option.text}</option>`);
+                });
+            }
+        } catch (error) {
+            showFailedToast('Gagal mendapatkan layanan.<br>' + error);
+        }
+    }
+
     async function fetchResepOptions() {
         try {
             const response = await axios.get('<?= base_url('transaksi/reseplist/' . $transaksi['id_transaksi'] . '/' . $transaksi['id_pasien']) ?>) ?>');
@@ -244,18 +331,22 @@
 
             const data = response.data;
 
+            const total_pembayaran = parseInt(data.total_pembayaran);
             const terima_uang = parseInt(data.terima_uang);
             const uang_kembali = parseInt(data.uang_kembali);
 
+            $('#total_pembayaran').text(`Rp${total_pembayaran.toLocaleString('id-ID')}`);
             $('#terima_uang_table').text(`Rp${terima_uang.toLocaleString('id-ID')}`);
             $('#uang_kembali_table').text(`Rp${uang_kembali.toLocaleString('id-ID')}`);
             $('#metode_pembayaran_table').text(data.metode_pembayaran);
 
             // Cek status `lunas`
             if (data.lunas === "1") {
+                $('#tambahLayananContainer').hide();
                 $('#tambahObatAlkesContainer').hide();
                 $('#printBtn').prop('disabled', false);
             } else if (data.lunas === "0") {
+                $('#tambahLayananContainer').show();
                 $('#tambahObatAlkesContainer').show();
                 $('#printBtn').prop('disabled', true);
             }
@@ -267,14 +358,83 @@
         }
     }
 
-    async function fetchDetailTransaksi() {
+    async function fetchLayanan() {
         $('#loadingSpinner').show();
 
         try {
-            const response = await axios.get('<?= base_url('transaksi/detailtransaksilist/') . $transaksi['id_transaksi'] ?>');
+            const response = await axios.get('<?= base_url('transaksi/detaillayananlist/') . $transaksi['id_transaksi'] ?>');
 
             const data = response.data;
-            $('#detail_transaksi').empty();
+            $('#list_layanan').empty();
+
+            let totalPembayaran = 0;
+
+            if (data.length === 0) {
+                // Tampilkan pesan jika tidak ada data
+                const emptyRow = `
+                    <tr>
+                        <td colspan="6" class="text-center">Tidak ada tindakan yang ditransaksikan</td>
+                    </tr>
+                `;
+                $('#list_layanan').append(emptyRow);
+                $('#processBtn').prop('disabled', true);
+            } else {
+                data.forEach(function(layanan) {
+                    const diskon = parseInt(layanan.diskon); // Konversi jumlah ke integer
+                    const qty_transaksi = parseInt(layanan.qty_transaksi);
+                    const harga_transaksi = parseInt(layanan.harga_transaksi); // Konversi harga satuan ke integer
+                    const total_pembayaran = (harga_transaksi * qty_transaksi) * (1 - (diskon / 100)); // Hitung total harga
+                    totalPembayaran += total_pembayaran;
+                    const tindakanElement = `
+                        <tr>
+                            <td class="tindakan" style="width: 0%;">
+                            <div class="btn-group" role="group">
+                                <button class="btn btn-secondary text-nowrap bg-gradient rounded-start-3 edit-layanan-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${layanan.id_detail_transaksi}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
+                                <button class="btn btn-danger text-nowrap bg-gradient rounded-end-3 delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${layanan.id_detail_transaksi}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        </td>
+                        <td>
+                            <span>${layanan.layanan.nama_layanan}</span>
+                        </td>
+                        <td class="date text-end">${qty_transaksi.toLocaleString('id-ID')}</td>
+                        <td class="date text-end">Rp${harga_transaksi.toLocaleString('id-ID')}</td>
+                        <td class="date text-end">${diskon.toLocaleString('id-ID')}%</td>
+                        <td class="date text-end">Rp${total_pembayaran.toLocaleString('id-ID')}</td>
+                        </tr>
+                    `;
+                    $('#list_layanan').append(tindakanElement);
+                    // Cek status `lunas`
+                    if (layanan.lunas === "1") {
+                        $('.edit-layanan-btn').prop('disabled', true);
+                        $('.delete-btn').prop('disabled', true);
+                        $('#processBtn').prop('disabled', true);
+                    } else if (layanan.lunas === "0") {
+                        $('.edit-layanan-btn').prop('disabled', false);
+                        $('.delete-btn').prop('disabled', false);
+                        $('#processBtn').prop('disabled', false);
+                    }
+                });
+            }
+            const totalPembayaranElement = `Rp${totalPembayaran.toLocaleString('id-ID')}`;
+            $('#subtotal_layanan').text(totalPembayaranElement);
+            $('[data-bs-toggle="tooltip"]').tooltip();
+        } catch (error) {
+            showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+            $('#list_layanan').empty();
+        } finally {
+            // Hide the spinner when done
+            $('#loadingSpinner').hide();
+        }
+    }
+
+    async function fetchObatAlkes() {
+        $('#loadingSpinner').show();
+
+        try {
+            const response = await axios.get('<?= base_url('transaksi/detailobatalkeslist/') . $transaksi['id_transaksi'] ?>');
+
+            const data = response.data;
+            $('#list_obat_alkes').empty();
 
             let totalPembayaran = 0;
 
@@ -285,69 +445,67 @@
                         <td colspan="5" class="text-center">Tidak ada resep yang akan ditransaksikan</td>
                     </tr>
                 `;
-                $('#detail_transaksi').append(emptyRow);
+                $('#list_obat_alkes').append(emptyRow);
                 $('#processBtn').prop('disabled', true);
             } else {
-                data.forEach(function(detail_transaksi) {
-                    const diskon = parseInt(detail_transaksi.diskon); // Konversi jumlah ke integer
-                    const harga_resep = parseInt(detail_transaksi.harga_resep); // Konversi harga satuan ke integer
-                    const total_pembayaran = harga_resep * (1 - (diskon / 100)); // Hitung total harga
+                data.forEach(function(obat_alkes) {
+                    const diskon = parseInt(obat_alkes.diskon); // Konversi jumlah ke integer
+                    const qty_transaksi = parseInt(obat_alkes.qty_transaksi);
+                    const harga_transaksi = parseInt(obat_alkes.harga_transaksi); // Konversi harga satuan ke integer
+                    const total_pembayaran = (harga_transaksi * qty_transaksi) * (1 - (diskon / 100)); // Hitung total harga
                     totalPembayaran += total_pembayaran;
-                    const keterangan = detail_transaksi.resep.keterangan == '' ?
-                        `<em>Tidak ada keterangan</em>` :
-                        `${detail_transaksi.resep.keterangan}`;
                     const tindakanElement = `
                         <tr>
-                            <td class="tindakan" rowspan="1">
+                            <td class="tindakan" style="width: 0%;">
                             <div class="btn-group" role="group">
-                                <button class="btn btn-secondary text-nowrap bg-gradient rounded-start-3 edit-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${detail_transaksi.id_detail_transaksi}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
-                                <button class="btn btn-danger text-nowrap bg-gradient rounded-end-3 delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${detail_transaksi.id_detail_transaksi}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
+                                <button class="btn btn-secondary text-nowrap bg-gradient rounded-start-3 edit-obatalkes-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${obat_alkes.id_detail_transaksi}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
+                                <button class="btn btn-danger text-nowrap bg-gradient rounded-end-3 delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${obat_alkes.id_detail_transaksi}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
                             </div>
                         </td>
                         <td>
-                            <span>${detail_transaksi.resep.user.fullname}</span>
-                            <ul class="mb-0" id="obat-${detail_transaksi.id_detail_transaksi}">
+                            <span>${obat_alkes.resep.user.fullname}</span>
+                            <ul class="mb-0" id="obat-${obat_alkes.id_detail_transaksi}">
                             </ul>
                         </td>
-                        <td class="date text-end">Rp${harga_resep.toLocaleString('id-ID')}</td>
+                        <td class="date text-end">Rp${harga_transaksi.toLocaleString('id-ID')}</td>
                         <td class="date text-end">${diskon.toLocaleString('id-ID')}%</td>
                         <td class="date text-end">Rp${total_pembayaran.toLocaleString('id-ID')}</td>
                         </tr>
                     `;
-                    $('#detail_transaksi').append(tindakanElement);
+                    $('#list_obat_alkes').append(tindakanElement);
                     // Iterasi untuk setiap resep
-                    detail_transaksi.resep.detail_resep.forEach(function(detail_resep) {
+                    obat_alkes.resep.detail_resep.forEach(function(detail_resep) {
                         // Iterasi untuk setiap obat di detail resep
                         detail_resep.obat.forEach(function(obat) {
                             const jumlah = parseInt(detail_resep.jumlah); // Konversi jumlah ke integer
                             const harga_satuan = parseInt(detail_resep.harga_satuan); // Konversi harga satuan ke integer
                             const total_harga = jumlah * harga_satuan; // Hitung total harga
 
-                            const detail_transaksiElement = `
+                            const obat_alkesElement = `
                                 <li>${obat.nama_obat}<br><small>${obat.kategori_obat} • ${obat.bentuk_obat} • ${obat.signa} • ${obat.cara_pakai} • ${jumlah.toLocaleString('id-ID')} × Rp${harga_satuan.toLocaleString('id-ID')} = Rp${total_harga.toLocaleString('id-ID')}<br>${obat.catatan}</small></li>
                             `;
 
-                            $(`#obat-${detail_transaksi.id_detail_transaksi}`).append(detail_transaksiElement);
+                            $(`#obat-${obat_alkes.id_detail_transaksi}`).append(obat_alkesElement);
                         });
                     });
                     // Cek status `lunas`
-                    if (detail_transaksi.lunas === "1") {
-                        $('.edit-btn').prop('disabled', true);
+                    if (obat_alkes.lunas === "1") {
+                        $('.edit-obatalkes-btn').prop('disabled', true);
                         $('.delete-btn').prop('disabled', true);
                         $('#processBtn').prop('disabled', true);
-                    } else if (detail_transaksi.lunas === "0") {
-                        $('.edit-btn').prop('disabled', false);
+                    } else if (obat_alkes.lunas === "0") {
+                        $('.edit-obatalkes-btn').prop('disabled', false);
                         $('.delete-btn').prop('disabled', false);
                         $('#processBtn').prop('disabled', false);
                     }
                 });
             }
             const totalPembayaranElement = `Rp${totalPembayaran.toLocaleString('id-ID')}`;
-            $('#total_pembayaran').text(totalPembayaranElement);
+            $('#subtotal_obat_alkes').text(totalPembayaranElement);
             $('[data-bs-toggle="tooltip"]').tooltip();
         } catch (error) {
             showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
-            $('#detail_transaksi').empty();
+            $('#list_obat_alkes').empty();
         } finally {
             // Hide the spinner when done
             $('#loadingSpinner').hide();
@@ -356,6 +514,12 @@
 
     $(document).ready(function() {
         $('[data-bs-toggle="tooltip"]').tooltip();
+        $('#id_layanan').select2({
+            dropdownParent: $('#tambahLayanan'),
+            theme: "bootstrap-5",
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+        });
         $('#id_resep').select2({
             dropdownParent: $('#tambahObatAlkes'),
             theme: "bootstrap-5",
@@ -379,7 +543,9 @@
 
             try {
                 await axios.delete(`<?= base_url('/transaksi/hapusdetailtransaksi') ?>/${detailTransaksiId}`);
-                fetchDetailTransaksi();
+                fetchLayanan();
+                fetchObatAlkes();
+                fetchTindakanOptions();
                 fetchResepOptions();
                 fetchStatusTransaksi();
             } catch (error) {
@@ -390,12 +556,142 @@
             }
         });
 
-        $(document).on('click', '.edit-btn', async function() {
+        $(document).on('click', '.edit-layanan-btn', async function() {
             const $this = $(this);
             const id = $(this).data('id');
             const $row = $this.closest('tr');
             $('[data-bs-toggle="tooltip"]').tooltip('hide');
             $this.prop('disabled', true).html(`<span class="spinner-border" style="width: 11px; height: 11px;" aria-hidden="true"></span>`);
+            $('#editLayananTransaksi').remove();
+            $('#editObatAlkesTransaksi').remove();
+            try {
+                const response = await axios.get(`<?= base_url('/transaksi/detailtransaksiitem') ?>/${id}`);
+                const formHtml = `
+                <tr id="editLayananTransaksi">
+                    <td colspan="6">
+                        <form id="editLayanan" enctype="multipart/form-data">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <div class="fw-bold">Edit Tindakan</div>
+                                <button id="editLayananCloseBtn" type="button" class="text-end btn-close ms-auto"></button>
+                            </div>
+                            <div class="d-flex flex-column flex-lg-row gap-1">
+                                <input type="hidden" id="id_detail_transaksi" name="id_detail_transaksi" value="${response.data.id_detail_transaksi}">
+                                <div class="flex-fill">
+                                    <input type="number" id="qty_transaksi_edit" name="qty_transaksi_edit" class="form-control rounded-3" placeholder="Diskon (%)" value="${response.data.qty_transaksi}">
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                                <div class="flex-fill">
+                                    <input type="number" id="diskon_layanan_edit" name="diskon_layanan_edit" class="form-control rounded-3" placeholder="Diskon (%)" value="${response.data.diskon}">
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                                <div class="d-grid d-lg-block w-auto">
+                                    <button type="submit" id="editLayananButton" class="btn btn-primary bg-gradient rounded-3">
+                                        <i class="fa-solid fa-pen-to-square"></i> Edit
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </td>
+                </tr>
+                `;
+                // Append the new row with the form directly after the current data row
+                $row.after(formHtml);
+
+                // Handle form submission
+                $('#editLayanan').on('submit', async function(e) {
+                    e.preventDefault();
+
+                    const formData = new FormData(this);
+                    console.log("Form Data:", $(this).serialize());
+
+                    // Clear previous validation states
+                    $('#editLayanan .is-invalid').removeClass('is-invalid');
+                    $('#editLayanan .invalid-feedback').text('').hide();
+                    $('#editLayananButton').prop('disabled', true).html(`
+                        <span class="spinner-border spinner-border-sm" aria-hidden="true"></span> Edit
+                    `);
+
+                    // Disable form inputs
+                    $('#editLayanan input, .btn-close').prop('disabled', true);
+
+                    try {
+                        const response = await axios.post(`<?= base_url('/transaksi/perbaruilayanan/' . $transaksi['id_transaksi']) ?>`, formData, {
+                            headers: {
+                                'Content-Type': 'multipart/form-data'
+                            }
+                        });
+
+                        if (response.data.success) {
+                            $('#editLayanan')[0].reset();
+                            $('#editLayanan .is-invalid').removeClass('is-invalid');
+                            $('#editLayanan .invalid-feedback').text('').hide();
+                            $('#editLayananTransaksi').remove();
+                            fetchLayanan();
+                            fetchObatAlkes();
+                            fetchTindakanOptions();
+                            fetchResepOptions();
+                            fetchStatusTransaksi();
+                        } else {
+                            console.log("Validation Errors:", response.data.errors);
+
+                            // Clear previous validation states
+                            $('#editLayanan .is-invalid').removeClass('is-invalid');
+                            $('#editLayanan .invalid-feedback').text('').hide();
+
+                            // Display new validation errors
+                            for (const field in response.data.errors) {
+                                if (response.data.errors.hasOwnProperty(field)) {
+                                    const fieldElement = $('#' + field);
+                                    const feedbackElement = fieldElement.siblings('.invalid-feedback');
+
+                                    console.log("Target Field:", fieldElement);
+                                    console.log("Target Feedback:", feedbackElement);
+
+                                    if (fieldElement.length > 0 && feedbackElement.length > 0) {
+                                        fieldElement.addClass('is-invalid');
+                                        feedbackElement.text(response.data.errors[field]).show();
+
+                                        // Remove error message when the user corrects the input
+                                        fieldElement.on('input change', function() {
+                                            $(this).removeClass('is-invalid');
+                                            $(this).siblings('.invalid-feedback').text('').hide();
+                                        });
+                                    } else {
+                                        console.warn("Elemen tidak ditemukan pada field:", field);
+                                    }
+                                }
+                            }
+                            console.error('Perbaiki kesalahan pada formulir.');
+                        }
+                    } catch (error) {
+                        showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                    } finally {
+                        $('#editLayananButton').prop('disabled', false).html(`
+                            <i class="fa-solid fa-pen-to-square"></i> Edit
+                        `);
+                        $('#editLayanan input, .btn-close').prop('disabled', false);
+                    }
+                });
+
+                // Handle cancel button
+                $('#editLayananCloseBtn').on('click', function() {
+                    $('#editLayananTransaksi').remove();
+                });
+            } catch (error) {
+                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                console.error(error);
+            } finally {
+                $this.prop('disabled', false).html(`<i class="fa-solid fa-pen-to-square"></i>`);
+            }
+        });
+
+        $(document).on('click', '.edit-obatalkes-btn', async function() {
+            const $this = $(this);
+            const id = $(this).data('id');
+            const $row = $this.closest('tr');
+            $('[data-bs-toggle="tooltip"]').tooltip('hide');
+            $this.prop('disabled', true).html(`<span class="spinner-border" style="width: 11px; height: 11px;" aria-hidden="true"></span>`);
+            $('#editLayananTransaksi').remove();
             $('#editObatAlkesTransaksi').remove();
             try {
                 const response = await axios.get(`<?= base_url('/transaksi/detailtransaksiitem') ?>/${id}`);
@@ -405,16 +701,16 @@
                         <form id="editObatAlkes" enctype="multipart/form-data">
                             <div class="d-flex justify-content-between align-items-center mb-1">
                                 <div class="fw-bold">Edit Diskon (%)</div>
-                                <button type="button" class="text-end btn-close ms-auto cancel-edit"></button>
+                                <button id="editObatAlkesCloseBtn" type="button" class="text-end btn-close ms-auto"></button>
                             </div>
                             <div class="d-flex flex-column flex-lg-row gap-1">
                                 <input type="hidden" id="id_detail_transaksi" name="id_detail_transaksi" value="${response.data.id_detail_transaksi}">
                                 <div class="flex-fill">
-                                    <input type="number" id="diskon_edit" name="diskon_edit" class="form-control rounded-3" placeholder="Diskon (%)" value="${response.data.diskon}">
+                                    <input type="number" id="diskon_obatalkes_edit" name="diskon_obatalkes_edit" class="form-control rounded-3" placeholder="Diskon (%)" value="${response.data.diskon}">
                                     <div class="invalid-feedback"></div>
                                 </div>
                                 <div class="d-grid d-lg-block w-auto">
-                                    <button type="submit" id="editButton" class="btn btn-primary bg-gradient rounded-3">
+                                    <button type="submit" id="editObatAlkesButton" class="btn btn-primary bg-gradient rounded-3">
                                         <i class="fa-solid fa-pen-to-square"></i> Edit
                                     </button>
                                 </div>
@@ -436,7 +732,7 @@
                     // Clear previous validation states
                     $('#editObatAlkes .is-invalid').removeClass('is-invalid');
                     $('#editObatAlkes .invalid-feedback').text('').hide();
-                    $('#editButton').prop('disabled', true).html(`
+                    $('#editObatAlkesButton').prop('disabled', true).html(`
                         <span class="spinner-border spinner-border-sm" aria-hidden="true"></span> Edit
                     `);
 
@@ -444,7 +740,7 @@
                     $('#editObatAlkes input, .btn-close').prop('disabled', true);
 
                     try {
-                        const response = await axios.post(`<?= base_url('/transaksi/perbaruidetailtransaksi/' . $transaksi['id_transaksi']) ?>`, formData, {
+                        const response = await axios.post(`<?= base_url('/transaksi/perbaruiobatalkes/' . $transaksi['id_transaksi']) ?>`, formData, {
                             headers: {
                                 'Content-Type': 'multipart/form-data'
                             }
@@ -455,7 +751,9 @@
                             $('#editObatAlkes .is-invalid').removeClass('is-invalid');
                             $('#editObatAlkes .invalid-feedback').text('').hide();
                             $('#editObatAlkesTransaksi').remove();
-                            fetchDetailTransaksi();
+                            fetchLayanan();
+                            fetchObatAlkes();
+                            fetchTindakanOptions();
                             fetchResepOptions();
                             fetchStatusTransaksi();
                         } else {
@@ -493,7 +791,7 @@
                     } catch (error) {
                         showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
                     } finally {
-                        $('#editButton').prop('disabled', false).html(`
+                        $('#editObatAlkesButton').prop('disabled', false).html(`
                             <i class="fa-solid fa-pen-to-square"></i> Edit
                         `);
                         $('#editObatAlkes input, .btn-close').prop('disabled', false);
@@ -501,7 +799,7 @@
                 });
 
                 // Handle cancel button
-                $('.cancel-edit').on('click', function() {
+                $('#editObatAlkesCloseBtn').on('click', function() {
                     $('#editObatAlkesTransaksi').remove();
                 });
             } catch (error) {
@@ -509,6 +807,83 @@
                 console.error(error);
             } finally {
                 $this.prop('disabled', false).html(`<i class="fa-solid fa-pen-to-square"></i>`);
+            }
+        });
+
+        $('#tambahLayanan').submit(async function(e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+            console.log("Form Data:", $(this).serialize());
+
+            // Clear previous validation states
+            $('#tambahLayanan .is-invalid').removeClass('is-invalid');
+            $('#tambahLayanan .invalid-feedback').text('').hide();
+            $('#addLayananButton').prop('disabled', true).html(`
+                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span> Tambah
+            `);
+
+            // Disable form inputs
+            $('#tambahLayanan input, #tambahLayanan select').prop('disabled', true);
+
+            try {
+                const response = await axios.post(`<?= base_url('/transaksi/tambahlayanan/' . $transaksi['id_transaksi']) ?>`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
+
+                if (response.data.success) {
+                    $('#tambahLayanan')[0].reset();
+                    $('#id_layanan').val(null).trigger('change');
+                    $('#qty_transaksi').val('');
+                    $('#diskon_layanan').val('');
+                    $('#tambahLayanan .is-invalid').removeClass('is-invalid');
+                    $('#tambahLayanan .invalid-feedback').text('').hide();
+                    fetchLayanan();
+                    fetchObatAlkes();
+                    fetchTindakanOptions();
+                    fetchResepOptions();
+                    fetchStatusTransaksi();
+                } else {
+                    console.log("Validation Errors:", response.data.errors);
+
+                    // Clear previous validation states
+                    $('#tambahLayanan .is-invalid').removeClass('is-invalid');
+                    $('#tambahLayanan .invalid-feedback').text('').hide();
+
+                    // Display new validation errors
+                    for (const field in response.data.errors) {
+                        if (response.data.errors.hasOwnProperty(field)) {
+                            const fieldElement = $('#' + field);
+                            const feedbackElement = fieldElement.siblings('.invalid-feedback');
+
+                            console.log("Target Field:", fieldElement);
+                            console.log("Target Feedback:", feedbackElement);
+
+                            if (fieldElement.length > 0 && feedbackElement.length > 0) {
+                                fieldElement.addClass('is-invalid');
+                                feedbackElement.text(response.data.errors[field]).show();
+
+                                // Remove error message when the user corrects the input
+                                fieldElement.on('input change', function() {
+                                    $(this).removeClass('is-invalid');
+                                    $(this).siblings('.invalid-feedback').text('').hide();
+                                });
+                            } else {
+                                console.warn("Elemen tidak ditemukan pada field:", field);
+                            }
+                        }
+                    }
+                    console.error('Perbaiki kesalahan pada formulir.');
+                }
+            } catch (error) {
+                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+            } finally {
+                $('#addLayananButton').prop('disabled', false).html(`
+                    <i class="fa-solid fa-plus"></i> Tambah
+                `);
+                $('#tambahLayanan input, #tambahLayanan select').prop('disabled', false);
             }
         });
 
@@ -521,7 +896,7 @@
             // Clear previous validation states
             $('#tambahObatAlkes .is-invalid').removeClass('is-invalid');
             $('#tambahObatAlkes .invalid-feedback').text('').hide();
-            $('#addButton').prop('disabled', true).html(`
+            $('#addObatAlkesButton').prop('disabled', true).html(`
                 <span class="spinner-border spinner-border-sm" aria-hidden="true"></span> Tambah
             `);
 
@@ -529,7 +904,7 @@
             $('#tambahObatAlkes input, #tambahObatAlkes select').prop('disabled', true);
 
             try {
-                const response = await axios.post(`<?= base_url('/transaksi/tambahdetailtransaksi/' . $transaksi['id_transaksi']) ?>`, formData, {
+                const response = await axios.post(`<?= base_url('/transaksi/tambahobatalkes/' . $transaksi['id_transaksi']) ?>`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }
@@ -537,11 +912,13 @@
 
                 if (response.data.success) {
                     $('#tambahObatAlkes')[0].reset();
-                    $('#id_resep').val('');
-                    $('#diskon').val('');
+                    $('#id_resep').val(null).trigger('change');
+                    $('#diskon_obatalkes').val('');
                     $('#tambahObatAlkes .is-invalid').removeClass('is-invalid');
                     $('#tambahObatAlkes .invalid-feedback').text('').hide();
-                    fetchDetailTransaksi();
+                    fetchLayanan();
+                    fetchObatAlkes();
+                    fetchTindakanOptions();
                     fetchResepOptions();
                     fetchStatusTransaksi();
                 } else {
@@ -579,7 +956,7 @@
             } catch (error) {
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
             } finally {
-                $('#addButton').prop('disabled', false).html(`
+                $('#addObatAlkesButton').prop('disabled', false).html(`
                     <i class="fa-solid fa-plus"></i> Tambah
                 `);
                 $('#tambahObatAlkes input, #tambahObatAlkes select').prop('disabled', false);
@@ -618,7 +995,8 @@
                 if (response.data.success) {
                     showSuccessToast(response.data.message, 'success');
                     $('#transaksiModal').modal('hide');
-                    fetchDetailTransaksi();
+                    fetchLayanan();
+                    fetchObatAlkes();
                     fetchStatusTransaksi();
                 } else {
                     if (response.data.errors == null) {
@@ -674,7 +1052,9 @@
             $('#transaksiForm .invalid-feedback').text('').hide();
         });
 
-        fetchDetailTransaksi();
+        fetchLayanan();
+        fetchObatAlkes();
+        fetchTindakanOptions();
         fetchResepOptions();
         fetchStatusTransaksi();
     });

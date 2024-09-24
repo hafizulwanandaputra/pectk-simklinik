@@ -262,7 +262,7 @@ class Transaksi extends BaseController
                 $transaksi['no_mr'] = $this->formatNoMr($transaksi['no_mr']);
                 $data = [
                     'transaksi' => $transaksi,
-                    'title' => 'Detail Transaksi ' . $id . ' - ' . $this->systemName,
+                    'title' => 'Detail Transaksi ' . $transaksi['no_kwitansi'] . ' - ' . $this->systemName,
                     'headertitle' => 'Detail Transaksi',
                     'agent' => $this->request->getUserAgent()
                 ];
@@ -297,6 +297,7 @@ class Transaksi extends BaseController
                         'id_detail_transaksi' => $row['id_detail_transaksi'],
                         'id_layanan' => $row['id_layanan'],
                         'id_transaksi' => $row['id_transaksi'],
+                        'qty_transaksi' => $row['qty_transaksi'],
                         'harga_transaksi' => $row['harga_transaksi'],
                         'diskon' => $row['diskon'],
                         'lunas' => $row['lunas'],
@@ -504,7 +505,7 @@ class Transaksi extends BaseController
             // Set base validation rules
             $validation->setRules([
                 'id_layanan' => 'required',
-                'qty_transaksi' => 'required|numeric|greater_than_[0]',
+                'qty_transaksi' => 'required|numeric|greater_than[0]',
                 'diskon_layanan' => 'required|numeric|greater_than_equal_to[0]|less_than[100]',
             ]);
 
@@ -552,7 +553,7 @@ class Transaksi extends BaseController
         }
     }
 
-    public function tambahobatlalkes($id)
+    public function tambahobatalkes($id)
     {
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
             // Validate
@@ -614,7 +615,7 @@ class Transaksi extends BaseController
             $validation = \Config\Services::validation();
             // Set base validation rules
             $validation->setRules([
-                'qty_transaksi_edit' => 'required|numeric|greater_than_[0]',
+                'qty_transaksi_edit' => 'required|numeric|greater_than[0]',
                 'diskon_layanan_edit' => 'required|numeric|greater_than_equal_to[0]|less_than[100]',
             ]);
 
@@ -686,7 +687,7 @@ class Transaksi extends BaseController
                 'id_layanan' => NULL,
                 'id_transaksi' => $id,
                 'jenis_transaksi' => $detail_transaksi['jenis_transaksi'],
-                'qty_transaksi' => $this->request->getPost('qty_transaksi_edit'),
+                'qty_transaksi' => $detail_transaksi['qty_transaksi'],
                 'harga_transaksi' => $detail_transaksi['harga_transaksi'],
                 'diskon' => $this->request->getPost('diskon_obatalkes_edit'),
             ];
@@ -832,8 +833,49 @@ class Transaksi extends BaseController
                 ->join('pasien', 'pasien.id_pasien = transaksi.id_pasien', 'inner')
                 ->join('user', 'user.id_user = transaksi.id_user', 'inner')
                 ->find($id);
-            $detail_transaksi = $this->DetailTransaksiModel
+            $layanan = $this->DetailTransaksiModel
                 ->where('detail_transaksi.id_transaksi', $id)
+                ->where('detail_transaksi.jenis_transaksi', 'Tindakan')
+                ->join('transaksi', 'transaksi.id_transaksi = detail_transaksi.id_transaksi', 'inner')
+                ->join('layanan', 'layanan.id_layanan = detail_transaksi.id_layanan', 'inner')
+                ->orderBy('id_detail_transaksi', 'ASC')
+                ->findAll();
+
+            // Array untuk menyimpan hasil terstruktur
+            $result_layanan = [];
+
+            // Untuk memetakan setiap transaksi
+            foreach ($layanan as $row) {
+                // Jika transaksi ini belum ada dalam array $result_layanan, tambahkan
+                if (!isset($result_layanan[$row['id_detail_transaksi']])) {
+                    $result_layanan[$row['id_detail_transaksi']] = [
+                        'id_detail_transaksi' => $row['id_detail_transaksi'],
+                        'id_layanan' => $row['id_layanan'],
+                        'id_transaksi' => $row['id_transaksi'],
+                        'qty_transaksi' => $row['qty_transaksi'],
+                        'harga_transaksi' => $row['harga_transaksi'],
+                        'diskon' => $row['diskon'],
+                        'lunas' => $row['lunas'],
+                        'layanan' => [
+                            'id_layanan' => $row['id_layanan'],
+                            'nama_layanan' => $row['nama_layanan'],
+                            'jenis_layanan' => $row['jenis_layanan'],
+                            'tarif' => $row['tarif'],
+                            'keterangan' => $row['keterangan'],
+                        ],
+                    ];
+                }
+            }
+
+            $total_layanan = $this->DetailTransaksiModel
+                ->selectSum('harga_transaksi')
+                ->where('detail_transaksi.id_transaksi', $id)
+                ->where('detail_transaksi.jenis_transaksi', 'Tindakan')
+                ->get()->getRowArray();
+
+            $obatalkes = $this->DetailTransaksiModel
+                ->where('detail_transaksi.id_transaksi', $id)
+                ->where('detail_transaksi.jenis_transaksi', 'Obat dan Alkes')
                 ->join('transaksi', 'transaksi.id_transaksi = detail_transaksi.id_transaksi', 'inner')
                 ->join('resep', 'resep.id_resep = detail_transaksi.id_resep', 'inner')
                 ->join('user', 'resep.id_user = user.id_user', 'inner')
@@ -841,18 +883,20 @@ class Transaksi extends BaseController
                 ->join('obat', 'detail_resep.id_obat = obat.id_obat', 'inner')
                 ->orderBy('id_detail_transaksi', 'ASC')
                 ->findAll();
+
             // Array untuk menyimpan hasil terstruktur
-            $result = [];
+            $result_obatalkes = [];
 
             // Untuk memetakan setiap transaksi
-            foreach ($detail_transaksi as $row) {
-                // Jika transaksi ini belum ada dalam array $result, tambahkan
-                if (!isset($result[$row['id_detail_transaksi']])) {
-                    $result[$row['id_detail_transaksi']] = [
+            foreach ($obatalkes as $row) {
+                // Jika transaksi ini belum ada dalam array $result_obatalkes, tambahkan
+                if (!isset($result_obatalkes[$row['id_detail_transaksi']])) {
+                    $result_obatalkes[$row['id_detail_transaksi']] = [
                         'id_detail_transaksi' => $row['id_detail_transaksi'],
                         'id_resep' => $row['id_resep'],
                         'id_transaksi' => $row['id_transaksi'],
-                        'harga_resep' => $row['harga_resep'],
+                        'qty_transaksi' => $row['qty_transaksi'],
+                        'harga_transaksi' => $row['harga_transaksi'],
                         'diskon' => $row['diskon'],
                         'lunas' => $row['lunas'],
                         'resep' => [
@@ -874,10 +918,12 @@ class Transaksi extends BaseController
                 }
 
                 // Tambahkan detail_resep ke transaksi
-                $result[$row['id_detail_transaksi']]['resep']['detail_resep'][] = [
+                $result_obatalkes[$row['id_detail_transaksi']]['resep']['detail_resep'][] = [
                     'id_detail_resep' => $row['id_detail_resep'],
                     'id_resep' => $row['id_resep'],
                     'id_obat' => $row['id_obat'],
+                    'jumlah' => $row['jumlah'],
+                    'harga_satuan' => $row['harga_satuan'],
                     'obat' => [
                         [
                             'id_obat' => $row['id_obat'],
@@ -890,19 +936,27 @@ class Transaksi extends BaseController
                             'signa' => $row['signa'],
                             'catatan' => $row['catatan'],
                             'cara_pakai' => $row['cara_pakai'],
+                            'jumlah' => $row['jumlah'],
                             'harga_satuan' => $row['harga_satuan'],
-                            'jumlah' => $row['jumlah']
                         ]
                     ],
                 ];
             }
+            $total_obatalkes = $this->DetailTransaksiModel
+                ->selectSum('harga_transaksi')
+                ->where('detail_transaksi.id_transaksi', $id)
+                ->where('detail_transaksi.jenis_transaksi', 'Obat dan Alkes')
+                ->get()->getRowArray();
             if (!empty($transaksi) && $transaksi['lunas'] == 1) {
-                // dd(array_values($result));
+                // dd($total_obatalkes);
                 // die;
                 $transaksi['no_mr'] = $this->formatNoMr($transaksi['no_mr']);
                 $data = [
                     'transaksi' => $transaksi,
-                    'detail_transaksi' => array_values($result),
+                    'layanan' => array_values($result_layanan),
+                    'obatalkes' => array_values($result_obatalkes),
+                    'total_layanan' => $total_layanan,
+                    'total_obatalkes' => $total_obatalkes,
                     'title' => 'Detail Transaksi ' . $id . ' - ' . $this->systemName
                 ];
                 // return view('dashboard/transaksi/struk', $data);
@@ -911,7 +965,7 @@ class Transaksi extends BaseController
                 $html = view('dashboard/transaksi/struk', $data);
                 $dompdf->loadHtml($html);
                 $dompdf->render();
-                $dompdf->stream('eticket-id-' . $transaksi['id_transaksi'] . '-' . $transaksi['tgl_transaksi'] . '-' . urlencode($transaksi['nama_pasien']) . '.pdf', [
+                $dompdf->stream('kwitansi-id-' . $transaksi['id_transaksi'] . '-' . $transaksi['no_kwitansi'] . '-' . $transaksi['tgl_transaksi'] . '-' . urlencode($transaksi['nama_pasien']) . '.pdf', [
                     'Attachment' => FALSE
                 ]);
             } else {
