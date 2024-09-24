@@ -234,7 +234,7 @@ class Obat extends BaseController
                 log_message('error', $e->getMessage());
 
                 // Return a generic error message
-                return $this->response->setStatusCode(500)->setJSON([
+                return $this->response->setStatusCode(422)->setJSON([
                     'error' => $e->getMessage(),
                 ]);
             }
