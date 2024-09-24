@@ -36,9 +36,6 @@ class Resep extends Migration
                 'type' => 'INT',
                 'constraint' => 24,
             ],
-            'keterangan' => [
-                'type' => 'TEXT'
-            ],
             'status' => [
                 'type' => 'BOOLEAN'
             ],

@@ -191,7 +191,7 @@ class Resep extends BaseController
                 'tanggal_resep' => date('Y-m-d H:i:s'),
                 'jumlah_resep' => 0,
                 'total_biaya' => 0,
-                'keterangan' => '',
+                'status' => 0,
             ];
             $this->ResepModel->save($data);
             return $this->response->setJSON(['success' => true, 'message' => 'Resep berhasil ditambahkan']);
@@ -334,48 +334,6 @@ class Resep extends BaseController
         }
     }
 
-    public function keterangan($id)
-    {
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
-            if (session()->get('role') == 'Admin') {
-                $data = $this->ResepModel
-                    ->select('keterangan, status')
-                    ->find($id);
-            } else {
-                $data = $this->ResepModel
-                    ->select('keterangan, status')
-                    ->where('id_user', session()->get('id_user'))
-                    ->find($id);
-            }
-            return $this->response->setJSON($data);
-        } else {
-            return $this->response->setStatusCode(404)->setJSON([
-                'error' => 'Halaman tidak ditemukan',
-            ]);
-        }
-    }
-
-    public function editketerangan($id)
-    {
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
-            $db = db_connect();
-            $resepBuilder = $db->table('resep');
-            $resepBuilder->where('id_resep', $id);
-            if (session()->get('role') != 'Admin') {
-                $resepBuilder->where('id_user', session()->get('id_user'));
-            }
-            $resepBuilder->update([
-                'keterangan' => $this->request->getPost('keterangan'),
-            ]);
-
-            return $this->response->setJSON(['success' => true, 'message' => 'Keterangan resep berhasil diperbarui']);
-        } else {
-            return $this->response->setStatusCode(404)->setJSON([
-                'error' => 'Halaman tidak ditemukan',
-            ]);
-        }
-    }
-
     public function obatlist($id_resep)
     {
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
@@ -422,8 +380,8 @@ class Resep extends BaseController
             // Set base validation rules
             $validation->setRules([
                 'id_obat' => 'required',
-                'dosis_kali' => 'required|numeric|greater_than[0]',
-                'dosis_hari' => 'required|numeric|greater_than[0]',
+                'signa' => 'required',
+                'catatan' => 'required',
                 'cara_pakai' => 'required',
                 'jumlah' => 'required|numeric|greater_than[0]',
             ]);
@@ -444,8 +402,8 @@ class Resep extends BaseController
                 $data = [
                     'id_resep' => $id,
                     'id_obat' => $this->request->getPost('id_obat'),
-                    'dosis_kali' => $this->request->getPost('dosis_kali'),
-                    'dosis_hari' => $this->request->getPost('dosis_hari'),
+                    'signa' => $this->request->getPost('signa'),
+                    'catatan' => $this->request->getPost('catatan'),
                     'cara_pakai' => $this->request->getPost('cara_pakai'),
                     'jumlah' => $this->request->getPost('jumlah'),
                     'harga_satuan' => $obat['harga_jual'],
@@ -491,10 +449,9 @@ class Resep extends BaseController
             $validation = \Config\Services::validation();
             // Set base validation rules
             $validation->setRules([
-                'dosis_kali_edit' => 'required|numeric|greater_than[0]',
-                'dosis_hari_edit' => 'required|numeric|greater_than[0]',
+                'signa_edit' => 'required',
+                'catatan_edit' => 'required',
                 'cara_pakai_edit' => 'required',
-                'jumlah_edit' => 'required|numeric|greater_than[0]',
             ]);
 
             if (!$this->validate($validation->getRules())) {
@@ -507,41 +464,15 @@ class Resep extends BaseController
 
             $db = db_connect();
 
-            $obatBuilder = $db->table('obat');
-
-            // Reset jumlah_keluar to 0 before updating
-            $obatBuilder->where('id_obat', $detail_resep['id_obat'])->update([
-                'jumlah_keluar' => 0
-            ]);
-
-            $obatBuilderNew = $db->table('obat');
-            $obatBuilderNew->select('jumlah_masuk, jumlah_keluar');
-            $obatBuilderNew->where('id_obat', $detail_resep['id_obat']);
-            $obatNew = $obatBuilderNew->get()->getRowArray();
-
-            if ($this->request->getPost('jumlah_edit') > ($obatNew['jumlah_masuk'] - $obatNew['jumlah_keluar'])) {
-                $obatBuilder->where('id_obat', $detail_resep['id_obat'])->update([
-                    'jumlah_keluar' => $obat['jumlah_keluar']
-                ]);
-                return $this->response->setJSON(['success' => false, 'message' => 'Jumlah obat melebihi stok', 'errors' => NULL]);
-            }
-            // Calculate the new quantity
-            $jumlah_baru = $this->request->getPost('jumlah_edit');
-
-            // Update jumlah_keluar with the new value from detail_resep
-            $obatBuilder->where('id_obat', $detail_resep['id_obat'])->update([
-                'jumlah_keluar' => $jumlah_baru
-            ]);
-
             // Save Data
             $data = [
                 'id_detail_resep' => $this->request->getPost('id_detail_resep'),
                 'id_resep' => $id,
                 'id_obat' => $detail_resep['id_obat'],
-                'dosis_kali' => $this->request->getPost('dosis_kali_edit'),
-                'dosis_hari' => $this->request->getPost('dosis_hari_edit'),
+                'signa' => $this->request->getPost('signa_edit'),
+                'catatan' => $this->request->getPost('catatan_edit'),
                 'cara_pakai' => $this->request->getPost('cara_pakai_edit'),
-                'jumlah' => $this->request->getPost('jumlah_edit'),
+                'jumlah' => $detail_resep['jumlah'],
                 'harga_satuan' => $detail_resep['harga_satuan'],
             ];
             $this->DetailResepModel->save($data);
@@ -564,7 +495,7 @@ class Resep extends BaseController
             ]);
 
             // Update detail_transaksi with new harga_resep
-            $harga_resep = $jumlah_baru * $detail_resep['harga_satuan'];
+            $harga_resep = $detail_resep['jumlah'] * $detail_resep['harga_satuan'];
 
             $detailTransaksiBuilder = $db->table('detail_transaksi');
             $detailTransaksiBuilder->where('id_resep', $id);

@@ -25,6 +25,10 @@ class Transaksi extends Migration
                 'constraint' => 24,
                 'unsigned' => true
             ],
+            'no_kwitansi' => [
+                'type' => 'VARCHAR',
+                'constraint' => 128,
+            ],
             'tgl_transaksi' => [
                 'type' => 'DATETIME',
             ],

@@ -25,13 +25,13 @@ class DetailResep extends Migration
                 'constraint' => 24,
                 'unsigned' => true
             ],
-            'dosis_kali' => [
-                'type' => 'INT',
+            'signa' => [
+                'type' => 'VARCHAR',
                 'constraint' => 24,
             ],
-            'dosis_hari' => [
-                'type' => 'INT',
-                'constraint' => 24,
+            'catatan' => [
+                'type' => 'VARCHAR',
+                'constraint' => 128,
             ],
             'cara_pakai' => [
                 'type' => 'VARCHAR',

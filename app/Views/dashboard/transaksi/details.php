@@ -19,6 +19,14 @@
         <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Informasi Transaksi</legend>
         <div style="font-size: 9pt;">
             <div class="mb-2 row">
+                <div class="col-lg-3 fw-medium">Nomor Kwitansi</div>
+                <div class="col-lg">
+                    <div class="date">
+                        <?= $transaksi['no_kwitansi'] ?>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-2 row">
                 <div class="col-lg-3 fw-medium">Tanggal dan Waktu</div>
                 <div class="col-lg">
                     <div class="date">
@@ -29,7 +37,7 @@
             <div class="mb-2 row">
                 <div class="col-lg-3 fw-medium">Nama Pasien</div>
                 <div class="col-lg">
-                    <div class="date">
+                    <div>
                         <?= $transaksi['nama_pasien'] ?>
                     </div>
                 </div>
@@ -51,9 +59,25 @@
                 </div>
             </div>
             <div class="mb-2 row">
-                <div class="col-lg-3 fw-medium">Kasir</div>
+                <div class="col-lg-3 fw-medium">Alamat</div>
+                <div class="col-lg">
+                    <div>
+                        <?= $transaksi['alamat_pasien'] ?>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-2 row">
+                <div class="col-lg-3 fw-medium">Nomor HP</div>
                 <div class="col-lg">
                     <div class="date">
+                        <?= $transaksi['no_hp_pasien'] ?>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-2 row">
+                <div class="col-lg-3 fw-medium">Kasir</div>
+                <div class="col-lg">
+                    <div>
                         <?= $transaksi['fullname'] ?>
                     </div>
                 </div>
@@ -61,9 +85,9 @@
         </div>
     </fieldset>
 
-    <fieldset id="tambahDetailContainer" class="border rounded-3 px-2 py-0 mb-3" style="display: none;">
-        <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Tambah Detail Transaksi</legend>
-        <form id="tambahDetail" enctype="multipart/form-data">
+    <fieldset id="tambahObatAlkesContainer" class="border rounded-3 px-2 py-0 mb-3" style="display: none;">
+        <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Tambah Obat dan Alkes</legend>
+        <form id="tambahObatAlkes" enctype="multipart/form-data">
             <div class="mb-2">
                 <select class="form-select rounded-3" id="id_resep" name="id_resep" aria-label="id_resep">
                     <option value="" disabled selected>-- Pilih Resep --</option>
@@ -130,7 +154,7 @@
     <div id="prosesTransaksi">
         <hr>
         <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
-            <button class="btn btn-primary rounded-3 bg-gradient" type="button" id="printBtn" onclick="window.open(`<?= base_url('/transaksi/struk/' . $transaksi['id_transaksi']) ?>`)" disabled><i class="fa-solid fa-print"></i> Cetak Struk</button>
+            <button class="btn btn-primary rounded-3 bg-gradient" type="button" id="printBtn" onclick="window.open(`<?= base_url('/transaksi/struk/' . $transaksi['id_transaksi']) ?>`)" disabled><i class="fa-solid fa-print"></i> Cetak Struk/Kwitansi</button>
             <button class="btn btn-success rounded-3 bg-gradient" type="button" id="processBtn" data-id="<?= $transaksi['id_transaksi'] ?>" disabled><i class="fa-solid fa-money-bills"></i> Proses Transaksi</button>
         </div>
     </div>
@@ -229,10 +253,10 @@
 
             // Cek status `lunas`
             if (data.lunas === "1") {
-                $('#tambahDetailContainer').hide();
+                $('#tambahObatAlkesContainer').hide();
                 $('#printBtn').prop('disabled', false);
             } else if (data.lunas === "0") {
-                $('#tambahDetailContainer').show();
+                $('#tambahObatAlkesContainer').show();
                 $('#printBtn').prop('disabled', true);
             }
         } catch (error) {
@@ -284,7 +308,6 @@
                             <span>${detail_transaksi.resep.user.fullname}</span>
                             <ul class="mb-0" id="obat-${detail_transaksi.id_detail_transaksi}">
                             </ul>
-                            <span>${keterangan}</span>
                         </td>
                         <td class="date text-end">Rp${harga_resep.toLocaleString('id-ID')}</td>
                         <td class="date text-end">${diskon.toLocaleString('id-ID')}%</td>
@@ -301,7 +324,7 @@
                             const total_harga = jumlah * harga_satuan; // Hitung total harga
 
                             const detail_transaksiElement = `
-                                <li>${obat.nama_obat}<br><small>${obat.kategori_obat} • ${obat.bentuk_obat} • ${obat.dosis_kali} × ${obat.dosis_hari} hari • ${obat.cara_pakai} • ${jumlah.toLocaleString('id-ID')} × Rp${harga_satuan.toLocaleString('id-ID')} = Rp${total_harga.toLocaleString('id-ID')}</small></li>
+                                <li>${obat.nama_obat}<br><small>${obat.kategori_obat} • ${obat.bentuk_obat} • ${obat.signa} • ${obat.cara_pakai} • ${jumlah.toLocaleString('id-ID')} × Rp${harga_satuan.toLocaleString('id-ID')} = Rp${total_harga.toLocaleString('id-ID')}<br>${obat.catatan}</small></li>
                             `;
 
                             $(`#obat-${detail_transaksi.id_detail_transaksi}`).append(detail_transaksiElement);
@@ -334,7 +357,7 @@
     $(document).ready(function() {
         $('[data-bs-toggle="tooltip"]').tooltip();
         $('#id_resep').select2({
-            dropdownParent: $('#tambahDetail'),
+            dropdownParent: $('#tambahObatAlkes'),
             theme: "bootstrap-5",
             width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
             placeholder: $(this).data('placeholder'),
@@ -373,13 +396,13 @@
             const $row = $this.closest('tr');
             $('[data-bs-toggle="tooltip"]').tooltip('hide');
             $this.prop('disabled', true).html(`<span class="spinner-border" style="width: 11px; height: 11px;" aria-hidden="true"></span>`);
-            $('#editDetailTransaksi').remove();
+            $('#editObatAlkesTransaksi').remove();
             try {
                 const response = await axios.get(`<?= base_url('/transaksi/detailtransaksiitem') ?>/${id}`);
                 const formHtml = `
-                <tr id="editDetailTransaksi">
+                <tr id="editObatAlkesTransaksi">
                     <td colspan="5">
-                        <form id="editDetail" enctype="multipart/form-data">
+                        <form id="editObatAlkes" enctype="multipart/form-data">
                             <div class="d-flex justify-content-between align-items-center mb-1">
                                 <div class="fw-bold">Edit Diskon (%)</div>
                                 <button type="button" class="text-end btn-close ms-auto cancel-edit"></button>
@@ -404,21 +427,21 @@
                 $row.after(formHtml);
 
                 // Handle form submission
-                $('#editDetail').on('submit', async function(e) {
+                $('#editObatAlkes').on('submit', async function(e) {
                     e.preventDefault();
 
                     const formData = new FormData(this);
                     console.log("Form Data:", $(this).serialize());
 
                     // Clear previous validation states
-                    $('#editDetail .is-invalid').removeClass('is-invalid');
-                    $('#editDetail .invalid-feedback').text('').hide();
+                    $('#editObatAlkes .is-invalid').removeClass('is-invalid');
+                    $('#editObatAlkes .invalid-feedback').text('').hide();
                     $('#editButton').prop('disabled', true).html(`
                         <span class="spinner-border spinner-border-sm" aria-hidden="true"></span> Edit
                     `);
 
                     // Disable form inputs
-                    $('#editDetail input, .btn-close').prop('disabled', true);
+                    $('#editObatAlkes input, .btn-close').prop('disabled', true);
 
                     try {
                         const response = await axios.post(`<?= base_url('/transaksi/perbaruidetailtransaksi/' . $transaksi['id_transaksi']) ?>`, formData, {
@@ -428,10 +451,10 @@
                         });
 
                         if (response.data.success) {
-                            $('#editDetail')[0].reset();
-                            $('#editDetail .is-invalid').removeClass('is-invalid');
-                            $('#editDetail .invalid-feedback').text('').hide();
-                            $('#editDetailTransaksi').remove();
+                            $('#editObatAlkes')[0].reset();
+                            $('#editObatAlkes .is-invalid').removeClass('is-invalid');
+                            $('#editObatAlkes .invalid-feedback').text('').hide();
+                            $('#editObatAlkesTransaksi').remove();
                             fetchDetailTransaksi();
                             fetchResepOptions();
                             fetchStatusTransaksi();
@@ -439,8 +462,8 @@
                             console.log("Validation Errors:", response.data.errors);
 
                             // Clear previous validation states
-                            $('#editDetail .is-invalid').removeClass('is-invalid');
-                            $('#editDetail .invalid-feedback').text('').hide();
+                            $('#editObatAlkes .is-invalid').removeClass('is-invalid');
+                            $('#editObatAlkes .invalid-feedback').text('').hide();
 
                             // Display new validation errors
                             for (const field in response.data.errors) {
@@ -473,13 +496,13 @@
                         $('#editButton').prop('disabled', false).html(`
                             <i class="fa-solid fa-pen-to-square"></i> Edit
                         `);
-                        $('#editDetail input, .btn-close').prop('disabled', false);
+                        $('#editObatAlkes input, .btn-close').prop('disabled', false);
                     }
                 });
 
                 // Handle cancel button
                 $('.cancel-edit').on('click', function() {
-                    $('#editDetailTransaksi').remove();
+                    $('#editObatAlkesTransaksi').remove();
                 });
             } catch (error) {
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
@@ -489,21 +512,21 @@
             }
         });
 
-        $('#tambahDetail').submit(async function(e) {
+        $('#tambahObatAlkes').submit(async function(e) {
             e.preventDefault();
 
             const formData = new FormData(this);
             console.log("Form Data:", $(this).serialize());
 
             // Clear previous validation states
-            $('#tambahDetail .is-invalid').removeClass('is-invalid');
-            $('#tambahDetail .invalid-feedback').text('').hide();
+            $('#tambahObatAlkes .is-invalid').removeClass('is-invalid');
+            $('#tambahObatAlkes .invalid-feedback').text('').hide();
             $('#addButton').prop('disabled', true).html(`
                 <span class="spinner-border spinner-border-sm" aria-hidden="true"></span> Tambah
             `);
 
             // Disable form inputs
-            $('#tambahDetail input, #tambahDetail select').prop('disabled', true);
+            $('#tambahObatAlkes input, #tambahObatAlkes select').prop('disabled', true);
 
             try {
                 const response = await axios.post(`<?= base_url('/transaksi/tambahdetailtransaksi/' . $transaksi['id_transaksi']) ?>`, formData, {
@@ -513,11 +536,11 @@
                 });
 
                 if (response.data.success) {
-                    $('#tambahDetail')[0].reset();
+                    $('#tambahObatAlkes')[0].reset();
                     $('#id_resep').val('');
                     $('#diskon').val('');
-                    $('#tambahDetail .is-invalid').removeClass('is-invalid');
-                    $('#tambahDetail .invalid-feedback').text('').hide();
+                    $('#tambahObatAlkes .is-invalid').removeClass('is-invalid');
+                    $('#tambahObatAlkes .invalid-feedback').text('').hide();
                     fetchDetailTransaksi();
                     fetchResepOptions();
                     fetchStatusTransaksi();
@@ -525,8 +548,8 @@
                     console.log("Validation Errors:", response.data.errors);
 
                     // Clear previous validation states
-                    $('#tambahDetail .is-invalid').removeClass('is-invalid');
-                    $('#tambahDetail .invalid-feedback').text('').hide();
+                    $('#tambahObatAlkes .is-invalid').removeClass('is-invalid');
+                    $('#tambahObatAlkes .invalid-feedback').text('').hide();
 
                     // Display new validation errors
                     for (const field in response.data.errors) {
@@ -559,7 +582,7 @@
                 $('#addButton').prop('disabled', false).html(`
                     <i class="fa-solid fa-plus"></i> Tambah
                 `);
-                $('#tambahDetail input, #tambahDetail select').prop('disabled', false);
+                $('#tambahObatAlkes input, #tambahObatAlkes select').prop('disabled', false);
             }
         });
 

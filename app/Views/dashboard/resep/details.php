@@ -58,40 +58,8 @@
                     </div>
                 </div>
             </div>
-            <div class="mb-2 row">
-                <div class="col-lg-3 fw-medium">Keterangan</div>
-                <div class="col-lg">
-                    <div class="date placeholder-glow">
-                        <span id="keterangan_detail"><span class="placeholder w-100"></span></span><br>
-                        <button type="button" class="btn btn-secondary btn-sm bg-gradient rounded-3" id="editKeteranganBtn" style="display: none;">
-                            <i class="fa-solid fa-pen-to-square"></i> Edit Keterangan
-                        </button>
-                    </div>
-                </div>
-            </div>
         </div>
     </fieldset>
-
-    <div class="modal fade" id="editKeterangan" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editKeteranganLabel" aria-hidden="true">
-        <div class="modal-dialog modal-fullscreen-md-down modal-lg modal-dialog-centered modal-dialog-scrollable rounded-3">
-            <form id="editKeteranganForm" enctype="multipart/form-data" class="modal-content bg-body shadow-lg transparent-blur">
-                <div class="modal-header justify-content-between pt-2 pb-2" style="border-bottom: 1px solid var(--bs-border-color-translucent);">
-                    <h6 class="pe-2 modal-title fs-6 text-truncate" id="editKeteranganLabel" style="font-weight: bold;">Keterangan</h6>
-                    <button type="button" class="btn btn-danger btn-sm bg-gradient ps-0 pe-0 pt-0 pb-0 rounded-3 closeBtn" data-bs-dismiss="modal" aria-label="Close"><span data-feather="x" class="mb-0" style="width: 30px; height: 30px;"></span></button>
-                </div>
-                <div class="modal-body py-2">
-                    <div class="mb-1 mt-1">
-                        <textarea class="form-control font-monospace rounded-3" autocomplete="off" dir="auto" id="editKeteranganText" name="keterangan" row="2" style="resize: none;"></textarea>
-                    </div>
-                </div>
-                <div class="modal-footer justify-content-end pt-2 pb-2" style="border-top: 1px solid var(--bs-border-color-translucent);">
-                    <button type="submit" id="submitKeteranganButton" class="btn btn-primary bg-gradient rounded-3">
-                        <i class="fa-solid fa-floppy-disk"></i> Simpan
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
 
     <fieldset id="tambahDetailContainer" class="border rounded-3 px-2 py-0 mb-3" style="display: none;">
         <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Tambah Detail Resep</legend>
@@ -104,12 +72,18 @@
                     <div class="invalid-feedback"></div>
                 </div>
                 <div class="col-6">
-                    <input type="number" id="dosis_kali" name="dosis_kali" class="form-control form-control-sm rounded-3" placeholder="Dosis berapa kali?">
+                    <input type="text" id="signa" name="signa" class="form-control form-control-sm rounded-3" placeholder="Dosis">
                     <div class="invalid-feedback"></div>
                 </div>
                 <div class="col-6">
-                    <input type="number" id="dosis_hari" name="dosis_hari" class="form-control form-control-sm rounded-3" placeholder="Dalam berapa hari?">
+                    <input type="text" id="catatan" name="catatan" class="form-control form-control-sm rounded-3" placeholder="Catatan" list="list_catatan">
                     <div class="invalid-feedback"></div>
+                    <datalist id="list_catatan">
+                        <option value="1 Tetes">
+                        <option value="Sendok Teh">
+                        <option value="Sendok Makan">
+                        <option value="1 Tablet">
+                    </datalist>
                 </div>
                 <div class="col-6">
                     <select class="form-select form-select-sm  rounded-3" id="cara_pakai" name="cara_pakai" aria-label="cara_pakai">
@@ -119,7 +93,8 @@
                         <option value="Kedua Mata">Kedua Mata</option>
                         <option value="Sebelum Makan">Sebelum Makan</option>
                         <option value="Sesudah Makan">Sesudah Makan</option>
-                        <option value="Sendok Teh">Sendok Teh</option>
+                        <option value="Sesudah Makan Dihabiskan">Sesudah Makan Dihabiskan</option>
+                        <option value="Sesudah Makan Bila Sakit">Sesudah Makan Bila Sakit</option>
                     </select>
                     <div class="invalid-feedback"></div>
                 </div>
@@ -268,7 +243,7 @@
                                 <button class="btn btn-danger text-nowrap bg-gradient rounded-end-3 delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${detail_resep.id_detail_resep}" data-name="${detail_resep.nama_obat}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
                             </div>
                         </td>
-                        <td class="text-nowrap">${detail_resep.nama_obat}<br><small>${detail_resep.kategori_obat} • ${detail_resep.bentuk_obat} • ${detail_resep.dosis_kali} × ${detail_resep.dosis_hari} hari • ${detail_resep.cara_pakai}</small></td>
+                        <td class="text-nowrap">${detail_resep.nama_obat}<br><small>${detail_resep.kategori_obat} • ${detail_resep.bentuk_obat} • ${detail_resep.signa} • ${detail_resep.cara_pakai}<br>${detail_resep.catatan}</small></td>
                         <td class="date text-end">${jumlah.toLocaleString('id-ID')}</td>
                         <td class="date text-end">Rp${harga_satuan.toLocaleString('id-ID')}</td>
                         <td class="date text-end">Rp${total_harga.toLocaleString('id-ID')}</td>
@@ -293,29 +268,6 @@
         } catch (error) {
             showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
             $('#detail_resep').empty();
-        } finally {
-            // Hide the spinner when done
-            $('#loadingSpinner').hide();
-        }
-    }
-
-    async function fetchKeterangan() {
-        $('#loadingSpinner').show();
-
-        try {
-            const response = await axios.get('<?= base_url('/resep/keterangan/') . $resep['id_resep'] ?>');
-            if (response.data.keterangan === "") {
-                $('#keterangan_detail').html('<em>Belum Ada Keterangan</em>');
-            } else {
-                $('#keterangan_detail').text(response.data.keterangan);
-            }
-            if (response.data.status === "0") {
-                $('#editKeteranganBtn').show();
-            } else {
-                $('#editKeteranganBtn').hide();
-            }
-        } catch (error) {
-            showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
         } finally {
             // Hide the spinner when done
             $('#loadingSpinner').hide();
@@ -391,7 +343,6 @@
 
                 if (response.data.success) {
                     $('#editKeterangan').modal('hide');
-                    fetchKeterangan();
                 } else {
                     console.log("Validation Errors:", response.data.errors);
 
@@ -484,20 +435,26 @@
                     <td colspan="5">
                         <form id="editDetail" enctype="multipart/form-data">
                         <div class="d-flex justify-content-between align-items-center mb-1">
-                            <div class="fw-bold">Edit Resep (Jumlah maksimum: ${response.data.jumlah_masuk})</div>
+                            <div class="fw-bold">Edit Resep</div>
                             <button type="button" class="text-end btn-close ms-auto cancel-edit"></button>
                         </div>
                         <input type="hidden" id="id_detail_resep" name="id_detail_resep" value="${response.data.id_detail_resep}">
                         <div class="row g-2">
                             <div class="col-6">
-                                <input type="number" id="dosis_kali_edit" name="dosis_kali_edit" class="form-control form-control-sm rounded-3" placeholder="Dosis berapa kali?" value="${response.data.dosis_kali}">
+                                <input type="text" id="signa_edit" name="signa_edit" class="form-control form-control-sm rounded-3" placeholder="Dosis berapa kali?" value="${response.data.signa}">
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="col-6">
-                                <input type="number" id="dosis_hari_edit" name="dosis_hari_edit" class="form-control form-control-sm rounded-3" placeholder="Dalam berapa hari?" value="${response.data.dosis_hari}">
+                                <input type="text" id="catatan_edit" name="catatan_edit" class="form-control form-control-sm rounded-3" placeholder="Dalam berapa hari?" value="${response.data.catatan}" list="list_catatan_edit">
                                 <div class="invalid-feedback"></div>
+                                <datalist id="list_catatan_edit">
+                                    <option value="1 Tetes">
+                                    <option value="Sendok Teh">
+                                    <option value="Sendok Makan">
+                                    <option value="1 Tablet">
+                                </datalist>
                             </div>
-                            <div class="col-6">
+                            <div class="col-12">
                                 <select class="form-select form-select-sm  rounded-3" id="cara_pakai_edit" name="cara_pakai_edit" aria-label="cara_pakai">
                                     <option value="" disabled selected>-- Pilih Cara Pakai --</option>
                                     <option value="Mata Kanan">Mata Kanan</option>
@@ -505,12 +462,9 @@
                                     <option value="Kedua Mata">Kedua Mata</option>
                                     <option value="Sebelum Makan">Sebelum Makan</option>
                                     <option value="Sesudah Makan">Sesudah Makan</option>
-                                    <option value="Sendok Teh">Sendok Teh</option>
+                                    <option value="Sesudah Makan Dihabiskan">Sesudah Makan Dihabiskan</option>
+                                    <option value="Sesudah Makan Bila Sakit">Sesudah Makan Bila Sakit</option>
                                 </select>
-                                <div class="invalid-feedback"></div>
-                            </div>
-                            <div class="col-6">
-                                <input type="number" id="jumlah_edit" name="jumlah_edit" class="form-control form-control-sm rounded-3" placeholder="Jumlah" value="${response.data.jumlah}">
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-2">
@@ -700,7 +654,6 @@
         fetchDetailResep();
         fetchObatOptions();
         fetchStatusResep();
-        fetchKeterangan();
     });
     // Show toast notification
     function showSuccessToast(message) {

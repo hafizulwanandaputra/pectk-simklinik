@@ -18,14 +18,29 @@ class DetailTransaksi extends Migration
             'id_resep' => [
                 'type' => 'BIGINT',
                 'constraint' => 24,
-                'unsigned' => true
+                'unsigned' => true,
+                'null' => true
+            ],
+            'id_layanan' => [
+                'type' => 'BIGINT',
+                'constraint' => 24,
+                'unsigned' => true,
+                'null' => true
             ],
             'id_transaksi' => [
                 'type' => 'BIGINT',
                 'constraint' => 24,
                 'unsigned' => true
             ],
-            'harga_resep' => [
+            'jenis_transaksi' => [
+                'type' => 'VARCHAR',
+                'constraint' => 128,
+            ],
+            'qty_transaksi' => [
+                'type' => 'INT',
+                'constraint' => 24,
+            ],
+            'harga_transaksi' => [
                 'type' => 'INT',
                 'constraint' => 24,
             ],
@@ -37,6 +52,7 @@ class DetailTransaksi extends Migration
         $this->forge->addKey('id_detail_transaksi', true);
         $this->forge->addForeignKey('id_resep', 'resep', 'id_resep', 'CASCADE', 'CASCADE');
         $this->forge->addForeignKey('id_transaksi', 'transaksi', 'id_transaksi', 'CASCADE', 'CASCADE');
+        $this->forge->addForeignKey('id_layanan', 'layanan', 'id_layanan', 'CASCADE', 'NO ACTION');
         $this->forge->createTable('detail_transaksi');
     }
 

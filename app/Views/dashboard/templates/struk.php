@@ -7,19 +7,13 @@
     <title><?= $title; ?></title>
     <style>
         @page {
-            size: 7.5cm 30cm;
-            margin: 0.1cm;
+            size: 21.5cm 16.5cm;
+            margin: 0.5cm;
         }
 
-        footer {
-            position: fixed;
-            bottom: 2px;
-            left: 0px;
-            right: 10px;
-            height: 12px;
-
-            /** Extra personal styles **/
-            text-align: right;
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 10pt;
         }
     </style>
     <?= $this->renderSection('css'); ?>

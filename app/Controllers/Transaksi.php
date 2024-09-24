@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\TransaksiModel;
 use App\Models\DetailTransaksiModel;
+use App\Models\LayananModel;
 use App\Models\ResepModel;
 use App\Models\PasienModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
@@ -88,7 +89,7 @@ class Transaksi extends BaseController
                 $db = db_connect();
                 // Calculate total_pembayaran
                 $builder = $db->table('detail_transaksi');
-                $builder->select('SUM(harga_resep * (1 - (diskon / 100))) as total_pembayaran');
+                $builder->select('SUM(harga_transaksi * (1 - (diskon / 100))) as total_pembayaran');
                 $builder->where('id_transaksi', $data['id_transaksi']);
                 $result = $builder->get()->getRow();
 
@@ -185,10 +186,24 @@ class Transaksi extends BaseController
                 return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
             }
 
+            $date = new \DateTime(); // Get current date and time
+            $tanggal = $date->format('d'); // Day (2 digit)
+            $bulan = $date->format('m'); // Month (2 digit)
+            $tahun = $date->format('y'); // Year (2 digit)
+
+            // Get last registration number to increment
+            $lastNoReg = $this->TransaksiModel->getLastNoReg($tahun, $bulan, $tanggal);
+            $lastNumber = $lastNoReg ? intval(substr($lastNoReg, -4)) : 0;
+            $nextNumber = str_pad($lastNumber + 1, 4, '0', STR_PAD_LEFT);
+
+            // Format the nomor registrasi
+            $no_kwitansi = sprintf('TRJ%s%s%s-%s', $tanggal, $bulan, $tahun, $nextNumber);
+
             // Save Data
             $data = [
                 'id_user' => session()->get('id_user'),
                 'id_pasien' => $this->request->getPost('id_pasien'),
+                'no_kwitansi' => $no_kwitansi,
                 'tgl_transaksi' => date('Y-m-d H:i:s'),
                 'total_pembayaran' => 0,
                 'metode_pembayaran' => '',
@@ -260,11 +275,57 @@ class Transaksi extends BaseController
         }
     }
 
-    public function detailtransaksilist($id)
+    public function detaillayananlist($id)
     {
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
-            $transaksi = $this->DetailTransaksiModel
+            $layanan = $this->DetailTransaksiModel
                 ->where('detail_transaksi.id_transaksi', $id)
+                ->where('detail_transaksi.jenis_transaksi', 'Tindakan')
+                ->join('transaksi', 'transaksi.id_transaksi = detail_transaksi.id_transaksi', 'inner')
+                ->join('layanan', 'layanan.id_layanan = detail_transaksi.id_layanan', 'inner')
+                ->orderBy('id_detail_transaksi', 'ASC')
+                ->findAll();
+
+            // Array untuk menyimpan hasil terstruktur
+            $result = [];
+
+            // Untuk memetakan setiap transaksi
+            foreach ($layanan as $row) {
+                // Jika transaksi ini belum ada dalam array $result, tambahkan
+                if (!isset($result[$row['id_detail_transaksi']])) {
+                    $result[$row['id_detail_transaksi']] = [
+                        'id_detail_transaksi' => $row['id_detail_transaksi'],
+                        'id_layanan' => $row['id_layanan'],
+                        'id_transaksi' => $row['id_transaksi'],
+                        'harga_transaksi' => $row['harga_transaksi'],
+                        'diskon' => $row['diskon'],
+                        'lunas' => $row['lunas'],
+                        'layanan' => [
+                            'id_layanan' => $row['id_layanan'],
+                            'nama_layanan' => $row['nama_layanan'],
+                            'jenis_layanan' => $row['jenis_layanan'],
+                            'tarif' => $row['tarif'],
+                            'keterangan' => $row['keterangan'],
+                        ],
+                    ];
+                }
+            }
+
+            // Mengembalikan hasil dalam bentuk JSON
+            return $this->response->setJSON(array_values($result));
+        } else {
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
+        }
+    }
+
+    public function detailobatalkeslist($id)
+    {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+            $obatalkes = $this->DetailTransaksiModel
+                ->where('detail_transaksi.id_transaksi', $id)
+                ->where('detail_transaksi.jenis_transaksi', 'Obat dan Alkes')
                 ->join('transaksi', 'transaksi.id_transaksi = detail_transaksi.id_transaksi', 'inner')
                 ->join('resep', 'resep.id_resep = detail_transaksi.id_resep', 'inner')
                 ->join('user', 'resep.id_user = user.id_user', 'inner')
@@ -277,14 +338,15 @@ class Transaksi extends BaseController
             $result = [];
 
             // Untuk memetakan setiap transaksi
-            foreach ($transaksi as $row) {
+            foreach ($obatalkes as $row) {
                 // Jika transaksi ini belum ada dalam array $result, tambahkan
                 if (!isset($result[$row['id_detail_transaksi']])) {
                     $result[$row['id_detail_transaksi']] = [
                         'id_detail_transaksi' => $row['id_detail_transaksi'],
                         'id_resep' => $row['id_resep'],
                         'id_transaksi' => $row['id_transaksi'],
-                        'harga_resep' => $row['harga_resep'],
+                        'qty_transaksi' => $row['qty_transaksi'],
+                        'harga_transaksi' => $row['harga_transaksi'],
                         'diskon' => $row['diskon'],
                         'lunas' => $row['lunas'],
                         'resep' => [
@@ -294,7 +356,6 @@ class Transaksi extends BaseController
                             'tanggal_resep' => $row['tanggal_resep'],
                             'jumlah_resep' => $row['jumlah_resep'],
                             'total_biaya' => $row['total_biaya'],
-                            'keterangan' => $row['keterangan'],
                             'status' => $row['status'],
                             'user' => [
                                 'id_user' => $row['id_user'],
@@ -322,8 +383,8 @@ class Transaksi extends BaseController
                             'bentuk_obat' => $row['bentuk_obat'],
                             'harga_obat' => $row['harga_obat'],
                             'harga_jual' => $row['harga_jual'],
-                            'dosis_kali' => $row['dosis_kali'],
-                            'dosis_hari' => $row['dosis_hari'],
+                            'signa' => $row['signa'],
+                            'catatan' => $row['catatan'],
                             'cara_pakai' => $row['cara_pakai'],
                             'jumlah_masuk' => $row['jumlah_masuk'],
                             'jumlah_keluar' => $row['jumlah_keluar'],
@@ -351,6 +412,43 @@ class Transaksi extends BaseController
                 ->find($id);
 
             return $this->response->setJSON($data);
+        } else {
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
+        }
+    }
+
+    public function layananlist($id_transaksi)
+    {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+            $LayananModel = new LayananModel();
+            $DetailTransaksiModel = new DetailTransaksiModel();
+
+            $results = $LayananModel
+                ->orderBy('layanan.id_layanan', 'ASC')->findAll();
+
+            $options = [];
+            foreach ($results as $row) {
+                $tarif = (int) $row['tarif'];
+                $tarif_terformat = number_format($tarif, 0, ',', '.');
+
+                $isUsed = $DetailTransaksiModel->where('id_layanan', $row['id_layanan'])
+                    ->where('id_transaksi', $id_transaksi)
+                    ->first();
+
+                if (!$isUsed) {
+                    $options[] = [
+                        'value' => $row['id_layanan'],
+                        'text' => $row['nama_layanan'] . ' (Rp' . $tarif_terformat . ')'
+                    ];
+                }
+            }
+
+            return $this->response->setJSON([
+                'success' => true,
+                'data' => $options,
+            ]);
         } else {
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan',
@@ -398,30 +496,34 @@ class Transaksi extends BaseController
         }
     }
 
-    public function tambahdetailtransaksi($id)
+    public function tambahlayanan($id)
     {
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
             // Validate
             $validation = \Config\Services::validation();
             // Set base validation rules
             $validation->setRules([
-                'id_resep' => 'required',
-                'diskon' => 'required|numeric|greater_than_equal_to[0]|less_than[100]',
+                'id_layanan' => 'required',
+                'qty_transaksi' => 'required|numeric|greater_than_[0]',
+                'diskon_layanan' => 'required|numeric|greater_than_equal_to[0]|less_than[100]',
             ]);
 
             if (!$this->validate($validation->getRules())) {
                 return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
             }
 
-            $ResepModel = new ResepModel();
-            $resep = $ResepModel->find($this->request->getPost('id_resep'));
+            $LayananModel = new LayananModel();
+            $layanan = $LayananModel->find($this->request->getPost('id_layanan'));
 
             // Save Data
             $data = [
-                'id_resep' => $this->request->getPost('id_resep'),
+                'id_resep' => NULL,
+                'id_layanan' => $this->request->getPost('id_layanan'),
                 'id_transaksi' => $id,
-                'harga_resep' => $resep['total_biaya'],
-                'diskon' => $this->request->getPost('diskon'),
+                'jenis_transaksi' => 'Tindakan',
+                'qty_transaksi' => $this->request->getPost('qty_transaksi'),
+                'harga_transaksi' => $layanan['tarif'],
+                'diskon' => $this->request->getPost('diskon_layanan'),
             ];
             $this->DetailTransaksiModel->save($data);
 
@@ -429,7 +531,7 @@ class Transaksi extends BaseController
 
             // Calculate total_pembayaran
             $builder = $db->table('detail_transaksi');
-            $builder->select('SUM(harga_resep * (1 - (diskon / 100))) as total_pembayaran');
+            $builder->select('SUM(harga_transaksi * (1 - (diskon / 100))) as total_pembayaran');
             $builder->where('id_transaksi', $id);
             $result = $builder->get()->getRow();
 
@@ -450,14 +552,125 @@ class Transaksi extends BaseController
         }
     }
 
-    public function perbaruidetailtransaksi($id)
+    public function tambahobatlalkes($id)
     {
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
             // Validate
             $validation = \Config\Services::validation();
             // Set base validation rules
             $validation->setRules([
-                'diskon_edit' => 'required|numeric|greater_than_equal_to[0]|less_than[100]',
+                'id_resep' => 'required',
+                'diskon_obatalkes' => 'required|numeric|greater_than_equal_to[0]|less_than[100]',
+            ]);
+
+            if (!$this->validate($validation->getRules())) {
+                return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
+            }
+
+            $ResepModel = new ResepModel();
+            $resep = $ResepModel->find($this->request->getPost('id_resep'));
+
+            // Save Data
+            $data = [
+                'id_resep' => $this->request->getPost('id_resep'),
+                'id_layanan' => NULL,
+                'id_transaksi' => $id,
+                'jenis_transaksi' => 'Obat dan Alkes',
+                'qty_transaksi' => 1,
+                'harga_transaksi' => $resep['total_biaya'],
+                'diskon' => $this->request->getPost('diskon_obatalkes'),
+            ];
+            $this->DetailTransaksiModel->save($data);
+
+            $db = db_connect();
+
+            // Calculate total_pembayaran
+            $builder = $db->table('detail_transaksi');
+            $builder->select('SUM(harga_transaksi * (1 - (diskon / 100))) as total_pembayaran');
+            $builder->where('id_transaksi', $id);
+            $result = $builder->get()->getRow();
+
+            $total_pembayaran = $result->total_pembayaran;
+
+            // Update transaksi table
+            $transaksiBuilder = $db->table('transaksi');
+            $transaksiBuilder->where('id_transaksi', $id);
+            $transaksiBuilder->update([
+                'total_pembayaran' => $total_pembayaran,
+            ]);
+
+            return $this->response->setJSON(['success' => true, 'message' => 'Item transaksi berhasil ditambahkan']);
+        } else {
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
+        }
+    }
+
+    public function perbaruilayanan($id)
+    {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+            // Validate
+            $validation = \Config\Services::validation();
+            // Set base validation rules
+            $validation->setRules([
+                'qty_transaksi_edit' => 'required|numeric|greater_than_[0]',
+                'diskon_layanan_edit' => 'required|numeric|greater_than_equal_to[0]|less_than[100]',
+            ]);
+
+            if (!$this->validate($validation->getRules())) {
+                return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
+            }
+
+            $detail_transaksi = $this->DetailTransaksiModel->find($this->request->getPost('id_detail_transaksi'));
+
+            // Save Data
+            $data = [
+                'id_detail_transaksi' => $this->request->getPost('id_detail_transaksi'),
+                'id_resep' => NULL,
+                'id_layanan' => $detail_transaksi['id_layanan'],
+                'id_transaksi' => $id,
+                'jenis_transaksi' => $detail_transaksi['jenis_transaksi'],
+                'qty_transaksi' => $this->request->getPost('qty_transaksi_edit'),
+                'harga_transaksi' => $detail_transaksi['harga_transaksi'],
+                'diskon' => $this->request->getPost('diskon_layanan_edit'),
+            ];
+            $this->DetailTransaksiModel->save($data);
+
+            $db = db_connect();
+
+            // Calculate total_pembayaran
+            $builder = $db->table('detail_transaksi');
+            $builder->select('SUM(harga_transaksi * (1 - (diskon / 100))) as total_pembayaran');
+            $builder->where('id_transaksi', $id);
+            $result = $builder->get()->getRow();
+
+            $total_pembayaran = $result->total_pembayaran;
+
+            // Update transaksi table
+            $transaksiBuilder = $db->table('transaksi');
+            $transaksiBuilder->where('id_transaksi', $id);
+            $transaksiBuilder->update([
+                'total_pembayaran' => $total_pembayaran,
+            ]);
+
+
+            return $this->response->setJSON(['success' => true, 'message' => 'Item transaksi berhasil diperbarui']);
+        } else {
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
+        }
+    }
+
+    public function perbaruiobatalkes($id)
+    {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+            // Validate
+            $validation = \Config\Services::validation();
+            // Set base validation rules
+            $validation->setRules([
+                'diskon_obatalkes_edit' => 'required|numeric|greater_than_equal_to[0]|less_than[100]',
             ]);
 
             if (!$this->validate($validation->getRules())) {
@@ -470,9 +683,12 @@ class Transaksi extends BaseController
             $data = [
                 'id_detail_transaksi' => $this->request->getPost('id_detail_transaksi'),
                 'id_resep' => $detail_transaksi['id_resep'],
+                'id_layanan' => NULL,
                 'id_transaksi' => $id,
-                'harga_resep' => $detail_transaksi['harga_resep'],
-                'diskon' => $this->request->getPost('diskon_edit'),
+                'jenis_transaksi' => $detail_transaksi['jenis_transaksi'],
+                'qty_transaksi' => $this->request->getPost('qty_transaksi_edit'),
+                'harga_transaksi' => $detail_transaksi['harga_transaksi'],
+                'diskon' => $this->request->getPost('diskon_obatalkes_edit'),
             ];
             $this->DetailTransaksiModel->save($data);
 
@@ -480,7 +696,7 @@ class Transaksi extends BaseController
 
             // Calculate total_pembayaran
             $builder = $db->table('detail_transaksi');
-            $builder->select('SUM(harga_resep * (1 - (diskon / 100))) as total_pembayaran');
+            $builder->select('SUM(harga_transaksi * (1 - (diskon / 100))) as total_pembayaran');
             $builder->where('id_transaksi', $id);
             $result = $builder->get()->getRow();
 
@@ -520,7 +736,7 @@ class Transaksi extends BaseController
 
             // Calculate total_pembayaran
             $builder = $db->table('detail_transaksi');
-            $builder->select('SUM(harga_resep * (1 - (diskon / 100))) as total_pembayaran');
+            $builder->select('SUM(harga_transaksi * (1 - (diskon / 100))) as total_pembayaran');
             $builder->where('id_transaksi', $id_transaksi);
             $result = $builder->get()->getRow();
 
@@ -646,7 +862,6 @@ class Transaksi extends BaseController
                             'tanggal_resep' => $row['tanggal_resep'],
                             'jumlah_resep' => $row['jumlah_resep'],
                             'total_biaya' => $row['total_biaya'],
-                            'keterangan' => $row['keterangan'],
                             'status' => $row['status'],
                             'user' => [
                                 'id_user' => $row['id_user'],
@@ -663,8 +878,6 @@ class Transaksi extends BaseController
                     'id_detail_resep' => $row['id_detail_resep'],
                     'id_resep' => $row['id_resep'],
                     'id_obat' => $row['id_obat'],
-                    'jumlah' => $row['jumlah'],
-                    'harga_satuan' => $row['harga_satuan'],
                     'obat' => [
                         [
                             'id_obat' => $row['id_obat'],
@@ -674,12 +887,11 @@ class Transaksi extends BaseController
                             'bentuk_obat' => $row['bentuk_obat'],
                             'harga_obat' => $row['harga_obat'],
                             'harga_jual' => $row['harga_jual'],
-                            'dosis_kali' => $row['dosis_kali'],
-                            'dosis_hari' => $row['dosis_hari'],
+                            'signa' => $row['signa'],
+                            'catatan' => $row['catatan'],
                             'cara_pakai' => $row['cara_pakai'],
-                            'jumlah_masuk' => $row['jumlah_masuk'],
-                            'jumlah_keluar' => $row['jumlah_keluar'],
-                            'updated_at' => $row['updated_at']
+                            'harga_satuan' => $row['harga_satuan'],
+                            'jumlah' => $row['jumlah']
                         ]
                     ],
                 ];
