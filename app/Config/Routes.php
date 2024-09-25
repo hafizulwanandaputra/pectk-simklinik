@@ -80,6 +80,14 @@ $routes->delete('/(?i)resep/(?i)hapusdetailresep/(:any)', 'Resep::hapusdetailres
 $routes->get('/(?i)resep/(?i)keterangan/(:any)', 'Resep::keterangan/$1');
 $routes->post('/(?i)resep/(?i)editketerangan/(:any)', 'Resep::editketerangan/$1');
 
+// LAYANAN
+$routes->get('/(?i)layanan', 'Layanan::index');
+$routes->post('/(?i)layanan/(?i)layananlist', 'Layanan::layananlist');
+$routes->get('/(?i)layanan/(?i)layanan/(:any)', 'Layanan::layanan/$1');
+$routes->post('/(?i)layanan/(?i)create', 'Layanan::create');
+$routes->post('/(?i)layanan/(?i)update', 'Layanan::update');
+$routes->delete('/(?i)layanan/(?i)delete/(:any)', 'Layanan::delete/$1');
+
 // TRANSAKSI
 $routes->get('/(?i)transaksi', 'Transaksi::index');
 $routes->get('/(?i)transaksi/(?i)listtransaksi', 'Transaksi::listtransaksi');

@@ -27,7 +27,6 @@ class Filters extends BaseConfig
         'secureheaders' => SecureHeaders::class,
         'authfilter' => \App\Filters\AuthFilter::class,
         'cors'     => \App\Filters\Cors::class,
-        'authfilterapi' => \App\Filters\AuthFilterAPI::class,
     ];
 
     /**
@@ -67,6 +66,8 @@ class Filters extends BaseConfig
                 '/pembelianobat/*',
                 '/resep',
                 '/resep/*',
+                '/layanan',
+                '/layanan/*',
                 '/transaksi',
                 '/transaksi/*',
                 '/admin',
