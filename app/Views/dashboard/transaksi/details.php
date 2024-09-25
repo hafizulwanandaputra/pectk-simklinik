@@ -358,6 +358,39 @@
         }
     }
 
+    async function transactionProcessBtn() {
+        try {
+            const [layananResponse, obatalkesResponse] = await Promise.all([
+                axios.get('<?= base_url('transaksi/detaillayananlist/') . $transaksi['id_transaksi'] ?>'),
+                axios.get('<?= base_url('transaksi/detailobatalkeslist/') . $transaksi['id_transaksi'] ?>')
+            ]);
+            const layanan = layananResponse.data;
+            const obatalkes = obatalkesResponse.data;
+            if ((!layanan || layanan.length === 0) || (!obatalkes || obatalkes.length === 0)) {
+                $('#processBtn').prop('disabled', true);
+            } else {
+                layanan.forEach(function(layanan) {
+                    const layananLunas = layanan.lunas;
+                    if (layananLunas === "1") {
+                        $('#processBtn').prop('disabled', true);
+                    } else if (layananLunas === "0") {
+                        $('#processBtn').prop('disabled', false);
+                    }
+                });
+                obatalkes.forEach(function(obatalkes) {
+                    const obatalkesLunas = obatalkes.lunas;
+                    if (obatalkesLunas === "1") {
+                        $('#processBtn').prop('disabled', true);
+                    } else if (obatalkesLunas === "0") {
+                        $('#processBtn').prop('disabled', false);
+                    }
+                });
+            }
+        } catch (error) {
+            showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+        }
+    }
+
     async function fetchLayanan() {
         $('#loadingSpinner').show();
 
@@ -377,7 +410,6 @@
                     </tr>
                 `;
                 $('#list_layanan').append(emptyRow);
-                $('#processBtn').prop('disabled', true);
             } else {
                 data.forEach(function(layanan) {
                     const diskon = parseInt(layanan.diskon); // Konversi jumlah ke integer
@@ -407,11 +439,9 @@
                     if (layanan.lunas === "1") {
                         $('.edit-layanan-btn').prop('disabled', true);
                         $('.delete-btn').prop('disabled', true);
-                        $('#processBtn').prop('disabled', true);
                     } else if (layanan.lunas === "0") {
                         $('.edit-layanan-btn').prop('disabled', false);
                         $('.delete-btn').prop('disabled', false);
-                        $('#processBtn').prop('disabled', false);
                     }
                 });
             }
@@ -446,7 +476,6 @@
                     </tr>
                 `;
                 $('#list_obat_alkes').append(emptyRow);
-                $('#processBtn').prop('disabled', true);
             } else {
                 data.forEach(function(obat_alkes) {
                     const diskon = parseInt(obat_alkes.diskon); // Konversi jumlah ke integer
@@ -492,11 +521,9 @@
                     if (obat_alkes.lunas === "1") {
                         $('.edit-obatalkes-btn').prop('disabled', true);
                         $('.delete-btn').prop('disabled', true);
-                        $('#processBtn').prop('disabled', true);
                     } else if (obat_alkes.lunas === "0") {
                         $('.edit-obatalkes-btn').prop('disabled', false);
                         $('.delete-btn').prop('disabled', false);
-                        $('#processBtn').prop('disabled', false);
                     }
                 });
             }
@@ -548,6 +575,7 @@
                 fetchTindakanOptions();
                 fetchResepOptions();
                 fetchStatusTransaksi();
+                transactionProcessBtn();
             } catch (error) {
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
             } finally {
@@ -631,6 +659,7 @@
                             fetchTindakanOptions();
                             fetchResepOptions();
                             fetchStatusTransaksi();
+                            transactionProcessBtn();
                         } else {
                             console.log("Validation Errors:", response.data.errors);
 
@@ -756,6 +785,7 @@
                             fetchTindakanOptions();
                             fetchResepOptions();
                             fetchStatusTransaksi();
+                            transactionProcessBtn();
                         } else {
                             console.log("Validation Errors:", response.data.errors);
 
@@ -845,6 +875,7 @@
                     fetchTindakanOptions();
                     fetchResepOptions();
                     fetchStatusTransaksi();
+                    transactionProcessBtn();
                 } else {
                     console.log("Validation Errors:", response.data.errors);
 
@@ -921,6 +952,7 @@
                     fetchTindakanOptions();
                     fetchResepOptions();
                     fetchStatusTransaksi();
+                    transactionProcessBtn();
                 } else {
                     console.log("Validation Errors:", response.data.errors);
 
@@ -998,6 +1030,7 @@
                     fetchLayanan();
                     fetchObatAlkes();
                     fetchStatusTransaksi();
+                    transactionProcessBtn();
                 } else {
                     if (response.data.errors == null) {
                         showFailedToast(response.data.message);
@@ -1051,12 +1084,12 @@
             $('#transaksiForm .is-invalid').removeClass('is-invalid');
             $('#transaksiForm .invalid-feedback').text('').hide();
         });
-
         fetchLayanan();
         fetchObatAlkes();
         fetchTindakanOptions();
         fetchResepOptions();
         fetchStatusTransaksi();
+        transactionProcessBtn();
     });
     // Show toast notification
     function showSuccessToast(message) {

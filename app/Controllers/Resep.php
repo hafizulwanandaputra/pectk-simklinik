@@ -494,13 +494,13 @@ class Resep extends BaseController
                 'total_biaya' => $total_biaya,
             ]);
 
-            // Update detail_transaksi with new harga_resep
-            $harga_resep = $detail_resep['jumlah'] * $detail_resep['harga_satuan'];
+            // Update detail_transaksi with new harga_transaksi
+            $harga_transaksi = $detail_resep['jumlah'] * $detail_resep['harga_satuan'];
 
             $detailTransaksiBuilder = $db->table('detail_transaksi');
             $detailTransaksiBuilder->where('id_resep', $id);
             $detailTransaksiBuilder->update([
-                'harga_resep' => $harga_resep
+                'harga_transaksi' => $harga_transaksi
             ]);
 
             return $this->response->setJSON(['success' => true, 'message' => 'Item resep berhasil diperbarui']);
