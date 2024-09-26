@@ -202,7 +202,7 @@
             columns: [{
                     data: 'no',
                     render: function(data, type, row) {
-                        return `<span class="date">${data}</span>`;
+                        return `<span class="date" style="display: block; text-align: center;">${data}</span>`;
                     }
                 },
                 {

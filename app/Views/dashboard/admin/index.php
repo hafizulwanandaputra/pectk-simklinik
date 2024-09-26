@@ -240,7 +240,7 @@
             columns: [{
                     data: 'no',
                     render: function(data, type, row) {
-                        return `<span class="date">${data}</span>`;
+                        return `<span class="date" style="display: block; text-align: center;">${data}</span>`;
                     }
                 },
                 {
@@ -282,10 +282,10 @@
                 },
             ],
             "order": [
-                [2, 'asc']
+                [2, 'desc']
             ],
             "columnDefs": [{
-                "target": [0, 1],
+                "target": [1],
                 "orderable": false
             }, {
                 "target": [0, 1],

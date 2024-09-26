@@ -125,15 +125,6 @@
                 });
             },
             "drawCallback": function() {
-                var api = this.api();
-                api.column(0, {
-                    order: 'applied'
-                }).nodes().each(function(cell, i) {
-                    cell.innerHTML = i + 1;
-                    $(cell).css({
-                        'font-variant-numeric': 'tabular-nums'
-                    });
-                });
                 $(".pagination").wrap("<div class='overflow-auto'></div>");
                 $(".pagination").addClass("pagination-sm");
                 $('.pagination-sm').css({
@@ -200,7 +191,7 @@
             columns: [{
                     data: 'no',
                     render: function(data, type, row) {
-                        return `<span class="date">${data}</span>`;
+                        return `<span class="date" style="display: block; text-align: center;">${data}</span>`;
                     }
                 },
                 {
@@ -238,10 +229,10 @@
                 },
             ],
             "order": [
-                [2, 'desc']
+                [0, 'desc']
             ],
             "columnDefs": [{
-                "target": [0, 1],
+                "target": [1],
                 "orderable": false
             }, {
                 "target": [0, 1, 4, 5],

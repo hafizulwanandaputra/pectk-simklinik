@@ -64,11 +64,21 @@ class Obat extends BaseController
             // Get total records count
             $totalRecords = $this->ObatModel->countAllResults(true);
 
+            // Modify sorting logic to handle jenis_tindakan
+            if ($sortColumn === 'nama_supplier') {
+                // Sort by jenis_layanan, then by nama_layanan
+                $this->ObatModel
+                    ->orderBy('nama_supplier', $sortDirection)
+                    ->orderBy('nama_obat', 'ASC');
+            } else {
+                // Default sorting behavior
+                $this->ObatModel->orderBy($sortColumn, $sortDirection);
+            }
+
             // Apply search query
             if ($search) {
                 $this->ObatModel
-                    ->like('nama_obat', $search)
-                    ->orderBy($sortColumn, $sortDirection);
+                    ->like('nama_obat', $search);
             }
 
             // Get filtered records count
@@ -77,7 +87,6 @@ class Obat extends BaseController
             // Fetch the data
             $obat = $this->ObatModel
                 ->join('supplier', 'supplier.id_supplier = obat.id_supplier', 'inner')
-                ->orderBy($sortColumn, $sortDirection)
                 ->findAll($length, $start);
 
             foreach ($obat as $index => &$item) {
