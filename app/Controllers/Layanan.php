@@ -73,10 +73,9 @@ class Layanan extends BaseController
                 ->orderBy($sortColumn, $sortDirection)
                 ->findAll($length, $start);
 
-            // Format the data
-            $data = [];
-            foreach ($layanan as $item) {
-                $data[] = $item;
+            // Tambahkan penomoran langsung ke $layanan
+            foreach ($layanan as $index => &$item) {
+                $item['no'] = $start + $index + 1; // Menambahkan kolom 'no'
             }
 
             // Return the JSON response
@@ -84,7 +83,7 @@ class Layanan extends BaseController
                 'draw' => $draw,
                 'recordsTotal' => $totalRecords,
                 'recordsFiltered' => $filteredRecords,
-                'data' => $data
+                'data' => $layanan
             ]);
         } else {
             return $this->response->setStatusCode(404)->setJSON([

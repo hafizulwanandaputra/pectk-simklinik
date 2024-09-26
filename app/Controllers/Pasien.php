@@ -81,11 +81,8 @@ class Pasien extends BaseController
                 ->orderBy($sortColumn, $sortDirection)
                 ->findAll($length, $start);
 
-            // Format the data
-            $data = [];
-            foreach ($pasien as $item) {
-                $item['no_mr'] = $this->formatNoMr($item['no_mr']);
-                $data[] = $item;
+            foreach ($pasien as $index => &$item) {
+                $item['no'] = $start + $index + 1; // Menambahkan kolom 'no'
             }
 
             // Return the JSON response
@@ -93,7 +90,7 @@ class Pasien extends BaseController
                 'draw' => $draw,
                 'recordsTotal' => $totalRecords,
                 'recordsFiltered' => $filteredRecords,
-                'data' => $data
+                'data' => $pasien
             ]);
         } else {
             return $this->response->setStatusCode(404)->setJSON([

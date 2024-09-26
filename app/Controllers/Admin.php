@@ -77,10 +77,8 @@ class Admin extends BaseController
                 ->orderBy($sortColumn, $sortDirection)
                 ->findAll($length, $start);
 
-            // Format the data
-            $data = [];
-            foreach ($users as $user) {
-                $data[] = $user;
+            foreach ($users as $index => &$item) {
+                $item['no'] = $start + $index + 1; // Menambahkan kolom 'no'
             }
 
             // Return the JSON response
@@ -88,7 +86,7 @@ class Admin extends BaseController
                 'draw' => $draw,
                 'recordsTotal' => $totalRecords,
                 'recordsFiltered' => $filteredRecords,
-                'data' => $data
+                'data' => $users
             ]);
         } else {
             return $this->response->setStatusCode(404)->setJSON([

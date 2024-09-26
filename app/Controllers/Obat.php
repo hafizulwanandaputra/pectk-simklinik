@@ -80,10 +80,8 @@ class Obat extends BaseController
                 ->orderBy($sortColumn, $sortDirection)
                 ->findAll($length, $start);
 
-            // Format the data
-            $data = [];
-            foreach ($obat as $item) {
-                $data[] = $item;
+            foreach ($obat as $index => &$item) {
+                $item['no'] = $start + $index + 1; // Menambahkan kolom 'no'
             }
 
             // Return the JSON response
@@ -91,7 +89,7 @@ class Obat extends BaseController
                 'draw' => $draw,
                 'recordsTotal' => $totalRecords,
                 'recordsFiltered' => $filteredRecords,
-                'data' => $data
+                'data' => $obat
             ]);
         } else {
             return $this->response->setStatusCode(404)->setJSON([

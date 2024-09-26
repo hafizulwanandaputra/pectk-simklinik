@@ -74,10 +74,8 @@ class Supplier extends BaseController
                 ->orderBy($sortColumn, $sortDirection)
                 ->findAll($length, $start);
 
-            // Format the data
-            $data = [];
-            foreach ($supplier as $item) {
-                $data[] = $item;
+            foreach ($supplier as $index => &$item) {
+                $item['no'] = $start + $index + 1; // Menambahkan kolom 'no'
             }
 
             // Return the JSON response
@@ -85,7 +83,7 @@ class Supplier extends BaseController
                 'draw' => $draw,
                 'recordsTotal' => $totalRecords,
                 'recordsFiltered' => $filteredRecords,
-                'data' => $data
+                'data' => $supplier
             ]);
         } else {
             return $this->response->setStatusCode(404)->setJSON([

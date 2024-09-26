@@ -198,7 +198,10 @@
                 }
             },
             columns: [{
-                    data: null
+                    data: 'no',
+                    render: function(data, type, row) {
+                        return `<span class="date">${data}</span>`;
+                    }
                 },
                 {
                     data: null,
