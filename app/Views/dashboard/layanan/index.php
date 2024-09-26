@@ -270,6 +270,10 @@
             $('#layananModal').modal('show');
         });
 
+        $('#layananModal').on('shown.bs.modal', function() {
+            $('#nama_layanan').trigger('focus');
+        });
+
         $(document).on('click', '.edit-btn', async function() {
             const $this = $(this);
             const id = $(this).data('id');

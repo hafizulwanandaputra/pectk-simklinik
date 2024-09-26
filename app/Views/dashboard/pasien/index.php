@@ -403,6 +403,10 @@
             $('#pasienModal').modal('show');
         });
 
+        $('#pasienModal').on('shown.bs.modal', function() {
+            $('#nama_pasien').trigger('focus');
+        });
+
         $(document).on('click', '.edit-btn', async function() {
             const $this = $(this);
             const id = $(this).data('id');

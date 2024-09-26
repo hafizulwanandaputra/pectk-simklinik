@@ -365,6 +365,13 @@
             $('#obatModalLabel').text('Tambah Obat');
             $('#obatModal').modal('show');
         });
+        $('#id_supplier').select2({});
+        $('#obatModal').on('shown.bs.modal', function() {
+            // Tunggu sedikit sebelum membuka select2 untuk memastikan modal sudah sepenuhnya ditampilkan
+            setTimeout(function() {
+                $('#id_supplier').select2('open');
+            }, 200); // Delay 200ms untuk memastikan semuanya sudah siap
+        });
 
         $('#obatModal').on('shown.bs.modal', function() {
             $('#id_supplier').select2({

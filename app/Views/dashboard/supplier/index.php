@@ -260,6 +260,10 @@
             $('#supplierModal').modal('show');
         });
 
+        $('#supplierModal').on('shown.bs.modal', function() {
+            $('#nama_supplier').trigger('focus');
+        });
+
         $(document).on('click', '.edit-btn', async function() {
             const $this = $(this);
             const id = $(this).data('id');

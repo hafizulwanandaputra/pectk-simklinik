@@ -315,6 +315,9 @@
             $('#original_username').val('');
             $('#userModal').modal('show');
         });
+        $('#userModal').on('shown.bs.modal', function() {
+            $('#fullname').trigger('focus');
+        });
         // Show edit user modal
         $(document).on('click', '.edit-btn', async function() {
             const $this = $(this);

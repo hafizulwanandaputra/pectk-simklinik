@@ -1000,6 +1000,10 @@
             $('#transaksiModal').modal('show');
         });
 
+        $('#transaksiModal').on('shown.bs.modal', function() {
+            $('#terima_uang').trigger('focus');
+        });
+
         $('#transaksiForm').submit(async function(e) {
             e.preventDefault();
 
