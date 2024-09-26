@@ -44,8 +44,8 @@ class Layanan extends BaseController
 
             // Map column index to the database column name
             $columnMapping = [
-                0 => 'id_supplier',
-                1 => 'id_supplier',
+                0 => 'id_layanan',
+                1 => 'id_layanan',
                 2 => 'nama_layanan',
                 3 => 'jenis_layanan',
                 4 => 'tarif',
@@ -53,7 +53,7 @@ class Layanan extends BaseController
             ];
 
             // Get the column to sort by
-            $sortColumn = $columnMapping[$sortColumnIndex] ?? 'id_supplier';
+            $sortColumn = $columnMapping[$sortColumnIndex] ?? 'id_layanan';
 
             // Get total records count
             $totalRecords = $this->LayananModel->countAllResults(true);
@@ -69,13 +69,13 @@ class Layanan extends BaseController
             $filteredRecords = $this->LayananModel->countAllResults(false);
 
             // Fetch the data
-            $supplier = $this->LayananModel
+            $layanan = $this->LayananModel
                 ->orderBy($sortColumn, $sortDirection)
                 ->findAll($length, $start);
 
             // Format the data
             $data = [];
-            foreach ($supplier as $item) {
+            foreach ($layanan as $item) {
                 $data[] = $item;
             }
 

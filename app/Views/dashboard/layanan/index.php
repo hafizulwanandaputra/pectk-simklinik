@@ -245,10 +245,10 @@
                 },
             ],
             "order": [
-                [2, 'asc']
+                [0, 'asc']
             ],
             "columnDefs": [{
-                "target": [0, 1],
+                "target": [1],
                 "orderable": false
             }, {
                 "target": [0, 1, 3, 4, 5],
