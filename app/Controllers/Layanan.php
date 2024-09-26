@@ -18,8 +18,8 @@ class Layanan extends BaseController
     {
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
             $data = [
-                'title' => 'Layanan - ' . $this->systemName,
-                'headertitle' => 'Layanan',
+                'title' => 'Tindakan - ' . $this->systemName,
+                'headertitle' => 'Tindakan',
                 'agent' => $this->request->getUserAgent()
             ];
             return view('dashboard/layanan/index', $data);
@@ -58,11 +58,21 @@ class Layanan extends BaseController
             // Get total records count
             $totalRecords = $this->LayananModel->countAllResults(true);
 
+            // Modify sorting logic to handle jenis_tindakan
+            if ($sortColumn === 'jenis_layanan') {
+                // Sort by jenis_layanan, then by nama_layanan
+                $this->LayananModel
+                    ->orderBy('jenis_layanan', $sortDirection)
+                    ->orderBy('id_layanan', 'ASC');
+            } else {
+                // Default sorting behavior
+                $this->LayananModel->orderBy($sortColumn, $sortDirection);
+            }
+
             // Apply search query
             if ($search) {
                 $this->LayananModel
-                    ->like('nama_layanan', $search)
-                    ->orderBy($sortColumn, $sortDirection);
+                    ->like('nama_layanan', $search);
             }
 
             // Get filtered records count
@@ -70,7 +80,6 @@ class Layanan extends BaseController
 
             // Fetch the data
             $layanan = $this->LayananModel
-                ->orderBy($sortColumn, $sortDirection)
                 ->findAll($length, $start);
 
             // Tambahkan penomoran langsung ke $layanan

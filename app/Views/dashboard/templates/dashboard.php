@@ -439,7 +439,7 @@
                                             <i class="fa-solid fa-user-nurse"></i>
                                         </div>
                                         <div class="flex-fill ms-2">
-                                            Layanan
+                                            Tindakan
                                         </div>
                                     </div>
                                 </a>

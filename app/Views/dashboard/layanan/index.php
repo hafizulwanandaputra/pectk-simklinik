@@ -98,17 +98,17 @@
         var table = $('#tabel').DataTable({
             "oLanguage": {
                 "sDecimal": ",",
-                "sEmptyTable": 'Tidak ada layanan. Klik "Tambah Layanan" untuk menambahkan layanan.',
-                "sInfo": "Menampilkan _START_ hingga _END_ dari _TOTAL_ layanan",
-                "sInfoEmpty": "Menampilkan 0 hingga 0 dari 0 layanan",
-                "sInfoFiltered": "(di-filter dari _MAX_ layanan)",
+                "sEmptyTable": 'Tidak ada tindakan. Klik "Tambah Tindakan" untuk menambahkan tindakan.',
+                "sInfo": "Menampilkan _START_ hingga _END_ dari _TOTAL_ tindakan",
+                "sInfoEmpty": "Menampilkan 0 hingga 0 dari 0 tindakan",
+                "sInfoFiltered": "(di-filter dari _MAX_ tindakan)",
                 "sInfoPostFix": "",
                 "sThousands": ".",
-                "sLengthMenu": "Tampilkan _MENU_ layanan",
+                "sLengthMenu": "Tampilkan _MENU_ tindakan",
                 "sLoadingRecords": "Memuat...",
                 "sProcessing": "",
                 "sSearch": "Cari:",
-                "sZeroRecords": "Layanan yang Anda cari tidak ditemukan",
+                "sZeroRecords": "Tindakan yang Anda cari tidak ditemukan",
                 "oAria": {
                     "sOrderable": "Urutkan menurut kolom ini",
                     "sOrderableReverse": "Urutkan terbalik kolom ini"
@@ -154,7 +154,7 @@
                     $(node).removeClass('btn-secondary')
                 },
             }, {
-                text: '<i class="fa-solid fa-plus"></i> Tambah Layanan',
+                text: '<i class="fa-solid fa-plus"></i> Tambah Tindakan',
                 className: 'btn-primary btn-sm bg-gradient rounded-end-3',
                 attr: {
                     id: 'addLayananBtn'
@@ -239,7 +239,7 @@
                 },
             ],
             "order": [
-                [0, 'asc']
+                [3, 'asc']
             ],
             "columnDefs": [{
                 "target": [1],
@@ -260,7 +260,7 @@
         });
         // Show add user modal
         $('#addLayananBtn').click(function() {
-            $('#layananModalLabel').text('Tambah Supplier');
+            $('#layananModalLabel').text('Tambah Tindakan');
             $('#layananModal').modal('show');
         });
 
@@ -276,7 +276,7 @@
 
             try {
                 const response = await axios.get(`<?= base_url('/layanan/layanan') ?>/${id}`);
-                $('#layananModalLabel').text('Edit Supplier');
+                $('#layananModalLabel').text('Edit Tindakan');
                 $('#id_layanan').val(response.data.id_layanan);
                 $('#nama_layanan').val(response.data.nama_layanan);
                 $('#jenis_layanan').val(response.data.jenis_layanan);
