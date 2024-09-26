@@ -20,7 +20,7 @@
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Jenis</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Tarif</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Keterangan</th>
-                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Digunakan dalam Transaksi</th>
+                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Digunakan</th>
                 </tr>
             </thead>
             <tbody class="align-top">
@@ -241,7 +241,6 @@
                 {
                     data: 'used',
                     render: function(data, type, row) {
-                        // Format harga_obat using number_format equivalent in JavaScript
                         let formattedUsed = new Intl.NumberFormat('id-ID', {
                             style: 'decimal',
                             minimumFractionDigits: 0

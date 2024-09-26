@@ -89,7 +89,7 @@ class Transaksi extends BaseController
                 $db = db_connect();
                 // Calculate total_pembayaran
                 $builder = $db->table('detail_transaksi');
-                $builder->select('SUM(harga_transaksi * (1 - (diskon / 100))) as total_pembayaran');
+                $builder->select('SUM((harga_transaksi * qty_transaksi) * (1 - (diskon / 100))) as total_pembayaran');
                 $builder->where('id_transaksi', $data['id_transaksi']);
                 $result = $builder->get()->getRow();
 
@@ -541,7 +541,7 @@ class Transaksi extends BaseController
 
             // Calculate total_pembayaran
             $builder = $db->table('detail_transaksi');
-            $builder->select('SUM(harga_transaksi * (1 - (diskon / 100))) as total_pembayaran');
+            $builder->select('SUM((harga_transaksi * qty_transaksi) * (1 - (diskon / 100))) as total_pembayaran');
             $builder->where('id_transaksi', $id);
             $result = $builder->get()->getRow();
 
@@ -596,7 +596,7 @@ class Transaksi extends BaseController
 
             // Calculate total_pembayaran
             $builder = $db->table('detail_transaksi');
-            $builder->select('SUM(harga_transaksi * (1 - (diskon / 100))) as total_pembayaran');
+            $builder->select('SUM((harga_transaksi * qty_transaksi) * (1 - (diskon / 100))) as total_pembayaran');
             $builder->where('id_transaksi', $id);
             $result = $builder->get()->getRow();
 
@@ -651,7 +651,7 @@ class Transaksi extends BaseController
 
             // Calculate total_pembayaran
             $builder = $db->table('detail_transaksi');
-            $builder->select('SUM(harga_transaksi * (1 - (diskon / 100))) as total_pembayaran');
+            $builder->select('SUM((harga_transaksi * qty_transaksi) * (1 - (diskon / 100))) as total_pembayaran');
             $builder->where('id_transaksi', $id);
             $result = $builder->get()->getRow();
 
@@ -706,7 +706,7 @@ class Transaksi extends BaseController
 
             // Calculate total_pembayaran
             $builder = $db->table('detail_transaksi');
-            $builder->select('SUM(harga_transaksi * (1 - (diskon / 100))) as total_pembayaran');
+            $builder->select('SUM((harga_transaksi * qty_transaksi) * (1 - (diskon / 100))) as total_pembayaran');
             $builder->where('id_transaksi', $id);
             $result = $builder->get()->getRow();
 
@@ -746,7 +746,7 @@ class Transaksi extends BaseController
 
             // Calculate total_pembayaran
             $builder = $db->table('detail_transaksi');
-            $builder->select('SUM(harga_transaksi * (1 - (diskon / 100))) as total_pembayaran');
+            $builder->select('SUM((harga_transaksi * qty_transaksi) * (1 - (diskon / 100))) as total_pembayaran');
             $builder->where('id_transaksi', $id_transaksi);
             $result = $builder->get()->getRow();
 

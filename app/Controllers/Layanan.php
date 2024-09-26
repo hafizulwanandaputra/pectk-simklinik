@@ -81,7 +81,7 @@ class Layanan extends BaseController
 
             // Fetch the data
             $layanan = $this->LayananModel
-                ->select('layanan.*, (SELECT COUNT(*) FROM detail_transaksi WHERE detail_transaksi.id_layanan = layanan.id_layanan) as used')
+                ->select('layanan.*, (SELECT SUM(qty_transaksi) FROM detail_transaksi WHERE detail_transaksi.id_layanan = layanan.id_layanan) as used')
                 ->findAll($length, $start);
 
             // Tambahkan penomoran langsung ke $layanan
