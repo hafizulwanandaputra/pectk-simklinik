@@ -83,6 +83,7 @@ class Pasien extends BaseController
 
             foreach ($pasien as $index => &$item) {
                 $item['no'] = $start + $index + 1; // Menambahkan kolom 'no'
+                $item['no_mr'] = $this->formatNoMr($item['no_mr']);
             }
 
             // Return the JSON response

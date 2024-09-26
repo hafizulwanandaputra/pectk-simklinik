@@ -277,7 +277,7 @@
                             minimumFractionDigits: 0
                         }).format(data);
 
-                        return `<span class="date text-nowrap">Rp${formattedHarga}</span>`;
+                        return `<span class="date text-nowrap" style="display: block; text-align: right;">Rp${formattedHarga}</span>`;
                     }
                 },
                 {
@@ -289,19 +289,19 @@
                             minimumFractionDigits: 0
                         }).format(data);
 
-                        return `<span class="date text-nowrap">Rp${formattedHarga}</span>`;
+                        return `<span class="date text-nowrap" style="display: block; text-align: right;">Rp${formattedHarga}</span>`;
                     }
                 },
                 {
                     data: 'jumlah_masuk',
                     render: function(data, type, row) {
-                        return `<span class="date text-nowrap">${data}</span>`;
+                        return `<span class="date text-nowrap" style="display: block; text-align: right;">${data}</span>`;
                     }
                 },
                 {
                     data: 'jumlah_keluar',
                     render: function(data, type, row) {
-                        return `<span class="date text-nowrap">${data}</span>`;
+                        return `<span class="date text-nowrap" style="display: block; text-align: right;">${data}</span>`;
                     }
                 },
                 {

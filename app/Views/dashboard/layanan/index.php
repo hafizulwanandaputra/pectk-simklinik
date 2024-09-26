@@ -20,6 +20,7 @@
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Jenis</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Tarif</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Keterangan</th>
+                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Digunakan Transaksi</th>
                 </tr>
             </thead>
             <tbody class="align-top">
@@ -231,21 +232,33 @@
                             minimumFractionDigits: 0
                         }).format(data);
 
-                        return `<span class="date text-nowrap">Rp${formattedTarif}</span>`;
-                    }
+                        return `<span class="date text-nowrap" style="display: block; text-align: right;">Rp${formattedTarif}</span>`;
+                    },
                 },
                 {
                     data: 'keterangan'
+                },
+                {
+                    data: 'used',
+                    render: function(data, type, row) {
+                        // Format harga_obat using number_format equivalent in JavaScript
+                        let formattedUsed = new Intl.NumberFormat('id-ID', {
+                            style: 'decimal',
+                            minimumFractionDigits: 0
+                        }).format(data);
+
+                        return `<span class="date text-nowrap" style="display: block; text-align: right;">${formattedUsed}</span>`;
+                    },
                 },
             ],
             "order": [
                 [3, 'desc']
             ],
             "columnDefs": [{
-                "target": [1],
+                "target": [1, 6],
                 "orderable": false
             }, {
-                "target": [0, 1, 3, 4, 5],
+                "target": [0, 1, 3, 4, 5, 6],
                 "width": "0%"
             }, {
                 "target": [2],

@@ -233,7 +233,7 @@
                 {
                     data: 'jumlah_obat',
                     render: function(data, type, row) {
-                        return `<div class="date text-nowrap text-end">${data}</div>`;
+                        return `<div class="date text-nowrap" style="display: block; text-align: right;">${data}</div>`;
                     }
                 },
             ],
