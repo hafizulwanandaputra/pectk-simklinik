@@ -394,26 +394,22 @@
             ]);
             const layanan = layananResponse.data;
             const obatalkes = obatalkesResponse.data;
-            if ((!layanan || layanan.length === 0) || (!obatalkes || obatalkes.length === 0)) {
-                $('#processBtn').prop('disabled', true);
-            } else {
-                layanan.forEach(function(layanan) {
-                    const layananLunas = layanan.lunas;
-                    if (layananLunas === "1") {
-                        $('#processBtn').prop('disabled', true);
-                    } else if (layananLunas === "0") {
-                        $('#processBtn').prop('disabled', false);
-                    }
-                });
-                obatalkes.forEach(function(obatalkes) {
-                    const obatalkesLunas = obatalkes.lunas;
-                    if (obatalkesLunas === "1") {
-                        $('#processBtn').prop('disabled', true);
-                    } else if (obatalkesLunas === "0") {
-                        $('#processBtn').prop('disabled', false);
-                    }
-                });
-            }
+            layanan.forEach(function(layanan) {
+                const layananLunas = layanan.lunas;
+                if (layananLunas === "1") {
+                    $('#processBtn').prop('disabled', true);
+                } else if (layananLunas === "0") {
+                    $('#processBtn').prop('disabled', false);
+                }
+            });
+            obatalkes.forEach(function(obatalkes) {
+                const obatalkesLunas = obatalkes.lunas;
+                if (obatalkesLunas === "1") {
+                    $('#processBtn').prop('disabled', true);
+                } else if (obatalkesLunas === "0") {
+                    $('#processBtn').prop('disabled', false);
+                }
+            });
         } catch (error) {
             showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
         }

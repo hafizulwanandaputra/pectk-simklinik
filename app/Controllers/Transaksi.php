@@ -814,12 +814,21 @@ class Transaksi extends BaseController
                 'lunas' => 1,
             ]);
 
-            // Update resep status
-            $resep = $db->table('resep');
-            $resep->where('id_pasien', $id_pasien);
-            $resep->update([
-                'status' => 1,
-            ]);
+            $detailtransaksi = $db->table('detail_transaksi');
+            $detailtransaksi->where('id_transaksi', $id_transaksi);
+            $details = $detailtransaksi->get()->getResultArray(); // Use getResultArray to retrieve all details
+
+            if ($details) {
+                foreach ($details as $detail) {
+                    if ($detail['id_resep'] !== null) {
+                        $resep = $db->table('resep');
+                        $resep->where('id_resep', $detail['id_resep']); // Ensure you're matching by id_resep
+                        $resep->update([
+                            'status' => 1,
+                        ]);
+                    }
+                }
+            }
 
             if ($db->transStatus() === false) {
                 $db->transRollback();  // Rollback if there is any issue
