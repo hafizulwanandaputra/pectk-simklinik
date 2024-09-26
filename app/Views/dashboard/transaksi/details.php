@@ -82,7 +82,7 @@
     </fieldset>
 
     <div class="row">
-        <div class="col-lg-6 mb-3">
+        <div class="col-lg-6 add-forms">
             <fieldset id="tambahLayananContainer" class="border rounded-3 px-2 py-0 h-100" style="display: none;">
                 <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Tambah Tindakan</legend>
                 <form id="tambahLayanan" enctype="multipart/form-data">
@@ -110,7 +110,7 @@
                 </form>
             </fieldset>
         </div>
-        <div class="col-lg-6 mb-3">
+        <div class="col-lg-6 add-forms">
             <fieldset id="tambahObatAlkesContainer" class="border rounded-3 px-2 py-0 h-100" style="display: none;">
                 <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Tambah Obat dan Alkes</legend>
                 <form id="tambahObatAlkes" enctype="multipart/form-data">
@@ -370,10 +370,12 @@
 
             // Cek status `lunas`
             if (data.lunas === "1") {
+                $('div.add-forms').removeClass('mb-3');
                 $('#tambahLayananContainer').hide();
                 $('#tambahObatAlkesContainer').hide();
                 $('#printBtn').prop('disabled', false);
             } else if (data.lunas === "0") {
+                $('div.add-forms').addClass('mb-3');
                 $('#tambahLayananContainer').show();
                 $('#tambahObatAlkesContainer').show();
                 $('#printBtn').prop('disabled', true);
