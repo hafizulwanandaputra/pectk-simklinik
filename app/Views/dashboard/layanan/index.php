@@ -70,7 +70,7 @@
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
-                        <input type="number" class="form-control" autocomplete="off" dir="auto" placeholder="keterangan" id="keterangan" name="keterangan">
+                        <input type="text" class="form-control" autocomplete="off" dir="auto" placeholder="keterangan" id="keterangan" name="keterangan">
                         <label for="keterangan">Keterangan</label>
                         <div class="invalid-feedback"></div>
                     </div>
