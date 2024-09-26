@@ -122,7 +122,7 @@ class Layanan extends BaseController
             $validation->setRules([
                 'nama_layanan' => 'required',
                 'jenis_layanan' => 'required',
-                'tarif' => 'required|numeric',
+                'tarif' => 'required|numeric|greater_than[0]',
             ]);
 
             if (!$this->validate($validation->getRules())) {
@@ -154,7 +154,7 @@ class Layanan extends BaseController
             $validation->setRules([
                 'nama_layanan' => 'required',
                 'jenis_layanan' => 'required',
-                'tarif' => 'required|numeric',
+                'tarif' => 'required|numeric|greater_than[0]',
             ]);
             if (!$this->validate($validation->getRules())) {
                 return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
