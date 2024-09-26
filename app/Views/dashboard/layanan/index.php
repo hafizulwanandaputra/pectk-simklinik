@@ -20,7 +20,7 @@
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Jenis</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Tarif</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Keterangan</th>
-                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Digunakan Transaksi</th>
+                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Digunakan dalam Transaksi</th>
                 </tr>
             </thead>
             <tbody class="align-top">
@@ -255,7 +255,7 @@
                 [3, 'desc']
             ],
             "columnDefs": [{
-                "target": [1, 6],
+                "target": [1],
                 "orderable": false
             }, {
                 "target": [0, 1, 3, 4, 5, 6],

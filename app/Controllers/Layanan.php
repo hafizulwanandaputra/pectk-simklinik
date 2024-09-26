@@ -50,6 +50,7 @@ class Layanan extends BaseController
                 3 => 'jenis_layanan',
                 4 => 'tarif',
                 5 => 'keterangan',
+                6 => 'used'
             ];
 
             // Get the column to sort by
@@ -80,12 +81,12 @@ class Layanan extends BaseController
 
             // Fetch the data
             $layanan = $this->LayananModel
+                ->select('layanan.*, (SELECT COUNT(*) FROM detail_transaksi WHERE detail_transaksi.id_layanan = layanan.id_layanan) as used')
                 ->findAll($length, $start);
 
             // Tambahkan penomoran langsung ke $layanan
             foreach ($layanan as $index => &$item) {
                 $item['no'] = $start + $index + 1; // Menambahkan kolom 'no'
-                $item['used'] = $this->isLayananUsedInDetailTransaksi($item['id_layanan']);
             }
 
             // Return the JSON response
