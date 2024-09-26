@@ -1046,7 +1046,7 @@
             $('#transaksiForm input, #transaksiForm select, #closeBtn').prop('disabled', true);
 
             try {
-                const response = await axios.post(`<?= base_url('/transaksi/process/' . $transaksi['id_transaksi'] . '/' . $transaksi['id_pasien']) ?>`, formData, {
+                const response = await axios.post(`<?= base_url('/transaksi/process/' . $transaksi['id_transaksi']) ?>`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }

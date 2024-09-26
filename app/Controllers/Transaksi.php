@@ -767,7 +767,7 @@ class Transaksi extends BaseController
         }
     }
 
-    public function process($id_transaksi, $id_pasien)
+    public function process($id_transaksi)
     {
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
             // Validate
