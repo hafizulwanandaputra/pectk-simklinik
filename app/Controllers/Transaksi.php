@@ -258,10 +258,16 @@ class Transaksi extends BaseController
                 ->join('pasien', 'pasien.id_pasien = transaksi.id_pasien', 'inner')
                 ->join('user', 'user.id_user = transaksi.id_user', 'inner')
                 ->find($id);
+            $LayananModel = new LayananModel();
+            $layanan = $LayananModel
+                ->select('jenis_layanan')
+                ->groupBy('jenis_layanan')
+                ->findAll();
             if (!empty($transaksi)) {
                 $transaksi['no_mr'] = $this->formatNoMr($transaksi['no_mr']);
                 $data = [
                     'transaksi' => $transaksi,
+                    'layanan' => $layanan,
                     'title' => 'Detail Transaksi ' . $transaksi['no_kwitansi'] . ' - ' . $this->systemName,
                     'headertitle' => 'Detail Transaksi',
                     'agent' => $this->request->getUserAgent()
@@ -420,14 +426,20 @@ class Transaksi extends BaseController
         }
     }
 
-    public function layananlist($id_transaksi)
+    public function layananlist($id_transaksi, $jenis_layanan = null)
     {
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
             $LayananModel = new LayananModel();
             $DetailTransaksiModel = new DetailTransaksiModel();
 
+            // Filter layanan berdasarkan jenis_layanan jika parameter diberikan
+            if ($jenis_layanan) {
+                $LayananModel->where('jenis_layanan', $jenis_layanan);
+            }
+
             $results = $LayananModel
-                ->orderBy('layanan.id_layanan', 'ASC')->findAll();
+                ->orderBy('layanan.id_layanan', 'ASC')
+                ->findAll();
 
             $options = [];
             foreach ($results as $row) {
@@ -446,10 +458,7 @@ class Transaksi extends BaseController
                 }
             }
 
-            return $this->response->setJSON([
-                'success' => true,
-                'data' => $options,
-            ]);
+            return $this->response->setJSON($options);
         } else {
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan',

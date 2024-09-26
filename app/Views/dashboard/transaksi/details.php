@@ -82,8 +82,8 @@
     </fieldset>
 
     <div class="row">
-        <div class="col-lg-6">
-            <fieldset id="tambahLayananContainer" class="border rounded-3 px-2 py-0 mb-3" style="display: none;">
+        <div class="col-lg-6 mb-3">
+            <fieldset id="tambahLayananContainer" class="border rounded-3 px-2 py-0 h-100" style="display: none;">
                 <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Tambah Tindakan</legend>
                 <form id="tambahLayanan" enctype="multipart/form-data">
                     <div class="mb-2">
@@ -110,8 +110,8 @@
                 </form>
             </fieldset>
         </div>
-        <div class="col-lg-6">
-            <fieldset id="tambahObatAlkesContainer" class="border rounded-3 px-2 py-0 mb-3" style="display: none;">
+        <div class="col-lg-6 mb-3">
+            <fieldset id="tambahObatAlkesContainer" class="border rounded-3 px-2 py-0 h-100" style="display: none;">
                 <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Tambah Obat dan Alkes</legend>
                 <form id="tambahObatAlkes" enctype="multipart/form-data">
                     <div class="mb-2">
@@ -283,20 +283,48 @@
 <script>
     async function fetchTindakanOptions() {
         try {
-            const response = await axios.get('<?= base_url('transaksi/layananlist/' . $transaksi['id_transaksi']) ?>) ?>');
+            const [rawatJalanList, pemeriksaanPenunjangList, OperasiList] = await Promise.all([
+                axios.get('<?= base_url('transaksi/layananlist/') . $transaksi['id_transaksi'] . '/Rawat%20Jalan' ?>'),
+                axios.get('<?= base_url('transaksi/layananlist/') . $transaksi['id_transaksi'] . '/Pemeriksaan%20Penunjang' ?>'),
+                axios.get('<?= base_url('transaksi/layananlist/') . $transaksi['id_transaksi'] . '/Operasi' ?>')
+            ]);
 
-            if (response.data.success) {
-                const options = response.data.data;
-                const select = $('#id_layanan');
+            // Ensure to access the correct property containing the array
+            const rawatJalan = Array.isArray(rawatJalanList.data) ? rawatJalanList.data : [];
+            const pemeriksaanPenunjang = Array.isArray(pemeriksaanPenunjangList.data) ? pemeriksaanPenunjangList.data : [];
+            const Operasi = Array.isArray(OperasiList.data) ? OperasiList.data : [];
 
-                // Clear existing options except the first one
-                select.find('option:not(:first)').remove();
+            const select = $('#id_layanan');
 
-                // Loop through the options and append them to the select element
-                options.forEach(option => {
-                    select.append(`<option value="${option.value}">${option.text}</option>`);
-                });
-            }
+            // Clear existing options except the first one (the placeholder)
+            select.empty().append('<option value="" disabled selected>-- Pilih Tindakan --</option>');
+
+            // Create optgroup for Rawat Jalan
+            const rawatJalanGroup = $('<optgroup label="Rawat Jalan"></optgroup>');
+            rawatJalan.forEach(option => {
+                if (option.value && option.text) {
+                    rawatJalanGroup.append(`<option value="${option.value}">${option.text}</option>`);
+                }
+            });
+            select.append(rawatJalanGroup);
+
+            // Create optgroup for Pemeriksaan Penunjang
+            const pemeriksaanGroup = $('<optgroup label="Pemeriksaan Penunjang"></optgroup>');
+            pemeriksaanPenunjang.forEach(option => {
+                if (option.value && option.text) {
+                    pemeriksaanGroup.append(`<option value="${option.value}">${option.text}</option>`);
+                }
+            });
+            select.append(pemeriksaanGroup);
+
+            // Create optgroup for Operasi
+            const operasiGroup = $('<optgroup label="Operasi"></optgroup>');
+            Operasi.forEach(option => {
+                if (option.value && option.text) {
+                    operasiGroup.append(`<option value="${option.value}">${option.text}</option>`);
+                }
+            });
+            select.append(operasiGroup);
         } catch (error) {
             showFailedToast('Gagal mendapatkan layanan.<br>' + error);
         }
