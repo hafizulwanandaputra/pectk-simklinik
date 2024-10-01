@@ -36,7 +36,7 @@ class Obat extends Migration
                 'type' => 'INT',
                 'constraint' => 24,
             ],
-            'harga_jual' => [
+            'ppn' => [
                 'type' => 'INT',
                 'constraint' => 24,
             ],
