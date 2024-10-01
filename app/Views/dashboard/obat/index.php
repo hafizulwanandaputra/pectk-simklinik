@@ -23,10 +23,12 @@
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Nama</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Kategori</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Bentuk</th>
-                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Harga Beli</th>
+                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Harga Obat</th>
+                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">PPN</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Harga Jual</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Jumlah Masuk</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Jumlah Keluar</th>
+                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Sisa Stok</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Terakhir Diperbarui</th>
                 </tr>
             </thead>
@@ -97,12 +99,12 @@
                     </div>
                     <div class="form-floating mb-1 mt-1">
                         <input type="number" class="form-control" autocomplete="off" dir="auto" placeholder="harga_obat" id="harga_obat" name="harga_obat">
-                        <label for="harga_obat">Harga Beli (Rp)*</label>
+                        <label for="harga_obat">Harga Obat (Rp)*</label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
-                        <input type="number" class="form-control" autocomplete="off" dir="auto" placeholder="harga_jual" id="harga_jual" name="harga_jual">
-                        <label for="harga_jual">Harga Jual (Rp)*</label>
+                        <input type="number" class="form-control" autocomplete="off" dir="auto" placeholder="ppn" id="ppn" name="ppn">
+                        <label for="ppn">PPN (%)*</label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
@@ -281,6 +283,12 @@
                     }
                 },
                 {
+                    data: 'ppn',
+                    render: function(data, type, row) {
+                        return `<span class="date text-nowrap" style="display: block; text-align: right;">${data}%</span>`;
+                    }
+                },
+                {
                     data: 'harga_jual',
                     render: function(data, type, row) {
                         // Format harga_obat using number_format equivalent in JavaScript
@@ -305,6 +313,12 @@
                     }
                 },
                 {
+                    data: 'sisa_stok',
+                    render: function(data, type, row) {
+                        return `<span class="date text-nowrap" style="display: block; text-align: right;">${data}</span>`;
+                    }
+                },
+                {
                     data: 'updated_at',
                     render: function(data, type, row) {
                         return `<span class="date text-nowrap">${data}</span>`;
@@ -319,7 +333,7 @@
                 "target": [1],
                 "orderable": false
             }, {
-                "target": [0, 1, 2, 4, 5, 6, 7, 8, 9, 10],
+                "target": [0, 1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12],
                 "width": "0%"
             }, {
                 "target": [3],
@@ -391,7 +405,7 @@
                 $('#kategori_obat').val(response.data.kategori_obat);
                 $('#bentuk_obat').val(response.data.bentuk_obat);
                 $('#harga_obat').val(response.data.harga_obat);
-                $('#harga_jual').val(response.data.harga_jual);
+                $('#ppn').val(response.data.ppn);
                 $('#obatModal').modal('show');
             } catch (error) {
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
@@ -515,7 +529,7 @@
             $('#kategori_obat').val('');
             $('#bentuk_obat').val('');
             $('#harga_obat').val('');
-            $('#harga_jual').val('');
+            $('#ppn').val('');
             $('#obatForm .is-invalid').removeClass('is-invalid');
             $('#obatForm .invalid-feedback').text('').hide();
         });

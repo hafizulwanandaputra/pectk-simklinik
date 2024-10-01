@@ -341,11 +341,16 @@ class Transaksi extends BaseController
                 ->orderBy('id_detail_transaksi', 'ASC')
                 ->findAll();
 
+
             // Array untuk menyimpan hasil terstruktur
             $result = [];
 
             // Untuk memetakan setiap transaksi
             foreach ($obatalkes as $row) {
+                $ppn = $row['ppn'];
+                $harga_obat = $row['harga_obat'];
+                $jumlah_ppn = ($harga_obat * $ppn) / 100;
+                $total_harga = $harga_obat + $jumlah_ppn;
                 // Jika transaksi ini belum ada dalam array $result, tambahkan
                 if (!isset($result[$row['id_detail_transaksi']])) {
                     $result[$row['id_detail_transaksi']] = [
@@ -389,7 +394,7 @@ class Transaksi extends BaseController
                             'kategori_obat' => $row['kategori_obat'],
                             'bentuk_obat' => $row['bentuk_obat'],
                             'harga_obat' => $row['harga_obat'],
-                            'harga_jual' => $row['harga_jual'],
+                            'harga_jual' => $total_harga,
                             'signa' => $row['signa'],
                             'catatan' => $row['catatan'],
                             'cara_pakai' => $row['cara_pakai'],
@@ -907,6 +912,10 @@ class Transaksi extends BaseController
 
             // Untuk memetakan setiap transaksi
             foreach ($obatalkes as $row) {
+                $ppn = $row['ppn'];
+                $harga_obat = $row['harga_obat'];
+                $jumlah_ppn = ($harga_obat * $ppn) / 100;
+                $total_harga = $harga_obat + $jumlah_ppn;
                 // Jika transaksi ini belum ada dalam array $result_obatalkes, tambahkan
                 if (!isset($result_obatalkes[$row['id_detail_transaksi']])) {
                     $result_obatalkes[$row['id_detail_transaksi']] = [
@@ -950,7 +959,7 @@ class Transaksi extends BaseController
                             'kategori_obat' => $row['kategori_obat'],
                             'bentuk_obat' => $row['bentuk_obat'],
                             'harga_obat' => $row['harga_obat'],
-                            'harga_jual' => $row['harga_jual'],
+                            'harga_jual' => $total_harga,
                             'signa' => $row['signa'],
                             'catatan' => $row['catatan'],
                             'cara_pakai' => $row['cara_pakai'],

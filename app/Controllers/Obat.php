@@ -52,10 +52,12 @@ class Obat extends BaseController
                 4 => 'kategori_obat',
                 5 => 'bentuk_obat',
                 6 => 'harga_obat',
-                7 => 'harga_jual',
-                8 => 'jumlah_masuk',
-                9 => 'jumlah_keluar',
-                10 => 'updated_at',
+                7 => 'ppn',
+                8 => 'harga_jual',
+                9 => 'jumlah_masuk',
+                10 => 'jumlah_keluar',
+                12 => 'sisa_stok',
+                11 => 'updated_at',
             ];
 
             // Get the column to sort by
@@ -86,6 +88,7 @@ class Obat extends BaseController
 
             // Fetch the data
             $obat = $this->ObatModel
+                ->select('obat.*, supplier.*, (obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) as harga_jual, (obat.jumlah_masuk - obat.jumlah_keluar) as sisa_stok')
                 ->join('supplier', 'supplier.id_supplier = obat.id_supplier', 'inner')
                 ->findAll($length, $start);
 
@@ -157,7 +160,7 @@ class Obat extends BaseController
                 'kategori_obat' => 'required',
                 'bentuk_obat' => 'required',
                 'harga_obat' => 'required|numeric|greater_than[0]',
-                'harga_jual' => 'required|numeric|greater_than[0]',
+                'ppn' => 'required|numeric|greater_than[0]',
             ]);
 
             if (!$this->validate($validation->getRules())) {
@@ -171,7 +174,7 @@ class Obat extends BaseController
                 'kategori_obat' => $this->request->getPost('kategori_obat'),
                 'bentuk_obat' => $this->request->getPost('bentuk_obat'),
                 'harga_obat' => $this->request->getPost('harga_obat'),
-                'harga_jual' => $this->request->getPost('harga_jual'),
+                'ppn' => $this->request->getPost('harga_jual'),
                 'jumlah_masuk' => 0,
                 'jumlah_keluar' => 0,
                 'updated_at' => date('Y-m-d H:i:s'),
@@ -197,7 +200,7 @@ class Obat extends BaseController
                 'kategori_obat' => 'required',
                 'bentuk_obat' => 'required',
                 'harga_obat' => 'required|numeric|greater_than[0]',
-                'harga_jual' => 'required|numeric|greater_than[0]',
+                'ppn' => 'required|numeric|greater_than[0]',
             ]);
             if (!$this->validate($validation->getRules())) {
                 return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
@@ -215,7 +218,7 @@ class Obat extends BaseController
                 'harga_obat' => $this->request->getPost('harga_obat'),
                 'harga_jual' => $this->request->getPost('harga_jual'),
                 'jumlah_masuk' => $obat['jumlah_masuk'],
-                'jumlah_keluar' => $obat['jumlah_keluar'],
+                'ppn' => $obat['jumlah_keluar'],
                 'updated_at' => $obat['updated_at'],
             ];
             $this->ObatModel->save($data);

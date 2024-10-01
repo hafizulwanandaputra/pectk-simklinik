@@ -345,8 +345,11 @@ class Resep extends BaseController
 
             $options = [];
             foreach ($results as $row) {
+                $ppn = (int) $row['ppn'];
                 $harga_obat = (int) $row['harga_obat'];
-                $harga_obat_terformat = number_format($harga_obat, 0, ',', '.');
+                $jumlah_ppn = ($harga_obat * $ppn) / 100;
+                $total_harga = $harga_obat + $jumlah_ppn;
+                $harga_obat_terformat = number_format($total_harga, 0, ',', '.');
                 // Cek apakah id_resep sudah ada di tabel detail_resep dengan id_resep yang sama
                 $isUsed = $DetailResepModel->where('id_obat', $row['id_obat'])
                     ->where('id_resep', $id_resep) // Pastikan sesuai dengan id_resep yang sedang digunakan
@@ -395,6 +398,11 @@ class Resep extends BaseController
             $builderObat = $db->table('obat');
             $obat = $builderObat->where('id_obat', $this->request->getPost('id_obat'))->get()->getRowArray();
 
+            $ppn = $obat['ppn'];
+            $harga_obat = $obat['harga_obat'];
+            $jumlah_ppn = ($harga_obat * $ppn) / 100;
+            $total_harga = $harga_obat + $jumlah_ppn;
+
             if ($this->request->getPost('jumlah') > ($obat['jumlah_masuk'] - $obat['jumlah_keluar'])) {
                 return $this->response->setJSON(['success' => false, 'message' => 'Jumlah obat melebihi stok', 'errors' => NULL]);
             } else {
@@ -406,7 +414,7 @@ class Resep extends BaseController
                     'catatan' => $this->request->getPost('catatan'),
                     'cara_pakai' => $this->request->getPost('cara_pakai'),
                     'jumlah' => $this->request->getPost('jumlah'),
-                    'harga_satuan' => $obat['harga_jual'],
+                    'harga_satuan' => $total_harga,
                 ];
                 $this->DetailResepModel->save($data);
 
