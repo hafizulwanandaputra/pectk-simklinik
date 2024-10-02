@@ -20,15 +20,18 @@ class PembelianObat extends Migration
                 'constraint' => 24,
                 'unsigned' => true
             ],
-            'id_user' => [
-                'type' => 'BIGINT',
-                'constraint' => 24,
-                'unsigned' => true
+            'apoteker' => [
+                'type' => 'VARCHAR',
+                'constraint' => 256,
             ],
             'tgl_pembelian' => [
                 'type' => 'DATETIME',
             ],
             'total_qty' => [
+                'type' => 'INT',
+                'constraint' => 24,
+            ],
+            'total_masuk' => [
                 'type' => 'INT',
                 'constraint' => 24,
             ],
@@ -42,7 +45,6 @@ class PembelianObat extends Migration
         ]);
         $this->forge->addKey('id_pembelian_obat', true);
         $this->forge->addForeignKey('id_supplier', 'supplier', 'id_supplier', 'CASCADE', 'NO ACTION');
-        $this->forge->addForeignKey('id_user', 'user', 'id_user', 'CASCADE', 'NO ACTION');
         $this->forge->createTable('pembelian_obat');
     }
 

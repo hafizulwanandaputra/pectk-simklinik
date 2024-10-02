@@ -49,11 +49,8 @@ class Transaksi extends BaseController
 
             $TransaksiModel
                 ->select('transaksi.*, 
-                pasien.nama_pasien as pasien_nama_pasien, 
-                user.fullname as user_fullname,
-                user.username as user_username')
-                ->join('pasien', 'pasien.id_pasien = transaksi.id_pasien', 'inner')
-                ->join('user', 'user.id_user = transaksi.id_user', 'inner');
+                pasien.nama_pasien as pasien_nama_pasien')
+                ->join('pasien', 'pasien.id_pasien = transaksi.id_pasien', 'inner');
 
             // Apply status filter if provided
             if ($status === '1') {
@@ -67,8 +64,7 @@ class Transaksi extends BaseController
                 $TransaksiModel
                     ->groupStart()
                     ->like('pasien.nama_pasien', $search)
-                    ->orLike('user.fullname', $search)
-                    ->orLike('user.username', $search)
+                    ->orLike('kasir', $search)
                     ->orLike('tgl_transaksi', $search)
                     ->groupEnd();
             }
@@ -162,7 +158,6 @@ class Transaksi extends BaseController
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
             $data = $this->TransaksiModel
                 ->join('pasien', 'pasien.id_pasien = transaksi.id_pasien', 'inner')
-                ->join('user', 'user.id_user = transaksi.id_user', 'inner')
                 ->find($id);
             return $this->response->setJSON($data);
         } else {
@@ -201,7 +196,7 @@ class Transaksi extends BaseController
 
             // Save Data
             $data = [
-                'id_user' => session()->get('id_user'),
+                'kasir' => session()->get('fullname'),
                 'id_pasien' => $this->request->getPost('id_pasien'),
                 'no_kwitansi' => $no_kwitansi,
                 'tgl_transaksi' => date('Y-m-d H:i:s'),
@@ -256,7 +251,6 @@ class Transaksi extends BaseController
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
             $transaksi = $this->TransaksiModel
                 ->join('pasien', 'pasien.id_pasien = transaksi.id_pasien', 'inner')
-                ->join('user', 'user.id_user = transaksi.id_user', 'inner')
                 ->find($id);
             $LayananModel = new LayananModel();
             $layanan = $LayananModel
@@ -335,7 +329,6 @@ class Transaksi extends BaseController
                 ->where('detail_transaksi.jenis_transaksi', 'Obat dan Alkes')
                 ->join('transaksi', 'transaksi.id_transaksi = detail_transaksi.id_transaksi', 'inner')
                 ->join('resep', 'resep.id_resep = detail_transaksi.id_resep', 'inner')
-                ->join('user', 'resep.id_user = user.id_user', 'inner')
                 ->join('detail_resep', 'resep.id_resep = detail_resep.id_resep', 'inner')
                 ->join('obat', 'detail_resep.id_obat = obat.id_obat', 'inner')
                 ->orderBy('id_detail_transaksi', 'ASC')
@@ -363,17 +356,12 @@ class Transaksi extends BaseController
                         'lunas' => $row['lunas'],
                         'resep' => [
                             'id_resep' => $row['id_resep'],
-                            'id_user' => $row['id_user'],
+                            'dokter' => $row['dokter'],
                             'id_pasien' => $row['id_pasien'],
                             'tanggal_resep' => $row['tanggal_resep'],
                             'jumlah_resep' => $row['jumlah_resep'],
                             'total_biaya' => $row['total_biaya'],
                             'status' => $row['status'],
-                            'user' => [
-                                'id_user' => $row['id_user'],
-                                'fullname' => $row['fullname'],
-                                'username' => $row['username'],
-                            ],
                             'detail_resep' => []
                         ],
                     ];
@@ -854,7 +842,6 @@ class Transaksi extends BaseController
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
             $transaksi = $this->TransaksiModel
                 ->join('pasien', 'pasien.id_pasien = transaksi.id_pasien', 'inner')
-                ->join('user', 'user.id_user = transaksi.id_user', 'inner')
                 ->find($id);
             $layanan = $this->DetailTransaksiModel
                 ->where('detail_transaksi.id_transaksi', $id)
@@ -901,7 +888,6 @@ class Transaksi extends BaseController
                 ->where('detail_transaksi.jenis_transaksi', 'Obat dan Alkes')
                 ->join('transaksi', 'transaksi.id_transaksi = detail_transaksi.id_transaksi', 'inner')
                 ->join('resep', 'resep.id_resep = detail_transaksi.id_resep', 'inner')
-                ->join('user', 'resep.id_user = user.id_user', 'inner')
                 ->join('detail_resep', 'resep.id_resep = detail_resep.id_resep', 'inner')
                 ->join('obat', 'detail_resep.id_obat = obat.id_obat', 'inner')
                 ->orderBy('id_detail_transaksi', 'ASC')
@@ -928,17 +914,12 @@ class Transaksi extends BaseController
                         'lunas' => $row['lunas'],
                         'resep' => [
                             'id_resep' => $row['id_resep'],
-                            'id_user' => $row['id_user'],
+                            'dokter' => $row['dokter'],
                             'id_pasien' => $row['id_pasien'],
                             'tanggal_resep' => $row['tanggal_resep'],
                             'jumlah_resep' => $row['jumlah_resep'],
                             'total_biaya' => $row['total_biaya'],
                             'status' => $row['status'],
-                            'user' => [
-                                'id_user' => $row['id_user'],
-                                'fullname' => $row['fullname'],
-                                'username' => $row['username'],
-                            ],
                             'detail_resep' => []
                         ],
                     ];

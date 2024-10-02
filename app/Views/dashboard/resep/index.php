@@ -196,7 +196,7 @@
                             ${resep.pasien_nama_pasien}
                         </h5>
                         <h6 class="card-subtitle mb-2">
-                            ${resep.user_fullname} (@${resep.user_username})
+                            ${resep.dokter}
                         </h6>
                         <p class="card-text">
                             <small class="date">

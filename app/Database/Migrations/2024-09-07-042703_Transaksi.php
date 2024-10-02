@@ -15,10 +15,9 @@ class Transaksi extends Migration
                 'unsigned' => true,
                 'auto_increment' => true,
             ],
-            'id_user' => [
-                'type' => 'BIGINT',
-                'constraint' => 24,
-                'unsigned' => true
+            'kasir' => [
+                'type' => 'VARCHAR',
+                'constraint' => 256,
             ],
             'id_pasien' => [
                 'type' => 'BIGINT',
@@ -53,7 +52,6 @@ class Transaksi extends Migration
             ],
         ]);
         $this->forge->addKey('id_transaksi', true);
-        $this->forge->addForeignKey('id_user', 'user', 'id_user', 'CASCADE', 'NO ACTION');
         $this->forge->addForeignKey('id_pasien', 'pasien', 'id_pasien', 'CASCADE', 'NO ACTION');
         $this->forge->createTable('transaksi');
     }

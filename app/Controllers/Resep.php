@@ -49,20 +49,14 @@ class Resep extends BaseController
             if (session()->get('role') == 'Admin') {
                 $ResepModel
                     ->select('resep.*, 
-                pasien.nama_pasien as pasien_nama_pasien, 
-                user.fullname as user_fullname,
-                user.username as user_username')
-                    ->join('pasien', 'pasien.id_pasien = resep.id_pasien', 'inner')
-                    ->join('user', 'user.id_user = resep.id_user', 'inner');
+                pasien.nama_pasien as pasien_nama_pasien')
+                    ->join('pasien', 'pasien.id_pasien = resep.id_pasien', 'inner');
             } else {
                 $ResepModel
                     ->select('resep.*, 
-                pasien.nama_pasien as pasien_nama_pasien, 
-                user.fullname as user_fullname,
-                user.username as user_username')
-                    ->where('resep.id_user', session()->get('id_user'))
-                    ->join('pasien', 'pasien.id_pasien = resep.id_pasien', 'inner')
-                    ->join('user', 'user.id_user = resep.id_user', 'inner');
+                pasien.nama_pasien as pasien_nama_pasien')
+                    ->where('resep.dokter', session()->get('fullname'))
+                    ->join('pasien', 'pasien.id_pasien = resep.id_pasien', 'inner');
             }
 
             // Apply status filter if provided
@@ -77,8 +71,7 @@ class Resep extends BaseController
                 $ResepModel
                     ->groupStart()
                     ->like('pasien.nama_pasien', $search)
-                    ->orLike('user.fullname', $search)
-                    ->orLike('user.username', $search)
+                    ->orLike('dokter', $search)
                     ->orLike('tanggal_resep', $search)
                     ->groupEnd();
             }
@@ -153,13 +146,11 @@ class Resep extends BaseController
             if (session()->get('role') == 'Admin') {
                 $data = $this->ResepModel
                     ->join('pasien', 'pasien.id_pasien = resep.id_pasien', 'inner')
-                    ->join('user', 'user.id_user = resep.id_user', 'inner')
                     ->find($id);
             } else {
                 $data = $this->ResepModel
                     ->where('resep.id_user', session()->get('id_user'))
                     ->join('pasien', 'pasien.id_pasien = resep.id_pasien', 'inner')
-                    ->join('user', 'user.id_user = resep.id_user', 'inner')
                     ->find($id);
             }
             return $this->response->setJSON($data);
@@ -187,7 +178,7 @@ class Resep extends BaseController
             // Save Data
             $data = [
                 'id_pasien' => $this->request->getPost('id_pasien'),
-                'id_user' => session()->get('id_user'),
+                'dokter' => session()->get('fullname'),
                 'tanggal_resep' => date('Y-m-d H:i:s'),
                 'jumlah_resep' => 0,
                 'total_biaya' => 0,
@@ -273,13 +264,11 @@ class Resep extends BaseController
             if (session()->get('role') == 'Admin') {
                 $resep = $this->ResepModel
                     ->join('pasien', 'pasien.id_pasien = resep.id_pasien', 'inner')
-                    ->join('user', 'user.id_user = resep.id_user', 'inner')
                     ->find($id);
             } else {
                 $resep = $this->ResepModel
                     ->where('resep.id_user', session()->get('id_user'))
                     ->join('pasien', 'pasien.id_pasien = resep.id_pasien', 'inner')
-                    ->join('user', 'user.id_user = resep.id_user', 'inner')
                     ->find($id);
             }
             if (!empty($resep)) {

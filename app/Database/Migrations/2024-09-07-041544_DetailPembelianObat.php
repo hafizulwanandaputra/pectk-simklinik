@@ -37,6 +37,14 @@ class DetailPembelianObat extends Migration
                 'type' => 'INT',
                 'constraint' => 24,
             ],
+            'obat_masuk' => [
+                'type' => 'INT',
+                'constraint' => 24,
+            ],
+            'obat_masuk_baru' => [
+                'type' => 'INT',
+                'constraint' => 24,
+            ],
             'harga_satuan' => [
                 'type' => 'INT',
                 'constraint' => 24,

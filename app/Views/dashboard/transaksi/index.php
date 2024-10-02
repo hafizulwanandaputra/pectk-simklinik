@@ -197,7 +197,7 @@
                             ${transaksi.pasien_nama_pasien}
                         </h5>
                         <h6 class="card-subtitle mb-2">
-                            ${transaksi.user_fullname} (@${transaksi.user_username})
+                            ${transaksi.kasir}
                         </h6>
                         <p class="card-text">
                             <small class="date">

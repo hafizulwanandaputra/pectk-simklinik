@@ -54,7 +54,7 @@
                 <div class="col-lg-3 fw-medium">Apoteker</div>
                 <div class="col-lg">
                     <div class="date">
-                        <?= $pembelianobat['fullname'] ?>
+                        <?= $pembelianobat['apoteker'] ?>
                     </div>
                 </div>
             </div>
@@ -93,6 +93,7 @@
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">No Batch</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Kadaluwarsa</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Jumlah</th>
+                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Obat Masuk</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Harga Satuan</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Harga</th>
                 </tr>
@@ -109,6 +110,7 @@
                     <th scope="col" class="bg-body-secondary border-secondary text-nowrap" style="border-bottom-width: 0; border-top-width: 2px;" colspan="3"></th>
                     <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 2px;">Total</th>
                     <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="total_qty"></th>
+                    <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="total_masuk"></th>
                     <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;"></th>
                     <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="total_harga"></th>
                 </tr>
@@ -245,6 +247,7 @@
             $('#detail_pembelian_obat').empty();
 
             let totalQty = 0;
+            let totalMasuk = 0;
             let totalHarga = 0;
 
             if (data.length === 0) {
@@ -260,10 +263,12 @@
             } else {
                 data.forEach(function(detail_pembelian_obat) {
                     const jumlah = parseInt(detail_pembelian_obat.jumlah); // Konversi jumlah ke integer
+                    const obat_masuk = parseInt(detail_pembelian_obat.obat_masuk_baru); // Konversi obat_masuk ke integer
                     const harga_satuan = parseInt(detail_pembelian_obat.harga_satuan); // Konversi harga obat ke integer
                     const total_harga = jumlah * harga_satuan; // Hitung total harga
                     totalHarga += total_harga;
                     totalQty += jumlah;
+                    totalMasuk += obat_masuk;
                     const expired = (detail_pembelian_obat.expired == null) ? '' : detail_pembelian_obat.expired;
                     const detail_pembelian_obatElement = `
                     <tr>
@@ -278,6 +283,7 @@
                         <td class="date">${detail_pembelian_obat.no_batch}</td>
                         <td class="date">${expired}</td>
                         <td class="date text-end">${jumlah.toLocaleString('id-ID')}</td>
+                        <td class="date text-end">${obat_masuk.toLocaleString('id-ID')}</td>
                         <td class="date text-end">Rp${harga_satuan.toLocaleString('id-ID')}</td>
                         <td class="date text-end">Rp${total_harga.toLocaleString('id-ID')}</td>
                     </tr>
@@ -301,8 +307,10 @@
             }
             const totalHargaElement = `Rp${totalHarga.toLocaleString('id-ID')}`;
             const totalQtyElement = `${totalQty.toLocaleString('id-ID')}`;
+            const totalMasukElement = `${totalMasuk.toLocaleString('id-ID')}`;
             $('#total_harga').text(totalHargaElement);
             $('#total_qty').text(totalQtyElement);
+            $('#total_masuk').text(totalMasukElement);
             $('[data-bs-toggle="tooltip"]').tooltip();
         } catch (error) {
             showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
@@ -520,7 +528,7 @@
                 const response = await axios.get(`<?= base_url('/pembelianobat/detailpembelianobatitem') ?>/${id}`);
                 const formHtml = `
                 <tr id="inputBatchPembelian">
-                    <td colspan="7">
+                    <td colspan="8">
                         <form id="inputBatch" enctype="multipart/form-data">
                             <div class="d-flex justify-content-between align-items-center mb-1">
                                 <div class="fw-bold">Input No Batch dan Tanggal Kadaluwarsa</div>
@@ -532,7 +540,11 @@
                                     <div class="invalid-feedback"></div>
                                 </div>
                                 <div class="flex-fill">
-                                    <input type="date" id="expired" name="expired" class="form-control rounded-3" placeholder="Jumlah" value="${response.data.expired}">
+                                    <input type="date" id="expired" name="expired" class="form-control rounded-3" placeholder="Kedaluwarsa" value="${response.data.expired}">
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                                <div class="flex-fill">
+                                    <input type="number" id="obat_masuk" name="obat_masuk" class="form-control rounded-3" placeholder="Jumlah Diterima" value="${response.data.obat_masuk_baru}">
                                     <div class="invalid-feedback"></div>
                                 </div>
                                 <div class="d-grid d-lg-block w-auto">

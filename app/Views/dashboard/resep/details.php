@@ -54,7 +54,7 @@
                 <div class="col-lg-3 fw-medium">Dokter</div>
                 <div class="col-lg">
                     <div class="date">
-                        <?= $resep['fullname'] ?>
+                        <?= $resep['dokter'] ?>
                     </div>
                 </div>
             </div>

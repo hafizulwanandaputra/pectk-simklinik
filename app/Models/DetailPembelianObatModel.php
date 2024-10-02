@@ -9,5 +9,5 @@ class DetailPembelianObatModel extends Model
     protected $table = 'detail_pembelian_obat';
     protected $primaryKey = 'id_detail_pembelian_obat';
     protected $useTimestamps = false;
-    protected $allowedFields = ['id_pembelian_obat', 'id_obat', 'no_batch', 'expired', 'jumlah', 'harga_satuan'];
+    protected $allowedFields = ['id_pembelian_obat', 'id_obat', 'no_batch', 'expired', 'jumlah', 'obat_masuk', 'obat_masuk_baru', 'harga_satuan'];
 }

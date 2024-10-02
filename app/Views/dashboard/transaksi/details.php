@@ -73,7 +73,7 @@
                     <div class="col-lg-4 fw-medium">Kasir</div>
                     <div class="col-lg">
                         <div>
-                            <?= $transaksi['fullname'] ?>
+                            <?= $transaksi['kasir'] ?>
                         </div>
                     </div>
                 </div>
@@ -518,7 +518,7 @@
                             </div>
                         </td>
                         <td>
-                            <span>${obat_alkes.resep.user.fullname}</span>
+                            <span>${obat_alkes.resep.dokter}</span>
                             <ul class="mb-0" id="obat-${obat_alkes.id_detail_transaksi}">
                             </ul>
                         </td>

@@ -20,10 +20,9 @@ class Resep extends Migration
                 'constraint' => 24,
                 'unsigned' => true
             ],
-            'id_user' => [
-                'type' => 'BIGINT',
-                'constraint' => 24,
-                'unsigned' => true
+            'dokter' => [
+                'type' => 'VARCHAR',
+                'constraint' => 256,
             ],
             'tanggal_resep' => [
                 'type' => 'DATETIME'
@@ -42,7 +41,6 @@ class Resep extends Migration
         ]);
         $this->forge->addKey('id_resep', true);
         $this->forge->addForeignKey('id_pasien', 'pasien', 'id_pasien', 'CASCADE', 'NO ACTION');
-        $this->forge->addForeignKey('id_user', 'user', 'id_user', 'CASCADE', 'NO ACTION');
         $this->forge->createTable('resep');
     }
 

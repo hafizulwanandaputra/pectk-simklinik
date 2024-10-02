@@ -9,5 +9,5 @@ class ResepModel extends Model
     protected $table = 'resep';
     protected $primaryKey = 'id_resep';
     protected $useTimestamps = false;
-    protected $allowedFields = ['id_pasien', 'id_user', 'tanggal_resep', 'jumlah_resep', 'total_biaya', 'status'];
+    protected $allowedFields = ['id_pasien', 'dokter', 'tanggal_resep', 'jumlah_resep', 'total_biaya', 'status'];
 }
