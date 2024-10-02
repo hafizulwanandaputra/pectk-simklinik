@@ -336,7 +336,7 @@
         $(document).on('click', '#completeBtn', function() {
             pembelianObatId = $(this).data('id');
             $('#completeMessage').html(`Apakah Anda telah menerima obat-obat ini?`);
-            $('#completeSubmessage').html(`Silakan periksa informasi pembelian ini! Detail pembelian tidak dapat diubah setelah menerima obat-obat ini!`);
+            $('#completeSubmessage').html(`Silakan periksa informasi pembelian ini. Detail pembelian tidak dapat diubah setelah menerima semua obat-obat ini. Jika jumlah obat masuk kurang dari jumlah yang Anda minta, Anda masih bisa mengubah detail pembelian ini.`);
             $('#completeModal').modal('show');
         });
 

@@ -278,7 +278,11 @@ class PembelianObat extends BaseController
                         ->update();
                 }
             }
-            return $this->response->setJSON(['success' => true, 'message' => 'Obat sudah diterima. Periksa jumlah masuk di menu obat.']);
+            if ($totalJumlah == $totalObatMasuk) {
+                return $this->response->setJSON(['success' => true, 'message' => 'Obat sudah diterima. Periksa jumlah masuk di menu obat.']);
+            } else {
+                return $this->response->setJSON(['success' => true, 'message' => 'Sebagian obat sudah diterima. Jika ada obat yang baru saja diterima, silakan perbarui jumlah masuk dan klik "Terima Obat" lagi.']);
+            }
         } else {
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan',

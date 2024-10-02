@@ -236,17 +236,17 @@ class Resep extends BaseController
 
                 // Hitung ulang total_pembayaran berdasarkan detail transaksi yang tersisa
                 $result = $db->query("
-        SELECT SUM(harga_satuan) as total_pembayaran 
-        FROM detail_transaksi 
-        WHERE id_transaksi = ?", [$id_transaksi])->getRow();
+                    SELECT SUM(harga_satuan) as total_pembayaran 
+                    FROM detail_transaksi 
+                    WHERE id_transaksi = ?", [$id_transaksi])->getRow();
 
                 $total_pembayaran = $result->total_pembayaran ?? 0;
 
                 // Update tabel transaksi dengan total_pembayaran yang baru
                 $db->query("
-        UPDATE transaksi 
-        SET total_pembayaran = ? 
-        WHERE id_transaksi = ?", [$total_pembayaran, $id_transaksi]);
+                    UPDATE transaksi 
+                    SET total_pembayaran = ? 
+                    WHERE id_transaksi = ?", [$total_pembayaran, $id_transaksi]);
             }
 
             return $this->response->setJSON(['message' => 'Resep berhasil dihapus']);
