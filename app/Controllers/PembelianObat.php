@@ -256,21 +256,6 @@ class PembelianObat extends BaseController
                 $id_obat = $detail['id_obat'];
                 $new_jumlah_masuk = $detail['obat_masuk_baru'];
 
-                // Ambil jumlah_keluar dari tabel obat
-                $obatData = $db->table('obat')
-                    ->select('jumlah_keluar')
-                    ->where('id_obat', $id_obat)
-                    ->get()
-                    ->getRow();
-
-                // Jika obat_masuk_baru kurang dari jumlah_keluar, gagalkan proses
-                if ($new_jumlah_masuk < $obatData->jumlah_keluar) {
-                    return $this->response->setJSON([
-                        'success' => false,
-                        'message' => 'Ada obat yang memiliki jumlah keluar lebih besar dari jumlah masuk yang Anda minta. Tidak dapat memperbarui stok obat. ',
-                    ]);
-                }
-
                 // Sum obat_masuk_baru for the same id_obat
                 if (isset($groupedDetails[$id_obat])) {
                     $groupedDetails[$id_obat] += $new_jumlah_masuk;
