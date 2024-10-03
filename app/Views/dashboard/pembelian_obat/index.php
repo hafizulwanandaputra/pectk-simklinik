@@ -348,9 +348,13 @@
             $('#deleteSubmessage').hide();
 
             try {
-                await axios.delete(`<?= base_url('/pembelianobat/delete') ?>/${pembelianObatId}`);
-                showSuccessToast('Pembelian obat berhasil dihapus.');
-                fetchPembelianObat();
+                const response = await axios.delete(`<?= base_url('/pembelianobat/delete') ?>/${pembelianObatId}`);
+                if (response.data.success) {
+                    showSuccessToast('Pembelian obat berhasil dihapus.');
+                    fetchPembelianObat();
+                } else {
+                    showFailedToast(response.data.message);
+                }
             } catch (error) {
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
             } finally {

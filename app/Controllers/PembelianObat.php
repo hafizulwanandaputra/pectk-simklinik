@@ -177,11 +177,29 @@ class PembelianObat extends BaseController
     {
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
             $db = db_connect();
+
             // Find all detail pembelian obat before deletion
             $details = $db->table('detail_pembelian_obat')
                 ->where('id_pembelian_obat', $id)
                 ->get()
                 ->getResultArray();
+
+            // Check if any obat related to detail has jumlah_keluar > 0
+            foreach ($details as $detail) {
+                $id_obat = $detail['id_obat'];
+                $jumlah_keluar = $db->table('obat')
+                    ->select('jumlah_keluar')
+                    ->where('id_obat', $id_obat)
+                    ->get()
+                    ->getRowArray()['jumlah_keluar'];
+
+                if ($jumlah_keluar > 0) {
+                    return $this->response->setJSON([
+                        'success' => false,
+                        'message' => "Obat dengan ID $id_obat tidak dapat dihapus karena sudah digunakan."
+                    ]);
+                }
+            }
 
             // Reduce jumlah_masuk in obat table for each detail
             foreach ($details as $detail) {
@@ -196,7 +214,7 @@ class PembelianObat extends BaseController
             $this->PembelianObatModel->delete($id);
             $db->query('ALTER TABLE `pembelian_obat` auto_increment = 1');
             $db->query('ALTER TABLE `detail_pembelian_obat` auto_increment = 1');
-            return $this->response->setJSON(['message' => 'Obat berhasil dihapus']);
+            return $this->response->setJSON(['success' => true, 'message' => 'Obat berhasil dihapus']);
         } else {
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan',
