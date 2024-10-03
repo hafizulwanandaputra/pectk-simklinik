@@ -16,13 +16,6 @@
     <fieldset class="border rounded-3 px-2 py-0">
         <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Informasi Pengguna</legend>
         <div class="form-floating mb-2">
-            <input type="text" class="form-control rounded-3 <?= (validation_show_error('fullname')) ? 'is-invalid' : ''; ?>" id="fullname" name="fullname" value="<?= (old('fullname')) ? old('fullname') : htmlspecialchars(session()->get('fullname')); ?>" autocomplete="off" dir="auto" placeholder="fullname">
-            <label for="fullname">Nama Lengkap*</label>
-            <div class="invalid-feedback">
-                <?= validation_show_error('fullname'); ?>
-            </div>
-        </div>
-        <div class="form-floating mb-2">
             <input type="text" class="form-control rounded-3 <?= (validation_show_error('username')) ? 'is-invalid' : ''; ?>" id="username" name="username" value="<?= (old('username')) ? old('username') : htmlspecialchars(session()->get('username')); ?>" autocomplete="off" dir="auto" placeholder="username">
             <label for="username">Nama Pengguna*</label>
             <div class="invalid-feedback">

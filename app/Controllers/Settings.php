@@ -41,13 +41,6 @@ class Settings extends BaseController
             $username = 'required|is_unique[user.username]|alpha_numeric_punct';
         }
         if (!$this->validate([
-            'fullname' => [
-                'label' => 'Nama Lengkap',
-                'rules' => 'required',
-                'errors' => [
-                    'required' => '{field} wajib diisi!',
-                ]
-            ],
             'username' => [
                 'label' => 'Nama Pengguna',
                 'rules' => $username,
@@ -61,12 +54,9 @@ class Settings extends BaseController
         }
         $this->SettingsModel->save([
             'id_user' => session()->get('id_user'),
-            'fullname' => $this->request->getVar('fullname'),
             'username' => $this->request->getVar('username'),
         ]);
-        $db = db_connect();
-        $agent = $this->request->getUserAgent();
-        if ($this->request->getVar('fullname') == session()->get('fullname') && $this->request->getVar('username') == session()->get('username')) {
+        if ($this->request->getVar('username') == session()->get('username')) {
             session()->setFlashdata('info', 'Tidak ada perubahan apa-apa dalam formulir ini!');
         } else {
             session()->remove('fullname');

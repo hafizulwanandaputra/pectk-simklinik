@@ -899,7 +899,6 @@
                     fetchLayanan();
                     fetchObatAlkes();
                     fetchTindakanOptions();
-                    fetchResepOptions();
                     fetchStatusTransaksi();
                     transactionProcessBtn();
                 } else {
@@ -975,7 +974,6 @@
                     $('#tambahObatAlkes .invalid-feedback').text('').hide();
                     fetchLayanan();
                     fetchObatAlkes();
-                    fetchTindakanOptions();
                     fetchResepOptions();
                     fetchStatusTransaksi();
                     transactionProcessBtn();
