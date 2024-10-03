@@ -127,9 +127,7 @@
                     <td colspan="5" class="text-center">Memuat detail resep...</td>
                 </tr>
             </tbody>
-            <tbody class="align-top">
-            </tbody>
-            <thead>
+            <tbody>
                 <tr>
                     <th scope="col" class="bg-body-secondary border-secondary text-nowrap" style="border-bottom-width: 0; border-top-width: 2px;" colspan="1"></th>
                     <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 2px;">Total</th>
@@ -137,7 +135,7 @@
                     <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;"></th>
                     <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="total_harga"></th>
                 </tr>
-            </thead>
+            </tbody>
         </table>
     </div>
 

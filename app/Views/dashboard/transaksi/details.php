@@ -140,7 +140,8 @@
         <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
             <thead>
                 <tr class="align-middle">
-                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;" colspan="2">Tindakan</th>
+                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Tindakan</th>
+                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">Nama Tindakan</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Qty</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Harga</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Diskon</th>
@@ -152,24 +153,23 @@
                     <td colspan="6" class="text-center">Memuat detail transaksi...</td>
                 </tr>
             </tbody>
-            <tbody class="align-top">
-            </tbody>
-            <thead>
+            <tbody>
                 <tr>
                     <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 2px;" colspan="5">Sub Total</th>
                     <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="subtotal_layanan"></th>
                 </tr>
-            </thead>
+            </tbody>
         </table>
     </div>
 
     <div class="my-3"></div>
 
     <div class="table-responsive">
-        <table class="table table-sm table-hover mb-0" style="width:100%; font-size: 9pt;">
+        <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
             <thead>
                 <tr class="align-middle">
-                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;" colspan="2">Obat dan Alkes</th>
+                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Tindakan</th>
+                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">Nama Obat dan Alkes</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Harga</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Diskon</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Pembayaran</th>
@@ -180,9 +180,7 @@
                     <td colspan="5" class="text-center">Memuat detail transaksi...</td>
                 </tr>
             </tbody>
-            <tbody class="align-top">
-            </tbody>
-            <thead>
+            <tbody>
                 <tr>
                     <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 2px;" colspan="4">Sub Total</th>
                     <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="subtotal_obat_alkes"></th>
@@ -203,7 +201,7 @@
                     <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 0px;" colspan="4">Metode Bayar</th>
                     <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 0px;" id="metode_pembayaran_table"></th>
                 </tr>
-            </thead>
+            </tbody>
         </table>
     </div>
 
@@ -445,7 +443,7 @@
                     totalPembayaran += total_pembayaran;
                     const tindakanElement = `
                         <tr>
-                            <td class="tindakan" style="width: 0%;">
+                            <td class="tindakan">
                             <div class="btn-group" role="group">
                                 <button class="btn btn-secondary text-nowrap bg-gradient rounded-start-3 edit-layanan-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${layanan.id_detail_transaksi}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
                                 <button class="btn btn-danger text-nowrap bg-gradient rounded-end-3 delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${layanan.id_detail_transaksi}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
@@ -511,7 +509,7 @@
                     totalPembayaran += total_pembayaran;
                     const tindakanElement = `
                         <tr>
-                            <td class="tindakan" style="width: 0%;">
+                            <td class="tindakan">
                             <div class="btn-group" role="group">
                                 <button class="btn btn-secondary text-nowrap bg-gradient rounded-start-3 edit-obatalkes-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${obat_alkes.id_detail_transaksi}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
                                 <button class="btn btn-danger text-nowrap bg-gradient rounded-end-3 delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${obat_alkes.id_detail_transaksi}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
