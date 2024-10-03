@@ -59,7 +59,6 @@ class Settings extends BaseController
         if ($this->request->getVar('username') == session()->get('username')) {
             session()->setFlashdata('info', 'Tidak ada perubahan apa-apa dalam formulir ini!');
         } else {
-            session()->remove('fullname');
             session()->remove('username');
             session()->set('fullname', $this->request->getVar('fullname'));
             session()->set('username', $this->request->getVar('username'));
