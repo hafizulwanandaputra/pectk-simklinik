@@ -174,7 +174,7 @@ class Obat extends BaseController
                 'kategori_obat' => $this->request->getPost('kategori_obat'),
                 'bentuk_obat' => $this->request->getPost('bentuk_obat'),
                 'harga_obat' => $this->request->getPost('harga_obat'),
-                'ppn' => $this->request->getPost('harga_jual'),
+                'ppn' => $this->request->getPost('ppn'),
                 'jumlah_masuk' => 0,
                 'jumlah_keluar' => 0,
                 'updated_at' => date('Y-m-d H:i:s'),
@@ -218,7 +218,7 @@ class Obat extends BaseController
                 'harga_obat' => $this->request->getPost('harga_obat'),
                 'harga_jual' => $this->request->getPost('harga_jual'),
                 'jumlah_masuk' => $obat['jumlah_masuk'],
-                'ppn' => $obat['jumlah_keluar'],
+                'ppn' => $obat['ppn'],
                 'updated_at' => $obat['updated_at'],
             ];
             $this->ObatModel->save($data);

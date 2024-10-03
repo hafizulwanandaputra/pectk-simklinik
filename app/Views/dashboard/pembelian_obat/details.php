@@ -90,8 +90,6 @@
                 <tr class="align-middle">
                     <th scope="col" class="bg-body-secondary border-secondary text-nowrap tindakan" style="border-bottom-width: 2px; width: 0%;">Tindakan</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">Nama Obat</th>
-                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">No Batch</th>
-                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Kadaluwarsa</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Jumlah</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Obat Masuk</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Harga Satuan</th>
@@ -107,7 +105,7 @@
             </tbody>
             <thead>
                 <tr>
-                    <th scope="col" class="bg-body-secondary border-secondary text-nowrap" style="border-bottom-width: 0; border-top-width: 2px;" colspan="3"></th>
+                    <th scope="col" class="bg-body-secondary border-secondary text-nowrap" style="border-bottom-width: 0; border-top-width: 2px;" colspan="1"></th>
                     <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 2px;">Total</th>
                     <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="total_qty"></th>
                     <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="total_masuk"></th>
@@ -135,6 +133,20 @@
                 <div class="modal-footer flex-nowrap p-0" style="border-top: 1px solid var(--bs-border-color-translucent);">
                     <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end" style="border-right: 1px solid var(--bs-border-color-translucent)!important;" data-bs-dismiss="modal">Tidak</button>
                     <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0" id="confirmDeleteBtn">Ya</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal modal-sheet p-4 py-md-5 fade" id="deleteItemModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteItemModalLabel" aria-hidden="true" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content bg-body rounded-4 shadow-lg transparent-blur">
+                <div class="modal-body p-4 text-center">
+                    <h5 class="mb-0" id="deleteItemMessage"></h5>
+                </div>
+                <div class="modal-footer flex-nowrap p-0" style="border-top: 1px solid var(--bs-border-color-translucent);">
+                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end" style="border-right: 1px solid var(--bs-border-color-translucent)!important;" data-bs-dismiss="modal">Tidak</button>
+                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0" id="confirmDeleteItemBtn">Ya</button>
                 </div>
             </div>
         </div>
@@ -274,14 +286,16 @@
                     <tr>
                         <td class="tindakan">
                             <div class="btn-group" role="group">
-                                <button class="btn btn-secondary text-nowrap bg-gradient rounded-start-3 input-batch-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${detail_pembelian_obat.id_detail_pembelian_obat}" data-bs-toggle="tooltip" data-bs-title="Input Batch dan Kadaluwarsa"><i class="fa-solid fa-list-check"></i></button>
+                                <button class="btn btn-primary text-nowrap bg-gradient rounded-start-3 add-batch-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${detail_pembelian_obat.id_detail_pembelian_obat}" data-bs-toggle="tooltip" data-bs-title="Tambah No. Batch dan Kadaluwarsa"><i class="fa-solid fa-plus"></i></button>
                                 <button class="btn btn-secondary text-nowrap bg-gradient edit-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${detail_pembelian_obat.id_detail_pembelian_obat}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
                                 <button class="btn btn-danger text-nowrap bg-gradient rounded-end-3 delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${detail_pembelian_obat.id_detail_pembelian_obat}" data-name="${detail_pembelian_obat.nama_obat}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
                             </div>
                         </td>
-                        <td class="text-nowrap">${detail_pembelian_obat.nama_obat}<br><small>${detail_pembelian_obat.kategori_obat} • ${detail_pembelian_obat.bentuk_obat}</small></td>
-                        <td class="date">${detail_pembelian_obat.no_batch}</td>
-                        <td class="date">${expired}</td>
+                        <td class="text-nowrap">
+                            ${detail_pembelian_obat.nama_obat}<br><small>${detail_pembelian_obat.kategori_obat} • ${detail_pembelian_obat.bentuk_obat}</small>
+                            <ul class="list-group" id="item-${detail_pembelian_obat.id_detail_pembelian_obat}">
+                            </ul>
+                        </td>
                         <td class="date text-end">${jumlah.toLocaleString('id-ID')}</td>
                         <td class="date text-end">${obat_masuk.toLocaleString('id-ID')}</td>
                         <td class="date text-end">Rp${harga_satuan.toLocaleString('id-ID')}</td>
@@ -290,14 +304,37 @@
                 `;
 
                     $('#detail_pembelian_obat').append(detail_pembelian_obatElement);
+                    detail_pembelian_obat.item.forEach(function(item) {
+                        const jumlah_item = parseInt(item.jumlah_item); // Konversi jumlah ke integer
+
+                        const itemElement = `
+                                <li class="list-group-item d-flex justify-content-between align-items-start">
+                                    <div class="ms-2 me-auto">
+                                        <div class="fw-bold">${item.no_batch}</div>
+                                        <div>Kadaluwarsa: ${item.expired}</div>
+                                        <div class="btn-group" role="group">
+                                            <button class="btn btn-secondary text-nowrap bg-gradient rounded-start-3 edit-batch-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${item.id_item_obat}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
+                                            <button class="btn btn-danger text-nowrap bg-gradient rounded-end-3 delete-batch-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${item.id_item_obat}" data-name="${item.no_batch}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
+                                        </div>
+                                    </div>
+                                    <span class="badge text-bg-primary rounded-pill bg-gradient fs-6">${jumlah_item}</span>
+                                </li>
+                            `;
+
+                        $(`#item-${item.id_detail_pembelian_obat}`).append(itemElement);
+                    });
                     if (detail_pembelian_obat.diterima === "1") {
-                        $('.input-batch-btn').prop('disabled', true);
+                        $('.add-batch-btn').prop('disabled', true);
+                        $('.edit-batch-btn').prop('disabled', true);
+                        $('.delete-batch-btn').prop('disabled', true);
                         $('.edit-btn').prop('disabled', true);
                         $('.delete-btn').prop('disabled', true);
                         $('#printBtn').prop('disabled', true);
                         $('#completeBtn').prop('disabled', true);
                     } else if (detail_pembelian_obat.diterima === "0") {
-                        $('.input-batch-btn').prop('disabled', false);
+                        $('.add-batch-btn').prop('disabled', false);
+                        $('.edit-batch-btn').prop('disabled', false);
+                        $('.delete-batch-btn').prop('disabled', false);
                         $('.edit-btn').prop('disabled', false);
                         $('.delete-btn').prop('disabled', false);
                         $('#printBtn').prop('disabled', false);
@@ -365,7 +402,6 @@
             }
         });
 
-        // Show delete confirmation modal
         $(document).on('click', '.delete-btn', function() {
             detailPembelianObatId = $(this).data('id');
             detailPembelianObatName = $(this).data('name');
@@ -398,7 +434,8 @@
             $('[data-bs-toggle="tooltip"]').tooltip('hide');
             $this.prop('disabled', true).html(`<span class="spinner-border" style="width: 11px; height: 11px;" aria-hidden="true"></span>`);
             $('#editDetailPembelian').remove();
-            $('#inputBatchPembelian').remove();
+            $('#addBatchPembelian').remove();
+            $('#editBatchPembelian').remove();
             try {
                 const response = await axios.get(`<?= base_url('/pembelianobat/detailpembelianobatitem') ?>/${id}`);
                 const formHtml = `
@@ -462,7 +499,9 @@
                             fetchDetailPembelianObat();
                             fetchObatOptions();
                             fetchStatusPembelian();
-                        } else {
+                        } else if (response.data.success == false && response.data.message) {
+                            showFailedToast(response.data.message);
+                        } else if (response.data.success == false && response.data.errors) {
                             console.log("Validation Errors:", response.data.errors);
 
                             // Clear previous validation states
@@ -513,137 +552,6 @@
                 console.error(error);
             } finally {
                 $this.prop('disabled', false).html(`<i class="fa-solid fa-pen-to-square"></i>`);
-            }
-        });
-
-        $(document).on('click', '.input-batch-btn', async function() {
-            const $this = $(this);
-            const id = $(this).data('id');
-            const $row = $this.closest('tr');
-            $('[data-bs-toggle="tooltip"]').tooltip('hide');
-            $this.prop('disabled', true).html(`<span class="spinner-border" style="width: 11px; height: 11px;" aria-hidden="true"></span>`);
-            $('#editDetailPembelian').remove();
-            $('#inputBatchPembelian').remove();
-            try {
-                const response = await axios.get(`<?= base_url('/pembelianobat/detailpembelianobatitem') ?>/${id}`);
-                const formHtml = `
-                <tr id="inputBatchPembelian">
-                    <td colspan="8">
-                        <form id="inputBatch" enctype="multipart/form-data">
-                            <div class="d-flex justify-content-between align-items-center mb-1">
-                                <div class="fw-bold">Input No Batch dan Tanggal Kadaluwarsa</div>
-                                <button type="button" class="text-end btn-close ms-auto cancel-input-batch"></button>
-                            </div>
-                            <div class="d-flex flex-column flex-lg-row gap-1">
-                                <div class="flex-fill">
-                                    <input type="text" id="no_batch" name="no_batch" class="form-control rounded-3" placeholder="Nomor Batch" value="${response.data.no_batch}">
-                                    <div class="invalid-feedback"></div>
-                                </div>
-                                <div class="flex-fill">
-                                    <input type="date" id="expired" name="expired" class="form-control rounded-3" placeholder="Kedaluwarsa" value="${response.data.expired}">
-                                    <div class="invalid-feedback"></div>
-                                </div>
-                                <div class="flex-fill">
-                                    <input type="number" id="obat_masuk" name="obat_masuk" class="form-control rounded-3" placeholder="Jumlah Diterima" value="${response.data.obat_masuk_baru}">
-                                    <div class="invalid-feedback"></div>
-                                </div>
-                                <div class="d-grid d-lg-block w-auto">
-                                    <button type="submit" id="inputBatchButton" class="btn btn-primary bg-gradient rounded-3">
-                                        <i class="fa-solid fa-floppy-disk"></i> Simpan
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </td>
-                </tr>
-                `;
-                // Append the new row with the form directly after the current data row
-                $row.after(formHtml);
-
-                // Handle form submission
-                $('#inputBatch').on('submit', async function(e) {
-                    e.preventDefault();
-
-                    const formData = new FormData(this);
-                    console.log("Form Data:", $(this).serialize());
-
-                    // Clear previous validation states
-                    $('#inputBatch .is-invalid').removeClass('is-invalid');
-                    $('#inputBatch .invalid-feedback').text('').hide();
-                    $('#inputBatchButton').prop('disabled', true).html(`
-                        <span class="spinner-border spinner-border-sm" aria-hidden="true"></span> Simpan
-                    `);
-
-                    // Disable form inputs
-                    $('#inputBatch input, .btn-close').prop('disabled', true);
-
-                    try {
-                        const response = await axios.post(`<?= base_url('/pembelianobat/inputbatchexpired') ?>/${id}`, formData, {
-                            headers: {
-                                'Content-Type': 'multipart/form-data'
-                            }
-                        });
-
-                        if (response.data.success) {
-                            $('#inputBatch')[0].reset();
-                            $('#id_obat').val(null).trigger('change');
-                            $('#inputBatch .is-invalid').removeClass('is-invalid');
-                            $('#inputBatch .invalid-feedback').text('').hide();
-                            $('#inputBatchPembelian').remove();
-                            fetchDetailPembelianObat();
-                            fetchObatOptions();
-                            fetchStatusPembelian();
-                        } else {
-                            console.log("Validation Errors:", response.data.errors);
-
-                            // Clear previous validation states
-                            $('#inputBatch .is-invalid').removeClass('is-invalid');
-                            $('#inputBatch .invalid-feedback').text('').hide();
-
-                            // Display new validation errors
-                            for (const field in response.data.errors) {
-                                if (response.data.errors.hasOwnProperty(field)) {
-                                    const fieldElement = $('#' + field);
-                                    const feedbackElement = fieldElement.siblings('.invalid-feedback');
-
-                                    console.log("Target Field:", fieldElement);
-                                    console.log("Target Feedback:", feedbackElement);
-
-                                    if (fieldElement.length > 0 && feedbackElement.length > 0) {
-                                        fieldElement.addClass('is-invalid');
-                                        feedbackElement.text(response.data.errors[field]).show();
-
-                                        // Remove error message when the user corrects the input
-                                        fieldElement.on('input change', function() {
-                                            $(this).removeClass('is-invalid');
-                                            $(this).siblings('.invalid-feedback').text('').hide();
-                                        });
-                                    } else {
-                                        console.warn("Elemen tidak ditemukan pada field:", field);
-                                    }
-                                }
-                            }
-                            console.error('Perbaiki kesalahan pada formulir.');
-                        }
-                    } catch (error) {
-                        showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
-                    } finally {
-                        $('#inputBatchButton').prop('disabled', false).html(`
-                            <i class="fa-solid fa-floppy-disk"></i> Simpan
-                        `);
-                        $('#inputBatch input, .btn-close').prop('disabled', false);
-                    }
-                });
-
-                // Handle cancel button
-                $('.cancel-input-batch').on('click', function() {
-                    $('#inputBatchPembelian').remove();
-                });
-            } catch (error) {
-                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
-                console.error(error);
-            } finally {
-                $this.prop('disabled', false).html(`<i class="fa-solid fa-list-check"></i>`);
             }
         });
 
@@ -718,6 +626,287 @@
                     <i class="fa-solid fa-plus"></i> Tambah
                 `);
                 $('#tambahDetail input, #tambahDetail select').prop('disabled', false);
+            }
+        });
+
+        $(document).on('click', '.add-batch-btn', async function() {
+            const $this = $(this);
+            const id = $(this).data('id');
+            const $row = $this.closest('tr');
+            $('[data-bs-toggle="tooltip"]').tooltip('hide');
+            $('#editDetailPembelian').remove();
+            $('#addBatchPembelian').remove();
+            const formHtml = `
+                <tr id="addBatchPembelian">
+                    <td colspan="8">
+                        <form id="addBatch" enctype="multipart/form-data">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <div class="fw-bold">Tambah Item</div>
+                                <button type="button" class="text-end btn-close ms-auto cancel-add-batch"></button>
+                            </div>
+                            <div class="d-flex flex-column flex-lg-row gap-1">
+                                <div class="flex-fill">
+                                    <input type="text" id="no_batch" name="no_batch" class="form-control rounded-3" placeholder="Nomor Batch">
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                                <div class="flex-fill">
+                                    <input type="date" id="expired" name="expired" class="form-control rounded-3" placeholder="Kedaluwarsa">
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                                <div class="flex-fill">
+                                    <input type="number" id="jumlah_item" name="jumlah_item" class="form-control rounded-3" placeholder="Jumlah Diterima">
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                                <div class="d-grid d-lg-block w-auto">
+                                    <button type="submit" id="addBatchButton" class="btn btn-primary bg-gradient rounded-3">
+                                        <i class="fa-solid fa-floppy-disk"></i> Simpan
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </td>
+                </tr>
+                `;
+            // Append the new row with the form directly after the current data row
+            $row.after(formHtml);
+
+            // Handle form submission
+            $('#addBatch').on('submit', async function(e) {
+                e.preventDefault();
+
+                const formData = new FormData(this);
+                console.log("Form Data:", $(this).serialize());
+
+                // Clear previous validation states
+                $('#addBatch .is-invalid').removeClass('is-invalid');
+                $('#addBatch .invalid-feedback').text('').hide();
+                $('#addBatchButton').prop('disabled', true).html(`
+                        <span class="spinner-border spinner-border-sm" aria-hidden="true"></span> Simpan
+                    `);
+
+                // Disable form inputs
+                $('#addBatch input, .btn-close').prop('disabled', true);
+
+                try {
+                    const response = await axios.post(`<?= base_url('/pembelianobat/tambahitemobat') ?>/${id}`, formData, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    });
+
+                    if (response.data.success) {
+                        $('#addBatch')[0].reset();
+                        $('#id_obat').val(null).trigger('change');
+                        $('#addBatch .is-invalid').removeClass('is-invalid');
+                        $('#addBatch .invalid-feedback').text('').hide();
+                        $('#addBatchPembelian').remove();
+                        fetchDetailPembelianObat();
+                        fetchObatOptions();
+                        fetchStatusPembelian();
+                    } else if (response.data.success == false && response.data.message) {
+                        showFailedToast(response.data.message);
+                    } else if (response.data.success == false && response.data.errors) {
+                        console.log("Validation Errors:", response.data.errors);
+
+                        // Clear previous validation states
+                        $('#addBatch .is-invalid').removeClass('is-invalid');
+                        $('#addBatch .invalid-feedback').text('').hide();
+
+                        // Display new validation errors
+                        for (const field in response.data.errors) {
+                            if (response.data.errors.hasOwnProperty(field)) {
+                                const fieldElement = $('#' + field);
+                                const feedbackElement = fieldElement.siblings('.invalid-feedback');
+
+                                console.log("Target Field:", fieldElement);
+                                console.log("Target Feedback:", feedbackElement);
+
+                                if (fieldElement.length > 0 && feedbackElement.length > 0) {
+                                    fieldElement.addClass('is-invalid');
+                                    feedbackElement.text(response.data.errors[field]).show();
+
+                                    // Remove error message when the user corrects the input
+                                    fieldElement.on('input change', function() {
+                                        $(this).removeClass('is-invalid');
+                                        $(this).siblings('.invalid-feedback').text('').hide();
+                                    });
+                                } else {
+                                    console.warn("Elemen tidak ditemukan pada field:", field);
+                                }
+                            }
+                        }
+                        console.error('Perbaiki kesalahan pada formulir.');
+                    }
+                } catch (error) {
+                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                } finally {
+                    $('#addBatchButton').prop('disabled', false).html(`
+                            <i class="fa-solid fa-floppy-disk"></i> Simpan
+                        `);
+                    $('#addBatch input, .btn-close').prop('disabled', false);
+                }
+            });
+
+            // Handle cancel button
+            $('.cancel-add-batch').on('click', function() {
+                $('#addBatchPembelian').remove();
+            });
+        });
+
+        $(document).on('click', '.edit-batch-btn', async function() {
+            const $this = $(this);
+            const id = $(this).data('id');
+            const $row = $this.closest('li');
+            $('[data-bs-toggle="tooltip"]').tooltip('hide');
+            $this.prop('disabled', true).html(`<span class="spinner-border" style="width: 11px; height: 11px;" aria-hidden="true"></span>`);
+            $('#editDetailPembelian').remove();
+            $('#inputBatchPembelian').remove();
+            $('#editBatchPembelian').remove();
+            try {
+                const response = await axios.get(`<?= base_url('/pembelianobat/itemobat') ?>/${id}`);
+                const formHtml = `
+                    <li class="list-group-item" id="editBatchPembelian">
+                        <form id="editBatch" enctype="multipart/form-data">
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <div class="fw-bold">Edit Item</div>
+                                <button type="button" class="text-end btn-close ms-auto cancel-edit-batch"></button>
+                            </div>
+                            <div class="d-flex flex-column flex-xl-row gap-1">
+                                <div class="flex-fill">
+                                    <input type="text" id="no_batch_edit" name="no_batch_edit" class="form-control rounded-3" placeholder="Nomor Batch" value="${response.data.no_batch}">
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                                <div class="flex-fill">
+                                    <input type="date" id="expired_edit" name="expired_edit" class="form-control rounded-3" placeholder="Kedaluwarsa" value="${response.data.expired}">
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                                <div class="flex-fill">
+                                    <input type="number" id="jumlah_item_edit" name="jumlah_item_edit" class="form-control rounded-3" placeholder="Jumlah Diterima" value="${response.data.jumlah_item}">
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                                <div class="d-grid d-xl-block w-auto">
+                                    <button type="submit" id="editBatchButton" class="btn btn-primary bg-gradient rounded-3">
+                                        <i class="fa-solid fa-floppy-disk"></i> Simpan
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </li>
+                `;
+                // Append the new row with the form directly after the current data row
+                $row.after(formHtml);
+
+                // Handle form submission
+                $('#editBatch').on('submit', async function(e) {
+                    e.preventDefault();
+
+                    const formData = new FormData(this);
+                    console.log("Form Data:", $(this).serialize());
+
+                    // Clear previous validation states
+                    $('#editBatch .is-invalid').removeClass('is-invalid');
+                    $('#editBatch .invalid-feedback').text('').hide();
+                    $('#editBatchButton').prop('disabled', true).html(`
+                        <span class="spinner-border spinner-border-sm" aria-hidden="true"></span> Edit
+                    `);
+
+                    // Disable form inputs
+                    $('#editBatch input, .btn-close').prop('disabled', true);
+
+                    try {
+                        const response = await axios.post(`<?= base_url('/pembelianobat/perbaruiitemobat/' . $pembelianobat['id_pembelian_obat']) ?>/${id}`, formData, {
+                            headers: {
+                                'Content-Type': 'multipart/form-data'
+                            }
+                        });
+
+                        if (response.data.success) {
+                            $('#editBatch')[0].reset();
+                            $('#id_obat').val(null).trigger('change');
+                            $('#editBatch .is-invalid').removeClass('is-invalid');
+                            $('#editBatch .invalid-feedback').text('').hide();
+                            $('#editBatchPembelian').remove();
+                            fetchDetailPembelianObat();
+                            fetchObatOptions();
+                            fetchStatusPembelian();
+                        } else if (response.data.success == false && response.data.message) {
+                            showFailedToast(response.data.message);
+                        } else if (response.data.success == false && response.data.errors) {
+                            console.log("Validation Errors:", response.data.errors);
+
+                            // Clear previous validation states
+                            $('#editBatch .is-invalid').removeClass('is-invalid');
+                            $('#editBatch .invalid-feedback').text('').hide();
+
+                            // Display new validation errors
+                            for (const field in response.data.errors) {
+                                if (response.data.errors.hasOwnProperty(field)) {
+                                    const fieldElement = $('#' + field);
+                                    const feedbackElement = fieldElement.siblings('.invalid-feedback');
+
+                                    console.log("Target Field:", fieldElement);
+                                    console.log("Target Feedback:", feedbackElement);
+
+                                    if (fieldElement.length > 0 && feedbackElement.length > 0) {
+                                        fieldElement.addClass('is-invalid');
+                                        feedbackElement.text(response.data.errors[field]).show();
+
+                                        // Remove error message when the user corrects the input
+                                        fieldElement.on('input change', function() {
+                                            $(this).removeClass('is-invalid');
+                                            $(this).siblings('.invalid-feedback').text('').hide();
+                                        });
+                                    } else {
+                                        console.warn("Elemen tidak ditemukan pada field:", field);
+                                    }
+                                }
+                            }
+                            console.error('Perbaiki kesalahan pada formulir.');
+                        }
+                    } catch (error) {
+                        showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                    } finally {
+                        $('#editBatchButton').prop('disabled', false).html(`
+                            <i class="fa-solid fa-pen-to-square"></i> Edit
+                        `);
+                        $('#editBatch input, .btn-close').prop('disabled', false);
+                    }
+                });
+
+                // Handle cancel button
+                $('.cancel-edit-batch').on('click', function() {
+                    $('#editBatchPembelian').remove();
+                });
+            } catch (error) {
+                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                console.error(error);
+            } finally {
+                $this.prop('disabled', false).html(`<i class="fa-solid fa-pen-to-square"></i>`);
+            }
+        });
+
+        $(document).on('click', '.delete-batch-btn', function() {
+            itemObatId = $(this).data('id');
+            itemObatName = $(this).data('name');
+            $('[data-bs-toggle="tooltip"]').tooltip('hide');
+            $('#deleteItemMessage').html(`Hapus item "` + itemObatName + `?`);
+            $('#deleteItemModal').modal('show');
+        });
+
+        $('#confirmDeleteItemBtn').click(async function() {
+            $('#deleteItemModal button').prop('disabled', true);
+            $('#deleteItemMessage').html('Menghapus, silakan tunggu...');
+
+            try {
+                await axios.delete(`<?= base_url('/pembelianobat/hapusitemobat') ?>/${itemObatId}`);
+                fetchDetailPembelianObat();
+                fetchObatOptions();
+                fetchStatusPembelian();
+            } catch (error) {
+                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+            } finally {
+                $('#deleteItemModal').modal('hide');
+                $('#deleteItemModal button').prop('disabled', false);
             }
         });
 
