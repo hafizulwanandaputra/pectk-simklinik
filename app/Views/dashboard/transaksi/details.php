@@ -137,7 +137,7 @@
     </div>
 
     <div class="table-responsive">
-        <table class="table table-sm table-hover mb-0" style="width:100%; font-size: 9pt;">
+        <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
             <thead>
                 <tr class="align-middle">
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;" colspan="2">Tindakan</th>

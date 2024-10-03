@@ -85,13 +85,14 @@
     </fieldset>
 
     <div class="table-responsive">
-        <table class="table table-sm table-hover mb-0" style="width:100%; font-size: 9pt;">
+        <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
             <thead>
                 <tr class="align-middle">
                     <th scope="col" class="bg-body-secondary border-secondary text-nowrap tindakan" style="border-bottom-width: 2px; width: 0%;">Tindakan</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">Nama Obat</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Jumlah</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Obat Masuk</th>
+                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Obat Belum Diterima</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Harga Satuan</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Harga</th>
                 </tr>
@@ -109,6 +110,7 @@
                     <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 2px;">Total</th>
                     <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="total_qty"></th>
                     <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="total_masuk"></th>
+                    <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="total_blm_diterima"></th>
                     <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;"></th>
                     <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="total_harga"></th>
                 </tr>
@@ -261,6 +263,7 @@
             let totalQty = 0;
             let totalMasuk = 0;
             let totalHarga = 0;
+            let totalBlmDiterima = 0;
 
             if (data.length === 0) {
                 // Tampilkan pesan jika tidak ada data
@@ -278,9 +281,11 @@
                     const obat_masuk = parseInt(detail_pembelian_obat.obat_masuk_baru); // Konversi obat_masuk ke integer
                     const harga_satuan = parseInt(detail_pembelian_obat.harga_satuan); // Konversi harga obat ke integer
                     const total_harga = jumlah * harga_satuan; // Hitung total harga
+                    const blm_diterima = jumlah - obat_masuk;
                     totalHarga += total_harga;
                     totalQty += jumlah;
                     totalMasuk += obat_masuk;
+                    totalBlmDiterima += blm_diterima;
                     const expired = (detail_pembelian_obat.expired == null) ? '' : detail_pembelian_obat.expired;
                     const detail_pembelian_obatElement = `
                     <tr>
@@ -293,11 +298,12 @@
                         </td>
                         <td class="text-nowrap">
                             ${detail_pembelian_obat.nama_obat}<br><small>${detail_pembelian_obat.kategori_obat} • ${detail_pembelian_obat.bentuk_obat}</small>
-                            <ul class="list-group" id="item-${detail_pembelian_obat.id_detail_pembelian_obat}">
+                            <ul class="list-group rounded-3" id="item-${detail_pembelian_obat.id_detail_pembelian_obat}">
                             </ul>
                         </td>
                         <td class="date text-end">${jumlah.toLocaleString('id-ID')}</td>
                         <td class="date text-end">${obat_masuk.toLocaleString('id-ID')}</td>
+                        <td class="date text-end">${blm_diterima.toLocaleString('id-ID')}</td>
                         <td class="date text-end">Rp${harga_satuan.toLocaleString('id-ID')}</td>
                         <td class="date text-end">Rp${total_harga.toLocaleString('id-ID')}</td>
                     </tr>
@@ -308,16 +314,14 @@
                         const jumlah_item = parseInt(item.jumlah_item); // Konversi jumlah ke integer
 
                         const itemElement = `
-                                <li class="list-group-item d-flex justify-content-between align-items-start">
-                                    <div class="ms-2 me-auto">
-                                        <div class="fw-bold">${item.no_batch}</div>
-                                        <div>Kadaluwarsa: ${item.expired}</div>
-                                        <div class="btn-group" role="group">
-                                            <button class="btn btn-secondary text-nowrap bg-gradient rounded-start-3 edit-batch-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${item.id_item_obat}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
-                                            <button class="btn btn-danger text-nowrap bg-gradient rounded-end-3 delete-batch-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${item.id_item_obat}" data-name="${item.no_batch}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
-                                        </div>
+                                <li class="list-group-item list-group-item-secondary text-body-emphasis">
+                                    <div class="fw-bold">${item.no_batch}</div>
+                                    <div>Kadaluwarsa: ${item.expired}</div>
+                                    <div>Jumlah: ${jumlah_item}</div>
+                                    <div class="btn-group" role="group">
+                                        <button class="btn btn-secondary text-nowrap bg-gradient rounded-start-3 edit-batch-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${item.id_item_obat}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
+                                        <button class="btn btn-danger text-nowrap bg-gradient rounded-end-3 delete-batch-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${item.id_item_obat}" data-name="${item.no_batch}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
                                     </div>
-                                    <span class="badge text-bg-primary rounded-pill bg-gradient fs-6">${jumlah_item}</span>
                                 </li>
                             `;
 
@@ -345,9 +349,11 @@
             const totalHargaElement = `Rp${totalHarga.toLocaleString('id-ID')}`;
             const totalQtyElement = `${totalQty.toLocaleString('id-ID')}`;
             const totalMasukElement = `${totalMasuk.toLocaleString('id-ID')}`;
+            const totalBlmDiterimaElement = `${totalBlmDiterima.toLocaleString('id-ID')}`;
             $('#total_harga').text(totalHargaElement);
             $('#total_qty').text(totalQtyElement);
             $('#total_masuk').text(totalMasukElement);
+            $('#total_blm_diterima').text(totalBlmDiterimaElement);
             $('[data-bs-toggle="tooltip"]').tooltip();
         } catch (error) {
             showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
