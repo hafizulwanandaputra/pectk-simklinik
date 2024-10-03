@@ -199,6 +199,9 @@
                     const statusBadge = pembelian_obat.diterima == '1' ?
                         `<span class="badge bg-success bg-gradient">Diterima</span>` :
                         `<span class="badge bg-danger bg-gradient">Belum Diterima</span>`;
+                    const statusButtons = pembelian_obat.diterima == '1' ?
+                        `disabled` :
+                        ``;
                     const pembelian_obatElement = `
             <li class="list-group-item bg-body-tertiary pb-3 pt-3">
                 <div class="d-flex">
@@ -225,7 +228,7 @@
                     <button type="button" class="btn btn-info btn-sm bg-gradient rounded-3" onclick="window.location.href = '<?= base_url('pembelianobat/detailpembelianobat') ?>/${pembelian_obat.id_pembelian_obat}';">
                         <i class="fa-solid fa-circle-info"></i> Detail
                     </button>
-                    <button type="button" class="btn btn-danger btn-sm bg-gradient rounded-3 delete-btn" data-id="${pembelian_obat.id_pembelian_obat}" data-name="${pembelian_obat.supplier_nama_supplier}" data-date="${pembelian_obat.tgl_pembelian}">
+                    <button type="button" class="btn btn-danger btn-sm bg-gradient rounded-3 delete-btn" data-id="${pembelian_obat.id_pembelian_obat}" data-name="${pembelian_obat.supplier_nama_supplier}" data-date="${pembelian_obat.tgl_pembelian}" ${statusButtons}>
                         <i class="fa-solid fa-trash"></i> Hapus
                     </button>
                 </div>

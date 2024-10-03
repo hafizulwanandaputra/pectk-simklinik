@@ -194,7 +194,7 @@ class PembelianObat extends BaseController
                     ->where('id_obat', $id_obat)
                     ->update();
             }
-            $this->PembelianObatModel->delete($id);
+            $this->PembelianObatModel->where('diterima', 0)->delete($id);
             $db->query('ALTER TABLE `pembelian_obat` auto_increment = 1');
             $db->query('ALTER TABLE `detail_pembelian_obat` auto_increment = 1');
             return $this->response->setJSON(['success' => true, 'message' => 'Obat berhasil dihapus']);
