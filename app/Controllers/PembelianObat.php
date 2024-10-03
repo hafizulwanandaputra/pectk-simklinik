@@ -227,23 +227,16 @@ class PembelianObat extends BaseController
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
             $db = db_connect();
 
-            // Get details of the purchase
-            $details = $db->table('detail_pembelian_obat')
+            // Menghitung total jumlah dan total obat_masuk_baru
+            $totals = $db->table('detail_pembelian_obat')
+                ->select('SUM(jumlah) as total_jumlah, SUM(obat_masuk_baru) as total_obat_masuk_baru')
                 ->where('id_pembelian_obat', $id)
                 ->get()
-                ->getResultArray();
+                ->getRow();
 
-            $totalJumlah = 0;
-            $totalObatMasuk = 0;
-
-            // Check if batch number and expiration date are filled
-            foreach ($details as $detail) {
-                if ($detail['obat_masuk_baru'] == 0) {
-                    return $this->response->setJSON(['success' => false, 'message' => 'Tidak ada item obat yang diterima. Silakan tambahkan item masing-masing obat.']);
-                }
-                $totalJumlah += $detail['jumlah'];
-                $totalObatMasuk += $detail['obat_masuk_baru'];
-            }
+            // Mendapatkan nilai totalJumlah dan totalObatMasuk
+            $totalJumlah = $totals->total_jumlah;
+            $totalObatMasuk = $totals->total_obat_masuk_baru;
 
             if ($totalJumlah == $totalObatMasuk) {
                 $db->table('pembelian_obat')
@@ -262,6 +255,21 @@ class PembelianObat extends BaseController
             foreach ($details as $detail) {
                 $id_obat = $detail['id_obat'];
                 $new_jumlah_masuk = $detail['obat_masuk_baru'];
+
+                // Ambil jumlah_keluar dari tabel obat
+                $obatData = $db->table('obat')
+                    ->select('jumlah_keluar')
+                    ->where('id_obat', $id_obat)
+                    ->get()
+                    ->getRow();
+
+                // Jika obat_masuk_baru kurang dari jumlah_keluar, gagalkan proses
+                if ($new_jumlah_masuk < $obatData->jumlah_keluar) {
+                    return $this->response->setJSON([
+                        'success' => false,
+                        'message' => 'Ada obat yang memiliki jumlah keluar lebih besar dari jumlah masuk yang Anda minta. Tidak dapat memperbarui stok obat. ',
+                    ]);
+                }
 
                 // Sum obat_masuk_baru for the same id_obat
                 if (isset($groupedDetails[$id_obat])) {
@@ -299,6 +307,7 @@ class PembelianObat extends BaseController
                         ->update();
                 }
             }
+
             if ($totalJumlah == $totalObatMasuk) {
                 return $this->response->setJSON(['success' => true, 'message' => 'Obat sudah diterima. Periksa jumlah masuk di menu obat.']);
             } else {
@@ -333,30 +342,28 @@ class PembelianObat extends BaseController
     public function detailpembelianobatlist($id)
     {
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+            // Retrieve all detail pembelian obat records based on the id_pembelian_obat
             $detail_pembelian_obat = $this->DetailPembelianObatModel
                 ->where('detail_pembelian_obat.id_pembelian_obat', $id)
                 ->join('pembelian_obat', 'pembelian_obat.id_pembelian_obat = detail_pembelian_obat.id_pembelian_obat', 'inner')
                 ->join('obat', 'obat.id_obat = detail_pembelian_obat.id_obat', 'inner')
                 ->orderBy('detail_pembelian_obat.id_detail_pembelian_obat', 'ASC')
                 ->findAll();
-            $item_obat = $this->ItemObatModel
-                ->where('id_detail_pembelian_obat', $id)
-                ->orderBy('id_detail_pembelian_obat', 'ASC')
-                ->findAll();
 
             $result = [];
 
-            // Map $item_obat by id_detail_pembelian_obat
-            $item_map = [];
-            foreach ($item_obat as $item) {
-                $item_map[$item['id_detail_pembelian_obat']][] = $item;
-            }
-
-            // Append 'item' to each $detail_pembelian_obat entry
+            // Loop through each $detail_pembelian_obat row
             foreach ($detail_pembelian_obat as $row) {
-                $row['item'] = isset($item_map[$row['id_detail_pembelian_obat']])
-                    ? $item_map[$row['id_detail_pembelian_obat']]
-                    : [];
+                // Fetch the items associated with the current id_detail_pembelian_obat
+                $item_obat = $this->ItemObatModel
+                    ->where('id_detail_pembelian_obat', $row['id_detail_pembelian_obat'])
+                    ->orderBy('id_detail_pembelian_obat', 'ASC')
+                    ->findAll();
+
+                // Append 'item' to the current row
+                $row['item'] = $item_obat;
+
+                // Add the modified row to the result
                 $result[] = $row;
             }
 
@@ -578,7 +585,7 @@ class PembelianObat extends BaseController
             $detailBuilder1->where('id_detail_pembelian_obat', $id);
 
             $detailJumlah = $detailBuilder1->get()->getRowArray();
-            if ($this->request->getPost('jumlah_item') > ($detailJumlah['jumlah'] - $detailJumlah['obat_masuk_baru'])) {
+            if ($this->request->getPost('jumlah_item') > ($detailJumlah['jumlah'])) {
                 return $this->response->setJSON(['success' => false, 'message' => 'Jumlah obat yang diterima sementara melebihi jumlah yang diminta', 'errors' => NULL]);
             }
 
@@ -610,7 +617,7 @@ class PembelianObat extends BaseController
         }
     }
 
-    public function perbaruiitemobat($id, $id_item_obat)
+    public function perbaruiitemobat($id)
     {
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
             // Validate
@@ -632,32 +639,31 @@ class PembelianObat extends BaseController
             $detailBuilder1->where('id_detail_pembelian_obat', $id);
 
             $detailJumlah = $detailBuilder1->get()->getRowArray();
-            if ($this->request->getPost('jumlah_item_edit') > ($detailJumlah['jumlah'] - $detailJumlah['obat_masuk_baru'])) {
+            if ($this->request->getPost('jumlah_item_edit') > ($detailJumlah['jumlah'])) {
                 return $this->response->setJSON(['success' => false, 'message' => 'Jumlah obat yang diterima sementara melebihi jumlah yang diminta', 'errors' => NULL]);
             }
 
-            // Save Data
-            $data = [
-                'id_item_obat' => $id_item_obat,
-                'id_detail_pembelian_obat' => $id,
+            $itemBuilder1 = $db->table('item_obat');
+            $itemBuilder1->where('id_detail_pembelian_obat', $id);
+            $itemBuilder1->update([
+                'id_item_obat' => $this->request->getPost('id_item_obat'),
                 'no_batch' => $this->request->getPost('no_batch_edit'),
                 'expired' => $this->request->getPost('expired_edit'),
                 'jumlah_item' => $this->request->getPost('jumlah_item_edit'),
-            ];
-            $this->ItemObatModel->save($data);
+            ]);
 
             // Get the sum of 'jumlah_item' from 'item_obat'
-            $itemBuilder = $db->table('item_obat');
-            $itemBuilder->selectSum('jumlah_item', 'total_jumlah_item');
-            $itemBuilder->where('id_detail_pembelian_obat', $id);
-            $itemSum = $itemBuilder->get()->getRowArray();
+            $itemBuilder2 = $db->table('item_obat');
+            $itemBuilder2->selectSum('jumlah_item', 'total_jumlah_item');
+            $itemBuilder2->where('id_detail_pembelian_obat', $id);
+            $itemSum = $itemBuilder2->get()->getRowArray();
 
             // Update 'obat_masuk_baru' in 'detail_pembelian_obat' with the sum
             $detailBuilder2 = $db->table('detail_pembelian_obat');
             $detailBuilder2->where('id_detail_pembelian_obat', $id);
             $detailBuilder2->update(['obat_masuk_baru' => $itemSum['total_jumlah_item']]);
 
-            return $this->response->setJSON(['success' => true, 'message' => 'Item obat berhasil ditambahkan']);
+            return $this->response->setJSON(['success' => true, 'message' => 'Item obat berhasil diedit']);
         } else {
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan',
@@ -679,6 +685,8 @@ class PembelianObat extends BaseController
 
             // Delete the item from 'item_obat'
             $this->ItemObatModel->delete($id);
+
+            $db->query('ALTER TABLE `item_obat` auto_increment = 1');
 
             // Get the sum of 'jumlah_item' from 'item_obat' for the same 'id_detail_pembelian_obat'
             $itemBuilder->selectSum('jumlah_item', 'total_jumlah_item');

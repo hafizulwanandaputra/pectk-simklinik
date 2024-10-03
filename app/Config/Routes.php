@@ -60,7 +60,7 @@ $routes->post('/(?i)pembelianobat/(?i)perbaruidetailpembelianobat/(:any)', 'Pemb
 $routes->delete('/(?i)pembelianobat/(?i)hapusdetailpembelianobat/(:any)', 'PembelianObat::hapusdetailpembelianobat/$1');
 $routes->get('/(?i)pembelianobat/(?i)itemobat/(:any)', 'PembelianObat::itemobat/$1');
 $routes->post('/(?i)pembelianobat/(?i)tambahitemobat/(:any)', 'PembelianObat::tambahitemobat/$1');
-$routes->post('/(?i)pembelianobat/(?i)perbaruiitemobat/(:any)/(:any)', 'PembelianObat::perbaruiitemobat/$1/$2');
+$routes->post('/(?i)pembelianobat/(?i)perbaruiitemobat/(:any)', 'PembelianObat::perbaruiitemobat/$1');
 $routes->delete('/(?i)pembelianobat/(?i)hapusitemobat/(:any)', 'PembelianObat::hapusitemobat/$1');
 $routes->get('/(?i)pembelianobat/(?i)fakturpembelianobat/(:any)', 'PembelianObat::fakturpembelianobat/$1');
 
