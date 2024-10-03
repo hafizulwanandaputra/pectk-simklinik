@@ -565,7 +565,7 @@ class PembelianObat extends BaseController
             $validation->setRules([
                 'no_batch' => 'required',
                 'expired' => 'required',
-                'jumlah_item' => 'required|numeric',
+                'jumlah_item' => 'required|numeric|greater_than[0]',
             ]);
 
             if (!$this->validate($validation->getRules())) {
@@ -619,7 +619,7 @@ class PembelianObat extends BaseController
             $validation->setRules([
                 'no_batch_edit' => 'required',
                 'expired_edit' => 'required',
-                'jumlah_item_edit' => 'required|numeric',
+                'jumlah_item_edit' => 'required|numeric|greater_than[0]',
             ]);
 
             if (!$this->validate($validation->getRules())) {

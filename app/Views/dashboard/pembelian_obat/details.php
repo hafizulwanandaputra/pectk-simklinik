@@ -640,6 +640,7 @@
             $('[data-bs-toggle="tooltip"]').tooltip('hide');
             $('#editDetailPembelian').remove();
             $('#addBatchPembelian').remove();
+            $('#editBatchPembelian').remove();
             const formHtml = `
                 <tr id="addBatchPembelian">
                     <td colspan="8">
@@ -764,7 +765,7 @@
             $('[data-bs-toggle="tooltip"]').tooltip('hide');
             $this.prop('disabled', true).html(`<span class="spinner-border" style="width: 11px; height: 11px;" aria-hidden="true"></span>`);
             $('#editDetailPembelian').remove();
-            $('#inputBatchPembelian').remove();
+            $('#addBatchPembelian').remove();
             $('#editBatchPembelian').remove();
             try {
                 const response = await axios.get(`<?= base_url('/pembelianobat/itemobat') ?>/${id}`);
