@@ -341,9 +341,16 @@ class Transaksi extends BaseController
             // Untuk memetakan setiap transaksi
             foreach ($obatalkes as $row) {
                 $ppn = $row['ppn'];
+                $mark_up = $row['mark_up'];
                 $harga_obat = $row['harga_obat'];
+
+                // Hitung PPN terlebih dahulu
                 $jumlah_ppn = ($harga_obat * $ppn) / 100;
-                $total_harga = $harga_obat + $jumlah_ppn;
+                $total_harga_ppn = $harga_obat + $jumlah_ppn;
+
+                // Setelah itu, terapkan mark-up
+                $jumlah_mark_up = ($total_harga_ppn * $mark_up) / 100;
+                $total_harga = $total_harga_ppn + $jumlah_mark_up;
                 // Jika transaksi ini belum ada dalam array $result, tambahkan
                 if (!isset($result[$row['id_detail_transaksi']])) {
                     $result[$row['id_detail_transaksi']] = [

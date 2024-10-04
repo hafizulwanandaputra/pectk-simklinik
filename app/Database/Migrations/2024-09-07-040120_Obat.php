@@ -40,6 +40,10 @@ class Obat extends Migration
                 'type' => 'INT',
                 'constraint' => 24,
             ],
+            'mark_up' => [
+                'type' => 'INT',
+                'constraint' => 24,
+            ],
             'jumlah_masuk' => [
                 'type' => 'INT',
                 'constraint' => 24,

@@ -7,6 +7,7 @@ use App\Models\DetailResepModel;
 use App\Models\ObatModel;
 use App\Models\PasienModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
+use Dompdf\Dompdf;
 
 class Resep extends BaseController
 {
@@ -335,9 +336,16 @@ class Resep extends BaseController
             $options = [];
             foreach ($results as $row) {
                 $ppn = (int) $row['ppn'];
+                $mark_up = (int) $row['mark_up'];
                 $harga_obat = (int) $row['harga_obat'];
+
+                // Hitung PPN terlebih dahulu
                 $jumlah_ppn = ($harga_obat * $ppn) / 100;
-                $total_harga = $harga_obat + $jumlah_ppn;
+                $total_harga_ppn = $harga_obat + $jumlah_ppn;
+
+                // Setelah itu, terapkan mark-up
+                $jumlah_mark_up = ($total_harga_ppn * $mark_up) / 100;
+                $total_harga = $total_harga_ppn + $jumlah_mark_up;
                 $harga_obat_terformat = number_format($total_harga, 0, ',', '.');
                 // Cek apakah id_resep sudah ada di tabel detail_resep dengan id_resep yang sama
                 $isUsed = $DetailResepModel->where('id_obat', $row['id_obat'])
@@ -388,9 +396,16 @@ class Resep extends BaseController
             $obat = $builderObat->where('id_obat', $this->request->getPost('id_obat'))->get()->getRowArray();
 
             $ppn = $obat['ppn'];
+            $mark_up = $obat['mark_up'];
             $harga_obat = $obat['harga_obat'];
+
+            // Hitung PPN terlebih dahulu
             $jumlah_ppn = ($harga_obat * $ppn) / 100;
-            $total_harga = $harga_obat + $jumlah_ppn;
+            $total_harga_ppn = $harga_obat + $jumlah_ppn;
+
+            // Setelah itu, terapkan mark-up
+            $jumlah_mark_up = ($total_harga_ppn * $mark_up) / 100;
+            $total_harga = $total_harga_ppn + $jumlah_mark_up;
 
             if ($this->request->getPost('jumlah') > $obat['jumlah_masuk']) {
                 return $this->response->setJSON(['success' => false, 'message' => 'Jumlah obat melebihi stok', 'errors' => NULL]);
@@ -576,6 +591,55 @@ class Resep extends BaseController
             }
 
             return $this->response->setJSON(['message' => 'Detail resep tidak ditemukan'], 404);
+        } else {
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
+        }
+    }
+
+    public function etiket($id)
+    {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
+            if (session()->get('role') == 'Admin') {
+                $resep = $this->ResepModel
+                    ->join('pasien', 'pasien.id_pasien = resep.id_pasien', 'inner')
+                    ->find($id);
+            } else {
+                $resep = $this->ResepModel
+                    ->where('resep.id_user', session()->get('id_user'))
+                    ->join('pasien', 'pasien.id_pasien = resep.id_pasien', 'inner')
+                    ->find($id);
+            }
+            $detail_resep = $this->DetailResepModel
+                ->where('detail_resep.id_resep', $id)
+                ->join('resep', 'resep.id_resep = detail_resep.id_resep', 'inner')
+                ->join('obat', 'obat.id_obat = detail_resep.id_obat', 'inner')
+                ->orderBy('id_detail_resep', 'ASC')
+                ->findAll();
+            // dd($detail_resep);
+            // die;
+            if (!empty($detail_resep) && $resep['status'] == 0) {
+                // dd($total_obatalkes);
+                // die;
+                $resep['no_mr'] = $this->formatNoMr($resep['no_mr']);
+                $data = [
+                    'resep' => $resep,
+                    'detail_resep' => $detail_resep,
+                    'title' => 'Etiket Resep ' . $id . ' - ' . $this->systemName
+                ];
+                // return view('dashboard/resep/etiket', $data);
+                // die;
+                $dompdf = new Dompdf();
+                $html = view('dashboard/resep/etiket', $data);
+                $dompdf->loadHtml($html);
+                $dompdf->render();
+                $dompdf->stream('resep-id-' . $resep['id_pasien'] . '-' . urlencode($resep['nama_pasien']) . '-' . urlencode($resep['dokter']) . '-' . $resep['tanggal_resep'] . '.pdf', [
+                    'Attachment' => FALSE
+                ]);
+            } else {
+                throw PageNotFoundException::forPageNotFound();
+            }
         } else {
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan',

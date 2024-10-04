@@ -139,6 +139,13 @@
         </table>
     </div>
 
+    <div>
+        <hr>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
+            <button class="btn btn-primary rounded-3 bg-gradient" type="button" id="printBtn" onclick="window.open(`<?= base_url('/resep/etiket/' . $resep['id_resep']) ?>`)" disabled><i class="fa-solid fa-print"></i> Cetak Etiket</button>
+        </div>
+    </div>
+
     <div class="modal modal-sheet p-4 py-md-5 fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content bg-body rounded-4 shadow-lg transparent-blur">
@@ -226,6 +233,7 @@
                     </tr>
                 `;
                 $('#detail_resep').append(emptyRow);
+                $('#printBtn').prop('disabled', true);
             } else {
                 data.forEach(function(detail_resep) {
                     const jumlah = parseInt(detail_resep.jumlah); // Konversi jumlah ke integer
@@ -252,9 +260,11 @@
                     if (detail_resep.status === "1") {
                         $('.edit-btn').prop('disabled', true);
                         $('.delete-btn').prop('disabled', true);
+                        $('#printBtn').prop('disabled', true);
                     } else if (detail_resep.status === "0") {
                         $('.edit-btn').prop('disabled', false);
                         $('.delete-btn').prop('disabled', false);
+                        $('#printBtn').prop('disabled', false);
                     }
                 });
             }

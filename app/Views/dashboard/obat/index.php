@@ -25,6 +25,7 @@
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Bentuk</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Harga Obat</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">PPN</th>
+                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Mark Up</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Harga Jual</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Jumlah Masuk</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Jumlah Keluar</th>
@@ -88,11 +89,13 @@
                     <div class="form-floating mt-1 mb-1">
                         <select class="form-select rounded-3" id="bentuk_obat" name="bentuk_obat" aria-label="bentuk_obat">
                             <option value="" disabled selected>-- Pilih Bentuk --</option>
-                            <option value="Tetes">Tetes</option>
-                            <option value="Salep">Salep</option>
-                            <option value="Gel">Gel</option>
-                            <option value="Tablet/Kapsul">Tablet/Kapsul</option>
-                            <option value="Injeksi">Injeksi</option>
+                            <optgroup label="Obat Luar">
+                                <option value="Tetes">Tetes</option>
+                                <option value="Salep">Salep</option>
+                            </optgroup>
+                            <optgroup label="Obat Dalam">
+                                <option value="Tablet/Kapsul">Tablet/Kapsul</option>
+                            </optgroup>
                         </select>
                         <label for="bentuk_obat">Bentuk*</label>
                         <div class="invalid-feedback"></div>
@@ -105,6 +108,11 @@
                     <div class="form-floating mb-1 mt-1">
                         <input type="number" class="form-control" autocomplete="off" dir="auto" placeholder="ppn" id="ppn" name="ppn">
                         <label for="ppn">PPN (%)*</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="form-floating mb-1 mt-1">
+                        <input type="number" class="form-control" autocomplete="off" dir="auto" placeholder="mark_up" id="mark_up" name="mark_up">
+                        <label for="mark_up">Mark Up (%)*</label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
@@ -289,6 +297,12 @@
                     }
                 },
                 {
+                    data: 'mark_up',
+                    render: function(data, type, row) {
+                        return `<span class="date text-nowrap" style="display: block; text-align: right;">${data}%</span>`;
+                    }
+                },
+                {
                     data: 'harga_jual',
                     render: function(data, type, row) {
                         // Format harga_obat using number_format equivalent in JavaScript
@@ -406,6 +420,7 @@
                 $('#bentuk_obat').val(response.data.bentuk_obat);
                 $('#harga_obat').val(response.data.harga_obat);
                 $('#ppn').val(response.data.ppn);
+                $('#mark_up').val(response.data.mark_up);
                 $('#obatModal').modal('show');
             } catch (error) {
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
@@ -530,6 +545,7 @@
             $('#bentuk_obat').val('');
             $('#harga_obat').val('');
             $('#ppn').val('');
+            $('#mark_up').val('');
             $('#obatForm .is-invalid').removeClass('is-invalid');
             $('#obatForm .invalid-feedback').text('').hide();
         });
