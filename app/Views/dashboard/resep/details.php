@@ -452,7 +452,7 @@
                                     <option value="1 Tablet">
                                 </datalist>
                             </div>
-                            <div class="col-12">
+                            <div class="col-6">
                                 <select class="form-select form-select-sm  rounded-3" id="cara_pakai_edit" name="cara_pakai_edit" aria-label="cara_pakai">
                                     <option value="" disabled selected>-- Pilih Cara Pakai --</option>
                                     <option value="Mata Kanan">Mata Kanan</option>
@@ -463,6 +463,10 @@
                                     <option value="Sesudah Makan Dihabiskan">Sesudah Makan Dihabiskan</option>
                                     <option value="Sesudah Makan Bila Sakit">Sesudah Makan Bila Sakit</option>
                                 </select>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="col-6">
+                                <input type="text" id="jumlah_edit" name="jumlah_edit" class="form-control form-control-sm rounded-3" placeholder="Dosis berapa kali?" value="${response.data.jumlah}">
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-2">

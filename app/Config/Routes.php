@@ -82,7 +82,7 @@ $routes->post('/(?i)resep/(?i)perbaruidetailresep/(:any)', 'Resep::perbaruidetai
 $routes->delete('/(?i)resep/(?i)hapusdetailresep/(:any)', 'Resep::hapusdetailresep/$1');
 $routes->get('/(?i)resep/(?i)keterangan/(:any)', 'Resep::keterangan/$1');
 $routes->post('/(?i)resep/(?i)editketerangan/(:any)', 'Resep::editketerangan/$1');
-$routes->get('/(?i)transaksi/(?i)etiket/(:any)', 'Transaksi::etiket/$1');
+$routes->get('/(?i)resep/(?i)etiket/(:any)', 'Resep::etiket/$1');
 
 // LAYANAN
 $routes->get('/(?i)layanan', 'Layanan::index');
