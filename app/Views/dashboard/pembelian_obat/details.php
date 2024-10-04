@@ -316,7 +316,7 @@
                                     <div>Kadaluwarsa: ${item.expired}</div>
                                     <div>Jumlah: ${jumlah_item}</div>
                                     <div class="btn-group" role="group">
-                                        <button class="btn btn-secondary text-nowrap bg-gradient rounded-start-3 edit-batch-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${item.id_detail_pembelian_obat}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
+                                        <button class="btn btn-secondary text-nowrap bg-gradient rounded-start-3 edit-batch-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${item.id_item_obat}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
                                         <button class="btn btn-danger text-nowrap bg-gradient rounded-end-3 delete-batch-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${item.id_item_obat}" data-name="${item.no_batch}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
                                     </div>
                                 </li>
@@ -775,7 +775,7 @@
                                 <button type="button" class="text-end btn-close ms-auto cancel-edit-batch"></button>
                             </div>
                             <div class="d-flex flex-column flex-xl-row gap-1">
-                                <input type="hidden" id="id_item_obat" name="id_item_obat" value="${response.data.id_item_obat}">
+                                <input type="hidden" id="id_detail_pembelian_obat" name="id_detail_pembelian_obat" value="${response.data.id_detail_pembelian_obat}">
                                 <div class="flex-fill">
                                     <input type="text" id="no_batch_edit" name="no_batch_edit" class="form-control rounded-3" placeholder="Nomor Batch" value="${response.data.no_batch}">
                                     <div class="invalid-feedback"></div>
@@ -790,7 +790,7 @@
                                 </div>
                                 <div class="d-grid d-xl-block w-auto">
                                     <button type="submit" id="editBatchButton" class="btn btn-primary bg-gradient rounded-3">
-                                        <i class="fa-solid fa-floppy-disk"></i> Simpan
+                                        <i class="fa-solid fa-pen-to-square"></i> Edit
                                     </button>
                                 </div>
                             </div>

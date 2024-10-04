@@ -551,10 +551,12 @@ class PembelianObat extends BaseController
 
             $detailBuilder1 = $db->table('detail_pembelian_obat');
             $detailBuilder1->where('id_detail_pembelian_obat', $id);
-
             $detailJumlah = $detailBuilder1->get()->getRowArray();
+            $obatBlmDiterima = $detailJumlah['jumlah'] - $detailJumlah['obat_masuk_baru'];
             if ($this->request->getPost('jumlah_item') > ($detailJumlah['jumlah'])) {
                 return $this->response->setJSON(['success' => false, 'message' => 'Jumlah obat yang diterima sementara melebihi jumlah yang diminta', 'errors' => NULL]);
+            } else if ($obatBlmDiterima == 0) {
+                return $this->response->setJSON(['success' => false, 'message' => 'Obat ini sudah semuanya diterima. Tidak dapat menambahkan item.', 'errors' => NULL]);
             }
 
             // Save Data
@@ -602,19 +604,11 @@ class PembelianObat extends BaseController
             }
 
             $db = db_connect();
-
-            $detailBuilder1 = $db->table('detail_pembelian_obat');
-            $detailBuilder1->where('id_detail_pembelian_obat', $id);
-
-            $detailJumlah = $detailBuilder1->get()->getRowArray();
-            if ($this->request->getPost('jumlah_item_edit') > ($detailJumlah['jumlah'])) {
-                return $this->response->setJSON(['success' => false, 'message' => 'Jumlah obat yang diterima sementara melebihi jumlah yang diminta', 'errors' => NULL]);
-            }
+            $db->transBegin();
 
             $itemBuilder1 = $db->table('item_obat');
-            $itemBuilder1->where('id_detail_pembelian_obat', $id);
+            $itemBuilder1->where('id_item_obat', $id);
             $itemBuilder1->update([
-                'id_item_obat' => $this->request->getPost('id_item_obat'),
                 'no_batch' => $this->request->getPost('no_batch_edit'),
                 'expired' => $this->request->getPost('expired_edit'),
                 'jumlah_item' => $this->request->getPost('jumlah_item_edit'),
@@ -623,15 +617,37 @@ class PembelianObat extends BaseController
             // Get the sum of 'jumlah_item' from 'item_obat'
             $itemBuilder2 = $db->table('item_obat');
             $itemBuilder2->selectSum('jumlah_item', 'total_jumlah_item');
-            $itemBuilder2->where('id_detail_pembelian_obat', $id);
+            $itemBuilder2->where('id_detail_pembelian_obat', $this->request->getPost('id_detail_pembelian_obat'));
             $itemSum = $itemBuilder2->get()->getRowArray();
+
+            // Get the current 'jumlah_pembelian' from 'detail_pembelian_obat'
+            $detailBuilder1 = $db->table('detail_pembelian_obat');
+            $detailBuilder1->select('jumlah');
+            $detailBuilder1->where('id_detail_pembelian_obat', $this->request->getPost('id_detail_pembelian_obat'));
+            $detail = $detailBuilder1->get()->getRowArray();
+
+            // Check if 'total_jumlah_item' exceeds 'jumlah_pembelian'
+            if ($itemSum['total_jumlah_item'] > $detail['jumlah']) {
+                $db->transRollback();  // Rollback the transaction
+                return $this->response->setJSON([
+                    'success' => false,
+                    'message' => 'Jumlah obat yang diterima sementara melebihi jumlah yang diminta',
+                    'errors' => NULL
+                ]);
+            }
 
             // Update 'obat_masuk_baru' in 'detail_pembelian_obat' with the sum
             $detailBuilder2 = $db->table('detail_pembelian_obat');
-            $detailBuilder2->where('id_detail_pembelian_obat', $id);
+            $detailBuilder2->where('id_detail_pembelian_obat', $this->request->getPost('id_detail_pembelian_obat'));
             $detailBuilder2->update(['obat_masuk_baru' => $itemSum['total_jumlah_item']]);
 
-            return $this->response->setJSON(['success' => true, 'message' => 'Item obat berhasil diedit']);
+            if ($db->transStatus() === false) {
+                $db->transRollback();  // Rollback if there is any issue
+                return $this->response->setJSON(['success' => false, 'message' => 'Gagal memproses pembelian', 'errors' => NULL]);
+            } else {
+                $db->transCommit();  // Commit the transaction if everything is fine
+                return $this->response->setJSON(['success' => true, 'message' => 'Item obat berhasil diedit']);
+            }
         } else {
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan',
