@@ -142,6 +142,17 @@ if (stripos($browser, 'Chrome') !== false) {
         <li class="list-group-item p-1 list-group-item-action disabled" aria-disabled="true">
             <div class="d-flex align-items-start">
                 <a href="#" class="stretched-link" style="min-width: 48px; max-width: 48px; text-align: center;">
+                    <p class="mb-0" style="font-size: 1.75rem!important;"><i class="fa-solid fa-globe"></i></p>
+                </a>
+                <div class="align-self-center flex-fill ps-1 text-wrap overflow-hidden" style="text-overflow: ellipsis;">
+                    <h5 class="card-title">Sambungan HTTPS</h5>
+                    <span><?= (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? 'Ya' : 'Tidak'; ?></span>
+                </div>
+            </div>
+        </li>
+        <li class="list-group-item p-1 list-group-item-action disabled" aria-disabled="true">
+            <div class="d-flex align-items-start">
+                <a href="#" class="stretched-link" style="min-width: 48px; max-width: 48px; text-align: center;">
                     <p class="mb-0" style="font-size: 1.75rem!important;"><i class="fa-solid fa-database"></i></p>
                 </a>
                 <div class="align-self-center flex-fill ps-1 text-wrap overflow-hidden" style="text-overflow: ellipsis;">
