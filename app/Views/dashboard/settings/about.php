@@ -146,7 +146,7 @@ if (stripos($browser, 'Chrome') !== false) {
                 </a>
                 <div class="align-self-center flex-fill ps-1 text-wrap overflow-hidden" style="text-overflow: ellipsis;">
                     <h5 class="card-title">Sambungan HTTPS</h5>
-                    <span><?= (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? 'Ya' : 'Tidak'; ?></span>
+                    <span><?= (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') ? 'Digunakan' : 'Tidak Digunakan'; ?></span>
                 </div>
             </div>
         </li>
