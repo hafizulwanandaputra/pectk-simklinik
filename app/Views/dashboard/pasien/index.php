@@ -48,7 +48,7 @@
         </div>
     </div>
     <div class="modal fade" id="pasienModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="pasienModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable rounded-3">
+        <div class="modal-dialog modal-xl modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable rounded-3">
             <form id="pasienForm" enctype="multipart/form-data" class="modal-content bg-body shadow-lg transparent-blur">
                 <div class="modal-header justify-content-between pt-2 pb-2" style="border-bottom: 1px solid var(--bs-border-color-translucent);">
                     <h6 class="pe-2 modal-title fs-6 text-truncate" id="pasienModalLabel" style="font-weight: bold;"></h6>
@@ -62,9 +62,9 @@
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="mt-1 mb-1 row">
-                        <label for="jenis_kelamin" class="col-xl-3 col-form-label">Jenis Kelamin*</label>
+                        <label for="jenis_kelamin" class="col-lg-3 col-form-label">Jenis Kelamin*</label>
                         <div class="col-lg col-form-label">
-                            <div class="d-flex align-items-center justify-content-evenly justify-content-xl-start">
+                            <div class="d-flex align-items-center justify-content-evenly justify-content-lg-start">
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="jenis_kelamin" id="jenis_kelamin1" value="Laki-Laki">
                                     <label class="form-check-label" for="jenis_kelamin1">
