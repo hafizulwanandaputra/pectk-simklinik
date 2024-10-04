@@ -150,7 +150,7 @@ class Resep extends BaseController
                     ->find($id);
             } else {
                 $data = $this->ResepModel
-                    ->where('resep.id_user', session()->get('id_user'))
+                    ->where('resep.dokter', session()->get('fullname'))
                     ->join('pasien', 'pasien.id_pasien = resep.id_pasien', 'inner')
                     ->find($id);
             }
@@ -268,7 +268,7 @@ class Resep extends BaseController
                     ->find($id);
             } else {
                 $resep = $this->ResepModel
-                    ->where('resep.id_user', session()->get('id_user'))
+                    ->where('resep.dokter', session()->get('fullname'))
                     ->join('pasien', 'pasien.id_pasien = resep.id_pasien', 'inner')
                     ->find($id);
             }
@@ -607,7 +607,7 @@ class Resep extends BaseController
                     ->find($id);
             } else {
                 $resep = $this->ResepModel
-                    ->where('resep.id_user', session()->get('id_user'))
+                    ->where('resep.dokter', session()->get('fullname'))
                     ->join('pasien', 'pasien.id_pasien = resep.id_pasien', 'inner')
                     ->find($id);
             }
