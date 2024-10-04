@@ -662,7 +662,7 @@
                                 </div>
                                 <div class="d-grid d-lg-block w-auto">
                                     <button type="submit" id="addBatchButton" class="btn btn-primary bg-gradient rounded-3">
-                                        <i class="fa-solid fa-floppy-disk"></i> Simpan
+                                        <i class="fa-solid fa-plus"></i> Tambah
                                     </button>
                                 </div>
                             </div>
@@ -684,7 +684,7 @@
                 $('#addBatch .is-invalid').removeClass('is-invalid');
                 $('#addBatch .invalid-feedback').text('').hide();
                 $('#addBatchButton').prop('disabled', true).html(`
-                        <span class="spinner-border spinner-border-sm" aria-hidden="true"></span> Simpan
+                        <span class="spinner-border spinner-border-sm" aria-hidden="true"></span> Tambah
                     `);
 
                 // Disable form inputs
@@ -744,7 +744,7 @@
                     showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
                 } finally {
                     $('#addBatchButton').prop('disabled', false).html(`
-                            <i class="fa-solid fa-floppy-disk"></i> Simpan
+                            <i class="fa-solid fa-plus"></i> Tambah
                         `);
                     $('#addBatch input, .btn-close').prop('disabled', false);
                 }

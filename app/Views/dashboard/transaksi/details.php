@@ -235,6 +235,18 @@
                     <button id="closeBtn" type="button" class="btn btn-danger btn-sm bg-gradient ps-0 pe-0 pt-0 pb-0 rounded-3" data-bs-dismiss="modal" aria-label="Close"><span data-feather="x" class="mb-0" style="width: 30px; height: 30px;"></span></button>
                 </div>
                 <div class="modal-body py-2">
+                    <div id="mediaAlert" class="alert alert-info bg-gradient rounded-3 mb-1 mt-1" role="alert">
+                        <div class="d-flex align-items-start">
+                            <div style="width: 12px; text-align: center;">
+                                <i class="fa-solid fa-circle-info"></i>
+                            </div>
+                            <div class="w-100 ms-3">
+                                <p>Pastikan Anda telah memasukkan nominal transaksi sesuai dengan grand total yang diminta dan telah menyelesaikan proses pembayaran.</p>
+                                <p>Grand Total:<br><span id="total_pembayaran_modal" class="date fs-4" style="font-weight: 900;"></span></p>
+                                <p class="mb-0">Jika uang yang diterima melebihi grand total, maka akan ada uang kembali.</p>
+                            </div>
+                        </div>
+                    </div>
                     <div class="form-floating mb-1 mt-1">
                         <input type="number" class="form-control" autocomplete="off" dir="auto" placeholder="terima_uang" id="terima_uang" name="terima_uang">
                         <label for="terima_uang">Terima Uang (Rp)*</label>
@@ -248,16 +260,6 @@
                         </select>
                         <label for="metode_pembayaran">Metode Pembayaran*</label>
                         <div class="invalid-feedback"></div>
-                    </div>
-                    <div id="mediaAlert" class="alert alert-info bg-gradient rounded-3 mb-1 mt-1" role="alert">
-                        <div class="d-flex align-items-start">
-                            <div style="width: 12px; text-align: center;">
-                                <i class="fa-solid fa-circle-info"></i>
-                            </div>
-                            <div class="w-100 ms-3">
-                                Pastikan Anda telah memasukkan nominal transaksi sesuai dengan grand total yang diminta dan telah menyelesaikan proses pembayaran.
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="modal-footer justify-content-end pt-2 pb-2" style="border-top: 1px solid var(--bs-border-color-translucent);">
@@ -365,6 +367,7 @@
             $('#terima_uang_table').text(`Rp${terima_uang.toLocaleString('id-ID')}`);
             $('#uang_kembali_table').text(`Rp${uang_kembali.toLocaleString('id-ID')}`);
             $('#metode_pembayaran_table').text(data.metode_pembayaran);
+            $('#total_pembayaran_modal').text(`Rp${total_pembayaran.toLocaleString('id-ID')}`);
 
             // Cek status `lunas`
             if (data.lunas === "1") {

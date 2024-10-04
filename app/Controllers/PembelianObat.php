@@ -177,6 +177,7 @@ class PembelianObat extends BaseController
     {
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
             $db = db_connect();
+            $db->transBegin();
 
             // Find all detail pembelian obat before deletion
             $details = $db->table('detail_pembelian_obat')
@@ -184,20 +185,43 @@ class PembelianObat extends BaseController
                 ->get()
                 ->getResultArray();
 
-            // Reduce jumlah_masuk in obat table for each detail
+            // Check and reduce jumlah_masuk in obat table for each detail
             foreach ($details as $detail) {
                 $id_obat = $detail['id_obat'];
                 $obat_masuk = $detail['obat_masuk'];
 
+                // Get current jumlah_masuk and jumlah_keluar from obat table
+                $obat = $db->table('obat')
+                    ->select('jumlah_masuk, jumlah_keluar')
+                    ->where('id_obat', $id_obat)
+                    ->get()
+                    ->getRow();
+
+                // Check if jumlah_masuk after deletion would be less than jumlah_keluar
+                if (($obat->jumlah_masuk - $obat_masuk) < $obat->jumlah_keluar) {
+                    $db->transRollback();  // Rollback the transaction
+                    return $this->response->setJSON([
+                        'success' => false,
+                        'message' => 'Gagal menghapus pembelian obat: stok masuk kurang dari jumlah keluar'
+                    ]);
+                }
+
+                // Reduce jumlah_masuk if the condition is satisfied
                 $db->table('obat')
                     ->set('jumlah_masuk', "jumlah_masuk - $obat_masuk", false)
                     ->where('id_obat', $id_obat)
                     ->update();
             }
-            $this->PembelianObatModel->where('diterima', 0)->delete($id);
+            $this->PembelianObatModel->delete($id);
             $db->query('ALTER TABLE `pembelian_obat` auto_increment = 1');
             $db->query('ALTER TABLE `detail_pembelian_obat` auto_increment = 1');
-            return $this->response->setJSON(['success' => true, 'message' => 'Obat berhasil dihapus']);
+            if ($db->transStatus() === false) {
+                $db->transRollback();  // Rollback if there is any issue
+                return $this->response->setJSON(['success' => false, 'message' => 'Gagal menghapus pembelian obat']);
+            } else {
+                $db->transCommit();  // Commit the transaction if everything is fine
+                return $this->response->setJSON(['success' => true, 'message' => 'Pembelian bat berhasil dihapus']);
+            }
         } else {
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan',
