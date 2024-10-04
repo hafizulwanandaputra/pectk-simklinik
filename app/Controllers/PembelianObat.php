@@ -215,6 +215,7 @@ class PembelianObat extends BaseController
             $this->PembelianObatModel->delete($id);
             $db->query('ALTER TABLE `pembelian_obat` auto_increment = 1');
             $db->query('ALTER TABLE `detail_pembelian_obat` auto_increment = 1');
+            $db->query('ALTER TABLE `item_obat` auto_increment = 1');
             if ($db->transStatus() === false) {
                 $db->transRollback();  // Rollback if there is any issue
                 return $this->response->setJSON(['success' => false, 'message' => 'Gagal menghapus pembelian obat']);
@@ -736,6 +737,7 @@ class PembelianObat extends BaseController
 
             // Reset auto_increment
             $db->query('ALTER TABLE `detail_pembelian_obat` auto_increment = 1');
+            $db->query('ALTER TABLE `item_obat` auto_increment = 1');
 
             // Recalculate total_qty, total_masuk, and total_biaya for the pembelian_obat
             $builder = $db->table('detail_pembelian_obat');
