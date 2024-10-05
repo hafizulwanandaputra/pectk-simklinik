@@ -21,7 +21,7 @@ class Resep extends BaseController
 
     public function index()
     {
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Apoteker') {
             $data = [
                 'title' => 'Resep - ' . $this->systemName,
                 'headertitle' => 'Resep',
@@ -35,7 +35,7 @@ class Resep extends BaseController
 
     public function listresep()
     {
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Apoteker') {
             $search = $this->request->getGet('search');
             $limit = $this->request->getGet('limit');
             $offset = $this->request->getGet('offset');
@@ -47,7 +47,7 @@ class Resep extends BaseController
             $ResepModel = $this->ResepModel;
 
             // Join tables before applying search filter
-            if (session()->get('role') == 'Admin') {
+            if (session()->get('role') != 'Dokter') {
                 $ResepModel
                     ->select('resep.*, 
                 pasien.nama_pasien as pasien_nama_pasien')
@@ -143,8 +143,8 @@ class Resep extends BaseController
 
     public function resep($id)
     {
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
-            if (session()->get('role') == 'Admin') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Apoteker') {
+            if (session()->get('role') != 'Dokter') {
                 $data = $this->ResepModel
                     ->join('pasien', 'pasien.id_pasien = resep.id_pasien', 'inner')
                     ->find($id);
@@ -261,8 +261,8 @@ class Resep extends BaseController
     // DETAIL RESEP
     public function detailresep($id)
     {
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
-            if (session()->get('role') == 'Admin') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Apoteker') {
+            if (session()->get('role') != 'Dokter') {
                 $resep = $this->ResepModel
                     ->join('pasien', 'pasien.id_pasien = resep.id_pasien', 'inner')
                     ->find($id);
@@ -291,7 +291,7 @@ class Resep extends BaseController
 
     public function detailreseplist($id)
     {
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Apoteker') {
             $data = $this->DetailResepModel
                 ->where('detail_resep.id_resep', $id)
                 ->join('resep', 'resep.id_resep = detail_resep.id_resep', 'inner')
@@ -309,7 +309,7 @@ class Resep extends BaseController
 
     public function detailresepitem($id)
     {
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Apoteker') {
             $data = $this->DetailResepModel
                 ->where('id_detail_resep', $id)
                 ->join('obat', 'obat.id_obat = detail_resep.id_obat', 'inner')
@@ -598,21 +598,61 @@ class Resep extends BaseController
         }
     }
 
-    public function etiket($id)
+    public function etiketdalam($id)
     {
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
-            if (session()->get('role') == 'Admin') {
-                $resep = $this->ResepModel
-                    ->join('pasien', 'pasien.id_pasien = resep.id_pasien', 'inner')
-                    ->find($id);
-            } else {
-                $resep = $this->ResepModel
-                    ->where('resep.dokter', session()->get('fullname'))
-                    ->join('pasien', 'pasien.id_pasien = resep.id_pasien', 'inner')
-                    ->find($id);
-            }
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+            $resep = $this->ResepModel
+                ->join('pasien', 'pasien.id_pasien = resep.id_pasien', 'inner')
+                ->find($id);
             $detail_resep = $this->DetailResepModel
                 ->where('detail_resep.id_resep', $id)
+                ->where('obat.bentuk_obat', 'Tablet/Kapsul')
+                ->join('resep', 'resep.id_resep = detail_resep.id_resep', 'inner')
+                ->join('obat', 'obat.id_obat = detail_resep.id_obat', 'inner')
+                ->orderBy('id_detail_resep', 'ASC')
+                ->findAll();
+            // dd($detail_resep);
+            // die;
+            if (!empty($detail_resep) && $resep['status'] == 0) {
+                // dd($total_obatalkes);
+                // die;
+                $resep['no_mr'] = $this->formatNoMr($resep['no_mr']);
+                $data = [
+                    'resep' => $resep,
+                    'detail_resep' => $detail_resep,
+                    'title' => 'Etiket Resep ' . $id . ' - ' . $this->systemName
+                ];
+                // return view('dashboard/resep/etiket', $data);
+                // die;
+                $dompdf = new Dompdf();
+                $html = view('dashboard/resep/etiket', $data);
+                $dompdf->loadHtml($html);
+                $dompdf->render();
+                $dompdf->stream('resep-id-' . $resep['id_pasien'] . '-' . urlencode($resep['nama_pasien']) . '-' . urlencode($resep['dokter']) . '-' . $resep['tanggal_resep'] . '.pdf', [
+                    'Attachment' => FALSE
+                ]);
+            } else {
+                throw PageNotFoundException::forPageNotFound();
+            }
+        } else {
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
+        }
+    }
+
+    public function etiketluar($id)
+    {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+            $resep = $this->ResepModel
+                ->join('pasien', 'pasien.id_pasien = resep.id_pasien', 'inner')
+                ->find($id);
+            $detail_resep = $this->DetailResepModel
+                ->where('detail_resep.id_resep', $id)
+                ->groupStart()
+                ->where('obat.bentuk_obat', 'Tetes')
+                ->orWhere('obat.bentuk_obat', 'Salep')
+                ->groupEnd()
                 ->join('resep', 'resep.id_resep = detail_resep.id_resep', 'inner')
                 ->join('obat', 'obat.id_obat = detail_resep.id_obat', 'inner')
                 ->orderBy('id_detail_resep', 'ASC')

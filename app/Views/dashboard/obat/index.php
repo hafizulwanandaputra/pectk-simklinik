@@ -82,6 +82,7 @@
                             <option value="Antiglaukoma">Antiglaukoma</option>
                             <option value="Antivirus">Antivirus</option>
                             <option value="Antijamur">Antijamur</option>
+                            <option value="Suplemen">Suplemen</option>
                         </select>
                         <label for="kategori_obat">Kategori*</label>
                         <div class="invalid-feedback"></div>

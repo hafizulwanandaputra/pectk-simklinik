@@ -24,7 +24,7 @@
             <button class="btn btn-success btn-sm bg-gradient rounded-end-3" type="button" id="refreshButton"><i class="fa-solid fa-sync"></i></button>
         </div>
     </div>
-    <fieldset class="border rounded-3 px-2 py-0 mb-3">
+    <fieldset class="border rounded-3 px-2 py-0 mb-3" id="tambahPasienForm">
         <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Tambah Pasien</legend>
         <form id="resepForm" enctype="multipart/form-data" class="d-flex flex-column flex-lg-row mb-2 gap-2">
             <div class="flex-fill">
@@ -129,26 +129,28 @@
                 </div>
             </li>
     `;
-    async function fetchPasienOptions() {
-        try {
-            const response = await axios.get('<?= base_url('resep/pasienlist') ?>');
+    <?php if (session()->get('role') != 'Apoteker') : ?>
+        async function fetchPasienOptions() {
+            try {
+                const response = await axios.get('<?= base_url('resep/pasienlist') ?>');
 
-            if (response.data.success) {
-                const options = response.data.data;
-                const select = $('#id_pasien');
+                if (response.data.success) {
+                    const options = response.data.data;
+                    const select = $('#id_pasien');
 
-                // Clear existing options except the first one
-                select.find('option:not(:first)').remove();
+                    // Clear existing options except the first one
+                    select.find('option:not(:first)').remove();
 
-                // Loop through the options and append them to the select element
-                options.forEach(option => {
-                    select.append(`<option value="${option.value}">${option.text}</option>`);
-                });
+                    // Loop through the options and append them to the select element
+                    options.forEach(option => {
+                        select.append(`<option value="${option.value}">${option.text}</option>`);
+                    });
+                }
+            } catch (error) {
+                showFailedToast('Gagal mendapatkan pasien.<br>' + error);
             }
-        } catch (error) {
-            showFailedToast('Gagal mendapatkan pasien.<br>' + error);
         }
-    }
+    <?php endif; ?>
     async function fetchResep() {
         const search = $('#searchInput').val();
         const offset = (currentPage - 1) * limit;
@@ -188,6 +190,9 @@
                     const statusButtons = resep.status == '1' ?
                         `disabled` :
                         ``;
+                    const deleteButton = `<button type="button" class="btn btn-danger btn-sm bg-gradient rounded-3 delete-btn" data-id="${resep.id_resep}" data-name="${resep.pasien_nama_pasien}" data-date="${resep.tanggal_resep}" ${statusButtons}>
+                        <i class="fa-solid fa-trash"></i> Hapus
+                    </button>`;
                     const resepElement = `
             <li class="list-group-item bg-body-tertiary pb-3 pt-3">
                 <div class="d-flex">
@@ -214,9 +219,7 @@
                     <button type="button" class="btn btn-info btn-sm bg-gradient rounded-3" onclick="window.location.href = '<?= base_url('resep/detailresep') ?>/${resep.id_resep}';">
                         <i class="fa-solid fa-circle-info"></i> Detail
                     </button>
-                    <button type="button" class="btn btn-danger btn-sm bg-gradient rounded-3 delete-btn" data-id="${resep.id_resep}" data-name="${resep.pasien_nama_pasien}" data-date="${resep.tanggal_resep}" ${statusButtons}>
-                        <i class="fa-solid fa-trash"></i> Hapus
-                    </button>
+                    <?= (session()->get('role') == 'Apoteker') ? '' : '${deleteButton}' ?>
                 </div>
             </li>
                 `;
@@ -433,7 +436,8 @@
         });
 
         fetchResep();
-        fetchPasienOptions();
+        <?= (session()->get('role') != 'Apoteker') ? 'fetchPasienOptions();' : '' ?>
+        <?= (session()->get('role') == 'Apoteker') ? "$('#tambahPasienForm').remove();" : '' ?>
         toggleSubmitButton();
     });
     // Show toast notification

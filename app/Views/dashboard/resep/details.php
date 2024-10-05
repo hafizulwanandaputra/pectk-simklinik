@@ -139,10 +139,11 @@
         </table>
     </div>
 
-    <div>
+    <div id="cetakEtiketBtn">
         <hr>
         <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
-            <button class="btn btn-primary rounded-3 bg-gradient" type="button" id="printBtn" onclick="window.open(`<?= base_url('/resep/etiket/' . $resep['id_resep']) ?>`)" disabled><i class="fa-solid fa-print"></i> Cetak Etiket</button>
+            <button class="btn btn-primary rounded-3 bg-gradient" type="button" id="printBtn1" onclick="window.open(`<?= base_url('/resep/etiket-dalam/' . $resep['id_resep']) ?>`)" disabled><i class="fa-solid fa-print"></i> Cetak Etiket Obat Dalam</button>
+            <button class="btn btn-primary rounded-3 bg-gradient" type="button" id="printBtn2" onclick="window.open(`<?= base_url('/resep/etiket-luar/' . $resep['id_resep']) ?>`)" disabled><i class="fa-solid fa-print"></i> Cetak Etiket Obat Luar</button>
         </div>
     </div>
 
@@ -170,48 +171,50 @@
 <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
 <script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.colVis.min.js"></script>
 <script>
-    async function fetchObatOptions() {
-        try {
-            const response = await axios.get('<?= base_url('resep/obatlist/' . $resep['id_resep']) ?>');
+    <?php if (session()->get('role') != 'Apoteker') : ?>
+        async function fetchObatOptions() {
+            try {
+                const response = await axios.get('<?= base_url('resep/obatlist/' . $resep['id_resep']) ?>');
 
-            if (response.data.success) {
-                const options = response.data.data;
-                const select = $('#id_obat');
+                if (response.data.success) {
+                    const options = response.data.data;
+                    const select = $('#id_obat');
 
-                // Clear existing options except the first one
-                select.find('option:not(:first)').remove();
+                    // Clear existing options except the first one
+                    select.find('option:not(:first)').remove();
 
-                // Loop through the options and append them to the select element
-                options.forEach(option => {
-                    select.append(`<option value="${option.value}">${option.text}</option>`);
-                });
+                    // Loop through the options and append them to the select element
+                    options.forEach(option => {
+                        select.append(`<option value="${option.value}">${option.text}</option>`);
+                    });
+                }
+            } catch (error) {
+                showFailedToast('Gagal mendapatkan obat.<br>' + error);
             }
-        } catch (error) {
-            showFailedToast('Gagal mendapatkan obat.<br>' + error);
         }
-    }
 
-    async function fetchStatusResep() {
-        $('#loadingSpinner').show();
+        async function fetchStatusResep() {
+            $('#loadingSpinner').show();
 
-        try {
-            const response = await axios.get('<?= base_url('resep/resep/') . $resep['id_resep'] ?>');
+            try {
+                const response = await axios.get('<?= base_url('resep/resep/') . $resep['id_resep'] ?>');
 
-            const data = response.data;
+                const data = response.data;
 
-            // Cek status `status`
-            if (data.status === "1") {
-                $('#tambahDetailContainer').hide();
-            } else if (data.status === "0") {
-                $('#tambahDetailContainer').show();
+                // Cek status `status`
+                if (data.status === "1") {
+                    $('#tambahDetailContainer').hide();
+                } else if (data.status === "0") {
+                    $('#tambahDetailContainer').show();
+                }
+            } catch (error) {
+                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+            } finally {
+                // Hide the spinner when done
+                $('#loadingSpinner').hide();
             }
-        } catch (error) {
-            showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
-        } finally {
-            // Hide the spinner when done
-            $('#loadingSpinner').hide();
         }
-    }
+    <?php endif; ?>
 
     async function fetchDetailResep() {
         $('#loadingSpinner').show();
@@ -225,6 +228,9 @@
             let jumlahResep = 0;
             let totalHarga = 0;
 
+            let hasInternalMedicine = false; // Track if there is internal medicine (kapsul/tablet)
+            let hasExternalMedicine = false; // Track if there is external medicine (tetes/salep)
+
             if (data.length === 0) {
                 // Tampilkan pesan jika tidak ada data
                 const emptyRow = `
@@ -233,7 +239,8 @@
                     </tr>
                 `;
                 $('#detail_resep').append(emptyRow);
-                $('#printBtn').prop('disabled', true);
+                $('#printBtn1').prop('disabled', true);
+                $('#printBtn2').prop('disabled', true);
             } else {
                 data.forEach(function(detail_resep) {
                     const jumlah = parseInt(detail_resep.jumlah); // Konversi jumlah ke integer
@@ -241,6 +248,14 @@
                     const total_harga = jumlah * harga_satuan; // Hitung total harga
                     totalHarga += total_harga;
                     jumlahResep += jumlah;
+
+                    // Check if the medicine is internal (kapsul/tablet) or external (tetes/salep)
+                    if (['Tablet/Kapsul'].includes(detail_resep.bentuk_obat)) {
+                        hasInternalMedicine = true;
+                    } else if (['Tetes', 'Salep'].includes(detail_resep.bentuk_obat)) {
+                        hasExternalMedicine = true;
+                    }
+
                     const detail_resepElement = `
                     <tr>
                         <td class="tindakan">
@@ -257,16 +272,39 @@
                 `;
 
                     $('#detail_resep').append(detail_resepElement);
-                    if (detail_resep.status === "1") {
+                    <?php if (session()->get('role') == 'Apoteker') : ?>
                         $('.edit-btn').prop('disabled', true);
                         $('.delete-btn').prop('disabled', true);
-                        $('#printBtn').prop('disabled', true);
-                    } else if (detail_resep.status === "0") {
-                        $('.edit-btn').prop('disabled', false);
-                        $('.delete-btn').prop('disabled', false);
-                        $('#printBtn').prop('disabled', false);
-                    }
+                        if (detail_resep.status === "1") {
+                            $('#printBtn1').prop('disabled', true);
+                            $('#printBtn2').prop('disabled', true);
+                        } else if (detail_resep.status === "0") {
+                            $('#printBtn1').prop('disabled', false);
+                            $('#printBtn2').prop('disabled', false);
+                        }
+                    <?php else : ?>
+                        if (detail_resep.status === "1") {
+                            $('.edit-btn').prop('disabled', true);
+                            $('.delete-btn').prop('disabled', true);
+                            $('#printBtn1').prop('disabled', true);
+                            $('#printBtn2').prop('disabled', true);
+                        } else if (detail_resep.status === "0") {
+                            $('.edit-btn').prop('disabled', false);
+                            $('.delete-btn').prop('disabled', false);
+
+                            $('#printBtn1').prop('disabled', false);
+                            $('#printBtn2').prop('disabled', false);
+                        }
+                    <?php endif; ?>
+
                 });
+            }
+            // Handle enabling/disabling print buttons based on medicine type
+            if (!hasInternalMedicine) {
+                $('#printBtn1').prop('disabled', true); // Disable if no internal medicine
+            }
+            if (!hasExternalMedicine) {
+                $('#printBtn2').prop('disabled', true); // Disable if no external medicine
             }
             const totalHargaElement = `Rp${totalHarga.toLocaleString('id-ID')}`;
             const jumlahResepElement = `${jumlahResep.toLocaleString('id-ID')}`;
@@ -280,11 +318,6 @@
             // Hide the spinner when done
             $('#loadingSpinner').hide();
         }
-    }
-
-    function autoResizeTextarea() {
-        $('#editKeteranganText').css('height', 'auto'); // Reset the height
-        $('#editKeteranganText').css('height', ($('#editKeteranganText')[0].scrollHeight + 2) + 'px');
     }
 
     $(document).ready(function() {
@@ -419,8 +452,8 @@
             try {
                 await axios.delete(`<?= base_url('/resep/hapusdetailresep') ?>/${detailResepId}`);
                 fetchDetailResep();
-                fetchObatOptions();
-                fetchStatusResep();
+                <?= (session()->get('role') != 'Apoteker') ? 'fetchObatOptions();' : '' ?>
+                <?= (session()->get('role') != 'Apoteker') ? 'fetchStatusResep();' : '' ?>
             } catch (error) {
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
             } finally {
@@ -524,8 +557,8 @@
                             $('#editDetail .invalid-feedback').text('').hide();
                             $('#editDetailResep').remove();
                             fetchDetailResep();
-                            fetchObatOptions();
-                            fetchStatusResep();
+                            <?= (session()->get('role') != 'Apoteker') ? 'fetchObatOptions();' : '' ?>
+                            <?= (session()->get('role') != 'Apoteker') ? 'fetchStatusResep();' : '' ?>
                         } else if (response.data.success == false && response.data.message) {
                             showFailedToast(response.data.message);
                         } else if (response.data.success == false && response.data.errors) {
@@ -612,8 +645,8 @@
                     $('#tambahDetail .is-invalid').removeClass('is-invalid');
                     $('#tambahDetail .invalid-feedback').text('').hide();
                     fetchDetailResep();
-                    fetchObatOptions();
-                    fetchStatusResep();
+                    <?= (session()->get('role') != 'Apoteker') ? 'fetchObatOptions();' : '' ?>
+                    <?= (session()->get('role') != 'Apoteker') ? 'fetchStatusResep();' : '' ?>
                 } else {
                     if (response.data.errors == null) {
                         showFailedToast(response.data.message);
@@ -664,8 +697,9 @@
         });
 
         fetchDetailResep();
-        fetchObatOptions();
-        fetchStatusResep();
+        <?= (session()->get('role') != 'Apoteker') ? 'fetchObatOptions();' : '' ?>
+        <?= (session()->get('role') != 'Apoteker') ? 'fetchStatusResep();' : '' ?>
+        <?= (session()->get('role') == 'Dokter') ? "$('#cetakEtiketBtn').remove();" : '' ?>
     });
     // Show toast notification
     function showSuccessToast(message) {

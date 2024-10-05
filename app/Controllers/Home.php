@@ -61,25 +61,39 @@ class Home extends BaseController
         // END GREETINGS
 
         $db = db_connect();
-        // $menu = $db->table('menu');
-        // $permintaan = $db->table('permintaan');
-        // $petugas = $db->table('petugas');
-        // $admin = $db->table('user');
-        // $totalmenu = $menu->countAllResults();
-        // $totalpermintaan = $permintaan->countAllResults();
-        // $totalpetugas = $petugas->countAllResults();
-        // $totaladmin = $admin->countAllResults();
+        $supplier = $db->table('supplier');
+        $obat = $db->table('obat');
+        $pembelian_obat = $db->table('pembelian_obat');
+        $resep = $db->table('resep');
+        $transaksi = $db->table('transaksi');
+        $user = $db->table('user');
+        $total_supplier = $supplier->countAllResults();
+        $total_obat = $obat->countAllResults();
+        $total_pembelian_obat_blm_diterima = $pembelian_obat->where('diterima', 0)->countAllResults();
+        $total_pembelian_obat_sdh_diterima = $pembelian_obat->where('diterima', 1)->countAllResults();
+        if (session()->get('role') != 'Dokter') {
+            $total_resep_blm_status = $resep->where('status', 0)->countAllResults();
+            $total_resep_sdh_status = $resep->where('status', 1)->countAllResults();
+        } else {
+            $total_resep_blm_status = $resep->where('status', 0)->where('dokter', session()->get('fullname'))->countAllResults();
+            $total_resep_sdh_status = $resep->where('status', 1)->where('dokter', session()->get('fullname'))->countAllResults();
+        }
+        $total_transaksi_blm_lunas = $transaksi->where('lunas', 0)->countAllResults();
+        $total_transaksi_sdh_lunas = $transaksi->where('lunas', 1)->countAllResults();
+        $total_user = $user->countAllResults();
         // $permintaangraph = $db->query('SELECT `nama_menu`, `jumlah` FROM `menu`;');
         // $petugasgraph = $db->query('SELECT `nama_petugas`, `jumlah_menu` FROM `petugas`;');
         // $permintaanperbulangraph = $permintaan->select('DATE_FORMAT(menu.tanggal, "%Y-%m") AS bulan, COUNT(*) AS jumlah_permintaan')->join('menu', 'menu.id_menu = permintaan.id_menu', 'inner')->groupBy('DATE_FORMAT(menu.tanggal, "%Y-%m")')->get();
         $data = [
-            // 'totalmenu' => $totalmenu,
-            // 'totalpermintaan' => $totalpermintaan,
-            // 'totalpetugas' => $totalpetugas,
-            // 'totaladmin' => $totaladmin,
-            // 'permintaanperbulangraph' => $permintaanperbulangraph,
-            // 'permintaangraph' => $permintaangraph,
-            // 'petugasgraph' => $petugasgraph,
+            'total_supplier' => $total_supplier,
+            'total_obat' => $total_obat,
+            'total_pembelian_obat_blm_diterima' => $total_pembelian_obat_blm_diterima,
+            'total_pembelian_obat_sdh_diterima' => $total_pembelian_obat_sdh_diterima,
+            'total_resep_blm_status' => $total_resep_blm_status,
+            'total_resep_sdh_status' => $total_resep_sdh_status,
+            'total_transaksi_blm_lunas' => $total_transaksi_blm_lunas,
+            'total_transaksi_sdh_lunas' => $total_transaksi_sdh_lunas,
+            'total_user' => $total_user,
             'txtgreeting' => $txtGreeting,
             'title' => 'Beranda - ' . $this->systemName,
             'headertitle' => 'Beranda',
