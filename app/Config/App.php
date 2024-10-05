@@ -20,8 +20,15 @@ class App extends BaseConfig
 
     public function __construct()
     {
-        $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
-        $this->baseURL = $protocol . '://' . $_SERVER['SERVER_NAME'] . env('requestURL');
+        // Cek apakah aplikasi dijalankan dari CLI
+        if (is_cli()) {
+            // Jika dijalankan dari CLI, set default baseURL tanpa mengakses $_SERVER
+            $this->baseURL = env('baseURL', 'http://localhost'); // Gunakan variabel env atau fallback ke 'http://localhost'
+        } else {
+            // Jika dijalankan dari web server, ambil base URL dari $_SERVER
+            $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
+            $this->baseURL = $protocol . '://' . $_SERVER['SERVER_NAME'] . env('requestURL', '/'); // Fallback ke '/' jika requestURL tidak ada
+        }
     }
 
     /**
