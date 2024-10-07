@@ -87,7 +87,7 @@
                     <div class="card text-bg-success w-100 rounded-3">
                         <div class="card-header w-100 text-truncate bg-gradient">Transaksi yang Sudah Diproses</div>
                         <div class="card-body">
-                            <h5 class="display-5 fw-medium date"><?= $total_transaksi_blm_lunas ?></h5>
+                            <h5 class="display-5 fw-medium date"><?= $total_transaksi_sdh_lunas ?></h5>
                         </div>
                     </div>
                 </div>
