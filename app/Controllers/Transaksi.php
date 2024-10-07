@@ -858,13 +858,6 @@ class Transaksi extends BaseController
                 ->orderBy('id_detail_transaksi', 'ASC')
                 ->findAll();
 
-            // Hitung rata-rata diskon
-            $average_discount = $this->DetailTransaksiModel
-                ->selectAvg('diskon') // Mengambil rata-rata dari kolom diskon
-                ->where('id_transaksi', $id)
-                ->where('jenis_transaksi', 'Obat dan Alkes')
-                ->get()->getRowArray();
-
             // Array untuk menyimpan hasil terstruktur
             $result_layanan = [];
 
@@ -892,15 +885,10 @@ class Transaksi extends BaseController
             }
 
             $total_layanan = $this->DetailTransaksiModel
-                ->selectSum('harga_transaksi')
+                ->selectSum('(harga_transaksi - (harga_transaksi * diskon / 100))', 'total_harga')
                 ->where('detail_transaksi.id_transaksi', $id)
                 ->where('detail_transaksi.jenis_transaksi', 'Tindakan')
                 ->get()->getRowArray();
-
-            // Hitung total setelah diskon rata-rata
-            if ($average_discount && $total_layanan) {
-                $discounted_layanan = $total_layanan['harga_transaksi'] * (1 - ($average_discount['diskon'] / 100));
-            }
 
             $obatalkes = $this->DetailTransaksiModel
                 ->where('detail_transaksi.id_transaksi', $id)
@@ -970,15 +958,11 @@ class Transaksi extends BaseController
                 ];
             }
             $total_obatalkes = $this->DetailTransaksiModel
-                ->selectSum('harga_transaksi')
+                ->selectSum('(harga_transaksi - (harga_transaksi * diskon / 100))', 'total_harga')
                 ->where('detail_transaksi.id_transaksi', $id)
                 ->where('detail_transaksi.jenis_transaksi', 'Obat dan Alkes')
                 ->get()->getRowArray();
 
-            // Hitung total setelah diskon rata-rata
-            if ($average_discount && $total_obatalkes) {
-                $discounted_obatalkes = $total_obatalkes['harga_transaksi'] * (1 - ($average_discount['diskon'] / 100));
-            }
             if (!empty($transaksi) && $transaksi['lunas'] == 1) {
                 // dd($total_obatalkes);
                 // die;
@@ -987,8 +971,8 @@ class Transaksi extends BaseController
                     'transaksi' => $transaksi,
                     'layanan' => array_values($result_layanan),
                     'obatalkes' => array_values($result_obatalkes),
-                    'total_layanan' => $discounted_layanan,
-                    'total_obatalkes' => $discounted_obatalkes,
+                    'total_layanan' => $total_layanan['total_harga'],
+                    'total_obatalkes' => $total_obatalkes['total_harga'],
                     'title' => 'Detail Transaksi ' . $id . ' - ' . $this->systemName
                 ];
                 // return view('dashboard/transaksi/struk', $data);

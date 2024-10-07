@@ -61,55 +61,57 @@
         </div>
     </fieldset>
 
-    <fieldset id="tambahDetailContainer" class="border rounded-3 px-2 py-0 mb-3" style="display: none;">
-        <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Tambah Detail Resep</legend>
-        <form id="tambahDetail" enctype="multipart/form-data">
-            <div class="row g-2">
-                <div class="col-12">
-                    <select class="form-select form-select-sm rounded-3" id="id_obat" name="id_obat" aria-label="id_obat">
-                        <option value="" disabled selected>-- Pilih Obat --</option>
-                    </select>
-                    <div class="invalid-feedback"></div>
+    <?php if (session()->get('role') == 'Dokter' || session()->get('role') == 'Admin') : ?>
+        <fieldset id="tambahDetailContainer" class="border rounded-3 px-2 py-0 mb-3" style="display: none;">
+            <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Tambah Detail Resep</legend>
+            <form id="tambahDetail" enctype="multipart/form-data">
+                <div class="row g-2">
+                    <div class="col-12">
+                        <select class="form-select form-select-sm rounded-3" id="id_obat" name="id_obat" aria-label="id_obat">
+                            <option value="" disabled selected>-- Pilih Obat --</option>
+                        </select>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="col-6">
+                        <input type="text" id="signa" name="signa" class="form-control form-control-sm rounded-3" placeholder="Dosis">
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="col-6">
+                        <input type="text" id="catatan" name="catatan" class="form-control form-control-sm rounded-3" placeholder="Catatan" list="list_catatan">
+                        <div class="invalid-feedback"></div>
+                        <datalist id="list_catatan">
+                            <option value="1 Tetes">
+                            <option value="Sendok Teh">
+                            <option value="Sendok Makan">
+                            <option value="1 Tablet">
+                        </datalist>
+                    </div>
+                    <div class="col-6">
+                        <select class="form-select form-select-sm  rounded-3" id="cara_pakai" name="cara_pakai" aria-label="cara_pakai">
+                            <option value="" disabled selected>-- Pilih Cara Pakai --</option>
+                            <option value="Mata Kanan">Mata Kanan</option>
+                            <option value="Mata Kiri">Mata Kiri</option>
+                            <option value="Kedua Mata">Kedua Mata</option>
+                            <option value="Sebelum Makan">Sebelum Makan</option>
+                            <option value="Sesudah Makan">Sesudah Makan</option>
+                            <option value="Sesudah Makan Dihabiskan">Sesudah Makan Dihabiskan</option>
+                            <option value="Sesudah Makan Bila Sakit">Sesudah Makan Bila Sakit</option>
+                        </select>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="col-6">
+                        <input type="number" id="jumlah" name="jumlah" class="form-control form-control-sm rounded-3" placeholder="Jumlah">
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-2">
+                        <button type="submit" id="addButton" class="btn btn-primary bg-gradient rounded-3 text-nowrap">
+                            <i class="fa-solid fa-plus"></i> Tambah
+                        </button>
+                    </div>
                 </div>
-                <div class="col-6">
-                    <input type="text" id="signa" name="signa" class="form-control form-control-sm rounded-3" placeholder="Dosis">
-                    <div class="invalid-feedback"></div>
-                </div>
-                <div class="col-6">
-                    <input type="text" id="catatan" name="catatan" class="form-control form-control-sm rounded-3" placeholder="Catatan" list="list_catatan">
-                    <div class="invalid-feedback"></div>
-                    <datalist id="list_catatan">
-                        <option value="1 Tetes">
-                        <option value="Sendok Teh">
-                        <option value="Sendok Makan">
-                        <option value="1 Tablet">
-                    </datalist>
-                </div>
-                <div class="col-6">
-                    <select class="form-select form-select-sm  rounded-3" id="cara_pakai" name="cara_pakai" aria-label="cara_pakai">
-                        <option value="" disabled selected>-- Pilih Cara Pakai --</option>
-                        <option value="Mata Kanan">Mata Kanan</option>
-                        <option value="Mata Kiri">Mata Kiri</option>
-                        <option value="Kedua Mata">Kedua Mata</option>
-                        <option value="Sebelum Makan">Sebelum Makan</option>
-                        <option value="Sesudah Makan">Sesudah Makan</option>
-                        <option value="Sesudah Makan Dihabiskan">Sesudah Makan Dihabiskan</option>
-                        <option value="Sesudah Makan Bila Sakit">Sesudah Makan Bila Sakit</option>
-                    </select>
-                    <div class="invalid-feedback"></div>
-                </div>
-                <div class="col-6">
-                    <input type="number" id="jumlah" name="jumlah" class="form-control form-control-sm rounded-3" placeholder="Jumlah">
-                    <div class="invalid-feedback"></div>
-                </div>
-                <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-2">
-                    <button type="submit" id="addButton" class="btn btn-primary bg-gradient rounded-3 text-nowrap">
-                        <i class="fa-solid fa-plus"></i> Tambah
-                    </button>
-                </div>
-            </div>
-        </form>
-    </fieldset>
+            </form>
+        </fieldset>
+    <?php endif; ?>
 
     <div class="table-responsive">
         <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
@@ -139,13 +141,15 @@
         </table>
     </div>
 
-    <div id="cetakEtiketBtn">
-        <hr>
-        <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
-            <button class="btn btn-primary rounded-3 bg-gradient" type="button" id="printBtn1" onclick="window.open(`<?= base_url('/resep/etiket-dalam/' . $resep['id_resep']) ?>`)" disabled><i class="fa-solid fa-print"></i> Cetak Etiket Obat Dalam</button>
-            <button class="btn btn-primary rounded-3 bg-gradient" type="button" id="printBtn2" onclick="window.open(`<?= base_url('/resep/etiket-luar/' . $resep['id_resep']) ?>`)" disabled><i class="fa-solid fa-print"></i> Cetak Etiket Obat Luar</button>
+    <?php if (session()->get('role') != 'Dokter') : ?>
+        <div id="cetakEtiketBtn">
+            <hr>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
+                <button class="btn btn-primary rounded-3 bg-gradient" type="button" id="printBtn1" onclick="window.open(`<?= base_url('/resep/etiket-dalam/' . $resep['id_resep']) ?>`)" disabled><i class="fa-solid fa-print"></i> Cetak Etiket Obat Dalam</button>
+                <button class="btn btn-primary rounded-3 bg-gradient" type="button" id="printBtn2" onclick="window.open(`<?= base_url('/resep/etiket-luar/' . $resep['id_resep']) ?>`)" disabled><i class="fa-solid fa-print"></i> Cetak Etiket Obat Luar</button>
+            </div>
         </div>
-    </div>
+    <?php endif; ?>
 
     <div class="modal modal-sheet p-4 py-md-5 fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -699,7 +703,6 @@
         fetchDetailResep();
         <?= (session()->get('role') != 'Apoteker') ? 'fetchObatOptions();' : '' ?>
         <?= (session()->get('role') != 'Apoteker') ? 'fetchStatusResep();' : '' ?>
-        <?= (session()->get('role') == 'Dokter') ? "$('#cetakEtiketBtn').remove();" : '' ?>
     });
     // Show toast notification
     function showSuccessToast(message) {
