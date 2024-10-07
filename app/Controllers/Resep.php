@@ -602,6 +602,7 @@ class Resep extends BaseController
     {
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
             $resep = $this->ResepModel
+                ->where('status', 0)
                 ->join('pasien', 'pasien.id_pasien = resep.id_pasien', 'inner')
                 ->find($id);
             $detail_resep = $this->DetailResepModel
@@ -645,6 +646,7 @@ class Resep extends BaseController
     {
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
             $resep = $this->ResepModel
+                ->where('status', 0)
                 ->join('pasien', 'pasien.id_pasien = resep.id_pasien', 'inner')
                 ->find($id);
             $detail_resep = $this->DetailResepModel
