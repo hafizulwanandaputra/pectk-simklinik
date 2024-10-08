@@ -66,7 +66,7 @@ PWA contents:
      '/Screenshot.png', // Screenshot
   ];
   ```
-- If the PWA located in subfolder, add the subfolder in the `start_url` and `src` values in `manifest.json` and values on `CACHE_URLS` in `public/service-worker.js`. You need to clear the browser's cache to apply these settings.
+- If the PWA located in subfolder, add the subfolder in the `start_url` and `src` values in `manifest.json` and values of `CACHE_URLS` in `public/service-worker.js`. You need to clear the browser's cache to apply these settings.
 
 To set up PWA application:
 
