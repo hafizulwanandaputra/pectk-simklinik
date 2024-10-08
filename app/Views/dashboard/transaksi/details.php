@@ -508,7 +508,7 @@
                     const diskon = parseInt(obat_alkes.diskon); // Konversi jumlah ke integer
                     const qty_transaksi = parseInt(obat_alkes.qty_transaksi);
                     const harga_transaksi = parseInt(obat_alkes.harga_transaksi); // Konversi harga satuan ke integer
-                    const total_pembayaran = (harga_transaksi * qty_transaksi) * (1 - (diskon / 100)); // Hitung total harga
+                    const total_pembayaran = Math.round((harga_transaksi * qty_transaksi) * (1 - (diskon / 100))); // Hitung total harga
                     totalPembayaran += total_pembayaran;
                     const tindakanElement = `
                         <tr>
@@ -535,10 +535,10 @@
                         detail_resep.obat.forEach(function(obat) {
                             const jumlah = parseInt(detail_resep.jumlah); // Konversi jumlah ke integer
                             const harga_satuan = parseInt(detail_resep.harga_satuan); // Konversi harga satuan ke integer
-                            const total_harga = jumlah * harga_satuan; // Hitung total harga
+                            const total_harga = Math.round((jumlah * harga_satuan) * (1 - (diskon / 100))); // Hitung total harga
 
                             const obat_alkesElement = `
-                                <li>${obat.nama_obat}<br><small>${obat.kategori_obat} • ${obat.bentuk_obat} • ${obat.signa} • ${obat.cara_pakai} • ${jumlah.toLocaleString('id-ID')} × Rp${harga_satuan.toLocaleString('id-ID')} = Rp${total_harga.toLocaleString('id-ID')}<br>${obat.catatan}</small></li>
+                                <li>${obat.nama_obat}<br><small>${obat.kategori_obat} • ${obat.bentuk_obat} • ${obat.signa} • ${obat.cara_pakai} • ${jumlah.toLocaleString('id-ID')} × Rp${harga_satuan.toLocaleString('id-ID')} × ${diskon}% = Rp${total_harga.toLocaleString('id-ID')}<br>${obat.catatan}</small></li>
                             `;
 
                             $(`#obat-${obat_alkes.id_detail_transaksi}`).append(obat_alkesElement);

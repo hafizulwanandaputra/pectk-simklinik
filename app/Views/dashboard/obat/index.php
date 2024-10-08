@@ -72,20 +72,20 @@
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mt-1 mb-1">
-                        <select class="form-select rounded-3" id="kategori_obat" name="kategori_obat" aria-label="kategori_obat">
-                            <option value="" disabled selected>-- Pilih Kategori --</option>
-                            <option value="Antibiotik">Antibiotik</option>
-                            <option value="Antiinflamasi">Antiinflamasi</option>
-                            <option value="Antihistamin">Antihistamin</option>
-                            <option value="Dekongestan">Dekongestan</option>
-                            <option value="Pelumas">Pelumas</option>
-                            <option value="Antiglaukoma">Antiglaukoma</option>
-                            <option value="Antivirus">Antivirus</option>
-                            <option value="Antijamur">Antijamur</option>
-                            <option value="Suplemen">Suplemen</option>
-                        </select>
-                        <label for="kategori_obat">Kategori*</label>
+                        <input type="text" class="form-control" autocomplete="off" dir="auto" placeholder="kategori_obat" id="kategori_obat" name="kategori_obat" list="list_kategori_obat">
+                        <label for="kategori_obat">Kategori Obat*</label>
                         <div class="invalid-feedback"></div>
+                        <datalist id="list_kategori_obat">
+                            <option value="Antibiotik">
+                            <option value="Antiinflamasi">
+                            <option value="Antihistamin">
+                            <option value="Dekongestan">
+                            <option value="Pelumas">
+                            <option value="Antiglaukoma">
+                            <option value="Antivirus">
+                            <option value="Antijamur">
+                            <option value="Suplemen">
+                        </datalist>
                     </div>
                     <div class="form-floating mt-1 mb-1">
                         <select class="form-select rounded-3" id="bentuk_obat" name="bentuk_obat" aria-label="bentuk_obat">
@@ -96,6 +96,7 @@
                             </optgroup>
                             <optgroup label="Obat Dalam">
                                 <option value="Tablet/Kapsul">Tablet/Kapsul</option>
+                                <option value="Sirup">Sirup</option>
                             </optgroup>
                         </select>
                         <label for="bentuk_obat">Bentuk*</label>
@@ -450,7 +451,7 @@
             try {
                 await axios.delete(`<?= base_url('/obat/delete') ?>/${obatId}`);
                 showSuccessToast('Obat berhasil dihapus.');
-                table.ajax.reload();
+                table.ajax.reload(null, false);
             } catch (error) {
                 // Check if the error has a response and extract the message
                 let errorMessage = 'Terjadi kesalahan. Silakan coba lagi.<br>' + error;
@@ -494,7 +495,7 @@
                 if (response.data.success) {
                     showSuccessToast(response.data.message, 'success');
                     $('#obatModal').modal('hide');
-                    table.ajax.reload();
+                    table.ajax.reload(null, false);
                 } else {
                     console.log("Validation Errors:", response.data.errors);
 

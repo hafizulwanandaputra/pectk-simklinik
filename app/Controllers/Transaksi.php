@@ -885,7 +885,7 @@ class Transaksi extends BaseController
             }
 
             $total_layanan = $this->DetailTransaksiModel
-                ->selectSum('(harga_transaksi - (harga_transaksi * diskon / 100))', 'total_harga')
+                ->selectSum('((harga_transaksi * qty_transaksi) - ((harga_transaksi * qty_transaksi) * diskon / 100))', 'total_harga')
                 ->where('detail_transaksi.id_transaksi', $id)
                 ->where('detail_transaksi.jenis_transaksi', 'Tindakan')
                 ->get()->getRowArray();
@@ -958,7 +958,7 @@ class Transaksi extends BaseController
                 ];
             }
             $total_obatalkes = $this->DetailTransaksiModel
-                ->selectSum('(harga_transaksi - (harga_transaksi * diskon / 100))', 'total_harga')
+                ->selectSum('((harga_transaksi * qty_transaksi) - ((harga_transaksi * qty_transaksi) * diskon / 100))', 'total_harga')
                 ->where('detail_transaksi.id_transaksi', $id)
                 ->where('detail_transaksi.jenis_transaksi', 'Obat dan Alkes')
                 ->get()->getRowArray();

@@ -81,9 +81,10 @@
                         <div class="invalid-feedback"></div>
                         <datalist id="list_catatan">
                             <option value="1 Tetes">
+                            <option value="1 Tablet">
+                            <option value="1 Salep">
                             <option value="Sendok Teh">
                             <option value="Sendok Makan">
-                            <option value="1 Tablet">
                         </datalist>
                     </div>
                     <div class="col-6">

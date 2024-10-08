@@ -324,7 +324,7 @@
             try {
                 await axios.delete(`<?= base_url('/layanan/delete') ?>/${layananId}`);
                 showSuccessToast('Layanan berhasil dihapus.');
-                table.ajax.reload();
+                table.ajax.reload(null, false);
             } catch (error) {
                 // Check if the error has a response and extract the message
                 let errorMessage = 'Terjadi kesalahan. Silakan coba lagi.<br>' + error;
@@ -370,7 +370,7 @@
                 if (response.data.success) {
                     showSuccessToast(response.data.message, 'success');
                     $('#layananModal').modal('hide');
-                    table.ajax.reload();
+                    table.ajax.reload(null, false);
                 } else {
                     console.log("Validation Errors:", response.data.errors);
 

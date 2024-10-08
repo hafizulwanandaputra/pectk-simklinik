@@ -607,7 +607,10 @@ class Resep extends BaseController
                 ->find($id);
             $detail_resep = $this->DetailResepModel
                 ->where('detail_resep.id_resep', $id)
+                ->groupStart()
                 ->where('obat.bentuk_obat', 'Tablet/Kapsul')
+                ->orWhere('obat.bentuk_obat', 'Sirup')
+                ->groupEnd()
                 ->join('resep', 'resep.id_resep = detail_resep.id_resep', 'inner')
                 ->join('obat', 'obat.id_obat = detail_resep.id_obat', 'inner')
                 ->orderBy('id_detail_resep', 'ASC')
@@ -629,7 +632,7 @@ class Resep extends BaseController
                 $html = view('dashboard/resep/etiket', $data);
                 $dompdf->loadHtml($html);
                 $dompdf->render();
-                $dompdf->stream('resep-id-' . $resep['id_pasien'] . '-' . urlencode($resep['nama_pasien']) . '-' . urlencode($resep['dokter']) . '-' . $resep['tanggal_resep'] . '.pdf', [
+                $dompdf->stream('resep-obat-dalam-id-' . $resep['id_pasien'] . '-' . urlencode($resep['nama_pasien']) . '-' . urlencode($resep['dokter']) . '-' . $resep['tanggal_resep'] . '.pdf', [
                     'Attachment' => FALSE
                 ]);
             } else {
@@ -676,7 +679,7 @@ class Resep extends BaseController
                 $html = view('dashboard/resep/etiket', $data);
                 $dompdf->loadHtml($html);
                 $dompdf->render();
-                $dompdf->stream('resep-id-' . $resep['id_pasien'] . '-' . urlencode($resep['nama_pasien']) . '-' . urlencode($resep['dokter']) . '-' . $resep['tanggal_resep'] . '.pdf', [
+                $dompdf->stream('resep-obat-luar-id-' . $resep['id_pasien'] . '-' . urlencode($resep['nama_pasien']) . '-' . urlencode($resep['dokter']) . '-' . $resep['tanggal_resep'] . '.pdf', [
                     'Attachment' => FALSE
                 ]);
             } else {

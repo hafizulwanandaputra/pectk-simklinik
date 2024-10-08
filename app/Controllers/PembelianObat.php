@@ -234,6 +234,7 @@ class PembelianObat extends BaseController
     {
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
             $db = db_connect();
+            $db->transStart();
 
             // Menghitung total jumlah dan total obat_masuk_baru
             $totals = $db->table('detail_pembelian_obat')
@@ -274,25 +275,35 @@ class PembelianObat extends BaseController
 
             // Update jumlah_masuk in the obat table for each id_obat
             foreach ($groupedDetails as $id_obat => $total_jumlah_masuk_baru) {
-                // Get the previous jumlah_masuk value for this obat
-                $previousDetail = $db->table('detail_pembelian_obat')
-                    ->select('SUM(obat_masuk) as total_obat_masuk')
+                // Get the current jumlah_masuk and jumlah_keluar values for this obat
+                $obat = $db->table('obat')
+                    ->select('jumlah_masuk, jumlah_keluar')
                     ->where('id_obat', $id_obat)
-                    ->where('id_pembelian_obat', $id)
                     ->get()
                     ->getRow();
 
-                if ($previousDetail) {
-                    $previous_jumlah_masuk = $previousDetail->total_obat_masuk;
+                if ($obat) {
+                    $current_jumlah_masuk = $obat->jumlah_masuk;
+                    $jumlah_keluar = $obat->jumlah_keluar;
 
-                    // Subtract the old jumlah_masuk and then add the new one
+                    // Pastikan jumlah masuk baru tidak kurang dari jumlah keluar
+                    if (($current_jumlah_masuk - $obat->jumlah_masuk + $total_jumlah_masuk_baru) < $jumlah_keluar) {
+                        // Rollback transaksi jika jumlah masuk baru tidak valid
+                        $db->transRollback();
+                        return $this->response->setJSON([
+                            'success' => false,
+                            'message' => "Gagal memproses pembelian obat: stok masuk kurang dari jumlah keluar."
+                        ]);
+                    }
+
+                    // Update jumlah_masuk
                     $db->table('obat')
-                        ->set('jumlah_masuk', "jumlah_masuk - $previous_jumlah_masuk + $total_jumlah_masuk_baru", false)
+                        ->set('jumlah_masuk', "jumlah_masuk - $current_jumlah_masuk + $total_jumlah_masuk_baru", false)
                         ->set('updated_at', date('Y-m-d H:i:s'))
                         ->where('id_obat', $id_obat)
                         ->update();
 
-                    // Update detail_pembelian_obat with the new obat_masuk value
+                    // Update detail_pembelian_obat dengan nilai obat_masuk baru
                     $db->table('detail_pembelian_obat')
                         ->set('obat_masuk', $total_jumlah_masuk_baru)
                         ->where('id_pembelian_obat', $id)
@@ -301,10 +312,16 @@ class PembelianObat extends BaseController
                 }
             }
 
-            if ($totalJumlah == $totalObatMasuk) {
-                return $this->response->setJSON(['success' => true, 'message' => 'Obat sudah diterima. Periksa jumlah masuk di menu obat.']);
+            if ($db->transStatus() === false) {
+                $db->transRollback();  // Rollback if there is any issue
+                return $this->response->setJSON(['success' => false, 'message' => 'Gagal memproses pembelian', 'errors' => NULL]);
             } else {
-                return $this->response->setJSON(['success' => true, 'message' => 'Sebagian obat sudah diterima. Jika ada obat yang baru saja diterima, silakan perbarui item masing-masing dan klik "Terima Obat" lagi.']);
+                $db->transCommit();
+                if ($totalJumlah == $totalObatMasuk) {
+                    return $this->response->setJSON(['success' => true, 'message' => 'Obat sudah diterima. Periksa jumlah masuk di menu obat.']);
+                } else {
+                    return $this->response->setJSON(['success' => true, 'message' => 'Sebagian obat sudah diterima. Jika ada obat yang baru saja diterima, silakan perbarui item masing-masing dan klik "Terima Obat" lagi.']);
+                }
             }
         } else {
             return $this->response->setStatusCode(404)->setJSON([
@@ -846,7 +863,9 @@ class PembelianObat extends BaseController
                     $total = $list['harga_satuan'] * $list['jumlah'];
                     $sheet->setCellValue('G' . $column, $total);
                     $sheet->getStyle('G' . $column)->getNumberFormat()->setFormatCode('_\Rp * #,##0_-;[Red]_\Rp * -#,##0_-;_-_\Rp * \"-\"_-;_-@_-');
-                    $sheet->getStyle('B' . $column . ':G' . $column)->getAlignment()->setWrapText(true);
+                    $sheet->getStyle('A' . $column . ':G' . $column)->getAlignment()->setWrapText(true);
+                    $sheet->getStyle('A' . $column)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+                    $sheet->getStyle('A' . $column . ':G' . $column)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
                     $column++;
                 }
                 $sheet->setCellValue('A' . ($column), 'Total Pembelian');
@@ -864,7 +883,7 @@ class PembelianObat extends BaseController
 
                 $sheet->getStyle('A1:A9')->getFont()->setBold(TRUE);
                 $sheet->getStyle('A10:G10')->getFont()->setBold(TRUE);
-                $sheet->getStyle('A' . ($column) . ':I' . ($column))->getFont()->setBold(TRUE);
+                $sheet->getStyle('A' . ($column) . ':G' . ($column))->getFont()->setBold(TRUE);
 
                 $headerBorder1 = [
                     'borders' => [

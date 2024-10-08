@@ -387,8 +387,8 @@
 
             try {
                 await axios.delete(`<?= base_url('/admin/delete') ?>/${userId}`);
-                showSuccessToast('User berhasil dihapus.');
-                table.ajax.reload();
+                showSuccessToast('Pengguna berhasil dihapus.');
+                table.ajax.reload(null, false);
             } catch (error) {
                 // Check if the error has a response and extract the message
                 let errorMessage = 'Terjadi kesalahan. Silakan coba lagi.<br>' + error;
@@ -405,12 +405,12 @@
 
         $('#confirmActivateBtn').click(async function() {
             $('#activateModal button').prop('disabled', true);
-            $('#activateMessage').html('Mengapus, silakan tunggu...');
+            $('#activateMessage').html('Mengaktifkan, silakan tunggu...');
 
             try {
                 await axios.post(`<?= base_url('/admin/activate') ?>/${userId}`);
-                showSuccessToast('User berhasil diaktifkan.');
-                table.ajax.reload();
+                showSuccessToast('Pengguna berhasil diaktifkan.');
+                table.ajax.reload(null, false);
             } catch (error) {
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
             } finally {
@@ -421,12 +421,12 @@
 
         $('#confirmDeactivateBtn').click(async function() {
             $('#deactivateModal button').prop('disabled', true);
-            $('#deactivateMessage').html('Mengapus, silakan tunggu...');
+            $('#deactivateMessage').html('Menonaktifkan, silakan tunggu...');
 
             try {
                 await axios.post(`<?= base_url('/admin/deactivate') ?>/${userId}`);
-                showSuccessToast('User berhasil dinonaktifkan.');
-                table.ajax.reload();
+                showSuccessToast('Pengguna berhasil dinonaktifkan.');
+                table.ajax.reload(null, false);
             } catch (error) {
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
             } finally {
@@ -443,8 +443,8 @@
 
             try {
                 await axios.post(`<?= base_url('/admin/resetpassword') ?>/${userId}`);
-                showSuccessToast('Kata sandi berhasil direset.');
-                table.ajax.reload();
+                showSuccessToast('Kata sandi berhasil diatur ulang.');
+                table.ajax.reload(null, false);
             } catch (error) {
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
             } finally {
@@ -485,7 +485,7 @@
                 if (response.data.success) {
                     showSuccessToast(response.data.message, 'success');
                     $('#userModal').modal('hide');
-                    table.ajax.reload();
+                    table.ajax.reload(null, false);
                 } else {
                     console.log("Validation Errors:", response.data.errors);
 
