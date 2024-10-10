@@ -282,7 +282,7 @@
                 },
             ],
             "order": [
-                [2, 'desc']
+                [2, 'asc']
             ],
             "columnDefs": [{
                 "target": [1],
