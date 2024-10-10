@@ -14,6 +14,7 @@
         "codeigniter4/framework": "^4.0",
         "dompdf/dompdf": "^3.0",
         "firebase/php-jwt": "^6.10",
+        "guzzlehttp/guzzle": "^7.9",
         "kint-php/kint": "^5.1",
         "phpoffice/phpspreadsheet": "^2.2"
     },
