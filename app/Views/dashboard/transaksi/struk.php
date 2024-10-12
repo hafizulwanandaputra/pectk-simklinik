@@ -188,8 +188,11 @@ $tanggal = Time::parse($transaksi['tgl_transaksi']);
                     <th class="outline-border" style="width: 0%; vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: left;">
                         No
                     </th>
-                    <th class="outline-border" colspan="2" style="width: 100%; vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: left;">
+                    <th class="outline-border" style="width: 100%; vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: left;">
                         Deskripsi
+                    </th>
+                    <th class="outline-border" style="width: 0%; vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: center;">
+                        Qty
                     </th>
                     <th colspan="2" class="outline-border" style="width: 0%; vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: center;">
                         Biaya
@@ -210,8 +213,11 @@ $tanggal = Time::parse($transaksi['tgl_transaksi']);
                                 <td class="outline-border" style="vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: center;">
                                     <?= $no_obat_alkes++ ?>
                                 </td>
-                                <td class="outline-border" colspan="2" style="vertical-align: top; padding-left: 2px; padding-right: 2px;">
+                                <td class="outline-border" style="vertical-align: top; padding-left: 2px; padding-right: 2px;">
                                     <?= $obat['nama_obat'] ?>
+                                </td>
+                                <td class="outline-border" style="vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
+                                    <?= $obat['jumlah'] ?>
                                 </td>
                                 <td class="outline-border-rigth" style="vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: left; white-space: nowrap;">
                                     Rp
