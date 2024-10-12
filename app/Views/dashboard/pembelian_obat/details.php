@@ -72,7 +72,7 @@
             </div>
             <div class="d-flex flex-column flex-lg-row mb-2 gap-2">
                 <div class="flex-fill">
-                    <input type="number" id="jumlah" name="jumlah" class="form-control rounded-3" placeholder="Jumlah">
+                    <input type="number" id="jumlah" name="jumlah" class="form-control rounded-3" placeholder="Jumlah" autocomplete="off">
                     <div class="invalid-feedback"></div>
                 </div>
                 <div class="d-grid d-lg-block w-auto">
@@ -452,7 +452,7 @@
                                 <input type="hidden" id="id_detail_pembelian_obat" name="id_detail_pembelian_obat" value="${response.data.id_detail_pembelian_obat}">
                                 <input type="hidden" id="id_obat_edit" name="id_obat_edit" value="${response.data.id_obat}">
                                 <div class="flex-fill">
-                                    <input type="number" id="jumlah_edit" name="jumlah_edit" class="form-control rounded-3" placeholder="Jumlah" value="${response.data.jumlah}">
+                                    <input type="number" id="jumlah_edit" name="jumlah_edit" class="form-control rounded-3" placeholder="Jumlah" value="${response.data.jumlah}" autocomplete="off">
                                     <div class="invalid-feedback"></div>
                                 </div>
                                 <div class="d-grid d-lg-block w-auto">
@@ -649,7 +649,7 @@
                             </div>
                             <div class="d-flex flex-column flex-lg-row gap-1">
                                 <div class="flex-fill">
-                                    <input type="text" id="no_batch" name="no_batch" class="form-control rounded-3" placeholder="Nomor Batch">
+                                    <input type="text" id="no_batch" name="no_batch" class="form-control rounded-3" placeholder="Nomor Batch" autocomplete="off">
                                     <div class="invalid-feedback"></div>
                                 </div>
                                 <div class="flex-fill">
@@ -657,7 +657,7 @@
                                     <div class="invalid-feedback"></div>
                                 </div>
                                 <div class="flex-fill">
-                                    <input type="number" id="jumlah_item" name="jumlah_item" class="form-control rounded-3" placeholder="Jumlah Diterima">
+                                    <input type="number" id="jumlah_item" name="jumlah_item" class="form-control rounded-3" placeholder="Jumlah Diterima" autocomplete="off">
                                     <div class="invalid-feedback"></div>
                                 </div>
                                 <div class="d-grid d-lg-block w-auto">
@@ -777,7 +777,7 @@
                             <div class="d-flex flex-column flex-xl-row gap-1">
                                 <input type="hidden" id="id_detail_pembelian_obat" name="id_detail_pembelian_obat" value="${response.data.id_detail_pembelian_obat}">
                                 <div class="flex-fill">
-                                    <input type="text" id="no_batch_edit" name="no_batch_edit" class="form-control rounded-3" placeholder="Nomor Batch" value="${response.data.no_batch}">
+                                    <input type="text" id="no_batch_edit" name="no_batch_edit" class="form-control rounded-3" placeholder="Nomor Batch" value="${response.data.no_batch}" autocomplete="off">
                                     <div class="invalid-feedback"></div>
                                 </div>
                                 <div class="flex-fill">
@@ -785,7 +785,7 @@
                                     <div class="invalid-feedback"></div>
                                 </div>
                                 <div class="flex-fill">
-                                    <input type="number" id="jumlah_item_edit" name="jumlah_item_edit" class="form-control rounded-3" placeholder="Jumlah Diterima" value="${response.data.jumlah_item}">
+                                    <input type="number" id="jumlah_item_edit" name="jumlah_item_edit" class="form-control rounded-3" placeholder="Jumlah Diterima" value="${response.data.jumlah_item}" autocomplete="off">
                                     <div class="invalid-feedback"></div>
                                 </div>
                                 <div class="d-grid d-xl-block w-auto">

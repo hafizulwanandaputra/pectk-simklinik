@@ -283,11 +283,24 @@ class PembelianObat extends BaseController
                     ->getRow();
 
                 if ($obat) {
+                    // Fetch the total obat_masuk from detail_pembelian_obat for the current id_obat
+                    $total_obat_masuk = $db->table('detail_pembelian_obat')
+                        ->where('id_obat', $id_obat)
+                        ->where('id_pembelian_obat', $id)
+                        ->selectSum('obat_masuk')
+                        ->get()
+                        ->getRow()
+                        ->obat_masuk;
+
+                    // Get current quantities
                     $current_jumlah_masuk = $obat->jumlah_masuk;
                     $jumlah_keluar = $obat->jumlah_keluar;
 
+                    // Calculate the new jumlah_masuk considering obat_masuk
+                    $new_jumlah_masuk = ($current_jumlah_masuk - $total_obat_masuk + $total_jumlah_masuk_baru);
+
                     // Pastikan jumlah masuk baru tidak kurang dari jumlah keluar
-                    if (($current_jumlah_masuk - $obat->jumlah_masuk + $total_jumlah_masuk_baru) < $jumlah_keluar) {
+                    if ($new_jumlah_masuk < $jumlah_keluar) {
                         // Rollback transaksi jika jumlah masuk baru tidak valid
                         $db->transRollback();
                         return $this->response->setJSON([
@@ -295,10 +308,8 @@ class PembelianObat extends BaseController
                             'message' => "Gagal memproses pembelian obat: stok masuk kurang dari jumlah keluar."
                         ]);
                     }
-
-                    // Update jumlah_masuk
                     $db->table('obat')
-                        ->set('jumlah_masuk', "jumlah_masuk - $current_jumlah_masuk + $total_jumlah_masuk_baru", false)
+                        ->set('jumlah_masuk', $new_jumlah_masuk, false)
                         ->set('updated_at', date('Y-m-d H:i:s'))
                         ->where('id_obat', $id_obat)
                         ->update();

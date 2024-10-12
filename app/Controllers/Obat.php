@@ -94,8 +94,10 @@ class Obat extends BaseController
                     (obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) as harga_setelah_ppn,
             
                     -- Kemudian terapkan mark_up pada harga setelah PPN
-                    ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) 
-                    + ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) * obat.mark_up / 100)) as harga_jual,
+                    ROUND(
+                        ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) 
+                        + ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) * obat.mark_up / 100))
+                    ) as harga_jual,
             
                     (obat.jumlah_masuk - obat.jumlah_keluar) as sisa_stok')
                 ->join('supplier', 'supplier.id_supplier = obat.id_supplier', 'inner')

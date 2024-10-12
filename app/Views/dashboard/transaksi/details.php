@@ -94,11 +94,11 @@
                     </div>
                     <div class="d-flex flex-column flex-lg-row mb-2 gap-2">
                         <div class="flex-fill">
-                            <input type="number" id="qty_transaksi" name="qty_transaksi" class="form-control rounded-3" placeholder="Qty">
+                            <input type="number" id="qty_transaksi" name="qty_transaksi" class="form-control rounded-3" placeholder="Qty" autocomplete="off">
                             <div class="invalid-feedback"></div>
                         </div>
                         <div class="flex-fill">
-                            <input type="number" id="diskon_layanan" name="diskon_layanan" class="form-control rounded-3" placeholder="Diskon (%)">
+                            <input type="number" id="diskon_layanan" name="diskon_layanan" class="form-control rounded-3" placeholder="Diskon (%)" autocomplete="off">
                             <div class="invalid-feedback"></div>
                         </div>
                         <div class="d-grid d-lg-block w-auto">
@@ -122,7 +122,7 @@
                     </div>
                     <div class="d-flex flex-column flex-lg-row mb-2 gap-2">
                         <div class="flex-fill">
-                            <input type="number" id="diskon_obatalkes" name="diskon_obatalkes" class="form-control rounded-3" placeholder="Diskon (%)">
+                            <input type="number" id="diskon_obatalkes" name="diskon_obatalkes" class="form-control rounded-3" placeholder="Diskon (%)" autocomplete="off">
                             <div class="invalid-feedback"></div>
                         </div>
                         <div class="d-grid d-lg-block w-auto">
@@ -632,11 +632,11 @@
                             <div class="d-flex flex-column flex-lg-row gap-1">
                                 <input type="hidden" id="id_detail_transaksi" name="id_detail_transaksi" value="${response.data.id_detail_transaksi}">
                                 <div class="flex-fill">
-                                    <input type="number" id="qty_transaksi_edit" name="qty_transaksi_edit" class="form-control rounded-3" placeholder="Diskon (%)" value="${response.data.qty_transaksi}">
+                                    <input type="number" id="qty_transaksi_edit" name="qty_transaksi_edit" class="form-control rounded-3" placeholder="Diskon (%)" value="${response.data.qty_transaksi}" autocomplete="off">
                                     <div class="invalid-feedback"></div>
                                 </div>
                                 <div class="flex-fill">
-                                    <input type="number" id="diskon_layanan_edit" name="diskon_layanan_edit" class="form-control rounded-3" placeholder="Diskon (%)" value="${response.data.diskon}">
+                                    <input type="number" id="diskon_layanan_edit" name="diskon_layanan_edit" class="form-control rounded-3" placeholder="Diskon (%)" value="${response.data.diskon}" autocomplete="off">
                                     <div class="invalid-feedback"></div>
                                 </div>
                                 <div class="d-grid d-lg-block w-auto">
@@ -762,7 +762,7 @@
                             <div class="d-flex flex-column flex-lg-row gap-1">
                                 <input type="hidden" id="id_detail_transaksi" name="id_detail_transaksi" value="${response.data.id_detail_transaksi}">
                                 <div class="flex-fill">
-                                    <input type="number" id="diskon_obatalkes_edit" name="diskon_obatalkes_edit" class="form-control rounded-3" placeholder="Diskon (%)" value="${response.data.diskon}">
+                                    <input type="number" id="diskon_obatalkes_edit" name="diskon_obatalkes_edit" class="form-control rounded-3" placeholder="Diskon (%)" value="${response.data.diskon}" autocomplete="off">
                                     <div class="invalid-feedback"></div>
                                 </div>
                                 <div class="d-grid d-lg-block w-auto">

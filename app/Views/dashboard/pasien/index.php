@@ -129,22 +129,22 @@
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
-                        <input type="text" class="form-control" dir="auto" placeholder="provinsi" id="provinsi" name="provinsi">
+                        <input type="text" class="form-control" autocomplete="off" dir="auto" placeholder="provinsi" id="provinsi" name="provinsi">
                         <label for="provinsi">Provinsi*</label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
-                        <input type="text" class="form-control" dir="auto" placeholder="kota" id="kota" name="kota">
+                        <input type="text" class="form-control" autocomplete="off" dir="auto" placeholder="kota" id="kota" name="kota">
                         <label for="kota">Kabupaten/Kota*</label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
-                        <input type="text" class="form-control" dir="auto" placeholder="kecamatan" id="kecamatan" name="kecamatan">
+                        <input type="text" class="form-control" autocomplete="off" dir="auto" placeholder="kecamatan" id="kecamatan" name="kecamatan">
                         <label for="kecamatan">Kecamatan*</label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
-                        <input type="text" class="form-control" dir="auto" placeholder="desa" id="desa" name="desa">
+                        <input type="text" class="form-control" autocomplete="off" dir="auto" placeholder="desa" id="desa" name="desa">
                         <label for="desa">Desa/Kelurahan*</label>
                         <div class="invalid-feedback"></div>
                     </div>

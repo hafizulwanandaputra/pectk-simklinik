@@ -67,17 +67,17 @@
             <form id="tambahDetail" enctype="multipart/form-data">
                 <div class="row g-2">
                     <div class="col-12">
-                        <select class="form-select form-select-sm rounded-3" id="id_obat" name="id_obat" aria-label="id_obat">
+                        <select class="form-select form-select-sm rounded-3" id="id_obat" name="id_obat" aria-label="id_obat" autocomplete="off">
                             <option value="" disabled selected>-- Pilih Obat --</option>
                         </select>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="col-6">
-                        <input type="text" id="signa" name="signa" class="form-control form-control-sm rounded-3" placeholder="Dosis">
+                        <input type="text" id="signa" name="signa" class="form-control form-control-sm rounded-3" placeholder="Dosis" autocomplete="off">
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="col-6">
-                        <input type="text" id="catatan" name="catatan" class="form-control form-control-sm rounded-3" placeholder="Catatan" list="list_catatan">
+                        <input type="text" id="catatan" name="catatan" class="form-control form-control-sm rounded-3" placeholder="Catatan" list="list_catatan" autocomplete="off">
                         <div class="invalid-feedback"></div>
                         <datalist id="list_catatan">
                             <option value="1 Tetes">
@@ -334,20 +334,6 @@
             placeholder: $(this).data('placeholder'),
         });
 
-        // Auto resize on input
-        $('#editKeteranganText').on('input', function() {
-            autoResizeTextarea();
-        });
-
-        // Auto resize on window resize
-        $(window).on('resize', function() {
-            autoResizeTextarea();
-        });
-
-        $('#editKeterangan').on('shown.bs.modal', function() {
-            autoResizeTextarea();
-        });
-
         $(document).on('click', '#editKeteranganBtn', async function() {
             const $this = $(this);
             $('[data-bs-toggle="tooltip"]').tooltip('hide');
@@ -487,17 +473,18 @@
                         <input type="hidden" id="id_detail_resep" name="id_detail_resep" value="${response.data.id_detail_resep}">
                         <div class="row g-2">
                             <div class="col-6">
-                                <input type="text" id="signa_edit" name="signa_edit" class="form-control form-control-sm rounded-3" placeholder="Dosis berapa kali?" value="${response.data.signa}">
+                                <input type="text" id="signa_edit" name="signa_edit" class="form-control form-control-sm rounded-3" placeholder="Dosis" value="${response.data.signa}" autocomplete="off">
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="col-6">
-                                <input type="text" id="catatan_edit" name="catatan_edit" class="form-control form-control-sm rounded-3" placeholder="Dalam berapa hari?" value="${response.data.catatan}" list="list_catatan_edit">
+                                <input type="text" id="catatan_edit" name="catatan_edit" class="form-control form-control-sm rounded-3" placeholder="Catatan" value="${response.data.catatan}" list="list_catatan_edit" autocomplete="off">
                                 <div class="invalid-feedback"></div>
                                 <datalist id="list_catatan_edit">
                                     <option value="1 Tetes">
+                                    <option value="1 Tablet">
+                                    <option value="1 Salep">
                                     <option value="Sendok Teh">
                                     <option value="Sendok Makan">
-                                    <option value="1 Tablet">
                                 </datalist>
                             </div>
                             <div class="col-6">
@@ -514,7 +501,7 @@
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="col-6">
-                                <input type="text" id="jumlah_edit" name="jumlah_edit" class="form-control form-control-sm rounded-3" placeholder="Dosis berapa kali?" value="${response.data.jumlah}">
+                                <input type="text" id="jumlah_edit" name="jumlah_edit" class="form-control form-control-sm rounded-3" placeholder="Jumlah" value="${response.data.jumlah}" autocomplete="off">
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-2">
