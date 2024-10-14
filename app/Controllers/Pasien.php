@@ -1,5 +1,7 @@
 <?php
 
+// DEPRECATED IN ORDER TO USE API METHOD
+
 namespace App\Controllers;
 
 use App\Models\PasienModel;
