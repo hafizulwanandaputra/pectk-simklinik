@@ -28,7 +28,11 @@ class App extends BaseConfig
             // Jika dijalankan dari web server, ambil base URL dari $_SERVER
             $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
             if ($_SERVER['SERVER_NAME'] === 'localhost') {
-                $this->baseURL = $protocol . '://' . $_SERVER['SERVER_ADDR'] . env('requestURL', '/'); // Fallback ke '/' jika requestURL tidak ada
+                if ($_SERVER['SERVER_ADDR'] == '::1') {
+                    $this->baseURL = $protocol . '://localhost' . env('requestURL', '/'); // Fallback ke '/' jika requestURL tidak ada
+                } else {
+                    $this->baseURL = $protocol . '://' . $_SERVER['SERVER_ADDR'] . env('requestURL', '/'); // Fallback ke '/' jika requestURL tidak ada
+                }
             } else {
                 $this->baseURL = $protocol . '://' . $_SERVER['SERVER_NAME'] . env('requestURL', '/'); // Fallback ke '/' jika requestURL tidak ada
             }
