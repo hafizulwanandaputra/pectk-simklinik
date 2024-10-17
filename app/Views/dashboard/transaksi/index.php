@@ -216,7 +216,7 @@
                     <button type="button" class="btn btn-info btn-sm bg-gradient rounded-3" onclick="window.location.href = '<?= base_url('transaksi/detailtransaksi') ?>/${transaksi.id_transaksi}';">
                         <i class="fa-solid fa-circle-info"></i> Detail
                     </button>
-                    <button type="button" class="btn btn-danger btn-sm bg-gradient rounded-3 delete-btn" data-id="${transaksi.id_transaksi}" data-name="${transaksi.pasien_nama_pasien}" data-date="${transaksi.tgl_transaksi}">
+                    <button type="button" class="btn btn-danger btn-sm bg-gradient rounded-3 delete-btn" data-id="${transaksi.id_transaksi}" data-name="${transaksi.nama_pasien}" data-date="${transaksi.tgl_transaksi}">
                         <i class="fa-solid fa-trash"></i> Hapus
                     </button>
                 </div>
@@ -331,7 +331,7 @@
             transaksiName = $(this).data('name');
             transaksiDate = $(this).data('date');
             $('[data-bs-toggle="tooltip"]').tooltip('hide');
-            $('#deleteMessage').html(`Hapus transaksi dari "` + transaksiName + `?`);
+            $('#deleteMessage').html(`Hapus transaksi dari "` + transaksiName + `"?`);
             $('#deleteSubmessage').html(`Tanggal Transaksi: ` + transaksiDate);
             $('#deleteModal').modal('show');
         });

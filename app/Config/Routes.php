@@ -16,14 +16,7 @@ $routes->get('/(?i)home', 'Home::index');
 
 // PASIEN
 $routes->get('/(?i)pasien', 'Pasien::index');
-$routes->post('/(?i)pasien/(?i)pasienlist', 'Pasien::pasienlist');
-$routes->get('/(?i)pasienapitest', 'Pasien::pasienapitest');
-$routes->get('/(?i)pasienapitestitem/(:any)', 'Pasien::pasienapitestitem/$1');
-$routes->get('/(?i)pasien/(?i)dokterlist', 'Pasien::dokterlist');
-$routes->get('/(?i)pasien/(?i)pasien/(:any)', 'Pasien::pasien/$1');
-$routes->post('/(?i)pasien/(?i)create', 'Pasien::create');
-$routes->post('/(?i)pasien/(?i)update', 'Pasien::update');
-$routes->delete('/(?i)pasien/(?i)delete/(:any)', 'Pasien::delete/$1');
+$routes->get('/(?i)pasien/(?i)pasienapi', 'Pasien::pasienapi');
 
 // SUPPLIER
 $routes->get('/(?i)supplier', 'Supplier::index');

@@ -337,7 +337,7 @@
             pembelianObatName = $(this).data('name');
             pembelianObatDate = $(this).data('date');
             $('[data-bs-toggle="tooltip"]').tooltip('hide');
-            $('#deleteMessage').html(`Hapus pembelian dari "` + pembelianObatName + `?`);
+            $('#deleteMessage').html(`Hapus pembelian dari "` + pembelianObatName + `"?`);
             $('#deleteSubmessage').html(`Tanggal Pembelian: ` + pembelianObatDate);
             $('#deleteModal').modal('show');
         });

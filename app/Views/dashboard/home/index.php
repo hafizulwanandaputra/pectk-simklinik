@@ -20,7 +20,7 @@
             <div class="row row-cols-1 row-cols-lg-2 g-2 mb-2">
                 <?php if (session()->get('role') != "Dokter") : ?>
                     <div class="col">
-                        <div class="card text-bg-primary w-100 rounded-3">
+                        <div class="card bg-body-tertiary w-100 rounded-3">
                             <div class="card-header w-100 text-truncate bg-gradient">Supplier</div>
                             <div class="card-body">
                                 <h5 class="display-5 fw-medium date"><?= $total_supplier ?></h5>
@@ -28,7 +28,7 @@
                         </div>
                     </div>
                     <div class="col">
-                        <div class="card text-bg-primary w-100 rounded-3">
+                        <div class="card bg-body-tertiary w-100 rounded-3">
                             <div class="card-header w-100 text-truncate bg-gradient">Obat</div>
                             <div class="card-body">
                                 <h5 class="display-5 fw-medium date"><?= $total_obat ?></h5>
@@ -99,7 +99,7 @@
             <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Admin</legend>
             <div class="row row-cols-1 g-2 mb-2">
                 <div class="col">
-                    <div class="card text-bg-primary w-100 rounded-3">
+                    <div class="card bg-body-tertiary w-100 rounded-3">
                         <div class="card-header w-100 text-truncate bg-gradient">Pengguna</div>
                         <div class="card-body">
                             <h5 class="display-5 fw-medium date"><?= $total_user ?></h5>
