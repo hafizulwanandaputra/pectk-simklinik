@@ -90,7 +90,7 @@
             `;
                 $('#datapasien').append(emptyRow);
             }
-            data.sort((a, b) => b.no_rm.localeCompare(a.no_rm, 'en', {
+            data.sort((a, b) => a.no_rm.localeCompare(b.no_rm, 'en', {
                 numeric: true
             }));
             data.forEach(function(pasien, index) {
