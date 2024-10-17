@@ -102,6 +102,21 @@ class Pasien extends BaseController
         }
     }
 
+    public function pasienapitest()
+    {
+        $PasienModel = new PasienModel();
+        $data = $PasienModel->orderBy('nama_pasien', 'DESC')->findAll();
+        return $this->response->setJSON($data);
+    }
+
+    public function pasienapitestitem($id)
+    {
+        $PasienModel = new PasienModel();
+        $data = $PasienModel->find($id);
+        $data['no_mr'] = $this->formatNoMr($data['no_mr']);
+        return $this->response->setJSON($data);
+    }
+
     public function pasien($id)
     {
         if (session()->get('role') == 'Admin') {

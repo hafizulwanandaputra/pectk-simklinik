@@ -42,6 +42,8 @@ class Filters extends BaseConfig
                 '/login',
                 '/login/*',
                 '/check-login',
+                '/pasienapitest',
+                '/pasienapitestitem/*',
                 '/'
             ]],
             'cors',

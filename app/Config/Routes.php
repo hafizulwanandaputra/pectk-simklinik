@@ -17,6 +17,8 @@ $routes->get('/(?i)home', 'Home::index');
 // PASIEN
 $routes->get('/(?i)pasien', 'Pasien::index');
 $routes->post('/(?i)pasien/(?i)pasienlist', 'Pasien::pasienlist');
+$routes->get('/(?i)pasienapitest', 'Pasien::pasienapitest');
+$routes->get('/(?i)pasienapitestitem/(:any)', 'Pasien::pasienapitestitem/$1');
 $routes->get('/(?i)pasien/(?i)dokterlist', 'Pasien::dokterlist');
 $routes->get('/(?i)pasien/(?i)pasien/(:any)', 'Pasien::pasien/$1');
 $routes->post('/(?i)pasien/(?i)create', 'Pasien::create');
