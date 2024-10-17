@@ -60,7 +60,8 @@
 <?= $this->section('javascript'); ?>
 <script>
     $(document).ready(function() {
-        $('#loadingSpinner').hide();
+        // Menyembunyikan spinner loading saat dokumen sudah siap
+        $('#loadingSpinner').hide(); // Menyembunyikan elemen spinner loading
     });
 </script>
 <?= $this->endSection(); ?>

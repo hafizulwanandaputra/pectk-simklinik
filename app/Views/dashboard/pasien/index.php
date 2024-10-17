@@ -62,126 +62,141 @@
     </div>
 </main>
 <?= $this->endSection(); ?>
-<?= $this->section('datatable'); ?>
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.bootstrap5.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.colVis.min.js"></script>
+<?= $this->section('javascript'); ?>
 <script>
+    // HTML untuk menunjukkan bahwa data pasien sedang dimuat
     const loading = `
-        <tr>
-            <td colspan="9" class="text-center">Memuat data pasien...</td>
-        </tr>
-    `;
+    <tr>
+        <td colspan="9" class="text-center">Memuat data pasien...</td>
+    </tr>
+`;
 
+    // Fungsi untuk menghitung usia berdasarkan tanggal lahir
     function hitungUsia(tanggalLahir) {
-        const lahir = new Date(tanggalLahir);
-        const sekarang = new Date();
-        let usia = sekarang.getFullYear() - lahir.getFullYear();
+        const lahir = new Date(tanggalLahir); // Mengubah tanggal lahir menjadi objek Date
+        const sekarang = new Date(); // Mendapatkan tanggal sekarang
+        let usia = sekarang.getFullYear() - lahir.getFullYear(); // Menghitung usia berdasarkan tahun
+
+        // Menghitung selisih bulan dan hari
         const bulan = sekarang.getMonth() - lahir.getMonth();
         const hari = sekarang.getDate() - lahir.getDate();
 
         // Periksa apakah bulan/hari ulang tahun belum terlewati di tahun ini
         if (bulan < 0 || (bulan === 0 && hari < 0)) {
-            usia--;
+            usia--; // Kurangi usia jika ulang tahun belum terlewati
         }
-        return usia;
+        return usia; // Mengembalikan usia
     }
 
+    // Fungsi untuk mengambil data pasien dari API
     async function fetchPasien() {
-        $('#loadingSpinner').show();
+        $('#loadingSpinner').show(); // Menampilkan spinner loading
 
         try {
             // Ambil nilai tanggal dari input
             const tanggal = $('#tanggal').val();
 
+            // Cek apakah tanggal diinput
             if (!tanggal) {
-                $('#datapasien').empty();
-                $('#refreshButton').prop('disabled', true);
-                $('#tanggal2').text(`-`);
-                $('#lengthpasien').text(`-`);
+                $('#datapasien').empty(); // Kosongkan tabel pasien
+                $('#refreshButton').prop('disabled', true); // Nonaktifkan tombol refresh
+                $('#tanggal2').text(`-`); // Set text tanggal ke '-'
+                $('#lengthpasien').text(`-`); // Set panjang pasien ke '-'
                 // Tampilkan pesan jika tidak ada data
                 const emptyRow = `
                     <tr>
-                        <td colspan="9" class="text-center"><strong>Silakan masukkan tanggal</strong><br>Data-data pasien ini diperoleh dari Sistem Informasi Manajemen Klinik Utama Mata Padang Eye Center Teluk Kuantan melalui <em>Application Programming Interface</em> (API)</td>
+                        <td colspan="9" class="text-center"><strong>Silakan masukkan tanggal</strong><br>Data-data pasien ini diperoleh dari Sistem Informasi Manajemen Klinik Utama Mata Padang Eye Center Teluk Kuantan melalui  <em>Application Programming Interface</em> (API)</td>
                     </tr>
                 `;
-                $('#datapasien').append(emptyRow);
-                return;
+                $('#datapasien').append(emptyRow); // Menambahkan baris kosong ke tabel
+                return; // Keluar dari fungsi
             }
+
+            // Mengambil data pasien dari API berdasarkan tanggal
             const response = await axios.get(`<?= base_url('pasien/pasienapi') ?>?tanggal=${tanggal}`);
-            const data = response.data.data;
-            $('#datapasien').empty();
-            $('#refreshButton').prop('disabled', false);
-            $('#tanggal2').text(tanggal);
-            $('#lengthpasien').text(data.length);
+            const data = response.data.data; // Mendapatkan data pasien
+
+            $('#datapasien').empty(); // Kosongkan tabel pasien
+            $('#refreshButton').prop('disabled', false); // Aktifkan tombol refresh
+            $('#tanggal2').text(tanggal); // Set text tanggal
+            $('#lengthpasien').text(data.length); // Set panjang pasien
+
+            // Cek apakah data pasien kosong
             if (data.length === 0) {
                 // Tampilkan pesan jika tidak ada data
                 const emptyRow = `
-                <tr>
-                    <td colspan="9" class="text-center">Tidak ada pasien yang berobat pada ${tanggal}</td>
-                </tr>
-            `;
-                $('#datapasien').append(emptyRow);
+                    <tr>
+                        <td colspan="9" class="text-center">Tidak ada pasien yang berobat pada ${tanggal}</td>
+                    </tr>
+                `;
+                $('#datapasien').append(emptyRow); // Menambahkan baris pesan ke tabel
             }
+
+            // Mengurutkan data pasien berdasarkan nomor registrasi
             data.sort((a, b) => a.nomor_registrasi.localeCompare(b.nomor_registrasi, 'en', {
                 numeric: true
             }));
-            data.forEach(function(pasien, index) {
-                // Kondisikan jenis kelamin
-                const jenis_kelamin = pasien.jenis_kelamin === "L" ? "Laki-laki" : "Perempuan";
-                const usia = hitungUsia(pasien.tanggal_lahir);
 
+            // Menambahkan setiap pasien ke tabel
+            data.forEach(function(pasien, index) {
+                // Mengkondisikan jenis kelamin
+                const jenis_kelamin = pasien.jenis_kelamin === "L" ? "Laki-laki" : "Perempuan";
+                const usia = hitungUsia(pasien.tanggal_lahir); // Menghitung usia pasien
+
+                // Membuat elemen baris untuk setiap pasien
                 const pasienElement = `
-                <tr>
-                    <td class="date text-nowrap text-center">${index + 1}</td>
-                    <td>${pasien.nama_pasien}</td>
-                    <td class="text-nowrap">${jenis_kelamin}</td>
-                    <td class="date text-nowrap">${pasien.no_rm}</td>
-                    <td class="date text-nowrap">${pasien.nomor_registrasi}</td>
-                    <td>${pasien.tempat_lahir}<br><small class="date text-nowrap">${pasien.tanggal_lahir} • ${usia} tahun</small></td>
-                    <td class="date text-nowrap text-end">${pasien.telpon}</td>
-                    <td>${pasien.alamat}</td>
-                    <td>${pasien.dokter}</td>
-                </tr>
+                    <tr>
+                        <td class="date text-nowrap text-center">${index + 1}</td>
+                        <td>${pasien.nama_pasien}</td>
+                        <td class="text-nowrap">${jenis_kelamin}</td>
+                        <td class="date text-nowrap">${pasien.no_rm}</td>
+                        <td class="date text-nowrap">${pasien.nomor_registrasi}</td>
+                        <td>${pasien.tempat_lahir}<br><small class="date text-nowrap">${pasien.tanggal_lahir} • ${usia} tahun</small></td>
+                        <td class="date text-nowrap text-end">${pasien.telpon}</td>
+                        <td>${pasien.alamat}</td>
+                        <td>${pasien.dokter}</td>
+                    </tr>
                 `;
-                $('#datapasien').append(pasienElement);
+                $('#datapasien').append(pasienElement); // Menambahkan elemen pasien ke tabel
             });
         } catch (error) {
-            console.error(error.response.data.error);
-            $('#tanggal2').html(`<i class="fa-solid fa-xmark"></i> Error`);
-            $('#lengthpasien').html(`<i class="fa-solid fa-xmark"></i> Error`);
+            // Menangani error jika permintaan gagal
+            console.error(error.response.data.error); // Menampilkan error di konsol
+            $('#tanggal2').html(`<i class="fa-solid fa-xmark"></i> Error`); // Menampilkan error pada text tanggal
+            $('#lengthpasien').html(`<i class="fa-solid fa-xmark"></i> Error`); // Menampilkan error pada panjang pasien
             const errorRow = `
                 <tr>
                     <td colspan="9" class="text-center">${error.response.data.error}</td>
                 </tr>
             `;
-            $('#datapasien').empty();
-            $('#datapasien').append(errorRow);
+            $('#datapasien').empty(); // Kosongkan tabel pasien
+            $('#datapasien').append(errorRow); // Menambahkan baris error ke tabel
         } finally {
-            // Hide the spinner when done
+            // Sembunyikan spinner loading setelah selesai
             $('#loadingSpinner').hide();
         }
     }
+
+    // Event listener ketika tanggal diubah
     $('#tanggal').on('change', function() {
-        $('#datapasien').empty();
-        $('#datapasien').append(loading);
-        $('#tanggal2').html(`<i class="fa-solid fa-spinner fa-spin-pulse"></i>`);
-        $('#lengthpasien').html(`<i class="fa-solid fa-spinner fa-spin-pulse"></i>`);
-        fetchPasien(); // Refresh articles on button click
+        $('#datapasien').empty(); // Kosongkan tabel pasien
+        $('#datapasien').append(loading); // Menampilkan loading indicator
+        $('#tanggal2').html(`<i class="fa-solid fa-spinner fa-spin-pulse"></i>`); // Menampilkan spinner pada text tanggal
+        $('#lengthpasien').html(`<i class="fa-solid fa-spinner fa-spin-pulse"></i>`); // Menampilkan spinner pada panjang pasien
+        fetchPasien(); // Memanggil fungsi untuk mengambil data pasien
     });
 
     $(document).ready(function() {
+        // Menangani event klik pada tombol refresh
         $('#refreshButton').on('click', function() {
-            $('#datapasien').empty();
-            $('#datapasien').append(loading);
-            $('#tanggal2').html(`<i class="fa-solid fa-spinner fa-spin-pulse"></i>`);
-            $('#lengthpasien').html(`<i class="fa-solid fa-spinner fa-spin-pulse"></i>`);
-            fetchPasien(); // Refresh articles on button click
+            $('#datapasien').empty(); // Kosongkan tabel pasien
+            $('#datapasien').append(loading); // Tampilkan loading indicator
+            $('#tanggal2').html(`<i class="fa-solid fa-spinner fa-spin-pulse"></i>`); // Tampilkan spinner pada text tanggal
+            $('#lengthpasien').html(`<i class="fa-solid fa-spinner fa-spin-pulse"></i>`); // Tampilkan spinner pada panjang pasien
+            fetchPasien(); // Panggil fungsi untuk mengambil data pasien
         });
+
+        // Panggil fungsi untuk mengambil data pasien saat dokumen siap
         fetchPasien();
     });
 

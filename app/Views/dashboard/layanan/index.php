@@ -146,6 +146,7 @@
                 $(".form-select").addClass("rounded-3");
             },
             'buttons': [{
+                // Tombol Refresh
                 action: function(e, dt, node, config) {
                     dt.ajax.reload(null, false);
                 },
@@ -155,6 +156,7 @@
                     $(node).removeClass('btn-secondary')
                 },
             }, {
+                // Tombol Tambah Tindakan
                 text: '<i class="fa-solid fa-plus"></i> Tambah Tindakan',
                 className: 'btn-primary btn-sm bg-gradient rounded-end-3',
                 attr: {
@@ -176,27 +178,28 @@
             "processing": false,
             "serverSide": true,
             "ajax": {
+                // URL endpoint untuk melakukan permintaan AJAX
                 "url": "<?= base_url('/layanan/layananlist') ?>",
-                "type": "POST",
+                "type": "POST", // Metode HTTP yang digunakan untuk permintaan (POST)
                 "data": function(d) {
-                    // Additional parameters
+                    // Menambahkan parameter tambahan pada data yang dikirim
                     d.search = {
-                        "value": $('.dataTables_filter input[type="search"]').val()
+                        "value": $('.dataTables_filter input[type="search"]').val() // Mengambil nilai input pencarian
                     };
                 },
                 beforeSend: function() {
-                    // Show the custom processing spinner
-                    $('#loadingSpinner').show();
+                    // Menampilkan spinner loading sebelum permintaan dikirim
+                    $('#loadingSpinner').show(); // Menampilkan elemen spinner loading
                 },
                 complete: function() {
-                    // Hide the custom processing spinner after the request is complete
-                    $('#loadingSpinner').hide();
+                    // Menyembunyikan spinner loading setelah permintaan selesai
+                    $('#loadingSpinner').hide(); // Menyembunyikan elemen spinner loading
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
-                    // Hide the custom processing spinner on error
-                    $('#loadingSpinner').hide();
-                    // Show the Bootstrap error toast when the AJAX request fails
-                    showFailedToast('Gagal memuat data. Silakan coba lagi.');
+                    // Menyembunyikan spinner loading jika terjadi kesalahan
+                    $('#loadingSpinner').hide(); // Menyembunyikan elemen spinner loading
+                    // Menampilkan toast error Bootstrap ketika permintaan AJAX gagal
+                    showFailedToast('Gagal memuat data. Silakan coba lagi.'); // Menampilkan pesan kesalahan
                 }
             },
             columns: [{
@@ -264,100 +267,107 @@
                 "width": "100%"
             }]
         });
-        // Initialize Bootstrap tooltips
+
+        // Menginisialisasi tooltip untuk elemen dengan atribut data-bs-toggle="tooltip"
         $('[data-bs-toggle="tooltip"]').tooltip();
-        // Re-initialize tooltips on table redraw (server-side events like pagination, etc.)
+
+        // Memperbarui tooltip setiap kali tabel digambar ulang
         table.on('draw', function() {
             $('[data-bs-toggle="tooltip"]').tooltip();
         });
-        // Show add user modal
+
+        // Tampilkan modal tambah layanan
         $('#addLayananBtn').click(function() {
-            $('#layananModalLabel').text('Tambah Tindakan');
-            $('#layananModal').modal('show');
+            $('#layananModalLabel').text('Tambah Tindakan'); // Ubah judul modal menjadi 'Tambah Tindakan'
+            $('#layananModal').modal('show'); // Tampilkan modal layanan
         });
 
+        // Fokuskan kursor ke field 'nama_layanan' saat modal ditampilkan
         $('#layananModal').on('shown.bs.modal', function() {
             $('#nama_layanan').trigger('focus');
         });
 
+        // Event klik untuk tombol edit
         $(document).on('click', '.edit-btn', async function() {
             const $this = $(this);
-            const id = $(this).data('id');
-            $('[data-bs-toggle="tooltip"]').tooltip('hide');
-            $this.prop('disabled', true).html(`<span class="spinner-border" style="width: 11px; height: 11px;" aria-hidden="true"></span>`);
+            const id = $(this).data('id'); // Dapatkan ID layanan
+            $('[data-bs-toggle="tooltip"]').tooltip('hide'); // Sembunyikan tooltip
+            $this.prop('disabled', true).html(`
+                <span class="spinner-border" style="width: 11px; height: 11px;" aria-hidden="true"></span>
+            `); // Ubah tombol menjadi indikator loading
 
             try {
-                const response = await axios.get(`<?= base_url('/layanan/layanan') ?>/${id}`);
-                $('#layananModalLabel').text('Edit Tindakan');
+                const response = await axios.get(`<?= base_url('/layanan/layanan') ?>/${id}`); // Ambil data layanan berdasarkan ID
+                $('#layananModalLabel').text('Edit Tindakan'); // Ubah judul modal menjadi 'Edit Tindakan'
                 $('#id_layanan').val(response.data.id_layanan);
                 $('#nama_layanan').val(response.data.nama_layanan);
                 $('#jenis_layanan').val(response.data.jenis_layanan);
                 $('#tarif').val(response.data.tarif);
                 $('#keterangan').val(response.data.keterangan);
-                $('#layananModal').modal('show');
+                $('#layananModal').modal('show'); // Tampilkan modal dengan data layanan
             } catch (error) {
-                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error); // Tampilkan pesan kesalahan
             } finally {
-                $this.prop('disabled', false).html(`<i class="fa-solid fa-pen-to-square"></i>`);
+                $this.prop('disabled', false).html(`<i class="fa-solid fa-pen-to-square"></i>`); // Pulihkan tombol
             }
         });
 
-        // Store the ID of the user to be deleted
+        // Variabel untuk menyimpan ID dan nama layanan yang akan dihapus
         var layananId;
         var layananName;
 
-        // Show delete confirmation modal
+        // Tampilkan modal konfirmasi hapus
         $(document).on('click', '.delete-btn', function() {
-            layananId = $(this).data('id');
-            layananName = $(this).data('name');
-            $('[data-bs-toggle="tooltip"]').tooltip('hide');
-            $('#deleteMessage').html(`Hapus "` + layananName + `"?`);
+            layananId = $(this).data('id'); // Dapatkan ID layanan
+            layananName = $(this).data('name'); // Dapatkan nama layanan
+            $('[data-bs-toggle="tooltip"]').tooltip('hide'); // Sembunyikan tooltip
+            $('#deleteMessage').html(`Hapus "` + layananName + `"?`); // Pesan konfirmasi
             $('#deleteSubmessage').html(`Layanan tidak dapat dihapus jika ada transaksi yang menggunakan layanan ini!`);
-            $('#deleteModal').modal('show');
+            $('#deleteModal').modal('show'); // Tampilkan modal konfirmasi
         });
 
+        // Proses konfirmasi hapus layanan
         $('#confirmDeleteBtn').click(async function() {
-            $('#deleteModal button').prop('disabled', true);
-            $('#deleteMessage').addClass('mb-0').html('Mengapus, silakan tunggu...');
-            $('#deleteSubmessage').hide();
+            $('#deleteModal button').prop('disabled', true); // Nonaktifkan tombol saat proses berlangsung
+            $('#deleteMessage').addClass('mb-0').html('Mengapus, silakan tunggu...'); // Ubah pesan menjadi indikator proses
+            $('#deleteSubmessage').hide(); // Sembunyikan pesan tambahan
 
             try {
-                await axios.delete(`<?= base_url('/layanan/delete') ?>/${layananId}`);
-                table.ajax.reload(null, false);
+                await axios.delete(`<?= base_url('/layanan/delete') ?>/${layananId}`); // Hapus layanan berdasarkan ID
+                table.ajax.reload(null, false); // Reload tabel data
             } catch (error) {
-                // Check if the error has a response and extract the message
                 let errorMessage = 'Terjadi kesalahan. Silakan coba lagi.<br>' + error;
                 if (error.response && error.response.data && error.response.data.error) {
                     console.error(error.response.data.error);
-                    errorMessage = 'Tidak dapat menghapus data ini karena sedang digunakan.'
+                    errorMessage = 'Tidak dapat menghapus data ini karena sedang digunakan.'; // Pesan kesalahan khusus
                 }
-                showFailedToast(errorMessage);
+                showFailedToast(errorMessage); // Tampilkan pesan kesalahan
             } finally {
-                $('#deleteModal').modal('hide');
+                $('#deleteModal').modal('hide'); // Sembunyikan modal konfirmasi
                 $('#deleteMessage').removeClass('mb-0');
-                $('#deleteSubmessage').show();
-                $('#deleteModal button').prop('disabled', false);
+                $('#deleteSubmessage').show(); // Tampilkan kembali pesan tambahan
+                $('#deleteModal button').prop('disabled', false); // Aktifkan kembali tombol
             }
         });
 
+        // Event submit form layanan (Tambah/Edit)
         $('#layananForm').submit(async function(e) {
-            e.preventDefault();
+            e.preventDefault(); // Cegah form dari submit default
 
-            const url = $('#id_layanan').val() ? '<?= base_url('/layanan/update') ?>' : '<?= base_url('/layanan/create') ?>';
-            const formData = new FormData(this);
+            const url = $('#id_layanan').val() ? '<?= base_url('/layanan/update') ?>' : '<?= base_url('/layanan/create') ?>'; // Tentukan URL berdasarkan aksi
+            const formData = new FormData(this); // Ambil data form
             console.log("Form URL:", url);
             console.log("Form Data:", $(this).serialize());
 
-            // Clear previous validation states
+            // Bersihkan status validasi sebelumnya
             $('#layananForm .is-invalid').removeClass('is-invalid');
             $('#layananForm .invalid-feedback').text('').hide();
             $('#submitButton').prop('disabled', true).html(`
                 <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
                 <span role="status">Memproses, silakan tunggu...</span>
-            `);
+            `); // Ubah tombol submit menjadi indikator loading
 
-            // Disable form inputs
-            $('#layananForm input, #layananForm select, #closeBtn').prop('disabled', true);
+            $('#layananForm input, #layananForm select, #closeBtn').prop('disabled', true); // Nonaktifkan input dan tombol
 
             try {
                 const response = await axios.post(url, formData, {
@@ -367,61 +377,47 @@
                 });
 
                 if (response.data.success) {
-                    $('#layananModal').modal('hide');
-                    table.ajax.reload(null, false);
+                    $('#layananModal').modal('hide'); // Tutup modal jika berhasil
+                    table.ajax.reload(null, false); // Reload tabel data
                 } else {
                     console.log("Validation Errors:", response.data.errors);
 
-                    // Clear previous validation states
-                    $('#layananForm .is-invalid').removeClass('is-invalid');
-                    $('#layananForm .invalid-feedback').text('').hide();
-
-                    // Display new validation errors
+                    // Tampilkan pesan validasi baru
                     for (const field in response.data.errors) {
-                        if (response.data.errors.hasOwnProperty(field)) {
-                            const fieldElement = $('#' + field);
-                            const feedbackElement = fieldElement.siblings('.invalid-feedback');
+                        const fieldElement = $('#' + field);
+                        const feedbackElement = fieldElement.siblings('.invalid-feedback');
 
-                            console.log("Target Field:", fieldElement);
-                            console.log("Target Feedback:", feedbackElement);
+                        if (fieldElement.length > 0 && feedbackElement.length > 0) {
+                            fieldElement.addClass('is-invalid');
+                            feedbackElement.text(response.data.errors[field]).show();
 
-                            if (fieldElement.length > 0 && feedbackElement.length > 0) {
-                                fieldElement.addClass('is-invalid');
-                                feedbackElement.text(response.data.errors[field]).show();
-
-                                // Remove error message when the user corrects the input
-                                fieldElement.on('input change', function() {
-                                    $(this).removeClass('is-invalid');
-                                    $(this).siblings('.invalid-feedback').text('').hide();
-                                });
-                            } else {
-                                console.warn("Elemen tidak ditemukan pada field:", field);
-                            }
+                            // Hapus pesan kesalahan saat input diubah
+                            fieldElement.on('input change', function() {
+                                $(this).removeClass('is-invalid');
+                                $(this).siblings('.invalid-feedback').text('').hide();
+                            });
                         }
                     }
                     console.error('Perbaiki kesalahan pada formulir.');
                 }
             } catch (error) {
-                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error); // Tampilkan pesan kesalahan
             } finally {
                 $('#submitButton').prop('disabled', false).html(`
                     <i class="fa-solid fa-floppy-disk"></i> Simpan
-                `);
-                $('#layananForm input, #layananForm select, #closeBtn').prop('disabled', false);
+                `); // Pulihkan tombol submit
+                $('#layananForm input, #layananForm select, #closeBtn').prop('disabled', false); // Aktifkan kembali input dan tombol
             }
         });
 
+        // Reset form saat modal ditutup
         $('#layananModal').on('hidden.bs.modal', function() {
-            $('#layananForm')[0].reset();
-            $('#id_layanan').val('');
-            $('#nama_layanan').val('');
-            $('#jenis_layanan').val('');
-            $('#tarif').val('');
-            $('#keterangan').val('');
-            $('#layananForm .is-invalid').removeClass('is-invalid');
-            $('#layananForm .invalid-feedback').text('').hide();
+            $('#layananForm')[0].reset(); // Reset form
+            $('#id_layanan, #nama_layanan, #jenis_layanan, #tarif, #keterangan').val(''); // Kosongkan input
+            $('#layananForm .is-invalid').removeClass('is-invalid'); // Bersihkan status validasi
+            $('#layananForm .invalid-feedback').text('').hide(); // Sembunyikan pesan kesalahan
         });
-        // Show toast notification
+
         function showSuccessToast(message) {
             var toastHTML = `<div id="toast" class="toast fade align-items-center text-bg-success border border-success rounded-3 transparent-blur" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="toast-body d-flex align-items-start">

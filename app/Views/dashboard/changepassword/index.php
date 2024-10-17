@@ -56,21 +56,25 @@
 <?= $this->section('javascript'); ?>
 <script>
     $(document).ready(function() {
-        $('#loadingSpinner').hide();
+        $('#loadingSpinner').hide(); // Menyembunyikan spinner loading saat halaman siap
+
+        // Menangani event input pada field dengan kelas 'form-control'
         $('input.form-control').on('input', function() {
-            // Remove the is-invalid class for the current input field
+            // Menghapus kelas 'is-invalid' untuk field input saat ini
             $(this).removeClass('is-invalid');
-            // Hide the invalid-feedback message for the current input field
+            // Menyembunyikan pesan 'invalid-feedback' untuk field input saat ini
             $(this).siblings('.invalid-feedback').hide();
         });
+
+        // Menangani event klik pada tombol dengan ID 'submitBtn'
         $(document).on('click', '#submitBtn', function(e) {
-            e.preventDefault();
-            $('#changePasswordForm').submit();
-            $('input').prop('disabled', true);
+            e.preventDefault(); // Mencegah perilaku default dari tombol
+            $('#changePasswordForm').submit(); // Mengirimkan form untuk mengubah kata sandi
+            $('input').prop('disabled', true); // Menonaktifkan semua field input
             $('#submitBtn').prop('disabled', true).html(`
                 <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
                 <span role="status">Memproses, silakan tunggu...</span>
-            `);
+            `); // Mengubah tampilan tombol submit menjadi loading
         });
     });
 </script>

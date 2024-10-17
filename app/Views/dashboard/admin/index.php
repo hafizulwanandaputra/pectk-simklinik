@@ -184,6 +184,7 @@
                 $(".form-select").addClass("rounded-3");
             },
             'buttons': [{
+                // Tombol Refresh
                 action: function(e, dt, node, config) {
                     dt.ajax.reload(null, false);
                 },
@@ -193,6 +194,7 @@
                     $(node).removeClass('btn-secondary')
                 },
             }, {
+                // Tombol Tambah Pengguna
                 text: '<i class="fa-solid fa-plus"></i> Tambah Pengguna',
                 className: 'btn-primary btn-sm bg-gradient rounded-end-3',
                 attr: {
@@ -214,27 +216,28 @@
             "processing": false,
             "serverSide": true,
             "ajax": {
+                // URL endpoint untuk melakukan permintaan AJAX
                 "url": "<?= base_url('/admin/adminlist') ?>",
-                "type": "POST",
+                "type": "POST", // Metode HTTP yang digunakan untuk permintaan (POST)
                 "data": function(d) {
-                    // Additional parameters
+                    // Menambahkan parameter tambahan pada data yang dikirim
                     d.search = {
-                        "value": $('.dataTables_filter input[type="search"]').val()
+                        "value": $('.dataTables_filter input[type="search"]').val() // Mengambil nilai input pencarian
                     };
                 },
                 beforeSend: function() {
-                    // Show the custom processing spinner
-                    $('#loadingSpinner').show();
+                    // Menampilkan spinner loading sebelum permintaan dikirim
+                    $('#loadingSpinner').show(); // Menampilkan elemen spinner loading
                 },
                 complete: function() {
-                    // Hide the custom processing spinner after the request is complete
-                    $('#loadingSpinner').hide();
+                    // Menyembunyikan spinner loading setelah permintaan selesai
+                    $('#loadingSpinner').hide(); // Menyembunyikan elemen spinner loading
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
-                    // Hide the custom processing spinner on error
-                    $('#loadingSpinner').hide();
-                    // Show the Bootstrap error toast when the AJAX request fails
-                    showFailedToast('Gagal memuat data. Silakan coba lagi.');
+                    // Menyembunyikan spinner loading jika terjadi kesalahan
+                    $('#loadingSpinner').hide(); // Menyembunyikan elemen spinner loading
+                    // Menampilkan toast error Bootstrap ketika permintaan AJAX gagal
+                    showFailedToast('Gagal memuat data. Silakan coba lagi.'); // Menampilkan pesan kesalahan
                 }
             },
             columns: [{
@@ -295,241 +298,255 @@
                 "width": "50%"
             }],
         });
-        // Initialize Bootstrap tooltips
+
+        // Menginisialisasi tooltip untuk elemen dengan atribut data-bs-toggle="tooltip"
         $('[data-bs-toggle="tooltip"]').tooltip();
-        // Re-initialize tooltips on table redraw (server-side events like pagination, etc.)
+
+        // Memperbarui tooltip setiap kali tabel digambar ulang
         table.on('draw', function() {
             $('[data-bs-toggle="tooltip"]').tooltip();
         });
-        // Show add user modal
+
+        // Ketika tombol "Tambah Pengguna" diklik
         $('#addUserBtn').click(function() {
-            $('#userModalLabel').text('Tambah Pengguna');
-            $('#userForm')[0].reset();
-            $('#userId').val('');
-            $('#original_username').val('');
-            $('#userModal').modal('show');
+            $('#userModalLabel').text('Tambah Pengguna'); // Mengubah label modal
+            $('#userForm')[0].reset(); // Mengatur ulang form
+            $('#userId').val(''); // Mengosongkan ID pengguna
+            $('#original_username').val(''); // Mengosongkan username asli
+            $('#userModal').modal('show'); // Menampilkan modal
         });
+
+        // Fokus pada field fullname saat modal ditampilkan
         $('#userModal').on('shown.bs.modal', function() {
-            $('#fullname').trigger('focus');
+            $('#fullname').trigger('focus'); // Memfokuskan field fullname
         });
-        // Show edit user modal
+
+        // Mengedit pengguna saat tombol edit diklik
         $(document).on('click', '.edit-btn', async function() {
-            const $this = $(this);
-            const id = $(this).data('id');
-            $('[data-bs-toggle="tooltip"]').tooltip('hide');
-            $this.prop('disabled', true).html(`<span class="spinner-border" style="width: 11px; height: 11px;" aria-hidden="true"></span>`);
+            const $this = $(this); // Menyimpan referensi ke tombol yang diklik
+            const id = $(this).data('id'); // Mengambil ID pengguna dari atribut data
+            $('[data-bs-toggle="tooltip"]').tooltip('hide'); // Menyembunyikan tooltip
+            $this.prop('disabled', true).html(`<span class="spinner-border" style="width: 11px; height: 11px;" aria-hidden="true"></span>`); // Menampilkan spinner
 
             try {
-                // Make the request with Axios
+                // Melakukan permintaan dengan Axios untuk mendapatkan data pengguna
                 const response = await axios.get(`<?= base_url('/admin/admin') ?>/${id}`);
 
-                // Update the modal fields
+                // Memperbarui field modal dengan data pengguna yang diterima
                 $('#userModalLabel').text('Edit Pengguna');
                 $('#userId').val(response.data.id_user);
                 $('#fullname').val(response.data.fullname);
                 $('#username').val(response.data.username);
                 $('#role').val(response.data.role);
-                // Set the original_username hidden field
+                // Mengatur field hidden original_username
                 $('#original_username').val(response.data.username);
 
-                // Show the modal
+                // Menampilkan modal
                 $('#userModal').modal('show');
             } catch (error) {
-                showToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                showToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error); // Menampilkan pesan kesalahan
             } finally {
-                // Reset the button state
-                $this.prop('disabled', false).html(`<i class="fa-solid fa-pen-to-square"></i>`);
+                // Mengatur ulang status tombol
+                $this.prop('disabled', false).html(`<i class="fa-solid fa-pen-to-square"></i>`); // Mengembalikan tampilan tombol
             }
         });
 
-        // Store the ID of the user to be deleted
+        // Menyimpan ID pengguna yang akan dihapus
         var userId;
         var userName;
 
-        // Show delete confirmation modal
+        // Menampilkan modal konfirmasi penghapusan
         $(document).on('click', '.delete-btn', function() {
-            userId = $(this).data('id');
-            userName = $(this).data('username');
-            $('[data-bs-toggle="tooltip"]').tooltip('hide');
-            $('#deleteMessage').html(`Hapus @` + userName + `?`);
-            $('#deleteModal').modal('show');
+            userId = $(this).data('id'); // Mengambil ID pengguna dari atribut data
+            userName = $(this).data('username'); // Mengambil nama pengguna dari atribut data
+            $('[data-bs-toggle="tooltip"]').tooltip('hide'); // Menyembunyikan tooltip
+            $('#deleteMessage').html(`Hapus @` + userName + `?`); // Menampilkan pesan konfirmasi penghapusan
+            $('#deleteModal').modal('show'); // Menampilkan modal konfirmasi
         });
 
+        // Menampilkan modal untuk mengaktifkan pengguna
         $(document).on('click', '.activate-btn', function() {
-            userId = $(this).data('id');
-            userName = $(this).data('username');
-            $('[data-bs-toggle="tooltip"]').tooltip('hide');
-            $('#activateMessage').html(`Aktifkan @` + userName + `?`);
-            $('#activateModal').modal('show');
+            userId = $(this).data('id'); // Mengambil ID pengguna
+            userName = $(this).data('username'); // Mengambil nama pengguna
+            $('[data-bs-toggle="tooltip"]').tooltip('hide'); // Menyembunyikan tooltip
+            $('#activateMessage').html(`Aktifkan @` + userName + `?`); // Menampilkan pesan konfirmasi aktivasi
+            $('#activateModal').modal('show'); // Menampilkan modal aktivasi
         });
 
+        // Menampilkan modal untuk menonaktifkan pengguna
         $(document).on('click', '.deactivate-btn', function() {
-            userId = $(this).data('id');
-            userName = $(this).data('username');
-            $('[data-bs-toggle="tooltip"]').tooltip('hide');
-            $('#deactivateMessage').html(`Nonaktifkan @` + userName + `?`);
-            $('#deactivateModal').modal('show');
+            userId = $(this).data('id'); // Mengambil ID pengguna
+            userName = $(this).data('username'); // Mengambil nama pengguna
+            $('[data-bs-toggle="tooltip"]').tooltip('hide'); // Menyembunyikan tooltip
+            $('#deactivateMessage').html(`Nonaktifkan @` + userName + `?`); // Menampilkan pesan konfirmasi nonaktif
+            $('#deactivateModal').modal('show'); // Menampilkan modal nonaktif
         });
 
+        // Menampilkan modal untuk mengatur ulang kata sandi pengguna
         $(document).on('click', '.resetpwd-btn', function() {
-            userId = $(this).data('id');
-            userName = $(this).data('username');
-            $('[data-bs-toggle="tooltip"]').tooltip('hide');
-            $('#resetPasswordMessage').html(`Atur ulang kata sandi @` + userName + `?`);
-            $('#resetPasswordSubmessage').html(`Kata sandi pengguna ini akan diatur sama dengan nama pengguna`);
-            $('#resetPasswordModal').modal('show');
+            userId = $(this).data('id'); // Mengambil ID pengguna
+            userName = $(this).data('username'); // Mengambil nama pengguna
+            $('[data-bs-toggle="tooltip"]').tooltip('hide'); // Menyembunyikan tooltip
+            $('#resetPasswordMessage').html(`Atur ulang kata sandi @` + userName + `?`); // Menampilkan pesan reset kata sandi
+            $('#resetPasswordSubmessage').html(`Kata sandi pengguna ini akan diatur sama dengan nama pengguna`); // Menjelaskan reset kata sandi
+            $('#resetPasswordModal').modal('show'); // Menampilkan modal reset kata sandi
         });
 
-        // Confirm deletion
+        // Konfirmasi penghapusan pengguna
         $('#confirmDeleteBtn').click(async function() {
-            $('#deleteModal button').prop('disabled', true);
-            $('#deleteMessage').html('Mengapus, silakan tunggu...');
+            $('#deleteModal button').prop('disabled', true); // Menonaktifkan tombol konfirmasi
+            $('#deleteMessage').html('Mengapus, silakan tunggu...'); // Menampilkan pesan loading
 
             try {
-                await axios.delete(`<?= base_url('/admin/delete') ?>/${userId}`);
-                table.ajax.reload(null, false);
+                await axios.delete(`<?= base_url('/admin/delete') ?>/${userId}`); // Menghapus pengguna
+                table.ajax.reload(null, false); // Memperbarui tabel
             } catch (error) {
-                // Check if the error has a response and extract the message
-                let errorMessage = 'Terjadi kesalahan. Silakan coba lagi.<br>' + error;
+                // Memeriksa jika error memiliki response dan mengambil pesan kesalahan
+                let errorMessage = 'Terjadi kesalahan. Silakan coba lagi.<br>' + error; // Pesan kesalahan umum
                 if (error.response && error.response.data && error.response.data.error) {
-                    console.error(error.response.data.error);
-                    errorMessage = 'Tidak dapat menghapus data ini karena sedang digunakan.'
+                    console.error(error.response.data.error); // Menampilkan kesalahan di konsol
+                    errorMessage = 'Tidak dapat menghapus data ini karena sedang digunakan.'; // Pesan kesalahan khusus
                 }
-                showFailedToast(errorMessage);
+                showFailedToast(errorMessage); // Menampilkan pesan kesalahan
             } finally {
-                $('#deleteModal').modal('hide');
-                $('#deleteModal button').prop('disabled', false);
+                $('#deleteModal').modal('hide'); // Menyembunyikan modal penghapusan
+                $('#deleteModal button').prop('disabled', false); // Mengembalikan status tombol
             }
         });
 
+        // Konfirmasi aktivasi pengguna
         $('#confirmActivateBtn').click(async function() {
-            $('#activateModal button').prop('disabled', true);
-            $('#activateMessage').html('Mengaktifkan, silakan tunggu...');
+            $('#activateModal button').prop('disabled', true); // Menonaktifkan tombol konfirmasi
+            $('#activateMessage').html('Mengaktifkan, silakan tunggu...'); // Menampilkan pesan loading
 
             try {
-                await axios.post(`<?= base_url('/admin/activate') ?>/${userId}`);
-                table.ajax.reload(null, false);
+                await axios.post(`<?= base_url('/admin/activate') ?>/${userId}`); // Mengaktifkan pengguna
+                table.ajax.reload(null, false); // Memperbarui tabel
             } catch (error) {
-                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error); // Menampilkan pesan kesalahan
             } finally {
-                $('#activateModal').modal('hide');
-                $('#activateModal button').prop('disabled', false);
+                $('#activateModal').modal('hide'); // Menyembunyikan modal aktivasi
+                $('#activateModal button').prop('disabled', false); // Mengembalikan status tombol
             }
         });
 
+        // Konfirmasi nonaktifkan pengguna
         $('#confirmDeactivateBtn').click(async function() {
-            $('#deactivateModal button').prop('disabled', true);
-            $('#deactivateMessage').html('Menonaktifkan, silakan tunggu...');
+            $('#deactivateModal button').prop('disabled', true); // Menonaktifkan tombol konfirmasi
+            $('#deactivateMessage').html('Menonaktifkan, silakan tunggu...'); // Menampilkan pesan loading
 
             try {
-                await axios.post(`<?= base_url('/admin/deactivate') ?>/${userId}`);
-                table.ajax.reload(null, false);
+                await axios.post(`<?= base_url('/admin/deactivate') ?>/${userId}`); // Menonaktifkan pengguna
+                table.ajax.reload(null, false); // Memperbarui tabel
             } catch (error) {
-                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error); // Menampilkan pesan kesalahan
             } finally {
-                $('#deactivateModal').modal('hide');
-                $('#deactivateModal button').prop('disabled', false);
+                $('#deactivateModal').modal('hide'); // Menyembunyikan modal nonaktif
+                $('#deactivateModal button').prop('disabled', false); // Mengembalikan status tombol
             }
         });
 
-        // Confirm reset password
+        // Konfirmasi reset kata sandi
         $('#confirmResetPasswordBtn').click(async function() {
-            $('#resetPasswordModal button').prop('disabled', true);
-            $('#resetPasswordMessage').addClass('mb-0').html('Mengatur ulang kata sandi, silakan tunggu...');
-            $('#resetPasswordSubmessage').hide();
+            $('#resetPasswordModal button').prop('disabled', true); // Menonaktifkan tombol konfirmasi
+            $('#resetPasswordMessage').addClass('mb-0').html('Mengatur ulang kata sandi, silakan tunggu...'); // Menampilkan pesan loading
+            $('#resetPasswordSubmessage').hide(); // Menyembunyikan subpesan
 
             try {
-                await axios.post(`<?= base_url('/admin/resetpassword') ?>/${userId}`);
-                showSuccessToast(`Kata sandi @${userName} berhasil diatur ulang.`);
-                table.ajax.reload(null, false);
+                await axios.post(`<?= base_url('/admin/resetpassword') ?>/${userId}`); // Mengatur ulang kata sandi pengguna
+                showSuccessToast(`Kata sandi @${userName} berhasil diatur ulang.`); // Menampilkan pesan sukses
+                table.ajax.reload(null, false); // Memperbarui tabel
             } catch (error) {
-                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error); // Menampilkan pesan kesalahan
             } finally {
-                $('#resetPasswordModal').modal('hide');
-                $('#resetPasswordMessage').removeClass('mb-0');
-                $('#resetPasswordSubmessage').show();
-                $('#resetPasswordModal button').prop('disabled', false);
+                $('#resetPasswordModal').modal('hide'); // Menyembunyikan modal reset kata sandi
+                $('#resetPasswordMessage').removeClass('mb-0'); // Menghapus kelas margin
+                $('#resetPasswordSubmessage').show(); // Menampilkan subpesan
+                $('#resetPasswordModal button').prop('disabled', false); // Mengembalikan status tombol
             }
         });
 
-        // Submit user form (Add/Edit)
+        // Mengirimkan form pengguna (Tambah/Edit)
         $('#userForm').submit(async function(e) {
-            e.preventDefault();
+            e.preventDefault(); // Mencegah pengiriman form default
 
-            const url = $('#userId').val() ? '<?= base_url('/admin/update') ?>' : '<?= base_url('/admin/create') ?>';
-            const formData = new FormData(this);
-            console.log("Form URL:", url);
-            console.log("Form Data:", $(this).serialize());
+            const url = $('#userId').val() ? '<?= base_url('/admin/update') ?>' : '<?= base_url('/admin/create') ?>'; // Menentukan URL berdasarkan apakah pengguna sedang diupdate atau ditambahkan
+            const formData = new FormData(this); // Mengambil data form
 
-            // Clear previous validation states
+            console.log("Form URL:", url); // Menampilkan URL di konsol
+            console.log("Form Data:", $(this).serialize()); // Menampilkan data form di konsol
+
+            // Menghapus status validasi sebelumnya
             $('#userForm .is-invalid').removeClass('is-invalid');
             $('#userForm .invalid-feedback').text('').hide();
             $('#submitButton').prop('disabled', true).html(`
                 <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
                 <span role="status">Memproses...</span>
-            `);
+            `); // Mengubah tampilan tombol submit menjadi loading
 
-            // Disable form inputs
+            // Menonaktifkan input form
             $('#userForm input, #userForm select, #closeBtn').prop('disabled', true);
 
             try {
                 const response = await axios.post(url, formData, {
                     headers: {
-                        'Content-Type': 'multipart/form-data'
+                        'Content-Type': 'multipart/form-data' // Menentukan jenis konten untuk permintaan
                     }
                 });
 
                 if (response.data.success) {
-                    $('#userModal').modal('hide');
-                    table.ajax.reload(null, false);
+                    $('#userModal').modal('hide'); // Menyembunyikan modal setelah sukses
+                    table.ajax.reload(null, false); // Memperbarui tabel
                 } else {
-                    console.log("Validation Errors:", response.data.errors);
+                    console.log("Validation Errors:", response.data.errors); // Menampilkan kesalahan validasi di konsol
 
-                    // Clear previous validation states
+                    // Menghapus status validasi sebelumnya
                     $('#userForm .is-invalid').removeClass('is-invalid');
                     $('#userForm .invalid-feedback').text('').hide();
 
-                    // Display new validation errors
+                    // Menampilkan kesalahan validasi baru
                     for (const field in response.data.errors) {
                         if (response.data.errors.hasOwnProperty(field)) {
-                            const fieldElement = $('#' + field);
-                            const feedbackElement = fieldElement.siblings('.invalid-feedback'); // Adjust this if necessary
+                            const fieldElement = $('#' + field); // Mengambil elemen field
+                            const feedbackElement = fieldElement.siblings('.invalid-feedback'); // Mengambil elemen feedback
 
-                            console.log("Target Field:", fieldElement);
-                            console.log("Target Feedback:", feedbackElement);
+                            console.log("Target Field:", fieldElement); // Menampilkan elemen target di konsol
+                            console.log("Target Feedback:", feedbackElement); // Menampilkan elemen feedback target di konsol
 
                             if (fieldElement.length > 0 && feedbackElement.length > 0) {
-                                fieldElement.addClass('is-invalid');
-                                feedbackElement.text(response.data.errors[field]).show();
+                                fieldElement.addClass('is-invalid'); // Menandai field sebagai tidak valid
+                                feedbackElement.text(response.data.errors[field]).show(); // Menampilkan pesan kesalahan
 
-                                // Remove error message when the user corrects the input
+                                // Menghapus pesan kesalahan ketika pengguna memperbaiki input
                                 fieldElement.on('input change', function() {
-                                    $(this).removeClass('is-invalid');
-                                    $(this).siblings('.invalid-feedback').text('').hide();
+                                    $(this).removeClass('is-invalid'); // Menghapus tanda tidak valid
+                                    $(this).siblings('.invalid-feedback').text('').hide(); // Menyembunyikan pesan kesalahan
                                 });
                             } else {
-                                console.warn("Elemen tidak ditemukan pada field:", field);
+                                console.warn("Elemen tidak ditemukan pada field:", field); // Peringatan jika elemen tidak ditemukan
                             }
                         }
                     }
-                    console.error('Perbaiki kesalahan pada formulir.');
+                    console.error('Perbaiki kesalahan pada formulir.'); // Menampilkan pesan kesalahan di konsol
                 }
             } catch (error) {
-                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error); // Menampilkan pesan kesalahan
             } finally {
                 $('#submitButton').prop('disabled', false).html(`
                     <i class="fa-solid fa-floppy-disk"></i> Simpan
-                `);
-                $('#userForm input, #userForm select, #closeBtn').prop('disabled', false);
+                `); // Mengembalikan tampilan tombol submit
+
+                $('#userForm input, #userForm select, #closeBtn').prop('disabled', false); // Mengembalikan status input form
             }
         });
 
+        // Mengatur ulang form dan status validasi saat modal ditutup
         $('#userModal').on('hidden.bs.modal', function() {
-            $('#userForm')[0].reset();
-            $('.is-invalid').removeClass('is-invalid');
-            $('.invalid-feedback').text('').hide();
+            $('#userForm')[0].reset(); // Mengatur ulang form
+            $('.is-invalid').removeClass('is-invalid'); // Menghapus tanda tidak valid
+            $('.invalid-feedback').text('').hide(); // Menyembunyikan semua pesan kesalahan
         });
-        // Show toast notification
+
         function showSuccessToast(message) {
             var toastHTML = `<div id="toast" class="toast fade align-items-center text-bg-success border border-success rounded-3 transparent-blur" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="toast-body d-flex align-items-start">

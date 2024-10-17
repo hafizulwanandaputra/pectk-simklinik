@@ -8,7 +8,6 @@
     <link rel="manifest" href="<?= base_url(); ?>/manifest.json">
     <meta name="theme-color" content="#5eba00">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <!-- Favicons -->
     <link href="<?= base_url(); ?>favicon.png" rel="icon" />
     <link href="<?= base_url(); ?>favicon.png" rel="apple-touch-icon" />
     <link href="https://getbootstrap.com/docs/5.3/examples/sign-in/sign-in.css" rel="stylesheet">
@@ -71,62 +70,69 @@
     <script src="<?= base_url(); ?>assets_public/fontawesome/js/all.js"></script>
     <script>
         $(document).ready(function() {
-            // Show toast messages if they exist
+            // Mengecek apakah elemen dengan id 'redirectToast' ada di dalam dokumen
             if ($('#redirectToast').length) {
                 var redirectToast = new bootstrap.Toast($('#redirectToast')[0]);
-                redirectToast.show();
+                redirectToast.show(); // Menampilkan toast redirect
             }
 
+            // Mengecek apakah elemen dengan id 'msgToast' ada di dalam dokumen
             if ($('#msgToast').length) {
                 var msgToast = new bootstrap.Toast($('#msgToast')[0]);
-                msgToast.show();
+                msgToast.show(); // Menampilkan toast pesan
             }
 
+            // Mengecek apakah elemen dengan id 'errorToast' ada di dalam dokumen
             if ($('#errorToast').length) {
                 var errorToast = new bootstrap.Toast($('#errorToast')[0]);
-                errorToast.show();
+                errorToast.show(); // Menampilkan toast error
             }
 
+            // Mengecek apakah elemen dengan id 'validationToast' ada di dalam dokumen
             if ($('#validationToast').length) {
                 var validationToast = new bootstrap.Toast($('#validationToast')[0]);
-                validationToast.show();
+                validationToast.show(); // Menampilkan toast validasi
             }
 
+            // Mengatur waktu untuk menyembunyikan toast setelah 5 detik
             setTimeout(function() {
+                // Mengecek kembali untuk menyembunyikan setiap toast jika ada
                 if ($('#redirectToast').length) {
                     var redirectToast = new bootstrap.Toast($('#redirectToast')[0]);
-                    redirectToast.hide();
+                    redirectToast.hide(); // Menyembunyikan toast redirect
                 }
 
                 if ($('#msgToast').length) {
                     var msgToast = new bootstrap.Toast($('#msgToast')[0]);
-                    msgToast.hide();
+                    msgToast.hide(); // Menyembunyikan toast pesan
                 }
 
                 if ($('#errorToast').length) {
                     var errorToast = new bootstrap.Toast($('#errorToast')[0]);
-                    errorToast.hide();
+                    errorToast.hide(); // Menyembunyikan toast error
                 }
 
                 if ($('#validationToast').length) {
                     var validationToast = new bootstrap.Toast($('#validationToast')[0]);
-                    validationToast.hide();
+                    validationToast.hide(); // Menyembunyikan toast validasi
                 }
-            }, 5000);
+            }, 5000); // Durasi waktu untuk menyembunyikan toast (5000 ms)
+
+            // Menghapus kelas 'is-invalid' dan menyembunyikan pesan invalid ketika input diubah
             $('input.form-control').on('input', function() {
-                // Remove the is-invalid class for the current input field
-                $(this).removeClass('is-invalid');
-                // Hide the invalid-feedback message for the current input field
-                $(this).siblings('.invalid-feedback').hide();
+                $(this).removeClass('is-invalid'); // Menghapus kelas 'is-invalid'
+                $(this).siblings('.invalid-feedback').hide(); // Menyembunyikan pesan feedback invalid
             });
+
+            // Menangani event klik pada tombol login
             $(document).on('click', '#loginBtn', function(e) {
-                e.preventDefault();
-                $('#loginForm').submit();
-                $('input').prop('disabled', true).removeClass('is-invalid');
+                e.preventDefault(); // Mencegah aksi default tombol
+                $('#loginForm').submit(); // Mengirimkan form login
+                $('input').prop('disabled', true).removeClass('is-invalid'); // Menonaktifkan semua input dan menghapus kelas 'is-invalid'
                 $('#loginBtn').prop('disabled', true).html(`
-          <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
-          <span role="status">SILAKAN TUNGGU...</span>
-        `);
+            <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+            <span role="status">SILAKAN TUNGGU...</span>
+        `); // Menampilkan spinner dan teks 'SILAKAN TUNGGU...' pada tombol login
             });
         });
     </script>

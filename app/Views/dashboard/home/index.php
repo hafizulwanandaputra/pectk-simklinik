@@ -109,43 +109,13 @@
             </div>
         </fieldset>
     <?php endif; ?>
-    <!-- <div class="row row-cols-1 g-3 mb-3">
-        <div class="col">
-            <fieldset class="border rounded-3 px-2 py-0 mb-3">
-                <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Grafik Permintaan Pasien per Bulan</legend>
-                <div style="width: 100% !important;height: 400px !important;">
-                    <canvas id="permintaanperbulangraph"></canvas>
-                </div>
-            </fieldset>
-        </div>
-    </div>
-    <div class="row row-cols-1 row-cols-sm-2 g-3 mb-3">
-        <div class="col">
-            <fieldset class="border rounded-3 px-2 py-0 mb-3">
-                <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Grafik Jumlah Permintaan berdasarkan Menu Makanan</legend>
-                <div style="width: 100% !important;height: 400px !important;">
-                    <canvas id="permintaangraph"></canvas>
-                </div>
-            </fieldset>
-        </div>
-        <div class="col">
-            <fieldset class="border rounded-3 px-2 py-0 mb-3">
-                <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Grafik Jumlah Menu Makanan berdasarkan Petugas Gizi</legend>
-                <div style="width: 100% !important;height: 400px !important;">
-                    <canvas id="petugasgraph"></canvas>
-                </div>
-            </fieldset>
-        </div>
-    </div> -->
 </main>
 <?= $this->endSection(); ?>
 <?= $this->section('javascript'); ?>
 <script>
     $(document).ready(function() {
-        $('#loadingSpinner').hide();
+        // Menyembunyikan spinner loading saat dokumen sudah siap
+        $('#loadingSpinner').hide(); // Menyembunyikan elemen spinner loading
     });
 </script>
-<?= $this->endSection(); ?>
-<?= $this->section('chartjs'); ?>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js" integrity="sha512-SIMGYRUjwY8+gKg7nn9EItdD8LCADSDfJNutF9TPrvEo86sQmFMh6MyralfIyhADlajSxqc7G0gs7+MwWF/ogQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <?= $this->endSection(); ?>

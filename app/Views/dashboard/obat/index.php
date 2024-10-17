@@ -188,6 +188,7 @@
                 $(".form-select").addClass("rounded-3");
             },
             'buttons': [{
+                // Tombol Refresh
                 action: function(e, dt, node, config) {
                     dt.ajax.reload(null, false);
                 },
@@ -197,6 +198,7 @@
                     $(node).removeClass('btn-secondary')
                 },
             }, {
+                // Tombol Tambah Obat
                 text: '<i class="fa-solid fa-plus"></i> Tambah Obat',
                 className: 'btn-primary btn-sm bg-gradient rounded-end-3',
                 attr: {
@@ -218,27 +220,28 @@
             "processing": false,
             "serverSide": true,
             "ajax": {
+                // URL endpoint untuk melakukan permintaan AJAX
                 "url": "<?= base_url('/obat/obatlist') ?>",
-                "type": "POST",
+                "type": "POST", // Metode HTTP yang digunakan untuk permintaan (POST)
                 "data": function(d) {
-                    // Additional parameters
+                    // Menambahkan parameter tambahan pada data yang dikirim
                     d.search = {
-                        "value": $('.dataTables_filter input[type="search"]').val()
+                        "value": $('.dataTables_filter input[type="search"]').val() // Mengambil nilai input pencarian
                     };
                 },
                 beforeSend: function() {
-                    // Show the custom processing spinner
-                    $('#loadingSpinner').show();
+                    // Menampilkan spinner loading sebelum permintaan dikirim
+                    $('#loadingSpinner').show(); // Menampilkan elemen spinner loading
                 },
                 complete: function() {
-                    // Hide the custom processing spinner after the request is complete
-                    $('#loadingSpinner').hide();
+                    // Menyembunyikan spinner loading setelah permintaan selesai
+                    $('#loadingSpinner').hide(); // Menyembunyikan elemen spinner loading
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
-                    // Hide the custom processing spinner on error
-                    $('#loadingSpinner').hide();
-                    // Show the Bootstrap error toast when the AJAX request fails
-                    showFailedToast('Gagal memuat data. Silakan coba lagi.');
+                    // Menyembunyikan spinner loading jika terjadi kesalahan
+                    $('#loadingSpinner').hide(); // Menyembunyikan elemen spinner loading
+                    // Menampilkan toast error Bootstrap ketika permintaan AJAX gagal
+                    showFailedToast('Gagal memuat data. Silakan coba lagi.'); // Menampilkan pesan kesalahan
                 }
             },
             columns: [{
@@ -356,47 +359,59 @@
                 "width": "100%"
             }]
         });
-        // Initialize Bootstrap tooltips
+
+        // Menginisialisasi tooltip untuk elemen dengan atribut data-bs-toggle="tooltip"
         $('[data-bs-toggle="tooltip"]').tooltip();
-        // Re-initialize tooltips on table redraw (server-side events like pagination, etc.)
+
+        // Memperbarui tooltip setiap kali tabel digambar ulang
         table.on('draw', function() {
             $('[data-bs-toggle="tooltip"]').tooltip();
         });
+
+        // Fungsi untuk mengambil opsi supplier dari server
         async function fetchSupplierOptions() {
             try {
+                // Mengirim permintaan GET untuk mendapatkan daftar supplier
                 const response = await axios.get('<?= base_url('obat/supplierlist') ?>');
 
                 if (response.data.success) {
                     const options = response.data.data;
                     const select = $('#id_supplier');
 
-                    // Clear existing options except the first one
+                    // Hapus opsi yang sudah ada, kecuali yang pertama (placeholder)
                     select.find('option:not(:first)').remove();
 
-                    // Loop through the options and append them to the select element
+                    // Tambahkan opsi supplier ke dalam elemen select
                     options.forEach(option => {
                         select.append(`<option value="${option.value}">${option.text}</option>`);
                     });
                 }
             } catch (error) {
+                // Tampilkan pesan error jika terjadi kegagalan
                 showFailedToast('Gagal mendapatkan dokter.<br>' + error);
             }
         }
-        // Call the function to fetch and populate the menu options
+
+        // Panggil fungsi untuk mengisi opsi supplier saat halaman dimuat
         fetchSupplierOptions();
-        // Show add user modal
+
+        // Event handler untuk menampilkan modal tambah obat
         $('#addObatBtn').click(function() {
             $('#obatModalLabel').text('Tambah Obat');
             $('#obatModal').modal('show');
         });
+
+        // Inisialisasi select2 untuk elemen #id_supplier
         $('#id_supplier').select2({});
+
+        // Buka select2 saat modal obat ditampilkan
         $('#obatModal').on('shown.bs.modal', function() {
-            // Tunggu sedikit sebelum membuka select2 untuk memastikan modal sudah sepenuhnya ditampilkan
             setTimeout(function() {
                 $('#id_supplier').select2('open');
-            }, 200); // Delay 200ms untuk memastikan semuanya sudah siap
+            }, 200); // Delay untuk memastikan modal sudah siap
         });
 
+        // Konfigurasi tambahan select2 dengan parent dropdown dari modal
         $('#obatModal').on('shown.bs.modal', function() {
             $('#id_supplier').select2({
                 dropdownParent: $('#obatModal'),
@@ -406,6 +421,7 @@
             });
         });
 
+        // Event handler untuk menampilkan modal edit obat
         $(document).on('click', '.edit-btn', async function() {
             const $this = $(this);
             const id = $(this).data('id');
@@ -431,11 +447,11 @@
             }
         });
 
-        // Store the ID of the user to be deleted
+        // Variabel untuk menyimpan ID dan nama obat yang akan dihapus
         var obatId;
         var obatName;
 
-        // Show delete confirmation modal
+        // Event handler untuk menampilkan modal konfirmasi hapus
         $(document).on('click', '.delete-btn', function() {
             obatId = $(this).data('id');
             obatName = $(this).data('name');
@@ -444,6 +460,7 @@
             $('#deleteModal').modal('show');
         });
 
+        // Event handler untuk konfirmasi penghapusan obat
         $('#confirmDeleteBtn').click(async function() {
             $('#deleteModal button').prop('disabled', true);
             $('#deleteMessage').html('Mengapus, silakan tunggu...');
@@ -452,7 +469,6 @@
                 await axios.delete(`<?= base_url('/obat/delete') ?>/${obatId}`);
                 table.ajax.reload(null, false);
             } catch (error) {
-                // Check if the error has a response and extract the message
                 let errorMessage = 'Terjadi kesalahan. Silakan coba lagi.<br>' + error;
                 if (error.response && error.response.data && error.response.data.error) {
                     console.error(error.response.data.error);
@@ -465,6 +481,7 @@
             }
         });
 
+        // Event handler untuk submit form obat
         $('#obatForm').submit(async function(e) {
             e.preventDefault();
 
@@ -473,15 +490,12 @@
             console.log("Form URL:", url);
             console.log("Form Data:", $(this).serialize());
 
-            // Clear previous validation states
             $('#obatForm .is-invalid').removeClass('is-invalid');
             $('#obatForm .invalid-feedback').text('').hide();
             $('#submitButton').prop('disabled', true).html(`
                 <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
                 <span role="status">Memproses...</span>
             `);
-
-            // Disable form inputs
             $('#obatForm input, #obatForm select, #closeBtn').prop('disabled', true);
 
             try {
@@ -496,35 +510,20 @@
                     table.ajax.reload(null, false);
                 } else {
                     console.log("Validation Errors:", response.data.errors);
-
-                    // Clear previous validation states
-                    $('#obatForm .is-invalid').removeClass('is-invalid');
-                    $('#obatForm .invalid-feedback').text('').hide();
-
-                    // Display new validation errors
                     for (const field in response.data.errors) {
-                        if (response.data.errors.hasOwnProperty(field)) {
-                            const fieldElement = $('#' + field);
-                            const feedbackElement = fieldElement.siblings('.invalid-feedback');
+                        const fieldElement = $('#' + field);
+                        const feedbackElement = fieldElement.siblings('.invalid-feedback');
 
-                            console.log("Target Field:", fieldElement);
-                            console.log("Target Feedback:", feedbackElement);
+                        if (fieldElement.length && feedbackElement.length) {
+                            fieldElement.addClass('is-invalid');
+                            feedbackElement.text(response.data.errors[field]).show();
 
-                            if (fieldElement.length > 0 && feedbackElement.length > 0) {
-                                fieldElement.addClass('is-invalid');
-                                feedbackElement.text(response.data.errors[field]).show();
-
-                                // Remove error message when the user corrects the input
-                                fieldElement.on('input change', function() {
-                                    $(this).removeClass('is-invalid');
-                                    $(this).siblings('.invalid-feedback').text('').hide();
-                                });
-                            } else {
-                                console.warn("Elemen tidak ditemukan pada field:", field);
-                            }
+                            fieldElement.on('input change', function() {
+                                $(this).removeClass('is-invalid');
+                                $(this).siblings('.invalid-feedback').text('').hide();
+                            });
                         }
                     }
-                    console.error('Perbaiki kesalahan pada formulir.');
                 }
             } catch (error) {
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
@@ -536,20 +535,15 @@
             }
         });
 
+        // Reset form dan status validasi saat modal obat ditutup
         $('#obatModal').on('hidden.bs.modal', function() {
             $('#obatForm')[0].reset();
             $('#id_obat').val('');
             $('#id_supplier').val(null).trigger('change');
-            $('#nama_obat').val('');
-            $('#kategori_obat').val('');
-            $('#bentuk_obat').val('');
-            $('#harga_obat').val('');
-            $('#ppn').val('');
-            $('#mark_up').val('');
             $('#obatForm .is-invalid').removeClass('is-invalid');
             $('#obatForm .invalid-feedback').text('').hide();
         });
-        // Show toast notification
+
         function showSuccessToast(message) {
             var toastHTML = `<div id="toast" class="toast fade align-items-center text-bg-success border border-success rounded-3 transparent-blur" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="toast-body d-flex align-items-start">

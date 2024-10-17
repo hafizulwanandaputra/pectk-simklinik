@@ -135,6 +135,7 @@
                 $(".form-select").addClass("rounded-3");
             },
             'buttons': [{
+                // Tombol Refresh
                 action: function(e, dt, node, config) {
                     dt.ajax.reload(null, false);
                 },
@@ -144,6 +145,7 @@
                     $(node).removeClass('btn-secondary')
                 },
             }, {
+                // Tombol Tambah Supplier
                 text: '<i class="fa-solid fa-plus"></i> Tambah Supplier',
                 className: 'btn-primary btn-sm bg-gradient rounded-end-3',
                 attr: {
@@ -165,27 +167,28 @@
             "processing": false,
             "serverSide": true,
             "ajax": {
+                // URL endpoint untuk melakukan permintaan AJAX
                 "url": "<?= base_url('/supplier/supplierlist') ?>",
-                "type": "POST",
+                "type": "POST", // Metode HTTP yang digunakan untuk permintaan (POST)
                 "data": function(d) {
-                    // Additional parameters
+                    // Menambahkan parameter tambahan pada data yang dikirim
                     d.search = {
-                        "value": $('.dataTables_filter input[type="search"]').val()
+                        "value": $('.dataTables_filter input[type="search"]').val() // Mengambil nilai input pencarian
                     };
                 },
                 beforeSend: function() {
-                    // Show the custom processing spinner
-                    $('#loadingSpinner').show();
+                    // Menampilkan spinner loading sebelum permintaan dikirim
+                    $('#loadingSpinner').show(); // Menampilkan elemen spinner loading
                 },
                 complete: function() {
-                    // Hide the custom processing spinner after the request is complete
-                    $('#loadingSpinner').hide();
+                    // Menyembunyikan spinner loading setelah permintaan selesai
+                    $('#loadingSpinner').hide(); // Menyembunyikan elemen spinner loading
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
-                    // Hide the custom processing spinner on error
-                    $('#loadingSpinner').hide();
-                    // Show the Bootstrap error toast when the AJAX request fails
-                    showFailedToast('Gagal memuat data. Silakan coba lagi.');
+                    // Menyembunyikan spinner loading jika terjadi kesalahan
+                    $('#loadingSpinner').hide(); // Menyembunyikan elemen spinner loading
+                    // Menampilkan toast error Bootstrap ketika permintaan AJAX gagal
+                    showFailedToast('Gagal memuat data. Silakan coba lagi.'); // Menampilkan pesan kesalahan
                 }
             },
             columns: [{
@@ -242,26 +245,31 @@
                 "width": "50%"
             }]
         });
-        // Initialize Bootstrap tooltips
+
+        // Menginisialisasi tooltip untuk elemen dengan atribut data-bs-toggle="tooltip"
         $('[data-bs-toggle="tooltip"]').tooltip();
-        // Re-initialize tooltips on table redraw (server-side events like pagination, etc.)
+
+        // Memperbarui tooltip setiap kali tabel digambar ulang
         table.on('draw', function() {
             $('[data-bs-toggle="tooltip"]').tooltip();
         });
-        // Show add user modal
+
+        // Tampilkan modal tambah supplier
         $('#addSupplierBtn').click(function() {
             $('#supplierModalLabel').text('Tambah Supplier');
             $('#supplierModal').modal('show');
         });
 
+        // Fokuskan input nama supplier saat modal ditampilkan
         $('#supplierModal').on('shown.bs.modal', function() {
             $('#nama_supplier').trigger('focus');
         });
 
+        // Fungsi untuk menangani tombol edit supplier
         $(document).on('click', '.edit-btn', async function() {
             const $this = $(this);
-            const id = $(this).data('id');
-            $('[data-bs-toggle="tooltip"]').tooltip('hide');
+            const id = $(this).data('id'); // Ambil ID supplier
+            $('[data-bs-toggle="tooltip"]').tooltip('hide'); // Sembunyikan tooltip
             $this.prop('disabled', true).html(`<span class="spinner-border" style="width: 11px; height: 11px;" aria-hidden="true"></span>`);
 
             try {
@@ -279,11 +287,11 @@
             }
         });
 
-        // Store the ID of the user to be deleted
+        // Variabel untuk menyimpan ID dan nama supplier yang akan dihapus
         var supplierId;
         var supplierName;
 
-        // Show delete confirmation modal
+        // Tampilkan modal konfirmasi hapus supplier
         $(document).on('click', '.delete-btn', function() {
             supplierId = $(this).data('id');
             supplierName = $(this).data('name');
@@ -293,20 +301,20 @@
             $('#deleteModal').modal('show');
         });
 
+        // Fungsi untuk mengonfirmasi penghapusan supplier
         $('#confirmDeleteBtn').click(async function() {
             $('#deleteModal button').prop('disabled', true);
-            $('#deleteMessage').addClass('mb-0').html('Mengapus, silakan tunggu...');
+            $('#deleteMessage').addClass('mb-0').html('Menghapus, silakan tunggu...');
             $('#deleteSubmessage').hide();
 
             try {
                 await axios.delete(`<?= base_url('/supplier/delete') ?>/${supplierId}`);
-                table.ajax.reload(null, false);
+                table.ajax.reload(null, false); // Refresh data setelah penghapusan
             } catch (error) {
-                // Check if the error has a response and extract the message
                 let errorMessage = 'Terjadi kesalahan. Silakan coba lagi.<br>' + error;
                 if (error.response && error.response.data && error.response.data.error) {
                     console.error(error.response.data.error);
-                    errorMessage = 'Tidak dapat menghapus data ini karena sedang digunakan.'
+                    errorMessage = 'Tidak dapat menghapus data ini karena sedang digunakan.';
                 }
                 showFailedToast(errorMessage);
             } finally {
@@ -317,6 +325,7 @@
             }
         });
 
+        // Fungsi untuk menangani submit form supplier
         $('#supplierForm').submit(async function(e) {
             e.preventDefault();
 
@@ -325,7 +334,7 @@
             console.log("Form URL:", url);
             console.log("Form Data:", $(this).serialize());
 
-            // Clear previous validation states
+            // Hapus status validasi sebelumnya
             $('#supplierForm .is-invalid').removeClass('is-invalid');
             $('#supplierForm .invalid-feedback').text('').hide();
             $('#submitButton').prop('disabled', true).html(`
@@ -333,7 +342,7 @@
                 <span role="status">Memproses, silakan tunggu...</span>
             `);
 
-            // Disable form inputs
+            // Nonaktifkan input form sementara
             $('#supplierForm input, #supplierForm select, #closeBtn').prop('disabled', true);
 
             try {
@@ -345,28 +354,21 @@
 
                 if (response.data.success) {
                     $('#supplierModal').modal('hide');
-                    table.ajax.reload(null, false);
+                    table.ajax.reload(null, false); // Refresh data setelah operasi berhasil
                 } else {
                     console.log("Validation Errors:", response.data.errors);
 
-                    // Clear previous validation states
-                    $('#supplierForm .is-invalid').removeClass('is-invalid');
-                    $('#supplierForm .invalid-feedback').text('').hide();
-
-                    // Display new validation errors
+                    // Tampilkan pesan kesalahan validasi
                     for (const field in response.data.errors) {
                         if (response.data.errors.hasOwnProperty(field)) {
                             const fieldElement = $('#' + field);
                             const feedbackElement = fieldElement.siblings('.invalid-feedback');
 
-                            console.log("Target Field:", fieldElement);
-                            console.log("Target Feedback:", feedbackElement);
-
                             if (fieldElement.length > 0 && feedbackElement.length > 0) {
                                 fieldElement.addClass('is-invalid');
                                 feedbackElement.text(response.data.errors[field]).show();
 
-                                // Remove error message when the user corrects the input
+                                // Hapus pesan kesalahan saat input berubah
                                 fieldElement.on('input change', function() {
                                     $(this).removeClass('is-invalid');
                                     $(this).siblings('.invalid-feedback').text('').hide();
@@ -388,6 +390,7 @@
             }
         });
 
+        // Reset form dan status validasi saat modal ditutup
         $('#supplierModal').on('hidden.bs.modal', function() {
             $('#supplierForm')[0].reset();
             $('#id_supplier').val('');
@@ -397,7 +400,7 @@
             $('#supplierForm .is-invalid').removeClass('is-invalid');
             $('#supplierForm .invalid-feedback').text('').hide();
         });
-        // Show toast notification
+
         function showSuccessToast(message) {
             var toastHTML = `<div id="toast" class="toast fade align-items-center text-bg-success border border-success rounded-3 transparent-blur" role="alert" aria-live="assertive" aria-atomic="true">
                 <div class="toast-body d-flex align-items-start">

@@ -535,49 +535,58 @@
     <?= $this->renderSection('chartjs'); ?>
     <?= $this->renderSection('imgupload'); ?>
     <script>
+        // Fungsi untuk menampilkan spinner loading
         function showSpinner() {
-            $('#loadingSpinner').show();
+            $('#loadingSpinner').show(); // Menampilkan elemen spinner
         }
+
+        // Event listener untuk menangani sebelum halaman di-unload
         $(window).on('beforeunload', function() {
-            showSpinner();
+            showSpinner(); // Menampilkan spinner saat pengguna meninggalkan halaman
         });
+
+        // Event listener untuk menangani klik pada tombol konfirmasi logout
         $(document).on('click', '#confirmLogout', function() {
-            $('#logoutModal button').prop('disabled', true);
-            $('#logoutMessage').html(`Silakan tunggu...`);
+            $('#logoutModal button').prop('disabled', true); // Nonaktifkan tombol logout
+            $('#logoutMessage').html(`Silakan tunggu...`); // Tampilkan pesan menunggu saat logout
         });
+
+        // Ketika dokumen siap
         $(document).ready(function() {
-            // Show toast messages if they exist
+            // Tampilkan pesan toast jika ada
             if ($('#infoToast').length) {
                 var infoToast = new bootstrap.Toast($('#infoToast')[0]);
-                infoToast.show();
+                infoToast.show(); // Menampilkan toast informasi
             }
 
             if ($('#msgToast').length) {
                 var msgToast = new bootstrap.Toast($('#msgToast')[0]);
-                msgToast.show();
+                msgToast.show(); // Menampilkan toast pesan
             }
 
             if ($('#errorToast').length) {
                 var errorToast = new bootstrap.Toast($('#errorToast')[0]);
-                errorToast.show();
+                errorToast.show(); // Menampilkan toast error
             }
 
+            // Mengatur waktu untuk menyembunyikan toast setelah 5 detik
             setTimeout(function() {
+                // Mengecek dan menyembunyikan setiap toast jika ada
                 if ($('#infoToast').length) {
                     var infoToast = new bootstrap.Toast($('#infoToast')[0]);
-                    infoToast.hide();
+                    infoToast.hide(); // Menyembunyikan toast informasi
                 }
 
                 if ($('#msgToast').length) {
                     var msgToast = new bootstrap.Toast($('#msgToast')[0]);
-                    msgToast.hide();
+                    msgToast.hide(); // Menyembunyikan toast pesan
                 }
 
                 if ($('#errorToast').length) {
                     var errorToast = new bootstrap.Toast($('#errorToast')[0]);
-                    errorToast.hide();
+                    errorToast.hide(); // Menyembunyikan toast error
                 }
-            }, 5000);
+            }, 5000); // Durasi waktu untuk menyembunyikan toast (5000 ms)
         });
     </script>
     <script>
