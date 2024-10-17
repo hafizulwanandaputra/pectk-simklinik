@@ -38,7 +38,7 @@
         </div>
         <hr>
         <div class="table-responsive">
-            <table class="table table-sm table-hover" style="width:100%; font-size: 9pt;">
+            <table class="table table-sm" style="width:100%; font-size: 9pt;">
                 <thead>
                     <tr class="align-middle">
                         <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">No</th>
