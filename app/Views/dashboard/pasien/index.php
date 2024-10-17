@@ -141,6 +141,8 @@
             data.forEach(function(pasien, index) {
                 // Mengkondisikan jenis kelamin
                 const jenis_kelamin = pasien.jenis_kelamin === "L" ? "Laki-laki" : "Perempuan";
+                // Gunakan pesan jika tidak ada nomor telepon
+                const telpon = pasien.telpon ? pasien.telpon : "<em>Tidak ada</em>";
                 const usia = hitungUsia(pasien.tanggal_lahir); // Menghitung usia pasien
 
                 // Membuat elemen baris untuk setiap pasien
@@ -152,7 +154,7 @@
                         <td class="date text-nowrap">${pasien.no_rm}</td>
                         <td class="date text-nowrap">${pasien.nomor_registrasi}</td>
                         <td>${pasien.tempat_lahir}<br><small class="date text-nowrap">${pasien.tanggal_lahir} • ${usia} tahun</small></td>
-                        <td class="date text-nowrap text-end">${pasien.telpon}</td>
+                        <td class="date text-nowrap">${telpon}</td>
                         <td>${pasien.alamat}</td>
                         <td>${pasien.dokter}</td>
                     </tr>
