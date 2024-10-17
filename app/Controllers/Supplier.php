@@ -16,33 +16,37 @@ class Supplier extends BaseController
 
     public function index()
     {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+            // Menyiapkan data untuk tampilan halaman supplier
             $data = [
-                'title' => 'Supplier - ' . $this->systemName,
-                'headertitle' => 'Supplier',
-                'agent' => $this->request->getUserAgent()
+                'title' => 'Supplier - ' . $this->systemName, // Judul halaman
+                'headertitle' => 'Supplier', // Judul header
+                'agent' => $this->request->getUserAgent() // Mengambil informasi user agent
             ];
-            return view('dashboard/supplier/index', $data);
+            return view('dashboard/supplier/index', $data); // Mengembalikan tampilan halaman supplier
         } else {
-            throw PageNotFoundException::forPageNotFound();
+            throw PageNotFoundException::forPageNotFound(); // Menampilkan halaman tidak ditemukan jika peran tidak valid
         }
     }
 
     public function supplierlist()
     {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+            // Mengambil data dari permintaan POST
             $request = $this->request->getPost();
-            $search = $request['search']['value']; // Search value
-            $start = $request['start']; // Start index for pagination
-            $length = $request['length']; // Length of the page
-            $draw = $request['draw']; // Draw counter for DataTables
+            $search = $request['search']['value']; // Nilai pencarian
+            $start = $request['start']; // Indeks awal untuk pagination
+            $length = $request['length']; // Panjang halaman
+            $draw = $request['draw']; // Penghitung draw untuk DataTables
 
-            // Get sorting parameters
+            // Mendapatkan parameter pengurutan
             $order = $request['order'];
-            $sortColumnIndex = $order[0]['column']; // Column index
-            $sortDirection = $order[0]['dir']; // asc or desc
+            $sortColumnIndex = $order[0]['column']; // Indeks kolom
+            $sortDirection = $order[0]['dir']; // asc atau desc
 
-            // Map column index to the database column name
+            // Memetakan indeks kolom ke nama kolom database
             $columnMapping = [
                 0 => 'id_supplier',
                 1 => 'id_supplier',
@@ -52,141 +56,149 @@ class Supplier extends BaseController
                 5 => 'jumlah_obat',
             ];
 
-            // Get the column to sort by
+            // Mendapatkan kolom untuk diurutkan
             $sortColumn = $columnMapping[$sortColumnIndex] ?? 'id_supplier';
 
-            // Get total records count
+            // Mendapatkan total jumlah catatan
             $totalRecords = $this->SupplierModel->countAllResults(true);
 
-            // Apply search query
+            // Menerapkan query pencarian
             if ($search) {
                 $this->SupplierModel
-                    ->like('nama_supplier', $search)
-                    ->orderBy($sortColumn, $sortDirection);
+                    ->like('nama_supplier', $search) // Mencari nama supplier
+                    ->orderBy($sortColumn, $sortDirection); // Mengurutkan hasil
             }
 
-            // Get filtered records count
+            // Mendapatkan jumlah catatan yang difilter
             $filteredRecords = $this->SupplierModel->countAllResults(false);
 
-            // Fetch the data
+            // Mengambil data supplier
             $supplier = $this->SupplierModel
                 ->select('supplier.*, (SELECT COUNT(*) FROM obat WHERE obat.id_supplier = supplier.id_supplier) as jumlah_obat')
                 ->orderBy($sortColumn, $sortDirection)
-                ->findAll($length, $start);
+                ->findAll($length, $start); // Mengambil data dengan pagination
 
             foreach ($supplier as $index => &$item) {
-                $item['no'] = $start + $index + 1; // Menambahkan kolom 'no'
+                $item['no'] = $start + $index + 1; // Menambahkan kolom 'no' ke setiap item
             }
 
-            // Return the JSON response
+            // Mengembalikan respon JSON
             return $this->response->setJSON([
                 'draw' => $draw,
                 'recordsTotal' => $totalRecords,
                 'recordsFiltered' => $filteredRecords,
-                'data' => $supplier
+                'data' => $supplier // Data supplier yang diambil
             ]);
         } else {
             return $this->response->setStatusCode(404)->setJSON([
-                'error' => 'Halaman tidak ditemukan',
+                'error' => 'Halaman tidak ditemukan', // Pesan jika peran tidak valid
             ]);
         }
     }
 
     public function supplier($id)
     {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+            // Mengambil data supplier berdasarkan id
             $data = $this->SupplierModel->find($id);
-            return $this->response->setJSON($data);
+            return $this->response->setJSON($data); // Mengembalikan data dalam format JSON
         } else {
             return $this->response->setStatusCode(404)->setJSON([
-                'error' => 'Halaman tidak ditemukan',
+                'error' => 'Halaman tidak ditemukan', // Pesan jika peran tidak valid
             ]);
         }
     }
 
     public function create()
     {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
-            // Validate
+            // Validasi input
             $validation = \Config\Services::validation();
-            // Set base validation rules
+            // Menetapkan aturan validasi dasar
             $validation->setRules([
-                'nama_supplier' => 'required',
-                'alamat_supplier' => 'required',
-                'kontak_supplier' => 'required|numeric',
+                'nama_supplier' => 'required', // Nama supplier wajib diisi
+                'alamat_supplier' => 'required', // Alamat supplier wajib diisi
+                'kontak_supplier' => 'required|numeric', // Kontak supplier wajib diisi dan harus berupa angka
             ]);
 
+            // Memeriksa validasi
             if (!$this->validate($validation->getRules())) {
-                return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
+                return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]); // Mengembalikan pesan kesalahan
             }
 
-            // Save Data
+            // Menyimpan data supplier
             $data = [
-                'nama_supplier' => $this->request->getPost('nama_supplier'),
-                'alamat_supplier' => $this->request->getPost('alamat_supplier'),
-                'kontak_supplier' => $this->request->getPost('kontak_supplier')
+                'nama_supplier' => $this->request->getPost('nama_supplier'), // Mengambil nama supplier dari input
+                'alamat_supplier' => $this->request->getPost('alamat_supplier'), // Mengambil alamat supplier dari input
+                'kontak_supplier' => $this->request->getPost('kontak_supplier') // Mengambil kontak supplier dari input
             ];
-            $this->SupplierModel->save($data);
-            return $this->response->setJSON(['success' => true, 'message' => 'Supplier berhasil ditambahkan']);
+            $this->SupplierModel->save($data); // Menyimpan data ke database
+            return $this->response->setJSON(['success' => true, 'message' => 'Supplier berhasil ditambahkan']); // Mengembalikan pesan sukses
         } else {
             return $this->response->setStatusCode(404)->setJSON([
-                'error' => 'Halaman tidak ditemukan',
+                'error' => 'Halaman tidak ditemukan', // Pesan jika peran tidak valid
             ]);
         }
     }
 
     public function update()
     {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
-            // Validate
+            // Validasi input
             $validation = \Config\Services::validation();
-            // Set base validation rules
+            // Menetapkan aturan validasi dasar
             $validation->setRules([
-                'nama_supplier' => 'required',
-                'alamat_supplier' => 'required',
-                'kontak_supplier' => 'required|numeric',
+                'nama_supplier' => 'required', // Nama supplier wajib diisi
+                'alamat_supplier' => 'required', // Alamat supplier wajib diisi
+                'kontak_supplier' => 'required|numeric', // Kontak supplier wajib diisi dan harus berupa angka
             ]);
+
+            // Memeriksa validasi
             if (!$this->validate($validation->getRules())) {
-                return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
+                return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]); // Mengembalikan pesan kesalahan
             }
 
-            // Save Data
+            // Menyimpan data supplier yang telah diperbarui
             $data = [
-                'id_supplier' => $this->request->getPost('id_supplier'),
-                'nama_supplier' => $this->request->getPost('nama_supplier'),
-                'alamat_supplier' => $this->request->getPost('alamat_supplier'),
-                'kontak_supplier' => $this->request->getPost('kontak_supplier')
+                'id_supplier' => $this->request->getPost('id_supplier'), // Mengambil id_supplier dari input
+                'nama_supplier' => $this->request->getPost('nama_supplier'), // Mengambil nama supplier dari input
+                'alamat_supplier' => $this->request->getPost('alamat_supplier'), // Mengambil alamat supplier dari input
+                'kontak_supplier' => $this->request->getPost('kontak_supplier') // Mengambil kontak supplier dari input
             ];
-            $this->SupplierModel->save($data);
-            return $this->response->setJSON(['success' => true, 'message' => 'Supplier berhasil diedit']);
+            $this->SupplierModel->save($data); // Menyimpan data ke database
+            return $this->response->setJSON(['success' => true, 'message' => 'Supplier berhasil diedit']); // Mengembalikan pesan sukses
         } else {
             return $this->response->setStatusCode(404)->setJSON([
-                'error' => 'Halaman tidak ditemukan',
+                'error' => 'Halaman tidak ditemukan', // Pesan jika peran tidak valid
             ]);
         }
     }
 
     public function delete($id)
     {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
-            $db = db_connect();
+            $db = db_connect(); // Menghubungkan ke database
 
             try {
-                $this->SupplierModel->delete($id);
-                $db->query('ALTER TABLE `supplier` auto_increment = 1');
-                return $this->response->setJSON(['message' => 'Supplier berhasil dihapus']);
+                $this->SupplierModel->delete($id); // Menghapus supplier berdasarkan id
+                $db->query('ALTER TABLE `supplier` auto_increment = 1'); // Mengatur auto increment
+                return $this->response->setJSON(['message' => 'Supplier berhasil dihapus']); // Mengembalikan pesan sukses
             } catch (DatabaseException $e) {
-                // Log the error message
+                // Mencatat pesan kesalahan
                 log_message('error', $e->getMessage());
 
-                // Return a generic error message
+                // Mengembalikan pesan kesalahan umum
                 return $this->response->setStatusCode(422)->setJSON([
-                    'error' => $e->getMessage(),
+                    'error' => $e->getMessage(), // Mengembalikan pesan kesalahan dari database
                 ]);
             }
         } else {
             return $this->response->setStatusCode(404)->setJSON([
-                'error' => 'Halaman tidak ditemukan',
+                'error' => 'Halaman tidak ditemukan', // Pesan jika peran tidak valid
             ]);
         }
     }

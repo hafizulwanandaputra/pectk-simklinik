@@ -16,33 +16,38 @@ class Layanan extends BaseController
 
     public function index()
     {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+            // Mengatur data untuk tampilan
             $data = [
                 'title' => 'Tindakan - ' . $this->systemName,
                 'headertitle' => 'Tindakan',
                 'agent' => $this->request->getUserAgent()
             ];
+            // Mengembalikan tampilan layanan
             return view('dashboard/layanan/index', $data);
         } else {
+            // Jika peran tidak dikenali, lempar pengecualian untuk halaman tidak ditemukan
             throw PageNotFoundException::forPageNotFound();
         }
     }
 
     public function layananlist()
     {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
             $request = $this->request->getPost();
-            $search = $request['search']['value']; // Search value
-            $start = $request['start']; // Start index for pagination
-            $length = $request['length']; // Length of the page
-            $draw = $request['draw']; // Draw counter for DataTables
+            $search = $request['search']['value']; // Nilai pencarian
+            $start = $request['start']; // Indeks mulai untuk paginasi
+            $length = $request['length']; // Panjang halaman
+            $draw = $request['draw']; // Hitungan draw untuk DataTables
 
-            // Get sorting parameters
+            // Mengambil parameter pengurutan
             $order = $request['order'];
-            $sortColumnIndex = $order[0]['column']; // Column index
-            $sortDirection = $order[0]['dir']; // asc or desc
+            $sortColumnIndex = $order[0]['column']; // Indeks kolom
+            $sortDirection = $order[0]['dir']; // arah asc atau desc
 
-            // Map column index to the database column name
+            // Memetakan indeks kolom ke nama kolom di database
             $columnMapping = [
                 0 => 'id_layanan',
                 1 => 'id_layanan',
@@ -53,43 +58,43 @@ class Layanan extends BaseController
                 6 => 'used'
             ];
 
-            // Get the column to sort by
+            // Mengambil kolom untuk diurutkan
             $sortColumn = $columnMapping[$sortColumnIndex] ?? 'id_layanan';
 
-            // Get total records count
+            // Menghitung total record
             $totalRecords = $this->LayananModel->countAllResults(true);
 
-            // Modify sorting logic to handle jenis_tindakan
+            // Memodifikasi logika pengurutan untuk menangani jenis_layanan
             if ($sortColumn === 'jenis_layanan') {
-                // Sort by jenis_layanan, then by nama_layanan
+                // Mengurutkan berdasarkan jenis_layanan, kemudian berdasarkan nama_layanan
                 $this->LayananModel
                     ->orderBy('jenis_layanan', $sortDirection)
                     ->orderBy('id_layanan', 'ASC');
             } else {
-                // Default sorting behavior
+                // Perilaku pengurutan default
                 $this->LayananModel->orderBy($sortColumn, $sortDirection);
             }
 
-            // Apply search query
+            // Menerapkan kueri pencarian
             if ($search) {
                 $this->LayananModel
                     ->like('nama_layanan', $search);
             }
 
-            // Get filtered records count
+            // Menghitung jumlah record yang difilter
             $filteredRecords = $this->LayananModel->countAllResults(false);
 
-            // Fetch the data
+            // Mengambil data
             $layanan = $this->LayananModel
                 ->select('layanan.*, (SELECT SUM(qty_transaksi) FROM detail_transaksi WHERE detail_transaksi.id_layanan = layanan.id_layanan) as used')
                 ->findAll($length, $start);
 
-            // Tambahkan penomoran langsung ke $layanan
+            // Menambahkan penomoran langsung ke $layanan
             foreach ($layanan as $index => &$item) {
                 $item['no'] = $start + $index + 1; // Menambahkan kolom 'no'
             }
 
-            // Return the JSON response
+            // Mengembalikan respons JSON
             return $this->response->setJSON([
                 'draw' => $draw,
                 'recordsTotal' => $totalRecords,
@@ -97,25 +102,22 @@ class Layanan extends BaseController
                 'data' => $layanan
             ]);
         } else {
+            // Jika peran tidak dikenali, kembalikan status 404
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan',
             ]);
         }
     }
 
-    private function isLayananUsedInDetailTransaksi($id_layanan)
-    {
-        return $this->LayananModel->where('layanan.id_layanan', $id_layanan)
-            ->join('detail_transaksi', 'detail_transaksi.id_layanan = layanan.id_layanan')
-            ->countAllResults();
-    }
-
     public function layanan($id)
     {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+            // Mengambil data layanan berdasarkan ID
             $data = $this->LayananModel->find($id);
             return $this->response->setJSON($data);
         } else {
+            // Jika peran tidak dikenali, kembalikan status 404
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan',
             ]);
@@ -124,21 +126,23 @@ class Layanan extends BaseController
 
     public function create()
     {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
-            // Validate
+            // Validasi
             $validation = \Config\Services::validation();
-            // Set base validation rules
+            // Mengatur aturan validasi dasar
             $validation->setRules([
                 'nama_layanan' => 'required',
                 'jenis_layanan' => 'required',
                 'tarif' => 'required|numeric|greater_than[0]',
             ]);
 
+            // Memeriksa validasi
             if (!$this->validate($validation->getRules())) {
                 return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
             }
 
-            // Save Data
+            // Menyimpan data
             $data = [
                 'nama_layanan' => $this->request->getPost('nama_layanan'),
                 'jenis_layanan' => $this->request->getPost('jenis_layanan'),
@@ -148,6 +152,7 @@ class Layanan extends BaseController
             $this->LayananModel->save($data);
             return $this->response->setJSON(['success' => true, 'message' => 'Layanan berhasil ditambahkan']);
         } else {
+            // Jika peran tidak dikenali, kembalikan status 404
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan',
             ]);
@@ -156,20 +161,22 @@ class Layanan extends BaseController
 
     public function update()
     {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
-            // Validate
+            // Validasi
             $validation = \Config\Services::validation();
-            // Set base validation rules
+            // Mengatur aturan validasi dasar
             $validation->setRules([
                 'nama_layanan' => 'required',
                 'jenis_layanan' => 'required',
                 'tarif' => 'required|numeric|greater_than[0]',
             ]);
+            // Memeriksa validasi
             if (!$this->validate($validation->getRules())) {
                 return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
             }
 
-            // Save Data
+            // Menyimpan data
             $data = [
                 'id_layanan' => $this->request->getPost('id_layanan'),
                 'nama_layanan' => $this->request->getPost('nama_layanan'),
@@ -180,6 +187,7 @@ class Layanan extends BaseController
             $this->LayananModel->save($data);
             return $this->response->setJSON(['success' => true, 'message' => 'Layanan berhasil diedit']);
         } else {
+            // Jika peran tidak dikenali, kembalikan status 404
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan',
             ]);
@@ -188,23 +196,27 @@ class Layanan extends BaseController
 
     public function delete($id)
     {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
             $db = db_connect();
 
             try {
+                // Menghapus data layanan berdasarkan ID
                 $this->LayananModel->delete($id);
+                // Mengatur auto increment
                 $db->query('ALTER TABLE `layanan` auto_increment = 1');
                 return $this->response->setJSON(['message' => 'Layanan berhasil dihapus']);
             } catch (DatabaseException $e) {
-                // Log the error message
+                // Mencatat pesan kesalahan
                 log_message('error', $e->getMessage());
 
-                // Return a generic error message
+                // Mengembalikan pesan kesalahan generik
                 return $this->response->setStatusCode(422)->setJSON([
                     'error' => $e->getMessage(),
                 ]);
             }
         } else {
+            // Jika peran tidak dikenali, kembalikan status 404
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan',
             ]);

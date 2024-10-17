@@ -17,33 +17,38 @@ class Obat extends BaseController
 
     public function index()
     {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+            // Menyiapkan data untuk tampilan
             $data = [
                 'title' => 'Obat - ' . $this->systemName,
                 'headertitle' => 'Obat',
                 'agent' => $this->request->getUserAgent()
             ];
+            // Mengembalikan tampilan daftar obat
             return view('dashboard/obat/index', $data);
         } else {
+            // Jika peran tidak dikenali, lempar pengecualian untuk halaman tidak ditemukan
             throw PageNotFoundException::forPageNotFound();
         }
     }
 
     public function obatlist()
     {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
             $request = $this->request->getPost();
-            $search = $request['search']['value']; // Search value
-            $start = $request['start']; // Start index for pagination
-            $length = $request['length']; // Length of the page
-            $draw = $request['draw']; // Draw counter for DataTables
+            $search = $request['search']['value']; // Nilai pencarian
+            $start = $request['start']; // Indeks mulai untuk paginasi
+            $length = $request['length']; // Panjang halaman
+            $draw = $request['draw']; // Hitungan draw untuk DataTables
 
-            // Get sorting parameters
+            // Mengambil parameter pengurutan
             $order = $request['order'];
-            $sortColumnIndex = $order[0]['column']; // Column index
-            $sortDirection = $order[0]['dir']; // asc or desc
+            $sortColumnIndex = $order[0]['column']; // Indeks kolom
+            $sortDirection = $order[0]['dir']; // arah asc atau desc
 
-            // Map column index to the database column name
+            // Memetakan indeks kolom ke nama kolom di database
             $columnMapping = [
                 0 => 'id_obat',
                 1 => 'id_obat',
@@ -61,53 +66,54 @@ class Obat extends BaseController
                 13 => 'updated_at',
             ];
 
-            // Get the column to sort by
+            // Mengambil kolom untuk diurutkan
             $sortColumn = $columnMapping[$sortColumnIndex] ?? 'id_obat';
 
-            // Get total records count
+            // Menghitung total record
             $totalRecords = $this->ObatModel->countAllResults(true);
 
-            // Modify sorting logic to handle jenis_tindakan
+            // Modifikasi logika pengurutan untuk menangani nama_supplier
             if ($sortColumn === 'nama_supplier') {
-                // Sort by jenis_layanan, then by nama_layanan
+                // Mengurutkan berdasarkan nama_supplier, kemudian berdasarkan nama_obat
                 $this->ObatModel
                     ->orderBy('nama_supplier', $sortDirection)
                     ->orderBy('nama_obat', 'ASC');
             } else {
-                // Default sorting behavior
+                // Perilaku pengurutan default
                 $this->ObatModel->orderBy($sortColumn, $sortDirection);
             }
 
-            // Apply search query
+            // Menerapkan kueri pencarian
             if ($search) {
                 $this->ObatModel
                     ->like('nama_obat', $search);
             }
 
-            // Get filtered records count
+            // Menghitung jumlah record yang difilter
             $filteredRecords = $this->ObatModel->countAllResults(false);
 
-            // Fetch the data
+            // Mengambil data
             $obat = $this->ObatModel
                 ->select('obat.*, supplier.*, 
-                    -- Hitung PPN terlebih dahulu
-                    (obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) as harga_setelah_ppn,
-            
-                    -- Kemudian terapkan mark_up pada harga setelah PPN
-                    ROUND(
-                        ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) 
-                        + ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) * obat.mark_up / 100))
-                    ) as harga_jual,
-            
-                    (obat.jumlah_masuk - obat.jumlah_keluar) as sisa_stok')
+                -- Hitung PPN terlebih dahulu
+                (obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) as harga_setelah_ppn,
+        
+                -- Kemudian terapkan mark_up pada harga setelah PPN
+                ROUND(
+                    ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) 
+                    + ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) * obat.mark_up / 100))
+                ) as harga_jual,
+        
+                (obat.jumlah_masuk - obat.jumlah_keluar) as sisa_stok')
                 ->join('supplier', 'supplier.id_supplier = obat.id_supplier', 'inner')
                 ->findAll($length, $start);
 
+            // Menambahkan penomoran langsung ke $obat
             foreach ($obat as $index => &$item) {
                 $item['no'] = $start + $index + 1; // Menambahkan kolom 'no'
             }
 
-            // Return the JSON response
+            // Mengembalikan respons JSON
             return $this->response->setJSON([
                 'draw' => $draw,
                 'recordsTotal' => $totalRecords,
@@ -115,6 +121,7 @@ class Obat extends BaseController
                 'data' => $obat
             ]);
         } else {
+            // Jika peran tidak dikenali, kembalikan status 404
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan',
             ]);
@@ -123,12 +130,15 @@ class Obat extends BaseController
 
     public function supplierlist()
     {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
             $SupplierModel = new SupplierModel();
 
+            // Mengambil daftar supplier dan mengurutkannya
             $results = $SupplierModel->orderBy('nama_supplier', 'DESC')->findAll();
 
             $options = [];
+            // Menyiapkan opsi untuk ditampilkan
             foreach ($results as $row) {
                 $options[] = [
                     'value' => $row['id_supplier'],
@@ -136,11 +146,13 @@ class Obat extends BaseController
                 ];
             }
 
+            // Mengembalikan respons JSON dengan data supplier
             return $this->response->setJSON([
                 'success' => true,
                 'data' => $options,
             ]);
         } else {
+            // Jika peran tidak dikenali, kembalikan status 404
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan',
             ]);
@@ -149,10 +161,13 @@ class Obat extends BaseController
 
     public function obat($id)
     {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+            // Mengambil data obat berdasarkan ID
             $data = $this->ObatModel->find($id);
             return $this->response->setJSON($data);
         } else {
+            // Jika peran tidak dikenali, kembalikan status 404
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan',
             ]);
@@ -161,10 +176,11 @@ class Obat extends BaseController
 
     public function create()
     {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
-            // Validate
+            // Validasi input
             $validation = \Config\Services::validation();
-            // Set base validation rules
+            // Menetapkan aturan validasi dasar
             $validation->setRules([
                 'id_supplier' => 'required',
                 'nama_obat' => 'required',
@@ -175,11 +191,13 @@ class Obat extends BaseController
                 'mark_up' => 'required|numeric|greater_than[0]',
             ]);
 
+            // Memeriksa apakah validasi berhasil
             if (!$this->validate($validation->getRules())) {
+                // Mengembalikan respons JSON dengan kesalahan validasi
                 return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
             }
 
-            // Save Data
+            // Menyimpan Data
             $data = [
                 'id_supplier' => $this->request->getPost('id_supplier'),
                 'nama_obat' => $this->request->getPost('nama_obat'),
@@ -188,12 +206,15 @@ class Obat extends BaseController
                 'harga_obat' => $this->request->getPost('harga_obat'),
                 'ppn' => $this->request->getPost('ppn'),
                 'mark_up' => $this->request->getPost('mark_up'),
-                'jumlah_masuk' => 0,
-                'updated_at' => date('Y-m-d H:i:s'),
+                'jumlah_masuk' => 0, // Nilai awal untuk jumlah_masuk
+                'updated_at' => date('Y-m-d H:i:s'), // Waktu pembaruan
             ];
+            // Menyimpan data obat ke dalam database
             $this->ObatModel->save($data);
+            // Mengembalikan respons sukses
             return $this->response->setJSON(['success' => true, 'message' => 'Obat berhasil ditambahkan']);
         } else {
+            // Jika peran tidak dikenali, kembalikan status 404
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan',
             ]);
@@ -202,10 +223,11 @@ class Obat extends BaseController
 
     public function update()
     {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
-            // Validate
+            // Validasi input
             $validation = \Config\Services::validation();
-            // Set base validation rules
+            // Menetapkan aturan validasi dasar
             $validation->setRules([
                 'id_supplier' => 'required',
                 'nama_obat' => 'required',
@@ -215,13 +237,17 @@ class Obat extends BaseController
                 'ppn' => 'required|numeric|greater_than[0]',
                 'mark_up' => 'required|numeric|greater_than[0]',
             ]);
+
+            // Memeriksa apakah validasi berhasil
             if (!$this->validate($validation->getRules())) {
+                // Mengembalikan respons JSON dengan kesalahan validasi
                 return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
             }
 
+            // Mengambil data obat berdasarkan ID obat yang akan diupdate
             $obat = $this->ObatModel->find($this->request->getPost('id_obat'));
 
-            // Save Data
+            // Menyimpan Data
             $data = [
                 'id_supplier' => $this->request->getPost('id_supplier'),
                 'id_obat' => $this->request->getPost('id_obat'),
@@ -231,12 +257,15 @@ class Obat extends BaseController
                 'harga_obat' => $this->request->getPost('harga_obat'),
                 'ppn' => $this->request->getPost('ppn'),
                 'mark_up' => $this->request->getPost('mark_up'),
-                'jumlah_masuk' => $obat['jumlah_masuk'],
-                'updated_at' => $obat['updated_at'],
+                'jumlah_masuk' => $obat['jumlah_masuk'], // Mengambil jumlah_masuk dari data sebelumnya
+                'updated_at' => $obat['updated_at'], // Mengambil waktu pembaruan dari data sebelumnya
             ];
+            // Mengupdate data obat dalam database
             $this->ObatModel->save($data);
+            // Mengembalikan respons sukses
             return $this->response->setJSON(['success' => true, 'message' => 'Obat berhasil diedit']);
         } else {
+            // Jika peran tidak dikenali, kembalikan status 404
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan',
             ]);
@@ -245,23 +274,29 @@ class Obat extends BaseController
 
     public function delete($id)
     {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+            // Menghubungkan ke database
             $db = db_connect();
 
             try {
+                // Menghapus data obat berdasarkan ID
                 $this->ObatModel->delete($id);
+                // Mengatur auto_increment kembali ke 1 setelah penghapusan
                 $db->query('ALTER TABLE `obat` auto_increment = 1');
+                // Mengembalikan respons sukses
                 return $this->response->setJSON(['message' => 'Obat berhasil dihapus']);
             } catch (DatabaseException $e) {
-                // Log the error message
+                // Mencatat pesan kesalahan
                 log_message('error', $e->getMessage());
 
-                // Return a generic error message
+                // Mengembalikan pesan kesalahan yang umum
                 return $this->response->setStatusCode(422)->setJSON([
                     'error' => $e->getMessage(),
                 ]);
             }
         } else {
+            // Jika peran tidak dikenali, kembalikan status 404
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan',
             ]);

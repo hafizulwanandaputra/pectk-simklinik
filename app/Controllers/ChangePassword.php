@@ -14,63 +14,79 @@ class ChangePassword extends BaseController
 
     public function index()
     {
+        // Menyiapkan data untuk tampilan halaman ubah kata sandi
         $data = [
-            'title' => 'Ubah Kata Sandi - ' . $this->systemName,
-            'headertitle' => 'Ubah Kata Sandi',
-            'agent' => $this->request->getUserAgent()
+            'title' => 'Ubah Kata Sandi - ' . $this->systemName, // Judul halaman
+            'headertitle' => 'Ubah Kata Sandi', // Judul header
+            'agent' => $this->request->getUserAgent() // Mendapatkan user agent dari request
         ];
+        // Mengembalikan tampilan halaman ubah kata sandi dengan data yang telah disiapkan
         return view('dashboard/changepassword/index', $data);
     }
+
     public function update()
     {
+        // Memvalidasi input dari form ubah kata sandi
         if (!$this->validate([
             'current_password' => [
-                'label' => 'Kata Sandi Lama',
-                'rules' => 'required',
+                'label' => 'Kata Sandi Lama', // Label untuk kata sandi lama
+                'rules' => 'required', // Kata sandi lama wajib diisi
                 'errors' => [
-                    'required' => '{field} wajib diisi!'
+                    'required' => '{field} wajib diisi!' // Pesan error jika kata sandi lama tidak diisi
                 ]
             ],
             'new_password1' => [
-                'label' => 'Kata Sandi Baru',
-                'rules' => 'required|min_length[3]|matches[new_password2]',
+                'label' => 'Kata Sandi Baru', // Label untuk kata sandi baru
+                'rules' => 'required|min_length[3]|matches[new_password2]', // Validasi untuk kata sandi baru
                 'errors' => [
-                    'required' => '{field} wajib diisi!',
-                    'min_length' => '{field} harus sekurang-kurangnya tiga karakter',
-                    'matches' => '{field} tidak cocok dengan Konfirmasi Kata Sandi!'
+                    'required' => '{field} wajib diisi!', // Pesan error jika kata sandi baru tidak diisi
+                    'min_length' => '{field} harus sekurang-kurangnya tiga karakter', // Pesan error jika kata sandi baru kurang dari 3 karakter
+                    'matches' => '{field} tidak cocok dengan Konfirmasi Kata Sandi!' // Pesan error jika kata sandi baru tidak cocok dengan konfirmasi
                 ]
             ],
             'new_password2' => [
-                'label' => 'Konfirmasi Kata Sandi',
-                'rules' => 'required|min_length[3]|matches[new_password1]',
+                'label' => 'Konfirmasi Kata Sandi', // Label untuk konfirmasi kata sandi baru
+                'rules' => 'required|min_length[3]|matches[new_password1]', // Validasi untuk konfirmasi kata sandi baru
                 'errors' => [
-                    'required' => '{field} wajib diisi!',
-                    'min_length' => '{field} harus sekurang-kurangnya tiga karakter',
-                    'matches' => '{field} tidak cocok dengan Kata Sandi Baru!'
+                    'required' => '{field} wajib diisi!', // Pesan error jika konfirmasi tidak diisi
+                    'min_length' => '{field} harus sekurang-kurangnya tiga karakter', // Pesan error jika konfirmasi kurang dari 3 karakter
+                    'matches' => '{field} tidak cocok dengan Kata Sandi Baru!' // Pesan error jika konfirmasi tidak cocok dengan kata sandi baru
                 ]
             ]
         ])) {
-            return redirect()->to(base_url('/settings/changepassword'))->withInput();
+            // Jika validasi gagal, mengalihkan kembali ke halaman ubah kata sandi dengan input yang ada
+            return redirect()->back()->withInput();
         }
+
+        // Mengambil kata sandi lama dan baru dari input
         $current_password = $this->request->getVar('current_password');
         $new_password = $this->request->getVar('new_password1');
+
+        // Memeriksa apakah kata sandi lama yang diinput benar
         if (!password_verify($current_password, session()->get('password'))) {
+            // Jika salah, mengatur flashdata untuk menampilkan pesan error
             session()->setFlashdata('error', 'Kata sandi lama Anda salah!');
-            return redirect()->to(base_url('/settings/changepassword'));
+            return redirect()->back(); // Kembali ke halaman ubah kata sandi
         } else {
+            // Memeriksa apakah kata sandi baru sama dengan kata sandi lama
             if ($current_password == $new_password) {
+                // Jika sama, mengatur flashdata untuk menampilkan pesan error
                 session()->setFlashdata('error', 'Kata sandi baru harus berbeda dengan kata sandi lama');
-                return redirect()->to(base_url('/settings/changepassword'));
+                return redirect()->back(); // Kembali ke halaman ubah kata sandi
             } else {
+                // Menghash kata sandi baru
                 $password_hash = password_hash($new_password, PASSWORD_DEFAULT);
+                // Menyimpan kata sandi baru ke model
                 $this->ChangePasswordModel->save([
                     'id_user' => session()->get('id_user'),
-                    'password' => $password_hash
+                    'password' => $password_hash // Menyimpan hash kata sandi baru
                 ]);
+                // Menghapus kata sandi lama dari sesi dan menyimpan kata sandi baru
                 session()->remove('password');
                 session()->set('password', $password_hash);
+                // Mengatur flashdata untuk menampilkan pesan sukses
                 session()->setFlashdata('msg', 'Anda berhasil mengubah kata sandi baru Anda!');
-                return redirect()->back();
+                return redirect()->back(); // Kembali ke halaman sebelumnya
             }
         }
     }
