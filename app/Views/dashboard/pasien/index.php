@@ -90,7 +90,7 @@
             `;
                 $('#datapasien').append(emptyRow);
             }
-            data.sort((a, b) => a.no_rm.localeCompare(b.no_rm, 'en', {
+            data.sort((a, b) => a.nomor_registrasi.localeCompare(b.nomor_registrasi, 'en', {
                 numeric: true
             }));
             data.forEach(function(pasien, index) {
