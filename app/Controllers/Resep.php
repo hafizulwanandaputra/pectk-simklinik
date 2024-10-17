@@ -104,11 +104,18 @@ class Resep extends BaseController
     public function pasienlist()
     {
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
+            $tanggal = $this->request->getGet('tanggal'); // Ambil tanggal dari query string
+
+            if (!$tanggal) {
+                return $this->response->setStatusCode(400)->setJSON([
+                    'error' => 'Tanggal harus diisi',
+                ]);
+            }
             $client = new Client(); // Create a new Guzzle HTTP client
 
             try {
                 // Send a GET request to the API
-                $response = $client->request('GET', env('API-URL') . date('Y-m-d'), [
+                $response = $client->request('GET', env('API-URL') . $tanggal, [
                     'headers' => [
                         'Accept' => 'application/json',
                         'x-key' => env('X-KEY')
@@ -178,11 +185,12 @@ class Resep extends BaseController
 
             // Get nomor_registrasi from the POST request
             $nomorRegistrasi = $this->request->getPost('nomor_registrasi');
+            $tanggalDaftar = $this->request->getPost('tanggal');
 
             // Fetch data from external API using Guzzle
             $client = new Client();
             try {
-                $response = $client->request('GET', env('API-URL') . date('Y-m-d'), [
+                $response = $client->request('GET', env('API-URL') . $tanggalDaftar, [
                     'headers' => [
                         'x-key' => env('X-KEY'),
                     ],

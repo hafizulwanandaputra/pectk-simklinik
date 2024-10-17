@@ -25,12 +25,18 @@ class Pasien extends BaseController
     public function pasienapi()
     {
         if (session()->get('role') == 'Admin') {
+            $tanggal = $this->request->getGet('tanggal'); // Ambil tanggal dari query string
+
+            if (!$tanggal) {
+                return $this->response->setStatusCode(400)->setJSON([
+                    'error' => 'Tanggal harus diisi',
+                ]);
+            }
             $client = new Client(); // Create a new Guzzle HTTP client
-            //  . date('Y-m-d')
 
             try {
                 // Send a GET request to the API
-                $response = $client->request('GET', env('API-URL') . date('Y-m-d'), [
+                $response = $client->request('GET', env('API-URL') . $tanggal, [
                     'headers' => [
                         'Accept' => 'application/json',
                         'x-key' => env('X-KEY')
