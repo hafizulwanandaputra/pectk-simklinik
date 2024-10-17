@@ -105,12 +105,10 @@ class Resep extends BaseController
     {
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
             $client = new Client(); // Create a new Guzzle HTTP client
-            $apiUrl = 'https://pectk.padangeyecenter.com/klinik/api/registrasi/rajal/all/' . date('Y-m-d');
-            //  . date('Y-m-d')
 
             try {
                 // Send a GET request to the API
-                $response = $client->request('GET', $apiUrl, [
+                $response = $client->request('GET', env('API-URL') . date('Y-m-d'), [
                     'headers' => [
                         'Accept' => 'application/json',
                         'x-key' => env('X-KEY')
@@ -184,7 +182,7 @@ class Resep extends BaseController
             // Fetch data from external API using Guzzle
             $client = new Client();
             try {
-                $response = $client->request('GET', 'https://pectk.padangeyecenter.com/klinik/api/registrasi/rajal/all/' . date('Y-m-d'), [
+                $response = $client->request('GET', env('API-URL') . date('Y-m-d'), [
                     'headers' => [
                         'x-key' => env('X-KEY'),
                     ],

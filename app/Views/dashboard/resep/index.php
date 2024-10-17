@@ -353,7 +353,7 @@
 
             try {
                 await axios.delete(`<?= base_url('/resep/delete') ?>/${resepId}`);
-                showSuccessToast('Pembelian obat berhasil dihapus.');
+                showSuccessToast('Resep berhasil dihapus.');
                 fetchResep();
             } catch (error) {
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
