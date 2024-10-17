@@ -450,7 +450,6 @@
 
             try {
                 await axios.delete(`<?= base_url('/obat/delete') ?>/${obatId}`);
-                showSuccessToast('Obat berhasil dihapus.');
                 table.ajax.reload(null, false);
             } catch (error) {
                 // Check if the error has a response and extract the message
@@ -493,7 +492,6 @@
                 });
 
                 if (response.data.success) {
-                    showSuccessToast(response.data.message, 'success');
                     $('#obatModal').modal('hide');
                     table.ajax.reload(null, false);
                 } else {

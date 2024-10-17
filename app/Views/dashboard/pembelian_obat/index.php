@@ -350,7 +350,6 @@
             try {
                 const response = await axios.delete(`<?= base_url('/pembelianobat/delete') ?>/${pembelianObatId}`);
                 if (response.data.success) {
-                    showSuccessToast('Pembelian obat berhasil dihapus.');
                     fetchPembelianObat();
                 } else {
                     showFailedToast(response.data.message);
@@ -389,7 +388,6 @@
                 });
 
                 if (response.data.success) {
-                    showSuccessToast(response.data.message, 'success');
                     $('#id_supplier').val(null).trigger('change');
                     $('#pembelianObatForm .is-invalid').removeClass('is-invalid');
                     $('#pembelianObatForm .invalid-feedback').text('').hide();

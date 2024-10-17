@@ -387,7 +387,6 @@
 
             try {
                 await axios.delete(`<?= base_url('/admin/delete') ?>/${userId}`);
-                showSuccessToast('Pengguna berhasil dihapus.');
                 table.ajax.reload(null, false);
             } catch (error) {
                 // Check if the error has a response and extract the message
@@ -409,7 +408,6 @@
 
             try {
                 await axios.post(`<?= base_url('/admin/activate') ?>/${userId}`);
-                showSuccessToast('Pengguna berhasil diaktifkan.');
                 table.ajax.reload(null, false);
             } catch (error) {
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
@@ -425,7 +423,6 @@
 
             try {
                 await axios.post(`<?= base_url('/admin/deactivate') ?>/${userId}`);
-                showSuccessToast('Pengguna berhasil dinonaktifkan.');
                 table.ajax.reload(null, false);
             } catch (error) {
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
@@ -443,7 +440,7 @@
 
             try {
                 await axios.post(`<?= base_url('/admin/resetpassword') ?>/${userId}`);
-                showSuccessToast('Kata sandi berhasil diatur ulang.');
+                showSuccessToast(`Kata sandi @${userName} berhasil diatur ulang.`);
                 table.ajax.reload(null, false);
             } catch (error) {
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
@@ -483,7 +480,6 @@
                 });
 
                 if (response.data.success) {
-                    showSuccessToast(response.data.message, 'success');
                     $('#userModal').modal('hide');
                     table.ajax.reload(null, false);
                 } else {

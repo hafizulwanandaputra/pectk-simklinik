@@ -358,7 +358,6 @@
 
             try {
                 await axios.delete(`<?= base_url('/resep/delete') ?>/${resepId}`);
-                showSuccessToast('Resep berhasil dihapus.');
                 fetchResep();
             } catch (error) {
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
@@ -394,7 +393,6 @@
                 });
 
                 if (response.data.success) {
-                    showSuccessToast(response.data.message, 'success');
                     $('#resepForm')[0].reset();
                     $('#nomor_registrasi').val(null).trigger('change');
                     $('#resepForm .is-invalid').removeClass('is-invalid');

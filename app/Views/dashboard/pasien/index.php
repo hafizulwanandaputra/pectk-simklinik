@@ -113,9 +113,9 @@
                 $('#datapasien').append(pasienElement);
             });
         } catch (error) {
+            console.error(error.response.data.error);
             $('#tanggal').html(`<i class="fa-solid fa-xmark"></i> Error`);
             $('#lengthpasien').html(`<i class="fa-solid fa-xmark"></i> Error`);
-            showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
             const errorRow = `
                 <tr>
                     <td colspan="9" class="text-center">${error.response.data.error}</td>

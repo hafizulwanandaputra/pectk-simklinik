@@ -348,7 +348,6 @@
 
             try {
                 await axios.delete(`<?= base_url('/transaksi/delete') ?>/${transaksiId}`);
-                showSuccessToast('Transaksi berhasil dihapus.');
                 fetchPasienOptions();
                 fetchTransaksi();
             } catch (error) {
@@ -385,7 +384,6 @@
                 });
 
                 if (response.data.success) {
-                    showSuccessToast(response.data.message, 'success');
                     $('#transaksiForm')[0].reset();
                     $('#nomor_registrasi').val(null).trigger('change');
                     $('#transaksiForm .is-invalid').removeClass('is-invalid');

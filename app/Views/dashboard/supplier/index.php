@@ -300,7 +300,6 @@
 
             try {
                 await axios.delete(`<?= base_url('/supplier/delete') ?>/${supplierId}`);
-                showSuccessToast('Supplier berhasil dihapus.');
                 table.ajax.reload(null, false);
             } catch (error) {
                 // Check if the error has a response and extract the message
@@ -345,7 +344,6 @@
                 });
 
                 if (response.data.success) {
-                    showSuccessToast(response.data.message, 'success');
                     $('#supplierModal').modal('hide');
                     table.ajax.reload(null, false);
                 } else {
