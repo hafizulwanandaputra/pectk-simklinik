@@ -306,7 +306,7 @@
                     <ul class="dropdown-menu rounded-3 dropdown-menu-end text-small shadow transparent-blur" style="width: 240px; background-color: #5eba00;">
                         <li class="lh-1 p-1">
                             <div class="d-flex align-items-start text-light">
-                                <span style="width: 32px; text-align: center;"><i class="fa-solid fa-user"></i></span>
+                                <span style="min-width: 32px; max-width: 32px; text-align: center;"><i class="fa-solid fa-user"></i></span>
                                 <span><?= session()->get('fullname'); ?><br><span class="fw-medium" style="font-size: 8pt;">@<?= session()->get('username'); ?></span><br><span class="fw-medium" style="font-size: 8pt;"><?= session()->get('role'); ?></span></span>
                             </div>
                         </li>
@@ -316,7 +316,7 @@
                         <li>
                             <a class="dropdown-item p-1 dropdown-item-pec" href="<?= base_url('/settings'); ?>" onclick="showSpinner()">
                                 <div class="d-flex align-items-start">
-                                    <span style="width: 32px; text-align: center;"><i class="fa-solid fa-gear"></i></span>
+                                    <span style="min-width: 32px; max-width: 32px; text-align: center;"><i class="fa-solid fa-gear"></i></span>
                                     <span>Pengaturan</span>
                                 </div>
                             </a>
@@ -324,7 +324,7 @@
                         <li>
                             <a class="dropdown-item p-1 dropdown-item-pec" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">
                                 <div class="d-flex align-items-start">
-                                    <span style="width: 32px; text-align: center;"><i class="fa-solid fa-right-from-bracket"></i></span>
+                                    <span style="min-width: 32px; max-width: 32px; text-align: center;"><i class="fa-solid fa-right-from-bracket"></i></span>
                                     <span>Keluar</span>
                                 </div>
                             </a>

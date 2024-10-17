@@ -90,6 +90,9 @@
             `;
                 $('#datapasien').append(emptyRow);
             }
+            data.sort((a, b) => b.no_rm.localeCompare(a.no_rm, 'en', {
+                numeric: true
+            }));
             data.forEach(function(pasien, index) {
                 // Kondisikan jenis kelamin
                 const jenis_kelamin = pasien.jenis_kelamin === "L" ? "Laki-laki" : "Perempuan";

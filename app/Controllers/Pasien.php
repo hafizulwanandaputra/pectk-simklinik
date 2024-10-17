@@ -40,13 +40,6 @@ class Pasien extends BaseController
                 // Decode JSON and handle potential errors
                 $data = json_decode($response->getBody()->getContents(), true);
 
-                $counter = 1; // Initialize a counter variable
-                if (isset($data['data']) && is_array($data['data'])) {
-                    foreach ($data['data'] as &$item) {
-                        $item['nomor'] = $counter++; // Assign and increment the counter
-                    }
-                }
-
                 return $this->response->setJSON([
                     'data' => $data,
                 ]);

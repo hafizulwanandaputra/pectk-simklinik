@@ -341,7 +341,7 @@
             resepName = $(this).data('name');
             resepDate = $(this).data('date');
             $('[data-bs-toggle="tooltip"]').tooltip('hide');
-            $('#deleteMessage').html(`Hapus resep dari "` + resepName + `"?`);
+            $('#deleteMessage').html(`Hapus resep untuk "` + resepName + `"?`);
             $('#deleteSubmessage').html(`Tanggal Resep: ` + resepDate);
             $('#deleteModal').modal('show');
         });

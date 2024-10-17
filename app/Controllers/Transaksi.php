@@ -112,7 +112,7 @@ class Transaksi extends BaseController
 
     public function pasienlist()
     {
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
             $client = new Client(); // Create a new Guzzle HTTP client
 
             try {
