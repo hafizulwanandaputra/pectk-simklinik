@@ -143,7 +143,7 @@
                 select.find('option:not(:first)').remove();
 
                 // Sort the options by 'value' in ascending order
-                options.sort((a, b) => a.value.localeCompare(b.value, 'en', {
+                options.sort((a, b) => b.value.localeCompare(a.value, 'en', {
                     numeric: true
                 }));
 
