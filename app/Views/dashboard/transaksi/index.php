@@ -282,6 +282,7 @@
         const page = $(this).data('page');
         if (page) {
             currentPage = page;
+            fetchPasienOptions()
             fetchTransaksi();
         }
     });
@@ -291,6 +292,7 @@
         for (let i = 0; i < limit; i++) {
             $('#transaksiContainer').append(placeholder);
         }
+        fetchPasienOptions()
         fetchTransaksi();
     });
 
@@ -434,6 +436,7 @@
             for (let i = 0; i < limit; i++) {
                 $('#transaksiContainer').append(placeholder);
             }
+            fetchPasienOptions()
             fetchTransaksi(); // Refresh articles on button click
         });
 
