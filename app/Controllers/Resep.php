@@ -47,9 +47,14 @@ class Resep extends BaseController
 
             $ResepModel = $this->ResepModel;
 
-            // Apply filters based on role and session data
-            if (session()->get('role') == 'Dokter') {
-                $ResepModel->where('resep.dokter', session()->get('fullname'));
+            // Join tables before applying search filter
+            if (session()->get('role') != 'Dokter') {
+                $ResepModel
+                    ->select('resep.*');
+            } else {
+                $ResepModel
+                    ->select('resep.*')
+                    ->where('resep.dokter', session()->get('fullname'));
             }
 
             // Apply status filter if provided
@@ -59,62 +64,35 @@ class Resep extends BaseController
                 $ResepModel->where('status', 0);
             }
 
-            // Fetch pasien data from external API
-            $client = new Client();
-            try {
-                $response = $client->request('GET', base_url('/pasienapitest')); // Replace with actual API URL
-                $pasienData = json_decode($response->getBody()->getContents(), true);
-            } catch (\Exception $e) {
-                return $this->response->setStatusCode(500)->setJSON([
-                    'error' => 'Failed to fetch pasien data',
-                    'message' => $e->getMessage(),
-                ]);
-            }
-
-            // If search query exists, filter both resep and pasien data
-            $filteredPasienIds = [];
+            // Apply search filter on supplier name or purchase date
             if ($search) {
-                $filteredPasienIds = array_column(
-                    array_filter($pasienData, function ($pasien) use ($search) {
-                        return stripos($pasien['nama_pasien'], $search) !== false;
-                    }),
-                    'id_pasien'
-                );
-
-                $ResepModel->groupStart()
+                $ResepModel
+                    ->groupStart()
+                    ->like('nama_pasien', $search)
                     ->orLike('dokter', $search)
-                    ->orLike('tanggal_resep', $search);
-
-                // If any matching pasien IDs found, add them to the search query
-                if (!empty($filteredPasienIds)) {
-                    $ResepModel->orWhereIn('id_pasien', $filteredPasienIds);
-                }
-
-                $ResepModel->groupEnd();
+                    ->orLike('tanggal_resep', $search)
+                    ->groupEnd();
             }
 
             // Count total results
             $total = $ResepModel->countAllResults(false);
 
             // Get paginated results
-            $Resep = $ResepModel->orderBy('id_resep', 'DESC')->findAll($limit, $offset);
+            $Resep = $ResepModel
+                ->orderBy('id_resep', 'DESC')
+                ->findAll($limit, $offset);
 
-            // Map pasien data with resep
-            $dataResep = array_map(function ($data, $index) use ($pasienData, $offset) {
-                $data['number'] = $offset + 1 + $index;
+            // Calculate the starting number for the current page
+            $startNumber = $offset + 1;
 
-                // Find matching pasien data by ID
-                $pasien = array_filter($pasienData, function ($p) use ($data) {
-                    return $p['id_pasien'] == $data['id_pasien'];
-                });
-
-                $data['pasien_nama_pasien'] = $pasien ? reset($pasien)['nama_pasien'] : 'Unknown';
+            $dataResep = array_map(function ($data, $index) use ($startNumber) {
+                $data['number'] = $startNumber + $index;
                 return $data;
             }, $Resep, array_keys($Resep));
 
             return $this->response->setJSON([
                 'resep' => $dataResep,
-                'total' => $total,
+                'total' => $total
             ]);
         } else {
             return $this->response->setStatusCode(404)->setJSON([
@@ -127,13 +105,15 @@ class Resep extends BaseController
     {
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
             $client = new Client(); // Create a new Guzzle HTTP client
-            $apiUrl = base_url('/pasienapitest'); // Replace with your API URL
+            $apiUrl = 'https://pectk.padangeyecenter.com/klinik/api/registrasi/rajal/all/' . date('Y-m-d');
+            //  . date('Y-m-d')
 
             try {
                 // Send a GET request to the API
                 $response = $client->request('GET', $apiUrl, [
                     'headers' => [
                         'Accept' => 'application/json',
+                        'x-key' => env('X-KEY')
                     ],
                 ]);
 
@@ -143,8 +123,8 @@ class Resep extends BaseController
                 $options = [];
                 foreach ($data as $row) {
                     $options[] = [
-                        'value' => $row['id_pasien'],
-                        'text' => $row['nama_pasien'] . ' (' . $this->formatNoMr($row['no_mr']) . ' - ' . $row['no_registrasi'] . ')'
+                        'value' => $row['nomor_registrasi'],
+                        'text' => $row['nama_pasien'] . ' (' . $row['no_rm'] . ' - ' . $row['nomor_registrasi'] . ')'
                     ];
                 }
 
@@ -165,28 +145,15 @@ class Resep extends BaseController
         }
     }
 
-    private function formatNoMr($no_mr)
-    {
-        // Format no_mr ke xx-xx-xx
-        $part1 = substr($no_mr, 0, 2);  // Ambil 2 digit pertama
-        $part2 = substr($no_mr, 2, 2);  // Ambil 2 digit kedua
-        $part3 = substr($no_mr, 4, 2);  // Ambil 2 digit terakhir
-
-        // Gabungkan menjadi xx-xx-xx
-        return "{$part1}-{$part2}-{$part3}";
-    }
-
     public function resep($id)
     {
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Apoteker') {
             if (session()->get('role') != 'Dokter') {
                 $data = $this->ResepModel
-                    ->join('pasien', 'pasien.id_pasien = resep.id_pasien', 'inner')
                     ->find($id);
             } else {
                 $data = $this->ResepModel
                     ->where('resep.dokter', session()->get('fullname'))
-                    ->join('pasien', 'pasien.id_pasien = resep.id_pasien', 'inner')
                     ->find($id);
             }
             return $this->response->setJSON($data);
@@ -204,24 +171,63 @@ class Resep extends BaseController
             $validation = \Config\Services::validation();
             // Set base validation rules
             $validation->setRules([
-                'id_pasien' => 'required',
+                'nomor_registrasi' => 'required',
             ]);
 
             if (!$this->validate($validation->getRules())) {
-                return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
+                return $this->response->setJSON(['success' => false, 'message' => NULL, 'errors' => $validation->getErrors()]);
             }
 
-            // Save Data
-            $data = [
-                'id_pasien' => $this->request->getPost('id_pasien'),
-                'dokter' => session()->get('fullname'),
-                'tanggal_resep' => date('Y-m-d H:i:s'),
-                'jumlah_resep' => 0,
-                'total_biaya' => 0,
-                'status' => 0,
-            ];
-            $this->ResepModel->save($data);
-            return $this->response->setJSON(['success' => true, 'message' => 'Resep berhasil ditambahkan']);
+            // Get nomor_registrasi from the POST request
+            $nomorRegistrasi = $this->request->getPost('nomor_registrasi');
+
+            // Fetch data from external API using Guzzle
+            $client = new Client();
+            try {
+                $response = $client->request('GET', 'https://pectk.padangeyecenter.com/klinik/api/registrasi/rajal/all/' . date('Y-m-d'), [
+                    'headers' => [
+                        'x-key' => env('X-KEY'),
+                    ],
+                ]);
+
+                $dataFromApi = json_decode($response->getBody(), true);
+
+                // Check if the data contains the requested nomor_registrasi
+                $patientData = null;
+                foreach ($dataFromApi as $patient) {
+                    if ($patient['nomor_registrasi'] == $nomorRegistrasi) {
+                        $patientData = $patient;
+                        break;
+                    }
+                }
+
+                if (!$patientData) {
+                    return $this->response->setJSON(['success' => false, 'message' => 'Data pasien tidak ditemukan', 'errors' => NULL]);
+                }
+
+                // Prepare data to save
+                $data = [
+                    'nomor_registrasi' => $nomorRegistrasi,
+                    'no_rm' => $patientData['no_rm'],
+                    'nama_pasien' => $patientData['nama_pasien'],
+                    'alamat' => $patientData['alamat'],
+                    'telpon' => $patientData['telpon'],
+                    'jenis_kelamin' => $patientData['jenis_kelamin'],
+                    'tempat_lahir' => $patientData['tempat_lahir'],
+                    'tanggal_lahir' => $patientData['tanggal_lahir'],
+                    'dokter' => session()->get('fullname'),
+                    'tanggal_resep' => date('Y-m-d H:i:s'),
+                    'jumlah_resep' => 0,
+                    'total_biaya' => 0,
+                    'status' => 0,
+                ];
+
+                // Save Data
+                $this->ResepModel->save($data);
+                return $this->response->setJSON(['success' => true, 'message' => 'Resep berhasil ditambahkan']);
+            } catch (\Exception $e) {
+                return $this->response->setJSON(['success' => false, 'message' => 'Terjadi kesalahan saat mengambil data: ' . $e->getMessage(), 'errors' => NULL]);
+            }
         } else {
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan',
@@ -297,43 +303,13 @@ class Resep extends BaseController
     public function detailresep($id)
     {
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Apoteker') {
-            // Fetch the resep record
-            $ResepModel = $this->ResepModel;
-
-            if (session()->get('role') == 'Dokter') {
-                $ResepModel->where('resep.dokter', session()->get('fullname'));
-            }
-
-            $resep = $ResepModel->find($id);
-
-            // If no matching resep is found, throw a 404 exception
-            if (empty($resep)) {
-                throw PageNotFoundException::forPageNotFound();
-            }
-
-            // Fetch pasien data from the external API
-            $client = new Client();
-            try {
-                $response = $client->request('GET', base_url('/pasienapitestitem/') . $resep['id_pasien']); // Replace with your actual API URL
-                $pasienData = json_decode($response->getBody()->getContents(), true);
-                // dd($pasienData);
-                // die;
-            } catch (\Exception $e) {
-                return $this->response->setStatusCode(500)->setJSON([
-                    'error' => 'Failed to fetch pasien data',
-                    'message' => $e->getMessage(),
-                ]);
-            }
-
-            // Attach pasien details to the resep record
-            if (!empty($pasienData)) {
-                $resep['nama_pasien'] = $pasienData['nama_pasien'] ?? 'Unknown';
-                $resep['no_mr'] = $pasienData['no_mr'] ?? 'N/A';
-                $resep['no_registrasi'] = $pasienData['no_registrasi'] ?? 'N/A';
+            if (session()->get('role') != 'Dokter') {
+                $resep = $this->ResepModel
+                    ->find($id);
             } else {
-                $resep['nama_pasien'] = 'Unknown';
-                $resep['no_mr'] = 'N/A';
-                $resep['no_registrasi'] = 'N/A';
+                $resep = $this->ResepModel
+                    ->where('resep.dokter', session()->get('fullname'))
+                    ->find($id);
             }
             if (!empty($resep)) {
                 $data = [
@@ -673,32 +649,9 @@ class Resep extends BaseController
     public function etiketdalam($id)
     {
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
-            // Fetch the resep data
             $resep = $this->ResepModel
                 ->where('status', 0)
                 ->find($id);
-
-            if (empty($resep)) {
-                throw PageNotFoundException::forPageNotFound();
-            }
-
-            // Fetch pasien data from the external API
-            $client = new Client();
-            try {
-                $response = $client->request('GET', base_url('/pasienapitestitem/') . $resep['id_pasien']); // Replace with actual API URL
-                $pasienData = json_decode($response->getBody()->getContents(), true);
-            } catch (\Exception $e) {
-                return $this->response->setStatusCode(500)->setJSON([
-                    'error' => 'Failed to fetch pasien data',
-                    'message' => $e->getMessage(),
-                ]);
-            }
-
-            // Attach pasien details to resep
-            $resep['nama_pasien'] = $pasienData['nama_pasien'] ?? 'Unknown';
-            $resep['no_mr'] = $pasienData['no_mr'] ?? '';
-            $resep['tanggal_lahir'] = $pasienData['tanggal_lahir'] ?? '';
-
             $detail_resep = $this->DetailResepModel
                 ->where('detail_resep.id_resep', $id)
                 ->groupStart()
@@ -709,24 +662,23 @@ class Resep extends BaseController
                 ->join('obat', 'obat.id_obat = detail_resep.id_obat', 'inner')
                 ->orderBy('id_detail_resep', 'ASC')
                 ->findAll();
-
-            // Validate data and generate PDF
+            // dd($detail_resep);
+            // die;
             if (!empty($detail_resep) && $resep['status'] == 0) {
+                // dd($total_obatalkes);
+                // die;
                 $data = [
                     'resep' => $resep,
                     'detail_resep' => $detail_resep,
                     'title' => 'Etiket Resep ' . $id . ' - ' . $this->systemName
                 ];
-
-                // Generate PDF with Dompdf
+                // return view('dashboard/resep/etiket', $data);
+                // die;
                 $dompdf = new Dompdf();
                 $html = view('dashboard/resep/etiket', $data);
                 $dompdf->loadHtml($html);
                 $dompdf->render();
-                $dompdf->stream('resep-obat-luar-id-' . $resep['id_pasien'] . '-' .
-                    urlencode($resep['nama_pasien']) . '-' .
-                    urlencode($resep['dokter']) . '-' .
-                    $resep['tanggal_resep'] . '.pdf', [
+                $dompdf->stream('resep-obat-dalam-id-' . $resep['nomor_registrasi'] . '-' . urlencode($resep['nama_pasien']) . '-' . urlencode($resep['dokter']) . '-' . $resep['tanggal_resep'] . '.pdf', [
                     'Attachment' => FALSE
                 ]);
             } else {
@@ -742,33 +694,9 @@ class Resep extends BaseController
     public function etiketluar($id)
     {
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
-            // Fetch the resep data
             $resep = $this->ResepModel
                 ->where('status', 0)
                 ->find($id);
-
-            if (empty($resep)) {
-                throw PageNotFoundException::forPageNotFound();
-            }
-
-            // Fetch pasien data from the external API
-            $client = new Client();
-            try {
-                $response = $client->request('GET', base_url('/pasienapitestitem/') . $resep['id_pasien']); // Replace with actual API URL
-                $pasienData = json_decode($response->getBody()->getContents(), true);
-            } catch (\Exception $e) {
-                return $this->response->setStatusCode(500)->setJSON([
-                    'error' => 'Failed to fetch pasien data',
-                    'message' => $e->getMessage(),
-                ]);
-            }
-
-            // Attach pasien details to resep
-            $resep['nama_pasien'] = $pasienData['nama_pasien'] ?? 'Unknown';
-            $resep['no_mr'] = $pasienData['no_mr'] ?? '';
-            $resep['tanggal_lahir'] = $pasienData['tanggal_lahir'] ?? '';
-
-            // Fetch detail resep data
             $detail_resep = $this->DetailResepModel
                 ->where('detail_resep.id_resep', $id)
                 ->groupStart()
@@ -779,24 +707,23 @@ class Resep extends BaseController
                 ->join('obat', 'obat.id_obat = detail_resep.id_obat', 'inner')
                 ->orderBy('id_detail_resep', 'ASC')
                 ->findAll();
-
-            // Validate data and generate PDF
+            // dd($detail_resep);
+            // die;
             if (!empty($detail_resep) && $resep['status'] == 0) {
+                // dd($total_obatalkes);
+                // die;
                 $data = [
                     'resep' => $resep,
                     'detail_resep' => $detail_resep,
                     'title' => 'Etiket Resep ' . $id . ' - ' . $this->systemName
                 ];
-
-                // Generate PDF with Dompdf
+                // return view('dashboard/resep/etiket', $data);
+                // die;
                 $dompdf = new Dompdf();
                 $html = view('dashboard/resep/etiket', $data);
                 $dompdf->loadHtml($html);
                 $dompdf->render();
-                $dompdf->stream('resep-obat-luar-id-' . $resep['id_pasien'] . '-' .
-                    urlencode($resep['nama_pasien']) . '-' .
-                    urlencode($resep['dokter']) . '-' .
-                    $resep['tanggal_resep'] . '.pdf', [
+                $dompdf->stream('resep-obat-luar-id-' . $resep['nomor_registrasi'] . '-' . urlencode($resep['nama_pasien']) . '-' . urlencode($resep['dokter']) . '-' . $resep['tanggal_resep'] . '.pdf', [
                     'Attachment' => FALSE
                 ]);
             } else {

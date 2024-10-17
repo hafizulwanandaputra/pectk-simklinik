@@ -38,7 +38,7 @@
                 <div class="col-lg-3 fw-medium">Nomor MR</div>
                 <div class="col-lg">
                     <div class="date">
-                        <?= $resep['no_mr'] ?>
+                        <?= $resep['no_rm'] ?>
                     </div>
                 </div>
             </div>
@@ -46,7 +46,23 @@
                 <div class="col-lg-3 fw-medium">Nomor Registrasi</div>
                 <div class="col-lg">
                     <div class="date">
-                        <?= $resep['no_registrasi'] ?>
+                        <?= $resep['nomor_registrasi'] ?>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-2 row">
+                <div class="col-lg-3 fw-medium">Jenis Kelamin</div>
+                <div class="col-lg">
+                    <div class="date">
+                        <?php
+                        if ($resep['jenis_kelamin'] == 'L') {
+                            echo 'Laki-Laki';
+                        } else if ($resep['jenis_kelamin'] == 'P') {
+                            echo 'Perempuan';
+                        } else {
+                            echo 'N/A';
+                        }
+                        ?>
                     </div>
                 </div>
             </div>

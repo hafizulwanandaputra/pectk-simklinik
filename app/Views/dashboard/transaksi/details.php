@@ -31,7 +31,7 @@
                     <div class="col-lg-4 fw-medium">Nomor MR</div>
                     <div class="col-lg">
                         <div class="date">
-                            <?= $transaksi['no_mr'] ?>
+                            <?= $transaksi['no_rm'] ?>
                         </div>
                     </div>
                 </div>
@@ -39,7 +39,7 @@
                     <div class="col-lg-4 fw-medium">Alamat</div>
                     <div class="col-lg">
                         <div>
-                            <?= $transaksi['alamat_pasien'] ?>
+                            <?= $transaksi['alamat'] ?>
                         </div>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
                     <div class="col-lg-4 fw-medium">Nomor HP</div>
                     <div class="col-lg">
                         <div class="date">
-                            <?= $transaksi['no_hp_pasien'] ?>
+                            <?= $transaksi['telpon'] ?>
                         </div>
                     </div>
                 </div>
@@ -332,7 +332,7 @@
 
     async function fetchResepOptions() {
         try {
-            const response = await axios.get('<?= base_url('transaksi/reseplist/' . $transaksi['id_transaksi'] . '/' . $transaksi['id_pasien']) ?>) ?>');
+            const response = await axios.get('<?= base_url('transaksi/reseplist/' . $transaksi['id_transaksi'] . '/' . $transaksi['nomor_registrasi']) ?>');
 
             if (response.data.success) {
                 const options = response.data.data;

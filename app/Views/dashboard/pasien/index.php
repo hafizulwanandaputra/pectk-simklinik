@@ -11,6 +11,18 @@
 <?= $this->section('content'); ?>
 <main class="col-md-9 ms-sm-auto col-lg-10 px-3 px-md-4 pt-3">
     <div class="mb-2">
+        <div class="alert alert-warning bg-gradient rounded-3" role="alert">
+            <div class="d-flex align-items-start">
+                <div style="width: 12px; text-align: center;">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                </div>
+                <div class="w-100 ms-3">
+                    <strong>TIDAK DIGUNAKAN LAGI!</strong>
+                    <br>
+                    Data pasien di sini sudah tidak digunakan karena data pasien saat ini diambil dari Sistem Informasi Manajemen Klinik ini melalui API.
+                </div>
+            </div>
+        </div>
         <table id="tabel" class="table table-sm table-hover" style="width:100%; font-size: 9pt;">
             <thead>
                 <tr class="align-middle">

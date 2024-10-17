@@ -73,7 +73,7 @@ $tanggal = Time::parse($transaksi['tgl_transaksi']);
                         <div>Nomor RM:</div>
                     </td>
                     <td style="width: 25%; vertical-align: top; padding: 0;">
-                        <div><?= $transaksi['no_mr'] ?></div>
+                        <div><?= $transaksi['no_rm'] ?></div>
                     </td>
                     <td style="width: 25%; vertical-align: top; padding: 0;">
                         <div>Nomor Kwitansi:</div>
@@ -101,7 +101,7 @@ $tanggal = Time::parse($transaksi['tgl_transaksi']);
                         <div>No. Telp:</div>
                     </td>
                     <td style="width: 25%; vertical-align: top; padding: 0;">
-                        <div><?= $transaksi['no_hp_pasien'] ?></div>
+                        <div><?= $transaksi['telpon'] ?></div>
                     </td>
                 </tr>
                 <tr>
@@ -109,7 +109,7 @@ $tanggal = Time::parse($transaksi['tgl_transaksi']);
                         <div>Alamat:</div>
                     </td>
                     <td style="width: 25%; vertical-align: top; padding: 0;" colspan="3">
-                        <div><?= $transaksi['alamat_pasien'] ?></div>
+                        <div><?= $transaksi['alamat'] ?></div>
                     </td>
                 </tr>
             </tbody>

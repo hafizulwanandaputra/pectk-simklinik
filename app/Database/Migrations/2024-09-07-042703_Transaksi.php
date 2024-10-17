@@ -15,14 +15,40 @@ class Transaksi extends Migration
                 'unsigned' => true,
                 'auto_increment' => true,
             ],
-            'kasir' => [
+            'nomor_registrasi' => [
                 'type' => 'VARCHAR',
                 'constraint' => 256,
             ],
-            'id_pasien' => [
-                'type' => 'BIGINT',
+            'no_rm' => [
+                'type' => 'VARCHAR',
                 'constraint' => 24,
-                'unsigned' => true
+            ],
+            'nama_pasien' => [
+                'type' => 'VARCHAR',
+                'constraint' => 256,
+            ],
+            'alamat' => [
+                'type' => 'VARCHAR',
+                'constraint' => 512,
+            ],
+            'telpon' => [
+                'type' => 'VARCHAR',
+                'constraint' => 24,
+            ],
+            'jenis_kelamin' => [
+                'type' => 'VARCHAR',
+                'constraint' => 1,
+            ],
+            'tempat_lahir' => [
+                'type' => 'VARCHAR',
+                'constraint' => 256,
+            ],
+            'tanggal_lahir' => [
+                'type' => 'DATE',
+            ],
+            'kasir' => [
+                'type' => 'VARCHAR',
+                'constraint' => 256,
             ],
             'no_kwitansi' => [
                 'type' => 'VARCHAR',
@@ -52,7 +78,6 @@ class Transaksi extends Migration
             ],
         ]);
         $this->forge->addKey('id_transaksi', true);
-        $this->forge->addForeignKey('id_pasien', 'pasien', 'id_pasien', 'CASCADE', 'NO ACTION');
         $this->forge->createTable('transaksi');
     }
 

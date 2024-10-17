@@ -15,10 +15,36 @@ class Resep extends Migration
                 'unsigned' => true,
                 'auto_increment' => true,
             ],
-            'id_pasien' => [
-                'type' => 'BIGINT',
+            'nomor_registrasi' => [
+                'type' => 'VARCHAR',
+                'constraint' => 256,
+            ],
+            'no_rm' => [
+                'type' => 'VARCHAR',
                 'constraint' => 24,
-                'unsigned' => true
+            ],
+            'nama_pasien' => [
+                'type' => 'VARCHAR',
+                'constraint' => 256,
+            ],
+            'alamat' => [
+                'type' => 'VARCHAR',
+                'constraint' => 512,
+            ],
+            'telpon' => [
+                'type' => 'VARCHAR',
+                'constraint' => 24,
+            ],
+            'jenis_kelamin' => [
+                'type' => 'VARCHAR',
+                'constraint' => 1,
+            ],
+            'tempat_lahir' => [
+                'type' => 'VARCHAR',
+                'constraint' => 256,
+            ],
+            'tanggal_lahir' => [
+                'type' => 'DATE',
             ],
             'dokter' => [
                 'type' => 'VARCHAR',
@@ -40,7 +66,6 @@ class Resep extends Migration
             ],
         ]);
         $this->forge->addKey('id_resep', true);
-        $this->forge->addForeignKey('id_pasien', 'pasien', 'id_pasien', 'CASCADE', 'NO ACTION');
         $this->forge->createTable('resep');
     }
 

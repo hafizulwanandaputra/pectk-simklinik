@@ -28,7 +28,7 @@
         <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Tambah Pasien</legend>
         <form id="transaksiForm" enctype="multipart/form-data" class="d-flex flex-column flex-lg-row mb-2 gap-2">
             <div class="flex-fill">
-                <select class="form-select rounded-3" id="id_pasien" name="id_pasien" aria-label="id_pasien">
+                <select class="form-select rounded-3" id="nomor_registrasi" name="nomor_registrasi" aria-label="nomor_registrasi">
                     <option value="" disabled selected>-- Pilih Pasien --</option>
                 </select>
                 <div class="invalid-feedback"></div>
@@ -137,7 +137,7 @@
 
             if (response.data.success) {
                 const options = response.data.data;
-                const select = $('#id_pasien');
+                const select = $('#nomor_registrasi');
 
                 // Clear existing options except the first one
                 select.find('option:not(:first)').remove();
@@ -194,7 +194,7 @@
                 <div class="d-flex">
                     <div class="align-self-center ps-2 w-100">
                         <h5 class="card-title">
-                            ${transaksi.pasien_nama_pasien}
+                            ${transaksi.nama_pasien}
                         </h5>
                         <h6 class="card-subtitle mb-2">
                             ${transaksi.kasir}
@@ -295,19 +295,19 @@
     });
 
     function toggleSubmitButton() {
-        var selectedValue = $('#id_pasien').val();
+        var selectedValue = $('#nomor_registrasi').val();
         if (selectedValue === null || selectedValue === "") {
             $('#submitButton').prop('disabled', true);
         } else {
             $('#submitButton').prop('disabled', false);
         }
     }
-    $('#id_pasien').on('change.select2', function() {
+    $('#nomor_registrasi').on('change.select2', function() {
         toggleSubmitButton();
     });
 
     $(document).ready(function() {
-        $('#id_pasien').select2({
+        $('#nomor_registrasi').select2({
             dropdownParent: $('#transaksiForm'),
             theme: "bootstrap-5",
             width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
@@ -380,12 +380,14 @@
                 if (response.data.success) {
                     showSuccessToast(response.data.message, 'success');
                     $('#transaksiForm')[0].reset();
-                    $('#id_pasien').val(null).trigger('change');
+                    $('#nomor_registrasi').val(null).trigger('change');
                     $('#transaksiForm .is-invalid').removeClass('is-invalid');
                     $('#transaksiForm .invalid-feedback').text('').hide();
                     $('#submitButton').prop('disabled', true);
                     fetchTransaksi();
-                } else {
+                } else if (response.data.success == false && response.data.message) {
+                    showFailedToast(response.data.message);
+                } else if (response.data.success == false && response.data.errors) {
                     console.log("Validation Errors:", response.data.errors);
 
                     // Clear previous validation states

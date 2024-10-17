@@ -9,7 +9,7 @@ class TransaksiModel extends Model
     protected $table = 'transaksi';
     protected $primaryKey = 'id_transaksi';
     protected $useTimestamps = false;
-    protected $allowedFields = ['kasir', 'id_pasien', 'no_kwitansi', 'tgl_transaksi', 'total_pembayaran', 'metode_pembayaran', 'lunas'];
+    protected $allowedFields = ['nomor_registrasi', 'no_rm', 'nama_pasien', 'alamat', 'telpon', 'jenis_kelamin', 'tempat_lahir', 'tanggal_lahir', 'kasir', 'no_kwitansi', 'tgl_transaksi', 'total_pembayaran', 'metode_pembayaran', 'lunas'];
 
     public function getLastNoReg($tahun, $bulan, $tanggal)
     {
