@@ -35,7 +35,7 @@
                 </div>
             </div>
             <div class="mb-2 row">
-                <div class="col-lg-3 fw-medium">Nomor MR</div>
+                <div class="col-lg-3 fw-medium">Nomor Rekam Medis</div>
                 <div class="col-lg">
                     <div class="date">
                         <?= $resep['no_rm'] ?>

@@ -33,7 +33,7 @@ $tanggal_lahir = Time::parse($resep['tanggal_lahir']);
             padding-top: 0;
             margin-bottom: 0;
             padding-bottom: 0;
-            font-size: 9pt;
+            font-size: 8pt;
         }
 
         .box {
@@ -52,7 +52,7 @@ $tanggal_lahir = Time::parse($resep['tanggal_lahir']);
     <div class="container-fluid my-3">
         <?php foreach ($detail_resep as $detail) : ?>
             <center>
-                <h2>KLINIK MATA<br>PADANG EYE CENTER • TELUK KUANTAN</h2>
+                <h2 style="font-size: 9pt;">KLINIK MATA<br>PADANG EYE CENTER • TELUK KUANTAN</h2>
             </center>
             <table width="100%">
                 <tbody>
