@@ -26,7 +26,7 @@
         </div>
     </div>
     <fieldset class="border rounded-3 px-2 py-0 mb-3">
-        <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Tambah Pasien</legend>
+        <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Tambah Pasien Rawat Jalan</legend>
         <form id="transaksiForm" enctype="multipart/form-data" class="d-flex flex-column flex-lg-row mb-2 gap-2">
             <div class="flex-fill">
                 <select class="form-select rounded-3" id="nomor_registrasi" name="nomor_registrasi" aria-label="nomor_registrasi">

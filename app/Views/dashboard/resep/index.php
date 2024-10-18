@@ -28,7 +28,7 @@
     </div>
     <?php if (session()->get('role') != 'Apoteker'): ?>
         <fieldset class="border rounded-3 px-2 py-0 mb-3" id="tambahPasienForm">
-            <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Tambah Pasien</legend>
+            <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Tambah Pasien Rawat Jalan</legend>
             <form id="resepForm" enctype="multipart/form-data">
                 <div class="d-flex flex-column flex-lg-row mb-2 gap-2">
                     <div class="flex-fill">
