@@ -31,7 +31,7 @@
             <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Tambah Pasien</legend>
             <form id="resepForm" enctype="multipart/form-data">
                 <div class="mb-2">
-                    <input type="date" id="tanggal" name="tanggal" class="form-control rounded-3">
+                    <input type="date" id="tanggal" name="tanggal" class="form-control rounded-3" value="<?= date('Y-m-d') ?>">
                     <div class="invalid-feedback"></div>
                 </div>
                 <div class="d-flex flex-column flex-lg-row mb-2 gap-2">
@@ -430,9 +430,6 @@
                             const fieldElement = $('#' + field);
                             const feedbackElement = fieldElement.siblings('.invalid-feedback');
 
-                            console.log("Target Field:", fieldElement);
-                            console.log("Target Feedback:", feedbackElement);
-
                             if (fieldElement.length > 0 && feedbackElement.length > 0) {
                                 fieldElement.addClass('is-invalid');
                                 feedbackElement.text(response.data.errors[field]).show();
@@ -447,7 +444,6 @@
                             }
                         }
                     }
-                    console.error('Perbaiki kesalahan pada formulir.');
                 }
             } catch (error) {
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
