@@ -43,8 +43,8 @@
                 <thead>
                     <tr class="align-middle">
                         <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">No</th>
-                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 25%; min-width: 128px;">Nomor Kwitansi</th>
-                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Grand Total</th>
+                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">Nomor Kwitansi</th>
+                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%; white-space: nowrap;">Grand Total</th>
                     </tr>
                 </thead>
                 <tbody class="align-top" id="datatransaksi">
@@ -71,6 +71,37 @@
 <?= $this->endSection(); ?>
 <?= $this->section('javascript'); ?>
 <script>
+    async function downloadReport() {
+        $('#loadingSpinner').show(); // Menampilkan spinner
+
+        try {
+            // Ambil nilai tanggal dari input
+            const tanggal = $('#tanggal').val();
+            // Mengambil file dari server
+            const response = await axios.get(`<?= base_url('transaksi/dailyreportexcel') ?>/${tanggal}`, {
+                responseType: 'blob' // Mendapatkan data sebagai blob
+            });
+
+            // Mendapatkan nama file dari header Content-Disposition
+            const disposition = response.headers['content-disposition'];
+            const filename = disposition ? disposition.split('filename=')[1].split(';')[0].replace(/"/g, '') : '.xlsx';
+
+            // Membuat URL unduhan
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename; // Menggunakan nama file dari header
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+
+            window.URL.revokeObjectURL(url); // Membebaskan URL yang dibuat
+        } catch (error) {
+            showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+        } finally {
+            $('#loadingSpinner').hide(); // Menyembunyikan spinner setelah unduhan selesai
+        }
+    }
     // HTML untuk menunjukkan bahwa data transaksi sedang dimuat
     const loading = `
     <tr>

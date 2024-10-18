@@ -7,7 +7,10 @@ use App\Models\DetailTransaksiModel;
 use App\Models\LayananModel;
 use App\Models\ResepModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
+use CodeIgniter\I18n\Time;
 use Dompdf\Dompdf;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class Transaksi extends BaseController
 {
@@ -1091,8 +1094,8 @@ class Transaksi extends BaseController
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
             // Menyiapkan data untuk tampilan halaman laporan
             $data = [
-                'title' => 'Laporan Transaksi - ' . $this->systemName, // Judul halaman
-                'headertitle' => 'Laporan Transaksi', // Judul header
+                'title' => 'Laporan Transaksi Harian - ' . $this->systemName, // Judul halaman
+                'headertitle' => 'Laporan Transaksi Harian', // Judul header
                 'agent' => $this->request->getUserAgent() // Mengambil informasi user agent
             ];
             return view('dashboard/transaksi/report/daily', $data); // Mengembalikan tampilan halaman laporan
@@ -1104,7 +1107,7 @@ class Transaksi extends BaseController
     public function dailyreport($tgl_transaksi)
     {
         // Memeriksa peran pengguna, hanya 'Admin' yang diizinkan
-        if (session()->get('role') == 'Admin') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
             // Mengambil tanggal dari query string
             $tanggal = $tgl_transaksi;
 
@@ -1135,6 +1138,140 @@ class Transaksi extends BaseController
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan',
             ]);
+        }
+    }
+
+    public function dailyreportexcel($tgl_transaksi)
+    {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+            // Mengambil Data Transaksi dari Model
+            $transaksi = $this->TransaksiModel->where('lunas', 1)->like('tgl_transaksi', $tgl_transaksi)->findAll();
+            $total_all = $this->TransaksiModel
+                ->where('lunas', 1)
+                ->like('tgl_transaksi', $tgl_transaksi)
+                ->selectSum('total_pembayaran')
+                ->get()
+                ->getRow()
+                ->total_pembayaran;
+
+            // Memeriksa apakah detail pembelian obat kosong
+            if (empty($transaksi)) {
+                throw PageNotFoundException::forPageNotFound();
+            } else {
+                // Membuat nama file berdasarkan tanggal pembelian
+                $filename = $tgl_transaksi . '-transaksi';
+                $tanggal = Time::parse($tgl_transaksi);
+                $spreadsheet = new Spreadsheet();
+                $sheet = $spreadsheet->getActiveSheet();
+
+                // Menambahkan informasi header di spreadsheet
+                $sheet->setCellValue('A1', 'KLINIK UTAMA MATA PADANG EYE CENTER TELUK KUANTAN');
+                $sheet->setCellValue('A2', 'Jl. Rusdi S. Abrus No. 35 LK III Sinambek, Kelurahan Sungai Jering, Kecamatan Kuantan Tengah, Kabupaten Kuantan Singingi, Riau.');
+                $sheet->setCellValue('A3', 'LAPORAN TRANSAKSI HARIAN');
+
+                // Menambahkan informasi tanggal dan supplier
+                $sheet->setCellValue('A4', 'Hari/Tanggal:');
+                $sheet->setCellValue('C4', $tanggal->toLocalizedString('d MMMM yyyy'));
+
+                // Menambahkan header tabel detail pembelian
+                $sheet->setCellValue('A5', 'No.');
+                $sheet->setCellValue('B5', 'Nomor Kwitansi');
+                $sheet->setCellValue('D5', 'Total Harga');
+
+                // Mengatur tata letak dan gaya untuk header
+                $spreadsheet->getActiveSheet()->mergeCells('A1:D1');
+                $spreadsheet->getActiveSheet()->mergeCells('A2:D2');
+                $spreadsheet->getActiveSheet()->mergeCells('A3:D3');
+                $spreadsheet->getActiveSheet()->mergeCells('B5:C5');
+                $spreadsheet->getActiveSheet()->getPageSetup()
+                    ->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_PORTRAIT);
+                $spreadsheet->getActiveSheet()->getPageSetup()
+                    ->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_A4);
+                $spreadsheet->getDefaultStyle()->getFont()->setName('Helvetica');
+                $spreadsheet->getDefaultStyle()->getFont()->setSize(8);
+
+                // Mengisi data detail pembelian obat ke dalam spreadsheet
+                $column = 6;
+                foreach ($transaksi as $list) {
+                    $sheet->setCellValue('A' . $column, ($column - 5));
+                    $sheet->setCellValue('B' . $column, $list['no_kwitansi']);
+                    $sheet->setCellValue('D' . $column, $list['total_pembayaran']);
+                    // Mengatur format grand total
+                    $sheet->getStyle('D' . $column)->getNumberFormat()->setFormatCode('_\Rp * #,##0_-;[Red]_\Rp * -#,##0_-;_-_\Rp * \"-\"_-;_-@_-');
+                    // Menggabungkan kolom Nomor Kwitansi
+                    $spreadsheet->getActiveSheet()->mergeCells('B' . ($column) . ':C' . ($column));
+                    // Mengatur gaya teks
+                    $sheet->getStyle('A' . $column . ':D' . $column)->getAlignment()->setWrapText(true);
+                    $sheet->getStyle('A' . $column)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+                    $sheet->getStyle('A' . $column . ':D' . $column)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+                    $column++;
+                }
+
+                // Menambahkan total pemasukan di bawah tabel
+                $sheet->setCellValue('A' . ($column), 'Total Pemasukan');
+                $spreadsheet->getActiveSheet()->mergeCells('A' . ($column) . ':C' . ($column));
+                $sheet->setCellValue('D' . ($column), $total_all);
+                // Mengatur format untuk total pemasukan
+                $sheet->getStyle('D' . ($column))->getNumberFormat()->setFormatCode('_\Rp * #,##0_-;[Red]_\Rp * -#,##0_-;_-_\Rp * \"-\"_-;_-@_-');
+
+                // Menambahkan bagian tanda tangan
+                $sheet->setCellValue('D' . ($column + 2), 'PLACEHOLDER');
+                $sheet->setCellValue('D' . ($column + 7), '(_________________________)');
+
+                // Mengatur gaya teks untuk header dan total
+                $sheet->getStyle('A1')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+                $sheet->getStyle('A1')->getFont()->setSize(12);
+                $sheet->getStyle('A2')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+                $sheet->getStyle('A2')->getFont()->setSize(6);
+                $sheet->getStyle('A3')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+                $sheet->getStyle('C4:C9')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT);
+                $sheet->getStyle('A5:G5')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+                $sheet->getStyle('A' . ($column))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT);
+                $sheet->getStyle('D' . ($column + 2) . ':D' . ($column + 7))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+
+                // Mengatur gaya font untuk header dan total
+                $sheet->getStyle('A1:A9')->getFont()->setBold(TRUE);
+                $sheet->getStyle('A5:G5')->getFont()->setBold(TRUE);
+                $sheet->getStyle('A' . ($column) . ':D' . ($column))->getFont()->setBold(TRUE);
+
+                // Menambahkan border untuk header dan tabel
+                $headerBorder1 = [
+                    'borders' => [
+                        'bottom' => [
+                            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                            'color' => ['argb' => 'FF000000']
+                        ]
+                    ]
+                ];
+                $sheet->getStyle('A2:D2')->applyFromArray($headerBorder1);
+                $tableBorder = [
+                    'borders' => [
+                        'allBorders' => [
+                            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                            'color' => ['argb' => 'FF000000']
+                        ]
+                    ]
+                ];
+                $sheet->getStyle('A5:D' . ($column))->applyFromArray($tableBorder);
+
+                // Mengatur lebar kolom
+                $sheet->getColumnDimension('A')->setWidth(50, 'px');
+                $sheet->getColumnDimension('B')->setWidth(240, 'px');
+                $sheet->getColumnDimension('C')->setWidth(240, 'px');
+                $sheet->getColumnDimension('D')->setWidth(240, 'px');
+
+                // Menyimpan file spreadsheet dan mengirimkan ke browser
+                $writer = new Xlsx($spreadsheet);
+                header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheet.sheet');
+                header('Content-Disposition: attachment;filename=' . $filename . '.xlsx');
+                header('Cache-Control: max-age=0');
+                $writer->save('php://output');
+                exit();
+            }
+        } else {
+            // Menghasilkan exception jika peran tidak diizinkan
+            throw PageNotFoundException::forPageNotFound();
         }
     }
 }

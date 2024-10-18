@@ -20,7 +20,7 @@ $tanggal_lahir = Time::parse($resep['tanggal_lahir']);
 
         body {
             font-family: Times, 'Times New Roman', serif;
-            font-size: 6pt;
+            font-size: 5.5pt;
             color: #2F5496;
         }
 
