@@ -29,7 +29,7 @@ The user guide corresponding to the latest version of the framework can be found
 3. Run `php spark migrate` to migrate database.
 4. Run `php spark db:seed User` to seed the database items.
 5. For development use, run `php spark serve` to start the server. Usually [http://localhost:8080](http://localhost:8080). You can use different port by using `php spark serve --port 8081`. Replace `8081` with the desired port number. You need to modify `requestURL` in `.env` to match with the desired port number.
-6. For production use such as Apache, just open it from URL like [http://localhost/pectk_farmasi](http://localhost/pectk_farmasi) or others based on your web server's configuration. You need to modify `requestURL` in `.env` to match with the desired URL address.
+6. For production use such as Apache, just open it from URL like [http://localhost/pectk-farmasi](http://localhost/pectk-farmasi) or others based on your web server's configuration. You need to modify `requestURL` in `.env` to match with the desired URL address.
    > The base URL is based on PHP's `$_SERVER['SERVER_NAME']` value. You just need to change the `requestURL` which consists of the port and the subfolder (if the app is stored in a subfolder).
 7. Sign in using username `admin` and password `12345`.
 
