@@ -33,6 +33,10 @@ The user guide corresponding to the latest version of the framework can be found
    > The base URL is based on PHP's `$_SERVER['SERVER_NAME']` value. You just need to change the `requestURL` which consists of the port and the subfolder (if the app is stored in a subfolder).
 7. Sign in using username `admin` and password `12345`. You need to change the password from `{your_base_url}/settings/changepassword` and we recommend using a strong password for better security.
 
+### Outpatient API from Clilic's Management Information System
+
+You can specify `API-URL` (API URL Endpoint) and `X-KEY` (X Key Authorization) in `.env`.
+
 ## Progressive Web App (PWA) Setup
 
 Files required for PWA setup inside public folder are:
