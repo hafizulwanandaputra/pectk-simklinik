@@ -313,8 +313,8 @@
                         const itemElement = `
                                 <li class="list-group-item list-group-item-secondary text-body-emphasis">
                                     <div class="fw-bold">${item.no_batch}</div>
-                                    <div>Kadaluwarsa: ${item.expired}</div>
-                                    <div>Jumlah: ${jumlah_item}</div>
+                                    <div class="date">Kadaluwarsa: ${item.expired}</div>
+                                    <div class="date">Jumlah: ${jumlah_item}</div>
                                     <div class="btn-group" role="group">
                                         <button class="btn btn-secondary text-nowrap bg-gradient rounded-start-3 edit-batch-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${item.id_item_obat}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
                                         <button class="btn btn-danger text-nowrap bg-gradient rounded-end-3 delete-batch-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${item.id_item_obat}" data-name="${item.no_batch}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
