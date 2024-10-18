@@ -397,31 +397,22 @@
             ]);
             const layanan = layananResponse.data;
             const obatalkes = obatalkesResponse.data;
-            // Cek apakah salah satu data kosong
-            if (layanan.length === 0 || obatalkes.length === 0) {
-                $('#processBtn').prop('disabled', true);
-                return; // Keluar lebih awal jika ada data kosong
-            }
-
-            // Asumsikan tombol bisa aktif
-            let shouldDisable = false;
-
-            // Periksa status lunas pada layanan
-            layanan.forEach(function(layananItem) {
-                if (layananItem.lunas === "1") {
-                    shouldDisable = true;
+            layanan.forEach(function(layanan) {
+                const layananLunas = layanan.lunas;
+                if (layananLunas === "1") {
+                    $('#processBtn').prop('disabled', true);
+                } else if (layananLunas === "0") {
+                    $('#processBtn').prop('disabled', false);
                 }
             });
-
-            // Periksa status lunas pada obat/alkes
-            obatalkes.forEach(function(obatalkesItem) {
-                if (obatalkesItem.lunas === "1") {
-                    shouldDisable = true;
+            obatalkes.forEach(function(obatalkes) {
+                const obatalkesLunas = obatalkes.lunas;
+                if (obatalkesLunas === "1") {
+                    $('#processBtn').prop('disabled', true);
+                } else if (obatalkesLunas === "0") {
+                    $('#processBtn').prop('disabled', false);
                 }
             });
-
-            // Atur status tombol berdasarkan hasil pengecekan
-            $('#processBtn').prop('disabled', shouldDisable);
         } catch (error) {
             showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
         }
