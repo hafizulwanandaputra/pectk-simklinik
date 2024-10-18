@@ -1,7 +1,6 @@
 const CACHE_NAME = 'pectk-farmasi-cache-v1';
 const ASSETS_TO_CACHE = [
   './', 
-  './index.php',
   './favicon.png',
   './Screenshot.png'
 ];

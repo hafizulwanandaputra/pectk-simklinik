@@ -55,8 +55,8 @@ PWA contents:
 - In `app/Views/auth/templates/login.php` and `app/Views/dashboard/templates/dashboard.php`, there's is a `<link rel="manifest" href="<?= base_url(); ?>/manifest.json">` tag to initiate `manifest.json` and JavaScript code to register service worker located in `public/service-worker.js`:
   ```
   if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/service-worker.js', {
-          scope: '/'
+      navigator.serviceWorker.register('<?= base_url('service-worker.js') ?>', {
+          scope: '<?= env('requestURL') ?>'
       }).then(registration => {
           console.log('Service Worker registered with scope:', registration.scope);
       }).catch(error => {
@@ -68,7 +68,6 @@ PWA contents:
   ```
   const ASSETS_TO_CACHE = [
       './',
-      './index.php',
       './favicon.png',
       './Screenshot.png'
   ];

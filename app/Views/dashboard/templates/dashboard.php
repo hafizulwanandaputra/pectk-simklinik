@@ -30,8 +30,8 @@
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script>
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/service-worker.js', {
-                scope: '/'
+            navigator.serviceWorker.register('<?= base_url('service-worker.js') ?>', {
+                scope: '<?= env('requestURL') ?>'
             }).then(registration => {
                 console.log('Service Worker registered with scope:', registration.scope);
             }).catch(error => {

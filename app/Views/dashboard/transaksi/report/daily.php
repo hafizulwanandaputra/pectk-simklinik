@@ -152,7 +152,11 @@
 
             // Menambahkan total pemasukan
             const total_pemasukan = parseInt(total_all);
-            $('#total_all').text(`Rp${total_pemasukan.toLocaleString('id-ID')}`);
+            if (isNaN(total_pemasukan) || total_pemasukan === 0) {
+                $('#total_all').text('Rp0');
+            } else {
+                $('#total_all').text(`Rp${total_pemasukan.toLocaleString('id-ID')}`);
+            }
         } catch (error) {
             // Menangani error jika permintaan gagal
             console.error(error.response.data.error); // Menampilkan error di konsol
