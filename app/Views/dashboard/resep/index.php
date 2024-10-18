@@ -30,10 +30,6 @@
         <fieldset class="border rounded-3 px-2 py-0 mb-3" id="tambahPasienForm">
             <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Tambah Pasien</legend>
             <form id="resepForm" enctype="multipart/form-data">
-                <div class="mb-2">
-                    <input type="date" id="tanggal" name="tanggal" class="form-control rounded-3" value="<?= date('Y-m-d') ?>">
-                    <div class="invalid-feedback"></div>
-                </div>
                 <div class="d-flex flex-column flex-lg-row mb-2 gap-2">
                     <div class="flex-fill">
                         <select class="form-select rounded-3" id="nomor_registrasi" name="nomor_registrasi" aria-label="nomor_registrasi">
@@ -147,15 +143,8 @@
     <?php if (session()->get('role') != 'Apoteker') : ?>
         async function fetchPasienOptions() {
             try {
-                // Ambil nilai tanggal dari input
-                const tanggal = $('#tanggal').val();
-
-                if (!tanggal) {
-                    return;
-                }
-
                 // Panggil API dengan query string tanggal
-                const response = await axios.get(`<?= base_url('resep/pasienlist') ?>?tanggal=${tanggal}`);
+                const response = await axios.get(`<?= base_url('resep/pasienlist') ?>`);
 
                 if (response.data.success) {
                     const options = response.data.data;
@@ -180,7 +169,6 @@
                 showFailedToast('Gagal mendapatkan pasien.<br>' + error);
             }
         }
-        $('#tanggal').on('change', fetchPasienOptions);
     <?php endif; ?>
     async function fetchResep() {
         const search = $('#searchInput').val();

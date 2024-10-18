@@ -109,19 +109,12 @@ class Resep extends BaseController
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Dokter' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
-            $tanggal = $this->request->getGet('tanggal'); // Mengambil tanggal dari query string
 
-            // Memeriksa apakah tanggal ada
-            if (!$tanggal) {
-                return $this->response->setStatusCode(400)->setJSON([
-                    'error' => 'Tanggal harus diisi', // Mengembalikan error jika tanggal tidak ada
-                ]);
-            }
             $client = new Client(); // Membuat klien HTTP Guzzle baru
 
             try {
                 // Mengirim permintaan GET ke API
-                $response = $client->request('GET', env('API-URL') . $tanggal, [
+                $response = $client->request('GET', env('API-URL') . date('Y-m-d'), [
                     'headers' => [
                         'Accept' => 'application/json',
                         'x-key' => env('X-KEY') // Mengatur header API
@@ -198,13 +191,12 @@ class Resep extends BaseController
 
             // Mengambil nomor registrasi dan tanggal dari permintaan POST
             $nomorRegistrasi = $this->request->getPost('nomor_registrasi');
-            $tanggalDaftar = $this->request->getPost('tanggal');
 
             // Mengambil data dari API eksternal menggunakan Guzzle
             $client = new Client();
             try {
                 // Mengirim permintaan GET ke API
-                $response = $client->request('GET', env('API-URL') . $tanggalDaftar, [
+                $response = $client->request('GET', env('API-URL') . date('Y-m-d'), [
                     'headers' => [
                         'x-key' => env('X-KEY'), // Mengatur header API
                     ],
