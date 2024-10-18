@@ -35,7 +35,7 @@ The user guide corresponding to the latest version of the framework can be found
 
 ### Outpatient API from Clilic's Management Information System
 
-You can specify `API-URL` (API URL Endpoint) and `X-KEY` (X Key Authorization) in `.env`.
+You can specify `API-URL` (API URL endpoint) and `X-KEY` (X Key authorization) in `.env`.
 
 ## Progressive Web App (PWA) Setup
 
