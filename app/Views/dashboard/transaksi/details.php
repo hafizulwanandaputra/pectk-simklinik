@@ -235,7 +235,7 @@
                     <button id="closeBtn" type="button" class="btn btn-danger btn-sm bg-gradient ps-0 pe-0 pt-0 pb-0 rounded-3" data-bs-dismiss="modal" aria-label="Close"><span data-feather="x" class="mb-0" style="width: 30px; height: 30px;"></span></button>
                 </div>
                 <div class="modal-body py-2">
-                    <div id="mediaAlert" class="alert alert-info bg-gradient rounded-3 mb-1 mt-1" role="alert">
+                    <div id="mediaAlert" class="alert alert-info rounded-3 mb-1 mt-1" role="alert">
                         <div class="d-flex align-items-start">
                             <div style="width: 12px; text-align: center;">
                                 <i class="fa-solid fa-circle-info"></i>

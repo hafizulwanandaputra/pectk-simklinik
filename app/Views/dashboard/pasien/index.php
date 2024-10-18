@@ -21,7 +21,7 @@
         <div class="row row-cols-1 row-cols-sm-2 g-2 mb-2">
             <div class="col">
                 <div class="card bg-body-tertiary w-100 rounded-3">
-                    <div class="card-header w-100 text-truncate bg-gradient">Tanggal </div>
+                    <div class="card-header w-100 text-truncate">Tanggal </div>
                     <div class="card-body">
                         <h5 class="display-6 fw-medium date mb-0" id="tanggal2"><i class="fa-solid fa-spinner fa-spin-pulse"></i></h5>
                     </div>
@@ -29,7 +29,7 @@
             </div>
             <div class="col">
                 <div class="card bg-body-tertiary w-100 rounded-3">
-                    <div class="card-header w-100 text-truncate bg-gradient">Jumlah Pasien yang Berobat</div>
+                    <div class="card-header w-100 text-truncate">Jumlah Pasien yang Berobat</div>
                     <div class="card-body">
                         <h5 class="display-6 fw-medium date mb-0" id="lengthpasien"><i class="fa-solid fa-spinner fa-spin-pulse"></i></h5>
                     </div>
