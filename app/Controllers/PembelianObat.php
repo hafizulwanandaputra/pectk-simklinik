@@ -993,6 +993,10 @@ class PembelianObat extends BaseController
                 // Mengatur format untuk total biaya
                 $sheet->getStyle('G' . ($column))->getNumberFormat()->setFormatCode('_\Rp * #,##0_-;[Red]_\Rp * -#,##0_-;_-_\Rp * \"-\"_-;_-@_-');
 
+                // Menambahkan bagian tanda tangan penerima
+                $sheet->setCellValue('G' . ($column + 2), 'Penerima');
+                $sheet->setCellValue('G' . ($column + 7), '(_________________________)');
+
                 // Mengatur gaya teks untuk header dan total
                 $sheet->getStyle('A1')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
                 $sheet->getStyle('A2')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
@@ -1000,6 +1004,7 @@ class PembelianObat extends BaseController
                 $sheet->getStyle('C4:C9')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT);
                 $sheet->getStyle('A10:G10')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
                 $sheet->getStyle('A' . ($column))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT);
+                $sheet->getStyle('G' . ($column + 2) . ':G' . ($column + 7))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
 
                 // Mengatur gaya font untuk header dan total
                 $sheet->getStyle('A1:A9')->getFont()->setBold(TRUE);
@@ -1028,12 +1033,12 @@ class PembelianObat extends BaseController
 
                 // Mengatur lebar kolom
                 $sheet->getColumnDimension('A')->setWidth(50, 'px');
-                $sheet->getColumnDimension('B')->setWidth(210, 'px');
+                $sheet->getColumnDimension('B')->setWidth(320, 'px');
                 $sheet->getColumnDimension('C')->setWidth(120, 'px');
                 $sheet->getColumnDimension('D')->setWidth(120, 'px');
-                $sheet->getColumnDimension('E')->setWidth(180, 'px');
+                $sheet->getColumnDimension('E')->setWidth(240, 'px');
                 $sheet->getColumnDimension('F')->setWidth(50, 'px');
-                $sheet->getColumnDimension('G')->setWidth(180, 'px');
+                $sheet->getColumnDimension('G')->setWidth(240, 'px');
 
                 // Menyimpan file spreadsheet dan mengirimkan ke browser
                 $writer = new Xlsx($spreadsheet);
