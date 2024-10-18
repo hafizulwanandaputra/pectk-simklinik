@@ -14,8 +14,8 @@ class Pasien extends BaseController
         if (session()->get('role') == 'Admin') {
             // Menyiapkan data untuk tampilan
             $data = [
-                'title' => 'Pasien - ' . $this->systemName,
-                'headertitle' => 'Pasien (Rawat Jalan)',
+                'title' => 'Pasien Rawat Jalan - ' . $this->systemName,
+                'headertitle' => 'Pasien Rawat Jalan',
                 'agent' => $this->request->getUserAgent() // Mengambil informasi user agent
             ];
             // Menampilkan tampilan untuk halaman pasien

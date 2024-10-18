@@ -54,7 +54,7 @@
                 </thead>
                 <tbody class="align-top" id="datapasien">
                     <tr>
-                        <td colspan="9" class="text-center">Memuat data pasien...</td>
+                        <td colspan="9" class="text-center">Memuat data pasien rawat jalan...</td>
                     </tr>
                 </tbody>
             </table>
@@ -106,7 +106,7 @@
                 // Tampilkan pesan jika tidak ada data
                 const emptyRow = `
                     <tr>
-                        <td colspan="9" class="text-center"><strong>Silakan masukkan tanggal</strong><br>Data-data pasien ini diperoleh dari Sistem Informasi Manajemen Klinik Utama Mata Padang Eye Center Teluk Kuantan melalui  <em>Application Programming Interface</em> (API)</td>
+                        <td colspan="9" class="text-center"><strong>Silakan masukkan tanggal</strong><br>Data-data pasien rawat jalan ini diperoleh dari Sistem Informasi Manajemen Klinik Utama Mata Padang Eye Center Teluk Kuantan melalui  <em>Application Programming Interface</em> (API)</td>
                     </tr>
                 `;
                 $('#datapasien').append(emptyRow); // Menambahkan baris kosong ke tabel

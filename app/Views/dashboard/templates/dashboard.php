@@ -371,7 +371,7 @@
                                             <i class="fa-solid fa-hospital-user"></i>
                                         </div>
                                         <div class="flex-fill ms-2">
-                                            Pasien
+                                            Pasien Rawat Jalan
                                         </div>
                                     </div>
                                 </a>
