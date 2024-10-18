@@ -1083,4 +1083,58 @@ class Transaksi extends BaseController
             throw PageNotFoundException::forPageNotFound(); // Jika peran tidak valid, lempar exception
         }
     }
+
+    // LAPORAN TRANSAKSI
+    public function dailyreportinit()
+    {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+            // Menyiapkan data untuk tampilan halaman laporan
+            $data = [
+                'title' => 'Laporan Transaksi - ' . $this->systemName, // Judul halaman
+                'headertitle' => 'Laporan Transaksi', // Judul header
+                'agent' => $this->request->getUserAgent() // Mengambil informasi user agent
+            ];
+            return view('dashboard/transaksi/report/daily', $data); // Mengembalikan tampilan halaman laporan
+        } else {
+            throw PageNotFoundException::forPageNotFound(); // Menampilkan halaman tidak ditemukan jika peran tidak valid
+        }
+    }
+
+    public function dailyreport($tgl_transaksi)
+    {
+        // Memeriksa peran pengguna, hanya 'Admin' yang diizinkan
+        if (session()->get('role') == 'Admin') {
+            // Mengambil tanggal dari query string
+            $tanggal = $tgl_transaksi;
+
+            // Memeriksa apakah tanggal diisi
+            if (!$tanggal) {
+                return $this->response->setStatusCode(400)->setJSON([
+                    'error' => 'Tanggal harus diisi',
+                ]);
+            }
+
+            // Mengambil Data Transaksi dari Model
+            $data = $this->TransaksiModel->where('lunas', 1)->like('tgl_transaksi', $tgl_transaksi)->findAll();
+            $total_all = $this->TransaksiModel
+                ->where('lunas', 1)
+                ->like('tgl_transaksi', $tgl_transaksi)
+                ->selectSum('total_pembayaran')
+                ->get()
+                ->getRow()
+                ->total_pembayaran;
+
+            // Mengembalikan respons JSON dengan data pasien
+            return $this->response->setJSON([
+                'data' => $data,
+                'total_all' => $total_all
+            ]);
+        } else {
+            // Jika peran tidak dikenali, kembalikan status 404
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
+        }
+    }
 }

@@ -97,6 +97,9 @@ $routes->get('/(?i)transaksi/(?i)struk/(:any)', 'Transaksi::struk/$1');
 $routes->post('/(?i)transaksi/(?i)create', 'Transaksi::create');
 $routes->post('/(?i)transaksi/(?i)update', 'Transaksi::update');
 $routes->post('/(?i)transaksi/(?i)process/(:any)', 'Transaksi::process/$1');
+$routes->get('/(?i)transaksi/(?i)dailyreport', 'Transaksi::dailyreportinit');
+$routes->get('/(?i)transaksi/(?i)dailyreport/(:any)', 'Transaksi::dailyreport/$1');
+$routes->get('/(?i)transaksi/(?i)dailyreport/(?i)excel/(:any)', 'Transaksi::dailyreportexcel/$1');
 $routes->delete('/(?i)transaksi/(?i)delete/(:any)', 'Transaksi::delete/$1');
 
 // DETAIL TRANSAKSI
