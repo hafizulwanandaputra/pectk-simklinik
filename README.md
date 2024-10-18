@@ -54,7 +54,7 @@ PWA contents:
       }).catch(error => {
           console.error('Service Worker registration failed:', error);
       });
-    }
+  }
   ```
 - Cache file to save files for offline use in `public/service-worker.js`:
   ```
