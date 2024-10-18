@@ -18,20 +18,20 @@
                 <button class="btn btn-success bg-gradient rounded-end-3" type="button" id="refreshButton" disabled><i class="fa-solid fa-sync"></i></button>
             </div>
         </fieldset>
-        <div class="row row-cols-1 row-cols-sm-2 g-2 mb-2">
+        <div id="infoCard" class="row row-cols-1 row-cols-sm-2 g-2 mb-2" style="display: none;">
             <div class="col">
                 <div class="card bg-body-tertiary w-100 rounded-3">
                     <div class="card-header w-100 text-truncate">Tanggal </div>
-                    <div class="card-body">
-                        <h5 class="display-6 fw-medium date mb-0" id="tanggal2"><i class="fa-solid fa-spinner fa-spin-pulse"></i></h5>
+                    <div class="card-body placeholder-glow">
+                        <h5 class="display-6 fw-medium date mb-0" id="tanggal2"><span class="placeholder w-100"></span></h5>
                     </div>
                 </div>
             </div>
             <div class="col">
                 <div class="card bg-body-tertiary w-100 rounded-3">
                     <div class="card-header w-100 text-truncate">Jumlah Pasien yang Berobat</div>
-                    <div class="card-body">
-                        <h5 class="display-6 fw-medium date mb-0" id="lengthpasien"><i class="fa-solid fa-spinner fa-spin-pulse"></i></h5>
+                    <div class="card-body placeholder-glow">
+                        <h5 class="display-6 fw-medium date mb-0" id="lengthpasien"><span class="placeholder w-100"></span></h5>
                     </div>
                 </div>
             </div>
@@ -98,10 +98,11 @@
 
             // Cek apakah tanggal diinput
             if (!tanggal) {
+                $('#infoCard').hide(); // Sembunyikan infoCard
                 $('#datapasien').empty(); // Kosongkan tabel pasien
                 $('#refreshButton').prop('disabled', true); // Nonaktifkan tombol refresh
-                $('#tanggal2').text(`-`); // Set text tanggal ke '-'
-                $('#lengthpasien').text(`-`); // Set panjang pasien ke '-'
+                $('#tanggal2').text(``); // Kosongkan tanggal tanggal
+                $('#lengthpasien').text(``); // Kosongkan panjang pasien
                 // Tampilkan pesan jika tidak ada data
                 const emptyRow = `
                     <tr>
@@ -111,6 +112,8 @@
                 $('#datapasien').append(emptyRow); // Menambahkan baris kosong ke tabel
                 return; // Keluar dari fungsi
             }
+
+            $('#infoCard').show();
 
             // Mengambil data pasien dari API berdasarkan tanggal
             const response = await axios.get(`<?= base_url('pasien/pasienapi') ?>?tanggal=${tanggal}`);
@@ -183,8 +186,8 @@
     $('#tanggal').on('change', function() {
         $('#datapasien').empty(); // Kosongkan tabel pasien
         $('#datapasien').append(loading); // Menampilkan loading indicator
-        $('#tanggal2').html(`<i class="fa-solid fa-spinner fa-spin-pulse"></i>`); // Menampilkan spinner pada text tanggal
-        $('#lengthpasien').html(`<i class="fa-solid fa-spinner fa-spin-pulse"></i>`); // Menampilkan spinner pada panjang pasien
+        $('#tanggal2').html(`<span class="placeholder w-100"></span>`); // Menampilkan placeholder pada text tanggal
+        $('#lengthpasien').html(`<span class="placeholder w-100"></span>`); // Menampilkan placeholder pada panjang pasien
         fetchPasien(); // Memanggil fungsi untuk mengambil data pasien
     });
 
@@ -193,8 +196,8 @@
         $('#refreshButton').on('click', function() {
             $('#datapasien').empty(); // Kosongkan tabel pasien
             $('#datapasien').append(loading); // Tampilkan loading indicator
-            $('#tanggal2').html(`<i class="fa-solid fa-spinner fa-spin-pulse"></i>`); // Tampilkan spinner pada text tanggal
-            $('#lengthpasien').html(`<i class="fa-solid fa-spinner fa-spin-pulse"></i>`); // Tampilkan spinner pada panjang pasien
+            $('#tanggal2').html(`<span class="placeholder w-100"></span>`); // Tampilkan placeholder pada text tanggal
+            $('#lengthpasien').html(`<span class="placeholder w-100"></span>`); // Tampilkan placeholder pada panjang pasien
             fetchPasien(); // Panggil fungsi untuk mengambil data pasien
         });
 
