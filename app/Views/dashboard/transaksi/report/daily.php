@@ -174,7 +174,7 @@
                 const transaksiElement = `
                     <tr>
                         <td class="date text-nowrap text-center">${index + 1}</td>
-                        <td>${transaksi.no_kwitansi}</td>
+                        <td class="date text-nowrap">${transaksi.no_kwitansi}</td>
                         <td class="date text-end">Rp${total_pembayaran.toLocaleString('id-ID')}</td>
                     </tr>
                 `;
