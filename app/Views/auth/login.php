@@ -6,7 +6,7 @@
             <div class="modal-content bg-body rounded-4 shadow-lg transparent-blur">
                 <div class="modal-body">
                     <?= form_open('check-login', 'id="loginForm"'); ?>
-                    <img class="mb-2" src="<?= base_url('/assets/images/logo_pec.png'); ?>" width="96px" style="filter: drop-shadow(-1px 0 0 var(--bs-light)) drop-shadow(0 1px 0 var(--bs-light)) drop-shadow(1px 0 0 var(--bs-light)) drop-shadow(0 -1px 0 var(--bs-light));">
+                    <img class="mb-2" src="<?= base_url('/assets/images/logo_pec.png'); ?>" width="96px">
                     <h1 class="h3 mb-2 fw-normal">
                         Kasir dan Farmasi
                     </h1>
