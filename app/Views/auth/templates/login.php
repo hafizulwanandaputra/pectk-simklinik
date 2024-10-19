@@ -18,9 +18,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&family=Noto+Sans+Arabic:wdth,wght@62.5..100,100..900&family=Noto+Sans+Mono:wdth,wght@62.5..100,100..900&family=Noto+Sans:ital,wdth,wght@0,62.5..100,100..900;1,62.5..100,100..900&display=swap" rel="stylesheet">
-    <link href="<?= base_url(); ?>assets_public/fonts/Inter/inter.css" rel="stylesheet">
-    <link href="<?= base_url(); ?>assets_public/fonts/jetbrains-mono/jetbrains-mono.css" rel="stylesheet">
-    <link href="<?= base_url(); ?>assets_public/fonts/base-font/inter.css" rel="stylesheet">
+    <link href="<?= base_url(); ?>assets_public/fonts/base-font/base-font.css" rel="stylesheet">
     <style>
         .form-signin .username {
             margin-bottom: -1px;
