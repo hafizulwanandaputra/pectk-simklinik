@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= $title; ?></title>
     <link rel="manifest" href="<?= base_url(); ?>/manifest.json">
-    <meta name="theme-color" content="#5eba00">
+    <meta name="theme-color" content="#dbf4f1" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#456f6a" media="(prefers-color-scheme: dark)">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="<?= base_url(); ?>favicon.png" rel="icon" />
     <link href="<?= base_url(); ?>favicon.png" rel="apple-touch-icon" />
@@ -33,15 +34,17 @@
             background-repeat: no-repeat;
             background-size: cover;
             position: relative;
+            background-color: #dbf4f1;
         }
 
         @media (prefers-color-scheme: dark) {
             body {
-                background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('<?= base_url('/assets/images/pec.jpg'); ?>');
+                background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), url('<?= base_url('/assets/images/pec-dark.jpg'); ?>');
                 background-position: center;
                 background-repeat: no-repeat;
                 background-size: cover;
                 position: relative;
+                background-color: #456f6a;
             }
         }
     </style>
@@ -59,7 +62,7 @@
     </script>
 </head>
 
-<body class="d-flex align-items-center py-4 text-center" id="background" style="background-color: #5eba00;">
+<body class="d-flex align-items-center py-4 text-center" id="background">
 
     <?= $this->renderSection('content'); ?>
 

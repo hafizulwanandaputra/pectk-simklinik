@@ -4,7 +4,7 @@
 <?= $this->endSection(); ?>
 <?= $this->section('title'); ?>
 <div class="d-flex justify-content-start align-items-center">
-    <a class="fs-5 me-3 link-body-emphasis" href="<?= base_url('/pembelianobat'); ?>"><i class="fa-solid fa-arrow-left"></i></a>
+    <a class="fs-5 me-3 text-success-emphasis" href="<?= base_url('/pembelianobat'); ?>"><i class="fa-solid fa-arrow-left"></i></a>
     <span class="fw-medium fs-5 flex-fill text-truncate"><?= $headertitle; ?></span>
     <div id="loadingSpinner" class="spinner-border spinner-border-sm" role="status">
         <span class="visually-hidden">Loading...</span>
