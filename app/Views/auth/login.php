@@ -3,7 +3,7 @@
 <main class="form-signin w-100 m-auto">
     <div class="modal d-block" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content bg-body rounded-4 shadow-lg transparent-blur">
+            <div class="modal-content bg-body-tertiary rounded-4 shadow-lg transparent-blur">
                 <div class="modal-body">
                     <?= form_open('check-login', 'id="loginForm"'); ?>
                     <img class="mb-2" src="<?= base_url('/assets/images/logo_pec.png'); ?>" width="96px">

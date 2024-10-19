@@ -600,7 +600,7 @@ class Transaksi extends BaseController
             $validation->setRules([
                 'id_layanan' => 'required', // ID layanan harus diisi
                 'qty_transaksi' => 'required|numeric|greater_than[0]', // Kuantitas harus diisi, berupa angka, dan lebih dari 0
-                'diskon_layanan' => 'required|numeric|greater_than_equal_to[0]|less_than[100]', // Diskon harus diisi, berupa angka, antara 0 dan 100
+                'diskon_layanan' => 'required|numeric|greater_than_equal_to[0]|less_than_equal_to[100]', // Diskon harus diisi, berupa angka, antara 0 dan 100
             ]);
 
             // Memeriksa validasi
@@ -662,7 +662,7 @@ class Transaksi extends BaseController
             // Menetapkan aturan validasi dasar
             $validation->setRules([
                 'id_resep' => 'required', // ID resep harus diisi
-                'diskon_obatalkes' => 'required|numeric|greater_than_equal_to[0]|less_than[100]', // Diskon harus diisi, berupa angka, antara 0 dan 100
+                'diskon_obatalkes' => 'required|numeric|greater_than_equal_to[0]|less_than_equal_to[100]', // Diskon harus diisi, berupa angka, antara 0 dan 100
             ]);
 
             // Memeriksa validasi
@@ -724,7 +724,7 @@ class Transaksi extends BaseController
             // Menetapkan aturan validasi dasar
             $validation->setRules([
                 'qty_transaksi_edit' => 'required|numeric|greater_than[0]', // Kuantitas harus diisi, berupa angka, dan lebih dari 0
-                'diskon_layanan_edit' => 'required|numeric|greater_than_equal_to[0]|less_than[100]', // Diskon harus diisi, berupa angka, antara 0 dan 100
+                'diskon_layanan_edit' => 'required|numeric|greater_than_equal_to[0]|less_than_equal_to[100]', // Diskon harus diisi, berupa angka, antara 0 dan 100
             ]);
 
             // Memeriksa validasi
@@ -785,7 +785,7 @@ class Transaksi extends BaseController
             $validation = \Config\Services::validation();
             // Menetapkan aturan validasi dasar
             $validation->setRules([
-                'diskon_obatalkes_edit' => 'required|numeric|greater_than_equal_to[0]|less_than[100]', // Diskon harus diisi, berupa angka, antara 0 dan 100
+                'diskon_obatalkes_edit' => 'required|numeric|greater_than_equal_to[0]|less_than_equal_to[100]', // Diskon harus diisi, berupa angka, antara 0 dan 100
             ]);
 
             // Memeriksa validasi

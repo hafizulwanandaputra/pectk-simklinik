@@ -281,7 +281,7 @@
                             </svg>
                         </div>
                     </a>
-                    <ul class="dropdown-menu rounded-3 dropdown-menu-end text-small shadow bg-body transparent-blur" style="width: 240px;">
+                    <ul class="dropdown-menu rounded-3 dropdown-menu-end text-small shadow bg-body-tertiary transparent-blur" style="width: 240px;">
                         <li class="lh-1 p-1">
                             <div class="d-flex align-items-start">
                                 <span style="min-width: 32px; max-width: 32px; text-align: center;"><i class="fa-solid fa-user"></i></span>
@@ -314,7 +314,7 @@
 
         <div class="modal modal-sheet p-4 py-md-5 fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModal" aria-hidden="true" role="dialog">
             <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content bg-body rounded-4 shadow-lg transparent-blur">
+                <div class="modal-content bg-body-tertiary rounded-4 shadow-lg transparent-blur">
                     <div class="modal-body p-4 text-center">
                         <h5 class="mb-0" id="logoutMessage">Apakah Anda ingin keluar?</h5>
                     </div>

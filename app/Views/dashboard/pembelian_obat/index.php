@@ -76,7 +76,7 @@
     </nav>
     <div class="modal modal-sheet p-4 py-md-5 fade" id="cancelModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="cancelModalLabel" aria-hidden="true" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content bg-body rounded-4 shadow-lg transparent-blur">
+            <div class="modal-content bg-body-tertiary rounded-4 shadow-lg transparent-blur">
                 <div class="modal-body p-4 text-center">
                     <h5 id="cancelMessage"></h5>
                     <h6 class="mb-0" id="cancelSubmessage"></h6>
@@ -90,7 +90,7 @@
     </div>
     <div class="modal modal-sheet p-4 py-md-5 fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content bg-body rounded-4 shadow-lg transparent-blur">
+            <div class="modal-content bg-body-tertiary rounded-4 shadow-lg transparent-blur">
                 <div class="modal-body p-4 text-center">
                     <h5 id="deleteMessage"></h5>
                     <h6 class="mb-0" id="deleteSubmessage"></h6>
