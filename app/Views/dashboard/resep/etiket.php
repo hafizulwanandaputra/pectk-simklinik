@@ -14,14 +14,16 @@ $tanggal_lahir = Time::parse($resep['tanggal_lahir']);
     <title><?= $title; ?></title>
     <style>
         @page {
-            size: 7cm 4.2cm;
-            margin: 0.2cm;
+            size: 5.5cm 3.75cm;
+            margin-top: 0.1cm;
+            margin-left: 0.65cm;
+            margin-right: 0.65cm;
+            margin-bottom: 0.55cm;
         }
 
         body {
             font-family: Times, 'Times New Roman', serif;
-            font-size: 5.5pt;
-            color: #2F5496;
+            font-size: 5pt;
         }
 
         table {
@@ -33,17 +35,17 @@ $tanggal_lahir = Time::parse($resep['tanggal_lahir']);
             padding-top: 0;
             margin-bottom: 0;
             padding-bottom: 0;
-            font-size: 8pt;
+            font-size: 7pt;
         }
 
         .box {
-            border: 1px solid #4472C4;
-            height: 1.3cm;
+            border: 1px solid black;
+            height: 0.925cm;
             overflow: hidden;
-            padding: 0.1cm;
+            padding: 0cm;
             font-weight: bold;
             text-align: center;
-            font-size: 7.5pt;
+            font-size: 5.5pt;
         }
     </style>
 </head>
@@ -52,22 +54,22 @@ $tanggal_lahir = Time::parse($resep['tanggal_lahir']);
     <div class="container-fluid my-3">
         <?php foreach ($detail_resep as $detail) : ?>
             <center>
-                <h2 style="font-size: 9pt;">KLINIK MATA<br>PADANG EYE CENTER • TELUK KUANTAN</h2>
+                <h2 style="font-size: 5.7pt;">KLINIK MATA<br>PADANG EYE CENTER • TELUK KUANTAN</h2>
             </center>
             <table width="100%">
-                <tbody>
+                <tbody style="vertical-align: top;">
                     <tr>
                         <td style="width: 100%;">No. RM: <?= $resep['no_rm'] ?></td>
                         <td style="width: 0%; text-align: right; white-space: nowrap;">Tgl: <?= $tanggal_resep->toLocalizedString('dd/MM/yyyy') ?></td>
                     </tr>
                     <tr>
-                        <td style="width: 100%;">DPJP: <?= $resep['dokter'] ?></td>
+                        <td style="width: 100%; height: 0.3cm;">DPJP: <?= $resep['dokter'] ?></td>
                         <td style="width: 0%; text-align: right; white-space: nowrap;">DOB: <?= $tanggal_lahir->toLocalizedString('dd/MM/yyyy') ?></td>
                     </tr>
                 </tbody>
             </table>
             <center>
-                <h2 style="padding-top: 0.2cm; padding-bottom: 0.2cm; white-space: nowrap;"><?= $resep['nama_pasien'] ?></h2>
+                <h2 style="padding-top: 0cm; padding-bottom: 0.1cm; white-space: nowrap; height: 0.5cm;"><?= $resep['nama_pasien'] ?></h2>
             </center>
             <div class="box">
                 <?= $detail['nama_obat'] ?>

@@ -13,7 +13,7 @@ $tanggal = Time::parse($transaksi['tgl_transaksi']);
     <title><?= $title; ?></title>
     <style>
         @page {
-            size: 21.5cm 16.5cm;
+            size: 21cm 29.7cm;
             margin: 0.5cm;
         }
 
