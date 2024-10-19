@@ -43,8 +43,14 @@
                 <thead>
                     <tr class="align-middle">
                         <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">No</th>
-                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">Nomor Kwitansi</th>
-                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%; white-space: nowrap;">Grand Total</th>
+                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Nomor Kwitansi</th>
+                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 12.5%;">Kasir</th>
+                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Nomor Rekam Medis</th>
+                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 12.5%;">Nama Pasien</th>
+                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Metode Pembayaran</th>
+                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 12.5%;">Dokter</th>
+                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 12.5%;">Tindakan</th>
+                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Kas</th>
                     </tr>
                 </thead>
                 <tbody class="align-top" id="datatransaksi">
@@ -54,7 +60,7 @@
                 </tbody>
                 <tbody>
                     <tr>
-                        <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 2px;" colspan="2">Total Pemasukan</th>
+                        <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 2px;" colspan="8">Total Pemasukan</th>
                         <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="total_all"></th>
                     </tr>
                 </tbody>
@@ -105,7 +111,7 @@
     // HTML untuk menunjukkan bahwa data transaksi sedang dimuat
     const loading = `
     <tr>
-        <td colspan="3" class="text-center">Memuat data transaksi...</td>
+        <td colspan="9" class="text-center">Memuat data transaksi...</td>
     </tr>
 `;
 
@@ -128,7 +134,7 @@
                 // Tampilkan pesan jika tidak ada data
                 const emptyRow = `
                     <tr>
-                        <td colspan="3" class="text-center">Silakan masukkan tanggal</td>
+                        <td colspan="9" class="text-center">Silakan masukkan tanggal</td>
                     </tr>
                 `;
                 $('#datatransaksi').append(emptyRow); // Menambahkan baris kosong ke tabel
@@ -154,31 +160,75 @@
                 $('#reportBtns').hide(); // Sembunyikan tombol buat laporan
                 const emptyRow = `
                     <tr>
-                        <td colspan="3" class="text-center">Tidak ada transaksi yang berlangsung pada ${tanggal}</td>
+                        <td colspan="9" class="text-center">Tidak ada transaksi yang berlangsung pada ${tanggal}</td>
                     </tr>
                 `;
                 $('#datatransaksi').append(emptyRow); // Menambahkan baris pesan ke tabel
             }
 
-            // Mengurutkan data transaksi berdasarkan nomor registrasi
-            data.sort((a, b) => a.nomor_registrasi.localeCompare(b.nomor_registrasi, 'en', {
+            // Mengurutkan data transaksi berdasarkan no_kwitansi
+            data.sort((a, b) => a.no_kwitansi.localeCompare(b.no_kwitansi, 'en', {
                 numeric: true
             }));
 
+            console.log(data);
+
             // Menambahkan setiap transaksi ke tabel
             data.forEach(function(transaksi, index) {
+                const rowspan = (transaksi.detail.layanan.length) + (transaksi.detail.obatalkes.length);
+                const layanan = transaksi.detail.layanan
+                const obatalkes = transaksi.detail.obatalkes
+                console.log(rowspan);
                 // Menjadikan angka-angka yang diperoleh sebagai integer
                 const total_pembayaran = parseInt(transaksi.total_pembayaran);
 
-                // Membuat elemen baris untuk setiap transaksi
+                // Baris pertama untuk informasi utama transaksi
                 const transaksiElement = `
                     <tr>
-                        <td class="date text-nowrap text-center">${index + 1}</td>
-                        <td class="date text-nowrap">${transaksi.no_kwitansi}</td>
-                        <td class="date text-end">Rp${total_pembayaran.toLocaleString('id-ID')}</td>
+                        <td rowspan="${rowspan + 2}" class="date text-nowrap text-center">${index + 1}</td>
+                        <td rowspan="${rowspan + 2}" class="date text-nowrap">${transaksi.no_kwitansi}</td>
+                        <td rowspan="${rowspan + 2}" class="date text-nowrap">${transaksi.kasir}</td>
+                        <td rowspan="${rowspan + 2}" class="date text-nowrap">${transaksi.no_rm}</td>
+                        <td rowspan="${rowspan + 2}" class="date text-nowrap">${transaksi.nama_pasien}</td>
+                        <td rowspan="${rowspan + 2}" class="date text-nowrap">${transaksi.metode_pembayaran}</td>
+                        <td rowspan="${rowspan + 2}" class="date text-nowrap">${transaksi.dokter}</td>
                     </tr>
                 `;
-                $('#datatransaksi').append(transaksiElement); // Menambahkan elemen transaksi ke tabel
+
+                // Menambahkan elemen transaksi utama ke tabel
+                $('#datatransaksi').append(transaksiElement);
+
+                // Menambahkan baris untuk setiap layanan
+                layanan.forEach(function(layananItem) {
+                    const harga_transaksi = parseInt(layananItem.harga_transaksi);
+                    const layananRow = `
+                        <tr>
+                            <td>${layananItem.layanan.nama_layanan}</td>
+                            <td class="text-end date">Rp${harga_transaksi.toLocaleString('id-ID')}</td>
+                        </tr>
+                    `;
+                    $('#datatransaksi').append(layananRow);
+                });
+
+                // Menambahkan baris untuk setiap obat/alkes
+                obatalkes.forEach(function(obatItem) {
+                    const harga_transaksi = parseInt(obatItem.harga_transaksi);
+                    const obatRow = `
+                        <tr>
+                            <td>Obat</td>
+                            <td class="text-end date">Rp${harga_transaksi.toLocaleString('id-ID')}</td>
+                        </tr>
+                    `;
+                    $('#datatransaksi').append(obatRow);
+                });
+                // Menambahkan baris terakhir untuk total pembayaran
+                const totalPembayaranRow = `
+                    <tr>
+                        <td class="fw-bold">Total</td>
+                        <td class="fw-bold date text-end">Rp${total_pembayaran.toLocaleString('id-ID')}</td>
+                    </tr>
+                `;
+                $('#datatransaksi').append(totalPembayaranRow);
             });
 
             // Menambahkan total pemasukan
@@ -195,7 +245,7 @@
             $('#lengthtransaksi').html(`<i class="fa-solid fa-xmark"></i> Error`); // Menampilkan error pada panjang transaksi
             const errorRow = `
                 <tr>
-                    <td colspan="3" class="text-center">${error.response.data.error}</td>
+                    <td colspan="9" class="text-center">${error.response.data.error}</td>
                 </tr>
             `;
             $('#datatransaksi').empty(); // Kosongkan tabel transaksi
