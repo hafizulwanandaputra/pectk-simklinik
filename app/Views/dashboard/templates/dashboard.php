@@ -25,7 +25,6 @@
     <link href="<?= base_url(); ?>assets_public/fonts/inter-hwp/inter-hwp.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/fonts/base-font.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/fontawesome/css/all.css" rel="stylesheet">
-    <script src="<?= base_url(); ?>assets/tinymce/js/tinymce/tinymce.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script>
@@ -509,9 +508,6 @@
     <script src="<?= base_url(); ?>assets/js/dashboard/dashboard.js"></script>
     <?= $this->renderSection('javascript'); ?>
     <?= $this->renderSection('datatable'); ?>
-    <?= $this->renderSection('tinymce'); ?>
-    <?= $this->renderSection('chartjs'); ?>
-    <?= $this->renderSection('imgupload'); ?>
     <script>
         // Fungsi untuk menampilkan spinner loading
         function showSpinner() {
