@@ -338,7 +338,6 @@
             } catch (error) {
                 let errorMessage = 'Terjadi kesalahan. Silakan coba lagi.<br>' + error;
                 if (error.response && error.response.data && error.response.data.error) {
-                    console.error(error.response.data.error);
                     errorMessage = 'Tidak dapat menghapus data ini karena sedang digunakan.'; // Pesan kesalahan khusus
                 }
                 showFailedToast(errorMessage); // Tampilkan pesan kesalahan

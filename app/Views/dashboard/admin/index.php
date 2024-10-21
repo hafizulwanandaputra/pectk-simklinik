@@ -403,10 +403,6 @@
             } catch (error) {
                 // Memeriksa jika error memiliki response dan mengambil pesan kesalahan
                 let errorMessage = 'Terjadi kesalahan. Silakan coba lagi.<br>' + error; // Pesan kesalahan umum
-                if (error.response && error.response.data && error.response.data.error) {
-                    console.error(error.response.data.error); // Menampilkan kesalahan di konsol
-                    errorMessage = 'Tidak dapat menghapus data ini karena sedang digunakan.'; // Pesan kesalahan khusus
-                }
                 showFailedToast(errorMessage); // Menampilkan pesan kesalahan
             } finally {
                 $('#deleteModal').modal('hide'); // Menyembunyikan modal penghapusan
