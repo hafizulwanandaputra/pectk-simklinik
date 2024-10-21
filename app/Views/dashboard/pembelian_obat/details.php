@@ -393,17 +393,16 @@
             $('#completeSubmessage').hide();
             try {
                 const response = await axios.post(`<?= base_url('pembelianobat/complete') ?>/${pembelianObatId}`);
-                if (response.data.success == true) {
-                    showSuccessToast(response.data.message);
-                    fetchDetailPembelianObat();
-                    fetchObatOptions();
-                    fetchStatusPembelian();
-                } else if (response.data.success == false) {
-                    showFailedToast(response.data.message);
-                }
-
+                showSuccessToast(response.data.message);
+                fetchDetailPembelianObat();
+                fetchObatOptions();
+                fetchStatusPembelian();
             } catch (error) {
-                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                if (error.response.request.status === 422) {
+                    showFailedToast(error.response.data.message);
+                } else {
+                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                }
             } finally {
                 $('#completeModal').modal('hide');
                 $('#completeMessage').removeClass('mb-0');
@@ -509,9 +508,7 @@
                             fetchDetailPembelianObat();
                             fetchObatOptions();
                             fetchStatusPembelian();
-                        } else if (response.data.success == false && response.data.message) {
-                            showFailedToast(response.data.message);
-                        } else if (response.data.success == false && response.data.errors) {
+                        } else {
                             console.log("Validation Errors:", response.data.errors);
 
                             // Clear previous validation states
@@ -544,7 +541,11 @@
                             console.error('Perbaiki kesalahan pada formulir.');
                         }
                     } catch (error) {
-                        showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                        if (error.response.request.status === 422) {
+                            showFailedToast(error.response.data.message);
+                        } else {
+                            showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                        }
                     } finally {
                         $('#editButton').prop('disabled', false).html(`
                             <i class="fa-solid fa-pen-to-square"></i> Edit
@@ -714,9 +715,7 @@
                         fetchDetailPembelianObat();
                         fetchObatOptions();
                         fetchStatusPembelian();
-                    } else if (response.data.success == false && response.data.message) {
-                        showFailedToast(response.data.message);
-                    } else if (response.data.success == false && response.data.errors) {
+                    } else {
                         console.log("Validation Errors:", response.data.errors);
 
                         // Clear previous validation states
@@ -749,7 +748,11 @@
                         console.error('Perbaiki kesalahan pada formulir.');
                     }
                 } catch (error) {
-                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                    if (error.response.request.status === 422) {
+                        showFailedToast(error.response.data.message);
+                    } else {
+                        showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                    }
                 } finally {
                     $('#addBatchButton').prop('disabled', false).html(`
                             <i class="fa-solid fa-plus"></i> Tambah
@@ -841,9 +844,7 @@
                             fetchDetailPembelianObat();
                             fetchObatOptions();
                             fetchStatusPembelian();
-                        } else if (response.data.success == false && response.data.message) {
-                            showFailedToast(response.data.message);
-                        } else if (response.data.success == false && response.data.errors) {
+                        } else {
                             console.log("Validation Errors:", response.data.errors);
 
                             // Clear previous validation states
@@ -876,7 +877,11 @@
                             console.error('Perbaiki kesalahan pada formulir.');
                         }
                     } catch (error) {
-                        showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                        if (error.response.request.status === 422) {
+                            showFailedToast(error.response.data.message);
+                        } else {
+                            showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                        }
                     } finally {
                         $('#editBatchButton').prop('disabled', false).html(`
                             <i class="fa-solid fa-pen-to-square"></i> Edit

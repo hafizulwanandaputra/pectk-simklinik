@@ -350,96 +350,6 @@
             placeholder: $(this).data('placeholder'),
         });
 
-        $(document).on('click', '#editKeteranganBtn', async function() {
-            const $this = $(this);
-            $('[data-bs-toggle="tooltip"]').tooltip('hide');
-            $(this).prop('disabled', true).html(`<span class="spinner-border" style="width: 11px; height: 11px;" aria-hidden="true"></span> Edit Keterangan`);
-            try {
-                const response = await axios.get(`<?= base_url('/resep/keterangan/') . $resep['id_resep'] ?>`);
-                $('#editKeteranganText').val(response.data.keterangan);
-                $('#editKeterangan').modal('show');
-            } catch (error) {
-                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
-                console.error(error);
-            } finally {
-                $this.prop('disabled', false).html(`<i class="fa-solid fa-pen-to-square"></i> Edit Keterangan`);
-            }
-        });
-
-        $('#editKeteranganForm').submit(async function(e) {
-            e.preventDefault();
-
-            const formData = new FormData(this);
-            console.log("Form Data:", $(this).serialize());
-
-            // Clear previous validation states
-            $('#editKeteranganForm .is-invalid').removeClass('is-invalid');
-            $('#editKeteranganForm .invalid-feedback').text('').hide();
-            $('#submitKeteranganButton').prop('disabled', true).html(`
-                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span> Memproses
-            `);
-
-            // Disable form inputs
-            $('#editKeteranganForm textarea, .closeBtn').prop('disabled', true);
-
-            try {
-                const response = await axios.post(`<?= base_url('/resep/editketerangan/' . $resep['id_resep']) ?>`, formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                });
-
-                if (response.data.success) {
-                    $('#editKeterangan').modal('hide');
-                } else {
-                    console.log("Validation Errors:", response.data.errors);
-
-                    // Clear previous validation states
-                    $('#editKeteranganForm .is-invalid').removeClass('is-invalid');
-                    $('#editKeteranganForm .invalid-feedback').text('').hide();
-
-                    // Display new validation errors
-                    for (const field in response.data.errors) {
-                        if (response.data.errors.hasOwnProperty(field)) {
-                            const fieldElement = $('#' + field);
-                            const feedbackElement = fieldElement.siblings('.invalid-feedback');
-
-                            console.log("Target Field:", fieldElement);
-                            console.log("Target Feedback:", feedbackElement);
-
-                            if (fieldElement.length > 0 && feedbackElement.length > 0) {
-                                fieldElement.addClass('is-invalid');
-                                feedbackElement.text(response.data.errors[field]).show();
-
-                                // Remove error message when the user corrects the input
-                                fieldElement.on('input change', function() {
-                                    $(this).removeClass('is-invalid');
-                                    $(this).siblings('.invalid-feedback').text('').hide();
-                                });
-                            } else {
-                                console.warn("Elemen tidak ditemukan pada field:", field);
-                            }
-                        }
-                    }
-                    console.error('Perbaiki kesalahan pada formulir.');
-                }
-            } catch (error) {
-                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
-            } finally {
-                $('#submitKeteranganButton').prop('disabled', false).html(`
-                    <i class="fa-solid fa-floppy-disk"></i> Simpan
-                `);
-                $('#editKeteranganForm textarea, .closeBtn').prop('disabled', false);
-            }
-        });
-
-        $('#editKeterangan').on('hidden.bs.modal', function() {
-            $('#editKeteranganForm')[0].reset();
-            $('#editKeteranganText').val('');
-            $('#editKeteranganForm .is-invalid').removeClass('is-invalid');
-            $('#editKeteranganForm .invalid-feedback').text('').hide();
-        });
-
         var detailResepId;
         var detailResepName;
 
@@ -567,9 +477,7 @@
                             fetchDetailResep();
                             <?= (session()->get('role') != 'Apoteker') ? 'fetchObatOptions();' : '' ?>
                             <?= (session()->get('role') != 'Apoteker') ? 'fetchStatusResep();' : '' ?>
-                        } else if (response.data.success == false && response.data.message) {
-                            showFailedToast(response.data.message);
-                        } else if (response.data.success == false && response.data.errors) {
+                        } else {
                             console.log("Validation Errors:", response.data.errors);
 
                             // Clear previous validation states
@@ -602,7 +510,11 @@
                             console.error('Perbaiki kesalahan pada formulir.');
                         }
                     } catch (error) {
-                        showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                        if (error.response.request.status === 422) {
+                            showFailedToast(error.response.data.message);
+                        } else {
+                            showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                        }
                     } finally {
                         $('#editButton').prop('disabled', false).html(`
                             <i class="fa-solid fa-pen-to-square"></i> Edit
@@ -656,46 +568,43 @@
                     <?= (session()->get('role') != 'Apoteker') ? 'fetchObatOptions();' : '' ?>
                     <?= (session()->get('role') != 'Apoteker') ? 'fetchStatusResep();' : '' ?>
                 } else {
-                    if (response.data.errors == null) {
-                        showFailedToast(response.data.message);
-                    } else if (response.data.message == null) {
-                        console.log("Validation Errors:", response.data.errors);
+                    console.log("Validation Errors:", response.data.errors);
 
-                        // Clear previous validation states
-                        $('#tambahDetail .is-invalid').removeClass('is-invalid');
-                        $('#tambahDetail .invalid-feedback').text('').hide();
+                    // Clear previous validation states
+                    $('#tambahDetail .is-invalid').removeClass('is-invalid');
+                    $('#tambahDetail .invalid-feedback').text('').hide();
 
-                        // Display new validation errors
-                        for (const field in response.data.errors) {
-                            if (response.data.errors.hasOwnProperty(field)) {
-                                const fieldElement = $('#' + field);
-                                const feedbackElement = fieldElement.siblings('.invalid-feedback');
+                    // Display new validation errors
+                    for (const field in response.data.errors) {
+                        if (response.data.errors.hasOwnProperty(field)) {
+                            const fieldElement = $('#' + field);
+                            const feedbackElement = fieldElement.siblings('.invalid-feedback');
 
-                                console.log("Target Field:", fieldElement);
-                                console.log("Target Feedback:", feedbackElement);
+                            console.log("Target Field:", fieldElement);
+                            console.log("Target Feedback:", feedbackElement);
 
-                                if (fieldElement.length > 0 && feedbackElement.length > 0) {
-                                    fieldElement.addClass('is-invalid');
-                                    feedbackElement.text(response.data.errors[field]).show();
+                            if (fieldElement.length > 0 && feedbackElement.length > 0) {
+                                fieldElement.addClass('is-invalid');
+                                feedbackElement.text(response.data.errors[field]).show();
 
-                                    // Remove error message when the user corrects the input
-                                    fieldElement.on('input change', function() {
-                                        $(this).removeClass('is-invalid');
-                                        $(this).siblings('.invalid-feedback').text('').hide();
-                                    });
-                                } else {
-                                    console.warn("Elemen tidak ditemukan pada field:", field);
-                                }
+                                // Remove error message when the user corrects the input
+                                fieldElement.on('input change', function() {
+                                    $(this).removeClass('is-invalid');
+                                    $(this).siblings('.invalid-feedback').text('').hide();
+                                });
+                            } else {
+                                console.warn("Elemen tidak ditemukan pada field:", field);
                             }
                         }
-                        console.error('Perbaiki kesalahan pada formulir.');
-                        // Jika tidak ada 'errors' dan 'message', mungkin ada masalah lain
-                    } else {
-                        console.error('Kesalahan tidak teridentifikasi.');
                     }
+                    console.error('Perbaiki kesalahan pada formulir.');
                 }
             } catch (error) {
-                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                if (error.response.request.status === 422) {
+                    showFailedToast(error.response.data.message);
+                } else {
+                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                }
             } finally {
                 $('#addButton').prop('disabled', false).html(`
                     <i class="fa-solid fa-plus"></i> Tambah

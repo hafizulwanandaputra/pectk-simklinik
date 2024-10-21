@@ -227,7 +227,7 @@ class PembelianObat extends BaseController
                 // Memeriksa apakah jumlah_masuk setelah penghapusan akan kurang dari jumlah_keluar
                 if (($obat->jumlah_masuk - $obat_masuk) < $obat->jumlah_keluar) {
                     $db->transRollback(); // Rollback transaksi
-                    return $this->response->setJSON([
+                    return $this->response->setStatusCode(422)->setJSON([
                         'success' => false,
                         'message' => 'Gagal menghapus pembelian obat: stok masuk kurang dari jumlah keluar'
                     ]);
@@ -335,7 +335,7 @@ class PembelianObat extends BaseController
                     if ($new_jumlah_masuk < $jumlah_keluar) {
                         // Rollback transaksi jika jumlah masuk baru tidak valid
                         $db->transRollback();
-                        return $this->response->setJSON([
+                        return $this->response->setStatusCode(422)->setJSON([
                             'success' => false,
                             'message' => "Gagal memproses pembelian obat: stok masuk kurang dari jumlah keluar."
                         ]);
@@ -702,7 +702,7 @@ class PembelianObat extends BaseController
             // Memeriksa apakah 'total_jumlah_item' melebihi 'jumlah_pembelian'
             if ($itemSum['total_jumlah_item'] > $detail['jumlah']) {
                 $db->transRollback();  // Mengembalikan transaksi jika jumlah melebihi
-                return $this->response->setJSON([
+                return $this->response->setStatusCode(422)->setJSON([
                     'success' => false,
                     'message' => 'Jumlah obat yang diterima sementara melebihi jumlah yang diminta',
                     'errors' => NULL
@@ -775,7 +775,7 @@ class PembelianObat extends BaseController
             // Memeriksa apakah 'total_jumlah_item' melebihi 'jumlah_pembelian'
             if ($itemSum['total_jumlah_item'] > $detail['jumlah']) {
                 $db->transRollback();  // Mengembalikan transaksi jika jumlah melebihi
-                return $this->response->setJSON([
+                return $this->response->setStatusCode(422)->setJSON([
                     'success' => false,
                     'message' => 'Jumlah obat yang diterima sementara melebihi jumlah yang diminta',
                     'errors' => NULL
