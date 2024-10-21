@@ -209,7 +209,7 @@
                     const statusButtons = resep.status == '1' ?
                         `disabled` :
                         ``;
-                    const deleteButton = `<button type="button" class="btn btn-danger btn-sm bg-gradient rounded-3 delete-btn" data-id="${resep.id_resep}" data-name="${resep.nama_pasien}" data-date="${resep.tanggal_resep}" ${statusButtons}>
+                    const deleteButton = `<button type="button" class="btn btn-danger btn-sm bg-gradient rounded-3 delete-btn" data-id="${resep.id_resep}" data-name="${resep.nama_pasien}" data-date="${resep.tanggal_resep}">
                         <i class="fa-solid fa-trash"></i> Hapus
                     </button>`;
                     const resepElement = `
@@ -365,7 +365,11 @@
                 await axios.delete(`<?= base_url('/resep/delete') ?>/${resepId}`);
                 fetchResep();
             } catch (error) {
-                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                if (error.response.request.status === 422) {
+                    showFailedToast(error.response.data.message);
+                } else {
+                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                }
             } finally {
                 $('#deleteModal').modal('hide');
                 $('#deleteMessage').removeClass('mb-0');

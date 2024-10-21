@@ -173,7 +173,7 @@
 
             // Menambahkan setiap transaksi ke tabel
             data.forEach(function(transaksi, index) {
-                const rowspan = (transaksi.detail.layanan.length) + (transaksi.detail.obatalkes.length);
+                const rowspan = (transaksi.detail.layanan.length) + 4;
                 const layanan = transaksi.detail.layanan
                 const obatalkes = transaksi.detail.obatalkes
                 const bank = transaksi.bank ? transaksi.bank : `-`;
@@ -183,13 +183,13 @@
                 // Baris pertama untuk informasi utama transaksi
                 const transaksiElement = `
                     <tr>
-                        <td rowspan="${rowspan + 3}" class="date text-nowrap text-center">${index + 1}</td>
-                        <td rowspan="${rowspan + 3}" class="date text-nowrap">${transaksi.no_kwitansi}</td>
-                        <td rowspan="${rowspan + 3}" class="date">${transaksi.kasir}</td>
-                        <td rowspan="${rowspan + 3}" class="date text-nowrap">${transaksi.no_rm}</td>
-                        <td rowspan="${rowspan + 3}" class="date">${transaksi.nama_pasien}</td>
-                        <td rowspan="${rowspan + 3}" class="date">${transaksi.metode_pembayaran}</td>
-                        <td rowspan="${rowspan + 3}" class="date">${transaksi.dokter}</td>
+                        <td rowspan="${rowspan}" class="date text-nowrap text-center">${index + 1}</td>
+                        <td rowspan="${rowspan}" class="date text-nowrap">${transaksi.no_kwitansi}</td>
+                        <td rowspan="${rowspan}" class="date">${transaksi.kasir}</td>
+                        <td rowspan="${rowspan}" class="date text-nowrap">${transaksi.no_rm}</td>
+                        <td rowspan="${rowspan}" class="date">${transaksi.nama_pasien}</td>
+                        <td rowspan="${rowspan}" class="date">${transaksi.metode_pembayaran}</td>
+                        <td rowspan="${rowspan}" class="date">${transaksi.dokter}</td>
                     </tr>
                 `;
 
@@ -209,16 +209,13 @@
                 });
 
                 // Menambahkan baris untuk setiap obat/alkes
-                obatalkes.forEach(function(obatItem) {
-                    const harga_transaksi = parseInt(obatItem.harga_transaksi);
-                    const obatRow = `
+                const obatRow = `
                         <tr>
                             <td>Obat</td>
-                            <td class="text-end date">Rp${harga_transaksi.toLocaleString('id-ID')}</td>
+                            <td class="text-end date">Rp${obatalkes.toLocaleString('id-ID')}</td>
                         </tr>
                     `;
-                    $('#datatransaksi').append(obatRow);
-                });
+                $('#datatransaksi').append(obatRow);
                 // Menambahkan baris terakhir untuk total pembayaran
                 const totalPembayaranRow = `
                     <tr>

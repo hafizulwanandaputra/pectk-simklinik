@@ -1234,6 +1234,19 @@ class Transaksi extends BaseController
 
                 $dokter = $result_obatalkes[0]['resep']['dokter'];
 
+                // Menghitung total harga obat dan alkes
+                $total_obatalkes_awal = $this->DetailTransaksiModel
+                    ->selectSum('((harga_transaksi * qty_transaksi) - ((harga_transaksi * qty_transaksi) * diskon / 100))', 'total_harga')
+                    ->where('detail_transaksi.id_transaksi', $item['id_transaksi'])
+                    ->where('detail_transaksi.jenis_transaksi', 'Obat dan Alkes')
+                    ->get()->getRowArray();
+
+                // Memastikan nilai total_harga ada
+                $total_harga = isset($total_obatalkes_awal['total_harga']) ? $total_obatalkes_awal['total_harga'] : 0;
+
+                // Membulatkan hasil total_harga (misalnya 2 angka di belakang koma)
+                $total_obatalkes = round($total_harga, 0);
+
                 $result[] = [
                     'id_transaksi' => $item['id_transaksi'],
                     'no_kwitansi' => $item['no_kwitansi'],
@@ -1246,10 +1259,11 @@ class Transaksi extends BaseController
                     'dokter' => $dokter,
                     'detail' => [
                         'layanan' => $result_layanan,
-                        'obatalkes' => $result_obatalkes
+                        'obatalkes' => $total_obatalkes
                     ]
                 ];
             }
+
 
             // Menghitung Total Pemasukan
             $total_all = $this->TransaksiModel
@@ -1337,6 +1351,19 @@ class Transaksi extends BaseController
 
                 $dokter = $result_obatalkes[0]['resep']['dokter'];
 
+                // Menghitung total harga obat dan alkes
+                $total_obatalkes_awal = $this->DetailTransaksiModel
+                    ->selectSum('((harga_transaksi * qty_transaksi) - ((harga_transaksi * qty_transaksi) * diskon / 100))', 'total_harga')
+                    ->where('detail_transaksi.id_transaksi', $item['id_transaksi'])
+                    ->where('detail_transaksi.jenis_transaksi', 'Obat dan Alkes')
+                    ->get()->getRowArray();
+
+                // Memastikan nilai total_harga ada
+                $total_harga = isset($total_obatalkes_awal['total_harga']) ? $total_obatalkes_awal['total_harga'] : 0;
+
+                // Membulatkan hasil total_harga (misalnya 2 angka di belakang koma)
+                $total_obatalkes = round($total_harga, 0);
+
                 $result[] = [
                     'id_transaksi' => $item['id_transaksi'],
                     'no_kwitansi' => $item['no_kwitansi'],
@@ -1349,7 +1376,7 @@ class Transaksi extends BaseController
                     'dokter' => $dokter,
                     'detail' => [
                         'layanan' => $result_layanan,
-                        'obatalkes' => $result_obatalkes
+                        'obatalkes' => $total_obatalkes
                     ]
                 ];
             }
@@ -1460,17 +1487,17 @@ class Transaksi extends BaseController
                         $column++;
                     }
 
-                    // Loop obat dan pastikan harga terformat
-                    foreach ($list['detail']['obatalkes'] as $obat) {
-                        $sheet->setCellValue('H' . $column, 'Obat');
+                    // Baris obat
+                    $sheet->setCellValue('H' . $column, 'Obat');
 
-                        // Terapkan format angka sebelum isi nilai
-                        $sheet->getStyle("I{$column}")->getNumberFormat()->setFormatCode(
-                            '_\Rp * #,##0_-;[Red]_\Rp * -#,##0_-;_-_\Rp * "-"_-;_-@_-'
-                        );
-                        $sheet->setCellValue('I' . $column, $obat['harga_transaksi']);
-                        $column++;
-                    }
+                    // Terapkan format angka sebelum isi nilai
+                    $sheet->getStyle("I{$column}")->getNumberFormat()->setFormatCode(
+                        '_\Rp * #,##0_-;[Red]_\Rp * -#,##0_-;_-_\Rp * "-"_-;_-@_-'
+                    );
+                    $sheet->setCellValue('I' . $column, $list['detail']['obatalkes']);
+
+                    // Tambahkan baris pemisah antar transaksi
+                    $column++;
 
                     // Baris total pembayaran
                     $sheet->setCellValue('H' . $column, 'Total');
