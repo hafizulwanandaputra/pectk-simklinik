@@ -123,7 +123,7 @@ $tanggal = Time::parse($transaksi['tgl_transaksi']);
                     <th class="outline-border" style="width: 0%; vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: left;">
                         No
                     </th>
-                    <th class="outline-border" style="width: 100%; vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: left;">
+                    <th class="outline-border" style="width: 60%; vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: left;">
                         Deskripsi
                     </th>
                     <th class="outline-border" style="width: 0%; vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: center;">
@@ -135,7 +135,7 @@ $tanggal = Time::parse($transaksi['tgl_transaksi']);
                     <th class="outline-border" style="width: 0%; vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: center; white-space: nowrap;">
                         Disc %
                     </th>
-                    <th colspan="2" class="outline-border" style="width: 0%; vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: center; white-space: nowrap;">
+                    <th colspan="2" class="outline-border" style="width: 40%; vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: center; white-space: nowrap;">
                         Sub Total
                     </th>
                 </tr>
@@ -188,7 +188,7 @@ $tanggal = Time::parse($transaksi['tgl_transaksi']);
                     <th class="outline-border" style="width: 0%; vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: left;">
                         No
                     </th>
-                    <th class="outline-border" style="width: 100%; vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: left;">
+                    <th class="outline-border" style="width: 60%; vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: left;">
                         Deskripsi
                     </th>
                     <th class="outline-border" style="width: 0%; vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: center;">
@@ -200,7 +200,7 @@ $tanggal = Time::parse($transaksi['tgl_transaksi']);
                     <th class="outline-border" style="width: 0%; vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: center; white-space: nowrap;">
                         Disc %
                     </th>
-                    <th colspan="2" class="outline-border" style="width: 0%; vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: center; white-space: nowrap;">
+                    <th colspan="2" class="outline-border" style="width: 40%; vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: center; white-space: nowrap;">
                         Sub Total
                     </th>
                 </tr>
@@ -291,8 +291,8 @@ $tanggal = Time::parse($transaksi['tgl_transaksi']);
                     <th colspan="3" class="outline-border" style="vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
                         Metode Bayar
                     </th>
-                    <th colspan="2" class="outline-border" style="vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
-                        <?= $transaksi['metode_pembayaran'] ?>
+                    <th colspan="2" class="outline-border" style="vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: right;">
+                        <?= $transaksi['metode_pembayaran'] ?> <?= ($transaksi['bank'] == NULL) ? '' : '(' . $transaksi['bank'] . ')' ?>
                     </th>
                 </tr>
             </tbody>

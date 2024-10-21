@@ -385,11 +385,12 @@
             const total_pembayaran = parseInt(data.total_pembayaran);
             const terima_uang = parseInt(data.terima_uang);
             const uang_kembali = parseInt(data.uang_kembali);
+            const bank = data.bank ? ` (${data.bank})` : ``;
 
             $('#total_pembayaran').text(`Rp${total_pembayaran.toLocaleString('id-ID')}`);
             $('#terima_uang_table').text(`Rp${terima_uang.toLocaleString('id-ID')}`);
             $('#uang_kembali_table').text(`Rp${uang_kembali.toLocaleString('id-ID')}`);
-            $('#metode_pembayaran_table').text(data.metode_pembayaran);
+            $('#metode_pembayaran_table').text(data.metode_pembayaran + bank);
             $('#total_pembayaran_modal').text(`Rp${total_pembayaran.toLocaleString('id-ID')}`);
 
             // Cek status `lunas`
