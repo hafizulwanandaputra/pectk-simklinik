@@ -71,7 +71,7 @@
                     </div>
                     <hr>
                     <div class="d-grid gap-2 d-flex justify-content-end">
-                        <a class="btn btn-info bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                        <a class="btn btn-body bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
                         <?php if (session()->get('role') != 'Apoteker'): ?>
                             <a class="btn btn-danger bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
                         <?php endif; ?>
@@ -133,7 +133,7 @@
                 </div>
                 <hr>
                 <div class="d-grid gap-2 d-flex justify-content-end">
-                    <a class="btn btn-info bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                    <a class="btn btn-body bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
                     <?php if (session()->get('role') != 'Apoteker'): ?>
                         <a class="btn btn-danger bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
                     <?php endif; ?>
@@ -235,7 +235,7 @@
                 </div>
                 <hr>
                 <div class="d-grid gap-2 d-flex justify-content-end">
-                    <button type="button" class="btn btn-info btn-sm bg-gradient rounded-3" onclick="window.location.href = '<?= base_url('resep/detailresep') ?>/${resep.id_resep}';">
+                    <button type="button" class="btn btn-body btn-sm bg-gradient rounded-3" onclick="window.location.href = '<?= base_url('resep/detailresep') ?>/${resep.id_resep}';">
                         <i class="fa-solid fa-circle-info"></i> Detail
                     </button>
                     <?= (session()->get('role') == 'Apoteker') ? '' : '${deleteButton}' ?>

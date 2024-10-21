@@ -73,6 +73,11 @@ class Transaksi extends Migration
                 'type' => 'VARCHAR',
                 'constraint' => 128,
             ],
+            'bank' => [
+                'type' => 'VARCHAR',
+                'constraint' => 256,
+                'null' => true,
+            ],
             'lunas' => [
                 'type' => 'BOOLEAN'
             ],

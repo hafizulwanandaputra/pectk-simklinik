@@ -11,6 +11,9 @@ use CodeIgniter\Exceptions\PageNotFoundException;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use CodeIgniter\I18n\Time;
+use DateTime;
+use IntlDateFormatter;
+use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 
 class PembelianObat extends BaseController
 {
@@ -919,7 +922,19 @@ class PembelianObat extends BaseController
             } else {
                 // Membuat nama file berdasarkan tanggal pembelian
                 $filename = $pembelianobat['tgl_pembelian'] . '-pembelian-obat';
-                $tanggal = Time::parse($pembelianobat['tgl_pembelian']);
+                $tanggal = new DateTime($pembelianobat['tgl_pembelian']);
+                // Buat formatter untuk tanggal dan waktu
+                $formatter = new IntlDateFormatter(
+                    'id_ID', // Locale untuk bahasa Indonesia
+                    IntlDateFormatter::LONG, // Format untuk tanggal
+                    IntlDateFormatter::NONE, // Tidak ada waktu
+                    'Asia/Jakarta', // Timezone
+                    IntlDateFormatter::GREGORIAN, // Calendar
+                    'EEEE, d MMMM yyyy HH:mm:ss' // Format tanggal lengkap dengan nama hari
+                );
+
+                // Format tanggal
+                $tanggalFormat = $formatter->format($tanggal);
                 $spreadsheet = new Spreadsheet();
                 $sheet = $spreadsheet->getActiveSheet();
 
@@ -928,9 +943,21 @@ class PembelianObat extends BaseController
                 $sheet->setCellValue('A2', 'Jl. Rusdi S. Abrus No. 35 LK III Sinambek, Kelurahan Sungai Jering, Kecamatan Kuantan Tengah, Kabupaten Kuantan Singingi, Riau.');
                 $sheet->setCellValue('A3', 'FAKTUR PEMBELIAN OBAT');
 
+                // Path gambar yang ingin ditambahkan
+                $gambarPath = FCPATH . 'assets/images/logo_pec.png'; // Ganti dengan path gambar Anda
+
+                // Membuat objek Drawing
+                $drawing = new Drawing();
+                $drawing->setName('Logo PEC-TK'); // Nama gambar
+                $drawing->setDescription('Logo PEC-TK'); // Deskripsi gambar
+                $drawing->setPath($gambarPath); // Path ke gambar
+                $drawing->setCoordinates('A1'); // Koordinat sel tempat gambar akan ditambahkan
+                $drawing->setHeight(36); // Tinggi gambar dalam piksel (opsional)
+                $drawing->setWorksheet($sheet); // Menambahkan gambar ke worksheet
+
                 // Menambahkan informasi tanggal dan supplier
                 $sheet->setCellValue('A4', 'Hari/Tanggal:');
-                $sheet->setCellValue('C4', $tanggal->toLocalizedString('d MMMM yyyy HH.mm.ss'));
+                $sheet->setCellValue('C4', $tanggalFormat);
                 $sheet->setCellValue('A5', 'Nama Supplier:');
                 $sheet->setCellValue('C5', $pembelianobat['nama_supplier']);
                 $sheet->setCellValue('A6', 'Alamat Supplier:');
@@ -981,7 +1008,7 @@ class PembelianObat extends BaseController
                     // Mengatur gaya teks
                     $sheet->getStyle('A' . $column . ':G' . $column)->getAlignment()->setWrapText(true);
                     $sheet->getStyle('A' . $column)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-                    $sheet->getStyle('A' . $column . ':G' . $column)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+                    $sheet->getStyle('A' . $column . ':G' . $column)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
                     $column++;
                 }
 
@@ -1001,8 +1028,8 @@ class PembelianObat extends BaseController
                 $sheet->getStyle('A1')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
                 $sheet->getStyle('A1')->getFont()->setSize(12);
                 $sheet->getStyle('A2')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-                $sheet->getStyle('A2')->getFont()->setSize(6);
                 $sheet->getStyle('A3')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+                $sheet->getStyle('A3')->getFont()->setSize(10);
                 $sheet->getStyle('C4:C9')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT);
                 $sheet->getStyle('A10:G10')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
                 $sheet->getStyle('A' . ($column))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT);
@@ -1011,7 +1038,9 @@ class PembelianObat extends BaseController
                 // Mengatur gaya font untuk header dan total
                 $sheet->getStyle('A1:A9')->getFont()->setBold(TRUE);
                 $sheet->getStyle('A10:G10')->getFont()->setBold(TRUE);
+                $sheet->getStyle('A10:G10')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
                 $sheet->getStyle('A' . ($column) . ':G' . ($column))->getFont()->setBold(TRUE);
+                $sheet->getStyle('A' . ($column) . ':G' . ($column))->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
 
                 // Menambahkan border untuk header dan tabel
                 $headerBorder1 = [

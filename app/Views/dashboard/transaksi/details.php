@@ -208,7 +208,7 @@
     <div id="prosesTransaksi">
         <hr>
         <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
-            <button class="btn btn-primary rounded-3 bg-gradient" type="button" id="printBtn" onclick="window.open(`<?= base_url('/transaksi/struk/' . $transaksi['id_transaksi']) ?>`)" disabled><i class="fa-solid fa-print"></i> Cetak Struk/Kwitansi</button>
+            <button class="btn btn-body rounded-3 bg-gradient" type="button" id="printBtn" onclick="window.open(`<?= base_url('/transaksi/struk/' . $transaksi['id_transaksi']) ?>`)" disabled><i class="fa-solid fa-print"></i> Cetak Struk/Kwitansi</button>
             <button class="btn btn-success rounded-3 bg-gradient" type="button" id="processBtn" data-id="<?= $transaksi['id_transaksi'] ?>" disabled><i class="fa-solid fa-money-bills"></i> Proses Transaksi</button>
         </div>
     </div>
@@ -256,10 +256,33 @@
                         <select class="form-select rounded-3" id="metode_pembayaran" name="metode_pembayaran" aria-label="metode_pembayaran">
                             <option value="" disabled selected>-- Pilih Metode Pembayaran --</option>
                             <option value="Tunai">Tunai</option>
-                            <option value="QRIS">QRIS</option>
+                            <option value="QRIS/Transfer Bank">QRIS/Transfer Bank</option>
                         </select>
                         <label for="metode_pembayaran">Metode Pembayaran*</label>
                         <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="form-floating mb-1 mt-1" id="bank_field" style="display: none;">
+                        <input type="text" class="form-control" autocomplete="off" dir="auto" placeholder="bank" id="bank" name="bank" list="bank_list">
+                        <label for="bank">Bank/E-wallet*</label>
+                        <div class="invalid-feedback"></div>
+                        <datalist id="bank_list">
+                            <option value="BNI">
+                            <option value="BRI">
+                            <option value="BTN">
+                            <option value="Mandiri">
+                            <option value="BSI">
+                            <option value="BCA">
+                            <option value="CIMB Niaga">
+                            <option value="Permata">
+                            <option value="Danamon">
+                            <option value="OCBC NISP">
+                            <option value="Maybank Indonesia">
+                            <option value="BRK Syariah">
+                            <option value="OVO">
+                            <option value="GoPay">
+                            <option value="DANA">
+                            <option value="LinkAja">
+                        </datalist>
                     </div>
                 </div>
                 <div class="modal-footer justify-content-end pt-2 pb-2" style="border-top: 1px solid var(--bs-border-color-translucent);">
@@ -1108,13 +1131,41 @@
             }
         });
 
+        // Fungsi untuk memunculkan/menghilangkan field Bank berdasarkan metode pembayaran
+        function toggleBankField() {
+            let metode = $('#metode_pembayaran').val();
+            if (metode === 'Tunai') {
+                $('#bank').val(''); // Kosongkan field bank
+                $('#bank_field').hide(); // Hilangkan field bank
+                // Hilangkan form validation
+                $('#bank').removeClass('is-invalid');
+                $('#bank').siblings('.invalid-feedback').text('').hide();
+            } else if (metode === 'QRIS/Transfer Bank') {
+                $('#bank_field').show(); // Munculkan field bank
+            } else {
+                $('#bank').val(''); // Kosongkan field bank
+                $('#bank_field').hide(); // Hilangkan field bank
+                // Hilangkan form validation
+                $('#bank').removeClass('is-invalid');
+                $('#bank').siblings('.invalid-feedback').text('').hide();
+            }
+        }
+
+        // Event listener ketika dropdown metode pembayaran berubah
+        $('#metode_pembayaran').on('change', function() {
+            toggleBankField();
+        });
+
         $('#transaksiModal').on('hidden.bs.modal', function() {
             $('#transaksiForm')[0].reset();
             $('#terima_uang').val('');
-            $('#metode_pembayaran').val('');
+            $('#metode_pembayaran').val('').change(); // Trigger change agar toggleBankField dipanggil
+            $('#bank').val(''); // Kosongkan field bank
+            $('#bank_field').hide(); // Reset bank dan hilangkan
             $('#transaksiForm .is-invalid').removeClass('is-invalid');
             $('#transaksiForm .invalid-feedback').text('').hide();
         });
+        toggleBankField();
         fetchLayanan();
         fetchObatAlkes();
         fetchTindakanOptions();

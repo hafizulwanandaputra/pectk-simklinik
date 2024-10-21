@@ -8,10 +8,13 @@ use App\Models\LayananModel;
 use App\Models\ResepModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\I18n\Time;
+use DateTime;
 use Dompdf\Dompdf;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
+use IntlDateFormatter;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class Transaksi extends BaseController
@@ -887,10 +890,19 @@ class Transaksi extends BaseController
             // Validasi input
             $validation = \Config\Services::validation();
             // Menetapkan aturan validasi dasar
-            $validation->setRules([
+            $rules = [
                 'terima_uang' => 'required|numeric|greater_than[0]', // Uang yang diterima harus diisi, berupa angka, dan lebih dari 0
                 'metode_pembayaran' => 'required', // Metode pembayaran harus diisi
-            ]);
+            ];
+
+            // Cek jika metode pembayaran adalah 'QRIS/Transfer Bank'
+            if ($this->request->getPost('metode_pembayaran') == 'QRIS/Transfer Bank') {
+                // Tambahkan aturan tambahan jika diperlukan (misalnya validasi terkait bank)
+                $rules['bank'] = 'required'; // Nama bank harus diisi
+            }
+
+            // Terapkan aturan validasi
+            $validation->setRules($rules);
 
             // Memeriksa validasi
             if (!$this->validate($validation->getRules())) {
@@ -912,13 +924,28 @@ class Transaksi extends BaseController
 
             $total_pembayaran = $transaksi->total_pembayaran; // Total pembayaran yang diambil
 
-            // Memeriksa apakah uang yang diterima kurang dari total pembayaran
-            if ($terima_uang < $total_pembayaran) {
-                return $this->response->setJSON(['success' => false, 'message' => 'Uang yang diterima kurang dari total pembayaran', 'errors' => NULL]);
+            if ($this->request->getPost('metode_pembayaran') == 'QRIS/Transfer Bank') {
+                // Memeriksa apakah uang yang diterima sama dengan total pembayaran
+                if ($terima_uang != $total_pembayaran) {
+                    return $this->response->setJSON(['success' => false, 'message' => 'Uang yang diterima harus sama dengan total pembayaran pada metode QRIS/Transfer Bank', 'errors' => NULL]);
+                }
+            } else {
+                // Memeriksa apakah uang yang diterima kurang dari total pembayaran
+                if ($terima_uang < $total_pembayaran) {
+                    return $this->response->setJSON(['success' => false, 'message' => 'Uang yang diterima kurang dari total pembayaran', 'errors' => NULL]);
+                }
             }
 
             // Menghitung uang kembali jika uang yang diterima lebih besar dari total pembayaran
             $uang_kembali = $terima_uang > $total_pembayaran ? $terima_uang - $total_pembayaran : 0;
+
+
+            // Jika bank kosong, atur ke NULL
+            if ($this->request->getPost('bank') == '') {
+                $bank = NULL;
+            } else {
+                $bank = $this->request->getPost('bank');
+            }
 
             // Memperbarui transaksi
             $transaksi = $db->table('transaksi');
@@ -926,6 +953,7 @@ class Transaksi extends BaseController
             $transaksi->update([
                 'terima_uang' => $terima_uang, // Memperbarui jumlah uang yang diterima
                 'metode_pembayaran' => $this->request->getPost('metode_pembayaran'), // Memperbarui metode pembayaran
+                'bank' => $bank, // Menambahkan bank
                 'uang_kembali' => $uang_kembali, // Memperbarui uang kembali
                 'lunas' => 1, // Menandai transaksi sebagai lunas
             ]);
@@ -1213,6 +1241,7 @@ class Transaksi extends BaseController
                     'no_rm' => $item['no_rm'],
                     'nama_pasien' => $item['nama_pasien'],
                     'metode_pembayaran' => $item['metode_pembayaran'],
+                    'bank' => $item['bank'],
                     'total_pembayaran' => $item['total_pembayaran'],
                     'dokter' => $dokter,
                     'detail' => [
@@ -1315,6 +1344,7 @@ class Transaksi extends BaseController
                     'no_rm' => $item['no_rm'],
                     'nama_pasien' => $item['nama_pasien'],
                     'metode_pembayaran' => $item['metode_pembayaran'],
+                    'bank' => $item['bank'],
                     'total_pembayaran' => $item['total_pembayaran'],
                     'dokter' => $dokter,
                     'detail' => [
@@ -1339,7 +1369,19 @@ class Transaksi extends BaseController
             } else {
                 // Membuat nama file berdasarkan tanggal pembelian
                 $filename = $tgl_transaksi . '-transaksi';
-                $tanggal = Time::parse($tgl_transaksi);
+                $tanggal = new DateTime($tgl_transaksi);
+                // Buat formatter untuk tanggal dan waktu
+                $formatter = new IntlDateFormatter(
+                    'id_ID', // Locale untuk bahasa Indonesia
+                    IntlDateFormatter::LONG, // Format untuk tanggal
+                    IntlDateFormatter::NONE, // Tidak ada waktu
+                    'Asia/Jakarta', // Timezone
+                    IntlDateFormatter::GREGORIAN, // Calendar
+                    'EEEE, d MMMM yyyy' // Format tanggal lengkap dengan nama hari
+                );
+
+                // Format tanggal
+                $tanggalFormat = $formatter->format($tanggal);
                 $spreadsheet = new Spreadsheet();
                 $sheet = $spreadsheet->getActiveSheet();
 
@@ -1348,12 +1390,24 @@ class Transaksi extends BaseController
                 $sheet->setCellValue('A2', 'Jl. Rusdi S. Abrus No. 35 LK III Sinambek, Kelurahan Sungai Jering, Kecamatan Kuantan Tengah, Kabupaten Kuantan Singingi, Riau.');
                 $sheet->setCellValue('A3', 'LAPORAN TRANSAKSI HARIAN');
 
+                // Path gambar yang ingin ditambahkan
+                $gambarPath = FCPATH . 'assets/images/logo_pec.png'; // Ganti dengan path gambar Anda
+
+                // Membuat objek Drawing
+                $drawing = new Drawing();
+                $drawing->setName('Logo PEC-TK'); // Nama gambar
+                $drawing->setDescription('Logo PEC-TK'); // Deskripsi gambar
+                $drawing->setPath($gambarPath); // Path ke gambar
+                $drawing->setCoordinates('A1'); // Koordinat sel tempat gambar akan ditambahkan
+                $drawing->setHeight(36); // Tinggi gambar dalam piksel (opsional)
+                $drawing->setWorksheet($sheet); // Menambahkan gambar ke worksheet
+
                 // Menambahkan informasi tanggal dan supplier
-                $sheet->setCellValue('A4', 'Hari/Tanggal:');
-                $sheet->setCellValue('C4', $tanggal->toLocalizedString('d MMMM yyyy'));
+                $sheet->setCellValue('A4', 'Hari dan Tanggal:');
+                $sheet->setCellValue('C4', $tanggalFormat);
 
                 // Menambahkan header tabel detail pembelian
-                $sheet->setCellValue('A5', 'No.');
+                $sheet->setCellValue('A5', 'No');
                 $sheet->setCellValue('B5', 'Nomor Kwitansi');
                 $sheet->setCellValue('C5', 'Kasir');
                 $sheet->setCellValue('D5', 'Nomor RM');
@@ -1379,7 +1433,8 @@ class Transaksi extends BaseController
                 $nomor = 1;  // Nomor urut transaksi
 
                 foreach ($result as $list) {
-                    $startRow = $column;  // Simpan posisi awal transaksi
+                    // Tentukan posisi awal untuk setiap transaksi
+                    $startRow = $column; // Simpan posisi awal transaksi
 
                     // Isi data transaksi utama
                     $sheet->setCellValue('A' . $column, $nomor++);
@@ -1389,6 +1444,9 @@ class Transaksi extends BaseController
                     $sheet->setCellValue('E' . $column, $list['nama_pasien']);
                     $sheet->setCellValue('F' . $column, $list['metode_pembayaran']);
                     $sheet->setCellValue('G' . $column, $list['dokter']);
+
+                    // Atur ke bold
+                    $sheet->getStyle("A{$column}")->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
 
                     // Loop layanan dan pastikan harga terformat
                     foreach ($list['detail']['layanan'] as $layanan) {
@@ -1420,6 +1478,30 @@ class Transaksi extends BaseController
                         '_\Rp * #,##0_-;[Red]_\Rp * -#,##0_-;_-_\Rp * "-"_-;_-@_-'
                     );
                     $sheet->setCellValue('I' . $column, $list['total_pembayaran']);
+                    // Atur ke bold
+                    $sheet->getStyle("H{$column}")->getFont()->setBold(TRUE);
+                    $sheet->getStyle("I{$column}")->getFont()->setBold(TRUE);
+
+                    // Tambahkan baris pemisah antar transaksi
+                    $column++;
+
+                    // Baris bank
+                    $sheet->setCellValue('H' . $column, 'Bank/E-wallet');
+                    $sheet->setCellValue('I' . $column, $list['bank']); // Menambahkan data bank
+                    // Atur ke bold
+                    $sheet->getStyle("H{$column}")->getFont()->setBold(TRUE);
+                    $sheet->getStyle("I{$column}")->getFont()->setBold(TRUE);
+                    // Atur rata kanan untuk bank
+                    $sheet->getStyle("I{$column}")->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT);
+
+                    // Menggabungkan sel dari A hingga G
+                    $sheet->mergeCells("A{$startRow}:A{$column}");
+                    $sheet->mergeCells("B{$startRow}:B{$column}");
+                    $sheet->mergeCells("C{$startRow}:C{$column}");
+                    $sheet->mergeCells("D{$startRow}:D{$column}");
+                    $sheet->mergeCells("E{$startRow}:E{$column}");
+                    $sheet->mergeCells("F{$startRow}:F{$column}");
+                    $sheet->mergeCells("G{$startRow}:G{$column}");
 
                     // Tambahkan baris pemisah antar transaksi
                     $column++;
@@ -1436,16 +1518,17 @@ class Transaksi extends BaseController
                 $sheet->getStyle('A1')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
                 $sheet->getStyle('A1')->getFont()->setSize(12);
                 $sheet->getStyle('A2')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-                $sheet->getStyle('A2')->getFont()->setSize(6);
                 $sheet->getStyle('A3')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-                $sheet->getStyle('C4:C9')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT);
-                $sheet->getStyle('A5:G5')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+                $sheet->getStyle('A3')->getFont()->setSize(10);
+                $sheet->getStyle('C4')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT);
+                $sheet->getStyle('A5:I5')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
                 $sheet->getStyle('A' . ($column))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT);
                 $sheet->getStyle('D' . ($column + 2) . ':D' . ($column + 7))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
 
                 // Mengatur gaya font untuk header dan total
-                $sheet->getStyle('A1:A9')->getFont()->setBold(TRUE);
+                $sheet->getStyle('A1:A4')->getFont()->setBold(TRUE);
                 $sheet->getStyle('A5:I5')->getFont()->setBold(TRUE);
+                $sheet->getStyle('A5:I5')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
                 $sheet->getStyle('A' . ($column) . ':I' . ($column))->getFont()->setBold(TRUE);
 
                 // Menambahkan border untuk header dan tabel
@@ -1457,7 +1540,7 @@ class Transaksi extends BaseController
                         ]
                     ]
                 ];
-                $sheet->getStyle('A2:D2')->applyFromArray($headerBorder1);
+                $sheet->getStyle('A2:I2')->applyFromArray($headerBorder1);
                 $tableBorder = [
                     'borders' => [
                         'allBorders' => [
@@ -1467,16 +1550,18 @@ class Transaksi extends BaseController
                     ]
                 ];
                 $sheet->getStyle('A5:I' . ($column))->applyFromArray($tableBorder);
+                $sheet->getStyle('A5:I' . ($column))->getAlignment()->setWrapText(true);
+                $sheet->getStyle('A6:I' . ($column + 1))->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
 
                 // Mengatur lebar kolom
-                $sheet->getColumnDimension('A')->setWidth(50, 'px');
-                $sheet->getColumnDimension('B')->setWidth(180, 'px');
-                $sheet->getColumnDimension('C')->setWidth(200, 'px');
-                $sheet->getColumnDimension('D')->setWidth(100, 'px');
-                $sheet->getColumnDimension('E')->setWidth(200, 'px');
+                $sheet->getColumnDimension('A')->setWidth(30, 'px');
+                $sheet->getColumnDimension('B')->setWidth(150, 'px');
+                $sheet->getColumnDimension('C')->setWidth(150, 'px');
+                $sheet->getColumnDimension('D')->setWidth(75, 'px');
+                $sheet->getColumnDimension('E')->setWidth(150, 'px');
                 $sheet->getColumnDimension('F')->setWidth(100, 'px');
-                $sheet->getColumnDimension('G')->setWidth(200, 'px');
-                $sheet->getColumnDimension('H')->setWidth(150, 'px');
+                $sheet->getColumnDimension('G')->setWidth(150, 'px');
+                $sheet->getColumnDimension('H')->setWidth(175, 'px');
                 $sheet->getColumnDimension('I')->setWidth(150, 'px');
 
                 // Menyimpan file spreadsheet dan mengirimkan ke browser

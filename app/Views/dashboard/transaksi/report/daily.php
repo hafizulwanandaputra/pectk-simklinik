@@ -171,27 +171,25 @@
                 numeric: true
             }));
 
-            console.log(data);
-
             // Menambahkan setiap transaksi ke tabel
             data.forEach(function(transaksi, index) {
                 const rowspan = (transaksi.detail.layanan.length) + (transaksi.detail.obatalkes.length);
                 const layanan = transaksi.detail.layanan
                 const obatalkes = transaksi.detail.obatalkes
-                console.log(rowspan);
+                const bank = transaksi.bank ? transaksi.bank : `-`;
                 // Menjadikan angka-angka yang diperoleh sebagai integer
                 const total_pembayaran = parseInt(transaksi.total_pembayaran);
 
                 // Baris pertama untuk informasi utama transaksi
                 const transaksiElement = `
                     <tr>
-                        <td rowspan="${rowspan + 2}" class="date text-nowrap text-center">${index + 1}</td>
-                        <td rowspan="${rowspan + 2}" class="date text-nowrap">${transaksi.no_kwitansi}</td>
-                        <td rowspan="${rowspan + 2}" class="date text-nowrap">${transaksi.kasir}</td>
-                        <td rowspan="${rowspan + 2}" class="date text-nowrap">${transaksi.no_rm}</td>
-                        <td rowspan="${rowspan + 2}" class="date text-nowrap">${transaksi.nama_pasien}</td>
-                        <td rowspan="${rowspan + 2}" class="date text-nowrap">${transaksi.metode_pembayaran}</td>
-                        <td rowspan="${rowspan + 2}" class="date text-nowrap">${transaksi.dokter}</td>
+                        <td rowspan="${rowspan + 3}" class="date text-nowrap text-center">${index + 1}</td>
+                        <td rowspan="${rowspan + 3}" class="date text-nowrap">${transaksi.no_kwitansi}</td>
+                        <td rowspan="${rowspan + 3}" class="date">${transaksi.kasir}</td>
+                        <td rowspan="${rowspan + 3}" class="date text-nowrap">${transaksi.no_rm}</td>
+                        <td rowspan="${rowspan + 3}" class="date">${transaksi.nama_pasien}</td>
+                        <td rowspan="${rowspan + 3}" class="date">${transaksi.metode_pembayaran}</td>
+                        <td rowspan="${rowspan + 3}" class="date">${transaksi.dokter}</td>
                     </tr>
                 `;
 
@@ -227,6 +225,10 @@
                         <td class="fw-bold">Total</td>
                         <td class="fw-bold date text-end">Rp${total_pembayaran.toLocaleString('id-ID')}</td>
                     </tr>
+                    <tr>
+                        <td class="fw-bold">Bank/E-wallet</td>
+                        <td class="fw-bold date text-end">${bank}</td>
+                    </tr>
                 `;
                 $('#datatransaksi').append(totalPembayaranRow);
             });
@@ -240,12 +242,12 @@
             }
         } catch (error) {
             // Menangani error jika permintaan gagal
-            console.error(error.response.data.error); // Menampilkan error di konsol
+            console.error(error); // Menampilkan error di konsol
             $('#tanggal2').html(`<i class="fa-solid fa-xmark"></i> Error`); // Menampilkan error pada text tanggal
             $('#lengthtransaksi').html(`<i class="fa-solid fa-xmark"></i> Error`); // Menampilkan error pada panjang transaksi
             const errorRow = `
                 <tr>
-                    <td colspan="9" class="text-center">${error.response.data.error}</td>
+                    <td colspan="9" class="text-center">${error}</td>
                 </tr>
             `;
             $('#datatransaksi').empty(); // Kosongkan tabel transaksi
