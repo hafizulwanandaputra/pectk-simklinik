@@ -19,7 +19,7 @@
                 <tr class="align-middle">
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">No</th>
                     <th scope="col" class="bg-body-secondary border-secondary text-nowrap" style="border-bottom-width: 2px;">Tindakan</th>
-                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Supplier</th>
+                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Merek</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Nama</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Kategori</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Bentuk</th>
@@ -61,9 +61,9 @@
                     <input type="hidden" id="id_obat" name="id_obat">
                     <div class="form-floating mt-1 mb-1">
                         <select class="form-select rounded-3" id="id_supplier" name="id_supplier" aria-label="id_supplier">
-                            <option value="" disabled selected>-- Pilih Supplier --</option>
+                            <option value="" disabled selected>-- Pilih Merek dan Supplier --</option>
                         </select>
-                        <label for="id_dokter">Supplier*</label>
+                        <label for="id_dokter">Merek dan Supplier*</label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
@@ -260,9 +260,9 @@
                     }
                 },
                 {
-                    data: 'nama_supplier',
+                    data: 'merek',
                     render: function(data, type, row) {
-                        return `<span class="text-nowrap">${data}</span>`;
+                        return `<span class="text-nowrap">${data}<br><small>${row.nama_supplier}</small></span>`;
                     }
                 },
                 {

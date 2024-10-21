@@ -17,6 +17,7 @@
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">No</th>
                     <th scope="col" class="bg-body-secondary border-secondary text-nowrap" style="border-bottom-width: 2px;">Tindakan</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Nama</th>
+                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Merek</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Alamat</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Nomor Telepon</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Jumlah Obat</th>
@@ -52,6 +53,11 @@
                     <div class="form-floating mb-1 mt-1">
                         <input type="text" class="form-control" autocomplete="off" dir="auto" placeholder="nama_supplier" id="nama_supplier" name="nama_supplier">
                         <label for="nama_supplier">Nama*</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="form-floating mb-1 mt-1">
+                        <input type="text" class="form-control" autocomplete="off" dir="auto" placeholder="merek" id="merek" name="merek">
+                        <label for="merek">Merek*</label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
@@ -213,6 +219,12 @@
                     }
                 },
                 {
+                    data: 'merek',
+                    render: function(data, type, row) {
+                        return `<span class="text-nowrap">${data}</span>`;
+                    }
+                },
+                {
                     data: 'alamat_supplier',
                     render: function(data, type, row) {
                         return `<span class="text-nowrap">${data}</span>`;
@@ -232,16 +244,16 @@
                 },
             ],
             "order": [
-                [0, 'desc']
+                [2, 'asc']
             ],
             "columnDefs": [{
                 "target": [1],
                 "orderable": false
             }, {
-                "target": [0, 1, 4, 5],
+                "target": [0, 1, 2, 5, 6],
                 "width": "0%"
             }, {
-                "target": [2, 3],
+                "target": [3, 4],
                 "width": "50%"
             }]
         });
@@ -277,6 +289,7 @@
                 $('#supplierModalLabel').text('Edit Supplier');
                 $('#id_supplier').val(response.data.id_supplier);
                 $('#nama_supplier').val(response.data.nama_supplier);
+                $('#merek').val(response.data.merek);
                 $('#alamat_supplier').val(response.data.alamat_supplier);
                 $('#kontak_supplier').val(response.data.kontak_supplier);
                 $('#supplierModal').modal('show');
@@ -395,6 +408,7 @@
             $('#supplierForm')[0].reset();
             $('#id_supplier').val('');
             $('#nama_supplier').val('');
+            $('#merek').val('');
             $('#alamat_supplier').val('');
             $('#kontak_supplier').val('');
             $('#supplierForm .is-invalid').removeClass('is-invalid');

@@ -19,6 +19,10 @@ class Supplier extends Migration
                 'type' => 'VARCHAR',
                 'constraint' => 256,
             ],
+            'merek' => [
+                'type' => 'VARCHAR',
+                'constraint' => 256,
+            ],
             'alamat_supplier' => [
                 'type' => 'VARCHAR',
                 'constraint' => 256,

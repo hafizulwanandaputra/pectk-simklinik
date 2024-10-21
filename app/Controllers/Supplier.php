@@ -51,9 +51,10 @@ class Supplier extends BaseController
                 0 => 'id_supplier',
                 1 => 'id_supplier',
                 2 => 'nama_supplier',
-                3 => 'alamat_supplier',
-                4 => 'kontak_supplier',
-                5 => 'jumlah_obat',
+                3 => 'merek',
+                4 => 'alamat_supplier',
+                5 => 'kontak_supplier',
+                6 => 'jumlah_obat',
             ];
 
             // Mendapatkan kolom untuk diurutkan
@@ -62,11 +63,22 @@ class Supplier extends BaseController
             // Mendapatkan total jumlah catatan
             $totalRecords = $this->SupplierModel->countAllResults(true);
 
+            // Modifikasi logika pengurutan untuk menangani nama_supplier
+            if ($sortColumn === 'nama_supplier') {
+                // Mengurutkan berdasarkan nama_supplier, kemudian berdasarkan nama_obat
+                $this->SupplierModel
+                    ->orderBy('nama_supplier', $sortDirection)
+                    ->orderBy('merek', 'ASC');
+            } else {
+                // Perilaku pengurutan default
+                $this->SupplierModel->orderBy($sortColumn, $sortDirection);
+            }
+
             // Menerapkan query pencarian
             if ($search) {
                 $this->SupplierModel
                     ->like('nama_supplier', $search) // Mencari nama supplier
-                    ->orderBy($sortColumn, $sortDirection); // Mengurutkan hasil
+                    ->orLike('merek', $search); // Mencari nama supplier
             }
 
             // Mendapatkan jumlah catatan yang difilter
@@ -119,6 +131,7 @@ class Supplier extends BaseController
             // Menetapkan aturan validasi dasar
             $validation->setRules([
                 'nama_supplier' => 'required', // Nama supplier wajib diisi
+                'merek' => 'required', // Merek wajib diisi
                 'alamat_supplier' => 'required', // Alamat supplier wajib diisi
             ]);
 
@@ -130,6 +143,7 @@ class Supplier extends BaseController
             // Menyimpan data supplier
             $data = [
                 'nama_supplier' => $this->request->getPost('nama_supplier'), // Mengambil nama supplier dari input
+                'merek' => $this->request->getPost('merek'), // Mengambil merek dari input
                 'alamat_supplier' => $this->request->getPost('alamat_supplier'), // Mengambil alamat supplier dari input
                 'kontak_supplier' => $this->request->getPost('kontak_supplier') // Mengambil kontak supplier dari input
             ];
@@ -151,6 +165,7 @@ class Supplier extends BaseController
             // Menetapkan aturan validasi dasar
             $validation->setRules([
                 'nama_supplier' => 'required', // Nama supplier wajib diisi
+                'merek' => 'required', // Merek wajib diisi
                 'alamat_supplier' => 'required', // Alamat supplier wajib diisi
             ]);
 
@@ -163,6 +178,7 @@ class Supplier extends BaseController
             $data = [
                 'id_supplier' => $this->request->getPost('id_supplier'), // Mengambil id_supplier dari input
                 'nama_supplier' => $this->request->getPost('nama_supplier'), // Mengambil nama supplier dari input
+                'merek' => $this->request->getPost('merek'), // Mengambil merek dari input
                 'alamat_supplier' => $this->request->getPost('alamat_supplier'), // Mengambil alamat supplier dari input
                 'kontak_supplier' => $this->request->getPost('kontak_supplier') // Mengambil kontak supplier dari input
             ];

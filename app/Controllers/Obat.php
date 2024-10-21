@@ -52,7 +52,7 @@ class Obat extends BaseController
             $columnMapping = [
                 0 => 'id_obat',
                 1 => 'id_obat',
-                2 => 'nama_supplier',
+                2 => 'merek',
                 3 => 'nama_obat',
                 4 => 'kategori_obat',
                 5 => 'bentuk_obat',
@@ -72,11 +72,12 @@ class Obat extends BaseController
             // Menghitung total record
             $totalRecords = $this->ObatModel->countAllResults(true);
 
-            // Modifikasi logika pengurutan untuk menangani nama_supplier
-            if ($sortColumn === 'nama_supplier') {
-                // Mengurutkan berdasarkan nama_supplier, kemudian berdasarkan nama_obat
+            // Modifikasi logika pengurutan untuk menangani merek
+            if ($sortColumn === 'merek') {
+                // Mengurutkan berdasarkan merek, kemudian berdasarkan nama_obat
                 $this->ObatModel
-                    ->orderBy('nama_supplier', $sortDirection)
+                    ->orderBy('merek', $sortDirection)
+                    ->orderBy('nama_supplier', 'ASC')
                     ->orderBy('nama_obat', 'ASC');
             } else {
                 // Perilaku pengurutan default
@@ -135,14 +136,14 @@ class Obat extends BaseController
             $SupplierModel = new SupplierModel();
 
             // Mengambil daftar supplier dan mengurutkannya
-            $results = $SupplierModel->orderBy('nama_supplier', 'DESC')->findAll();
+            $results = $SupplierModel->orderBy('merek', 'DESC')->findAll();
 
             $options = [];
             // Menyiapkan opsi untuk ditampilkan
             foreach ($results as $row) {
                 $options[] = [
                     'value' => $row['id_supplier'],
-                    'text' => $row['nama_supplier']
+                    'text' => $row['merek'] . ' • ' . $row['nama_supplier']
                 ];
             }
 

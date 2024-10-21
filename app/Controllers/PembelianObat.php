@@ -64,7 +64,7 @@ class PembelianObat extends BaseController
 
             // Mengambil data dari tabel dengan join ke tabel supplier
             $PembelianObatModel
-                ->select('pembelian_obat.*, supplier.nama_supplier as supplier_nama_supplier')
+                ->select('pembelian_obat.*, supplier.merek as supplier_merek, supplier.nama_supplier as supplier_nama_supplier')
                 ->join('supplier', 'supplier.id_supplier = pembelian_obat.id_supplier', 'inner');
 
             // Mengaplikasikan filter status jika diberikan
@@ -122,14 +122,14 @@ class PembelianObat extends BaseController
             $SupplierModel = new SupplierModel();
 
             // Mengambil semua supplier yang diurutkan berdasarkan nama
-            $results = $SupplierModel->orderBy('nama_supplier', 'DESC')->findAll();
+            $results = $SupplierModel->orderBy('merek', 'DESC')->findAll();
 
             // Menyiapkan opsi untuk ditampilkan di dropdown
             $options = [];
             foreach ($results as $row) {
                 $options[] = [
                     'value' => $row['id_supplier'],
-                    'text' => $row['nama_supplier']
+                    'text' => $row['merek'] . ' • ' . $row['nama_supplier']
                 ];
             }
 
@@ -964,19 +964,21 @@ class PembelianObat extends BaseController
                 $sheet->setCellValue('C6', $pembelianobat['alamat_supplier']);
                 $sheet->setCellValue('A7', 'Nomor Telepon Supplier:');
                 $sheet->setCellValue('C7', $pembelianobat['kontak_supplier']);
-                $sheet->setCellValue('A8', 'Apoteker:');
-                $sheet->setCellValue('C8', $pembelianobat['apoteker']);
-                $sheet->setCellValue('A9', 'ID Pembelian:');
-                $sheet->setCellValue('C9', $pembelianobat['id_pembelian_obat']);
+                $sheet->setCellValue('A8', 'Merek:');
+                $sheet->setCellValue('C8', $pembelianobat['merek']);
+                $sheet->setCellValue('A9', 'Apoteker:');
+                $sheet->setCellValue('C9', $pembelianobat['apoteker']);
+                $sheet->setCellValue('A10', 'ID Pembelian:');
+                $sheet->setCellValue('C10', $pembelianobat['id_pembelian_obat']);
 
                 // Menambahkan header tabel detail pembelian
-                $sheet->setCellValue('A10', 'No.');
-                $sheet->setCellValue('B10', 'Nama Obat');
-                $sheet->setCellValue('C10', 'Kategori Obat');
-                $sheet->setCellValue('D10', 'Bentuk Obat');
-                $sheet->setCellValue('E10', 'Harga Satuan');
-                $sheet->setCellValue('F10', 'Qty');
-                $sheet->setCellValue('G10', 'Total Harga');
+                $sheet->setCellValue('A11', 'No.');
+                $sheet->setCellValue('B11', 'Nama Obat');
+                $sheet->setCellValue('C11', 'Kategori Obat');
+                $sheet->setCellValue('D11', 'Bentuk Obat');
+                $sheet->setCellValue('E11', 'Harga Satuan');
+                $sheet->setCellValue('F11', 'Qty');
+                $sheet->setCellValue('G11', 'Total Harga');
 
                 // Mengatur tata letak dan gaya untuk header
                 $spreadsheet->getActiveSheet()->mergeCells('A1:G1');
@@ -990,7 +992,7 @@ class PembelianObat extends BaseController
                 $spreadsheet->getDefaultStyle()->getFont()->setSize(8);
 
                 // Mengisi data detail pembelian obat ke dalam spreadsheet
-                $column = 11;
+                $column = 12;
                 foreach ($detailpembelianobat as $list) {
                     $sheet->setCellValue('A' . $column, ($column - 10));
                     $sheet->setCellValue('B' . $column, $list['nama_obat']);
@@ -1030,15 +1032,15 @@ class PembelianObat extends BaseController
                 $sheet->getStyle('A2')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
                 $sheet->getStyle('A3')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
                 $sheet->getStyle('A3')->getFont()->setSize(10);
-                $sheet->getStyle('C4:C9')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT);
-                $sheet->getStyle('A10:G10')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+                $sheet->getStyle('C4:C10')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT);
+                $sheet->getStyle('A11:G11')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
                 $sheet->getStyle('A' . ($column))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT);
                 $sheet->getStyle('G' . ($column + 2) . ':G' . ($column + 7))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
 
                 // Mengatur gaya font untuk header dan total
-                $sheet->getStyle('A1:A9')->getFont()->setBold(TRUE);
-                $sheet->getStyle('A10:G10')->getFont()->setBold(TRUE);
-                $sheet->getStyle('A10:G10')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+                $sheet->getStyle('A1:A10')->getFont()->setBold(TRUE);
+                $sheet->getStyle('A11:G11')->getFont()->setBold(TRUE);
+                $sheet->getStyle('A11:G11')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
                 $sheet->getStyle('A' . ($column) . ':G' . ($column))->getFont()->setBold(TRUE);
                 $sheet->getStyle('A' . ($column) . ':G' . ($column))->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
 
@@ -1060,7 +1062,7 @@ class PembelianObat extends BaseController
                         ]
                     ]
                 ];
-                $sheet->getStyle('A10:G' . ($column))->applyFromArray($tableBorder);
+                $sheet->getStyle('A11:G' . ($column))->applyFromArray($tableBorder);
 
                 // Mengatur lebar kolom
                 $sheet->getColumnDimension('A')->setWidth(50, 'px');
