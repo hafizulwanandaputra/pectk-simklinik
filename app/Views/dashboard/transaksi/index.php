@@ -22,7 +22,7 @@
         <div class="input-group input-group-sm flex-fill">
             <input type="search" id="searchInput" class="form-control rounded-start-3" placeholder="Cari pasien, petugas kasir, dan tanggal transaksi...">
             <button class="btn btn-success btn-sm bg-gradient" type="button" id="refreshButton"><i class="fa-solid fa-sync"></i></button>
-            <button class="btn btn-secondary btn-sm bg-gradient rounded-end-3" type="button" id="reportButton" onclick="window.location.href = '<?= base_url('transaksi/dailyreport') ?>';"><i class="fa-solid fa-file-export"></i> Harian</button>
+            <button class="btn btn-body btn-sm bg-gradient rounded-end-3" type="button" id="reportButton" onclick="window.location.href = '<?= base_url('transaksi/dailyreport') ?>';"><i class="fa-solid fa-file-export"></i> Laporan</button>
         </div>
     </div>
     <fieldset class="border rounded-3 px-2 py-0 mb-3">

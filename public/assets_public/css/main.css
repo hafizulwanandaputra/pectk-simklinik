@@ -458,10 +458,16 @@ div.dataTables_wrapper div.dataTables_info {
   --bs-btn-disabled-color: #f8f9fa;
   --bs-btn-disabled-bg: transparent;
   --bs-btn-disabled-border-color: #f8f9fa;
+  --bs-gradient: none;
+}
+
+[data-bs-theme=dark] .btn-outline-body:hover,
+[data-bs-theme=dark] .btn-outline-body:focus-visible {
   --bs-gradient: linear-gradient(180deg,
       rgba(255, 255, 255, 0.25) 0%,
       rgba(255, 255, 255, 0) 10px,
       rgba(0, 0, 0, 0.25) 100%);
+  ;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -552,10 +558,16 @@ div.dataTables_wrapper div.dataTables_info {
     --bs-btn-disabled-color: #f8f9fa;
     --bs-btn-disabled-bg: transparent;
     --bs-btn-disabled-border-color: #f8f9fa;
+    --bs-gradient: none;
+  }
+
+  .btn-outline-body:hover,
+  .btn-outline-body:focus-visible {
     --bs-gradient: linear-gradient(180deg,
         rgba(255, 255, 255, 0.25) 0%,
         rgba(255, 255, 255, 0) 10px,
         rgba(0, 0, 0, 0.25) 100%);
+    ;
   }
 
   .btn-close.btn-close-black {
