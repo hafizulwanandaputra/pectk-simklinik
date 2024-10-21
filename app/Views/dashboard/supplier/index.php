@@ -61,7 +61,7 @@
                     </div>
                     <div class="form-floating mb-1 mt-1">
                         <input type="number" class="form-control" autocomplete="off" dir="auto" placeholder="kontak_supplier" id="kontak_supplier" name="kontak_supplier">
-                        <label for="kontak_supplier">Nomor Telepon*</label>
+                        <label for="kontak_supplier">Nomor Telepon</label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>

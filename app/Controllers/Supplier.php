@@ -120,7 +120,6 @@ class Supplier extends BaseController
             $validation->setRules([
                 'nama_supplier' => 'required', // Nama supplier wajib diisi
                 'alamat_supplier' => 'required', // Alamat supplier wajib diisi
-                'kontak_supplier' => 'required|numeric', // Kontak supplier wajib diisi dan harus berupa angka
             ]);
 
             // Memeriksa validasi
@@ -153,7 +152,6 @@ class Supplier extends BaseController
             $validation->setRules([
                 'nama_supplier' => 'required', // Nama supplier wajib diisi
                 'alamat_supplier' => 'required', // Alamat supplier wajib diisi
-                'kontak_supplier' => 'required|numeric', // Kontak supplier wajib diisi dan harus berupa angka
             ]);
 
             // Memeriksa validasi

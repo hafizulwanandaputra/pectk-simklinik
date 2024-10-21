@@ -192,9 +192,10 @@
                     const statusBadge = transaksi.lunas == '1' ?
                         `<span class="badge bg-success bg-gradient">Transaksi Diproses</span>` :
                         `<span class="badge bg-danger bg-gradient">Transaksi Belum Diproses</span>`;
+                    const bank = transaksi.bank ? ` (${transaksi.bank})` : ``;
                     const metode_pembayaran = transaksi.metode_pembayaran == '' ?
                         `<em>Belum ada</em>` :
-                        `${transaksi.metode_pembayaran}`;
+                        transaksi.metode_pembayaran + bank;
                     const transaksiElement = `
             <li class="list-group-item bg-body-tertiary pb-3 pt-3">
                 <div class="d-flex">

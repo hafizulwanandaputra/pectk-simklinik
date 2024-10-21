@@ -40,12 +40,12 @@ $tanggal_lahir = Time::parse($resep['tanggal_lahir']);
 
         .box {
             border: 1px solid black;
-            height: 0.925cm;
+            height: 0.85cm;
             overflow: hidden;
             padding: 0cm;
             font-weight: bold;
             text-align: center;
-            font-size: 5.5pt;
+            font-size: 5pt;
         }
     </style>
 </head>
@@ -63,14 +63,20 @@ $tanggal_lahir = Time::parse($resep['tanggal_lahir']);
                         <td style="width: 0%; text-align: right; white-space: nowrap;">Tgl: <?= $tanggal_resep->toLocalizedString('dd/MM/yyyy') ?></td>
                     </tr>
                     <tr>
-                        <td style="width: 100%; height: 0.3cm;">DPJP: <?= $resep['dokter'] ?></td>
+                        <td style="width: 100%; height: 0.425cm;">DPJP: <?= $resep['dokter'] ?></td>
                         <td style="width: 0%; text-align: right; white-space: nowrap;">DOB: <?= $tanggal_lahir->toLocalizedString('dd/MM/yyyy') ?></td>
                     </tr>
                 </tbody>
             </table>
-            <center>
-                <h2 style="padding-top: 0cm; padding-bottom: 0.1cm; white-space: nowrap; height: 0.5cm;"><?= $resep['nama_pasien'] ?></h2>
-            </center>
+            <table width="100%" style="padding-top: 0cm; padding-bottom: 0cm;">
+                <tbody style="vertical-align: middle;">
+                    <tr>
+                        <td style="height: 0.5cm;">
+                            <h2 style="text-align: center;"><?= $resep['nama_pasien'] ?></h2>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
             <div class="box">
                 <?= $detail['nama_obat'] ?>
                 <br>
