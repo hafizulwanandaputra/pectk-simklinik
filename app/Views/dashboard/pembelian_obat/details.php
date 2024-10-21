@@ -119,7 +119,7 @@
     <div id="terimaObat">
         <hr>
         <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
-            <button class="btn btn-success rounded-3 bg-gradient" type="button" id="printBtn" onclick="startDownload()" disabled><i class="fa-solid fa-file-excel"></i> Buat Faktur (Excel)</button>
+            <button class="btn btn-outline-success rounded-3 bg-gradient" type="button" id="printBtn" onclick="startDownload()" disabled><i class="fa-solid fa-file-excel"></i> Buat Faktur (Excel)</button>
             <button class="btn btn-primary rounded-3 bg-gradient" type="button" id="completeBtn" data-id="<?= $pembelianobat['id_pembelian_obat'] ?>" disabled><i class="fa-solid fa-check-double"></i> Terima Obat</button>
         </div>
     </div>
@@ -289,9 +289,9 @@
                     <tr>
                         <td class="tindakan">
                             <div class="btn-group" role="group">
-                                <button class="btn btn-primary text-nowrap bg-gradient rounded-start-3 add-batch-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${detail_pembelian_obat.id_detail_pembelian_obat}" data-bs-toggle="tooltip" data-bs-title="Tambah Item Obat"><i class="fa-solid fa-plus"></i></button>
-                                <button class="btn btn-secondary text-nowrap bg-gradient edit-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${detail_pembelian_obat.id_detail_pembelian_obat}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
-                                <button class="btn btn-danger text-nowrap bg-gradient rounded-end-3 delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${detail_pembelian_obat.id_detail_pembelian_obat}" data-name="${detail_pembelian_obat.nama_obat}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
+                                <button class="btn btn-outline-primary text-nowrap bg-gradient rounded-start-3 add-batch-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${detail_pembelian_obat.id_detail_pembelian_obat}" data-bs-toggle="tooltip" data-bs-title="Tambah Item Obat"><i class="fa-solid fa-plus"></i></button>
+                                <button class="btn btn-outline-body text-nowrap bg-gradient edit-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${detail_pembelian_obat.id_detail_pembelian_obat}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
+                                <button class="btn btn-outline-danger text-nowrap bg-gradient rounded-end-3 delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${detail_pembelian_obat.id_detail_pembelian_obat}" data-name="${detail_pembelian_obat.nama_obat}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
                             </div>
                         </td>
                         <td class="text-nowrap">
@@ -316,8 +316,8 @@
                                     <div class="date">Kadaluwarsa: ${item.expired}</div>
                                     <div class="date">Jumlah: ${jumlah_item}</div>
                                     <div class="btn-group" role="group">
-                                        <button class="btn btn-secondary text-nowrap bg-gradient rounded-start-3 edit-batch-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${item.id_item_obat}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
-                                        <button class="btn btn-danger text-nowrap bg-gradient rounded-end-3 delete-batch-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${item.id_item_obat}" data-name="${item.no_batch}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
+                                        <button class="btn btn-outline-body text-nowrap bg-gradient rounded-start-3 edit-batch-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${item.id_item_obat}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
+                                        <button class="btn btn-outline-danger text-nowrap bg-gradient rounded-end-3 delete-batch-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${item.id_item_obat}" data-name="${item.no_batch}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
                                     </div>
                                 </li>
                             `;
