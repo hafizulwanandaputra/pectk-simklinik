@@ -446,7 +446,12 @@ class Resep extends BaseController
                 // Setelah itu, terapkan mark-up
                 $jumlah_mark_up = ($total_harga_ppn * $mark_up) / 100;
                 $total_harga = $total_harga_ppn + $jumlah_mark_up;
-                $harga_obat_terformat = number_format($total_harga, 0, ',', '.'); // Memformat harga obat
+
+                // Bulatkan ke ratusan terdekat ke atas
+                $harga_bulat = ceil($total_harga / 100) * 100;
+
+                // Memformat harga yang telah dibulatkan
+                $harga_obat_terformat = number_format($harga_bulat, 0, ',', '.');
 
                 // Cek apakah id_resep sudah ada di tabel detail_resep dengan id_resep yang sama
                 $isUsed = $DetailResepModel->where('id_obat', $row['id_obat'])

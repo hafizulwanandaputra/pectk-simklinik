@@ -96,16 +96,20 @@ class Obat extends BaseController
             // Mengambil data
             $obat = $this->ObatModel
                 ->select('obat.*, supplier.*, 
-                -- Hitung PPN terlebih dahulu
-                (obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) as harga_setelah_ppn,
-        
-                -- Kemudian terapkan mark_up pada harga setelah PPN
-                ROUND(
-                    ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) 
-                    + ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) * obat.mark_up / 100))
-                ) as harga_jual,
-        
-                (obat.jumlah_masuk - obat.jumlah_keluar) as sisa_stok')
+            -- Hitung PPN terlebih dahulu
+            (obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) as harga_setelah_ppn,
+    
+            -- Hitung harga jual sebelum pembulatan
+            ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) 
+            + ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) * obat.mark_up / 100)) as harga_jual_sebelum_bulat,
+    
+            -- Bulatkan harga_jual ke ratusan terdekat ke atas
+            CEIL(
+                ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) 
+                + ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) * obat.mark_up / 100)) / 100
+            ) * 100 as harga_jual,
+    
+            (obat.jumlah_masuk - obat.jumlah_keluar) as sisa_stok')
                 ->join('supplier', 'supplier.id_supplier = obat.id_supplier', 'inner')
                 ->findAll($length, $start);
 
