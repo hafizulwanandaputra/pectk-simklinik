@@ -407,9 +407,7 @@
                     $('#resepForm .invalid-feedback').text('').hide();
                     $('#submitButton').prop('disabled', true);
                     fetchResep();
-                } else if (response.data.success == false && response.data.message) {
-                    showFailedToast(response.data.message);
-                } else if (response.data.success == false && response.data.errors) {
+                } else {
                     console.log("Validation Errors:", response.data.errors);
 
                     // Clear previous validation states
@@ -438,7 +436,11 @@
                     }
                 }
             } catch (error) {
-                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                if (error.response.request.status === 500 || error.response.request.status === 404) {
+                    showFailedToast(error.response.data.message);
+                } else {
+                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                }
                 $('#submitButton').prop('disabled', false);
             } finally {
                 $('#submitButton').html(`

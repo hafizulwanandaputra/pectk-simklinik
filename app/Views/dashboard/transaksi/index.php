@@ -26,11 +26,11 @@
         </div>
     </div>
     <fieldset class="border rounded-3 px-2 py-0 mb-3">
-        <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Tambah Pasien Rawat Jalan</legend>
+        <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Tambah Pasien dari Resep</legend>
         <form id="transaksiForm" enctype="multipart/form-data" class="d-flex flex-column flex-lg-row mb-2 gap-2">
             <div class="flex-fill">
-                <select class="form-select rounded-3" id="nomor_registrasi" name="nomor_registrasi" aria-label="nomor_registrasi">
-                    <option value="" disabled selected>-- Pilih Pasien --</option>
+                <select class="form-select rounded-3" id="id_resep" name="id_resep" aria-label="id_resep">
+                    <option value="" disabled selected>-- Pilih Pasien dari Resep --</option>
                 </select>
                 <div class="invalid-feedback"></div>
             </div>
@@ -138,7 +138,7 @@
 
             if (response.data.success) {
                 const options = response.data.data;
-                const select = $('#nomor_registrasi');
+                const select = $('#id_resep');
 
                 // Clear existing options except the first one
                 select.find('option:not(:first)').remove();
@@ -304,19 +304,19 @@
     });
 
     function toggleSubmitButton() {
-        var selectedValue = $('#nomor_registrasi').val();
+        var selectedValue = $('#id_resep').val();
         if (selectedValue === null || selectedValue === "") {
             $('#submitButton').prop('disabled', true);
         } else {
             $('#submitButton').prop('disabled', false);
         }
     }
-    $('#nomor_registrasi').on('change.select2', function() {
+    $('#id_resep').on('change.select2', function() {
         toggleSubmitButton();
     });
 
     $(document).ready(function() {
-        $('#nomor_registrasi').select2({
+        $('#id_resep').select2({
             dropdownParent: $('#transaksiForm'),
             theme: "bootstrap-5",
             width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
@@ -391,14 +391,13 @@
 
                 if (response.data.success) {
                     $('#transaksiForm')[0].reset();
-                    $('#nomor_registrasi').val(null).trigger('change');
+                    $('#id_resep').val(null).trigger('change');
                     $('#transaksiForm .is-invalid').removeClass('is-invalid');
                     $('#transaksiForm .invalid-feedback').text('').hide();
                     $('#submitButton').prop('disabled', true);
+                    fetchPasienOptions();
                     fetchTransaksi();
-                } else if (response.data.success == false && response.data.message) {
-                    showFailedToast(response.data.message);
-                } else if (response.data.success == false && response.data.errors) {
+                } else {
                     console.log("Validation Errors:", response.data.errors);
 
                     // Clear previous validation states
@@ -431,7 +430,11 @@
                     console.error('Perbaiki kesalahan pada formulir.');
                 }
             } catch (error) {
-                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                if (error.response.request.status === 404) {
+                    showFailedToast(error.response.data.message);
+                } else {
+                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                }
                 $('#submitButton').prop('disabled', false);
             } finally {
                 $('#submitButton').html(`

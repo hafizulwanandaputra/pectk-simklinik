@@ -391,7 +391,7 @@
 
     async function fetchResepOptions() {
         try {
-            const response = await axios.get('<?= base_url('transaksi/reseplist/' . $transaksi['id_transaksi'] . '/' . $transaksi['nomor_registrasi']) ?>');
+            const response = await axios.get('<?= base_url('transaksi/reseplist/' . $transaksi['id_transaksi'] . '/' . $transaksi['id_resep']) ?>');
 
             if (response.data.success) {
                 const options = response.data.data;

@@ -15,6 +15,11 @@ class Transaksi extends Migration
                 'unsigned' => true,
                 'auto_increment' => true,
             ],
+            'id_resep' => [
+                'type' => 'BIGINT',
+                'constraint' => 24,
+                'unsigned' => true,
+            ],
             'nomor_registrasi' => [
                 'type' => 'VARCHAR',
                 'constraint' => 256,

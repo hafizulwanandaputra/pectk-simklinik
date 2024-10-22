@@ -235,7 +235,7 @@ class Resep extends BaseController
 
                 // Jika data pasien tidak ditemukan
                 if (!$patientData) {
-                    return $this->response->setJSON(['success' => false, 'message' => 'Data pasien tidak ditemukan', 'errors' => NULL]);
+                    return $this->response->setStatusCode(404)->setJSON(['success' => false, 'message' => 'Data pasien tidak ditemukan', 'errors' => NULL]);
                 }
 
                 // Menyiapkan data untuk disimpan
@@ -260,7 +260,7 @@ class Resep extends BaseController
                 return $this->response->setJSON(['success' => true, 'message' => 'Resep berhasil ditambahkan']);
             } catch (\Exception $e) {
                 // Menangani kesalahan saat mengambil data
-                return $this->response->setJSON(['success' => false, 'message' => 'Terjadi kesalahan saat mengambil data: ' . $e->getMessage(), 'errors' => NULL]);
+                return $this->response->setStatusCode(500)->setJSON(['success' => false, 'message' => 'Terjadi kesalahan saat mengambil data: ' . $e->getMessage(), 'errors' => NULL]);
             }
         } else {
             // Mengembalikan status 404 jika peran tidak diizinkan
