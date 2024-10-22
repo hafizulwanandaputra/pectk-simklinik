@@ -1293,8 +1293,8 @@
 
         $('#batalTransaksiModal').on('hidden.bs.modal', function() {
             $('#batalTransaksiForm')[0].reset();
-            $('#transaksiForm .is-invalid').removeClass('is-invalid');
-            $('#transaksiForm .invalid-feedback').text('').hide();
+            $('#batalTransaksiForm .is-invalid').removeClass('is-invalid');
+            $('#batalTransaksiForm .invalid-feedback').text('').hide();
         });
         toggleBankField();
         fetchLayanan();
