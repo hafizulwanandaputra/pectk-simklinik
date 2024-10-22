@@ -1054,8 +1054,10 @@ class Transaksi extends BaseController
                     }
                 }
 
+                // Kirim pesan pembatalan berhasil jika kata sandi yang dimasukkan benar
                 return $this->response->setJSON(['success' => true, 'message' => 'Transaksi berhasil dibatalkan.']);
             } else {
+                // Kirim pesan kesalahan HTTP 401 jika kata sandi yang dimasukkan salah
                 return $this->response->setStatusCode(401)->setJSON(['success' => false, 'message' => 'Kata sandi transaksi salah', 'errors' => NULL]);
             }
         } else {
