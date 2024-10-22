@@ -353,7 +353,11 @@
                 fetchPasienOptions();
                 fetchTransaksi();
             } catch (error) {
-                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                if (error.response.request.status === 422) {
+                    showFailedToast(error.response.data.message);
+                } else {
+                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                }
             } finally {
                 $('#deleteModal').modal('hide');
                 $('#deleteMessage').removeClass('mb-0');

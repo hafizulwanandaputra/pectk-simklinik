@@ -209,6 +209,7 @@
         <hr>
         <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
             <button class="btn btn-body rounded-3 bg-gradient" type="button" id="printBtn" onclick="window.open(`<?= base_url('/transaksi/struk/' . $transaksi['id_transaksi']) ?>`)" disabled><i class="fa-solid fa-print"></i> Cetak Struk/Kwitansi</button>
+            <button class="btn btn-danger rounded-3 bg-gradient" type="button" id="cancelBtn" data-id="<?= $transaksi['id_transaksi'] ?>" disabled><i class="fa-solid fa-xmark"></i> Batalkan Transaksi</button>
             <button class="btn btn-success rounded-3 bg-gradient" type="button" id="processBtn" data-id="<?= $transaksi['id_transaksi'] ?>" disabled><i class="fa-solid fa-money-bills"></i> Proses Transaksi</button>
         </div>
     </div>
@@ -232,7 +233,7 @@
             <form id="transaksiForm" enctype="multipart/form-data" class="modal-content bg-body-tertiary shadow-lg transparent-blur">
                 <div class="modal-header justify-content-between pt-2 pb-2" style="border-bottom: 1px solid var(--bs-border-color-translucent);">
                     <h6 class="pe-2 modal-title fs-6 text-truncate" id="transaksiModalLabel" style="font-weight: bold;"></h6>
-                    <button id="closeBtn" type="button" class="btn btn-danger btn-sm bg-gradient ps-0 pe-0 pt-0 pb-0 rounded-3" data-bs-dismiss="modal" aria-label="Close"><span data-feather="x" class="mb-0" style="width: 30px; height: 30px;"></span></button>
+                    <button id="transaksiCloseBtn" type="button" class="btn btn-danger btn-sm bg-gradient ps-0 pe-0 pt-0 pb-0 rounded-3" data-bs-dismiss="modal" aria-label="Close"><span data-feather="x" class="mb-0" style="width: 30px; height: 30px;"></span></button>
                 </div>
                 <div class="modal-body py-2">
                     <div id="mediaAlert" class="alert alert-info rounded-3 mb-1 mt-1" role="alert">
@@ -288,6 +289,41 @@
                 <div class="modal-footer justify-content-end pt-2 pb-2" style="border-top: 1px solid var(--bs-border-color-translucent);">
                     <button type="submit" id="submitButton" class="btn btn-primary bg-gradient rounded-3">
                         <i class="fa-solid fa-money-bill-transfer"></i> Proses
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal fade" id="batalTransaksiModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="batalTransaksiModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable rounded-3">
+            <form id="batalTransaksiForm" enctype="multipart/form-data" class="modal-content bg-body-tertiary shadow-lg transparent-blur">
+                <div class="modal-header justify-content-between pt-2 pb-2" style="border-bottom: 1px solid var(--bs-border-color-translucent);">
+                    <h6 class="pe-2 modal-title fs-6 text-truncate" id="batalTransaksiModalLabel" style="font-weight: bold;"></h6>
+                    <button id="batalTransaksiCloseBtn" type="button" class="btn btn-danger btn-sm bg-gradient ps-0 pe-0 pt-0 pb-0 rounded-3" data-bs-dismiss="modal" aria-label="Close"><span data-feather="x" class="mb-0" style="width: 30px; height: 30px;"></span></button>
+                </div>
+                <div class="modal-body py-2">
+                    <div class="alert alert-warning rounded-3 mb-1 mt-1" role="alert">
+                        <div class="d-flex align-items-start">
+                            <div style="width: 12px; text-align: center;">
+                                <i class="fa-solid fa-triangle-exclamation"></i>
+                            </div>
+                            <div class="w-100 ms-3">
+                                <h4 style="font-weight: 900;">PERINGATAN!</h4>
+                                <p>Pastikan Anda telah mendapatkan persetujuan dari pimpinan atau manajer klinik untuk membatalkan transaksi ini. Pembatalan transaksi <strong>HANYA DILAKUKAN</strong> apabila terjadi kesalahan dalam memasukkan item transaksi.</p>
+                                <p class="mb-0">Segala penyalahgunaan dalam pembatalan transaksi ini akan diproses secara hukum.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-floating mb-1 mt-1">
+                        <input type="password" class="form-control" autocomplete="off" dir="auto" placeholder="password" id="password" name="password">
+                        <label for="password">Masukkan Kata Sandi Transaksi*</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-end pt-2 pb-2" style="border-top: 1px solid var(--bs-border-color-translucent);">
+                    <button type="submit" id="cancelSubmitButton" class="btn btn-danger bg-gradient rounded-3">
+                        <i class="fa-solid fa-xmark"></i> Batalkan
                     </button>
                 </div>
             </form>
@@ -399,11 +435,13 @@
                 $('#tambahLayananContainer').hide();
                 $('#tambahObatAlkesContainer').hide();
                 $('#printBtn').prop('disabled', false);
+                $('#cancelBtn').prop('disabled', false);
             } else if (data.lunas === "0") {
                 $('div.add-forms').addClass('mb-3');
                 $('#tambahLayananContainer').show();
                 $('#tambahObatAlkesContainer').show();
                 $('#printBtn').prop('disabled', true);
+                $('#cancelBtn').prop('disabled', true);
             }
         } catch (error) {
             showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
@@ -1051,8 +1089,17 @@
             $('#transaksiModal').modal('show');
         });
 
+        $('#cancelBtn').click(function() {
+            $('#batalTransaksiModalLabel').text('Batalkan Transaksi');
+            $('#batalTransaksiModal').modal('show');
+        });
+
         $('#transaksiModal').on('shown.bs.modal', function() {
             $('#terima_uang').trigger('focus');
+        });
+
+        $('#batalTransaksiModal').on('shown.bs.modal', function() {
+            $('#password').trigger('focus');
         });
 
         $('#transaksiForm').submit(async function(e) {
@@ -1087,48 +1134,125 @@
                     fetchStatusTransaksi();
                     transactionProcessBtn();
                 } else {
-                    if (response.data.errors == null) {
-                        showFailedToast(response.data.message);
-                    } else if (response.data.message == null) {
-                        console.log("Validation Errors:", response.data.errors);
+                    console.log("Validation Errors:", response.data.errors);
 
-                        // Clear previous validation states
-                        $('#transaksiForm .is-invalid').removeClass('is-invalid');
-                        $('#transaksiForm .invalid-feedback').text('').hide();
+                    // Clear previous validation states
+                    $('#transaksiForm .is-invalid').removeClass('is-invalid');
+                    $('#transaksiForm .invalid-feedback').text('').hide();
 
-                        // Display new validation errors
-                        for (const field in response.data.errors) {
-                            if (response.data.errors.hasOwnProperty(field)) {
-                                const fieldElement = $('#' + field);
-                                const feedbackElement = fieldElement.siblings('.invalid-feedback');
+                    // Display new validation errors
+                    for (const field in response.data.errors) {
+                        if (response.data.errors.hasOwnProperty(field)) {
+                            const fieldElement = $('#' + field);
+                            const feedbackElement = fieldElement.siblings('.invalid-feedback');
 
-                                console.log("Target Field:", fieldElement);
-                                console.log("Target Feedback:", feedbackElement);
+                            console.log("Target Field:", fieldElement);
+                            console.log("Target Feedback:", feedbackElement);
 
-                                if (fieldElement.length > 0 && feedbackElement.length > 0) {
-                                    fieldElement.addClass('is-invalid');
-                                    feedbackElement.text(response.data.errors[field]).show();
+                            if (fieldElement.length > 0 && feedbackElement.length > 0) {
+                                fieldElement.addClass('is-invalid');
+                                feedbackElement.text(response.data.errors[field]).show();
 
-                                    // Remove error message when the user corrects the input
-                                    fieldElement.on('input change', function() {
-                                        $(this).removeClass('is-invalid');
-                                        $(this).siblings('.invalid-feedback').text('').hide();
-                                    });
-                                } else {
-                                    console.warn("Elemen tidak ditemukan pada field:", field);
-                                }
+                                // Remove error message when the user corrects the input
+                                fieldElement.on('input change', function() {
+                                    $(this).removeClass('is-invalid');
+                                    $(this).siblings('.invalid-feedback').text('').hide();
+                                });
+                            } else {
+                                console.warn("Elemen tidak ditemukan pada field:", field);
                             }
                         }
-                        console.error('Perbaiki kesalahan pada formulir.');
                     }
+                    console.error('Perbaiki kesalahan pada formulir.');
                 }
             } catch (error) {
-                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                if (error.response.request.status === 422) {
+                    showFailedToast(error.response.data.message);
+                } else {
+                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                }
             } finally {
                 $('#submitButton').prop('disabled', false).html(`
                     <i class="fa-solid fa-floppy-disk"></i> Simpan
                 `);
                 $('#transaksiForm input, #transaksiForm select, #closeBtn').prop('disabled', false);
+            }
+        });
+
+        $('#batalTransaksiForm').submit(async function(e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+            console.log("Form Data:", $(this).serialize());
+
+            // Clear previous validation states
+            $('#batalTransaksiForm .is-invalid').removeClass('is-invalid');
+            $('#batalTransaksiForm .invalid-feedback').text('').hide();
+            $('#cancelSubmitButton').prop('disabled', true).html(`
+                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                <span role="status">Membatalkan...</span>
+            `);
+
+            // Disable form inputs
+            $('#batalTransaksiForm input, #batalTransaksiCloseBtn').prop('disabled', true);
+
+            try {
+                const response = await axios.post(`<?= base_url('/transaksi/cancel/' . $transaksi['id_transaksi']) ?>`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
+
+                if (response.data.success) {
+                    showSuccessToast(response.data.message, 'success');
+                    $('#batalTransaksiModal').modal('hide');
+                    fetchLayanan();
+                    fetchObatAlkes();
+                    fetchStatusTransaksi();
+                    transactionProcessBtn();
+                } else {
+                    console.log("Validation Errors:", response.data.errors);
+
+                    // Clear previous validation states
+                    $('#batalTransaksiForm .is-invalid').removeClass('is-invalid');
+                    $('#batalTransaksiForm .invalid-feedback').text('').hide();
+
+                    // Display new validation errors
+                    for (const field in response.data.errors) {
+                        if (response.data.errors.hasOwnProperty(field)) {
+                            const fieldElement = $('#' + field);
+                            const feedbackElement = fieldElement.siblings('.invalid-feedback');
+
+                            console.log("Target Field:", fieldElement);
+                            console.log("Target Feedback:", feedbackElement);
+
+                            if (fieldElement.length > 0 && feedbackElement.length > 0) {
+                                fieldElement.addClass('is-invalid');
+                                feedbackElement.text(response.data.errors[field]).show();
+
+                                // Remove error message when the user corrects the input
+                                fieldElement.on('input change', function() {
+                                    $(this).removeClass('is-invalid');
+                                    $(this).siblings('.invalid-feedback').text('').hide();
+                                });
+                            } else {
+                                console.warn("Elemen tidak ditemukan pada field:", field);
+                            }
+                        }
+                    }
+                    console.error('Perbaiki kesalahan pada formulir.');
+                }
+            } catch (error) {
+                if (error.response.request.status === 401) {
+                    showFailedToast(error.response.data.message);
+                } else {
+                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                }
+            } finally {
+                $('#cancelSubmitButton').prop('disabled', false).html(`
+                    <i class="fa-solid fa-xmark"></i> Batalkan
+                `);
+                $('#batalTransaksiForm input, #batalTransaksiCloseBtn').prop('disabled', false);
             }
         });
 
@@ -1163,6 +1287,12 @@
             $('#metode_pembayaran').val('').change(); // Trigger change agar toggleBankField dipanggil
             $('#bank').val(''); // Kosongkan field bank
             $('#bank_field').hide(); // Reset bank dan hilangkan
+            $('#transaksiForm .is-invalid').removeClass('is-invalid');
+            $('#transaksiForm .invalid-feedback').text('').hide();
+        });
+
+        $('#batalTransaksiModal').on('hidden.bs.modal', function() {
+            $('#batalTransaksiForm')[0].reset();
             $('#transaksiForm .is-invalid').removeClass('is-invalid');
             $('#transaksiForm .invalid-feedback').text('').hide();
         });

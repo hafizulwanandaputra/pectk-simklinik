@@ -77,6 +77,97 @@ class Settings extends BaseController
         return redirect()->back(); // Kembali ke halaman sebelumnya
     }
 
+    public function pwdTransaksi()
+    {
+        // Memeriksa apakah peran pengguna dalam sesi adalah "Admin"
+        if (session()->get('role') == 'Admin') {
+            // Menyiapkan data untuk tampilan halaman ubah kata sandi
+            $data = [
+                'title' => 'Ubah Kata Sandi Transaksi - ' . $this->systemName, // Judul halaman
+                'headertitle' => 'Ubah Kata Sandi Transaksi', // Judul header
+                'agent' => $this->request->getUserAgent() // Mendapatkan user agent dari request
+            ];
+            // Mengembalikan tampilan halaman ubah kata sandi dengan data yang telah disiapkan
+            return view('dashboard/settings/pwdtransaksi', $data);
+        } else {
+            // Jika bukan admin, mengembalikan status 404 dengan pesan error
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
+        }
+    }
+
+    public function updatePwdTransaksi()
+    {
+        // Memvalidasi input dari form ubah kata sandi
+        if (!$this->validate([
+            'current_password' => [
+                'label' => 'Kata Sandi Lama', // Label untuk kata sandi lama
+                'rules' => 'required', // Kata sandi lama wajib diisi
+                'errors' => [
+                    'required' => '{field} wajib diisi!' // Pesan error jika kata sandi lama tidak diisi
+                ]
+            ],
+            'new_password1' => [
+                'label' => 'Kata Sandi Baru', // Label untuk kata sandi baru
+                'rules' => 'required|min_length[5]|matches[new_password2]', // Validasi untuk kata sandi baru
+                'errors' => [
+                    'required' => '{field} wajib diisi!', // Pesan error jika kata sandi baru tidak diisi
+                    'min_length' => '{field} harus sekurang-kurangnya lima karakter', // Pesan error jika kata sandi baru kurang dari 5 karakter
+                    'matches' => '{field} tidak cocok dengan Konfirmasi Kata Sandi!' // Pesan error jika kata sandi baru tidak cocok dengan konfirmasi
+                ]
+            ],
+            'new_password2' => [
+                'label' => 'Konfirmasi Kata Sandi', // Label untuk konfirmasi kata sandi baru
+                'rules' => 'required|min_length[5]|matches[new_password1]', // Validasi untuk konfirmasi kata sandi baru
+                'errors' => [
+                    'required' => '{field} wajib diisi!', // Pesan error jika konfirmasi tidak diisi
+                    'min_length' => '{field} harus sekurang-kurangnya lima karakter', // Pesan error jika konfirmasi kurang dari 5 karakter
+                    'matches' => '{field} tidak cocok dengan Kata Sandi Baru!' // Pesan error jika konfirmasi tidak cocok dengan kata sandi baru
+                ]
+            ]
+        ])) {
+            // Jika validasi gagal, mengalihkan kembali ke halaman ubah kata sandi dengan input yang ada
+            return redirect()->back()->withInput();
+        }
+
+        $db = db_connect();
+        // Ambil data kata sandi transaksi dengan ID 1
+        $query_pwd_transaksi = $db->table('pwd_transaksi')->getWhere(['id' => 1]);
+
+        $pwd_transaksi = $query_pwd_transaksi->getRowArray(); // Ambil satu baris data
+
+        // Mengambil kata sandi lama dan baru dari input
+        $current_password = $this->request->getVar('current_password');
+        $new_password = $this->request->getVar('new_password1');
+
+        // Memeriksa apakah kata sandi lama yang diinput benar
+        if (!password_verify($current_password, $pwd_transaksi['pwd_transaksi'])) {
+            // Jika salah, mengatur flashdata untuk menampilkan pesan error
+            session()->setFlashdata('error', 'Kata sandi lama Anda salah!');
+            return redirect()->back(); // Kembali ke halaman ubah kata sandi
+        } else {
+            // Memeriksa apakah kata sandi baru sama dengan kata sandi lama
+            if ($current_password == $new_password) {
+                // Jika sama, mengatur flashdata untuk menampilkan pesan error
+                session()->setFlashdata('error', 'Kata sandi baru harus berbeda dengan kata sandi lama');
+                return redirect()->back(); // Kembali ke halaman ubah kata sandi
+            } else {
+                // Menghash kata sandi baru
+                $password_hash = password_hash($new_password, PASSWORD_DEFAULT);
+                // Menyimpan kata sandi baru ke database pwd_transaksi
+                $data = [
+                    'id' => 1,
+                    'pwd_transaksi' => $password_hash
+                ];
+                $db->table('pwd_transaksi')->update($data, ['id' => 1]); // Update data berdasarkan id
+                // Mengatur flashdata untuk menampilkan pesan sukses
+                session()->setFlashdata('msg', 'Anda berhasil mengubah kata sandi transaksi!');
+                return redirect()->back(); // Kembali ke halaman sebelumnya
+            }
+        }
+    }
+
     public function about()
     {
         // Menghubungkan ke database

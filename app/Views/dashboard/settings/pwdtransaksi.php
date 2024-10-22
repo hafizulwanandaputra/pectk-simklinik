@@ -17,13 +17,13 @@
                 <i class="fa-solid fa-circle-info"></i>
             </div>
             <div class="w-100 ms-3">
-                Kata sandi harus minimal 3 karakter
+                Kata sandi harus minimal 5 karakter. Disarankan untuk membuat kata sandi yang kuat demi keamanan sistem transaksi untuk mencegah pembatalan dan penghapusan transaksi tanpa persetujuan admin.
             </div>
         </div>
     </div>
-    <?= form_open_multipart('/settings/changepassword/update', 'id="changePasswordForm"'); ?>
+    <?= form_open_multipart('/settings/updatepwdtransaksi', 'id="changePasswordForm"'); ?>
     <fieldset class="border rounded-3 px-2 py-0">
-        <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Kata Sandi Pengguna</legend>
+        <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Kata Sandi Transaksi</legend>
         <div class="form-floating mb-2">
             <input type="password" class="form-control rounded-3 <?= (validation_show_error('current_password')) ? 'is-invalid' : ''; ?>" id="current_password" name="current_password" placeholder="current_password">
             <label for="current_password">Kata Sandi Lama</label>

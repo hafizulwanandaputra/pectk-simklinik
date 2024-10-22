@@ -16,8 +16,8 @@ class ChangePassword extends BaseController
     {
         // Menyiapkan data untuk tampilan halaman ubah kata sandi
         $data = [
-            'title' => 'Ubah Kata Sandi - ' . $this->systemName, // Judul halaman
-            'headertitle' => 'Ubah Kata Sandi', // Judul header
+            'title' => 'Ubah Kata Sandi Pengguna - ' . $this->systemName, // Judul halaman
+            'headertitle' => 'Ubah Kata Sandi Pengguna', // Judul header
             'agent' => $this->request->getUserAgent() // Mendapatkan user agent dari request
         ];
         // Mengembalikan tampilan halaman ubah kata sandi dengan data yang telah disiapkan

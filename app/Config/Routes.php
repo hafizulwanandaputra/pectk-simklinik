@@ -97,6 +97,7 @@ $routes->get('/(?i)transaksi/(?i)struk/(:any)', 'Transaksi::struk/$1');
 $routes->post('/(?i)transaksi/(?i)create', 'Transaksi::create');
 $routes->post('/(?i)transaksi/(?i)update', 'Transaksi::update');
 $routes->post('/(?i)transaksi/(?i)process/(:any)', 'Transaksi::process/$1');
+$routes->post('/(?i)transaksi/(?i)cancel/(:any)', 'Transaksi::cancel/$1');
 $routes->get('/(?i)transaksi/(?i)dailyreport', 'Transaksi::dailyreportinit');
 $routes->get('/(?i)transaksi/(?i)dailyreport/(:any)', 'Transaksi::dailyreport/$1');
 $routes->get('/(?i)transaksi/(?i)dailyreportexcel/(:any)', 'Transaksi::dailyreportexcel/$1');
@@ -129,6 +130,10 @@ $routes->delete('/(?i)admin/(?i)delete/(:any)', 'Admin::delete/$1');
 
 // SETTINGS
 $routes->get('/(?i)settings', 'Settings::index');
+
+// CHANGE CASHIER PASSWORD
+$routes->get('/(?i)settings/(?i)pwdtransaksi', 'Settings::pwdTransaksi');
+$routes->post('/(?i)settings/(?i)updatepwdtransaksi', 'Settings::updatePwdTransaksi');
 
 // CHANGE USER INFORMATION
 $routes->get('/(?i)settings/(?i)edit', 'Settings::edit');

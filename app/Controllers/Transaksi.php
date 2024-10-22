@@ -278,27 +278,31 @@ class Transaksi extends BaseController
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
-            $db = db_connect(); // Menghubungkan ke database
+            $transaksi = $this->TransaksiModel->find($id);
+            if ($transaksi['lunas'] == 0) {
+                $db = db_connect();
+                // Mencari semua `id_resep` yang terkait dengan transaksi yang akan dihapus
+                $query = $db->query('SELECT DISTINCT id_resep FROM detail_transaksi WHERE id_transaksi = ?', [$id]);
+                $results = $query->getResult(); // Mengambil hasil query
 
-            // Mencari semua `id_resep` yang terkait dengan transaksi yang akan dihapus
-            $query = $db->query('SELECT DISTINCT id_resep FROM detail_transaksi WHERE id_transaksi = ?', [$id]);
-            $results = $query->getResult(); // Mengambil hasil query
-
-            if (!empty($results)) {
-                // Loop melalui setiap `id_resep` terkait dan memperbarui statusnya menjadi 0
-                foreach ($results as $row) {
-                    $db->query('UPDATE resep SET status = 0 WHERE id_resep = ?', [$row->id_resep]);
+                if (!empty($results)) {
+                    // Loop melalui setiap `id_resep` terkait dan memperbarui statusnya menjadi 0
+                    foreach ($results as $row) {
+                        $db->query('UPDATE resep SET status = 0 WHERE id_resep = ?', [$row->id_resep]);
+                    }
                 }
+
+                // Menghapus transaksi
+                $this->TransaksiModel->delete($id);
+
+                // Reset auto increment untuk tabel transaksi dan detail_transaksi
+                $db->query('ALTER TABLE `transaksi` auto_increment = 1');
+                $db->query('ALTER TABLE `detail_transaksi` auto_increment = 1');
+
+                return $this->response->setJSON(['message' => 'Transaksi berhasil dihapus']); // Mengembalikan respon sukses
+            } else {
+                return $this->response->setStatusCode(422)->setJSON(['message' => 'Transaksi yang sudah lunas tidak bisa dihapus. Batalkan transaksi terlebih dahulu sebelum menghapus transaksi ini.']);
             }
-
-            // Menghapus transaksi
-            $this->TransaksiModel->delete($id);
-
-            // Reset auto increment untuk tabel transaksi dan detail_transaksi
-            $db->query('ALTER TABLE `transaksi` auto_increment = 1');
-            $db->query('ALTER TABLE `detail_transaksi` auto_increment = 1');
-
-            return $this->response->setJSON(['message' => 'Transaksi berhasil dihapus']); // Mengembalikan respon sukses
         } else {
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan', // Pesan jika peran tidak valid
@@ -979,10 +983,80 @@ class Transaksi extends BaseController
             // Memeriksa status transaksi
             if ($db->transStatus() === false) {
                 $db->transRollback();  // Rollback jika ada masalah
-                return $this->response->setJSON(['success' => false, 'message' => 'Gagal memproses transaksi', 'errors' => NULL]);
+                return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Gagal memproses transaksi', 'errors' => NULL]);
             } else {
                 $db->transCommit();  // Commit transaksi jika semuanya baik-baik saja
                 return $this->response->setJSON(['success' => true, 'message' => 'Transaksi berhasil diproses. Silakan cetak struk transaksi.']);
+            }
+        } else {
+            // Jika peran tidak valid, kembalikan status 404
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
+        }
+    }
+
+    public function cancel($id_transaksi)
+    {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+            // Validasi input
+            $validation = \Config\Services::validation();
+            // Menetapkan aturan validasi dasar
+            $rules = [
+                'password' => 'required', // Kata sandi pembatalan transaksi
+            ];
+
+            // Terapkan aturan validasi
+            $validation->setRules($rules);
+
+            // Memeriksa validasi
+            if (!$this->validate($validation->getRules())) {
+                // Mengembalikan kesalahan validasi jika tidak valid
+                return $this->response->setJSON(['success' => false, 'message' => NULL, 'errors' => $validation->getErrors()]);
+            }
+
+            $password = $this->request->getPost('password'); // Mengambil kata sandi yang dimasukkan
+
+            $db = db_connect();
+            // Ambil data kata sandi transaksi dengan ID 1
+            $query_pwd_transaksi = $db->table('pwd_transaksi')->getWhere(['id' => 1]);
+
+            $pwd_transaksi = $query_pwd_transaksi->getRowArray(); // Ambil satu baris data
+
+            if (password_verify($password, $pwd_transaksi['pwd_transaksi'])) {
+                // Membatalkan transaksi
+                $transaksi = $db->table('transaksi');
+                $transaksi->where('id_transaksi', $id_transaksi);
+                $transaksi->update([
+                    'terima_uang' => 0, // Mengosongkan uang yang terima
+                    'metode_pembayaran' => '', // Mengosongkan metode pembayaran
+                    'bank' => '', // Mengosongkan bank
+                    'uang_kembali' => 0, // Mengosongkan uang kembali
+                    'lunas' => 0, // Menandai transaksi sebagai belum lunas
+                ]);
+
+                // Mengambil detail transaksi
+                $detailtransaksi = $db->table('detail_transaksi');
+                $detailtransaksi->where('id_transaksi', $id_transaksi);
+                $details = $detailtransaksi->get()->getResultArray(); // Mengambil semua detail transaksi
+
+                // Memperbarui status resep jika ada
+                if ($details) {
+                    foreach ($details as $detail) {
+                        if ($detail['id_resep'] !== null) { // Memeriksa apakah ada ID resep
+                            $resep = $db->table('resep');
+                            $resep->where('id_resep', $detail['id_resep']); // Memastikan mencocokkan berdasarkan id_resep
+                            $resep->update([
+                                'status' => 0, // Memperbarui status resep menjadi belum selesai
+                            ]);
+                        }
+                    }
+                }
+
+                return $this->response->setJSON(['success' => true, 'message' => 'Transaksi berhasil dibatalkan.']);
+            } else {
+                return $this->response->setStatusCode(401)->setJSON(['success' => false, 'message' => 'Kata sandi transaksi salah', 'errors' => NULL]);
             }
         } else {
             // Jika peran tidak valid, kembalikan status 404

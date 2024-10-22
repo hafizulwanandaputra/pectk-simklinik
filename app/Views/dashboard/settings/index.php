@@ -10,6 +10,24 @@
 <?= $this->endSection(); ?>
 <?= $this->section('content'); ?>
 <main class="col-md-9 ms-sm-auto col-lg-10 px-3 px-md-4 pt-3">
+    <?php if (session()->get('role') == "Admin") : ?>
+        <h5>Transaksi</h5>
+        <ul class="list-group shadow-sm rounded-3 mb-3">
+            <li class="list-group-item p-1 list-group-item-action">
+                <div class="d-flex align-items-start">
+                    <a href="<?= base_url('/settings/pwdtransaksi'); ?>" class="stretched-link" style="min-width: 48px; max-width: 48px; text-align: center;">
+                        <p class="mb-0" style="font-size: 1.75rem!important;"><i class="fa-solid fa-key"></i></p>
+                    </a>
+                    <div class="align-self-center flex-fill ps-1 text-wrap overflow-hidden" style="text-overflow: ellipsis;">
+                        <h5 class="card-title">Ubah Kata Sandi Transaksi</h5>
+                    </div>
+                    <div class="align-self-center" style="min-width: 48px; max-width: 48px; text-align: center;">
+                        <span class="text-body-tertiary"><i class="fa-solid fa-angle-right"></i></span>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    <?php endif; ?>
     <h5>Pengguna</h5>
     <ul class="list-group shadow-sm rounded-3 mb-3">
         <li class="list-group-item p-1 list-group-item-action">
@@ -31,7 +49,7 @@
                     <p class="mb-0" style="font-size: 1.75rem!important;"><i class="fa-solid fa-key"></i></p>
                 </a>
                 <div class="align-self-center flex-fill ps-1 text-wrap overflow-hidden" style="text-overflow: ellipsis;">
-                    <h5 class="card-title">Ubah Kata Sandi</h5>
+                    <h5 class="card-title">Ubah Kata Sandi Pengguna</h5>
                 </div>
                 <div class="align-self-center" style="min-width: 48px; max-width: 48px; text-align: center;">
                     <span class="text-body-tertiary"><i class="fa-solid fa-angle-right"></i></span>
