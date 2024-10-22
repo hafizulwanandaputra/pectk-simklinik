@@ -37,7 +37,7 @@ The user guide corresponding to the latest version of the framework can be found
 
 Run `php spark db:seed Tindakan` to seed the action's items.
 
-### Outpatient API from Clilic's Management Information System
+### Outpatient API from Clinic's Management Information System
 
 You can specify `API-URL` (API URL endpoint) and `X-KEY` (X Key authorization) in `.env`.
 
