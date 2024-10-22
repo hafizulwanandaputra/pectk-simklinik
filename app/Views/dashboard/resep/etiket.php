@@ -40,12 +40,12 @@ $tanggal_lahir = Time::parse($resep['tanggal_lahir']);
 
         .box {
             border: 1px solid black;
-            height: 0.85cm;
+            height: 0.9cm;
             overflow: hidden;
             padding: 0cm;
             font-weight: bold;
             text-align: center;
-            font-size: 5pt;
+            font-size: 4.8pt;
         }
     </style>
 </head>
@@ -80,7 +80,7 @@ $tanggal_lahir = Time::parse($resep['tanggal_lahir']);
             <div class="box">
                 <?= $detail['nama_obat'] ?>
                 <br>
-                <?= $detail['signa'] ?> hari • <?= $detail['catatan'] ?>
+                <span style="font-size: 7pt;"><?= $detail['signa'] ?> hari • <?= $detail['catatan'] ?></span>
                 <br>
                 <?= $detail['cara_pakai'] ?>
                 <?php if ($detail['bentuk_obat'] == 'Tetes' || $detail['bentuk_obat'] == 'Salep') : ?>
