@@ -264,6 +264,14 @@ class PembelianObat extends BaseController
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
             $db = db_connect(); // Menghubungkan ke database
+            $pembelian_obatb = $db->table('pembelian_obat');
+            $pembelian_obatb->where('id_pembelian_obat', $id);
+            $pembelian_obat = $pembelian_obatb->get()->getRowArray();
+
+            if ($pembelian_obat['diterima'] == 1) {
+                // Gagalkan jika pembelian obat sudah diterima
+                return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Pembelian obat sudah diterima sebelumnya']);
+            }
             $db->transStart(); // Memulai transaksi
 
             // Menghitung total jumlah dan total obat_masuk_baru dari detail pembelian obat
@@ -523,6 +531,18 @@ class PembelianObat extends BaseController
                 return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
             }
 
+            // Menghubungkan ke database
+            $db = db_connect();
+
+            $pembelian_obatb = $db->table('pembelian_obat');
+            $pembelian_obatb->where('id_pembelian_obat', $id);
+            $pembelian_obat = $pembelian_obatb->get()->getRowArray();
+
+            if ($pembelian_obat['diterima'] == 1) {
+                // Gagalkan jika pembelian obat sudah diterima
+                return $this->response->setStatusCode(401)->setJSON(['success' => false, 'message' => 'Tidak bisa dilakukan. Pembelian obat sudah diterima.']);
+            }
+
             // Mengambil model obat dan informasi obat yang dipilih
             $ObatModel = new ObatModel();
             $obat = $ObatModel->find($this->request->getPost('id_obat'));
@@ -537,9 +557,6 @@ class PembelianObat extends BaseController
                 'harga_satuan' => $obat['harga_obat'],
             ];
             $this->DetailPembelianObatModel->save($data);
-
-            // Menghubungkan ke database untuk perhitungan total
-            $db = db_connect();
 
             // Menghitung total_qty dan total_biaya
             $builder = $db->table('detail_pembelian_obat');
@@ -586,6 +603,18 @@ class PembelianObat extends BaseController
                 return $this->response->setJSON(['success' => false, 'message' => NULL, 'errors' => $validation->getErrors()]);
             }
 
+            // Menghubungkan ke database
+            $db = db_connect();
+
+            $pembelian_obatb = $db->table('pembelian_obat');
+            $pembelian_obatb->where('id_pembelian_obat', $id);
+            $pembelian_obat = $pembelian_obatb->get()->getRowArray();
+
+            if ($pembelian_obat['diterima'] == 1) {
+                // Gagalkan jika pembelian obat sudah diterima
+                return $this->response->setStatusCode(401)->setJSON(['success' => false, 'message' => 'Tidak bisa dilakukan. Pembelian obat sudah diterima.']);
+            }
+
             // Mengambil detail pembelian obat yang ingin diperbarui
             $detail_pembelian_obat = $this->DetailPembelianObatModel->find($this->request->getPost('id_detail_pembelian_obat'));
 
@@ -606,8 +635,6 @@ class PembelianObat extends BaseController
             ];
             $this->DetailPembelianObatModel->save($data);
 
-            // Menghubungkan ke database untuk perhitungan total
-            $db = db_connect();
 
             // Menghitung total_qty dan total_biaya
             $builder = $db->table('detail_pembelian_obat');
@@ -657,7 +684,7 @@ class PembelianObat extends BaseController
         }
     }
 
-    public function tambahitemobat($id)
+    public function tambahitemobat($id, $id_pembelian_obat)
     {
         // Memeriksa apakah pengguna adalah Admin atau Apoteker
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
@@ -699,6 +726,17 @@ class PembelianObat extends BaseController
             $detailBuilder1->where('id_detail_pembelian_obat', $id);
             $detail = $detailBuilder1->get()->getRowArray();
 
+            // Mengambil 'pembelian_obat'
+            $pembelian_obatb = $db->table('pembelian_obat');
+            $pembelian_obatb->where('id_pembelian_obat', $id_pembelian_obat);
+            $pembelian_obat = $pembelian_obatb->get()->getRowArray();
+
+            if ($pembelian_obat['diterima'] == 1) {
+                // Gagalkan jika pembelian obat sudah diterima
+                $db->transRollback();
+                return $this->response->setStatusCode(401)->setJSON(['success' => false, 'message' => 'Tidak bisa dilakukan. Pembelian obat sudah diterima.']);
+            }
+
             // Memeriksa apakah 'total_jumlah_item' melebihi 'jumlah_pembelian'
             if ($itemSum['total_jumlah_item'] > $detail['jumlah']) {
                 $db->transRollback();  // Mengembalikan transaksi jika jumlah melebihi
@@ -730,7 +768,7 @@ class PembelianObat extends BaseController
         }
     }
 
-    public function perbaruiitemobat($id)
+    public function perbaruiitemobat($id, $id_pembelian_obat)
     {
         // Memeriksa apakah pengguna adalah Admin atau Apoteker
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
@@ -772,6 +810,17 @@ class PembelianObat extends BaseController
             $detailBuilder1->where('id_detail_pembelian_obat', $this->request->getPost('id_detail_pembelian_obat'));
             $detail = $detailBuilder1->get()->getRowArray();
 
+            // Mengambil 'pembelian_obat'
+            $pembelian_obatb = $db->table('pembelian_obat');
+            $pembelian_obatb->where('id_pembelian_obat', $id_pembelian_obat);
+            $pembelian_obat = $pembelian_obatb->get()->getRowArray();
+
+            if ($pembelian_obat['diterima'] == 1) {
+                // Gagalkan jika pembelian obat sudah diterima
+                $db->transRollback();
+                return $this->response->setStatusCode(401)->setJSON(['success' => false, 'message' => 'Tidak bisa dilakukan. Pembelian obat sudah diterima.']);
+            }
+
             // Memeriksa apakah 'total_jumlah_item' melebihi 'jumlah_pembelian'
             if ($itemSum['total_jumlah_item'] > $detail['jumlah']) {
                 $db->transRollback();  // Mengembalikan transaksi jika jumlah melebihi
@@ -803,7 +852,7 @@ class PembelianObat extends BaseController
         }
     }
 
-    public function hapusitemobat($id)
+    public function hapusitemobat($id, $id_pembelian_obat)
     {
         // Memeriksa apakah pengguna adalah Admin atau Apoteker
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
@@ -816,6 +865,17 @@ class PembelianObat extends BaseController
             $itemObat = $itemBuilder->get()->getRowArray();
 
             $id_detail_pembelian_obat = $itemObat['id_detail_pembelian_obat'];
+
+            // Mengambil 'pembelian_obat'
+            $pembelian_obatb = $db->table('pembelian_obat');
+            $pembelian_obatb->where('id_pembelian_obat', $id_pembelian_obat);
+            $pembelian_obat = $pembelian_obatb->get()->getRowArray();
+
+            if ($pembelian_obat['diterima'] == 1) {
+                // Gagalkan jika pembelian obat sudah diterima
+                $db->transRollback();
+                return $this->response->setStatusCode(401)->setJSON(['success' => false, 'message' => 'Tidak bisa dilakukan. Pembelian obat sudah diterima.']);
+            }
 
             // Menghapus item dari 'item_obat'
             $this->ItemObatModel->delete($id);
@@ -854,6 +914,15 @@ class PembelianObat extends BaseController
             $id_pembelian_obat = $detail['id_pembelian_obat'];
             $id_obat = $detail['id_obat'];
             $obat_masuk = $detail['obat_masuk'];
+
+            $pembelian_obatb = $db->table('pembelian_obat');
+            $pembelian_obatb->where('id_pembelian_obat', $id_pembelian_obat);
+            $pembelian_obat = $pembelian_obatb->get()->getRowArray();
+
+            if ($pembelian_obat['diterima'] == 1) {
+                // Gagalkan jika pembelian obat sudah diterima
+                return $this->response->setStatusCode(401)->setJSON(['success' => false, 'message' => 'Tidak bisa dilakukan. Pembelian obat sudah diterima.']);
+            }
 
             // Mengurangi jumlah_masuk di tabel obat untuk id_obat yang sesuai
             $db->table('obat')
@@ -904,7 +973,6 @@ class PembelianObat extends BaseController
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
             // Mengambil data pembelian obat yang belum diterima dan informasi supplier
             $pembelianobat = $this->PembelianObatModel
-                ->where('diterima', 0)
                 ->join('supplier', 'supplier.id_supplier = pembelian_obat.id_supplier', 'inner')
                 ->find($id);
 
@@ -917,7 +985,7 @@ class PembelianObat extends BaseController
                 ->findAll();
 
             // Memeriksa apakah detail pembelian obat kosong
-            if (empty($detailpembelianobat)) {
+            if ($pembelianobat['diterima'] == 1) {
                 throw PageNotFoundException::forPageNotFound();
             } else {
                 // Membuat nama file berdasarkan tanggal pembelian

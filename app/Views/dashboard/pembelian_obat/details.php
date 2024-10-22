@@ -429,7 +429,11 @@
                 fetchObatOptions();
                 fetchStatusPembelian();
             } catch (error) {
-                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                if (error.response.request.status === 401) {
+                    showFailedToast(error.response.data.message);
+                } else {
+                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                }
             } finally {
                 $('#deleteModal').modal('hide');
                 $('#deleteModal button').prop('disabled', false);
@@ -541,7 +545,7 @@
                             console.error('Perbaiki kesalahan pada formulir.');
                         }
                     } catch (error) {
-                        if (error.response.request.status === 422) {
+                        if (error.response.request.status === 422 || error.response.request.status === 401) {
                             showFailedToast(error.response.data.message);
                         } else {
                             showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
@@ -560,7 +564,6 @@
                 });
             } catch (error) {
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
-                console.error(error);
             } finally {
                 $this.prop('disabled', false).html(`<i class="fa-solid fa-pen-to-square"></i>`);
             }
@@ -631,7 +634,11 @@
                     console.error('Perbaiki kesalahan pada formulir.');
                 }
             } catch (error) {
-                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                if (error.response.request.status === 401) {
+                    showFailedToast(error.response.data.message);
+                } else {
+                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                }
             } finally {
                 $('#addButton').prop('disabled', false).html(`
                     <i class="fa-solid fa-plus"></i> Tambah
@@ -700,7 +707,7 @@
                 $('#addBatch input, .btn-close').prop('disabled', true);
 
                 try {
-                    const response = await axios.post(`<?= base_url('/pembelianobat/tambahitemobat') ?>/${id}`, formData, {
+                    const response = await axios.post(`<?= base_url('/pembelianobat/tambahitemobat') ?>/${id}/<?= $pembelianobat['id_pembelian_obat'] ?>`, formData, {
                         headers: {
                             'Content-Type': 'multipart/form-data'
                         }
@@ -748,7 +755,7 @@
                         console.error('Perbaiki kesalahan pada formulir.');
                     }
                 } catch (error) {
-                    if (error.response.request.status === 422) {
+                    if (error.response.request.status === 422 || error.response.request.status === 401) {
                         showFailedToast(error.response.data.message);
                     } else {
                         showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
@@ -829,7 +836,7 @@
                     $('#editBatch input, .btn-close').prop('disabled', true);
 
                     try {
-                        const response = await axios.post(`<?= base_url('/pembelianobat/perbaruiitemobat') ?>/${id}`, formData, {
+                        const response = await axios.post(`<?= base_url('/pembelianobat/perbaruiitemobat') ?>/${id}/<?= $pembelianobat['id_pembelian_obat'] ?>`, formData, {
                             headers: {
                                 'Content-Type': 'multipart/form-data'
                             }
@@ -877,7 +884,7 @@
                             console.error('Perbaiki kesalahan pada formulir.');
                         }
                     } catch (error) {
-                        if (error.response.request.status === 422) {
+                        if (error.response.request.status === 422 || error.response.request.status === 401) {
                             showFailedToast(error.response.data.message);
                         } else {
                             showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
@@ -915,12 +922,16 @@
             $('#deleteItemMessage').html('Menghapus, silakan tunggu...');
 
             try {
-                await axios.delete(`<?= base_url('/pembelianobat/hapusitemobat') ?>/${itemObatId}`);
+                await axios.delete(`<?= base_url('/pembelianobat/hapusitemobat') ?>/${itemObatId}/<?= $pembelianobat['id_pembelian_obat'] ?>`);
                 fetchDetailPembelianObat();
                 fetchObatOptions();
                 fetchStatusPembelian();
             } catch (error) {
-                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                if (error.response.request.status === 401) {
+                    showFailedToast(error.response.data.message);
+                } else {
+                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                }
             } finally {
                 $('#deleteItemModal').modal('hide');
                 $('#deleteItemModal button').prop('disabled', false);
