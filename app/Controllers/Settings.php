@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\SettingsModel;
+use CodeIgniter\Exceptions\PageNotFoundException;
 
 class Settings extends BaseController
 {
@@ -91,9 +92,7 @@ class Settings extends BaseController
             return view('dashboard/settings/pwdtransaksi', $data);
         } else {
             // Jika bukan admin, mengembalikan status 404 dengan pesan error
-            return $this->response->setStatusCode(404)->setJSON([
-                'error' => 'Halaman tidak ditemukan',
-            ]);
+            throw PageNotFoundException::forPageNotFound();
         }
     }
 
