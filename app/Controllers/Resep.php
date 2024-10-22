@@ -533,6 +533,17 @@ class Resep extends BaseController
             ];
             $this->DetailResepModel->save($data);
 
+            // Mengambil data resep
+            $resepb = $db->table('resep');
+            $resepb->where('id_resep', $id);
+            $resep = $resepb->get()->getRowArray();
+
+            // Jika status resep adalah transaksi sudah diproses, gagalkan operasi
+            if ($resep['status'] == 1) {
+                $db->transRollback();
+                return $this->response->setStatusCode(401)->setJSON(['success' => false, 'message' => 'Tidak bisa dilakukan karena transaksi yang menggunakan resep ini sudah diproses', 'errors' => NULL]);
+            }
+
             // Mengupdate jumlah keluar obat
             $new_jumlah_keluar = $obat['jumlah_keluar'] + $this->request->getPost('jumlah');
             $builderObat->where('id_obat', $this->request->getPost('id_obat'))->update(['jumlah_keluar' => $new_jumlah_keluar]);
@@ -617,6 +628,17 @@ class Resep extends BaseController
             ];
             $this->DetailResepModel->save($data);
 
+            // Mengambil data resep
+            $resepb = $db->table('resep');
+            $resepb->where('id_resep', $id);
+            $resep = $resepb->get()->getRowArray();
+
+            // Jika status resep adalah transaksi sudah diproses, gagalkan operasi
+            if ($resep['status'] == 1) {
+                $db->transRollback();
+                return $this->response->setStatusCode(401)->setJSON(['success' => false, 'message' => 'Tidak bisa dilakukan karena transaksi yang menggunakan resep ini sudah diproses', 'errors' => NULL]);
+            }
+
             // Mengupdate jumlah keluar obat
             $new_jumlah_keluar = $obat['jumlah_keluar'] - $detail_resep['jumlah'] + $this->request->getPost('jumlah_edit');
             $builderObat->where('id_obat', $detail_resep['id_obat'])->update(['jumlah_keluar' => $new_jumlah_keluar]);
@@ -684,6 +706,16 @@ class Resep extends BaseController
                 $id_resep = $detail['id_resep']; // Mengambil id resep dari detail
                 $id_obat = $detail['id_obat']; // Mengambil id obat dari detail
                 $jumlah_obat = $detail['jumlah']; // Mengambil jumlah obat dari detail
+
+                // Mengambil data resep
+                $resepb = $db->table('resep');
+                $resepb->where('id_resep', $id_resep);
+                $resep = $resepb->get()->getRowArray();
+
+                // Jika status resep adalah transaksi sudah diproses, gagalkan operasi
+                if ($resep['status'] == 1) {
+                    return $this->response->setStatusCode(401)->setJSON(['success' => false, 'message' => 'Tidak bisa dilakukan karena transaksi yang menggunakan resep ini sudah diproses', 'errors' => NULL]);
+                }
 
                 // Mengambil jumlah_keluar saat ini dari tabel obat
                 $builderObat = $db->table('obat');

@@ -372,7 +372,11 @@
                 <?= (session()->get('role') != 'Apoteker') ? 'fetchObatOptions();' : '' ?>
                 <?= (session()->get('role') != 'Apoteker') ? 'fetchStatusResep();' : '' ?>
             } catch (error) {
-                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                if (error.response.request.status === 401) {
+                    showFailedToast(error.response.data.message);
+                } else {
+                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                }
             } finally {
                 $('#deleteModal').modal('hide');
                 $('#deleteModal button').prop('disabled', false);
@@ -510,7 +514,7 @@
                             console.error('Perbaiki kesalahan pada formulir.');
                         }
                     } catch (error) {
-                        if (error.response.request.status === 422) {
+                        if (error.response.request.status === 422 || error.response.request.status === 401) {
                             showFailedToast(error.response.data.message);
                         } else {
                             showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
@@ -600,7 +604,7 @@
                     console.error('Perbaiki kesalahan pada formulir.');
                 }
             } catch (error) {
-                if (error.response.request.status === 422) {
+                if (error.response.request.status === 422 || error.response.request.status === 401) {
                     showFailedToast(error.response.data.message);
                 } else {
                     showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
