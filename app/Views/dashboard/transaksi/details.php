@@ -668,7 +668,11 @@
                 fetchStatusTransaksi();
                 transactionProcessBtn();
             } catch (error) {
-                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                if (error.response.request.status === 401) {
+                    showFailedToast(error.response.data.message);
+                } else {
+                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                }
             } finally {
                 $('#deleteModal').modal('hide');
                 $('#deleteModal button').prop('disabled', false);
@@ -784,7 +788,11 @@
                             console.error('Perbaiki kesalahan pada formulir.');
                         }
                     } catch (error) {
-                        showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                        if (error.response.request.status === 401) {
+                            showFailedToast(error.response.data.message);
+                        } else {
+                            showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                        }
                     } finally {
                         $('#editLayananButton').prop('disabled', false).html(`
                             <i class="fa-solid fa-pen-to-square"></i> Edit
@@ -910,7 +918,11 @@
                             console.error('Perbaiki kesalahan pada formulir.');
                         }
                     } catch (error) {
-                        showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                        if (error.response.request.status === 401) {
+                            showFailedToast(error.response.data.message);
+                        } else {
+                            showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                        }
                     } finally {
                         $('#editObatAlkesButton').prop('disabled', false).html(`
                             <i class="fa-solid fa-pen-to-square"></i> Edit
@@ -999,7 +1011,11 @@
                     console.error('Perbaiki kesalahan pada formulir.');
                 }
             } catch (error) {
-                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                if (error.response.request.status === 401) {
+                    showFailedToast(error.response.data.message);
+                } else {
+                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                }
             } finally {
                 $('#addLayananButton').prop('disabled', false).html(`
                     <i class="fa-solid fa-plus"></i> Tambah
@@ -1075,7 +1091,11 @@
                     console.error('Perbaiki kesalahan pada formulir.');
                 }
             } catch (error) {
-                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                if (error.response.request.status === 401) {
+                    showFailedToast(error.response.data.message);
+                } else {
+                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                }
             } finally {
                 $('#addObatAlkesButton').prop('disabled', false).html(`
                     <i class="fa-solid fa-plus"></i> Tambah
@@ -1166,7 +1186,7 @@
                     console.error('Perbaiki kesalahan pada formulir.');
                 }
             } catch (error) {
-                if (error.response.request.status === 422) {
+                if (error.response.request.status === 401) {
                     showFailedToast(error.response.data.message);
                 } else {
                     showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);

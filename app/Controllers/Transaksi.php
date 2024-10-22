@@ -7,7 +7,6 @@ use App\Models\DetailTransaksiModel;
 use App\Models\LayananModel;
 use App\Models\ResepModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
-use CodeIgniter\I18n\Time;
 use DateTime;
 use Dompdf\Dompdf;
 use GuzzleHttp\Client;
@@ -301,7 +300,7 @@ class Transaksi extends BaseController
 
                 return $this->response->setJSON(['message' => 'Transaksi berhasil dihapus']); // Mengembalikan respon sukses
             } else {
-                return $this->response->setStatusCode(422)->setJSON(['message' => 'Transaksi yang sudah lunas tidak bisa dihapus. Batalkan transaksi terlebih dahulu sebelum menghapus transaksi ini.']);
+                return $this->response->setStatusCode(401)->setJSON(['message' => 'Transaksi yang sudah lunas tidak bisa dihapus. Batalkan transaksi terlebih dahulu sebelum menghapus transaksi ini.']);
             }
         } else {
             return $this->response->setStatusCode(404)->setJSON([
@@ -616,6 +615,17 @@ class Transaksi extends BaseController
                 return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
             }
 
+            $db = db_connect();
+
+            $transaksib = $db->table('transaksi');
+            $transaksib->where('id_transaksi', $id);
+            $transaksi = $transaksib->get()->getRowArray();
+
+            if ($transaksi['lunas'] == 1) {
+                // Gagalkan jika transaksi lunas
+                return $this->response->setStatusCode(401)->setJSON(['success' => false, 'message' => 'Tidak bisa dilakukan. Batalkan transaksi terlebih dahulu.']);
+            }
+
             $LayananModel = new LayananModel();
             // Mengambil data layanan berdasarkan ID yang diberikan
             $layanan = $LayananModel->find($this->request->getPost('id_layanan'));
@@ -632,8 +642,6 @@ class Transaksi extends BaseController
             ];
             // Menyimpan data ke DetailTransaksiModel
             $this->DetailTransaksiModel->save($data);
-
-            $db = db_connect();
 
             // Menghitung total pembayaran
             $builder = $db->table('detail_transaksi');
@@ -678,6 +686,17 @@ class Transaksi extends BaseController
                 return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
             }
 
+            $db = db_connect();
+
+            $transaksib = $db->table('transaksi');
+            $transaksib->where('id_transaksi', $id);
+            $transaksi = $transaksib->get()->getRowArray();
+
+            if ($transaksi['lunas'] == 1) {
+                // Gagalkan jika transaksi lunas
+                return $this->response->setStatusCode(401)->setJSON(['success' => false, 'message' => 'Tidak bisa dilakukan. Batalkan transaksi terlebih dahulu.']);
+            }
+
             $ResepModel = new ResepModel();
             // Mengambil data resep berdasarkan ID yang diberikan
             $resep = $ResepModel->find($this->request->getPost('id_resep'));
@@ -694,8 +713,6 @@ class Transaksi extends BaseController
             ];
             // Menyimpan data ke DetailTransaksiModel
             $this->DetailTransaksiModel->save($data);
-
-            $db = db_connect();
 
             // Menghitung total pembayaran
             $builder = $db->table('detail_transaksi');
@@ -740,6 +757,17 @@ class Transaksi extends BaseController
                 return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
             }
 
+            $db = db_connect();
+
+            $transaksib = $db->table('transaksi');
+            $transaksib->where('id_transaksi', $id);
+            $transaksi = $transaksib->get()->getRowArray();
+
+            if ($transaksi['lunas'] == 1) {
+                // Gagalkan jika transaksi lunas
+                return $this->response->setStatusCode(401)->setJSON(['success' => false, 'message' => 'Tidak bisa dilakukan. Batalkan transaksi terlebih dahulu.']);
+            }
+
             // Mengambil detail transaksi berdasarkan ID yang diberikan
             $detail_transaksi = $this->DetailTransaksiModel->find($this->request->getPost('id_detail_transaksi'));
 
@@ -756,8 +784,6 @@ class Transaksi extends BaseController
             ];
             // Menyimpan data ke DetailTransaksiModel
             $this->DetailTransaksiModel->save($data);
-
-            $db = db_connect();
 
             // Menghitung total pembayaran
             $builder = $db->table('detail_transaksi');
@@ -801,6 +827,17 @@ class Transaksi extends BaseController
                 return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
             }
 
+            $db = db_connect();
+
+            $transaksib = $db->table('transaksi');
+            $transaksib->where('id_transaksi', $id);
+            $transaksi = $transaksib->get()->getRowArray();
+
+            if ($transaksi['lunas'] == 1) {
+                // Gagalkan jika transaksi lunas
+                return $this->response->setStatusCode(401)->setJSON(['success' => false, 'message' => 'Tidak bisa dilakukan. Batalkan transaksi terlebih dahulu.']);
+            }
+
             // Mengambil detail transaksi berdasarkan ID yang diberikan
             $detail_transaksi = $this->DetailTransaksiModel->find($this->request->getPost('id_detail_transaksi'));
 
@@ -817,8 +854,6 @@ class Transaksi extends BaseController
             ];
             // Menyimpan data ke DetailTransaksiModel
             $this->DetailTransaksiModel->save($data);
-
-            $db = db_connect();
 
             // Menghitung total pembayaran
             $builder = $db->table('detail_transaksi');
@@ -855,6 +890,15 @@ class Transaksi extends BaseController
             $detail = $this->DetailTransaksiModel->find($id);
 
             $id_transaksi = $detail['id_transaksi']; // Mengambil id_transaksi dari detail yang ditemukan
+
+            $transaksib = $db->table('transaksi');
+            $transaksib->where('id_transaksi', $id_transaksi);
+            $transaksi = $transaksib->get()->getRowArray();
+
+            if ($transaksi['lunas'] == 1) {
+                // Gagalkan jika transaksi lunas
+                return $this->response->setStatusCode(401)->setJSON(['message' => 'Tidak bisa dilakukan. Batalkan transaksi terlebih dahulu.']);
+            }
 
             // Menghapus detail pembelian obat
             $this->DetailTransaksiModel->delete($id);
@@ -983,7 +1027,7 @@ class Transaksi extends BaseController
             // Memeriksa status transaksi
             if ($db->transStatus() === false) {
                 $db->transRollback();  // Rollback jika ada masalah
-                return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Gagal memproses transaksi', 'errors' => NULL]);
+                return $this->response->setStatusCode(401)->setJSON(['success' => false, 'message' => 'Gagal memproses transaksi', 'errors' => NULL]);
             } else {
                 $db->transCommit();  // Commit transaksi jika semuanya baik-baik saja
                 return $this->response->setJSON(['success' => true, 'message' => 'Transaksi berhasil diproses. Silakan cetak struk transaksi.']);
