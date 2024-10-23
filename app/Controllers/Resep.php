@@ -26,8 +26,8 @@ class Resep extends BaseController
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Apoteker') {
             // Menyusun data yang akan dikirim ke tampilan
             $data = [
-                'title' => 'Resep - ' . $this->systemName, // Judul halaman
-                'headertitle' => 'Resep', // Judul header
+                'title' => 'Resep Dokter - ' . $this->systemName, // Judul halaman
+                'headertitle' => 'Resep Dokter', // Judul header
                 'agent' => $this->request->getUserAgent() // Mengambil user agent
             ];
             return view('dashboard/resep/index', $data); // Mengembalikan tampilan resep
@@ -364,8 +364,8 @@ class Resep extends BaseController
                 // Menyiapkan data untuk tampilan
                 $data = [
                     'resep' => $resep,
-                    'title' => 'Detail Resep ' . $id . ' - ' . $this->systemName,
-                    'headertitle' => 'Detail Resep',
+                    'title' => 'Detail Resep Dokter ' . $resep['nama_pasien'] . ' (' . $id . ') - ' . $this->systemName,
+                    'headertitle' => 'Detail Resep Dokter',
                     'agent' => $this->request->getUserAgent() // Menyimpan informasi tentang user agent
                 ];
                 // Mengembalikan tampilan detail resep

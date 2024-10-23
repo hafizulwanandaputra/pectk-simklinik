@@ -391,7 +391,7 @@
                                             <i class="fa-solid fa-prescription"></i>
                                         </div>
                                         <div class="flex-fill ms-2">
-                                            Resep
+                                            Resep Dokter
                                         </div>
                                     </div>
                                 </a>
