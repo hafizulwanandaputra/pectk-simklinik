@@ -574,6 +574,7 @@
                     const harga_transaksi = parseInt(obat_alkes.harga_transaksi); // Konversi harga satuan ke integer
                     const total_pembayaran = Math.round((harga_transaksi * qty_transaksi) * (1 - (diskon / 100))); // Hitung total harga
                     totalPembayaran += total_pembayaran;
+                    const dokter = obat_alkes.resep.dokter == null ? `Resep Luar` : obat_alkes.resep.dokter;
                     const tindakanElement = `
                         <tr>
                             <td class="tindakan">
@@ -583,7 +584,7 @@
                             </div>
                         </td>
                         <td>
-                            <span>${obat_alkes.resep.dokter}</span>
+                            <span>${dokter}</span>
                             <ul class="mb-0" id="obat-${obat_alkes.id_detail_transaksi}">
                             </ul>
                         </td>

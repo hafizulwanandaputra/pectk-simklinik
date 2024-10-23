@@ -177,6 +177,8 @@
                 const layanan = transaksi.detail.layanan
                 const obatalkes = transaksi.detail.obatalkes
                 const bank = transaksi.bank ? transaksi.bank : `-`;
+                const no_rm = transaksi.dokter == null ? `-` : transaksi.no_rm;
+                const dokter = transaksi.dokter == null ? `-` : transaksi.dokter;
                 // Menjadikan angka-angka yang diperoleh sebagai integer
                 const total_pembayaran = parseInt(transaksi.total_pembayaran);
 
@@ -186,10 +188,10 @@
                         <td rowspan="${rowspan}" class="date text-nowrap text-center">${index + 1}</td>
                         <td rowspan="${rowspan}" class="date text-nowrap">${transaksi.no_kwitansi}</td>
                         <td rowspan="${rowspan}" class="date">${transaksi.kasir}</td>
-                        <td rowspan="${rowspan}" class="date text-nowrap">${transaksi.no_rm}</td>
+                        <td rowspan="${rowspan}" class="date text-nowrap">${no_rm}</td>
                         <td rowspan="${rowspan}" class="date">${transaksi.nama_pasien}</td>
                         <td rowspan="${rowspan}" class="date">${transaksi.metode_pembayaran}</td>
-                        <td rowspan="${rowspan}" class="date">${transaksi.dokter}</td>
+                        <td rowspan="${rowspan}" class="date">${dokter}</td>
                     </tr>
                 `;
 

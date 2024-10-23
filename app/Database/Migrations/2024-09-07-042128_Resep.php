@@ -18,10 +18,12 @@ class Resep extends Migration
             'nomor_registrasi' => [
                 'type' => 'VARCHAR',
                 'constraint' => 256,
+                'null' => true,
             ],
             'no_rm' => [
                 'type' => 'VARCHAR',
                 'constraint' => 24,
+                'null' => true,
             ],
             'nama_pasien' => [
                 'type' => 'VARCHAR',
@@ -34,6 +36,7 @@ class Resep extends Migration
             'telpon' => [
                 'type' => 'VARCHAR',
                 'constraint' => 24,
+                'null' => true,
             ],
             'jenis_kelamin' => [
                 'type' => 'VARCHAR',
@@ -42,6 +45,7 @@ class Resep extends Migration
             'tempat_lahir' => [
                 'type' => 'VARCHAR',
                 'constraint' => 256,
+                'null' => true,
             ],
             'tanggal_lahir' => [
                 'type' => 'DATE',
@@ -49,6 +53,7 @@ class Resep extends Migration
             'dokter' => [
                 'type' => 'VARCHAR',
                 'constraint' => 256,
+                'null' => true,
             ],
             'tanggal_resep' => [
                 'type' => 'DATETIME'

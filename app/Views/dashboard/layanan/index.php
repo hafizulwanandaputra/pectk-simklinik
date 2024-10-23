@@ -397,7 +397,6 @@
                             });
                         }
                     }
-                    console.error('Perbaiki kesalahan pada formulir.');
                 }
             } catch (error) {
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error); // Tampilkan pesan kesalahan

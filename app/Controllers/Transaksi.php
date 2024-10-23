@@ -1563,14 +1563,18 @@ class Transaksi extends BaseController
                     // Tentukan posisi awal untuk setiap transaksi
                     $startRow = $column; // Simpan posisi awal transaksi
 
+                    // Kondisikan jika ada resep luar
+                    $no_rm = ($list['no_rm'] == NULL) ? '-' : $list['no_rm'];
+                    $dokter = ($list['dokter'] == NULL) ? '-' : $list['dokter'];
+
                     // Isi data transaksi utama
                     $sheet->setCellValue('A' . $column, $nomor++);
                     $sheet->setCellValue('B' . $column, $list['no_kwitansi']);
                     $sheet->setCellValue('C' . $column, $list['kasir']);
-                    $sheet->setCellValue('D' . $column, $list['no_rm']);
+                    $sheet->setCellValue('D' . $column, $no_rm);
                     $sheet->setCellValue('E' . $column, $list['nama_pasien']);
                     $sheet->setCellValue('F' . $column, $list['metode_pembayaran']);
-                    $sheet->setCellValue('G' . $column, $list['dokter']);
+                    $sheet->setCellValue('G' . $column, $dokter);
 
                     // Atur ke bold
                     $sheet->getStyle("A{$column}")->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
@@ -1612,9 +1616,12 @@ class Transaksi extends BaseController
                     // Tambahkan baris pemisah antar transaksi
                     $column++;
 
+                    // Kondisikan jika tidak ada bank
+                    $bank = ($list['bank'] == NULL) ? '-' : $list['bank'];
+
                     // Baris bank
                     $sheet->setCellValue('H' . $column, 'Bank/E-wallet');
-                    $sheet->setCellValue('I' . $column, $list['bank']); // Menambahkan data bank
+                    $sheet->setCellValue('I' . $column, $bank); // Menambahkan data bank
                     // Atur ke bold
                     $sheet->getStyle("H{$column}")->getFont()->setBold(TRUE);
                     $sheet->getStyle("I{$column}")->getFont()->setBold(TRUE);
