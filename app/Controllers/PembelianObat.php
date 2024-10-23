@@ -13,6 +13,7 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use CodeIgniter\I18n\Time;
 use DateTime;
 use IntlDateFormatter;
+use PhpOffice\PhpSpreadsheet\Cell\DataType;
 use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 
 class PembelianObat extends BaseController
@@ -1031,7 +1032,7 @@ class PembelianObat extends BaseController
                 $sheet->setCellValue('A6', 'Alamat Supplier:');
                 $sheet->setCellValue('C6', $pembelianobat['alamat_supplier']);
                 $sheet->setCellValue('A7', 'Nomor Telepon Supplier:');
-                $sheet->setCellValue('C7', $pembelianobat['kontak_supplier']);
+                $sheet->setCellValueExplicit('C7', $pembelianobat['kontak_supplier'], DataType::TYPE_STRING);
                 $sheet->setCellValue('A8', 'Merek:');
                 $sheet->setCellValue('C8', $pembelianobat['merek']);
                 $sheet->setCellValue('A9', 'Apoteker:');

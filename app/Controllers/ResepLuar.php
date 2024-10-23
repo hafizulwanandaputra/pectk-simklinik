@@ -519,7 +519,10 @@ class ResepLuar extends BaseController
 
             // Mengupdate jumlah keluar obat
             $new_jumlah_keluar = $obat['jumlah_keluar'] + $this->request->getPost('jumlah');
-            $builderObat->where('id_obat', $this->request->getPost('id_obat'))->update(['jumlah_keluar' => $new_jumlah_keluar]);
+            $builderObat->where('id_obat', $this->request->getPost('id_obat'))->update([
+                'jumlah_keluar' => $new_jumlah_keluar,
+                'updated_at' => date('Y-m-d H:i:s')
+            ]);
 
             // Memeriksa apakah jumlah keluar melebihi stok
             if ($new_jumlah_keluar > $obat['jumlah_masuk']) {
@@ -614,7 +617,10 @@ class ResepLuar extends BaseController
 
             // Mengupdate jumlah keluar obat
             $new_jumlah_keluar = $obat['jumlah_keluar'] - $detail_resep['jumlah'] + $this->request->getPost('jumlah_edit');
-            $builderObat->where('id_obat', $detail_resep['id_obat'])->update(['jumlah_keluar' => $new_jumlah_keluar]);
+            $builderObat->where('id_obat', $detail_resep['id_obat'])->update([
+                'jumlah_keluar' => $new_jumlah_keluar,
+                'updated_at' => date('Y-m-d H:i:s')
+            ]);
 
             // Memeriksa apakah jumlah keluar melebihi stok
             if ($new_jumlah_keluar > $obat['jumlah_masuk']) {
@@ -700,7 +706,10 @@ class ResepLuar extends BaseController
                     if ($new_jumlah_keluar < 0) {
                         $new_jumlah_keluar = 0; // Jika jumlah keluar negatif, set menjadi 0
                     }
-                    $builderObat->where('id_obat', $id_obat)->update(['jumlah_keluar' => $new_jumlah_keluar]);
+                    $builderObat->where('id_obat', $id_obat)->update([
+                        'jumlah_keluar' => $new_jumlah_keluar,
+                        'updated_at' => date('Y-m-d H:i:s')
+                    ]);
 
                     // Menghapus detail resep
                     $builderDetail->where('id_detail_resep', $id)->delete();

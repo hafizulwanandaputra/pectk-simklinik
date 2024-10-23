@@ -555,9 +555,6 @@ class Resep extends BaseController
             // Bulatkan ke ratusan terdekat ke atas
             $harga_bulat = ceil($total_harga / 100) * 100;
 
-            // Memformat harga yang telah dibulatkan
-            $harga_obat_terformat = number_format($harga_bulat, 0, ',', '.');
-
             // Simpan data detail resep
             $data = [
                 'id_resep' => $id,
@@ -566,7 +563,7 @@ class Resep extends BaseController
                 'catatan' => $this->request->getPost('catatan'),
                 'cara_pakai' => $this->request->getPost('cara_pakai'),
                 'jumlah' => $this->request->getPost('jumlah'),
-                'harga_satuan' => $harga_obat_terformat,
+                'harga_satuan' => $harga_bulat,
             ];
             $this->DetailResepModel->save($data);
 
@@ -583,7 +580,10 @@ class Resep extends BaseController
 
             // Mengupdate jumlah keluar obat
             $new_jumlah_keluar = $obat['jumlah_keluar'] + $this->request->getPost('jumlah');
-            $builderObat->where('id_obat', $this->request->getPost('id_obat'))->update(['jumlah_keluar' => $new_jumlah_keluar]);
+            $builderObat->where('id_obat', $this->request->getPost('id_obat'))->update([
+                'jumlah_keluar' => $new_jumlah_keluar,
+                'updated_at' => date('Y-m-d H:i:s')
+            ]);
 
             // Memeriksa apakah jumlah keluar melebihi stok
             if ($new_jumlah_keluar > $obat['jumlah_masuk']) {
@@ -678,7 +678,10 @@ class Resep extends BaseController
 
             // Mengupdate jumlah keluar obat
             $new_jumlah_keluar = $obat['jumlah_keluar'] - $detail_resep['jumlah'] + $this->request->getPost('jumlah_edit');
-            $builderObat->where('id_obat', $detail_resep['id_obat'])->update(['jumlah_keluar' => $new_jumlah_keluar]);
+            $builderObat->where('id_obat', $detail_resep['id_obat'])->update([
+                'jumlah_keluar' => $new_jumlah_keluar,
+                'updated_at' => date('Y-m-d H:i:s')
+            ]);
 
             // Memeriksa apakah jumlah keluar melebihi stok
             if ($new_jumlah_keluar > $obat['jumlah_masuk']) {
@@ -764,7 +767,10 @@ class Resep extends BaseController
                     if ($new_jumlah_keluar < 0) {
                         $new_jumlah_keluar = 0; // Jika jumlah keluar negatif, set menjadi 0
                     }
-                    $builderObat->where('id_obat', $id_obat)->update(['jumlah_keluar' => $new_jumlah_keluar]);
+                    $builderObat->where('id_obat', $id_obat)->update([
+                        'jumlah_keluar' => $new_jumlah_keluar,
+                        'updated_at' => date('Y-m-d H:i:s')
+                    ]);
 
                     // Menghapus detail resep
                     $builderDetail->where('id_detail_resep', $id)->delete();
