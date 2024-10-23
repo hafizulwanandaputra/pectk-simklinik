@@ -102,6 +102,11 @@ $routes->post('/(?i)resepluar/(?i)editketerangan/(:any)', 'ResepLuar::editketera
 $routes->get('/(?i)resepluar/(?i)etiket-dalam/(:any)', 'ResepLuar::etiketdalam/$1');
 $routes->get('/(?i)resepluar/(?i)etiket-luar/(:any)', 'ResepLuar::etiketluar/$1');
 
+// LAPORAN RESEP
+$routes->get('/(?i)laporanresep/', 'LaporanResep::index');
+$routes->get('/(?i)laporanresep/(?i)export/(:any)', 'LaporanResep::export/$1');
+$routes->get('/(?i)laporanresep/(?i)exportexcel/(:any)', 'LaporanResep::exportexcel/$1');
+
 // LAYANAN
 $routes->get('/(?i)layanan', 'Layanan::index');
 $routes->post('/(?i)layanan/(?i)layananlist', 'Layanan::layananlist');
