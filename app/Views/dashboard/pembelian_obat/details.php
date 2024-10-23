@@ -304,7 +304,7 @@
                         </td>
                         <td class="text-nowrap">
                             ${detail_pembelian_obat.nama_obat}<br><small>${detail_pembelian_obat.kategori_obat} • ${detail_pembelian_obat.bentuk_obat}</small>
-                            <ul class="list-group rounded-3" id="item-${detail_pembelian_obat.id_detail_pembelian_obat}">
+                            <ul class="list-group shadow-sm rounded-3" id="item-${detail_pembelian_obat.id_detail_pembelian_obat}">
                             </ul>
                         </td>
                         <td class="date text-end">${jumlah.toLocaleString('id-ID')}</td>
@@ -319,7 +319,7 @@
                     detail_pembelian_obat.item.forEach(function(item) {
                         const jumlah_item = parseInt(item.jumlah_item); // Konversi jumlah ke integer
                         const itemElement = `
-                                <li class="list-group-item list-group-item-light text-body-emphasis">
+                                <li class="list-group-item bg-body-tertiary">
                                     <div class="fw-bold">${item.no_batch}</div>
                                     <div class="date">Kadaluwarsa: ${item.expired}</div>
                                     <div class="date">Jumlah: ${jumlah_item}</div>
