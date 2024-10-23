@@ -319,7 +319,7 @@
                     detail_pembelian_obat.item.forEach(function(item) {
                         const jumlah_item = parseInt(item.jumlah_item); // Konversi jumlah ke integer
                         const itemElement = `
-                                <li class="list-group-item list-group-item-secondary text-body-emphasis">
+                                <li class="list-group-item list-group-item-light text-body-emphasis">
                                     <div class="fw-bold">${item.no_batch}</div>
                                     <div class="date">Kadaluwarsa: ${item.expired}</div>
                                     <div class="date">Jumlah: ${jumlah_item}</div>

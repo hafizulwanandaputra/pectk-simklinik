@@ -25,22 +25,44 @@
             <button class="btn btn-body btn-sm bg-gradient rounded-end-3" type="button" id="reportButton" onclick="window.location.href = '<?= base_url('transaksi/dailyreport') ?>';"><i class="fa-solid fa-file-export"></i> Laporan</button>
         </div>
     </div>
-    <fieldset class="border rounded-3 px-2 py-0 mb-3">
-        <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Tambah Pasien dari Resep</legend>
-        <form id="transaksiForm" enctype="multipart/form-data" class="d-flex flex-column flex-lg-row mb-2 gap-2">
-            <div class="flex-fill">
-                <select class="form-select rounded-3" id="id_resep" name="id_resep" aria-label="id_resep">
-                    <option value="" disabled selected>-- Pilih Pasien dari Resep --</option>
-                </select>
-                <div class="invalid-feedback"></div>
-            </div>
-            <div class="d-grid w-auto" id="submitButtonContainer">
-                <button type="submit" id="submitButton" class="btn btn-primary bg-gradient rounded-3" disabled>
-                    <i class="fa-solid fa-plus"></i> Tambah
-                </button>
-            </div>
-        </form>
-    </fieldset>
+    <div class="row">
+        <div class="col-lg-6">
+            <fieldset class="border rounded-3 px-2 py-0 mb-3">
+                <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Tambah Pasien Rawat Jalan</legend>
+                <form id="transaksiForm1" enctype="multipart/form-data" class="d-flex flex-column mb-2 gap-2">
+                    <div class="flex-fill">
+                        <select class="form-select rounded-3" id="nomor_registrasi" name="nomor_registrasi" aria-label="nomor_registrasi">
+                            <option value="" disabled selected>-- Pilih Pasien Rawat Jalan --</option>
+                        </select>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end" id="submitButtonContainer">
+                        <button type="submit" id="submitButton1" class="btn btn-primary bg-gradient rounded-3" disabled>
+                            <i class="fa-solid fa-plus"></i> Tambah
+                        </button>
+                    </div>
+                </form>
+            </fieldset>
+        </div>
+        <div class="col-lg-6">
+            <fieldset class="border rounded-3 px-2 py-0 mb-3">
+                <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Tambah Pasien dari Resep Luar</legend>
+                <form id="transaksiForm2" enctype="multipart/form-data" class="d-flex flex-column mb-2 gap-2">
+                    <div class="flex-fill">
+                        <select class="form-select rounded-3" id="id_resep" name="id_resep" aria-label="id_resep">
+                            <option value="" disabled selected>-- Pilih Pasien dari Resep Luar --</option>
+                        </select>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end" id="submitButtonContainer">
+                        <button type="submit" id="submitButton2" class="btn btn-primary bg-gradient rounded-3" disabled>
+                            <i class="fa-solid fa-plus"></i> Tambah
+                        </button>
+                    </div>
+                </form>
+            </fieldset>
+        </div>
+    </div>
     <div class="list-group-container overflow-auto">
         <ul id="transaksiContainer" class="list-group shadow-sm rounded-3 mt-1">
             <?php for ($i = 0; $i < 12; $i++) : ?>
@@ -132,9 +154,34 @@
                 </div>
             </li>
     `;
-    async function fetchPasienOptions() {
+    async function fetchPasienOptions1() {
         try {
             const response = await axios.get('<?= base_url('transaksi/pasienlist') ?>');
+
+            if (response.data.success) {
+                const options = response.data.data;
+                const select = $('#nomor_registrasi');
+
+                // Clear existing options except the first one
+                select.find('option:not(:first)').remove();
+
+                // Sort the options by 'value' in ascending order
+                options.sort((a, b) => b.value.localeCompare(a.value, 'en', {
+                    numeric: true
+                }));
+
+                // Loop through the options and append them to the select element
+                options.forEach(option => {
+                    select.append(`<option value="${option.value}">${option.text}</option>`);
+                });
+            }
+        } catch (error) {
+            showFailedToast('Gagal mendapatkan pasien.<br>' + error);
+        }
+    }
+    async function fetchPasienOptions2() {
+        try {
+            const response = await axios.get('<?= base_url('transaksi/pasienlistexternal') ?>');
 
             if (response.data.success) {
                 const options = response.data.data;
@@ -196,12 +243,13 @@
                     const metode_pembayaran = transaksi.metode_pembayaran == '' ?
                         `<em>Belum ada</em>` :
                         transaksi.metode_pembayaran + bank;
+                    const resepluar = transaksi.id_resep ? `<span class="badge bg-secondary bg-gradient">Resep Luar</span>` : ``;
                     const transaksiElement = `
             <li class="list-group-item bg-body-tertiary pb-3 pt-3">
                 <div class="d-flex">
                     <div class="align-self-center ps-2 w-100">
                         <h5 class="card-title">
-                            ${transaksi.nama_pasien}
+                            ${transaksi.nama_pasien} ${resepluar}
                         </h5>
                         <h6 class="card-subtitle mb-2">
                             ${transaksi.kasir}
@@ -289,7 +337,8 @@
         const page = $(this).data('page');
         if (page) {
             currentPage = page;
-            fetchPasienOptions()
+            fetchPasienOptions1()
+            fetchPasienOptions2()
             fetchTransaksi();
         }
     });
@@ -299,25 +348,44 @@
         for (let i = 0; i < limit; i++) {
             $('#transaksiContainer').append(placeholder);
         }
-        fetchPasienOptions()
+        fetchPasienOptions1()
+        fetchPasienOptions2()
         fetchTransaksi();
     });
 
-    function toggleSubmitButton() {
+    function toggleSubmitButton1() {
+        var selectedValue = $('#nomor_registrasi').val();
+        if (selectedValue === null || selectedValue === "") {
+            $('#submitButton1').prop('disabled', true);
+        } else {
+            $('#submitButton1').prop('disabled', false);
+        }
+    }
+    $('#nomor_registrasi').on('change.select2', function() {
+        toggleSubmitButton1();
+    });
+
+    function toggleSubmitButton2() {
         var selectedValue = $('#id_resep').val();
         if (selectedValue === null || selectedValue === "") {
-            $('#submitButton').prop('disabled', true);
+            $('#submitButton2').prop('disabled', true);
         } else {
-            $('#submitButton').prop('disabled', false);
+            $('#submitButton2').prop('disabled', false);
         }
     }
     $('#id_resep').on('change.select2', function() {
-        toggleSubmitButton();
+        toggleSubmitButton2();
     });
 
     $(document).ready(function() {
+        $('#nomor_registrasi').select2({
+            dropdownParent: $('#transaksiForm1'),
+            theme: "bootstrap-5",
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: $(this).data('placeholder'),
+        });
         $('#id_resep').select2({
-            dropdownParent: $('#transaksiForm'),
+            dropdownParent: $('#transaksiForm2'),
             theme: "bootstrap-5",
             width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
             placeholder: $(this).data('placeholder'),
@@ -350,7 +418,8 @@
 
             try {
                 await axios.delete(`<?= base_url('/transaksi/delete') ?>/${transaksiId}`);
-                fetchPasienOptions();
+                fetchPasienOptions1();
+                fetchPasienOptions2();
                 fetchTransaksi();
             } catch (error) {
                 if (error.response.request.status === 401) {
@@ -366,21 +435,21 @@
             }
         });
 
-        $('#transaksiForm').submit(async function(e) {
+        $('#transaksiForm1').submit(async function(e) {
             e.preventDefault();
 
             const formData = new FormData(this);
             console.log("Form Data:", $(this).serialize());
 
             // Clear previous validation states
-            $('#transaksiForm .is-invalid').removeClass('is-invalid');
-            $('#transaksiForm .invalid-feedback').text('').hide();
-            $('#submitButton').prop('disabled', true).html(`
+            $('#transaksiForm1 .is-invalid').removeClass('is-invalid');
+            $('#transaksiForm1 .invalid-feedback').text('').hide();
+            $('#submitButton1').prop('disabled', true).html(`
                 <span class="spinner-border spinner-border-sm" aria-hidden="true"></span> Tambah
             `);
 
             // Disable form inputs
-            $('#transaksiForm select').prop('disabled', true);
+            $('#transaksiForm1 select').prop('disabled', true);
 
             try {
                 const response = await axios.post(`<?= base_url('transaksi/create') ?>`, formData, {
@@ -390,19 +459,19 @@
                 });
 
                 if (response.data.success) {
-                    $('#transaksiForm')[0].reset();
-                    $('#id_resep').val(null).trigger('change');
-                    $('#transaksiForm .is-invalid').removeClass('is-invalid');
-                    $('#transaksiForm .invalid-feedback').text('').hide();
-                    $('#submitButton').prop('disabled', true);
-                    fetchPasienOptions();
+                    $('#transaksiForm1')[0].reset();
+                    $('#nomor_registrasi').val(null).trigger('change');
+                    $('#transaksiForm1 .is-invalid').removeClass('is-invalid');
+                    $('#transaksiForm1 .invalid-feedback').text('').hide();
+                    $('#submitButton1').prop('disabled', true);
+                    fetchPasienOptions1();
                     fetchTransaksi();
                 } else {
                     console.log("Validation Errors:", response.data.errors);
 
                     // Clear previous validation states
-                    $('#transaksiForm .is-invalid').removeClass('is-invalid');
-                    $('#transaksiForm .invalid-feedback').text('').hide();
+                    $('#transaksiForm1 .is-invalid').removeClass('is-invalid');
+                    $('#transaksiForm1 .invalid-feedback').text('').hide();
 
                     // Display new validation errors
                     for (const field in response.data.errors) {
@@ -435,12 +504,90 @@
                 } else {
                     showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
                 }
-                $('#submitButton').prop('disabled', false);
+                $('#submitButton1').prop('disabled', false);
             } finally {
-                $('#submitButton').html(`
+                $('#submitButton1').html(`
                     <i class="fa-solid fa-plus"></i> Tambah
                 `);
-                $('#transaksiForm select').prop('disabled', false);
+                $('#transaksiForm1 select').prop('disabled', false);
+            }
+        });
+
+        $('#transaksiForm2').submit(async function(e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+            console.log("Form Data:", $(this).serialize());
+
+            // Clear previous validation states
+            $('#transaksiForm2 .is-invalid').removeClass('is-invalid');
+            $('#transaksiForm2 .invalid-feedback').text('').hide();
+            $('#submitButton2').prop('disabled', true).html(`
+                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span> Tambah
+            `);
+
+            // Disable form inputs
+            $('#transaksiForm2 select').prop('disabled', true);
+
+            try {
+                const response = await axios.post(`<?= base_url('transaksi/createexternal') ?>`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
+
+                if (response.data.success) {
+                    $('#transaksiForm2')[0].reset();
+                    $('#id_resep').val(null).trigger('change');
+                    $('#transaksiForm2 .is-invalid').removeClass('is-invalid');
+                    $('#transaksiForm2 .invalid-feedback').text('').hide();
+                    $('#submitButton2').prop('disabled', true);
+                    fetchPasienOptions2();
+                    fetchTransaksi();
+                } else {
+                    console.log("Validation Errors:", response.data.errors);
+
+                    // Clear previous validation states
+                    $('#transaksiForm2 .is-invalid').removeClass('is-invalid');
+                    $('#transaksiForm2 .invalid-feedback').text('').hide();
+
+                    // Display new validation errors
+                    for (const field in response.data.errors) {
+                        if (response.data.errors.hasOwnProperty(field)) {
+                            const fieldElement = $('#' + field);
+                            const feedbackElement = fieldElement.siblings('.invalid-feedback');
+
+                            console.log("Target Field:", fieldElement);
+                            console.log("Target Feedback:", feedbackElement);
+
+                            if (fieldElement.length > 0 && feedbackElement.length > 0) {
+                                fieldElement.addClass('is-invalid');
+                                feedbackElement.text(response.data.errors[field]).show();
+
+                                // Remove error message when the user corrects the input
+                                fieldElement.on('input change', function() {
+                                    $(this).removeClass('is-invalid');
+                                    $(this).siblings('.invalid-feedback').text('').hide();
+                                });
+                            } else {
+                                console.warn("Elemen tidak ditemukan pada field:", field);
+                            }
+                        }
+                    }
+                    console.error('Perbaiki kesalahan pada formulir.');
+                }
+            } catch (error) {
+                if (error.response.request.status === 404) {
+                    showFailedToast(error.response.data.message);
+                } else {
+                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                }
+                $('#submitButton2').prop('disabled', false);
+            } finally {
+                $('#submitButton2').html(`
+                    <i class="fa-solid fa-plus"></i> Tambah
+                `);
+                $('#transaksiForm2 select').prop('disabled', false);
             }
         });
         $('#refreshButton').on('click', function() {
@@ -448,13 +595,16 @@
             for (let i = 0; i < limit; i++) {
                 $('#transaksiContainer').append(placeholder);
             }
-            fetchPasienOptions()
+            fetchPasienOptions1();
+            fetchPasienOptions2();
             fetchTransaksi(); // Refresh articles on button click
         });
 
         fetchTransaksi();
-        fetchPasienOptions();
-        toggleSubmitButton();
+        fetchPasienOptions1();
+        fetchPasienOptions2();
+        toggleSubmitButton1();
+        toggleSubmitButton2();
     });
     // Show toast notification
     function showSuccessToast(message) {

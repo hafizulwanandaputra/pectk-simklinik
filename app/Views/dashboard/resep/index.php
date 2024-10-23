@@ -30,14 +30,14 @@
         <fieldset class="border rounded-3 px-2 py-0 mb-3" id="tambahPasienForm">
             <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Tambah Pasien Rawat Jalan</legend>
             <form id="resepForm" enctype="multipart/form-data">
-                <div class="d-flex flex-column flex-lg-row mb-2 gap-2">
+                <div class="d-flex flex-column mb-2 gap-2">
                     <div class="flex-fill">
                         <select class="form-select rounded-3" id="nomor_registrasi" name="nomor_registrasi" aria-label="nomor_registrasi">
                             <option value="" disabled selected>-- Pilih Pasien --</option>
                         </select>
                         <div class="invalid-feedback"></div>
                     </div>
-                    <div class="d-grid w-auto" id="submitButtonContainer">
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end" id="submitButtonContainer">
                         <button type="submit" id="submitButton" class="btn btn-primary bg-gradient rounded-3" disabled>
                             <i class="fa-solid fa-plus"></i> Tambah
                         </button>

@@ -128,9 +128,63 @@ class Transaksi extends BaseController
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+            $client = new Client(); // Membuat klien HTTP Guzzle baru
+
+            try {
+                // Mengirim permintaan GET ke API
+                $response = $client->request('GET', env('API-URL') . date('Y-m-d'), [
+                    'headers' => [
+                        'Accept' => 'application/json',
+                        'x-key' => env('X-KEY') // Mengatur header API
+                    ],
+                ]);
+
+                // Mendekode JSON dan menangani potensi error
+                $data = json_decode($response->getBody()->getContents(), true);
+
+                $options = [];
+                // Menyusun opsi dari data pasien yang diterima
+                foreach ($data as $row) {
+                    $options[] = [
+                        'value' => $row['nomor_registrasi'],
+                        'text' => $row['nama_pasien'] . ' (' . $row['no_rm'] . ' - ' . $row['nomor_registrasi'] . ')' // Menyusun teks yang ditampilkan
+                    ];
+                }
+
+                // Mengembalikan data pasien dalam format JSON
+                return $this->response->setJSON([
+                    'success' => true,
+                    'data' => $options,
+                ]);
+            } catch (RequestException $e) {
+                // Menangani error saat permintaan API
+                return $this->response->setStatusCode(500)->setJSON([
+                    'error' => 'Gagal mengambil data pasien: ' . $e->getMessage(),
+                ]);
+            }
+        } else {
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan', // Pesan jika peran tidak valid
+            ]);
+        }
+    }
+
+    public function pasienlistexternal()
+    {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
             // Mengambil data dari tabel resep dengan status = 0 dan mengurutkan berdasarkan nomor_registrasi
             $ResepModel = new ResepModel();
-            $resepData = $ResepModel->where('status', 0)->orderBy('id_resep')->findAll();
+            $resepData = $ResepModel
+                ->groupStart()
+                ->where('nomor_registrasi', null)
+                ->where('no_rm', null)
+                ->where('telpon', null)
+                ->where('tempat_lahir', null)
+                ->where('dokter', null)
+                ->groupEnd()
+                ->orderBy('id_resep')
+                ->findAll();
 
             // Mengambil id_resep yang sudah terpakai di transaksi
             $db = \Config\Database::connect();
@@ -192,6 +246,97 @@ class Transaksi extends BaseController
             $validation = \Config\Services::validation();
             // Menetapkan aturan validasi dasar
             $validation->setRules([
+                'nomor_registrasi' => 'required', // Nomor registrasi wajib diisi
+            ]);
+
+            // Memeriksa apakah validasi berhasil
+            if (!$this->validate($validation->getRules())) {
+                return $this->response->setJSON(['success' => false, 'message' => NULL, 'errors' => $validation->getErrors()]); // Mengembalikan kesalahan validasi
+            }
+
+            // Mengambil nomor registrasi dari permintaan POST
+            $nomorRegistrasi = $this->request->getPost('nomor_registrasi');
+
+            // Mengambil data dari API eksternal menggunakan Guzzle
+            $client = new Client();
+            try {
+                // Mengirim permintaan GET ke API
+                $response = $client->request('GET', env('API-URL') . date('Y-m-d'), [
+                    'headers' => [
+                        'x-key' => env('X-KEY'), // Mengatur header API
+                    ],
+                ]);
+
+                // Mendekode JSON yang diterima dari API
+                $dataFromApi = json_decode($response->getBody(), true);
+
+                // Memeriksa apakah data mengandung nomor registrasi yang diminta
+                $resepData = null;
+                foreach ($dataFromApi as $patient) {
+                    if ($patient['nomor_registrasi'] == $nomorRegistrasi) {
+                        $resepData = $patient; // Menyimpan data pasien jika ditemukan
+                        break;
+                    }
+                }
+
+                // Jika data pasien tidak ditemukan
+                if (!$resepData) {
+                    return $this->response->setJSON(['success' => false, 'message' => 'Data pasien tidak ditemukan', 'errors' => NULL]);
+                }
+
+                // Mendapatkan tanggal saat ini
+                $date = new \DateTime();
+                $tanggal = $date->format('d'); // Hari (2 digit)
+                $bulan = $date->format('m'); // Bulan (2 digit)
+                $tahun = $date->format('y'); // Tahun (2 digit)
+
+                // Mengambil nomor registrasi terakhir untuk di-increment
+                $lastNoReg = $this->TransaksiModel->getLastNoReg($tahun, $bulan, $tanggal);
+                $lastNumber = $lastNoReg ? intval(substr($lastNoReg, -4)) : 0; // Mendapatkan nomor terakhir
+                $nextNumber = str_pad($lastNumber + 1, 4, '0', STR_PAD_LEFT); // Menyiapkan nomor berikutnya
+
+                // Memformat nomor kwitansi
+                $no_kwitansi = sprintf('TRJ%s%s%s-%s', $tanggal, $bulan, $tahun, $nextNumber);
+
+                // Menyimpan data transaksi
+                $data = [
+                    'id_resep' => NULL, // ID resep diatur ke NULL
+                    'nomor_registrasi' => $nomorRegistrasi, // Nomor registrasi
+                    'no_rm' => $resepData['no_rm'], // Nomor rekam medis
+                    'nama_pasien' => $resepData['nama_pasien'], // Nama pasien
+                    'alamat' => $resepData['alamat'], // Alamat pasien
+                    'telpon' => $resepData['telpon'], // Nomor telepon pasien
+                    'jenis_kelamin' => $resepData['jenis_kelamin'], // Jenis kelamin pasien
+                    'tempat_lahir' => $resepData['tempat_lahir'], // Tempat lahir pasien
+                    'tanggal_lahir' => $resepData['tanggal_lahir'], // Tanggal lahir pasien
+                    'kasir' => session()->get('fullname'), // Nama kasir dari session
+                    'no_kwitansi' => $no_kwitansi, // Nomor kwitansi
+                    'tgl_transaksi' => date('Y-m-d H:i:s'), // Tanggal dan waktu transaksi
+                    'total_pembayaran' => 0, // Total pembayaran awal
+                    'metode_pembayaran' => '', // Metode pembayaran (kosong pada awalnya)
+                    'lunas' => 0, // Status lunas (0 berarti belum lunas)
+                ];
+                $this->TransaksiModel->save($data); // Menyimpan data transaksi ke database
+                return $this->response->setJSON(['success' => true, 'message' => 'Transaksi berhasil ditambahkan']); // Mengembalikan respon sukses
+            } catch (\Exception $e) {
+                // Menangani kesalahan saat mengambil data
+                return $this->response->setJSON(['success' => false, 'message' => 'Terjadi kesalahan saat mengambil data: ' . $e->getMessage(), 'errors' => NULL]);
+            }
+        } else {
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan', // Pesan jika peran tidak valid
+            ]);
+        }
+    }
+
+    public function createexternal()
+    {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+            // Melakukan validasi
+            $validation = \Config\Services::validation();
+            // Menetapkan aturan validasi dasar
+            $validation->setRules([
                 'id_resep' => 'required', // Nomor registrasi wajib diisi
             ]);
 
@@ -205,7 +350,15 @@ class Transaksi extends BaseController
 
             // Mengambil data dari tabel resep berdasarkan nomor registrasi
             $ResepModel = new ResepModel();
-            $resepData = $ResepModel->where('status', 0)->where('id_resep', $id_resep)->get()->getRowArray();
+            $resepData = $ResepModel
+                ->where('nomor_registrasi', null)
+                ->where('no_rm', null)
+                ->where('telpon', null)
+                ->where('tempat_lahir', null)
+                ->where('dokter', null)
+                ->where('status', 0)
+                ->where('id_resep', $id_resep)
+                ->get()->getRowArray();
 
             // Jika data pasien tidak ditemukan
             if (!$resepData) {
@@ -228,7 +381,7 @@ class Transaksi extends BaseController
 
             // Menyimpan data transaksi
             $data = [
-                'id_resep' => $id_resep, // ID_resep
+                'id_resep' => $id_resep, // ID resep
                 'nomor_registrasi' => $resepData['nomor_registrasi'], // Nomor registrasi
                 'no_rm' => $resepData['no_rm'], // Nomor rekam medis
                 'nama_pasien' => $resepData['nama_pasien'], // Nama pasien
@@ -529,7 +682,54 @@ class Transaksi extends BaseController
         }
     }
 
-    public function reseplist($id_transaksi, $id_resep)
+    public function reseplist($id_transaksi, $nomor_registrasi)
+    {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+            $ResepModel = new ResepModel();
+            $DetailTransaksiModel = new DetailTransaksiModel();
+
+            // Mengambil resep berdasarkan nomor registrasi dengan kondisi tertentu
+            $results = $ResepModel
+                ->where('nomor_registrasi', $nomor_registrasi)
+                ->where('status', 0) // Mengambil resep yang statusnya 0
+                ->where('total_biaya >', 0) // Mengambil resep dengan total biaya lebih dari 0
+                ->orderBy('resep.id_resep', 'DESC')->findAll();
+
+            $options = [];
+            // Memetakan hasil resep ke dalam format yang diinginkan
+            foreach ($results as $row) {
+                $total_biaya = (int) $row['total_biaya']; // Mengonversi total biaya ke integer
+                $total_biaya_terformat = number_format($total_biaya, 0, ',', '.'); // Memformat total biaya
+
+                // Memeriksa apakah resep sudah digunakan dalam transaksi
+                $isUsed = $DetailTransaksiModel->where('id_resep', $row['id_resep'])
+                    ->where('id_transaksi', $id_transaksi)
+                    ->first();
+
+                // Jika resep belum digunakan, tambahkan ke opsi
+                if (!$isUsed) {
+                    $options[] = [
+                        'value' => $row['id_resep'], // ID resep
+                        'text' => $row['tanggal_resep'] . ' (Rp' . $total_biaya_terformat . ')' // Tanggal resep dengan total biaya terformat
+                    ];
+                }
+            }
+
+            // Mengembalikan opsi resep dalam bentuk JSON
+            return $this->response->setJSON([
+                'success' => true,
+                'data' => $options,
+            ]);
+        } else {
+            // Jika peran tidak valid, kembalikan status 404
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
+        }
+    }
+
+    public function reseplistexternal($id_transaksi, $id_resep)
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {

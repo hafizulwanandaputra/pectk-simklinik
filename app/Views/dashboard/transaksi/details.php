@@ -391,7 +391,12 @@
 
     async function fetchResepOptions() {
         try {
-            const response = await axios.get('<?= base_url('transaksi/reseplist/' . $transaksi['id_transaksi'] . '/' . $transaksi['id_resep']) ?>');
+            <?php if ($transaksi['nomor_registrasi'] == NULL || $transaksi['no_rm'] == NULL || $transaksi['telpon'] == NULL || $transaksi['tanggal_lahir'] == NULL) : ?>
+                const url = `<?= base_url('transaksi/reseplistexternal/') . $transaksi['id_transaksi'] . '/' . $transaksi['id_resep'] ?>`;
+            <?php else : ?>
+                const url = `<?= base_url('transaksi/reseplist/') . $transaksi['id_transaksi'] . '/' . $transaksi['nomor_registrasi'] ?>`;
+            <?php endif; ?>
+            const response = await axios.get(url);
 
             if (response.data.success) {
                 const options = response.data.data;

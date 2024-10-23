@@ -26,14 +26,14 @@
     </div>
     <fieldset class="border rounded-3 px-2 py-0 mb-3">
         <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Tambah Pembelian</legend>
-        <form id="pembelianObatForm" enctype="multipart/form-data" class="d-flex flex-column flex-lg-row mb-2 gap-2">
+        <form id="pembelianObatForm" enctype="multipart/form-data" class="d-flex flex-column mb-2 gap-2">
             <div class="flex-fill">
                 <select class="form-select rounded-3" id="id_supplier" name="id_supplier" aria-label="id_supplier">
                     <option value="" disabled selected>-- Pilih Supplier --</option>
                 </select>
                 <div class="invalid-feedback"></div>
             </div>
-            <div class="d-grid w-auto" id="submitButtonContainer">
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end" id="submitButtonContainer">
                 <button type="submit" id="submitButton" class="btn btn-primary bg-gradient rounded-3" disabled>
                     <i class="fa-solid fa-plus"></i> Tambah
                 </button>

@@ -19,6 +19,7 @@ class Transaksi extends Migration
                 'type' => 'BIGINT',
                 'constraint' => 24,
                 'unsigned' => true,
+                'null' => true,
             ],
             'nomor_registrasi' => [
                 'type' => 'VARCHAR',
