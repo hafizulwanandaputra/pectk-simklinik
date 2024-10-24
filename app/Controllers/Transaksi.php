@@ -142,12 +142,22 @@ class Transaksi extends BaseController
                 // Mendekode JSON dan menangani potensi error
                 $data = json_decode($response->getBody()->getContents(), true);
 
+                // Mengambil nomor_registrasi yang sudah terpakai di transaksi
+                $db = \Config\Database::connect();
+                $usedNoReg = $db->table('transaksi')->select('nomor_registrasi')->get()->getResultArray();
+                $usedNoReg = array_column($usedNoReg, 'nomor_registrasi');
+
                 $options = [];
                 // Menyusun opsi dari data pasien yang diterima
                 foreach ($data as $row) {
+                    // Memeriksa apakah id_resep ada dalam daftar id yang terpakai
+                    if (in_array($row['nomor_registrasi'], $usedNoReg)) {
+                        continue; // Lewati resep yang sudah terpakai
+                    }
+
                     $options[] = [
                         'value' => $row['nomor_registrasi'],
-                        'text' => $row['nama_pasien'] . ' (' . $row['no_rm'] . ' - ' . $row['nomor_registrasi'] . ')' // Menyusun teks yang ditampilkan
+                        'text' => $row['nama_pasien'] . ' (' . $row['nomor_registrasi'] . ' - ' . $row['no_rm'] . ' - ' . $row['tanggal_lahir'] . ')' // Menyusun teks yang ditampilkan
                     ];
                 }
 
@@ -199,17 +209,10 @@ class Transaksi extends BaseController
                     continue; // Lewati resep yang sudah terpakai
                 }
 
-                // Menyiapkan teks untuk opsi
-                if ($resep['nomor_registrasi'] == '') {
-                    $text = $resep['nama_pasien'] . ' (' . $resep['tanggal_lahir'] . ')';
-                } else {
-                    $text = $resep['nama_pasien'] . ' (' . $resep['tanggal_lahir'] . ' - ' . $resep['no_rm'] . ' - ' . $resep['nomor_registrasi'] . ')';
-                }
-
                 // Menambahkan opsi ke dalam array
                 $options[] = [
                     'value' => $resep['id_resep'], // Nilai untuk opsi
-                    'text'  => $text // Teks untuk opsi
+                    'text'  => $resep['nama_pasien'] . ' (' . $resep['tanggal_lahir'] . ')' // Teks untuk opsi
                 ];
             }
 
