@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Models\ResepModel;
 use App\Models\DetailResepModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use DateTime;
@@ -14,8 +15,10 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 class LaporanResep extends BaseController
 {
     protected $DetailResepModel;
+    protected $ResepModel;
     public function __construct()
     {
+        $this->ResepModel = new ResepModel();
         $this->DetailResepModel = new DetailResepModel();
     }
 
@@ -23,11 +26,13 @@ class LaporanResep extends BaseController
     {
         // Memeriksa peran pengguna, hanya 'Admin' dan 'Apoteker' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+            $daftarDokter = $this->ResepModel->select('dokter')->groupBy('dokter')->orderBy('dokter', 'ASC')->findAll();
             // Menyiapkan data untuk tampilan
             $data = [
                 'title' => 'Laporan Resep - ' . $this->systemName,
                 'headertitle' => 'Laporan Resep',
-                'agent' => $this->request->getUserAgent() // Mengambil informasi user agent
+                'agent' => $this->request->getUserAgent(), // Mengambil informasi user agent
+                'daftarDokter' => $daftarDokter,
             ];
             // Menampilkan tampilan untuk halaman pasien
             return view('dashboard/laporanresep/index', $data);
@@ -41,18 +46,30 @@ class LaporanResep extends BaseController
     {
         // Memeriksa peran pengguna, hanya 'Admin' dan 'Apoteker' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+            // Ambil daftar dokter dari query string
+            $dokterFilter = $this->request->getGet('dokter'); // Array nama dokter
+
             // Ambil laporan resep
-            $laporanresep = $this->DetailResepModel
-                ->select('obat.nama_obat AS nama_obat, 
-                    SUM(detail_resep.jumlah) AS total_keluar, 
-                    detail_resep.harga_satuan AS harga_satuan, 
-                    (SUM(detail_resep.jumlah) * harga_satuan) AS total_harga')
+            $query = $this->DetailResepModel
+                ->select('resep.dokter AS dokter,
+                obat.nama_obat AS nama_obat, 
+                SUM(detail_resep.jumlah) AS total_keluar, 
+                detail_resep.harga_satuan AS harga_satuan, 
+                (SUM(detail_resep.jumlah) * harga_satuan) AS total_harga')
                 ->join('resep', 'resep.id_resep = detail_resep.id_resep')
                 ->join('obat', 'obat.id_obat = detail_resep.id_obat')
                 ->where('DATE(resep.tanggal_resep)', $tanggal) // Kondisi berdasarkan tanggal
-                ->where('resep.status', 1) // Tambahkan kondisi status
-                ->groupBy('obat.nama_obat, DATE(resep.tanggal_resep)')
-                ->orderBy('obat.nama_obat', 'ASC') // Urutkan berdasarkan nama_obat
+                ->where('resep.status', 1); // Tambahkan kondisi status
+
+            // Tambahkan filter dokter jika ada
+            if (!empty($dokterFilter)) {
+                $query->whereIn('resep.dokter', $dokterFilter);
+            }
+
+            $laporanresep = $query
+                ->groupBy('resep.dokter, obat.nama_obat, DATE(resep.tanggal_resep)')
+                ->orderBy('resep.dokter', 'ASC')
+                ->orderBy('obat.nama_obat', 'ASC')
                 ->findAll();
 
             // Hitung total keseluruhan obat keluar dan harga
@@ -60,7 +77,7 @@ class LaporanResep extends BaseController
             $totalHargaKeseluruhan = array_sum(array_column($laporanresep, 'total_harga'));
 
             // Kirim dalam bentuk JSON
-            return $this->response->setStatusCode(200)->setJSON([
+            return $this->response->setJSON([
                 'laporanresep' => $laporanresep,
                 'tanggal' => $tanggal,
                 'total_keluar_keseluruhan' => $totalKeluarKeseluruhan,
@@ -78,18 +95,30 @@ class LaporanResep extends BaseController
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+            // Ambil daftar dokter dari query string
+            $dokterFilter = $this->request->getGet('dokter'); // Array nama dokter
+
             // Ambil laporan resep
-            $result = $this->DetailResepModel
-                ->select('obat.nama_obat AS nama_obat, 
-                    SUM(detail_resep.jumlah) AS total_keluar, 
-                    detail_resep.harga_satuan AS harga_satuan, 
-                    (SUM(detail_resep.jumlah) * harga_satuan) AS total_harga')
+            $query = $this->DetailResepModel
+                ->select('resep.dokter AS dokter,
+                obat.nama_obat AS nama_obat, 
+                SUM(detail_resep.jumlah) AS total_keluar, 
+                detail_resep.harga_satuan AS harga_satuan, 
+                (SUM(detail_resep.jumlah) * harga_satuan) AS total_harga')
                 ->join('resep', 'resep.id_resep = detail_resep.id_resep')
                 ->join('obat', 'obat.id_obat = detail_resep.id_obat')
                 ->where('DATE(resep.tanggal_resep)', $tanggal) // Kondisi berdasarkan tanggal
-                ->where('resep.status', 1) // Tambahkan kondisi status
-                ->groupBy('obat.nama_obat, DATE(resep.tanggal_resep)')
-                ->orderBy('obat.nama_obat', 'ASC') // Urutkan berdasarkan nama_obat
+                ->where('resep.status', 1); // Tambahkan kondisi status
+
+            // Tambahkan filter dokter jika ada
+            if (!empty($dokterFilter)) {
+                $query->whereIn('resep.dokter', $dokterFilter);
+            }
+
+            $result = $query
+                ->groupBy('resep.dokter, obat.nama_obat, DATE(resep.tanggal_resep)')
+                ->orderBy('resep.dokter', 'ASC')
+                ->orderBy('obat.nama_obat', 'ASC')
                 ->findAll();
 
             // Hitung total keseluruhan obat keluar dan harga
@@ -141,7 +170,8 @@ class LaporanResep extends BaseController
 
                 // Menambahkan header tabel detail laporan resep
                 $sheet->setCellValue('A5', 'No');
-                $sheet->setCellValue('B5', 'Nama Obat');
+                $sheet->setCellValue('B5', 'Dokter');
+                $sheet->setCellValue('C5', 'Nama Obat');
                 $sheet->setCellValue('D5', 'Harga Satuan');
                 $sheet->setCellValue('E5', 'Obat Keluar');
                 $sheet->setCellValue('F5', 'Total Harga');
@@ -150,7 +180,6 @@ class LaporanResep extends BaseController
                 $spreadsheet->getActiveSheet()->mergeCells('A1:F1');
                 $spreadsheet->getActiveSheet()->mergeCells('A2:F2');
                 $spreadsheet->getActiveSheet()->mergeCells('A3:F3');
-                $spreadsheet->getActiveSheet()->mergeCells('B5:C5');
                 $spreadsheet->getActiveSheet()->getPageSetup()
                     ->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
                 $spreadsheet->getActiveSheet()->getPageSetup()
@@ -164,7 +193,8 @@ class LaporanResep extends BaseController
                 foreach ($result as $list) {
                     // Isi data resep
                     $sheet->setCellValue('A' . $column, $nomor++);
-                    $sheet->setCellValue('B' . $column, $list['nama_obat']);
+                    $sheet->setCellValue('B' . $column, $list['dokter']);
+                    $sheet->setCellValue('C' . $column, $list['nama_obat']);
                     $sheet->getStyle('D' . $column)->getNumberFormat()->setFormatCode(
                         '_\Rp * #,##0_-;[Red]_\Rp * -#,##0_-;_-_\Rp * "-"_-;_-@_-'
                     );
@@ -177,9 +207,6 @@ class LaporanResep extends BaseController
 
                     // Atur nomor ke rata tengah
                     $sheet->getStyle("A{$column}")->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-
-                    // Gabungkan kolom B dan C
-                    $spreadsheet->getActiveSheet()->mergeCells('B' . $column . ':C' . $column);
 
                     // Tambahkan baris pemisah antar transaksi
                     $column++;
@@ -256,9 +283,14 @@ class LaporanResep extends BaseController
     {
         // Memeriksa peran pengguna, hanya 'Admin' dan 'Apoteker' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+            // Ambil daftar dokter dari query string
+            $dokterFilter = $this->request->getGet('dokter'); // Array nama dokter
+
             // Ambil laporan resep
-            $laporanresep = $this->DetailResepModel
-                ->select('obat.nama_obat AS nama_obat, 
+            $query = $this->DetailResepModel
+                ->select('DATE(resep.tanggal_resep) AS tanggal,
+                    resep.dokter AS dokter, 
+                    obat.nama_obat AS nama_obat, 
                     SUM(detail_resep.jumlah) AS total_keluar, 
                     detail_resep.harga_satuan AS harga_satuan, 
                     (SUM(detail_resep.jumlah) * harga_satuan) AS total_harga')
@@ -266,9 +298,18 @@ class LaporanResep extends BaseController
                 ->join('obat', 'obat.id_obat = detail_resep.id_obat')
                 ->where('YEAR(resep.tanggal_resep)', date('Y', strtotime($bulan)))
                 ->where('MONTH(resep.tanggal_resep)', date('m', strtotime($bulan)))
-                ->where('resep.status', 1) // Tambahkan kondisi status
-                ->groupBy('obat.nama_obat, YEAR(resep.tanggal_resep), MONTH(resep.tanggal_resep)')
-                ->orderBy('obat.nama_obat', 'ASC') // Urutkan berdasarkan nama_obat
+                ->where('resep.status', 1); // Tambahkan kondisi status
+
+            // Tambahkan filter dokter jika ada
+            if (!empty($dokterFilter)) {
+                $query->whereIn('resep.dokter', $dokterFilter);
+            }
+
+            $laporanresep = $query
+                ->groupBy('resep.dokter, obat.nama_obat, DATE(resep.tanggal_resep)')
+                ->orderBy('tanggal', 'ASC') // Urutkan berdasarkan tanggal ASC
+                ->orderBy('resep.dokter', 'ASC') // Urutkan berdasarkan dokter ASC
+                ->orderBy('obat.nama_obat', 'ASC') // Urutkan berdasarkan nama_obat ASC
                 ->findAll();
 
             // Hitung total keseluruhan obat keluar dan harga
@@ -276,7 +317,7 @@ class LaporanResep extends BaseController
             $totalHargaKeseluruhan = array_sum(array_column($laporanresep, 'total_harga'));
 
             // Kirim dalam bentuk JSON
-            return $this->response->setStatusCode(200)->setJSON([
+            return $this->response->setJSON([
                 'laporanresep' => $laporanresep,
                 'bulan' => $bulan,
                 'total_keluar_keseluruhan' => $totalKeluarKeseluruhan,
@@ -294,19 +335,33 @@ class LaporanResep extends BaseController
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+            // Ambil daftar dokter dari query string
+            $dokterFilter = $this->request->getGet('dokter'); // Array nama dokter
+
             // Ambil laporan resep
-            $result = $this->DetailResepModel
-                ->select('obat.nama_obat AS nama_obat, 
-                SUM(detail_resep.jumlah) AS total_keluar, 
-                detail_resep.harga_satuan AS harga_satuan, 
-                (SUM(detail_resep.jumlah) * harga_satuan) AS total_harga')
+            $query = $this->DetailResepModel
+                ->select('DATE(resep.tanggal_resep) AS tanggal,
+                    resep.dokter AS dokter, 
+                    obat.nama_obat AS nama_obat, 
+                    SUM(detail_resep.jumlah) AS total_keluar, 
+                    detail_resep.harga_satuan AS harga_satuan, 
+                    (SUM(detail_resep.jumlah) * harga_satuan) AS total_harga')
                 ->join('resep', 'resep.id_resep = detail_resep.id_resep')
                 ->join('obat', 'obat.id_obat = detail_resep.id_obat')
                 ->where('YEAR(resep.tanggal_resep)', date('Y', strtotime($bulan)))
                 ->where('MONTH(resep.tanggal_resep)', date('m', strtotime($bulan)))
-                ->where('resep.status', 1) // Tambahkan kondisi status
-                ->groupBy('obat.nama_obat, YEAR(resep.tanggal_resep), MONTH(resep.tanggal_resep)')
-                ->orderBy('obat.nama_obat', 'ASC') // Urutkan berdasarkan nama_obat
+                ->where('resep.status', 1); // Tambahkan kondisi status
+
+            // Tambahkan filter dokter jika ada
+            if (!empty($dokterFilter)) {
+                $query->whereIn('resep.dokter', $dokterFilter);
+            }
+
+            $result = $query
+                ->groupBy('resep.dokter, obat.nama_obat, DATE(resep.tanggal_resep)')
+                ->orderBy('tanggal', 'ASC') // Urutkan berdasarkan tanggal ASC
+                ->orderBy('resep.dokter', 'ASC') // Urutkan berdasarkan dokter ASC
+                ->orderBy('obat.nama_obat', 'ASC') // Urutkan berdasarkan nama_obat ASC
                 ->findAll();
 
             // Hitung total keseluruhan obat keluar dan harga
@@ -338,7 +393,7 @@ class LaporanResep extends BaseController
                 // Menambahkan informasi header di spreadsheet
                 $sheet->setCellValue('A1', 'KLINIK UTAMA MATA PADANG EYE CENTER TELUK KUANTAN');
                 $sheet->setCellValue('A2', 'Jl. Rusdi S. Abrus No. 35 LK III Sinambek, Kelurahan Sungai Jering, Kecamatan Kuantan Tengah, Kabupaten Kuantan Singingi, Riau.');
-                $sheet->setCellValue('A3', 'LAPORAN TRANSAKSI HARIAN');
+                $sheet->setCellValue('A3', 'LAPORAN TRANSAKSI BULANAN');
 
                 // Path gambar yang ingin ditambahkan
                 $gambarPath = FCPATH . 'assets/images/logo_pec.png'; // Ganti dengan path gambar Anda
@@ -358,16 +413,17 @@ class LaporanResep extends BaseController
 
                 // Menambahkan header tabel detail laporan resep
                 $sheet->setCellValue('A5', 'No');
-                $sheet->setCellValue('B5', 'Nama Obat');
-                $sheet->setCellValue('D5', 'Harga Satuan');
-                $sheet->setCellValue('E5', 'Obat Keluar');
-                $sheet->setCellValue('F5', 'Total Harga');
+                $sheet->setCellValue('B5', 'Tanggal');
+                $sheet->setCellValue('C5', 'Dokter');
+                $sheet->setCellValue('D5', 'Nama Obat');
+                $sheet->setCellValue('E5', 'Harga Satuan');
+                $sheet->setCellValue('F5', 'Obat Keluar');
+                $sheet->setCellValue('G5', 'Total Harga');
 
                 // Mengatur tata letak dan gaya untuk header
-                $spreadsheet->getActiveSheet()->mergeCells('A1:F1');
-                $spreadsheet->getActiveSheet()->mergeCells('A2:F2');
-                $spreadsheet->getActiveSheet()->mergeCells('A3:F3');
-                $spreadsheet->getActiveSheet()->mergeCells('B5:C5');
+                $spreadsheet->getActiveSheet()->mergeCells('A1:G1');
+                $spreadsheet->getActiveSheet()->mergeCells('A2:G2');
+                $spreadsheet->getActiveSheet()->mergeCells('A3:G3');
                 $spreadsheet->getActiveSheet()->getPageSetup()
                     ->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
                 $spreadsheet->getActiveSheet()->getPageSetup()
@@ -379,24 +435,36 @@ class LaporanResep extends BaseController
                 $nomor = 1;  // Nomor urut resep
 
                 foreach ($result as $list) {
+                    $tanggalinit = new DateTime($list['tanggal']);
+                    // Buat formatter untuk tanggal dan waktu
+                    $formatter = new IntlDateFormatter(
+                        'id_ID', // Locale untuk bahasa Indonesia
+                        IntlDateFormatter::LONG, // Format untuk tanggal
+                        IntlDateFormatter::NONE, // Tidak ada waktu
+                        'Asia/Jakarta', // Timezone
+                        IntlDateFormatter::GREGORIAN, // Calendar
+                        'd MMMM yyyy' // Format tanggal lengkap dengan nama hari
+                    );
+
+                    // Format tanggal
+                    $tanggalFormat = $formatter->format($tanggalinit);
                     // Isi data resep
                     $sheet->setCellValue('A' . $column, $nomor++);
-                    $sheet->setCellValue('B' . $column, $list['nama_obat']);
-                    $sheet->getStyle('D' . $column)->getNumberFormat()->setFormatCode(
+                    $sheet->setCellValue('B' . $column, $tanggalFormat);
+                    $sheet->setCellValue('C' . $column, $list['dokter']);
+                    $sheet->setCellValue('D' . $column, $list['nama_obat']);
+                    $sheet->getStyle('E' . $column)->getNumberFormat()->setFormatCode(
                         '_\Rp * #,##0_-;[Red]_\Rp * -#,##0_-;_-_\Rp * "-"_-;_-@_-'
                     );
-                    $sheet->setCellValue('D' . $column, $list['harga_satuan']);
-                    $sheet->setCellValue('E' . $column, $list['total_keluar']);
-                    $sheet->getStyle('F' . $column)->getNumberFormat()->setFormatCode(
+                    $sheet->setCellValue('E' . $column, $list['harga_satuan']);
+                    $sheet->setCellValue('F' . $column, $list['total_keluar']);
+                    $sheet->getStyle('G' . $column)->getNumberFormat()->setFormatCode(
                         '_\Rp * #,##0_-;[Red]_\Rp * -#,##0_-;_-_\Rp * "-"_-;_-@_-'
                     );
-                    $sheet->setCellValue('F' . $column, $list['total_harga']);
+                    $sheet->setCellValue('G' . $column, $list['total_harga']);
 
                     // Atur nomor ke rata tengah
                     $sheet->getStyle("A{$column}")->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-
-                    // Gabungkan kolom B dan C
-                    $spreadsheet->getActiveSheet()->mergeCells('B' . $column . ':C' . $column);
 
                     // Tambahkan baris pemisah antar transaksi
                     $column++;
@@ -404,10 +472,10 @@ class LaporanResep extends BaseController
 
                 // Menambahkan total keseluruhan di bawah tabel
                 $sheet->setCellValue('A' . ($column), 'Total Keseluruhan');
-                $spreadsheet->getActiveSheet()->mergeCells('A' . ($column) . ':D' . ($column));
-                $sheet->setCellValue('E' . ($column), $totalKeluarKeseluruhan);
-                $sheet->getStyle('F' . ($column))->getNumberFormat()->setFormatCode('_\Rp * #,##0_-;[Red]_\Rp * -#,##0_-;_-_\Rp * \"-\"_-;_-@_-');
-                $sheet->setCellValue('F' . ($column), $totalHargaKeseluruhan);
+                $spreadsheet->getActiveSheet()->mergeCells('A' . ($column) . ':E' . ($column));
+                $sheet->setCellValue('F' . ($column), $totalKeluarKeseluruhan);
+                $sheet->getStyle('G' . ($column))->getNumberFormat()->setFormatCode('_\Rp * #,##0_-;[Red]_\Rp * -#,##0_-;_-_\Rp * \"-\"_-;_-@_-');
+                $sheet->setCellValue('G' . ($column), $totalHargaKeseluruhan);
 
                 // Mengatur gaya teks untuk header dan total
                 $sheet->getStyle('A1')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
@@ -416,14 +484,14 @@ class LaporanResep extends BaseController
                 $sheet->getStyle('A2')->getFont()->setSize(8);
                 $sheet->getStyle('A3')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
                 $sheet->getStyle('A3')->getFont()->setSize(12);
-                $sheet->getStyle('A5:F5')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+                $sheet->getStyle('A5:G5')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
                 $sheet->getStyle('A' . ($column))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT);
 
                 // Mengatur gaya font untuk header dan total
                 $sheet->getStyle('A1:A4')->getFont()->setBold(TRUE);
-                $sheet->getStyle('A5:F5')->getFont()->setBold(TRUE);
-                $sheet->getStyle('A5:F5')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
-                $sheet->getStyle('A' . ($column) . ':F' . ($column))->getFont()->setBold(TRUE);
+                $sheet->getStyle('A5:G5')->getFont()->setBold(TRUE);
+                $sheet->getStyle('A5:G5')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+                $sheet->getStyle('A' . ($column) . ':G' . ($column))->getFont()->setBold(TRUE);
 
                 // Menambahkan border untuk header dan tabel
                 $headerBorder1 = [
@@ -434,7 +502,7 @@ class LaporanResep extends BaseController
                         ]
                     ]
                 ];
-                $sheet->getStyle('A2:F2')->applyFromArray($headerBorder1);
+                $sheet->getStyle('A2:G2')->applyFromArray($headerBorder1);
                 $tableBorder = [
                     'borders' => [
                         'allBorders' => [
@@ -443,17 +511,18 @@ class LaporanResep extends BaseController
                         ]
                     ]
                 ];
-                $sheet->getStyle('A5:F' . ($column))->applyFromArray($tableBorder);
-                $sheet->getStyle('A5:F' . ($column))->getAlignment()->setWrapText(true);
-                $sheet->getStyle('A6:F' . ($column + 1))->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
+                $sheet->getStyle('A5:G' . ($column))->applyFromArray($tableBorder);
+                $sheet->getStyle('A5:G' . ($column))->getAlignment()->setWrapText(true);
+                $sheet->getStyle('A6:G' . ($column + 1))->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
 
                 // Mengatur lebar kolom
                 $sheet->getColumnDimension('A')->setWidth(30, 'px');
-                $sheet->getColumnDimension('B')->setWidth(275, 'px');
-                $sheet->getColumnDimension('C')->setWidth(275, 'px');
-                $sheet->getColumnDimension('D')->setWidth(125, 'px');
-                $sheet->getColumnDimension('E')->setWidth(75, 'px');
-                $sheet->getColumnDimension('F')->setWidth(125, 'px');
+                $sheet->getColumnDimension('B')->setWidth(183, 'px');
+                $sheet->getColumnDimension('C')->setWidth(183, 'px');
+                $sheet->getColumnDimension('D')->setWidth(183, 'px');
+                $sheet->getColumnDimension('E')->setWidth(125, 'px');
+                $sheet->getColumnDimension('F')->setWidth(75, 'px');
+                $sheet->getColumnDimension('G')->setWidth(125, 'px');
 
                 // Menyimpan file spreadsheet dan mengirimkan ke browser
                 $writer = new Xlsx($spreadsheet);

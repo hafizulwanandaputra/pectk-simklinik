@@ -72,7 +72,7 @@ class ResepLuar extends BaseController
                 ->where('no_rm', null)
                 ->where('telpon', null)
                 ->where('tempat_lahir', null)
-                ->where('dokter', null)
+                ->where('dokter', 'Resep Luar')
                 ->groupEnd();
 
             // Menghitung total hasil pencarian
@@ -112,7 +112,7 @@ class ResepLuar extends BaseController
                 ->where('no_rm', null)
                 ->where('telpon', null)
                 ->where('tempat_lahir', null)
-                ->where('dokter', null)
+                ->where('dokter', 'Resep Luar')
                 ->find($id); // Mengambil resep 
             return $this->response->setJSON($data); // Mengembalikan data resep dalam format JSON
         } else {
@@ -152,7 +152,7 @@ class ResepLuar extends BaseController
                 'jenis_kelamin' => $this->request->getPost('jenis_kelamin'),
                 'tempat_lahir' => NULL,
                 'tanggal_lahir' => $this->request->getPost('tanggal_lahir'),
-                'dokter' => NULL,
+                'dokter' => 'Resep Luar',
                 'tanggal_resep' => date('Y-m-d H:i:s'), // Menyimpan tanggal resep saat ini
                 'jumlah_resep' => 0,
                 'total_biaya' => 0,
@@ -195,7 +195,7 @@ class ResepLuar extends BaseController
                 ->where('no_rm', null)
                 ->where('telpon', null)
                 ->where('tempat_lahir', null)
-                ->where('dokter', null)
+                ->where('dokter', 'Resep Luar')
                 ->find($this->request->getPost('id_resep'));
 
             if ($resep['status'] == 0) {
@@ -210,7 +210,7 @@ class ResepLuar extends BaseController
                     'jenis_kelamin' => $this->request->getPost('jenis_kelamin'),
                     'tempat_lahir' => NULL,
                     'tanggal_lahir' => $this->request->getPost('tanggal_lahir'),
-                    'dokter' => NULL,
+                    'dokter' => 'Resep Luar',
                     'tanggal_resep' => date('Y-m-d H:i:s'), // Menyimpan tanggal resep saat ini
                     'jumlah_resep' => 0,
                     'total_biaya' => 0,
@@ -247,7 +247,7 @@ class ResepLuar extends BaseController
                 ->where('no_rm', null)
                 ->where('telpon', null)
                 ->where('tempat_lahir', null)
-                ->where('dokter', null)
+                ->where('dokter', 'Resep Luar')
                 ->find($id);
 
             if ($resep['status'] == 0) {
@@ -326,7 +326,7 @@ class ResepLuar extends BaseController
                 ->where('no_rm', null)
                 ->where('telpon', null)
                 ->where('tempat_lahir', null)
-                ->where('dokter', null)
+                ->where('dokter', 'Resep Luar')
                 ->find($id);
 
             // Memeriksa apakah resep tidak kosong
@@ -356,9 +356,14 @@ class ResepLuar extends BaseController
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
             // Mengambil detail resep berdasarkan id_resep yang diberikan
             $data = $this->DetailResepModel
-                ->where('detail_resep.id_resep', $id)
                 ->join('resep', 'resep.id_resep = detail_resep.id_resep', 'inner') // Bergabung dengan tabel resep
                 ->join('obat', 'obat.id_obat = detail_resep.id_obat', 'inner') // Bergabung dengan tabel obat
+                ->where('detail_resep.id_resep', $id)
+                ->where('resep.nomor_registrasi', null)
+                ->where('resep.no_rm', null)
+                ->where('resep.telpon', null)
+                ->where('resep.tempat_lahir', null)
+                ->where('resep.dokter', 'Resep Luar')
                 ->orderBy('id_detail_resep', 'ASC') // Mengurutkan berdasarkan id_detail_resep
                 ->findAll();
 
@@ -508,7 +513,13 @@ class ResepLuar extends BaseController
 
             // Mengambil data resep
             $resepb = $db->table('resep');
-            $resepb->where('id_resep', $id);
+            $resepb
+                ->where('id_resep', $id)
+                ->where('nomor_registrasi', null)
+                ->where('no_rm', null)
+                ->where('telpon', null)
+                ->where('tempat_lahir', null)
+                ->where('dokter', 'Resep Luar');
             $resep = $resepb->get()->getRowArray();
 
             // Jika status resep adalah transaksi sudah diproses, gagalkan operasi
@@ -606,7 +617,13 @@ class ResepLuar extends BaseController
 
             // Mengambil data resep
             $resepb = $db->table('resep');
-            $resepb->where('id_resep', $id);
+            $resepb
+                ->where('id_resep', $id)
+                ->where('nomor_registrasi', null)
+                ->where('no_rm', null)
+                ->where('telpon', null)
+                ->where('tempat_lahir', null)
+                ->where('dokter', 'Resep Luar');
             $resep = $resepb->get()->getRowArray();
 
             // Jika status resep adalah transaksi sudah diproses, gagalkan operasi
@@ -688,7 +705,13 @@ class ResepLuar extends BaseController
 
                 // Mengambil data resep
                 $resepb = $db->table('resep');
-                $resepb->where('id_resep', $id_resep);
+                $resepb
+                    ->where('id_resep', $id_resep)
+                    ->where('nomor_registrasi', null)
+                    ->where('no_rm', null)
+                    ->where('telpon', null)
+                    ->where('tempat_lahir', null)
+                    ->where('dokter', 'Resep Luar');
                 $resep = $resepb->get()->getRowArray();
 
                 // Jika status resep adalah transaksi sudah diproses, gagalkan operasi
@@ -757,6 +780,11 @@ class ResepLuar extends BaseController
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
             // Mengambil data resep berdasarkan id dan status
             $resep = $this->ResepModel
+                ->where('nomor_registrasi', null)
+                ->where('no_rm', null)
+                ->where('telpon', null)
+                ->where('tempat_lahir', null)
+                ->where('dokter', 'Resep Luar')
                 ->where('status', 0)
                 ->find($id);
             // Mengambil detail resep yang berkaitan dengan bentuk obat Tablet/Kapsul dan Sirup
@@ -804,6 +832,11 @@ class ResepLuar extends BaseController
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
             // Mengambil data resep berdasarkan id dan status
             $resep = $this->ResepModel
+                ->where('nomor_registrasi', null)
+                ->where('no_rm', null)
+                ->where('telpon', null)
+                ->where('tempat_lahir', null)
+                ->where('dokter', 'Resep Luar')
                 ->where('status', 0)
                 ->find($id);
             // Mengambil detail resep yang berkaitan dengan bentuk obat Tetes dan Salep

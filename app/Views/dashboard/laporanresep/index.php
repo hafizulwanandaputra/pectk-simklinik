@@ -19,11 +19,22 @@
         </nav>
         <div class="tab-content" id="nav-tabContent">
             <div class="tab-pane show active" id="resepharian-container" role="tabpanel" aria-labelledby="resepharian-container-tab" tabindex="0">
-                <fieldset class="border rounded-3 px-2 py-0 mb-3" id="tambahPasienForm">
+                <fieldset class="border rounded-3 px-2 py-0 mb-3">
                     <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Masukkan Tanggal</legend>
                     <div class="mb-2 input-group">
                         <input type="date" id="tanggal" name="tanggal" class="form-control rounded-start-3">
                         <button class="btn btn-success bg-gradient rounded-end-3" type="button" id="refreshButton1" disabled><i class="fa-solid fa-sync"></i></button>
+                    </div>
+                </fieldset>
+                <fieldset class="border rounded-3 px-2 py-0 mb-3" id="dokter-harian" style="display: none;">
+                    <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Daftar Dokter</legend>
+                    <div class="form-check">
+                        <?php foreach ($daftarDokter as $dokter) : ?>
+                            <label class="form-check-label">
+                                <input class="form-check-input dokter-checkbox-1" type="checkbox" value="<?= $dokter['dokter'] ?>" name="dokter[]">
+                                <?= $dokter['dokter']; ?>
+                            </label><br>
+                        <?php endforeach; ?>
                     </div>
                 </fieldset>
                 <div class="table-responsive">
@@ -31,7 +42,8 @@
                         <thead>
                             <tr class="align-middle">
                                 <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">No</th>
-                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">Nama Obat</th>
+                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 50%;">Dokter</th>
+                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 50%;">Nama Obat</th>
                                 <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Harga Satuan</th>
                                 <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Obat Keluar</th>
                                 <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Harga</th>
@@ -39,12 +51,12 @@
                         </thead>
                         <tbody class="align-top" id="resepharian">
                             <tr>
-                                <td colspan="5" class="text-center">Memuat data resep...</td>
+                                <td colspan="6" class="text-center">Memuat data resep...</td>
                             </tr>
                         </tbody>
                         <tbody>
                             <tr>
-                                <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 2px;" colspan="3">Total Keseluruhan</th>
+                                <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 2px;" colspan="4">Total Keseluruhan</th>
                                 <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="total_keluar_harian"></th>
                                 <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="total_harga_harian"></th>
                             </tr>
@@ -59,11 +71,22 @@
                 </div>
             </div>
             <div class="tab-pane" id="resepbulanan-container" role="tabpanel" aria-labelledby="resepbulanan-container-tab" tabindex="0">
-                <fieldset class="border rounded-3 px-2 py-0 mb-3" id="tambahPasienForm">
+                <fieldset class="border rounded-3 px-2 py-0 mb-3">
                     <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Masukkan Bulan</legend>
                     <div class="mb-2 input-group">
                         <input type="month" id="bulan" name="bulan" class="form-control rounded-start-3">
                         <button class="btn btn-success bg-gradient rounded-end-3" type="button" id="refreshButton2" disabled><i class="fa-solid fa-sync"></i></button>
+                    </div>
+                </fieldset>
+                <fieldset class="border rounded-3 px-2 py-0 mb-3" id="dokter-bulanan" style="display: none;">
+                    <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Daftar Dokter</legend>
+                    <div class="form-check">
+                        <?php foreach ($daftarDokter as $dokter) : ?>
+                            <label class="form-check-label">
+                                <input class="form-check-input dokter-checkbox-2" type="checkbox" value="<?= $dokter['dokter'] ?>" name="dokter[]">
+                                <?= $dokter['dokter']; ?>
+                            </label><br>
+                        <?php endforeach; ?>
                     </div>
                 </fieldset>
                 <div class="table-responsive">
@@ -71,7 +94,9 @@
                         <thead>
                             <tr class="align-middle">
                                 <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">No</th>
-                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">Nama Obat</th>
+                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Tanggal</th>
+                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 50%;">Dokter</th>
+                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 50%;">Nama Obat</th>
                                 <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Harga Satuan</th>
                                 <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Obat Keluar</th>
                                 <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Harga</th>
@@ -79,12 +104,12 @@
                         </thead>
                         <tbody class="align-top" id="resepbulanan">
                             <tr>
-                                <td colspan="5" class="text-center">Memuat data resep...</td>
+                                <td colspan="7" class="text-center">Memuat data resep...</td>
                             </tr>
                         </tbody>
                         <tbody>
                             <tr>
-                                <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 2px;" colspan="3">Total Keseluruhan</th>
+                                <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 2px;" colspan="5">Total Keseluruhan</th>
                                 <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="total_keluar_bulanan"></th>
                                 <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="total_harga_bulanan"></th>
                             </tr>
@@ -108,11 +133,22 @@
     async function downloadReport1() {
         $('#loadingSpinner').show(); // Menampilkan spinner
 
+        // Mengambil semua checkbox yang dipilih
+        const selectedDoctors = [];
+        $('.dokter-checkbox-1:checked').each(function() {
+            selectedDoctors.push($(this).val());
+        });
+
+        // Membangun query string
+        const queryString = $.param({
+            dokter: selectedDoctors
+        });
+
         try {
             // Ambil nilai tanggal dari input
             const tanggal = $('#tanggal').val();
             // Mengambil file dari server
-            const response = await axios.get(`<?= base_url('laporanresep/exportdailyexcel') ?>/${tanggal}`, {
+            const response = await axios.get(`<?= base_url('laporanresep/exportdailyexcel') ?>/${tanggal}?${queryString}`, {
                 responseType: 'blob' // Mendapatkan data sebagai blob
             });
 
@@ -141,11 +177,22 @@
     async function downloadReport2() {
         $('#loadingSpinner').show(); // Menampilkan spinner
 
+        // Mengambil semua checkbox yang dipilih
+        const selectedDoctors = [];
+        $('.dokter-checkbox-2:checked').each(function() {
+            selectedDoctors.push($(this).val());
+        });
+
+        // Membangun query string
+        const queryString = $.param({
+            dokter: selectedDoctors
+        });
+
         try {
             // Ambil nilai bulan dari input
             const bulan = $('#bulan').val();
             // Mengambil file dari server
-            const response = await axios.get(`<?= base_url('laporanresep/exportmonthlyexcel') ?>/${bulan}`, {
+            const response = await axios.get(`<?= base_url('laporanresep/exportmonthlyexcel') ?>/${bulan}?${queryString}`, {
                 responseType: 'blob' // Mendapatkan data sebagai blob
             });
 
@@ -170,9 +217,14 @@
         }
     }
     // HTML untuk menunjukkan bahwa data transaksi sedang dimuat
-    const loading = `
+    const loading1 = `
         <tr>
-            <td colspan="5" class="text-center">Memuat data resep...</td>
+            <td colspan="6" class="text-center">Memuat data resep...</td>
+        </tr>
+    `;
+    const loading2 = `
+        <tr>
+            <td colspan="7" class="text-center">Memuat data resep...</td>
         </tr>
     `;
 
@@ -180,19 +232,31 @@
     async function fetchResep1() {
         $('#loadingSpinner').show(); // Menampilkan spinner loading
 
+        // Mengambil semua checkbox yang dipilih
+        const selectedDoctors = [];
+        $('.dokter-checkbox-1:checked').each(function() {
+            selectedDoctors.push($(this).val());
+        });
+
+        // Membangun query string
+        const queryString = $.param({
+            dokter: selectedDoctors
+        });
+
         try {
             // Ambil nilai tanggal dari input
             const tanggal = $('#tanggal').val();
 
             // Cek apakah tanggal diinput
             if (!tanggal) {
+                $('#dokter-harian').hide(); // Sembunyikan kotak centang dokter
                 $('#reportBtns1').hide(); // Sembunyikan tombol buat laporan
                 $('#resepharian').empty(); // Kosongkan tabel resep
                 $('#refreshButton1').prop('disabled', true); // Nonaktifkan tombol refresh
                 // Tampilkan pesan jika tidak ada data
                 const emptyRow = `
                     <tr>
-                        <td colspan="5" class="text-center">Silakan masukkan tanggal</td>
+                        <td colspan="6" class="text-center">Silakan masukkan tanggal</td>
                     </tr>
                 `;
                 $('#resepharian').append(emptyRow); // Menambahkan baris kosong ke tabel
@@ -200,12 +264,13 @@
             }
 
             // Mengambil data resep dari API berdasarkan tanggal
-            const response = await axios.get(`<?= base_url('laporanresep/exportdaily') ?>/${tanggal}`);
+            const response = await axios.get(`<?= base_url('laporanresep/exportdaily') ?>/${tanggal}?${queryString}`);
             const data = response.data.laporanresep; // Mendapatkan data resep
             // Mendapatkan total keseluruhan
             const total_keluar_keseluruhan = response.data.total_keluar_keseluruhan;
             const total_harga_keseluruhan = response.data.total_harga_keseluruhan;
 
+            $('#dokter-harian').show(); // Tampilkan kotak centang dokter
             $('#reportBtns1').show(); // Tampilkan tombol buat laporan
             $('#resepharian').empty(); // Kosongkan tabel resep
             $('#refreshButton1').prop('disabled', false); // Aktifkan tombol refresh
@@ -224,6 +289,8 @@
 
             // Menambahkan setiap resep ke tabel
             data.forEach(function(resep, index) {
+                // Nilai NULL = Resep Luar
+                const dokter = resep.dokter == null ? `Resep Luar` : resep.dokter;
                 // Menjadikan angka-angka yang diperoleh sebagai integer
                 const total_keluar = parseInt(resep.total_keluar);
                 const harga_satuan = parseInt(resep.harga_satuan);
@@ -233,6 +300,7 @@
                 const resepElement = `
                     <tr>
                         <td class="date text-nowrap text-center">${index + 1}</td>
+                        <td>${dokter}</td>
                         <td>${resep.nama_obat}</td>
                         <td class="date text-end">Rp${harga_satuan.toLocaleString('id-ID')}</td>
                         <td class="date text-end">${total_keluar.toLocaleString('id-ID')}</td>
@@ -276,7 +344,14 @@
     // Event listener ketika tanggal diubah
     $('#tanggal').on('change', function() {
         $('#resepharian').empty(); // Kosongkan tabel resep
-        $('#resepharian').append(loading); // Menampilkan loading indicator
+        $('#resepharian').append(loading1); // Menampilkan loading indicator
+        fetchResep1(); // Memanggil fungsi untuk mengambil data resep
+    });
+
+    // Event listener ketika kotak centang diubah
+    $('.dokter-checkbox-1').on('change', function() {
+        $('#resepharian').empty(); // Kosongkan tabel resep
+        $('#resepharian').append(loading1); // Menampilkan loading indicator
         fetchResep1(); // Memanggil fungsi untuk mengambil data resep
     });
 
@@ -284,19 +359,31 @@
     async function fetchResep2() {
         $('#loadingSpinner').show(); // Menampilkan spinner loading
 
+        // Mengambil semua checkbox yang dipilih
+        const selectedDoctors = [];
+        $('.dokter-checkbox-2:checked').each(function() {
+            selectedDoctors.push($(this).val());
+        });
+
+        // Membangun query string
+        const queryString = $.param({
+            dokter: selectedDoctors
+        });
+
         try {
             // Ambil nilai bulan dari input
             const bulan = $('#bulan').val();
 
             // Cek apakah bulan diinput
             if (!bulan) {
+                $('#dokter-bulanan').hide(); // Sembunyikan kotak centang dokter
                 $('#reportBtns2').hide(); // Sembunyikan tombol buat laporan
                 $('#resepbulanan').empty(); // Kosongkan tabel resep
                 $('#refreshButton2').prop('disabled', true); // Nonaktifkan tombol refresh
                 // Tampilkan pesan jika tidak ada data
                 const emptyRow = `
                     <tr>
-                        <td colspan="5" class="text-center">Silakan masukkan bulan</td>
+                        <td colspan="7" class="text-center">Silakan masukkan bulan</td>
                     </tr>
                 `;
                 $('#resepbulanan').append(emptyRow); // Menambahkan baris kosong ke tabel
@@ -304,12 +391,13 @@
             }
 
             // Mengambil data resep dari API berdasarkan bulan
-            const response = await axios.get(`<?= base_url('laporanresep/exportmonthly') ?>/${bulan}`);
+            const response = await axios.get(`<?= base_url('laporanresep/exportmonthly') ?>/${bulan}?${queryString}`);
             const data = response.data.laporanresep; // Mendapatkan data resep
             // Mendapatkan total keseluruhan
             const total_keluar_keseluruhan = response.data.total_keluar_keseluruhan;
             const total_harga_keseluruhan = response.data.total_harga_keseluruhan;
 
+            $('#dokter-bulanan').show(); // Tampilkan kotak centang dokter
             $('#reportBtns2').show(); // Tampilkan tombol buat laporan
             $('#resepbulanan').empty(); // Kosongkan tabel resep
             $('#refreshButton2').prop('disabled', false); // Aktifkan tombol refresh
@@ -320,7 +408,7 @@
                 $('#reportBtns2').hide(); // Sembunyikan tombol buat laporan
                 const emptyRow = `
                     <tr>
-                        <td colspan="5" class="text-center">Tidak ada resep yang digunakan pada ${bulan}</td>
+                        <td colspan="7" class="text-center">Tidak ada resep yang digunakan pada ${bulan}</td>
                     </tr>
                 `;
                 $('#resepbulanan').append(emptyRow); // Menambahkan baris pesan ke tabel
@@ -328,6 +416,8 @@
 
             // Menambahkan setiap resep ke tabel
             data.forEach(function(resep, index) {
+                // Nilai NULL = Resep Luar
+                const dokter = resep.dokter == null ? `Resep Luar` : resep.dokter;
                 // Menjadikan angka-angka yang diperoleh sebagai integer
                 const total_keluar = parseInt(resep.total_keluar);
                 const harga_satuan = parseInt(resep.harga_satuan);
@@ -337,6 +427,8 @@
                 const resepElement = `
                     <tr>
                         <td class="date text-nowrap text-center">${index + 1}</td>
+                        <td class="date text-nowrap">${resep.tanggal}</td>
+                        <td>${dokter}</td>
                         <td>${resep.nama_obat}</td>
                         <td class="date text-end">Rp${harga_satuan.toLocaleString('id-ID')}</td>
                         <td class="date text-end">${total_keluar.toLocaleString('id-ID')}</td>
@@ -366,7 +458,7 @@
             console.error(error); // Menampilkan error di konsol
             const errorRow = `
                 <tr>
-                    <td colspan="5" class="text-center">${error}</td>
+                    <td colspan="7" class="text-center">${error}</td>
                 </tr>
             `;
             $('#resepbulanan').empty(); // Kosongkan tabel resep
@@ -380,7 +472,14 @@
     // Event listener ketika bulan diubah
     $('#bulan').on('change', function() {
         $('#resepbulanan').empty(); // Kosongkan tabel resep
-        $('#resepbulanan').append(loading); // Menampilkan loading indicator
+        $('#resepbulanan').append(loading2); // Menampilkan loading indicator
+        fetchResep2(); // Memanggil fungsi untuk mengambil data resep
+    });
+
+    // Event listener ketika kotak centang diubah
+    $('.dokter-checkbox-2').on('change', function() {
+        $('#resepbulanan').empty(); // Kosongkan tabel resep
+        $('#resepbulanan').append(loading2); // Menampilkan loading indicator
         fetchResep2(); // Memanggil fungsi untuk mengambil data resep
     });
 
@@ -388,13 +487,13 @@
         // Menangani event klik pada tombol refresh
         $('#refreshButton1').on('click', function() {
             $('#resepharian').empty(); // Kosongkan tabel resep
-            $('#resepharian').append(loading); // Tampilkan loading indicator
+            $('#resepharian').append(loading1); // Tampilkan loading indicator
             fetchResep1(); // Panggil fungsi untuk mengambil data resep
         });
         // Menangani event klik pada tombol refresh
         $('#refreshButton2').on('click', function() {
             $('#resepbulanan').empty(); // Kosongkan tabel resep
-            $('#resepbulanan').append(loading); // Tampilkan loading indicator
+            $('#resepbulanan').append(loading2); // Tampilkan loading indicator
             fetchResep2(); // Panggil fungsi untuk mengambil data resep
         });
 

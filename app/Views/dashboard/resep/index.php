@@ -14,13 +14,11 @@
 <?= $this->section('content'); ?>
 <main class="col-md-9 ms-sm-auto col-lg-10 px-3 px-md-4 pt-3">
     <div class="d-flex flex-column flex-lg-row mb-1 gap-2 mb-3">
-        <?php if (session()->get('role') != 'Apoteker'): ?>
-            <select id="statusFilter" class="form-select form-select-sm w-auto rounded-3">
-                <option value="">Semua</option>
-                <option value="1">Diproses</option>
-                <option value="0">Belum Diproses</option>
-            </select>
-        <?php endif; ?>
+        <select id="statusFilter" class="form-select form-select-sm w-auto rounded-3">
+            <option value="">Semua</option>
+            <option value="1">Diproses</option>
+            <option value="0">Belum Diproses</option>
+        </select>
         <div class="input-group input-group-sm flex-fill">
             <input type="search" id="searchInput" class="form-control rounded-start-3" placeholder="Cari pasien, dokter, dan tanggal resep...">
             <button class="btn btn-success btn-sm bg-gradient rounded-end-3" type="button" id="refreshButton"><i class="fa-solid fa-sync"></i></button>
@@ -46,40 +44,38 @@
             </form>
         </fieldset>
     <?php endif; ?>
-    <div class="list-group-container overflow-auto">
-        <ul id="resepContainer" class="list-group shadow-sm rounded-3 mt-1">
-            <?php for ($i = 0; $i < 12; $i++) : ?>
+    <ul id="resepContainer" class="list-group shadow-sm rounded-3 mt-1">
+        <?php for ($i = 0; $i < 12; $i++) : ?>
 
-                <li class="list-group-item bg-body-tertiary pb-3 pt-3">
-                    <div class="d-flex">
-                        <div class="align-self-center ps-2 w-100">
-                            <h5 class="card-title placeholder-glow">
-                                <span class="placeholder" style="width: 100%"></span>
-                            </h5>
-                            <h6 class="card-subtitle mb-2 placeholder-glow">
-                                <span class="placeholder" style="width: 25%;"></span>
-                            </h6>
-                            <p class="card-text placeholder-glow">
-                                <small>
-                                    <span class="placeholder" style="width: 12.5%;"></span><br>
-                                    <span class="placeholder" style="width: 12.5%;"></span><br>
-                                    <span class="placeholder" style="width: 12.5%;"></span><br>
-                                    <span class="placeholder" style="width: 12.5%;"></span>
-                                </small>
-                            </p>
-                        </div>
+            <li class="list-group-item bg-body-tertiary pb-3 pt-3">
+                <div class="d-flex">
+                    <div class="align-self-center ps-2 w-100">
+                        <h5 class="card-title placeholder-glow">
+                            <span class="placeholder" style="width: 100%"></span>
+                        </h5>
+                        <h6 class="card-subtitle mb-2 placeholder-glow">
+                            <span class="placeholder" style="width: 25%;"></span>
+                        </h6>
+                        <p class="card-text placeholder-glow">
+                            <small>
+                                <span class="placeholder" style="width: 12.5%;"></span><br>
+                                <span class="placeholder" style="width: 12.5%;"></span><br>
+                                <span class="placeholder" style="width: 12.5%;"></span><br>
+                                <span class="placeholder" style="width: 12.5%;"></span>
+                            </small>
+                        </p>
                     </div>
-                    <hr>
-                    <div class="d-grid gap-2 d-flex justify-content-end">
-                        <a class="btn btn-body bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
-                        <?php if (session()->get('role') != 'Apoteker'): ?>
-                            <a class="btn btn-danger bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
-                        <?php endif; ?>
-                    </div>
-                </li>
-            <?php endfor; ?>
-        </ul>
-    </div>
+                </div>
+                <hr>
+                <div class="d-grid gap-2 d-flex justify-content-end">
+                    <a class="btn btn-body bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                    <?php if (session()->get('role') != 'Apoteker'): ?>
+                        <a class="btn btn-danger bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                    <?php endif; ?>
+                </div>
+            </li>
+        <?php endfor; ?>
+    </ul>
     <nav id="paginationNav" class="d-flex justify-content-center justify-content-lg-end mt-3 overflow-auto w-100">
         <ul class="pagination pagination-sm" style="--bs-pagination-border-radius: var(--bs-border-radius-lg);"></ul>
     </nav>
@@ -173,7 +169,7 @@
     async function fetchResep() {
         const search = $('#searchInput').val();
         const offset = (currentPage - 1) * limit;
-        const status = <?= (session()->get('role') == 'Apoteker') ? "0" : "$('#statusFilter').val();" ?>
+        const status = $('#statusFilter').val();
 
         // Show the spinner
         $('#loadingSpinner').show();

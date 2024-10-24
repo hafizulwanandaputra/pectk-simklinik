@@ -63,38 +63,36 @@
             </fieldset>
         </div>
     </div>
-    <div class="list-group-container overflow-auto">
-        <ul id="transaksiContainer" class="list-group shadow-sm rounded-3 mt-1">
-            <?php for ($i = 0; $i < 12; $i++) : ?>
-                <li class="list-group-item bg-body-tertiary pb-3 pt-3">
-                    <div class="d-flex">
-                        <div class="align-self-center ps-2 w-100">
-                            <h5 class="card-title placeholder-glow">
-                                <span class="placeholder" style="width: 100%"></span>
-                            </h5>
-                            <h6 class="card-subtitle mb-2 placeholder-glow">
-                                <span class="placeholder" style="width: 25%;"></span>
-                            </h6>
-                            <p class="card-text placeholder-glow">
-                                <small>
-                                    <span class="placeholder" style="width: 12.5%;"></span><br>
-                                    <span class="placeholder" style="width: 12.5%;"></span><br>
-                                    <span class="placeholder" style="width: 12.5%;"></span><br>
-                                    <span class="placeholder" style="width: 12.5%;"></span><br>
-                                    <span class="placeholder" style="width: 12.5%;"></span>
-                                </small>
-                            </p>
-                        </div>
+    <ul id="transaksiContainer" class="list-group shadow-sm rounded-3 mt-1">
+        <?php for ($i = 0; $i < 12; $i++) : ?>
+            <li class="list-group-item bg-body-tertiary pb-3 pt-3">
+                <div class="d-flex">
+                    <div class="align-self-center ps-2 w-100">
+                        <h5 class="card-title placeholder-glow">
+                            <span class="placeholder" style="width: 100%"></span>
+                        </h5>
+                        <h6 class="card-subtitle mb-2 placeholder-glow">
+                            <span class="placeholder" style="width: 25%;"></span>
+                        </h6>
+                        <p class="card-text placeholder-glow">
+                            <small>
+                                <span class="placeholder" style="width: 12.5%;"></span><br>
+                                <span class="placeholder" style="width: 12.5%;"></span><br>
+                                <span class="placeholder" style="width: 12.5%;"></span><br>
+                                <span class="placeholder" style="width: 12.5%;"></span><br>
+                                <span class="placeholder" style="width: 12.5%;"></span>
+                            </small>
+                        </p>
                     </div>
-                    <hr>
-                    <div class="d-grid gap-2 d-flex justify-content-end">
-                        <a class="btn btn-body bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
-                        <a class="btn btn-danger bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
-                    </div>
-                </li>
-            <?php endfor; ?>
-        </ul>
-    </div>
+                </div>
+                <hr>
+                <div class="d-grid gap-2 d-flex justify-content-end">
+                    <a class="btn btn-body bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                    <a class="btn btn-danger bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                </div>
+            </li>
+        <?php endfor; ?>
+    </ul>
     <nav id="paginationNav" class="d-flex justify-content-center justify-content-lg-end mt-3 overflow-auto w-100">
         <ul class="pagination pagination-sm" style="--bs-pagination-border-radius: var(--bs-border-radius-lg);"></ul>
     </nav>
