@@ -355,7 +355,7 @@ class Transaksi extends BaseController
                 ->where('no_rm', null)
                 ->where('telpon', null)
                 ->where('tempat_lahir', null)
-                ->where('dokter', null)
+                ->where('dokter', 'Resep Luar')
                 ->where('status', 0)
                 ->where('id_resep', $id_resep)
                 ->get()->getRowArray();
