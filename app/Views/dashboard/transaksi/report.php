@@ -19,25 +19,6 @@
                 <button class="btn btn-success bg-gradient rounded-end-3" type="button" id="refreshButton" disabled><i class="fa-solid fa-sync"></i></button>
             </div>
         </fieldset>
-        <div id="infoCard" class="row row-cols-1 row-cols-sm-2 g-2 mb-2" style="display: none;">
-            <div class="col">
-                <div class="card bg-body-tertiary w-100 rounded-3">
-                    <div class="card-header w-100 text-truncate">Tanggal </div>
-                    <div class="card-body placeholder-glow">
-                        <h5 class="display-6 fw-medium date mb-0" id="tanggal2"><span class="placeholder w-100"></span></h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="card bg-body-tertiary w-100 rounded-3">
-                    <div class="card-header w-100 text-truncate">Jumlah Transaksi yang Diproses</div>
-                    <div class="card-body placeholder-glow">
-                        <h5 class="display-6 fw-medium date mb-0" id="lengthtransaksi"><span class="placeholder w-100"></span></h5>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <hr>
         <div class="table-responsive">
             <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
                 <thead>
@@ -110,10 +91,10 @@
     }
     // HTML untuk menunjukkan bahwa data transaksi sedang dimuat
     const loading = `
-    <tr>
-        <td colspan="9" class="text-center">Memuat data transaksi...</td>
-    </tr>
-`;
+        <tr>
+            <td colspan="9" class="text-center">Memuat data transaksi...</td>
+        </tr>
+    `;
 
     // Fungsi untuk mengambil data transaksi dari tabel transaksi
     async function fetchTransaksi() {
@@ -125,13 +106,9 @@
 
             // Cek apakah tanggal diinput
             if (!tanggal) {
-                $('#infoCard').hide(); // Sembunyikan infoCard
                 $('#reportBtns').hide(); // Sembunyikan tombol buat laporan
                 $('#datatransaksi').empty(); // Kosongkan tabel transaksi
                 $('#refreshButton').prop('disabled', true); // Nonaktifkan tombol refresh
-                $('#tanggal2').text(``); // Kosongkan tanggal tanggal
-                $('#lengthtransaksi').text(``); // Kosongkan panjang transaksi
-                // Tampilkan pesan jika tidak ada data
                 const emptyRow = `
                     <tr>
                         <td colspan="9" class="text-center">Silakan masukkan tanggal</td>
@@ -141,18 +118,14 @@
                 return; // Keluar dari fungsi
             }
 
-            $('#infoCard').show();
-
             // Mengambil data transaksi dari API berdasarkan tanggal
-            const response = await axios.get(`<?= base_url('transaksi/dailyreport') ?>/${tanggal}`);
+            const response = await axios.get(`<?= base_url('transaksi/report') ?>/${tanggal}`);
             const data = response.data.data; // Mendapatkan data transaksi
             const total_all = response.data.total_all; // Mendapatkan total keseluruhan
 
             $('#reportBtns').show(); // Tampilkan tombol buat laporan
             $('#datatransaksi').empty(); // Kosongkan tabel transaksi
             $('#refreshButton').prop('disabled', false); // Aktifkan tombol refresh
-            $('#tanggal2').text(tanggal); // Set text tanggal
-            $('#lengthtransaksi').text(data.length); // Set panjang transaksi
 
             // Cek apakah data transaksi kosong
             if (data.length === 0) {
@@ -242,8 +215,6 @@
         } catch (error) {
             // Menangani error jika permintaan gagal
             console.error(error); // Menampilkan error di konsol
-            $('#tanggal2').html(`<i class="fa-solid fa-xmark"></i> Error`); // Menampilkan error pada text tanggal
-            $('#lengthtransaksi').html(`<i class="fa-solid fa-xmark"></i> Error`); // Menampilkan error pada panjang transaksi
             const errorRow = `
                 <tr>
                     <td colspan="9" class="text-center">${error}</td>
@@ -261,8 +232,6 @@
     $('#tanggal').on('change', function() {
         $('#datatransaksi').empty(); // Kosongkan tabel transaksi
         $('#datatransaksi').append(loading); // Menampilkan loading indicator
-        $('#tanggal2').html(`<span class="placeholder w-100"></span>`); // Menampilkan placeholder pada text tanggal
-        $('#lengthtransaksi').html(`<span class="placeholder w-100"></span>`); // Menampilkan placeholder pada panjang transaksi
         fetchTransaksi(); // Memanggil fungsi untuk mengambil data transaksi
     });
 
@@ -271,8 +240,6 @@
         $('#refreshButton').on('click', function() {
             $('#datatransaksi').empty(); // Kosongkan tabel transaksi
             $('#datatransaksi').append(loading); // Tampilkan loading indicator
-            $('#tanggal2').html(`<span class="placeholder w-100"></span>`); // Tampilkan placeholder pada text tanggal
-            $('#lengthtransaksi').html(`<span class="placeholder w-100"></span>`); // Tampilkan placeholder pada panjang transaksi
             fetchTransaksi(); // Panggil fungsi untuk mengambil data transaksi
         });
 
@@ -280,40 +247,6 @@
         fetchTransaksi();
     });
 
-    function showSuccessToast(message) {
-        var toastHTML = `<div id="toast" class="toast fade align-items-center text-bg-success border border-success rounded-3 transparent-blur" role="alert" aria-live="assertive" aria-atomic="true">
-                <div class="toast-body d-flex align-items-start">
-                    <div style="width: 24px; text-align: center;">
-                        <i class="fa-solid fa-circle-check"></i>
-                    </div>
-                    <div class="w-100 mx-2 text-start" id="toast-message">
-                        ${message}
-                    </div>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
-                </div>
-            </div>`;
-        var toastElement = $(toastHTML);
-        $('#toastContainer').append(toastElement); // Make sure there's a container with id `toastContainer`
-        var toast = new bootstrap.Toast(toastElement);
-        toast.show();
-    }
-
-    function showFailedToast(message) {
-        var toastHTML = `<div id="toast" class="toast fade align-items-center text-bg-danger border border-danger rounded-3 transparent-blur" role="alert" aria-live="assertive" aria-atomic="true">
-                <div class="toast-body d-flex align-items-start">
-                    <div style="width: 24px; text-align: center;">
-                        <i class="fa-solid fa-circle-xmark"></i>
-                    </div>
-                    <div class="w-100 mx-2 text-start" id="toast-message">
-                        ${message}
-                    </div>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
-                </div>
-            </div>`;
-        var toastElement = $(toastHTML);
-        $('#toastContainer').append(toastElement); // Make sure there's a container with id `toastContainer`
-        var toast = new bootstrap.Toast(toastElement);
-        toast.show();
-    }
+    <?= $this->include('toast/index') ?>
 </script>
 <?= $this->endSection(); ?>

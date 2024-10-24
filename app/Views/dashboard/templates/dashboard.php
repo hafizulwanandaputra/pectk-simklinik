@@ -413,6 +413,20 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                 </a>
                             </li>
                         <?php endif; ?>
+                        <?php if (session()->get('role') == "Apoteker" || session()->get('role') == "Admin") : ?>
+                            <li class="nav-item">
+                                <a class="nav-link p-2 <?= ($activeSegment === 'laporanresep') ? 'active bg-success' : '' ?>" href=" <?= base_url('/laporanresep'); ?>">
+                                    <div class="d-flex align-items-start <?= ($activeSegment === 'laporanresep') ? 'text-white' : 'text-success-emphasis' ?>">
+                                        <div style="min-width: 24px; max-width: 24px; text-align: center;">
+                                            <i class="fa-solid fa-file-prescription"></i>
+                                        </div>
+                                        <div class="flex-fill ms-2">
+                                            Laporan Resep
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                        <?php endif; ?>
                         <?php if (session()->get('role') == "Kasir" || session()->get('role') == "Admin") : ?>
                             <li class="nav-item">
                                 <a class="nav-link p-2 <?= ($activeSegment === 'layanan') ? 'active bg-success' : '' ?>" href=" <?= base_url('/layanan'); ?>">

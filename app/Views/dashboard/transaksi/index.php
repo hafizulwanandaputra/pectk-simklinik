@@ -22,7 +22,7 @@
         <div class="input-group input-group-sm flex-fill">
             <input type="search" id="searchInput" class="form-control rounded-start-3" placeholder="Cari pasien, petugas kasir, dan tanggal transaksi...">
             <button class="btn btn-success btn-sm bg-gradient" type="button" id="refreshButton"><i class="fa-solid fa-sync"></i></button>
-            <button class="btn btn-body btn-sm bg-gradient rounded-end-3" type="button" id="reportButton" onclick="window.location.href = '<?= base_url('transaksi/dailyreport') ?>';"><i class="fa-solid fa-file-export"></i> Laporan</button>
+            <button class="btn btn-body btn-sm bg-gradient rounded-end-3" type="button" id="reportButton" onclick="window.location.href = '<?= base_url('transaksi/report') ?>';"><i class="fa-solid fa-file-export"></i> Laporan</button>
         </div>
     </div>
     <div class="row">
@@ -607,40 +607,6 @@
         toggleSubmitButton2();
     });
     // Show toast notification
-    function showSuccessToast(message) {
-        var toastHTML = `<div id="toast" class="toast fade align-items-center text-bg-success border border-success rounded-3 transparent-blur" role="alert" aria-live="assertive" aria-atomic="true">
-                <div class="toast-body d-flex align-items-start">
-                    <div style="width: 24px; text-align: center;">
-                        <i class="fa-solid fa-circle-check"></i>
-                    </div>
-                    <div class="w-100 mx-2 text-start" id="toast-message">
-                        ${message}
-                    </div>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
-                </div>
-            </div>`;
-        var toastElement = $(toastHTML);
-        $('#toastContainer').append(toastElement); // Make sure there's a container with id `toastContainer`
-        var toast = new bootstrap.Toast(toastElement);
-        toast.show();
-    }
-
-    function showFailedToast(message) {
-        var toastHTML = `<div id="toast" class="toast fade align-items-center text-bg-danger border border-danger rounded-3 transparent-blur" role="alert" aria-live="assertive" aria-atomic="true">
-                <div class="toast-body d-flex align-items-start">
-                    <div style="width: 24px; text-align: center;">
-                        <i class="fa-solid fa-circle-xmark"></i>
-                    </div>
-                    <div class="w-100 mx-2 text-start" id="toast-message">
-                        ${message}
-                    </div>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
-                </div>
-            </div>`;
-        var toastElement = $(toastHTML);
-        $('#toastContainer').append(toastElement); // Make sure there's a container with id `toastContainer`
-        var toast = new bootstrap.Toast(toastElement);
-        toast.show();
-    }
+    <?= $this->include('toast/index') ?>
 </script>
 <?= $this->endSection(); ?>

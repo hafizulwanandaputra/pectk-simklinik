@@ -1445,7 +1445,7 @@ class Transaksi extends BaseController
     }
 
     // LAPORAN TRANSAKSI
-    public function dailyreportinit()
+    public function reportinit()
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
@@ -1455,13 +1455,13 @@ class Transaksi extends BaseController
                 'headertitle' => 'Laporan Transaksi Harian', // Judul header
                 'agent' => $this->request->getUserAgent() // Mengambil informasi user agent
             ];
-            return view('dashboard/transaksi/report/daily', $data); // Mengembalikan tampilan halaman laporan
+            return view('dashboard/transaksi/report', $data); // Mengembalikan tampilan halaman laporan
         } else {
             throw PageNotFoundException::forPageNotFound(); // Menampilkan halaman tidak ditemukan jika peran tidak valid
         }
     }
 
-    public function dailyreport($tgl_transaksi)
+    public function report($tgl_transaksi)
     {
         // Memeriksa peran pengguna, hanya 'Admin' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
@@ -1587,7 +1587,7 @@ class Transaksi extends BaseController
         }
     }
 
-    public function dailyreportexcel($tgl_transaksi)
+    public function reportexcel($tgl_transaksi)
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {

@@ -104,8 +104,10 @@ $routes->get('/(?i)resepluar/(?i)etiket-luar/(:any)', 'ResepLuar::etiketluar/$1'
 
 // LAPORAN RESEP
 $routes->get('/(?i)laporanresep/', 'LaporanResep::index');
-$routes->get('/(?i)laporanresep/(?i)export/(:any)', 'LaporanResep::export/$1');
-$routes->get('/(?i)laporanresep/(?i)exportexcel/(:any)', 'LaporanResep::exportexcel/$1');
+$routes->get('/(?i)laporanresep/(?i)exportdaily/(:any)', 'LaporanResep::exportdaily/$1');
+$routes->get('/(?i)laporanresep/(?i)exportdailyexcel/(:any)', 'LaporanResep::exportdailyexcel/$1');
+$routes->get('/(?i)laporanresep/(?i)exportmonthly/(:any)', 'LaporanResep::exportmonthly/$1');
+$routes->get('/(?i)laporanresep/(?i)exportmonthlyexcel/(:any)', 'LaporanResep::exportmonthlyexcel/$1');
 
 // LAYANAN
 $routes->get('/(?i)layanan', 'Layanan::index');
@@ -126,9 +128,9 @@ $routes->post('/(?i)transaksi/(?i)create', 'Transaksi::create');
 $routes->post('/(?i)transaksi/(?i)createexternal', 'Transaksi::createexternal');
 $routes->post('/(?i)transaksi/(?i)process/(:any)', 'Transaksi::process/$1');
 $routes->post('/(?i)transaksi/(?i)cancel/(:any)', 'Transaksi::cancel/$1');
-$routes->get('/(?i)transaksi/(?i)dailyreport', 'Transaksi::dailyreportinit');
-$routes->get('/(?i)transaksi/(?i)dailyreport/(:any)', 'Transaksi::dailyreport/$1');
-$routes->get('/(?i)transaksi/(?i)dailyreportexcel/(:any)', 'Transaksi::dailyreportexcel/$1');
+$routes->get('/(?i)transaksi/(?i)report', 'Transaksi::reportinit');
+$routes->get('/(?i)transaksi/(?i)report/(:any)', 'Transaksi::report/$1');
+$routes->get('/(?i)transaksi/(?i)reportexcel/(:any)', 'Transaksi::reportexcel/$1');
 $routes->delete('/(?i)transaksi/(?i)delete/(:any)', 'Transaksi::delete/$1');
 
 // DETAIL TRANSAKSI
