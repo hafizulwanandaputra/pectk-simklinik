@@ -55,7 +55,6 @@ class Layanan extends BaseController
                 3 => 'jenis_layanan',
                 4 => 'tarif',
                 5 => 'keterangan',
-                6 => 'used'
             ];
 
             // Mengambil kolom untuk diurutkan
@@ -86,7 +85,6 @@ class Layanan extends BaseController
 
             // Mengambil data
             $layanan = $this->LayananModel
-                ->select('layanan.*, (SELECT SUM(qty_transaksi) FROM detail_transaksi WHERE detail_transaksi.id_layanan = layanan.id_layanan) as used')
                 ->findAll($length, $start);
 
             // Menambahkan penomoran langsung ke $layanan

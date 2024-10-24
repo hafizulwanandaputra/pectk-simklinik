@@ -20,7 +20,6 @@
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Jenis</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Tarif</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Keterangan</th>
-                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Digunakan</th>
                 </tr>
             </thead>
             <tbody class="align-top">
@@ -241,17 +240,6 @@
                 {
                     data: 'keterangan'
                 },
-                {
-                    data: 'used',
-                    render: function(data, type, row) {
-                        let formattedUsed = new Intl.NumberFormat('id-ID', {
-                            style: 'decimal',
-                            minimumFractionDigits: 0
-                        }).format(data);
-
-                        return `<span class="date text-nowrap" style="display: block; text-align: right;">${formattedUsed}</span>`;
-                    },
-                },
             ],
             "order": [
                 [3, 'desc']
@@ -260,7 +248,7 @@
                 "target": [1],
                 "orderable": false
             }, {
-                "target": [0, 1, 3, 4, 5, 6],
+                "target": [0, 1, 3, 4, 5],
                 "width": "0%"
             }, {
                 "target": [2],
