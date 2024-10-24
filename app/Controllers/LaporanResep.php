@@ -50,6 +50,7 @@ class LaporanResep extends BaseController
                 ->join('resep', 'resep.id_resep = detail_resep.id_resep')
                 ->join('obat', 'obat.id_obat = detail_resep.id_obat')
                 ->where('DATE(resep.tanggal_resep)', $tanggal) // Kondisi berdasarkan tanggal
+                ->where('resep.status', 1) // Tambahkan kondisi status
                 ->groupBy('obat.nama_obat, DATE(resep.tanggal_resep)')
                 ->orderBy('obat.nama_obat', 'ASC') // Urutkan berdasarkan nama_obat
                 ->findAll();
@@ -86,6 +87,7 @@ class LaporanResep extends BaseController
                 ->join('resep', 'resep.id_resep = detail_resep.id_resep')
                 ->join('obat', 'obat.id_obat = detail_resep.id_obat')
                 ->where('DATE(resep.tanggal_resep)', $tanggal) // Kondisi berdasarkan tanggal
+                ->where('resep.status', 1) // Tambahkan kondisi status
                 ->groupBy('obat.nama_obat, DATE(resep.tanggal_resep)')
                 ->orderBy('obat.nama_obat', 'ASC') // Urutkan berdasarkan nama_obat
                 ->findAll();
@@ -264,6 +266,7 @@ class LaporanResep extends BaseController
                 ->join('obat', 'obat.id_obat = detail_resep.id_obat')
                 ->where('YEAR(resep.tanggal_resep)', date('Y', strtotime($bulan)))
                 ->where('MONTH(resep.tanggal_resep)', date('m', strtotime($bulan)))
+                ->where('resep.status', 1) // Tambahkan kondisi status
                 ->groupBy('obat.nama_obat, YEAR(resep.tanggal_resep), MONTH(resep.tanggal_resep)')
                 ->orderBy('obat.nama_obat', 'ASC') // Urutkan berdasarkan nama_obat
                 ->findAll();
@@ -301,6 +304,7 @@ class LaporanResep extends BaseController
                 ->join('obat', 'obat.id_obat = detail_resep.id_obat')
                 ->where('YEAR(resep.tanggal_resep)', date('Y', strtotime($bulan)))
                 ->where('MONTH(resep.tanggal_resep)', date('m', strtotime($bulan)))
+                ->where('resep.status', 1) // Tambahkan kondisi status
                 ->groupBy('obat.nama_obat, YEAR(resep.tanggal_resep), MONTH(resep.tanggal_resep)')
                 ->orderBy('obat.nama_obat', 'ASC') // Urutkan berdasarkan nama_obat
                 ->findAll();

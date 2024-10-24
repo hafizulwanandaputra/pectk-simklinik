@@ -65,7 +65,7 @@
             // Ambil nilai tanggal dari input
             const tanggal = $('#tanggal').val();
             // Mengambil file dari server
-            const response = await axios.get(`<?= base_url('transaksi/dailyreportexcel') ?>/${tanggal}`, {
+            const response = await axios.get(`<?= base_url('transaksi/reportexcel') ?>/${tanggal}`, {
                 responseType: 'blob' // Mendapatkan data sebagai blob
             });
 
@@ -176,7 +176,7 @@
                     const harga_transaksi = parseInt(layananItem.harga_transaksi);
                     const layananRow = `
                         <tr>
-                            <td>${layananItem.layanan.nama_layanan}</td>
+                            <td>${layananItem.nama_layanan}</td>
                             <td class="text-end date">Rp${harga_transaksi.toLocaleString('id-ID')}</td>
                         </tr>
                     `;

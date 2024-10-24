@@ -484,7 +484,6 @@ class Transaksi extends BaseController
                 ->where('detail_transaksi.id_transaksi', $id)
                 ->where('detail_transaksi.jenis_transaksi', 'Tindakan')
                 ->join('transaksi', 'transaksi.id_transaksi = detail_transaksi.id_transaksi', 'inner')
-                ->join('layanan', 'layanan.id_layanan = detail_transaksi.id_layanan', 'inner')
                 ->orderBy('id_detail_transaksi', 'ASC')
                 ->findAll();
 
@@ -503,13 +502,7 @@ class Transaksi extends BaseController
                         'harga_transaksi' => $row['harga_transaksi'],
                         'diskon' => $row['diskon'],
                         'lunas' => $row['lunas'],
-                        'layanan' => [
-                            'id_layanan' => $row['id_layanan'],
-                            'nama_layanan' => $row['nama_layanan'],
-                            'jenis_layanan' => $row['jenis_layanan'],
-                            'tarif' => $row['tarif'],
-                            'keterangan' => $row['keterangan'],
-                        ],
+                        'nama_layanan' => $row['nama_layanan'],
                     ];
                 }
             }
@@ -815,6 +808,7 @@ class Transaksi extends BaseController
                 'id_resep' => NULL,
                 'id_layanan' => $this->request->getPost('id_layanan'),
                 'id_transaksi' => $id,
+                'nama_layanan' => $layanan['nama_layanan'],
                 'jenis_transaksi' => 'Tindakan',
                 'qty_transaksi' => $this->request->getPost('qty_transaksi'),
                 'harga_transaksi' => $layanan['tarif'], // Menggunakan tarif dari layanan
@@ -886,6 +880,7 @@ class Transaksi extends BaseController
                 'id_resep' => $this->request->getPost('id_resep'),
                 'id_layanan' => NULL,
                 'id_transaksi' => $id,
+                'nama_layanan' => NULL,
                 'jenis_transaksi' => 'Obat dan Alkes',
                 'qty_transaksi' => 1, // Kuantitas untuk obat dan alkes ditetapkan 1
                 'harga_transaksi' => $resep['total_biaya'], // Menggunakan total biaya dari resep
@@ -957,6 +952,7 @@ class Transaksi extends BaseController
                 'id_resep' => NULL,
                 'id_layanan' => $detail_transaksi['id_layanan'], // Menggunakan ID layanan yang ada
                 'id_transaksi' => $id,
+                'nama_layanan' => $detail_transaksi['nama_layanan'],
                 'jenis_transaksi' => $detail_transaksi['jenis_transaksi'],
                 'qty_transaksi' => $this->request->getPost('qty_transaksi_edit'), // Menggunakan kuantitas yang diperbarui
                 'harga_transaksi' => $detail_transaksi['harga_transaksi'],
@@ -1027,6 +1023,7 @@ class Transaksi extends BaseController
                 'id_resep' => $detail_transaksi['id_resep'], // Menggunakan ID resep yang ada
                 'id_layanan' => NULL,
                 'id_transaksi' => $id,
+                'nama_layanan' => NULL,
                 'jenis_transaksi' => $detail_transaksi['jenis_transaksi'],
                 'qty_transaksi' => $detail_transaksi['qty_transaksi'], // Menggunakan kuantitas yang ada
                 'harga_transaksi' => $detail_transaksi['harga_transaksi'],
@@ -1484,7 +1481,6 @@ class Transaksi extends BaseController
                 $layanan = $this->DetailTransaksiModel
                     ->where('detail_transaksi.id_transaksi', $item['id_transaksi'])
                     ->where('detail_transaksi.jenis_transaksi', 'Tindakan')
-                    ->join('layanan', 'layanan.id_layanan = detail_transaksi.id_layanan', 'inner')
                     ->orderBy('id_detail_transaksi', 'ASC')
                     ->findAll();
 
@@ -1496,13 +1492,7 @@ class Transaksi extends BaseController
                         'qty_transaksi' => $row['qty_transaksi'],
                         'harga_transaksi' => $row['harga_transaksi'],
                         'diskon' => $row['diskon'],
-                        'layanan' => [
-                            'id_layanan' => $row['id_layanan'],
-                            'nama_layanan' => $row['nama_layanan'],
-                            'jenis_layanan' => $row['jenis_layanan'],
-                            'tarif' => $row['tarif'],
-                            'keterangan' => $row['keterangan'],
-                        ],
+                        'nama_layanan' => $row['nama_layanan'],
                     ];
                 }, $layanan);
 
@@ -1601,7 +1591,6 @@ class Transaksi extends BaseController
                 $layanan = $this->DetailTransaksiModel
                     ->where('detail_transaksi.id_transaksi', $item['id_transaksi'])
                     ->where('detail_transaksi.jenis_transaksi', 'Tindakan')
-                    ->join('layanan', 'layanan.id_layanan = detail_transaksi.id_layanan', 'inner')
                     ->orderBy('id_detail_transaksi', 'ASC')
                     ->findAll();
 
@@ -1613,13 +1602,7 @@ class Transaksi extends BaseController
                         'qty_transaksi' => $row['qty_transaksi'],
                         'harga_transaksi' => $row['harga_transaksi'],
                         'diskon' => $row['diskon'],
-                        'layanan' => [
-                            'id_layanan' => $row['id_layanan'],
-                            'nama_layanan' => $row['nama_layanan'],
-                            'jenis_layanan' => $row['jenis_layanan'],
-                            'tarif' => $row['tarif'],
-                            'keterangan' => $row['keterangan'],
-                        ],
+                        'nama_layanan' => $row['nama_layanan'],
                     ];
                 }, $layanan);
 
@@ -1781,7 +1764,7 @@ class Transaksi extends BaseController
 
                     // Loop layanan dan pastikan harga terformat
                     foreach ($list['detail']['layanan'] as $layanan) {
-                        $sheet->setCellValue('H' . $column, $layanan['layanan']['nama_layanan']);
+                        $sheet->setCellValue('H' . $column, $layanan['nama_layanan']);
 
                         // Terapkan format angka sebelum isi nilai
                         $sheet->getStyle("I{$column}")->getNumberFormat()->setFormatCode(

@@ -521,7 +521,7 @@
                             </div>
                         </td>
                         <td>
-                            <span>${layanan.layanan.nama_layanan}</span>
+                            <span>${layanan.nama_layanan}</span>
                         </td>
                         <td class="date text-end">${qty_transaksi.toLocaleString('id-ID')}</td>
                         <td class="date text-end">Rp${harga_transaksi.toLocaleString('id-ID')}</td>
