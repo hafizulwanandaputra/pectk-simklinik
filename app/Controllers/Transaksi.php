@@ -148,23 +148,24 @@ class Transaksi extends BaseController
                 $usedNoReg = array_column($usedNoReg, 'nomor_registrasi');
 
                 $options = [];
-                // Menyusun opsi dari data pasien yang diterima
+                // Menyusun opsi dari data rawat jalan yang diterima
                 foreach ($data as $row) {
-                    // Memeriksa apakah id_resep ada dalam daftar id yang terpakai
+                    // Memeriksa apakah nomor_registrasi ada dalam daftar nomor_registrasi yang terpakai
                     if (in_array($row['nomor_registrasi'], $usedNoReg)) {
-                        continue; // Lewati resep yang sudah terpakai
+                        continue; // Lewati rawat jalan yang sudah terpakai
                     }
 
+                    // Menambahkan opsi ke dalam array
                     $options[] = [
-                        'value' => $row['nomor_registrasi'],
-                        'text' => $row['nama_pasien'] . ' (' . $row['nomor_registrasi'] . ' - ' . $row['no_rm'] . ' - ' . $row['tanggal_lahir'] . ')' // Menyusun teks yang ditampilkan
+                        'value' => $row['nomor_registrasi'], // Nilai untuk opsi
+                        'text' => $row['nama_pasien'] . ' (' . $row['nomor_registrasi'] . ' - ' . $row['no_rm'] . ' - ' . $row['tanggal_lahir'] . ')' // Teks untuk opsi
                     ];
                 }
 
-                // Mengembalikan data pasien dalam format JSON
+                // Mengembalikan data rawat jalan dalam format JSON
                 return $this->response->setJSON([
-                    'success' => true,
-                    'data' => $options,
+                    'success' => true, // Indikator sukses
+                    'data' => $options, // Data opsi
                 ]);
             } catch (RequestException $e) {
                 // Menangani error saat permintaan API
@@ -203,6 +204,7 @@ class Transaksi extends BaseController
 
             // Menyiapkan array opsi untuk dikirim dalam respon
             $options = [];
+            // Menyusun opsi dari data resep luar yang diterima
             foreach ($resepData as $resep) {
                 // Memeriksa apakah id_resep ada dalam daftar id yang terpakai
                 if (in_array($resep['id_resep'], $usedResepIds)) {
@@ -216,6 +218,7 @@ class Transaksi extends BaseController
                 ];
             }
 
+            // Mengembalikan data resep luar dalam format JSON
             return $this->response->setJSON([
                 'success' => true, // Indikator sukses
                 'data'    => $options, // Data opsi
