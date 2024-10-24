@@ -304,7 +304,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
             </div>
         </header>
 
-        <div class="modal modal-sheet p-4 py-md-5 fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModal" aria-hidden="true" role="dialog">
+        <div class="modal modal-sheet p-4 py-md-5 fade" id="logoutModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="logoutModal" aria-hidden="true" role="dialog">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content bg-body-tertiary rounded-4 shadow-lg transparent-blur">
                     <div class="modal-body p-4 text-center">

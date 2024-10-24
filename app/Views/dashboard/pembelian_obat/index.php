@@ -72,20 +72,6 @@
     <nav id="paginationNav" class="d-flex justify-content-center justify-content-lg-end mt-3 overflow-auto w-100">
         <ul class="pagination pagination-sm" style="--bs-pagination-border-radius: var(--bs-border-radius-lg);"></ul>
     </nav>
-    <div class="modal modal-sheet p-4 py-md-5 fade" id="cancelModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="cancelModalLabel" aria-hidden="true" role="dialog">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content bg-body-tertiary rounded-4 shadow-lg transparent-blur">
-                <div class="modal-body p-4 text-center">
-                    <h5 id="cancelMessage"></h5>
-                    <h6 class="mb-0" id="cancelSubmessage"></h6>
-                </div>
-                <div class="modal-footer flex-nowrap p-0" style="border-top: 1px solid var(--bs-border-color-translucent);">
-                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end" style="border-right: 1px solid var(--bs-border-color-translucent)!important;" data-bs-dismiss="modal">Tidak</button>
-                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0" id="confirmCancelBtn">Ya</button>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="modal modal-sheet p-4 py-md-5 fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content bg-body-tertiary rounded-4 shadow-lg transparent-blur">
