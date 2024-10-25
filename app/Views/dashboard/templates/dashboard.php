@@ -145,7 +145,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
             background-repeat: no-repeat;
             background-size: cover;
             position: relative;
-            outline: 3px solid var(--bs-success);
+            outline: 1px solid var(--bs-success);
         }
 
         .profilephotosidebar svg {
@@ -251,55 +251,76 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
 <body>
     <div class="wrapper">
         <!-- HEADER -->
-        <header class="navbar sticky-top flex-md-nowrap p-0 shadow-sm bg-success-subtle text-success-emphasis header" style="border-bottom: 1px solid var(--bs-success-border-subtle);">
+        <header class="navbar sticky-top flex-md-nowrap p-0 shadow-sm bg-success-subtle text-success-emphasis border-bottom border-success-subtle header">
             <div class="d-flex justify-content-center align-items-center col-md-3 col-lg-2 me-0 px-3 py-md-1" style="min-height: 48px; max-height: 48px;">
-                <span class="navbar-brand mx-0 text-start text-md-center lh-1 d-flex justify-content-center align-items-center" style="font-size: 7pt;">
+                <span class="navbar-brand mx-0 text-start text-md-center lh-sm d-flex justify-content-center align-items-center" style="font-size: 7.5pt;">
                     <img src="<?= base_url('/assets/images/logo_pec.png'); ?>" alt="KLINIK MATA PECTK" height="24px">
-                    <div class="ps-2 text-start text-success-emphasis">KLINIK UTAMA MATA<br><span class="fw-bold">PADANG EYE CENTER</span><br>TELUK KUANTAN</div>
+                    <div class="ps-2 text-start text-success-emphasis">KASIR DAN FARMASI<br><span class="fw-bold">PEC</span> TELUK KUANTAN</div>
                 </span>
             </div>
-            <button class="navbar-toggler position-absolute text-success-emphasis d-md-none rounded-3 border-success-subtle collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon text-success-emphasis"></span>
-            </button>
+            <button type="button" class="btn btn-outline-success bg-gradient d-md-none mx-3 rounded-3" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation"><i class="fa-solid fa-bars"></i></button>
             <div class="d-flex flex-nowrap w-100 align-items-center" style="min-height: 48px;">
                 <div class="w-100 ps-3 pe-1 text-truncate">
                     <?= $this->renderSection('title'); ?>
                 </div>
-                <div class="dropdown mx-3">
-                    <a href="#" class="d-flex align-items-center text-success-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                        <div class="rounded-pill bg-body profilephotosidebar me-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16">
+                <div class="mx-3">
+                    <a href="#" class="d-flex align-items-center text-success-emphasis text-decoration-none" data-bs-toggle="offcanvas" data-bs-target="#userOffcanvas" role="button" aria-controls="userOffcanvas">
+                        <div class="rounded-pill bg-body profilephotosidebar d-flex justify-content-center align-items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
                                 <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM14 14s-1-4-6-4-6 4-6 4 1 0 6 0 6 0 6 0z" />
                             </svg>
                         </div>
                     </a>
-                    <ul class="dropdown-menu rounded-3 dropdown-menu-end text-small shadow bg-body-tertiary transparent-blur" style="width: 240px;">
-                        <li class="lh-1 p-1">
-                            <div class="d-flex align-items-start">
-                                <span style="min-width: 32px; max-width: 32px; text-align: center;"><i class="fa-solid fa-user"></i></span>
-                                <span><?= session()->get('fullname'); ?><br><span class="fw-medium" style="font-size: 8pt;">@<?= session()->get('username'); ?></span><br><span class="fw-medium" style="font-size: 8pt;"><?= session()->get('role'); ?></span></span>
+                    <div class="offcanvas offcanvas-end bg-success-subtle text-success-emphasis shadow-sm" tabindex="-1" id="userOffcanvas" aria-labelledby="userOffcanvasLabel" style="border-left: var(--bs-offcanvas-border-width) solid var(--bs-success-border-subtle);">
+                        <div class="offcanvas-header pt-0 pb-0 d-flex justify-content-between">
+                            <div style="min-height: 48px; max-height: 48px;">
+                                <span class="navbar-brand mx-0 text-start text-md-center lh-sm d-flex justify-content-center align-items-center" style="font-size: 7.5pt;">
+                                    <img src="<?= base_url('/assets/images/logo_pec.png'); ?>" alt="KLINIK MATA PECTK" height="24px">
+                                    <div class="ps-2 text-start text-success-emphasis">KASIR DAN FARMASI<br><span class="fw-bold">PEC</span> TELUK KUANTAN</div>
+                                </span>
                             </div>
-                        </li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li>
-                            <a class="dropdown-item p-1" href="<?= base_url('/settings'); ?>" onclick="showSpinner()">
-                                <div class="d-flex align-items-start">
-                                    <span style="min-width: 32px; max-width: 32px; text-align: center;"><i class="fa-solid fa-gear"></i></span>
-                                    <span>Pengaturan</span>
+                            <button id="closeOffcanvasBtn" type="button" class="btn btn-success btn-sm bg-gradient ps-0 pe-0 pt-0 pb-0 rounded-3" data-bs-dismiss="offcanvas" aria-label="Close"><span data-feather="chevrons-right" class="mb-0" style="width: 30px; height: 30px;"></span></button>
+                        </div>
+                        <div class="offcanvas-body p-1">
+                            <div class="d-flex justify-content-center">
+                                <div class="rounded-pill bg-body profilephotosidebar m-2 d-flex justify-content-center align-items-center" style="width: 96px; height: 96px;">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" viewBox="0 0 16 16">
+                                        <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM14 14s-1-4-6-4-6 4-6 4 1 0 6 0 6 0 6 0z" />
+                                    </svg>
                                 </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item p-1" href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">
-                                <div class="d-flex align-items-start">
-                                    <span style="min-width: 32px; max-width: 32px; text-align: center;"><i class="fa-solid fa-right-from-bracket"></i></span>
-                                    <span>Keluar</span>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
+                            </div>
+                            <div class="text-center w-100 lh-sm">
+                                <span><?= session()->get('fullname'); ?><br><span style="font-size: 10pt;">@<?= session()->get('username'); ?></span><br><span style="font-size: 9pt;"><?= session()->get('role'); ?></span></span>
+                            </div>
+                            <hr class="my-1 border-success-subtle opacity-100">
+                            <ul class="nav nav-pills flex-column">
+                                <li class="nav-item">
+                                    <a id="settingsLink" class="nav-link p-2" href="<?= base_url('/settings'); ?>">
+                                        <div class="d-flex align-items-start text-success-emphasis">
+                                            <div style="min-width: 24px; max-width: 24px; text-align: center;">
+                                                <i class="fa-solid fa-gear"></i>
+                                            </div>
+                                            <div class="flex-fill ms-2">
+                                                Pengaturan
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a id="logoutButton" class="nav-link p-2" href="#">
+                                        <div class="d-flex align-items-start text-danger">
+                                            <div style="min-width: 24px; max-width: 24px; text-align: center;">
+                                                <i class="fa-solid fa-right-from-bracket"></i>
+                                            </div>
+                                            <div class="flex-fill ms-2">
+                                                Keluar
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </header>
@@ -546,6 +567,32 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
 
         // Ketika dokumen siap
         $(document).ready(function() {
+            $('#settingsLink').on('click', function(e) {
+                const offcanvasInstance = bootstrap.Offcanvas.getInstance($('#userOffcanvas')[0]);
+                if (offcanvasInstance) {
+                    e.preventDefault(); // Prevent the immediate navigation
+
+                    offcanvasInstance.hide(); // Hide the offcanvas
+
+                    // Once the offcanvas is hidden, navigate to the settings page
+                    $('#userOffcanvas').one('hidden.bs.offcanvas', function() {
+                        window.location.href = '<?= base_url('/settings'); ?>';
+                    });
+                }
+            });
+            $('#logoutButton').on('click', function(e) {
+                e.preventDefault(); // Prevent default anchor behavior
+
+                const offcanvasInstance = bootstrap.Offcanvas.getInstance($('#userOffcanvas')[0]);
+                if (offcanvasInstance) {
+                    offcanvasInstance.hide();
+
+                    // Attach the event listener only once for the next time offcanvas is hidden
+                    $('#userOffcanvas').one('hidden.bs.offcanvas', function() {
+                        $('#logoutModal').modal('show');
+                    });
+                }
+            });
             // Tampilkan pesan toast jika ada
             if ($('#infoToast').length) {
                 var infoToast = new bootstrap.Toast($('#infoToast')[0]);

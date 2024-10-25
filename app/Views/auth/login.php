@@ -7,9 +7,7 @@
                 <div class="modal-body">
                     <?= form_open('check-login', 'id="loginForm"'); ?>
                     <img class="mb-2" src="<?= base_url('/assets/images/logo_pec.png'); ?>" width="96px">
-                    <h1 class="h3 mb-2 fw-normal">
-                        Kasir dan Farmasi
-                    </h1>
+                    <h1 class="h3 mb-2 fw-bold">Kasir dan Farmasi</h1>
                     <h6>Klinik Utama Mata Padang Eye Center Teluk Kuantan</h6>
                     <div class="form-floating">
                         <input type="text" class="form-control username rounded-top-3 <?= (validation_show_error('username')) ? 'is-invalid' : ''; ?>" id="floatingInput" name="username" placeholder="Username" value="" autocomplete="off" list="username">
