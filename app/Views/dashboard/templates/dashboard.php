@@ -295,7 +295,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                             <hr class="my-1 border-success-subtle opacity-100">
                             <ul class="nav nav-pills flex-column">
                                 <li class="nav-item">
-                                    <a id="settingsLink" class="nav-link p-2" href="<?= base_url('/settings'); ?>">
+                                    <a class="nav-link nav-link-offcanvas p-2" href="<?= base_url('/settings'); ?>">
                                         <div class="d-flex align-items-start text-success-emphasis">
                                             <div style="min-width: 24px; max-width: 24px; text-align: center;">
                                                 <i class="fa-solid fa-gear"></i>
@@ -567,16 +567,35 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
 
         // Ketika dokumen siap
         $(document).ready(function() {
-            $('#settingsLink').on('click', function(e) {
+            $('.nav-link-offcanvas-ext').on('click', function(e) {
                 const offcanvasInstance = bootstrap.Offcanvas.getInstance($('#userOffcanvas')[0]);
                 if (offcanvasInstance) {
                     e.preventDefault(); // Prevent the immediate navigation
 
                     offcanvasInstance.hide(); // Hide the offcanvas
 
+                    // Get the target URL from the clicked link
+                    const targetUrl = $(this).attr('href');
+
                     // Once the offcanvas is hidden, navigate to the settings page
                     $('#userOffcanvas').one('hidden.bs.offcanvas', function() {
-                        window.location.href = '<?= base_url('/settings'); ?>';
+                        window.open(targetUrl, '_blank'); // Open the URL in a new tab
+                    });
+                }
+            });
+            $('.nav-link-offcanvas').on('click', function(e) {
+                const offcanvasInstance = bootstrap.Offcanvas.getInstance($('#userOffcanvas')[0]);
+                if (offcanvasInstance) {
+                    e.preventDefault(); // Prevent the immediate navigation
+
+                    offcanvasInstance.hide(); // Hide the offcanvas
+
+                    // Get the target URL from the clicked link
+                    const targetUrl = $(this).attr('href');
+
+                    // Once the offcanvas is hidden, navigate to the settings page
+                    $('#userOffcanvas').one('hidden.bs.offcanvas', function() {
+                        window.location.href = targetUrl;
                     });
                 }
             });
