@@ -49,6 +49,17 @@ class LaporanResep extends BaseController
             // Ambil daftar dokter dari query string
             $dokterFilter = $this->request->getGet('dokter'); // Array nama dokter
 
+            // Jika tidak ada dokter yang dipilih, kembalikan data kosong
+            if (empty($dokterFilter)) {
+                return $this->response->setJSON([
+                    'laporanresep' => [],
+                    'tanggal' => $tanggal,
+                    'total_keluar_keseluruhan' => 0,
+                    'total_harga_keseluruhan' => 0,
+                    'message' => 'Silakan beri kotak centang pada daftar dokter'
+                ]);
+            }
+
             // Ambil laporan resep
             $query = $this->DetailResepModel
                 ->select('resep.dokter AS dokter,
@@ -81,7 +92,8 @@ class LaporanResep extends BaseController
                 'laporanresep' => $laporanresep,
                 'tanggal' => $tanggal,
                 'total_keluar_keseluruhan' => $totalKeluarKeseluruhan,
-                'total_harga_keseluruhan' => $totalHargaKeseluruhan
+                'total_harga_keseluruhan' => $totalHargaKeseluruhan,
+                'message' => null
             ]);
         } else {
             // Jika peran tidak dikenali, kembalikan status 404
@@ -98,32 +110,37 @@ class LaporanResep extends BaseController
             // Ambil daftar dokter dari query string
             $dokterFilter = $this->request->getGet('dokter'); // Array nama dokter
 
-            // Ambil laporan resep
-            $query = $this->DetailResepModel
-                ->select('resep.dokter AS dokter,
-                obat.nama_obat AS nama_obat, 
-                SUM(detail_resep.jumlah) AS total_keluar, 
-                detail_resep.harga_satuan AS harga_satuan, 
-                (SUM(detail_resep.jumlah) * harga_satuan) AS total_harga')
-                ->join('resep', 'resep.id_resep = detail_resep.id_resep')
-                ->join('obat', 'obat.id_obat = detail_resep.id_obat')
-                ->where('DATE(resep.tanggal_resep)', $tanggal) // Kondisi berdasarkan tanggal
-                ->where('resep.status', 1); // Tambahkan kondisi status
+            // Jika tidak ada dokter yang dipilih, kirim HTTP 404
+            if (empty($dokterFilter)) {
+                throw PageNotFoundException::forPageNotFound();
+            } else {
+                // Ambil laporan resep
+                $query = $this->DetailResepModel
+                    ->select('resep.dokter AS dokter,
+                        obat.nama_obat AS nama_obat, 
+                        SUM(detail_resep.jumlah) AS total_keluar, 
+                        detail_resep.harga_satuan AS harga_satuan, 
+                        (SUM(detail_resep.jumlah) * harga_satuan) AS total_harga')
+                    ->join('resep', 'resep.id_resep = detail_resep.id_resep')
+                    ->join('obat', 'obat.id_obat = detail_resep.id_obat')
+                    ->where('DATE(resep.tanggal_resep)', $tanggal) // Kondisi berdasarkan tanggal
+                    ->where('resep.status', 1); // Tambahkan kondisi status
 
-            // Tambahkan filter dokter jika ada
-            if (!empty($dokterFilter)) {
-                $query->whereIn('resep.dokter', $dokterFilter);
+                // Tambahkan filter dokter jika ada
+                if (!empty($dokterFilter)) {
+                    $query->whereIn('resep.dokter', $dokterFilter);
+                }
+
+                $result = $query
+                    ->groupBy('resep.dokter, obat.nama_obat, DATE(resep.tanggal_resep)')
+                    ->orderBy('resep.dokter', 'ASC')
+                    ->orderBy('obat.nama_obat', 'ASC')
+                    ->findAll();
+
+                // Hitung total keseluruhan obat keluar dan harga
+                $totalKeluarKeseluruhan = array_sum(array_column($result, 'total_keluar'));
+                $totalHargaKeseluruhan = array_sum(array_column($result, 'total_harga'));
             }
-
-            $result = $query
-                ->groupBy('resep.dokter, obat.nama_obat, DATE(resep.tanggal_resep)')
-                ->orderBy('resep.dokter', 'ASC')
-                ->orderBy('obat.nama_obat', 'ASC')
-                ->findAll();
-
-            // Hitung total keseluruhan obat keluar dan harga
-            $totalKeluarKeseluruhan = array_sum(array_column($result, 'total_keluar'));
-            $totalHargaKeseluruhan = array_sum(array_column($result, 'total_harga'));
 
             // Memeriksa apakah detail pembelian obat kosong
             if (empty($result)) {
@@ -286,6 +303,17 @@ class LaporanResep extends BaseController
             // Ambil daftar dokter dari query string
             $dokterFilter = $this->request->getGet('dokter'); // Array nama dokter
 
+            // Jika tidak ada dokter yang dipilih, kembalikan data kosong
+            if (empty($dokterFilter)) {
+                return $this->response->setJSON([
+                    'laporanresep' => [],
+                    'bulan' => $bulan,
+                    'total_keluar_keseluruhan' => 0,
+                    'total_harga_keseluruhan' => 0,
+                    'message' => 'Silakan beri kotak centang pada daftar dokter'
+                ]);
+            }
+
             // Ambil laporan resep
             $query = $this->DetailResepModel
                 ->select('DATE(resep.tanggal_resep) AS tanggal,
@@ -321,7 +349,8 @@ class LaporanResep extends BaseController
                 'laporanresep' => $laporanresep,
                 'bulan' => $bulan,
                 'total_keluar_keseluruhan' => $totalKeluarKeseluruhan,
-                'total_harga_keseluruhan' => $totalHargaKeseluruhan
+                'total_harga_keseluruhan' => $totalHargaKeseluruhan,
+                'message' => null
             ]);
         } else {
             // Jika peran tidak dikenali, kembalikan status 404
@@ -338,35 +367,40 @@ class LaporanResep extends BaseController
             // Ambil daftar dokter dari query string
             $dokterFilter = $this->request->getGet('dokter'); // Array nama dokter
 
-            // Ambil laporan resep
-            $query = $this->DetailResepModel
-                ->select('DATE(resep.tanggal_resep) AS tanggal,
-                    resep.dokter AS dokter, 
-                    obat.nama_obat AS nama_obat, 
-                    SUM(detail_resep.jumlah) AS total_keluar, 
-                    detail_resep.harga_satuan AS harga_satuan, 
-                    (SUM(detail_resep.jumlah) * harga_satuan) AS total_harga')
-                ->join('resep', 'resep.id_resep = detail_resep.id_resep')
-                ->join('obat', 'obat.id_obat = detail_resep.id_obat')
-                ->where('YEAR(resep.tanggal_resep)', date('Y', strtotime($bulan)))
-                ->where('MONTH(resep.tanggal_resep)', date('m', strtotime($bulan)))
-                ->where('resep.status', 1); // Tambahkan kondisi status
+            // Jika tidak ada dokter yang dipilih, kirim HTTP 404
+            if (empty($dokterFilter)) {
+                throw PageNotFoundException::forPageNotFound();
+            } else {
+                // Ambil laporan resep
+                $query = $this->DetailResepModel
+                    ->select('DATE(resep.tanggal_resep) AS tanggal,
+                        resep.dokter AS dokter, 
+                        obat.nama_obat AS nama_obat, 
+                        SUM(detail_resep.jumlah) AS total_keluar, 
+                        detail_resep.harga_satuan AS harga_satuan, 
+                        (SUM(detail_resep.jumlah) * harga_satuan) AS total_harga')
+                    ->join('resep', 'resep.id_resep = detail_resep.id_resep')
+                    ->join('obat', 'obat.id_obat = detail_resep.id_obat')
+                    ->where('YEAR(resep.tanggal_resep)', date('Y', strtotime($bulan)))
+                    ->where('MONTH(resep.tanggal_resep)', date('m', strtotime($bulan)))
+                    ->where('resep.status', 1); // Tambahkan kondisi status
 
-            // Tambahkan filter dokter jika ada
-            if (!empty($dokterFilter)) {
-                $query->whereIn('resep.dokter', $dokterFilter);
+                // Tambahkan filter dokter jika ada
+                if (!empty($dokterFilter)) {
+                    $query->whereIn('resep.dokter', $dokterFilter);
+                }
+
+                $result = $query
+                    ->groupBy('resep.dokter, obat.nama_obat, DATE(resep.tanggal_resep)')
+                    ->orderBy('tanggal', 'ASC') // Urutkan berdasarkan tanggal ASC
+                    ->orderBy('resep.dokter', 'ASC') // Urutkan berdasarkan dokter ASC
+                    ->orderBy('obat.nama_obat', 'ASC') // Urutkan berdasarkan nama_obat ASC
+                    ->findAll();
+
+                // Hitung total keseluruhan obat keluar dan harga
+                $totalKeluarKeseluruhan = array_sum(array_column($result, 'total_keluar'));
+                $totalHargaKeseluruhan = array_sum(array_column($result, 'total_harga'));
             }
-
-            $result = $query
-                ->groupBy('resep.dokter, obat.nama_obat, DATE(resep.tanggal_resep)')
-                ->orderBy('tanggal', 'ASC') // Urutkan berdasarkan tanggal ASC
-                ->orderBy('resep.dokter', 'ASC') // Urutkan berdasarkan dokter ASC
-                ->orderBy('obat.nama_obat', 'ASC') // Urutkan berdasarkan nama_obat ASC
-                ->findAll();
-
-            // Hitung total keseluruhan obat keluar dan harga
-            $totalKeluarKeseluruhan = array_sum(array_column($result, 'total_keluar'));
-            $totalHargaKeseluruhan = array_sum(array_column($result, 'total_harga'));
 
             // Memeriksa apakah detail pembelian obat kosong
             if (empty($result)) {

@@ -294,9 +294,10 @@
             if (data.length === 0) {
                 // Tampilkan pesan jika tidak ada data
                 $('#reportBtns1').hide(); // Sembunyikan tombol buat laporan
+                const message = response.data.message == null ? `Tidak ada resep yang digunakan pada ${tanggal}` : response.data.message;
                 const emptyRow = `
                     <tr>
-                        <td colspan="6" class="text-center">Tidak ada resep yang digunakan pada ${tanggal}</td>
+                        <td colspan="7" class="text-center">${message}</td>
                     </tr>
                 `;
                 $('#resepharian').append(emptyRow); // Menambahkan baris pesan ke tabel
@@ -420,10 +421,11 @@
             // Cek apakah data resep kosong
             if (data.length === 0) {
                 // Tampilkan pesan jika tidak ada data
-                $('#reportBtns2').hide(); // Sembunyikan tombol buat laporan
+                $('#reportBtns1').hide(); // Sembunyikan tombol buat laporan
+                const message = response.data.message == null ? `Tidak ada resep yang digunakan pada ${tanggal}` : response.data.message;
                 const emptyRow = `
                     <tr>
-                        <td colspan="7" class="text-center">Tidak ada resep yang digunakan pada ${bulan}</td>
+                        <td colspan="7" class="text-center">${message}</td>
                     </tr>
                 `;
                 $('#resepbulanan').append(emptyRow); // Menambahkan baris pesan ke tabel
