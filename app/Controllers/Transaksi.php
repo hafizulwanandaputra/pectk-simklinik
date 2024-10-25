@@ -1122,7 +1122,7 @@ class Transaksi extends BaseController
             $validation = \Config\Services::validation();
             // Menetapkan aturan validasi dasar
             $rules = [
-                'terima_uang' => 'required|numeric|greater_than[0]', // Uang yang diterima harus diisi, berupa angka, dan lebih dari 0
+                'terima_uang' => 'required|numeric|greater_than_equal_to[0]', // Uang yang diterima harus diisi, berupa angka, dan lebih dari 0
                 'metode_pembayaran' => 'required', // Metode pembayaran harus diisi
             ];
 
