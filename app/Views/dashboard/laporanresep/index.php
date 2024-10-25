@@ -27,9 +27,9 @@
 <main class="col-md-9 ms-sm-auto col-lg-10 px-3 px-md-4 pt-3">
     <div class="mb-2">
         <nav>
-            <div class="nav nav-tabs justify-content-center mb-2" id="nav-tab" role="tablist">
-                <button class="nav-link custom-flex flex-lg-row rounded-top-3 active" id="resepharian-container-tab" data-bs-toggle="tab" data-bs-target="#resepharian-container" type="button" role="tab" aria-controls="resepharian-container" aria-selected="true">Harian</button>
-                <button class="nav-link custom-flex flex-lg-row rounded-top-3" id="resepbulanan-container-tab" data-bs-toggle="tab" data-bs-target="#resepbulanan-container" type="button" role="tab" aria-controls="resepbulanan-container" aria-selected="false">Bulanan</button>
+            <div class="nav nav-tabs mb-2" id="nav-tab" role="tablist">
+                <button class="nav-link custom-flex rounded-top-3 active" id="resepharian-container-tab" data-bs-toggle="tab" data-bs-target="#resepharian-container" type="button" role="tab" aria-controls="resepharian-container" aria-selected="true">Harian</button>
+                <button class="nav-link custom-flex rounded-top-3" id="resepbulanan-container-tab" data-bs-toggle="tab" data-bs-target="#resepbulanan-container" type="button" role="tab" aria-controls="resepbulanan-container" aria-selected="false">Bulanan</button>
             </div>
         </nav>
         <div class="tab-content" id="nav-tabContent">
