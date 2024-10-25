@@ -182,7 +182,11 @@
 
             window.URL.revokeObjectURL(url); // Membebaskan URL yang dibuat
         } catch (error) {
-            showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+            if (error.response.request.status === 404) {
+                showFailedToast('Data resep kosong');
+            } else {
+                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+            }
         } finally {
             $('#loadingSpinner').hide(); // Menyembunyikan spinner setelah unduhan selesai
         }
@@ -226,7 +230,11 @@
 
             window.URL.revokeObjectURL(url); // Membebaskan URL yang dibuat
         } catch (error) {
-            showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+            if (error.response.request.status === 404) {
+                showFailedToast('Data resep kosong');
+            } else {
+                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+            }
         } finally {
             $('#loadingSpinner').hide(); // Menyembunyikan spinner setelah unduhan selesai
         }
@@ -421,7 +429,7 @@
             // Cek apakah data resep kosong
             if (data.length === 0) {
                 // Tampilkan pesan jika tidak ada data
-                $('#reportBtns1').hide(); // Sembunyikan tombol buat laporan
+                $('#reportBtns2').hide(); // Sembunyikan tombol buat laporan
                 const message = response.data.message == null ? `Tidak ada resep yang digunakan pada ${tanggal}` : response.data.message;
                 const emptyRow = `
                     <tr>
