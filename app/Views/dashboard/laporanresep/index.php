@@ -281,7 +281,7 @@
                 $('#reportBtns1').hide(); // Sembunyikan tombol buat laporan
                 const emptyRow = `
                     <tr>
-                        <td colspan="5" class="text-center">Tidak ada resep yang digunakan pada ${tanggal}</td>
+                        <td colspan="6" class="text-center">Tidak ada resep yang digunakan pada ${tanggal}</td>
                     </tr>
                 `;
                 $('#resepharian').append(emptyRow); // Menambahkan baris pesan ke tabel
@@ -330,7 +330,7 @@
             console.error(error); // Menampilkan error di konsol
             const errorRow = `
                 <tr>
-                    <td colspan="5" class="text-center">${error}</td>
+                    <td colspan="6" class="text-center">${error}</td>
                 </tr>
             `;
             $('#resepharian').empty(); // Kosongkan tabel resep
