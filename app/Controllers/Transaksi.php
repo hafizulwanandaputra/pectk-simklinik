@@ -1158,12 +1158,12 @@ class Transaksi extends BaseController
             if ($this->request->getPost('metode_pembayaran') == 'QRIS/Transfer Bank') {
                 // Memeriksa apakah uang yang diterima sama dengan total pembayaran
                 if ($terima_uang != $total_pembayaran) {
-                    return $this->response->setJSON(['success' => false, 'message' => 'Uang yang diterima harus sama dengan total pembayaran pada metode QRIS/Transfer Bank', 'errors' => NULL]);
+                    return $this->response->setStatusCode(402)->setJSON(['success' => false, 'message' => 'Uang yang diterima harus sama dengan total pembayaran pada metode QRIS/Transfer Bank', 'errors' => NULL]);
                 }
             } else {
                 // Memeriksa apakah uang yang diterima kurang dari total pembayaran
                 if ($terima_uang < $total_pembayaran) {
-                    return $this->response->setJSON(['success' => false, 'message' => 'Uang yang diterima kurang dari total pembayaran', 'errors' => NULL]);
+                    return $this->response->setStatusCode(402)->setJSON(['success' => false, 'message' => 'Uang yang diterima kurang dari total pembayaran', 'errors' => NULL]);
                 }
             }
 
@@ -1210,7 +1210,7 @@ class Transaksi extends BaseController
             // Memeriksa status transaksi
             if ($db->transStatus() === false) {
                 $db->transRollback();  // Rollback jika ada masalah
-                return $this->response->setStatusCode(401)->setJSON(['success' => false, 'message' => 'Gagal memproses transaksi', 'errors' => NULL]);
+                return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Gagal memproses transaksi', 'errors' => NULL]);
             } else {
                 $db->transCommit();  // Commit transaksi jika semuanya baik-baik saja
                 return $this->response->setJSON(['success' => true, 'message' => 'Transaksi berhasil diproses. Silakan cetak struk transaksi.']);
