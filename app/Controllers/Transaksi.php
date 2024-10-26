@@ -1754,7 +1754,6 @@ class Transaksi extends BaseController
 
                     // Kondisikan jika ada resep luar
                     $no_rm = ($list['no_rm'] == NULL) ? '-' : $list['no_rm'];
-                    $dokter = ($list['dokter'] == NULL) ? '-' : $list['dokter'];
 
                     // Isi data transaksi utama
                     $sheet->setCellValue('A' . $column, $nomor++);
@@ -1763,7 +1762,7 @@ class Transaksi extends BaseController
                     $sheet->setCellValue('D' . $column, $no_rm);
                     $sheet->setCellValue('E' . $column, $list['nama_pasien']);
                     $sheet->setCellValue('F' . $column, $list['metode_pembayaran']);
-                    $sheet->setCellValue('G' . $column, $dokter);
+                    $sheet->setCellValue('G' . $column, $list['dokter']);
 
                     // Atur ke bold
                     $sheet->getStyle("A{$column}")->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);

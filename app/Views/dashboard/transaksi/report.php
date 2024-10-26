@@ -25,12 +25,12 @@
                     <tr class="align-middle">
                         <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">No</th>
                         <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Nomor Kwitansi</th>
-                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 12.5%;">Kasir</th>
+                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 12.5%; min-width: 128px;">Kasir</th>
                         <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Nomor Rekam Medis</th>
-                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 12.5%;">Nama Pasien</th>
+                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 12.5%; min-width: 128px;">Nama Pasien</th>
                         <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Metode Pembayaran</th>
-                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 12.5%;">Dokter</th>
-                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 12.5%;">Tindakan</th>
+                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 12.5%; min-width: 128px;">Dokter</th>
+                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 12.5%; min-width: 128px;">Tindakan</th>
                         <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Kas</th>
                     </tr>
                 </thead>
@@ -150,8 +150,7 @@
                 const layanan = transaksi.detail.layanan
                 const obatalkes = transaksi.detail.obatalkes
                 const bank = transaksi.bank ? transaksi.bank : `-`;
-                const no_rm = transaksi.dokter == null ? `-` : transaksi.no_rm;
-                const dokter = transaksi.dokter == null ? `-` : transaksi.dokter;
+                const no_rm = transaksi.no_rm === null ? `-` : transaksi.no_rm;
                 // Menjadikan angka-angka yang diperoleh sebagai integer
                 const total_pembayaran = parseInt(transaksi.total_pembayaran);
 
@@ -164,7 +163,7 @@
                         <td rowspan="${rowspan}" class="date text-nowrap">${no_rm}</td>
                         <td rowspan="${rowspan}" class="date">${transaksi.nama_pasien}</td>
                         <td rowspan="${rowspan}" class="date">${transaksi.metode_pembayaran}</td>
-                        <td rowspan="${rowspan}" class="date">${dokter}</td>
+                        <td rowspan="${rowspan}" class="date">${transaksi.dokter}</td>
                     </tr>
                 `;
 
