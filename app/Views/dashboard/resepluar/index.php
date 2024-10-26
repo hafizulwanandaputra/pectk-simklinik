@@ -339,7 +339,7 @@
 
             try {
                 const response = await axios.get(`<?= base_url('/resepluar/resep') ?>/${id}`); // Ambil data resep luar berdasarkan ID
-                $('#resepluarModalLabel').text('Edit Tindakan'); // Ubah judul modal menjadi 'Edit Tindakan'
+                $('#resepluarModalLabel').text('Edit Identitas Pasien'); // Ubah judul modal menjadi 'Edit Identitas Pasien'
                 $('#id_resep').val(response.data.id_resep);
                 $('#nama_pasien').val(response.data.nama_pasien);
                 $('#alamat').val(response.data.alamat);
