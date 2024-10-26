@@ -88,9 +88,9 @@
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="mt-1 mb-1 row">
-                        <label for="jenis_kelamin" class="col-md-3 col-form-label">Jenis Kelamin*</label>
-                        <div class="col-md col-form-label">
-                            <div class="d-flex align-items-center justify-content-evenly justify-content-md-start">
+                        <label for="jenis_kelamin" class="col-3 col-form-label">Jenis Kelamin*</label>
+                        <div class="col col-form-label">
+                            <div class="d-flex align-items-center justify-content-start">
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="jenis_kelamin" id="jenis_kelamin1" value="L">
                                     <label class="form-check-label" for="jenis_kelamin1">
@@ -231,7 +231,7 @@
                         <i class="fa-solid fa-circle-info"></i> Detail
                     </button>
                     <button type="button" class="btn btn-body btn-sm bg-gradient rounded-3 edit-btn" data-id="${resep.id_resep}">
-                        <i class="fa-solid fa-pen-to-square"></i> Edit
+                        <i class="fa-solid fa-pen-to-square"></i> Edit Identitas
                     </button>
                     <button type="button" class="btn btn-danger btn-sm bg-gradient rounded-3 delete-btn" data-id="${resep.id_resep}" data-name="${resep.nama_pasien}" data-date="${resep.tanggal_resep}">
                         <i class="fa-solid fa-trash"></i> Hapus
@@ -334,7 +334,7 @@
             const id = $(this).data('id'); // Dapatkan ID layanan
             $('[data-bs-toggle="tooltip"]').tooltip('hide'); // Sembunyikan tooltip
             $this.prop('disabled', true).html(`
-                <span class="spinner-border" style="width: 11px; height: 11px;" aria-hidden="true"></span> Edit
+                <span class="spinner-border" style="width: 15px; height: 15px;" aria-hidden="true"></span> Edit Identitas
             `); // Ubah tombol menjadi indikator loading
 
             try {
@@ -352,7 +352,7 @@
             } catch (error) {
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error); // Tampilkan pesan kesalahan
             } finally {
-                $this.prop('disabled', false).html(`<i class="fa-solid fa-pen-to-square"></i> Edit`); // Pulihkan tombol
+                $this.prop('disabled', false).html(`<i class="fa-solid fa-pen-to-square"></i> Edit Identitas`); // Pulihkan tombol
             }
         });
 
