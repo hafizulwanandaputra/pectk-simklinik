@@ -360,7 +360,7 @@
                 "width": "0%"
             }, {
                 "target": [2, 3],
-                "width": "100%",
+                "width": "50%",
                 "className": "min-width-column"
             }]
         });
