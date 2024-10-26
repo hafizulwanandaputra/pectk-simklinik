@@ -20,7 +20,7 @@
             <option value="0">Belum Diterima</option>
         </select>
         <div class="input-group input-group-sm flex-fill">
-            <input type="search" id="searchInput" class="form-control rounded-start-3" placeholder="Cari supplier dan tanggal pembelian obat...">
+            <input type="search" id="searchInput" class="form-control rounded-start-3" placeholder="Cari merek, supplier, dan tanggal pembelian obat...">
             <button class="btn btn-success btn-sm bg-gradient rounded-end-3" type="button" id="refreshButton"><i class="fa-solid fa-sync"></i></button>
         </div>
     </div>
