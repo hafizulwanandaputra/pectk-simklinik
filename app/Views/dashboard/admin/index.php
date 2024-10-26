@@ -295,7 +295,8 @@
                 "width": "0%"
             }, {
                 "target": [2, 3, 4],
-                "width": "50%"
+                "width": "50%",
+                "className": "min-width-column"
             }],
         });
 

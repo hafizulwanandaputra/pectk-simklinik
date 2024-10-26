@@ -26,6 +26,7 @@
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Harga Obat</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">PPN</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Mark Up</th>
+                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Penambahan Harga</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Harga Jual</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Jumlah Masuk</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Jumlah Keluar</th>
@@ -262,26 +263,17 @@
                 {
                     data: 'merek',
                     render: function(data, type, row) {
-                        return `<span class="text-nowrap">${data}<br><small>${row.nama_supplier}</small></span>`;
+                        return `<span>${data}<br><small>${row.nama_supplier}</small></span>`;
                     }
                 },
                 {
-                    data: 'nama_obat',
-                    render: function(data, type, row) {
-                        return `<span class="text-nowrap">${data}</span>`;
-                    }
+                    data: 'nama_obat'
                 },
                 {
-                    data: 'kategori_obat',
-                    render: function(data, type, row) {
-                        return `<span class="text-nowrap">${data}</span>`;
-                    }
+                    data: 'kategori_obat'
                 },
                 {
-                    data: 'bentuk_obat',
-                    render: function(data, type, row) {
-                        return `<span class="text-nowrap">${data}</span>`;
-                    }
+                    data: 'bentuk_obat'
                 },
                 {
                     data: 'harga_obat',
@@ -305,6 +297,18 @@
                     data: 'mark_up',
                     render: function(data, type, row) {
                         return `<span class="date text-nowrap" style="display: block; text-align: right;">${data}%</span>`;
+                    }
+                },
+                {
+                    data: 'selisih_harga',
+                    render: function(data, type, row) {
+                        // Format harga_obat using number_format equivalent in JavaScript
+                        let formattedHarga = new Intl.NumberFormat('id-ID', {
+                            style: 'decimal',
+                            minimumFractionDigits: 0
+                        }).format(data);
+
+                        return `<span class="date text-nowrap" style="display: block; text-align: right;">Rp${formattedHarga}</span>`;
                     }
                 },
                 {
@@ -352,11 +356,12 @@
                 "target": [1],
                 "orderable": false
             }, {
-                "target": [0, 1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+                "target": [0, 1, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
                 "width": "0%"
             }, {
-                "target": [3],
-                "width": "100%"
+                "target": [2, 3],
+                "width": "100%",
+                "className": "min-width-column"
             }]
         });
 

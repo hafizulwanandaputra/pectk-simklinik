@@ -25,12 +25,12 @@
                     <tr class="align-middle">
                         <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">No</th>
                         <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Nomor Kwitansi</th>
-                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 12.5%; min-width: 128px;">Kasir</th>
+                        <th scope="col" class="bg-body-secondary border-secondary min-width-column" style="border-bottom-width: 2px; width: 12.5%;">Kasir</th>
                         <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Nomor Rekam Medis</th>
-                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 12.5%; min-width: 128px;">Nama Pasien</th>
+                        <th scope="col" class="bg-body-secondary border-secondary min-width-column" style="border-bottom-width: 2px; width: 12.5%;">Nama Pasien</th>
                         <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Metode Pembayaran</th>
-                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 12.5%; min-width: 128px;">Dokter</th>
-                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 12.5%; min-width: 128px;">Tindakan</th>
+                        <th scope="col" class="bg-body-secondary border-secondary min-width-column" style="border-bottom-width: 2px; width: 12.5%;">Dokter</th>
+                        <th scope="col" class="bg-body-secondary border-secondary min-width-column" style="border-bottom-width: 2px; width: 12.5%;">Tindakan</th>
                         <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Kas</th>
                     </tr>
                 </thead>

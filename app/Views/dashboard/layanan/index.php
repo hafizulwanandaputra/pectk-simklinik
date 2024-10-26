@@ -252,7 +252,8 @@
                 "width": "0%"
             }, {
                 "target": [2],
-                "width": "100%"
+                "width": "100%",
+                "className": "min-width-column"
             }]
         });
 

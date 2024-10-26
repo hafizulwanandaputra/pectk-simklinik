@@ -213,22 +213,13 @@
                     }
                 },
                 {
-                    data: 'nama_supplier',
-                    render: function(data, type, row) {
-                        return `<span class="text-nowrap">${data}</span>`;
-                    }
+                    data: 'nama_supplier'
                 },
                 {
-                    data: 'merek',
-                    render: function(data, type, row) {
-                        return `<span class="text-nowrap">${data}</span>`;
-                    }
+                    data: 'merek'
                 },
                 {
-                    data: 'alamat_supplier',
-                    render: function(data, type, row) {
-                        return `<span class="text-nowrap">${data}</span>`;
-                    }
+                    data: 'alamat_supplier'
                 },
                 {
                     data: 'kontak_supplier',
@@ -250,11 +241,12 @@
                 "target": [1],
                 "orderable": false
             }, {
-                "target": [0, 1, 2, 5, 6],
+                "target": [0, 1, 5, 6],
                 "width": "0%"
             }, {
-                "target": [3, 4],
-                "width": "50%"
+                "target": [2, 3, 4],
+                "width": "50%",
+                "className": "min-width-column"
             }]
         });
 
