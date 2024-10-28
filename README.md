@@ -88,6 +88,7 @@ PHP version 8.1 or higher is required, with the following extensions installed:
 
 - [intl](http://php.net/manual/en/intl.requirements.php)
 - [mbstring](http://php.net/manual/en/mbstring.installation.php)
+- [fileinfo](https://php.net/manual/en/fileinfo.installation.php) for exportng excel files
 
 > [!WARNING]
 >
