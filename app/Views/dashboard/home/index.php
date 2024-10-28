@@ -37,7 +37,7 @@
                     </div>
                     <div class="col">
                         <div class="card bg-danger-subtle text-danger-emphasis w-100 rounded-3">
-                            <div class="card-header w-100 text-truncate">Pembelian Obat yang Belum Diterima</div>
+                            <div class="card-header w-100 text-truncate">Obat Masuk yang Belum Diterima</div>
                             <div class="card-body">
                                 <h5 class="display-5 fw-medium date mb-0"><?= $total_pembelian_obat_blm_diterima ?></h5>
                             </div>
@@ -45,7 +45,7 @@
                     </div>
                     <div class="col">
                         <div class="card bg-success-subtle text-success-emphasis w-100 rounded-3">
-                            <div class="card-header w-100 text-truncate">Pembelian Obat yang Sudah Diterima</div>
+                            <div class="card-header w-100 text-truncate">Obat Masuk yang Sudah Diterima</div>
                             <div class="card-body">
                                 <h5 class="display-5 fw-medium date mb-0"><?= $total_pembelian_obat_sdh_diterima ?></h5>
                             </div>

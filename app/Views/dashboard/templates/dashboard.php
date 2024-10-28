@@ -406,7 +406,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                             <i class="fa-solid fa-cart-shopping"></i>
                                         </div>
                                         <div class="flex-fill ms-2">
-                                            Pembelian Obat
+                                            Obat Masuk
                                         </div>
                                     </div>
                                 </a>

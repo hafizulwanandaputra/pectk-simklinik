@@ -34,8 +34,8 @@ class PembelianObat extends BaseController
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
             // Menyiapkan data untuk tampilan
             $data = [
-                'title' => 'Pembelian Obat - ' . $this->systemName,
-                'headertitle' => 'Pembelian Obat',
+                'title' => 'Obat Masuk - ' . $this->systemName,
+                'headertitle' => 'Obat Masuk',
                 'agent' => $this->request->getUserAgent() // Mengambil informasi user agent
             ];
             // Menampilkan tampilan untuk halaman pembelian obat
@@ -402,8 +402,8 @@ class PembelianObat extends BaseController
             // Menyiapkan data untuk ditampilkan
             $data = [
                 'pembelianobat' => $pembelianobat,
-                'title' => 'Detail Pembelian Obat dengan ID ' . $id . ' - ' . $this->systemName,
-                'headertitle' => 'Detail Pembelian Obat',
+                'title' => 'Detail Obat Masuk dengan ID ' . $id . ' - ' . $this->systemName,
+                'headertitle' => 'Detail Obat Masuk',
                 'agent' => $this->request->getUserAgent()
             ];
 

@@ -16,7 +16,7 @@
 <main class="col-md-9 ms-sm-auto col-lg-10 px-3 px-md-4 pt-3">
 
     <fieldset class="border rounded-3 px-2 py-0 mb-3">
-        <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Informasi Pembelian Obat</legend>
+        <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Informasi Obat Masuk</legend>
         <div style="font-size: 9pt;">
             <div class="mb-2 row">
                 <div class="col-lg-3 fw-medium">Tanggal dan Waktu</div>
