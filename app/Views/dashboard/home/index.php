@@ -62,7 +62,7 @@
                 </div>
                 <div class="col">
                     <div class="card bg-success-subtle text-success-emphasis w-100 rounded-3">
-                        <div class="card-header w-100 text-truncate">Resep Obat yang Sudah Diproses</div>
+                        <div class="card-header w-100 text-truncate">Resep yang Sudah Diproses</div>
                         <div class="card-body">
                             <h5 class="display-5 fw-medium date mb-0"><?= $total_resep_sdh_status ?></h5>
                         </div>
