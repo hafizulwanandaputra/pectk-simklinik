@@ -194,7 +194,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
         }
 
         .min-width-column {
-            min-width: 192px;
+            min-width: 144px;
         }
 
         @media (prefers-reduced-transparency) {
