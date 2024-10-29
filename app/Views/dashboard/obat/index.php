@@ -513,7 +513,7 @@
                 $('#mark_up').val(response.data.mark_up);
                 $('#penyesuaian_harga').val(response.data.penyesuaian_harga);
                 $('#jumlah_masuk').val('');
-                $('#stok_label').text(`Jumlah Masuk* (masuk: ${response.data.jumlah_masuk}; keluar: ${response.data.jumlah_keluar}; stok: ${response.data.jumlah_masuk - response.data.jumlah_keluar})`);
+                $('#stok_label').text(`Tambah/Kurangi Stok* (masuk: ${response.data.jumlah_masuk}; keluar: ${response.data.jumlah_keluar}; stok: ${response.data.jumlah_masuk - response.data.jumlah_keluar})`);
                 hitungHargaJual();
                 $('#obatModal').modal('show');
             } catch (error) {
