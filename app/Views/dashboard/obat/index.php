@@ -21,12 +21,14 @@
                     <th scope="col" class="bg-body-secondary border-secondary text-nowrap" style="border-bottom-width: 2px;">Tindakan</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Merek</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Nama</th>
+                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Isi</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Kategori</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Bentuk</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Harga Obat</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">PPN</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Mark Up</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Penambahan Harga</th>
+                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Penyesuaian Harga</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Harga Jual</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Jumlah Masuk</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Jumlah Keluar</th>
@@ -72,9 +74,14 @@
                         <label for="nama_obat">Nama*</label>
                         <div class="invalid-feedback"></div>
                     </div>
+                    <div class="form-floating mb-1 mt-1">
+                        <input type="text" class="form-control" autocomplete="off" dir="auto" placeholder="isi_obat" id="isi_obat" name="isi_obat">
+                        <label for="isi_obat">Isi</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
                     <div class="form-floating mt-1 mb-1">
                         <input type="text" class="form-control" autocomplete="off" dir="auto" placeholder="kategori_obat" id="kategori_obat" name="kategori_obat" list="list_kategori_obat">
-                        <label for="kategori_obat">Kategori Obat*</label>
+                        <label for="kategori_obat">Kategori Obat</label>
                         <div class="invalid-feedback"></div>
                         <datalist id="list_kategori_obat">
                             <option value="Antibiotik">
@@ -119,12 +126,20 @@
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
+                        <input type="number" class="form-control" autocomplete="off" dir="auto" placeholder="penyesuaian_harga" id="penyesuaian_harga" name="penyesuaian_harga">
+                        <label for="penyesuaian_harga">Penyesuaian Harga (Rp)*</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="form-floating mb-1 mt-1">
                         <input type="number" class="form-control" autocomplete="off" dir="auto" placeholder="jumlah_masuk" id="jumlah_masuk" name="jumlah_masuk">
                         <label for="jumlah_masuk" id="stok_label"></label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
-                <div class="modal-footer justify-content-end pt-2 pb-2" style="border-top: 1px solid var(--bs-border-color-translucent);">
+                <div class="modal-footer justify-content-between pt-2 pb-2" style="border-top: 1px solid var(--bs-border-color-translucent);">
+                    <div>
+                        Harga Jual: Rp<span id="hasil_harga_jual"></span>
+                    </div>
                     <button type="submit" id="submitButton" class="btn btn-primary bg-gradient rounded-3">
                         <i class="fa-solid fa-floppy-disk"></i> Simpan
                     </button>
@@ -275,6 +290,9 @@
                     data: 'nama_obat'
                 },
                 {
+                    data: 'isi_obat'
+                },
+                {
                     data: 'kategori_obat'
                 },
                 {
@@ -306,6 +324,18 @@
                 },
                 {
                     data: 'selisih_harga',
+                    render: function(data, type, row) {
+                        // Format harga_obat using number_format equivalent in JavaScript
+                        let formattedHarga = new Intl.NumberFormat('id-ID', {
+                            style: 'decimal',
+                            minimumFractionDigits: 0
+                        }).format(data);
+
+                        return `<span class="date text-nowrap" style="display: block; text-align: right;">Rp${formattedHarga}</span>`;
+                    }
+                },
+                {
+                    data: 'penyesuaian_harga',
                     render: function(data, type, row) {
                         // Format harga_obat using number_format equivalent in JavaScript
                         let formattedHarga = new Intl.NumberFormat('id-ID', {
@@ -361,7 +391,7 @@
                 "target": [1],
                 "orderable": false
             }, {
-                "target": [0, 1, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
+                "target": [0, 1, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
                 "width": "0%"
             }, {
                 "target": [2, 3],
@@ -405,6 +435,36 @@
         // Panggil fungsi untuk mengisi opsi supplier saat halaman dimuat
         fetchSupplierOptions();
 
+        // Fungsi untuk menghitung harga jual
+        function hitungHargaJual() {
+            let hargaObat = parseFloat($('#harga_obat').val()) || 0;
+            let ppn = parseFloat($('#ppn').val()) || 0;
+            let markUp = parseFloat($('#mark_up').val()) || 0;
+            let penyesuaianHarga = parseFloat($('#penyesuaian_harga').val()) || 0;
+
+            // 1. Hitung PPN
+            let jumlahPpn = (hargaObat * ppn) / 100;
+            let totalHargaPpn = hargaObat + jumlahPpn;
+
+            // 2. Hitung Mark Up
+            let jumlahMarkUp = (totalHargaPpn * markUp) / 100;
+            let totalHarga = totalHargaPpn + jumlahMarkUp;
+
+            // 3. Bulatkan ke ratusan terdekat ke atas
+            let hargaBulat = Math.ceil(totalHarga / 100) * 100;
+
+            // 4. Tambahkan penyesuaian harga
+            let hargaJual = hargaBulat + penyesuaianHarga;
+
+            // 5. Tampilkan hasil dengan format Rupiah
+            $('#hasil_harga_jual').text(new Intl.NumberFormat('id-ID').format(hargaJual));
+        }
+
+        // Event listener untuk setiap input
+        $('#harga_obat, #ppn, #mark_up, #penyesuaian_harga').on('input', function() {
+            hitungHargaJual(); // Panggil fungsi saat ada perubahan nilai
+        });
+
         // Event handler untuk menampilkan modal tambah obat
         $('#addObatBtn').click(function() {
             $('#obatModalLabel').text('Tambah Obat');
@@ -445,13 +505,16 @@
                 $('#id_obat').val(response.data.id_obat);
                 $('#id_supplier').val(response.data.id_supplier);
                 $('#nama_obat').val(response.data.nama_obat);
+                $('#isi_obat').val(response.data.isi_obat);
                 $('#kategori_obat').val(response.data.kategori_obat);
                 $('#bentuk_obat').val(response.data.bentuk_obat);
                 $('#harga_obat').val(response.data.harga_obat);
                 $('#ppn').val(response.data.ppn);
                 $('#mark_up').val(response.data.mark_up);
+                $('#penyesuaian_harga').val(response.data.penyesuaian_harga);
                 $('#jumlah_masuk').val('');
                 $('#stok_label').text(`Jumlah Masuk* (masuk: ${response.data.jumlah_masuk}; keluar: ${response.data.jumlah_keluar}; stok: ${response.data.jumlah_masuk - response.data.jumlah_keluar})`);
+                hitungHargaJual();
                 $('#obatModal').modal('show');
             } catch (error) {
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
@@ -556,6 +619,7 @@
             $('#obatForm')[0].reset();
             $('#id_obat').val('');
             $('#id_supplier').val(null).trigger('change');
+            $('#hasil_harga_jual').text('');
             $('#obatForm .is-invalid').removeClass('is-invalid');
             $('#obatForm .invalid-feedback').text('').hide();
         });

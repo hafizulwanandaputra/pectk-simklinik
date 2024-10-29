@@ -54,17 +54,19 @@ class Obat extends BaseController
                 1 => 'id_obat',
                 2 => 'merek',
                 3 => 'nama_obat',
-                4 => 'kategori_obat',
-                5 => 'bentuk_obat',
-                6 => 'harga_obat',
-                7 => 'ppn',
-                8 => 'mark_up',
-                9 => 'selisih_harga',
-                10 => 'harga_jual',
-                11 => 'jumlah_masuk',
-                12 => 'jumlah_keluar',
-                13 => 'sisa_stok',
-                14 => 'updated_at',
+                4 => 'isi_obat',
+                5 => 'kategori_obat',
+                6 => 'bentuk_obat',
+                7 => 'harga_obat',
+                8 => 'ppn',
+                9 => 'mark_up',
+                10 => 'selisih_harga',
+                11 => 'penyesuaian_harga',
+                12 => 'harga_jual',
+                13 => 'jumlah_masuk',
+                14 => 'jumlah_keluar',
+                15 => 'sisa_stok',
+                16 => 'updated_at',
             ];
 
             // Mengambil kolom untuk diurutkan
@@ -79,7 +81,13 @@ class Obat extends BaseController
                 $this->ObatModel
                     ->orderBy('merek', $sortDirection)
                     ->orderBy('nama_supplier', 'ASC')
-                    ->orderBy('nama_obat', 'ASC');
+                    ->orderBy('nama_obat', 'ASC')
+                    ->orderBy('isi_obat', 'ASC');
+            } else if ($sortColumn === 'nama_obat') {
+                // Mengurutkan berdasarkan nama_obat, kemudian berdasarkan isi_obat
+                $this->ObatModel
+                    ->orderBy('nama_obat', $sortDirection)
+                    ->orderBy('isi_obat', 'ASC');
             } else {
                 // Perilaku pengurutan default
                 $this->ObatModel->orderBy($sortColumn, $sortDirection);
@@ -88,37 +96,50 @@ class Obat extends BaseController
             // Menerapkan kueri pencarian
             if ($search) {
                 $this->ObatModel
-                    ->like('nama_obat', $search);
+                    ->like('nama_obat', $search)
+                    ->orLike('isi_obat', $search);
             }
 
             // Menghitung jumlah record yang difilter
             $filteredRecords = $this->ObatModel->countAllResults(false);
 
             $obat = $this->ObatModel
-                ->select('obat.*, supplier.*, 
+                ->select('
+                obat.*, 
+        supplier.*, 
 
-    -- Hitung PPN terlebih dahulu
-    (obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) as harga_setelah_ppn,
+        -- Hitung PPN terlebih dahulu
+        (obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) as harga_setelah_ppn,
 
-    -- Hitung harga jual sebelum pembulatan
-    ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) 
-    + ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) * obat.mark_up / 100)) as harga_jual_sebelum_bulat,
-
-    -- Bulatkan harga_jual ke ratusan terdekat ke atas
-    CEIL(
+        -- Hitung harga jual sebelum pembulatan
         ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) 
-        + ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) * obat.mark_up / 100)) / 100
-    ) * 100 as harga_jual,
+        + ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) * obat.mark_up / 100)) as harga_jual_sebelum_bulat,
 
-    -- Hitung selisih antara harga setelah pembulatan dan sebelum pembulatan
-    (CEIL(
-        ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) 
-        + ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) * obat.mark_up / 100)) / 100
-    ) * 100 
-    - ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) 
-    + ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) * obat.mark_up / 100))) as selisih_harga,
+        -- Bulatkan harga_jual ke ratusan terdekat ke atas
+        CEIL(
+            ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) 
+            + ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) * obat.mark_up / 100)) / 100
+        ) * 100 as harga_jual_bulat,
 
-    (obat.jumlah_masuk - obat.jumlah_keluar) as sisa_stok')
+        obat.penyesuaian_harga as penyesuaian_harga,
+
+        -- Tambahkan penyesuaian_harga ke harga_jual_bulat
+        (CEIL(
+            ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) 
+            + ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) * obat.mark_up / 100)) / 100
+        ) * 100 + obat.penyesuaian_harga) as harga_jual,
+
+        -- Hitung selisih antara harga_jual dan harga_jual_sebelum_bulat
+        ((CEIL(
+            ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) 
+            + ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) * obat.mark_up / 100)) / 100
+        ) * 100 + obat.penyesuaian_harga) 
+        - ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) 
+        + ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) * obat.mark_up / 100))) as selisih_harga,
+
+        -- Hitung sisa stok
+        (obat.jumlah_masuk - obat.jumlah_keluar) as sisa_stok
+                ')
                 ->join('supplier', 'supplier.id_supplier = obat.id_supplier', 'inner')
                 ->findAll($length, $start);
 
@@ -198,11 +219,11 @@ class Obat extends BaseController
             $validation->setRules([
                 'id_supplier' => 'required',
                 'nama_obat' => 'required',
-                'kategori_obat' => 'required',
                 'bentuk_obat' => 'required',
-                'harga_obat' => 'required|numeric|greater_than[0]',
+                'harga_obat' => 'required|numeric|greater_than_equal_to[0]',
                 'ppn' => 'required|numeric|greater_than_equal_to[0]',
                 'mark_up' => 'required|numeric|greater_than_equal_to[0]',
+                'penyesuaian_harga' => 'required|numeric',
                 'jumlah_masuk' => 'required|numeric|greater_than_equal_to[0]',
             ]);
 
@@ -216,11 +237,13 @@ class Obat extends BaseController
             $data = [
                 'id_supplier' => $this->request->getPost('id_supplier'),
                 'nama_obat' => $this->request->getPost('nama_obat'),
+                'isi_obat' => $this->request->getPost('isi_obat'),
                 'kategori_obat' => $this->request->getPost('kategori_obat'),
                 'bentuk_obat' => $this->request->getPost('bentuk_obat'),
                 'harga_obat' => $this->request->getPost('harga_obat'),
                 'ppn' => $this->request->getPost('ppn'),
                 'mark_up' => $this->request->getPost('mark_up'),
+                'penyesuaian_harga' => $this->request->getPost('penyesuaian_harga'),
                 'jumlah_masuk' => $this->request->getPost('jumlah_masuk'),
                 'updated_at' => date('Y-m-d H:i:s'), // Waktu pembaruan
             ];
@@ -246,11 +269,11 @@ class Obat extends BaseController
             $validation->setRules([
                 'id_supplier' => 'required',
                 'nama_obat' => 'required',
-                'kategori_obat' => 'required',
                 'bentuk_obat' => 'required',
-                'harga_obat' => 'required|numeric|greater_than[0]',
+                'harga_obat' => 'required|numeric|greater_than_equal_to[0]',
                 'ppn' => 'required|numeric|greater_than_equal_to[0]',
                 'mark_up' => 'required|numeric|greater_than_equal_to[0]',
+                'penyesuaian_harga' => 'required|numeric',
                 'jumlah_masuk' => 'required|numeric',
             ]);
 
@@ -271,11 +294,13 @@ class Obat extends BaseController
                 'id_supplier' => $this->request->getPost('id_supplier'),
                 'id_obat' => $obat['id_obat'],
                 'nama_obat' => $this->request->getPost('nama_obat'),
+                'isi_obat' => $this->request->getPost('isi_obat'),
                 'kategori_obat' => $this->request->getPost('kategori_obat'),
                 'bentuk_obat' => $this->request->getPost('bentuk_obat'),
                 'harga_obat' => $this->request->getPost('harga_obat'),
                 'ppn' => $this->request->getPost('ppn'),
                 'mark_up' => $this->request->getPost('mark_up'),
+                'penyesuaian_harga' => $this->request->getPost('penyesuaian_harga'),
                 'jumlah_masuk' => $obat['jumlah_masuk'] + $this->request->getPost('jumlah_masuk'),
                 'updated_at' => $obat['updated_at'], // Mengambil waktu pembaruan dari data sebelumnya
             ];

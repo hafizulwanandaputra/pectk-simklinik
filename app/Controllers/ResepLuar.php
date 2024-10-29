@@ -410,34 +410,41 @@ class ResepLuar extends BaseController
 
             $options = []; // Menyiapkan array untuk opsi obat
             foreach ($results as $row) {
-                $ppn = (int) $row['ppn']; // Mengambil nilai PPN
-                $mark_up = (int) $row['mark_up']; // Mengambil nilai mark-up
-                $harga_obat = (int) $row['harga_obat']; // Mengambil harga obat
+                $ppn = (float) $row['ppn']; // Mengambil nilai PPN
+                $mark_up = (float) $row['mark_up']; // Mengambil nilai mark-up
+                $harga_obat = (float) $row['harga_obat']; // Mengambil harga obat
+                $penyesuaian_harga = (float) $row['penyesuaian_harga']; // Mengambil penyesuaian harga
 
-                // Menghitung PPN terlebih dahulu
+                // 1. Hitung PPN
                 $jumlah_ppn = ($harga_obat * $ppn) / 100;
                 $total_harga_ppn = $harga_obat + $jumlah_ppn;
 
-                // Setelah itu, terapkan mark-up
+                // 2. Terapkan mark-up
                 $jumlah_mark_up = ($total_harga_ppn * $mark_up) / 100;
                 $total_harga = $total_harga_ppn + $jumlah_mark_up;
 
-                // Bulatkan ke ratusan terdekat ke atas
-                $harga_bulat = ceil($total_harga / 100) * 100;
+                // 3. Bulatkan harga ke ratusan terdekat ke atas dan tambahkan penyesuaian
+                $harga_bulat = ceil($total_harga / 100) * 100 + $penyesuaian_harga;
 
-                // Memformat harga yang telah dibulatkan
+                // 4. Format harga dengan pemisah ribuan
                 $harga_obat_terformat = number_format($harga_bulat, 0, ',', '.');
 
-                // Cek apakah id_resep sudah ada di tabel detail_resep dengan id_resep yang sama
-                $isUsed = $DetailResepModel->where('id_obat', $row['id_obat'])
-                    ->where('id_resep', $id_resep) // Pastikan sesuai dengan id_resep yang sedang digunakan
+                // 5. Cek apakah obat sudah digunakan dalam resep yang sama
+                $isUsed = $DetailResepModel
+                    ->where('id_obat', $row['id_obat'])
+                    ->where('id_resep', $id_resep)
                     ->first();
 
-                // Jika belum ada pada pembelian yang sama, tambahkan ke options
-                if (($row['jumlah_masuk'] - $row['jumlah_keluar']) > 0 && !$isUsed) {
+                // 6. Jika stok tersedia dan obat belum digunakan, tambahkan ke options
+                $stok_tersisa = $row['jumlah_masuk'] - $row['jumlah_keluar'];
+                if ($stok_tersisa > 0 && !$isUsed) {
                     $options[] = [
                         'value' => $row['id_obat'], // Menyimpan id_obat
-                        'text' => $row['nama_obat'] . ' (' . $row['kategori_obat'] . ' • ' . $row['bentuk_obat'] . ' • Rp' . $harga_obat_terformat . ' • ' . ($row['jumlah_masuk'] - $row['jumlah_keluar']) . ')' // Menyimpan informasi obat
+                        'text' => $row['nama_obat'] .
+                            ' (' . $row['kategori_obat'] .
+                            ' • ' . $row['bentuk_obat'] .
+                            ' • Rp' . $harga_obat_terformat .
+                            ' • ' . $stok_tersisa . ')' // Menyimpan informasi obat
                     ];
                 }
             }
@@ -483,21 +490,25 @@ class ResepLuar extends BaseController
             $builderObat = $db->table('obat');
             $obat = $builderObat->where('id_obat', $this->request->getPost('id_obat'))->get()->getRowArray();
 
-            // Mengambil nilai PPN, mark-up, dan harga obat
-            $ppn = $obat['ppn'];
-            $mark_up = $obat['mark_up'];
-            $harga_obat = $obat['harga_obat'];
+            // Mengambil data obat berdasarkan id_obat yang diberikan
+            $builderObat = $db->table('obat');
+            $obat = $builderObat->where('id_obat', $this->request->getPost('id_obat'))->get()->getRowArray();
 
-            // Hitung PPN terlebih dahulu
+            $ppn = (float) $obat['ppn']; // Mengambil nilai PPN
+            $mark_up = (float) $obat['mark_up']; // Mengambil nilai mark-up
+            $harga_obat = (float) $obat['harga_obat']; // Mengambil harga obat
+            $penyesuaian_harga = (float) $obat['penyesuaian_harga']; // Mengambil penyesuaian harga
+
+            // 1. Hitung PPN
             $jumlah_ppn = ($harga_obat * $ppn) / 100;
             $total_harga_ppn = $harga_obat + $jumlah_ppn;
 
-            // Setelah itu, terapkan mark-up
+            // 2. Terapkan mark-up
             $jumlah_mark_up = ($total_harga_ppn * $mark_up) / 100;
             $total_harga = $total_harga_ppn + $jumlah_mark_up;
 
-            // Bulatkan ke ratusan terdekat ke atas
-            $harga_bulat = ceil($total_harga / 100) * 100;
+            // 3. Bulatkan harga ke ratusan terdekat ke atas dan tambahkan penyesuaian
+            $harga_bulat = ceil($total_harga / 100) * 100 + $penyesuaian_harga;
 
             // Simpan data detail resep
             $data = [

@@ -24,6 +24,10 @@ class Obat extends Migration
                 'type' => 'VARCHAR',
                 'constraint' => 256,
             ],
+            'isi_obat' => [
+                'type' => 'VARCHAR',
+                'constraint' => 256,
+            ],
             'kategori_obat' => [
                 'type' => 'VARCHAR',
                 'constraint' => 256,
@@ -41,6 +45,10 @@ class Obat extends Migration
                 'constraint' => 24,
             ],
             'mark_up' => [
+                'type' => 'INT',
+                'constraint' => 24,
+            ],
+            'penyesuaian_harga' => [
                 'type' => 'INT',
                 'constraint' => 24,
             ],
