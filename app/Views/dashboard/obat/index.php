@@ -118,6 +118,11 @@
                         <label for="mark_up">Mark Up (%)*</label>
                         <div class="invalid-feedback"></div>
                     </div>
+                    <div class="form-floating mb-1 mt-1">
+                        <input type="number" class="form-control" autocomplete="off" dir="auto" placeholder="jumlah_masuk" id="jumlah_masuk" name="jumlah_masuk">
+                        <label for="jumlah_masuk" id="stok_label"></label>
+                        <div class="invalid-feedback"></div>
+                    </div>
                 </div>
                 <div class="modal-footer justify-content-end pt-2 pb-2" style="border-top: 1px solid var(--bs-border-color-translucent);">
                     <button type="submit" id="submitButton" class="btn btn-primary bg-gradient rounded-3">
@@ -403,6 +408,7 @@
         // Event handler untuk menampilkan modal tambah obat
         $('#addObatBtn').click(function() {
             $('#obatModalLabel').text('Tambah Obat');
+            $('#stok_label').text('Jumlah Stok Awal*');
             $('#obatModal').modal('show');
         });
 
@@ -444,6 +450,8 @@
                 $('#harga_obat').val(response.data.harga_obat);
                 $('#ppn').val(response.data.ppn);
                 $('#mark_up').val(response.data.mark_up);
+                $('#jumlah_masuk').val(response.data.jumlah_masuk);
+                $('#stok_label').text('Jumlah Masuk*');
                 $('#obatModal').modal('show');
             } catch (error) {
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);

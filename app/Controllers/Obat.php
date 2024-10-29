@@ -201,8 +201,9 @@ class Obat extends BaseController
                 'kategori_obat' => 'required',
                 'bentuk_obat' => 'required',
                 'harga_obat' => 'required|numeric|greater_than[0]',
-                'ppn' => 'required|numeric|greater_than[0]',
-                'mark_up' => 'required|numeric|greater_than[0]',
+                'ppn' => 'required|numeric|greater_than_equal_to[0]',
+                'mark_up' => 'required|numeric|greater_than_equal_to[0]',
+                'jumlah_masuk' => 'required|numeric|greater_than_equal_to[0]',
             ]);
 
             // Memeriksa apakah validasi berhasil
@@ -220,7 +221,7 @@ class Obat extends BaseController
                 'harga_obat' => $this->request->getPost('harga_obat'),
                 'ppn' => $this->request->getPost('ppn'),
                 'mark_up' => $this->request->getPost('mark_up'),
-                'jumlah_masuk' => 0, // Nilai awal untuk jumlah_masuk
+                'jumlah_masuk' => $this->request->getPost('jumlah_masuk'),
                 'updated_at' => date('Y-m-d H:i:s'), // Waktu pembaruan
             ];
             // Menyimpan data obat ke dalam database
@@ -248,8 +249,9 @@ class Obat extends BaseController
                 'kategori_obat' => 'required',
                 'bentuk_obat' => 'required',
                 'harga_obat' => 'required|numeric|greater_than[0]',
-                'ppn' => 'required|numeric|greater_than[0]',
-                'mark_up' => 'required|numeric|greater_than[0]',
+                'ppn' => 'required|numeric|greater_than_equal_to[0]',
+                'mark_up' => 'required|numeric|greater_than_equal_to[0]',
+                'jumlah_masuk' => 'required|numeric|greater_than_equal_to[0]',
             ]);
 
             // Memeriksa apakah validasi berhasil
@@ -271,7 +273,7 @@ class Obat extends BaseController
                 'harga_obat' => $this->request->getPost('harga_obat'),
                 'ppn' => $this->request->getPost('ppn'),
                 'mark_up' => $this->request->getPost('mark_up'),
-                'jumlah_masuk' => $obat['jumlah_masuk'], // Mengambil jumlah_masuk dari data sebelumnya
+                'jumlah_masuk' => $this->request->getPost('jumlah_masuk'),
                 'updated_at' => $obat['updated_at'], // Mengambil waktu pembaruan dari data sebelumnya
             ];
             // Mengupdate data obat dalam database
