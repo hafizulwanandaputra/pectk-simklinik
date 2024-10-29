@@ -59,6 +59,17 @@ $routes->post('/(?i)pembelianobat/(?i)perbaruiitemobat/(:any)/(:any)', 'Pembelia
 $routes->delete('/(?i)pembelianobat/(?i)hapusitemobat/(:any)/(:any)', 'PembelianObat::hapusitemobat/$1/$2');
 $routes->get('/(?i)pembelianobat/(?i)fakturpembelianobat/(:any)', 'PembelianObat::fakturpembelianobat/$1');
 
+// OPNAME OBAT
+$routes->get('/(?i)opnameobat', 'OpnameObat::index');
+$routes->get('/(?i)opnameobat/(?i)opnameobatlist', 'OpnameObat::opnameobatlist');
+$routes->post('/(?i)opnameobat/(?i)create', 'OpnameObat::create');
+$routes->delete('/(?i)opnameobat/(?i)delete/(:any)', 'OpnameObat::delete/$1');
+
+// DETAIL OPNAME OBAT
+$routes->get('/(?i)opnameobat/(?i)detailopnameobat/(:any)', 'OpnameObat::detailopnameobat/$1');
+$routes->get('/(?i)opnameobat/(?i)obatlist/(:any)', 'OpnameObat::obatlist/$1');
+$routes->get('/(?i)opnameobat/(?i)exportopnameobat/(:any)', 'OpnameObat::exportopnameobat/$1');
+
 // RESEP DOKTER
 $routes->get('/(?i)resep', 'Resep::index');
 $routes->get('/(?i)resep/(?i)listresep', 'Resep::listresep');

@@ -64,6 +64,8 @@ class Filters extends BaseConfig
                 '/obat/*',
                 '/pembelianobat',
                 '/pembelianobat/*',
+                '/opnameobat',
+                '/opnameobat/*',
                 '/resepluar',
                 '/resepluar/*',
                 '/resep',

@@ -412,6 +412,18 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link p-2 <?= ($activeSegment === 'opnameobat') ? 'active bg-success' : '' ?>" href=" <?= base_url('/opnameobat'); ?>">
+                                    <div class="d-flex align-items-start <?= ($activeSegment === 'opnameobat') ? 'text-white' : 'text-success-emphasis' ?>">
+                                        <div style="min-width: 24px; max-width: 24px; text-align: center;">
+                                            <i class="fa-solid fa-file-invoice"></i>
+                                        </div>
+                                        <div class="flex-fill ms-2">
+                                            Opname Obat
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link p-2 <?= ($activeSegment === 'resepluar') ? 'active bg-success' : '' ?>" href=" <?= base_url('/resepluar'); ?>">
                                     <div class="d-flex align-items-start <?= ($activeSegment === 'resepluar') ? 'text-white' : 'text-success-emphasis' ?>">
                                         <div style="min-width: 24px; max-width: 24px; text-align: center;">

@@ -10,7 +10,6 @@ use App\Models\ObatModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use CodeIgniter\I18n\Time;
 use DateTime;
 use IntlDateFormatter;
 use PhpOffice\PhpSpreadsheet\Cell\DataType;
@@ -246,6 +245,11 @@ class PembelianObat extends BaseController
             $db->table('detail_pembelian_obat')->where('id_pembelian_obat', $id)->delete();
             // Menghapus data pembelian obat
             $this->PembelianObatModel->delete($id);
+
+            // Reset auto increment untuk tabel pembelian_obat dan detail_pembelian_obat
+            $db->query('ALTER TABLE `pembelian_obat` auto_increment = 1');
+            $db->query('ALTER TABLE `detail_pembelian_obat` auto_increment = 1');
+            $db->query('ALTER TABLE `item_obat` auto_increment = 1');
 
             // Menyelesaikan transaksi
             if ($db->transCommit()) {
