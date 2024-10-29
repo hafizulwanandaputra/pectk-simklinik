@@ -22,7 +22,7 @@
     <form id="opnameObatForm" enctype="multipart/form-data">
         <div class="d-grid gap-2">
             <button type="submit" id="addButton" class="btn btn-primary bg-gradient rounded-3">
-                <i class="fa-solid fa-plus"></i> Buat Opname Baru
+                <i class="fa-solid fa-plus"></i> Buat Laporan Baru
             </button>
         </div>
     </form>

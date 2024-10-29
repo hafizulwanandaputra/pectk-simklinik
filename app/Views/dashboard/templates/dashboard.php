@@ -418,7 +418,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                             <i class="fa-solid fa-file-invoice"></i>
                                         </div>
                                         <div class="flex-fill ms-2">
-                                            Opname Obat
+                                            Laporan Stok Obat
                                         </div>
                                     </div>
                                 </a>

@@ -6,6 +6,11 @@ use App\Controllers\BaseController;
 use App\Models\ObatModel;
 use App\Models\OpnameObatModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
+use DateTime;
+use IntlDateFormatter;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class OpnameObat extends BaseController
 {
@@ -22,8 +27,8 @@ class OpnameObat extends BaseController
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
             // Menyiapkan data untuk tampilan
             $data = [
-                'title' => 'Opname Obat - ' . $this->systemName,
-                'headertitle' => 'Opname Obat',
+                'title' => 'Laporan Stok Obat - ' . $this->systemName,
+                'headertitle' => 'Laporan Stok Obat',
                 'agent' => $this->request->getUserAgent() // Mengambil informasi user agent
             ];
             // Menampilkan tampilan untuk halaman opnameobat
@@ -164,14 +169,14 @@ class OpnameObat extends BaseController
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
-            // Mengambil detail pembelian obat dengan bergabung dengan tabel supplier
+            // Mengambil opname obat
             $opname_obat = $this->OpnameObatModel->find($id);
 
             // Menyiapkan data untuk ditampilkan
             $data = [
                 'opname_obat' => $opname_obat,
-                'title' => 'Detail Opname Obat ' . $opname_obat['tanggal'] . ' - ' . $this->systemName,
-                'headertitle' => 'Detail Opname Obat',
+                'title' => 'Detail Laporan Stok Obat ' . $opname_obat['tanggal'] . ' - ' . $this->systemName,
+                'headertitle' => 'Detail Laporan Stok Obat',
                 'agent' => $this->request->getUserAgent()
             ];
 
@@ -189,15 +194,181 @@ class OpnameObat extends BaseController
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
             // Mengambil detail opname obat
             $db = db_connect();
-            $opname_obat = $db->table('detail_opname_obat')->where('id_opname_obat', $id)->get()->getResultArray();
+            $detail_opname_obat = $db->table('detail_opname_obat')->where('id_opname_obat', $id)->get()->getResultArray();
 
             // Mengembalikan menjadi JSON
-            return $this->response->setJSON($opname_obat);
+            return $this->response->setJSON($detail_opname_obat);
         } else {
             // Jika peran tidak dikenali, kembalikan status 404
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan',
             ]);
+        }
+    }
+
+    public function exportopnameobat($id)
+    {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+            // Mengambil opname obat
+            $opname_obat = $this->OpnameObatModel->find($id);
+            // Mengambil detail opname obat
+            $db = db_connect();
+            $detail_opname_obat = $db->table('detail_opname_obat')->where('id_opname_obat', $id)->get()->getResultArray();
+            // Mengambil jumlah total sisa_stok dari detail_opname_obat
+            $total_stok = $db->table('detail_opname_obat')
+                ->selectSum('sisa_stok')  // Fungsi SUM untuk menjumlahkan sisa_stok
+                ->where('id_opname_obat', $id)
+                ->get()
+                ->getRowArray();
+
+            // Ambil nilai jumlah sisa_stok dari array
+            $jumlah_sisa_stok = $total_stok['sisa_stok'] ?? 0;
+
+            // Memeriksa apakah detail pembelian obat kosong
+            if (empty($opname_obat)) {
+                throw PageNotFoundException::forPageNotFound();
+            } else {
+                // Membuat nama file berdasarkan tanggal pembelian
+                $filename = $opname_obat['tanggal'] . '-laporan-stok-obat';
+                $tanggal = new DateTime($opname_obat['tanggal']);
+                // Buat formatter untuk tanggal dan waktu
+                $formatter = new IntlDateFormatter(
+                    'id_ID', // Locale untuk bahasa Indonesia
+                    IntlDateFormatter::LONG, // Format untuk tanggal
+                    IntlDateFormatter::NONE, // Tidak ada waktu
+                    'Asia/Jakarta', // Timezone
+                    IntlDateFormatter::GREGORIAN, // Calendar
+                    'EEEE, d MMMM yyyy HH:mm:ss' // Format tanggal lengkap dengan nama hari
+                );
+
+                // Format tanggal
+                $tanggalFormat = $formatter->format($tanggal);
+                $spreadsheet = new Spreadsheet();
+                $sheet = $spreadsheet->getActiveSheet();
+
+                // Menambahkan informasi header di spreadsheet
+                $sheet->setCellValue('A1', 'KLINIK UTAMA MATA PADANG EYE CENTER TELUK KUANTAN');
+                $sheet->setCellValue('A2', 'Jl. Rusdi S. Abrus No. 35 LK III Sinambek, Kelurahan Sungai Jering, Kecamatan Kuantan Tengah, Kabupaten Kuantan Singingi, Riau.');
+                $sheet->setCellValue('A3', 'LAPORAN STOK OBAT');
+
+                // Path gambar yang ingin ditambahkan
+                $gambarPath = FCPATH . 'assets/images/logo_pec.png'; // Ganti dengan path gambar Anda
+
+                // Membuat objek Drawing
+                $drawing = new Drawing();
+                $drawing->setName('Logo PEC-TK'); // Nama gambar
+                $drawing->setDescription('Logo PEC-TK'); // Deskripsi gambar
+                $drawing->setPath($gambarPath); // Path ke gambar
+                $drawing->setCoordinates('A1'); // Koordinat sel tempat gambar akan ditambahkan
+                $drawing->setHeight(36); // Tinggi gambar dalam piksel (opsional)
+                $drawing->setWorksheet($sheet); // Menambahkan gambar ke worksheet
+
+                // Menambahkan informasi tanggal dan supplier
+                $sheet->setCellValue('A4', 'Tanggal dan Waktu:');
+                $sheet->setCellValue('C4', $tanggalFormat);
+                $sheet->setCellValue('A5', 'Apoteker:');
+                $sheet->setCellValue('C5', $opname_obat['apoteker']);
+
+                // Menambahkan header tabel detail pembelian
+                $sheet->setCellValue('A6', 'No.');
+                $sheet->setCellValue('B6', 'Nama Obat');
+                $sheet->setCellValue('D6', 'Sisa Stok');
+
+                // Mengatur tata letak dan gaya untuk header
+                $spreadsheet->getActiveSheet()->mergeCells('A1:D1');
+                $spreadsheet->getActiveSheet()->mergeCells('A2:D2');
+                $spreadsheet->getActiveSheet()->mergeCells('A3:D3');
+                $spreadsheet->getActiveSheet()->mergeCells('B6:C6');
+                $spreadsheet->getActiveSheet()->getPageSetup()
+                    ->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_PORTRAIT);
+                $spreadsheet->getActiveSheet()->getPageSetup()
+                    ->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_A4);
+                $spreadsheet->getDefaultStyle()->getFont()->setName('Helvetica');
+                $spreadsheet->getDefaultStyle()->getFont()->setSize(8);
+
+                // Mengisi data detail pembelian obat ke dalam spreadsheet
+                $column = 7;
+                $nomor = 1;
+
+                foreach ($detail_opname_obat as $list) {
+                    $sheet->setCellValue('A' . $column, $nomor++);
+                    $sheet->setCellValue('B' . $column, $list['nama_obat']);
+                    $sheet->setCellValue('D' . $column, $list['sisa_stok']);
+                    // Menggabungkan sel dari B hingga C
+                    $sheet->mergeCells('B' . $column . ':C' . $column);
+                    // Mengatur gaya teks
+                    $sheet->getStyle('A' . $column . ':D' . $column)->getAlignment()->setWrapText(true);
+                    $sheet->getStyle('A' . $column)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+                    $sheet->getStyle('A' . $column . ':D' . $column)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
+                    $column++;
+                }
+
+                // Menambahkan total pembelian di bawah tabel
+                $sheet->setCellValue('A' . ($column), 'Total');
+                $spreadsheet->getActiveSheet()->mergeCells('A' . ($column) . ':C' . ($column));
+                $sheet->setCellValue('D' . ($column), $jumlah_sisa_stok);
+
+                // Menambahkan bagian tanda tangan penerima
+                $sheet->setCellValue('C' . ($column + 2), 'Apoteker');
+                $sheet->setCellValue('C' . ($column + 7), $opname_obat['apoteker']);
+
+                // Mengatur gaya teks untuk header dan total
+                $sheet->getStyle('A1')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+                $sheet->getStyle('A1')->getFont()->setSize(12);
+                $sheet->getStyle('A2')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+                $sheet->getStyle('A2')->getFont()->setSize(6);
+                $sheet->getStyle('A3')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+                $sheet->getStyle('A3')->getFont()->setSize(10);
+                $sheet->getStyle('C4:C5')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT);
+                $sheet->getStyle('A6:D6')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+                $sheet->getStyle('A' . ($column))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT);
+                $sheet->getStyle('C' . ($column + 2) . ':C' . ($column + 7))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+
+                // Mengatur gaya font untuk header dan total
+                $sheet->getStyle('A1:A5')->getFont()->setBold(TRUE);
+                $sheet->getStyle('A6:D6')->getFont()->setBold(TRUE);
+                $sheet->getStyle('A6:D6')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+                $sheet->getStyle('A' . ($column) . ':D' . ($column))->getFont()->setBold(TRUE);
+                $sheet->getStyle('A' . ($column) . ':D' . ($column))->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
+
+                // Menambahkan border untuk header dan tabel
+                $headerBorder1 = [
+                    'borders' => [
+                        'bottom' => [
+                            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                            'color' => ['argb' => 'FF000000']
+                        ]
+                    ]
+                ];
+                $sheet->getStyle('A2:D2')->applyFromArray($headerBorder1);
+                $tableBorder = [
+                    'borders' => [
+                        'allBorders' => [
+                            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                            'color' => ['argb' => 'FF000000']
+                        ]
+                    ]
+                ];
+                $sheet->getStyle('A6:D' . ($column))->applyFromArray($tableBorder);
+
+                // Mengatur lebar kolom
+                $sheet->getColumnDimension('A')->setWidth(50, 'px');
+                $sheet->getColumnDimension('B')->setWidth(300, 'px');
+                $sheet->getColumnDimension('C')->setWidth(300, 'px');
+                $sheet->getColumnDimension('D')->setWidth(120, 'px');
+
+                // Menyimpan file spreadsheet dan mengirimkan ke browser
+                $writer = new Xlsx($spreadsheet);
+                header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheet.sheet');
+                header('Content-Disposition: attachment;filename=' . $filename . '.xlsx');
+                header('Cache-Control: max-age=0');
+                $writer->save('php://output');
+                exit();
+            }
+        } else {
+            // Menghasilkan exception jika peran tidak diizinkan
+            throw PageNotFoundException::forPageNotFound();
         }
     }
 }
