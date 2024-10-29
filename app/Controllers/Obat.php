@@ -251,7 +251,7 @@ class Obat extends BaseController
                 'harga_obat' => 'required|numeric|greater_than[0]',
                 'ppn' => 'required|numeric|greater_than_equal_to[0]',
                 'mark_up' => 'required|numeric|greater_than_equal_to[0]',
-                'jumlah_masuk' => 'required|numeric|greater_than_equal_to[0]',
+                'jumlah_masuk' => 'required|numeric',
             ]);
 
             // Memeriksa apakah validasi berhasil
@@ -263,23 +263,43 @@ class Obat extends BaseController
             // Mengambil data obat berdasarkan ID obat yang akan diupdate
             $obat = $this->ObatModel->find($this->request->getPost('id_obat'));
 
+            $db = db_connect(); // Koneksi ke database
+            $db->transBegin();
+
             // Menyimpan Data
             $data = [
                 'id_supplier' => $this->request->getPost('id_supplier'),
-                'id_obat' => $this->request->getPost('id_obat'),
+                'id_obat' => $obat['id_obat'],
                 'nama_obat' => $this->request->getPost('nama_obat'),
                 'kategori_obat' => $this->request->getPost('kategori_obat'),
                 'bentuk_obat' => $this->request->getPost('bentuk_obat'),
                 'harga_obat' => $this->request->getPost('harga_obat'),
                 'ppn' => $this->request->getPost('ppn'),
                 'mark_up' => $this->request->getPost('mark_up'),
-                'jumlah_masuk' => $this->request->getPost('jumlah_masuk'),
+                'jumlah_masuk' => $obat['jumlah_masuk'] + $this->request->getPost('jumlah_masuk'),
                 'updated_at' => $obat['updated_at'], // Mengambil waktu pembaruan dari data sebelumnya
             ];
-            // Mengupdate data obat dalam database
-            $this->ObatModel->save($data);
-            // Mengembalikan respons sukses
-            return $this->response->setJSON(['success' => true, 'message' => 'Obat berhasil diedit']);
+
+            // Memperbarui data obat
+            $itemBuilder1 = $db->table('obat');
+            $itemBuilder1->where('id_obat', $obat['id_obat']);
+            $itemBuilder1->update($data);
+
+            if ($data['jumlah_masuk'] < $obat['jumlah_keluar']) {
+                // Gagalkan jika pembelian obat sudah diterima
+                $db->transRollback();
+                return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Jumlah masuk tidak bisa kurang dari jumlah keluar.']);
+            }
+
+            // Memeriksa status stok obat
+            if ($db->transStatus() === false) {
+                $db->transRollback();  // Mengembalikan jika ada masalah
+                return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Gagal memproses pembelian', 'errors' => NULL]);
+            } else {
+                $db->transCommit();
+                // Mengembalikan respons sukses
+                return $this->response->setJSON(['success' => true, 'message' => 'Obat berhasil diedit']);
+            }
         } else {
             // Jika peran tidak dikenali, kembalikan status 404
             return $this->response->setStatusCode(404)->setJSON([

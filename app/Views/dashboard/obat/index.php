@@ -450,8 +450,8 @@
                 $('#harga_obat').val(response.data.harga_obat);
                 $('#ppn').val(response.data.ppn);
                 $('#mark_up').val(response.data.mark_up);
-                $('#jumlah_masuk').val(response.data.jumlah_masuk);
-                $('#stok_label').text('Jumlah Masuk*');
+                $('#jumlah_masuk').val('');
+                $('#stok_label').text(`Jumlah Masuk* (masuk: ${response.data.jumlah_masuk}; keluar: ${response.data.jumlah_keluar}; stok: ${response.data.jumlah_masuk - response.data.jumlah_keluar})`);
                 $('#obatModal').modal('show');
             } catch (error) {
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
@@ -538,7 +538,11 @@
                     }
                 }
             } catch (error) {
-                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                if (error.response.request.status === 422 || error.response.request.status === 401) {
+                    showFailedToast(error.response.data.message);
+                } else {
+                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                }
             } finally {
                 $('#submitButton').prop('disabled', false).html(`
                     <i class="fa-solid fa-floppy-disk"></i> Simpan
