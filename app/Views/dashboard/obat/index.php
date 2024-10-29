@@ -27,7 +27,7 @@
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Harga Obat</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">PPN</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Mark Up</th>
-                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Penambahan Harga</th>
+                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Pembulatan Harga</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Penyesuaian Harga</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Harga Jual</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Jumlah Masuk</th>
@@ -54,7 +54,7 @@
         </div>
     </div>
     <div class="modal fade" id="obatModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="obatModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable rounded-3">
+        <div class="modal-dialog modal-lg modal-fullscreen-lg-down modal-dialog-centered modal-dialog-scrollable rounded-3">
             <form id="obatForm" enctype="multipart/form-data" class="modal-content bg-body-tertiary shadow-lg transparent-blur">
                 <div class="modal-header justify-content-between pt-2 pb-2" style="border-bottom: 1px solid var(--bs-border-color-translucent);">
                     <h6 class="pe-2 modal-title fs-6 text-truncate" id="obatModalLabel" style="font-weight: bold;"></h6>
@@ -138,7 +138,7 @@
                 </div>
                 <div class="modal-footer justify-content-between pt-2 pb-2" style="border-top: 1px solid var(--bs-border-color-translucent);">
                     <div>
-                        Harga Jual: Rp<span id="hasil_harga_jual"></span>
+                        Harga Jual: <span class="fw-bold date" id="hasil_harga_jual">Rp0</span>
                     </div>
                     <button type="submit" id="submitButton" class="btn btn-primary bg-gradient rounded-3">
                         <i class="fa-solid fa-floppy-disk"></i> Simpan
@@ -457,7 +457,7 @@
             let hargaJual = hargaBulat + penyesuaianHarga;
 
             // 5. Tampilkan hasil dengan format Rupiah
-            $('#hasil_harga_jual').text(new Intl.NumberFormat('id-ID').format(hargaJual));
+            $('#hasil_harga_jual').text('Rp' + new Intl.NumberFormat('id-ID').format(hargaJual));
         }
 
         // Event listener untuk setiap input
@@ -474,13 +474,6 @@
 
         // Inisialisasi select2 untuk elemen #id_supplier
         $('#id_supplier').select2({});
-
-        // Buka select2 saat modal obat ditampilkan
-        $('#obatModal').on('shown.bs.modal', function() {
-            setTimeout(function() {
-                $('#id_supplier').select2('open');
-            }, 200); // Delay untuk memastikan modal sudah siap
-        });
 
         // Konfigurasi tambahan select2 dengan parent dropdown dari modal
         $('#obatModal').on('shown.bs.modal', function() {
@@ -512,7 +505,7 @@
                 $('#ppn').val(response.data.ppn);
                 $('#mark_up').val(response.data.mark_up);
                 $('#penyesuaian_harga').val(response.data.penyesuaian_harga);
-                $('#jumlah_masuk').val('');
+                $('#jumlah_masuk').val('0');
                 $('#stok_label').text(`Tambah/Kurangi Stok* (masuk: ${response.data.jumlah_masuk}; keluar: ${response.data.jumlah_keluar}; stok: ${response.data.jumlah_masuk - response.data.jumlah_keluar})`);
                 hitungHargaJual();
                 $('#obatModal').modal('show');
@@ -619,7 +612,7 @@
             $('#obatForm')[0].reset();
             $('#id_obat').val('');
             $('#id_supplier').val(null).trigger('change');
-            $('#hasil_harga_jual').text('');
+            $('#hasil_harga_jual').text('Rp0');
             $('#obatForm .is-invalid').removeClass('is-invalid');
             $('#obatForm .invalid-feedback').text('').hide();
         });
