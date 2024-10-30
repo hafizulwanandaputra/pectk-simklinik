@@ -35,7 +35,11 @@ class UserSession extends Migration
             'created_at' => [
                 'type' => 'DATETIME',
                 'null' => false,
-            ]
+            ],
+            'expires_at' => [
+                'type' => 'DATETIME',
+                'null' => false,
+            ],
         ]);
 
         // Set primary key

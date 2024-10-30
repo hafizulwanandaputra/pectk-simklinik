@@ -69,13 +69,17 @@ class Auth extends BaseController
                     $user_agent = $this->request->getUserAgent()->getAgentString();
                     $ip_address = $this->request->getIPAddress();
 
+                    // Tentukan waktu kadaluwarsa (misalnya, 1 jam dari sekarang)
+                    $expires_at = date('Y-m-d H:i:s', strtotime('+1 day'));
+
                     // Simpan token sesi ke tabel `user_sessions`
                     $db->table('user_sessions')->insert([
                         'id_user' => $check['id_user'],
                         'session_token' => $session_token,
                         'user_agent' => $user_agent,
                         'ip_address' => $ip_address,
-                        'created_at' => date('Y-m-d H:i:s')
+                        'created_at' => date('Y-m-d H:i:s'),
+                        'expires_at' => $expires_at
                     ]);
                     // Menyimpan data sesi setelah login berhasil
                     session()->set('log', true);

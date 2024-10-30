@@ -17,7 +17,17 @@ class AuthFilter implements FilterInterface
             ->where('id_user', session()->get('id_user'))
             ->where('session_token', $token)
             ->get();
-        if (session()->get('log') != true || $query->getNumRows() === 0) {
+        // Memeriksa sesi berdasarkan token
+        $session = $db->table('user_sessions')
+            ->where('session_token', $token)
+            ->get()
+            ->getRowArray();
+        if (session()->get('log') != true || $query->getNumRows() === 0 || strtotime($session['expires_at']) < time()) {
+            if ($session) {
+                $db->table('user_sessions')
+                    ->where('session_token', $token)
+                    ->delete();
+            }
             session()->remove('log');
             session()->remove('session_token');
             $data = array(
