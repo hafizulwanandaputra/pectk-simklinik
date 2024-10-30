@@ -320,7 +320,7 @@
                 }
             } finally {
                 $('#addButton').prop('disabled', false).html(`
-                    <i class="fa-solid fa-plus"></i> Buat Opname Baru
+                    <i class="fa-solid fa-plus"></i> Buat Laporan Baru
                 `);
                 $('#opnameObatForm select').prop('disabled', false);
             }
