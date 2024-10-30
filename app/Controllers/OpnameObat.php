@@ -194,7 +194,7 @@ class OpnameObat extends BaseController
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
             // Mengambil detail opname obat
             $db = db_connect();
-            $detail_opname_obat = $db->table('detail_opname_obat')->where('id_opname_obat', $id)->get()->getResultArray();
+            $detail_opname_obat = $db->table('detail_opname_obat')->where('id_opname_obat', $id)->orderBy('nama_obat')->get()->getResultArray();
 
             // Mengembalikan menjadi JSON
             return $this->response->setJSON($detail_opname_obat);
@@ -214,7 +214,7 @@ class OpnameObat extends BaseController
             $opname_obat = $this->OpnameObatModel->find($id);
             // Mengambil detail opname obat
             $db = db_connect();
-            $detail_opname_obat = $db->table('detail_opname_obat')->where('id_opname_obat', $id)->get()->getResultArray();
+            $detail_opname_obat = $db->table('detail_opname_obat')->where('id_opname_obat', $id)->orderBy('nama_obat')->get()->getResultArray();
             // Mengambil jumlah total sisa_stok dari detail_opname_obat
             $total_stok = $db->table('detail_opname_obat')
                 ->selectSum('sisa_stok')  // Fungsi SUM untuk menjumlahkan sisa_stok
@@ -287,7 +287,7 @@ class OpnameObat extends BaseController
                 $spreadsheet->getDefaultStyle()->getFont()->setName('Helvetica');
                 $spreadsheet->getDefaultStyle()->getFont()->setSize(8);
 
-                // Mengisi data detail pembelian obat ke dalam spreadsheet
+                // Mengisi data detail pembelian oasien Rawat Jalanbat ke dalam spreadsheet
                 $column = 7;
                 $nomor = 1;
 
