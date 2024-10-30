@@ -2,7 +2,7 @@
     "name": "Kasir dan Farmasi Klinik Mata PEC Teluk Kuantan",
     "short_name": "Kasir dan Farmasi Klinik Mata PEC Teluk Kuantan",
     "start_url": "/pectk-farmasi",
-    "display": "standalone",
+    "display": "minimal-ui",
     "background_color": "#5eba00",
     "theme_color": "#5eba00",
     "icons": [
