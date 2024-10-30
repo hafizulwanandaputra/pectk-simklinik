@@ -300,6 +300,7 @@ class OpnameObat extends BaseController
                     // Mengatur gaya teks
                     $sheet->getStyle('A' . $column . ':D' . $column)->getAlignment()->setWrapText(true);
                     $sheet->getStyle('A' . $column)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+                    $sheet->getStyle('D' . $column)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
                     $sheet->getStyle('A' . $column . ':D' . $column)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
                     $column++;
                 }
@@ -308,6 +309,7 @@ class OpnameObat extends BaseController
                 $sheet->setCellValue('A' . ($column), 'Total');
                 $spreadsheet->getActiveSheet()->mergeCells('A' . ($column) . ':C' . ($column));
                 $sheet->setCellValue('D' . ($column), $jumlah_sisa_stok);
+                $sheet->getStyle('D' . $column)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
 
                 // Menambahkan bagian tanda tangan penerima
                 $sheet->setCellValue('C' . ($column + 2), 'Apoteker');
