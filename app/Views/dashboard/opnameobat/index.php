@@ -233,7 +233,7 @@
             opnameObatName = $(this).data('name');
             opnameObatDate = $(this).data('date');
             $('[data-bs-toggle="tooltip"]').tooltip('hide');
-            $('#deleteMessage').html(`Hapus Opname Obat ini ?`);
+            $('#deleteMessage').html(`Hapus Laporan Obat ini ?`);
             $('#deleteSubmessage').html(`Tanggal: ` + opnameObatDate);
             $('#deleteModal').modal('show');
         });
