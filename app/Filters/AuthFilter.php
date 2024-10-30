@@ -11,7 +11,15 @@ class AuthFilter implements FilterInterface
     public function before(RequestInterface $request, $arguments = null)
     {
         // Do something here
-        if (session()->get('log') != true) {
+        $db = db_connect();
+        $token = session()->get('session_token');
+        $query = $db->table('user_sessions')
+            ->where('id_user', session()->get('id_user'))
+            ->where('session_token', $token)
+            ->get();
+        if (session()->get('log') != true || $query->getNumRows() === 0) {
+            session()->remove('log');
+            session()->remove('session_token');
             $data = array(
                 'redirect' => urlencode(uri_string())
             );

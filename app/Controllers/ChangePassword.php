@@ -74,8 +74,22 @@ class ChangePassword extends BaseController
                 session()->setFlashdata('error', 'Kata sandi baru harus berbeda dengan kata sandi lama');
                 return redirect()->back(); // Kembali ke halaman ubah kata sandi
             } else {
+                $db = db_connect();
                 // Menghash kata sandi baru
                 $password_hash = password_hash($new_password, PASSWORD_DEFAULT);
+                // Ambil token sesi perangkat aktif dari sesi saat ini
+                $current_token = session()->get('session_token');
+                // Hapus semua sesi kecuali perangkat aktif
+                $db->table('user_sessions')
+                    ->where('id_user', session()->get('id_user'))
+                    ->where('session_token !=', $current_token)
+                    ->delete();
+                $db->query('ALTER TABLE `user_sessions` auto_increment = 1');
+                // Perbarui token perangkat aktif (opsional, untuk keamanan tambahan)
+                $new_token = bin2hex(random_bytes(32));
+                $db->table('user_sessions')
+                    ->where('session_token', $current_token)
+                    ->update(['session_token' => $new_token]);
                 // Menyimpan kata sandi baru ke model
                 $this->ChangePasswordModel->save([
                     'id_user' => session()->get('id_user'),
@@ -83,6 +97,8 @@ class ChangePassword extends BaseController
                 ]);
                 // Menghapus kata sandi lama dari sesi dan menyimpan kata sandi baru
                 session()->remove('password');
+                // Perbarui token sesi di sesi saat ini
+                session()->set('session_token', $new_token);
                 session()->set('password', $password_hash);
                 // Mengatur flashdata untuk menampilkan pesan sukses
                 session()->setFlashdata('msg', 'Anda berhasil mengubah kata sandi baru Anda!');

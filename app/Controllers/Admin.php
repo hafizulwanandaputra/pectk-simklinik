@@ -210,8 +210,18 @@ class Admin extends BaseController
             $db = db_connect(); // Menghubungkan ke database
             // Mengambil data pengguna berdasarkan ID
             $user = $this->AuthModel->find($id);
+            // Menghash kata sandi baru
+            $password_hash = password_hash($user['username'], PASSWORD_DEFAULT);
             // Mengatur ulang kata sandi pengguna dengan hash dari username
-            $db->table('user')->set('password', password_hash($user['username'], PASSWORD_DEFAULT))->where('id_user', $id)->update();
+            $db->table('user')
+                ->set('password', $password_hash)
+                ->where('id_user', $id)
+                ->update();
+            // Hapus semua sesi pengguna terkait di tabel `user_sessions`
+            $db->table('user_sessions')
+                ->where('id_user', $id)
+                ->delete();
+            $db->query('ALTER TABLE `user_sessions` auto_increment = 1');
             // Mengembalikan respons JSON sukses
             return $this->response->setJSON(['success' => true, 'message' => 'Kata sandi pengguna berhasil diatur ulang']);
         } else {

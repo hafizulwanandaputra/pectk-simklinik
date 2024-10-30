@@ -61,6 +61,22 @@ class Auth extends BaseController
             if (password_verify($password, $check['password'])) {
                 // Memeriksa status akun aktif
                 if ($check['active'] == '1') {
+                    $db = db_connect();
+                    // Generate token sesi baru
+                    $session_token = bin2hex(random_bytes(32));
+
+                    // Ambil data perangkat pengguna
+                    $user_agent = $this->request->getUserAgent()->getAgentString();
+                    $ip_address = $this->request->getIPAddress();
+
+                    // Simpan token sesi ke tabel `user_sessions`
+                    $db->table('user_sessions')->insert([
+                        'id_user' => $check['id_user'],
+                        'session_token' => $session_token,
+                        'user_agent' => $user_agent,
+                        'ip_address' => $ip_address,
+                        'created_at' => date('Y-m-d H:i:s')
+                    ]);
                     // Menyimpan data sesi setelah login berhasil
                     session()->set('log', true);
                     session()->set('id_user', $check['id_user']);
@@ -69,6 +85,7 @@ class Auth extends BaseController
                     session()->set('password', $check['password']);
                     session()->set('profilephoto', $check['profilephoto']);
                     session()->set('role', $check['role']);
+                    session()->set('session_token', $session_token);
                     session()->set('url', $url);
                     // Mengalihkan pengguna ke URL yang telah ditentukan
                     return redirect()->to($url);
@@ -91,6 +108,14 @@ class Auth extends BaseController
 
     public function logout()
     {
+        $db = db_connect();
+
+        // Hapus token sesi untuk perangkat saat ini
+        $db->table('user_sessions')
+            ->where('id_user', session()->get('id_user'))
+            ->where('session_token', session()->get('session_token'))
+            ->delete();
+        $db->query('ALTER TABLE `user_sessions` auto_increment = 1');
         // Menghapus semua data sesi
         session()->remove('log');
         session()->remove('id_user');
@@ -99,6 +124,7 @@ class Auth extends BaseController
         session()->remove('password');
         session()->remove('profilephoto');
         session()->remove('role');
+        session()->remove('session_token');
         session()->remove('url');
         // Mengatur flashdata untuk menampilkan pesan sukses logout
         session()->setFlashdata('msg', 'Berhasil keluar');
