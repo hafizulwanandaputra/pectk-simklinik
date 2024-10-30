@@ -27,6 +27,7 @@ class AuthFilter implements FilterInterface
                 $db->table('user_sessions')
                     ->where('session_token', $token)
                     ->delete();
+                $db->query('ALTER TABLE `user_sessions` auto_increment = 1');
             }
             session()->remove('log');
             session()->remove('session_token');
