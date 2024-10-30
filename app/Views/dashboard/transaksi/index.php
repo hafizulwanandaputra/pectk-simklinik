@@ -228,7 +228,7 @@
                 $('#paginationNav ul').empty();
                 $('#transaksiContainer').append(
                     '<li class="list-group-item bg-body-tertiary pb-3 pt-3">' +
-                    '    <h1 class="display-4 text-center text-muted" style="font-weight: 100;">Data Kosong</h1>' +
+                    '    <h1 class="display-4 text-center text-muted" style="font-weight: 200;">Data Kosong</h1>' +
                     '</li>'
                 );
             } else {
