@@ -177,6 +177,9 @@ $routes->get('/(?i)settings', 'Settings::index');
 $routes->get('/(?i)settings/(?i)pwdtransaksi', 'Settings::pwdTransaksi');
 $routes->post('/(?i)settings/(?i)updatepwdtransaksi', 'Settings::updatePwdTransaksi');
 
+// FLUSH USER SESSION
+$routes->post('/(?i)settings/(?i)flush', 'Settings::flush');
+
 // CHANGE USER INFORMATION
 $routes->get('/(?i)settings/(?i)edit', 'Settings::edit');
 $routes->post('/(?i)settings/(?i)update', 'Settings::update');
