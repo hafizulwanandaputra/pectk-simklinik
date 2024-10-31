@@ -90,6 +90,7 @@ class Auth extends BaseController
                     session()->set('profilephoto', $check['profilephoto']);
                     session()->set('role', $check['role']);
                     session()->set('session_token', $session_token);
+                    session()->set('expires_at', $expires_at);
                     session()->set('url', $url);
                     // Mengalihkan pengguna ke URL yang telah ditentukan
                     return redirect()->to($url);
@@ -129,6 +130,7 @@ class Auth extends BaseController
         session()->remove('profilephoto');
         session()->remove('role');
         session()->remove('session_token');
+        session()->remove('expires_at');
         session()->remove('url');
         // Mengatur flashdata untuk menampilkan pesan sukses logout
         session()->setFlashdata('msg', 'Berhasil keluar');

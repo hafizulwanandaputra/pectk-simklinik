@@ -294,7 +294,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                 </div>
                             </div>
                             <div class="text-center w-100 lh-sm mb-3">
-                                <span><?= session()->get('fullname'); ?><br><span style="font-size: 10pt;">@<?= session()->get('username'); ?></span><br><span style="font-size: 9pt;"><?= session()->get('role'); ?></span></span>
+                                <span><?= session()->get('fullname'); ?><br><span style="font-size: 10pt;">@<?= session()->get('username'); ?></span><br><span style="font-size: 9pt;"><?= session()->get('role'); ?></span><br><span class="date" style="font-size: 9pt;">Sesi akan berakhir pada <?= session()->get('expires_at'); ?></span></span>
                             </div>
                             <hr class="my-1 border-success-subtle opacity-100">
                             <ul class="nav nav-pills flex-column">
