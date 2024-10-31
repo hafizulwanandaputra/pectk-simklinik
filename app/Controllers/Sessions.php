@@ -141,22 +141,22 @@ class Sessions extends BaseController
             $db = db_connect();
             $builder = $db->table('user_sessions');
 
-            // Mengecek apakah ada sesi yang kadaluwarsa
+            // Mengecek apakah ada sesi yang kedaluwarsa
             $expiredSessions = $builder->where('expires_at <', date('Y-m-d H:i:s'))->countAllResults();
 
             if ($expiredSessions > 0) {
-                // Menghapus sesi yang kadaluwarsa
+                // Menghapus sesi yang kedaluwarsa
                 $builder->where('expires_at <', date('Y-m-d H:i:s'))->delete();
 
                 // Mengatur ulang nilai Auto Increment
                 $db->query('ALTER TABLE `user_sessions` auto_increment = 1');
 
                 // Mengembalikan respons JSON sukses
-                return $this->response->setJSON(['message' => 'Sesi pengguna yang kadaluwarsa berhasil dihapus']);
+                return $this->response->setJSON(['message' => 'Sesi pengguna yang kedaluwarsa berhasil dihapus']);
             } else {
-                // Jika tidak ada sesi yang kadaluwarsa, mengembalikan status 404 dengan pesan error
+                // Jika tidak ada sesi yang kedaluwarsa, mengembalikan status 404 dengan pesan error
                 return $this->response->setStatusCode(404)->setJSON([
-                    'error' => 'Tidak ada sesi yang kadaluwarsa untuk dihapus',
+                    'error' => 'Tidak ada sesi yang kedaluwarsa untuk dihapus',
                 ]);
             }
         } else {

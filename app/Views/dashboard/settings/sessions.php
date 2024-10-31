@@ -21,7 +21,7 @@
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Alamat IP</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">User Agent</th>
                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Waktu Masuk</th>
-                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Kadaluwarsa</th>
+                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Kedaluwarsa</th>
                 </tr>
             </thead>
             <tbody class="align-top">
@@ -152,8 +152,8 @@
                     $(node).removeClass('btn-secondary')
                 },
             }, {
-                // Tombol Hapus Sesi Kadaluwarsa
-                text: '<i class="fa-solid fa-trash"></i><span class="d-block d-sm-inline"> Kadaluwarsa</span>',
+                // Tombol Hapus Sesi Kedaluwarsa
+                text: '<i class="fa-solid fa-trash"></i><span class="d-block d-sm-inline"> Kedaluwarsa</span>',
                 className: 'btn-danger btn-sm bg-gradient rounded-end-3',
                 attr: {
                     id: 'deleteExpiredBtn'
@@ -226,7 +226,7 @@
                         // Check if 'expires_at' has passed the current date and time
                         const isExpired = expiresAt < currentDate;
                         const statusBadge = isExpired ?
-                            '<span class="badge bg-danger bg-gradient">Kadaluwarsa</span>' :
+                            '<span class="badge bg-danger bg-gradient">Kedaluwarsa</span>' :
                             '<span class="badge bg-success bg-gradient">Aktif</span>';
                         return `<strong>${row.fullname}</strong><br>@${data} ${statusBadge}`;
                     }
@@ -302,7 +302,7 @@
 
         // Menampilkan modal untuk menonaktifkan pengguna
         $(document).on('click', '#deleteExpiredBtn', function() {
-            $('#deleteExpiredMessage').html(`Hapus seluruh sesi yang kadaluwarsa?`); // Menampilkan pesan konfirmasi nonaktif
+            $('#deleteExpiredMessage').html(`Hapus seluruh sesi yang kedaluwarsa?`); // Menampilkan pesan konfirmasi nonaktif
             $('#deleteExpiredModal').modal('show'); // Menampilkan modal nonaktif
         });
 
