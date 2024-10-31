@@ -68,22 +68,26 @@ class Sessions extends BaseController
             // Menerapkan kueri pencarian
             if ($search) {
                 $this->SessionsModel
+                    ->join('user AS u1', 'u1.id_user = user_sessions.id_user', 'inner') // Alias 'u1' for user table
                     ->groupStart()
-                    ->like('username', $search) // Mencari berdasarkan username
-                    ->orLike('ip_address', $search) // Mencari berdasarkan alamat IP
-                    ->orLike('user_agent', $search) // Mencari berdasarkan user agent
+                    ->like('u1.username', $search) // Mencari berdasarkan username dari tabel user
+                    ->orLike('user_sessions.ip_address', $search) // Mencari berdasarkan alamat IP dari tabel user_sessions
+                    ->orLike('user_sessions.user_agent', $search) // Mencari berdasarkan user agent dari tabel user_sessions
                     ->groupEnd()
-                    ->where('session_token !=', session()->get('session_token')) // Mengabaikan token sesi saat ini
+                    ->where('user_sessions.session_token !=', session()->get('session_token')) // Mengabaikan token sesi saat ini
                     ->orderBy($sortColumn, $sortDirection); // Mengurutkan hasil
             }
 
             // Mendapatkan jumlah catatan yang terfilter
-            $filteredRecords = $this->SessionsModel->where('session_token !=', session()->get('session_token'))->countAllResults(false);
+            $filteredRecords = $this->SessionsModel
+                ->join('user AS u2', 'u2.id_user = user_sessions.id_user', 'inner') // Alias 'u2' for user table
+                ->where('user_sessions.session_token !=', session()->get('session_token')) // Mengabaikan token sesi saat ini
+                ->countAllResults(false);
 
             // Mengambil data sesi
             $sessions = $this->SessionsModel
-                ->join('user', 'user.id_user = user_sessions.id_user', 'inner')
-                ->where('session_token !=', session()->get('session_token'))
+                ->join('user AS u3', 'u3.id_user = user_sessions.id_user', 'inner') // Alias 'u3' for user table
+                ->where('user_sessions.session_token !=', session()->get('session_token'))
                 ->orderBy($sortColumn, $sortDirection) // Mengurutkan hasil
                 ->findAll($length, $start); // Mengambil hasil dengan batasan panjang dan awal
 
