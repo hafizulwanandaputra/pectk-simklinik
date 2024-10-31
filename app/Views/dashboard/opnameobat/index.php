@@ -268,7 +268,7 @@
             $('#opnameObatForm .is-invalid').removeClass('is-invalid');
             $('#opnameObatForm .invalid-feedback').text('').hide();
             $('#addButton').prop('disabled', true).html(`
-                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span> Membuat Opname Obat...
+                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span> Membuat Laporan Obat...
             `);
 
             // Disable form inputs
