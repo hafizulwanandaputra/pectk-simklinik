@@ -69,8 +69,8 @@ class Auth extends BaseController
                     $user_agent = $this->request->getUserAgent()->getAgentString();
                     $ip_address = $this->request->getIPAddress();
 
-                    // Tentukan waktu kadaluwarsa (misalnya, 1 jam dari sekarang)
-                    $expires_at = date('Y-m-d H:i:s', strtotime('+1 day'));
+                    // Tentukan waktu kadaluwarsa (misalnya, 12 jam dari sekarang)
+                    $expires_at = date('Y-m-d H:i:s', strtotime('+12 hours'));
 
                     // Simpan token sesi ke tabel `user_sessions`
                     $db->table('user_sessions')->insert([
