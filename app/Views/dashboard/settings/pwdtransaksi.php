@@ -25,13 +25,6 @@
     <fieldset class="border rounded-3 px-2 py-0">
         <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Kata Sandi Transaksi</legend>
         <div class="form-floating mb-2">
-            <input type="password" class="form-control rounded-3 <?= (validation_show_error('current_password')) ? 'is-invalid' : ''; ?>" id="current_password" name="current_password" placeholder="current_password">
-            <label for="current_password">Kata Sandi Lama</label>
-            <div class="invalid-feedback">
-                <?= validation_show_error('current_password'); ?>
-            </div>
-        </div>
-        <div class="form-floating mb-2">
             <input type="password" class="form-control rounded-3 <?= (validation_show_error('new_password1')) ? 'is-invalid' : ''; ?>" id="new_password1" name="new_password1" placeholder="new_password1">
             <label for="new_password1">Kata Sandi Baru</label>
             <div class="invalid-feedback">

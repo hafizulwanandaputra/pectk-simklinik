@@ -24,27 +24,6 @@ class Settings extends BaseController
         return view('dashboard/settings/index', $data); // Mengembalikan tampilan halaman pengaturan
     }
 
-    public function flush()
-    {
-        // Memeriksa apakah peran pengguna dalam sesi adalah "Admin"
-        if (session()->get('role') == 'Admin') {
-            $db = db_connect();
-            /// Ambil token sesi perangkat aktif dari sesi saat ini
-            $current_token = session()->get('session_token');
-            // Hapus semua sesi kecuali perangkat aktif
-            $db->table('user_sessions')
-                ->where('session_token !=', $current_token)
-                ->delete();
-            $db->query('ALTER TABLE `user_sessions` auto_increment = 1');
-            // Mengatur flashdata untuk menampilkan pesan sukses
-            session()->setFlashdata('msg', 'Anda berhasil membersihkan sesi!');
-            return redirect()->back(); // Kembali ke halaman sebelumnya
-        } else {
-            // Jika bukan admin, mengembalikan status 404 dengan pesan error
-            throw PageNotFoundException::forPageNotFound();
-        }
-    }
-
     public function edit()
     {
         // Menyiapkan data untuk tampilan halaman edit informasi pengguna
@@ -123,13 +102,6 @@ class Settings extends BaseController
         if (session()->get('role') == 'Admin') {
             // Memvalidasi input dari form ubah kata sandi
             if (!$this->validate([
-                'current_password' => [
-                    'label' => 'Kata Sandi Lama', // Label untuk kata sandi lama
-                    'rules' => 'required', // Kata sandi lama wajib diisi
-                    'errors' => [
-                        'required' => '{field} wajib diisi!' // Pesan error jika kata sandi lama tidak diisi
-                    ]
-                ],
                 'new_password1' => [
                     'label' => 'Kata Sandi Baru', // Label untuk kata sandi baru
                     'rules' => 'required|min_length[5]|matches[new_password2]', // Validasi untuk kata sandi baru
@@ -154,40 +126,19 @@ class Settings extends BaseController
             }
 
             $db = db_connect();
-            // Ambil data kata sandi transaksi dengan ID 1
-            $query_pwd_transaksi = $db->table('pwd_transaksi')->getWhere(['id' => 1]);
-
-            $pwd_transaksi = $query_pwd_transaksi->getRowArray(); // Ambil satu baris data
-
-            // Mengambil kata sandi lama dan baru dari input
-            $current_password = $this->request->getVar('current_password');
             $new_password = $this->request->getVar('new_password1');
 
-            // Memeriksa apakah kata sandi lama yang diinput benar
-            if (!password_verify($current_password, $pwd_transaksi['pwd_transaksi'])) {
-                // Jika salah, mengatur flashdata untuk menampilkan pesan error
-                session()->setFlashdata('error', 'Kata sandi lama Anda salah!');
-                return redirect()->back(); // Kembali ke halaman ubah kata sandi
-            } else {
-                // Memeriksa apakah kata sandi baru sama dengan kata sandi lama
-                if ($current_password == $new_password) {
-                    // Jika sama, mengatur flashdata untuk menampilkan pesan error
-                    session()->setFlashdata('error', 'Kata sandi baru harus berbeda dengan kata sandi lama');
-                    return redirect()->back(); // Kembali ke halaman ubah kata sandi
-                } else {
-                    // Menghash kata sandi baru
-                    $password_hash = password_hash($new_password, PASSWORD_DEFAULT);
-                    // Menyimpan kata sandi baru ke database pwd_transaksi
-                    $data = [
-                        'id' => 1,
-                        'pwd_transaksi' => $password_hash
-                    ];
-                    $db->table('pwd_transaksi')->update($data, ['id' => 1]); // Update data berdasarkan id
-                    // Mengatur flashdata untuk menampilkan pesan sukses
-                    session()->setFlashdata('msg', 'Anda berhasil mengubah kata sandi transaksi!');
-                    return redirect()->back(); // Kembali ke halaman sebelumnya
-                }
-            }
+            // Menghash kata sandi baru
+            $password_hash = password_hash($new_password, PASSWORD_DEFAULT);
+            // Menyimpan kata sandi baru ke database pwd_transaksi
+            $data = [
+                'id' => 1,
+                'pwd_transaksi' => $password_hash
+            ];
+            $db->table('pwd_transaksi')->update($data, ['id' => 1]); // Update data berdasarkan id
+            // Mengatur flashdata untuk menampilkan pesan sukses
+            session()->setFlashdata('msg', 'Anda berhasil mengubah kata sandi transaksi!');
+            return redirect()->back(); // Kembali ke halaman sebelumnya
         } else {
             // Jika bukan admin, mengembalikan status 404 dengan pesan error
             throw PageNotFoundException::forPageNotFound();
