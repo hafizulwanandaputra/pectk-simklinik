@@ -17,7 +17,7 @@
                 <i class="fa-solid fa-circle-info"></i>
             </div>
             <div class="w-100 ms-3">
-                Kata sandi harus minimal 3 karakter
+                Kata sandi harus minimal 3 karakter. Sesi yang menggunakan akun Anda selain dari perangkat ini akan dihapus setelah mengganti kata sandi. Disarankan untuk menggunakan kata sandi kuat demi keamanan.
             </div>
         </div>
     </div>
