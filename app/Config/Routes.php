@@ -177,8 +177,12 @@ $routes->get('/(?i)settings', 'Settings::index');
 $routes->get('/(?i)settings/(?i)pwdtransaksi', 'Settings::pwdTransaksi');
 $routes->post('/(?i)settings/(?i)updatepwdtransaksi', 'Settings::updatePwdTransaksi');
 
-// FLUSH USER SESSION
-$routes->post('/(?i)settings/(?i)flush', 'Settings::flush');
+// SESSION MANAGER
+$routes->get('/(?i)settings/(?i)sessions', 'Sessions::index');
+$routes->post('/(?i)settings/(?i)sessionslist', 'Sessions::sessionslist');
+$routes->delete('/(?i)settings/(?i)flush', 'Sessions::flush');
+$routes->delete('/(?i)settings/(?i)deleteexpired', 'Sessions::deleteexpired');
+$routes->delete('/(?i)settings/(?i)deletesession/(:any)', 'Sessions::deletesession/$1');
 
 // CHANGE USER INFORMATION
 $routes->get('/(?i)settings/(?i)edit', 'Settings::edit');
