@@ -34,7 +34,7 @@
             <li class="list-group-item p-1 list-group-item-action">
                 <div class="d-flex align-items-start">
                     <a href="<?= base_url('/settings/sessions'); ?>" class="stretched-link" style="min-width: 48px; max-width: 48px; text-align: center;">
-                        <p class="mb-0" style="font-size: 1.75rem!important;"><i class="fa-solid fa-broom"></i></p>
+                        <p class="mb-0" style="font-size: 1.75rem!important;"><i class="fa-solid fa-users-gear"></i></p>
                     </a>
                     <div class="align-self-center flex-fill ps-1 text-wrap overflow-hidden" style="text-overflow: ellipsis;">
                         <h5 class="card-title">Manajer Sesi</h5>
