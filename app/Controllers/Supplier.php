@@ -131,7 +131,6 @@ class Supplier extends BaseController
             // Menetapkan aturan validasi dasar
             $validation->setRules([
                 'nama_supplier' => 'required', // Nama supplier wajib diisi
-                'merek' => 'required', // Merek wajib diisi
                 'alamat_supplier' => 'required', // Alamat supplier wajib diisi
             ]);
 
@@ -165,7 +164,6 @@ class Supplier extends BaseController
             // Menetapkan aturan validasi dasar
             $validation->setRules([
                 'nama_supplier' => 'required', // Nama supplier wajib diisi
-                'merek' => 'required', // Merek wajib diisi
                 'alamat_supplier' => 'required', // Alamat supplier wajib diisi
             ]);
 

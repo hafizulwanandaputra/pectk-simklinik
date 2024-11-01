@@ -57,7 +57,7 @@
                     </div>
                     <div class="form-floating mb-1 mt-1">
                         <input type="text" class="form-control" autocomplete="off" dir="auto" placeholder="merek" id="merek" name="merek">
-                        <label for="merek">Merek*</label>
+                        <label for="merek">Merek</label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
