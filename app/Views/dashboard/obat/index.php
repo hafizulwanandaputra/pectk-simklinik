@@ -283,7 +283,8 @@
                 {
                     data: 'merek',
                     render: function(data, type, row) {
-                        return `<span>${data}<br><small>${row.nama_supplier}</small></span>`;
+                        const merek = data ? data : 'Tanpa Merek';
+                        return `<span>${merek}<br><small>${row.nama_supplier}</small></span>`;
                     }
                 },
                 {
