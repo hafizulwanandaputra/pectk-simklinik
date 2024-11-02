@@ -315,6 +315,7 @@ class Transaksi extends BaseController
                     'jenis_kelamin' => $resepData['jenis_kelamin'], // Jenis kelamin pasien
                     'tempat_lahir' => $resepData['tempat_lahir'], // Tempat lahir pasien
                     'tanggal_lahir' => $resepData['tanggal_lahir'], // Tanggal lahir pasien
+                    'dokter' => $resepData['dokter'], // Tanggal lahir pasien
                     'kasir' => session()->get('fullname'), // Nama kasir dari session
                     'no_kwitansi' => $no_kwitansi, // Nomor kwitansi
                     'tgl_transaksi' => date('Y-m-d H:i:s'), // Tanggal dan waktu transaksi
@@ -396,6 +397,7 @@ class Transaksi extends BaseController
                 'jenis_kelamin' => $resepData['jenis_kelamin'], // Jenis kelamin pasien
                 'tempat_lahir' => $resepData['tempat_lahir'], // Tempat lahir pasien
                 'tanggal_lahir' => $resepData['tanggal_lahir'], // Tanggal lahir pasien
+                'dokter' => 'Resep Luar', // Tanggal lahir pasien
                 'kasir' => session()->get('fullname'), // Nama kasir dari session
                 'no_kwitansi' => $no_kwitansi, // Nomor kwitansi
                 'tgl_transaksi' => date('Y-m-d H:i:s'), // Tanggal dan waktu transaksi
@@ -1484,6 +1486,8 @@ class Transaksi extends BaseController
             $result = []; // Untuk menyimpan transaksi terstruktur
 
             foreach ($transaksi as $item) {
+                $dokter = $item['dokter'];
+
                 $layanan = $this->DetailTransaksiModel
                     ->where('detail_transaksi.id_transaksi', $item['id_transaksi'])
                     ->where('detail_transaksi.jenis_transaksi', 'Tindakan')
@@ -1527,8 +1531,6 @@ class Transaksi extends BaseController
                         ]
                     ];
                 }, $obatalkes);
-
-                $dokter = $result_obatalkes[0]['resep']['dokter'];
 
                 // Menghitung total harga obat dan alkes
                 $total_obatalkes_awal = $this->DetailTransaksiModel
@@ -1594,6 +1596,7 @@ class Transaksi extends BaseController
             $result = []; // Untuk menyimpan transaksi terstruktur
 
             foreach ($transaksi as $item) {
+                $dokter = $item['dokter'];
                 $layanan = $this->DetailTransaksiModel
                     ->where('detail_transaksi.id_transaksi', $item['id_transaksi'])
                     ->where('detail_transaksi.jenis_transaksi', 'Tindakan')
@@ -1637,8 +1640,6 @@ class Transaksi extends BaseController
                         ]
                     ];
                 }, $obatalkes);
-
-                $dokter = $result_obatalkes[0]['resep']['dokter'];
 
                 // Menghitung total harga obat dan alkes
                 $total_obatalkes_awal = $this->DetailTransaksiModel

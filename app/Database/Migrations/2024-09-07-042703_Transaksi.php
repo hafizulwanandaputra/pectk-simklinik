@@ -56,6 +56,10 @@ class Transaksi extends Migration
             'tanggal_lahir' => [
                 'type' => 'DATE',
             ],
+            'dokter' => [
+                'type' => 'VARCHAR',
+                'constraint' => 256,
+            ],
             'kasir' => [
                 'type' => 'VARCHAR',
                 'constraint' => 256,
