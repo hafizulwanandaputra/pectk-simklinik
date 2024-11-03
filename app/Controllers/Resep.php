@@ -465,7 +465,7 @@ class Resep extends BaseController
             $DetailResepModel = new DetailResepModel(); // Membuat instance model DetailResep
 
             // Mengambil semua obat dari tabel obat dan mengurutkannya
-            $results = $ObatModel->orderBy('nama_obat', 'DESC')->findAll();
+            $results = $ObatModel->orderBy('nama_obat', 'ASC')->findAll();
 
             $options = []; // Menyiapkan array untuk opsi obat
             foreach ($results as $row) {
