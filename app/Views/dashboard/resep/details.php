@@ -223,7 +223,8 @@
                 const data = response.data;
 
                 // Cek status `status`
-                if (data.status === "1") {
+                if (data.status === "1"
+                    <?= (session()->get('role') != 'Admin') ? ' || data.dokter != `' . session()->get("fullname") . '`' : ''; ?>) {
                     $('#tambahDetailContainer').hide();
                 } else if (data.status === "0") {
                     $('#tambahDetailContainer').show();
@@ -295,7 +296,8 @@
                         $('.edit-btn').prop('disabled', true);
                         $('.delete-btn').prop('disabled', true);
                     <?php else : ?>
-                        if (detail_resep.status === "1") {
+                        if (detail_resep.status === "1"
+                            <?= (session()->get('role') != 'Admin') ? ' || data.dokter != `' . session()->get("fullname") . '`' : ''; ?>) {
                             $('.edit-btn').prop('disabled', true);
                             $('.delete-btn').prop('disabled', true);
                         } else if (detail_resep.status === "0") {

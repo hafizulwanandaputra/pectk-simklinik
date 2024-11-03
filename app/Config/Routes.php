@@ -72,6 +72,7 @@ $routes->get('/(?i)opnameobat/(?i)exportopnameobat/(:any)', 'OpnameObat::exporto
 
 // RESEP DOKTER
 $routes->get('/(?i)resep', 'Resep::index');
+$routes->get('/(?i)resep/(?i)dokterlist', 'Resep::dokterlist');
 $routes->get('/(?i)resep/(?i)listresep', 'Resep::listresep');
 $routes->get('/(?i)resep/(?i)pasienlist', 'Resep::pasienlist');
 $routes->get('/(?i)resep/(?i)resep/(:any)', 'Resep::resep/$1');

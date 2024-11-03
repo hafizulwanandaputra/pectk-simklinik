@@ -46,6 +46,7 @@ class Resep extends BaseController
             $limit = $this->request->getGet('limit');
             $offset = $this->request->getGet('offset');
             $status = $this->request->getGet('status');
+            $dokter = $this->request->getGet('dokter');
 
             // Menentukan limit dan offset
             $limit = $limit ? intval($limit) : 0;
@@ -53,13 +54,7 @@ class Resep extends BaseController
 
             $ResepModel = $this->ResepModel;
 
-            // Mengatur query untuk pemanggilan data berdasarkan peran
-            if (session()->get('role') != 'Dokter') {
-                $ResepModel->select('resep.*'); // Mengambil semua kolom dari tabel resep
-            } else {
-                // Hanya mengambil resep yang dibuat oleh dokter yang sedang login
-                $ResepModel->select('resep.*')->where('resep.dokter', session()->get('fullname'));
-            }
+            $ResepModel->select('resep.*'); // Mengambil semua kolom dari tabel resep
 
             // Menerapkan filter status jika disediakan
             if ($status === '1') {
@@ -72,9 +67,13 @@ class Resep extends BaseController
             if ($search) {
                 $ResepModel->groupStart()
                     ->like('nama_pasien', $search)
-                    ->orLike('dokter', $search)
                     ->orLike('tanggal_resep', $search)
                     ->groupEnd();
+            }
+
+            // Menerapkan filter untuk dokter jika disediakan
+            if ($dokter) {
+                $ResepModel->where('dokter', $dokter); // Menambahkan filter berdasarkan dokter
             }
 
             // Menambahkan filter untuk resep di mana nomor_registrasi, no_rm, dan dokter adalah bukan NULL
@@ -110,6 +109,40 @@ class Resep extends BaseController
             // Mengembalikan status 404 jika peran tidak diizinkan
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan',
+            ]);
+        }
+    }
+
+    public function dokterlist()
+    {
+        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Apoteker' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Apoteker') {
+            // Mengambil dokter dari tabel resep dengan pengecualian resep luar
+            $resepData = $this->ResepModel
+                ->where('dokter !=', 'Resep Luar')
+                ->groupBy('dokter')
+                ->orderBy('dokter', 'ASC')
+                ->findAll();
+
+            // Menyiapkan array opsi untuk dikirim dalam respon
+            $options = [];
+            // Menyusun opsi dari data resep luar yang diterima
+            foreach ($resepData as $resep) {
+                // Menambahkan opsi ke dalam array
+                $options[] = [
+                    'value' => $resep['dokter'], // Nilai untuk opsi
+                    'text'  => $resep['dokter'] // Teks untuk opsi
+                ];
+            }
+
+            // Mengembalikan data resep luar dalam format JSON
+            return $this->response->setJSON([
+                'success' => true, // Indikator sukses
+                'data'    => $options, // Data opsi
+            ]);
+        } else {
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan', // Pesan jika peran tidak valid
             ]);
         }
     }
@@ -185,24 +218,13 @@ class Resep extends BaseController
         // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Apoteker' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Apoteker') {
             // Mengambil data resep berdasarkan ID
-            if (session()->get('role') != 'Dokter') {
-                $data = $this->ResepModel
-                    ->where('nomor_registrasi IS NOT NULL')
-                    ->where('no_rm IS NOT NULL')
-                    ->where('telpon IS NOT NULL')
-                    ->where('tempat_lahir IS NOT NULL')
-                    ->where('dokter !=', 'Resep Luar')
-                    ->find($id); // Mengambil resep tanpa filter dokter
-            } else {
-                $data = $this->ResepModel
-                    ->where('resep.dokter', session()->get('fullname')) // Mengambil resep hanya untuk dokter yang sedang login
-                    ->where('nomor_registrasi IS NOT NULL')
-                    ->where('no_rm IS NOT NULL')
-                    ->where('telpon IS NOT NULL')
-                    ->where('tempat_lahir IS NOT NULL')
-                    ->where('dokter !=', 'Resep Luar')
-                    ->find($id);
-            }
+            $data = $this->ResepModel
+                ->where('nomor_registrasi IS NOT NULL')
+                ->where('no_rm IS NOT NULL')
+                ->where('telpon IS NOT NULL')
+                ->where('tempat_lahir IS NOT NULL')
+                ->where('dokter !=', 'Resep Luar')
+                ->find($id); // Mengambil resep tanpa filter dokter
             return $this->response->setJSON($data); // Mengembalikan data resep dalam format JSON
         } else {
             // Mengembalikan status 404 jika peran tidak diizinkan
@@ -369,26 +391,14 @@ class Resep extends BaseController
     {
         // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Apoteker' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Apoteker') {
-            // Jika peran bukan 'Dokter', ambil resep berdasarkan ID
-            if (session()->get('role') != 'Dokter') {
-                $resep = $this->ResepModel
-                    ->where('nomor_registrasi IS NOT NULL')
-                    ->where('no_rm IS NOT NULL')
-                    ->where('telpon IS NOT NULL')
-                    ->where('tempat_lahir IS NOT NULL')
-                    ->where('dokter !=', 'Resep Luar')
-                    ->find($id);
-            } else {
-                // Jika peran 'Dokter', ambil resep yang dibuat oleh dokter yang sedang login
-                $resep = $this->ResepModel
-                    ->where('resep.dokter', session()->get('fullname'))
-                    ->where('nomor_registrasi IS NOT NULL')
-                    ->where('no_rm IS NOT NULL')
-                    ->where('telpon IS NOT NULL')
-                    ->where('tempat_lahir IS NOT NULL')
-                    ->where('dokter !=', 'Resep Luar')
-                    ->find($id);
-            }
+            // ambil resep berdasarkan ID
+            $resep = $this->ResepModel
+                ->where('nomor_registrasi IS NOT NULL')
+                ->where('no_rm IS NOT NULL')
+                ->where('telpon IS NOT NULL')
+                ->where('tempat_lahir IS NOT NULL')
+                ->where('dokter !=', 'Resep Luar')
+                ->find($id);
 
             // Memeriksa apakah resep tidak kosong
             if (!empty($resep)) {
@@ -597,6 +607,14 @@ class Resep extends BaseController
                 return $this->response->setStatusCode(401)->setJSON(['success' => false, 'message' => 'Tidak bisa dilakukan karena transaksi yang menggunakan resep ini sudah diproses', 'errors' => NULL]);
             }
 
+            // Jika resep dilakukan oleh dokter lain, gagalkan operasi
+            if (session()->get('role') != 'Admin') {
+                if ($resep['dokter'] != session()->get('fullname')) {
+                    $db->transRollback();
+                    return $this->response->setStatusCode(401)->setJSON(['success' => false, 'message' => 'Resep ini hanya bisa ditambahkan oleh ' . $resep['dokter'], 'errors' => NULL]);
+                }
+            }
+
             // Mengupdate jumlah keluar obat
             $new_jumlah_keluar = $obat['jumlah_keluar'] + $this->request->getPost('jumlah');
             $builderObat->where('id_obat', $this->request->getPost('id_obat'))->update([
@@ -709,6 +727,14 @@ class Resep extends BaseController
                 return $this->response->setStatusCode(401)->setJSON(['success' => false, 'message' => 'Tidak bisa dilakukan karena transaksi yang menggunakan resep ini sudah diproses', 'errors' => NULL]);
             }
 
+            // Jika resep dilakukan oleh dokter lain, gagalkan operasi
+            if (session()->get('role') != 'Admin') {
+                if ($resep['dokter'] != session()->get('fullname')) {
+                    $db->transRollback();
+                    return $this->response->setStatusCode(401)->setJSON(['success' => false, 'message' => 'Resep ini hanya bisa diedit oleh ' . $resep['dokter'], 'errors' => NULL]);
+                }
+            }
+
             // Mengupdate jumlah keluar obat
             $new_jumlah_keluar = $obat['jumlah_keluar'] - $detail_resep['jumlah'] + $this->request->getPost('jumlah_edit');
             $builderObat->where('id_obat', $detail_resep['id_obat'])->update([
@@ -794,6 +820,14 @@ class Resep extends BaseController
                 // Jika status resep adalah transaksi sudah diproses, gagalkan operasi
                 if ($resep['status'] == 1) {
                     return $this->response->setStatusCode(401)->setJSON(['success' => false, 'message' => 'Tidak bisa dilakukan karena transaksi yang menggunakan resep ini sudah diproses', 'errors' => NULL]);
+                }
+
+                // Jika resep dilakukan oleh dokter lain, gagalkan operasi
+                if (session()->get('role') != 'Admin') {
+                    if ($resep['dokter'] != session()->get('fullname')) {
+                        $db->transRollback();
+                        return $this->response->setStatusCode(401)->setJSON(['success' => false, 'message' => 'Resep ini hanya bisa dihapus oleh ' . $resep['dokter'], 'errors' => NULL]);
+                    }
                 }
 
                 // Mengambil jumlah_keluar saat ini dari tabel obat

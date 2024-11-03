@@ -13,16 +13,22 @@
 <?= $this->endSection(); ?>
 <?= $this->section('content'); ?>
 <main class="col-md-9 ms-sm-auto col-lg-10 px-3 px-md-4 pt-3">
-    <div class="d-flex flex-column flex-lg-row mb-1 gap-2 mb-3">
+    <div class="d-flex flex-column flex-lg-row mb-1 gap-2 mb-2">
         <select id="statusFilter" class="form-select form-select-sm w-auto rounded-3">
             <option value="">Semua</option>
             <option value="1">Diproses</option>
             <option value="0">Belum Diproses</option>
         </select>
-        <div class="input-group input-group-sm flex-fill">
-            <input type="search" id="searchInput" class="form-control rounded-start-3" placeholder="Cari pasien, dokter, dan tanggal resep...">
-            <button class="btn btn-success btn-sm bg-gradient rounded-end-3" type="button" id="refreshButton"><i class="fa-solid fa-sync"></i></button>
+        <div class="input-group input-group-sm">
+            <select id="dokterFilter" class="form-select form-select-sm w-auto rounded-start-3 flex-fill">
+                <option value="">Semua Dokter</option>
+            </select>
+            <button class="btn btn-success btn-sm bg-gradient rounded-end-3" type="button" id="refreshDokterButton"><i class="fa-solid fa-sync"></i> Dokter</button>
         </div>
+    </div>
+    <div class="input-group input-group-sm mb-3">
+        <input type="search" id="searchInput" class="form-control rounded-start-3" placeholder="Cari pasien dan tanggal resep...">
+        <button class="btn btn-success btn-sm bg-gradient rounded-end-3" type="button" id="refreshButton"><i class="fa-solid fa-sync"></i> Resep</button>
     </div>
     <?php if (session()->get('role') != 'Apoteker'): ?>
         <fieldset class="border rounded-3 px-2 py-0 mb-3" id="tambahPasienForm">
@@ -166,10 +172,52 @@
             }
         }
     <?php endif; ?>
+    async function fetchDokterOptions(selectedDokter = null) {
+        // Show the spinner
+        $('#loadingSpinner').show();
+        try {
+            // Panggil API dengan query string tanggal
+            const response = await axios.get(`<?= base_url('resep/dokterlist') ?>`);
+
+            if (response.data.success) {
+                const options = response.data.data;
+                const select = $('#dokterFilter');
+
+                // Simpan nilai yang saat ini dipilih
+                const currentSelection = selectedDokter || select.val();
+
+                // Hapus semua opsi kecuali opsi pertama (default)
+                select.find('option:not(:first)').remove();
+
+                // Urutkan opsi berdasarkan 'value' secara ascending
+                options.sort((a, b) => b.value.localeCompare(a.value, 'en', {
+                    numeric: true
+                }));
+
+                // Tambahkan opsi ke elemen select
+                options.forEach(option => {
+                    select.append(`<option value="${option.value}">${option.text}</option>`);
+                });
+
+                // Mengatur ulang pilihan sebelumnya
+                if (currentSelection) {
+                    select.val(currentSelection);
+                }
+            } else {
+                showFailedToast('Gagal mendapatkan dokter.');
+            }
+        } catch (error) {
+            showFailedToast('Gagal mendapatkan dokter.<br>' + error);
+        } finally {
+            // Hide the spinner when done
+            $('#loadingSpinner').hide();
+        }
+    }
     async function fetchResep() {
         const search = $('#searchInput').val();
         const offset = (currentPage - 1) * limit;
         const status = $('#statusFilter').val();
+        const dokter = $('#dokterFilter').val();
 
         // Show the spinner
         $('#loadingSpinner').show();
@@ -180,7 +228,8 @@
                     search: search,
                     limit: limit,
                     offset: offset,
-                    status: status
+                    status: status,
+                    dokter: dokter
                 }
             });
 
@@ -312,6 +361,15 @@
         fetchResep();
     });
 
+    $('#dokterFilter').on('change', function() {
+        $('#resepContainer').empty();
+        for (let i = 0; i < limit; i++) {
+            $('#resepContainer').append(placeholder);
+        }
+        <?= (session()->get('role') != 'Apoteker') ? 'fetchPasienOptions();' : '' ?>
+        fetchResep();
+    });
+
     function toggleSubmitButton() {
         var selectedValue = $('#nomor_registrasi').val();
         if (selectedValue === null || selectedValue === "") {
@@ -359,6 +417,10 @@
 
             try {
                 await axios.delete(`<?= base_url('/resep/delete') ?>/${resepId}`);
+                // Simpan nilai pilihan dokter saat ini
+                const selectedDokter = $('#dokterFilter').val();
+                // Panggil fungsi untuk memperbarui opsi dokter
+                fetchDokterOptions(selectedDokter);
                 fetchResep();
             } catch (error) {
                 if (error.response.request.status === 422) {
@@ -402,6 +464,10 @@
                     $('#resepForm .is-invalid').removeClass('is-invalid');
                     $('#resepForm .invalid-feedback').text('').hide();
                     $('#submitButton').prop('disabled', true);
+                    // Simpan nilai pilihan dokter saat ini
+                    const selectedDokter = $('#dokterFilter').val();
+                    // Panggil fungsi untuk memperbarui opsi dokter
+                    fetchDokterOptions(selectedDokter);
                     fetchResep();
                 } else {
                     console.log("Validation Errors:", response.data.errors);
@@ -451,11 +517,18 @@
                 $('#resepContainer').append(placeholder);
             }
             <?= (session()->get('role') != 'Apoteker') ? 'fetchPasienOptions();' : '' ?>
-            fetchResep(); // Refresh articles on button click
+            fetchResep();
+        });
+        $('#refreshDokterButton').on('click', function() {
+            // Simpan nilai pilihan dokter saat ini
+            const selectedDokter = $('#dokterFilter').val();
+            // Panggil fungsi untuk memperbarui opsi dokter
+            fetchDokterOptions(selectedDokter);
         });
 
         fetchResep();
         <?= (session()->get('role') != 'Apoteker') ? 'fetchPasienOptions();' : '' ?>
+        fetchDokterOptions();
         toggleSubmitButton();
     });
     // Show toast notification

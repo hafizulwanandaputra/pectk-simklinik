@@ -194,7 +194,7 @@ class Transaksi extends BaseController
                 ->where('tempat_lahir', null)
                 ->where('dokter', 'Resep Luar')
                 ->groupEnd()
-                ->orderBy('id_resep')
+                ->orderBy('id_resep', 'DESC')
                 ->findAll();
 
             // Mengambil id_resep yang sudah terpakai di transaksi
