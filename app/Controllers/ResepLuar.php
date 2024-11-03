@@ -617,7 +617,7 @@ class ResepLuar extends BaseController
             // Memeriksa apakah id_obat ditemukan
             if (!$obat) {
                 $db->transRollback();
-                return $this->response->setStatusCode(404)->setJSON(['success' => false, 'message' => 'Obat tidak ditemukan', 'errors' => NULL]);
+                return $this->response->setStatusCode(404)->setJSON(['success' => false, 'message' => 'Obat tidak ditemukan atau sudah dihapus', 'errors' => NULL]);
             }
 
             // Simpan data detail resep yang diperbarui
@@ -753,36 +753,36 @@ class ResepLuar extends BaseController
                         'jumlah_keluar' => $new_jumlah_keluar,
                         'updated_at' => date('Y-m-d H:i:s')
                     ]);
-
-                    // Menghapus detail resep
-                    $builderDetail->where('id_detail_resep', $id)->delete();
-
-                    // Mengatur ulang auto_increment (opsional, tidak biasanya direkomendasikan di produksi)
-                    $db->query('ALTER TABLE `detail_resep` auto_increment = 1');
-
-                    // Menghitung jumlah_resep dan total_biaya untuk resep
-                    $builder = $db->table('detail_resep');
-                    $builder->select('SUM(jumlah) as jumlah_resep, SUM(jumlah * harga_satuan) as total_biaya');
-                    $builder->where('id_resep', $id_resep);
-                    $result = $builder->get()->getRow();
-
-                    $jumlah_resep = $result->jumlah_resep ?? 0;  // Menangani null jika tidak ada baris yang tersisa
-                    $total_biaya = $result->total_biaya ?? 0;
-
-                    // Memperbarui tabel resep
-                    $resepBuilder = $db->table('resep');
-                    $resepBuilder->where('id_resep', $id_resep);
-                    $resepBuilder->update([
-                        'jumlah_resep' => $jumlah_resep,
-                        'total_biaya' => $total_biaya,
-                    ]);
-
-                    // Menghapus catatan detail_transaksi yang terkait
-                    $builderTransaksiDetail = $db->table('detail_transaksi');
-                    $builderTransaksiDetail->where('id_resep', $id_resep)->delete();
-
-                    return $this->response->setJSON(['message' => 'Item resep berhasil dihapus']);
                 }
+
+                // Menghapus detail resep
+                $builderDetail->where('id_detail_resep', $id)->delete();
+
+                // Mengatur ulang auto_increment (opsional, tidak biasanya direkomendasikan di produksi)
+                $db->query('ALTER TABLE `detail_resep` auto_increment = 1');
+
+                // Menghitung jumlah_resep dan total_biaya untuk resep
+                $builder = $db->table('detail_resep');
+                $builder->select('SUM(jumlah) as jumlah_resep, SUM(jumlah * harga_satuan) as total_biaya');
+                $builder->where('id_resep', $id_resep);
+                $result = $builder->get()->getRow();
+
+                $jumlah_resep = $result->jumlah_resep ?? 0;  // Menangani null jika tidak ada baris yang tersisa
+                $total_biaya = $result->total_biaya ?? 0;
+
+                // Memperbarui tabel resep
+                $resepBuilder = $db->table('resep');
+                $resepBuilder->where('id_resep', $id_resep);
+                $resepBuilder->update([
+                    'jumlah_resep' => $jumlah_resep,
+                    'total_biaya' => $total_biaya,
+                ]);
+
+                // Menghapus catatan detail_transaksi yang terkait
+                $builderTransaksiDetail = $db->table('detail_transaksi');
+                $builderTransaksiDetail->where('id_resep', $id_resep)->delete();
+
+                return $this->response->setJSON(['message' => 'Item resep berhasil dihapus']);
             }
 
             return $this->response->setJSON(['message' => 'Detail resep tidak ditemukan'], 404);

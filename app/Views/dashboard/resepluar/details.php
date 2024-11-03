@@ -473,7 +473,7 @@
                             console.error('Perbaiki kesalahan pada formulir.');
                         }
                     } catch (error) {
-                        if (error.response.request.status === 422 || error.response.request.status === 401) {
+                        if (error.response.request.status === 422 || error.response.request.status === 401 || error.response.request.status === 404) {
                             showFailedToast(error.response.data.message);
                         } else {
                             showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
