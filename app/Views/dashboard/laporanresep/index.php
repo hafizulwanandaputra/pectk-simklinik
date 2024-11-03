@@ -324,7 +324,7 @@
                 const resepElement = `
                     <tr>
                         <td class="date text-nowrap text-center">${index + 1}</td>
-                        <td>${dokter}</td>
+                        <td>${resep.dokter}</td>
                         <td>${resep.nama_obat}</td>
                         <td class="date text-end">Rp${harga_satuan.toLocaleString('id-ID')}</td>
                         <td class="date text-end">${total_keluar.toLocaleString('id-ID')}</td>
@@ -441,8 +441,6 @@
 
             // Menambahkan setiap resep ke tabel
             data.forEach(function(resep, index) {
-                // Nilai NULL = Resep Luar
-                const dokter = resep.dokter == null ? `Resep Luar` : resep.dokter;
                 // Menjadikan angka-angka yang diperoleh sebagai integer
                 const total_keluar = parseInt(resep.total_keluar);
                 const harga_satuan = parseInt(resep.harga_satuan);
@@ -453,7 +451,7 @@
                     <tr>
                         <td class="date text-nowrap text-center">${index + 1}</td>
                         <td class="date text-nowrap">${resep.tanggal}</td>
-                        <td>${dokter}</td>
+                        <td>${resep.dokter}</td>
                         <td>${resep.nama_obat}</td>
                         <td class="date text-end">Rp${harga_satuan.toLocaleString('id-ID')}</td>
                         <td class="date text-end">${total_keluar.toLocaleString('id-ID')}</td>

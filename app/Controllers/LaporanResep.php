@@ -62,13 +62,11 @@ class LaporanResep extends BaseController
 
             // Ambil laporan resep
             $query = $this->DetailResepModel
-                ->select('resep.dokter AS dokter,
-                obat.nama_obat AS nama_obat, 
+                ->select('resep.dokter AS dokter, nama_obat, 
                 SUM(detail_resep.jumlah) AS total_keluar, 
                 detail_resep.harga_satuan AS harga_satuan, 
                 (SUM(detail_resep.jumlah) * harga_satuan) AS total_harga')
                 ->join('resep', 'resep.id_resep = detail_resep.id_resep')
-                ->join('obat', 'obat.id_obat = detail_resep.id_obat')
                 ->where('DATE(resep.tanggal_resep)', $tanggal) // Kondisi berdasarkan tanggal
                 ->where('resep.status', 1); // Tambahkan kondisi status
 
@@ -78,9 +76,9 @@ class LaporanResep extends BaseController
             }
 
             $laporanresep = $query
-                ->groupBy('resep.dokter, obat.nama_obat, DATE(resep.tanggal_resep)')
+                ->groupBy('resep.dokter, nama_obat, DATE(resep.tanggal_resep)')
                 ->orderBy('resep.dokter', 'ASC')
-                ->orderBy('obat.nama_obat', 'ASC')
+                ->orderBy('nama_obat', 'ASC')
                 ->findAll();
 
             // Hitung total keseluruhan obat keluar dan harga
@@ -116,13 +114,11 @@ class LaporanResep extends BaseController
             } else {
                 // Ambil laporan resep
                 $query = $this->DetailResepModel
-                    ->select('resep.dokter AS dokter,
-                        obat.nama_obat AS nama_obat, 
+                    ->select('resep.dokter AS dokter, nama_obat, 
                         SUM(detail_resep.jumlah) AS total_keluar, 
                         detail_resep.harga_satuan AS harga_satuan, 
                         (SUM(detail_resep.jumlah) * harga_satuan) AS total_harga')
                     ->join('resep', 'resep.id_resep = detail_resep.id_resep')
-                    ->join('obat', 'obat.id_obat = detail_resep.id_obat')
                     ->where('DATE(resep.tanggal_resep)', $tanggal) // Kondisi berdasarkan tanggal
                     ->where('resep.status', 1); // Tambahkan kondisi status
 
@@ -132,9 +128,9 @@ class LaporanResep extends BaseController
                 }
 
                 $result = $query
-                    ->groupBy('resep.dokter, obat.nama_obat, DATE(resep.tanggal_resep)')
+                    ->groupBy('resep.dokter, nama_obat, DATE(resep.tanggal_resep)')
                     ->orderBy('resep.dokter', 'ASC')
-                    ->orderBy('obat.nama_obat', 'ASC')
+                    ->orderBy('nama_obat', 'ASC')
                     ->findAll();
 
                 // Hitung total keseluruhan obat keluar dan harga
@@ -317,13 +313,11 @@ class LaporanResep extends BaseController
             // Ambil laporan resep
             $query = $this->DetailResepModel
                 ->select('DATE(resep.tanggal_resep) AS tanggal,
-                    resep.dokter AS dokter, 
-                    obat.nama_obat AS nama_obat, 
+                    resep.dokter AS dokter, nama_obat, 
                     SUM(detail_resep.jumlah) AS total_keluar, 
                     detail_resep.harga_satuan AS harga_satuan, 
                     (SUM(detail_resep.jumlah) * harga_satuan) AS total_harga')
                 ->join('resep', 'resep.id_resep = detail_resep.id_resep')
-                ->join('obat', 'obat.id_obat = detail_resep.id_obat')
                 ->where('YEAR(resep.tanggal_resep)', date('Y', strtotime($bulan)))
                 ->where('MONTH(resep.tanggal_resep)', date('m', strtotime($bulan)))
                 ->where('resep.status', 1); // Tambahkan kondisi status
@@ -334,10 +328,10 @@ class LaporanResep extends BaseController
             }
 
             $laporanresep = $query
-                ->groupBy('resep.dokter, obat.nama_obat, DATE(resep.tanggal_resep)')
+                ->groupBy('resep.dokter, nama_obat, DATE(resep.tanggal_resep)')
                 ->orderBy('tanggal', 'ASC') // Urutkan berdasarkan tanggal ASC
                 ->orderBy('resep.dokter', 'ASC') // Urutkan berdasarkan dokter ASC
-                ->orderBy('obat.nama_obat', 'ASC') // Urutkan berdasarkan nama_obat ASC
+                ->orderBy('nama_obat', 'ASC') // Urutkan berdasarkan nama_obat ASC
                 ->findAll();
 
             // Hitung total keseluruhan obat keluar dan harga
@@ -374,13 +368,11 @@ class LaporanResep extends BaseController
                 // Ambil laporan resep
                 $query = $this->DetailResepModel
                     ->select('DATE(resep.tanggal_resep) AS tanggal,
-                        resep.dokter AS dokter, 
-                        obat.nama_obat AS nama_obat, 
+                        resep.dokter AS dokter, nama_obat, 
                         SUM(detail_resep.jumlah) AS total_keluar, 
                         detail_resep.harga_satuan AS harga_satuan, 
                         (SUM(detail_resep.jumlah) * harga_satuan) AS total_harga')
                     ->join('resep', 'resep.id_resep = detail_resep.id_resep')
-                    ->join('obat', 'obat.id_obat = detail_resep.id_obat')
                     ->where('YEAR(resep.tanggal_resep)', date('Y', strtotime($bulan)))
                     ->where('MONTH(resep.tanggal_resep)', date('m', strtotime($bulan)))
                     ->where('resep.status', 1); // Tambahkan kondisi status
@@ -391,10 +383,10 @@ class LaporanResep extends BaseController
                 }
 
                 $result = $query
-                    ->groupBy('resep.dokter, obat.nama_obat, DATE(resep.tanggal_resep)')
+                    ->groupBy('resep.dokter, nama_obat, DATE(resep.tanggal_resep)')
                     ->orderBy('tanggal', 'ASC') // Urutkan berdasarkan tanggal ASC
                     ->orderBy('resep.dokter', 'ASC') // Urutkan berdasarkan dokter ASC
-                    ->orderBy('obat.nama_obat', 'ASC') // Urutkan berdasarkan nama_obat ASC
+                    ->orderBy('nama_obat', 'ASC') // Urutkan berdasarkan nama_obat ASC
                     ->findAll();
 
                 // Hitung total keseluruhan obat keluar dan harga
