@@ -114,7 +114,7 @@
                     </div>
                     <div class="form-floating mb-1 mt-1">
                         <input type="text" class="form-control" autocomplete="off" dir="auto" placeholder="alamat" id="alamat" name="alamat">
-                        <label for="alamat_pasien">Alamat*</label>
+                        <label for="alamat_pasien">Alamat</label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>

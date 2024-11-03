@@ -132,7 +132,6 @@ class ResepLuar extends BaseController
             // Menetapkan aturan validasi dasar
             $validation->setRules([
                 'nama_pasien' => 'required', // Nama pasien
-                'alamat' => 'required', // Alamat pasien
                 'jenis_kelamin' => 'required', // Jenis kelamin
                 'tanggal_lahir' => 'required', // Jenis kelamin
             ]);
@@ -179,7 +178,6 @@ class ResepLuar extends BaseController
             // Menetapkan aturan validasi dasar
             $validation->setRules([
                 'nama_pasien' => 'required', // Nama pasien
-                'alamat' => 'required', // Alamat pasien
                 'jenis_kelamin' => 'required', // Jenis kelamin
                 'tanggal_lahir' => 'required', // Jenis kelamin
             ]);
