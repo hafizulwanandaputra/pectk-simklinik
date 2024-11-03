@@ -671,6 +671,12 @@ class Resep extends BaseController
             $builderObat = $db->table('obat');
             $obat = $builderObat->where('id_obat', $detail_resep['id_obat'])->get()->getRowArray();
 
+            // Memeriksa apakah id_obat ditemukan
+            if (!$obat) {
+                $db->transRollback();
+                return $this->response->setStatusCode(404)->setJSON(['success' => false, 'message' => 'Obat tidak ditemukan', 'errors' => NULL]);
+            }
+
             // Simpan data detail resep yang diperbarui
             $data = [
                 'signa' => $this->request->getPost('signa_edit'),
