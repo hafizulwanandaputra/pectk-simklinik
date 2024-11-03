@@ -25,6 +25,18 @@ class DetailResep extends Migration
                 'constraint' => 24,
                 'unsigned' => true
             ],
+            'nama_obat' => [
+                'type' => 'VARCHAR',
+                'constraint' => 256,
+            ],
+            'kategori_obat' => [
+                'type' => 'VARCHAR',
+                'constraint' => 256,
+            ],
+            'bentuk_obat' => [
+                'type' => 'VARCHAR',
+                'constraint' => 128,
+            ],
             'signa' => [
                 'type' => 'VARCHAR',
                 'constraint' => 24,
@@ -48,7 +60,6 @@ class DetailResep extends Migration
         ]);
         $this->forge->addKey('id_detail_resep', true);
         $this->forge->addForeignKey('id_resep', 'resep', 'id_resep', 'CASCADE', 'CASCADE');
-        $this->forge->addForeignKey('id_obat', 'obat', 'id_obat', 'CASCADE', 'NO ACTION');
         $this->forge->createTable('detail_resep');
     }
 

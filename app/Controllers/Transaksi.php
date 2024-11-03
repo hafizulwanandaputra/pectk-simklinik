@@ -536,7 +536,6 @@ class Transaksi extends BaseController
                 ->join('transaksi', 'transaksi.id_transaksi = detail_transaksi.id_transaksi', 'inner')
                 ->join('resep', 'resep.id_resep = detail_transaksi.id_resep', 'inner')
                 ->join('detail_resep', 'resep.id_resep = detail_resep.id_resep', 'inner')
-                ->join('obat', 'detail_resep.id_obat = obat.id_obat', 'inner')
                 ->orderBy('id_detail_transaksi', 'ASC')
                 ->findAll();
 
@@ -545,18 +544,6 @@ class Transaksi extends BaseController
 
             // Memetakan setiap transaksi
             foreach ($obatalkes as $row) {
-                $ppn = $row['ppn'];
-                $mark_up = $row['mark_up'];
-                $harga_obat = $row['harga_obat'];
-
-                // Hitung PPN terlebih dahulu
-                $jumlah_ppn = ($harga_obat * $ppn) / 100;
-                $total_harga_ppn = $harga_obat + $jumlah_ppn;
-
-                // Setelah itu, terapkan mark-up
-                $jumlah_mark_up = ($total_harga_ppn * $mark_up) / 100;
-                $total_harga = $total_harga_ppn + $jumlah_mark_up;
-
                 // Jika transaksi ini belum ada dalam array $result, tambahkan
                 if (!isset($result[$row['id_detail_transaksi']])) {
                     $result[$row['id_detail_transaksi']] = [
@@ -584,25 +571,14 @@ class Transaksi extends BaseController
                     'id_detail_resep' => $row['id_detail_resep'],
                     'id_resep' => $row['id_resep'],
                     'id_obat' => $row['id_obat'],
+                    'nama_obat' => $row['nama_obat'],
+                    'kategori_obat' => $row['kategori_obat'],
+                    'bentuk_obat' => $row['bentuk_obat'],
+                    'signa' => $row['signa'],
+                    'catatan' => $row['catatan'],
+                    'cara_pakai' => $row['cara_pakai'],
                     'jumlah' => $row['jumlah'],
-                    'harga_satuan' => $row['harga_satuan'],
-                    'obat' => [
-                        [
-                            'id_obat' => $row['id_obat'],
-                            'id_supplier' => $row['id_supplier'],
-                            'nama_obat' => $row['nama_obat'],
-                            'kategori_obat' => $row['kategori_obat'],
-                            'bentuk_obat' => $row['bentuk_obat'],
-                            'harga_obat' => $row['harga_obat'],
-                            'harga_jual' => $total_harga,
-                            'signa' => $row['signa'],
-                            'catatan' => $row['catatan'],
-                            'cara_pakai' => $row['cara_pakai'],
-                            'jumlah_masuk' => $row['jumlah_masuk'],
-                            'jumlah_keluar' => $row['jumlah_keluar'],
-                            'updated_at' => $row['updated_at']
-                        ]
-                    ],
+                    'harga_satuan' => $row['harga_satuan']
                 ];
             }
 
@@ -1361,10 +1337,6 @@ class Transaksi extends BaseController
 
             // Memetakan setiap transaksi obat dan alkes
             foreach ($obatalkes as $row) {
-                $ppn = $row['ppn'];
-                $harga_obat = $row['harga_obat'];
-                $jumlah_ppn = ($harga_obat * $ppn) / 100; // Menghitung PPN
-                $total_harga = $harga_obat + $jumlah_ppn; // Total harga termasuk PPN
 
                 if (!isset($result_obatalkes[$row['id_detail_transaksi']])) {
                     // Menyimpan detail obat ke array jika belum ada
@@ -1393,24 +1365,14 @@ class Transaksi extends BaseController
                     'id_detail_resep' => $row['id_detail_resep'],
                     'id_resep' => $row['id_resep'],
                     'id_obat' => $row['id_obat'],
+                    'nama_obat' => $row['nama_obat'],
+                    'kategori_obat' => $row['kategori_obat'],
+                    'bentuk_obat' => $row['bentuk_obat'],
+                    'signa' => $row['signa'],
+                    'catatan' => $row['catatan'],
+                    'cara_pakai' => $row['cara_pakai'],
                     'jumlah' => $row['jumlah'],
-                    'harga_satuan' => $row['harga_satuan'],
-                    'obat' => [
-                        [
-                            'id_obat' => $row['id_obat'],
-                            'id_supplier' => $row['id_supplier'],
-                            'nama_obat' => $row['nama_obat'],
-                            'kategori_obat' => $row['kategori_obat'],
-                            'bentuk_obat' => $row['bentuk_obat'],
-                            'harga_obat' => $row['harga_obat'],
-                            'harga_jual' => $total_harga, // Harga jual termasuk PPN
-                            'signa' => $row['signa'],
-                            'catatan' => $row['catatan'],
-                            'cara_pakai' => $row['cara_pakai'],
-                            'jumlah' => $row['jumlah'],
-                            'harga_satuan' => $row['harga_satuan'],
-                        ]
-                    ],
+                    'harga_satuan' => $row['harga_satuan']
                 ];
             }
 

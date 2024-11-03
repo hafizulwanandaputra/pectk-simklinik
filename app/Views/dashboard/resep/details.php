@@ -249,7 +249,7 @@
             let jumlahResep = 0;
             let totalHarga = 0;
 
-            let hasInternalMedicine = false; // Track if there is internal medicine (kapsul/tablet)
+            let hasInternalMedicine = false; // Track if there is internal medicine (kapsul/tablet/sirup)
             let hasExternalMedicine = false; // Track if there is external medicine (tetes/salep)
 
             if (data.length === 0) {
@@ -260,8 +260,6 @@
                     </tr>
                 `;
                 $('#detail_resep').append(emptyRow);
-                $('#printBtn1').prop('disabled', true);
-                $('#printBtn2').prop('disabled', true);
             } else {
                 data.forEach(function(detail_resep) {
                     const jumlah = parseInt(detail_resep.jumlah); // Konversi jumlah ke integer
@@ -271,7 +269,7 @@
                     jumlahResep += jumlah;
 
                     // Check if the medicine is internal (kapsul/tablet) or external (tetes/salep)
-                    if (['Tablet/Kapsul'].includes(detail_resep.bentuk_obat)) {
+                    if (['Tablet/Kapsul', 'Sirup'].includes(detail_resep.bentuk_obat)) {
                         hasInternalMedicine = true;
                     } else if (['Tetes', 'Salep'].includes(detail_resep.bentuk_obat)) {
                         hasExternalMedicine = true;
@@ -296,36 +294,24 @@
                     <?php if (session()->get('role') == 'Apoteker') : ?>
                         $('.edit-btn').prop('disabled', true);
                         $('.delete-btn').prop('disabled', true);
-                        if (detail_resep.status === "1") {
-                            $('#printBtn1').prop('disabled', true);
-                            $('#printBtn2').prop('disabled', true);
-                        } else if (detail_resep.status === "0") {
-                            $('#printBtn1').prop('disabled', false);
-                            $('#printBtn2').prop('disabled', false);
-                        }
                     <?php else : ?>
                         if (detail_resep.status === "1") {
                             $('.edit-btn').prop('disabled', true);
                             $('.delete-btn').prop('disabled', true);
-                            $('#printBtn1').prop('disabled', true);
-                            $('#printBtn2').prop('disabled', true);
                         } else if (detail_resep.status === "0") {
                             $('.edit-btn').prop('disabled', false);
                             $('.delete-btn').prop('disabled', false);
-
-                            $('#printBtn1').prop('disabled', false);
-                            $('#printBtn2').prop('disabled', false);
                         }
                     <?php endif; ?>
 
                 });
             }
             // Handle enabling/disabling print buttons based on medicine type
-            if (!hasInternalMedicine) {
-                $('#printBtn1').prop('disabled', true); // Disable if no internal medicine
+            if (hasInternalMedicine) {
+                $('#printBtn1').prop('disabled', false); // Disable if no internal medicine
             }
-            if (!hasExternalMedicine) {
-                $('#printBtn2').prop('disabled', true); // Disable if no external medicine
+            if (hasExternalMedicine) {
+                $('#printBtn2').prop('disabled', false); // Disable if no external medicine
             }
             const totalHargaElement = `Rp${totalHarga.toLocaleString('id-ID')}`;
             const jumlahResepElement = `${jumlahResep.toLocaleString('id-ID')}`;

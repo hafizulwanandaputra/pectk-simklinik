@@ -601,18 +601,15 @@
                     $('#list_obat_alkes').append(tindakanElement);
                     // Iterasi untuk setiap resep
                     obat_alkes.resep.detail_resep.forEach(function(detail_resep) {
-                        // Iterasi untuk setiap obat di detail resep
-                        detail_resep.obat.forEach(function(obat) {
-                            const jumlah = parseInt(detail_resep.jumlah); // Konversi jumlah ke integer
-                            const harga_satuan = parseInt(detail_resep.harga_satuan); // Konversi harga satuan ke integer
-                            const total_harga = Math.round((jumlah * harga_satuan) * (1 - (diskon / 100))); // Hitung total harga
+                        const jumlah = parseInt(detail_resep.jumlah); // Konversi jumlah ke integer
+                        const harga_satuan = parseInt(detail_resep.harga_satuan); // Konversi harga satuan ke integer
+                        const total_harga = Math.round((jumlah * harga_satuan) * (1 - (diskon / 100))); // Hitung total harga
 
-                            const obat_alkesElement = `
-                                <li>${obat.nama_obat}<br><small>${obat.kategori_obat} • ${obat.bentuk_obat} • ${obat.signa} • ${obat.cara_pakai} • ${jumlah.toLocaleString('id-ID')} × Rp${harga_satuan.toLocaleString('id-ID')} × ${diskon}% = Rp${total_harga.toLocaleString('id-ID')}<br>${obat.catatan}</small></li>
+                        const obat_alkesElement = `
+                                <li>${detail_resep.nama_obat}<br><small>${detail_resep.kategori_obat} • ${detail_resep.bentuk_obat} • ${detail_resep.signa} • ${detail_resep.cara_pakai} • ${jumlah.toLocaleString('id-ID')} × Rp${harga_satuan.toLocaleString('id-ID')} × ${diskon}% = Rp${total_harga.toLocaleString('id-ID')}<br>${detail_resep.catatan}</small></li>
                             `;
 
-                            $(`#obat-${obat_alkes.id_detail_transaksi}`).append(obat_alkesElement);
-                        });
+                        $(`#obat-${obat_alkes.id_detail_transaksi}`).append(obat_alkesElement);
                     });
                     // Cek status `lunas`
                     if (obat_alkes.lunas === "1") {

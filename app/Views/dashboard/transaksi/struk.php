@@ -208,34 +208,32 @@ $tanggal = Time::parse($transaksi['tgl_transaksi']);
                 $no_obat_alkes = 1; // Inisialisasi variabel untuk penomoran
                 foreach ($obatalkes as $list) : ?>
                     <?php foreach ($list['resep']['detail_resep'] as $resep) : ?>
-                        <?php foreach ($resep['obat'] as $obat) : ?>
-                            <tr class="outline-border">
-                                <td class="outline-border" style="vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: center;">
-                                    <?= $no_obat_alkes++ ?>
-                                </td>
-                                <td class="outline-border" style="vertical-align: top; padding-left: 2px; padding-right: 2px;">
-                                    <?= $obat['nama_obat'] ?>
-                                </td>
-                                <td class="outline-border" style="vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
-                                    <?= $obat['jumlah'] ?>
-                                </td>
-                                <td class="outline-border-rigth" style="vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: left; white-space: nowrap;">
-                                    Rp
-                                </td>
-                                <td class="outline-border-left" style="vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
-                                    <?= number_format($obat['harga_satuan'], 0, ',', '.') ?>
-                                </td>
-                                <td class="outline-border" style="vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
-                                    <?= $list['diskon'] ?>
-                                </td>
-                                <td class="outline-border-right" style="vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: left; white-space: nowrap;">
-                                    Rp
-                                </td>
-                                <td class="outline-border-left" style="vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
-                                    <?= number_format(($obat['harga_satuan'] * $obat['jumlah']) * (1 - ($list['diskon'] / 100)), 0, ',', '.') ?>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
+                        <tr class="outline-border">
+                            <td class="outline-border" style="vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: center;">
+                                <?= $no_obat_alkes++ ?>
+                            </td>
+                            <td class="outline-border" style="vertical-align: top; padding-left: 2px; padding-right: 2px;">
+                                <?= $resep['nama_obat'] ?>
+                            </td>
+                            <td class="outline-border" style="vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
+                                <?= $resep['jumlah'] ?>
+                            </td>
+                            <td class="outline-border-rigth" style="vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: left; white-space: nowrap;">
+                                Rp
+                            </td>
+                            <td class="outline-border-left" style="vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
+                                <?= number_format($resep['harga_satuan'], 0, ',', '.') ?>
+                            </td>
+                            <td class="outline-border" style="vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
+                                <?= $list['diskon'] ?>
+                            </td>
+                            <td class="outline-border-right" style="vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: left; white-space: nowrap;">
+                                Rp
+                            </td>
+                            <td class="outline-border-left" style="vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
+                                <?= number_format(($resep['harga_satuan'] * $resep['jumlah']) * (1 - ($list['diskon'] / 100)), 0, ',', '.') ?>
+                            </td>
+                        </tr>
                     <?php endforeach; ?>
                 <?php endforeach; ?>
                 <tr>

@@ -357,7 +357,6 @@ class ResepLuar extends BaseController
             // Mengambil detail resep berdasarkan id_resep yang diberikan
             $data = $this->DetailResepModel
                 ->join('resep', 'resep.id_resep = detail_resep.id_resep', 'inner') // Bergabung dengan tabel resep
-                ->join('obat', 'obat.id_obat = detail_resep.id_obat', 'inner') // Bergabung dengan tabel obat
                 ->where('detail_resep.id_resep', $id)
                 ->where('resep.nomor_registrasi', null)
                 ->where('resep.no_rm', null)
@@ -384,7 +383,6 @@ class ResepLuar extends BaseController
             // Mengambil detail resep berdasarkan id_detail_resep yang diberikan
             $data = $this->DetailResepModel
                 ->where('id_detail_resep', $id)
-                ->join('obat', 'obat.id_obat = detail_resep.id_obat', 'inner') // Bergabung dengan tabel obat
                 ->orderBy('id_detail_resep', 'ASC') // Mengurutkan berdasarkan id_detail_resep
                 ->find($id); // Mengambil data berdasarkan id
 
@@ -514,6 +512,9 @@ class ResepLuar extends BaseController
             $data = [
                 'id_resep' => $id,
                 'id_obat' => $this->request->getPost('id_obat'),
+                'nama_obat' => $obat['nama_obat'],
+                'kategori_obat' => $obat['kategori_obat'],
+                'bentuk_obat' => $obat['bentuk_obat'],
                 'signa' => $this->request->getPost('signa'),
                 'catatan' => $this->request->getPost('catatan'),
                 'cara_pakai' => $this->request->getPost('cara_pakai'),
@@ -615,16 +616,18 @@ class ResepLuar extends BaseController
 
             // Simpan data detail resep yang diperbarui
             $data = [
-                'id_detail_resep' => $this->request->getPost('id_detail_resep'),
-                'id_resep' => $id,
-                'id_obat' => $detail_resep['id_obat'],
                 'signa' => $this->request->getPost('signa_edit'),
                 'catatan' => $this->request->getPost('catatan_edit'),
                 'cara_pakai' => $this->request->getPost('cara_pakai_edit'),
                 'jumlah' => $this->request->getPost('jumlah_edit'),
-                'harga_satuan' => $detail_resep['harga_satuan'], // Menyimpan harga satuan yang sama
+                'harga_satuan' => $detail_resep['harga_satuan'],
             ];
-            $this->DetailResepModel->save($data);
+
+            $db->table('detail_resep')
+                ->where('id_detail_resep', $this->request->getPost('id_detail_resep'))
+                ->where('id_resep', $id)
+                ->where('id_obat', $detail_resep['id_obat'])
+                ->update($data);
 
             // Mengambil data resep
             $resepb = $db->table('resep');
@@ -796,22 +799,20 @@ class ResepLuar extends BaseController
                 ->where('telpon', null)
                 ->where('tempat_lahir', null)
                 ->where('dokter', 'Resep Luar')
-                ->where('status', 0)
                 ->find($id);
             // Mengambil detail resep yang berkaitan dengan bentuk obat Tablet/Kapsul dan Sirup
             $detail_resep = $this->DetailResepModel
                 ->where('detail_resep.id_resep', $id)
                 ->groupStart()
-                ->where('obat.bentuk_obat', 'Tablet/Kapsul')
-                ->orWhere('obat.bentuk_obat', 'Sirup')
+                ->where('bentuk_obat', 'Tablet/Kapsul')
+                ->orWhere('bentuk_obat', 'Sirup')
                 ->groupEnd()
                 ->join('resep', 'resep.id_resep = detail_resep.id_resep', 'inner')
-                ->join('obat', 'obat.id_obat = detail_resep.id_obat', 'inner')
                 ->orderBy('id_detail_resep', 'ASC')
                 ->findAll();
 
             // Memeriksa apakah detail resep tidak kosong dan status resep sama dengan 0
-            if (!empty($detail_resep) && $resep['status'] == 0) {
+            if (!empty($detail_resep)) {
                 // Menyiapkan data untuk cetakan
                 $data = [
                     'resep' => $resep,
@@ -848,22 +849,20 @@ class ResepLuar extends BaseController
                 ->where('telpon', null)
                 ->where('tempat_lahir', null)
                 ->where('dokter', 'Resep Luar')
-                ->where('status', 0)
                 ->find($id);
             // Mengambil detail resep yang berkaitan dengan bentuk obat Tetes dan Salep
             $detail_resep = $this->DetailResepModel
                 ->where('detail_resep.id_resep', $id)
                 ->groupStart()
-                ->where('obat.bentuk_obat', 'Tetes')
-                ->orWhere('obat.bentuk_obat', 'Salep')
+                ->where('bentuk_obat', 'Tetes')
+                ->orWhere('bentuk_obat', 'Salep')
                 ->groupEnd()
                 ->join('resep', 'resep.id_resep = detail_resep.id_resep', 'inner')
-                ->join('obat', 'obat.id_obat = detail_resep.id_obat', 'inner')
                 ->orderBy('id_detail_resep', 'ASC')
                 ->findAll();
 
             // Memeriksa apakah detail resep tidak kosong dan status resep sama dengan 0
-            if (!empty($detail_resep) && $resep['status'] == 0) {
+            if (!empty($detail_resep)) {
                 // Menyiapkan data untuk cetakan
                 $data = [
                     'resep' => $resep,

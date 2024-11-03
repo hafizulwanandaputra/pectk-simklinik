@@ -205,41 +205,41 @@ class PembelianObat extends BaseController
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
             $db = db_connect();
-            $db->transBegin(); // Memulai transaksi
+            // $db->transBegin(); // Memulai transaksi
 
-            // Mengambil semua detail pembelian obat sebelum penghapusan
-            $details = $db->table('detail_pembelian_obat')
-                ->where('id_pembelian_obat', $id)
-                ->get()
-                ->getResultArray();
+            // // Mengambil semua detail pembelian obat sebelum penghapusan
+            // $details = $db->table('detail_pembelian_obat')
+            //     ->where('id_pembelian_obat', $id)
+            //     ->get()
+            //     ->getResultArray();
 
-            // Memeriksa dan mengurangi jumlah_masuk di tabel obat untuk setiap detail
-            foreach ($details as $detail) {
-                $id_obat = $detail['id_obat'];
-                $obat_masuk = $detail['obat_masuk'];
+            // // Memeriksa dan mengurangi jumlah_masuk di tabel obat untuk setiap detail
+            // foreach ($details as $detail) {
+            //     $id_obat = $detail['id_obat'];
+            //     $obat_masuk = $detail['obat_masuk'];
 
-                // Mengambil jumlah_masuk dan jumlah_keluar saat ini dari tabel obat
-                $obat = $db->table('obat')
-                    ->select('jumlah_masuk, jumlah_keluar')
-                    ->where('id_obat', $id_obat)
-                    ->get()
-                    ->getRow();
+            //     // Mengambil jumlah_masuk dan jumlah_keluar saat ini dari tabel obat
+            //     $obat = $db->table('obat')
+            //         ->select('jumlah_masuk, jumlah_keluar')
+            //         ->where('id_obat', $id_obat)
+            //         ->get()
+            //         ->getRow();
 
-                // Memeriksa apakah jumlah_masuk setelah penghapusan akan kurang dari jumlah_keluar
-                if (($obat->jumlah_masuk - $obat_masuk) < $obat->jumlah_keluar) {
-                    $db->transRollback(); // Rollback transaksi
-                    return $this->response->setStatusCode(422)->setJSON([
-                        'success' => false,
-                        'message' => 'Gagal menghapus pembelian obat: stok masuk kurang dari jumlah keluar'
-                    ]);
-                }
+            //     // Memeriksa apakah jumlah_masuk setelah penghapusan akan kurang dari jumlah_keluar
+            //     if (($obat->jumlah_masuk - $obat_masuk) < $obat->jumlah_keluar) {
+            //         $db->transRollback(); // Rollback transaksi
+            //         return $this->response->setStatusCode(422)->setJSON([
+            //             'success' => false,
+            //             'message' => 'Gagal menghapus pembelian obat: stok masuk kurang dari jumlah keluar'
+            //         ]);
+            //     }
 
-                // Mengurangi jumlah_masuk jika kondisi terpenuhi
-                $db->table('obat')
-                    ->set('jumlah_masuk', "jumlah_masuk - $obat_masuk", false)
-                    ->where('id_obat', $id_obat)
-                    ->update();
-            }
+            //     // Mengurangi jumlah_masuk jika kondisi terpenuhi
+            //     $db->table('obat')
+            //         ->set('jumlah_masuk', "jumlah_masuk - $obat_masuk", false)
+            //         ->where('id_obat', $id_obat)
+            //         ->update();
+            // }
 
             // Menghapus detail pembelian obat
             $db->table('detail_pembelian_obat')->where('id_pembelian_obat', $id)->delete();
@@ -251,12 +251,12 @@ class PembelianObat extends BaseController
             $db->query('ALTER TABLE `detail_pembelian_obat` auto_increment = 1');
             $db->query('ALTER TABLE `item_obat` auto_increment = 1');
 
-            // Menyelesaikan transaksi
-            if ($db->transCommit()) {
-                return $this->response->setJSON(['success' => true, 'message' => 'Pembelian obat berhasil dihapus']);
-            } else {
-                return $this->response->setJSON(['success' => false, 'message' => 'Gagal menghapus pembelian obat']);
-            }
+            // // Menyelesaikan transaksi
+            // if ($db->transCommit()) {
+            return $this->response->setJSON(['success' => true, 'message' => 'Pembelian obat berhasil dihapus']);
+            // } else {
+            //     return $this->response->setJSON(['success' => false, 'message' => 'Gagal menghapus pembelian obat']);
+            // }
         } else {
             // Jika peran tidak dikenali, kembalikan status 404
             return $this->response->setStatusCode(404)->setJSON([
