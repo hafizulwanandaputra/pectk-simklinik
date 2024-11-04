@@ -598,8 +598,8 @@
                         </td>
                         <td>
                             <span>${dokter}</span>
-                            <ul class="mb-0" id="obat-${obat_alkes.id_detail_transaksi}">
-                            </ul>
+                            <ol class="mb-0" id="obat-${obat_alkes.id_detail_transaksi}">
+                            </ol>
                         </td>
                         <td class="date text-end">Rp${harga_transaksi.toLocaleString('id-ID')}</td>
                         <td class="date text-end">${diskon.toLocaleString('id-ID')}%</td>
