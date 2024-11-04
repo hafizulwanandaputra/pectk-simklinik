@@ -297,7 +297,7 @@
                         $('.delete-btn').prop('disabled', true);
                     <?php else : ?>
                         if (detail_resep.status === "1"
-                            <?= (session()->get('role') != 'Admin') ? ' || data.dokter != `' . session()->get("fullname") . '`' : ''; ?>) {
+                            <?= (session()->get('role') != 'Admin') ? ' || detail_resep.dokter != `' . session()->get("fullname") . '`' : ''; ?>) {
                             $('.edit-btn').prop('disabled', true);
                             $('.delete-btn').prop('disabled', true);
                         } else if (detail_resep.status === "0") {
