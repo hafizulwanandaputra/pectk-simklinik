@@ -155,8 +155,6 @@ class Resep extends BaseController
             $client = new Client(); // Membuat klien HTTP Guzzle baru
 
             try {
-                // Mendapatkan informasi dokter dari sesi
-                $dokterLogin = session()->get('fullname'); // Atau dari model jika data lebih kompleks
                 // Mengirim permintaan GET ke API
                 $response = $client->request('GET', env('API-URL') . date('Y-m-d'), [
                     'headers' => [
@@ -168,30 +166,13 @@ class Resep extends BaseController
                 // Mendekode JSON dan menangani potensi error
                 $data = json_decode($response->getBody()->getContents(), true);
 
-                // Kondisikan jika yang login itu dokter
-                if (session()->get('role') == 'Dokter') {
-                    // Filter data pasien berdasarkan dokter login
-                    $filteredData = array_filter($data, function ($pasien) use ($dokterLogin) {
-                        // Misalkan nama dokter dicocokkan dengan kolom 'dokter' dari API
-                        return isset($pasien['dokter']) && $pasien['dokter'] === $dokterLogin;
-                    });
-                    $options = [];
-                    // Menyusun opsi dari data pasien yang diterima
-                    foreach ($filteredData as $row) {
-                        $options[] = [
-                            'value' => $row['nomor_registrasi'],
-                            'text' => $row['nama_pasien'] . ' (' . $row['no_rm'] . ' - ' . $row['nomor_registrasi'] . ')' // Menyusun teks yang ditampilkan
-                        ];
-                    }
-                } else {
-                    $options = [];
-                    // Menyusun opsi dari data pasien yang diterima
-                    foreach ($data as $row) {
-                        $options[] = [
-                            'value' => $row['nomor_registrasi'],
-                            'text' => $row['nama_pasien'] . ' (' . $row['no_rm'] . ' - ' . $row['nomor_registrasi'] . ')' // Menyusun teks yang ditampilkan
-                        ];
-                    }
+                $options = [];
+                // Menyusun opsi dari data pasien yang diterima
+                foreach ($data as $row) {
+                    $options[] = [
+                        'value' => $row['nomor_registrasi'],
+                        'text' => $row['nama_pasien'] . ' (' . $row['no_rm'] . ' - ' . $row['nomor_registrasi'] . ' - ' . $row['dokter'] . ')' // Menyusun teks yang ditampilkan
+                    ];
                 }
 
                 // Mengembalikan data pasien dalam format JSON
