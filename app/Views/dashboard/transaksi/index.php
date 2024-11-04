@@ -13,17 +13,20 @@
 <?= $this->endSection(); ?>
 <?= $this->section('content'); ?>
 <main class="col-md-9 ms-sm-auto col-lg-10 px-3 px-md-4 pt-3">
-    <div class="d-flex flex-column flex-lg-row mb-1 gap-2 mb-3">
+    <div class="d-flex flex-column flex-lg-row mb-1 gap-2 mb-2">
         <select id="statusFilter" class="form-select form-select-sm w-auto rounded-3">
             <option value="">Semua</option>
             <option value="1">Diproses</option>
             <option value="0">Belum Diproses</option>
         </select>
-        <div class="input-group input-group-sm flex-fill">
-            <input type="search" id="searchInput" class="form-control rounded-start-3" placeholder="Cari pasien, petugas kasir, dan tanggal transaksi...">
-            <button class="btn btn-success btn-sm bg-gradient" type="button" id="refreshButton"><i class="fa-solid fa-sync"></i></button>
-            <button class="btn btn-body btn-sm bg-gradient rounded-end-3" type="button" id="reportButton" onclick="window.location.href = '<?= base_url('transaksi/report') ?>';"><i class="fa-solid fa-file-export"></i> Laporan</button>
-        </div>
+        <select id="kasirFilter" class="form-select form-select-sm w-auto rounded-3 flex-fill">
+            <option value="">Semua</option>
+        </select>
+    </div>
+    <div class="input-group input-group-sm mb-3">
+        <input type="search" id="searchInput" class="form-control rounded-start-3" placeholder="Cari pasien dan tanggal transaksi...">
+        <button class="btn btn-success btn-sm bg-gradient" type="button" id="refreshButton"><i class="fa-solid fa-sync"></i></button>
+        <button class="btn btn-body btn-sm bg-gradient rounded-end-3" type="button" id="reportButton" onclick="window.location.href = '<?= base_url('transaksi/report') ?>';"><i class="fa-solid fa-file-export"></i> Laporan</button>
     </div>
     <div class="row">
         <div class="col-lg-6">
@@ -202,10 +205,54 @@
             showFailedToast('Gagal mendapatkan pasien.<br>' + error);
         }
     }
+
+    async function fetchKasirOptions(selectedKasir = null) {
+        // Show the spinner
+        $('#loadingSpinner').show();
+        try {
+            // Panggil API dengan query string tanggal
+            const response = await axios.get(`<?= base_url('transaksi/kasirlist') ?>`);
+
+            if (response.data.success) {
+                const options = response.data.data;
+                const select = $('#kasirFilter');
+
+                // Simpan nilai yang saat ini dipilih
+                const currentSelection = selectedKasir || select.val();
+
+                // Hapus semua opsi kecuali opsi pertama (default)
+                select.find('option:not(:first)').remove();
+
+                // Urutkan opsi berdasarkan 'value' secara ascending
+                options.sort((a, b) => b.value.localeCompare(a.value, 'en', {
+                    numeric: true
+                }));
+
+                // Tambahkan opsi ke elemen select
+                options.forEach(option => {
+                    select.append(`<option value="${option.value}">${option.text}</option>`);
+                });
+
+                // Mengatur ulang pilihan sebelumnya
+                if (currentSelection) {
+                    select.val(currentSelection);
+                }
+            } else {
+                showFailedToast('Gagal mendapatkan dokter.');
+            }
+        } catch (error) {
+            showFailedToast('Gagal mendapatkan dokter.<br>' + error);
+        } finally {
+            // Hide the spinner when done
+            $('#loadingSpinner').hide();
+        }
+    }
+
     async function fetchTransaksi() {
         const search = $('#searchInput').val();
         const offset = (currentPage - 1) * limit;
         const status = $('#statusFilter').val();
+        const kasir = $('#kasirFilter').val();
 
         // Show the spinner
         $('#loadingSpinner').show();
@@ -216,7 +263,8 @@
                     search: search,
                     limit: limit,
                     offset: offset,
-                    status: status
+                    status: status,
+                    kasir: kasir
                 }
             });
 
@@ -341,7 +389,7 @@
         }
     });
 
-    $('#statusFilter').on('change', function() {
+    $('#statusFilter, #kasirFilter').on('change', function() {
         $('#transaksiContainer').empty();
         for (let i = 0; i < limit; i++) {
             $('#transaksiContainer').append(placeholder);
@@ -416,6 +464,10 @@
 
             try {
                 await axios.delete(`<?= base_url('/transaksi/delete') ?>/${transaksiId}`);
+                // Simpan nilai pilihan kasir saat ini
+                const selectedKasir = $('#kasirFilter').val();
+                // Panggil fungsi untuk memperbarui opsi kasir
+                fetchKasirOptions(selectedKasir);
                 fetchPasienOptions1();
                 fetchPasienOptions2();
                 fetchTransaksi();
@@ -462,6 +514,10 @@
                     $('#transaksiForm1 .is-invalid').removeClass('is-invalid');
                     $('#transaksiForm1 .invalid-feedback').text('').hide();
                     $('#submitButton1').prop('disabled', true);
+                    // Simpan nilai pilihan kasir saat ini
+                    const selectedKasir = $('#kasirFilter').val();
+                    // Panggil fungsi untuk memperbarui opsi kasir
+                    fetchKasirOptions(selectedKasir);
                     fetchPasienOptions1();
                     fetchTransaksi();
                 } else {
@@ -540,6 +596,10 @@
                     $('#transaksiForm2 .is-invalid').removeClass('is-invalid');
                     $('#transaksiForm2 .invalid-feedback').text('').hide();
                     $('#submitButton2').prop('disabled', true);
+                    // Simpan nilai pilihan kasir saat ini
+                    const selectedKasir = $('#kasirFilter').val();
+                    // Panggil fungsi untuk memperbarui opsi kasir
+                    fetchKasirOptions(selectedKasir);
                     fetchPasienOptions2();
                     fetchTransaksi();
                 } else {
@@ -589,10 +649,14 @@
             }
         });
         $('#refreshButton').on('click', function() {
+            // Simpan nilai pilihan kasir saat ini
+            const selectedKasir = $('#kasirFilter').val();
             $('#transaksiContainer').empty();
             for (let i = 0; i < limit; i++) {
                 $('#transaksiContainer').append(placeholder);
             }
+            // Panggil fungsi untuk memperbarui opsi kasir
+            fetchKasirOptions(selectedKasir);
             fetchPasienOptions1();
             fetchPasienOptions2();
             fetchTransaksi(); // Refresh articles on button click
@@ -601,6 +665,7 @@
         fetchTransaksi();
         fetchPasienOptions1();
         fetchPasienOptions2();
+        fetchKasirOptions();
         toggleSubmitButton1();
         toggleSubmitButton2();
     });

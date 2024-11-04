@@ -51,6 +51,7 @@ class Transaksi extends BaseController
             $limit = $this->request->getGet('limit'); // Batas jumlah hasil
             $offset = $this->request->getGet('offset'); // Offset untuk pagination
             $status = $this->request->getGet('status'); // Status transaksi
+            $kasir = $this->request->getGet('kasir'); // Status transaksi
 
             // Mengubah limit dan offset menjadi integer, jika tidak ada, set ke 0
             $limit = $limit ? intval($limit) : 0;
@@ -74,9 +75,13 @@ class Transaksi extends BaseController
                 $TransaksiModel
                     ->groupStart()
                     ->like('nama_pasien', $search) // Pencarian berdasarkan nama pasien
-                    ->orLike('kasir', $search) // Pencarian berdasarkan nama kasir
                     ->orLike('tgl_transaksi', $search) // Pencarian berdasarkan tanggal transaksi
                     ->groupEnd();
+            }
+
+            // Menerapkan filter untuk kasir jika disediakan
+            if ($kasir) {
+                $TransaksiModel->where('kasir', $kasir); // Menambahkan filter berdasarkan kasir
             }
 
             // Menghitung total hasil tanpa filter
@@ -116,6 +121,39 @@ class Transaksi extends BaseController
             return $this->response->setJSON([
                 'transaksi' => $dataTransaksi, // Data transaksi
                 'total' => $total // Total hasil
+            ]);
+        } else {
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan', // Pesan jika peran tidak valid
+            ]);
+        }
+    }
+
+    public function kasirlist()
+    {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+            // Mengambil kasir dari tabel transaksi
+            $transaksiData = $this->TransaksiModel
+                ->groupBy('kasir')
+                ->orderBy('kasir', 'ASC')
+                ->findAll();
+
+            // Menyiapkan array opsi untuk dikirim dalam respon
+            $options = [];
+            // Menyusun opsi dari data transaksi luar yang diterima
+            foreach ($transaksiData as $transaksi) {
+                // Menambahkan opsi ke dalam array
+                $options[] = [
+                    'value' => $transaksi['kasir'], // Nilai untuk opsi
+                    'text'  => $transaksi['kasir'] // Teks untuk opsi
+                ];
+            }
+
+            // Mengembalikan data transaksi luar dalam format JSON
+            return $this->response->setJSON([
+                'success' => true, // Indikator sukses
+                'data'    => $options, // Data opsi
             ]);
         } else {
             return $this->response->setStatusCode(404)->setJSON([

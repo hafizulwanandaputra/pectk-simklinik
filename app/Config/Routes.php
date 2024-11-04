@@ -133,6 +133,7 @@ $routes->delete('/(?i)layanan/(?i)delete/(:any)', 'Layanan::delete/$1');
 
 // TRANSAKSI
 $routes->get('/(?i)transaksi', 'Transaksi::index');
+$routes->get('/(?i)transaksi/(?i)kasirlist', 'Transaksi::kasirlist');
 $routes->get('/(?i)transaksi/(?i)listtransaksi', 'Transaksi::listtransaksi');
 $routes->get('/(?i)transaksi/(?i)pasienlist', 'Transaksi::pasienlist');
 $routes->get('/(?i)transaksi/(?i)pasienlistexternal', 'Transaksi::pasienlistexternal');
