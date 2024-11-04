@@ -77,6 +77,14 @@
                         </div>
                     </div>
                 </div>
+                <div class="mb-2 row">
+                    <div class="col-lg-4 fw-medium">Dokter</div>
+                    <div class="col-lg">
+                        <div>
+                            <?= $transaksi['dokter'] ?>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </fieldset>
