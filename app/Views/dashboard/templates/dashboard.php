@@ -197,6 +197,10 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
             min-width: 144px;
         }
 
+        .min-width-column-2 {
+            min-width: 96px;
+        }
+
         @media (prefers-reduced-transparency) {
             div.dataTables_wrapper div.dataTables_processing.card {
                 --bs-bg-opacity: 1;

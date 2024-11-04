@@ -397,7 +397,7 @@
             }, {
                 "target": [2, 3],
                 "width": "50%",
-                "className": "min-width-column"
+                "className": "min-width-column-2"
             }]
         });
 
