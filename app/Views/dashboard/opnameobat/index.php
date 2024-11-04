@@ -214,14 +214,14 @@
         if (page) {
             currentPage = page;
             <?= (session()->get('role') != 'Apoteker') ? 'fetchPasienOptions();' : '' ?>
-            fetchResep();
+            fetchOpnameObat();
         }
     });
 
     $(document).ready(function() {
         $('#searchInput').on('input', function() {
             currentPage = 1;
-            fetchResep();
+            fetchOpnameObat();
         });
 
         // Store the ID of the user to be deleted
