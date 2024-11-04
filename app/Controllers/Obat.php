@@ -343,8 +343,6 @@ class Obat extends BaseController
             try {
                 // Menghapus data obat berdasarkan ID
                 $this->ObatModel->delete($id);
-                // Mengatur auto_increment kembali ke 1 setelah penghapusan
-                $db->query('ALTER TABLE `obat` auto_increment = 1');
                 // Mengembalikan respons sukses
                 return $this->response->setJSON(['message' => 'Obat berhasil dihapus']);
             } catch (DatabaseException $e) {
