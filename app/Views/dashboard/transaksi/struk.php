@@ -69,46 +69,52 @@ $tanggal = Time::parse($transaksi['tgl_transaksi']);
         <table class="table" style="width: 100%; margin-bottom: 4px;">
             <tbody>
                 <tr>
-                    <td style="width: 25%; vertical-align: top; padding: 0;">
+                    <td style="width: 15%; vertical-align: top; padding: 0;">
                         <div>Nomor RM:</div>
                     </td>
-                    <td style="width: 25%; vertical-align: top; padding: 0;">
+                    <td style="width: 35%; vertical-align: top; padding: 0;">
                         <div><?= $transaksi['no_rm'] ?></div>
                     </td>
-                    <td style="width: 25%; vertical-align: top; padding: 0;">
+                    <td style="width: 15%; vertical-align: top; padding: 0;">
                         <div>Nomor Kwitansi:</div>
                     </td>
-                    <td style="width: 25%; vertical-align: top; padding: 0;">
+                    <td style="width: 35%; vertical-align: top; padding: 0;">
                         <div><?= $transaksi['no_kwitansi'] ?></div>
                     </td>
                 </tr>
                 <tr>
-                    <td style="width: 25%; vertical-align: top; padding: 0;">
+                    <td style="width: 15%; vertical-align: top; padding: 0;">
                         <div>Nama Pasien:</div>
                     </td>
-                    <td style="width: 25%; vertical-align: top; padding: 0;">
+                    <td style="width: 35%; vertical-align: top; padding: 0;">
                         <div><?= $transaksi['nama_pasien'] ?></div>
                     </td>
-                    <td style="width: 25%; vertical-align: top; padding: 0;">
+                    <td style="width: 15%; vertical-align: top; padding: 0;">
                         <div>Tanggal/Waktu:</div>
                     </td>
-                    <td style="width: 25%; vertical-align: top; padding: 0;">
+                    <td style="width: 35%; vertical-align: top; padding: 0;">
                         <div><?= $tanggal ?></div>
                     </td>
                 </tr>
                 <tr>
-                    <td style="width: 25%; vertical-align: top; padding: 0;">
+                    <td style="width: 15%; vertical-align: top; padding: 0;">
                         <div>No. Telp:</div>
                     </td>
-                    <td style="width: 25%; vertical-align: top; padding: 0;">
+                    <td style="width: 35%; vertical-align: top; padding: 0;">
                         <div><?= $transaksi['telpon'] ?></div>
+                    </td>
+                    <td style="width: 15%; vertical-align: top; padding: 0;">
+                        <div>Dokter:</div>
+                    </td>
+                    <td rowspan="2" style="width: 35%; vertical-align: top; padding: 0;">
+                        <div><?= $transaksi['dokter'] ?></div>
                     </td>
                 </tr>
                 <tr>
-                    <td style="width: 25%; vertical-align: top; padding: 0;">
+                    <td style="width: 15%; vertical-align: top; padding: 0;">
                         <div>Alamat:</div>
                     </td>
-                    <td style="width: 25%; vertical-align: top; padding: 0;" colspan="3">
+                    <td style="width: 35%; vertical-align: top; padding: 0;" colspan="2">
                         <div><?= $transaksi['alamat'] ?></div>
                     </td>
                 </tr>

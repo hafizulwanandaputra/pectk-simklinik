@@ -133,7 +133,6 @@ class ResepLuar extends BaseController
             $validation->setRules([
                 'nama_pasien' => 'required', // Nama pasien
                 'jenis_kelamin' => 'required', // Jenis kelamin
-                'tanggal_lahir' => 'required', // Jenis kelamin
             ]);
 
             // Memeriksa validasi
@@ -179,7 +178,6 @@ class ResepLuar extends BaseController
             $validation->setRules([
                 'nama_pasien' => 'required', // Nama pasien
                 'jenis_kelamin' => 'required', // Jenis kelamin
-                'tanggal_lahir' => 'required', // Jenis kelamin
             ]);
 
             // Memeriksa validasi
