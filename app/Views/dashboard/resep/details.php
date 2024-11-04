@@ -188,8 +188,8 @@
         <?php endif; ?>
         <?php if (session()->get('role') != 'Apoteker') : ?>
             <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-2">
-                <button class="btn btn-danger rounded-3 bg-gradient" type="button" id="cancelConfirmBtn" disabled><i class="fa-solid fa-print"></i> Batalkan Konfirmasi</button>
-                <button class="btn btn-success rounded-3 bg-gradient" type="button" id="confirmBtn" disabled><i class="fa-solid fa-print"></i> Konfirmasi</button>
+                <button class="btn btn-danger rounded-3 bg-gradient" type="button" id="cancelConfirmBtn" disabled><i class="fa-solid fa-xmark"></i> Batalkan Konfirmasi</button>
+                <button class="btn btn-success rounded-3 bg-gradient" type="button" id="confirmBtn" disabled><i class="fa-solid fa-check-double"></i> Konfirmasi</button>
             </div>
         <?php endif; ?>
     </div>
