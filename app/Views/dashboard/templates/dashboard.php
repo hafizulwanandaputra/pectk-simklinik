@@ -267,13 +267,19 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                 </span>
             </div>
             <button type="button" class="btn btn-outline-success bg-gradient d-md-none mx-3 rounded-3" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation"><i class="fa-solid fa-bars"></i></button>
-            <div class="d-flex flex-nowrap w-100 align-items-center" style="min-height: 48px;">
-                <div class="w-100 ps-3 pe-1 text-truncate">
+            <div class="d-flex flex-nowrap w-100 align-items-center" style="min-height: 48px; max-height: 48px;">
+                <div class="w-100 ps-3 pe-1 pe-lg-3 text-truncate">
                     <?= $this->renderSection('title'); ?>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <div class="vr d-none d-lg-block border-success-subtle" style="height: 32px;"></div>
                 </div>
                 <div class="mx-3">
                     <a href="#" class="d-flex align-items-center text-success-emphasis text-decoration-none" data-bs-toggle="offcanvas" data-bs-target="#userOffcanvas" role="button" aria-controls="userOffcanvas">
-                        <div class="rounded-pill bg-body profilephotosidebar d-flex justify-content-center align-items-center">
+                        <div class="me-2 d-none d-lg-block text-end lh-1" style="font-size: 9pt;">
+                            @<?= session()->get('username') ?>
+                        </div>
+                        <div class="rounded-pill bg-body profilephotosidebar d-flex justify-content-center align-items-center" style="min-height: 32px; max-height: 32px;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
                                 <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM14 14s-1-4-6-4-6 4-6 4 1 0 6 0 6 0 6 0z" />
                             </svg>
