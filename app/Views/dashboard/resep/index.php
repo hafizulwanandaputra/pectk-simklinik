@@ -19,16 +19,13 @@
             <option value="1">Diproses</option>
             <option value="0">Belum Diproses</option>
         </select>
-        <div class="input-group input-group-sm">
-            <select id="dokterFilter" class="form-select form-select-sm w-auto rounded-start-3 flex-fill">
-                <option value="">Semua Dokter</option>
-            </select>
-            <button class="btn btn-success btn-sm bg-gradient rounded-end-3" type="button" id="refreshDokterButton"><i class="fa-solid fa-sync"></i> Dokter</button>
-        </div>
+        <select id="dokterFilter" class="form-select form-select-sm w-auto rounded-3 flex-fill">
+            <option value="">Semua Dokter</option>
+        </select>
     </div>
     <div class="input-group input-group-sm mb-3">
         <input type="search" id="searchInput" class="form-control rounded-start-3" placeholder="Cari pasien dan tanggal resep...">
-        <button class="btn btn-success btn-sm bg-gradient rounded-end-3" type="button" id="refreshButton"><i class="fa-solid fa-sync"></i> Resep</button>
+        <button class="btn btn-success btn-sm bg-gradient rounded-end-3" type="button" id="refreshButton"><i class="fa-solid fa-sync"></i></button>
     </div>
     <?php if (session()->get('role') != 'Apoteker'): ?>
         <fieldset class="border rounded-3 px-2 py-0 mb-3" id="tambahPasienForm">
@@ -352,16 +349,7 @@
         }
     });
 
-    $('#statusFilter').on('change', function() {
-        $('#resepContainer').empty();
-        for (let i = 0; i < limit; i++) {
-            $('#resepContainer').append(placeholder);
-        }
-        <?= (session()->get('role') != 'Apoteker') ? 'fetchPasienOptions();' : '' ?>
-        fetchResep();
-    });
-
-    $('#dokterFilter').on('change', function() {
+    $('#statusFilter, #dokterFilter').on('change', function() {
         $('#resepContainer').empty();
         for (let i = 0; i < limit; i++) {
             $('#resepContainer').append(placeholder);
@@ -512,18 +500,16 @@
             }
         });
         $('#refreshButton').on('click', function() {
+            // Simpan nilai pilihan dokter saat ini
+            const selectedDokter = $('#dokterFilter').val();
             $('#resepContainer').empty();
             for (let i = 0; i < limit; i++) {
                 $('#resepContainer').append(placeholder);
             }
             <?= (session()->get('role') != 'Apoteker') ? 'fetchPasienOptions();' : '' ?>
-            fetchResep();
-        });
-        $('#refreshDokterButton').on('click', function() {
-            // Simpan nilai pilihan dokter saat ini
-            const selectedDokter = $('#dokterFilter').val();
             // Panggil fungsi untuk memperbarui opsi dokter
             fetchDokterOptions(selectedDokter);
+            fetchResep();
         });
 
         fetchResep();
