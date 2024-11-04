@@ -94,51 +94,52 @@ class OpnameObat extends BaseController
 
     public function create()
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
-            // Menyimpan data pembelian obat
+            $db = db_connect();
+            $db->transStart(); // Mulai transaksi
+
+            // Simpan data opname obat
             $data = [
                 'tanggal' => date('Y-m-d H:i:s'),
                 'apoteker' => session()->get('fullname'),
             ];
+            $opnameId = $this->OpnameObatModel->insert($data);
 
-            // Simpan data opname obat
-            $opnameId = $this->OpnameObatModel->save($data); // Menyimpan data ke database dan mendapatkan ID yang baru ditambahkan
-
-            // Jika penyimpanan opname obat berhasil, lanjutkan untuk menyimpan detail opname
             if ($opnameId) {
-                // Ambil seluruh data dari tabel obat
                 $obatData = $this->ObatModel->findAll();
-
-                // Siapkan data untuk disimpan ke detail_opname_obat
                 $detailData = [];
+
                 foreach ($obatData as $obat) {
                     $sisa_stok = $obat['jumlah_masuk'] - $obat['jumlah_keluar'];
                     $detailData[] = [
-                        'id_opname_obat' => $opnameId, // ID opname obat yang baru
+                        'id_opname_obat' => $opnameId,
                         'nama_obat' => $obat['nama_obat'],
                         'sisa_stok' => $sisa_stok,
                     ];
                 }
 
-                // Simpan data detail opname obat ke database
                 if (!empty($detailData)) {
-                    $db = db_connect(); // Menghubungkan ke database
-                    $builder = $db->table('detail_opname_obat'); // Mengakses tabel detail_opname_obat
-                    $builder->insertBatch($detailData); // Menggunakan insertBatch untuk menyimpan beberapa data sekaligus
-                }
+                    $builder = $db->table('detail_opname_obat');
+                    $insertBatchStatus = $builder->insertBatch($detailData);
 
+                    if (!$insertBatchStatus) {
+                        return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Gagal menambahkan detail opname obat']);
+                    }
+                }
+            }
+
+            if ($db->transComplete()) {
                 return $this->response->setJSON(['success' => true, 'message' => 'Opname obat berhasil ditambahkan']);
             } else {
-                return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Gagal menambahkan opname obat']);
+                return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Gagal menyimpan opname obat']);
             }
         } else {
-            // Jika peran tidak dikenali, kembalikan status 404
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan',
             ]);
         }
     }
+
 
     public function delete($id)
     {
