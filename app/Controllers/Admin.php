@@ -192,6 +192,15 @@ class Admin extends BaseController
             // Menggunakan model untuk menyimpan data yang telah diperbarui
             $AuthModelEdit = new AuthModelEdit();
             $AuthModelEdit->save($data);
+            // Hapus semua sesi pengguna terkait di tabel `user_sessions`
+            // Validasi hanya jika username telah diubah
+            if ($this->request->getPost('username') != $this->request->getPost('original_username')) {
+                $db = db_connect();
+                $db->table('user_sessions')
+                    ->where('id_user', $this->request->getPost('id_user'))
+                    ->delete();
+                $db->query('ALTER TABLE `user_sessions` auto_increment = 1');
+            }
             // Mengembalikan respons JSON sukses
             return $this->response->setJSON(['success' => true, 'message' => 'Pengguna berhasil diedit']);
         } else {
@@ -256,6 +265,11 @@ class Admin extends BaseController
             $db = db_connect(); // Menghubungkan ke database
             // Mengubah status pengguna menjadi tidak aktif
             $db->table('user')->set('active', 0)->where('id_user', $id)->update();
+            // Hapus semua sesi pengguna terkait di tabel `user_sessions`
+            $db->table('user_sessions')
+                ->where('id_user', $id)
+                ->delete();
+            $db->query('ALTER TABLE `user_sessions` auto_increment = 1');
             // Mengembalikan respons JSON sukses
             return $this->response->setJSON(['success' => true, 'message' => 'Pengguna berhasil dinonaktifkan']);
         } else {
