@@ -66,6 +66,10 @@ class Resep extends Migration
                 'type' => 'INT',
                 'constraint' => 24,
             ],
+            'confirmed' => [
+                'type' => 'BOOLEAN',
+                'null' => true,
+            ],
             'status' => [
                 'type' => 'BOOLEAN'
             ],

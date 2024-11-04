@@ -19,6 +19,11 @@
             <option value="1">Diproses</option>
             <option value="0">Belum Diproses</option>
         </select>
+        <select id="confirmedFilter" class="form-select form-select-sm w-auto rounded-3">
+            <option value="">Semua</option>
+            <option value="1">Dikonfirmasi</option>
+            <option value="0">Belum Dikonfirmasi</option>
+        </select>
         <select id="dokterFilter" class="form-select form-select-sm w-auto rounded-3 flex-fill">
             <option value="">Semua Dokter</option>
         </select>
@@ -214,6 +219,7 @@
         const search = $('#searchInput').val();
         const offset = (currentPage - 1) * limit;
         const status = $('#statusFilter').val();
+        const confirmed = $('#confirmedFilter').val();
         const dokter = $('#dokterFilter').val();
 
         // Show the spinner
@@ -226,7 +232,8 @@
                     limit: limit,
                     offset: offset,
                     status: status,
-                    dokter: dokter
+                    dokter: dokter,
+                    confirmed: confirmed
                 }
             });
 
@@ -245,6 +252,9 @@
                 data.resep.forEach(function(resep) {
                     const jumlah_resep = parseInt(resep.jumlah_resep);
                     const total_biaya = parseInt(resep.total_biaya);
+                    const confirmedBadge = resep.confirmed == '1' ?
+                        `<span class="badge bg-success bg-gradient">Dikonfirmasi</span>` :
+                        `<span class="badge bg-danger bg-gradient">Belum Dikonfirmasi</span>`;
                     const statusBadge = resep.status == '1' ?
                         `<span class="badge bg-success bg-gradient">Transaksi Diproses</span>` :
                         `<span class="badge bg-danger bg-gradient">Transaksi Belum Diproses</span>`;
@@ -270,7 +280,7 @@
                                 Tanggal dan Waktu Resep: ${resep.tanggal_resep}<br>
                                 Total Resep: ${jumlah_resep.toLocaleString('id-ID')}<br>
                                 Total Harga: Rp${total_biaya.toLocaleString('id-ID')}<br>
-                                ${statusBadge}
+                                ${confirmedBadge}<br>${statusBadge}
                             </small>
                         </p>
                     </div>
@@ -349,7 +359,7 @@
         }
     });
 
-    $('#statusFilter, #dokterFilter').on('change', function() {
+    $('#statusFilter, #confirmedFilter, #dokterFilter').on('change', function() {
         $('#resepContainer').empty();
         for (let i = 0; i < limit; i++) {
             $('#resepContainer').append(placeholder);

@@ -669,6 +669,7 @@ class Transaksi extends BaseController
             // Mengambil resep berdasarkan nomor registrasi dengan kondisi tertentu
             $results = $ResepModel
                 ->where('nomor_registrasi', $nomor_registrasi)
+                ->where('confirmed', 1) // Mengambil resep yang sudah dikonfirmasi
                 ->where('status', 0) // Mengambil resep yang statusnya 0
                 ->where('total_biaya >', 0) // Mengambil resep dengan total biaya lebih dari 0
                 ->orderBy('resep.id_resep', 'DESC')->findAll();
@@ -716,6 +717,7 @@ class Transaksi extends BaseController
             // Mengambil resep berdasarkan nomor registrasi dengan kondisi tertentu
             $results = $ResepModel
                 ->where('id_resep', $id_resep)
+                ->where('confirmed', null)
                 ->where('status', 0) // Mengambil resep yang statusnya 0
                 ->where('total_biaya >', 0) // Mengambil resep dengan total biaya lebih dari 0
                 ->orderBy('resep.id_resep', 'DESC')->findAll();

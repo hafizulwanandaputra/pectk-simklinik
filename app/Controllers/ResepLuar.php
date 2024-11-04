@@ -154,6 +154,7 @@ class ResepLuar extends BaseController
                 'tanggal_resep' => date('Y-m-d H:i:s'), // Menyimpan tanggal resep saat ini
                 'jumlah_resep' => 0,
                 'total_biaya' => 0,
+                'confirmed' => NULL,
                 'status' => 0,
             ];
 
@@ -207,10 +208,11 @@ class ResepLuar extends BaseController
                     'tempat_lahir' => NULL,
                     'tanggal_lahir' => $this->request->getPost('tanggal_lahir'),
                     'dokter' => 'Resep Luar',
-                    'tanggal_resep' => date('Y-m-d H:i:s'), // Menyimpan tanggal resep saat ini
-                    'jumlah_resep' => 0,
-                    'total_biaya' => 0,
-                    'status' => 0,
+                    'tanggal_resep' => $resep['tanggal_resep'],
+                    'jumlah_resep' => $resep['jumlah_resep'],
+                    'total_biaya' => $resep['total_biaya'],
+                    'confirmed' => NULL,
+                    'status' => $resep['status'],
                 ];
 
                 // Menyimpan data resep ke dalam model
@@ -802,6 +804,11 @@ class ResepLuar extends BaseController
                 ->where('tempat_lahir', null)
                 ->where('dokter', 'Resep Luar')
                 ->find($id);
+
+            if (empty($resep)) {
+                throw PageNotFoundException::forPageNotFound();
+            }
+
             // Mengambil detail resep yang berkaitan dengan bentuk obat Tablet/Kapsul dan Sirup
             $detail_resep = $this->DetailResepModel
                 ->where('detail_resep.id_resep', $id)
@@ -852,6 +859,11 @@ class ResepLuar extends BaseController
                 ->where('tempat_lahir', null)
                 ->where('dokter', 'Resep Luar')
                 ->find($id);
+
+            if (empty($resep)) {
+                throw PageNotFoundException::forPageNotFound();
+            }
+
             // Mengambil detail resep yang berkaitan dengan bentuk obat Tetes dan Salep
             $detail_resep = $this->DetailResepModel
                 ->where('detail_resep.id_resep', $id)

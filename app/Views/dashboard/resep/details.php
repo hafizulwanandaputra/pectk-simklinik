@@ -74,6 +74,25 @@
                     </div>
                 </div>
             </div>
+            <div class="mb-2 row">
+                <div class="col-lg-3 fw-medium">Status Konfirmasi</div>
+                <div class="col-lg">
+                    <div class="date" id="confirmedStatus">
+                        <?php
+                        if ($resep['confirmed'] == '1') {
+                            echo 'Dikonfirmasi';
+                        } else if ($resep['confirmed'] == '0') {
+                            echo 'Belum Dikonfirmasi';
+                        } else {
+                            echo 'N/A';
+                        }
+                        ?>
+                    </div>
+                    <?php if (session()->get('role') != 'Dokter') : ?>
+                        <button id="refreshConfirmeded" type="button" class="btn btn-link" style="--bs-btn-padding-y: 0; --bs-btn-padding-x: 0; --bs-btn-font-size: 9pt;" onclick="window.location.reload();">Perbarui Status</button>
+                    <?php endif; ?>
+                </div>
+            </div>
         </div>
     </fieldset>
 
@@ -158,15 +177,22 @@
         </table>
     </div>
 
-    <?php if (session()->get('role') != 'Dokter') : ?>
-        <div id="cetakEtiketBtn">
-            <hr>
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
+
+    <div class="mb-3">
+        <hr>
+        <?php if (session()->get('role') != 'Dokter') : ?>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-2">
                 <button class="btn btn-body rounded-3 bg-gradient" type="button" id="printBtn1" onclick="window.open(`<?= base_url('/resep/etiket-dalam/' . $resep['id_resep']) ?>`)" disabled><i class="fa-solid fa-print"></i> Cetak Etiket Obat Dalam</button>
                 <button class="btn btn-body rounded-3 bg-gradient" type="button" id="printBtn2" onclick="window.open(`<?= base_url('/resep/etiket-luar/' . $resep['id_resep']) ?>`)" disabled><i class="fa-solid fa-print"></i> Cetak Etiket Obat Luar</button>
             </div>
-        </div>
-    <?php endif; ?>
+        <?php endif; ?>
+        <?php if (session()->get('role') != 'Apoteker') : ?>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-2">
+                <button class="btn btn-danger rounded-3 bg-gradient" type="button" id="cancelConfirmBtn" disabled><i class="fa-solid fa-print"></i> Batalkan Konfirmasi</button>
+                <button class="btn btn-success rounded-3 bg-gradient" type="button" id="confirmBtn" disabled><i class="fa-solid fa-print"></i> Konfirmasi</button>
+            </div>
+        <?php endif; ?>
+    </div>
 
     <div class="modal modal-sheet p-4 py-md-5 fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -177,6 +203,34 @@
                 <div class="modal-footer flex-nowrap p-0" style="border-top: 1px solid var(--bs-border-color-translucent);">
                     <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end" style="border-right: 1px solid var(--bs-border-color-translucent)!important;" data-bs-dismiss="modal">Tidak</button>
                     <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0" id="confirmDeleteBtn">Ya</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal modal-sheet p-4 py-md-5 fade" id="confirmModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content bg-body-tertiary rounded-4 shadow-lg transparent-blur">
+                <div class="modal-body p-4 text-center">
+                    <h5 class="mb-0" id="confirmMessage"></h5>
+                </div>
+                <div class="modal-footer flex-nowrap p-0" style="border-top: 1px solid var(--bs-border-color-translucent);">
+                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end" style="border-right: 1px solid var(--bs-border-color-translucent)!important;" data-bs-dismiss="modal">Tidak</button>
+                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0" id="confirmConfirmBtn">Ya</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal modal-sheet p-4 py-md-5 fade" id="cancelConfirmModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="cancelConfirmModalLabel" aria-hidden="true" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content bg-body-tertiary rounded-4 shadow-lg transparent-blur">
+                <div class="modal-body p-4 text-center">
+                    <h5 class="mb-0" id="cancelConfirmMessage"></h5>
+                </div>
+                <div class="modal-footer flex-nowrap p-0" style="border-top: 1px solid var(--bs-border-color-translucent);">
+                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end" style="border-right: 1px solid var(--bs-border-color-translucent)!important;" data-bs-dismiss="modal">Tidak</button>
+                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0" id="confirmCancelConfirmBtn">Ya</button>
                 </div>
             </div>
         </div>
@@ -252,6 +306,7 @@
 
             let hasInternalMedicine = false; // Track if there is internal medicine (kapsul/tablet/sirup)
             let hasExternalMedicine = false; // Track if there is external medicine (tetes/salep)
+            let allConfirmed = true; // Track overall confirmed status
 
             if (data.length === 0) {
                 // Tampilkan pesan jika tidak ada data
@@ -261,6 +316,8 @@
                     </tr>
                 `;
                 $('#detail_resep').append(emptyRow);
+                $('#cancelConfirmBtn').prop('disabled', true);
+                $('#confirmBtn').prop('disabled', true);
             } else {
                 data.forEach(function(detail_resep) {
                     const jumlah = parseInt(detail_resep.jumlah); // Konversi jumlah ke integer
@@ -274,6 +331,10 @@
                         hasInternalMedicine = true;
                     } else if (['Tetes', 'Salep'].includes(detail_resep.bentuk_obat)) {
                         hasExternalMedicine = true;
+                    }
+
+                    if (detail_resep.confirmed !== "1") {
+                        allConfirmed = false;
                     }
 
                     const detail_resepElement = `
@@ -301,19 +362,34 @@
                             $('.edit-btn').prop('disabled', true);
                             $('.delete-btn').prop('disabled', true);
                         } else if (detail_resep.status === "0") {
-                            $('.edit-btn').prop('disabled', false);
-                            $('.delete-btn').prop('disabled', false);
+                            if (detail_resep.confirmed === "1") {
+                                $('.edit-btn').prop('disabled', true);
+                                $('.delete-btn').prop('disabled', true);
+                                $('#cancelConfirmBtn').prop('disabled', false);
+                                $('#confirmBtn').prop('disabled', true);
+                            } else if (detail_resep.confirmed === "0") {
+                                $('.edit-btn').prop('disabled', false);
+                                $('.delete-btn').prop('disabled', false);
+                                $('#cancelConfirmBtn').prop('disabled', true);
+                                $('#confirmBtn').prop('disabled', false);
+                            }
                         }
                     <?php endif; ?>
 
                 });
             }
-            // Handle enabling/disabling print buttons based on medicine type
-            if (hasInternalMedicine) {
-                $('#printBtn1').prop('disabled', false); // Disable if no internal medicine
-            }
-            if (hasExternalMedicine) {
-                $('#printBtn2').prop('disabled', false); // Disable if no external medicine
+
+            // Enable/disable print buttons based on overall confirmed status
+            if (allConfirmed) {
+                if (hasInternalMedicine) {
+                    $('#printBtn1').prop('disabled', false);
+                }
+                if (hasExternalMedicine) {
+                    $('#printBtn2').prop('disabled', false);
+                }
+            } else {
+                $('#printBtn1').prop('disabled', true);
+                $('#printBtn2').prop('disabled', true);
             }
             const totalHargaElement = `Rp${totalHarga.toLocaleString('id-ID')}`;
             const jumlahResepElement = `${jumlahResep.toLocaleString('id-ID')}`;
@@ -368,6 +444,62 @@
             } finally {
                 $('#deleteModal').modal('hide');
                 $('#deleteModal button').prop('disabled', false);
+            }
+        });
+
+        $('#confirmBtn').on('click', function() {
+            $('[data-bs-toggle="tooltip"]').tooltip('hide');
+            $('#confirmMessage').html(`Resep ini akan diproses oleh apoteker. Konfirmasi resep ini?`);
+            $('#confirmModal').modal('show');
+        });
+
+        $('#confirmConfirmBtn').click(async function() {
+            $('#confirmModal button').prop('disabled', true);
+            $('#confirmMessage').html('Mengonfirmasi, silakan tunggu...');
+
+            try {
+                await axios.post(`<?= base_url('/resep/confirm/' . $resep['id_resep']) ?>`);
+                $('#confirmedStatus').text('Dikonfirmasi');
+                fetchDetailResep();
+                <?= (session()->get('role') != 'Apoteker') ? 'fetchObatOptions();' : '' ?>
+                <?= (session()->get('role') != 'Apoteker') ? 'fetchStatusResep();' : '' ?>
+            } catch (error) {
+                if (error.response.request.status === 401) {
+                    showFailedToast(error.response.data.message);
+                } else {
+                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                }
+            } finally {
+                $('#confirmModal').modal('hide');
+                $('#confirmModal button').prop('disabled', false);
+            }
+        });
+
+        $('#cancelConfirmBtn').on('click', function() {
+            $('[data-bs-toggle="tooltip"]').tooltip('hide');
+            $('#cancelConfirmMessage').html(`Resep ini akan dibatalkan dan tidak bisa diproses oleh apoteker. Batalkan konfirmasi resep ini?`);
+            $('#cancelConfirmModal').modal('show');
+        });
+
+        $('#confirmCancelConfirmBtn').click(async function() {
+            $('#cancelConfirmModal button').prop('disabled', true);
+            $('#cancelConfirmMessage').html('Membatalkan, silakan tunggu...');
+
+            try {
+                await axios.post(`<?= base_url('/resep/cancel/' . $resep['id_resep']) ?>`);
+                $('#confirmedStatus').text('Belum Dikonfirmasi');
+                fetchDetailResep();
+                <?= (session()->get('role') != 'Apoteker') ? 'fetchObatOptions();' : '' ?>
+                <?= (session()->get('role') != 'Apoteker') ? 'fetchStatusResep();' : '' ?>
+            } catch (error) {
+                if (error.response.request.status === 401) {
+                    showFailedToast(error.response.data.message);
+                } else {
+                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                }
+            } finally {
+                $('#cancelConfirmModal').modal('hide');
+                $('#cancelConfirmModal button').prop('disabled', false);
             }
         });
 
