@@ -51,6 +51,7 @@ class Transaksi extends BaseController
             $limit = $this->request->getGet('limit'); // Batas jumlah hasil
             $offset = $this->request->getGet('offset'); // Offset untuk pagination
             $status = $this->request->getGet('status'); // Status transaksi
+            $jenis = $this->request->getGet('jenis'); // Status transaksi
             $kasir = $this->request->getGet('kasir'); // Status transaksi
 
             // Mengubah limit dan offset menjadi integer, jika tidak ada, set ke 0
@@ -68,6 +69,13 @@ class Transaksi extends BaseController
                 $TransaksiModel->where('lunas', 1); // Status lunas
             } elseif ($status === '0') {
                 $TransaksiModel->where('lunas', 0); // Status belum lunas
+            }
+
+            // Menerapkan filter jenis jika ada
+            if ($jenis === 'Resep Luar') {
+                $TransaksiModel->where('dokter', 'Resep Luar'); // Resep Luar
+            } elseif ($jenis === 'Resep Dokter') {
+                $TransaksiModel->where('dokter !=', 'Resep Luar'); // Resep Dokter
             }
 
             // Menerapkan filter pencarian berdasarkan nama pasien, kasir, atau tanggal transaksi

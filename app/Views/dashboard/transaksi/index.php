@@ -19,6 +19,11 @@
             <option value="1">Diproses</option>
             <option value="0">Belum Diproses</option>
         </select>
+        <select id="jenisFilter" class="form-select form-select-sm w-auto rounded-3">
+            <option value="">Semua</option>
+            <option value="Resep Dokter">Resep Dokter</option>
+            <option value="Resep Luar">Resep Luar</option>
+        </select>
         <select id="kasirFilter" class="form-select form-select-sm w-auto rounded-3 flex-fill">
             <option value="">Semua</option>
         </select>
@@ -252,6 +257,7 @@
         const search = $('#searchInput').val();
         const offset = (currentPage - 1) * limit;
         const status = $('#statusFilter').val();
+        const jenis = $('#jenisFilter').val();
         const kasir = $('#kasirFilter').val();
 
         // Show the spinner
@@ -264,6 +270,7 @@
                     limit: limit,
                     offset: offset,
                     status: status,
+                    jenis: jenis,
                     kasir: kasir
                 }
             });
@@ -389,7 +396,7 @@
         }
     });
 
-    $('#statusFilter, #kasirFilter').on('change', function() {
+    $('#statusFilter, #jenisFilter, #kasirFilter').on('change', function() {
         $('#transaksiContainer').empty();
         for (let i = 0; i < limit; i++) {
             $('#transaksiContainer').append(placeholder);
