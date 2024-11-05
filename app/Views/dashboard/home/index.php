@@ -352,7 +352,7 @@
                         beginAtZero: true,
                         title: {
                             display: true,
-                            text: 'Pemasukan (Rp)'
+                            text: 'Resep yang Diproses'
                         }
                     }
                 },
