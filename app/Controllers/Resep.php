@@ -500,7 +500,8 @@ class Resep extends BaseController
                     $options[] = [
                         'value' => $row['id_obat'], // Menyimpan id_obat
                         'text' => $row['nama_obat'] .
-                            ' (' . $row['kategori_obat'] .
+                            ' (' . $row['isi_obat'] .
+                            ' • ' . $row['kategori_obat'] .
                             ' • ' . $row['bentuk_obat'] .
                             ' • Rp' . $harga_obat_terformat .
                             ' • ' . $stok_tersisa . ')' // Menyimpan informasi obat
