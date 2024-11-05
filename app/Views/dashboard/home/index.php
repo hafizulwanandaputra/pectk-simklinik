@@ -68,6 +68,28 @@
                         </div>
                     </div>
                 </div>
+                <?php if (session()->get('role') != "Dokter") : ?>
+                    <div class="col">
+                        <div class="card bg-body-tertiary w-100 rounded-3">
+                            <div class="card-header w-100 text-truncate">Resep Menurut Dokter</div>
+                            <div class="card-body">
+                                <div style="width: 100% !important;height: 400px !important;">
+                                    <canvas id="resepbydoktergraph"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card bg-body-tertiary w-100 rounded-3">
+                            <div class="card-header w-100 text-truncate">Resep Per Bulan</div>
+                            <div class="card-body">
+                                <div style="width: 100% !important;height: 400px !important;">
+                                    <canvas id="resepgraph"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <?php endif; ?>
             </div>
         </fieldset>
     <?php endif; ?>
@@ -208,6 +230,12 @@
         });
     }
     Chart.defaults.font.family = '"Helvetica Neue", Helvetica, Arial, "Liberation Sans", sans-serif';
+    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Apoteker") : ?>
+        const data_resepbydoktergraph = [];
+        const label_resepbydoktergraph = [];
+        const data_resepgraph = [];
+        const label_resepgraph = [];
+    <?php endif; ?>
     <?php if (session()->get('role') == "Admin" || session()->get('role') == "Kasir") : ?>
         const data_transaksiperbulangraph = [];
         const label_transaksiperbulangraph = [];
@@ -215,6 +243,16 @@
         const label_pemasukanperbulangraph = [];
     <?php endif; ?>
 
+    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Apoteker") : ?>
+        <?php foreach ($resepbydoktergraph->getResult() as $key => $resepbydoktergraph) : ?>
+            data_resepbydoktergraph.push(<?= $resepbydoktergraph->jumlah; ?>);
+            label_resepbydoktergraph.push('<?= $resepbydoktergraph->dokter; ?>');
+        <?php endforeach; ?>
+        <?php foreach ($resepgraph->getResult() as $key => $resepgraph) : ?>
+            data_resepgraph.push(<?= $resepgraph->total_resep; ?>);
+            label_resepgraph.push('<?= $resepgraph->bulan; ?>');
+        <?php endforeach; ?>
+    <?php endif; ?>
     <?php if (session()->get('role') == "Admin" || session()->get('role') == "Kasir") : ?>
         <?php foreach ($transaksiperbulangraph->getResult() as $key => $transaksiperbulangraph) : ?>
             data_transaksiperbulangraph.push(<?= $transaksiperbulangraph->total_transaksi; ?>);
@@ -226,6 +264,28 @@
         <?php endforeach; ?>
     <?php endif; ?>
 
+    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Apoteker") : ?>
+        var data_content_resepbydoktergraph = {
+            labels: label_resepbydoktergraph,
+            datasets: [{
+                label: 'Resep Menurut Dokter',
+                borderWidth: 2,
+                pointStyle: 'rectRot',
+                fill: true,
+                data: data_resepbydoktergraph
+            }]
+        }
+        var data_content_resepgraph = {
+            labels: label_resepgraph,
+            datasets: [{
+                label: 'Resep Per Bulan',
+                borderWidth: 2,
+                pointStyle: 'rectRot',
+                fill: true,
+                data: data_resepgraph
+            }]
+        }
+    <?php endif; ?>
     <?php if (session()->get('role') == "Admin" || session()->get('role') == "Kasir") : ?>
         var data_content_transaksiperbulangraph = {
             labels: label_transaksiperbulangraph,
@@ -249,6 +309,61 @@
         }
     <?php endif; ?>
 
+    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Apoteker") : ?>
+        var chart_resepbydoktergraph = createChart(document.getElementById('resepbydoktergraph').getContext('2d'), {
+            type: 'pie',
+            data: data_content_resepbydoktergraph,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                locale: 'id-ID',
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scale: {
+                    ticks: {
+                        precision: 0
+                    }
+                }
+            }
+        })
+        var chart_resepgraph = createChart(document.getElementById('resepgraph').getContext('2d'), {
+            type: 'line',
+            data: data_content_resepgraph,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                locale: 'id-ID',
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Bulan'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Pemasukan (Rp)'
+                        }
+                    }
+                },
+                scale: {
+                    ticks: {
+                        precision: 0
+                    }
+                }
+            }
+        })
+    <?php endif; ?>
     <?php if (session()->get('role') == "Admin" || session()->get('role') == "Kasir") : ?>
         var chart_transaksiperbulangraph = createChart(document.getElementById('transaksiperbulangraph').getContext('2d'), {
             type: 'line',

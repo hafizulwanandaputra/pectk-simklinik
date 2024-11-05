@@ -91,6 +91,10 @@ class Home extends BaseController
             $total_resep_sdh_status = $resep->where('status', 1)->where('dokter', session()->get('fullname'))->countAllResults(); // Total resep sudah status berdasarkan dokter
         }
 
+        $resepbydoktergraph = $resep->select('dokter, COUNT(*) AS jumlah')->where('status', 1)->groupBy('dokter')->get(); // Resep yang Diberikan Menurut Dokter
+
+        $resepgraph = $resep->select('DATE_FORMAT(resep.tanggal_resep, "%Y-%m") AS bulan, COUNT(*) AS total_resep')->where('resep.status', 1)->groupBy('DATE_FORMAT(resep.tanggal_resep, "%Y-%m")')->get(); // Resep Per Bulan
+
         $total_transaksi_blm_lunas = $transaksi->where('lunas', 0)->countAllResults(); // Total transaksi belum lunas
         $total_transaksi_sdh_lunas = $transaksi->where('lunas', 1)->countAllResults(); // Total transaksi sudah lunas
         $transaksiperbulangraph = $transaksi->select('DATE_FORMAT(transaksi.tgl_transaksi, "%Y-%m") AS bulan, COUNT(*) AS total_transaksi')->where('transaksi.lunas', 1)->groupBy('DATE_FORMAT(transaksi.tgl_transaksi, "%Y-%m")')->get(); // Transaksi yang Sudah Diproses Per Bulan
@@ -105,6 +109,8 @@ class Home extends BaseController
             'total_pembelian_obat_sdh_diterima' => $total_pembelian_obat_sdh_diterima,
             'total_resep_blm_status' => $total_resep_blm_status,
             'total_resep_sdh_status' => $total_resep_sdh_status,
+            'resepbydoktergraph' => $resepbydoktergraph,
+            'resepgraph' => $resepgraph,
             'total_transaksi_blm_lunas' => $total_transaksi_blm_lunas,
             'total_transaksi_sdh_lunas' => $total_transaksi_sdh_lunas,
             'transaksiperbulangraph' => $transaksiperbulangraph,
