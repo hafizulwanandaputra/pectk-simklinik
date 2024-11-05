@@ -388,7 +388,7 @@
                         beginAtZero: true,
                         title: {
                             display: true,
-                            text: 'Transaksi Diproses'
+                            text: 'Transaksi yang Diproses'
                         }
                     }
                 },
