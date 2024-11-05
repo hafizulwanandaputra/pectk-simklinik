@@ -92,6 +92,14 @@
                     </div>
                 </div>
             </div>
+            <div class="card bg-body-tertiary w-100 rounded-3 mb-2">
+                <div class="card-header w-100 text-truncate">Pemasukan Per Bulan</div>
+                <div class="card-body">
+                    <div style="width: 100% !important;height: 400px !important;">
+                        <canvas id="pemasukanperbulangraph"></canvas>
+                    </div>
+                </div>
+            </div>
         </fieldset>
     <?php endif; ?>
     <?php if (session()->get('role') == "Admin") : ?>
@@ -116,6 +124,144 @@
     $(document).ready(function() {
         // Menyembunyikan spinner loading saat dokumen sudah siap
         $('#loadingSpinner').hide(); // Menyembunyikan elemen spinner loading
+    });
+</script>
+<?= $this->endSection(); ?>
+<?= $this->section('chartjs'); ?>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js" integrity="sha512-SIMGYRUjwY8+gKg7nn9EItdD8LCADSDfJNutF9TPrvEo86sQmFMh6MyralfIyhADlajSxqc7G0gs7+MwWF/ogQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    // Array to keep track of chart instances
+    const chartInstances = [];
+
+    // Function to initialize a chart and add it to the instances array
+    function createChart(ctx, config) {
+        const chart = new Chart(ctx, config);
+        chartInstances.push(chart);
+        return chart;
+    }
+
+    // Function to update chart configurations based on the color scheme
+    function updateChartOptions() {
+        const isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+        const colorSettings = {
+            color: isDarkMode ? "#ADBABD" : "#000000",
+            borderColor: isDarkMode ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)",
+            backgroundColor: isDarkMode ? "rgba(255,255,0,0.1)" : "rgba(0,255,0,0.1)",
+            lineBorderColor: isDarkMode ? "rgba(255,255,0,0.4)" : "rgba(0,255,0,0.4)",
+            gridColor: isDarkMode ? "rgba(255,255,255,0.2)" : "rgba(0,0,0,0.2)"
+        };
+
+        chartInstances.forEach(chart => {
+            if (chart.options.scales) {
+                // Update X-axis
+                if (chart.options.scales.x) {
+                    if (chart.options.scales.x.ticks) {
+                        chart.options.scales.x.ticks.color = colorSettings.color;
+                    }
+                    if (chart.options.scales.x.title) {
+                        chart.options.scales.x.title.color = colorSettings.color;
+                    }
+                    if (chart.options.scales.x.grid) {
+                        chart.options.scales.x.grid.color = colorSettings.gridColor;
+                    }
+                }
+
+                // Update Y-axis
+                if (chart.options.scales.y) {
+                    if (chart.options.scales.y.ticks) {
+                        chart.options.scales.y.ticks.color = colorSettings.color;
+                    }
+                    if (chart.options.scales.y.title) {
+                        chart.options.scales.y.title.color = colorSettings.color;
+                    }
+                    if (chart.options.scales.y.grid) {
+                        chart.options.scales.y.grid.color = colorSettings.gridColor;
+                    }
+                }
+            }
+
+            // Update line chart specific settings
+            if (chart.options.elements && chart.options.elements.line) {
+                chart.options.elements.line.borderColor = colorSettings.lineBorderColor;
+            }
+
+            // Update doughnut chart legend
+            if (chart.config.type === 'doughnut' && chart.options.plugins && chart.options.plugins.legend) {
+                chart.options.plugins.legend.labels.color = colorSettings.color;
+            }
+
+            // Redraw the chart with updated settings
+            chart.update();
+        });
+    }
+    Chart.defaults.font.family = '"Helvetica Neue", Helvetica, Arial, "Liberation Sans", sans-serif';
+    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Kasir") : ?>
+        const data_pemasukanperbulangraph = [];
+        const label_pemasukanperbulangraph = [];
+        <?php foreach ($pemasukanperbulangraph->getResult() as $key => $pemasukanperbulangraph) : ?>
+            data_pemasukanperbulangraph.push(<?= $pemasukanperbulangraph->total_pemasukan; ?>);
+            label_pemasukanperbulangraph.push('<?= $pemasukanperbulangraph->bulan; ?>');
+        <?php endforeach; ?>
+    <?php endif; ?>
+
+    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Kasir") : ?>
+        var data_content_pemasukanperbulangraph = {
+            labels: label_pemasukanperbulangraph,
+            datasets: [{
+                label: 'Pemasukan Per Bulan',
+                borderWidth: 2,
+                pointStyle: 'rectRot',
+                fill: true,
+                data: data_pemasukanperbulangraph
+            }]
+        }
+    <?php endif; ?>
+
+    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Kasir") : ?>
+        var chart_pemasukanperbulangraph = createChart(document.getElementById('pemasukanperbulangraph').getContext('2d'), {
+            type: 'line',
+            data: data_content_pemasukanperbulangraph,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                locale: 'id-ID',
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Bulan'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Pemasukan (Rp)'
+                        }
+                    }
+                },
+                scale: {
+                    ticks: {
+                        precision: 0
+                    }
+                }
+            }
+        })
+    <?php endif; ?>
+
+    // Initial setup
+    updateChartOptions();
+
+    // Watch for changes in color scheme preference
+    const mediaQueryList = window.matchMedia("(prefers-color-scheme: dark)");
+    mediaQueryList.addEventListener("change", () => {
+        updateChartOptions();
     });
 </script>
 <?= $this->endSection(); ?>

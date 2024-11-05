@@ -574,6 +574,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
     <script src="<?= base_url(); ?>assets/js/dashboard/dashboard.js"></script>
     <?= $this->renderSection('javascript'); ?>
     <?= $this->renderSection('datatable'); ?>
+    <?= $this->renderSection('chartjs'); ?>
     <script>
         // Fungsi untuk menampilkan spinner loading
         function showSpinner() {

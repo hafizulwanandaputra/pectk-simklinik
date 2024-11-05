@@ -34,9 +34,6 @@
                         <h5 class="card-title placeholder-glow">
                             <span class="placeholder" style="width: 100%"></span>
                         </h5>
-                        <h6 class="card-subtitle mb-2 placeholder-glow">
-                            <span class="placeholder" style="width: 25%;"></span>
-                        </h6>
                         <p class="card-text placeholder-glow">
                             <small>
                                 <span class="placeholder" style="width: 12.5%;"></span><br>
@@ -147,9 +144,6 @@
                         <h5 class="card-title placeholder-glow">
                             <span class="placeholder" style="width: 100%"></span>
                         </h5>
-                        <h6 class="card-subtitle mb-2 placeholder-glow">
-                            <span class="placeholder" style="width: 25%;"></span>
-                        </h6>
                         <p class="card-text placeholder-glow">
                             <small>
                                 <span class="placeholder" style="width: 12.5%;"></span><br>
