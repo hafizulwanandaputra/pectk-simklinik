@@ -311,63 +311,67 @@ class Resep extends BaseController
             // Mengambil resep
             $resep = $this->ResepModel->find($id);
 
-            if ($resep['status'] == 0) {
-                // Mengambil semua id_obat dan jumlah dari detail_resep yang terkait dengan resep yang dihapus
-                $detailResep = $db->query("SELECT id_obat, jumlah FROM detail_resep WHERE id_resep = ?", [$id])->getResultArray();
-
-                // Mengurangi jumlah_keluar pada tabel obat
-                foreach ($detailResep as $detail) {
-                    $id_obat = $detail['id_obat'];
-                    $jumlah = $detail['jumlah'];
-
-                    // Mengambil jumlah_keluar dari tabel obat
-                    $obat = $db->query("SELECT jumlah_keluar FROM obat WHERE id_obat = ?", [$id_obat])->getRowArray();
-
-                    if ($obat) {
-                        // Mengurangi jumlah_keluar
-                        $new_jumlah_keluar = $obat['jumlah_keluar'] - $jumlah;
-
-                        // Memastikan jumlah_keluar tidak negatif
-                        if ($new_jumlah_keluar < 0) {
-                            $new_jumlah_keluar = 0;
-                        }
-
-                        // Memperbarui jumlah_keluar di tabel obat
-                        $db->query("UPDATE obat SET jumlah_keluar = ? WHERE id_obat = ?", [$new_jumlah_keluar, $id_obat]);
-                    }
-                }
-
-                // Melanjutkan penghapusan resep
-                $transaksiDetail = $db->query("SELECT id_transaksi FROM detail_transaksi WHERE id_resep = ?", [$id])->getRow();
-
-                // Menghapus resep dan detail terkait
-                $this->ResepModel->where('status', 0)->delete($id);
-                $db->query('ALTER TABLE `resep` auto_increment = 1'); // Mengatur ulang auto increment pada tabel resep
-                $db->query('ALTER TABLE `detail_resep` auto_increment = 1'); // Mengatur ulang auto increment pada tabel detail resep
-
-                // Jika ada transaksi terkait, hitung ulang total_pembayaran
-                if ($transaksiDetail) {
-                    $id_transaksi = $transaksiDetail->id_transaksi;
-
-                    // Hitung ulang total_pembayaran berdasarkan detail transaksi yang tersisa
-                    $result = $db->query("
-                SELECT SUM(harga_satuan) as total_pembayaran 
-                FROM detail_transaksi 
-                WHERE id_transaksi = ?", [$id_transaksi])->getRow();
-
-                    $total_pembayaran = $result->total_pembayaran ?? 0;
-
-                    // Memperbarui tabel transaksi dengan total_pembayaran yang baru
-                    $db->query("
-                UPDATE transaksi 
-                SET total_pembayaran = ? 
-                WHERE id_transaksi = ?", [$total_pembayaran, $id_transaksi]);
-                }
-
-                return $this->response->setJSON(['message' => 'Resep berhasil dihapus']); // Mengembalikan pesan sukses
-            } else {
+            if ($resep['status'] == 1) {
                 return $this->response->setStatusCode(422)->setJSON(['message' => 'Resep ini tidak bisa dihapus karena sudah ditransaksikan']);
             }
+
+            if ($resep['confirmed'] == 1) {
+                return $this->response->setStatusCode(422)->setJSON(['message' => 'Resep ini tidak bisa dihapus karena sudah dikonfirmasi']);
+            }
+
+            // Mengambil semua id_obat dan jumlah dari detail_resep yang terkait dengan resep yang dihapus
+            $detailResep = $db->query("SELECT id_obat, jumlah FROM detail_resep WHERE id_resep = ?", [$id])->getResultArray();
+
+            // Mengurangi jumlah_keluar pada tabel obat
+            foreach ($detailResep as $detail) {
+                $id_obat = $detail['id_obat'];
+                $jumlah = $detail['jumlah'];
+
+                // Mengambil jumlah_keluar dari tabel obat
+                $obat = $db->query("SELECT jumlah_keluar FROM obat WHERE id_obat = ?", [$id_obat])->getRowArray();
+
+                if ($obat) {
+                    // Mengurangi jumlah_keluar
+                    $new_jumlah_keluar = $obat['jumlah_keluar'] - $jumlah;
+
+                    // Memastikan jumlah_keluar tidak negatif
+                    if ($new_jumlah_keluar < 0) {
+                        $new_jumlah_keluar = 0;
+                    }
+
+                    // Memperbarui jumlah_keluar di tabel obat
+                    $db->query("UPDATE obat SET jumlah_keluar = ? WHERE id_obat = ?", [$new_jumlah_keluar, $id_obat]);
+                }
+            }
+
+            // Melanjutkan penghapusan resep
+            $transaksiDetail = $db->query("SELECT id_transaksi FROM detail_transaksi WHERE id_resep = ?", [$id])->getRow();
+
+            // Menghapus resep dan detail terkait
+            $this->ResepModel->where('status', 0)->delete($id);
+            $db->query('ALTER TABLE `resep` auto_increment = 1'); // Mengatur ulang auto increment pada tabel resep
+            $db->query('ALTER TABLE `detail_resep` auto_increment = 1'); // Mengatur ulang auto increment pada tabel detail resep
+
+            // Jika ada transaksi terkait, hitung ulang total_pembayaran
+            if ($transaksiDetail) {
+                $id_transaksi = $transaksiDetail->id_transaksi;
+
+                // Hitung ulang total_pembayaran berdasarkan detail transaksi yang tersisa
+                $result = $db->query("
+            SELECT SUM(harga_satuan) as total_pembayaran 
+            FROM detail_transaksi 
+            WHERE id_transaksi = ?", [$id_transaksi])->getRow();
+
+                $total_pembayaran = $result->total_pembayaran ?? 0;
+
+                // Memperbarui tabel transaksi dengan total_pembayaran yang baru
+                $db->query("
+            UPDATE transaksi 
+            SET total_pembayaran = ? 
+            WHERE id_transaksi = ?", [$total_pembayaran, $id_transaksi]);
+            }
+
+            return $this->response->setJSON(['message' => 'Resep berhasil dihapus']); // Mengembalikan pesan sukses
         } else {
             // Mengembalikan status 404 jika peran tidak diizinkan
             return $this->response->setStatusCode(404)->setJSON([
