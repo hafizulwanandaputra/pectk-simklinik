@@ -93,7 +93,8 @@ class Home extends BaseController
 
         $total_transaksi_blm_lunas = $transaksi->where('lunas', 0)->countAllResults(); // Total transaksi belum lunas
         $total_transaksi_sdh_lunas = $transaksi->where('lunas', 1)->countAllResults(); // Total transaksi sudah lunas
-        $pemasukanperbulangraph = $transaksi->select('DATE_FORMAT(transaksi.tgl_transaksi, "%Y-%m") AS bulan, SUM(total_pembayaran) AS total_pemasukan')->groupBy('DATE_FORMAT(transaksi.tgl_transaksi, "%Y-%m")')->get();
+        $transaksiperbulangraph = $transaksi->select('DATE_FORMAT(transaksi.tgl_transaksi, "%Y-%m") AS bulan, COUNT(*) AS total_transaksi')->where('transaksi.lunas', 1)->groupBy('DATE_FORMAT(transaksi.tgl_transaksi, "%Y-%m")')->get(); // Transaksi yang Sudah Diproses Per Bulan
+        $pemasukanperbulangraph = $transaksi->select('DATE_FORMAT(transaksi.tgl_transaksi, "%Y-%m") AS bulan, SUM(total_pembayaran) AS total_pemasukan')->where('transaksi.lunas', 1)->groupBy('DATE_FORMAT(transaksi.tgl_transaksi, "%Y-%m")')->get(); // Pemasukan Per Bulan
         $total_user = $user->countAllResults(); // Total pengguna
 
         // Menyusun data untuk ditampilkan di view
@@ -106,6 +107,7 @@ class Home extends BaseController
             'total_resep_sdh_status' => $total_resep_sdh_status,
             'total_transaksi_blm_lunas' => $total_transaksi_blm_lunas,
             'total_transaksi_sdh_lunas' => $total_transaksi_sdh_lunas,
+            'transaksiperbulangraph' => $transaksiperbulangraph,
             'pemasukanperbulangraph' => $pemasukanperbulangraph,
             'total_user' => $total_user,
             'txtgreeting' => $txtGreeting, // Ucapan yang ditentukan sebelumnya

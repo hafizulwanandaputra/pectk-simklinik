@@ -91,12 +91,24 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="card bg-body-tertiary w-100 rounded-3 mb-2">
-                <div class="card-header w-100 text-truncate">Pemasukan Per Bulan</div>
-                <div class="card-body">
-                    <div style="width: 100% !important;height: 400px !important;">
-                        <canvas id="pemasukanperbulangraph"></canvas>
+                <div class="col">
+                    <div class="card bg-body-tertiary w-100 rounded-3 mb-2">
+                        <div class="card-header w-100 text-truncate">Transaksi Per Bulan</div>
+                        <div class="card-body">
+                            <div style="width: 100% !important;height: 400px !important;">
+                                <canvas id="transaksiperbulangraph"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card bg-body-tertiary w-100 rounded-3 mb-2">
+                        <div class="card-header w-100 text-truncate">Pemasukan Per Bulan</div>
+                        <div class="card-body">
+                            <div style="width: 100% !important;height: 400px !important;">
+                                <canvas id="pemasukanperbulangraph"></canvas>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -197,8 +209,17 @@
     }
     Chart.defaults.font.family = '"Helvetica Neue", Helvetica, Arial, "Liberation Sans", sans-serif';
     <?php if (session()->get('role') == "Admin" || session()->get('role') == "Kasir") : ?>
+        const data_transaksiperbulangraph = [];
+        const label_transaksiperbulangraph = [];
         const data_pemasukanperbulangraph = [];
         const label_pemasukanperbulangraph = [];
+    <?php endif; ?>
+
+    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Kasir") : ?>
+        <?php foreach ($transaksiperbulangraph->getResult() as $key => $transaksiperbulangraph) : ?>
+            data_transaksiperbulangraph.push(<?= $transaksiperbulangraph->total_transaksi; ?>);
+            label_transaksiperbulangraph.push('<?= $transaksiperbulangraph->bulan; ?>');
+        <?php endforeach; ?>
         <?php foreach ($pemasukanperbulangraph->getResult() as $key => $pemasukanperbulangraph) : ?>
             data_pemasukanperbulangraph.push(<?= $pemasukanperbulangraph->total_pemasukan; ?>);
             label_pemasukanperbulangraph.push('<?= $pemasukanperbulangraph->bulan; ?>');
@@ -206,6 +227,16 @@
     <?php endif; ?>
 
     <?php if (session()->get('role') == "Admin" || session()->get('role') == "Kasir") : ?>
+        var data_content_transaksiperbulangraph = {
+            labels: label_transaksiperbulangraph,
+            datasets: [{
+                label: 'Transaksi Per Bulan',
+                borderWidth: 2,
+                pointStyle: 'rectRot',
+                fill: true,
+                data: data_transaksiperbulangraph
+            }]
+        }
         var data_content_pemasukanperbulangraph = {
             labels: label_pemasukanperbulangraph,
             datasets: [{
@@ -219,6 +250,40 @@
     <?php endif; ?>
 
     <?php if (session()->get('role') == "Admin" || session()->get('role') == "Kasir") : ?>
+        var chart_transaksiperbulangraph = createChart(document.getElementById('transaksiperbulangraph').getContext('2d'), {
+            type: 'line',
+            data: data_content_transaksiperbulangraph,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                locale: 'id-ID',
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Bulan'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Transaksi Diproses'
+                        }
+                    }
+                },
+                scale: {
+                    ticks: {
+                        precision: 0
+                    }
+                }
+            }
+        })
         var chart_pemasukanperbulangraph = createChart(document.getElementById('pemasukanperbulangraph').getContext('2d'), {
             type: 'line',
             data: data_content_pemasukanperbulangraph,
