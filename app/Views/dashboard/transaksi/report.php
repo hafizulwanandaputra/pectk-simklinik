@@ -146,6 +146,9 @@
 
             // Menambahkan setiap transaksi ke tabel
             data.forEach(function(transaksi, index) {
+                const nama_pasien = transaksi.nama_pasien == null ?
+                    `<em>Anonim</em>` :
+                    transaksi.nama_pasien;
                 const rowspan = (transaksi.detail.layanan.length) + 4;
                 const layanan = transaksi.detail.layanan
                 const obatalkes = transaksi.detail.obatalkes
@@ -159,11 +162,11 @@
                     <tr>
                         <td rowspan="${rowspan}" class="date text-nowrap text-center">${index + 1}</td>
                         <td rowspan="${rowspan}" class="date text-nowrap">${transaksi.no_kwitansi}</td>
-                        <td rowspan="${rowspan}" class="date">${transaksi.kasir}</td>
+                        <td rowspan="${rowspan}">${transaksi.kasir}</td>
                         <td rowspan="${rowspan}" class="date text-nowrap">${no_rm}</td>
-                        <td rowspan="${rowspan}" class="date">${transaksi.nama_pasien}</td>
-                        <td rowspan="${rowspan}" class="date">${transaksi.metode_pembayaran}</td>
-                        <td rowspan="${rowspan}" class="date">${transaksi.dokter}</td>
+                        <td rowspan="${rowspan}">${nama_pasien}</td>
+                        <td rowspan="${rowspan}">${transaksi.metode_pembayaran}</td>
+                        <td rowspan="${rowspan}">${transaksi.dokter}</td>
                     </tr>
                 `;
 
@@ -198,7 +201,7 @@
                     </tr>
                     <tr>
                         <td class="fw-bold">Bank/E-wallet</td>
-                        <td class="fw-bold date text-end">${bank}</td>
+                        <td class="fw-bold text-end">${bank}</td>
                     </tr>
                 `;
                 $('#datatransaksi').append(totalPembayaranRow);

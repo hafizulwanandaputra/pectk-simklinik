@@ -34,6 +34,7 @@ class Transaksi extends Migration
             'nama_pasien' => [
                 'type' => 'VARCHAR',
                 'constraint' => 256,
+                'null' => true,
             ],
             'alamat' => [
                 'type' => 'VARCHAR',

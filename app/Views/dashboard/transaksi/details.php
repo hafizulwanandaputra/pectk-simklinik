@@ -23,7 +23,7 @@
                     <div class="col-lg-4 fw-medium">Nama Pasien</div>
                     <div class="col-lg">
                         <div>
-                            <?= $transaksi['nama_pasien'] ?>
+                            <?= ($transaksi['nama_pasien'] == NULL) ? '<em>Anonim</em>' : $transaksi['nama_pasien']; ?>
                         </div>
                     </div>
                 </div>

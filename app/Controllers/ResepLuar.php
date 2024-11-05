@@ -44,6 +44,7 @@ class ResepLuar extends BaseController
             $limit = $this->request->getGet('limit');
             $offset = $this->request->getGet('offset');
             $status = $this->request->getGet('status');
+            $names = $this->request->getGet('names');
 
             // Menentukan limit dan offset
             $limit = $limit ? intval($limit) : 0;
@@ -56,6 +57,13 @@ class ResepLuar extends BaseController
                 $ResepModel->select('resep.*')->where('status', 1); // Resep aktif
             } elseif ($status === '0') {
                 $ResepModel->select('resep.*')->where('status', 0); // Resep non-aktif
+            }
+
+            // Menerapkan filter names jika disediakan
+            if ($names === '1') {
+                $ResepModel->select('resep.*')->where('nama_pasien IS NOT NULL'); // Pasien dengan nama
+            } elseif ($names === '0') {
+                $ResepModel->select('resep.*')->where('nama_pasien', NULL); // Pasien anonim
             }
 
             // Menerapkan filter pencarian berdasarkan nama pasien atau tanggal resep
@@ -131,7 +139,6 @@ class ResepLuar extends BaseController
             $validation = \Config\Services::validation();
             // Menetapkan aturan validasi dasar
             $validation->setRules([
-                'nama_pasien' => 'required', // Nama pasien
                 'jenis_kelamin' => 'required', // Jenis kelamin
             ]);
 
@@ -140,11 +147,18 @@ class ResepLuar extends BaseController
                 return $this->response->setJSON(['success' => false, 'message' => NULL, 'errors' => $validation->getErrors()]);
             }
 
+            // Atur ke null untuk pasien anonim
+            if ($this->request->getPost('nama_pasien') == '') {
+                $nama_pasien = NULL;
+            } else {
+                $nama_pasien = $this->request->getPost('nama_pasien');
+            }
+
             // Menyiapkan data untuk disimpan
             $data = [
                 'nomor_registrasi' => NULL,
                 'no_rm' => NULL,
-                'nama_pasien' => $this->request->getPost('nama_pasien'),
+                'nama_pasien' => $nama_pasien,
                 'alamat' => $this->request->getPost('alamat'),
                 'telpon' => NULL,
                 'jenis_kelamin' => $this->request->getPost('jenis_kelamin'),
@@ -177,13 +191,19 @@ class ResepLuar extends BaseController
             $validation = \Config\Services::validation();
             // Menetapkan aturan validasi dasar
             $validation->setRules([
-                'nama_pasien' => 'required', // Nama pasien
                 'jenis_kelamin' => 'required', // Jenis kelamin
             ]);
 
             // Memeriksa validasi
             if (!$this->validate($validation->getRules())) {
                 return $this->response->setJSON(['success' => false, 'message' => NULL, 'errors' => $validation->getErrors()]);
+            }
+
+            // Atur ke null untuk pasien anonim
+            if ($this->request->getPost('nama_pasien') == '') {
+                $nama_pasien = NULL;
+            } else {
+                $nama_pasien = $this->request->getPost('nama_pasien');
             }
 
             // Ambil resep luar
@@ -201,7 +221,7 @@ class ResepLuar extends BaseController
                     'id_resep' => $this->request->getPost('id_resep'),
                     'nomor_registrasi' => NULL,
                     'no_rm' => NULL,
-                    'nama_pasien' => $this->request->getPost('nama_pasien'),
+                    'nama_pasien' => $nama_pasien,
                     'alamat' => $this->request->getPost('alamat'),
                     'telpon' => NULL,
                     'jenis_kelamin' => $this->request->getPost('jenis_kelamin'),

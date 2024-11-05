@@ -52,6 +52,7 @@ class Transaksi extends BaseController
             $offset = $this->request->getGet('offset'); // Offset untuk pagination
             $status = $this->request->getGet('status'); // Status transaksi
             $jenis = $this->request->getGet('jenis'); // Status transaksi
+            $names = $this->request->getGet('names');
             $kasir = $this->request->getGet('kasir'); // Status transaksi
 
             // Mengubah limit dan offset menjadi integer, jika tidak ada, set ke 0
@@ -76,6 +77,13 @@ class Transaksi extends BaseController
                 $TransaksiModel->where('dokter', 'Resep Luar'); // Resep Luar
             } elseif ($jenis === 'Resep Dokter') {
                 $TransaksiModel->where('dokter !=', 'Resep Luar'); // Resep Dokter
+            }
+
+            // Menerapkan filter names jika disediakan
+            if ($names === '1') {
+                $TransaksiModel->where('nama_pasien IS NOT NULL'); // Pasien dengan nama
+            } elseif ($names === '0') {
+                $TransaksiModel->where('nama_pasien', NULL); // Pasien anonim
             }
 
             // Menerapkan filter pencarian berdasarkan nama pasien, kasir, atau tanggal transaksi
@@ -257,10 +265,16 @@ class Transaksi extends BaseController
                     continue; // Lewati resep yang sudah terpakai
                 }
 
+                if ($resep['nama_pasien'] == NULL) {
+                    $nama_pasien = 'Anonim';
+                } else {
+                    $nama_pasien = $resep['nama_pasien'];
+                }
+
                 // Menambahkan opsi ke dalam array
                 $options[] = [
                     'value' => $resep['id_resep'], // Nilai untuk opsi
-                    'text'  => $resep['nama_pasien'] . ' (' . $resep['tanggal_lahir'] . ')' // Teks untuk opsi
+                    'text'  => $nama_pasien . ' (ID ' . $resep['id_resep'] . ' - '  . $resep['tanggal_lahir'] . ')' // Teks untuk opsi
                 ];
             }
 
@@ -1766,12 +1780,15 @@ class Transaksi extends BaseController
                     // Kondisikan jika ada resep luar
                     $no_rm = ($list['no_rm'] == NULL) ? '-' : $list['no_rm'];
 
+                    // Kondisikan jika nama pasien adalah anonim atau bukan
+                    $nama_pasien = ($list['nama_pasien'] == NULL) ? '-' : $list['nama_pasien'];
+
                     // Isi data transaksi utama
                     $sheet->setCellValue('A' . $column, $nomor++);
                     $sheet->setCellValue('B' . $column, $list['no_kwitansi']);
                     $sheet->setCellValue('C' . $column, $list['kasir']);
                     $sheet->setCellValue('D' . $column, $no_rm);
-                    $sheet->setCellValue('E' . $column, $list['nama_pasien']);
+                    $sheet->setCellValue('E' . $column, $nama_pasien);
                     $sheet->setCellValue('F' . $column, $list['metode_pembayaran']);
                     $sheet->setCellValue('G' . $column, $list['dokter']);
 

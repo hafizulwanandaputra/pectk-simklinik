@@ -30,7 +30,7 @@
                 <div class="col-lg-3 fw-medium">Nama Pasien</div>
                 <div class="col-lg">
                     <div class="date">
-                        <?= $resep['nama_pasien'] ?>
+                        <?= ($resep['nama_pasien'] == NULL) ? '<em>Anonim</em>' : $resep['nama_pasien']; ?>
                     </div>
                 </div>
             </div>

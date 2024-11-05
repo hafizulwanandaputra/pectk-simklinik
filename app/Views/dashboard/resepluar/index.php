@@ -15,9 +15,14 @@
 <main class="col-md-9 ms-sm-auto col-lg-10 px-3 px-md-4 pt-3">
     <div class="d-flex flex-column flex-lg-row mb-1 gap-2 mb-3">
         <select id="statusFilter" class="form-select form-select-sm w-auto rounded-3">
-            <option value="">Semua</option>
+            <option value="">Semua Status Proses</option>
             <option value="1">Diproses</option>
             <option value="0">Belum Diproses</option>
+        </select>
+        <select id="namesFilter" class="form-select form-select-sm w-auto rounded-3">
+            <option value="">Semua Nama</option>
+            <option value="1">Dengan Nama</option>
+            <option value="0">Anonim</option>
         </select>
         <div class="input-group input-group-sm flex-fill">
             <input type="search" id="searchInput" class="form-control rounded-start-3" placeholder="Cari pasien dan tanggal resep...">
@@ -81,7 +86,7 @@
                     <input type="hidden" id="id_resep" name="id_resep">
                     <div class="form-floating mb-1 mt-1">
                         <input type="text" class="form-control" autocomplete="off" dir="auto" placeholder="nama_pasien" id="nama_pasien" name="nama_pasien">
-                        <label for="nama_pasien">Nama Pasien*</label>
+                        <label for="nama_pasien">Nama Pasien</label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="mt-1 mb-1 row">
@@ -166,6 +171,7 @@
         const search = $('#searchInput').val();
         const offset = (currentPage - 1) * limit;
         const status = $('#statusFilter').val();
+        const names = $('#namesFilter').val();
 
         // Show the spinner
         $('#loadingSpinner').show();
@@ -176,7 +182,8 @@
                     search: search,
                     limit: limit,
                     offset: offset,
-                    status: status
+                    status: status,
+                    names: names
                 }
             });
 
@@ -193,6 +200,9 @@
                 );
             } else {
                 data.resep.forEach(function(resep) {
+                    const nama_pasien = resep.nama_pasien == null ?
+                        `<em>Anonim</em>` :
+                        resep.nama_pasien;
                     const jumlah_resep = parseInt(resep.jumlah_resep);
                     const total_biaya = parseInt(resep.total_biaya);
                     const statusBadge = resep.status == '1' ?
@@ -206,7 +216,7 @@
                 <div class="d-flex">
                     <div class="align-self-center ps-2 w-100">
                         <h5 class="card-title">
-                            ${resep.nama_pasien}
+                            ${nama_pasien}
                         </h5>
                         <p class="card-text">
                             <small class="date">
@@ -297,7 +307,7 @@
         }
     });
 
-    $('#statusFilter').on('change', function() {
+    $('#statusFilter, #namesFilter').on('change', function() {
         $('#resepContainer').empty();
         for (let i = 0; i < limit; i++) {
             $('#resepContainer').append(placeholder);
@@ -360,8 +370,12 @@
             resepId = $(this).data('id');
             resepName = $(this).data('name');
             resepDate = $(this).data('date');
+            // Check if transaksiName is null or undefined
+            const nama_pasien = (resepName === null || resepName === undefined || resepName === 'null') ?
+                'yang anonim ini' :
+                `dari "${resepName}"`;
             $('[data-bs-toggle="tooltip"]').tooltip('hide');
-            $('#deleteMessage').html(`Hapus resep untuk "` + resepName + `"?`);
+            $('#deleteMessage').html(`Hapus resep ${nama_pasien}?`);
             $('#deleteSubmessage').html(`Tanggal Resep: ` + resepDate);
             $('#deleteModal').modal('show');
         });

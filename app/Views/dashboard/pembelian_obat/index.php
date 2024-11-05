@@ -15,7 +15,7 @@
 <main class="col-md-9 ms-sm-auto col-lg-10 px-3 px-md-4 pt-3">
     <div class="d-flex flex-column flex-lg-row mb-1 gap-2 mb-3">
         <select id="statusFilter" class="form-select form-select-sm w-auto rounded-3">
-            <option value="">Semua</option>
+            <option value="">Semua Status Terima</option>
             <option value="1">Diterima</option>
             <option value="0">Belum Diterima</option>
         </select>

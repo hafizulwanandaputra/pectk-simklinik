@@ -14,20 +14,25 @@
 <?= $this->section('content'); ?>
 <main class="col-md-9 ms-sm-auto col-lg-10 px-3 px-md-4 pt-3">
     <div class="d-flex flex-column flex-lg-row mb-1 gap-2 mb-2">
-        <select id="statusFilter" class="form-select form-select-sm w-auto rounded-3">
-            <option value="">Semua</option>
+        <select id="statusFilter" class="form-select form-select-sm w-auto rounded-3 flex-fill">
+            <option value="">Semua Transaksi</option>
             <option value="1">Diproses</option>
             <option value="0">Belum Diproses</option>
         </select>
-        <select id="jenisFilter" class="form-select form-select-sm w-auto rounded-3">
-            <option value="">Semua</option>
+        <select id="jenisFilter" class="form-select form-select-sm w-auto rounded-3 flex-fill">
+            <option value="">Semua Resep</option>
             <option value="Resep Dokter">Resep Dokter</option>
             <option value="Resep Luar">Resep Luar</option>
         </select>
-        <select id="kasirFilter" class="form-select form-select-sm w-auto rounded-3 flex-fill">
-            <option value="">Semua</option>
+        <select id="namesFilter" class="form-select form-select-sm w-auto rounded-3 flex-fill">
+            <option value="">Semua Nama</option>
+            <option value="1">Dengan Nama</option>
+            <option value="0">Anonim</option>
         </select>
     </div>
+    <select id="kasirFilter" class="form-select form-select-sm rounded-3 mb-2">
+        <option value="">Semua Dokter</option>
+    </select>
     <div class="input-group input-group-sm mb-3">
         <input type="search" id="searchInput" class="form-control rounded-start-3" placeholder="Cari pasien dan tanggal transaksi...">
         <button class="btn btn-success btn-sm bg-gradient" type="button" id="refreshButton"><i class="fa-solid fa-sync"></i></button>
@@ -258,6 +263,7 @@
         const offset = (currentPage - 1) * limit;
         const status = $('#statusFilter').val();
         const jenis = $('#jenisFilter').val();
+        const names = $('#namesFilter').val();
         const kasir = $('#kasirFilter').val();
 
         // Show the spinner
@@ -271,6 +277,7 @@
                     offset: offset,
                     status: status,
                     jenis: jenis,
+                    names: names,
                     kasir: kasir
                 }
             });
@@ -288,6 +295,9 @@
                 );
             } else {
                 data.transaksi.forEach(function(transaksi) {
+                    const nama_pasien = transaksi.nama_pasien == null ?
+                        `<em>Anonim</em>` :
+                        transaksi.nama_pasien;
                     const total_pembayaran = parseInt(transaksi.total_pembayaran);
                     const statusBadge = transaksi.lunas == '1' ?
                         `<span class="badge bg-success bg-gradient">Transaksi Diproses</span>` :
@@ -302,7 +312,7 @@
                 <div class="d-flex">
                     <div class="align-self-center ps-2 w-100">
                         <h5 class="card-title">
-                            ${transaksi.nama_pasien} ${resepluar}
+                            ${nama_pasien} ${resepluar}
                         </h5>
                         <h6 class="card-subtitle mb-2">
                             ${transaksi.kasir}
@@ -396,7 +406,7 @@
         }
     });
 
-    $('#statusFilter, #jenisFilter, #kasirFilter').on('change', function() {
+    $('#statusFilter, #jenisFilter, #namesFilter, #kasirFilter').on('change', function() {
         $('#transaksiContainer').empty();
         for (let i = 0; i < limit; i++) {
             $('#transaksiContainer').append(placeholder);
@@ -458,8 +468,12 @@
             transaksiId = $(this).data('id');
             transaksiName = $(this).data('name');
             transaksiDate = $(this).data('date');
+            // Check if transaksiName is null or undefined
+            const nama_pasien = (transaksiName === null || transaksiName === undefined || transaksiName === 'null') ?
+                'yang anonim ini' :
+                `dari "${transaksiName}"`;
             $('[data-bs-toggle="tooltip"]').tooltip('hide');
-            $('#deleteMessage').html(`Hapus transaksi dari "` + transaksiName + `"?`);
+            $('#deleteMessage').html(`Hapus transaksi ${nama_pasien}?`);
             $('#deleteSubmessage').html(`Tanggal Transaksi: ` + transaksiDate);
             $('#deleteModal').modal('show');
         });

@@ -14,20 +14,20 @@
 <?= $this->section('content'); ?>
 <main class="col-md-9 ms-sm-auto col-lg-10 px-3 px-md-4 pt-3">
     <div class="d-flex flex-column flex-lg-row mb-1 gap-2 mb-2">
-        <select id="statusFilter" class="form-select form-select-sm w-auto rounded-3">
-            <option value="">Semua</option>
+        <select id="statusFilter" class="form-select form-select-sm w-auto rounded-3 flex-fill">
+            <option value="">Semua Status Proses</option>
             <option value="1">Diproses</option>
             <option value="0">Belum Diproses</option>
         </select>
-        <select id="confirmedFilter" class="form-select form-select-sm w-auto rounded-3">
-            <option value="">Semua</option>
+        <select id="confirmedFilter" class="form-select form-select-sm w-auto rounded-3 flex-fill">
+            <option value="">Semua Status Konfirmasi</option>
             <option value="1">Dikonfirmasi</option>
             <option value="0">Belum Dikonfirmasi</option>
         </select>
-        <select id="dokterFilter" class="form-select form-select-sm w-auto rounded-3 flex-fill">
-            <option value="">Semua Dokter</option>
-        </select>
     </div>
+    <select id="dokterFilter" class="form-select form-select-sm rounded-3 mb-2">
+        <option value="">Semua Dokter</option>
+    </select>
     <div class="input-group input-group-sm mb-3">
         <input type="search" id="searchInput" class="form-control rounded-start-3" placeholder="Cari pasien dan tanggal resep...">
         <button class="btn btn-success btn-sm bg-gradient rounded-end-3" type="button" id="refreshButton"><i class="fa-solid fa-sync"></i></button>

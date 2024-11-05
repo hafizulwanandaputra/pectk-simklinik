@@ -87,7 +87,7 @@ $tanggal = Time::parse($transaksi['tgl_transaksi']);
                         <div>Nama Pasien:</div>
                     </td>
                     <td style="width: 35%; vertical-align: top; padding: 0;">
-                        <div><?= $transaksi['nama_pasien'] ?></div>
+                        <div><?= ($transaksi['nama_pasien'] == NULL) ? '<em>Anonim</em>' : $transaksi['nama_pasien']; ?></div>
                     </td>
                     <td style="width: 15%; vertical-align: top; padding: 0;">
                         <div>Tanggal/Waktu:</div>

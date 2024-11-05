@@ -72,7 +72,7 @@ $tanggal_lahir = Time::parse($resep['tanggal_lahir']);
                 <tbody style="vertical-align: middle;">
                     <tr>
                         <td style="height: 0.5cm;">
-                            <h2 style="text-align: center;"><?= $resep['nama_pasien'] ?></h2>
+                            <?= ($resep['nama_pasien'] == NULL) ? '<em>PASIEN ANONIM</em>' : $resep['nama_pasien']; ?>
                         </td>
                     </tr>
                 </tbody>
