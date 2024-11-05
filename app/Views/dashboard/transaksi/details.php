@@ -215,7 +215,7 @@
 
     <div id="prosesTransaksi">
         <hr>
-        <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
+        <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-3">
             <button class="btn btn-body rounded-3 bg-gradient" type="button" id="printBtn" onclick="window.open(`<?= base_url('/transaksi/struk/' . $transaksi['id_transaksi']) ?>`)" disabled><i class="fa-solid fa-print"></i> Cetak Struk/Kwitansi</button>
             <button class="btn btn-danger rounded-3 bg-gradient" type="button" id="cancelBtn" data-id="<?= $transaksi['id_transaksi'] ?>" disabled><i class="fa-solid fa-xmark"></i> Batalkan Transaksi</button>
             <button class="btn btn-success rounded-3 bg-gradient" type="button" id="processBtn" data-id="<?= $transaksi['id_transaksi'] ?>" disabled><i class="fa-solid fa-money-bills"></i> Proses Transaksi</button>
