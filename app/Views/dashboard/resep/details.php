@@ -181,13 +181,14 @@
     <div class="mb-3">
         <hr>
         <?php if (session()->get('role') != 'Dokter') : ?>
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-2">
+            <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-2">
                 <button class="btn btn-body rounded-3 bg-gradient" type="button" id="printBtn1" onclick="window.open(`<?= base_url('/resep/etiket-dalam/' . $resep['id_resep']) ?>`)" disabled><i class="fa-solid fa-print"></i> Cetak Etiket Obat Dalam</button>
                 <button class="btn btn-body rounded-3 bg-gradient" type="button" id="printBtn2" onclick="window.open(`<?= base_url('/resep/etiket-luar/' . $resep['id_resep']) ?>`)" disabled><i class="fa-solid fa-print"></i> Cetak Etiket Obat Luar</button>
+                <button class="btn btn-body rounded-3 bg-gradient" type="button" id="printBtn3" onclick="window.open(`<?= base_url('/resep/print/' . $resep['id_resep']) ?>`)" disabled><i class="fa-solid fa-print"></i> Cetak Resep</button>
             </div>
         <?php endif; ?>
         <?php if (session()->get('role') != 'Apoteker') : ?>
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-2">
+            <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-2">
                 <button class="btn btn-danger rounded-3 bg-gradient" type="button" id="cancelConfirmBtn" disabled><i class="fa-solid fa-xmark"></i> Batalkan Konfirmasi</button>
                 <button class="btn btn-success rounded-3 bg-gradient" type="button" id="confirmBtn" disabled><i class="fa-solid fa-check-double"></i> Konfirmasi</button>
             </div>
@@ -387,9 +388,11 @@
                 if (hasExternalMedicine) {
                     $('#printBtn2').prop('disabled', false);
                 }
+                $('#printBtn3').prop('disabled', false);
             } else {
                 $('#printBtn1').prop('disabled', true);
                 $('#printBtn2').prop('disabled', true);
+                $('#printBtn3').prop('disabled', true);
             }
             const totalHargaElement = `Rp${totalHarga.toLocaleString('id-ID')}`;
             const jumlahResepElement = `${jumlahResep.toLocaleString('id-ID')}`;

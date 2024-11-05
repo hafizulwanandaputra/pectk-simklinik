@@ -1082,4 +1082,60 @@ class Resep extends BaseController
             ]);
         }
     }
+
+    public function print($id)
+    {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+            // ambil resep berdasarkan ID
+            $resep = $this->ResepModel
+                ->where('nomor_registrasi IS NOT NULL')
+                ->where('no_rm IS NOT NULL')
+                ->where('telpon IS NOT NULL')
+                ->where('tempat_lahir IS NOT NULL')
+                ->where('dokter !=', 'Resep Luar')
+                ->where('confirmed', 1)
+                ->find($id);
+
+            // Mengambil detail resep berdasarkan id_resep yang diberikan
+            $detailresep = $this->DetailResepModel
+                ->join('resep', 'resep.id_resep = detail_resep.id_resep', 'inner') // Bergabung dengan tabel resep
+                ->where('detail_resep.id_resep', $id)
+                ->where('resep.nomor_registrasi IS NOT NULL')
+                ->where('resep.no_rm IS NOT NULL')
+                ->where('resep.telpon IS NOT NULL')
+                ->where('resep.tempat_lahir IS NOT NULL')
+                ->where('resep.dokter !=', 'Resep Luar')
+                ->orderBy('id_detail_resep', 'ASC') // Mengurutkan berdasarkan id_detail_resep
+                ->findAll();
+
+            // Memeriksa apakah resep tidak kosong
+            if (!empty($resep)) {
+                // Menyiapkan data untuk tampilan
+                $data = [
+                    'resep' => $resep,
+                    'detailresep' => $detailresep,
+                    'title' => 'Struk Resep Dokter ' . $resep['nama_pasien'] . ' (' . $id . ') - ' . $this->systemName,
+                    'headertitle' => 'Struk Resep Dokter',
+                    'agent' => $this->request->getUserAgent() // Menyimpan informasi tentang user agent
+                ];
+                // return view('dashboard/resep/struk', $data);
+                // die;
+                // Menghasilkan dan menampilkan struk transaksi dalam format PDF
+                $dompdf = new Dompdf();
+                $html = view('dashboard/resep/struk', $data);
+                $dompdf->loadHtml($html);
+                $dompdf->render();
+                $dompdf->stream('resep-id-' . $resep['id_resep'] . '-' . $resep['tanggal_resep'] . '-' . urlencode($resep['nama_pasien']) . '.pdf', [
+                    'Attachment' => FALSE // Mengunduh PDF atau membuka di browser
+                ]);
+            } else {
+                // Menampilkan halaman tidak ditemukan jika resep tidak ditemukan
+                throw PageNotFoundException::forPageNotFound();
+            }
+        } else {
+            // Menampilkan halaman tidak ditemukan jika peran tidak diizinkan
+            throw PageNotFoundException::forPageNotFound();
+        }
+    }
 }

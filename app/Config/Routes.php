@@ -76,6 +76,7 @@ $routes->get('/(?i)resep/(?i)dokterlist', 'Resep::dokterlist');
 $routes->get('/(?i)resep/(?i)listresep', 'Resep::listresep');
 $routes->get('/(?i)resep/(?i)pasienlist', 'Resep::pasienlist');
 $routes->get('/(?i)resep/(?i)resep/(:any)', 'Resep::resep/$1');
+$routes->get('/(?i)resep/(?i)print/(:any)', 'Resep::print/$1');
 $routes->post('/(?i)resep/(?i)create', 'Resep::create');
 $routes->post('/(?i)resep/(?i)confirm/(:any)', 'Resep::confirm/$1');
 $routes->post('/(?i)resep/(?i)cancel/(:any)', 'Resep::cancel/$1');
