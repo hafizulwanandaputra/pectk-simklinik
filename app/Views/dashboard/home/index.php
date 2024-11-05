@@ -92,7 +92,7 @@
                     </div>
                 </div>
                 <div class="col">
-                    <div class="card bg-body-tertiary w-100 rounded-3 mb-2">
+                    <div class="card bg-body-tertiary w-100 rounded-3">
                         <div class="card-header w-100 text-truncate">Transaksi Per Bulan</div>
                         <div class="card-body">
                             <div style="width: 100% !important;height: 400px !important;">
@@ -102,7 +102,7 @@
                     </div>
                 </div>
                 <div class="col">
-                    <div class="card bg-body-tertiary w-100 rounded-3 mb-2">
+                    <div class="card bg-body-tertiary w-100 rounded-3">
                         <div class="card-header w-100 text-truncate">Pemasukan Per Bulan</div>
                         <div class="card-body">
                             <div style="width: 100% !important;height: 400px !important;">
