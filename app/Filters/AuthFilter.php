@@ -14,6 +14,7 @@ class AuthFilter implements FilterInterface
         $db = db_connect();
         $token = session()->get('session_token');
         $currentIP = $request->getIPAddress();
+        $currentUserAgent = service('request')->getUserAgent()->getAgentString();
 
         // Get session data based on session token
         $session = $db->table('user_sessions')
@@ -22,14 +23,22 @@ class AuthFilter implements FilterInterface
             ->getRowArray();
 
         if ($session) {
-            // Check if IP has changed
+            // Check if IP or user agent has changed
+            $updateData = [];
             if ($session['ip_address'] !== $currentIP) {
-                // Update the IP in the database
+                $updateData['ip_address'] = $currentIP;
+                session()->set('ip_address', $currentIP);
+            }
+            if ($session['user_agent'] !== $currentUserAgent) {
+                $updateData['user_agent'] = $currentUserAgent;
+                session()->set('user_agent', $currentUserAgent);
+            }
+
+            // Update the session record if either IP or user agent has changed
+            if (!empty($updateData)) {
                 $db->table('user_sessions')
                     ->where('session_token', $token)
-                    ->update(['ip_address' => $currentIP]);
-                // Update the IP in the session
-                session()->set('ip_address', $currentIP);
+                    ->update($updateData);
             }
 
             // Check for session validity
