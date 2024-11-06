@@ -399,7 +399,7 @@
 
     async function fetchResepOptions() {
         try {
-            <?php if ($transaksi['nomor_registrasi'] == NULL || $transaksi['no_rm'] == NULL || $transaksi['tanggal_lahir'] == NULL) : ?>
+            <?php if ($transaksi['nomor_registrasi'] == NULL || $transaksi['no_rm'] == NULL) : ?>
                 const url = `<?= base_url('transaksi/reseplistexternal/') . $transaksi['id_transaksi'] . '/' . $transaksi['id_resep'] ?>`;
             <?php else : ?>
                 const url = `<?= base_url('transaksi/reseplist/') . $transaksi['id_transaksi'] . '/' . $transaksi['nomor_registrasi'] ?>`;
