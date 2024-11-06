@@ -10,36 +10,44 @@ class AuthFilter implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {
-        // Do something here
+        // Connect to the database and retrieve session token
         $db = db_connect();
         $token = session()->get('session_token');
-        $query = $db->table('user_sessions')
-            ->where('id_user', session()->get('id_user'))
-            ->where('session_token', $token)
-            ->get();
-        // Memeriksa sesi berdasarkan token
+        $currentIP = $request->getIPAddress();
+
+        // Get session data based on session token
         $session = $db->table('user_sessions')
             ->where('session_token', $token)
             ->get()
             ->getRowArray();
-        if (session()->get('log') != true || $query->getNumRows() === 0 || strtotime($session['expires_at']) < time()) {
-            if ($session) {
+
+        if ($session) {
+            // Check if IP has changed
+            if ($session['ip_address'] !== $currentIP) {
+                // Update the IP in the database
+                $db->table('user_sessions')
+                    ->where('session_token', $token)
+                    ->update(['ip_address' => $currentIP]);
+            }
+
+            // Check for session validity
+            if (session()->get('log') != true || strtotime($session['expires_at']) < time()) {
                 $db->table('user_sessions')
                     ->where('session_token', $token)
                     ->delete();
                 $db->query('ALTER TABLE `user_sessions` auto_increment = 1');
-            }
-            session()->remove('log');
-            session()->remove('session_token');
-            $data = array(
-                'redirect' => urlencode(uri_string())
-            );
-            if (uri_string() == 'home' || uri_string() == '') {
-                session()->setFlashdata('url', base_url('home'));
-                return redirect()->to(base_url());
-            } else {
-                session()->setFlashdata('url', http_build_query($data));
-                return redirect()->to(base_url('/?' . session()->getFlashdata('url')));
+                session()->remove('log');
+                session()->remove('session_token');
+
+                // Handle redirection
+                $data = array('redirect' => urlencode(uri_string()));
+                if (uri_string() == 'home' || uri_string() == '') {
+                    session()->setFlashdata('url', base_url('home'));
+                    return redirect()->to(base_url());
+                } else {
+                    session()->setFlashdata('url', http_build_query($data));
+                    return redirect()->to(base_url('/?' . session()->getFlashdata('url')));
+                }
             }
         }
     }
