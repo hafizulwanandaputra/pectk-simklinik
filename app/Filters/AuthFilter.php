@@ -28,6 +28,8 @@ class AuthFilter implements FilterInterface
                 $db->table('user_sessions')
                     ->where('session_token', $token)
                     ->update(['ip_address' => $currentIP]);
+                // Update the IP in the session
+                session()->set('ip_address', $currentIP);
             }
 
             // Check for session validity
