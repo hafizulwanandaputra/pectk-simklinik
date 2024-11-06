@@ -320,7 +320,7 @@
                         <p class="card-text">
                             <small class="date">
                                 ID Transaksi: ${transaksi.id_transaksi}<br>
-                                Nomor Kwitansi: ${transaksi.no_kwitansi}<br>
+                                Nomor Kuitansi: ${transaksi.no_kwitansi}<br>
                                 Tanggal dan Waktu Transaksi: ${transaksi.tgl_transaksi}<br>
                                 Total Pembayaran: Rp${total_pembayaran.toLocaleString('id-ID')}<br>
                                 Metode Pembayaran: ${metode_pembayaran}<br>

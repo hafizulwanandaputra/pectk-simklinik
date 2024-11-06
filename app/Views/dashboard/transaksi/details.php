@@ -54,7 +54,7 @@
             </div>
             <div class="col-lg-6" style="font-size: 9pt;">
                 <div class="mb-2 row">
-                    <div class="col-lg-4 fw-medium">Nomor Kwitansi</div>
+                    <div class="col-lg-4 fw-medium">Nomor Kuitansi</div>
                     <div class="col-lg">
                         <div class="date">
                             <?= $transaksi['no_kwitansi'] ?>
@@ -216,7 +216,7 @@
     <div id="prosesTransaksi">
         <hr>
         <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-3">
-            <button class="btn btn-body rounded-3 bg-gradient" type="button" id="printBtn" onclick="window.open(`<?= base_url('/transaksi/struk/' . $transaksi['id_transaksi']) ?>`)" disabled><i class="fa-solid fa-print"></i> Cetak Struk/Kwitansi</button>
+            <button class="btn btn-body rounded-3 bg-gradient" type="button" id="printBtn" onclick="window.open(`<?= base_url('/transaksi/struk/' . $transaksi['id_transaksi']) ?>`)" disabled><i class="fa-solid fa-print"></i> Cetak Struk/Kuitansi</button>
             <button class="btn btn-danger rounded-3 bg-gradient" type="button" id="cancelBtn" data-id="<?= $transaksi['id_transaksi'] ?>" disabled><i class="fa-solid fa-xmark"></i> Batalkan Transaksi</button>
             <button class="btn btn-success rounded-3 bg-gradient" type="button" id="processBtn" data-id="<?= $transaksi['id_transaksi'] ?>" disabled><i class="fa-solid fa-money-bills"></i> Proses Transaksi</button>
         </div>
