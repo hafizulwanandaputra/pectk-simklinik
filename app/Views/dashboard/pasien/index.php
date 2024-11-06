@@ -53,9 +53,9 @@
     `;
 
     // Fungsi untuk menghitung usia berdasarkan tanggal lahir
-    function hitungUsia(tanggalLahir) {
+    function hitungUsia(tanggalLahir, tanggalRegistrasi) {
         const lahir = new Date(tanggalLahir); // Mengubah tanggal lahir menjadi objek Date
-        const sekarang = new Date(); // Mendapatkan tanggal sekarang
+        const sekarang = new Date(tanggalRegistrasi); // Mendapatkan tanggal registrasi
         let usia = sekarang.getFullYear() - lahir.getFullYear(); // Menghitung usia berdasarkan tahun
 
         // Menghitung selisih bulan dan hari
@@ -119,7 +119,7 @@
                 const jenis_kelamin = pasien.jenis_kelamin === "L" ? "Laki-laki" : "Perempuan";
                 // Gunakan pesan jika tidak ada nomor telepon
                 const telpon = pasien.telpon ? pasien.telpon : "<em>Tidak ada</em>";
-                const usia = hitungUsia(pasien.tanggal_lahir); // Menghitung usia pasien
+                const usia = hitungUsia(pasien.tanggal_lahir, pasien.tanggal_registrasi); // Menghitung usia pasien
 
                 // Membuat elemen baris untuk setiap pasien
                 const pasienElement = `
