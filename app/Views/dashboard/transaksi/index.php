@@ -31,7 +31,7 @@
         </select>
     </div>
     <select id="kasirFilter" class="form-select form-select-sm rounded-3 mb-2">
-        <option value="">Semua Dokter</option>
+        <option value="">Semua Petugas Kasir</option>
     </select>
     <div class="input-group input-group-sm mb-3">
         <input type="search" id="searchInput" class="form-control rounded-start-3" placeholder="Cari pasien dan tanggal transaksi...">
