@@ -14,6 +14,17 @@
         <h1 class="h2 me-3"><i class="fa-regular fa-face-smile-beam"></i></h1>
         <h1 class="h2"><?= $txtgreeting . ', ' . session()->get('fullname') . '!'; ?></h1>
     </div>
+    <div class="alert alert-warning rounded-3" role="alert">
+        <div class="d-flex align-items-start">
+            <div style="width: 12px; text-align: center;">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <div class="w-100 ms-3">
+                <p>Pastkan Anda masuk dengan akun yang <strong>benar-benar milik Anda</strong>!</p>
+                <button class="btn btn-danger btn-sm rounded-3 bg-gradient" type="button" id="logoutLink">Keluar jika akun ini bukan milik Anda</button>
+            </div>
+        </div>
+    </div>
     <?php if (session()->get('role') == "Admin" || session()->get('role') == "Apoteker" || session()->get('role') == "Dokter") : ?>
         <fieldset class="border rounded-3 px-2 py-0 mb-3">
             <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Farmasi</legend>
@@ -158,6 +169,14 @@
     $(document).ready(function() {
         // Menyembunyikan spinner loading saat dokumen sudah siap
         $('#loadingSpinner').hide(); // Menyembunyikan elemen spinner loading
+    });
+</script>
+<?= $this->endSection(); ?>
+<?= $this->section('javascript'); ?>
+<script>
+    $('#logoutLink').on('click', function(e) {
+        e.preventDefault();
+        $('#logoutModal').modal('show');
     });
 </script>
 <?= $this->endSection(); ?>
