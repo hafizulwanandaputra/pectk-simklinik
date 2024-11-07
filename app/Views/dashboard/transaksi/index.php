@@ -343,11 +343,6 @@
                 if (currentPage > 1) {
                     $('#paginationNav ul').append(`
                     <li class="page-item">
-                        <a class="page-link bg-gradient date" href="#" data-page="1">
-                            <i class="fa-solid fa-angles-left"></i>
-                        </a>
-                    </li>
-                    <li class="page-item">
                         <a class="page-link bg-gradient date" href="#" data-page="${currentPage - 1}">
                             <i class="fa-solid fa-angle-left"></i>
                         </a>
@@ -355,14 +350,14 @@
                 `);
                 }
 
-                if (totalPages > 3) {
+                if (totalPages > 5) {
                     $('#paginationNav ul').append(`
                     <li class="page-item ${currentPage === 1 ? 'active' : ''}">
                         <a class="page-link bg-gradient date" href="#" data-page="1">1</a>
                     </li>
                 `);
 
-                    if (currentPage > 2) {
+                    if (currentPage > 3) {
                         $('#paginationNav ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">...</span></li>');
                     }
 
@@ -374,7 +369,7 @@
                     `);
                     }
 
-                    if (currentPage < totalPages - 1) {
+                    if (currentPage < totalPages - 2) {
                         $('#paginationNav ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">...</span></li>');
                     }
 
@@ -399,11 +394,6 @@
                     <li class="page-item">
                         <a class="page-link bg-gradient date" href="#" data-page="${currentPage + 1}">
                             <i class="fa-solid fa-angle-right"></i>
-                        </a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link bg-gradient date" href="#" data-page="${totalPages}">
-                            <i class="fa-solid fa-angles-right"></i>
                         </a>
                     </li>
                 `);
