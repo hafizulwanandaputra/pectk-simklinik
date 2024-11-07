@@ -313,7 +313,7 @@
                 `);
 
                     if (currentPage > 3) {
-                        $('#paginationNav ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">...</span></li>');
+                        $('#paginationNav ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">…</span></li>');
                     }
 
                     for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
@@ -325,7 +325,7 @@
                     }
 
                     if (currentPage < totalPages - 2) {
-                        $('#paginationNav ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">...</span></li>');
+                        $('#paginationNav ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">…</span></li>');
                     }
 
                     $('#paginationNav ul').append(`
