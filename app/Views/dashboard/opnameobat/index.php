@@ -150,6 +150,7 @@
                     $('#opnameObatContainer').append(opnameObatElement);
                 });
 
+                // Pagination logic with ellipsis for more than 3 pages
                 const totalPages = Math.ceil(data.total / limit);
                 $('#paginationNav ul').empty();
 
@@ -168,12 +169,43 @@
                 `);
                 }
 
-                for (let i = 1; i <= totalPages; i++) {
+                if (totalPages > 3) {
                     $('#paginationNav ul').append(`
-                    <li class="page-item ${i === currentPage ? 'active' : ''}">
-                        <a class="page-link bg-gradient date" href="#" data-page="${i}">${i}</a>
+                    <li class="page-item ${currentPage === 1 ? 'active' : ''}">
+                        <a class="page-link bg-gradient date" href="#" data-page="1">1</a>
                     </li>
                 `);
+
+                    if (currentPage > 2) {
+                        $('#paginationNav ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">...</span></li>');
+                    }
+
+                    for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
+                        $('#paginationNav ul').append(`
+                        <li class="page-item ${i === currentPage ? 'active' : ''}">
+                            <a class="page-link bg-gradient date" href="#" data-page="${i}">${i}</a>
+                        </li>
+                    `);
+                    }
+
+                    if (currentPage < totalPages - 1) {
+                        $('#paginationNav ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">...</span></li>');
+                    }
+
+                    $('#paginationNav ul').append(`
+                    <li class="page-item ${currentPage === totalPages ? 'active' : ''}">
+                        <a class="page-link bg-gradient date" href="#" data-page="${totalPages}">${totalPages}</a>
+                    </li>
+                `);
+                } else {
+                    // Show all pages if total pages are 3 or fewer
+                    for (let i = 1; i <= totalPages; i++) {
+                        $('#paginationNav ul').append(`
+                        <li class="page-item ${i === currentPage ? 'active' : ''}">
+                            <a class="page-link bg-gradient date" href="#" data-page="${i}">${i}</a>
+                        </li>
+                    `);
+                    }
                 }
 
                 if (currentPage < totalPages) {

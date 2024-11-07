@@ -301,42 +301,42 @@
                         transaksi.metode_pembayaran + bank;
                     const resepluar = transaksi.id_resep ? `<span class="badge bg-secondary bg-gradient">Resep Luar</span>` : ``;
                     const transaksiElement = `
-            <li class="list-group-item bg-body-tertiary pb-3 pt-3">
-                <div class="d-flex">
-                    <div class="align-self-center ps-2 w-100">
-                        <h5 class="card-title">
-                            ${nama_pasien} ${resepluar}
-                        </h5>
-                        <h6 class="card-subtitle mb-2">
-                            ${transaksi.kasir}
-                        </h6>
-                        <p class="card-text">
-                            <small class="date">
-                                ID Transaksi: ${transaksi.id_transaksi}<br>
-                                Nomor Kuitansi: ${transaksi.no_kwitansi}<br>
-                                Tanggal dan Waktu Transaksi: ${transaksi.tgl_transaksi}<br>
-                                Total Pembayaran: Rp${total_pembayaran.toLocaleString('id-ID')}<br>
-                                Metode Pembayaran: ${metode_pembayaran}<br>
-                                ${statusBadge}
-                            </small>
-                        </p>
-                    </div>
-                </div>
-                <hr>
-                <div class="d-grid gap-2 d-flex justify-content-end">
-                    <button type="button" class="btn btn-body btn-sm bg-gradient rounded-3" onclick="window.location.href = '<?= base_url('transaksi/detailtransaksi') ?>/${transaksi.id_transaksi}';">
-                        <i class="fa-solid fa-circle-info"></i> Detail
-                    </button>
-                    <button type="button" class="btn btn-danger btn-sm bg-gradient rounded-3 delete-btn" data-id="${transaksi.id_transaksi}" data-name="${transaksi.nama_pasien}" data-date="${transaksi.tgl_transaksi}">
-                        <i class="fa-solid fa-trash"></i> Hapus
-                    </button>
-                </div>
-            </li>
+                    <li class="list-group-item bg-body-tertiary pb-3 pt-3">
+                        <div class="d-flex">
+                            <div class="align-self-center ps-2 w-100">
+                                <h5 class="card-title">
+                                    ${nama_pasien} ${resepluar}
+                                </h5>
+                                <h6 class="card-subtitle mb-2">
+                                    ${transaksi.kasir}
+                                </h6>
+                                <p class="card-text">
+                                    <small class="date">
+                                        ID Transaksi: ${transaksi.id_transaksi}<br>
+                                        Nomor Kuitansi: ${transaksi.no_kwitansi}<br>
+                                        Tanggal dan Waktu Transaksi: ${transaksi.tgl_transaksi}<br>
+                                        Total Pembayaran: Rp${total_pembayaran.toLocaleString('id-ID')}<br>
+                                        Metode Pembayaran: ${metode_pembayaran}<br>
+                                        ${statusBadge}
+                                    </small>
+                                </p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="d-grid gap-2 d-flex justify-content-end">
+                            <button type="button" class="btn btn-body btn-sm bg-gradient rounded-3" onclick="window.location.href = '<?= base_url('transaksi/detailtransaksi') ?>/${transaksi.id_transaksi}';">
+                                <i class="fa-solid fa-circle-info"></i> Detail
+                            </button>
+                            <button type="button" class="btn btn-danger btn-sm bg-gradient rounded-3 delete-btn" data-id="${transaksi.id_transaksi}" data-name="${transaksi.nama_pasien}" data-date="${transaksi.tgl_transaksi}">
+                                <i class="fa-solid fa-trash"></i> Hapus
+                            </button>
+                        </div>
+                    </li>
                 `;
-
                     $('#transaksiContainer').append(transaksiElement);
                 });
 
+                // Pagination logic with ellipsis for more than 3 pages
                 const totalPages = Math.ceil(data.total / limit);
                 $('#paginationNav ul').empty();
 
@@ -355,12 +355,43 @@
                 `);
                 }
 
-                for (let i = 1; i <= totalPages; i++) {
+                if (totalPages > 3) {
                     $('#paginationNav ul').append(`
-                    <li class="page-item ${i === currentPage ? 'active' : ''}">
-                        <a class="page-link bg-gradient date" href="#" data-page="${i}">${i}</a>
+                    <li class="page-item ${currentPage === 1 ? 'active' : ''}">
+                        <a class="page-link bg-gradient date" href="#" data-page="1">1</a>
                     </li>
                 `);
+
+                    if (currentPage > 2) {
+                        $('#paginationNav ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">...</span></li>');
+                    }
+
+                    for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
+                        $('#paginationNav ul').append(`
+                        <li class="page-item ${i === currentPage ? 'active' : ''}">
+                            <a class="page-link bg-gradient date" href="#" data-page="${i}">${i}</a>
+                        </li>
+                    `);
+                    }
+
+                    if (currentPage < totalPages - 1) {
+                        $('#paginationNav ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">...</span></li>');
+                    }
+
+                    $('#paginationNav ul').append(`
+                    <li class="page-item ${currentPage === totalPages ? 'active' : ''}">
+                        <a class="page-link bg-gradient date" href="#" data-page="${totalPages}">${totalPages}</a>
+                    </li>
+                `);
+                } else {
+                    // Show all pages if total pages are 3 or fewer
+                    for (let i = 1; i <= totalPages; i++) {
+                        $('#paginationNav ul').append(`
+                        <li class="page-item ${i === currentPage ? 'active' : ''}">
+                            <a class="page-link bg-gradient date" href="#" data-page="${i}">${i}</a>
+                        </li>
+                    `);
+                    }
                 }
 
                 if (currentPage < totalPages) {
@@ -387,6 +418,7 @@
             $('#loadingSpinner').hide();
         }
     }
+
 
     $(document).on('click', '#paginationNav a', function(event) {
         event.preventDefault(); // Prevents default behavior (scrolling)
