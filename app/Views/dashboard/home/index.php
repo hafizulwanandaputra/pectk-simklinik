@@ -126,6 +126,16 @@
                 </div>
                 <div class="col">
                     <div class="card bg-body-tertiary w-100 rounded-3">
+                        <div class="card-header w-100 text-truncate">Transaksi Menurut Petugas Kasir</div>
+                        <div class="card-body">
+                            <div style="width: 100% !important;height: 400px !important;">
+                                <canvas id="transaksibykasirgraph"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card bg-body-tertiary w-100 rounded-3">
                         <div class="card-header w-100 text-truncate">Transaksi Per Bulan</div>
                         <div class="card-body">
                             <div style="width: 100% !important;height: 400px !important;">
@@ -134,13 +144,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="col">
-                    <div class="card bg-body-tertiary w-100 rounded-3">
-                        <div class="card-header w-100 text-truncate">Pemasukan Per Bulan</div>
-                        <div class="card-body">
-                            <div style="width: 100% !important;height: 400px !important;">
-                                <canvas id="pemasukanperbulangraph"></canvas>
-                            </div>
+            </div>
+            <div class="mb-2">
+                <div class="card bg-body-tertiary w-100 rounded-3">
+                    <div class="card-header w-100 text-truncate">Pemasukan Per Bulan</div>
+                    <div class="card-body">
+                        <div style="width: 100% !important;height: 400px !important;">
+                            <canvas id="pemasukanperbulangraph"></canvas>
                         </div>
                     </div>
                 </div>
@@ -252,12 +262,10 @@
     <?php if (session()->get('role') == "Admin" || session()->get('role') == "Apoteker") : ?>
         const data_resepbydoktergraph = [];
         const label_resepbydoktergraph = [];
-        const data_resepgraph = [];
-        const label_resepgraph = [];
     <?php endif; ?>
     <?php if (session()->get('role') == "Admin" || session()->get('role') == "Kasir") : ?>
-        const data_transaksiperbulangraph = [];
-        const label_transaksiperbulangraph = [];
+        const data_transaksibykasirgraph = [];
+        const label_transaksibykasirgraph = [];
         const data_pemasukanperbulangraph = [];
         const label_pemasukanperbulangraph = [];
     <?php endif; ?>
@@ -267,15 +275,11 @@
             data_resepbydoktergraph.push(<?= $resepbydoktergraph->jumlah; ?>);
             label_resepbydoktergraph.push('<?= $resepbydoktergraph->dokter; ?>');
         <?php endforeach; ?>
-        <?php foreach ($resepgraph->getResult() as $key => $resepgraph) : ?>
-            data_resepgraph.push(<?= $resepgraph->total_resep; ?>);
-            label_resepgraph.push('<?= $resepgraph->bulan; ?>');
-        <?php endforeach; ?>
     <?php endif; ?>
     <?php if (session()->get('role') == "Admin" || session()->get('role') == "Kasir") : ?>
-        <?php foreach ($transaksiperbulangraph->getResult() as $key => $transaksiperbulangraph) : ?>
-            data_transaksiperbulangraph.push(<?= $transaksiperbulangraph->total_transaksi; ?>);
-            label_transaksiperbulangraph.push('<?= $transaksiperbulangraph->bulan; ?>');
+        <?php foreach ($transaksibykasirgraph->getResult() as $key => $transaksibykasirgraph) : ?>
+            data_transaksibykasirgraph.push(<?= $transaksibykasirgraph->jumlah; ?>);
+            label_transaksibykasirgraph.push('<?= $transaksibykasirgraph->kasir; ?>');
         <?php endforeach; ?>
         <?php foreach ($pemasukanperbulangraph->getResult() as $key => $pemasukanperbulangraph) : ?>
             data_pemasukanperbulangraph.push(<?= $pemasukanperbulangraph->total_pemasukan; ?>);
@@ -295,26 +299,24 @@
             }]
         }
         var data_content_resepgraph = {
-            labels: label_resepgraph,
-            datasets: [{
-                label: 'Resep Per Bulan',
-                borderWidth: 2,
-                pointStyle: 'rectRot',
-                fill: true,
-                data: data_resepgraph
-            }]
+            labels: <?= $labels_resep ?>,
+            datasets: <?= $datasets_resep ?>
         }
     <?php endif; ?>
     <?php if (session()->get('role') == "Admin" || session()->get('role') == "Kasir") : ?>
-        var data_content_transaksiperbulangraph = {
-            labels: label_transaksiperbulangraph,
+        var data_content_transaksibykasirgraph = {
+            labels: label_transaksibykasirgraph,
             datasets: [{
-                label: 'Transaksi Per Bulan',
+                label: 'Transaksi Menurut Petugas Kasir',
                 borderWidth: 2,
                 pointStyle: 'rectRot',
                 fill: true,
-                data: data_transaksiperbulangraph
+                data: data_transaksibykasirgraph
             }]
+        }
+        var data_content_transaksiperbulangraph = {
+            labels: <?= $labels_transaksi ?>,
+            datasets: <?= $datasets_transaksi ?>
         }
         var data_content_pemasukanperbulangraph = {
             labels: label_pemasukanperbulangraph,
@@ -384,6 +386,25 @@
         })
     <?php endif; ?>
     <?php if (session()->get('role') == "Admin" || session()->get('role') == "Kasir") : ?>
+        var chart_transaksibykasirgraph = createChart(document.getElementById('transaksibykasirgraph').getContext('2d'), {
+            type: 'pie',
+            data: data_content_transaksibykasirgraph,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                locale: 'id-ID',
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scale: {
+                    ticks: {
+                        precision: 0
+                    }
+                }
+            }
+        })
         var chart_transaksiperbulangraph = createChart(document.getElementById('transaksiperbulangraph').getContext('2d'), {
             type: 'line',
             data: data_content_transaksiperbulangraph,

@@ -75,6 +75,9 @@ class Home extends BaseController
         $transaksi = $db->table('transaksi');
         $user = $db->table('user');
 
+        $dokter = $resep->select('dokter')->where('status', 1)->groupBy('dokter')->get()->getResultArray(); // Dokter
+        $kasir = $transaksi->select('kasir')->where('lunas', 1)->groupBy('kasir')->get()->getResultArray(); // Dokter
+
         // Menghitung total data dari setiap tabel
         $total_supplier = $supplier->countAllResults(); // Total supplier
         $total_obat = $obat->countAllResults(); // Total obat
@@ -93,16 +96,107 @@ class Home extends BaseController
 
         $resepbydoktergraph = $resep->select('dokter, COUNT(*) AS jumlah')->where('status', 1)->groupBy('dokter')->get(); // Resep yang Diberikan Menurut Dokter
 
-        $resepgraph = $resep->select('DATE_FORMAT(resep.tanggal_resep, "%Y-%m") AS bulan, COUNT(*) AS total_resep')->where('resep.status', 1)->groupBy('DATE_FORMAT(resep.tanggal_resep, "%Y-%m")')->get(); // Resep Per Bulan
+        // Query untuk mengambil data resep per bulan dan per dokter
+        $resepgraph = $resep->select('DATE_FORMAT(resep.tanggal_resep, "%Y-%m") AS bulan, dokter, COUNT(*) AS total_resep')
+            ->where('resep.status', 1)
+            ->groupBy('DATE_FORMAT(resep.tanggal_resep, "%Y-%m"), dokter')
+            ->get()
+            ->getResultArray();
+
+        // Inisialisasi array untuk labels (bulan unik) dan datasets
+        $labels_resep = [];
+        $data_per_dokter = [];
+
+        // Proses data hasil query
+        foreach ($resepgraph as $row) {
+            // Tambahkan bulan ke array labels jika belum ada
+            if (!in_array($row['bulan'], $labels_resep)) {
+                $labels_resep[] = $row['bulan'];
+            }
+
+            // Atur data resep per dokter
+            $data_per_dokter[$row['dokter']][$row['bulan']] = $row['total_resep'];
+        }
+
+        // Urutkan labels secara kronologis
+        sort($labels_resep);
+
+        // Siapkan struktur data untuk Chart.js
+        $datasets_resep = [];
+        foreach ($data_per_dokter as $dokter => $data_bulan) {
+            $dataset = [
+                'label' => $dokter,
+                'borderWidth' => 2,
+                'pointStyle' => 'rectRot',
+                'fill' => true,
+                'data' => []
+            ];
+
+            // Isi data sesuai urutan bulan di labels
+            foreach ($labels_resep as $bulan) {
+                // Gunakan nilai resep jika ada, atau 0 jika tidak ada data untuk bulan tersebut
+                $dataset['data'][] = $data_bulan[$bulan] ?? 0;
+            }
+
+            $datasets_resep[] = $dataset;
+        }
 
         $total_transaksi_blm_lunas = $transaksi->where('lunas', 0)->countAllResults(); // Total transaksi belum lunas
         $total_transaksi_sdh_lunas = $transaksi->where('lunas', 1)->countAllResults(); // Total transaksi sudah lunas
-        $transaksiperbulangraph = $transaksi->select('DATE_FORMAT(transaksi.tgl_transaksi, "%Y-%m") AS bulan, COUNT(*) AS total_transaksi')->where('transaksi.lunas', 1)->groupBy('DATE_FORMAT(transaksi.tgl_transaksi, "%Y-%m")')->get(); // Transaksi yang Sudah Diproses Per Bulan
+
+        $transaksibykasirgraph = $transaksi->select('kasir, COUNT(*) AS jumlah')->where('lunas', 1)->groupBy('kasir')->get(); // Transaksi yang Diproses Menurut Petugas Kasir
+
+        // Query untuk mendapatkan data transaksi per bulan dan per kasir
+        $transaksiperbulangraph = $transaksi->select('DATE_FORMAT(transaksi.tgl_transaksi, "%Y-%m") AS bulan, kasir, COUNT(*) AS total_transaksi')
+            ->where('transaksi.lunas', 1)
+            ->groupBy('DATE_FORMAT(transaksi.tgl_transaksi, "%Y-%m"), kasir')
+            ->get()
+            ->getResultArray();
+
+        // Inisialisasi array untuk labels (bulan unik) dan datasets
+        $labels_transaksi = [];
+        $data_per_kasir = [];
+
+        // Memproses hasil query untuk mengumpulkan bulan dan data per kasir
+        foreach ($transaksiperbulangraph as $row) {
+            // Tambahkan bulan ke array labels jika belum ada
+            if (!in_array($row['bulan'], $labels_transaksi)) {
+                $labels_transaksi[] = $row['bulan'];
+            }
+
+            // Atur data transaksi per kasir
+            $data_per_kasir[$row['kasir']][$row['bulan']] = $row['total_transaksi'];
+        }
+
+        // Urutkan labels secara kronologis
+        sort($labels_transaksi);
+
+        // Siapkan struktur data untuk Chart.js
+        $datasets_transaksi = [];
+        foreach ($data_per_kasir as $kasir => $data_bulan) {
+            $dataset = [
+                'label' => $kasir,
+                'borderWidth' => 2,
+                'pointStyle' => 'rectRot',
+                'fill' => true,
+                'data' => []
+            ];
+
+            // Isi data sesuai urutan bulan di labels
+            foreach ($labels_transaksi as $bulan) {
+                // Gunakan nilai transaksi jika ada, atau 0 jika tidak ada data untuk bulan tersebut
+                $dataset['data'][] = $data_bulan[$bulan] ?? 0;
+            }
+
+            $datasets_transaksi[] = $dataset;
+        }
         $pemasukanperbulangraph = $transaksi->select('DATE_FORMAT(transaksi.tgl_transaksi, "%Y-%m") AS bulan, SUM(total_pembayaran) AS total_pemasukan')->where('transaksi.lunas', 1)->groupBy('DATE_FORMAT(transaksi.tgl_transaksi, "%Y-%m")')->get(); // Pemasukan Per Bulan
         $total_user = $user->countAllResults(); // Total pengguna
 
         // Menyusun data untuk ditampilkan di view
         $data = [
+            'dokter' => $dokter,
+            'kasir' => $kasir,
             'total_supplier' => $total_supplier,
             'total_obat' => $total_obat,
             'total_pembelian_obat_blm_diterima' => $total_pembelian_obat_blm_diterima,
@@ -110,10 +204,13 @@ class Home extends BaseController
             'total_resep_blm_status' => $total_resep_blm_status,
             'total_resep_sdh_status' => $total_resep_sdh_status,
             'resepbydoktergraph' => $resepbydoktergraph,
-            'resepgraph' => $resepgraph,
+            'labels_resep' => json_encode($labels_resep),
+            'datasets_resep' => json_encode($datasets_resep),
             'total_transaksi_blm_lunas' => $total_transaksi_blm_lunas,
             'total_transaksi_sdh_lunas' => $total_transaksi_sdh_lunas,
-            'transaksiperbulangraph' => $transaksiperbulangraph,
+            'transaksibykasirgraph' => $transaksibykasirgraph,
+            'labels_transaksi' => json_encode($labels_transaksi),
+            'datasets_transaksi' => json_encode($datasets_transaksi),
             'pemasukanperbulangraph' => $pemasukanperbulangraph,
             'total_user' => $total_user,
             'txtgreeting' => $txtGreeting, // Ucapan yang ditentukan sebelumnya
