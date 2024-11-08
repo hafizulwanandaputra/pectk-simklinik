@@ -82,7 +82,6 @@ class Auth extends BaseController
                         'expires_at' => $expires_at
                     ]);
                     // Menyimpan data sesi setelah login berhasil
-                    session()->set('log', true);
                     session()->set('id_user', $check['id_user']);
                     session()->set('fullname', $check['fullname']);
                     session()->set('username', $check['username']);
@@ -122,7 +121,6 @@ class Auth extends BaseController
             ->delete();
         $db->query('ALTER TABLE `user_sessions` auto_increment = 1');
         // Menghapus semua data sesi
-        session()->remove('log');
         session()->remove('id_user');
         session()->remove('fullname');
         session()->remove('username');
