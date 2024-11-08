@@ -70,7 +70,6 @@ class Settings extends BaseController
             session()->setFlashdata('info', 'Tidak ada perubahan apa-apa dalam formulir ini!'); // Pesan jika tidak ada perubahan
         } else {
             session()->remove('username'); // Menghapus username lama dari session
-            session()->set('fullname', $this->request->getVar('fullname')); // Memperbarui fullname di session
             session()->set('username', $this->request->getVar('username')); // Memperbarui username di session
             session()->setFlashdata('msg', 'Informasi Pengguna berhasil diubah!'); // Pesan sukses
         }
