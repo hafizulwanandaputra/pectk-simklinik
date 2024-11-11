@@ -38,6 +38,7 @@
                     <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Masukkan Tanggal</legend>
                     <div class="mb-2 input-group">
                         <input type="date" id="tanggal" name="tanggal" class="form-control rounded-start-3">
+                        <button class="btn btn-danger bg-gradient" type="button" id="clearTglButton"><i class="fa-solid fa-xmark"></i></button>
                         <button class="btn btn-success bg-gradient rounded-end-3" type="button" id="refreshButton1" disabled><i class="fa-solid fa-sync"></i></button>
                     </div>
                 </fieldset>
@@ -90,6 +91,7 @@
                     <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Masukkan Bulan</legend>
                     <div class="mb-2 input-group">
                         <input type="month" id="bulan" name="bulan" class="form-control rounded-start-3">
+                        <button class="btn btn-danger bg-gradient" type="button" id="clearBlnButton"><i class="fa-solid fa-xmark"></i></button>
                         <button class="btn btn-success bg-gradient rounded-end-3" type="button" id="refreshButton2" disabled><i class="fa-solid fa-sync"></i></button>
                     </div>
                 </fieldset>
@@ -507,11 +509,27 @@
     });
 
     $(document).ready(function() {
+        // Menangani event klik pada tombol bersihkan tanggal
+        $('#clearTglButton').on('click', function() {
+            $('#tanggal').val(''); // Kosongkan tanggal
+            $('.dokter-checkbox-1').prop('checked', false); // Hapus checklist pada checkbox dengan kelas dokter-checkbox-1
+            $('#resepharian').empty(); // Kosongkan tabel resep
+            $('#resepharian').append(loading1); // Tampilkan loading indicator
+            fetchResep1(); // Panggil fungsi untuk mengambil data resep
+        });
         // Menangani event klik pada tombol refresh
         $('#refreshButton1').on('click', function() {
             $('#resepharian').empty(); // Kosongkan tabel resep
             $('#resepharian').append(loading1); // Tampilkan loading indicator
             fetchResep1(); // Panggil fungsi untuk mengambil data resep
+        });
+        // Menangani event klik pada tombol bersihkan bulan
+        $('#clearBlnButton').on('click', function() {
+            $('#bulan').val(''); // Kosongkan tanggal
+            $('.dokter-checkbox-2').prop('checked', false); // Hapus checklist pada checkbox dengan kelas dokter-checkbox-2
+            $('#resepbulanan').empty(); // Kosongkan tabel resep
+            $('#resepbulanan').append(loading2); // Tampilkan loading indicator
+            fetchResep2(); // Panggil fungsi untuk mengambil data resep
         });
         // Menangani event klik pada tombol refresh
         $('#refreshButton2').on('click', function() {

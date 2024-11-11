@@ -45,6 +45,7 @@ class ResepLuar extends BaseController
             $offset = $this->request->getGet('offset');
             $status = $this->request->getGet('status');
             $names = $this->request->getGet('names');
+            $tanggal = $this->request->getGet('tanggal');
 
             // Menentukan limit dan offset
             $limit = $limit ? intval($limit) : 0;
@@ -66,11 +67,15 @@ class ResepLuar extends BaseController
                 $ResepModel->select('resep.*')->where('nama_pasien', NULL); // Pasien anonim
             }
 
+            // Mengaplikasikan filter tanggal jika diberikan
+            if ($tanggal) {
+                $ResepModel->like('tanggal_resep', $tanggal);
+            }
+
             // Menerapkan filter pencarian berdasarkan nama pasien atau tanggal resep
             if ($search) {
                 $ResepModel->groupStart()
                     ->like('nama_pasien', $search)
-                    ->orLike('tanggal_resep', $search)
                     ->groupEnd();
             }
 

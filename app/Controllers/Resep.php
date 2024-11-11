@@ -48,6 +48,7 @@ class Resep extends BaseController
             $status = $this->request->getGet('status');
             $dokter = $this->request->getGet('dokter');
             $confirmed = $this->request->getGet('confirmed');
+            $tanggal = $this->request->getGet('tanggal');
 
             // Menentukan limit dan offset
             $limit = $limit ? intval($limit) : 0;
@@ -71,11 +72,15 @@ class Resep extends BaseController
                 $ResepModel->where('confirmed', 0); // Mengambil resep dengan confirmed non-aktif
             }
 
+            // Mengaplikasikan filter tanggal jika diberikan
+            if ($tanggal) {
+                $ResepModel->like('tanggal_resep', $tanggal);
+            }
+
             // Menerapkan filter pencarian berdasarkan nama pasien, dokter, atau tanggal resep
             if ($search) {
                 $ResepModel->groupStart()
                     ->like('nama_pasien', $search)
-                    ->orLike('tanggal_resep', $search)
                     ->groupEnd();
             }
 

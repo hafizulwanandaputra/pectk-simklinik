@@ -28,9 +28,15 @@
     <select id="dokterFilter" class="form-select form-select-sm rounded-3 mb-2">
         <option value="">Semua Dokter</option>
     </select>
-    <div class="input-group input-group-sm mb-3">
-        <input type="search" id="searchInput" class="form-control rounded-start-3" placeholder="Cari pasien dan tanggal resep...">
-        <button class="btn btn-success btn-sm bg-gradient rounded-end-3" type="button" id="refreshButton"><i class="fa-solid fa-sync"></i></button>
+    <div class="d-flex flex-column flex-lg-row mb-1 gap-2 mb-3">
+        <div class="input-group input-group-sm">
+            <input type="date" id="tanggalFilter" class="form-control rounded-start-3">
+            <button class="btn btn-danger btn-sm bg-gradient rounded-end-3" type="button" id="clearTglButton"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="input-group input-group-sm flex-fill">
+            <input type="search" id="searchInput" class="form-control rounded-start-3" placeholder="Cari pasien">
+            <button class="btn btn-success btn-sm bg-gradient rounded-end-3" type="button" id="refreshButton"><i class="fa-solid fa-sync"></i></button>
+        </div>
     </div>
     <?php if (session()->get('role') != 'Apoteker'): ?>
         <fieldset class="border rounded-3 px-2 py-0 mb-3" id="tambahPasienForm">
@@ -214,6 +220,7 @@
         const status = $('#statusFilter').val();
         const confirmed = $('#confirmedFilter').val();
         const dokter = $('#dokterFilter').val();
+        const tanggal = $('#tanggalFilter').val();
 
         // Show the spinner
         $('#loadingSpinner').show();
@@ -226,7 +233,8 @@
                     offset: offset,
                     status: status,
                     dokter: dokter,
-                    confirmed: confirmed
+                    confirmed: confirmed,
+                    tanggal: tanggal
                 }
             });
 
@@ -374,7 +382,17 @@
         }
     });
 
-    $('#statusFilter, #confirmedFilter, #dokterFilter').on('change', function() {
+    $('#statusFilter, #confirmedFilter, #dokterFilter, #tanggalFilter').on('change', function() {
+        $('#resepContainer').empty();
+        for (let i = 0; i < limit; i++) {
+            $('#resepContainer').append(placeholder);
+        }
+        <?= (session()->get('role') != 'Apoteker') ? 'fetchPasienOptions();' : '' ?>
+        fetchResep();
+    });
+
+    $('#clearTglButton').on('click', function() {
+        $('#tanggalFilter').val('');
         $('#resepContainer').empty();
         for (let i = 0; i < limit; i++) {
             $('#resepContainer').append(placeholder);

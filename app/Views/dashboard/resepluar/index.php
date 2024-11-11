@@ -13,19 +13,25 @@
 <?= $this->endSection(); ?>
 <?= $this->section('content'); ?>
 <main class="col-md-9 ms-sm-auto col-lg-10 px-3 px-md-4 pt-3">
-    <div class="d-flex flex-column flex-lg-row mb-1 gap-2 mb-3">
-        <select id="statusFilter" class="form-select form-select-sm w-auto rounded-3">
+    <div class="d-flex flex-column flex-lg-row mb-1 gap-2 mb-2">
+        <select id="statusFilter" class="form-select form-select-sm w-auto rounded-3 flex-fill">
             <option value="">Semua Status Proses</option>
             <option value="1">Diproses</option>
             <option value="0">Belum Diproses</option>
         </select>
-        <select id="namesFilter" class="form-select form-select-sm w-auto rounded-3">
+        <select id="namesFilter" class="form-select form-select-sm w-auto rounded-3 flex-fill">
             <option value="">Semua Nama</option>
             <option value="1">Dengan Nama</option>
             <option value="0">Anonim</option>
         </select>
+    </div>
+    <div class="d-flex flex-column flex-lg-row mb-1 gap-2 mb-3">
+        <div class="input-group input-group-sm">
+            <input type="date" id="tanggalFilter" class="form-control rounded-start-3">
+            <button class="btn btn-danger btn-sm bg-gradient rounded-end-3" type="button" id="clearTglButton"><i class="fa-solid fa-xmark"></i></button>
+        </div>
         <div class="input-group input-group-sm flex-fill">
-            <input type="search" id="searchInput" class="form-control rounded-start-3" placeholder="Cari pasien dan tanggal resep...">
+            <input type="search" id="searchInput" class="form-control rounded-start-3" placeholder="Cari pasien">
             <button class="btn btn-success btn-sm bg-gradient" type="button" id="refreshButton"><i class="fa-solid fa-sync"></i></button>
             <button class="btn btn-primary btn-sm bg-gradient rounded-end-3" type="button" id="addButton"><i class="fa-solid fa-plus"></i> Tambah</button>
         </div>
@@ -322,7 +328,16 @@
         }
     });
 
-    $('#statusFilter, #namesFilter').on('change', function() {
+    $('#statusFilter, #namesFilter, #tanggalFilter').on('change', function() {
+        $('#resepContainer').empty();
+        for (let i = 0; i < limit; i++) {
+            $('#resepContainer').append(placeholder);
+        }
+        fetchResep();
+    });
+
+    $('#clearTglButton').on('click', function() {
+        $('#tanggalFilter').val('');
         $('#resepContainer').empty();
         for (let i = 0; i < limit; i++) {
             $('#resepContainer').append(placeholder);

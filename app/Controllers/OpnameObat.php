@@ -44,7 +44,8 @@ class OpnameObat extends BaseController
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
             // Mengambil parameter pencarian, limit, offset, dan status dari query string
-            $search = $this->request->getGet('search');
+            $tanggal = $this->request->getGet('tanggal');
+            $apoteker = $this->request->getGet('apoteker');
             $limit = $this->request->getGet('limit');
             $offset = $this->request->getGet('offset');
 
@@ -56,10 +57,15 @@ class OpnameObat extends BaseController
             $OpnameObatModel = $this->OpnameObatModel;
 
             // Menerapkan filter pencarian pada nama supplier atau tanggal pembelian
-            if ($search) {
+            if ($tanggal) {
                 $OpnameObatModel
-                    ->like('tanggal', $search)
-                    ->orLike('apoteker', $search);
+                    ->like('tanggal', $tanggal);
+            }
+
+            // Menerapkan filter pencarian pada nama supplier atau tanggal pembelian
+            if ($apoteker) {
+                $OpnameObatModel
+                    ->like('apoteker', $apoteker);
             }
 
             // Menghitung total hasil
@@ -88,6 +94,39 @@ class OpnameObat extends BaseController
             // Jika peran tidak dikenali, kembalikan status 404
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan',
+            ]);
+        }
+    }
+
+    public function apotekerlist()
+    {
+        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Apoteker' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+            // Mengambil apoteker dari tabel opname obat
+            $OpnameObatData = $this->OpnameObatModel
+                ->groupBy('apoteker')
+                ->orderBy('apoteker', 'ASC')
+                ->findAll();
+
+            // Menyiapkan array opsi untuk dikirim dalam respon
+            $options = [];
+            // Menyusun opsi dari data opname obat yang diterima
+            foreach ($OpnameObatData as $opname_obat) {
+                // Menambahkan opsi ke dalam array
+                $options[] = [
+                    'value' => $opname_obat['apoteker'], // Nilai untuk opsi
+                    'text'  => $opname_obat['apoteker'] // Teks untuk opsi
+                ];
+            }
+
+            // Mengembalikan data opname obat dalam format JSON
+            return $this->response->setJSON([
+                'success' => true, // Indikator sukses
+                'data'    => $options, // Data opsi
+            ]);
+        } else {
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan', // Pesan jika peran tidak valid
             ]);
         }
     }

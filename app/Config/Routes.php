@@ -62,6 +62,7 @@ $routes->get('/(?i)pembelianobat/(?i)fakturpembelianobat/(:any)', 'PembelianObat
 // OPNAME OBAT
 $routes->get('/(?i)opnameobat', 'OpnameObat::index');
 $routes->get('/(?i)opnameobat/(?i)opnameobatlist', 'OpnameObat::opnameobatlist');
+$routes->get('/(?i)opnameobat/(?i)apotekerlist', 'OpnameObat::apotekerlist');
 $routes->post('/(?i)opnameobat/(?i)create', 'OpnameObat::create');
 $routes->delete('/(?i)opnameobat/(?i)delete/(:any)', 'OpnameObat::delete/$1');
 

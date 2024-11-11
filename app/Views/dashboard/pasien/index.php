@@ -15,6 +15,7 @@
             <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Masukkan Tanggal</legend>
             <div class="mb-2 input-group">
                 <input type="date" id="tanggal" name="tanggal" class="form-control rounded-start-3">
+                <button class="btn btn-danger bg-gradient" type="button" id="clearTglButton"><i class="fa-solid fa-xmark"></i></button>
                 <button class="btn btn-success bg-gradient rounded-end-3" type="button" id="refreshButton" disabled><i class="fa-solid fa-sync"></i></button>
             </div>
         </fieldset>
@@ -161,6 +162,13 @@
     });
 
     $(document).ready(function() {
+        // Menangani event klik pada tombol bersihkan
+        $('#clearTglButton').on('click', function() {
+            $('#tanggal').val(''); // Kosongkan tanggal
+            $('#datapasien').empty(); // Kosongkan tabel pasien
+            $('#datapasien').append(loading); // Menampilkan loading indicator
+            fetchPasien(); // Memanggil fungsi untuk mengambil data pasien
+        });
         // Menangani event klik pada tombol refresh
         $('#refreshButton').on('click', function() {
             $('#datapasien').empty(); // Kosongkan tabel pasien

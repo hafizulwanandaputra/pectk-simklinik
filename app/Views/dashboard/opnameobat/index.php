@@ -13,11 +13,15 @@
 <?= $this->endSection(); ?>
 <?= $this->section('content'); ?>
 <main class="col-md-9 ms-sm-auto col-lg-10 px-3 px-md-4 pt-3">
-    <div class="d-flex flex-column flex-lg-row mb-1 gap-2 mb-3">
-        <div class="input-group input-group-sm flex-fill">
-            <input type="search" id="searchInput" class="form-control rounded-start-3" placeholder="Cari tanggal dan apoteker...">
-            <button class="btn btn-success btn-sm bg-gradient rounded-end-3" type="button" id="refreshButton"><i class="fa-solid fa-sync"></i></button>
-        </div>
+    <div class="input-group input-group-sm mb-2">
+        <input type="date" id="tanggalFilter" class="form-control rounded-start-3">
+        <button class="btn btn-danger btn-sm bg-gradient rounded-end-3" type="button" id="clearTglButton"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="input-group input-group-sm mb-3">
+        <select id="apotekerFilter" class="form-select form-select-sm rounded-start-3">
+            <option value="">Semua Apoteker</option>
+        </select>
+        <button class="btn btn-success btn-sm bg-gradient rounded-end-3" type="button" id="refreshButton"><i class="fa-solid fa-sync"></i></button>
     </div>
     <div class="shadow-sm rounded-3">
         <form id="opnameObatForm" enctype="multipart/form-data">
@@ -93,10 +97,52 @@
             </li>
     `;
 
+    async function fetchApotekerOptions(selectedApoteker = null) {
+        // Show the spinner
+        $('#loadingSpinner').show();
+        try {
+            // Panggil API dengan query string tanggal
+            const response = await axios.get(`<?= base_url('opnameobat/apotekerlist') ?>`);
+
+            if (response.data.success) {
+                const options = response.data.data;
+                const select = $('#apotekerFilter');
+
+                // Simpan nilai yang saat ini dipilih
+                const currentSelection = selectedApoteker || select.val();
+
+                // Hapus semua opsi kecuali opsi pertama (default)
+                select.find('option:not(:first)').remove();
+
+                // Urutkan opsi berdasarkan 'value' secara ascending
+                options.sort((a, b) => b.value.localeCompare(a.value, 'en', {
+                    numeric: true
+                }));
+
+                // Tambahkan opsi ke elemen select
+                options.forEach(option => {
+                    select.append(`<option value="${option.value}">${option.text}</option>`);
+                });
+
+                // Mengatur ulang pilihan sebelumnya
+                if (currentSelection) {
+                    select.val(currentSelection);
+                }
+            } else {
+                showFailedToast('Gagal mendapatkan dokter.');
+            }
+        } catch (error) {
+            showFailedToast('Gagal mendapatkan dokter.<br>' + error);
+        } finally {
+            // Hide the spinner when done
+            $('#loadingSpinner').hide();
+        }
+    }
+
     async function fetchOpnameObat() {
-        const search = $('#searchInput').val();
+        const tanggal = $('#tanggalFilter').val();
+        const apoteker = $('#apotekerFilter').val();
         const offset = (currentPage - 1) * limit;
-        const status = $('#statusFilter').val();
 
         // Show the spinner
         $('#loadingSpinner').show();
@@ -104,7 +150,8 @@
         try {
             const response = await axios.get('<?= base_url('opnameobat/opnameobatlist') ?>', {
                 params: {
-                    search: search,
+                    tanggal: tanggal,
+                    apoteker: apoteker,
                     limit: limit,
                     offset: offset,
                 }
@@ -228,17 +275,33 @@
         const page = $(this).data('page');
         if (page) {
             currentPage = page;
-            <?= (session()->get('role') != 'Apoteker') ? 'fetchPasienOptions();' : '' ?>
             fetchOpnameObat();
         }
     });
 
     $(document).ready(function() {
-        $('#searchInput').on('input', function() {
-            currentPage = 1;
-            fetchOpnameObat();
+        $('#tanggalFilter, #apotekerFilter').on('change', function() {
+            // Simpan nilai pilihan apoteker saat ini
+            const selectedApoteker = $('apotekerFilter').val();
+            $('#opnameObatContainer').empty();
+            for (let i = 0; i < limit; i++) {
+                $('#opnameObatContainer').append(placeholder);
+            }
+            fetchApotekerOptions(selectedApoteker);
+            fetchOpnameObat(); // Refresh articles on button click
         });
 
+        $('#clearTglButton').on('click', function() {
+            // Simpan nilai pilihan apoteker saat ini
+            const selectedApoteker = $('apotekerFilter').val();
+            $('#tanggalFilter').val('');
+            $('#opnameObatContainer').empty();
+            for (let i = 0; i < limit; i++) {
+                $('#opnameObatContainer').append(placeholder);
+            }
+            fetchApotekerOptions(selectedApoteker);
+            fetchOpnameObat(); // Refresh articles on button click
+        });
         // Store the ID of the user to be deleted
         var OpnameObatId;
         var OpnameObatName;
@@ -262,6 +325,7 @@
 
             try {
                 await axios.delete(`<?= base_url('/opnameobat/delete') ?>/${opnameObatId}`);
+                fetchApotekerOptions(selectedApoteker);
                 fetchOpnameObat();
             } catch (error) {
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
@@ -297,9 +361,12 @@
                 });
 
                 if (response.data.success) {
+                    // Simpan nilai pilihan apoteker saat ini
+                    const selectedApoteker = $('apotekerFilter').val();
                     $('#opnameObatForm .is-invalid').removeClass('is-invalid');
                     $('#opnameObatForm .invalid-feedback').text('').hide();
                     $('#addButton').prop('disabled', true);
+                    fetchApotekerOptions(selectedApoteker);
                     fetchOpnameObat();
                 } else {
                     console.log("Validation Errors:", response.data.errors);
@@ -343,13 +410,17 @@
             }
         });
         $('#refreshButton').on('click', function() {
+            // Simpan nilai pilihan apoteker saat ini
+            const selectedApoteker = $('apotekerFilter').val();
             $('#opnameObatContainer').empty();
             for (let i = 0; i < limit; i++) {
                 $('#opnameObatContainer').append(placeholder);
             }
+            fetchApotekerOptions(selectedApoteker);
             fetchOpnameObat(); // Refresh articles on button click
         });
 
+        fetchApotekerOptions();
         fetchOpnameObat();
     });
     // Show toast notification

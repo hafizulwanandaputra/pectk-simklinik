@@ -19,8 +19,12 @@
             <option value="1">Diterima</option>
             <option value="0">Belum Diterima</option>
         </select>
+        <div class="input-group input-group-sm">
+            <input type="date" id="tanggalFilter" class="form-control rounded-start-3">
+            <button class="btn btn-danger btn-sm bg-gradient rounded-end-3" type="button" id="clearTglButton"><i class="fa-solid fa-xmark"></i></button>
+        </div>
         <div class="input-group input-group-sm flex-fill">
-            <input type="search" id="searchInput" class="form-control rounded-start-3" placeholder="Cari merek, supplier, dan tanggal obat masuk...">
+            <input type="search" id="searchInput" class="form-control rounded-start-3" placeholder="Cari merek dan supplier">
             <button class="btn btn-success btn-sm bg-gradient rounded-end-3" type="button" id="refreshButton"><i class="fa-solid fa-sync"></i></button>
         </div>
     </div>
@@ -295,7 +299,16 @@
         }
     });
 
-    $('#statusFilter').on('change', function() {
+    $('#statusFilter, #tanggalFilter').on('change', function() {
+        $('#pembelianObatContainer').empty();
+        for (let i = 0; i < limit; i++) {
+            $('#pembelianObatContainer').append(placeholder);
+        }
+        fetchPembelianObat();
+    });
+
+    $('#clearTglButton').on('click', function() {
+        $('#tanggalFilter').val('');
         $('#pembelianObatContainer').empty();
         for (let i = 0; i < limit; i++) {
             $('#pembelianObatContainer').append(placeholder);

@@ -52,8 +52,9 @@ class Transaksi extends BaseController
             $offset = $this->request->getGet('offset'); // Offset untuk pagination
             $status = $this->request->getGet('status'); // Status transaksi
             $jenis = $this->request->getGet('jenis'); // Status transaksi
-            $names = $this->request->getGet('names');
-            $kasir = $this->request->getGet('kasir'); // Status transaksi
+            $names = $this->request->getGet('names'); // Ada nama atau anonim
+            $kasir = $this->request->getGet('kasir'); // Petugas kasir
+            $tanggal = $this->request->getGet('tanggal'); // Tanggal Transaksi
 
             // Mengubah limit dan offset menjadi integer, jika tidak ada, set ke 0
             $limit = $limit ? intval($limit) : 0;
@@ -86,12 +87,16 @@ class Transaksi extends BaseController
                 $TransaksiModel->where('nama_pasien', NULL); // Pasien anonim
             }
 
+            // Mengaplikasikan filter tanggal jika diberikan
+            if ($tanggal) {
+                $TransaksiModel->like('tgl_transaksi', $tanggal);
+            }
+
             // Menerapkan filter pencarian berdasarkan nama pasien, kasir, atau tanggal transaksi
             if ($search) {
                 $TransaksiModel
                     ->groupStart()
                     ->like('nama_pasien', $search) // Pencarian berdasarkan nama pasien
-                    ->orLike('tgl_transaksi', $search) // Pencarian berdasarkan tanggal transaksi
                     ->groupEnd();
             }
 

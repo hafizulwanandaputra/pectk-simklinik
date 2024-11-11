@@ -54,6 +54,7 @@ class PembelianObat extends BaseController
             $limit = $this->request->getGet('limit');
             $offset = $this->request->getGet('offset');
             $status = $this->request->getGet('status');
+            $tanggal = $this->request->getGet('tanggal');
 
             // Menentukan limit dan offset
             $limit = $limit ? intval($limit) : 0;
@@ -74,6 +75,11 @@ class PembelianObat extends BaseController
                 $PembelianObatModel->where('diterima', 0);
             }
 
+            // Mengaplikasikan filter tanggal jika diberikan
+            if ($tanggal) {
+                $PembelianObatModel->like('tgl_pembelian', $tanggal);
+            }
+
             // Menerapkan filter pencarian pada nama supplier atau tanggal pembelian
             if ($search) {
                 $PembelianObatModel
@@ -81,7 +87,6 @@ class PembelianObat extends BaseController
                     ->like('supplier.merek', $search)
                     ->orLike('supplier.nama_supplier', $search)
                     ->orLike('apoteker', $search)
-                    ->orLike('tgl_pembelian', $search)
                     ->groupEnd();
             }
 

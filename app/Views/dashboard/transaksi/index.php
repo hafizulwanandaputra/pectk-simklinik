@@ -33,10 +33,16 @@
     <select id="kasirFilter" class="form-select form-select-sm rounded-3 mb-2">
         <option value="">Semua Petugas Kasir</option>
     </select>
-    <div class="input-group input-group-sm mb-3">
-        <input type="search" id="searchInput" class="form-control rounded-start-3" placeholder="Cari pasien dan tanggal transaksi...">
-        <button class="btn btn-success btn-sm bg-gradient" type="button" id="refreshButton"><i class="fa-solid fa-sync"></i></button>
-        <button class="btn btn-body btn-sm bg-gradient rounded-end-3" type="button" id="reportButton" onclick="window.location.href = '<?= base_url('transaksi/report') ?>';"><i class="fa-solid fa-file-export"></i> Laporan</button>
+    <div class="d-flex flex-column flex-lg-row mb-1 gap-2 mb-3">
+        <div class="input-group input-group-sm">
+            <input type="date" id="tanggalFilter" class="form-control rounded-start-3">
+            <button class="btn btn-danger btn-sm bg-gradient rounded-end-3" type="button" id="clearTglButton"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="input-group input-group-sm">
+            <input type="search" id="searchInput" class="form-control rounded-start-3" placeholder="Cari pasien">
+            <button class="btn btn-success btn-sm bg-gradient" type="button" id="refreshButton"><i class="fa-solid fa-sync"></i></button>
+            <button class="btn btn-body btn-sm bg-gradient rounded-end-3" type="button" id="reportButton" onclick="window.location.href = '<?= base_url('transaksi/report') ?>';"><i class="fa-solid fa-file-export"></i> Laporan</button>
+        </div>
     </div>
     <div class="row">
         <div class="col-lg-6">
@@ -258,6 +264,7 @@
         const jenis = $('#jenisFilter').val();
         const names = $('#namesFilter').val();
         const kasir = $('#kasirFilter').val();
+        const tanggal = $('#tanggalFilter').val();
 
         // Show the spinner
         $('#loadingSpinner').show();
@@ -271,7 +278,8 @@
                     status: status,
                     jenis: jenis,
                     names: names,
-                    kasir: kasir
+                    kasir: kasir,
+                    tanggal: tanggal
                 }
             });
 
@@ -421,13 +429,24 @@
         }
     });
 
-    $('#statusFilter, #jenisFilter, #namesFilter, #kasirFilter').on('change', function() {
+    $('#statusFilter, #jenisFilter, #namesFilter, #kasirFilter, #tanggalFilter').on('change', function() {
         $('#transaksiContainer').empty();
         for (let i = 0; i < limit; i++) {
             $('#transaksiContainer').append(placeholder);
         }
         fetchPasienOptions1()
         fetchPasienOptions2()
+        fetchTransaksi();
+    });
+
+    $('#clearTglButton').on('click', function() {
+        $('#tanggalFilter').val('');
+        $('#transaksiContainer').empty();
+        for (let i = 0; i < limit; i++) {
+            $('#transaksiContainer').append(placeholder);
+        }
+        fetchPasienOptions1();
+        fetchPasienOptions2();
         fetchTransaksi();
     });
 
