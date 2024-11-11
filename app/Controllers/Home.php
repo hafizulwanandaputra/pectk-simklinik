@@ -74,6 +74,7 @@ class Home extends BaseController
         $resep = $db->table('resep');
         $transaksi = $db->table('transaksi');
         $user = $db->table('user');
+        $user_sessions = $db->table('user_sessions');
 
         $dokter = $resep->select('dokter')->where('status', 1)->groupBy('dokter')->get()->getResultArray(); // Dokter
         $kasir = $transaksi->select('kasir')->where('lunas', 1)->groupBy('kasir')->get()->getResultArray(); // Dokter
@@ -85,23 +86,27 @@ class Home extends BaseController
         $total_pembelian_obat_sdh_diterima = $pembelian_obat->where('diterima', 1)->countAllResults(); // Total pembelian obat sudah diterima
 
         // Memeriksa peran pengguna untuk menghitung resep
-        if (session()->get('role') != 'Dokter') {
-            $total_resep_blm_status = $resep->where('status', 0)->countAllResults(); // Total resep belum status
-            $total_resep_sdh_status = $resep->where('status', 1)->countAllResults(); // Total resep sudah status
-        } else {
+        if (session()->get('role') == 'Dokter') {
             // Jika pengguna adalah dokter, hitung resep berdasarkan nama dokter
             $total_resep_blm_status = $resep->where('status', 0)->where('dokter', session()->get('fullname'))->countAllResults(); // Total resep belum status berdasarkan dokter
             $total_resep_sdh_status = $resep->where('status', 1)->where('dokter', session()->get('fullname'))->countAllResults(); // Total resep sudah status berdasarkan dokter
+            $resepbydoktergraph = $resep->select('dokter, COUNT(*) AS jumlah')->where('dokter', session()->get('fullname'))->where('status', 1)->groupBy('dokter')->get(); // Resep yang Diberikan Menurut Dokter
+            $resepgraph = $resep->select('DATE_FORMAT(resep.tanggal_resep, "%Y-%m") AS bulan, dokter, COUNT(*) AS total_resep')
+                ->where('dokter', session()->get('fullname'))
+                ->where('resep.status', 1)
+                ->groupBy('DATE_FORMAT(resep.tanggal_resep, "%Y-%m"), dokter')
+                ->get()
+                ->getResultArray();
+        } else {
+            $total_resep_blm_status = $resep->where('status', 0)->countAllResults(); // Total resep belum status
+            $total_resep_sdh_status = $resep->where('status', 1)->countAllResults(); // Total resep sudah status
+            $resepbydoktergraph = $resep->select('dokter, COUNT(*) AS jumlah')->where('status', 1)->groupBy('dokter')->get(); // Resep yang Diberikan Menurut Dokter
+            $resepgraph = $resep->select('DATE_FORMAT(resep.tanggal_resep, "%Y-%m") AS bulan, dokter, COUNT(*) AS total_resep')
+                ->where('resep.status', 1)
+                ->groupBy('DATE_FORMAT(resep.tanggal_resep, "%Y-%m"), dokter')
+                ->get()
+                ->getResultArray();
         }
-
-        $resepbydoktergraph = $resep->select('dokter, COUNT(*) AS jumlah')->where('status', 1)->groupBy('dokter')->get(); // Resep yang Diberikan Menurut Dokter
-
-        // Query untuk mengambil data resep per bulan dan per dokter
-        $resepgraph = $resep->select('DATE_FORMAT(resep.tanggal_resep, "%Y-%m") AS bulan, dokter, COUNT(*) AS total_resep')
-            ->where('resep.status', 1)
-            ->groupBy('DATE_FORMAT(resep.tanggal_resep, "%Y-%m"), dokter')
-            ->get()
-            ->getResultArray();
 
         // Inisialisasi array untuk labels (bulan unik) dan datasets
         $labels_resep = [];
@@ -190,8 +195,19 @@ class Home extends BaseController
 
             $datasets_transaksi[] = $dataset;
         }
+
+        $total_pemasukan = $transaksi->where('lunas', 1)->selectSum('total_pembayaran')->get()->getRow()->total_pembayaran; // Total Pemasukan
+
         $pemasukanperbulangraph = $transaksi->select('DATE_FORMAT(transaksi.tgl_transaksi, "%Y-%m") AS bulan, SUM(total_pembayaran) AS total_pemasukan')->where('transaksi.lunas', 1)->groupBy('DATE_FORMAT(transaksi.tgl_transaksi, "%Y-%m")')->get(); // Pemasukan Per Bulan
+
         $total_user = $user->countAllResults(); // Total pengguna
+        $total_user_inactive = $user->where('active', 0)->countAllResults(); // Total pengguna nonaktif
+        $total_user_active = $user->where('active', 1)->countAllResults(); // Total pengguna aktif
+
+        $currentDateTime = date('Y-m-d H:i:s');
+        $total_sessions = $user_sessions->where('session_token !=', session()->get('session_token'))->countAllResults(); // Total sesi
+        $total_sessions_expired = $user_sessions->where('expires_at <', $currentDateTime)->where('session_token !=', session()->get('session_token'))->countAllResults(); // Total sesi kedaluwarsa
+        $total_sessions_active = $user_sessions->where('expires_at >=', $currentDateTime)->where('session_token !=', session()->get('session_token'))->countAllResults(); // Total sesi aktif
 
         // Menyusun data untuk ditampilkan di view
         $data = [
@@ -211,8 +227,14 @@ class Home extends BaseController
             'transaksibykasirgraph' => $transaksibykasirgraph,
             'labels_transaksi' => json_encode($labels_transaksi),
             'datasets_transaksi' => json_encode($datasets_transaksi),
+            'total_pemasukan' => $total_pemasukan,
             'pemasukanperbulangraph' => $pemasukanperbulangraph,
             'total_user' => $total_user,
+            'total_user_inactive' => $total_user_inactive,
+            'total_user_active' => $total_user_active,
+            'total_sessions' => $total_sessions,
+            'total_sessions_expired' => $total_sessions_expired,
+            'total_sessions_active' => $total_sessions_active,
             'txtgreeting' => $txtGreeting, // Ucapan yang ditentukan sebelumnya
             'title' => 'Beranda - ' . $this->systemName, // Judul halaman
             'headertitle' => 'Beranda', // Judul header

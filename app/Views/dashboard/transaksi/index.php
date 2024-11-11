@@ -285,7 +285,7 @@
 
             const data = response.data;
             $('#transaksiContainer').empty();
-            $('#totalRecords').text(`(${data.total})`);
+            $('#totalRecords').text(`(${data.total.toLocaleString('id-ID')})`);
 
             if (data.total === 0) {
                 $('#paginationNav ul').empty();

@@ -240,7 +240,7 @@
 
             const data = response.data;
             $('#resepContainer').empty();
-            $('#totalRecords').text(`(${data.total})`);
+            $('#totalRecords').text(`(${data.total.toLocaleString('id-ID')})`);
 
             if (data.total === 0) {
                 $('#paginationNav ul').empty();
