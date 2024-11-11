@@ -413,7 +413,7 @@
         toggleSubmitButton();
     });
 
-    $(document).ready(function() {
+    $(document).ready(async function() {
         $('#nomor_registrasi').select2({
             dropdownParent: $('#resepForm'),
             theme: "bootstrap-5",
@@ -555,9 +555,14 @@
             fetchResep();
         });
 
-        fetchResep();
         <?= (session()->get('role') != 'Apoteker') ? 'fetchPasienOptions();' : '' ?>
-        fetchDokterOptions();
+        <?php if (session()->get('role') == 'Dokter') : ?>
+            const selectedDokter = '<?= session()->get('fullname'); ?>';
+            await fetchDokterOptions(selectedDokter);
+        <?php else : ?>
+            await fetchDokterOptions();
+        <?php endif; ?>
+        fetchResep();
         toggleSubmitButton();
     });
     // Show toast notification
