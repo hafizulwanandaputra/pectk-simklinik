@@ -171,6 +171,7 @@
         const offset = (currentPage - 1) * limit;
         const status = $('#statusFilter').val();
         const names = $('#namesFilter').val();
+        const tanggal = $('#tanggalFilter').val();
 
         // Show the spinner
         $('#loadingSpinner').show();
@@ -182,7 +183,8 @@
                     limit: limit,
                     offset: offset,
                     status: status,
-                    names: names
+                    names: names,
+                    tanggal: tanggal
                 }
             });
 
