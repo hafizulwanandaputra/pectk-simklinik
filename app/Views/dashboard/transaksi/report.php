@@ -11,46 +11,50 @@
 <?= $this->endSection(); ?>
 <?= $this->section('content'); ?>
 <main class="col-md-9 ms-sm-auto col-lg-10 px-3 px-md-4 pt-3">
-    <div class="mb-2">
-        <fieldset class="border rounded-3 px-2 py-0 mb-3" id="tambahPasienForm">
-            <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Masukkan Tanggal</legend>
-            <div class="mb-2 input-group">
-                <input type="date" id="tanggal" name="tanggal" class="form-control rounded-start-3">
-                <button class="btn btn-success bg-gradient rounded-end-3" type="button" id="refreshButton" disabled><i class="fa-solid fa-sync"></i></button>
-            </div>
-        </fieldset>
-        <div class="table-responsive">
-            <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
-                <thead>
-                    <tr class="align-middle">
-                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">No</th>
-                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Nomor Kuitansi</th>
-                        <th scope="col" class="bg-body-secondary border-secondary min-width-column" style="border-bottom-width: 2px; width: 12.5%;">Kasir</th>
-                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Nomor Rekam Medis</th>
-                        <th scope="col" class="bg-body-secondary border-secondary min-width-column" style="border-bottom-width: 2px; width: 12.5%;">Nama Pasien</th>
-                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Metode Pembayaran</th>
-                        <th scope="col" class="bg-body-secondary border-secondary min-width-column" style="border-bottom-width: 2px; width: 12.5%;">Dokter</th>
-                        <th scope="col" class="bg-body-secondary border-secondary min-width-column" style="border-bottom-width: 2px; width: 12.5%;">Tindakan</th>
-                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Kas</th>
-                    </tr>
-                </thead>
-                <tbody class="align-top" id="datatransaksi">
-                    <tr>
-                        <td colspan="9" class="text-center">Memuat data transaksi...</td>
-                    </tr>
-                </tbody>
-                <tbody>
-                    <tr>
-                        <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 2px;" colspan="8">Total Pemasukan</th>
-                        <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="total_all"></th>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div id="reportBtns" style="display: none;">
-            <hr>
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
-                <button class="btn btn-success rounded-3 bg-gradient" type="button" id="reportBtn" onclick="downloadReport()"><i class="fa-solid fa-file-excel"></i> Buat Laporan (Excel)</button>
+    <div class="d-lg-flex justify-content-center">
+        <div class="no-fluid-content">
+            <div class="mb-2">
+                <fieldset class="border rounded-3 px-2 py-0 mb-3" id="tambahPasienForm">
+                    <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Masukkan Tanggal</legend>
+                    <div class="mb-2 input-group">
+                        <input type="date" id="tanggal" name="tanggal" class="form-control rounded-start-3">
+                        <button class="btn btn-success bg-gradient rounded-end-3" type="button" id="refreshButton" disabled><i class="fa-solid fa-sync"></i></button>
+                    </div>
+                </fieldset>
+                <div class="table-responsive">
+                    <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
+                        <thead>
+                            <tr class="align-middle">
+                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">No</th>
+                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Nomor Kuitansi</th>
+                                <th scope="col" class="bg-body-secondary border-secondary min-width-column" style="border-bottom-width: 2px; width: 12.5%;">Kasir</th>
+                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Nomor Rekam Medis</th>
+                                <th scope="col" class="bg-body-secondary border-secondary min-width-column" style="border-bottom-width: 2px; width: 12.5%;">Nama Pasien</th>
+                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Metode Pembayaran</th>
+                                <th scope="col" class="bg-body-secondary border-secondary min-width-column" style="border-bottom-width: 2px; width: 12.5%;">Dokter</th>
+                                <th scope="col" class="bg-body-secondary border-secondary min-width-column" style="border-bottom-width: 2px; width: 12.5%;">Tindakan</th>
+                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Kas</th>
+                            </tr>
+                        </thead>
+                        <tbody class="align-top" id="datatransaksi">
+                            <tr>
+                                <td colspan="9" class="text-center">Memuat data transaksi...</td>
+                            </tr>
+                        </tbody>
+                        <tbody>
+                            <tr>
+                                <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 2px;" colspan="8">Total Pemasukan</th>
+                                <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="total_all"></th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="reportBtns" style="display: none;">
+                    <hr>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
+                        <button class="btn btn-success rounded-3 bg-gradient" type="button" id="reportBtn" onclick="downloadReport()"><i class="fa-solid fa-file-excel"></i> Buat Laporan (Excel)</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

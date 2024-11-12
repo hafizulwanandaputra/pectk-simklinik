@@ -14,211 +14,214 @@
 <?= $this->endSection(); ?>
 <?= $this->section('content'); ?>
 <main class="col-md-9 ms-sm-auto col-lg-10 px-3 px-md-4 pt-3">
+    <div class="d-lg-flex justify-content-center">
+        <div class="no-fluid-content">
+            <fieldset class="border rounded-3 px-2 py-0 mb-3">
+                <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Informasi Transaksi</legend>
+                <div class="row">
+                    <div class="col-lg-6" style="font-size: 9pt;">
+                        <div class="mb-2 row">
+                            <div class="col-lg-4 fw-medium">Nama Pasien</div>
+                            <div class="col-lg">
+                                <div>
+                                    <?= ($transaksi['nama_pasien'] == NULL) ? '<em>Anonim</em>' : $transaksi['nama_pasien']; ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-2 row">
+                            <div class="col-lg-4 fw-medium">Nomor Rekam Medis</div>
+                            <div class="col-lg">
+                                <div class="date">
+                                    <?= $transaksi['no_rm'] ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-2 row">
+                            <div class="col-lg-4 fw-medium">Alamat</div>
+                            <div class="col-lg">
+                                <div>
+                                    <?= $transaksi['alamat'] ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-2 row">
+                            <div class="col-lg-4 fw-medium">Nomor HP</div>
+                            <div class="col-lg">
+                                <div class="date">
+                                    <?= $transaksi['telpon'] ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6" style="font-size: 9pt;">
+                        <div class="mb-2 row">
+                            <div class="col-lg-4 fw-medium">Nomor Kuitansi</div>
+                            <div class="col-lg">
+                                <div class="date">
+                                    <?= $transaksi['no_kwitansi'] ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-2 row">
+                            <div class="col-lg-4 fw-medium">Tanggal dan Waktu</div>
+                            <div class="col-lg">
+                                <div class="date">
+                                    <?= $transaksi['tgl_transaksi'] ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-2 row">
+                            <div class="col-lg-4 fw-medium">Kasir</div>
+                            <div class="col-lg">
+                                <div>
+                                    <?= $transaksi['kasir'] ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-2 row">
+                            <div class="col-lg-4 fw-medium">Dokter</div>
+                            <div class="col-lg">
+                                <div>
+                                    <?= $transaksi['dokter'] ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
 
-    <fieldset class="border rounded-3 px-2 py-0 mb-3">
-        <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Informasi Transaksi</legend>
-        <div class="row">
-            <div class="col-lg-6" style="font-size: 9pt;">
-                <div class="mb-2 row">
-                    <div class="col-lg-4 fw-medium">Nama Pasien</div>
-                    <div class="col-lg">
-                        <div>
-                            <?= ($transaksi['nama_pasien'] == NULL) ? '<em>Anonim</em>' : $transaksi['nama_pasien']; ?>
-                        </div>
-                    </div>
+            <div class="row">
+                <div class="col-lg-6 add-forms">
+                    <fieldset id="tambahLayananContainer" class="border rounded-3 px-2 py-0 h-100" style="display: none;">
+                        <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Tambah Tindakan</legend>
+                        <form id="tambahLayanan" enctype="multipart/form-data">
+                            <div class="mb-2">
+                                <select class="form-select rounded-3 form-tindakan" id="id_layanan" name="id_layanan" aria-label="id_layanan">
+                                    <option value="" disabled selected>-- Pilih Tindakan --</option>
+                                </select>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="d-flex flex-column flex-lg-row mb-2 gap-2">
+                                <div class="flex-fill">
+                                    <input type="number" id="qty_transaksi" name="qty_transaksi" class="form-control rounded-3 form-tindakan" placeholder="Qty" autocomplete="off">
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                                <div class="flex-fill">
+                                    <input type="number" id="diskon_layanan" name="diskon_layanan" class="form-control rounded-3 form-tindakan" placeholder="Diskon (%)" autocomplete="off">
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                                <div class="d-grid d-lg-block w-auto">
+                                    <button type="submit" id="addLayananButton" class="btn btn-primary bg-gradient rounded-3 text-nowrap">
+                                        <i class="fa-solid fa-plus"></i> Tambah
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </fieldset>
                 </div>
-                <div class="mb-2 row">
-                    <div class="col-lg-4 fw-medium">Nomor Rekam Medis</div>
-                    <div class="col-lg">
-                        <div class="date">
-                            <?= $transaksi['no_rm'] ?>
-                        </div>
-                    </div>
-                </div>
-                <div class="mb-2 row">
-                    <div class="col-lg-4 fw-medium">Alamat</div>
-                    <div class="col-lg">
-                        <div>
-                            <?= $transaksi['alamat'] ?>
-                        </div>
-                    </div>
-                </div>
-                <div class="mb-2 row">
-                    <div class="col-lg-4 fw-medium">Nomor HP</div>
-                    <div class="col-lg">
-                        <div class="date">
-                            <?= $transaksi['telpon'] ?>
-                        </div>
-                    </div>
+                <div class="col-lg-6 add-forms">
+                    <fieldset id="tambahObatAlkesContainer" class="border rounded-3 px-2 py-0 h-100" style="display: none;">
+                        <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Tambah Obat dan Alkes</legend>
+                        <form id="tambahObatAlkes" enctype="multipart/form-data">
+                            <div class="mb-2">
+                                <select class="form-select rounded-3" id="id_resep" name="id_resep" aria-label="id_resep">
+                                    <option value="" disabled selected>-- Pilih Resep --</option>
+                                </select>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="d-flex flex-column flex-lg-row mb-2 gap-2">
+                                <div class="flex-fill">
+                                    <input type="number" id="diskon_obatalkes" name="diskon_obatalkes" class="form-control rounded-3" placeholder="Diskon (%)" autocomplete="off">
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                                <div class="d-grid d-lg-block w-auto">
+                                    <button type="submit" id="addObatAlkesButton" class="btn btn-primary bg-gradient rounded-3 text-nowrap">
+                                        <i class="fa-solid fa-plus"></i> Tambah
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </fieldset>
                 </div>
             </div>
-            <div class="col-lg-6" style="font-size: 9pt;">
-                <div class="mb-2 row">
-                    <div class="col-lg-4 fw-medium">Nomor Kuitansi</div>
-                    <div class="col-lg">
-                        <div class="date">
-                            <?= $transaksi['no_kwitansi'] ?>
-                        </div>
-                    </div>
-                </div>
-                <div class="mb-2 row">
-                    <div class="col-lg-4 fw-medium">Tanggal dan Waktu</div>
-                    <div class="col-lg">
-                        <div class="date">
-                            <?= $transaksi['tgl_transaksi'] ?>
-                        </div>
-                    </div>
-                </div>
-                <div class="mb-2 row">
-                    <div class="col-lg-4 fw-medium">Kasir</div>
-                    <div class="col-lg">
-                        <div>
-                            <?= $transaksi['kasir'] ?>
-                        </div>
-                    </div>
-                </div>
-                <div class="mb-2 row">
-                    <div class="col-lg-4 fw-medium">Dokter</div>
-                    <div class="col-lg">
-                        <div>
-                            <?= $transaksi['dokter'] ?>
-                        </div>
-                    </div>
+
+            <div class="table-responsive">
+                <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
+                    <thead>
+                        <tr class="align-middle">
+                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Tindakan</th>
+                            <th scope="col" class="bg-body-secondary border-secondary min-width-column" style="border-bottom-width: 2px; width: 100%;">Nama Tindakan</th>
+                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Qty</th>
+                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Harga</th>
+                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Diskon</th>
+                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Pembayaran</th>
+                        </tr>
+                    </thead>
+                    <tbody class="align-top" id="list_layanan">
+                        <tr>
+                            <td colspan="6" class="text-center">Memuat detail transaksi...</td>
+                        </tr>
+                    </tbody>
+                    <tbody>
+                        <tr>
+                            <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 2px;" colspan="5">Sub Total</th>
+                            <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="subtotal_layanan"></th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="my-3"></div>
+
+            <div class="table-responsive">
+                <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
+                    <thead>
+                        <tr class="align-middle">
+                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Tindakan</th>
+                            <th scope="col" class="bg-body-secondary border-secondary min-width-column" style="border-bottom-width: 2px; width: 100%;">Nama Obat dan Alkes</th>
+                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Harga</th>
+                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Diskon</th>
+                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Pembayaran</th>
+                        </tr>
+                    </thead>
+                    <tbody class="align-top" id="list_obat_alkes">
+                        <tr>
+                            <td colspan="5" class="text-center">Memuat detail transaksi...</td>
+                        </tr>
+                    </tbody>
+                    <tbody>
+                        <tr>
+                            <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 2px;" colspan="4">Sub Total</th>
+                            <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="subtotal_obat_alkes"></th>
+                        </tr>
+                        <tr>
+                            <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 0px;" colspan="4">Grand Total</th>
+                            <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 0px;" id="total_pembayaran"></th>
+                        </tr>
+                        <tr>
+                            <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 0px;" colspan="4">Terima Uang</th>
+                            <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 0px;" id="terima_uang_table"></th>
+                        </tr>
+                        <tr>
+                            <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 0px;" colspan="4">Uang Kembali</th>
+                            <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 0px;" id="uang_kembali_table"></th>
+                        </tr>
+                        <tr>
+                            <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 0px;" colspan="4">Metode Bayar</th>
+                            <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 0px;" id="metode_pembayaran_table"></th>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="prosesTransaksi">
+                <hr>
+                <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-3">
+                    <button class="btn btn-body rounded-3 bg-gradient" type="button" id="printBtn" onclick="window.open(`<?= base_url('/transaksi/struk/' . $transaksi['id_transaksi']) ?>`)" disabled><i class="fa-solid fa-print"></i> Cetak Struk/Kuitansi</button>
+                    <button class="btn btn-danger rounded-3 bg-gradient" type="button" id="cancelBtn" data-id="<?= $transaksi['id_transaksi'] ?>" disabled><i class="fa-solid fa-xmark"></i> Batalkan Transaksi</button>
+                    <button class="btn btn-success rounded-3 bg-gradient" type="button" id="processBtn" data-id="<?= $transaksi['id_transaksi'] ?>" disabled><i class="fa-solid fa-money-bills"></i> Proses Transaksi</button>
                 </div>
             </div>
-        </div>
-    </fieldset>
-
-    <div class="row">
-        <div class="col-lg-6 add-forms">
-            <fieldset id="tambahLayananContainer" class="border rounded-3 px-2 py-0 h-100" style="display: none;">
-                <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Tambah Tindakan</legend>
-                <form id="tambahLayanan" enctype="multipart/form-data">
-                    <div class="mb-2">
-                        <select class="form-select rounded-3 form-tindakan" id="id_layanan" name="id_layanan" aria-label="id_layanan">
-                            <option value="" disabled selected>-- Pilih Tindakan --</option>
-                        </select>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                    <div class="d-flex flex-column flex-lg-row mb-2 gap-2">
-                        <div class="flex-fill">
-                            <input type="number" id="qty_transaksi" name="qty_transaksi" class="form-control rounded-3 form-tindakan" placeholder="Qty" autocomplete="off">
-                            <div class="invalid-feedback"></div>
-                        </div>
-                        <div class="flex-fill">
-                            <input type="number" id="diskon_layanan" name="diskon_layanan" class="form-control rounded-3 form-tindakan" placeholder="Diskon (%)" autocomplete="off">
-                            <div class="invalid-feedback"></div>
-                        </div>
-                        <div class="d-grid d-lg-block w-auto">
-                            <button type="submit" id="addLayananButton" class="btn btn-primary bg-gradient rounded-3 text-nowrap">
-                                <i class="fa-solid fa-plus"></i> Tambah
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </fieldset>
-        </div>
-        <div class="col-lg-6 add-forms">
-            <fieldset id="tambahObatAlkesContainer" class="border rounded-3 px-2 py-0 h-100" style="display: none;">
-                <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Tambah Obat dan Alkes</legend>
-                <form id="tambahObatAlkes" enctype="multipart/form-data">
-                    <div class="mb-2">
-                        <select class="form-select rounded-3" id="id_resep" name="id_resep" aria-label="id_resep">
-                            <option value="" disabled selected>-- Pilih Resep --</option>
-                        </select>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                    <div class="d-flex flex-column flex-lg-row mb-2 gap-2">
-                        <div class="flex-fill">
-                            <input type="number" id="diskon_obatalkes" name="diskon_obatalkes" class="form-control rounded-3" placeholder="Diskon (%)" autocomplete="off">
-                            <div class="invalid-feedback"></div>
-                        </div>
-                        <div class="d-grid d-lg-block w-auto">
-                            <button type="submit" id="addObatAlkesButton" class="btn btn-primary bg-gradient rounded-3 text-nowrap">
-                                <i class="fa-solid fa-plus"></i> Tambah
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </fieldset>
-        </div>
-    </div>
-
-    <div class="table-responsive">
-        <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
-            <thead>
-                <tr class="align-middle">
-                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Tindakan</th>
-                    <th scope="col" class="bg-body-secondary border-secondary min-width-column" style="border-bottom-width: 2px; width: 100%;">Nama Tindakan</th>
-                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Qty</th>
-                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Harga</th>
-                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Diskon</th>
-                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Pembayaran</th>
-                </tr>
-            </thead>
-            <tbody class="align-top" id="list_layanan">
-                <tr>
-                    <td colspan="6" class="text-center">Memuat detail transaksi...</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 2px;" colspan="5">Sub Total</th>
-                    <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="subtotal_layanan"></th>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div class="my-3"></div>
-
-    <div class="table-responsive">
-        <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
-            <thead>
-                <tr class="align-middle">
-                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Tindakan</th>
-                    <th scope="col" class="bg-body-secondary border-secondary min-width-column" style="border-bottom-width: 2px; width: 100%;">Nama Obat dan Alkes</th>
-                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Harga</th>
-                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Diskon</th>
-                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Pembayaran</th>
-                </tr>
-            </thead>
-            <tbody class="align-top" id="list_obat_alkes">
-                <tr>
-                    <td colspan="5" class="text-center">Memuat detail transaksi...</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 2px;" colspan="4">Sub Total</th>
-                    <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="subtotal_obat_alkes"></th>
-                </tr>
-                <tr>
-                    <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 0px;" colspan="4">Grand Total</th>
-                    <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 0px;" id="total_pembayaran"></th>
-                </tr>
-                <tr>
-                    <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 0px;" colspan="4">Terima Uang</th>
-                    <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 0px;" id="terima_uang_table"></th>
-                </tr>
-                <tr>
-                    <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 0px;" colspan="4">Uang Kembali</th>
-                    <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 0px;" id="uang_kembali_table"></th>
-                </tr>
-                <tr>
-                    <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 0px;" colspan="4">Metode Bayar</th>
-                    <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 0px;" id="metode_pembayaran_table"></th>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <div id="prosesTransaksi">
-        <hr>
-        <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-3">
-            <button class="btn btn-body rounded-3 bg-gradient" type="button" id="printBtn" onclick="window.open(`<?= base_url('/transaksi/struk/' . $transaksi['id_transaksi']) ?>`)" disabled><i class="fa-solid fa-print"></i> Cetak Struk/Kuitansi</button>
-            <button class="btn btn-danger rounded-3 bg-gradient" type="button" id="cancelBtn" data-id="<?= $transaksi['id_transaksi'] ?>" disabled><i class="fa-solid fa-xmark"></i> Batalkan Transaksi</button>
-            <button class="btn btn-success rounded-3 bg-gradient" type="button" id="processBtn" data-id="<?= $transaksi['id_transaksi'] ?>" disabled><i class="fa-solid fa-money-bills"></i> Proses Transaksi</button>
         </div>
     </div>
 

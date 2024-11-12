@@ -14,129 +14,143 @@
         <h1 class="h2 me-3"><i class="fa-regular fa-face-smile-beam"></i></h1>
         <h1 class="h2"><?= $txtgreeting . ', ' . session()->get('fullname') . '!'; ?></h1>
     </div>
-    <?php if (session()->get('role') == "Admin") : ?>
-        <fieldset class="border rounded-3 px-2 py-0 mb-3">
-            <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Admin</legend>
-            <div class="mb-2">
-                <div class="card bg-body-tertiary w-100 rounded-3">
-                    <div class="card-header w-100 text-truncate">Pengguna Keseluruhan</div>
-                    <div class="card-body">
-                        <h5 class="display-5 fw-medium date mb-0"><?= number_format($total_user, 0, ',', '.') ?></h5>
-                    </div>
-                </div>
-            </div>
-            <div class="row row-cols-1 row-cols-lg-2 g-2 mb-2">
-                <div class="col">
-                    <div class="card bg-danger-subtle text-danger-emphasis w-100 rounded-3">
-                        <div class="card-header w-100 text-truncate">Pengguna Nonaktif</div>
-                        <div class="card-body">
-                            <h5 class="display-5 fw-medium date mb-0"><?= number_format($total_user_inactive, 0, ',', '.') ?></h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card bg-success-subtle text-success-emphasis w-100 rounded-3">
-                        <div class="card-header w-100 text-truncate">Pengguna Aktif</div>
-                        <div class="card-body">
-                            <h5 class="display-5 fw-medium date mb-0"><?= number_format($total_user_active, 0, ',', '.') ?></h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="mb-2">
-                <div class="card bg-body-tertiary w-100 rounded-3">
-                    <div class="card-header w-100 text-truncate">Sesi Keseluruhan Selain Anda</div>
-                    <div class="card-body">
-                        <h5 class="display-5 fw-medium date mb-0"><?= number_format($total_sessions, 0, ',', '.') ?></h5>
-                    </div>
-                </div>
-            </div>
-            <div class="row row-cols-1 row-cols-lg-2 g-2 mb-2">
-                <div class="col">
-                    <div class="card bg-danger-subtle text-danger-emphasis w-100 rounded-3">
-                        <div class="card-header w-100 text-truncate">Sesi Kedaluwarsa Selain Anda</div>
-                        <div class="card-body">
-                            <h5 class="display-5 fw-medium date mb-0"><?= number_format($total_sessions_expired, 0, ',', '.') ?></h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card bg-success-subtle text-success-emphasis w-100 rounded-3">
-                        <div class="card-header w-100 text-truncate">Sesi Aktif Selain Anda</div>
-                        <div class="card-body">
-                            <h5 class="display-5 fw-medium date mb-0"><?= number_format($total_sessions_active, 0, ',', '.') ?></h5>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </fieldset>
-    <?php endif; ?>
-    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Apoteker" || session()->get('role') == "Dokter") : ?>
-        <fieldset class="border rounded-3 px-2 py-0 mb-3">
-            <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Farmasi</legend>
-            <div class="row row-cols-1 row-cols-lg-2 g-2 mb-2">
-                <?php if (session()->get('role') != "Dokter") : ?>
-                    <div class="col">
+    <div class="d-lg-flex justify-content-center">
+        <div class="no-fluid-content">
+            <?php if (session()->get('role') == "Admin") : ?>
+                <fieldset class="border rounded-3 px-2 py-0 mb-3">
+                    <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Admin</legend>
+                    <div class="mb-2">
                         <div class="card bg-body-tertiary w-100 rounded-3">
-                            <div class="card-header w-100 text-truncate">Supplier</div>
+                            <div class="card-header w-100 text-truncate">Pengguna Keseluruhan</div>
                             <div class="card-body">
-                                <h5 class="display-5 fw-medium date mb-0"><?= number_format($total_supplier, 0, ',', '.') ?></h5>
+                                <h5 class="display-5 fw-medium date mb-0"><?= number_format($total_user, 0, ',', '.') ?></h5>
                             </div>
                         </div>
                     </div>
-                    <div class="col">
-                        <div class="card bg-body-tertiary w-100 rounded-3">
-                            <div class="card-header w-100 text-truncate">Obat</div>
-                            <div class="card-body">
-                                <h5 class="display-5 fw-medium date mb-0"><?= number_format($total_obat, 0, ',', '.') ?></h5>
+                    <div class="row row-cols-1 row-cols-lg-2 g-2 mb-2">
+                        <div class="col">
+                            <div class="card bg-danger-subtle text-danger-emphasis w-100 rounded-3">
+                                <div class="card-header w-100 text-truncate">Pengguna Nonaktif</div>
+                                <div class="card-body">
+                                    <h5 class="display-5 fw-medium date mb-0"><?= number_format($total_user_inactive, 0, ',', '.') ?></h5>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col">
-                        <div class="card bg-danger-subtle text-danger-emphasis w-100 rounded-3">
-                            <div class="card-header w-100 text-truncate">Obat Masuk yang Belum Diterima</div>
-                            <div class="card-body">
-                                <h5 class="display-5 fw-medium date mb-0"><?= number_format($total_pembelian_obat_blm_diterima, 0, ',', '.') ?></h5>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card bg-success-subtle text-success-emphasis w-100 rounded-3">
-                            <div class="card-header w-100 text-truncate">Obat Masuk yang Sudah Diterima</div>
-                            <div class="card-body">
-                                <h5 class="display-5 fw-medium date mb-0"><?= number_format($total_pembelian_obat_sdh_diterima, 0, ',', '.') ?></h5>
-                            </div>
-                        </div>
-                    </div>
-                <?php endif; ?>
-                <div class="col">
-                    <div class="card bg-danger-subtle text-danger-emphasis w-100 rounded-3">
-                        <div class="card-header w-100 text-truncate">Resep yang Belum Diproses</div>
-                        <div class="card-body">
-                            <h5 class="display-5 fw-medium date mb-0"><?= number_format($total_resep_blm_status, 0, ',', '.') ?></h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card bg-success-subtle text-success-emphasis w-100 rounded-3">
-                        <div class="card-header w-100 text-truncate">Resep yang Sudah Diproses</div>
-                        <div class="card-body">
-                            <h5 class="display-5 fw-medium date mb-0"><?= number_format($total_resep_sdh_status, 0, ',', '.') ?></h5>
-                        </div>
-                    </div>
-                </div>
-                <?php if (session()->get('role') != "Dokter") : ?>
-                    <div class="col">
-                        <div class="card bg-body-tertiary w-100 rounded-3">
-                            <div class="card-header w-100 text-truncate">Resep Menurut Dokter</div>
-                            <div class="card-body">
-                                <div style="width: 100% !important;height: 400px !important;">
-                                    <canvas id="resepbydoktergraph"></canvas>
+                        <div class="col">
+                            <div class="card bg-success-subtle text-success-emphasis w-100 rounded-3">
+                                <div class="card-header w-100 text-truncate">Pengguna Aktif</div>
+                                <div class="card-body">
+                                    <h5 class="display-5 fw-medium date mb-0"><?= number_format($total_user_active, 0, ',', '.') ?></h5>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col">
+                    <div class="mb-2">
+                        <div class="card bg-body-tertiary w-100 rounded-3">
+                            <div class="card-header w-100 text-truncate">Sesi Keseluruhan Selain Anda</div>
+                            <div class="card-body">
+                                <h5 class="display-5 fw-medium date mb-0"><?= number_format($total_sessions, 0, ',', '.') ?></h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row-cols-1 row-cols-lg-2 g-2 mb-2">
+                        <div class="col">
+                            <div class="card bg-danger-subtle text-danger-emphasis w-100 rounded-3">
+                                <div class="card-header w-100 text-truncate">Sesi Kedaluwarsa Selain Anda</div>
+                                <div class="card-body">
+                                    <h5 class="display-5 fw-medium date mb-0"><?= number_format($total_sessions_expired, 0, ',', '.') ?></h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card bg-success-subtle text-success-emphasis w-100 rounded-3">
+                                <div class="card-header w-100 text-truncate">Sesi Aktif Selain Anda</div>
+                                <div class="card-body">
+                                    <h5 class="display-5 fw-medium date mb-0"><?= number_format($total_sessions_active, 0, ',', '.') ?></h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            <?php endif; ?>
+            <?php if (session()->get('role') == "Admin" || session()->get('role') == "Apoteker" || session()->get('role') == "Dokter") : ?>
+                <fieldset class="border rounded-3 px-2 py-0 mb-3">
+                    <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Farmasi</legend>
+                    <div class="row row-cols-1 row-cols-lg-2 g-2 mb-2">
+                        <?php if (session()->get('role') != "Dokter") : ?>
+                            <div class="col">
+                                <div class="card bg-body-tertiary w-100 rounded-3">
+                                    <div class="card-header w-100 text-truncate">Supplier</div>
+                                    <div class="card-body">
+                                        <h5 class="display-5 fw-medium date mb-0"><?= number_format($total_supplier, 0, ',', '.') ?></h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="card bg-body-tertiary w-100 rounded-3">
+                                    <div class="card-header w-100 text-truncate">Obat</div>
+                                    <div class="card-body">
+                                        <h5 class="display-5 fw-medium date mb-0"><?= number_format($total_obat, 0, ',', '.') ?></h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="card bg-danger-subtle text-danger-emphasis w-100 rounded-3">
+                                    <div class="card-header w-100 text-truncate">Obat Masuk yang Belum Diterima</div>
+                                    <div class="card-body">
+                                        <h5 class="display-5 fw-medium date mb-0"><?= number_format($total_pembelian_obat_blm_diterima, 0, ',', '.') ?></h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="card bg-success-subtle text-success-emphasis w-100 rounded-3">
+                                    <div class="card-header w-100 text-truncate">Obat Masuk yang Sudah Diterima</div>
+                                    <div class="card-body">
+                                        <h5 class="display-5 fw-medium date mb-0"><?= number_format($total_pembelian_obat_sdh_diterima, 0, ',', '.') ?></h5>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endif; ?>
+                        <div class="col">
+                            <div class="card bg-danger-subtle text-danger-emphasis w-100 rounded-3">
+                                <div class="card-header w-100 text-truncate">Resep yang Belum Diproses</div>
+                                <div class="card-body">
+                                    <h5 class="display-5 fw-medium date mb-0"><?= number_format($total_resep_blm_status, 0, ',', '.') ?></h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card bg-success-subtle text-success-emphasis w-100 rounded-3">
+                                <div class="card-header w-100 text-truncate">Resep yang Sudah Diproses</div>
+                                <div class="card-body">
+                                    <h5 class="display-5 fw-medium date mb-0"><?= number_format($total_resep_sdh_status, 0, ',', '.') ?></h5>
+                                </div>
+                            </div>
+                        </div>
+                        <?php if (session()->get('role') != "Dokter") : ?>
+                            <div class="col">
+                                <div class="card bg-body-tertiary w-100 rounded-3">
+                                    <div class="card-header w-100 text-truncate">Resep Menurut Dokter</div>
+                                    <div class="card-body">
+                                        <div style="width: 100% !important;height: 400px !important;">
+                                            <canvas id="resepbydoktergraph"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="card bg-body-tertiary w-100 rounded-3">
+                                    <div class="card-header w-100 text-truncate">Resep Per Bulan</div>
+                                    <div class="card-body">
+                                        <div style="width: 100% !important;height: 400px !important;">
+                                            <canvas id="resepgraph"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php else : ?>
+                    </div>
+                    <div class="mb-2">
                         <div class="card bg-body-tertiary w-100 rounded-3">
                             <div class="card-header w-100 text-truncate">Resep Per Bulan</div>
                             <div class="card-body">
@@ -146,83 +160,72 @@
                             </div>
                         </div>
                     </div>
-                <?php else : ?>
-            </div>
-            <div class="mb-2">
-                <div class="card bg-body-tertiary w-100 rounded-3">
-                    <div class="card-header w-100 text-truncate">Resep Per Bulan</div>
-                    <div class="card-body">
-                        <div style="width: 100% !important;height: 400px !important;">
-                            <canvas id="resepgraph"></canvas>
+                <?php endif; ?>
+                </fieldset>
+            <?php endif; ?>
+            <?php if (session()->get('role') == "Admin" || session()->get('role') == "Kasir") : ?>
+                <fieldset class="border rounded-3 px-2 py-0 mb-3">
+                    <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Kasir</legend>
+                    <div class="row row-cols-1 row-cols-lg-2 g-2 mb-2">
+                        <div class="col">
+                            <div class="card bg-danger-subtle text-danger-emphasis w-100 rounded-3">
+                                <div class="card-header w-100 text-truncate">Transaksi yang Belum Diproses</div>
+                                <div class="card-body">
+                                    <h5 class="display-5 fw-medium date mb-0"><?= number_format($total_transaksi_blm_lunas, 0, ',', '.') ?></h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card bg-success-subtle text-success-emphasis w-100 rounded-3">
+                                <div class="card-header w-100 text-truncate">Transaksi yang Sudah Diproses</div>
+                                <div class="card-body">
+                                    <h5 class="display-5 fw-medium date mb-0"><?= number_format($total_transaksi_sdh_lunas, 0, ',', '.') ?></h5>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card bg-body-tertiary w-100 rounded-3">
+                                <div class="card-header w-100 text-truncate">Transaksi Menurut Petugas Kasir</div>
+                                <div class="card-body">
+                                    <div style="width: 100% !important;height: 400px !important;">
+                                        <canvas id="transaksibykasirgraph"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="card bg-body-tertiary w-100 rounded-3">
+                                <div class="card-header w-100 text-truncate">Transaksi Per Bulan</div>
+                                <div class="card-body">
+                                    <div style="width: 100% !important;height: 400px !important;">
+                                        <canvas id="transaksiperbulangraph"></canvas>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        <?php endif; ?>
+                    <div class="mb-2">
+                        <div class="card bg-primary-subtle text-primary-emphasis w-100 rounded-3">
+                            <div class="card-header w-100 text-truncate">Jumlah Pemasukan Keseluruhan</div>
+                            <div class="card-body">
+                                <h5 class="display-5 fw-medium date mb-0"><?= 'Rp' . number_format($total_pemasukan, 0, ',', '.') ?></h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <div class="card bg-body-tertiary w-100 rounded-3">
+                            <div class="card-header w-100 text-truncate">Pemasukan Per Bulan</div>
+                            <div class="card-body">
+                                <div style="width: 100% !important;height: 400px !important;">
+                                    <canvas id="pemasukanperbulangraph"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            <?php endif; ?>
         </div>
-        </fieldset>
-    <?php endif; ?>
-    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Kasir") : ?>
-        <fieldset class="border rounded-3 px-2 py-0 mb-3">
-            <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Kasir</legend>
-            <div class="row row-cols-1 row-cols-lg-2 g-2 mb-2">
-                <div class="col">
-                    <div class="card bg-danger-subtle text-danger-emphasis w-100 rounded-3">
-                        <div class="card-header w-100 text-truncate">Transaksi yang Belum Diproses</div>
-                        <div class="card-body">
-                            <h5 class="display-5 fw-medium date mb-0"><?= number_format($total_transaksi_blm_lunas, 0, ',', '.') ?></h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card bg-success-subtle text-success-emphasis w-100 rounded-3">
-                        <div class="card-header w-100 text-truncate">Transaksi yang Sudah Diproses</div>
-                        <div class="card-body">
-                            <h5 class="display-5 fw-medium date mb-0"><?= number_format($total_transaksi_sdh_lunas, 0, ',', '.') ?></h5>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card bg-body-tertiary w-100 rounded-3">
-                        <div class="card-header w-100 text-truncate">Transaksi Menurut Petugas Kasir</div>
-                        <div class="card-body">
-                            <div style="width: 100% !important;height: 400px !important;">
-                                <canvas id="transaksibykasirgraph"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="card bg-body-tertiary w-100 rounded-3">
-                        <div class="card-header w-100 text-truncate">Transaksi Per Bulan</div>
-                        <div class="card-body">
-                            <div style="width: 100% !important;height: 400px !important;">
-                                <canvas id="transaksiperbulangraph"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="mb-2">
-                <div class="card bg-primary-subtle text-primary-emphasis w-100 rounded-3">
-                    <div class="card-header w-100 text-truncate">Jumlah Pemasukan Keseluruhan</div>
-                    <div class="card-body">
-                        <h5 class="display-5 fw-medium date mb-0"><?= 'Rp' . number_format($total_pemasukan, 0, ',', '.') ?></h5>
-                    </div>
-                </div>
-            </div>
-            <div class="mb-2">
-                <div class="card bg-body-tertiary w-100 rounded-3">
-                    <div class="card-header w-100 text-truncate">Pemasukan Per Bulan</div>
-                    <div class="card-body">
-                        <div style="width: 100% !important;height: 400px !important;">
-                            <canvas id="pemasukanperbulangraph"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </fieldset>
-    <?php endif; ?>
+    </div>
 </main>
 <?= $this->endSection(); ?>
 <?= $this->section('javascript'); ?>

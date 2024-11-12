@@ -14,59 +14,61 @@
 <?= $this->endSection(); ?>
 <?= $this->section('content'); ?>
 <main class="col-md-9 ms-sm-auto col-lg-10 px-3 px-md-4 pt-3">
-
-    <fieldset class="border rounded-3 px-2 py-0 mb-3">
-        <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Informasi Laporan Stok Obat</legend>
-        <div style="font-size: 9pt;">
-            <div class="mb-2 row">
-                <div class="col-lg-3 fw-medium">Tanggal dan Waktu</div>
-                <div class="col-lg">
-                    <div class="date">
-                        <?= $opname_obat['tanggal'] ?>
+    <div class="d-lg-flex justify-content-center">
+        <div class="no-fluid-content">
+            <fieldset class="border rounded-3 px-2 py-0 mb-3">
+                <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Informasi Laporan Stok Obat</legend>
+                <div style="font-size: 9pt;">
+                    <div class="mb-2 row">
+                        <div class="col-lg-3 fw-medium">Tanggal dan Waktu</div>
+                        <div class="col-lg">
+                            <div class="date">
+                                <?= $opname_obat['tanggal'] ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-2 row">
+                        <div class="col-lg-3 fw-medium">Apoteker</div>
+                        <div class="col-lg">
+                            <div class="date">
+                                <?= $opname_obat['apoteker'] ?>
+                            </div>
+                        </div>
                     </div>
                 </div>
+            </fieldset>
+
+            <div class="table-responsive">
+                <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
+                    <thead>
+                        <tr class="align-middle">
+                            <th scope="col" class="bg-body-secondary border-secondary text-nowrap tindakan" style="border-bottom-width: 2px; width: 0%;">No</th>
+                            <th scope="col" class="bg-body-secondary border-secondary min-width-column" style="border-bottom-width: 2px; width: 100%;">Nama Obat</th>
+                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Sisa Stok</th>
+                        </tr>
+                    </thead>
+                    <tbody class="align-top" id="detail_opname_obat">
+                        <tr>
+                            <td colspan="3" class="text-center">Memuat detail obat...</td>
+                        </tr>
+                    </tbody>
+                    <tbody>
+                        <tr>
+                            <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 2px;" colspan="2">Total</th>
+                            <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="total_stok"></th>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-            <div class="mb-2 row">
-                <div class="col-lg-3 fw-medium">Apoteker</div>
-                <div class="col-lg">
-                    <div class="date">
-                        <?= $opname_obat['apoteker'] ?>
-                    </div>
+
+            <div id="exportOpnameObatBtn">
+                <hr>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
+                    <button class="btn btn-success rounded-3 bg-gradient" type="button" id="exportBtn" onclick="startDownload()" disabled><i class="fa-solid fa-file-excel"></i> Ekspor Laporan Stok Obat (Excel)</button>
                 </div>
             </div>
         </div>
-    </fieldset>
-
-    <div class="table-responsive">
-        <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
-            <thead>
-                <tr class="align-middle">
-                    <th scope="col" class="bg-body-secondary border-secondary text-nowrap tindakan" style="border-bottom-width: 2px; width: 0%;">No</th>
-                    <th scope="col" class="bg-body-secondary border-secondary min-width-column" style="border-bottom-width: 2px; width: 100%;">Nama Obat</th>
-                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Sisa Stok</th>
-                </tr>
-            </thead>
-            <tbody class="align-top" id="detail_opname_obat">
-                <tr>
-                    <td colspan="3" class="text-center">Memuat detail obat...</td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 2px;" colspan="2">Total</th>
-                    <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="total_stok"></th>
-                </tr>
-            </tbody>
-        </table>
     </div>
-
-    <div id="exportOpnameObatBtn">
-        <hr>
-        <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
-            <button class="btn btn-success rounded-3 bg-gradient" type="button" id="exportBtn" onclick="startDownload()" disabled><i class="fa-solid fa-file-excel"></i> Ekspor Laporan Stok Obat (Excel)</button>
-        </div>
-    </div>
-
 </main>
 <?= $this->endSection(); ?>
 <?= $this->section('javascript'); ?>

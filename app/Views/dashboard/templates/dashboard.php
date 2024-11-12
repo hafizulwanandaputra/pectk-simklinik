@@ -208,6 +208,21 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
             }
         }
 
+        @media (min-width: 992px) {
+            .no-fluid-content {
+                min-width: 779px;
+                max-width: 779px;
+            }
+        }
+
+        @media (min-width: 1400px) {
+
+            .no-fluid-content {
+                min-width: 1098px;
+                max-width: 1098px;
+            }
+        }
+
         @media (max-width: 767.98px) {
             .toast-container {
                 padding-top: 7rem !important;

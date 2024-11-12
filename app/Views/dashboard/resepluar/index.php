@@ -13,60 +13,64 @@
 <?= $this->endSection(); ?>
 <?= $this->section('content'); ?>
 <main class="col-md-9 ms-sm-auto col-lg-10 px-3 px-md-4 pt-3">
-    <div class="d-flex flex-column flex-lg-row mb-1 gap-2 mb-2">
-        <select id="statusFilter" class="form-select form-select-sm w-auto rounded-3 flex-fill">
-            <option value="">Semua Status Proses</option>
-            <option value="1">Diproses</option>
-            <option value="0">Belum Diproses</option>
-        </select>
-        <select id="namesFilter" class="form-select form-select-sm w-auto rounded-3 flex-fill">
-            <option value="">Semua Nama</option>
-            <option value="1">Dengan Nama</option>
-            <option value="0">Anonim</option>
-        </select>
-    </div>
-    <div class="d-flex flex-column flex-lg-row mb-1 gap-2 mb-3">
-        <div class="input-group input-group-sm">
-            <input type="date" id="tanggalFilter" class="form-control rounded-start-3">
-            <button class="btn btn-danger btn-sm bg-gradient rounded-end-3" type="button" id="clearTglButton"><i class="fa-solid fa-xmark"></i></button>
-        </div>
-        <div class="input-group input-group-sm flex-fill">
-            <input type="search" id="searchInput" class="form-control rounded-start-3" placeholder="Cari pasien">
-            <button class="btn btn-success btn-sm bg-gradient" type="button" id="refreshButton"><i class="fa-solid fa-sync"></i></button>
-            <button class="btn btn-primary btn-sm bg-gradient rounded-end-3" type="button" id="addButton"><i class="fa-solid fa-plus"></i> Tambah</button>
-        </div>
-    </div>
-    <ul id="resepContainer" class="list-group shadow-sm rounded-3 mt-1">
-        <?php for ($i = 0; $i < 12; $i++) : ?>
+    <div class="d-lg-flex justify-content-center">
+        <div class="no-fluid-content">
+            <div class="d-flex flex-column flex-lg-row mb-1 gap-2 mb-2">
+                <select id="statusFilter" class="form-select form-select-sm w-auto rounded-3 flex-fill">
+                    <option value="">Semua Status Proses</option>
+                    <option value="1">Diproses</option>
+                    <option value="0">Belum Diproses</option>
+                </select>
+                <select id="namesFilter" class="form-select form-select-sm w-auto rounded-3 flex-fill">
+                    <option value="">Semua Nama</option>
+                    <option value="1">Dengan Nama</option>
+                    <option value="0">Anonim</option>
+                </select>
+            </div>
+            <div class="d-flex flex-column flex-lg-row mb-1 gap-2 mb-3">
+                <div class="input-group input-group-sm">
+                    <input type="date" id="tanggalFilter" class="form-control rounded-start-3">
+                    <button class="btn btn-danger btn-sm bg-gradient rounded-end-3" type="button" id="clearTglButton"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div class="input-group input-group-sm flex-fill">
+                    <input type="search" id="searchInput" class="form-control rounded-start-3" placeholder="Cari pasien">
+                    <button class="btn btn-success btn-sm bg-gradient" type="button" id="refreshButton"><i class="fa-solid fa-sync"></i></button>
+                    <button class="btn btn-primary btn-sm bg-gradient rounded-end-3" type="button" id="addButton"><i class="fa-solid fa-plus"></i> Tambah</button>
+                </div>
+            </div>
+            <ul id="resepContainer" class="list-group shadow-sm rounded-3 mt-1">
+                <?php for ($i = 0; $i < 12; $i++) : ?>
 
-            <li class="list-group-item bg-body-tertiary pb-3 pt-3">
-                <div class="d-flex">
-                    <div class="align-self-center ps-2 w-100">
-                        <h5 class="card-title placeholder-glow">
-                            <span class="placeholder" style="width: 100%"></span>
-                        </h5>
-                        <p class="card-text placeholder-glow">
-                            <small>
-                                <span class="placeholder" style="width: 12.5%;"></span><br>
-                                <span class="placeholder" style="width: 12.5%;"></span><br>
-                                <span class="placeholder" style="width: 12.5%;"></span><br>
-                                <span class="placeholder" style="width: 12.5%;"></span>
-                            </small>
-                        </p>
-                    </div>
-                </div>
-                <hr>
-                <div class="d-grid gap-2 d-flex justify-content-end">
-                    <a class="btn btn-body bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
-                    <a class="btn btn-body bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
-                    <a class="btn btn-danger bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
-                </div>
-            </li>
-        <?php endfor; ?>
-    </ul>
-    <nav id="paginationNav" class="d-flex justify-content-center justify-content-lg-end mt-3 overflow-auto w-100">
-        <ul class="pagination pagination-sm" style="--bs-pagination-border-radius: var(--bs-border-radius-lg);"></ul>
-    </nav>
+                    <li class="list-group-item bg-body-tertiary pb-3 pt-3">
+                        <div class="d-flex">
+                            <div class="align-self-center ps-2 w-100">
+                                <h5 class="card-title placeholder-glow">
+                                    <span class="placeholder" style="width: 100%"></span>
+                                </h5>
+                                <p class="card-text placeholder-glow">
+                                    <small>
+                                        <span class="placeholder" style="width: 12.5%;"></span><br>
+                                        <span class="placeholder" style="width: 12.5%;"></span><br>
+                                        <span class="placeholder" style="width: 12.5%;"></span><br>
+                                        <span class="placeholder" style="width: 12.5%;"></span>
+                                    </small>
+                                </p>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="d-grid gap-2 d-flex justify-content-end">
+                            <a class="btn btn-body bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                            <a class="btn btn-body bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                            <a class="btn btn-danger bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                        </div>
+                    </li>
+                <?php endfor; ?>
+            </ul>
+            <nav id="paginationNav" class="d-flex justify-content-center justify-content-lg-end mt-3 overflow-auto w-100">
+                <ul class="pagination pagination-sm" style="--bs-pagination-border-radius: var(--bs-border-radius-lg);"></ul>
+            </nav>
+        </div>
+    </div>
     <div class="modal modal-sheet p-4 py-md-5 fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content bg-body-tertiary rounded-4 shadow-lg transparent-blur">

@@ -13,49 +13,53 @@
 <?= $this->endSection(); ?>
 <?= $this->section('content'); ?>
 <main class="col-md-9 ms-sm-auto col-lg-10 px-3 px-md-4 pt-3">
-    <div class="input-group input-group-sm mb-2">
-        <input type="date" id="tanggalFilter" class="form-control rounded-start-3">
-        <button class="btn btn-danger btn-sm bg-gradient rounded-end-3" type="button" id="clearTglButton"><i class="fa-solid fa-xmark"></i></button>
-    </div>
-    <div class="input-group input-group-sm mb-3">
-        <select id="apotekerFilter" class="form-select form-select-sm rounded-start-3">
-            <option value="">Semua Apoteker</option>
-        </select>
-        <button class="btn btn-success btn-sm bg-gradient rounded-end-3" type="button" id="refreshButton"><i class="fa-solid fa-sync"></i></button>
-    </div>
-    <div class="shadow-sm rounded-3">
-        <form id="opnameObatForm" enctype="multipart/form-data">
-            <div class="d-grid gap-2">
-                <button type="submit" id="addButton" class="btn btn-primary bg-gradient rounded-top-3 rounded-bottom-0">
-                    <i class="fa-solid fa-plus"></i> Buat Laporan Baru
-                </button>
+    <div class="d-lg-flex justify-content-center">
+        <div class="no-fluid-content">
+            <div class="input-group input-group-sm mb-2">
+                <input type="date" id="tanggalFilter" class="form-control rounded-start-3">
+                <button class="btn btn-danger btn-sm bg-gradient rounded-end-3" type="button" id="clearTglButton"><i class="fa-solid fa-xmark"></i></button>
             </div>
-        </form>
-        <ul id="opnameObatContainer" class="list-group rounded-top-0 rounded-bottom-3">
-            <?php for ($i = 0; $i < 12; $i++) : ?>
-                <li class="list-group-item bg-body-tertiary pb-3 pt-3">
-                    <div class="d-flex">
-                        <div class="align-self-center ps-2 w-100">
-                            <h5 class="card-title placeholder-glow">
-                                <span class="placeholder" style="width: 100%"></span>
-                            </h5>
-                            <h6 class="card-subtitle mb-2 placeholder-glow">
-                                <span class="placeholder" style="width: 25%;"></span>
-                            </h6>
-                        </div>
+            <div class="input-group input-group-sm mb-3">
+                <select id="apotekerFilter" class="form-select form-select-sm rounded-start-3">
+                    <option value="">Semua Apoteker</option>
+                </select>
+                <button class="btn btn-success btn-sm bg-gradient rounded-end-3" type="button" id="refreshButton"><i class="fa-solid fa-sync"></i></button>
+            </div>
+            <div class="shadow-sm rounded-3">
+                <form id="opnameObatForm" enctype="multipart/form-data">
+                    <div class="d-grid gap-2">
+                        <button type="submit" id="addButton" class="btn btn-primary bg-gradient rounded-top-3 rounded-bottom-0">
+                            <i class="fa-solid fa-plus"></i> Buat Laporan Baru
+                        </button>
                     </div>
-                    <hr>
-                    <div class="d-grid gap-2 d-flex justify-content-end">
-                        <a class="btn btn-body bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
-                        <a class="btn btn-danger bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
-                    </div>
-                </li>
-            <?php endfor; ?>
-        </ul>
+                </form>
+                <ul id="opnameObatContainer" class="list-group rounded-top-0 rounded-bottom-3">
+                    <?php for ($i = 0; $i < 12; $i++) : ?>
+                        <li class="list-group-item bg-body-tertiary pb-3 pt-3">
+                            <div class="d-flex">
+                                <div class="align-self-center ps-2 w-100">
+                                    <h5 class="card-title placeholder-glow">
+                                        <span class="placeholder" style="width: 100%"></span>
+                                    </h5>
+                                    <h6 class="card-subtitle mb-2 placeholder-glow">
+                                        <span class="placeholder" style="width: 25%;"></span>
+                                    </h6>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="d-grid gap-2 d-flex justify-content-end">
+                                <a class="btn btn-body bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                                <a class="btn btn-danger bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                            </div>
+                        </li>
+                    <?php endfor; ?>
+                </ul>
+            </div>
+            <nav id="paginationNav" class="d-flex justify-content-center justify-content-lg-end mt-3 overflow-auto w-100">
+                <ul class="pagination pagination-sm" style="--bs-pagination-border-radius: var(--bs-border-radius-lg);"></ul>
+            </nav>
+        </div>
     </div>
-    <nav id="paginationNav" class="d-flex justify-content-center justify-content-lg-end mt-3 overflow-auto w-100">
-        <ul class="pagination pagination-sm" style="--bs-pagination-border-radius: var(--bs-border-radius-lg);"></ul>
-    </nav>
     <div class="modal modal-sheet p-4 py-md-5 fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content bg-body-tertiary rounded-4 shadow-lg transparent-blur">
