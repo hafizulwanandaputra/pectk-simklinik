@@ -95,18 +95,18 @@
                 <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Tambah Tindakan</legend>
                 <form id="tambahLayanan" enctype="multipart/form-data">
                     <div class="mb-2">
-                        <select class="form-select rounded-3" id="id_layanan" name="id_layanan" aria-label="id_layanan">
+                        <select class="form-select rounded-3 form-tindakan" id="id_layanan" name="id_layanan" aria-label="id_layanan">
                             <option value="" disabled selected>-- Pilih Tindakan --</option>
                         </select>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="d-flex flex-column flex-lg-row mb-2 gap-2">
                         <div class="flex-fill">
-                            <input type="number" id="qty_transaksi" name="qty_transaksi" class="form-control rounded-3" placeholder="Qty" autocomplete="off">
+                            <input type="number" id="qty_transaksi" name="qty_transaksi" class="form-control rounded-3 form-tindakan" placeholder="Qty" autocomplete="off">
                             <div class="invalid-feedback"></div>
                         </div>
                         <div class="flex-fill">
-                            <input type="number" id="diskon_layanan" name="diskon_layanan" class="form-control rounded-3" placeholder="Diskon (%)" autocomplete="off">
+                            <input type="number" id="diskon_layanan" name="diskon_layanan" class="form-control rounded-3 form-tindakan" placeholder="Diskon (%)" autocomplete="off">
                             <div class="invalid-feedback"></div>
                         </div>
                         <div class="d-grid d-lg-block w-auto">
@@ -435,6 +435,11 @@
             $('#metode_pembayaran_table').text(data.metode_pembayaran + bank);
             $('#total_pembayaran_modal').text(`Rp${total_pembayaran.toLocaleString('id-ID')}`);
 
+            if (data.dokter === "Resep Luar") {
+                $('.form-tindakan').prop('disabled', true);
+                $('#addLayananButton').prop('disabled', true);
+            }
+
             // Cek status `lunas`
             if (data.lunas === "1") {
                 $('div.add-forms').removeClass('mb-3');
@@ -531,6 +536,13 @@
                         </tr>
                     `;
                     $('#list_layanan').append(tindakanElement);
+                    if (layanan.dokter === "Resep Luar") {
+                        $('.edit-layanan-btn').prop('disabled', true);
+                        $('.delete-btn').prop('disabled', true);
+                    } else {
+                        $('.edit-layanan-btn').prop('disabled', false);
+                        $('.delete-btn').prop('disabled', false);
+                    }
                     // Cek status `lunas`
                     if (layanan.lunas === "1") {
                         $('.edit-layanan-btn').prop('disabled', true);
@@ -792,7 +804,7 @@
                             console.error('Perbaiki kesalahan pada formulir.');
                         }
                     } catch (error) {
-                        if (error.response.request.status === 401) {
+                        if (error.response.request.status === 401 || error.response.request.status === 422) {
                             showFailedToast(error.response.data.message);
                         } else {
                             showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
@@ -1015,7 +1027,7 @@
                     console.error('Perbaiki kesalahan pada formulir.');
                 }
             } catch (error) {
-                if (error.response.request.status === 401) {
+                if (error.response.request.status === 401 || error.response.request.status === 422) {
                     showFailedToast(error.response.data.message);
                 } else {
                     showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);

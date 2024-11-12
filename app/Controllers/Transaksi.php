@@ -850,6 +850,11 @@ class Transaksi extends BaseController
                 return $this->response->setStatusCode(401)->setJSON(['success' => false, 'message' => 'Tidak bisa dilakukan. Batalkan transaksi terlebih dahulu.']);
             }
 
+            if ($transaksi['dokter'] == 'Resep Luar') {
+                // Gagalkan jika resep luar
+                return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Tidak bisa menambahkan tindakan pada resep luar.']);
+            }
+
             $LayananModel = new LayananModel();
             // Mengambil data layanan berdasarkan ID yang diberikan
             $layanan = $LayananModel->find($this->request->getPost('id_layanan'));
@@ -992,6 +997,11 @@ class Transaksi extends BaseController
             if ($transaksi['lunas'] == 1) {
                 // Gagalkan jika transaksi lunas
                 return $this->response->setStatusCode(401)->setJSON(['success' => false, 'message' => 'Tidak bisa dilakukan. Batalkan transaksi terlebih dahulu.']);
+            }
+
+            if ($transaksi['dokter'] == 'Resep Luar') {
+                // Gagalkan jika resep luar
+                return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Tidak bisa mengedit tindakan pada resep luar.']);
             }
 
             // Mengambil detail transaksi berdasarkan ID yang diberikan
