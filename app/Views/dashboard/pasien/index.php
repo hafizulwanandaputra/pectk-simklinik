@@ -26,14 +26,14 @@
                         <thead>
                             <tr class="align-middle">
                                 <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">No</th>
-                                <th scope="col" class="bg-body-secondary border-secondary min-width-column" style="border-bottom-width: 2px; width: 25%;">Nama</th>
+                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 25%;">Nama</th>
                                 <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Jenis Kelamin</th>
                                 <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Nomor Rekam Medis</th>
                                 <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Nomor Registrasi</th>
-                                <th scope="col" class="bg-body-secondary border-secondary min-width-column" style="border-bottom-width: 2px; width: 25%;">Tempat dan Tanggal Lahir</th>
+                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 25%;">Tempat dan Tanggal Lahir</th>
                                 <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Nomor Telepon</th>
-                                <th scope="col" class="bg-body-secondary border-secondary min-width-column" style="border-bottom-width: 2px; width: 25%;">Alamat</th>
-                                <th scope="col" class="bg-body-secondary border-secondary min-width-column" style="border-bottom-width: 2px; width: 15%;">Dokter</th>
+                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 25%;">Alamat</th>
+                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 15%;">Dokter</th>
                             </tr>
                         </thead>
                         <tbody class="align-top" id="datapasien">

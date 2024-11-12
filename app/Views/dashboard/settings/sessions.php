@@ -265,12 +265,10 @@
                 "width": "0%"
             }, {
                 "target": [2],
-                "width": "25%",
-                "className": "min-width-column"
+                "width": "25%"
             }, {
                 "target": [4],
-                "width": "75%",
-                "className": "min-width-column"
+                "width": "75%"
             }],
         });
 
