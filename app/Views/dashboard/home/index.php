@@ -45,7 +45,7 @@
             </div>
             <div class="mb-2">
                 <div class="card bg-body-tertiary w-100 rounded-3">
-                    <div class="card-header w-100 text-truncate">Sesi Keseluruhan</div>
+                    <div class="card-header w-100 text-truncate">Sesi Keseluruhan Selain Anda</div>
                     <div class="card-body">
                         <h5 class="display-5 fw-medium date mb-0"><?= number_format($total_sessions, 0, ',', '.') ?></h5>
                     </div>
@@ -54,7 +54,7 @@
             <div class="row row-cols-1 row-cols-lg-2 g-2 mb-2">
                 <div class="col">
                     <div class="card bg-danger-subtle text-danger-emphasis w-100 rounded-3">
-                        <div class="card-header w-100 text-truncate">Sesi Kedaluwarsa</div>
+                        <div class="card-header w-100 text-truncate">Sesi Kedaluwarsa Selain Anda</div>
                         <div class="card-body">
                             <h5 class="display-5 fw-medium date mb-0"><?= number_format($total_sessions_expired, 0, ',', '.') ?></h5>
                         </div>
@@ -62,7 +62,7 @@
                 </div>
                 <div class="col">
                     <div class="card bg-success-subtle text-success-emphasis w-100 rounded-3">
-                        <div class="card-header w-100 text-truncate">Sesi Aktif</div>
+                        <div class="card-header w-100 text-truncate">Sesi Aktif Selain Anda</div>
                         <div class="card-body">
                             <h5 class="display-5 fw-medium date mb-0"><?= number_format($total_sessions_active, 0, ',', '.') ?></h5>
                         </div>

@@ -28,8 +28,15 @@ class AuthFilter implements FilterInterface
                 ->where('session_token', $token)
                 ->delete();
             $db->query('ALTER TABLE `user_sessions` auto_increment = 1');
-            session()->remove('log');
+            session()->remove('id_user');
+            session()->remove('fullname');
+            session()->remove('username');
+            session()->remove('password');
+            session()->remove('profilephoto');
+            session()->remove('role');
             session()->remove('session_token');
+            session()->remove('created_at');
+            session()->remove('expires_at');
 
             // Handle redirection
             $data = array('redirect' => urlencode(uri_string()));
