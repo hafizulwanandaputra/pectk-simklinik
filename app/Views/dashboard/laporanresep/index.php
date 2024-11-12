@@ -114,8 +114,8 @@
                                     <tr class="align-middle">
                                         <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">No</th>
                                         <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Tanggal</th>
-                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 50%; min-width: 128px;">Dokter</th>
-                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 50%; min-width: 128px;">Nama Obat</th>
+                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 50%;">Dokter</th>
+                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 50%;">Nama Obat</th>
                                         <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Harga Satuan</th>
                                         <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Obat Keluar</th>
                                         <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Harga</th>

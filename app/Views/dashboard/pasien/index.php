@@ -88,7 +88,7 @@
                 $('#refreshButton').prop('disabled', true); // Nonaktifkan tombol refresh
                 const emptyRow = `
                     <tr>
-                        <td colspan="9" class="text-center"><strong>Silakan masukkan tanggal</strong><br>Data-data pasien rawat jalan ini diperoleh dari Sistem Informasi Manajemen Klinik Utama Mata Padang Eye Center Teluk Kuantan melalui  <em>Application Programming Interface</em> (API)</td>
+                        <td colspan="9" class="text-center">Silakan masukkan tanggal<br><small>Data-data pasien rawat jalan ini diperoleh dari Sistem Informasi Manajemen Klinik Utama Mata Padang Eye Center Teluk Kuantan melalui  <em>Application Programming Interface</em> (API)</small></td>
                     </tr>
                 `;
                 $('#datapasien').append(emptyRow); // Menambahkan baris kosong ke tabel

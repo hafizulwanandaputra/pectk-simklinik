@@ -18,6 +18,7 @@
                     <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Masukkan Tanggal</legend>
                     <div class="mb-2 input-group">
                         <input type="date" id="tanggal" name="tanggal" class="form-control rounded-start-3">
+                        <button class="btn btn-danger bg-gradient" type="button" id="clearTglButton"><i class="fa-solid fa-xmark"></i></button>
                         <button class="btn btn-success bg-gradient rounded-end-3" type="button" id="refreshButton" disabled><i class="fa-solid fa-sync"></i></button>
                     </div>
                 </fieldset>
@@ -242,6 +243,13 @@
     });
 
     $(document).ready(function() {
+        // Menangani event klik pada tombol bersihkan
+        $('#clearTglButton').on('click', function() {
+            $('#tanggal').val(''); // Kosongkan tanggal
+            $('#datatransaksi').empty(); // Kosongkan tabel transaksi
+            $('#datatransaksi').append(loading); // Tampilkan loading indicator
+            fetchTransaksi(); // Panggil fungsi untuk mengambil data transaksi
+        });
         // Menangani event klik pada tombol refresh
         $('#refreshButton').on('click', function() {
             $('#datatransaksi').empty(); // Kosongkan tabel transaksi
