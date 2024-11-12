@@ -328,6 +328,8 @@
             $('#deleteSubmessage').hide();
 
             try {
+                // Simpan nilai pilihan apoteker saat ini
+                const selectedApoteker = $('apotekerFilter').val();
                 await axios.delete(`<?= base_url('/opnameobat/delete') ?>/${opnameObatId}`);
                 fetchApotekerOptions(selectedApoteker);
                 fetchOpnameObat();
