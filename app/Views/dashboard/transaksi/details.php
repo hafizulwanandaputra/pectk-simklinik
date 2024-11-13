@@ -14,7 +14,7 @@
 <?= $this->endSection(); ?>
 <?= $this->section('content'); ?>
 <main class="col-md-9 ms-sm-auto col-lg-10 px-3 px-md-4 pt-3">
-    <div class="d-lg-flex justify-content-center">
+    <div class="d-xxl-flex justify-content-center">
         <div class="no-fluid-content">
             <fieldset class="border rounded-3 px-2 py-0 mb-3">
                 <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Informasi Transaksi</legend>

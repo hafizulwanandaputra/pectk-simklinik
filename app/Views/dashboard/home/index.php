@@ -14,7 +14,7 @@
         <h1 class="h2 me-3"><i class="fa-regular fa-face-smile-beam"></i></h1>
         <h1 class="h2"><?= $txtgreeting . ', ' . session()->get('fullname') . '!'; ?></h1>
     </div>
-    <div class="d-lg-flex justify-content-center">
+    <div class="d-xxl-flex justify-content-center">
         <div class="no-fluid-content">
             <?php if (session()->get('role') == "Admin") : ?>
                 <fieldset class="border rounded-3 px-2 py-0 mb-3">

@@ -13,7 +13,7 @@
 <?= $this->endSection(); ?>
 <?= $this->section('content'); ?>
 <main class="col-md-9 ms-sm-auto col-lg-10 px-3 px-md-4 pt-3">
-    <div class="d-lg-flex justify-content-center">
+    <div class="d-xxl-flex justify-content-center">
         <div class="no-fluid-content">
             <div class="d-flex flex-column flex-lg-row mb-1 gap-2 mb-2">
                 <select id="statusFilter" class="form-select form-select-sm w-auto rounded-3 flex-fill">

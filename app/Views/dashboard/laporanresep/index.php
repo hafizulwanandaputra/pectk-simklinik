@@ -25,7 +25,7 @@
 <?= $this->endSection(); ?>
 <?= $this->section('content'); ?>
 <main class="col-md-9 ms-sm-auto col-lg-10 px-3 px-md-4 pt-3">
-    <div class="d-lg-flex justify-content-center">
+    <div class="d-xxl-flex justify-content-center">
         <div class="no-fluid-content">
             <div class="mb-2">
                 <nav>
