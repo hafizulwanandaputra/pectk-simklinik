@@ -106,6 +106,9 @@
                                 <option value="Tablet/Kapsul">Tablet/Kapsul</option>
                                 <option value="Sirup">Sirup</option>
                             </optgroup>
+                            <optgroup label="Lainnya">
+                                <option value="Alat Kesehatan">Alat Kesehatan</option>
+                            </optgroup>
                         </select>
                         <label for="bentuk_obat">Bentuk*</label>
                         <div class="invalid-feedback"></div>
