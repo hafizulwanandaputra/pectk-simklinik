@@ -216,7 +216,7 @@ if (stripos($browser, 'Chrome') !== false) {
         </ul>
         <hr>
         <div>
-            <p>Template aplikasi ini didasarkan pada <a class="text-decoration-none" href="https://github.com/hafizulwanandaputra/hwpweb-admin-template" target="_blank"><span style="font-weight: 900;">HWP</span><span style="font-weight: 300;">web</span> ADMIN Template</a></p>
+            <p>Aplikasi ini didasarkan pada <a class="text-decoration-none" href="https://github.com/hafizulwanandaputra/hwpweb-admin-template" target="_blank"><span style="font-weight: 900;">HWP</span><span style="font-weight: 300;">web</span> ADMIN Template</a></p>
         </div>
     </div>
 </main>
