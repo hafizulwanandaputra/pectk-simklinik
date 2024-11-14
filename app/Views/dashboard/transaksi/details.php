@@ -606,7 +606,7 @@
                         </td>
                         <td>
                             <span>${dokter}</span>
-                            <ol class="mb-0" id="obat-${obat_alkes.id_detail_transaksi}">
+                            <ol class="ps-4 mb-0" id="obat-${obat_alkes.id_detail_transaksi}">
                             </ol>
                         </td>
                         <td class="date text-end">Rp${harga_transaksi.toLocaleString('id-ID')}</td>

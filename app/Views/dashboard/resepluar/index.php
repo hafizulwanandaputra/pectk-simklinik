@@ -17,19 +17,19 @@
         <div class="no-fluid-content">
             <div class="d-flex flex-column flex-lg-row mb-1 gap-2 mb-2">
                 <select id="statusFilter" class="form-select form-select-sm w-auto rounded-3 flex-fill">
-                    <option value="">Semua Status Proses</option>
+                    <option value="">Semua Status Transaksi</option>
                     <option value="1">Diproses</option>
                     <option value="0">Belum Diproses</option>
-                </select>
-                <select id="genderFilter" class="form-select form-select-sm w-auto rounded-3 flex-fill">
-                    <option value="">Semua Jenis Kelamin</option>
-                    <option value="L">Laki-Laki</option>
-                    <option value="P">Perempuan</option>
                 </select>
                 <select id="namesFilter" class="form-select form-select-sm w-auto rounded-3 flex-fill">
                     <option value="">Semua Nama</option>
                     <option value="1">Dengan Nama</option>
                     <option value="0">Anonim</option>
+                </select>
+                <select id="genderFilter" class="form-select form-select-sm w-auto rounded-3 flex-fill">
+                    <option value="">Semua Jenis Kelamin</option>
+                    <option value="L">Laki-Laki</option>
+                    <option value="P">Perempuan</option>
                 </select>
             </div>
             <div class="d-flex flex-column flex-lg-row mb-1 gap-2 mb-3">
