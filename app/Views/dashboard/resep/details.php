@@ -444,7 +444,6 @@
 
             try {
                 await axios.delete(`<?= base_url('/resep/hapusdetailresep') ?>/${detailResepId}`);
-                fetchStatusKonfirmasi();
                 fetchDetailResep();
                 <?= (session()->get('role') != 'Apoteker') ? 'fetchObatOptions();' : '' ?>
                 <?= (session()->get('role') != 'Apoteker') ? 'fetchStatusResep();' : '' ?>
@@ -611,7 +610,6 @@
                             $('#editDetail .is-invalid').removeClass('is-invalid');
                             $('#editDetail .invalid-feedback').text('').hide();
                             $('#editDetailResep').remove();
-                            fetchStatusKonfirmasi();
                             fetchDetailResep();
                             <?= (session()->get('role') != 'Apoteker') ? 'fetchObatOptions();' : '' ?>
                             <?= (session()->get('role') != 'Apoteker') ? 'fetchStatusResep();' : '' ?>
@@ -702,7 +700,6 @@
                     $('#jumlah').val('');
                     $('#tambahDetail .is-invalid').removeClass('is-invalid');
                     $('#tambahDetail .invalid-feedback').text('').hide();
-                    fetchStatusKonfirmasi();
                     fetchDetailResep();
                     <?= (session()->get('role') != 'Apoteker') ? 'fetchObatOptions();' : '' ?>
                     <?= (session()->get('role') != 'Apoteker') ? 'fetchStatusResep();' : '' ?>
