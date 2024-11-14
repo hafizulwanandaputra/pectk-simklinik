@@ -191,7 +191,7 @@ class Resep extends BaseController
                 // Menyusun opsi dari data pasien yang diterima
                 foreach ($data as $row) {
                     if ($row['jenis_kelamin'] == 'L') {
-                        $jenis_kelamin = 'Laki-laki';
+                        $jenis_kelamin = 'Laki-Laki';
                     } else if ($row['jenis_kelamin'] == 'P') {
                         $jenis_kelamin = 'Perempuan';
                     }

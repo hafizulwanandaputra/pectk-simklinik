@@ -23,7 +23,7 @@
                 </select>
                 <select id="genderFilter" class="form-select form-select-sm w-auto rounded-3 flex-fill">
                     <option value="">Semua Jenis Kelamin</option>
-                    <option value="L">Laki-laki</option>
+                    <option value="L">Laki-Laki</option>
                     <option value="P">Perempuan</option>
                 </select>
                 <select id="confirmedFilter" class="form-select form-select-sm w-auto rounded-3 flex-fill">
