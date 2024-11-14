@@ -203,8 +203,8 @@
                 <hr>
                 <?php if (session()->get('role') != 'Dokter') : ?>
                     <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-2">
-                        <button class="btn btn-body rounded-3 bg-gradient" type="button" id="printBtn1" onclick="window.open(`<?= base_url('/resep/etiket-dalam/' . $resep['id_resep']) ?>`)" disabled><i class="fa-solid fa-print"></i> Cetak Etiket Obat Dalam</button>
-                        <button class="btn btn-body rounded-3 bg-gradient" type="button" id="printBtn2" onclick="window.open(`<?= base_url('/resep/etiket-luar/' . $resep['id_resep']) ?>`)" disabled><i class="fa-solid fa-print"></i> Cetak Etiket Obat Luar</button>
+                        <button class="btn btn-body rounded-3 bg-gradient" type="button" id="printBtn1" onclick="window.open(`<?= base_url('/resep/etiket-dalam/' . $resep['id_resep']) ?>`)" disabled><i class="fa-solid fa-print"></i> Cetak E-Tiket Obat Dalam</button>
+                        <button class="btn btn-body rounded-3 bg-gradient" type="button" id="printBtn2" onclick="window.open(`<?= base_url('/resep/etiket-luar/' . $resep['id_resep']) ?>`)" disabled><i class="fa-solid fa-print"></i> Cetak E-Tiket Obat Luar</button>
                         <button class="btn btn-body rounded-3 bg-gradient" type="button" id="printBtn3" onclick="window.open(`<?= base_url('/resep/print/' . $resep['id_resep']) ?>`)" disabled><i class="fa-solid fa-print"></i> Cetak Resep</button>
                     </div>
                 <?php endif; ?>

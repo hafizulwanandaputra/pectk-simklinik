@@ -861,7 +861,7 @@ class ResepLuar extends BaseController
                 $data = [
                     'resep' => $resep,
                     'detail_resep' => $detail_resep,
-                    'title' => 'Etiket Resep ' . $id . ' - ' . $this->systemName
+                    'title' => 'E-Tiket Resep ' . $id . ' - ' . $this->systemName
                 ];
                 // Menghasilkan PDF menggunakan Dompdf
                 $dompdf = new Dompdf();
@@ -916,7 +916,7 @@ class ResepLuar extends BaseController
                 $data = [
                     'resep' => $resep,
                     'detail_resep' => $detail_resep,
-                    'title' => 'Etiket Resep ' . $id . ' - ' . $this->systemName
+                    'title' => 'E-Tiket Resep ' . $id . ' - ' . $this->systemName
                 ];
                 // Menghasilkan PDF menggunakan Dompdf
                 $dompdf = new Dompdf();

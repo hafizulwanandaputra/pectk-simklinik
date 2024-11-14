@@ -160,8 +160,8 @@
             <div id="cetakEtiketBtn">
                 <hr>
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
-                    <button class="btn btn-body rounded-3 bg-gradient" type="button" id="printBtn1" onclick="window.open(`<?= base_url('/resepluar/etiket-dalam/' . $resep['id_resep']) ?>`)" disabled><i class="fa-solid fa-print"></i> Cetak Etiket Obat Dalam</button>
-                    <button class="btn btn-body rounded-3 bg-gradient" type="button" id="printBtn2" onclick="window.open(`<?= base_url('/resepluar/etiket-luar/' . $resep['id_resep']) ?>`)" disabled><i class="fa-solid fa-print"></i> Cetak Etiket Obat Luar</button>
+                    <button class="btn btn-body rounded-3 bg-gradient" type="button" id="printBtn1" onclick="window.open(`<?= base_url('/resepluar/etiket-dalam/' . $resep['id_resep']) ?>`)" disabled><i class="fa-solid fa-print"></i> Cetak E-Tiket Obat Dalam</button>
+                    <button class="btn btn-body rounded-3 bg-gradient" type="button" id="printBtn2" onclick="window.open(`<?= base_url('/resepluar/etiket-luar/' . $resep['id_resep']) ?>`)" disabled><i class="fa-solid fa-print"></i> Cetak E-Tiket Obat Luar</button>
                 </div>
             </div>
         </div>
