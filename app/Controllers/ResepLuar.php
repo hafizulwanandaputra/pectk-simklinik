@@ -178,6 +178,7 @@ class ResepLuar extends BaseController
                 'tempat_lahir' => NULL,
                 'tanggal_lahir' => $this->request->getPost('tanggal_lahir'),
                 'dokter' => 'Resep Luar',
+                'apoteker' => session()->get('fullname'),
                 'tanggal_resep' => date('Y-m-d H:i:s'), // Menyimpan tanggal resep saat ini
                 'jumlah_resep' => 0,
                 'total_biaya' => 0,
@@ -241,6 +242,7 @@ class ResepLuar extends BaseController
                     'tempat_lahir' => NULL,
                     'tanggal_lahir' => $this->request->getPost('tanggal_lahir'),
                     'dokter' => 'Resep Luar',
+                    'apoteker' => $resep['apoteker'],
                     'tanggal_resep' => $resep['tanggal_resep'],
                     'jumlah_resep' => $resep['jumlah_resep'],
                     'total_biaya' => $resep['total_biaya'],

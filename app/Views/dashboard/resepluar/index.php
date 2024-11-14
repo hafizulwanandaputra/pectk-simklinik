@@ -52,6 +52,9 @@
                                 <h5 class="card-title placeholder-glow">
                                     <span class="placeholder" style="width: 100%"></span>
                                 </h5>
+                                <h6 class="card-subtitle mb-2 placeholder-glow">
+                                    <span class="placeholder" style="width: 25%;"></span>
+                                </h6>
                                 <p class="card-text placeholder-glow">
                                     <small>
                                         <span class="placeholder" style="width: 12.5%;"></span><br>
@@ -158,6 +161,9 @@
                         <h5 class="card-title placeholder-glow">
                             <span class="placeholder" style="width: 100%"></span>
                         </h5>
+                        <h6 class="card-subtitle mb-2 placeholder-glow">
+                            <span class="placeholder" style="width: 25%;"></span>
+                        </h6>
                         <p class="card-text placeholder-glow">
                             <small>
                                 <span class="placeholder" style="width: 12.5%;"></span><br>
@@ -241,6 +247,9 @@
                         <h5 class="card-title">
                             ${nama_pasien} ${jenis_kelamin}
                         </h5>
+                        <h6 class="card-subtitle mb-2">
+                            ${resep.apoteker}
+                        </h6>
                         <p class="card-text">
                             <small class="date">
                                 ID Resep: ${resep.id_resep}<br>

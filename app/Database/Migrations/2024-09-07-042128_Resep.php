@@ -56,6 +56,11 @@ class Resep extends Migration
                 'constraint' => 256,
                 'null' => true,
             ],
+            'apoteker' => [
+                'type' => 'VARCHAR',
+                'constraint' => 256,
+                'null' => true,
+            ],
             'tanggal_resep' => [
                 'type' => 'DATETIME'
             ],

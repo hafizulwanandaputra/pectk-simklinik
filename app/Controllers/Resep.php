@@ -298,6 +298,7 @@ class Resep extends BaseController
                     'tempat_lahir' => $patientData['tempat_lahir'],
                     'tanggal_lahir' => $patientData['tanggal_lahir'],
                     'dokter' => session()->get('fullname'), // Menyimpan nama dokter yang sedang login
+                    'apoteker' => NULL,
                     'tanggal_resep' => date('Y-m-d H:i:s'), // Menyimpan tanggal resep saat ini
                     'jumlah_resep' => 0,
                     'total_biaya' => 0,
