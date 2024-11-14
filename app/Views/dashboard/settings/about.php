@@ -56,6 +56,10 @@ if (stripos($browser, 'Chrome') !== false) {
 <?= $this->section('content'); ?>
 <main class="d-xxl-flex justify-content-center col-md-9 ms-sm-auto col-lg-10 px-3 px-md-4 pt-3">
     <div class="no-fluid-content">
+        <div>
+            <p><span class="h2">Sistem Informasi Kasir dan Farmasi Klinik Utama Mata Padang Eye Center Teluk Kuantan</span><br><span class="fs-4">Melayani dengan Hati</span><br>&copy; 2024 <?= (date('Y') !== "2024") ? "- " . date('Y') : ''; ?> Klinik Utama Mata Padang Eye Center Teluk Kuantan</p>
+        </div>
+        <hr>
         <h5>Informasi Klien</h5>
         <ul class="list-group shadow-sm rounded-3 mb-3">
             <li class="list-group-item p-1 list-group-item-action disabled" aria-disabled="true">
@@ -157,8 +161,8 @@ if (stripos($browser, 'Chrome') !== false) {
                         <p class="mb-0" style="font-size: 1.75rem!important;"><i class="fa-solid fa-database"></i></p>
                     </a>
                     <div class="align-self-center flex-fill ps-1 text-wrap overflow-hidden" style="text-overflow: ellipsis;">
-                        <h5 class="card-title">Basis Data</h5>
-                        <span><?= esc($version_comment) ?> versi <?= esc($version) ?></span>
+                        <h5 class="card-title">Versi Peladen Basis Data MySQL/MariaDB</h5>
+                        <span><?= esc($version) ?> (<?= esc($version_comment) . ' • ' . esc($version_compile_os) . ' ' . esc($version_compile_machine) ?>)</span>
                     </div>
                 </div>
             </li>
@@ -212,7 +216,6 @@ if (stripos($browser, 'Chrome') !== false) {
         </ul>
         <hr>
         <div>
-            <p><strong>Sistem Informasi Kasir dan Farmasi</strong><br>&copy; 2024 <?= (date('Y') !== "2024") ? "- " . date('Y') : ''; ?> Klinik Utama Mata Padang Eye Center Teluk Kuantan<br><strong>Melayani dengan Hati</strong></p>
             <p>Template aplikasi ini didasarkan pada <a class="text-decoration-none" href="https://github.com/hafizulwanandaputra/hwpweb-admin-template" target="_blank"><span style="font-weight: 900;">HWP</span><span style="font-weight: 300;">web</span> ADMIN Template</a></p>
         </div>
     </div>

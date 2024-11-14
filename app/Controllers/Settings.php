@@ -151,8 +151,12 @@ class Settings extends BaseController
         $php_extensions = get_loaded_extensions(); // Mengambil ekstensi PHP yang terpasang
         $query_version = $db->query('SELECT VERSION() as version'); // Mengambil versi database
         $query_comment = $db->query('SHOW VARIABLES LIKE "version_comment"'); // Mengambil komentar versi database
+        $query_compile_os = $db->query('SHOW VARIABLES LIKE "version_compile_os"'); // Mengambil sistem operasi
+        $query_compile_machine = $db->query('SHOW VARIABLES LIKE "version_compile_machine"'); // Mengambil jenis mesin
         $row_version = $query_version->getRow(); // Mendapatkan hasil query versi
         $row_comment = $query_comment->getRow(); // Mendapatkan hasil query komentar versi
+        $row_compile_os = $query_compile_os->getRow(); // Mendapatkan hasil sistem operasi
+        $row_compile_machine = $query_compile_machine->getRow(); // Mendapatkan hasil jenis mesin
         $agent = $this->request->getUserAgent(); // Mengambil informasi user agent
 
         // Menyiapkan data untuk tampilan halaman tentang
@@ -160,6 +164,8 @@ class Settings extends BaseController
             'php_extensions' => implode(', ', $php_extensions), // Menggabungkan ekstensi PHP menjadi string
             'version' => $row_version->version, // Versi database
             'version_comment' => $row_comment->Value, // Komentar versi database
+            'version_compile_os' => $row_compile_os->Value, // Sistem operasi database
+            'version_compile_machine' => $row_compile_machine->Value, // Jenis mesin database
             'agent' => $agent, // Informasi user agent
             'title' => 'Tentang ' . $this->systemName, // Judul halaman
             'headertitle' => 'Tentang Sistem' // Judul header
