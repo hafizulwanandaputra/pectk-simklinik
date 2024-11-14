@@ -166,6 +166,9 @@ class Settings extends BaseController
             'version_comment' => $row_comment->Value, // Komentar versi database
             'version_compile_os' => $row_compile_os->Value, // Sistem operasi database
             'version_compile_machine' => $row_compile_machine->Value, // Jenis mesin database
+            'systemName' => $this->systemName,
+            'systemSubtitleName' => $this->systemSubtitleName,
+            'companyName' => $this->companyName,
             'agent' => $agent, // Informasi user agent
             'title' => 'Tentang ' . $this->systemName, // Judul halaman
             'headertitle' => 'Tentang Sistem' // Judul header

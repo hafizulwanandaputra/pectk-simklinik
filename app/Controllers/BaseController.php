@@ -51,6 +51,20 @@ abstract class BaseController extends Controller
     protected $systemName = "Kasir dan Farmasi Klinik Utama Mata Padang Eye Center Teluk Kuantan";
 
     /**
+     * System subtitle name property.
+     *
+     * @var string
+     */
+    protected $systemSubtitleName = "Melayani dengan Hati";
+
+    /**
+     * Company name property.
+     *
+     * @var string
+     */
+    protected $companyName = "Klinik Utama Mata Padang Eye Center Teluk Kuantan";
+
+    /**
      * @return void
      */
     public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
