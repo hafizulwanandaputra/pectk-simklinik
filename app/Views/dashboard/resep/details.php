@@ -259,7 +259,6 @@
 
         async function fetchStatusResep() {
             $('#loadingSpinner').show();
-            $('#confirmedStatus').text('Memuat status...');
 
             try {
                 const response = await axios.get('<?= base_url('resep/resep/') . $resep['id_resep'] ?>');
