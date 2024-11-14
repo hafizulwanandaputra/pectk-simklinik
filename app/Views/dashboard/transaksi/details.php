@@ -21,14 +21,6 @@
                 <div class="row">
                     <div class="col-lg-6" style="font-size: 9pt;">
                         <div class="mb-2 row">
-                            <div class="col-lg-4 fw-medium">Nama Pasien</div>
-                            <div class="col-lg">
-                                <div>
-                                    <?= ($transaksi['nama_pasien'] == NULL) ? '<em>Anonim</em>' : $transaksi['nama_pasien']; ?>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-2 row">
                             <div class="col-lg-4 fw-medium">Nomor Rekam Medis</div>
                             <div class="col-lg">
                                 <div class="date">
@@ -37,10 +29,10 @@
                             </div>
                         </div>
                         <div class="mb-2 row">
-                            <div class="col-lg-4 fw-medium">Alamat</div>
+                            <div class="col-lg-4 fw-medium">Nama Pasien</div>
                             <div class="col-lg">
                                 <div>
-                                    <?= ($transaksi['alamat'] == NULL) ? '<em>Tidak ada</em>' : $transaksi['alamat']; ?>
+                                    <?= ($transaksi['nama_pasien'] == NULL) ? '<em>Anonim</em>' : $transaksi['nama_pasien']; ?>
                                 </div>
                             </div>
                         </div>
@@ -49,6 +41,14 @@
                             <div class="col-lg">
                                 <div class="date">
                                     <?= ($transaksi['telpon'] == NULL) ? '<em>Tidak ada</em>' : $transaksi['telpon']; ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-2 row">
+                            <div class="col-lg-4 fw-medium">Alamat</div>
+                            <div class="col-lg">
+                                <div>
+                                    <?= ($transaksi['alamat'] == NULL) ? '<em>Tidak ada</em>' : $transaksi['alamat']; ?>
                                 </div>
                             </div>
                         </div>
@@ -71,18 +71,18 @@
                             </div>
                         </div>
                         <div class="mb-2 row">
-                            <div class="col-lg-4 fw-medium">Kasir</div>
-                            <div class="col-lg">
-                                <div>
-                                    <?= $transaksi['kasir'] ?>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-2 row">
                             <div class="col-lg-4 fw-medium">Dokter</div>
                             <div class="col-lg">
                                 <div>
                                     <?= $transaksi['dokter'] ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-2 row">
+                            <div class="col-lg-4 fw-medium">Kasir</div>
+                            <div class="col-lg">
+                                <div>
+                                    <?= $transaksi['kasir'] ?>
                                 </div>
                             </div>
                         </div>

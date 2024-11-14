@@ -18,72 +18,100 @@
         <div class="no-fluid-content">
             <fieldset class="border rounded-3 px-2 py-0 mb-3">
                 <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Informasi Pasien Rawat Jalan</legend>
-                <div style="font-size: 9pt;">
-                    <div class="mb-2 row">
-                        <div class="col-lg-3 fw-medium">Tanggal dan Waktu</div>
-                        <div class="col-lg">
-                            <div class="date">
-                                <?= $resep['tanggal_resep'] ?>
+                <div class="row">
+                    <div class="col-lg-6" style="font-size: 9pt;">
+                        <div class="mb-2 row">
+                            <div class="col-lg-4 fw-medium">Tanggal dan Waktu</div>
+                            <div class="col-lg">
+                                <div class="date">
+                                    <?= $resep['tanggal_resep'] ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-2 row">
+                            <div class="col-lg-4 fw-medium">Dokter</div>
+                            <div class="col-lg">
+                                <div class="date">
+                                    <?= $resep['dokter'] ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-2 row">
+                            <div class="col-lg-4 fw-medium">Nama Pasien</div>
+                            <div class="col-lg">
+                                <div class="date">
+                                    <?= $resep['nama_pasien'] ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-2 row">
+                            <div class="col-lg-4 fw-medium">Nomor Rekam Medis</div>
+                            <div class="col-lg">
+                                <div class="date">
+                                    <?= $resep['no_rm'] ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-2 row">
+                            <div class="col-lg-4 fw-medium">Nomor Registrasi</div>
+                            <div class="col-lg">
+                                <div class="date">
+                                    <?= $resep['nomor_registrasi'] ?>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="mb-2 row">
-                        <div class="col-lg-3 fw-medium">Nama Pasien</div>
-                        <div class="col-lg">
-                            <div class="date">
-                                <?= $resep['nama_pasien'] ?>
+                    <div class="col-lg-6" style="font-size: 9pt;">
+                        <div class="mb-2 row">
+                            <div class="col-lg-4 fw-medium">Jenis Kelamin</div>
+                            <div class="col-lg">
+                                <div class="date">
+                                    <?php
+                                    if ($resep['jenis_kelamin'] == 'L') {
+                                        echo 'Laki-Laki';
+                                    } else if ($resep['jenis_kelamin'] == 'P') {
+                                        echo 'Perempuan';
+                                    } else {
+                                        echo 'N/A';
+                                    }
+                                    ?>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="mb-2 row">
-                        <div class="col-lg-3 fw-medium">Nomor Rekam Medis</div>
-                        <div class="col-lg">
-                            <div class="date">
-                                <?= $resep['no_rm'] ?>
+                        <div class="mb-2 row">
+                            <div class="col-lg-4 fw-medium">Tanggal Lahir</div>
+                            <div class="col-lg">
+                                <div class="date">
+                                    <?= $resep['tanggal_lahir'] ?>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="mb-2 row">
-                        <div class="col-lg-3 fw-medium">Nomor Registrasi</div>
-                        <div class="col-lg">
-                            <div class="date">
-                                <?= $resep['nomor_registrasi'] ?>
+                        <div class="mb-2 row">
+                            <div class="col-lg-4 fw-medium">Alamat</div>
+                            <div class="col-lg">
+                                <div class="date">
+                                    <?= $resep['alamat'] ?>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="mb-2 row">
-                        <div class="col-lg-3 fw-medium">Jenis Kelamin</div>
-                        <div class="col-lg">
-                            <div class="date">
-                                <?php
-                                if ($resep['jenis_kelamin'] == 'L') {
-                                    echo 'Laki-Laki';
-                                } else if ($resep['jenis_kelamin'] == 'P') {
-                                    echo 'Perempuan';
-                                } else {
-                                    echo 'N/A';
-                                }
-                                ?>
+                        <div class="mb-2 row">
+                            <div class="col-lg-4 fw-medium">Nomor Telepon</div>
+                            <div class="col-lg">
+                                <div class="date">
+                                    <?= $resep['telpon'] ?>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="mb-2 row">
-                        <div class="col-lg-3 fw-medium">Dokter</div>
-                        <div class="col-lg">
-                            <div class="date">
-                                <?= $resep['dokter'] ?>
+                        <div class="mb-2 row">
+                            <div class="col-lg-4 fw-medium">Status Konfirmasi</div>
+                            <div class="col-lg">
+                                <div class="date" id="confirmedStatus">
+                                    Memuat status...
+                                </div>
+                                <?php if (session()->get('role') != 'Dokter') : ?>
+                                    <button id="refreshConfirmed" type="button" class="btn btn-link" style="--bs-btn-padding-y: 0; --bs-btn-padding-x: 0; --bs-btn-font-size: 9pt;">Perbarui Status</button>
+                                <?php endif; ?>
                             </div>
-                        </div>
-                    </div>
-                    <div class="mb-2 row">
-                        <div class="col-lg-3 fw-medium">Status Konfirmasi</div>
-                        <div class="col-lg">
-                            <div class="date" id="confirmedStatus">
-                                Memuat status...
-                            </div>
-                            <?php if (session()->get('role') != 'Dokter') : ?>
-                                <button id="refreshConfirmed" type="button" class="btn btn-link" style="--bs-btn-padding-y: 0; --bs-btn-padding-x: 0; --bs-btn-font-size: 9pt;">Perbarui Status</button>
-                            <?php endif; ?>
                         </div>
                     </div>
                 </div>

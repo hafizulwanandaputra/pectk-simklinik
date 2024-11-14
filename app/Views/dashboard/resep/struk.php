@@ -32,7 +32,7 @@ $tanggalFormat = $formatter->format($tanggal_isi_resep);
 
         body {
             font-family: Helvetica, Arial, sans-serif;
-            font-size: 11pt;
+            font-size: 10pt;
         }
 
         .prescription {
@@ -90,7 +90,7 @@ $tanggalFormat = $formatter->format($tanggal_isi_resep);
             <tbody>
                 <tr>
                     <td style="width: 25%; vertical-align: top; padding: 0;">
-                        <div>Tanggal/Waktu:</div>
+                        <div>Tanggal dan Waktu:</div>
                     </td>
                     <td style="width: 75%; vertical-align: top; padding: 0;">
                         <div><?= $tanggal ?></div>
@@ -106,6 +106,14 @@ $tanggalFormat = $formatter->format($tanggal_isi_resep);
                 </tr>
                 <tr>
                     <td style="width: 25%; vertical-align: top; padding: 0;">
+                        <div>Nama Pasien:</div>
+                    </td>
+                    <td style="width: 75%; vertical-align: top; padding: 0;">
+                        <div><?= $resep['nama_pasien'] ?></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 25%; vertical-align: top; padding: 0;">
                         <div>Nomor RM:</div>
                     </td>
                     <td style="width: 75%; vertical-align: top; padding: 0;">
@@ -114,10 +122,24 @@ $tanggalFormat = $formatter->format($tanggal_isi_resep);
                 </tr>
                 <tr>
                     <td style="width: 25%; vertical-align: top; padding: 0;">
-                        <div>Nama Pasien:</div>
+                        <div>Nomor Registrasi:</div>
                     </td>
                     <td style="width: 75%; vertical-align: top; padding: 0;">
-                        <div><?= $resep['nama_pasien'] ?></div>
+                        <div><?= $resep['nomor_registrasi'] ?></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 25%; vertical-align: top; padding: 0;">
+                        <div>Jenis Kelamin:</div>
+                    </td>
+                    <td style="width: 75%; vertical-align: top; padding: 0;">
+                        <div>
+                            <?php if ($resep['jenis_kelamin'] == 'L') : ?>
+                                Laki-Laki
+                            <?php elseif ($resep['jenis_kelamin'] == 'P') : ?>
+                                Perempuan
+                            <?php endif; ?>
+                        </div>
                     </td>
                 </tr>
                 <tr>
@@ -130,18 +152,18 @@ $tanggalFormat = $formatter->format($tanggal_isi_resep);
                 </tr>
                 <tr>
                     <td style="width: 25%; vertical-align: top; padding: 0;">
-                        <div>No. Telp:</div>
-                    </td>
-                    <td style="width: 75%; vertical-align: top; padding: 0;">
-                        <div><?= $resep['telpon'] ?></div>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="width: 25%; vertical-align: top; padding: 0;">
                         <div>Alamat:</div>
                     </td>
                     <td style="width: 75%; vertical-align: top; padding: 0;">
                         <div><?= $resep['alamat'] ?></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="width: 25%; vertical-align: top; padding: 0;">
+                        <div>Nomor Telepon:</div>
+                    </td>
+                    <td style="width: 75%; vertical-align: top; padding: 0;">
+                        <div><?= $resep['telpon'] ?></div>
                     </td>
                 </tr>
             </tbody>
@@ -149,7 +171,7 @@ $tanggalFormat = $formatter->format($tanggal_isi_resep);
         <hr>
         <ul class="prescription">
             <?php foreach ($detailresep as $item) : ?>
-                <li style="padding-bottom: 0.125cm; padding-top: 0.125cm; font-size: 13pt;">
+                <li style="padding-bottom: 0.125cm; padding-top: 0.125cm; font-size: 11pt;">
                     <?= $item['nama_obat'] ?> • <?= $item['jumlah'] ?> item<br><span style="font-size: 10pt;"><?= $item['signa'] ?> • <?= $item['cara_pakai'] ?><br><?= $item['catatan'] ?></span>
                 </li>
             <?php endforeach; ?>
