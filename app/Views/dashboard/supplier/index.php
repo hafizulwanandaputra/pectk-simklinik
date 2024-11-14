@@ -220,7 +220,11 @@
                     data: 'nama_supplier'
                 },
                 {
-                    data: 'merek'
+                    data: 'merek',
+                    render: function(data, type, row) {
+                        const merek = data ? data : '<em>Tanpa merek</em>';
+                        return `${merek}`;
+                    }
                 },
                 {
                     data: 'alamat_supplier'
@@ -228,7 +232,8 @@
                 {
                     data: 'kontak_supplier',
                     render: function(data, type, row) {
-                        return `<span class="date text-nowrap">${data}</span>`;
+                        const kontak_supplier = data ? data : '<em>Tidak ada</em>';
+                        return `<span class="date text-nowrap">${kontak_supplier}</span>`;
                     }
                 },
                 {

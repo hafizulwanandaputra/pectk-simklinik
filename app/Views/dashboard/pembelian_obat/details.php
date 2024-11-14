@@ -47,7 +47,7 @@
                         <div class="col-lg-3 fw-medium">Nomor Telepon Supplier</div>
                         <div class="col-lg">
                             <div class="date">
-                                <?= $pembelianobat['kontak_supplier'] ?>
+                                <?= ($pembelianobat['kontak_supplier'] == '') ? '<em>Tidak ada</em>' : $pembelianobat['kontak_supplier']; ?>
                             </div>
                         </div>
                     </div>
@@ -55,7 +55,7 @@
                         <div class="col-lg-3 fw-medium">Merek</div>
                         <div class="col-lg">
                             <div class="date">
-                                <?= $pembelianobat['merek'] ?>
+                                <?= ($pembelianobat['merek'] == '') ? '<em>Tanpa Merek</em>' : $pembelianobat['merek']; ?>
                             </div>
                         </div>
                     </div>
@@ -327,13 +327,13 @@
                             `;
                         $(`#item-${item.id_detail_pembelian_obat}`).append(itemElement);
                     });
+                    $('#printBtn').prop('disabled', false);
                     if (detail_pembelian_obat.diterima === "1") {
                         $('.add-batch-btn').prop('disabled', true);
                         $('.edit-batch-btn').prop('disabled', true);
                         $('.delete-batch-btn').prop('disabled', true);
                         $('.edit-btn').prop('disabled', true);
                         $('.delete-btn').prop('disabled', true);
-                        $('#printBtn').prop('disabled', true);
                         $('#completeBtn').prop('disabled', true);
                     } else if (detail_pembelian_obat.diterima === "0") {
                         $('.add-batch-btn').prop('disabled', false);
@@ -341,7 +341,6 @@
                         $('.delete-batch-btn').prop('disabled', false);
                         $('.edit-btn').prop('disabled', false);
                         $('.delete-btn').prop('disabled', false);
-                        $('#printBtn').prop('disabled', false);
                         $('#completeBtn').prop('disabled', false);
                     }
                 });

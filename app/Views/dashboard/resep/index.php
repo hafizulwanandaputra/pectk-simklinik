@@ -21,6 +21,11 @@
                     <option value="1">Diproses</option>
                     <option value="0">Belum Diproses</option>
                 </select>
+                <select id="genderFilter" class="form-select form-select-sm w-auto rounded-3 flex-fill">
+                    <option value="">Semua Jenis Kelamin</option>
+                    <option value="L">Laki-laki</option>
+                    <option value="P">Perempuan</option>
+                </select>
                 <select id="confirmedFilter" class="form-select form-select-sm w-auto rounded-3 flex-fill">
                     <option value="">Semua Status Konfirmasi</option>
                     <option value="1">Dikonfirmasi</option>
@@ -222,6 +227,7 @@
         const search = $('#searchInput').val();
         const offset = (currentPage - 1) * limit;
         const status = $('#statusFilter').val();
+        const gender = $('#genderFilter').val();
         const confirmed = $('#confirmedFilter').val();
         const dokter = $('#dokterFilter').val();
         const tanggal = $('#tanggalFilter').val();
@@ -236,6 +242,7 @@
                     limit: limit,
                     offset: offset,
                     status: status,
+                    gender: gender,
                     dokter: dokter,
                     confirmed: confirmed,
                     tanggal: tanggal
@@ -255,6 +262,12 @@
                 );
             } else {
                 data.resep.forEach(function(resep) {
+                    let jenis_kelamin = resep.jenis_kelamin;
+                    if (jenis_kelamin === 'L') {
+                        jenis_kelamin = `<span class="badge text-bg-primary border-primary bg-gradient text-nowrap"><i class="fa-solid fa-mars"></i> LAKI-LAKI</span>`;
+                    } else if (jenis_kelamin === 'P') {
+                        jenis_kelamin = `<span class="badge text-bg-danger border-danger bg-gradient text-nowrap"><i class="fa-solid fa-venus"></i> PEREMPUAN</span>`;
+                    }
                     const jumlah_resep = parseInt(resep.jumlah_resep);
                     const total_biaya = parseInt(resep.total_biaya);
                     const confirmedBadge = resep.confirmed == '1' ?
@@ -274,7 +287,7 @@
                 <div class="d-flex">
                     <div class="align-self-center ps-2 w-100">
                         <h5 class="card-title">
-                            ${resep.nama_pasien}
+                            ${resep.nama_pasien} ${jenis_kelamin}
                         </h5>
                         <h6 class="card-subtitle mb-2">
                             ${resep.dokter}
@@ -386,7 +399,7 @@
         }
     });
 
-    $('#statusFilter, #confirmedFilter, #dokterFilter, #tanggalFilter').on('change', function() {
+    $('#statusFilter, #genderFilter, #confirmedFilter, #dokterFilter, #tanggalFilter').on('change', function() {
         $('#resepContainer').empty();
         for (let i = 0; i < limit; i++) {
             $('#resepContainer').append(placeholder);

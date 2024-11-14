@@ -181,7 +181,7 @@
                 data.pembelian_obat.forEach(function(pembelian_obat) {
                     const total_qty = parseInt(pembelian_obat.total_qty);
                     const total_biaya = parseInt(pembelian_obat.total_biaya);
-                    const merek = pembelian_obat.supplier_merek ? `${pembelian_obat.supplier_merek} • ` : ``;
+                    const merek = pembelian_obat.supplier_merek ? `${pembelian_obat.supplier_merek}` : `<em>Tanpa merek</em>`;
                     const statusBadge = pembelian_obat.diterima == '1' ?
                         `<span class="badge bg-success bg-gradient">Diterima</span>` :
                         `<span class="badge bg-danger bg-gradient">Belum Diterima</span>`;
@@ -190,7 +190,7 @@
                 <div class="d-flex">
                     <div class="align-self-center ps-2 w-100">
                         <h5 class="card-title">
-                            ${merek} ${pembelian_obat.supplier_nama_supplier}
+                            ${merek} • ${pembelian_obat.supplier_nama_supplier}
                         </h5>
                         <h6 class="card-subtitle mb-2">
                             ${pembelian_obat.apoteker}

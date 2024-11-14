@@ -21,6 +21,11 @@
                     <option value="1">Diproses</option>
                     <option value="0">Belum Diproses</option>
                 </select>
+                <select id="genderFilter" class="form-select form-select-sm w-auto rounded-3 flex-fill">
+                    <option value="">Semua Jenis Kelamin</option>
+                    <option value="L">Laki-laki</option>
+                    <option value="P">Perempuan</option>
+                </select>
                 <select id="namesFilter" class="form-select form-select-sm w-auto rounded-3 flex-fill">
                     <option value="">Semua Nama</option>
                     <option value="1">Dengan Nama</option>
@@ -49,6 +54,7 @@
                                 </h5>
                                 <p class="card-text placeholder-glow">
                                     <small>
+                                        <span class="placeholder" style="width: 12.5%;"></span><br>
                                         <span class="placeholder" style="width: 12.5%;"></span><br>
                                         <span class="placeholder" style="width: 12.5%;"></span><br>
                                         <span class="placeholder" style="width: 12.5%;"></span><br>
@@ -157,6 +163,7 @@
                                 <span class="placeholder" style="width: 12.5%;"></span><br>
                                 <span class="placeholder" style="width: 12.5%;"></span><br>
                                 <span class="placeholder" style="width: 12.5%;"></span><br>
+                                <span class="placeholder" style="width: 12.5%;"></span><br>
                                 <span class="placeholder" style="width: 12.5%;"></span>
                             </small>
                         </p>
@@ -174,6 +181,7 @@
         const search = $('#searchInput').val();
         const offset = (currentPage - 1) * limit;
         const status = $('#statusFilter').val();
+        const gender = $('#genderFilter').val();
         const names = $('#namesFilter').val();
         const tanggal = $('#tanggalFilter').val();
 
@@ -187,6 +195,7 @@
                     limit: limit,
                     offset: offset,
                     status: status,
+                    gender: gender,
                     names: names,
                     tanggal: tanggal
                 }
@@ -208,6 +217,15 @@
                     const nama_pasien = resep.nama_pasien == null ?
                         `<em>Anonim</em>` :
                         resep.nama_pasien;
+                    let jenis_kelamin = resep.jenis_kelamin;
+                    if (jenis_kelamin === 'L') {
+                        jenis_kelamin = `<span class="badge text-bg-primary border-primary bg-gradient text-nowrap"><i class="fa-solid fa-mars"></i> LAKI-LAKI</span>`;
+                    } else if (jenis_kelamin === 'P') {
+                        jenis_kelamin = `<span class="badge text-bg-danger border-danger bg-gradient text-nowrap"><i class="fa-solid fa-venus"></i> PEREMPUAN</span>`;
+                    }
+                    const alamat = resep.alamat == '' ?
+                        `<em>Tidak ada</em>` :
+                        resep.alamat;
                     const jumlah_resep = parseInt(resep.jumlah_resep);
                     const total_biaya = parseInt(resep.total_biaya);
                     const statusBadge = resep.status == '1' ?
@@ -221,12 +239,13 @@
                 <div class="d-flex">
                     <div class="align-self-center ps-2 w-100">
                         <h5 class="card-title">
-                            ${nama_pasien}
+                            ${nama_pasien} ${jenis_kelamin}
                         </h5>
                         <p class="card-text">
                             <small class="date">
                                 ID Resep: ${resep.id_resep}<br>
                                 Tanggal dan Waktu Resep: ${resep.tanggal_resep}<br>
+                                Alamat: ${alamat}<br>
                                 Total Resep: ${jumlah_resep.toLocaleString('id-ID')}<br>
                                 Total Harga: Rp${total_biaya.toLocaleString('id-ID')}<br>
                                 ${statusBadge}
@@ -334,7 +353,7 @@
         }
     });
 
-    $('#statusFilter, #namesFilter, #tanggalFilter').on('change', function() {
+    $('#statusFilter, #genderFilter, #namesFilter, #tanggalFilter').on('change', function() {
         $('#resepContainer').empty();
         for (let i = 0; i < limit; i++) {
             $('#resepContainer').append(placeholder);

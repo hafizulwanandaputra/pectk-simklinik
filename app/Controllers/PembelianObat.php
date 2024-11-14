@@ -133,9 +133,11 @@ class PembelianObat extends BaseController
             // Menyiapkan opsi untuk ditampilkan di dropdown
             $options = [];
             foreach ($results as $row) {
+                // Mengkondisikan Merek
+                $merek = ($row['merek'] == '') ? 'Tanpa merek' : $row['merek'];
                 $options[] = [
                     'value' => $row['id_supplier'],
-                    'text' => $row['merek'] . ' • ' . $row['nama_supplier']
+                    'text' => $merek . ' • ' . $row['nama_supplier']
                 ];
             }
 
@@ -360,12 +362,12 @@ class PembelianObat extends BaseController
                         ]);
                     }
 
-                    // Memperbarui jumlah_masuk untuk obat
-                    $db->table('obat')
-                        ->set('jumlah_masuk', $new_jumlah_masuk, false)
-                        ->set('updated_at', date('Y-m-d H:i:s')) // Memperbarui timestamp
-                        ->where('id_obat', $id_obat)
-                        ->update();
+                    // // Memperbarui jumlah_masuk untuk obat
+                    // $db->table('obat')
+                    //     ->set('jumlah_masuk', $new_jumlah_masuk, false)
+                    //     ->set('updated_at', date('Y-m-d H:i:s')) // Memperbarui timestamp
+                    //     ->where('id_obat', $id_obat)
+                    //     ->update();
 
                     // Memperbarui detail_pembelian_obat dengan nilai obat_masuk baru
                     $db->table('detail_pembelian_obat')
@@ -384,7 +386,7 @@ class PembelianObat extends BaseController
                 $db->transCommit(); // Menyelesaikan transaksi
                 if ($totalJumlah == $totalObatMasuk) {
                     // Semua obat diterima
-                    return $this->response->setJSON(['success' => true, 'message' => 'Obat sudah diterima. Periksa jumlah masuk di menu obat.']);
+                    return $this->response->setJSON(['success' => true, 'message' => 'Obat sudah diterima.']);
                 } else {
                     // Sebagian obat sudah diterima
                     return $this->response->setJSON(['success' => true, 'message' => 'Sebagian obat sudah diterima. Jika ada obat yang baru saja diterima, silakan perbarui item masing-masing dan klik "Terima Obat" lagi.']);
@@ -995,171 +997,166 @@ class PembelianObat extends BaseController
                 ->orderBy('id_detail_pembelian_obat', 'ASC')
                 ->findAll();
 
-            // Memeriksa apakah detail pembelian obat kosong
-            if ($pembelianobat['diterima'] == 1) {
-                throw PageNotFoundException::forPageNotFound();
-            } else {
-                // Membuat nama file berdasarkan tanggal pembelian
-                $filename = $pembelianobat['tgl_pembelian'] . '-pembelian-obat';
-                $tanggal = new DateTime($pembelianobat['tgl_pembelian']);
-                // Buat formatter untuk tanggal dan waktu
-                $formatter = new IntlDateFormatter(
-                    'id_ID', // Locale untuk bahasa Indonesia
-                    IntlDateFormatter::LONG, // Format untuk tanggal
-                    IntlDateFormatter::NONE, // Tidak ada waktu
-                    'Asia/Jakarta', // Timezone
-                    IntlDateFormatter::GREGORIAN, // Calendar
-                    'EEEE, d MMMM yyyy HH:mm:ss' // Format tanggal lengkap dengan nama hari
-                );
+            // Membuat nama file berdasarkan tanggal pembelian
+            $filename = $pembelianobat['tgl_pembelian'] . '-pembelian-obat';
+            $tanggal = new DateTime($pembelianobat['tgl_pembelian']);
+            // Buat formatter untuk tanggal dan waktu
+            $formatter = new IntlDateFormatter(
+                'id_ID', // Locale untuk bahasa Indonesia
+                IntlDateFormatter::LONG, // Format untuk tanggal
+                IntlDateFormatter::NONE, // Tidak ada waktu
+                'Asia/Jakarta', // Timezone
+                IntlDateFormatter::GREGORIAN, // Calendar
+                'EEEE, d MMMM yyyy HH:mm:ss' // Format tanggal lengkap dengan nama hari
+            );
 
-                // Format tanggal
-                $tanggalFormat = $formatter->format($tanggal);
-                $spreadsheet = new Spreadsheet();
-                $sheet = $spreadsheet->getActiveSheet();
+            // Format tanggal
+            $tanggalFormat = $formatter->format($tanggal);
+            $spreadsheet = new Spreadsheet();
+            $sheet = $spreadsheet->getActiveSheet();
 
-                // Menambahkan informasi header di spreadsheet
-                $sheet->setCellValue('A1', 'KLINIK UTAMA MATA PADANG EYE CENTER TELUK KUANTAN');
-                $sheet->setCellValue('A2', 'Jl. Rusdi S. Abrus No. 35 LK III Sinambek, Kelurahan Sungai Jering, Kecamatan Kuantan Tengah, Kabupaten Kuantan Singingi, Riau.');
-                $sheet->setCellValue('A3', 'FAKTUR PEMBELIAN OBAT');
+            // Menambahkan informasi header di spreadsheet
+            $sheet->setCellValue('A1', 'KLINIK UTAMA MATA PADANG EYE CENTER TELUK KUANTAN');
+            $sheet->setCellValue('A2', 'Jl. Rusdi S. Abrus No. 35 LK III Sinambek, Kelurahan Sungai Jering, Kecamatan Kuantan Tengah, Kabupaten Kuantan Singingi, Riau.');
+            $sheet->setCellValue('A3', 'FAKTUR PEMBELIAN OBAT');
 
-                // Path gambar yang ingin ditambahkan
-                $gambarPath = FCPATH . 'assets/images/logo_pec.png'; // Ganti dengan path gambar Anda
+            // Path gambar yang ingin ditambahkan
+            $gambarPath = FCPATH . 'assets/images/logo_pec.png'; // Ganti dengan path gambar Anda
 
-                // Membuat objek Drawing
-                $drawing = new Drawing();
-                $drawing->setName('Logo PEC-TK'); // Nama gambar
-                $drawing->setDescription('Logo PEC-TK'); // Deskripsi gambar
-                $drawing->setPath($gambarPath); // Path ke gambar
-                $drawing->setCoordinates('A1'); // Koordinat sel tempat gambar akan ditambahkan
-                $drawing->setHeight(36); // Tinggi gambar dalam piksel (opsional)
-                $drawing->setWorksheet($sheet); // Menambahkan gambar ke worksheet
+            // Membuat objek Drawing
+            $drawing = new Drawing();
+            $drawing->setName('Logo PEC-TK'); // Nama gambar
+            $drawing->setDescription('Logo PEC-TK'); // Deskripsi gambar
+            $drawing->setPath($gambarPath); // Path ke gambar
+            $drawing->setCoordinates('A1'); // Koordinat sel tempat gambar akan ditambahkan
+            $drawing->setHeight(36); // Tinggi gambar dalam piksel (opsional)
+            $drawing->setWorksheet($sheet); // Menambahkan gambar ke worksheet
 
-                // Menambahkan informasi tanggal dan supplier
-                $sheet->setCellValue('A4', 'Hari/Tanggal:');
-                $sheet->setCellValue('C4', $tanggalFormat);
-                $sheet->setCellValue('A5', 'Nama Supplier:');
-                $sheet->setCellValue('C5', $pembelianobat['nama_supplier']);
-                $sheet->setCellValue('A6', 'Alamat Supplier:');
-                $sheet->setCellValue('C6', $pembelianobat['alamat_supplier']);
-                $sheet->setCellValue('A7', 'Nomor Telepon Supplier:');
-                $sheet->setCellValueExplicit('C7', $pembelianobat['kontak_supplier'], DataType::TYPE_STRING);
-                $sheet->setCellValue('A8', 'Merek:');
-                $sheet->setCellValue('C8', $pembelianobat['merek']);
-                $sheet->setCellValue('A9', 'Apoteker:');
-                $sheet->setCellValue('C9', $pembelianobat['apoteker']);
-                $sheet->setCellValue('A10', 'ID Pembelian:');
-                $sheet->setCellValue('C10', $pembelianobat['id_pembelian_obat']);
+            // Menambahkan informasi tanggal dan supplier
+            $sheet->setCellValue('A4', 'Hari/Tanggal:');
+            $sheet->setCellValue('C4', $tanggalFormat);
+            $sheet->setCellValue('A5', 'Nama Supplier:');
+            $sheet->setCellValue('C5', $pembelianobat['nama_supplier']);
+            $sheet->setCellValue('A6', 'Alamat Supplier:');
+            $sheet->setCellValue('C6', $pembelianobat['alamat_supplier']);
+            $sheet->setCellValue('A7', 'Nomor Telepon Supplier:');
+            $sheet->setCellValueExplicit('C7', $pembelianobat['kontak_supplier'], DataType::TYPE_STRING);
+            $sheet->setCellValue('A8', 'Merek:');
+            $sheet->setCellValue('C8', $pembelianobat['merek']);
+            $sheet->setCellValue('A9', 'Apoteker:');
+            $sheet->setCellValue('C9', $pembelianobat['apoteker']);
+            $sheet->setCellValue('A10', 'ID Pembelian:');
+            $sheet->setCellValue('C10', $pembelianobat['id_pembelian_obat']);
 
-                // Menambahkan header tabel detail pembelian
-                $sheet->setCellValue('A11', 'No.');
-                $sheet->setCellValue('B11', 'Nama Obat');
-                $sheet->setCellValue('C11', 'Kategori Obat');
-                $sheet->setCellValue('D11', 'Bentuk Obat');
-                $sheet->setCellValue('E11', 'Harga Satuan');
-                $sheet->setCellValue('F11', 'Qty');
-                $sheet->setCellValue('G11', 'Total Harga');
+            // Menambahkan header tabel detail pembelian
+            $sheet->setCellValue('A11', 'No.');
+            $sheet->setCellValue('B11', 'Nama Obat');
+            $sheet->setCellValue('C11', 'Kategori Obat');
+            $sheet->setCellValue('D11', 'Bentuk Obat');
+            $sheet->setCellValue('E11', 'Harga Satuan');
+            $sheet->setCellValue('F11', 'Qty');
+            $sheet->setCellValue('G11', 'Total Harga');
 
-                // Mengatur tata letak dan gaya untuk header
-                $spreadsheet->getActiveSheet()->mergeCells('A1:G1');
-                $spreadsheet->getActiveSheet()->mergeCells('A2:G2');
-                $spreadsheet->getActiveSheet()->mergeCells('A3:G3');
-                $spreadsheet->getActiveSheet()->getPageSetup()
-                    ->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
-                $spreadsheet->getActiveSheet()->getPageSetup()
-                    ->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_A4);
-                $spreadsheet->getDefaultStyle()->getFont()->setName('Helvetica');
-                $spreadsheet->getDefaultStyle()->getFont()->setSize(8);
+            // Mengatur tata letak dan gaya untuk header
+            $spreadsheet->getActiveSheet()->mergeCells('A1:G1');
+            $spreadsheet->getActiveSheet()->mergeCells('A2:G2');
+            $spreadsheet->getActiveSheet()->mergeCells('A3:G3');
+            $spreadsheet->getActiveSheet()->getPageSetup()
+                ->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
+            $spreadsheet->getActiveSheet()->getPageSetup()
+                ->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_A4);
+            $spreadsheet->getDefaultStyle()->getFont()->setName('Helvetica');
+            $spreadsheet->getDefaultStyle()->getFont()->setSize(8);
 
-                // Mengisi data detail pembelian obat ke dalam spreadsheet
-                $column = 12;
-                foreach ($detailpembelianobat as $list) {
-                    $sheet->setCellValue('A' . $column, ($column - 10));
-                    $sheet->setCellValue('B' . $column, $list['nama_obat']);
-                    $sheet->setCellValue('C' . $column, $list['kategori_obat']);
-                    $sheet->setCellValue('D' . $column, $list['bentuk_obat']);
-                    $sheet->setCellValue('E' . $column, $list['harga_satuan']);
-                    // Mengatur format harga satuan
-                    $sheet->getStyle('E' . $column)->getNumberFormat()->setFormatCode('_\Rp * #,##0_-;[Red]_\Rp * -#,##0_-;_-_\Rp * \"-\"_-;_-@_-');
-                    $sheet->setCellValue('F' . $column, $list['jumlah']);
-                    // Menghitung total harga
-                    $total = $list['harga_satuan'] * $list['jumlah'];
-                    $sheet->setCellValue('G' . $column, $total);
-                    // Mengatur format total harga
-                    $sheet->getStyle('G' . $column)->getNumberFormat()->setFormatCode('_\Rp * #,##0_-;[Red]_\Rp * -#,##0_-;_-_\Rp * \"-\"_-;_-@_-');
-                    // Mengatur gaya teks
-                    $sheet->getStyle('A' . $column . ':G' . $column)->getAlignment()->setWrapText(true);
-                    $sheet->getStyle('A' . $column)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-                    $sheet->getStyle('A' . $column . ':G' . $column)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
-                    $column++;
-                }
-
-                // Menambahkan total pembelian di bawah tabel
-                $sheet->setCellValue('A' . ($column), 'Total Pembelian');
-                $spreadsheet->getActiveSheet()->mergeCells('A' . ($column) . ':E' . ($column));
-                $sheet->setCellValue('F' . ($column), $pembelianobat['total_qty']);
-                $sheet->setCellValue('G' . ($column), $pembelianobat['total_biaya']);
-                // Mengatur format untuk total biaya
-                $sheet->getStyle('G' . ($column))->getNumberFormat()->setFormatCode('_\Rp * #,##0_-;[Red]_\Rp * -#,##0_-;_-_\Rp * \"-\"_-;_-@_-');
-
-                // Menambahkan bagian tanda tangan penerima
-                $sheet->setCellValue('G' . ($column + 2), 'Penerima');
-                $sheet->setCellValue('G' . ($column + 7), '(_________________________)');
-
-                // Mengatur gaya teks untuk header dan total
-                $sheet->getStyle('A1')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-                $sheet->getStyle('A1')->getFont()->setSize(12);
-                $sheet->getStyle('A2')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-                $sheet->getStyle('A3')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-                $sheet->getStyle('A3')->getFont()->setSize(10);
-                $sheet->getStyle('C4:C10')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT);
-                $sheet->getStyle('A11:G11')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-                $sheet->getStyle('A' . ($column))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT);
-                $sheet->getStyle('G' . ($column + 2) . ':G' . ($column + 7))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-
-                // Mengatur gaya font untuk header dan total
-                $sheet->getStyle('A1:A10')->getFont()->setBold(TRUE);
-                $sheet->getStyle('A11:G11')->getFont()->setBold(TRUE);
-                $sheet->getStyle('A11:G11')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
-                $sheet->getStyle('A' . ($column) . ':G' . ($column))->getFont()->setBold(TRUE);
-                $sheet->getStyle('A' . ($column) . ':G' . ($column))->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
-
-                // Menambahkan border untuk header dan tabel
-                $headerBorder1 = [
-                    'borders' => [
-                        'bottom' => [
-                            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-                            'color' => ['argb' => 'FF000000']
-                        ]
-                    ]
-                ];
-                $sheet->getStyle('A2:G2')->applyFromArray($headerBorder1);
-                $tableBorder = [
-                    'borders' => [
-                        'allBorders' => [
-                            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-                            'color' => ['argb' => 'FF000000']
-                        ]
-                    ]
-                ];
-                $sheet->getStyle('A11:G' . ($column))->applyFromArray($tableBorder);
-
-                // Mengatur lebar kolom
-                $sheet->getColumnDimension('A')->setWidth(50, 'px');
-                $sheet->getColumnDimension('B')->setWidth(320, 'px');
-                $sheet->getColumnDimension('C')->setWidth(120, 'px');
-                $sheet->getColumnDimension('D')->setWidth(120, 'px');
-                $sheet->getColumnDimension('E')->setWidth(240, 'px');
-                $sheet->getColumnDimension('F')->setWidth(50, 'px');
-                $sheet->getColumnDimension('G')->setWidth(240, 'px');
-
-                // Menyimpan file spreadsheet dan mengirimkan ke browser
-                $writer = new Xlsx($spreadsheet);
-                header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheet.sheet');
-                header('Content-Disposition: attachment;filename=' . $filename . '.xlsx');
-                header('Cache-Control: max-age=0');
-                $writer->save('php://output');
-                exit();
+            // Mengisi data detail pembelian obat ke dalam spreadsheet
+            $column = 12;
+            foreach ($detailpembelianobat as $list) {
+                $sheet->setCellValue('A' . $column, ($column - 10));
+                $sheet->setCellValue('B' . $column, $list['nama_obat']);
+                $sheet->setCellValue('C' . $column, $list['kategori_obat']);
+                $sheet->setCellValue('D' . $column, $list['bentuk_obat']);
+                $sheet->setCellValue('E' . $column, $list['harga_satuan']);
+                // Mengatur format harga satuan
+                $sheet->getStyle('E' . $column)->getNumberFormat()->setFormatCode('_\Rp * #,##0_-;[Red]_\Rp * -#,##0_-;_-_\Rp * \"-\"_-;_-@_-');
+                $sheet->setCellValue('F' . $column, $list['jumlah']);
+                // Menghitung total harga
+                $total = $list['harga_satuan'] * $list['jumlah'];
+                $sheet->setCellValue('G' . $column, $total);
+                // Mengatur format total harga
+                $sheet->getStyle('G' . $column)->getNumberFormat()->setFormatCode('_\Rp * #,##0_-;[Red]_\Rp * -#,##0_-;_-_\Rp * \"-\"_-;_-@_-');
+                // Mengatur gaya teks
+                $sheet->getStyle('A' . $column . ':G' . $column)->getAlignment()->setWrapText(true);
+                $sheet->getStyle('A' . $column)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+                $sheet->getStyle('A' . $column . ':G' . $column)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
+                $column++;
             }
+
+            // Menambahkan total pembelian di bawah tabel
+            $sheet->setCellValue('A' . ($column), 'Total Pembelian');
+            $spreadsheet->getActiveSheet()->mergeCells('A' . ($column) . ':E' . ($column));
+            $sheet->setCellValue('F' . ($column), $pembelianobat['total_qty']);
+            $sheet->setCellValue('G' . ($column), $pembelianobat['total_biaya']);
+            // Mengatur format untuk total biaya
+            $sheet->getStyle('G' . ($column))->getNumberFormat()->setFormatCode('_\Rp * #,##0_-;[Red]_\Rp * -#,##0_-;_-_\Rp * \"-\"_-;_-@_-');
+
+            // Menambahkan bagian tanda tangan penerima
+            $sheet->setCellValue('G' . ($column + 2), 'Penerima');
+            $sheet->setCellValue('G' . ($column + 7), '(_________________________)');
+
+            // Mengatur gaya teks untuk header dan total
+            $sheet->getStyle('A1')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+            $sheet->getStyle('A1')->getFont()->setSize(12);
+            $sheet->getStyle('A2')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+            $sheet->getStyle('A3')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+            $sheet->getStyle('A3')->getFont()->setSize(10);
+            $sheet->getStyle('C4:C10')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT);
+            $sheet->getStyle('A11:G11')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+            $sheet->getStyle('A' . ($column))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT);
+            $sheet->getStyle('G' . ($column + 2) . ':G' . ($column + 7))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+
+            // Mengatur gaya font untuk header dan total
+            $sheet->getStyle('A1:A10')->getFont()->setBold(TRUE);
+            $sheet->getStyle('A11:G11')->getFont()->setBold(TRUE);
+            $sheet->getStyle('A11:G11')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+            $sheet->getStyle('A' . ($column) . ':G' . ($column))->getFont()->setBold(TRUE);
+            $sheet->getStyle('A' . ($column) . ':G' . ($column))->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
+
+            // Menambahkan border untuk header dan tabel
+            $headerBorder1 = [
+                'borders' => [
+                    'bottom' => [
+                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                        'color' => ['argb' => 'FF000000']
+                    ]
+                ]
+            ];
+            $sheet->getStyle('A2:G2')->applyFromArray($headerBorder1);
+            $tableBorder = [
+                'borders' => [
+                    'allBorders' => [
+                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                        'color' => ['argb' => 'FF000000']
+                    ]
+                ]
+            ];
+            $sheet->getStyle('A11:G' . ($column))->applyFromArray($tableBorder);
+
+            // Mengatur lebar kolom
+            $sheet->getColumnDimension('A')->setWidth(50, 'px');
+            $sheet->getColumnDimension('B')->setWidth(320, 'px');
+            $sheet->getColumnDimension('C')->setWidth(120, 'px');
+            $sheet->getColumnDimension('D')->setWidth(120, 'px');
+            $sheet->getColumnDimension('E')->setWidth(240, 'px');
+            $sheet->getColumnDimension('F')->setWidth(50, 'px');
+            $sheet->getColumnDimension('G')->setWidth(240, 'px');
+
+            // Menyimpan file spreadsheet dan mengirimkan ke browser
+            $writer = new Xlsx($spreadsheet);
+            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheet.sheet');
+            header('Content-Disposition: attachment;filename=' . $filename . '.xlsx');
+            header('Cache-Control: max-age=0');
+            $writer->save('php://output');
+            exit();
         } else {
             // Menghasilkan exception jika peran tidak diizinkan
             throw PageNotFoundException::forPageNotFound();

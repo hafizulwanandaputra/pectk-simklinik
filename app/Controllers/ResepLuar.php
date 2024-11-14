@@ -44,6 +44,7 @@ class ResepLuar extends BaseController
             $limit = $this->request->getGet('limit');
             $offset = $this->request->getGet('offset');
             $status = $this->request->getGet('status');
+            $gender = $this->request->getGet('gender');
             $names = $this->request->getGet('names');
             $tanggal = $this->request->getGet('tanggal');
 
@@ -58,6 +59,13 @@ class ResepLuar extends BaseController
                 $ResepModel->select('resep.*')->where('status', 1); // Resep aktif
             } elseif ($status === '0') {
                 $ResepModel->select('resep.*')->where('status', 0); // Resep non-aktif
+            }
+
+            // Menerapkan filter gender jika disediakan
+            if ($gender === 'L') {
+                $ResepModel->where('jenis_kelamin', 'L'); // Mengambil resep dari pasien laki-laki
+            } elseif ($gender === 'P') {
+                $ResepModel->where('jenis_kelamin', 'P'); // Mengambil resep dari pasien perempuan
             }
 
             // Menerapkan filter names jika disediakan

@@ -46,6 +46,7 @@ class Resep extends BaseController
             $limit = $this->request->getGet('limit');
             $offset = $this->request->getGet('offset');
             $status = $this->request->getGet('status');
+            $gender = $this->request->getGet('gender');
             $dokter = $this->request->getGet('dokter');
             $confirmed = $this->request->getGet('confirmed');
             $tanggal = $this->request->getGet('tanggal');
@@ -63,6 +64,13 @@ class Resep extends BaseController
                 $ResepModel->where('status', 1); // Mengambil resep dengan status aktif
             } elseif ($status === '0') {
                 $ResepModel->where('status', 0); // Mengambil resep dengan status non-aktif
+            }
+
+            // Menerapkan filter gender jika disediakan
+            if ($gender === 'L') {
+                $ResepModel->where('jenis_kelamin', 'L'); // Mengambil resep dari pasien laki-laki
+            } elseif ($gender === 'P') {
+                $ResepModel->where('jenis_kelamin', 'P'); // Mengambil resep dari pasien perempuan
             }
 
             // Menerapkan filter confirmed jika disediakan
@@ -182,9 +190,14 @@ class Resep extends BaseController
                 $options = [];
                 // Menyusun opsi dari data pasien yang diterima
                 foreach ($data as $row) {
+                    if ($row['jenis_kelamin'] == 'L') {
+                        $jenis_kelamin = 'Laki-laki';
+                    } else if ($row['jenis_kelamin'] == 'P') {
+                        $jenis_kelamin = 'Perempuan';
+                    }
                     $options[] = [
                         'value' => $row['nomor_registrasi'],
-                        'text' => $row['nama_pasien'] . ' (' . $row['no_rm'] . ' - ' . $row['nomor_registrasi'] . ' - ' . $row['dokter'] . ')' // Menyusun teks yang ditampilkan
+                        'text' => $row['nama_pasien'] . ' (' . $jenis_kelamin . ' - ' . $row['no_rm'] . ' - ' . $row['nomor_registrasi'] . ' - ' . $row['dokter'] . ')' // Menyusun teks yang ditampilkan
                     ];
                 }
 

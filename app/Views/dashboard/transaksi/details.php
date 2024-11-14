@@ -32,7 +32,7 @@
                             <div class="col-lg-4 fw-medium">Nomor Rekam Medis</div>
                             <div class="col-lg">
                                 <div class="date">
-                                    <?= $transaksi['no_rm'] ?>
+                                    <?= ($transaksi['no_rm'] == NULL) ? '<em>Tidak ada</em>' : $transaksi['no_rm']; ?>
                                 </div>
                             </div>
                         </div>
@@ -40,7 +40,7 @@
                             <div class="col-lg-4 fw-medium">Alamat</div>
                             <div class="col-lg">
                                 <div>
-                                    <?= $transaksi['alamat'] ?>
+                                    <?= ($transaksi['alamat'] == NULL) ? '<em>Tidak ada</em>' : $transaksi['alamat']; ?>
                                 </div>
                             </div>
                         </div>
@@ -48,7 +48,7 @@
                             <div class="col-lg-4 fw-medium">Nomor HP</div>
                             <div class="col-lg">
                                 <div class="date">
-                                    <?= $transaksi['telpon'] ?>
+                                    <?= ($transaksi['telpon'] == NULL) ? '<em>Tidak ada</em>' : $transaksi['telpon']; ?>
                                 </div>
                             </div>
                         </div>

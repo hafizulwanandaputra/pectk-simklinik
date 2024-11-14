@@ -59,6 +59,14 @@
                             </div>
                         </div>
                     </div>
+                    <div class="mb-2 row">
+                        <div class="col-lg-3 fw-medium">Alamat</div>
+                        <div class="col-lg">
+                            <div class="date">
+                                <?= ($resep['alamat'] == NULL) ? '<em>Tidak ada</em>' : $resep['alamat']; ?>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </fieldset>
 

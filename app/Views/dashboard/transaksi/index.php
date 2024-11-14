@@ -311,13 +311,13 @@
                     const metode_pembayaran = transaksi.metode_pembayaran == '' ?
                         `<em>Belum ada</em>` :
                         transaksi.metode_pembayaran + bank;
-                    const resepluar = transaksi.id_resep ? `<span class="badge bg-secondary bg-gradient">Resep Luar</span>` : ``;
+                    const jenisResep = transaksi.id_resep ? `<span class="badge bg-secondary border-secondary bg-gradient">Resep Luar</span>` : `<span class="badge bg-success border-success bg-gradient">Resep Dokter</span>`;
                     const transaksiElement = `
                     <li class="list-group-item bg-body-tertiary pb-3 pt-3">
                         <div class="d-flex">
                             <div class="align-self-center ps-2 w-100">
                                 <h5 class="card-title">
-                                    ${nama_pasien} ${resepluar}
+                                    ${nama_pasien} ${jenisResep}
                                 </h5>
                                 <h6 class="card-subtitle mb-2">
                                     ${transaksi.kasir}
