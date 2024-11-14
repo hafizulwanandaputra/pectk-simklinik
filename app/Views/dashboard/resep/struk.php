@@ -158,8 +158,8 @@ $tanggalFormat = $formatter->format($tanggal_isi_resep);
         <table class="table" style="width: 100%; margin-bottom: 4px;">
             <tbody>
                 <tr>
-                    <td style="text-align: center; width: 50%;">Apoteker</td>
-                    <td style="text-align: center; width: 50%;">Teluk Kuantan, <?= $tanggalFormat ?><br>Pasien</td>
+                    <td style="text-align: center; vertical-align: bottom; width: 50%;">Apoteker</td>
+                    <td style="text-align: center; vertical-align: bottom; width: 50%;">Teluk Kuantan, <?= $tanggalFormat ?><br>Pasien</td>
                 </tr>
                 <tr>
                     <td style="text-align: center; padding-top: 2cm; width: 50%;"><?= session()->get('fullname') ?></td>
