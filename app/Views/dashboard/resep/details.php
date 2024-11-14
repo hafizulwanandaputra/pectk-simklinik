@@ -266,13 +266,6 @@
 
                 const data = response.data;
 
-                // Cek status konfirmasi
-                if (data.confirmed === "1") {
-                    $('#confirmedStatus').text('Dikonfirmasi');
-                } else if (data.confirmed === "0") {
-                    $('#confirmedStatus').text('Belum Dikonfirmasi');
-                }
-
                 // Cek status `status`
                 if (data.status === "1" || data.confirmed === "1"
                     <?= (session()->get('role') != 'Admin') ? ' || data.dokter != `' . session()->get("fullname") . '`' : ''; ?>) {
@@ -288,6 +281,26 @@
             }
         }
     <?php endif; ?>
+
+    async function fetchStatusKonfirmasi() {
+        $('#confirmedStatus').text('Memuat status...');
+
+        try {
+            const response = await axios.get('<?= base_url('resep/resep/') . $resep['id_resep'] ?>');
+
+            const data = response.data;
+
+            // Cek status konfirmasi
+            if (data.confirmed === "1") {
+                $('#confirmedStatus').text('Dikonfirmasi');
+            } else if (data.confirmed === "0") {
+                $('#confirmedStatus').text('Belum Dikonfirmasi');
+            }
+        } catch (error) {
+            showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+            $('#confirmedStatus').text('Silakan coba lagi! • ' + error);
+        }
+    }
 
     async function fetchDetailResep() {
         $('#loadingSpinner').show();
@@ -431,6 +444,7 @@
 
             try {
                 await axios.delete(`<?= base_url('/resep/hapusdetailresep') ?>/${detailResepId}`);
+                fetchStatusKonfirmasi();
                 fetchDetailResep();
                 <?= (session()->get('role') != 'Apoteker') ? 'fetchObatOptions();' : '' ?>
                 <?= (session()->get('role') != 'Apoteker') ? 'fetchStatusResep();' : '' ?>
@@ -458,7 +472,7 @@
 
             try {
                 await axios.post(`<?= base_url('/resep/confirm/' . $resep['id_resep']) ?>`);
-                $('#confirmedStatus').text('Dikonfirmasi');
+                fetchStatusKonfirmasi();
                 fetchDetailResep();
                 <?= (session()->get('role') != 'Apoteker') ? 'fetchObatOptions();' : '' ?>
                 <?= (session()->get('role') != 'Apoteker') ? 'fetchStatusResep();' : '' ?>
@@ -486,7 +500,7 @@
 
             try {
                 await axios.post(`<?= base_url('/resep/cancel/' . $resep['id_resep']) ?>`);
-                $('#confirmedStatus').text('Belum Dikonfirmasi');
+                fetchStatusKonfirmasi();
                 fetchDetailResep();
                 <?= (session()->get('role') != 'Apoteker') ? 'fetchObatOptions();' : '' ?>
                 <?= (session()->get('role') != 'Apoteker') ? 'fetchStatusResep();' : '' ?>
@@ -597,6 +611,7 @@
                             $('#editDetail .is-invalid').removeClass('is-invalid');
                             $('#editDetail .invalid-feedback').text('').hide();
                             $('#editDetailResep').remove();
+                            fetchStatusKonfirmasi();
                             fetchDetailResep();
                             <?= (session()->get('role') != 'Apoteker') ? 'fetchObatOptions();' : '' ?>
                             <?= (session()->get('role') != 'Apoteker') ? 'fetchStatusResep();' : '' ?>
@@ -687,6 +702,7 @@
                     $('#jumlah').val('');
                     $('#tambahDetail .is-invalid').removeClass('is-invalid');
                     $('#tambahDetail .invalid-feedback').text('').hide();
+                    fetchStatusKonfirmasi();
                     fetchDetailResep();
                     <?= (session()->get('role') != 'Apoteker') ? 'fetchObatOptions();' : '' ?>
                     <?= (session()->get('role') != 'Apoteker') ? 'fetchStatusResep();' : '' ?>
@@ -737,11 +753,13 @@
         });
 
         $('#refreshConfirmed').on('click', function() {
+            fetchStatusKonfirmasi();
             fetchDetailResep();
             <?= (session()->get('role') != 'Apoteker') ? 'fetchObatOptions();' : '' ?>
             <?= (session()->get('role') != 'Apoteker') ? 'fetchStatusResep();' : '' ?>
         });
 
+        fetchStatusKonfirmasi();
         fetchDetailResep();
         <?= (session()->get('role') != 'Apoteker') ? 'fetchObatOptions();' : '' ?>
         <?= (session()->get('role') != 'Apoteker') ? 'fetchStatusResep();' : '' ?>
