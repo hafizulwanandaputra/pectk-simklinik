@@ -274,10 +274,10 @@
                 const data = response.data;
 
                 // Cek status `status`
-                if (data.status === "1"
+                if (data.status === "1" || data.confirmed === "1"
                     <?= (session()->get('role') != 'Admin') ? ' || data.dokter != `' . session()->get("fullname") . '`' : ''; ?>) {
                     $('#tambahDetailContainer').hide();
-                } else if (data.status === "0") {
+                } else if (data.status === "0" || data.confirmed === "0") {
                     $('#tambahDetailContainer').show();
                 }
             } catch (error) {
