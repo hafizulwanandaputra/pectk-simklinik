@@ -62,7 +62,8 @@
                                         <span class="placeholder" style="width: 12.5%;"></span><br>
                                         <span class="placeholder" style="width: 12.5%;"></span><br>
                                         <span class="placeholder" style="width: 12.5%;"></span><br>
-                                        <span class="placeholder" style="width: 12.5%;"></span>
+                                        <span class="placeholder" style="width: 12.5%;"></span><br>
+                                        <span class="placeholder" style="width: 9%;"></span>
                                     </small>
                                 </p>
                             </div>
@@ -116,7 +117,8 @@
                                 <span class="placeholder" style="width: 12.5%;"></span><br>
                                 <span class="placeholder" style="width: 12.5%;"></span><br>
                                 <span class="placeholder" style="width: 12.5%;"></span><br>
-                                <span class="placeholder" style="width: 12.5%;"></span>
+                                <span class="placeholder" style="width: 12.5%;"></span><br>
+                                <span class="placeholder" style="width: 9%;"></span>
                             </small>
                         </p>
                     </div>

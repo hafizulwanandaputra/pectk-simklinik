@@ -79,18 +79,10 @@
                         <div class="col-lg-3 fw-medium">Status Konfirmasi</div>
                         <div class="col-lg">
                             <div class="date" id="confirmedStatus">
-                                <?php
-                                if ($resep['confirmed'] == '1') {
-                                    echo 'Dikonfirmasi';
-                                } else if ($resep['confirmed'] == '0') {
-                                    echo 'Belum Dikonfirmasi';
-                                } else {
-                                    echo 'N/A';
-                                }
-                                ?>
+                                Memuat status...
                             </div>
                             <?php if (session()->get('role') != 'Dokter') : ?>
-                                <button id="refreshConfirmeded" type="button" class="btn btn-link" style="--bs-btn-padding-y: 0; --bs-btn-padding-x: 0; --bs-btn-font-size: 9pt;" onclick="window.location.reload();">Perbarui Status</button>
+                                <button id="refreshConfirmed" type="button" class="btn btn-link" style="--bs-btn-padding-y: 0; --bs-btn-padding-x: 0; --bs-btn-font-size: 9pt;">Perbarui Status</button>
                             <?php endif; ?>
                         </div>
                     </div>
@@ -267,11 +259,19 @@
 
         async function fetchStatusResep() {
             $('#loadingSpinner').show();
+            $('#confirmedStatus').text('Memuat status...');
 
             try {
                 const response = await axios.get('<?= base_url('resep/resep/') . $resep['id_resep'] ?>');
 
                 const data = response.data;
+
+                // Cek status konfirmasi
+                if (data.confirmed === "1") {
+                    $('#confirmedStatus').text('Dikonfirmasi');
+                } else if (data.confirmed === "0") {
+                    $('#confirmedStatus').text('Belum Dikonfirmasi');
+                }
 
                 // Cek status `status`
                 if (data.status === "1" || data.confirmed === "1"
@@ -734,6 +734,12 @@
                 `);
                 $('#tambahDetail input, #tambahDetail select').prop('disabled', false);
             }
+        });
+
+        $('#refreshConfirmed').on('click', function() {
+            fetchDetailResep();
+            <?= (session()->get('role') != 'Apoteker') ? 'fetchObatOptions();' : '' ?>
+            <?= (session()->get('role') != 'Apoteker') ? 'fetchStatusResep();' : '' ?>
         });
 
         fetchDetailResep();

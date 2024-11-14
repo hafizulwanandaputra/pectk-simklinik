@@ -82,7 +82,11 @@
                                         <span class="placeholder" style="width: 12.5%;"></span><br>
                                         <span class="placeholder" style="width: 12.5%;"></span><br>
                                         <span class="placeholder" style="width: 12.5%;"></span><br>
-                                        <span class="placeholder" style="width: 12.5%;"></span>
+                                        <span class="placeholder" style="width: 12.5%;"></span><br>
+                                        <span class="placeholder" style="width: 12.5%;"></span><br>
+                                        <span class="placeholder" style="width: 12.5%;"></span><br>
+                                        <span class="placeholder" style="width: 9%;"></span><br>
+                                        <span class="placeholder" style="width: 9%;"></span>
                                     </small>
                                 </p>
                             </div>
@@ -138,7 +142,11 @@
                                 <span class="placeholder" style="width: 12.5%;"></span><br>
                                 <span class="placeholder" style="width: 12.5%;"></span><br>
                                 <span class="placeholder" style="width: 12.5%;"></span><br>
-                                <span class="placeholder" style="width: 12.5%;"></span>
+                                <span class="placeholder" style="width: 12.5%;"></span><br>
+                                <span class="placeholder" style="width: 12.5%;"></span><br>
+                                <span class="placeholder" style="width: 12.5%;"></span><br>
+                                <span class="placeholder" style="width: 9%;"></span><br>
+                                <span class="placeholder" style="width: 9%;"></span>
                             </small>
                         </p>
                     </div>
@@ -295,6 +303,8 @@
                         <p class="card-text">
                             <small class="date">
                                 ID Resep: ${resep.id_resep}<br>
+                                Nomor Rekam Medis: ${resep.no_rm}<br>
+                                Nomor Registrasi: ${resep.nomor_registrasi}<br>
                                 Tanggal dan Waktu Resep: ${resep.tanggal_resep}<br>
                                 Total Resep: ${jumlah_resep.toLocaleString('id-ID')}<br>
                                 Total Harga: Rp${total_biaya.toLocaleString('id-ID')}<br>
