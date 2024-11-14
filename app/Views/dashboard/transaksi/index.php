@@ -311,7 +311,7 @@
                     const metode_pembayaran = transaksi.metode_pembayaran == '' ?
                         `<em>Belum ada</em>` :
                         transaksi.metode_pembayaran + bank;
-                    const jenisResep = transaksi.id_resep ? `<span class="badge bg-secondary border-secondary bg-gradient text-nowrap">RESEP LUAR</span>` : `<span class="badge bg-success border-success bg-gradient text-nowrap">RESEP DOKTER</span>`;
+                    const jenisResep = transaksi.id_resep ? `<span class="badge bg-secondary bg-gradient text-nowrap">RESEP LUAR</span>` : `<span class="badge bg-success bg-gradient text-nowrap">RESEP DOKTER</span>`;
                     const transaksiElement = `
                     <li class="list-group-item bg-body-tertiary pb-3 pt-3">
                         <div class="d-flex">
