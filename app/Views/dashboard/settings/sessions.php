@@ -166,10 +166,10 @@
             "search": {
                 "caseInsensitive": true
             },
-            'pageLength': 25,
+            'pageLength': 12,
             'lengthMenu': [
-                [25, 50, 100, 250, 500],
-                [25, 50, 100, 250, 500]
+                [12, 24, 36, 48, 60],
+                [12, 24, 36, 48, 60]
             ],
             "autoWidth": true,
             "processing": false,

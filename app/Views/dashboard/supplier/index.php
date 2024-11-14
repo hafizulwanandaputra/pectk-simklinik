@@ -168,10 +168,10 @@
             "search": {
                 "caseInsensitive": true
             },
-            'pageLength': 25,
+            'pageLength': 12,
             'lengthMenu': [
-                [25, 50, 100, 250, 500],
-                [25, 50, 100, 250, 500]
+                [12, 24, 36, 48, 60],
+                [12, 24, 36, 48, 60]
             ],
             "autoWidth": true,
             "processing": false,
@@ -234,7 +234,12 @@
                 {
                     data: 'jumlah_obat',
                     render: function(data, type, row) {
-                        return `<div class="date text-nowrap" style="display: block; text-align: right;">${data}</div>`;
+                        // Format harga_obat using number_format equivalent in JavaScript
+                        let formattedData = new Intl.NumberFormat('id-ID', {
+                            style: 'decimal',
+                            minimumFractionDigits: 0
+                        }).format(data);
+                        return `<div class="date text-nowrap" style="display: block; text-align: right;">${formattedData}</div>`;
                     }
                 },
             ],
