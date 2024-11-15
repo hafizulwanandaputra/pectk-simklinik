@@ -12,18 +12,24 @@
 <div style="min-width: 1px; max-width: 1px;"></div>
 <?= $this->endSection(); ?>
 <?= $this->section('content'); ?>
-<main class="col-md-9 ms-sm-auto col-lg-10 px-3 px-md-4 pt-3">
+<main class="col-md-9 ms-sm-auto col-lg-10 px-3 px-md-4">
     <div class="d-xxl-flex justify-content-center">
         <div class="no-fluid-content">
-            <div class="input-group input-group-sm mb-2">
-                <input type="date" id="tanggalFilter" class="form-control rounded-start-3">
-                <button class="btn btn-danger btn-sm bg-gradient rounded-end-3" type="button" id="clearTglButton"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            <div class="input-group input-group-sm mb-3">
-                <select id="apotekerFilter" class="form-select form-select-sm rounded-start-3">
-                    <option value="">Semua Apoteker</option>
-                </select>
-                <button class="btn btn-success btn-sm bg-gradient rounded-end-3" type="button" id="refreshButton"><i class="fa-solid fa-sync"></i></button>
+            <div class="sticky-top" style="z-index: 99;">
+                <ul class="list-group shadow-sm rounded-top-0 rounded-bottom-3 mb-2">
+                    <li class="list-group-item border-top-0 bg-body-tertiary">
+                        <div class="input-group input-group-sm mb-2">
+                            <input type="date" id="tanggalFilter" class="form-control rounded-start-3">
+                            <button class="btn btn-danger btn-sm bg-gradient rounded-end-3" type="button" id="clearTglButton"><i class="fa-solid fa-xmark"></i></button>
+                        </div>
+                        <div class="input-group input-group-sm">
+                            <select id="apotekerFilter" class="form-select form-select-sm rounded-start-3">
+                                <option value="">Semua Apoteker</option>
+                            </select>
+                            <button class="btn btn-success btn-sm bg-gradient rounded-end-3" type="button" id="refreshButton"><i class="fa-solid fa-sync"></i></button>
+                        </div>
+                    </li>
+                </ul>
             </div>
             <div class="shadow-sm rounded-3">
                 <form id="opnameObatForm" enctype="multipart/form-data">
