@@ -46,6 +46,7 @@ class ResepLuar extends BaseController
             $status = $this->request->getGet('status');
             $gender = $this->request->getGet('gender');
             $names = $this->request->getGet('names');
+            $apoteker = $this->request->getGet('apoteker');
             $tanggal = $this->request->getGet('tanggal');
 
             // Menentukan limit dan offset
@@ -73,6 +74,11 @@ class ResepLuar extends BaseController
                 $ResepModel->select('resep.*')->where('nama_pasien IS NOT NULL'); // Pasien dengan nama
             } elseif ($names === '0') {
                 $ResepModel->select('resep.*')->where('nama_pasien', NULL); // Pasien anonim
+            }
+
+            // Mengaplikasikan filter apoteker jika diberikan
+            if ($apoteker) {
+                $ResepModel->like('apoteker', $apoteker);
             }
 
             // Mengaplikasikan filter tanggal jika diberikan
@@ -120,6 +126,40 @@ class ResepLuar extends BaseController
             // Mengembalikan status 404 jika peran tidak diizinkan
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan',
+            ]);
+        }
+    }
+
+    public function apotekerlist()
+    {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+            // Mengambil apoteker dari tabel resep luar
+            $resepData = $this->ResepModel
+                ->where('apoteker IS NOT NULL')
+                ->groupBy('apoteker')
+                ->orderBy('apoteker', 'ASC')
+                ->findAll();
+
+            // Menyiapkan array opsi untuk dikirim dalam respon
+            $options = [];
+            // Menyusun opsi dari data resep luar yang diterima
+            foreach ($resepData as $resep) {
+                // Menambahkan opsi ke dalam array
+                $options[] = [
+                    'value' => $resep['apoteker'], // Nilai untuk opsi
+                    'text'  => $resep['apoteker'] // Teks untuk opsi
+                ];
+            }
+
+            // Mengembalikan data resep luar dalam format JSON
+            return $this->response->setJSON([
+                'success' => true, // Indikator sukses
+                'data'    => $options, // Data opsi
+            ]);
+        } else {
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan', // Pesan jika peran tidak valid
             ]);
         }
     }

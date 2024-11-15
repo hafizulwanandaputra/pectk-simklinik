@@ -98,6 +98,7 @@ $routes->get('/(?i)resep/(?i)etiket-luar/(:any)', 'Resep::etiketluar/$1');
 
 // RESEP LUAR
 $routes->get('/(?i)resepluar', 'ResepLuar::index');
+$routes->get('/(?i)resepluar/(?i)apotekerlist', 'ResepLuar::apotekerlist');
 $routes->get('/(?i)resepluar/(?i)listresep', 'ResepLuar::listresep');
 $routes->get('/(?i)resepluar/(?i)pasienlist', 'ResepLuar::pasienlist');
 $routes->get('/(?i)resepluar/(?i)resep/(:any)', 'ResepLuar::resep/$1');
