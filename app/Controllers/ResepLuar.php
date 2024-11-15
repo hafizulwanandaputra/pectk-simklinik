@@ -134,15 +134,12 @@ class ResepLuar extends BaseController
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
-            $db = db_connect();
-            // Mengambil apoteker dari tabel user
-            $resepData = $db->table('user')
-                ->where('role', 'Admin')
-                ->orWhere('role', 'Apoteker')
-                ->groupBy('fullname')
-                ->orderBy('fullname', 'ASC')
-                ->get()
-                ->getResultArray();
+            // Mengambil apoteker dari tabel resep luar
+            $resepData = $this->ResepModel
+                ->where('apoteker IS NOT NULL')
+                ->groupBy('apoteker')
+                ->orderBy('apoteker', 'ASC')
+                ->findAll();
 
             // Menyiapkan array opsi untuk dikirim dalam respon
             $options = [];
@@ -150,8 +147,8 @@ class ResepLuar extends BaseController
             foreach ($resepData as $resep) {
                 // Menambahkan opsi ke dalam array
                 $options[] = [
-                    'value' => $resep['fullname'], // Nilai untuk opsi
-                    'text'  => $resep['fullname'] // Teks untuk opsi
+                    'value' => $resep['apoteker'], // Nilai untuk opsi
+                    'text'  => $resep['apoteker'] // Teks untuk opsi
                 ];
             }
 

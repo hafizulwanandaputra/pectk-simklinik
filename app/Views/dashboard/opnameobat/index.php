@@ -21,7 +21,7 @@
             </div>
             <div class="input-group input-group-sm mb-3">
                 <select id="apotekerFilter" class="form-select form-select-sm rounded-start-3">
-                    <option value="">Semua Apoteker dan Admin</option>
+                    <option value="">Semua Apoteker</option>
                 </select>
                 <button class="btn btn-success btn-sm bg-gradient rounded-end-3" type="button" id="refreshButton"><i class="fa-solid fa-sync"></i></button>
             </div>
@@ -426,12 +426,7 @@
             fetchOpnameObat(); // Refresh articles on button click
         });
 
-        <?php if (session()->get('role') == 'Apoteker') : ?>
-            const selectedApoteker = '<?= session()->get('fullname') ?>';
-            await fetchApotekerOptions(selectedApoteker);
-        <?php else : ?>
-            await fetchApotekerOptions();
-        <?php endif; ?>
+        await fetchApotekerOptions();
         fetchOpnameObat();
     });
     // Show toast notification

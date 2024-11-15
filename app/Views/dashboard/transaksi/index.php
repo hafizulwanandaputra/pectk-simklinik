@@ -33,7 +33,7 @@
                 </select>
             </div>
             <select id="kasirFilter" class="form-select form-select-sm rounded-3 mb-2">
-                <option value="">Semua Petugas Kasir dan Admin</option>
+                <option value="">Semua Petugas Kasir</option>
             </select>
             <div class="d-flex flex-column flex-lg-row mb-1 gap-2 mb-3">
                 <div class="input-group input-group-sm">
@@ -722,12 +722,7 @@
             fetchPasienOptions2();
             fetchTransaksi(); // Refresh articles on button click
         });
-        <?php if (session()->get('role') == 'Kasir') : ?>
-            const selectedKasir = '<?= session()->get('fullname'); ?>';
-            await fetchKasirOptions(selectedKasir);
-        <?php else : ?>
-            await fetchKasirOptions();
-        <?php endif; ?>
+        await fetchKasirOptions();
         fetchTransaksi();
         fetchPasienOptions1();
         fetchPasienOptions2();

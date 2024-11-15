@@ -102,15 +102,11 @@ class OpnameObat extends BaseController
     {
         // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Apoteker' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
-            $db = db_connect();
-            // Mengambil apoteker dari tabel user
-            $OpnameObatData = $db->table('user')
-                ->where('role', 'Admin')
-                ->orWhere('role', 'Apoteker')
-                ->groupBy('fullname')
-                ->orderBy('fullname', 'ASC')
-                ->get()
-                ->getResultArray();
+            // Mengambil apoteker dari tabel opname obat
+            $OpnameObatData = $this->OpnameObatModel
+                ->groupBy('apoteker')
+                ->orderBy('apoteker', 'ASC')
+                ->findAll();
 
             // Menyiapkan array opsi untuk dikirim dalam respon
             $options = [];
@@ -118,8 +114,8 @@ class OpnameObat extends BaseController
             foreach ($OpnameObatData as $opname_obat) {
                 // Menambahkan opsi ke dalam array
                 $options[] = [
-                    'value' => $opname_obat['fullname'], // Nilai untuk opsi
-                    'text'  => $opname_obat['fullname'] // Teks untuk opsi
+                    'value' => $opname_obat['apoteker'], // Nilai untuk opsi
+                    'text'  => $opname_obat['apoteker'] // Teks untuk opsi
                 ];
             }
 

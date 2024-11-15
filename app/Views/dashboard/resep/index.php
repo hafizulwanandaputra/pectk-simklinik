@@ -33,7 +33,7 @@
                 </select>
             </div>
             <select id="dokterFilter" class="form-select form-select-sm rounded-3 mb-2">
-                <option value="">Semua Dokter dan Admin</option>
+                <option value="">Semua Dokter</option>
             </select>
             <div class="d-flex flex-column flex-lg-row mb-1 gap-2 mb-3">
                 <div class="input-group input-group-sm">
@@ -583,12 +583,7 @@
         });
 
         <?= (session()->get('role') != 'Apoteker') ? 'fetchPasienOptions();' : '' ?>
-        <?php if (session()->get('role') == 'Dokter') : ?>
-            const selectedDokter = '<?= session()->get('fullname'); ?>';
-            await fetchDokterOptions(selectedDokter);
-        <?php else : ?>
-            await fetchDokterOptions();
-        <?php endif; ?>
+        await fetchDokterOptions();
         fetchResep();
         toggleSubmitButton();
     });
