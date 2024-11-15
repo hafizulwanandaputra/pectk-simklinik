@@ -477,6 +477,7 @@
                 await axios.delete(`<?= base_url('/resep/delete') ?>/${resepId}`);
                 // Simpan nilai pilihan dokter saat ini
                 const selectedDokter = $('#dokterFilter').val();
+                <?= (session()->get('role') != 'Apoteker') ? 'fetchPasienOptions();' : '' ?>
                 // Panggil fungsi untuk memperbarui opsi dokter
                 await fetchDokterOptions(selectedDokter);
                 fetchResep();
@@ -524,6 +525,7 @@
                     $('#submitButton').prop('disabled', true);
                     // Simpan nilai pilihan dokter saat ini
                     const selectedDokter = $('#dokterFilter').val();
+                    <?= (session()->get('role') != 'Apoteker') ? 'fetchPasienOptions();' : '' ?>
                     // Panggil fungsi untuk memperbarui opsi dokter
                     await fetchDokterOptions(selectedDokter);
                     fetchResep();

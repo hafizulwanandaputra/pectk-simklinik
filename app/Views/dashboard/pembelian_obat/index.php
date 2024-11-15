@@ -423,6 +423,7 @@
                 // Panggil fungsi untuk memperbarui opsi apoteker
                 await fetchApotekerOptions(selectedApoteker);
                 fetchPembelianObat();
+                fetchSupplierOptions();
             } catch (error) {
                 if (error.response.request.status === 422) {
                     showFailedToast(error.response.data.message);
@@ -470,6 +471,7 @@
                     // Panggil fungsi untuk memperbarui opsi apoteker
                     await fetchApotekerOptions(selectedApoteker);
                     fetchPembelianObat();
+                    fetchSupplierOptions();
                 } else {
                     console.log("Validation Errors:", response.data.errors);
 
@@ -521,7 +523,8 @@
             }
             // Panggil fungsi untuk memperbarui opsi apoteker
             await fetchApotekerOptions(selectedApoteker);
-            fetchPembelianObat(); // Refresh articles on button click
+            fetchPembelianObat();
+            fetchSupplierOptions();
         });
 
         await fetchApotekerOptions();
