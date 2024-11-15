@@ -15,12 +15,17 @@
 <main class="col-md-9 ms-sm-auto col-lg-10 px-3 px-md-4 pt-3">
     <div class="d-xxl-flex justify-content-center">
         <div class="no-fluid-content">
-            <div class="d-flex flex-column flex-lg-row mb-1 gap-2 mb-3">
-                <select id="statusFilter" class="form-select form-select-sm w-auto rounded-3">
+            <div class="d-flex flex-column flex-lg-row mb-1 gap-2 mb-2">
+                <select id="statusFilter" class="form-select form-select-sm w-auto rounded-3 flex-fill">
                     <option value="">Semua Status Terima</option>
                     <option value="1">Diterima</option>
                     <option value="0">Belum Diterima</option>
                 </select>
+            </div>
+            <select id="apotekerFilter" class="form-select form-select-sm rounded-3 mb-2">
+                <option value="">Semua Apoteker</option>
+            </select>
+            <div class="d-flex flex-column flex-lg-row mb-1 gap-2 mb-3">
                 <div class="input-group input-group-sm">
                     <input type="date" id="tanggalFilter" class="form-control rounded-start-3">
                     <button class="btn btn-danger btn-sm bg-gradient rounded-end-3" type="button" id="clearTglButton"><i class="fa-solid fa-xmark"></i></button>
@@ -130,6 +135,49 @@
                 </div>
             </li>
     `;
+
+    async function fetchApotekerOptions(selectedApoteker = null) {
+        // Show the spinner
+        $('#loadingSpinner').show();
+        try {
+            // Panggil API dengan query string tanggal
+            const response = await axios.get(`<?= base_url('pembelianobat/apotekerlist') ?>`);
+
+            if (response.data.success) {
+                const options = response.data.data;
+                const select = $('#apotekerFilter');
+
+                // Simpan nilai yang saat ini dipilih
+                const currentSelection = selectedApoteker || select.val();
+
+                // Hapus semua opsi kecuali opsi pertama (default)
+                select.find('option:not(:first)').remove();
+
+                // Urutkan opsi berdasarkan 'value' secara ascending
+                options.sort((a, b) => b.value.localeCompare(a.value, 'en', {
+                    numeric: true
+                }));
+
+                // Tambahkan opsi ke elemen select
+                options.forEach(option => {
+                    select.append(`<option value="${option.value}">${option.text}</option>`);
+                });
+
+                // Mengatur ulang pilihan sebelumnya
+                if (currentSelection) {
+                    select.val(currentSelection);
+                }
+            } else {
+                showFailedToast('Gagal mendapatkan apoteker.');
+            }
+        } catch (error) {
+            showFailedToast('Gagal mendapatkan apoteker.<br>' + error);
+        } finally {
+            // Hide the spinner when done
+            $('#loadingSpinner').hide();
+        }
+    }
+
     async function fetchSupplierOptions() {
         try {
             const response = await axios.get('<?= base_url('obat/supplierlist') ?>');
@@ -147,13 +195,14 @@
                 });
             }
         } catch (error) {
-            showFailedToast('Gagal mendapatkan dokter.<br>' + error);
+            showFailedToast('Gagal mendapatkan supplier.<br>' + error);
         }
     }
     async function fetchPembelianObat() {
         const search = $('#searchInput').val();
         const offset = (currentPage - 1) * limit;
         const status = $('#statusFilter').val();
+        const apoteker = $('#apotekerFilter').val();
 
         // Show the spinner
         $('#loadingSpinner').show();
@@ -164,7 +213,8 @@
                     search: search,
                     limit: limit,
                     offset: offset,
-                    status: status
+                    status: status,
+                    apoteker: apoteker
                 }
             });
 
@@ -305,7 +355,7 @@
         }
     });
 
-    $('#statusFilter, #tanggalFilter').on('change', function() {
+    $('#statusFilter, #apotekerFilter, #tanggalFilter').on('change', function() {
         $('#pembelianObatContainer').empty();
         for (let i = 0; i < limit; i++) {
             $('#pembelianObatContainer').append(placeholder);
@@ -333,7 +383,7 @@
     $('#id_supplier').on('change.select2', function() {
         toggleSubmitButton();
     });
-    $(document).ready(function() {
+    $(document).ready(async function() {
         $('#id_supplier').select2({
             dropdownParent: $('#pembelianObatForm'),
             theme: "bootstrap-5",
@@ -368,6 +418,10 @@
 
             try {
                 const response = await axios.delete(`<?= base_url('/pembelianobat/delete') ?>/${pembelianObatId}`);
+                // Simpan nilai pilihan apoteker saat ini
+                const selectedApoteker = $('#apotekerFilter').val();
+                // Panggil fungsi untuk memperbarui opsi apoteker
+                fetchApotekerOptions(selectedApoteker);
                 fetchPembelianObat();
             } catch (error) {
                 if (error.response.request.status === 422) {
@@ -411,6 +465,10 @@
                     $('#pembelianObatForm .is-invalid').removeClass('is-invalid');
                     $('#pembelianObatForm .invalid-feedback').text('').hide();
                     $('#submitButton').prop('disabled', true);
+                    // Simpan nilai pilihan apoteker saat ini
+                    const selectedApoteker = $('#apotekerFilter').val();
+                    // Panggil fungsi untuk memperbarui opsi apoteker
+                    fetchApotekerOptions(selectedApoteker);
                     fetchPembelianObat();
                 } else {
                     console.log("Validation Errors:", response.data.errors);
@@ -455,13 +513,23 @@
             }
         });
         $('#refreshButton').on('click', function() {
+            // Simpan nilai pilihan apoteker saat ini
+            const selectedApoteker = $('#apotekerFilter').val();
             $('#pembelianObatContainer').empty();
             for (let i = 0; i < limit; i++) {
                 $('#pembelianObatContainer').append(placeholder);
             }
+            // Panggil fungsi untuk memperbarui opsi apoteker
+            fetchApotekerOptions(selectedApoteker);
             fetchPembelianObat(); // Refresh articles on button click
         });
 
+        <?php if (session()->get('role') == 'Apoteker') : ?>
+            const selectedApoteker = '<?= session()->get('fullname'); ?>';
+            await fetchApotekerOptions(selectedApoteker);
+        <?php else : ?>
+            await fetchApotekerOptions();
+        <?php endif; ?>
         fetchPembelianObat();
         fetchSupplierOptions();
         toggleSubmitButton();

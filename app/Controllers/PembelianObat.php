@@ -54,6 +54,7 @@ class PembelianObat extends BaseController
             $limit = $this->request->getGet('limit');
             $offset = $this->request->getGet('offset');
             $status = $this->request->getGet('status');
+            $apoteker = $this->request->getGet('apoteker');
             $tanggal = $this->request->getGet('tanggal');
 
             // Menentukan limit dan offset
@@ -75,6 +76,11 @@ class PembelianObat extends BaseController
                 $PembelianObatModel->where('diterima', 0);
             }
 
+            // Mengaplikasikan filter apoteker jika diberikan
+            if ($apoteker) {
+                $PembelianObatModel->like('apoteker', $apoteker);
+            }
+
             // Mengaplikasikan filter tanggal jika diberikan
             if ($tanggal) {
                 $PembelianObatModel->like('tgl_pembelian', $tanggal);
@@ -86,7 +92,6 @@ class PembelianObat extends BaseController
                     ->groupStart()
                     ->like('supplier.merek', $search)
                     ->orLike('supplier.nama_supplier', $search)
-                    ->orLike('apoteker', $search)
                     ->groupEnd();
             }
 
@@ -116,6 +121,39 @@ class PembelianObat extends BaseController
             // Jika peran tidak dikenali, kembalikan status 404
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan',
+            ]);
+        }
+    }
+
+    public function apotekerlist()
+    {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+            // Mengambil apoteker dari tabel pembelian obat
+            $pembelianObatData = $this->PembelianObatModel
+                ->groupBy('apoteker')
+                ->orderBy('apoteker', 'ASC')
+                ->findAll();
+
+            // Menyiapkan array opsi untuk dikirim dalam respon
+            $options = [];
+            // Menyusun opsi dari data pembelian obat yang diterima
+            foreach ($pembelianObatData as $pembelianObat) {
+                // Menambahkan opsi ke dalam array
+                $options[] = [
+                    'value' => $pembelianObat['apoteker'], // Nilai untuk opsi
+                    'text'  => $pembelianObat['apoteker'] // Teks untuk opsi
+                ];
+            }
+
+            // Mengembalikan data pembelian obat dalam format JSON
+            return $this->response->setJSON([
+                'success' => true, // Indikator sukses
+                'data'    => $options, // Data opsi
+            ]);
+        } else {
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan', // Pesan jika peran tidak valid
             ]);
         }
     }
