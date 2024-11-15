@@ -480,7 +480,7 @@
         toggleSubmitButton2();
     });
 
-    $(document).ready(function() {
+    $(document).ready(async function() {
         $('#nomor_registrasi').select2({
             dropdownParent: $('#transaksiForm1'),
             theme: "bootstrap-5",
@@ -722,11 +722,15 @@
             fetchPasienOptions2();
             fetchTransaksi(); // Refresh articles on button click
         });
-
+        <?php if (session()->get('role') == 'Kasir') : ?>
+            const selectedKasir = '<?= session()->get('fullname'); ?>';
+            await fetchKasirOptions(selectedKasir);
+        <?php else : ?>
+            await fetchKasirOptions();
+        <?php endif; ?>
         fetchTransaksi();
         fetchPasienOptions1();
         fetchPasienOptions2();
-        fetchKasirOptions();
         toggleSubmitButton1();
         toggleSubmitButton2();
     });
