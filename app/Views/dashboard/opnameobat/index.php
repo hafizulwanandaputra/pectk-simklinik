@@ -28,14 +28,14 @@
             <div class="shadow-sm rounded-3">
                 <form id="opnameObatForm" enctype="multipart/form-data">
                     <div class="d-grid gap-2">
-                        <button type="submit" id="addButton" class="btn btn-primary bg-gradient rounded-top-3 rounded-bottom-0">
+                        <button type="submit" id="addButton" class="btn btn-primary btn-sm bg-gradient rounded-top-3 rounded-bottom-0">
                             <i class="fa-solid fa-plus"></i> Buat Laporan Baru
                         </button>
                     </div>
                 </form>
                 <ul id="opnameObatContainer" class="list-group rounded-top-0 rounded-bottom-3">
                     <?php for ($i = 0; $i < 12; $i++) : ?>
-                        <li class="list-group-item bg-body-tertiary pb-3 pt-3">
+                        <li class="list-group-item bg-body-tertiary border-top-0 pb-3 pt-3">
                             <div class="d-flex">
                                 <div class="align-self-center ps-2 w-100">
                                     <h5 class="card-title placeholder-glow">

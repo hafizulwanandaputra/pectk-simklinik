@@ -45,62 +45,69 @@
                     <button class="btn btn-success btn-sm bg-gradient rounded-end-3" type="button" id="refreshButton"><i class="fa-solid fa-sync"></i></button>
                 </div>
             </div>
-            <?php if (session()->get('role') != 'Apoteker'): ?>
-                <fieldset class="border rounded-3 px-2 py-0 mb-3" id="tambahPasienForm">
-                    <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Tambah Pasien Rawat Jalan</legend>
-                    <form id="resepForm" enctype="multipart/form-data">
-                        <div class="d-flex flex-column mb-2 gap-2">
-                            <div class="flex-fill">
-                                <select class="form-select rounded-3" id="nomor_registrasi" name="nomor_registrasi" aria-label="nomor_registrasi">
-                                    <option value="" disabled selected>-- Pilih Pasien --</option>
-                                </select>
-                                <div class="invalid-feedback"></div>
+            <div class="shadow-sm rounded-3">
+                <?php if (session()->get('role') != 'Apoteker') : ?>
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-primary btn-sm bg-gradient rounded-top-3 rounded-bottom-0" type="button" data-bs-toggle="collapse" data-bs-target="#tambahPasienForm" aria-expanded="false" aria-controls="tambahPasienForm">
+                            <i class="fa-solid fa-plus"></i> Tambah Resep Dokter
+                        </button>
+                    </div>
+                    <ul id="tambahPasienForm" class="list-group rounded-0 collapse">
+                        <li class="list-group-item border-top-0 border-bottom-0 bg-body-tertiary pb-3 pt-3">
+                            <form id="resepForm" enctype="multipart/form-data">
+                                <div class="d-flex flex-column mb-2 gap-2">
+                                    <div class="flex-fill">
+                                        <select class="form-select rounded-3" id="nomor_registrasi" name="nomor_registrasi" aria-label="nomor_registrasi">
+                                            <option value="" disabled selected>-- Pilih Pasien --</option>
+                                        </select>
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                    <div class="d-grid gap-2 d-md-flex justify-content-md-end" id="submitButtonContainer">
+                                        <button type="submit" id="submitButton" class="btn btn-primary bg-gradient rounded-3" disabled>
+                                            <i class="fa-solid fa-plus"></i> Tambah
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </li>
+                    </ul>
+                <?php endif; ?>
+                <ul id="resepContainer" class="list-group <?= (session()->get('role') != 'Apoteker') ? 'rounded-top-0 rounded-bottom-3' : 'rounded-3'; ?>">
+                    <?php for ($i = 0; $i < 12; $i++) : ?>
+                        <li class="list-group-item <?= (session()->get('role') != 'Apoteker') ? 'border-top-0' : ''; ?> bg-body-tertiary pb-3 pt-3">
+                            <div class="d-flex">
+                                <div class="align-self-center ps-2 w-100">
+                                    <h5 class="card-title placeholder-glow">
+                                        <span class="placeholder" style="width: 100%"></span>
+                                    </h5>
+                                    <h6 class="card-subtitle mb-2 placeholder-glow">
+                                        <span class="placeholder" style="width: 25%;"></span>
+                                    </h6>
+                                    <p class="card-text placeholder-glow">
+                                        <small>
+                                            <span class="placeholder" style="width: 12.5%;"></span><br>
+                                            <span class="placeholder" style="width: 12.5%;"></span><br>
+                                            <span class="placeholder" style="width: 12.5%;"></span><br>
+                                            <span class="placeholder" style="width: 12.5%;"></span><br>
+                                            <span class="placeholder" style="width: 12.5%;"></span><br>
+                                            <span class="placeholder" style="width: 12.5%;"></span><br>
+                                            <span class="placeholder" style="width: 9%;"></span><br>
+                                            <span class="placeholder" style="width: 9%;"></span>
+                                        </small>
+                                    </p>
+                                </div>
                             </div>
-                            <div class="d-grid gap-2 d-md-flex justify-content-md-end" id="submitButtonContainer">
-                                <button type="submit" id="submitButton" class="btn btn-primary bg-gradient rounded-3" disabled>
-                                    <i class="fa-solid fa-plus"></i> Tambah
-                                </button>
+                            <hr>
+                            <div class="d-grid gap-2 d-flex justify-content-end">
+                                <a class="btn btn-body bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                                <?php if (session()->get('role') != 'Apoteker'): ?>
+                                    <a class="btn btn-danger bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                                <?php endif; ?>
                             </div>
-                        </div>
-                    </form>
-                </fieldset>
-            <?php endif; ?>
-            <ul id="resepContainer" class="list-group shadow-sm rounded-3 mt-1">
-                <?php for ($i = 0; $i < 12; $i++) : ?>
-
-                    <li class="list-group-item bg-body-tertiary pb-3 pt-3">
-                        <div class="d-flex">
-                            <div class="align-self-center ps-2 w-100">
-                                <h5 class="card-title placeholder-glow">
-                                    <span class="placeholder" style="width: 100%"></span>
-                                </h5>
-                                <h6 class="card-subtitle mb-2 placeholder-glow">
-                                    <span class="placeholder" style="width: 25%;"></span>
-                                </h6>
-                                <p class="card-text placeholder-glow">
-                                    <small>
-                                        <span class="placeholder" style="width: 12.5%;"></span><br>
-                                        <span class="placeholder" style="width: 12.5%;"></span><br>
-                                        <span class="placeholder" style="width: 12.5%;"></span><br>
-                                        <span class="placeholder" style="width: 12.5%;"></span><br>
-                                        <span class="placeholder" style="width: 12.5%;"></span><br>
-                                        <span class="placeholder" style="width: 12.5%;"></span><br>
-                                        <span class="placeholder" style="width: 9%;"></span><br>
-                                        <span class="placeholder" style="width: 9%;"></span>
-                                    </small>
-                                </p>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="d-grid gap-2 d-flex justify-content-end">
-                            <a class="btn btn-body bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
-                            <?php if (session()->get('role') != 'Apoteker'): ?>
-                                <a class="btn btn-danger bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
-                            <?php endif; ?>
-                        </div>
-                    </li>
-                <?php endfor; ?>
-            </ul>
+                        </li>
+                    <?php endfor; ?>
+                </ul>
+            </div>
             <nav id="paginationNav" class="d-flex justify-content-center justify-content-lg-end mt-3 overflow-auto w-100">
                 <ul class="pagination pagination-sm" style="--bs-pagination-border-radius: var(--bs-border-radius-lg);"></ul>
             </nav>
