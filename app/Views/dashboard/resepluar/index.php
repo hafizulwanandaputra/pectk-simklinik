@@ -16,26 +16,6 @@
     <div class="d-xxl-flex justify-content-center">
         <div class="no-fluid-content">
             <div class="d-flex flex-column flex-lg-row mb-1 gap-2 mb-2">
-                <select id="statusFilter" class="form-select form-select-sm w-auto rounded-3 flex-fill">
-                    <option value="">Semua Status Transaksi</option>
-                    <option value="1">Diproses</option>
-                    <option value="0">Belum Diproses</option>
-                </select>
-                <select id="namesFilter" class="form-select form-select-sm w-auto rounded-3 flex-fill">
-                    <option value="">Semua Nama</option>
-                    <option value="1">Dengan Nama</option>
-                    <option value="0">Anonim</option>
-                </select>
-                <select id="genderFilter" class="form-select form-select-sm w-auto rounded-3 flex-fill">
-                    <option value="">Semua Jenis Kelamin</option>
-                    <option value="L">Laki-Laki</option>
-                    <option value="P">Perempuan</option>
-                </select>
-            </div>
-            <select id="apotekerFilter" class="form-select form-select-sm rounded-3 mb-2">
-                <option value="">Semua Apoteker</option>
-            </select>
-            <div class="d-flex flex-column flex-lg-row mb-1 gap-2 mb-3">
                 <div class="input-group input-group-sm">
                     <input type="date" id="tanggalFilter" class="form-control rounded-start-3">
                     <button class="btn btn-danger btn-sm bg-gradient rounded-end-3" type="button" id="clearTglButton"><i class="fa-solid fa-xmark"></i></button>
@@ -43,6 +23,39 @@
                 <div class="input-group input-group-sm flex-fill">
                     <input type="search" id="searchInput" class="form-control rounded-start-3" placeholder="Cari pasien">
                     <button class="btn btn-success btn-sm bg-gradient rounded-end-3" type="button" id="refreshButton"><i class="fa-solid fa-sync"></i></button>
+                </div>
+            </div>
+            <div class="accordion mb-2" id="accordionFilter">
+                <div class="accordion-item rounded-3 ">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button p-2 rounded-3 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFilter" aria-expanded="false" aria-controls="collapseFilter">
+                            Pencarian Tambahan
+                        </button>
+                    </h2>
+                    <div id="collapseFilter" class="accordion-collapse collapse" data-bs-parent="#accordionFilter">
+                        <div class="accordion-body px-2 py-1">
+                            <div class="d-flex flex-column flex-lg-row mb-1 gap-1 my-1">
+                                <select id="statusFilter" class="form-select form-select-sm w-auto rounded-3 flex-fill">
+                                    <option value="">Semua Status Transaksi</option>
+                                    <option value="1">Diproses</option>
+                                    <option value="0">Belum Diproses</option>
+                                </select>
+                                <select id="namesFilter" class="form-select form-select-sm w-auto rounded-3 flex-fill">
+                                    <option value="">Semua Nama</option>
+                                    <option value="1">Dengan Nama</option>
+                                    <option value="0">Anonim</option>
+                                </select>
+                                <select id="genderFilter" class="form-select form-select-sm w-auto rounded-3 flex-fill">
+                                    <option value="">Semua Jenis Kelamin</option>
+                                    <option value="L">Laki-Laki</option>
+                                    <option value="P">Perempuan</option>
+                                </select>
+                            </div>
+                            <select id="apotekerFilter" class="form-select form-select-sm rounded-3 my-1">
+                                <option value="">Semua Apoteker</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="shadow-sm rounded-3">
