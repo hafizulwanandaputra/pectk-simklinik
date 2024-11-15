@@ -439,7 +439,7 @@
         });
 
         // Bind the external search input to the table search
-        $('#externalSearch').on('keyup', function() {
+        $('#externalSearch').on('input', function() {
             table.search(this.value).draw(); // Trigger search on the table
         });
 
