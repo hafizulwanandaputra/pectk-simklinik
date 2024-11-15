@@ -569,16 +569,30 @@
                 $('#resepForm select').prop('disabled', false);
             }
         });
-        $('#refreshButton').on('click', function() {
-            // Simpan nilai pilihan dokter saat ini
-            const selectedDokter = $('#dokterFilter').val();
+        $('#refreshButton').on('click', async function() {
             $('#resepContainer').empty();
             for (let i = 0; i < limit; i++) {
                 $('#resepContainer').append(placeholder);
             }
             <?= (session()->get('role') != 'Apoteker') ? 'fetchPasienOptions();' : '' ?>
-            // Panggil fungsi untuk memperbarui opsi dokter
-            fetchDokterOptions(selectedDokter);
+            <?php if (session()->get('role') == 'Dokter') : ?>
+                const selectedDokter = '<?= session()->get('fullname'); ?>';
+                await fetchDokterOptions(selectedDokter);
+                const filter = $('#dokterFilter');
+                const optionExists = filter.find(`option[value="${selectedDokter}"]`).length > 0;
+
+                if (optionExists) {
+                    filter.val(selectedDokter);
+                } else {
+                    filter.append(new Option(selectedDokter, selectedDokter));
+                    filter.val(selectedDokter); // Set the new option as the selected value
+                }
+            <?php else : ?>
+                // Simpan nilai pilihan dokter saat ini
+                const selectedDokter = $('#dokterFilter').val();
+                // Panggil fungsi untuk memperbarui opsi dokter
+                await fetchDokterOptions(selectedDokter);
+            <?php endif; ?>
             fetchResep();
         });
 
@@ -592,7 +606,8 @@
             if (optionExists) {
                 filter.val(selectedDokter);
             } else {
-                filter.val(''); // Set to an empty string if the option doesn't exist
+                filter.append(new Option(selectedDokter, selectedDokter));
+                filter.val(selectedDokter); // Set the new option as the selected value
             }
         <?php else : ?>
             await fetchDokterOptions();

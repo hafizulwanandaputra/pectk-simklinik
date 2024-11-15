@@ -722,20 +722,8 @@
             fetchPasienOptions2();
             fetchTransaksi(); // Refresh articles on button click
         });
-        <?php if (session()->get('role') == 'Kasir') : ?>
-            const selectedKasir = '<?= session()->get('fullname'); ?>';
-            await fetchKasirOptions(selectedKasir);
-            const filter = $('#kasirFilter');
-            const optionExists = filter.find(`option[value="${selectedKasir}"]`).length > 0;
 
-            if (optionExists) {
-                filter.val(selectedKasir);
-            } else {
-                filter.val(''); // Set to an empty string if the option doesn't exist
-            }
-        <?php else : ?>
-            await fetchKasirOptions();
-        <?php endif; ?>
+        await fetchKasirOptions();
         fetchTransaksi();
         fetchPasienOptions1();
         fetchPasienOptions2();
