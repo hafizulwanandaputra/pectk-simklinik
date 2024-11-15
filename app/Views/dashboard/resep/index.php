@@ -586,6 +586,14 @@
         <?php if (session()->get('role') == 'Dokter') : ?>
             const selectedDokter = '<?= session()->get('fullname'); ?>';
             await fetchDokterOptions(selectedDokter);
+            const filter = $('#dokterFilter');
+            const optionExists = filter.find(`option[value="${selectedDokter}"]`).length > 0;
+
+            if (optionExists) {
+                filter.val(selectedDokter);
+            } else {
+                filter.val(''); // Set to an empty string if the option doesn't exist
+            }
         <?php else : ?>
             await fetchDokterOptions();
         <?php endif; ?>

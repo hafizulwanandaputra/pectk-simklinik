@@ -283,7 +283,7 @@
         }
     });
 
-    $(document).ready(function() {
+    $(document).ready(async function() {
         $('#tanggalFilter, #apotekerFilter').on('change', function() {
             // Simpan nilai pilihan apoteker saat ini
             const selectedApoteker = $('apotekerFilter').val();
@@ -426,7 +426,20 @@
             fetchOpnameObat(); // Refresh articles on button click
         });
 
-        fetchApotekerOptions();
+        <?php if (session()->get('role') == 'Apoteker') : ?>
+            const selectedApoteker = '<?= session()->get('fullname') ?>';
+            await fetchApotekerOptions(selectedApoteker);
+            const filter = $('#apotekerFilter');
+            const optionExists = filter.find(`option[value="${selectedApoteker}"]`).length > 0;
+
+            if (optionExists) {
+                filter.val(selectedApoteker);
+            } else {
+                filter.val(''); // Set to an empty string if the option doesn't exist
+            }
+        <?php else : ?>
+            await fetchApotekerOptions();
+        <?php endif; ?>
         fetchOpnameObat();
     });
     // Show toast notification
