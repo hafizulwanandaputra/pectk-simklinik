@@ -9,9 +9,16 @@
 <div style="min-width: 1px; max-width: 1px;"></div>
 <?= $this->endSection(); ?>
 <?= $this->section('content'); ?>
-<main class="col-md-9 ms-sm-auto col-lg-10 px-3 px-md-4 pt-3">
+<main class="col-md-9 ms-sm-auto col-lg-10 px-3 px-md-4">
     <div class="d-xxl-flex justify-content-center">
         <div class="no-fluid-content">
+            <div class="sticky-top" style="z-index: 99;">
+                <ul class="list-group shadow-sm rounded-top-0 rounded-bottom-3 mb-2">
+                    <li class="list-group-item border-top-0 bg-body-tertiary">
+                        <input type="search" class="form-control form-control-sm rounded-3" id="externalSearch" placeholder="Cari">
+                    </li>
+                </ul>
+            </div>
             <div class="mb-2">
                 <table id="tabel" class="table table-sm table-hover" style="width:100%; font-size: 9pt;">
                     <thead>
@@ -168,6 +175,7 @@
             "search": {
                 "caseInsensitive": true
             },
+            "searching": false, // Disable the internal search bar
             'pageLength': 12,
             'lengthMenu': [
                 [12, 24, 36, 48, 60],
@@ -183,7 +191,7 @@
                 "data": function(d) {
                     // Menambahkan parameter tambahan pada data yang dikirim
                     d.search = {
-                        "value": $('.dataTables_filter input[type="search"]').val() // Mengambil nilai input pencarian
+                        "value": $('#externalSearch').val() // Mengambil nilai input pencarian
                     };
                 },
                 beforeSend: function() {
@@ -269,6 +277,11 @@
         // Memperbarui tooltip setiap kali tabel digambar ulang
         table.on('draw', function() {
             $('[data-bs-toggle="tooltip"]').tooltip();
+        });
+
+        // Bind the external search input to the table search
+        $('#externalSearch').on('keyup', function() {
+            table.search(this.value).draw(); // Trigger search on the table
         });
 
         // Tampilkan modal tambah supplier
