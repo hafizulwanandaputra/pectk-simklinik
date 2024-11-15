@@ -296,14 +296,11 @@
         });
 
         $('#clearTglButton').on('click', function() {
-            // Simpan nilai pilihan apoteker saat ini
-            const selectedApoteker = $('apotekerFilter').val();
             $('#tanggalFilter').val('');
             $('#opnameObatContainer').empty();
             for (let i = 0; i < limit; i++) {
                 $('#opnameObatContainer').append(placeholder);
             }
-            fetchApotekerOptions(selectedApoteker);
             fetchOpnameObat(); // Refresh articles on button click
         });
         // Store the ID of the user to be deleted
@@ -331,7 +328,7 @@
                 // Simpan nilai pilihan apoteker saat ini
                 const selectedApoteker = $('apotekerFilter').val();
                 await axios.delete(`<?= base_url('/opnameobat/delete') ?>/${opnameObatId}`);
-                fetchApotekerOptions(selectedApoteker);
+                await fetchApotekerOptions(selectedApoteker);
                 fetchOpnameObat();
             } catch (error) {
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
@@ -372,7 +369,7 @@
                     $('#opnameObatForm .is-invalid').removeClass('is-invalid');
                     $('#opnameObatForm .invalid-feedback').text('').hide();
                     $('#addButton').prop('disabled', true);
-                    fetchApotekerOptions(selectedApoteker);
+                    await fetchApotekerOptions(selectedApoteker);
                     fetchOpnameObat();
                 } else {
                     console.log("Validation Errors:", response.data.errors);
@@ -415,14 +412,14 @@
                 $('#opnameObatForm select').prop('disabled', false);
             }
         });
-        $('#refreshButton').on('click', function() {
+        $('#refreshButton').on('click', async function() {
             // Simpan nilai pilihan apoteker saat ini
             const selectedApoteker = $('apotekerFilter').val();
             $('#opnameObatContainer').empty();
             for (let i = 0; i < limit; i++) {
                 $('#opnameObatContainer').append(placeholder);
             }
-            fetchApotekerOptions(selectedApoteker);
+            await fetchApotekerOptions(selectedApoteker);
             fetchOpnameObat(); // Refresh articles on button click
         });
 

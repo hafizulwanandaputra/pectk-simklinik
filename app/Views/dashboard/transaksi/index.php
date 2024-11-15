@@ -528,7 +528,7 @@
                 // Simpan nilai pilihan kasir saat ini
                 const selectedKasir = $('#kasirFilter').val();
                 // Panggil fungsi untuk memperbarui opsi kasir
-                fetchKasirOptions(selectedKasir);
+                await fetchKasirOptions(selectedKasir);
                 fetchPasienOptions1();
                 fetchPasienOptions2();
                 fetchTransaksi();
@@ -544,7 +544,8 @@
                 $('#deleteSubmessage').show();
                 $('#deleteModal button').prop('disabled', false);
             }
-        });
+        }); // Simpan nilai pilihan apoteker saat ini
+        const selectedApoteker = $('apotekerFilter').val();
 
         $('#transaksiForm1').submit(async function(e) {
             e.preventDefault();
@@ -578,7 +579,7 @@
                     // Simpan nilai pilihan kasir saat ini
                     const selectedKasir = $('#kasirFilter').val();
                     // Panggil fungsi untuk memperbarui opsi kasir
-                    fetchKasirOptions(selectedKasir);
+                    await fetchKasirOptions(selectedKasir);
                     fetchPasienOptions1();
                     fetchTransaksi();
                 } else {
@@ -660,7 +661,7 @@
                     // Simpan nilai pilihan kasir saat ini
                     const selectedKasir = $('#kasirFilter').val();
                     // Panggil fungsi untuk memperbarui opsi kasir
-                    fetchKasirOptions(selectedKasir);
+                    await fetchKasirOptions(selectedKasir);
                     fetchPasienOptions2();
                     fetchTransaksi();
                 } else {
@@ -709,7 +710,7 @@
                 $('#transaksiForm2 select').prop('disabled', false);
             }
         });
-        $('#refreshButton').on('click', function() {
+        $('#refreshButton').on('click', async function() {
             // Simpan nilai pilihan kasir saat ini
             const selectedKasir = $('#kasirFilter').val();
             $('#transaksiContainer').empty();
@@ -717,7 +718,7 @@
                 $('#transaksiContainer').append(placeholder);
             }
             // Panggil fungsi untuk memperbarui opsi kasir
-            fetchKasirOptions(selectedKasir);
+            await fetchKasirOptions(selectedKasir);
             fetchPasienOptions1();
             fetchPasienOptions2();
             fetchTransaksi(); // Refresh articles on button click

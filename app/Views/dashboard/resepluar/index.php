@@ -504,7 +504,7 @@
                 // Simpan nilai pilihan apoteker saat ini
                 const selectedApoteker = $('#apotekerFilter').val();
                 // Panggil fungsi untuk memperbarui opsi apoteker
-                fetchApotekerOptions(selectedApoteker);
+                await fetchApotekerOptions(selectedApoteker);
                 fetchResep();
             } catch (error) {
                 if (error.response.request.status === 422) {
@@ -549,7 +549,7 @@
                     // Simpan nilai pilihan apoteker saat ini
                     const selectedApoteker = $('#apotekerFilter').val();
                     // Panggil fungsi untuk memperbarui opsi apoteker
-                    fetchApotekerOptions(selectedApoteker);
+                    await fetchApotekerOptions(selectedApoteker);
                     fetchResep();
                 } else {
                     console.log("Validation Errors:", response.data.errors);
@@ -611,7 +611,7 @@
             }
         });
 
-        $('#refreshButton').on('click', function() {
+        $('#refreshButton').on('click', async function() {
             // Simpan nilai pilihan apoteker saat ini
             const selectedApoteker = $('#apotekerFilter').val();
             $('#resepContainer').empty();
@@ -619,7 +619,7 @@
                 $('#resepContainer').append(placeholder);
             }
             // Panggil fungsi untuk memperbarui opsi apoteker
-            fetchApotekerOptions(selectedApoteker);
+            await fetchApotekerOptions(selectedApoteker);
             fetchResep(); // Refresh articles on button click
         });
 
