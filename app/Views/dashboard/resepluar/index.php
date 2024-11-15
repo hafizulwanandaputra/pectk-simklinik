@@ -33,7 +33,7 @@
                 </select>
             </div>
             <select id="apotekerFilter" class="form-select form-select-sm rounded-3 mb-2">
-                <option value="">Semua Apoteker</option>
+                <option value="">Semua Apoteker dan Admin</option>
             </select>
             <div class="d-flex flex-column flex-lg-row mb-1 gap-2 mb-3">
                 <div class="input-group input-group-sm">
@@ -629,7 +629,12 @@
             $('#resepluarForm .is-invalid').removeClass('is-invalid');
             $('#resepluarForm .invalid-feedback').text('').hide();
         });
-        await fetchApotekerOptions();
+        <?php if (session()->get('role') == 'Apoteker') : ?>
+            const selectedApoteker = '<?= session()->get('fullname') ?>';
+            await fetchApotekerOptions(selectedApoteker);
+        <?php else : ?>
+            await fetchApotekerOptions();
+        <?php endif; ?>
         fetchResep();
     });
     // Show toast notification

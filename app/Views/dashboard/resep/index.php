@@ -33,7 +33,7 @@
                 </select>
             </div>
             <select id="dokterFilter" class="form-select form-select-sm rounded-3 mb-2">
-                <option value="">Semua Dokter</option>
+                <option value="">Semua Dokter dan Admin</option>
             </select>
             <div class="d-flex flex-column flex-lg-row mb-1 gap-2 mb-3">
                 <div class="input-group input-group-sm">
@@ -569,30 +569,16 @@
                 $('#resepForm select').prop('disabled', false);
             }
         });
-        $('#refreshButton').on('click', async function() {
+        $('#refreshButton').on('click', function() {
+            // Simpan nilai pilihan dokter saat ini
+            const selectedDokter = $('#dokterFilter').val();
             $('#resepContainer').empty();
             for (let i = 0; i < limit; i++) {
                 $('#resepContainer').append(placeholder);
             }
             <?= (session()->get('role') != 'Apoteker') ? 'fetchPasienOptions();' : '' ?>
-            <?php if (session()->get('role') == 'Dokter') : ?>
-                const selectedDokter = '<?= session()->get('fullname'); ?>';
-                await fetchDokterOptions(selectedDokter);
-                const filter = $('#dokterFilter');
-                const optionExists = filter.find(`option[value="${selectedDokter}"]`).length > 0;
-
-                if (optionExists) {
-                    filter.val(selectedDokter);
-                } else {
-                    filter.append(new Option(selectedDokter, selectedDokter));
-                    filter.val(selectedDokter); // Set the new option as the selected value
-                }
-            <?php else : ?>
-                // Simpan nilai pilihan dokter saat ini
-                const selectedDokter = $('#dokterFilter').val();
-                // Panggil fungsi untuk memperbarui opsi dokter
-                await fetchDokterOptions(selectedDokter);
-            <?php endif; ?>
+            // Panggil fungsi untuk memperbarui opsi dokter
+            fetchDokterOptions(selectedDokter);
             fetchResep();
         });
 
@@ -600,15 +586,6 @@
         <?php if (session()->get('role') == 'Dokter') : ?>
             const selectedDokter = '<?= session()->get('fullname'); ?>';
             await fetchDokterOptions(selectedDokter);
-            const filter = $('#dokterFilter');
-            const optionExists = filter.find(`option[value="${selectedDokter}"]`).length > 0;
-
-            if (optionExists) {
-                filter.val(selectedDokter);
-            } else {
-                filter.append(new Option(selectedDokter, selectedDokter));
-                filter.val(selectedDokter); // Set the new option as the selected value
-            }
         <?php else : ?>
             await fetchDokterOptions();
         <?php endif; ?>

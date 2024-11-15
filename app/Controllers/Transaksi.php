@@ -154,11 +154,15 @@ class Transaksi extends BaseController
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
-            // Mengambil kasir dari tabel transaksi
-            $transaksiData = $this->TransaksiModel
-                ->groupBy('kasir')
-                ->orderBy('kasir', 'ASC')
-                ->findAll();
+            $db = db_connect();
+            // Mengambil kasir dari tabel user
+            $transaksiData = $db->table('user')
+                ->where('role', 'Admin')
+                ->orWhere('role', 'Kasir')
+                ->groupBy('fullname')
+                ->orderBy('fullname', 'ASC')
+                ->get()
+                ->getResultArray();
 
             // Menyiapkan array opsi untuk dikirim dalam respon
             $options = [];
@@ -166,8 +170,8 @@ class Transaksi extends BaseController
             foreach ($transaksiData as $transaksi) {
                 // Menambahkan opsi ke dalam array
                 $options[] = [
-                    'value' => $transaksi['kasir'], // Nilai untuk opsi
-                    'text'  => $transaksi['kasir'] // Teks untuk opsi
+                    'value' => $transaksi['fullname'], // Nilai untuk opsi
+                    'text'  => $transaksi['fullname'] // Teks untuk opsi
                 ];
             }
 

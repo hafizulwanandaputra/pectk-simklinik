@@ -129,11 +129,15 @@ class PembelianObat extends BaseController
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
-            // Mengambil apoteker dari tabel pembelian obat
-            $pembelianObatData = $this->PembelianObatModel
-                ->groupBy('apoteker')
-                ->orderBy('apoteker', 'ASC')
-                ->findAll();
+            $db = db_connect();
+            // Mengambil apoteker dari tabel user
+            $pembelianObatData = $db->table('user')
+                ->where('role', 'Admin')
+                ->orWhere('role', 'Apoteker')
+                ->groupBy('fullname')
+                ->orderBy('fullname', 'ASC')
+                ->get()
+                ->getResultArray();
 
             // Menyiapkan array opsi untuk dikirim dalam respon
             $options = [];
@@ -141,8 +145,8 @@ class PembelianObat extends BaseController
             foreach ($pembelianObatData as $pembelianObat) {
                 // Menambahkan opsi ke dalam array
                 $options[] = [
-                    'value' => $pembelianObat['apoteker'], // Nilai untuk opsi
-                    'text'  => $pembelianObat['apoteker'] // Teks untuk opsi
+                    'value' => $pembelianObat['fullname'], // Nilai untuk opsi
+                    'text'  => $pembelianObat['fullname'] // Teks untuk opsi
                 ];
             }
 
