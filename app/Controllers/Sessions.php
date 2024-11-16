@@ -118,13 +118,22 @@ class Sessions extends BaseController
             $db = db_connect();
             /// Ambil token sesi perangkat aktif dari sesi saat ini
             $current_token = session()->get('session_token');
-            // Hapus semua sesi kecuali perangkat aktif
-            $db->table('user_sessions')
-                ->where('session_token !=', $current_token)
-                ->delete();
-            $db->query('ALTER TABLE `user_sessions` auto_increment = 1');
-            // Mengembalikan respons JSON sukses
-            return $this->response->setJSON(['message' => 'Sesi pengguna berhasil dibersihkan']);
+            // Mengecek apakah ada sesi
+            $builder = $db->table('user_sessions');
+            $otherSessions = $builder->where('session_token !=', $current_token)->countAllResults();
+            if ($otherSessions > 0) {
+                // Hapus semua sesi kecuali perangkat aktif
+                $db->table('user_sessions')
+                    ->where('session_token !=', $current_token)
+                    ->delete();
+                $db->query('ALTER TABLE `user_sessions` auto_increment = 1');
+                // Mengembalikan respons JSON sukses
+                return $this->response->setJSON(['message' => 'Sesi pengguna berhasil dibersihkan']);
+            } else {
+                return $this->response->setStatusCode(404)->setJSON([
+                    'error' => 'Sesi pengguna kosong',
+                ]);
+            }
         } else {
             // Jika bukan admin, mengembalikan status 404 dengan pesan error
             return $this->response->setStatusCode(404)->setJSON([

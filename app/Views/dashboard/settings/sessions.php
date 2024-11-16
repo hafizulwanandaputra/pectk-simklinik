@@ -337,14 +337,18 @@
         // Konfirmasi aktivasi pengguna
         $('#confirmFlushBtn').click(async function() {
             $('#flushModal button').prop('disabled', true); // Menonaktifkan tombol konfirmasi
-            $('#flushMessage').html('Mengaktifkan, silakan tunggu...'); // Menampilkan pesan loading
+            $('#flushMessage').html('Membersihkan, silakan tunggu...'); // Menampilkan pesan loading
 
             try {
                 const response = await axios.delete(`<?= base_url('/settings/flush') ?>`); // Mengaktifkan pengguna
                 showSuccessToast(response.data.message);
                 table.ajax.reload(null, false); // Memperbarui tabel
             } catch (error) {
-                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error); // Menampilkan pesan kesalahan
+                if (error.response.request.status === 404) {
+                    showFailedToast(error.response.data.error);
+                } else {
+                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                }
             } finally {
                 $('#flushModal').modal('hide'); // Menyembunyikan modal aktivasi
                 $('#flushModal button').prop('disabled', false); // Mengembalikan status tombol
