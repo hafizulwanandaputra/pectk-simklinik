@@ -15,7 +15,10 @@
             <div class="sticky-top" style="z-index: 99;">
                 <ul class="list-group shadow-sm rounded-top-0 rounded-bottom-3 mb-2">
                     <li class="list-group-item border-top-0 bg-body-tertiary">
-                        <input type="search" class="form-control form-control-sm rounded-3" id="externalSearch" placeholder="Cari">
+                        <div class="input-group input-group-sm">
+                            <input type="search" class="form-control form-control-sm rounded-start-3" id="externalSearch" placeholder="Cari">
+                            <button class="btn btn-success btn-sm bg-gradient rounded-end-3" type="button" id="refreshButton"><i class="fa-solid fa-sync"></i></button>
+                        </div>
                     </li>
                 </ul>
             </div>
@@ -61,12 +64,12 @@
                 <div class="modal-body py-2">
                     <input type="hidden" id="id_layanan" name="id_layanan">
                     <div class="form-floating mb-1 mt-1">
-                        <input type="text" class="form-control" autocomplete="off" dir="auto" placeholder="nama_layanan" id="nama_layanan" name="nama_layanan">
+                        <input type="text" class="form-control rounded-3" autocomplete="off" dir="auto" placeholder="nama_layanan" id="nama_layanan" name="nama_layanan">
                         <label for="nama_layanan">Nama*</label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mt-1 mb-1">
-                        <select class="form-select rounded-3" id="jenis_layanan" name="jenis_layanan" aria-label="jenis_layanan">
+                        <select class="form-select rounded-3 rounded-3" id="jenis_layanan" name="jenis_layanan" aria-label="jenis_layanan">
                             <option value="" disabled selected>-- Pilih Jenis --</option>
                             <option value="Rawat Jalan">Rawat Jalan</option>
                             <option value="Pemeriksaan Penunjang">Pemeriksaan Penunjang</option>
@@ -76,12 +79,12 @@
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
-                        <input type="number" class="form-control" autocomplete="off" dir="auto" placeholder="tarif" id="tarif" name="tarif">
+                        <input type="number" class="form-control rounded-3" autocomplete="off" dir="auto" placeholder="tarif" id="tarif" name="tarif">
                         <label for="tarif">Tarif (Rp)*</label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
-                        <input type="text" class="form-control" autocomplete="off" dir="auto" placeholder="keterangan" id="keterangan" name="keterangan">
+                        <input type="text" class="form-control rounded-3" autocomplete="off" dir="auto" placeholder="keterangan" id="keterangan" name="keterangan">
                         <label for="keterangan">Keterangan</label>
                         <div class="invalid-feedback"></div>
                     </div>
@@ -152,23 +155,12 @@
                     '--bs-pagination-border-radius': 'var(--bs-border-radius-lg)'
                 });
                 $(".page-item .page-link").addClass("bg-gradient");
-                $(".form-control").addClass("rounded-3");
-                $(".form-select").addClass("rounded-3");
+                $('select[name="tabel_length"]').addClass("rounded-3");
             },
             'buttons': [{
-                // Tombol Refresh
-                action: function(e, dt, node, config) {
-                    dt.ajax.reload(null, false);
-                },
-                text: '<i class="fa-solid fa-arrows-rotate"></i> Refresh',
-                className: 'btn-success btn-sm bg-gradient rounded-start-3',
-                init: function(api, node, config) {
-                    $(node).removeClass('btn-secondary')
-                },
-            }, {
                 // Tombol Tambah Tindakan
                 text: '<i class="fa-solid fa-plus"></i> Tambah Tindakan',
-                className: 'btn-primary btn-sm bg-gradient rounded-end-3',
+                className: 'btn-primary btn-sm bg-gradient rounded-3',
                 attr: {
                     id: 'addLayananBtn'
                 },
@@ -279,6 +271,10 @@
         // Bind the external search input to the table search
         $('#externalSearch').on('input', function() {
             table.search(this.value).draw(); // Trigger search on the table
+        });
+
+        $('#refreshButton').on('click', async function() {
+            table.ajax.reload(null, false);
         });
 
         // Tampilkan modal tambah layanan

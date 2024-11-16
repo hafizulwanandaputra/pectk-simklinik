@@ -16,7 +16,10 @@
             <div class="sticky-top" style="z-index: 99;">
                 <ul class="list-group shadow-sm rounded-top-0 rounded-bottom-3 mb-2">
                     <li class="list-group-item border-top-0 bg-body-tertiary">
-                        <input type="search" class="form-control form-control-sm rounded-3" id="externalSearch" placeholder="Cari">
+                        <div class="input-group input-group-sm">
+                            <input type="search" class="form-control form-control-sm rounded-start-3" id="externalSearch" placeholder="Cari">
+                            <button class="btn btn-success btn-sm bg-gradient rounded-end-3" type="button" id="refreshButton"><i class="fa-solid fa-sync"></i></button>
+                        </div>
                     </li>
                 </ul>
             </div>
@@ -136,23 +139,12 @@
                     '--bs-pagination-border-radius': 'var(--bs-border-radius-lg)'
                 });
                 $(".page-item .page-link").addClass("bg-gradient");
-                $(".form-control").addClass("rounded-3");
-                $(".form-select").addClass("rounded-3");
+                $('select[name="tabel_length"]').addClass("rounded-3");
             },
             'buttons': [{
-                // Tombol Refresh
-                action: function(e, dt, node, config) {
-                    dt.ajax.reload(null, false);
-                },
-                text: '<i class="fa-solid fa-arrows-rotate"></i><span class="d-block d-sm-inline"> Refresh</span>',
-                className: 'btn-success btn-sm bg-gradient rounded-start-3',
-                init: function(api, node, config) {
-                    $(node).removeClass('btn-secondary')
-                },
-            }, {
                 // Tombol Bersihkan Sesi
-                text: '<i class="fa-solid fa-broom"></i><span class="d-block d-sm-inline"> Bersihkan</span>',
-                className: 'btn-danger btn-sm bg-gradient',
+                text: '<i class="fa-solid fa-broom"></i> Bersihkan',
+                className: 'btn-danger btn-sm bg-gradient rounded-start-3',
                 attr: {
                     id: 'flushBtn'
                 },
@@ -161,7 +153,7 @@
                 },
             }, {
                 // Tombol Hapus Sesi Kedaluwarsa
-                text: '<i class="fa-solid fa-trash"></i><span class="d-block d-sm-inline"> Kedaluwarsa</span>',
+                text: '<i class="fa-solid fa-trash"></i> Kedaluwarsa',
                 className: 'btn-danger btn-sm bg-gradient rounded-end-3',
                 attr: {
                     id: 'deleteExpiredBtn'
@@ -291,6 +283,10 @@
         // Bind the external search input to the table search
         $('#externalSearch').on('input', function() {
             table.search(this.value).draw(); // Trigger search on the table
+        });
+
+        $('#refreshButton').on('click', async function() {
+            table.ajax.reload(null, false);
         });
 
         // Menyimpan ID pengguna yang akan dihapus

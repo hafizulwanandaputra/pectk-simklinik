@@ -18,7 +18,10 @@
             <div class="sticky-top" style="z-index: 99;">
                 <ul class="list-group shadow-sm rounded-top-0 rounded-bottom-3 mb-2">
                     <li class="list-group-item border-top-0 bg-body-tertiary">
-                        <input type="search" class="form-control form-control-sm rounded-3" id="externalSearch" placeholder="Cari">
+                        <div class="input-group input-group-sm">
+                            <input type="search" class="form-control form-control-sm rounded-start-3" id="externalSearch" placeholder="Cari">
+                            <button class="btn btn-success btn-sm bg-gradient rounded-end-3" type="button" id="refreshButton"><i class="fa-solid fa-sync"></i></button>
+                        </div>
                     </li>
                 </ul>
             </div>
@@ -79,17 +82,17 @@
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="form-floating mb-1 mt-1">
-                                <input type="text" class="form-control" autocomplete="off" dir="auto" placeholder="nama_obat" id="nama_obat" name="nama_obat">
+                                <input type="text" class="form-control rounded-3" autocomplete="off" dir="auto" placeholder="nama_obat" id="nama_obat" name="nama_obat">
                                 <label for="nama_obat">Nama*</label>
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="form-floating mb-1 mt-1">
-                                <input type="text" class="form-control" autocomplete="off" dir="auto" placeholder="isi_obat" id="isi_obat" name="isi_obat">
+                                <input type="text" class="form-control rounded-3" autocomplete="off" dir="auto" placeholder="isi_obat" id="isi_obat" name="isi_obat">
                                 <label for="isi_obat">Isi</label>
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="form-floating mt-1 mb-1">
-                                <input type="text" class="form-control" autocomplete="off" dir="auto" placeholder="kategori_obat" id="kategori_obat" name="kategori_obat" list="list_kategori_obat">
+                                <input type="text" class="form-control rounded-3" autocomplete="off" dir="auto" placeholder="kategori_obat" id="kategori_obat" name="kategori_obat" list="list_kategori_obat">
                                 <label for="kategori_obat">Kategori Obat</label>
                                 <div class="invalid-feedback"></div>
                                 <datalist id="list_kategori_obat">
@@ -123,27 +126,27 @@
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="form-floating mb-1 mt-1">
-                                <input type="number" class="form-control" autocomplete="off" dir="auto" placeholder="harga_obat" id="harga_obat" name="harga_obat">
+                                <input type="number" class="form-control rounded-3" autocomplete="off" dir="auto" placeholder="harga_obat" id="harga_obat" name="harga_obat">
                                 <label for="harga_obat">Harga Obat (Rp)*</label>
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="form-floating mb-1 mt-1">
-                                <input type="number" class="form-control" autocomplete="off" dir="auto" placeholder="ppn" id="ppn" name="ppn">
+                                <input type="number" class="form-control rounded-3" autocomplete="off" dir="auto" placeholder="ppn" id="ppn" name="ppn">
                                 <label for="ppn">PPN (%)*</label>
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="form-floating mb-1 mt-1">
-                                <input type="number" class="form-control" autocomplete="off" dir="auto" placeholder="mark_up" id="mark_up" name="mark_up">
+                                <input type="number" class="form-control rounded-3" autocomplete="off" dir="auto" placeholder="mark_up" id="mark_up" name="mark_up">
                                 <label for="mark_up">Mark Up (%)*</label>
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="form-floating mb-1 mt-1">
-                                <input type="number" class="form-control" autocomplete="off" dir="auto" placeholder="penyesuaian_harga" id="penyesuaian_harga" name="penyesuaian_harga">
+                                <input type="number" class="form-control rounded-3" autocomplete="off" dir="auto" placeholder="penyesuaian_harga" id="penyesuaian_harga" name="penyesuaian_harga">
                                 <label for="penyesuaian_harga">Penyesuaian Harga (Rp)*</label>
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="form-floating mb-1 mt-1">
-                                <input type="number" class="form-control" autocomplete="off" dir="auto" placeholder="jumlah_masuk" id="jumlah_masuk" name="jumlah_masuk">
+                                <input type="number" class="form-control rounded-3" autocomplete="off" dir="auto" placeholder="jumlah_masuk" id="jumlah_masuk" name="jumlah_masuk">
                                 <label for="jumlah_masuk" id="stok_label"></label>
                                 <div class="invalid-feedback"></div>
                             </div>
@@ -219,23 +222,12 @@
                     '--bs-pagination-border-radius': 'var(--bs-border-radius-lg)'
                 });
                 $(".page-item .page-link").addClass("bg-gradient");
-                $(".form-control").addClass("rounded-3");
-                $(".form-select").addClass("rounded-3");
+                $('select[name="tabel_length"]').addClass("rounded-3");
             },
             'buttons': [{
-                // Tombol Refresh
-                action: function(e, dt, node, config) {
-                    dt.ajax.reload(null, false);
-                },
-                text: '<i class="fa-solid fa-arrows-rotate"></i> Refresh',
-                className: 'btn-success btn-sm bg-gradient rounded-start-3',
-                init: function(api, node, config) {
-                    $(node).removeClass('btn-secondary')
-                },
-            }, {
                 // Tombol Tambah Obat
                 text: '<i class="fa-solid fa-plus"></i> Tambah Obat',
-                className: 'btn-primary btn-sm bg-gradient rounded-end-3',
+                className: 'btn-primary btn-sm bg-gradient rounded-3',
                 attr: {
                     id: 'addObatBtn'
                 },
@@ -441,6 +433,10 @@
         // Bind the external search input to the table search
         $('#externalSearch').on('input', function() {
             table.search(this.value).draw(); // Trigger search on the table
+        });
+
+        $('#refreshButton').on('click', async function() {
+            table.ajax.reload(null, false);
         });
 
         // Fungsi untuk mengambil opsi supplier dari server

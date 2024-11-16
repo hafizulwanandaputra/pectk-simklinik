@@ -15,7 +15,10 @@
             <div class="sticky-top" style="z-index: 99;">
                 <ul class="list-group shadow-sm rounded-top-0 rounded-bottom-3 mb-2">
                     <li class="list-group-item border-top-0 bg-body-tertiary">
-                        <input type="search" class="form-control form-control-sm rounded-3" id="externalSearch" placeholder="Cari">
+                        <div class="input-group input-group-sm">
+                            <input type="search" class="form-control form-control-sm rounded-start-3" id="externalSearch" placeholder="Cari">
+                            <button class="btn btn-success btn-sm bg-gradient rounded-end-3" type="button" id="refreshButton"><i class="fa-solid fa-sync"></i></button>
+                        </div>
                     </li>
                 </ul>
             </div>
@@ -101,17 +104,17 @@
                     <input type="hidden" id="userId" name="id_user">
                     <input type="hidden" id="original_username" name="original_username">
                     <div class="form-floating mb-1 mt-1">
-                        <input type="text" class="form-control" autocomplete="off" dir="auto" placeholder="fullname" id="fullname" name="fullname">
+                        <input type="text" class="form-control rounded-3" autocomplete="off" dir="auto" placeholder="fullname" id="fullname" name="fullname">
                         <label for="fullname">Nama Lengkap*</label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
-                        <input type="text" class="form-control" autocomplete="off" dir="auto" placeholder="username" id="username" name="username">
+                        <input type="text" class="form-control rounded-3" autocomplete="off" dir="auto" placeholder="username" id="username" name="username">
                         <label for="username">Nama Pengguna*</label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
-                        <select class="form-select" id="role" name="role" aria-label="role">
+                        <select class="form-select rounded-3" id="role" name="role" aria-label="role">
                             <option value="" disabled selected>-- Pilih Jenis Pengguna --</option>
                             <option value="Admin">Admin</option>
                             <option value="Apoteker">Apoteker</option>
@@ -191,23 +194,12 @@
                     '--bs-pagination-border-radius': 'var(--bs-border-radius-lg)'
                 });
                 $(".page-item .page-link").addClass("bg-gradient");
-                $(".form-control").addClass("rounded-3");
-                $(".form-select").addClass("rounded-3");
+                $('select[name="tabel_length"]').addClass("rounded-3");
             },
             'buttons': [{
-                // Tombol Refresh
-                action: function(e, dt, node, config) {
-                    dt.ajax.reload(null, false);
-                },
-                text: '<i class="fa-solid fa-arrows-rotate"></i> Refresh',
-                className: 'btn-success btn-sm bg-gradient rounded-start-3',
-                init: function(api, node, config) {
-                    $(node).removeClass('btn-secondary')
-                },
-            }, {
                 // Tombol Tambah Pengguna
                 text: '<i class="fa-solid fa-plus"></i> Tambah Pengguna',
-                className: 'btn-primary btn-sm bg-gradient rounded-end-3',
+                className: 'btn-primary btn-sm bg-gradient rounded-3',
                 attr: {
                     id: 'addUserBtn'
                 },
@@ -322,6 +314,10 @@
         // Bind the external search input to the table search
         $('#externalSearch').on('input', function() {
             table.search(this.value).draw(); // Trigger search on the table
+        });
+
+        $('#refreshButton').on('click', async function() {
+            table.ajax.reload(null, false);
         });
 
         // Ketika tombol "Tambah Pengguna" diklik
