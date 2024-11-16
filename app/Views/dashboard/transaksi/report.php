@@ -39,7 +39,7 @@
                         </thead>
                         <tbody class="align-top" id="datatransaksi">
                             <tr>
-                                <td colspan="9" class="text-center">Memuat data transaksi...</td>
+                                <td colspan="9" class="text-center" style="cursor: wait;">Memuat data transaksi...</td>
                             </tr>
                         </tbody>
                         <tbody>
@@ -97,7 +97,7 @@
     // HTML untuk menunjukkan bahwa data transaksi sedang dimuat
     const loading = `
         <tr>
-            <td colspan="9" class="text-center">Memuat data transaksi...</td>
+            <td colspan="9" class="text-center" style="cursor: wait;">Memuat data transaksi...</td>
         </tr>
     `;
 

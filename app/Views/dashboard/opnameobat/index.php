@@ -41,7 +41,7 @@
                 </form>
                 <ul id="opnameObatContainer" class="list-group rounded-top-0 rounded-bottom-3">
                     <?php for ($i = 0; $i < 12; $i++) : ?>
-                        <li class="list-group-item bg-body-tertiary border-top-0 pb-3 pt-3">
+                        <li class="list-group-item bg-body-tertiary border-top-0 pb-3 pt-3" style="cursor: wait;">
                             <div class="d-flex">
                                 <div class="align-self-center ps-2 w-100">
                                     <h5 class="card-title placeholder-glow">
@@ -88,7 +88,7 @@
     let currentPage = 1;
     let pembelianObatId = null;
     var placeholder = `
-            <li class="list-group-item bg-body-tertiary pb-3 pt-3">
+            <li class="list-group-item bg-body-tertiary pb-3 pt-3" style="cursor: wait;">
                 <div class="d-flex">
                     <div class="align-self-center ps-2 w-100">
                         <h5 class="card-title placeholder-glow">

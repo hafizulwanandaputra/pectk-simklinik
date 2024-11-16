@@ -38,7 +38,7 @@
                         </thead>
                         <tbody class="align-top" id="datapasien">
                             <tr>
-                                <td colspan="9" class="text-center">Memuat data pasien rawat jalan...</td>
+                                <td colspan="9" class="text-center" style="cursor: wait;">Memuat data pasien rawat jalan...</td>
                             </tr>
                         </tbody>
                     </table>
@@ -53,7 +53,7 @@
     // HTML untuk menunjukkan bahwa data pasien sedang dimuat
     const loading = `
         <tr>
-            <td colspan="9" class="text-center">Memuat data pasien...</td>
+            <td colspan="9" class="text-center" style="cursor: wait;">Memuat data pasien...</td>
         </tr>
     `;
 

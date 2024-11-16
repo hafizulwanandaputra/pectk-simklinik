@@ -69,7 +69,7 @@
                                 </thead>
                                 <tbody class="align-top" id="resepharian">
                                     <tr>
-                                        <td colspan="6" class="text-center">Memuat data resep...</td>
+                                        <td colspan="6" class="text-center" style="cursor: wait;">Memuat data resep...</td>
                                     </tr>
                                 </tbody>
                                 <tbody>
@@ -123,7 +123,7 @@
                                 </thead>
                                 <tbody class="align-top" id="resepbulanan">
                                     <tr>
-                                        <td colspan="7" class="text-center">Memuat data resep...</td>
+                                        <td colspan="7" class="text-center" style="cursor: wait;">Memuat data resep...</td>
                                     </tr>
                                 </tbody>
                                 <tbody>
@@ -248,12 +248,12 @@
     // HTML untuk menunjukkan bahwa data transaksi sedang dimuat
     const loading1 = `
         <tr>
-            <td colspan="6" class="text-center">Memuat data resep...</td>
+            <td colspan="6" class="text-center" style="cursor: wait;">Memuat data resep...</td>
         </tr>
     `;
     const loading2 = `
         <tr>
-            <td colspan="7" class="text-center">Memuat data resep...</td>
+            <td colspan="7" class="text-center" style="cursor: wait;">Memuat data resep...</td>
         </tr>
     `;
 
