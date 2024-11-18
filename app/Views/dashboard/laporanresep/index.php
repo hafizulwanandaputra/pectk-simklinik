@@ -8,42 +8,35 @@
 </div>
 <div style="min-width: 1px; max-width: 1px;"></div>
 <?= $this->endSection(); ?>
-<?= $this->section('css'); ?>
-<style>
-    /* Enable flex-fill by default */
-    .custom-flex {
-        flex: 1 1 auto;
-    }
-
-    /* Disable flex-fill after lg size (≥992px) */
-    @media (min-width: 992px) {
-        .custom-flex {
-            flex: initial;
-        }
-    }
-</style>
-<?= $this->endSection(); ?>
 <?= $this->section('content'); ?>
-<main class="col-md-9 ms-sm-auto col-lg-10 px-3 px-md-4 pt-3">
+<main class="col-md-9 ms-sm-auto col-lg-10 px-3 px-md-4">
     <div class="d-xxl-flex justify-content-center">
         <div class="no-fluid-content">
+            <div class="sticky-top" style="z-index: 99;">
+                <ul class="list-group shadow-sm rounded-top-0 rounded-bottom-3 mb-2">
+                    <li class="list-group-item border-top-0 bg-body-tertiary">
+                        <nav>
+                            <div class="nav nav-underline nav-justified mb-2" id="nav-tab" role="tablist">
+                                <button class="nav-link rounded-top-3 active" id="resepharian-container-tab" data-bs-toggle="tab" data-bs-target="#resepharian-container" type="button" role="tab" aria-controls="resepharian-container" aria-selected="true">Harian</button>
+                                <button class="nav-link rounded-top-3" id="resepbulanan-container-tab" data-bs-toggle="tab" data-bs-target="#resepbulanan-container" type="button" role="tab" aria-controls="resepbulanan-container" aria-selected="false">Bulanan</button>
+                            </div>
+                        </nav>
+                        <div class="input-group input-group-sm" id="tanggal_form">
+                            <input type="date" id="tanggal" name="tanggal" class="form-control rounded-start-3">
+                            <button class="btn btn-danger bg-gradient" type="button" id="clearTglButton"><i class="fa-solid fa-xmark"></i></button>
+                            <button class="btn btn-success bg-gradient rounded-end-3" type="button" id="refreshButton1" disabled><i class="fa-solid fa-sync"></i></button>
+                        </div>
+                        <div class="input-group input-group-sm" id="bulan_form" style="display: none;">
+                            <input type="month" id="bulan" name="bulan" class="form-control rounded-start-3">
+                            <button class="btn btn-danger bg-gradient" type="button" id="clearBlnButton"><i class="fa-solid fa-xmark"></i></button>
+                            <button class="btn btn-success bg-gradient rounded-end-3" type="button" id="refreshButton2" disabled><i class="fa-solid fa-sync"></i></button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
             <div class="mb-2">
-                <nav>
-                    <div class="nav nav-tabs mb-2" id="nav-tab" role="tablist">
-                        <button class="nav-link custom-flex rounded-top-3 active" id="resepharian-container-tab" data-bs-toggle="tab" data-bs-target="#resepharian-container" type="button" role="tab" aria-controls="resepharian-container" aria-selected="true">Harian</button>
-                        <button class="nav-link custom-flex rounded-top-3" id="resepbulanan-container-tab" data-bs-toggle="tab" data-bs-target="#resepbulanan-container" type="button" role="tab" aria-controls="resepbulanan-container" aria-selected="false">Bulanan</button>
-                    </div>
-                </nav>
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane show active" id="resepharian-container" role="tabpanel" aria-labelledby="resepharian-container-tab" tabindex="0">
-                        <fieldset class="border rounded-3 px-2 py-0 mb-3">
-                            <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Masukkan Tanggal</legend>
-                            <div class="mb-2 input-group">
-                                <input type="date" id="tanggal" name="tanggal" class="form-control rounded-start-3">
-                                <button class="btn btn-danger bg-gradient" type="button" id="clearTglButton"><i class="fa-solid fa-xmark"></i></button>
-                                <button class="btn btn-success bg-gradient rounded-end-3" type="button" id="refreshButton1" disabled><i class="fa-solid fa-sync"></i></button>
-                            </div>
-                        </fieldset>
                         <fieldset class="border rounded-3 px-2 py-0 mb-3" id="dokter-harian" style="display: none;">
                             <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Daftar Dokter</legend>
                             <div class="form-check">
@@ -89,14 +82,6 @@
                         </div>
                     </div>
                     <div class="tab-pane" id="resepbulanan-container" role="tabpanel" aria-labelledby="resepbulanan-container-tab" tabindex="0">
-                        <fieldset class="border rounded-3 px-2 py-0 mb-3">
-                            <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Masukkan Bulan</legend>
-                            <div class="mb-2 input-group">
-                                <input type="month" id="bulan" name="bulan" class="form-control rounded-start-3">
-                                <button class="btn btn-danger bg-gradient" type="button" id="clearBlnButton"><i class="fa-solid fa-xmark"></i></button>
-                                <button class="btn btn-success bg-gradient rounded-end-3" type="button" id="refreshButton2" disabled><i class="fa-solid fa-sync"></i></button>
-                            </div>
-                        </fieldset>
                         <fieldset class="border rounded-3 px-2 py-0 mb-3" id="dokter-bulanan" style="display: none;">
                             <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Daftar Dokter</legend>
                             <div class="form-check">
@@ -371,6 +356,11 @@
         }
     }
 
+    $('#resepharian-container-tab').on('click', function() {
+        $('#tanggal_form').show();
+        $('#bulan_form').hide();
+    });
+
     // Event listener ketika tanggal diubah
     $('#tanggal').on('change', function() {
         $('#resepharian').empty(); // Kosongkan tabel resep
@@ -497,6 +487,11 @@
             $('#loadingSpinner').hide();
         }
     }
+
+    $('#resepbulanan-container-tab').on('click', function() {
+        $('#bulan_form').show();
+        $('#tanggal_form').hide();
+    });
 
     // Event listener ketika bulan diubah
     $('#bulan').on('change', function() {

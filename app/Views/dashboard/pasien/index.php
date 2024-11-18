@@ -9,18 +9,21 @@
 <div style="min-width: 1px; max-width: 1px;"></div>
 <?= $this->endSection(); ?>
 <?= $this->section('content'); ?>
-<main class="col-md-9 ms-sm-auto col-lg-10 px-3 px-md-4 pt-3">
+<main class="col-md-9 ms-sm-auto col-lg-10 px-3 px-md-4">
     <div class="d-xxl-flex justify-content-center">
         <div class="no-fluid-content">
+            <div class="sticky-top" style="z-index: 99;">
+                <ul class="list-group shadow-sm rounded-top-0 rounded-bottom-3 mb-2">
+                    <li class="list-group-item border-top-0 bg-body-tertiary">
+                        <div class="input-group input-group-sm">
+                            <input type="date" id="tanggal" name="tanggal" class="form-control rounded-start-3">
+                            <button class="btn btn-danger bg-gradient" type="button" id="clearTglButton"><i class="fa-solid fa-xmark"></i></button>
+                            <button class="btn btn-success bg-gradient rounded-end-3" type="button" id="refreshButton" disabled><i class="fa-solid fa-sync"></i></button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
             <div class="mb-2">
-                <fieldset class="border rounded-3 px-2 py-0 mb-3" id="tambahPasienForm">
-                    <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Masukkan Tanggal</legend>
-                    <div class="mb-2 input-group">
-                        <input type="date" id="tanggal" name="tanggal" class="form-control rounded-start-3">
-                        <button class="btn btn-danger bg-gradient" type="button" id="clearTglButton"><i class="fa-solid fa-xmark"></i></button>
-                        <button class="btn btn-success bg-gradient rounded-end-3" type="button" id="refreshButton" disabled><i class="fa-solid fa-sync"></i></button>
-                    </div>
-                </fieldset>
                 <div class="table-responsive">
                     <table class="table table-sm" style="width:100%; font-size: 9pt;">
                         <thead>
