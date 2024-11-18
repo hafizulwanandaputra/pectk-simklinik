@@ -326,6 +326,16 @@
                             </div>
                         </div>
                     </div>
+                    <div class="alert alert-warning rounded-3 mb-1 mt-1" id="capsLockStatus" role="alert" style="display: none;">
+                        <div class="d-flex align-items-start">
+                            <div style="width: 12px; text-align: center;">
+                                <i class="fa-solid fa-triangle-exclamation"></i>
+                            </div>
+                            <div class="w-100 ms-3">
+                                <strong><em>CAPS LOCK</em> AKTIF!</strong> Harap periksa status <em>Caps Lock</em> pada papan tombol (<em>keyboard</em>) Anda.
+                            </div>
+                        </div>
+                    </div>
                     <div class="form-floating mb-1 mt-1">
                         <input type="password" class="form-control" autocomplete="off" dir="auto" placeholder="password" id="password" name="password">
                         <label for="password">Masukkan Kata Sandi Transaksi*</label>
@@ -344,6 +354,13 @@
 <?= $this->endSection(); ?>
 <?= $this->section('javascript'); ?>
 <script>
+    function checkCapsLockStatus(event) {
+        if (event.originalEvent.getModifierState("CapsLock")) {
+            $('#capsLockStatus').show();
+        } else {
+            $('#capsLockStatus').hide();
+        }
+    }
     async function fetchTindakanOptions() {
         try {
             const [rawatJalanList, pemeriksaanPenunjangList, OperasiList] = await Promise.all([
@@ -565,7 +582,15 @@
         } finally {
             // Hide the spinner when done
             $('#loadingSpinner').hide();
-        }
+        } // Deteksi perubahan status Caps Lock saat tombol ditekan
+        $(document).on('keydown', function(event) {
+            checkCapsLockStatus(event);
+        });
+
+        // Deteksi perubahan status Caps Lock saat tombol ditekan
+        $('input[type="password"]').on('keydown', function(event) {
+            checkCapsLockStatus(event);
+        });
     }
 
     async function fetchObatAlkes() {
@@ -662,6 +687,16 @@
             theme: "bootstrap-5",
             width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
             placeholder: $(this).data('placeholder'),
+        });
+
+        // Deteksi perubahan status Caps Lock saat tombol ditekan
+        $(document).on('keydown', function(event) {
+            checkCapsLockStatus(event);
+        });
+
+        // Deteksi perubahan status Caps Lock saat tombol ditekan
+        $('input[type="password"]').on('keydown', function(event) {
+            checkCapsLockStatus(event);
         });
 
         var detailTransaksiId;

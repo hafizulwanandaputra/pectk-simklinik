@@ -28,7 +28,11 @@
                         </label>
                     </div>
                     <div class="form-floating">
-                        <input type="password" class="form-control rounded-bottom-3 <?= (validation_show_error('password')) ? 'is-invalid' : ''; ?>" id="floatingPassword" name="password" placeholder="Password" autocomplete="off">
+                        <input type="password" class="form-control rounded-bottom-3 <?= (validation_show_error('password')) ? 'is-invalid' : ''; ?>" id="floatingPassword" name="password" placeholder="Password" autocomplete="off" data-bs-toggle="popover"
+                            data-bs-placement="top"
+                            data-bs-trigger="manual"
+                            data-bs-title="<em>CAPS LOCK</em> AKTIF"
+                            data-bs-content="Harap periksa status <em>Caps Lock</em> pada papan tombol (<em>keyboard</em>) Anda.">
                         <label for="floatingPassword">
                             <div class="d-flex align-items-start">
                                 <div style="width: 12px; text-align: center;">

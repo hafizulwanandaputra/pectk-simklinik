@@ -55,10 +55,41 @@
     <?= $this->renderSection('content'); ?>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="<?= base_url(); ?>assets_public/fontawesome/js/all.js"></script>
     <script>
         $(document).ready(function() {
+            const passwordInput = $('#floatingPassword');
+            const popover = new bootstrap.Popover(passwordInput[0], {
+                html: true, // Mengaktifkan dukungan HTML di dalam konten popover
+            });
+
+            let capsLockActive = false; // Status Caps Lock sebelumnya
+
+            passwordInput.on('focus', function() {
+                $(document).on('keydown', function(event) {
+                    const currentCapsLock = event.originalEvent.getModifierState('CapsLock');
+
+                    // Jika status Caps Lock berubah
+                    if (currentCapsLock !== capsLockActive) {
+                        capsLockActive = currentCapsLock; // Perbarui status
+
+                        if (capsLockActive) {
+                            popover.show();
+                        } else {
+                            popover.hide();
+                        }
+                    }
+                });
+            });
+
+            passwordInput.on('blur', function() {
+                popover.hide(); // Sembunyikan popover saat kehilangan fokus
+                $(document).off('keydown'); // Lepas listener saat blur
+                capsLockActive = false; // Reset status
+            });
+
             // Mengecek apakah elemen dengan id 'redirectToast' ada di dalam dokumen
             if ($('#redirectToast').length) {
                 var redirectToast = new bootstrap.Toast($('#redirectToast')[0]);

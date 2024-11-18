@@ -23,6 +23,16 @@
                     </div>
                 </div>
             </div>
+            <div class="alert alert-warning rounded-3" id="capsLockStatus" role="alert" style="display: none;">
+                <div class="d-flex align-items-start">
+                    <div style="width: 12px; text-align: center;">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                    </div>
+                    <div class="w-100 ms-3">
+                        <strong><em>CAPS LOCK</em> AKTIF!</strong> Harap periksa status <em>Caps Lock</em> pada papan tombol (<em>keyboard</em>) Anda.
+                    </div>
+                </div>
+            </div>
             <?= form_open_multipart('/settings/changepassword/update', 'id="changePasswordForm"'); ?>
             <fieldset class="border rounded-3 px-2 py-0">
                 <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Kata Sandi Pengguna</legend>
@@ -59,15 +69,24 @@
 <?= $this->endSection(); ?>
 <?= $this->section('javascript'); ?>
 <script>
+    function checkCapsLockStatus(event) {
+        if (event.originalEvent.getModifierState("CapsLock")) {
+            $('#capsLockStatus').show();
+        } else {
+            $('#capsLockStatus').hide();
+        }
+    }
     $(document).ready(function() {
         $('#loadingSpinner').hide(); // Menyembunyikan spinner loading saat halaman siap
 
-        // Menangani event input pada field dengan kelas 'form-control'
-        $('input.form-control').on('input', function() {
-            // Menghapus kelas 'is-invalid' untuk field input saat ini
-            $(this).removeClass('is-invalid');
-            // Menyembunyikan pesan 'invalid-feedback' untuk field input saat ini
-            $(this).siblings('.invalid-feedback').hide();
+        // Deteksi perubahan status Caps Lock saat tombol ditekan
+        $(document).on('keydown', function(event) {
+            checkCapsLockStatus(event);
+        });
+
+        // Deteksi perubahan status Caps Lock saat tombol ditekan
+        $('input[type="password"]').on('keydown', function(event) {
+            checkCapsLockStatus(event);
         });
 
         // Menangani event klik pada tombol dengan ID 'submitBtn'
