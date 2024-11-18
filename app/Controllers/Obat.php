@@ -96,12 +96,17 @@ class Obat extends BaseController
             // Menerapkan kueri pencarian
             if ($search) {
                 $this->ObatModel
-                    ->like('nama_obat', $search)
-                    ->orLike('isi_obat', $search);
+                    ->join('supplier as s1', 's1.id_supplier = obat.id_supplier', 'inner')
+                    ->groupStart()
+                    ->like('s1.merek', $search)
+                    ->orLike('obat.nama_obat', $search)
+                    ->orLike('obat.isi_obat', $search)
+                    ->groupEnd();
             }
 
             // Menghitung jumlah record yang difilter
-            $filteredRecords = $this->ObatModel->countAllResults(false);
+            $filteredRecords = $this->ObatModel
+                ->join('supplier AS s2', 's2.id_supplier = obat.id_supplier', 'inner')->countAllResults(false);
 
             $obat = $this->ObatModel
                 ->select('

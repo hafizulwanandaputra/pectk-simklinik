@@ -24,7 +24,7 @@
                                 <button class="btn btn-danger btn-sm bg-gradient rounded-end-3" type="button" id="clearTglButton"><i class="fa-solid fa-xmark"></i></button>
                             </div>
                             <div class="input-group input-group-sm flex-fill">
-                                <input type="search" id="searchInput" class="form-control rounded-start-3" placeholder="Cari merek dan supplier">
+                                <input type="search" id="searchInput" class="form-control rounded-start-3" placeholder="Cari merek dan nama supplier">
                                 <button class="btn btn-success btn-sm bg-gradient rounded-end-3" type="button" id="refreshButton"><i class="fa-solid fa-sync"></i></button>
                             </div>
                         </div>
