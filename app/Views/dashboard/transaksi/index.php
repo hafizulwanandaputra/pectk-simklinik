@@ -743,10 +743,6 @@
         $('#refreshButton').on('click', async function() {
             // Simpan nilai pilihan kasir saat ini
             const selectedKasir = $('#kasirFilter').val();
-            $('#transaksiContainer').empty();
-            for (let i = 0; i < limit; i++) {
-                $('#transaksiContainer').append(placeholder);
-            }
             // Panggil fungsi untuk memperbarui opsi kasir
             await fetchKasirOptions(selectedKasir);
             fetchPasienOptions1();

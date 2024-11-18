@@ -252,8 +252,6 @@
         });
         // Menangani event klik pada tombol refresh
         $('#refreshButton').on('click', function() {
-            $('#datatransaksi').empty(); // Kosongkan tabel transaksi
-            $('#datatransaksi').append(loading); // Tampilkan loading indicator
             fetchTransaksi(); // Panggil fungsi untuk mengambil data transaksi
         });
 

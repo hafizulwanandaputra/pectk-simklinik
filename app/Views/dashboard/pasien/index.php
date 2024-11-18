@@ -175,8 +175,6 @@
         });
         // Menangani event klik pada tombol refresh
         $('#refreshButton').on('click', function() {
-            $('#datapasien').empty(); // Kosongkan tabel pasien
-            $('#datapasien').append(loading); // Tampilkan loading indicator
             fetchPasien(); // Panggil fungsi untuk mengambil data pasien
         });
 

@@ -638,10 +638,6 @@
         $('#refreshButton').on('click', async function() {
             // Simpan nilai pilihan apoteker saat ini
             const selectedApoteker = $('#apotekerFilter').val();
-            $('#resepContainer').empty();
-            for (let i = 0; i < limit; i++) {
-                $('#resepContainer').append(placeholder);
-            }
             // Panggil fungsi untuk memperbarui opsi apoteker
             await fetchApotekerOptions(selectedApoteker);
             fetchResep(); // Refresh articles on button click

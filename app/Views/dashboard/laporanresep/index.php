@@ -523,8 +523,6 @@
         });
         // Menangani event klik pada tombol refresh
         $('#refreshButton1').on('click', function() {
-            $('#resepharian').empty(); // Kosongkan tabel resep
-            $('#resepharian').append(loading1); // Tampilkan loading indicator
             fetchResep1(); // Panggil fungsi untuk mengambil data resep
         });
         // Menangani event klik pada tombol bersihkan bulan
@@ -537,8 +535,6 @@
         });
         // Menangani event klik pada tombol refresh
         $('#refreshButton2').on('click', function() {
-            $('#resepbulanan').empty(); // Kosongkan tabel resep
-            $('#resepbulanan').append(loading2); // Tampilkan loading indicator
             fetchResep2(); // Panggil fungsi untuk mengambil data resep
         });
 

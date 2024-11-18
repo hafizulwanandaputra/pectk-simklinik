@@ -421,10 +421,6 @@
         $('#refreshButton').on('click', async function() {
             // Simpan nilai pilihan apoteker saat ini
             const selectedApoteker = $('apotekerFilter').val();
-            $('#opnameObatContainer').empty();
-            for (let i = 0; i < limit; i++) {
-                $('#opnameObatContainer').append(placeholder);
-            }
             await fetchApotekerOptions(selectedApoteker);
             fetchOpnameObat(); // Refresh articles on button click
         });

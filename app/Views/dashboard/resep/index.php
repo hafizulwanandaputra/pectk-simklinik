@@ -600,10 +600,6 @@
         $('#refreshButton').on('click', async function() {
             // Simpan nilai pilihan dokter saat ini
             const selectedDokter = $('#dokterFilter').val();
-            $('#resepContainer').empty();
-            for (let i = 0; i < limit; i++) {
-                $('#resepContainer').append(placeholder);
-            }
             <?= (session()->get('role') != 'Apoteker') ? 'fetchPasienOptions();' : '' ?>
             // Panggil fungsi untuk memperbarui opsi dokter
             await fetchDokterOptions(selectedDokter);
