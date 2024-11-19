@@ -68,21 +68,40 @@
         </tr>
     `;
 
-    // Fungsi untuk menghitung usia berdasarkan tanggal lahir
+    // Fungsi untuk menghitung usia dan sisa bulan berdasarkan tanggal lahir
     function hitungUsia(tanggalLahir, tanggalRegistrasi) {
         const lahir = new Date(tanggalLahir); // Mengubah tanggal lahir menjadi objek Date
-        const sekarang = new Date(tanggalRegistrasi); // Mendapatkan tanggal registrasi
-        let usia = sekarang.getFullYear() - lahir.getFullYear(); // Menghitung usia berdasarkan tahun
+        const sekarang = new Date(tanggalRegistrasi); // Mengubah tanggal registrasi menjadi objek Date
 
-        // Menghitung selisih bulan dan hari
-        const bulan = sekarang.getMonth() - lahir.getMonth();
+        // Menghitung usia dalam tahun
+        let usia = sekarang.getFullYear() - lahir.getFullYear();
+
+        // Menghitung selisih bulan
+        let bulan = sekarang.getMonth() - lahir.getMonth();
+
+        // Menghitung selisih hari untuk memastikan bulan tidak negatif
         const hari = sekarang.getDate() - lahir.getDate();
 
         // Periksa apakah bulan/hari ulang tahun belum terlewati di tahun ini
         if (bulan < 0 || (bulan === 0 && hari < 0)) {
             usia--; // Kurangi usia jika ulang tahun belum terlewati
+            bulan += 12; // Tambahkan 12 bulan jika bulan menjadi negatif
         }
-        return usia; // Mengembalikan usia
+
+        // Jika hari di bulan ini belum cukup, kurangi bulan
+        if (hari < 0) {
+            bulan--;
+        }
+
+        // Pastikan bulan berada dalam rentang 0-11
+        if (bulan < 0) {
+            bulan += 12;
+        }
+
+        return {
+            usia,
+            bulan
+        }; // Mengembalikan usia dan sisa bulan
     }
 
     // Fungsi untuk mengambil data pasien dari API
@@ -145,7 +164,7 @@
                         <td class="text-nowrap">${jenis_kelamin}</td>
                         <td class="date text-nowrap">${pasien.no_rm}</td>
                         <td class="date text-nowrap">${pasien.nomor_registrasi}</td>
-                        <td>${pasien.tempat_lahir}<br><small class="date text-nowrap">${pasien.tanggal_lahir} • ${usia} tahun</small></td>
+                        <td>${pasien.tempat_lahir}<br><small class="date text-nowrap">${pasien.tanggal_lahir} • ${usia.usia} tahun ${usia.bulan} bulan</small></td>
                         <td class="date text-nowrap">${telpon}</td>
                         <td>${pasien.alamat}</td>
                         <td>${pasien.dokter}</td>
