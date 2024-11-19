@@ -132,7 +132,7 @@
                 <div class="modal-body py-2">
                     <input type="hidden" id="id_resep" name="id_resep">
                     <div class="form-floating mb-1 mt-1">
-                        <input type="text" class="form-control" autocomplete="off" dir="auto" placeholder="nama_pasien" id="nama_pasien" name="nama_pasien">
+                        <input type="text" class="form-control rounded-3" autocomplete="off" dir="auto" placeholder="nama_pasien" id="nama_pasien" name="nama_pasien">
                         <label for="nama_pasien">Nama Pasien</label>
                         <div class="invalid-feedback"></div>
                     </div>
@@ -157,12 +157,12 @@
                         </div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
-                        <input type="date" class="form-control" autocomplete="off" dir="auto" placeholder="tanggal_lahir" id="tanggal_lahir" name="tanggal_lahir">
+                        <input type="date" class="form-control rounded-3" autocomplete="off" dir="auto" placeholder="tanggal_lahir" id="tanggal_lahir" name="tanggal_lahir">
                         <label for="tanggal_lahir">Tanggal Lahir</label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
-                        <input type="text" class="form-control" autocomplete="off" dir="auto" placeholder="alamat" id="alamat" name="alamat">
+                        <input type="text" class="form-control rounded-3" autocomplete="off" dir="auto" placeholder="alamat" id="alamat" name="alamat">
                         <label for="alamat_pasien">Alamat</label>
                         <div class="invalid-feedback"></div>
                     </div>
