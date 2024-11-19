@@ -93,7 +93,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
         body {
             height: 100%;
             margin: 0;
-            overflow: auto;
+            overflow: hidden;
         }
 
         .wrapper {
