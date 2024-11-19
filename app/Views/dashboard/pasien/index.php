@@ -23,29 +23,37 @@
                     </li>
                 </ul>
             </div>
-            <div class="mb-2">
-                <div class="table-responsive">
-                    <table class="table table-sm" style="width:100%; font-size: 9pt;">
-                        <thead>
-                            <tr class="align-middle">
-                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">No</th>
-                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 25%;">Nama</th>
-                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Jenis Kelamin</th>
-                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Nomor Rekam Medis</th>
-                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Nomor Registrasi</th>
-                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 25%;">Tempat dan Tanggal Lahir</th>
-                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Nomor Telepon</th>
-                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 25%;">Alamat</th>
-                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 15%;">Dokter</th>
-                            </tr>
-                        </thead>
-                        <tbody class="align-top" id="datapasien">
-                            <tr>
-                                <td colspan="9" class="text-center" style="cursor: wait;">Memuat data pasien rawat jalan...</td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <div class="alert alert-info rounded-3" role="alert">
+                <div class="d-flex align-items-start">
+                    <div style="width: 12px; text-align: center;">
+                        <i class="fa-solid fa-circle-info"></i>
+                    </div>
+                    <div class="w-100 ms-3">
+                        Data-data pasien rawat jalan ini diperoleh dari <a href="https://pectk.padangeyecenter.com/klinik" class="alert-link" target="_blank">Sistem Informasi Manajemen Klinik Utama Mata Padang Eye Center Teluk Kuantan</a> melalui <em>Application Programming Interface</em> (API)
+                    </div>
                 </div>
+            </div>
+            <div class="table-responsive mb-2">
+                <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
+                    <thead>
+                        <tr class="align-middle">
+                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">No</th>
+                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 25%;">Nama</th>
+                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Jenis Kelamin</th>
+                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Nomor Rekam Medis</th>
+                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Nomor Registrasi</th>
+                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 25%;">Tempat dan Tanggal Lahir</th>
+                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Nomor Telepon</th>
+                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 25%;">Alamat</th>
+                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 15%;">Dokter</th>
+                        </tr>
+                    </thead>
+                    <tbody class="align-top" id="datapasien">
+                        <tr>
+                            <td colspan="9" class="text-center" style="cursor: wait;">Memuat data pasien rawat jalan...</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -91,7 +99,7 @@
                 $('#refreshButton').prop('disabled', true); // Nonaktifkan tombol refresh
                 const emptyRow = `
                     <tr>
-                        <td colspan="9" class="text-center">Silakan masukkan tanggal<br><small>Data-data pasien rawat jalan ini diperoleh dari Sistem Informasi Manajemen Klinik Utama Mata Padang Eye Center Teluk Kuantan melalui  <em>Application Programming Interface</em> (API)</small></td>
+                        <td colspan="9" class="text-center">Silakan masukkan tanggal</td>
                     </tr>
                 `;
                 $('#datapasien').append(emptyRow); // Menambahkan baris kosong ke tabel
