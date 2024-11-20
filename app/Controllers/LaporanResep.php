@@ -26,7 +26,7 @@ class LaporanResep extends BaseController
     {
         // Memeriksa peran pengguna, hanya 'Admin' dan 'Apoteker' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
-            $daftarDokter = $this->ResepModel->select('dokter')->groupBy('dokter')->orderBy('dokter', 'ASC')->findAll();
+            $daftarDokter = $this->ResepModel->select('dokter')->where('status', 1)->groupBy('dokter')->orderBy('dokter', 'ASC')->findAll();
             // Menyiapkan data untuk tampilan
             $data = [
                 'title' => 'Laporan Resep - ' . $this->systemName,

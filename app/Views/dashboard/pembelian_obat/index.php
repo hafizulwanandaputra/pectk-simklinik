@@ -61,8 +61,8 @@
                     </button>
                 </div>
                 <ul id="pembelianObatFormContainter" class="list-group rounded-0 collapse">
-                    <li class="list-group-item border-top-0 border-bottom-0 bg-body-tertiary pb-3 pt-3">
-                        <form id="pembelianObatForm" enctype="multipart/form-data" class="d-flex flex-column mb-2 gap-2">
+                    <li class="list-group-item border-top-0 border-bottom-0 bg-body-tertiary">
+                        <form id="pembelianObatForm" enctype="multipart/form-data" class="d-flex flex-column gap-2">
                             <div class="flex-fill">
                                 <select class="form-select rounded-3" id="id_supplier" name="id_supplier" aria-label="id_supplier">
                                     <option value="" disabled selected>-- Pilih Supplier --</option>
@@ -81,7 +81,7 @@
                     <?php for ($i = 0; $i < 12; $i++) : ?>
                         <li class="list-group-item bg-body-tertiary pb-3 pt-3" style="cursor: wait;">
                             <div class="d-flex">
-                                <div class="align-self-center ps-2 w-100">
+                                <div class="align-self-center w-100">
                                     <h5 class="card-title placeholder-glow">
                                         <span class="placeholder" style="width: 100%"></span>
                                     </h5>
@@ -137,7 +137,7 @@
     var placeholder = `
             <li class="list-group-item bg-body-tertiary pb-3 pt-3" style="cursor: wait;">
                 <div class="d-flex">
-                    <div class="align-self-center ps-2 w-100">
+                    <div class="align-self-center w-100">
                         <h5 class="card-title placeholder-glow">
                             <span class="placeholder" style="width: 100%"></span>
                         </h5>
@@ -267,7 +267,7 @@
                     const pembelian_obatElement = `
             <li class="list-group-item bg-body-tertiary pb-3 pt-3">
                 <div class="d-flex">
-                    <div class="align-self-center ps-2 w-100">
+                    <div class="align-self-center w-100">
                         <h5 class="card-title">
                             ${merek} • ${pembelian_obat.supplier_nama_supplier}
                         </h5>

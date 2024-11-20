@@ -91,35 +91,34 @@
             </fieldset>
 
             <div class="row gy-3 mb-2">
-                <div class="col-lg-6 d-flex flex-column">
-                    <fieldset id="tambahLayananContainer" class="border rounded-3 px-2 py-0 mb-3" style="display: none;">
-                        <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Tambah Tindakan</legend>
-                        <form id="tambahLayanan" enctype="multipart/form-data">
-                            <div class="mb-2">
-                                <select class="form-select rounded-3 form-tindakan" id="id_layanan" name="id_layanan" aria-label="id_layanan">
-                                    <option value="" disabled selected>-- Pilih Tindakan --</option>
-                                </select>
-                                <div class="invalid-feedback"></div>
-                            </div>
-                            <div class="d-flex flex-column flex-lg-row mb-2 gap-2">
-                                <div class="flex-fill">
-                                    <input type="number" id="qty_transaksi" name="qty_transaksi" class="form-control rounded-3 form-tindakan" placeholder="Qty" autocomplete="off">
+                <div class="col-lg-6">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-header" id="tambahLayananContainer" style="display: none;">
+                            <form id="tambahLayanan" enctype="multipart/form-data">
+                                <div class="mb-2">
+                                    <select class="form-select rounded-3 form-tindakan" id="id_layanan" name="id_layanan" aria-label="id_layanan">
+                                        <option value="" disabled selected>-- Pilih Tindakan --</option>
+                                    </select>
                                     <div class="invalid-feedback"></div>
                                 </div>
-                                <div class="flex-fill">
-                                    <input type="number" id="diskon_layanan" name="diskon_layanan" class="form-control rounded-3 form-tindakan" placeholder="Diskon (%)" autocomplete="off">
-                                    <div class="invalid-feedback"></div>
+                                <div class="d-flex flex-column flex-lg-row gap-2">
+                                    <div class="flex-fill">
+                                        <input type="number" id="qty_transaksi" name="qty_transaksi" class="form-control rounded-3 form-tindakan" placeholder="Qty" autocomplete="off">
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                    <div class="flex-fill">
+                                        <input type="number" id="diskon_layanan" name="diskon_layanan" class="form-control rounded-3 form-tindakan" placeholder="Diskon (%)" autocomplete="off">
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                    <div class="d-grid d-lg-block w-auto">
+                                        <button type="submit" id="addLayananButton" class="btn btn-primary bg-gradient rounded-3 text-nowrap">
+                                            <i class="fa-solid fa-plus"></i> Tambah
+                                        </button>
+                                    </div>
                                 </div>
-                                <div class="d-grid d-lg-block w-auto">
-                                    <button type="submit" id="addLayananButton" class="btn btn-primary bg-gradient rounded-3 text-nowrap">
-                                        <i class="fa-solid fa-plus"></i> Tambah
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </fieldset>
-                    <div class="card h-100">
-                        <div class="card-body p-0 m-0 table-responsive" style="overflow-y: auto; max-height: calc(100vh - 200px);">
+                            </form>
+                        </div>
+                        <div class="card-body p-0 m-0 table-responsive">
                             <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
                                 <thead>
                                     <tr class="align-middle">
@@ -150,31 +149,30 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6 d-flex flex-column">
-                    <fieldset id="tambahObatAlkesContainer" class="border rounded-3 px-2 py-0 mb-3" style="display: none;">
-                        <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Tambah Obat dan Alkes</legend>
-                        <form id="tambahObatAlkes" enctype="multipart/form-data">
-                            <div class="mb-2">
-                                <select class="form-select rounded-3" id="id_resep" name="id_resep" aria-label="id_resep">
-                                    <option value="" disabled selected>-- Pilih Resep --</option>
-                                </select>
-                                <div class="invalid-feedback"></div>
-                            </div>
-                            <div class="d-flex flex-column flex-lg-row mb-2 gap-2">
-                                <div class="flex-fill">
-                                    <input type="number" id="diskon_obatalkes" name="diskon_obatalkes" class="form-control rounded-3" placeholder="Diskon (%)" autocomplete="off">
+                <div class="col-lg-6">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-header" id="tambahObatAlkesContainer" style="display: none;">
+                            <form id="tambahObatAlkes" enctype="multipart/form-data">
+                                <div class="mb-2">
+                                    <select class="form-select rounded-3" id="id_resep" name="id_resep" aria-label="id_resep">
+                                        <option value="" disabled selected>-- Pilih Resep --</option>
+                                    </select>
                                     <div class="invalid-feedback"></div>
                                 </div>
-                                <div class="d-grid d-lg-block w-auto">
-                                    <button type="submit" id="addObatAlkesButton" class="btn btn-primary bg-gradient rounded-3 text-nowrap">
-                                        <i class="fa-solid fa-plus"></i> Tambah
-                                    </button>
+                                <div class="d-flex flex-column flex-lg-row gap-2">
+                                    <div class="flex-fill">
+                                        <input type="number" id="diskon_obatalkes" name="diskon_obatalkes" class="form-control rounded-3" placeholder="Diskon (%)" autocomplete="off">
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                    <div class="d-grid d-lg-block w-auto">
+                                        <button type="submit" id="addObatAlkesButton" class="btn btn-primary bg-gradient rounded-3 text-nowrap">
+                                            <i class="fa-solid fa-plus"></i> Tambah
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
-                        </form>
-                    </fieldset>
-                    <div class="card h-100">
-                        <div class="card-body p-0 m-0 table-responsive" style="overflow-y: auto; max-height: calc(100vh - 200px);">
+                            </form>
+                        </div>
+                        <div class="card-body p-0 m-0 table-responsive">
                             <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
                                 <thead>
                                     <tr class="align-middle">

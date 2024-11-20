@@ -34,7 +34,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="mb-2">
+            <div class="mb-3">
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane show active" id="resepharian-container" role="tabpanel" aria-labelledby="resepharian-container-tab" tabindex="0">
                         <fieldset class="border rounded-3 px-2 py-0 mb-3" id="dokter-harian" style="display: none;">
@@ -48,7 +48,7 @@
                                 <?php endforeach; ?>
                             </div>
                         </fieldset>
-                        <div class="table-responsive">
+                        <div class="table-responsive card shadow-sm rounded-3">
                             <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
                                 <thead>
                                     <tr class="align-middle">
@@ -93,7 +93,7 @@
                                 <?php endforeach; ?>
                             </div>
                         </fieldset>
-                        <div class="table-responsive">
+                        <div class="table-responsive card shadow-sm rounded-3">
                             <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
                                 <thead>
                                     <tr class="align-middle">
@@ -345,7 +345,7 @@
             console.error(error); // Menampilkan error di konsol
             const errorRow = `
                 <tr>
-                    <td colspan="6" class="text-center">${error}</td>
+                    <td colspan="6" class="text-center text-danger">${error}</td>
                 </tr>
             `;
             $('#resepharian').empty(); // Kosongkan tabel resep
@@ -426,7 +426,7 @@
             if (data.length === 0) {
                 // Tampilkan pesan jika tidak ada data
                 $('#reportBtns2').hide(); // Sembunyikan tombol buat laporan
-                const message = response.data.message == null ? `Tidak ada resep yang digunakan pada ${tanggal}` : response.data.message;
+                const message = response.data.message == null ? `Tidak ada resep yang digunakan pada ${bulan}` : response.data.message;
                 const emptyRow = `
                     <tr>
                         <td colspan="7" class="text-center">${message}</td>
@@ -477,7 +477,7 @@
             console.error(error); // Menampilkan error di konsol
             const errorRow = `
                 <tr>
-                    <td colspan="7" class="text-center">${error}</td>
+                    <td colspan="7" class="text-center text-danger">${error}</td>
                 </tr>
             `;
             $('#resepbulanan').empty(); // Kosongkan tabel resep

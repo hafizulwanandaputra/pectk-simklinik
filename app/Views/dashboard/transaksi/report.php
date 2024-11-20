@@ -24,8 +24,8 @@
                     </li>
                 </ul>
             </div>
-            <div class="mb-2">
-                <div class="table-responsive">
+            <div class="mb-3">
+                <div class="table-responsive card shadow-sm rounded-3">
                     <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
                         <thead>
                             <tr class="align-middle">
@@ -227,7 +227,7 @@
             console.error(error); // Menampilkan error di konsol
             const errorRow = `
                 <tr>
-                    <td colspan="9" class="text-center">${error}</td>
+                    <td colspan="9" class="text-center text-danger">${error}</td>
                 </tr>
             `;
             $('#datatransaksi').empty(); // Kosongkan tabel transaksi

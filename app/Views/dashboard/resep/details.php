@@ -117,87 +117,86 @@
                 </div>
             </fieldset>
 
-            <?php if (session()->get('role') == 'Dokter' || session()->get('role') == 'Admin') : ?>
-                <fieldset id="tambahDetailContainer" class="border rounded-3 px-2 py-0 mb-3" style="display: none;">
-                    <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Tambah Detail Resep</legend>
-                    <form id="tambahDetail" enctype="multipart/form-data">
-                        <div class="row g-2">
-                            <div class="col-12">
-                                <select class="form-select form-select-sm rounded-3" id="id_obat" name="id_obat" aria-label="id_obat" autocomplete="off">
-                                    <option value="" disabled selected>-- Pilih Obat --</option>
-                                </select>
-                                <div class="invalid-feedback"></div>
+            <div class="card shadow-sm">
+                <?php if (session()->get('role') == 'Dokter' || session()->get('role') == 'Admin') : ?>
+                    <div class="card-header" id="tambahDetailContainer" style="display: none;">
+                        <form id="tambahDetail" enctype="multipart/form-data">
+                            <div class="row g-2">
+                                <div class="col-12">
+                                    <select class="form-select form-select-sm rounded-3" id="id_obat" name="id_obat" aria-label="id_obat" autocomplete="off">
+                                        <option value="" disabled selected>-- Pilih Obat --</option>
+                                    </select>
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                                <div class="col-6">
+                                    <input type="text" id="signa" name="signa" class="form-control form-control-sm rounded-3" placeholder="Dosis" autocomplete="off">
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                                <div class="col-6">
+                                    <input type="text" id="catatan" name="catatan" class="form-control form-control-sm rounded-3" placeholder="Catatan" list="list_catatan" autocomplete="off">
+                                    <div class="invalid-feedback"></div>
+                                    <datalist id="list_catatan">
+                                        <option value="1 Tetes">
+                                        <option value="1 Tablet">
+                                        <option value="1 Salep">
+                                        <option value="Sendok Teh">
+                                        <option value="Sendok Makan">
+                                    </datalist>
+                                </div>
+                                <div class="col-6">
+                                    <select class="form-select form-select-sm  rounded-3" id="cara_pakai" name="cara_pakai" aria-label="cara_pakai">
+                                        <option value="" disabled selected>-- Pilih Cara Pakai --</option>
+                                        <option value="Mata Kanan">Mata Kanan</option>
+                                        <option value="Mata Kiri">Mata Kiri</option>
+                                        <option value="Kedua Mata">Kedua Mata</option>
+                                        <option value="Sebelum Makan">Sebelum Makan</option>
+                                        <option value="Sesudah Makan">Sesudah Makan</option>
+                                        <option value="Sesudah Makan Dihabiskan">Sesudah Makan Dihabiskan</option>
+                                        <option value="Sesudah Makan Bila Sakit">Sesudah Makan Bila Sakit</option>
+                                    </select>
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                                <div class="col-6">
+                                    <input type="number" id="jumlah" name="jumlah" class="form-control form-control-sm rounded-3" placeholder="Jumlah">
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                                <div class="d-grid gap-2 d-lg-flex justify-content-lg-end">
+                                    <button type="submit" id="addButton" class="btn btn-primary bg-gradient rounded-3 text-nowrap">
+                                        <i class="fa-solid fa-plus"></i> Tambah
+                                    </button>
+                                </div>
                             </div>
-                            <div class="col-6">
-                                <input type="text" id="signa" name="signa" class="form-control form-control-sm rounded-3" placeholder="Dosis" autocomplete="off">
-                                <div class="invalid-feedback"></div>
-                            </div>
-                            <div class="col-6">
-                                <input type="text" id="catatan" name="catatan" class="form-control form-control-sm rounded-3" placeholder="Catatan" list="list_catatan" autocomplete="off">
-                                <div class="invalid-feedback"></div>
-                                <datalist id="list_catatan">
-                                    <option value="1 Tetes">
-                                    <option value="1 Tablet">
-                                    <option value="1 Salep">
-                                    <option value="Sendok Teh">
-                                    <option value="Sendok Makan">
-                                </datalist>
-                            </div>
-                            <div class="col-6">
-                                <select class="form-select form-select-sm  rounded-3" id="cara_pakai" name="cara_pakai" aria-label="cara_pakai">
-                                    <option value="" disabled selected>-- Pilih Cara Pakai --</option>
-                                    <option value="Mata Kanan">Mata Kanan</option>
-                                    <option value="Mata Kiri">Mata Kiri</option>
-                                    <option value="Kedua Mata">Kedua Mata</option>
-                                    <option value="Sebelum Makan">Sebelum Makan</option>
-                                    <option value="Sesudah Makan">Sesudah Makan</option>
-                                    <option value="Sesudah Makan Dihabiskan">Sesudah Makan Dihabiskan</option>
-                                    <option value="Sesudah Makan Bila Sakit">Sesudah Makan Bila Sakit</option>
-                                </select>
-                                <div class="invalid-feedback"></div>
-                            </div>
-                            <div class="col-6">
-                                <input type="number" id="jumlah" name="jumlah" class="form-control form-control-sm rounded-3" placeholder="Jumlah">
-                                <div class="invalid-feedback"></div>
-                            </div>
-                            <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-2">
-                                <button type="submit" id="addButton" class="btn btn-primary bg-gradient rounded-3 text-nowrap">
-                                    <i class="fa-solid fa-plus"></i> Tambah
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </fieldset>
-            <?php endif; ?>
-
-            <div class="table-responsive">
-                <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
-                    <thead>
-                        <tr class="align-middle">
-                            <th scope="col" class="bg-body-secondary border-secondary text-nowrap tindakan" style="border-bottom-width: 2px; width: 0%;">Tindakan</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">Obat</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Jumlah</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Harga Satuan</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Harga</th>
-                        </tr>
-                    </thead>
-                    <tbody class="align-top" id="detail_resep">
-                        <tr>
-                            <td colspan="5" class="text-center">Memuat detail resep...</td>
-                        </tr>
-                    </tbody>
-                    <tbody>
-                        <tr>
-                            <th scope="col" class="bg-body-secondary border-secondary text-nowrap" style="border-bottom-width: 0; border-top-width: 2px;" colspan="1"></th>
-                            <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 2px;">Total</th>
-                            <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="jumlah_resep"></th>
-                            <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;"></th>
-                            <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="total_harga"></th>
-                        </tr>
-                    </tbody>
-                </table>
+                        </form>
+                    </div>
+                <?php endif; ?>
+                <div class="card-body p-0 m-0 table-responsive">
+                    <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
+                        <thead>
+                            <tr class="align-middle">
+                                <th scope="col" class="bg-body-secondary border-secondary text-nowrap tindakan" style="border-bottom-width: 2px; width: 0%;">Tindakan</th>
+                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">Obat</th>
+                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Jumlah</th>
+                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Harga Satuan</th>
+                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Harga</th>
+                            </tr>
+                        </thead>
+                        <tbody class="align-top" id="detail_resep">
+                            <tr>
+                                <td colspan="5" class="text-center">Memuat detail resep...</td>
+                            </tr>
+                        </tbody>
+                        <tbody>
+                            <tr>
+                                <th scope="col" class="bg-body-secondary border-secondary text-nowrap" style="border-bottom-width: 0; border-top-width: 2px;" colspan="1"></th>
+                                <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 2px;">Total</th>
+                                <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="jumlah_resep"></th>
+                                <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;"></th>
+                                <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="total_harga"></th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-
 
             <div class="mb-3">
                 <hr>

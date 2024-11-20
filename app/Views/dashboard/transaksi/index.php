@@ -72,10 +72,10 @@
                     </button>
                 </div>
                 <ul id="transaksiFormContainer" class="list-group rounded-0 collapse">
-                    <li class="list-group-item border-top-0 border-bottom-0 bg-body-tertiary pb-3 pt-3">
-                        <div class="row">
+                    <li class="list-group-item border-top-0 border-bottom-0 bg-body-tertiary">
+                        <div class="row gy-3">
                             <div class="col-lg-6">
-                                <fieldset class="border rounded-3 px-2 py-0 mb-3">
+                                <fieldset class="border rounded-3 px-2 py-0">
                                     <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Tambah Pasien Rawat Jalan</legend>
                                     <form id="transaksiForm1" enctype="multipart/form-data" class="d-flex flex-column mb-2 gap-2">
                                         <div class="flex-fill">
@@ -93,7 +93,7 @@
                                 </fieldset>
                             </div>
                             <div class="col-lg-6">
-                                <fieldset class="border rounded-3 px-2 py-0 mb-3">
+                                <fieldset class="border rounded-3 px-2 py-0">
                                     <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Tambah Pasien dari Resep Luar</legend>
                                     <form id="transaksiForm2" enctype="multipart/form-data" class="d-flex flex-column mb-2 gap-2">
                                         <div class="flex-fill">
@@ -117,7 +117,7 @@
                     <?php for ($i = 0; $i < 12; $i++) : ?>
                         <li class="list-group-item bg-body-tertiary pb-3 pt-3" style="cursor: wait;">
                             <div class="d-flex">
-                                <div class="align-self-center ps-2 w-100">
+                                <div class="align-self-center w-100">
                                     <h5 class="card-title placeholder-glow">
                                         <span class="placeholder" style="width: 100%"></span>
                                     </h5>
@@ -174,7 +174,7 @@
     var placeholder = `
             <li class="list-group-item bg-body-tertiary pb-3 pt-3" style="cursor: wait;">
                 <div class="d-flex">
-                    <div class="align-self-center ps-2 w-100">
+                    <div class="align-self-center w-100">
                         <h5 class="card-title placeholder-glow">
                             <span class="placeholder" style="width: 100%"></span>
                         </h5>
@@ -347,7 +347,7 @@
                     const transaksiElement = `
                     <li class="list-group-item bg-body-tertiary pb-3 pt-3">
                         <div class="d-flex">
-                            <div class="align-self-center ps-2 w-100">
+                            <div class="align-self-center w-100">
                                 <h5 class="card-title">
                                     ${nama_pasien} ${jenisResep}
                                 </h5>

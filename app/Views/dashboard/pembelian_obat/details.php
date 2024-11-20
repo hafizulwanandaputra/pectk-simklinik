@@ -70,59 +70,59 @@
                 </div>
             </fieldset>
 
-            <fieldset id="tambahDetailContainer" class="border rounded-3 px-2 py-0 mb-3" style="display: none;">
-                <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Tambah Detail Pembelian</legend>
-                <form id="tambahDetail" enctype="multipart/form-data">
-                    <div class="mb-2">
-                        <select class="form-select rounded-3" id="id_obat" name="id_obat" aria-label="id_obat">
-                            <option value="" disabled selected>-- Pilih Obat --</option>
-                        </select>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                    <div class="d-flex flex-column flex-lg-row mb-2 gap-2">
-                        <div class="flex-fill">
-                            <input type="number" id="jumlah" name="jumlah" class="form-control rounded-3" placeholder="Jumlah" autocomplete="off">
+            <div class="card shadow-sm">
+                <div class="card-header" id="tambahDetailContainer" style="display: none;">
+                    <form id="tambahDetail" enctype="multipart/form-data">
+                        <div class="mb-2">
+                            <select class="form-select rounded-3" id="id_obat" name="id_obat" aria-label="id_obat">
+                                <option value="" disabled selected>-- Pilih Obat --</option>
+                            </select>
                             <div class="invalid-feedback"></div>
                         </div>
-                        <div class="d-grid d-lg-block w-auto">
-                            <button type="submit" id="addButton" class="btn btn-primary bg-gradient rounded-3 text-nowrap">
-                                <i class="fa-solid fa-plus"></i> Tambah
-                            </button>
+                        <div class="d-flex flex-column flex-lg-row gap-2">
+                            <div class="flex-fill">
+                                <input type="number" id="jumlah" name="jumlah" class="form-control rounded-3" placeholder="Jumlah" autocomplete="off">
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="d-grid d-lg-block w-auto">
+                                <button type="submit" id="addButton" class="btn btn-primary bg-gradient rounded-3 text-nowrap">
+                                    <i class="fa-solid fa-plus"></i> Tambah
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                </form>
-            </fieldset>
-
-            <div class="table-responsive">
-                <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
-                    <thead>
-                        <tr class="align-middle">
-                            <th scope="col" class="bg-body-secondary border-secondary text-nowrap tindakan" style="border-bottom-width: 2px; width: 0%;">Tindakan</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">Nama Obat</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Jumlah</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Obat Masuk</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Obat Belum Diterima</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Harga Satuan</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Harga</th>
-                        </tr>
-                    </thead>
-                    <tbody class="align-top" id="detail_pembelian_obat">
-                        <tr>
-                            <td colspan="7" class="text-center">Memuat detail pembelian...</td>
-                        </tr>
-                    </tbody>
-                    <tbody>
-                        <tr>
-                            <th scope="col" class="bg-body-secondary border-secondary text-nowrap" style="border-bottom-width: 0; border-top-width: 2px;" colspan="1"></th>
-                            <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 2px;">Total</th>
-                            <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="total_qty"></th>
-                            <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="total_masuk"></th>
-                            <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="total_blm_diterima"></th>
-                            <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;"></th>
-                            <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="total_harga"></th>
-                        </tr>
-                    </tbody>
-                </table>
+                    </form>
+                </div>
+                <div class="card-body p-0 m-0 table-responsive">
+                    <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
+                        <thead>
+                            <tr class="align-middle">
+                                <th scope="col" class="bg-body-secondary border-secondary text-nowrap tindakan" style="border-bottom-width: 2px; width: 0%;">Tindakan</th>
+                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">Nama Obat</th>
+                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Jumlah</th>
+                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Obat Masuk</th>
+                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Obat Belum Diterima</th>
+                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Harga Satuan</th>
+                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Harga</th>
+                            </tr>
+                        </thead>
+                        <tbody class="align-top" id="detail_pembelian_obat">
+                            <tr>
+                                <td colspan="7" class="text-center">Memuat detail pembelian...</td>
+                            </tr>
+                        </tbody>
+                        <tbody>
+                            <tr>
+                                <th scope="col" class="bg-body-secondary border-secondary text-nowrap" style="border-bottom-width: 0; border-top-width: 2px;" colspan="1"></th>
+                                <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 2px;">Total</th>
+                                <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="total_qty"></th>
+                                <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="total_masuk"></th>
+                                <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="total_blm_diterima"></th>
+                                <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;"></th>
+                                <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="total_harga"></th>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
             <div id="terimaObat">

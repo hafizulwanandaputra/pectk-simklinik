@@ -72,20 +72,18 @@
                         </button>
                     </div>
                     <ul id="tambahPasienForm" class="list-group rounded-0 collapse">
-                        <li class="list-group-item border-top-0 border-bottom-0 bg-body-tertiary pb-3 pt-3">
-                            <form id="resepForm" enctype="multipart/form-data">
-                                <div class="d-flex flex-column mb-2 gap-2">
-                                    <div class="flex-fill">
-                                        <select class="form-select rounded-3" id="nomor_registrasi" name="nomor_registrasi" aria-label="nomor_registrasi">
-                                            <option value="" disabled selected>-- Pilih Pasien --</option>
-                                        </select>
-                                        <div class="invalid-feedback"></div>
-                                    </div>
-                                    <div class="d-grid gap-2 d-md-flex justify-content-md-end" id="submitButtonContainer">
-                                        <button type="submit" id="submitButton" class="btn btn-primary bg-gradient rounded-3" disabled>
-                                            <i class="fa-solid fa-plus"></i> Tambah
-                                        </button>
-                                    </div>
+                        <li class="list-group-item border-top-0 border-bottom-0 bg-body-tertiary">
+                            <form id="resepForm" enctype="multipart/form-data" class="d-flex flex-column gap-2">
+                                <div class="flex-fill">
+                                    <select class="form-select rounded-3" id="nomor_registrasi" name="nomor_registrasi" aria-label="nomor_registrasi">
+                                        <option value="" disabled selected>-- Pilih Pasien --</option>
+                                    </select>
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                                <div class="d-grid gap-2 d-md-flex justify-content-md-end" id="submitButtonContainer">
+                                    <button type="submit" id="submitButton" class="btn btn-primary bg-gradient rounded-3" disabled>
+                                        <i class="fa-solid fa-plus"></i> Tambah
+                                    </button>
                                 </div>
                             </form>
                         </li>
@@ -95,7 +93,7 @@
                     <?php for ($i = 0; $i < 12; $i++) : ?>
                         <li class="list-group-item <?= (session()->get('role') != 'Apoteker') ? 'border-top-0' : ''; ?> bg-body-tertiary pb-3 pt-3" style="cursor: wait;">
                             <div class="d-flex">
-                                <div class="align-self-center ps-2 w-100">
+                                <div class="align-self-center w-100">
                                     <h5 class="card-title placeholder-glow">
                                         <span class="placeholder" style="width: 100%"></span>
                                     </h5>
@@ -156,7 +154,7 @@
     var placeholder = `
             <li class="list-group-item <?= (session()->get('role') != 'Apoteker') ? 'border-top-0' : ''; ?> bg-body-tertiary pb-3 pt-3" style="cursor: wait;">
                 <div class="d-flex">
-                    <div class="align-self-center ps-2 w-100">
+                    <div class="align-self-center w-100">
                         <h5 class="card-title placeholder-glow">
                             <span class="placeholder" style="width: 100%"></span>
                         </h5>
@@ -319,7 +317,7 @@
                     const resepElement = `
             <li class="list-group-item bg-body-tertiary pb-3 pt-3">
                 <div class="d-flex">
-                    <div class="align-self-center ps-2 w-100">
+                    <div class="align-self-center w-100">
                         <h5 class="card-title">
                             ${resep.nama_pasien} ${jenis_kelamin}
                         </h5>

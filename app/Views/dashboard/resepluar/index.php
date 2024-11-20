@@ -74,7 +74,7 @@
                     <?php for ($i = 0; $i < 12; $i++) : ?>
                         <li class="list-group-item bg-body-tertiary pb-3 pt-3" style="cursor: wait;">
                             <div class="d-flex">
-                                <div class="align-self-center ps-2 w-100">
+                                <div class="align-self-center w-100">
                                     <h5 class="card-title placeholder-glow">
                                         <span class="placeholder" style="width: 100%"></span>
                                     </h5>
@@ -185,7 +185,7 @@
     var placeholder = `
             <li class="list-group-item bg-body-tertiary pb-3 pt-3" style="cursor: wait;">
                 <div class="d-flex">
-                    <div class="align-self-center ps-2 w-100">
+                    <div class="align-self-center w-100">
                         <h5 class="card-title placeholder-glow">
                             <span class="placeholder" style="width: 100%"></span>
                         </h5>
@@ -317,7 +317,7 @@
                     const resepElement = `
             <li class="list-group-item bg-body-tertiary pb-3 pt-3">
                 <div class="d-flex">
-                    <div class="align-self-center ps-2 w-100">
+                    <div class="align-self-center w-100">
                         <h5 class="card-title">
                             ${nama_pasien} ${jenis_kelamin}
                         </h5>

@@ -172,6 +172,11 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
             border-radius: var(--bs-border-radius-lg) !important;
         }
 
+        table.dataTable {
+            margin-top: 0 !important;
+            margin-bottom: 0 !important;
+        }
+
         .modal-body div.dataTables_wrapper div.dataTables_processing.card {
             background-color: rgba(var(--bs-body-bg-rgb), var(--bs-bg-opacity)) !important;
             --bs-bg-opacity: 1;

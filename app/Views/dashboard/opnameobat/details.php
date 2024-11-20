@@ -38,7 +38,7 @@
                 </div>
             </fieldset>
 
-            <div class="table-responsive">
+            <div class="table-responsive card shadow-sm rounded-3">
                 <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
                     <thead>
                         <tr class="align-middle">

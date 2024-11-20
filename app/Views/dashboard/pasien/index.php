@@ -23,37 +23,21 @@
                     </li>
                 </ul>
             </div>
-            <div class="alert alert-info rounded-3" role="alert">
+            <div class="alert alert-info rounded-3 mb-2" role="alert">
                 <div class="d-flex align-items-start">
                     <div style="width: 12px; text-align: center;">
                         <i class="fa-solid fa-circle-info"></i>
                     </div>
                     <div class="w-100 ms-3">
-                        Data-data pasien rawat jalan ini diperoleh dari <a href="https://pectk.padangeyecenter.com/klinik" class="alert-link" target="_blank">Sistem Informasi Manajemen Klinik Utama Mata Padang Eye Center Teluk Kuantan</a> melalui <em>Application Programming Interface</em> (API)
+                        Data-data pasien rawat jalan ini diperoleh dari <em>Application Programming Interface</em> (API) <a href="https://pectk.padangeyecenter.com/klinik" class="alert-link" target="_blank">Sistem Informasi Manajemen Klinik Utama Mata Padang Eye Center Teluk Kuantan</a>
                     </div>
                 </div>
             </div>
-            <div class="table-responsive mb-2">
-                <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
-                    <thead>
-                        <tr class="align-middle">
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">No</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 25%;">Nama</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Jenis Kelamin</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Nomor Rekam Medis</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Nomor Registrasi</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 25%;">Tempat dan Tanggal Lahir</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Nomor Telepon</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 25%;">Alamat</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 15%;">Dokter</th>
-                        </tr>
-                    </thead>
-                    <tbody class="align-top" id="datapasien">
-                        <tr>
-                            <td colspan="9" class="text-center" style="cursor: wait;">Memuat data pasien rawat jalan...</td>
-                        </tr>
-                    </tbody>
-                </table>
+
+            <div class="accordion mb-3" id="datapasien" style="--bs-accordion-border-radius: var(--bs-border-radius-lg); --bs-accordion-inner-border-radius: calc(var(--bs-border-radius-lg) - (var(--bs-border-width)));">
+                <div class="accordion-item shadow-sm p-3 p-3">
+                    <h2 class="text-center text-muted mb-0" style="font-weight: 300;">Memuat data pasien rawat jalan...</h2>
+                </div>
             </div>
         </div>
     </div>
@@ -63,9 +47,9 @@
 <script>
     // HTML untuk menunjukkan bahwa data pasien sedang dimuat
     const loading = `
-        <tr>
-            <td colspan="9" class="text-center" style="cursor: wait;">Memuat data pasien rawat jalan...</td>
-        </tr>
+        <div class="accordion-item shadow-sm p-3 p-3">
+            <h2 class="text-center text-muted mb-0" style="font-weight: 300;">Memuat data pasien rawat jalan...</h2>
+        </div>
     `;
 
     // Fungsi untuk menghitung usia dan sisa bulan berdasarkan tanggal lahir
@@ -117,9 +101,9 @@
                 $('#datapasien').empty(); // Kosongkan tabel pasien
                 $('#refreshButton').prop('disabled', true); // Nonaktifkan tombol refresh
                 const emptyRow = `
-                    <tr>
-                        <td colspan="9" class="text-center">Silakan masukkan tanggal</td>
-                    </tr>
+                    <div class="accordion-item shadow-sm p-3 p-3">
+                        <h2 class="text-center text-muted mb-0" style="font-weight: 300;">Silakan masukkan tanggal</h2>
+                    </div>
                 `;
                 $('#datapasien').append(emptyRow); // Menambahkan baris kosong ke tabel
                 return; // Keluar dari fungsi
@@ -136,9 +120,9 @@
             if (data.length === 0) {
                 // Tampilkan pesan jika tidak ada data
                 const emptyRow = `
-                    <tr>
-                        <td colspan="9" class="text-center">Tidak ada pasien yang berobat pada ${tanggal}</td>
-                    </tr>
+                    <div class="accordion-item shadow-sm p-3 p-3">
+                        <h2 class="text-center text-muted mb-0" style="font-weight: 300;">Tidak ada pasien yang berobat pada ${tanggal}</h2>
+                    </div>
                 `;
                 $('#datapasien').append(emptyRow); // Menambahkan baris pesan ke tabel
             }
@@ -151,24 +135,52 @@
             // Menambahkan setiap pasien ke tabel
             data.forEach(function(pasien, index) {
                 // Mengkondisikan jenis kelamin
-                const jenis_kelamin = pasien.jenis_kelamin === "L" ? "Laki-laki" : "Perempuan";
+                let jenis_kelamin = pasien.jenis_kelamin;
+                if (jenis_kelamin === 'L') {
+                    jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap" style="background-color: SkyBlue"><i class="fa-solid fa-mars"></i> LAKI-LAKI</span>`;
+                } else if (jenis_kelamin === 'P') {
+                    jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap" style="background-color: Pink"><i class="fa-solid fa-venus"></i> PEREMPUAN</span>`;
+                }
                 // Gunakan pesan jika tidak ada nomor telepon
                 const telpon = pasien.telpon ? pasien.telpon : "<em>Tidak ada</em>";
                 const usia = hitungUsia(pasien.tanggal_lahir, pasien.tanggal_registrasi); // Menghitung usia pasien
 
                 // Membuat elemen baris untuk setiap pasien
                 const pasienElement = `
-                    <tr>
-                        <td class="date text-nowrap text-center">${index + 1}</td>
-                        <td>${pasien.nama_pasien}</td>
-                        <td class="text-nowrap">${jenis_kelamin}</td>
-                        <td class="date text-nowrap">${pasien.no_rm}</td>
-                        <td class="date text-nowrap">${pasien.nomor_registrasi}</td>
-                        <td>${pasien.tempat_lahir}<br><small class="date text-nowrap">${pasien.tanggal_lahir} • ${usia.usia} tahun ${usia.bulan} bulan</small></td>
-                        <td class="date text-nowrap">${telpon}</td>
-                        <td>${pasien.alamat}</td>
-                        <td>${pasien.dokter}</td>
-                    </tr>
+                <div class="accordion-item shadow-sm">
+                    <div class="accordion-header">
+                        <button class="accordion-button px-3 py-2 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-${index + 1}" aria-expanded="false" aria-controls="collapse-${index + 1}">
+                            <table class="w-100">
+                                <tbody>
+                                    <tr>
+                                        <th class="align-top" style="width: 0%; min-width: 60.23px;">
+                                            <p class="mb-0" style="font-size: 1.5rem!important;">
+                                                <span class="badge text-bg-secondary bg-gradient rounded-3 d-grid" style="font-variant-numeric: tabular-nums;">${index + 1}</span>
+                                            </p>
+                                        </th>
+                                        <td class="align-top ps-2" style="width: 100%;">
+                                            <h5 class="card-title">${pasien.nama_pasien} ${jenis_kelamin}</h5>
+                                            <h6 class="card-subtitle text-muted">${pasien.dokter}</h6>
+                                            <p class="card-text text-muted"><small>${pasien.nomor_registrasi}</small></p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </button>
+                    </div>
+                    <div id="collapse-${index + 1}" class="accordion-collapse collapse" data-bs-parent="#datapasien">
+                        <div class="accordion-body px-3 py-2">
+                            <small class="date">
+                                Nomor Rekam Medis: ${pasien.no_rm}<br>
+                                Tempat Lahir: ${pasien.tempat_lahir}<br>
+                                Tanggal Lahir: ${pasien.tanggal_lahir}<br>
+                                Usia: ${usia.usia} tahun ${usia.bulan} bulan<br>
+                                Alamat: ${pasien.alamat}<br>
+                                Telepon: ${telpon}
+                            </small>
+                        </div>
+                    </div>
+                </div>
                 `;
                 $('#datapasien').append(pasienElement); // Menambahkan elemen pasien ke tabel
             });
