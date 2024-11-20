@@ -18,8 +18,8 @@
                     <li class="list-group-item border-top-0 bg-body-tertiary">
                         <div class="input-group input-group-sm">
                             <input type="date" id="tanggal" name="tanggal" class="form-control rounded-start-3">
-                            <button class="btn btn-danger bg-gradient" type="button" id="clearTglButton"><i class="fa-solid fa-xmark"></i></button>
-                            <button class="btn btn-success bg-gradient rounded-end-3" type="button" id="refreshButton" disabled><i class="fa-solid fa-sync"></i></button>
+                            <button class="btn btn-danger bg-gradient" type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
+                            <button class="btn btn-success bg-gradient rounded-end-3" type="button" id="refreshButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan" disabled><i class="fa-solid fa-sync"></i></button>
                         </div>
                     </li>
                 </ul>

@@ -17,7 +17,7 @@
                     <li class="list-group-item border-top-0 bg-body-tertiary">
                         <div class="input-group input-group-sm">
                             <input type="search" class="form-control form-control-sm rounded-start-3" id="externalSearch" placeholder="Cari nama tindakan">
-                            <button class="btn btn-success btn-sm bg-gradient rounded-end-3" type="button" id="refreshButton"><i class="fa-solid fa-sync"></i></button>
+                            <button class="btn btn-success btn-sm bg-gradient rounded-end-3" type="button" id="refreshButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan"><i class="fa-solid fa-sync"></i></button>
                         </div>
                     </li>
                 </ul>

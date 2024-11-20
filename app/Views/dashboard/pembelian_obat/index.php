@@ -21,11 +21,11 @@
                         <div class="d-flex flex-column flex-lg-row mb-1 gap-2 mb-2">
                             <div class="input-group input-group-sm">
                                 <input type="date" id="tanggalFilter" class="form-control rounded-start-3">
-                                <button class="btn btn-danger btn-sm bg-gradient rounded-end-3" type="button" id="clearTglButton"><i class="fa-solid fa-xmark"></i></button>
+                                <button class="btn btn-danger btn-sm bg-gradient rounded-end-3" type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
                             </div>
                             <div class="input-group input-group-sm flex-fill">
                                 <input type="search" id="searchInput" class="form-control rounded-start-3" placeholder="Cari merek dan nama supplier">
-                                <button class="btn btn-success btn-sm bg-gradient rounded-end-3" type="button" id="refreshButton"><i class="fa-solid fa-sync"></i></button>
+                                <button class="btn btn-success btn-sm bg-gradient rounded-end-3" type="button" id="refreshButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan"><i class="fa-solid fa-sync"></i></button>
                             </div>
                         </div>
                         <div class="accordion" id="accordionFilter" style="--bs-accordion-border-radius: var(--bs-border-radius-lg); --bs-accordion-inner-border-radius: calc(var(--bs-border-radius-lg) - (var(--bs-border-width)));">

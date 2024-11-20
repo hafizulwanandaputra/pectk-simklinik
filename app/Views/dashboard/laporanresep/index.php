@@ -23,13 +23,13 @@
                         </nav>
                         <div class="input-group input-group-sm" id="tanggal_form">
                             <input type="date" id="tanggal" name="tanggal" class="form-control rounded-start-3">
-                            <button class="btn btn-danger bg-gradient" type="button" id="clearTglButton"><i class="fa-solid fa-xmark"></i></button>
-                            <button class="btn btn-success bg-gradient rounded-end-3" type="button" id="refreshButton1" disabled><i class="fa-solid fa-sync"></i></button>
+                            <button class="btn btn-danger bg-gradient" type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
+                            <button class="btn btn-success bg-gradient rounded-end-3" type="button" id="refreshButton1" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan" disabled><i class="fa-solid fa-sync"></i></button>
                         </div>
                         <div class="input-group input-group-sm" id="bulan_form" style="display: none;">
                             <input type="month" id="bulan" name="bulan" class="form-control rounded-start-3">
-                            <button class="btn btn-danger bg-gradient" type="button" id="clearBlnButton"><i class="fa-solid fa-xmark"></i></button>
-                            <button class="btn btn-success bg-gradient rounded-end-3" type="button" id="refreshButton2" disabled><i class="fa-solid fa-sync"></i></button>
+                            <button class="btn btn-danger bg-gradient" type="button" id="clearBlnButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Bulan"><i class="fa-solid fa-xmark"></i></button>
+                            <button class="btn btn-success bg-gradient rounded-end-3" type="button" id="refreshButton2" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan" disabled><i class="fa-solid fa-sync"></i></button>
                         </div>
                     </li>
                 </ul>

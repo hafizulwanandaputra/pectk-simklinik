@@ -592,6 +592,15 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
             showSpinner(); // Menampilkan spinner saat pengguna meninggalkan halaman
         });
 
+        $('[data-bs-toggle="tooltip"]').each(function() {
+            const tooltip = new bootstrap.Tooltip(this);
+
+            // Dismiss the tooltip when the button is clicked
+            $(this).on('click', function() {
+                tooltip.hide();
+            });
+        });
+
         // Event listener untuk menangani klik pada tombol konfirmasi logout
         $(document).on('click', '#confirmLogout', function() {
             $('#logoutModal button').prop('disabled', true); // Nonaktifkan tombol logout
