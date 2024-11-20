@@ -90,9 +90,9 @@
                 </div>
             </fieldset>
 
-            <div class="row">
-                <div class="col-lg-6 add-forms">
-                    <fieldset id="tambahLayananContainer" class="border rounded-3 px-2 py-0 h-100" style="display: none;">
+            <div class="row gy-3 mb-2">
+                <div class="col-lg-6 d-flex flex-column">
+                    <fieldset id="tambahLayananContainer" class="border rounded-3 px-2 py-0 mb-3" style="display: none;">
                         <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Tambah Tindakan</legend>
                         <form id="tambahLayanan" enctype="multipart/form-data">
                             <div class="mb-2">
@@ -118,9 +118,40 @@
                             </div>
                         </form>
                     </fieldset>
+                    <div class="card h-100">
+                        <div class="card-body p-0 m-0 table-responsive" style="overflow-y: auto; max-height: calc(100vh - 200px);">
+                            <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
+                                <thead>
+                                    <tr class="align-middle">
+                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Tindakan</th>
+                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">Nama Tindakan</th>
+                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Qty</th>
+                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Harga</th>
+                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Diskon</th>
+                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Pembayaran</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="align-top" id="list_layanan">
+                                    <tr>
+                                        <td colspan="6" class="text-center">Memuat detail transaksi...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="card-footer">
+                            <div class="row d-flex align-items-end">
+                                <div class="col fw-medium text-nowrap">Sub Total</div>
+                                <div class="col text-end">
+                                    <div class="date text-nowrap placeholder-glow" id="subtotal_layanan">
+                                        <span class="placeholder w-100"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-lg-6 add-forms">
-                    <fieldset id="tambahObatAlkesContainer" class="border rounded-3 px-2 py-0 h-100" style="display: none;">
+                <div class="col-lg-6 d-flex flex-column">
+                    <fieldset id="tambahObatAlkesContainer" class="border rounded-3 px-2 py-0 mb-3" style="display: none;">
                         <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Tambah Obat dan Alkes</legend>
                         <form id="tambahObatAlkes" enctype="multipart/form-data">
                             <div class="mb-2">
@@ -142,76 +173,70 @@
                             </div>
                         </form>
                     </fieldset>
+                    <div class="card h-100">
+                        <div class="card-body p-0 m-0 table-responsive" style="overflow-y: auto; max-height: calc(100vh - 200px);">
+                            <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
+                                <thead>
+                                    <tr class="align-middle">
+                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Tindakan</th>
+                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">Nama Obat dan Alkes</th>
+                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Harga</th>
+                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Diskon</th>
+                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Pembayaran</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="align-top" id="list_obat_alkes">
+                                    <tr>
+                                        <td colspan="5" class="text-center">Memuat detail transaksi...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="card-footer">
+                            <div class="row d-flex align-items-end">
+                                <div class="col fw-medium text-nowrap">Sub Total</div>
+                                <div class="col text-end">
+                                    <div class="date text-nowrap placeholder-glow" id="subtotal_obat_alkes">
+                                        <span class="placeholder w-100"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="table-responsive">
-                <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
-                    <thead>
-                        <tr class="align-middle">
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Tindakan</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">Nama Tindakan</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Qty</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Harga</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Diskon</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Pembayaran</th>
-                        </tr>
-                    </thead>
-                    <tbody class="align-top" id="list_layanan">
-                        <tr>
-                            <td colspan="6" class="text-center">Memuat detail transaksi...</td>
-                        </tr>
-                    </tbody>
-                    <tbody>
-                        <tr>
-                            <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 2px;" colspan="5">Sub Total</th>
-                            <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="subtotal_layanan"></th>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="mb-2 row d-flex align-items-end">
+                <div class="col fw-medium text-nowrap">Grand Total</div>
+                <div class="col text-end">
+                    <div class="fs-4 date text-nowrap placeholder-glow" style="font-weight: 900;" id="total_pembayaran">
+                        <span class="placeholder w-100"></span>
+                    </div>
+                </div>
             </div>
-
-            <div class="my-3"></div>
-
-            <div class="table-responsive">
-                <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
-                    <thead>
-                        <tr class="align-middle">
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Tindakan</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">Nama Obat dan Alkes</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Harga</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Diskon</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Pembayaran</th>
-                        </tr>
-                    </thead>
-                    <tbody class="align-top" id="list_obat_alkes">
-                        <tr>
-                            <td colspan="5" class="text-center">Memuat detail transaksi...</td>
-                        </tr>
-                    </tbody>
-                    <tbody>
-                        <tr>
-                            <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 2px;" colspan="4">Sub Total</th>
-                            <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="subtotal_obat_alkes"></th>
-                        </tr>
-                        <tr>
-                            <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 0px;" colspan="4">Grand Total</th>
-                            <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 0px;" id="total_pembayaran"></th>
-                        </tr>
-                        <tr>
-                            <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 0px;" colspan="4">Terima Uang</th>
-                            <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 0px;" id="terima_uang_table"></th>
-                        </tr>
-                        <tr>
-                            <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 0px;" colspan="4">Uang Kembali</th>
-                            <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 0px;" id="uang_kembali_table"></th>
-                        </tr>
-                        <tr>
-                            <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 0px;" colspan="4">Metode Bayar</th>
-                            <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 0px;" id="metode_pembayaran_table"></th>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="mb-2 row d-flex align-items-end">
+                <div class="col fw-medium text-nowrap">Terima Uang</div>
+                <div class="col text-end">
+                    <div class="date text-nowrap placeholder-glow" id="terima_uang_table">
+                        <span class="placeholder w-100"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-2 row d-flex align-items-end">
+                <div class="col fw-medium text-nowrap">Uang Kembali</div>
+                <div class="col text-end">
+                    <div class="date text-nowrap placeholder-glow" id="uang_kembali_table">
+                        <span class="placeholder w-100"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-2 row d-flex align-items-end">
+                <div class="col fw-medium text-nowrap">Metode Bayar</div>
+                <div class="col text-end">
+                    <div class="date text-nowrap placeholder-glow" id="metode_pembayaran_table">
+                        <span class="placeholder w-100"></span>
+                    </div>
+                </div>
             </div>
 
             <div id="prosesTransaksi">
@@ -447,12 +472,12 @@
             const total_pembayaran = parseInt(data.total_pembayaran);
             const terima_uang = parseInt(data.terima_uang);
             const uang_kembali = parseInt(data.uang_kembali);
-            const bank = data.bank ? ` (${data.bank})` : ``;
+            const bank = data.bank ? ` (${data.bank})` : `<em>Belum ada</em>`;
 
             $('#total_pembayaran').text(`Rp${total_pembayaran.toLocaleString('id-ID')}`);
             $('#terima_uang_table').text(`Rp${terima_uang.toLocaleString('id-ID')}`);
             $('#uang_kembali_table').text(`Rp${uang_kembali.toLocaleString('id-ID')}`);
-            $('#metode_pembayaran_table').text(data.metode_pembayaran + bank);
+            $('#metode_pembayaran_table').html(data.metode_pembayaran + bank);
             $('#total_pembayaran_modal').text(`Rp${total_pembayaran.toLocaleString('id-ID')}`);
 
             if (data.dokter === "Resep Luar") {
@@ -462,13 +487,11 @@
 
             // Cek status `lunas`
             if (data.lunas === "1") {
-                $('div.add-forms').removeClass('mb-3');
                 $('#tambahLayananContainer').hide();
                 $('#tambahObatAlkesContainer').hide();
                 $('#printBtn').prop('disabled', false);
                 $('#cancelBtn').prop('disabled', false);
             } else if (data.lunas === "0") {
-                $('div.add-forms').addClass('mb-3');
                 $('#tambahLayananContainer').show();
                 $('#tambahObatAlkesContainer').show();
                 $('#printBtn').prop('disabled', true);
