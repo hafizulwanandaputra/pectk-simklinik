@@ -349,10 +349,10 @@
                         <div class="d-flex">
                             <div class="align-self-center w-100">
                                 <h5 class="card-title">
-                                    [<span class="date" style="font-weight: 900;">${transaksi.number}</span>] ${nama_pasien} ${jenisResep}
+                                    [<span class="date" style="font-weight: 900;">${transaksi.number}</span>] ${nama_pasien}
                                 </h5>
                                 <h6 class="card-subtitle mb-2">
-                                    ${transaksi.kasir}
+                                    ${transaksi.kasir}<br>${jenisResep}
                                 </h6>
                                 <p class="card-text">
                                     <small class="date">
