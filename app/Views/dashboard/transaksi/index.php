@@ -349,7 +349,7 @@
                         <div class="d-flex">
                             <div class="align-self-center w-100">
                                 <h5 class="card-title">
-                                    ${nama_pasien} ${jenisResep}
+                                    [<span class="date" style="font-weight: 900;">${transaksi.number}</span>] ${nama_pasien} ${jenisResep}
                                 </h5>
                                 <h6 class="card-subtitle mb-2">
                                     ${transaksi.kasir}

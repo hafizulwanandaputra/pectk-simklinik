@@ -269,7 +269,7 @@
                 <div class="d-flex">
                     <div class="align-self-center w-100">
                         <h5 class="card-title">
-                            ${merek} • ${pembelian_obat.supplier_nama_supplier}
+                            [<span class="date" style="font-weight: 900;">${pembelian_obat.number}</span>] ${merek} • ${pembelian_obat.supplier_nama_supplier}
                         </h5>
                         <h6 class="card-subtitle mb-2">
                             ${pembelian_obat.apoteker}

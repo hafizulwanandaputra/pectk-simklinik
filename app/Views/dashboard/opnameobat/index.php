@@ -185,7 +185,7 @@
                 <div class="d-flex">
                     <div class="align-self-center w-100">
                         <h5 class="card-title date">
-                            ${opname_obat.tanggal}
+                            [<span class="date" style="font-weight: 900;">${opname_obat.number}</span>] ${opname_obat.tanggal}
                         </h5>
                         <h6 class="card-subtitle mb-2">
                             ${opname_obat.apoteker}

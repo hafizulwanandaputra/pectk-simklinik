@@ -470,7 +470,7 @@
             const total_pembayaran = parseInt(data.total_pembayaran);
             const terima_uang = parseInt(data.terima_uang);
             const uang_kembali = parseInt(data.uang_kembali);
-            const bank = data.bank ? ` (${data.bank})` : `<em>Belum ada</em>`;
+            const bank = data.bank ? ` (${data.bank})` : ``;
 
             $('#total_pembayaran').text(`Rp${total_pembayaran.toLocaleString('id-ID')}`);
             $('#terima_uang_table').text(`Rp${terima_uang.toLocaleString('id-ID')}`);

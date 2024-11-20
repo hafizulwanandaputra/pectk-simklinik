@@ -1,7 +1,7 @@
 <?= $this->extend('dashboard/templates/dashboard'); ?>
 <?= $this->section('title'); ?>
 <div class="d-flex justify-content-start align-items-center">
-    <span class="fw-medium fs-5 flex-fill text-truncate"><?= $headertitle; ?></span>
+    <span class="fw-medium fs-5 flex-fill text-truncate"><?= $headertitle; ?> <span id="total_rajal" class="date"></span></span>
     <div id="loadingSpinner" class="spinner-border spinner-border-sm" role="status">
         <span class="visually-hidden">Loading...</span>
     </div>
@@ -106,6 +106,7 @@
                     </div>
                 `;
                 $('#datapasien').append(emptyRow); // Menambahkan baris kosong ke tabel
+                $('#total_rajal').text(''); // Kosongkan total
                 return; // Keluar dari fungsi
             }
 
@@ -115,6 +116,7 @@
 
             $('#datapasien').empty(); // Kosongkan tabel pasien
             $('#refreshButton').prop('disabled', false); // Aktifkan tombol refresh
+            $('#total_rajal').text(`(${data.length})`); // Jumlah data
 
             // Cek apakah data pasien kosong
             if (data.length === 0) {
@@ -150,22 +152,11 @@
                 <div class="accordion-item shadow-sm">
                     <div class="accordion-header">
                         <button class="accordion-button px-3 py-2 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-${index + 1}" aria-expanded="false" aria-controls="collapse-${index + 1}">
-                            <table class="w-100">
-                                <tbody>
-                                    <tr>
-                                        <th class="align-top" style="width: 0%; min-width: 60.23px;">
-                                            <p class="mb-0" style="font-size: 1.5rem!important;">
-                                                <span class="badge text-bg-secondary bg-gradient rounded-3 d-grid" style="font-variant-numeric: tabular-nums;">${index + 1}</span>
-                                            </p>
-                                        </th>
-                                        <td class="align-top ps-2" style="width: 100%;">
-                                            <h5 class="card-title">${pasien.nama_pasien} ${jenis_kelamin}</h5>
-                                            <h6 class="card-subtitle text-muted">${pasien.dokter}</h6>
-                                            <p class="card-text text-muted"><small>${pasien.nomor_registrasi}</small></p>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <div>
+                                <h5 class="card-title">[<span class="date" style="font-weight: 900;">${index + 1}</span>] ${pasien.nama_pasien} ${jenis_kelamin}</h5>
+                                <h6 class="card-subtitle text-muted">${pasien.dokter}</h6>
+                                <p class="card-text text-muted"><small>${pasien.nomor_registrasi}</small></p>
+                            </div>
                         </button>
                     </div>
                     <div id="collapse-${index + 1}" class="accordion-collapse collapse" data-bs-parent="#datapasien">
@@ -188,9 +179,9 @@
             // Menangani error jika permintaan gagal
             console.error(error.response.data.error); // Menampilkan error di konsol
             const errorRow = `
-                <tr>
-                    <td colspan="9" class="text-center">${error.response.data.error}</td>
-                </tr>
+                <div class="accordion-item shadow-sm p-3 p-3">
+                    <h2 class="text-center text-danger mb-0" style="font-weight: 300;">${error.response.data.error}</h2>
+                </div>
             `;
             $('#datapasien').empty(); // Kosongkan tabel pasien
             $('#datapasien').append(errorRow); // Menambahkan baris error ke tabel
