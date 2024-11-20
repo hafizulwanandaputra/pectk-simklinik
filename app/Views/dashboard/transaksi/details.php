@@ -92,7 +92,7 @@
 
             <div class="row gy-3 mb-2">
                 <div class="col-lg-6">
-                    <div class="card h-100 shadow-sm">
+                    <div class="card h-100 shadow-sm rounded-3 overflow-auto">
                         <div class="card-header" id="tambahLayananContainer" style="display: none;">
                             <form id="tambahLayanan" enctype="multipart/form-data">
                                 <div class="mb-2">
@@ -150,7 +150,7 @@
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <div class="card h-100 shadow-sm">
+                    <div class="card h-100 shadow-sm rounded-3 overflow-auto">
                         <div class="card-header" id="tambahObatAlkesContainer" style="display: none;">
                             <form id="tambahObatAlkes" enctype="multipart/form-data">
                                 <div class="mb-2">

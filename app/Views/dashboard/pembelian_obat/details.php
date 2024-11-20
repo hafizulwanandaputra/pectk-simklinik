@@ -70,7 +70,7 @@
                 </div>
             </fieldset>
 
-            <div class="card shadow-sm">
+            <div class="card shadow-sm rounded-3 overflow-auto">
                 <div class="card-header" id="tambahDetailContainer" style="display: none;">
                     <form id="tambahDetail" enctype="multipart/form-data">
                         <div class="mb-2">
