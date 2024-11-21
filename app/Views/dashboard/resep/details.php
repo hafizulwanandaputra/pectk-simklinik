@@ -423,7 +423,9 @@
                 if (hasExternalMedicine) {
                     $('#printBtn2').prop('disabled', false);
                 }
-                $('#printBtn3').prop('disabled', false);
+                if (hasInternalMedicine || hasExternalMedicine) {
+                    $('#printBtn3').prop('disabled', false);
+                }
             } else {
                 $('#printBtn1').prop('disabled', true);
                 $('#printBtn2').prop('disabled', true);
