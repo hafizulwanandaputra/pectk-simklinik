@@ -1,6 +1,19 @@
 <?= $this->extend('dashboard/templates/dashboard'); ?>
 <?= $this->section('css'); ?>
 <?= $this->include('select2/normal'); ?>
+<style>
+    /* Ensures the dropdown is visible outside the parent with overflow auto */
+    .select2-container {
+        z-index: 1050;
+        /* Make sure it's above other elements, like modals */
+    }
+
+    .select2-dropdown {
+        position: absolute !important;
+        /* Ensures placement isn't affected by overflow */
+        z-index: 1050;
+    }
+</style>
 <?= $this->endSection(); ?>
 <?= $this->section('title'); ?>
 <div class="d-flex justify-content-start align-items-center">
@@ -698,13 +711,13 @@
     $(document).ready(function() {
         $('[data-bs-toggle="tooltip"]').tooltip();
         $('#id_layanan').select2({
-            dropdownParent: $('#tambahLayanan'),
+            dropdownParent: $(document.body),
             theme: "bootstrap-5",
             width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
             placeholder: $(this).data('placeholder'),
         });
         $('#id_resep').select2({
-            dropdownParent: $('#tambahObatAlkes'),
+            dropdownParent: $(document.body),
             theme: "bootstrap-5",
             width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
             placeholder: $(this).data('placeholder'),
