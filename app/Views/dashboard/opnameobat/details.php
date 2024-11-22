@@ -38,21 +38,23 @@
                 </div>
             </fieldset>
 
-            <div class="table-responsive card shadow-sm rounded-3">
-                <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
-                    <thead>
-                        <tr class="align-middle">
-                            <th scope="col" class="bg-body-secondary border-secondary text-nowrap tindakan" style="border-bottom-width: 2px; width: 0%;">No</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">Nama Obat</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Sisa Stok</th>
-                        </tr>
-                    </thead>
-                    <tbody class="align-top" id="detail_opname_obat">
-                        <tr>
-                            <td colspan="3" class="text-center">Memuat detail obat...</td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="card shadow-sm rounded-3">
+                <div class="table-responsive">
+                    <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
+                        <thead>
+                            <tr class="align-middle">
+                                <th scope="col" class="bg-body-secondary border-secondary text-nowrap tindakan" style="border-bottom-width: 2px; width: 0%;">No</th>
+                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">Nama Obat</th>
+                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Sisa Stok</th>
+                            </tr>
+                        </thead>
+                        <tbody class="align-top" id="detail_opname_obat">
+                            <tr>
+                                <td colspan="3" class="text-center">Memuat detail obat...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
                 <div class="card-footer bg-body-tertiary">
                     <div class="row d-flex align-items-end">
                         <div class="col fw-medium text-nowrap">Total</div>

@@ -30,27 +30,29 @@
         <div class="d-xxl-flex justify-content-center">
             <div class="no-fluid-content">
                 <div class="mb-3">
-                    <div class="table-responsive card shadow-sm rounded-3">
-                        <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
-                            <thead>
-                                <tr class="align-middle">
-                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">No</th>
-                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Nomor Kuitansi</th>
-                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 12.5%;">Kasir</th>
-                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Nomor Rekam Medis</th>
-                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 12.5%;">Nama Pasien</th>
-                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Metode Pembayaran</th>
-                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 12.5%;">Dokter</th>
-                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 12.5%;">Tindakan</th>
-                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Kas</th>
-                                </tr>
-                            </thead>
-                            <tbody class="align-top" id="datatransaksi">
-                                <tr>
-                                    <td colspan="9" class="text-center" style="cursor: wait;">Memuat data transaksi...</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                    <div class="card shadow-sm rounded-3">
+                        <div class="table-responsive">
+                            <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
+                                <thead>
+                                    <tr class="align-middle">
+                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">No</th>
+                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Nomor Kuitansi</th>
+                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 12.5%;">Kasir</th>
+                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Nomor Rekam Medis</th>
+                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 12.5%;">Nama Pasien</th>
+                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Metode Pembayaran</th>
+                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 12.5%;">Dokter</th>
+                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 12.5%;">Tindakan</th>
+                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Kas</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="align-top" id="datatransaksi">
+                                    <tr>
+                                        <td colspan="9" class="text-center" style="cursor: wait;">Memuat data transaksi...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                         <div class="card-footer bg-body-tertiary">
                             <div class="row d-flex align-items-end">
                                 <div class="col fw-medium text-nowrap">Total Pemasukan</div>

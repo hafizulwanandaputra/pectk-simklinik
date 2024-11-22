@@ -53,24 +53,26 @@
                                     <?php endforeach; ?>
                                 </div>
                             </fieldset>
-                            <div class="table-responsive card shadow-sm rounded-3">
-                                <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
-                                    <thead>
-                                        <tr class="align-middle">
-                                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">No</th>
-                                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 50%;">Dokter</th>
-                                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 50%;">Nama Obat</th>
-                                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Harga Satuan</th>
-                                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Obat Keluar</th>
-                                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Harga</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="align-top" id="resepharian">
-                                        <tr>
-                                            <td colspan="6" class="text-center" style="cursor: wait;">Memuat data resep...</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                            <div class="card shadow-sm rounded-3">
+                                <div class="table-responsive">
+                                    <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
+                                        <thead>
+                                            <tr class="align-middle">
+                                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">No</th>
+                                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 50%;">Dokter</th>
+                                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 50%;">Nama Obat</th>
+                                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Harga Satuan</th>
+                                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Obat Keluar</th>
+                                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Harga</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="align-top" id="resepharian">
+                                            <tr>
+                                                <td colspan="6" class="text-center" style="cursor: wait;">Memuat data resep...</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                                 <div class="card-footer bg-body-tertiary">
                                     <div class="row d-flex align-items-end">
                                         <div class="col fw-medium text-nowrap">Total Obat Keluar</div>
@@ -109,25 +111,27 @@
                                     <?php endforeach; ?>
                                 </div>
                             </fieldset>
-                            <div class="table-responsive card shadow-sm rounded-3">
-                                <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
-                                    <thead>
-                                        <tr class="align-middle">
-                                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">No</th>
-                                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Tanggal</th>
-                                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 50%;">Dokter</th>
-                                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 50%;">Nama Obat</th>
-                                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Harga Satuan</th>
-                                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Obat Keluar</th>
-                                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Harga</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="align-top" id="resepbulanan">
-                                        <tr>
-                                            <td colspan="7" class="text-center" style="cursor: wait;">Memuat data resep...</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                            <div class="card shadow-sm rounded-3">
+                                <div class="table-responsive">
+                                    <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
+                                        <thead>
+                                            <tr class="align-middle">
+                                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">No</th>
+                                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Tanggal</th>
+                                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 50%;">Dokter</th>
+                                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 50%;">Nama Obat</th>
+                                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Harga Satuan</th>
+                                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Obat Keluar</th>
+                                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Harga</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="align-top" id="resepbulanan">
+                                            <tr>
+                                                <td colspan="7" class="text-center" style="cursor: wait;">Memuat data resep...</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                                 <div class="card-footer bg-body-tertiary">
                                     <div class="row d-flex align-items-end">
                                         <div class="col fw-medium text-nowrap">Total Obat Keluar</div>
