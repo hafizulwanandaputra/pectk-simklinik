@@ -14,61 +14,57 @@
     <div class="sticky-top" style="z-index: 99;">
         <ul class="list-group shadow-sm rounded-0 mb-2">
             <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-tertiary transparent-blur">
-                <div class="d-xxl-flex justify-content-center">
-                    <div class="no-fluid-content">
-                        <div class="input-group input-group-sm">
-                            <input type="date" id="tanggal" name="tanggal" class="form-control rounded-start-3">
-                            <button class="btn btn-danger bg-gradient" type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
-                            <button class="btn btn-success bg-gradient rounded-end-3" type="button" id="refreshButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan" disabled><i class="fa-solid fa-sync"></i></button>
-                        </div>
+                <div class="no-fluid-content">
+                    <div class="input-group input-group-sm">
+                        <input type="date" id="tanggal" name="tanggal" class="form-control rounded-start-3">
+                        <button class="btn btn-danger bg-gradient" type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
+                        <button class="btn btn-success bg-gradient rounded-end-3" type="button" id="refreshButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan" disabled><i class="fa-solid fa-sync"></i></button>
                     </div>
                 </div>
             </li>
         </ul>
     </div>
     <div class="px-3">
-        <div class="d-xxl-flex justify-content-center">
-            <div class="no-fluid-content">
-                <div class="mb-3">
-                    <div class="card shadow-sm rounded-3">
-                        <div class="table-responsive">
-                            <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
-                                <thead>
-                                    <tr class="align-middle">
-                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">No</th>
-                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Nomor Kuitansi</th>
-                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 12.5%;">Kasir</th>
-                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Nomor Rekam Medis</th>
-                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 12.5%;">Nama Pasien</th>
-                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Metode Pembayaran</th>
-                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 12.5%;">Dokter</th>
-                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 12.5%;">Tindakan</th>
-                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Kas</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="align-top" id="datatransaksi">
-                                    <tr>
-                                        <td colspan="9" class="text-center" style="cursor: wait;">Memuat data transaksi...</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="card-footer bg-body-tertiary">
-                            <div class="row d-flex align-items-end">
-                                <div class="col fw-medium text-nowrap">Total Pemasukan</div>
-                                <div class="col text-end">
-                                    <div class="date text-nowrap placeholder-glow fw-bold" id="total_all">
-                                        <span class="placeholder w-100"></span>
-                                    </div>
+        <div class="no-fluid-content">
+            <div class="mb-3">
+                <div class="card shadow-sm rounded-3">
+                    <div class="table-responsive">
+                        <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
+                            <thead>
+                                <tr class="align-middle">
+                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">No</th>
+                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Nomor Kuitansi</th>
+                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 12.5%;">Kasir</th>
+                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Nomor Rekam Medis</th>
+                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 12.5%;">Nama Pasien</th>
+                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Metode Pembayaran</th>
+                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 12.5%;">Dokter</th>
+                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 12.5%;">Tindakan</th>
+                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Kas</th>
+                                </tr>
+                            </thead>
+                            <tbody class="align-top" id="datatransaksi">
+                                <tr>
+                                    <td colspan="9" class="text-center" style="cursor: wait;">Memuat data transaksi...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-footer bg-body-tertiary">
+                        <div class="row d-flex align-items-end">
+                            <div class="col fw-medium text-nowrap">Total Pemasukan</div>
+                            <div class="col text-end">
+                                <div class="date text-nowrap placeholder-glow fw-bold" id="total_all">
+                                    <span class="placeholder w-100"></span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div id="reportBtns" style="display: none;">
-                        <hr>
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
-                            <button class="btn btn-success rounded-3 bg-gradient" type="button" id="reportBtn" onclick="downloadReport()"><i class="fa-solid fa-file-excel"></i> Buat Laporan (Excel)</button>
-                        </div>
+                </div>
+                <div id="reportBtns" style="display: none;">
+                    <hr>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
+                        <button class="btn btn-success rounded-3 bg-gradient" type="button" id="reportBtn" onclick="downloadReport()"><i class="fa-solid fa-file-excel"></i> Buat Laporan (Excel)</button>
                     </div>
                 </div>
             </div>

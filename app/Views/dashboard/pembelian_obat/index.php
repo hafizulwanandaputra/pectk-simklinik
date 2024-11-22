@@ -16,38 +16,36 @@
     <div class="sticky-top" style="z-index: 99;">
         <ul class="list-group shadow-sm rounded-0 mb-2">
             <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-tertiary transparent-blur">
-                <div class="d-xxl-flex justify-content-center">
-                    <div class="no-fluid-content">
-                        <div class="d-flex flex-column flex-lg-row mb-1 gap-2 mb-2">
-                            <div class="input-group input-group-sm">
-                                <input type="date" id="tanggalFilter" class="form-control rounded-start-3">
-                                <button class="btn btn-danger btn-sm bg-gradient rounded-end-3" type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
-                            </div>
-                            <div class="input-group input-group-sm flex-fill">
-                                <input type="search" id="searchInput" class="form-control rounded-start-3" placeholder="Cari merek dan nama supplier">
-                                <button class="btn btn-success btn-sm bg-gradient rounded-end-3" type="button" id="refreshButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan"><i class="fa-solid fa-sync"></i></button>
-                            </div>
+                <div class="no-fluid-content">
+                    <div class="d-flex flex-column flex-lg-row mb-1 gap-2 mb-2">
+                        <div class="input-group input-group-sm">
+                            <input type="date" id="tanggalFilter" class="form-control rounded-start-3">
+                            <button class="btn btn-danger btn-sm bg-gradient rounded-end-3" type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
                         </div>
-                        <div class="accordion" id="accordionFilter" style="--bs-accordion-border-radius: var(--bs-border-radius-lg); --bs-accordion-inner-border-radius: calc(var(--bs-border-radius-lg) - (var(--bs-border-width)));">
-                            <div class="accordion-item">
-                                <h2 class="accordion-header">
-                                    <button class="accordion-button p-2 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFilter" aria-expanded="false" aria-controls="collapseFilter">
-                                        Pencarian Tambahan
-                                    </button>
-                                </h2>
-                                <div id="collapseFilter" class="accordion-collapse collapse" data-bs-parent="#accordionFilter">
-                                    <div class="accordion-body px-2 py-1">
-                                        <div class="d-flex flex-column flex-lg-row mb-1 gap-1 my-1">
-                                            <select id="statusFilter" class="form-select form-select-sm w-auto rounded-3 flex-fill">
-                                                <option value="">Semua Status Terima</option>
-                                                <option value="1">Diterima</option>
-                                                <option value="0">Belum Diterima</option>
-                                            </select>
-                                        </div>
-                                        <select id="apotekerFilter" class="form-select form-select-sm rounded-3 my-1">
-                                            <option value="">Semua Apoteker</option>
+                        <div class="input-group input-group-sm flex-fill">
+                            <input type="search" id="searchInput" class="form-control rounded-start-3" placeholder="Cari merek dan nama supplier">
+                            <button class="btn btn-success btn-sm bg-gradient rounded-end-3" type="button" id="refreshButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan"><i class="fa-solid fa-sync"></i></button>
+                        </div>
+                    </div>
+                    <div class="accordion" id="accordionFilter" style="--bs-accordion-border-radius: var(--bs-border-radius-lg); --bs-accordion-inner-border-radius: calc(var(--bs-border-radius-lg) - (var(--bs-border-width)));">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button p-2 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFilter" aria-expanded="false" aria-controls="collapseFilter">
+                                    Pencarian Tambahan
+                                </button>
+                            </h2>
+                            <div id="collapseFilter" class="accordion-collapse collapse" data-bs-parent="#accordionFilter">
+                                <div class="accordion-body px-2 py-1">
+                                    <div class="d-flex flex-column flex-lg-row mb-1 gap-1 my-1">
+                                        <select id="statusFilter" class="form-select form-select-sm w-auto rounded-3 flex-fill">
+                                            <option value="">Semua Status Terima</option>
+                                            <option value="1">Diterima</option>
+                                            <option value="0">Belum Diterima</option>
                                         </select>
                                     </div>
+                                    <select id="apotekerFilter" class="form-select form-select-sm rounded-3 my-1">
+                                        <option value="">Semua Apoteker</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -57,66 +55,64 @@
         </ul>
     </div>
     <div class="px-3">
-        <div class="d-xxl-flex justify-content-center">
-            <div class="no-fluid-content">
-                <div class="shadow-sm rounded-3">
-                    <div class="d-grid gap-2">
-                        <button class="btn btn-primary btn-sm bg-gradient rounded-top-3 rounded-bottom-0" type="button" data-bs-toggle="collapse" data-bs-target="#pembelianObatFormContainter" aria-expanded="false" aria-controls="pembelianObatFormContainter">
-                            <i class="fa-solid fa-plus"></i> Tambah Pembelian Obat
-                        </button>
-                    </div>
-                    <ul id="pembelianObatFormContainter" class="list-group rounded-0 collapse">
-                        <li class="list-group-item border-top-0 border-bottom-0 bg-body-tertiary">
-                            <form id="pembelianObatForm" enctype="multipart/form-data" class="d-flex flex-column gap-2">
-                                <div class="flex-fill">
-                                    <select class="form-select rounded-3" id="id_supplier" name="id_supplier" aria-label="id_supplier">
-                                        <option value="" disabled selected>-- Pilih Supplier --</option>
-                                    </select>
-                                    <div class="invalid-feedback"></div>
-                                </div>
-                                <div class="d-grid gap-2 d-md-flex justify-content-md-end" id="submitButtonContainer">
-                                    <button type="submit" id="submitButton" class="btn btn-primary bg-gradient rounded-3" disabled>
-                                        <i class="fa-solid fa-plus"></i> Tambah
-                                    </button>
-                                </div>
-                            </form>
-                        </li>
-                    </ul>
-                    <ul id="pembelianObatContainer" class="list-group rounded-top-0 rounded-bottom-3">
-                        <?php for ($i = 0; $i < 12; $i++) : ?>
-                            <li class="list-group-item bg-body-tertiary pb-3 pt-3" style="cursor: wait;">
-                                <div class="d-flex">
-                                    <div class="align-self-center w-100">
-                                        <h5 class="card-title placeholder-glow">
-                                            <span class="placeholder" style="width: 100%"></span>
-                                        </h5>
-                                        <h6 class="card-subtitle mb-2 placeholder-glow">
-                                            <span class="placeholder" style="width: 25%;"></span>
-                                        </h6>
-                                        <p class="card-text placeholder-glow">
-                                            <small>
-                                                <span class="placeholder" style="width: 12.5%;"></span><br>
-                                                <span class="placeholder" style="width: 12.5%;"></span><br>
-                                                <span class="placeholder" style="width: 12.5%;"></span><br>
-                                                <span class="placeholder" style="width: 12.5%;"></span><br>
-                                                <span class="placeholder" style="width: 9%;"></span>
-                                            </small>
-                                        </p>
-                                    </div>
-                                </div>
-                                <hr>
-                                <div class="d-grid gap-2 d-flex justify-content-end">
-                                    <a class="btn btn-body bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
-                                    <a class="btn btn-danger bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
-                                </div>
-                            </li>
-                        <?php endfor; ?>
-                    </ul>
+        <div class="no-fluid-content">
+            <div class="shadow-sm rounded-3">
+                <div class="d-grid gap-2">
+                    <button class="btn btn-primary btn-sm bg-gradient rounded-top-3 rounded-bottom-0" type="button" data-bs-toggle="collapse" data-bs-target="#pembelianObatFormContainter" aria-expanded="false" aria-controls="pembelianObatFormContainter">
+                        <i class="fa-solid fa-plus"></i> Tambah Pembelian Obat
+                    </button>
                 </div>
-                <nav id="paginationNav" class="d-flex justify-content-center justify-content-lg-end mt-3 overflow-auto w-100">
-                    <ul class="pagination pagination-sm" style="--bs-pagination-border-radius: var(--bs-border-radius-lg);"></ul>
-                </nav>
+                <ul id="pembelianObatFormContainter" class="list-group rounded-0 collapse">
+                    <li class="list-group-item border-top-0 border-bottom-0 bg-body-tertiary">
+                        <form id="pembelianObatForm" enctype="multipart/form-data" class="d-flex flex-column gap-2">
+                            <div class="flex-fill">
+                                <select class="form-select rounded-3" id="id_supplier" name="id_supplier" aria-label="id_supplier">
+                                    <option value="" disabled selected>-- Pilih Supplier --</option>
+                                </select>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end" id="submitButtonContainer">
+                                <button type="submit" id="submitButton" class="btn btn-primary bg-gradient rounded-3" disabled>
+                                    <i class="fa-solid fa-plus"></i> Tambah
+                                </button>
+                            </div>
+                        </form>
+                    </li>
+                </ul>
+                <ul id="pembelianObatContainer" class="list-group rounded-top-0 rounded-bottom-3">
+                    <?php for ($i = 0; $i < 12; $i++) : ?>
+                        <li class="list-group-item bg-body-tertiary pb-3 pt-3" style="cursor: wait;">
+                            <div class="d-flex">
+                                <div class="align-self-center w-100">
+                                    <h5 class="card-title placeholder-glow">
+                                        <span class="placeholder" style="width: 100%"></span>
+                                    </h5>
+                                    <h6 class="card-subtitle mb-2 placeholder-glow">
+                                        <span class="placeholder" style="width: 25%;"></span>
+                                    </h6>
+                                    <p class="card-text placeholder-glow">
+                                        <small>
+                                            <span class="placeholder" style="width: 12.5%;"></span><br>
+                                            <span class="placeholder" style="width: 12.5%;"></span><br>
+                                            <span class="placeholder" style="width: 12.5%;"></span><br>
+                                            <span class="placeholder" style="width: 12.5%;"></span><br>
+                                            <span class="placeholder" style="width: 9%;"></span>
+                                        </small>
+                                    </p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="d-grid gap-2 d-flex justify-content-end">
+                                <a class="btn btn-body bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                                <a class="btn btn-danger bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                            </div>
+                        </li>
+                    <?php endfor; ?>
+                </ul>
             </div>
+            <nav id="paginationNav" class="d-flex justify-content-center justify-content-lg-end mt-3 overflow-auto w-100">
+                <ul class="pagination pagination-sm" style="--bs-pagination-border-radius: var(--bs-border-radius-lg);"></ul>
+            </nav>
         </div>
     </div>
     <div class="modal modal-sheet p-4 py-md-5 fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" role="dialog">

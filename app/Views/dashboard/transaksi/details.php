@@ -27,236 +27,234 @@
 <?= $this->endSection(); ?>
 <?= $this->section('content'); ?>
 <main class="col-md-9 ms-sm-auto col-lg-10 px-3 pt-3">
-    <div class="d-xxl-flex justify-content-center">
-        <div class="no-fluid-content">
-            <fieldset class="border rounded-3 px-2 py-0 mb-3">
-                <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Informasi Transaksi</legend>
-                <div class="row">
-                    <div class="col-lg-6" style="font-size: 9pt;">
-                        <div class="mb-2 row">
-                            <div class="col-lg-4 fw-medium">Nomor Rekam Medis</div>
-                            <div class="col-lg">
-                                <div class="date">
-                                    <?= ($transaksi['no_rm'] == NULL) ? '<em>Tidak ada</em>' : $transaksi['no_rm']; ?>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-2 row">
-                            <div class="col-lg-4 fw-medium">Nama Pasien</div>
-                            <div class="col-lg">
-                                <div>
-                                    <?= ($transaksi['nama_pasien'] == NULL) ? '<em>Anonim</em>' : $transaksi['nama_pasien']; ?>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-2 row">
-                            <div class="col-lg-4 fw-medium">Nomor HP</div>
-                            <div class="col-lg">
-                                <div class="date">
-                                    <?= ($transaksi['telpon'] == NULL) ? '<em>Tidak ada</em>' : $transaksi['telpon']; ?>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-2 row">
-                            <div class="col-lg-4 fw-medium">Alamat</div>
-                            <div class="col-lg">
-                                <div>
-                                    <?= ($transaksi['alamat'] == NULL) ? '<em>Tidak ada</em>' : $transaksi['alamat']; ?>
-                                </div>
+    <div class="no-fluid-content">
+        <fieldset class="border rounded-3 px-2 py-0 mb-3">
+            <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Informasi Transaksi</legend>
+            <div class="row">
+                <div class="col-lg-6" style="font-size: 9pt;">
+                    <div class="mb-2 row">
+                        <div class="col-lg-4 fw-medium">Nomor Rekam Medis</div>
+                        <div class="col-lg">
+                            <div class="date">
+                                <?= ($transaksi['no_rm'] == NULL) ? '<em>Tidak ada</em>' : $transaksi['no_rm']; ?>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-6" style="font-size: 9pt;">
-                        <div class="mb-2 row">
-                            <div class="col-lg-4 fw-medium">Nomor Kuitansi</div>
-                            <div class="col-lg">
-                                <div class="date">
-                                    <?= $transaksi['no_kwitansi'] ?>
-                                </div>
+                    <div class="mb-2 row">
+                        <div class="col-lg-4 fw-medium">Nama Pasien</div>
+                        <div class="col-lg">
+                            <div>
+                                <?= ($transaksi['nama_pasien'] == NULL) ? '<em>Anonim</em>' : $transaksi['nama_pasien']; ?>
                             </div>
                         </div>
-                        <div class="mb-2 row">
-                            <div class="col-lg-4 fw-medium">Tanggal dan Waktu</div>
-                            <div class="col-lg">
-                                <div class="date">
-                                    <?= $transaksi['tgl_transaksi'] ?>
-                                </div>
+                    </div>
+                    <div class="mb-2 row">
+                        <div class="col-lg-4 fw-medium">Nomor HP</div>
+                        <div class="col-lg">
+                            <div class="date">
+                                <?= ($transaksi['telpon'] == NULL) ? '<em>Tidak ada</em>' : $transaksi['telpon']; ?>
                             </div>
                         </div>
-                        <div class="mb-2 row">
-                            <div class="col-lg-4 fw-medium">Dokter</div>
-                            <div class="col-lg">
-                                <div>
-                                    <?= $transaksi['dokter'] ?>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-2 row">
-                            <div class="col-lg-4 fw-medium">Kasir</div>
-                            <div class="col-lg">
-                                <div>
-                                    <?= $transaksi['kasir'] ?>
-                                </div>
+                    </div>
+                    <div class="mb-2 row">
+                        <div class="col-lg-4 fw-medium">Alamat</div>
+                        <div class="col-lg">
+                            <div>
+                                <?= ($transaksi['alamat'] == NULL) ? '<em>Tidak ada</em>' : $transaksi['alamat']; ?>
                             </div>
                         </div>
                     </div>
                 </div>
-            </fieldset>
+                <div class="col-lg-6" style="font-size: 9pt;">
+                    <div class="mb-2 row">
+                        <div class="col-lg-4 fw-medium">Nomor Kuitansi</div>
+                        <div class="col-lg">
+                            <div class="date">
+                                <?= $transaksi['no_kwitansi'] ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-2 row">
+                        <div class="col-lg-4 fw-medium">Tanggal dan Waktu</div>
+                        <div class="col-lg">
+                            <div class="date">
+                                <?= $transaksi['tgl_transaksi'] ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-2 row">
+                        <div class="col-lg-4 fw-medium">Dokter</div>
+                        <div class="col-lg">
+                            <div>
+                                <?= $transaksi['dokter'] ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-2 row">
+                        <div class="col-lg-4 fw-medium">Kasir</div>
+                        <div class="col-lg">
+                            <div>
+                                <?= $transaksi['kasir'] ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
 
-            <div class="row gy-3 mb-2">
-                <div class="col-lg-6">
-                    <div class="card h-100 shadow-sm rounded-3 overflow-auto">
-                        <div class="card-header bg-body-tertiary" id="tambahLayananContainer" style="display: none;">
-                            <form id="tambahLayanan" enctype="multipart/form-data">
-                                <div class="mb-2">
-                                    <select class="form-select rounded-3 form-tindakan" id="id_layanan" name="id_layanan" aria-label="id_layanan">
-                                        <option value="" disabled selected>-- Pilih Tindakan --</option>
-                                    </select>
+        <div class="row gy-3 mb-2">
+            <div class="col-lg-6">
+                <div class="card h-100 shadow-sm rounded-3 overflow-auto">
+                    <div class="card-header bg-body-tertiary" id="tambahLayananContainer" style="display: none;">
+                        <form id="tambahLayanan" enctype="multipart/form-data">
+                            <div class="mb-2">
+                                <select class="form-select rounded-3 form-tindakan" id="id_layanan" name="id_layanan" aria-label="id_layanan">
+                                    <option value="" disabled selected>-- Pilih Tindakan --</option>
+                                </select>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="d-flex flex-column flex-lg-row gap-2">
+                                <div class="flex-fill">
+                                    <input type="number" id="qty_transaksi" name="qty_transaksi" class="form-control rounded-3 form-tindakan" placeholder="Qty" autocomplete="off">
                                     <div class="invalid-feedback"></div>
                                 </div>
-                                <div class="d-flex flex-column flex-lg-row gap-2">
-                                    <div class="flex-fill">
-                                        <input type="number" id="qty_transaksi" name="qty_transaksi" class="form-control rounded-3 form-tindakan" placeholder="Qty" autocomplete="off">
-                                        <div class="invalid-feedback"></div>
-                                    </div>
-                                    <div class="flex-fill">
-                                        <input type="number" id="diskon_layanan" name="diskon_layanan" class="form-control rounded-3 form-tindakan" placeholder="Diskon (%)" autocomplete="off">
-                                        <div class="invalid-feedback"></div>
-                                    </div>
-                                    <div class="d-grid d-lg-block w-auto">
-                                        <button type="submit" id="addLayananButton" class="btn btn-primary bg-gradient rounded-3 text-nowrap">
-                                            <i class="fa-solid fa-plus"></i> Tambah
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="card-body p-0 m-0 table-responsive">
-                            <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
-                                <thead>
-                                    <tr class="align-middle">
-                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Tindakan</th>
-                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">Nama Tindakan</th>
-                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Qty</th>
-                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Harga</th>
-                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Diskon</th>
-                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Pembayaran</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="align-top" id="list_layanan">
-                                    <tr>
-                                        <td colspan="6" class="text-center">Memuat detail transaksi...</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="card-footer bg-body-tertiary">
-                            <div class="row d-flex align-items-end">
-                                <div class="col fw-medium text-nowrap">Sub Total</div>
-                                <div class="col text-end">
-                                    <div class="date text-nowrap placeholder-glow fw-bold" id="subtotal_layanan">
-                                        <span class="placeholder w-100"></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6">
-                    <div class="card h-100 shadow-sm rounded-3 overflow-auto">
-                        <div class="card-header bg-body-tertiary" id="tambahObatAlkesContainer" style="display: none;">
-                            <form id="tambahObatAlkes" enctype="multipart/form-data">
-                                <div class="mb-2">
-                                    <select class="form-select rounded-3" id="id_resep" name="id_resep" aria-label="id_resep">
-                                        <option value="" disabled selected>-- Pilih Resep --</option>
-                                    </select>
+                                <div class="flex-fill">
+                                    <input type="number" id="diskon_layanan" name="diskon_layanan" class="form-control rounded-3 form-tindakan" placeholder="Diskon (%)" autocomplete="off">
                                     <div class="invalid-feedback"></div>
                                 </div>
-                                <div class="d-flex flex-column flex-lg-row gap-2">
-                                    <div class="flex-fill">
-                                        <input type="number" id="diskon_obatalkes" name="diskon_obatalkes" class="form-control rounded-3" placeholder="Diskon (%)" autocomplete="off">
-                                        <div class="invalid-feedback"></div>
-                                    </div>
-                                    <div class="d-grid d-lg-block w-auto">
-                                        <button type="submit" id="addObatAlkesButton" class="btn btn-primary bg-gradient rounded-3 text-nowrap">
-                                            <i class="fa-solid fa-plus"></i> Tambah
-                                        </button>
-                                    </div>
+                                <div class="d-grid d-lg-block w-auto">
+                                    <button type="submit" id="addLayananButton" class="btn btn-primary bg-gradient rounded-3 text-nowrap">
+                                        <i class="fa-solid fa-plus"></i> Tambah
+                                    </button>
                                 </div>
-                            </form>
-                        </div>
-                        <div class="card-body p-0 m-0 table-responsive">
-                            <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
-                                <thead>
-                                    <tr class="align-middle">
-                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Tindakan</th>
-                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">Nama Obat dan Alkes</th>
-                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Harga</th>
-                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Diskon</th>
-                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Pembayaran</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="align-top" id="list_obat_alkes">
-                                    <tr>
-                                        <td colspan="5" class="text-center">Memuat detail transaksi...</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="card-footer bg-body-tertiary">
-                            <div class="row d-flex align-items-end">
-                                <div class="col fw-medium text-nowrap">Sub Total</div>
-                                <div class="col text-end">
-                                    <div class="date text-nowrap placeholder-glow fw-bold" id="subtotal_obat_alkes">
-                                        <span class="placeholder w-100"></span>
-                                    </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="card-body p-0 m-0 table-responsive">
+                        <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
+                            <thead>
+                                <tr class="align-middle">
+                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Tindakan</th>
+                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">Nama Tindakan</th>
+                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Qty</th>
+                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Harga</th>
+                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Diskon</th>
+                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Pembayaran</th>
+                                </tr>
+                            </thead>
+                            <tbody class="align-top" id="list_layanan">
+                                <tr>
+                                    <td colspan="6" class="text-center">Memuat detail transaksi...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-footer bg-body-tertiary">
+                        <div class="row d-flex align-items-end">
+                            <div class="col fw-medium text-nowrap">Sub Total</div>
+                            <div class="col text-end">
+                                <div class="date text-nowrap placeholder-glow fw-bold" id="subtotal_layanan">
+                                    <span class="placeholder w-100"></span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="col-lg-6">
+                <div class="card h-100 shadow-sm rounded-3 overflow-auto">
+                    <div class="card-header bg-body-tertiary" id="tambahObatAlkesContainer" style="display: none;">
+                        <form id="tambahObatAlkes" enctype="multipart/form-data">
+                            <div class="mb-2">
+                                <select class="form-select rounded-3" id="id_resep" name="id_resep" aria-label="id_resep">
+                                    <option value="" disabled selected>-- Pilih Resep --</option>
+                                </select>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="d-flex flex-column flex-lg-row gap-2">
+                                <div class="flex-fill">
+                                    <input type="number" id="diskon_obatalkes" name="diskon_obatalkes" class="form-control rounded-3" placeholder="Diskon (%)" autocomplete="off">
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                                <div class="d-grid d-lg-block w-auto">
+                                    <button type="submit" id="addObatAlkesButton" class="btn btn-primary bg-gradient rounded-3 text-nowrap">
+                                        <i class="fa-solid fa-plus"></i> Tambah
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="card-body p-0 m-0 table-responsive">
+                        <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
+                            <thead>
+                                <tr class="align-middle">
+                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Tindakan</th>
+                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">Nama Obat dan Alkes</th>
+                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Harga</th>
+                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Diskon</th>
+                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Pembayaran</th>
+                                </tr>
+                            </thead>
+                            <tbody class="align-top" id="list_obat_alkes">
+                                <tr>
+                                    <td colspan="5" class="text-center">Memuat detail transaksi...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-footer bg-body-tertiary">
+                        <div class="row d-flex align-items-end">
+                            <div class="col fw-medium text-nowrap">Sub Total</div>
+                            <div class="col text-end">
+                                <div class="date text-nowrap placeholder-glow fw-bold" id="subtotal_obat_alkes">
+                                    <span class="placeholder w-100"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-            <div class="mb-2 row d-flex align-items-end">
-                <div class="col fw-medium text-nowrap">Grand Total</div>
-                <div class="col text-end">
-                    <div class="fs-4 date text-nowrap placeholder-glow" style="font-weight: 900;" id="total_pembayaran">
-                        <span class="placeholder w-100"></span>
-                    </div>
+        <div class="mb-2 row d-flex align-items-end">
+            <div class="col fw-medium text-nowrap">Grand Total</div>
+            <div class="col text-end">
+                <div class="fs-4 date text-nowrap placeholder-glow" style="font-weight: 900;" id="total_pembayaran">
+                    <span class="placeholder w-100"></span>
                 </div>
             </div>
-            <div class="mb-2 row d-flex align-items-end">
-                <div class="col fw-medium text-nowrap">Terima Uang</div>
-                <div class="col text-end">
-                    <div class="date text-nowrap placeholder-glow" id="terima_uang_table">
-                        <span class="placeholder w-100"></span>
-                    </div>
+        </div>
+        <div class="mb-2 row d-flex align-items-end">
+            <div class="col fw-medium text-nowrap">Terima Uang</div>
+            <div class="col text-end">
+                <div class="date text-nowrap placeholder-glow" id="terima_uang_table">
+                    <span class="placeholder w-100"></span>
                 </div>
             </div>
-            <div class="mb-2 row d-flex align-items-end">
-                <div class="col fw-medium text-nowrap">Uang Kembali</div>
-                <div class="col text-end">
-                    <div class="date text-nowrap placeholder-glow" id="uang_kembali_table">
-                        <span class="placeholder w-100"></span>
-                    </div>
+        </div>
+        <div class="mb-2 row d-flex align-items-end">
+            <div class="col fw-medium text-nowrap">Uang Kembali</div>
+            <div class="col text-end">
+                <div class="date text-nowrap placeholder-glow" id="uang_kembali_table">
+                    <span class="placeholder w-100"></span>
                 </div>
             </div>
-            <div class="mb-2 row d-flex align-items-end">
-                <div class="col fw-medium text-nowrap">Metode Bayar</div>
-                <div class="col text-end">
-                    <div class="date text-nowrap placeholder-glow" id="metode_pembayaran_table">
-                        <span class="placeholder w-100"></span>
-                    </div>
+        </div>
+        <div class="mb-2 row d-flex align-items-end">
+            <div class="col fw-medium text-nowrap">Metode Bayar</div>
+            <div class="col text-end">
+                <div class="date text-nowrap placeholder-glow" id="metode_pembayaran_table">
+                    <span class="placeholder w-100"></span>
                 </div>
             </div>
+        </div>
 
-            <div id="prosesTransaksi">
-                <hr>
-                <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-3">
-                    <button class="btn btn-body rounded-3 bg-gradient" type="button" id="printBtn" onclick="window.open(`<?= base_url('/transaksi/struk/' . $transaksi['id_transaksi']) ?>`)" disabled><i class="fa-solid fa-print"></i> Cetak Struk/Kuitansi</button>
-                    <button class="btn btn-danger rounded-3 bg-gradient" type="button" id="cancelBtn" data-id="<?= $transaksi['id_transaksi'] ?>" disabled><i class="fa-solid fa-xmark"></i> Batalkan Transaksi</button>
-                    <button class="btn btn-success rounded-3 bg-gradient" type="button" id="processBtn" data-id="<?= $transaksi['id_transaksi'] ?>" disabled><i class="fa-solid fa-money-bills"></i> Proses Transaksi</button>
-                </div>
+        <div id="prosesTransaksi">
+            <hr>
+            <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-3">
+                <button class="btn btn-body rounded-3 bg-gradient" type="button" id="printBtn" onclick="window.open(`<?= base_url('/transaksi/struk/' . $transaksi['id_transaksi']) ?>`)" disabled><i class="fa-solid fa-print"></i> Cetak Struk/Kuitansi</button>
+                <button class="btn btn-danger rounded-3 bg-gradient" type="button" id="cancelBtn" data-id="<?= $transaksi['id_transaksi'] ?>" disabled><i class="fa-solid fa-xmark"></i> Batalkan Transaksi</button>
+                <button class="btn btn-success rounded-3 bg-gradient" type="button" id="processBtn" data-id="<?= $transaksi['id_transaksi'] ?>" disabled><i class="fa-solid fa-money-bills"></i> Proses Transaksi</button>
             </div>
         </div>
     </div>

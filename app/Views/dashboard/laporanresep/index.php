@@ -13,149 +13,145 @@
     <div class="sticky-top" style="z-index: 99;">
         <ul class="list-group shadow-sm rounded-0 mb-2">
             <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-tertiary transparent-blur">
-                <div class="d-xxl-flex justify-content-center">
-                    <div class="no-fluid-content">
-                        <nav>
-                            <div class="nav nav-underline nav-justified mb-2" id="nav-tab" role="tablist">
-                                <button class="nav-link rounded-top-3 active" id="resepharian-container-tab" data-bs-toggle="tab" data-bs-target="#resepharian-container" type="button" role="tab" aria-controls="resepharian-container" aria-selected="true">Harian</button>
-                                <button class="nav-link rounded-top-3" id="resepbulanan-container-tab" data-bs-toggle="tab" data-bs-target="#resepbulanan-container" type="button" role="tab" aria-controls="resepbulanan-container" aria-selected="false">Bulanan</button>
-                            </div>
-                        </nav>
-                        <div class="input-group input-group-sm" id="tanggal_form">
-                            <input type="date" id="tanggal" name="tanggal" class="form-control rounded-start-3">
-                            <button class="btn btn-danger bg-gradient" type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
-                            <button class="btn btn-success bg-gradient rounded-end-3" type="button" id="refreshButton1" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan" disabled><i class="fa-solid fa-sync"></i></button>
+                <div class="no-fluid-content">
+                    <nav>
+                        <div class="nav nav-underline nav-justified mb-2" id="nav-tab" role="tablist">
+                            <button class="nav-link rounded-top-3 active" id="resepharian-container-tab" data-bs-toggle="tab" data-bs-target="#resepharian-container" type="button" role="tab" aria-controls="resepharian-container" aria-selected="true">Harian</button>
+                            <button class="nav-link rounded-top-3" id="resepbulanan-container-tab" data-bs-toggle="tab" data-bs-target="#resepbulanan-container" type="button" role="tab" aria-controls="resepbulanan-container" aria-selected="false">Bulanan</button>
                         </div>
-                        <div class="input-group input-group-sm" id="bulan_form" style="display: none;">
-                            <input type="month" id="bulan" name="bulan" class="form-control rounded-start-3">
-                            <button class="btn btn-danger bg-gradient" type="button" id="clearBlnButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Bulan"><i class="fa-solid fa-xmark"></i></button>
-                            <button class="btn btn-success bg-gradient rounded-end-3" type="button" id="refreshButton2" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan" disabled><i class="fa-solid fa-sync"></i></button>
-                        </div>
+                    </nav>
+                    <div class="input-group input-group-sm" id="tanggal_form">
+                        <input type="date" id="tanggal" name="tanggal" class="form-control rounded-start-3">
+                        <button class="btn btn-danger bg-gradient" type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
+                        <button class="btn btn-success bg-gradient rounded-end-3" type="button" id="refreshButton1" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan" disabled><i class="fa-solid fa-sync"></i></button>
+                    </div>
+                    <div class="input-group input-group-sm" id="bulan_form" style="display: none;">
+                        <input type="month" id="bulan" name="bulan" class="form-control rounded-start-3">
+                        <button class="btn btn-danger bg-gradient" type="button" id="clearBlnButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Bulan"><i class="fa-solid fa-xmark"></i></button>
+                        <button class="btn btn-success bg-gradient rounded-end-3" type="button" id="refreshButton2" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan" disabled><i class="fa-solid fa-sync"></i></button>
                     </div>
                 </div>
             </li>
         </ul>
     </div>
     <div class="px-3">
-        <div class="d-xxl-flex justify-content-center">
-            <div class="no-fluid-content">
-                <div class="mb-3">
-                    <div class="tab-content" id="nav-tabContent">
-                        <div class="tab-pane show active" id="resepharian-container" role="tabpanel" aria-labelledby="resepharian-container-tab" tabindex="0">
-                            <fieldset class="border rounded-3 px-2 py-0 mb-3" id="dokter-harian" style="display: none;">
-                                <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Daftar Dokter</legend>
-                                <div class="form-check">
-                                    <?php foreach ($daftarDokter as $dokter) : ?>
-                                        <label class="form-check-label">
-                                            <input class="form-check-input dokter-checkbox-1" type="checkbox" value="<?= $dokter['dokter'] ?>" name="dokter[]">
-                                            <?= $dokter['dokter']; ?>
-                                        </label><br>
-                                    <?php endforeach; ?>
-                                </div>
-                            </fieldset>
-                            <div class="card shadow-sm rounded-3">
-                                <div class="table-responsive">
-                                    <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
-                                        <thead>
-                                            <tr class="align-middle">
-                                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">No</th>
-                                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 50%;">Dokter</th>
-                                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 50%;">Nama Obat</th>
-                                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Harga Satuan</th>
-                                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Obat Keluar</th>
-                                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Harga</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="align-top" id="resepharian">
-                                            <tr>
-                                                <td colspan="6" class="text-center" style="cursor: wait;">Memuat data resep...</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="card-footer bg-body-tertiary">
-                                    <div class="row d-flex align-items-end">
-                                        <div class="col fw-medium text-nowrap">Total Obat Keluar</div>
-                                        <div class="col text-end">
-                                            <div class="date text-nowrap placeholder-glow" id="total_keluar_harian">
-                                                <span class="placeholder w-100"></span>
-                                            </div>
+        <div class="no-fluid-content">
+            <div class="mb-3">
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane show active" id="resepharian-container" role="tabpanel" aria-labelledby="resepharian-container-tab" tabindex="0">
+                        <fieldset class="border rounded-3 px-2 py-0 mb-3" id="dokter-harian" style="display: none;">
+                            <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Daftar Dokter</legend>
+                            <div class="form-check">
+                                <?php foreach ($daftarDokter as $dokter) : ?>
+                                    <label class="form-check-label">
+                                        <input class="form-check-input dokter-checkbox-1" type="checkbox" value="<?= $dokter['dokter'] ?>" name="dokter[]">
+                                        <?= $dokter['dokter']; ?>
+                                    </label><br>
+                                <?php endforeach; ?>
+                            </div>
+                        </fieldset>
+                        <div class="card shadow-sm rounded-3">
+                            <div class="table-responsive">
+                                <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
+                                    <thead>
+                                        <tr class="align-middle">
+                                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">No</th>
+                                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 50%;">Dokter</th>
+                                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 50%;">Nama Obat</th>
+                                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Harga Satuan</th>
+                                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Obat Keluar</th>
+                                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Harga</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="align-top" id="resepharian">
+                                        <tr>
+                                            <td colspan="6" class="text-center" style="cursor: wait;">Memuat data resep...</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="card-footer bg-body-tertiary">
+                                <div class="row d-flex align-items-end">
+                                    <div class="col fw-medium text-nowrap">Total Obat Keluar</div>
+                                    <div class="col text-end">
+                                        <div class="date text-nowrap placeholder-glow" id="total_keluar_harian">
+                                            <span class="placeholder w-100"></span>
                                         </div>
                                     </div>
-                                    <div class="row d-flex align-items-end">
-                                        <div class="col fw-medium text-nowrap">Total Harga</div>
-                                        <div class="col text-end">
-                                            <div class="date text-nowrap placeholder-glow fw-bold" id="total_harga_harian">
-                                                <span class="placeholder w-100"></span>
-                                            </div>
+                                </div>
+                                <div class="row d-flex align-items-end">
+                                    <div class="col fw-medium text-nowrap">Total Harga</div>
+                                    <div class="col text-end">
+                                        <div class="date text-nowrap placeholder-glow fw-bold" id="total_harga_harian">
+                                            <span class="placeholder w-100"></span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div id="reportBtns1" style="display: none;">
-                                <hr>
-                                <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
-                                    <button class="btn btn-success rounded-3 bg-gradient" type="button" id="reportBtn1" onclick="downloadReport1()"><i class="fa-solid fa-file-excel"></i> Buat Laporan (Excel)</button>
+                        </div>
+                        <div id="reportBtns1" style="display: none;">
+                            <hr>
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
+                                <button class="btn btn-success rounded-3 bg-gradient" type="button" id="reportBtn1" onclick="downloadReport1()"><i class="fa-solid fa-file-excel"></i> Buat Laporan (Excel)</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="resepbulanan-container" role="tabpanel" aria-labelledby="resepbulanan-container-tab" tabindex="0">
+                        <fieldset class="border rounded-3 px-2 py-0 mb-3" id="dokter-bulanan" style="display: none;">
+                            <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Daftar Dokter</legend>
+                            <div class="form-check">
+                                <?php foreach ($daftarDokter as $dokter) : ?>
+                                    <label class="form-check-label">
+                                        <input class="form-check-input dokter-checkbox-2" type="checkbox" value="<?= $dokter['dokter'] ?>" name="dokter[]">
+                                        <?= $dokter['dokter']; ?>
+                                    </label><br>
+                                <?php endforeach; ?>
+                            </div>
+                        </fieldset>
+                        <div class="card shadow-sm rounded-3">
+                            <div class="table-responsive">
+                                <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
+                                    <thead>
+                                        <tr class="align-middle">
+                                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">No</th>
+                                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Tanggal</th>
+                                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 50%;">Dokter</th>
+                                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 50%;">Nama Obat</th>
+                                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Harga Satuan</th>
+                                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Obat Keluar</th>
+                                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Harga</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="align-top" id="resepbulanan">
+                                        <tr>
+                                            <td colspan="7" class="text-center" style="cursor: wait;">Memuat data resep...</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="card-footer bg-body-tertiary">
+                                <div class="row d-flex align-items-end">
+                                    <div class="col fw-medium text-nowrap">Total Obat Keluar</div>
+                                    <div class="col text-end">
+                                        <div class="date text-nowrap placeholder-glow" id="total_keluar_bulanan">
+                                            <span class="placeholder w-100"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row d-flex align-items-end">
+                                    <div class="col fw-medium text-nowrap">Total Harga</div>
+                                    <div class="col text-end">
+                                        <div class="date text-nowrap placeholder-glow fw-bold" id="total_harga_bulanan">
+                                            <span class="placeholder w-100"></span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="tab-pane" id="resepbulanan-container" role="tabpanel" aria-labelledby="resepbulanan-container-tab" tabindex="0">
-                            <fieldset class="border rounded-3 px-2 py-0 mb-3" id="dokter-bulanan" style="display: none;">
-                                <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Daftar Dokter</legend>
-                                <div class="form-check">
-                                    <?php foreach ($daftarDokter as $dokter) : ?>
-                                        <label class="form-check-label">
-                                            <input class="form-check-input dokter-checkbox-2" type="checkbox" value="<?= $dokter['dokter'] ?>" name="dokter[]">
-                                            <?= $dokter['dokter']; ?>
-                                        </label><br>
-                                    <?php endforeach; ?>
-                                </div>
-                            </fieldset>
-                            <div class="card shadow-sm rounded-3">
-                                <div class="table-responsive">
-                                    <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
-                                        <thead>
-                                            <tr class="align-middle">
-                                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">No</th>
-                                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Tanggal</th>
-                                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 50%;">Dokter</th>
-                                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 50%;">Nama Obat</th>
-                                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Harga Satuan</th>
-                                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Obat Keluar</th>
-                                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Harga</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="align-top" id="resepbulanan">
-                                            <tr>
-                                                <td colspan="7" class="text-center" style="cursor: wait;">Memuat data resep...</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="card-footer bg-body-tertiary">
-                                    <div class="row d-flex align-items-end">
-                                        <div class="col fw-medium text-nowrap">Total Obat Keluar</div>
-                                        <div class="col text-end">
-                                            <div class="date text-nowrap placeholder-glow" id="total_keluar_bulanan">
-                                                <span class="placeholder w-100"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row d-flex align-items-end">
-                                        <div class="col fw-medium text-nowrap">Total Harga</div>
-                                        <div class="col text-end">
-                                            <div class="date text-nowrap placeholder-glow fw-bold" id="total_harga_bulanan">
-                                                <span class="placeholder w-100"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div id="reportBtns2" style="display: none;">
-                                <hr>
-                                <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
-                                    <button class="btn btn-success rounded-3 bg-gradient" type="button" id="reportBtn2" onclick="downloadReport2()"><i class="fa-solid fa-file-excel"></i> Buat Laporan (Excel)</button>
-                                </div>
+                        <div id="reportBtns2" style="display: none;">
+                            <hr>
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
+                                <button class="btn btn-success rounded-3 bg-gradient" type="button" id="reportBtn2" onclick="downloadReport2()"><i class="fa-solid fa-file-excel"></i> Buat Laporan (Excel)</button>
                             </div>
                         </div>
                     </div>

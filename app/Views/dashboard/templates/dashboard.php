@@ -209,11 +209,15 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
             }
         }
 
-        @media (min-width: 1400px) {
-            .no-fluid-content {
-                min-width: 1134.66px;
-                max-width: 1134.66px;
-            }
+        .no-fluid-content {
+            --bs-gutter-x: 0;
+            --bs-gutter-y: 0;
+            width: 100%;
+            padding-right: calc(var(--bs-gutter-x) * 0.5);
+            padding-left: calc(var(--bs-gutter-x) * 0.5);
+            margin-right: auto;
+            margin-left: auto;
+            max-width: 1140px;
         }
 
         @media (max-width: 767.98px) {

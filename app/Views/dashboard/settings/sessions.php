@@ -14,37 +14,33 @@
     <div class="sticky-top" style="z-index: 99;">
         <ul class="list-group shadow-sm rounded-0 mb-2">
             <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-tertiary transparent-blur">
-                <div class="d-xxl-flex justify-content-center">
-                    <div class="no-fluid-content">
-                        <div class="input-group input-group-sm">
-                            <input type="search" class="form-control form-control-sm rounded-start-3" id="externalSearch" placeholder="Cari nama pengguna, alamat IP, dan user agent">
-                            <button class="btn btn-success btn-sm bg-gradient rounded-end-3" type="button" id="refreshButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan"><i class="fa-solid fa-sync"></i></button>
-                        </div>
+                <div class="no-fluid-content">
+                    <div class="input-group input-group-sm">
+                        <input type="search" class="form-control form-control-sm rounded-start-3" id="externalSearch" placeholder="Cari nama pengguna, alamat IP, dan user agent">
+                        <button class="btn btn-success btn-sm bg-gradient rounded-end-3" type="button" id="refreshButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan"><i class="fa-solid fa-sync"></i></button>
                     </div>
                 </div>
             </li>
         </ul>
     </div>
     <div class="px-3">
-        <div class="d-xxl-flex justify-content-center">
-            <div class="no-fluid-content">
-                <div class="mb-3">
-                    <table id="tabel" class="table table-sm table-hover m-0 p-0" style="width:100%; font-size: 9pt;">
-                        <thead>
-                            <tr class="align-middle">
-                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">No.</th>
-                                <th scope="col" class="bg-body-secondary border-secondary text-nowrap" style="border-bottom-width: 2px;">Tindakan</th>
-                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Pengguna</th>
-                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Alamat IP</th>
-                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">User Agent</th>
-                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Waktu Masuk</th>
-                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Kedaluwarsa</th>
-                            </tr>
-                        </thead>
-                        <tbody class="align-top">
-                        </tbody>
-                    </table>
-                </div>
+        <div class="no-fluid-content">
+            <div class="mb-3">
+                <table id="tabel" class="table table-sm table-hover m-0 p-0" style="width:100%; font-size: 9pt;">
+                    <thead>
+                        <tr class="align-middle">
+                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">No.</th>
+                            <th scope="col" class="bg-body-secondary border-secondary text-nowrap" style="border-bottom-width: 2px;">Tindakan</th>
+                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Pengguna</th>
+                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Alamat IP</th>
+                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">User Agent</th>
+                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Waktu Masuk</th>
+                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Kedaluwarsa</th>
+                        </tr>
+                    </thead>
+                    <tbody class="align-top">
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

@@ -27,146 +27,144 @@
 <?= $this->endSection(); ?>
 <?= $this->section('content'); ?>
 <main class="col-md-9 ms-sm-auto col-lg-10 px-3 pt-3">
-    <div class="d-xxl-flex justify-content-center">
-        <div class="no-fluid-content">
-            <fieldset class="border rounded-3 px-2 py-0 mb-3">
-                <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Informasi Obat Masuk</legend>
-                <div style="font-size: 9pt;">
-                    <div class="mb-2 row">
-                        <div class="col-lg-3 fw-medium">Tanggal dan Waktu</div>
-                        <div class="col-lg">
-                            <div class="date">
-                                <?= $pembelianobat['tgl_pembelian'] ?>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mb-2 row">
-                        <div class="col-lg-3 fw-medium">Nama Supplier</div>
-                        <div class="col-lg">
-                            <div class="date">
-                                <?= $pembelianobat['nama_supplier'] ?>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mb-2 row">
-                        <div class="col-lg-3 fw-medium">Alamat Supplier</div>
-                        <div class="col-lg">
-                            <div class="date">
-                                <?= $pembelianobat['alamat_supplier'] ?>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mb-2 row">
-                        <div class="col-lg-3 fw-medium">Nomor Telepon Supplier</div>
-                        <div class="col-lg">
-                            <div class="date">
-                                <?= ($pembelianobat['kontak_supplier'] == '') ? '<em>Tidak ada</em>' : $pembelianobat['kontak_supplier']; ?>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mb-2 row">
-                        <div class="col-lg-3 fw-medium">Merek</div>
-                        <div class="col-lg">
-                            <div class="date">
-                                <?= ($pembelianobat['merek'] == '') ? '<em>Tanpa Merek</em>' : $pembelianobat['merek']; ?>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mb-2 row">
-                        <div class="col-lg-3 fw-medium">Apoteker</div>
-                        <div class="col-lg">
-                            <div class="date">
-                                <?= $pembelianobat['apoteker'] ?>
-                            </div>
+    <div class="no-fluid-content">
+        <fieldset class="border rounded-3 px-2 py-0 mb-3">
+            <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Informasi Obat Masuk</legend>
+            <div style="font-size: 9pt;">
+                <div class="mb-2 row">
+                    <div class="col-lg-3 fw-medium">Tanggal dan Waktu</div>
+                    <div class="col-lg">
+                        <div class="date">
+                            <?= $pembelianobat['tgl_pembelian'] ?>
                         </div>
                     </div>
                 </div>
-            </fieldset>
-
-            <div class="card shadow-sm rounded-3 overflow-auto">
-                <div class="card-header bg-body-tertiary" id="tambahDetailContainer" style="display: none;">
-                    <form id="tambahDetail" enctype="multipart/form-data">
-                        <div class="mb-2">
-                            <select class="form-select rounded-3" id="id_obat" name="id_obat" aria-label="id_obat">
-                                <option value="" disabled selected>-- Pilih Obat --</option>
-                            </select>
-                            <div class="invalid-feedback"></div>
+                <div class="mb-2 row">
+                    <div class="col-lg-3 fw-medium">Nama Supplier</div>
+                    <div class="col-lg">
+                        <div class="date">
+                            <?= $pembelianobat['nama_supplier'] ?>
                         </div>
-                        <div class="d-flex flex-column flex-lg-row gap-2">
-                            <div class="flex-fill">
-                                <input type="number" id="jumlah" name="jumlah" class="form-control rounded-3" placeholder="Jumlah" autocomplete="off">
-                                <div class="invalid-feedback"></div>
-                            </div>
-                            <div class="d-grid d-lg-block w-auto">
-                                <button type="submit" id="addButton" class="btn btn-primary bg-gradient rounded-3 text-nowrap">
-                                    <i class="fa-solid fa-plus"></i> Tambah
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                    </div>
                 </div>
-                <div class="card-body p-0 m-0 table-responsive">
-                    <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
-                        <thead>
-                            <tr class="align-middle">
-                                <th scope="col" class="bg-body-secondary border-secondary text-nowrap tindakan" style="border-bottom-width: 2px; width: 0%;">Tindakan</th>
-                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">Nama Obat</th>
-                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Jumlah</th>
-                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Obat Masuk</th>
-                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Obat Belum Diterima</th>
-                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Harga Satuan</th>
-                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Harga</th>
-                            </tr>
-                        </thead>
-                        <tbody class="align-top" id="detail_pembelian_obat">
-                            <tr>
-                                <td colspan="7" class="text-center">Memuat detail pembelian...</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="mb-2 row">
+                    <div class="col-lg-3 fw-medium">Alamat Supplier</div>
+                    <div class="col-lg">
+                        <div class="date">
+                            <?= $pembelianobat['alamat_supplier'] ?>
+                        </div>
+                    </div>
                 </div>
-                <div class="card-footer bg-body-tertiary">
-                    <div class="row d-flex align-items-end">
-                        <div class="col fw-medium text-nowrap">Total Qty</div>
-                        <div class="col text-end">
-                            <div class="date text-nowrap placeholder-glow" id="total_qty">
-                                <span class="placeholder w-100"></span>
-                            </div>
+                <div class="mb-2 row">
+                    <div class="col-lg-3 fw-medium">Nomor Telepon Supplier</div>
+                    <div class="col-lg">
+                        <div class="date">
+                            <?= ($pembelianobat['kontak_supplier'] == '') ? '<em>Tidak ada</em>' : $pembelianobat['kontak_supplier']; ?>
                         </div>
                     </div>
-                    <div class="row d-flex align-items-end">
-                        <div class="col fw-medium text-nowrap">Total Masuk</div>
-                        <div class="col text-end">
-                            <div class="date text-nowrap placeholder-glow" id="total_masuk">
-                                <span class="placeholder w-100"></span>
-                            </div>
+                </div>
+                <div class="mb-2 row">
+                    <div class="col-lg-3 fw-medium">Merek</div>
+                    <div class="col-lg">
+                        <div class="date">
+                            <?= ($pembelianobat['merek'] == '') ? '<em>Tanpa Merek</em>' : $pembelianobat['merek']; ?>
                         </div>
                     </div>
-                    <div class="row d-flex align-items-end">
-                        <div class="col fw-medium text-nowrap">Total Belum Diterima</div>
-                        <div class="col text-end">
-                            <div class="date text-nowrap placeholder-glow" id="total_blm_diterima">
-                                <span class="placeholder w-100"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row d-flex align-items-end">
-                        <div class="col fw-medium text-nowrap">Total Harga</div>
-                        <div class="col text-end">
-                            <div class="date text-nowrap placeholder-glow fw-bold" id="total_harga">
-                                <span class="placeholder w-100"></span>
-                            </div>
+                </div>
+                <div class="mb-2 row">
+                    <div class="col-lg-3 fw-medium">Apoteker</div>
+                    <div class="col-lg">
+                        <div class="date">
+                            <?= $pembelianobat['apoteker'] ?>
                         </div>
                     </div>
                 </div>
             </div>
+        </fieldset>
 
-            <div id="terimaObat">
-                <hr>
-                <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
-                    <button class="btn btn-outline-success rounded-3 bg-gradient" type="button" id="printBtn" onclick="startDownload()" disabled><i class="fa-solid fa-file-excel"></i> Buat Faktur (Excel)</button>
-                    <button class="btn btn-primary rounded-3 bg-gradient" type="button" id="completeBtn" data-id="<?= $pembelianobat['id_pembelian_obat'] ?>" disabled><i class="fa-solid fa-check-double"></i> Terima Obat</button>
+        <div class="card shadow-sm rounded-3 overflow-auto">
+            <div class="card-header bg-body-tertiary" id="tambahDetailContainer" style="display: none;">
+                <form id="tambahDetail" enctype="multipart/form-data">
+                    <div class="mb-2">
+                        <select class="form-select rounded-3" id="id_obat" name="id_obat" aria-label="id_obat">
+                            <option value="" disabled selected>-- Pilih Obat --</option>
+                        </select>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="d-flex flex-column flex-lg-row gap-2">
+                        <div class="flex-fill">
+                            <input type="number" id="jumlah" name="jumlah" class="form-control rounded-3" placeholder="Jumlah" autocomplete="off">
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="d-grid d-lg-block w-auto">
+                            <button type="submit" id="addButton" class="btn btn-primary bg-gradient rounded-3 text-nowrap">
+                                <i class="fa-solid fa-plus"></i> Tambah
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="card-body p-0 m-0 table-responsive">
+                <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
+                    <thead>
+                        <tr class="align-middle">
+                            <th scope="col" class="bg-body-secondary border-secondary text-nowrap tindakan" style="border-bottom-width: 2px; width: 0%;">Tindakan</th>
+                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">Nama Obat</th>
+                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Jumlah</th>
+                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Obat Masuk</th>
+                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Obat Belum Diterima</th>
+                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Harga Satuan</th>
+                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Harga</th>
+                        </tr>
+                    </thead>
+                    <tbody class="align-top" id="detail_pembelian_obat">
+                        <tr>
+                            <td colspan="7" class="text-center">Memuat detail pembelian...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer bg-body-tertiary">
+                <div class="row d-flex align-items-end">
+                    <div class="col fw-medium text-nowrap">Total Qty</div>
+                    <div class="col text-end">
+                        <div class="date text-nowrap placeholder-glow" id="total_qty">
+                            <span class="placeholder w-100"></span>
+                        </div>
+                    </div>
                 </div>
+                <div class="row d-flex align-items-end">
+                    <div class="col fw-medium text-nowrap">Total Masuk</div>
+                    <div class="col text-end">
+                        <div class="date text-nowrap placeholder-glow" id="total_masuk">
+                            <span class="placeholder w-100"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row d-flex align-items-end">
+                    <div class="col fw-medium text-nowrap">Total Belum Diterima</div>
+                    <div class="col text-end">
+                        <div class="date text-nowrap placeholder-glow" id="total_blm_diterima">
+                            <span class="placeholder w-100"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row d-flex align-items-end">
+                    <div class="col fw-medium text-nowrap">Total Harga</div>
+                    <div class="col text-end">
+                        <div class="date text-nowrap placeholder-glow fw-bold" id="total_harga">
+                            <span class="placeholder w-100"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="terimaObat">
+            <hr>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
+                <button class="btn btn-outline-success rounded-3 bg-gradient" type="button" id="printBtn" onclick="startDownload()" disabled><i class="fa-solid fa-file-excel"></i> Buat Faktur (Excel)</button>
+                <button class="btn btn-primary rounded-3 bg-gradient" type="button" id="completeBtn" data-id="<?= $pembelianobat['id_pembelian_obat'] ?>" disabled><i class="fa-solid fa-check-double"></i> Terima Obat</button>
             </div>
         </div>
     </div>

@@ -27,215 +27,213 @@
 <?= $this->endSection(); ?>
 <?= $this->section('content'); ?>
 <main class="col-md-9 ms-sm-auto col-lg-10 px-3 pt-3">
-    <div class="d-xxl-flex justify-content-center">
-        <div class="no-fluid-content">
-            <fieldset class="border rounded-3 px-2 py-0 mb-3">
-                <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Informasi Pasien Rawat Jalan</legend>
-                <div class="row">
-                    <div class="col-lg-6" style="font-size: 9pt;">
-                        <div class="mb-2 row">
-                            <div class="col-lg-4 fw-medium">Tanggal dan Waktu</div>
-                            <div class="col-lg">
-                                <div class="date">
-                                    <?= $resep['tanggal_resep'] ?>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-2 row">
-                            <div class="col-lg-4 fw-medium">Dokter</div>
-                            <div class="col-lg">
-                                <div class="date">
-                                    <?= $resep['dokter'] ?>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-2 row">
-                            <div class="col-lg-4 fw-medium">Nama Pasien</div>
-                            <div class="col-lg">
-                                <div class="date">
-                                    <?= $resep['nama_pasien'] ?>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-2 row">
-                            <div class="col-lg-4 fw-medium">Nomor Rekam Medis</div>
-                            <div class="col-lg">
-                                <div class="date">
-                                    <?= $resep['no_rm'] ?>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-2 row">
-                            <div class="col-lg-4 fw-medium">Nomor Registrasi</div>
-                            <div class="col-lg">
-                                <div class="date">
-                                    <?= $resep['nomor_registrasi'] ?>
-                                </div>
+    <div class="no-fluid-content">
+        <fieldset class="border rounded-3 px-2 py-0 mb-3">
+            <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Informasi Pasien Rawat Jalan</legend>
+            <div class="row">
+                <div class="col-lg-6" style="font-size: 9pt;">
+                    <div class="mb-2 row">
+                        <div class="col-lg-4 fw-medium">Tanggal dan Waktu</div>
+                        <div class="col-lg">
+                            <div class="date">
+                                <?= $resep['tanggal_resep'] ?>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-6" style="font-size: 9pt;">
-                        <div class="mb-2 row">
-                            <div class="col-lg-4 fw-medium">Jenis Kelamin</div>
-                            <div class="col-lg">
-                                <div class="date">
-                                    <?php
-                                    if ($resep['jenis_kelamin'] == 'L') {
-                                        echo 'Laki-Laki';
-                                    } else if ($resep['jenis_kelamin'] == 'P') {
-                                        echo 'Perempuan';
-                                    } else {
-                                        echo 'N/A';
-                                    }
-                                    ?>
-                                </div>
+                    <div class="mb-2 row">
+                        <div class="col-lg-4 fw-medium">Dokter</div>
+                        <div class="col-lg">
+                            <div class="date">
+                                <?= $resep['dokter'] ?>
                             </div>
                         </div>
-                        <div class="mb-2 row">
-                            <div class="col-lg-4 fw-medium">Tanggal Lahir</div>
-                            <div class="col-lg">
-                                <div class="date">
-                                    <?= $resep['tanggal_lahir'] ?>
-                                </div>
+                    </div>
+                    <div class="mb-2 row">
+                        <div class="col-lg-4 fw-medium">Nama Pasien</div>
+                        <div class="col-lg">
+                            <div class="date">
+                                <?= $resep['nama_pasien'] ?>
                             </div>
                         </div>
-                        <div class="mb-2 row">
-                            <div class="col-lg-4 fw-medium">Alamat</div>
-                            <div class="col-lg">
-                                <div class="date">
-                                    <?= $resep['alamat'] ?>
-                                </div>
+                    </div>
+                    <div class="mb-2 row">
+                        <div class="col-lg-4 fw-medium">Nomor Rekam Medis</div>
+                        <div class="col-lg">
+                            <div class="date">
+                                <?= $resep['no_rm'] ?>
                             </div>
                         </div>
-                        <div class="mb-2 row">
-                            <div class="col-lg-4 fw-medium">Nomor Telepon</div>
-                            <div class="col-lg">
-                                <div class="date">
-                                    <?= $resep['telpon'] ?>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-2 row">
-                            <div class="col-lg-4 fw-medium">Status Konfirmasi</div>
-                            <div class="col-lg">
-                                <div class="date" id="confirmedStatus">
-                                    Memuat status...
-                                </div>
-                                <?php if (session()->get('role') != 'Dokter') : ?>
-                                    <button id="refreshConfirmed" type="button" class="btn btn-link" style="--bs-btn-padding-y: 0; --bs-btn-padding-x: 0; --bs-btn-font-size: 9pt;">Perbarui Status</button>
-                                <?php endif; ?>
+                    </div>
+                    <div class="mb-2 row">
+                        <div class="col-lg-4 fw-medium">Nomor Registrasi</div>
+                        <div class="col-lg">
+                            <div class="date">
+                                <?= $resep['nomor_registrasi'] ?>
                             </div>
                         </div>
                     </div>
                 </div>
-            </fieldset>
-
-            <div class="card shadow-sm rounded-3 overflow-auto">
-                <?php if (session()->get('role') == 'Dokter' || session()->get('role') == 'Admin') : ?>
-                    <div class="card-header bg-body-tertiary" id="tambahDetailContainer" style="display: none;">
-                        <form id="tambahDetail" enctype="multipart/form-data">
-                            <div class="row g-2">
-                                <div class="col-12">
-                                    <select class="form-select form-select-sm rounded-3" id="id_obat" name="id_obat" aria-label="id_obat" autocomplete="off">
-                                        <option value="" disabled selected>-- Pilih Obat --</option>
-                                    </select>
-                                    <div class="invalid-feedback"></div>
-                                </div>
-                                <div class="col-6">
-                                    <input type="text" id="signa" name="signa" class="form-control form-control-sm rounded-3" placeholder="Dosis" autocomplete="off">
-                                    <div class="invalid-feedback"></div>
-                                </div>
-                                <div class="col-6">
-                                    <input type="text" id="catatan" name="catatan" class="form-control form-control-sm rounded-3" placeholder="Catatan" list="list_catatan" autocomplete="off">
-                                    <div class="invalid-feedback"></div>
-                                    <datalist id="list_catatan">
-                                        <option value="1 Tetes">
-                                        <option value="1 Tablet">
-                                        <option value="1 Salep">
-                                        <option value="Sendok Teh">
-                                        <option value="Sendok Makan">
-                                    </datalist>
-                                </div>
-                                <div class="col-6">
-                                    <select class="form-select form-select-sm  rounded-3" id="cara_pakai" name="cara_pakai" aria-label="cara_pakai">
-                                        <option value="" disabled selected>-- Pilih Cara Pakai --</option>
-                                        <option value="Mata Kanan">Mata Kanan</option>
-                                        <option value="Mata Kiri">Mata Kiri</option>
-                                        <option value="Kedua Mata">Kedua Mata</option>
-                                        <option value="Sebelum Makan">Sebelum Makan</option>
-                                        <option value="Sesudah Makan">Sesudah Makan</option>
-                                        <option value="Sesudah Makan Dihabiskan">Sesudah Makan Dihabiskan</option>
-                                        <option value="Sesudah Makan Bila Sakit">Sesudah Makan Bila Sakit</option>
-                                    </select>
-                                    <div class="invalid-feedback"></div>
-                                </div>
-                                <div class="col-6">
-                                    <input type="number" id="jumlah" name="jumlah" class="form-control form-control-sm rounded-3" placeholder="Jumlah">
-                                    <div class="invalid-feedback"></div>
-                                </div>
-                                <div class="d-grid gap-2 d-lg-flex justify-content-lg-end">
-                                    <button type="submit" id="addButton" class="btn btn-primary bg-gradient rounded-3 text-nowrap">
-                                        <i class="fa-solid fa-plus"></i> Tambah
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                <?php endif; ?>
-                <div class="card-body p-0 m-0 table-responsive">
-                    <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
-                        <thead>
-                            <tr class="align-middle">
-                                <th scope="col" class="bg-body-secondary border-secondary text-nowrap tindakan" style="border-bottom-width: 2px; width: 0%;">Tindakan</th>
-                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">Obat</th>
-                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Jumlah</th>
-                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Harga Satuan</th>
-                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Harga</th>
-                            </tr>
-                        </thead>
-                        <tbody class="align-top" id="detail_resep">
-                            <tr>
-                                <td colspan="5" class="text-center">Memuat detail resep...</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="card-footer bg-body-tertiary">
-                    <div class="row d-flex align-items-end">
-                        <div class="col fw-medium text-nowrap">Total Resep</div>
-                        <div class="col text-end">
-                            <div class="date text-nowrap placeholder-glow" id="jumlah_resep">
-                                <span class="placeholder w-100"></span>
+                <div class="col-lg-6" style="font-size: 9pt;">
+                    <div class="mb-2 row">
+                        <div class="col-lg-4 fw-medium">Jenis Kelamin</div>
+                        <div class="col-lg">
+                            <div class="date">
+                                <?php
+                                if ($resep['jenis_kelamin'] == 'L') {
+                                    echo 'Laki-Laki';
+                                } else if ($resep['jenis_kelamin'] == 'P') {
+                                    echo 'Perempuan';
+                                } else {
+                                    echo 'N/A';
+                                }
+                                ?>
                             </div>
                         </div>
                     </div>
-                    <div class="row d-flex align-items-end">
-                        <div class="col fw-medium text-nowrap">Total Harga</div>
-                        <div class="col text-end">
-                            <div class="date text-nowrap placeholder-glow fw-bold" id="total_harga">
-                                <span class="placeholder w-100"></span>
+                    <div class="mb-2 row">
+                        <div class="col-lg-4 fw-medium">Tanggal Lahir</div>
+                        <div class="col-lg">
+                            <div class="date">
+                                <?= $resep['tanggal_lahir'] ?>
                             </div>
+                        </div>
+                    </div>
+                    <div class="mb-2 row">
+                        <div class="col-lg-4 fw-medium">Alamat</div>
+                        <div class="col-lg">
+                            <div class="date">
+                                <?= $resep['alamat'] ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-2 row">
+                        <div class="col-lg-4 fw-medium">Nomor Telepon</div>
+                        <div class="col-lg">
+                            <div class="date">
+                                <?= $resep['telpon'] ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-2 row">
+                        <div class="col-lg-4 fw-medium">Status Konfirmasi</div>
+                        <div class="col-lg">
+                            <div class="date" id="confirmedStatus">
+                                Memuat status...
+                            </div>
+                            <?php if (session()->get('role') != 'Dokter') : ?>
+                                <button id="refreshConfirmed" type="button" class="btn btn-link" style="--bs-btn-padding-y: 0; --bs-btn-padding-x: 0; --bs-btn-font-size: 9pt;">Perbarui Status</button>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
             </div>
+        </fieldset>
 
-            <div class="mb-3">
-                <hr>
-                <?php if (session()->get('role') != 'Dokter') : ?>
-                    <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-2">
-                        <button class="btn btn-body rounded-3 bg-gradient" type="button" id="printBtn1" onclick="window.open(`<?= base_url('/resep/etiket-dalam/' . $resep['id_resep']) ?>`)" disabled><i class="fa-solid fa-print"></i> Cetak E-Tiket Obat Dalam</button>
-                        <button class="btn btn-body rounded-3 bg-gradient" type="button" id="printBtn2" onclick="window.open(`<?= base_url('/resep/etiket-luar/' . $resep['id_resep']) ?>`)" disabled><i class="fa-solid fa-print"></i> Cetak E-Tiket Obat Luar</button>
-                        <button class="btn btn-body rounded-3 bg-gradient" type="button" id="printBtn3" onclick="window.open(`<?= base_url('/resep/print/' . $resep['id_resep']) ?>`)" disabled><i class="fa-solid fa-print"></i> Cetak Resep</button>
-                    </div>
-                <?php endif; ?>
-                <?php if (session()->get('role') != 'Apoteker') : ?>
-                    <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-2">
-                        <button class="btn btn-danger rounded-3 bg-gradient" type="button" id="cancelConfirmBtn" disabled><i class="fa-solid fa-xmark"></i> Batalkan Konfirmasi</button>
-                        <button class="btn btn-success rounded-3 bg-gradient" type="button" id="confirmBtn" disabled><i class="fa-solid fa-check-double"></i> Konfirmasi</button>
-                    </div>
-                <?php endif; ?>
+        <div class="card shadow-sm rounded-3 overflow-auto">
+            <?php if (session()->get('role') == 'Dokter' || session()->get('role') == 'Admin') : ?>
+                <div class="card-header bg-body-tertiary" id="tambahDetailContainer" style="display: none;">
+                    <form id="tambahDetail" enctype="multipart/form-data">
+                        <div class="row g-2">
+                            <div class="col-12">
+                                <select class="form-select form-select-sm rounded-3" id="id_obat" name="id_obat" aria-label="id_obat" autocomplete="off">
+                                    <option value="" disabled selected>-- Pilih Obat --</option>
+                                </select>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="col-6">
+                                <input type="text" id="signa" name="signa" class="form-control form-control-sm rounded-3" placeholder="Dosis" autocomplete="off">
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="col-6">
+                                <input type="text" id="catatan" name="catatan" class="form-control form-control-sm rounded-3" placeholder="Catatan" list="list_catatan" autocomplete="off">
+                                <div class="invalid-feedback"></div>
+                                <datalist id="list_catatan">
+                                    <option value="1 Tetes">
+                                    <option value="1 Tablet">
+                                    <option value="1 Salep">
+                                    <option value="Sendok Teh">
+                                    <option value="Sendok Makan">
+                                </datalist>
+                            </div>
+                            <div class="col-6">
+                                <select class="form-select form-select-sm  rounded-3" id="cara_pakai" name="cara_pakai" aria-label="cara_pakai">
+                                    <option value="" disabled selected>-- Pilih Cara Pakai --</option>
+                                    <option value="Mata Kanan">Mata Kanan</option>
+                                    <option value="Mata Kiri">Mata Kiri</option>
+                                    <option value="Kedua Mata">Kedua Mata</option>
+                                    <option value="Sebelum Makan">Sebelum Makan</option>
+                                    <option value="Sesudah Makan">Sesudah Makan</option>
+                                    <option value="Sesudah Makan Dihabiskan">Sesudah Makan Dihabiskan</option>
+                                    <option value="Sesudah Makan Bila Sakit">Sesudah Makan Bila Sakit</option>
+                                </select>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="col-6">
+                                <input type="number" id="jumlah" name="jumlah" class="form-control form-control-sm rounded-3" placeholder="Jumlah">
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="d-grid gap-2 d-lg-flex justify-content-lg-end">
+                                <button type="submit" id="addButton" class="btn btn-primary bg-gradient rounded-3 text-nowrap">
+                                    <i class="fa-solid fa-plus"></i> Tambah
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            <?php endif; ?>
+            <div class="card-body p-0 m-0 table-responsive">
+                <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
+                    <thead>
+                        <tr class="align-middle">
+                            <th scope="col" class="bg-body-secondary border-secondary text-nowrap tindakan" style="border-bottom-width: 2px; width: 0%;">Tindakan</th>
+                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">Obat</th>
+                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Jumlah</th>
+                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Harga Satuan</th>
+                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Harga</th>
+                        </tr>
+                    </thead>
+                    <tbody class="align-top" id="detail_resep">
+                        <tr>
+                            <td colspan="5" class="text-center">Memuat detail resep...</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
+            <div class="card-footer bg-body-tertiary">
+                <div class="row d-flex align-items-end">
+                    <div class="col fw-medium text-nowrap">Total Resep</div>
+                    <div class="col text-end">
+                        <div class="date text-nowrap placeholder-glow" id="jumlah_resep">
+                            <span class="placeholder w-100"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row d-flex align-items-end">
+                    <div class="col fw-medium text-nowrap">Total Harga</div>
+                    <div class="col text-end">
+                        <div class="date text-nowrap placeholder-glow fw-bold" id="total_harga">
+                            <span class="placeholder w-100"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <hr>
+            <?php if (session()->get('role') != 'Dokter') : ?>
+                <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-2">
+                    <button class="btn btn-body rounded-3 bg-gradient" type="button" id="printBtn1" onclick="window.open(`<?= base_url('/resep/etiket-dalam/' . $resep['id_resep']) ?>`)" disabled><i class="fa-solid fa-print"></i> Cetak E-Tiket Obat Dalam</button>
+                    <button class="btn btn-body rounded-3 bg-gradient" type="button" id="printBtn2" onclick="window.open(`<?= base_url('/resep/etiket-luar/' . $resep['id_resep']) ?>`)" disabled><i class="fa-solid fa-print"></i> Cetak E-Tiket Obat Luar</button>
+                    <button class="btn btn-body rounded-3 bg-gradient" type="button" id="printBtn3" onclick="window.open(`<?= base_url('/resep/print/' . $resep['id_resep']) ?>`)" disabled><i class="fa-solid fa-print"></i> Cetak Resep</button>
+                </div>
+            <?php endif; ?>
+            <?php if (session()->get('role') != 'Apoteker') : ?>
+                <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-2">
+                    <button class="btn btn-danger rounded-3 bg-gradient" type="button" id="cancelConfirmBtn" disabled><i class="fa-solid fa-xmark"></i> Batalkan Konfirmasi</button>
+                    <button class="btn btn-success rounded-3 bg-gradient" type="button" id="confirmBtn" disabled><i class="fa-solid fa-check-double"></i> Konfirmasi</button>
+                </div>
+            <?php endif; ?>
         </div>
     </div>
 

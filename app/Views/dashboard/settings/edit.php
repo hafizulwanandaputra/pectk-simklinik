@@ -11,26 +11,24 @@
 <?= $this->endSection(); ?>
 <?= $this->section('content'); ?>
 <main class="col-md-9 ms-sm-auto col-lg-10 px-3 pt-3">
-    <div class="d-xxl-flex justify-content-center">
-        <div class="no-fluid-content">
-            <?= form_open_multipart('/settings/update', 'id="userInfoForm"'); ?>
-            <?= csrf_field(); ?>
-            <fieldset class="border rounded-3 px-2 py-0">
-                <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Informasi Pengguna</legend>
-                <div class="form-floating mb-2">
-                    <input type="text" class="form-control rounded-3 <?= (validation_show_error('username')) ? 'is-invalid' : ''; ?>" id="username" name="username" value="<?= (old('username')) ? old('username') : htmlspecialchars(session()->get('username')); ?>" autocomplete="off" dir="auto" placeholder="username">
-                    <label for="username">Nama Pengguna*</label>
-                    <div class="invalid-feedback">
-                        <?= validation_show_error('username'); ?>
-                    </div>
+    <div class="no-fluid-content">
+        <?= form_open_multipart('/settings/update', 'id="userInfoForm"'); ?>
+        <?= csrf_field(); ?>
+        <fieldset class="border rounded-3 px-2 py-0">
+            <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Informasi Pengguna</legend>
+            <div class="form-floating mb-2">
+                <input type="text" class="form-control rounded-3 <?= (validation_show_error('username')) ? 'is-invalid' : ''; ?>" id="username" name="username" value="<?= (old('username')) ? old('username') : htmlspecialchars(session()->get('username')); ?>" autocomplete="off" dir="auto" placeholder="username">
+                <label for="username">Nama Pengguna*</label>
+                <div class="invalid-feedback">
+                    <?= validation_show_error('username'); ?>
                 </div>
-            </fieldset>
-            <hr>
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
-                <button class="btn btn-primary rounded-3 bg-gradient" type="submit" id="submitBtn"><i class="fa-solid fa-user-pen"></i> Ubah</button>
             </div>
-            <?= form_close(); ?>
+        </fieldset>
+        <hr>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
+            <button class="btn btn-primary rounded-3 bg-gradient" type="submit" id="submitBtn"><i class="fa-solid fa-user-pen"></i> Ubah</button>
         </div>
+        <?= form_close(); ?>
     </div>
 </main>
 <?= $this->endSection(); ?>
