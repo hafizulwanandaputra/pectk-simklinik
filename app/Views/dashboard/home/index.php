@@ -1,4 +1,17 @@
 <?= $this->extend('dashboard/templates/dashboard'); ?>
+<?= $this->section('css'); ?>
+<style>
+    .ratio-onecol {
+        --bs-aspect-ratio: 33%;
+    }
+
+    @media (max-width: 991.98px) {
+        .ratio-onecol {
+            --bs-aspect-ratio: 56.25%;
+        }
+    }
+</style>
+<?= $this->endSection(); ?>
 <?= $this->section('title'); ?>
 <div class="d-flex justify-content-start align-items-center">
     <span class="fw-medium fs-5 flex-fill text-truncate"><?= $headertitle; ?></span>
@@ -132,7 +145,7 @@
                             <div class="card bg-body-tertiary w-100 rounded-3 shadow-sm">
                                 <div class="card-header w-100 text-truncate">Resep Menurut Dokter</div>
                                 <div class="card-body">
-                                    <div style="width: 100% !important;height: 400px !important;">
+                                    <div class="ratio ratio-16x9 w-100">
                                         <canvas id="resepbydoktergraph"></canvas>
                                     </div>
                                 </div>
@@ -142,7 +155,7 @@
                             <div class="card bg-body-tertiary w-100 rounded-3 shadow-sm">
                                 <div class="card-header w-100 text-truncate">Resep Per Bulan</div>
                                 <div class="card-body">
-                                    <div style="width: 100% !important;height: 400px !important;">
+                                    <div class="ratio ratio-16x9 w-100">
                                         <canvas id="resepgraph"></canvas>
                                     </div>
                                 </div>
@@ -154,7 +167,7 @@
                     <div class="card bg-body-tertiary w-100 rounded-3 shadow-sm">
                         <div class="card-header w-100 text-truncate">Resep Per Bulan</div>
                         <div class="card-body">
-                            <div style="width: 100% !important;height: 400px !important;">
+                            <div class="ratio ratio-16x9 <?= (session()->get('role') == 'Dokter') ? 'ratio-onecol' : ''; ?> w-100">
                                 <canvas id="resepgraph"></canvas>
                             </div>
                         </div>
@@ -187,7 +200,7 @@
                         <div class="card bg-body-tertiary w-100 rounded-3 shadow-sm">
                             <div class="card-header w-100 text-truncate">Transaksi Menurut Petugas Kasir</div>
                             <div class="card-body">
-                                <div style="width: 100% !important;height: 400px !important;">
+                                <div class="ratio ratio-16x9 w-100">
                                     <canvas id="transaksibykasirgraph"></canvas>
                                 </div>
                             </div>
@@ -197,7 +210,7 @@
                         <div class="card bg-body-tertiary w-100 rounded-3 shadow-sm">
                             <div class="card-header w-100 text-truncate">Transaksi Per Bulan</div>
                             <div class="card-body">
-                                <div style="width: 100% !important;height: 400px !important;">
+                                <div class="ratio ratio-16x9 w-100">
                                     <canvas id="transaksiperbulangraph"></canvas>
                                 </div>
                             </div>
@@ -216,7 +229,7 @@
                     <div class="card bg-body-tertiary w-100 rounded-3 shadow-sm">
                         <div class="card-header w-100 text-truncate">Pemasukan Per Bulan</div>
                         <div class="card-body">
-                            <div style="width: 100% !important;height: 400px !important;">
+                            <div class="ratio ratio-onecol w-100">
                                 <canvas id="pemasukanperbulangraph"></canvas>
                             </div>
                         </div>
