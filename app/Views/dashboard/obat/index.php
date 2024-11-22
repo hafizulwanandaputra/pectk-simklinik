@@ -27,7 +27,7 @@
             </li>
         </ul>
     </div>
-    <div class="px-3 px-md-4">
+    <div class="px-3">
         <div class="d-xxl-flex justify-content-center">
             <div class="no-fluid-content">
                 <div class="mb-3">

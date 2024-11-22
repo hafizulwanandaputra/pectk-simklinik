@@ -211,8 +211,8 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
 
         @media (min-width: 1400px) {
             .no-fluid-content {
-                min-width: 1118.66px;
-                max-width: 1118.66px;
+                min-width: 1134.66px;
+                max-width: 1134.66px;
             }
         }
 
