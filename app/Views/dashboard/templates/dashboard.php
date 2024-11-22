@@ -198,6 +198,10 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
             word-break: break-all;
         }
 
+        .card {
+            --bs-card-border-color: var(--bs-border-color);
+        }
+
         @media (prefers-reduced-transparency) {
             div.dataTables_wrapper div.dataTables_processing.card {
                 --bs-bg-opacity: 1;

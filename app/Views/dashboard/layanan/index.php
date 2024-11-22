@@ -9,34 +9,40 @@
 <div style="min-width: 1px; max-width: 1px;"></div>
 <?= $this->endSection(); ?>
 <?= $this->section('content'); ?>
-<main class="col-md-9 ms-sm-auto col-lg-10 px-3 px-md-4">
-    <div class="d-xxl-flex justify-content-center">
-        <div class="no-fluid-content">
-            <div class="sticky-top" style="z-index: 99;">
-                <ul class="list-group shadow-sm rounded-top-0 rounded-bottom-3 mb-2">
-                    <li class="list-group-item border-top-0 bg-body-tertiary">
+<main class="col-md-9 ms-sm-auto col-lg-10">
+    <div class="sticky-top" style="z-index: 99;">
+        <ul class="list-group shadow-sm rounded-0 mb-2">
+            <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-tertiary transparent-blur">
+                <div class="d-xxl-flex justify-content-center">
+                    <div class="no-fluid-content">
                         <div class="input-group input-group-sm">
                             <input type="search" class="form-control form-control-sm rounded-start-3" id="externalSearch" placeholder="Cari nama tindakan">
                             <button class="btn btn-success btn-sm bg-gradient rounded-end-3" type="button" id="refreshButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan"><i class="fa-solid fa-sync"></i></button>
                         </div>
-                    </li>
-                </ul>
-            </div>
-            <div class="mb-2">
-                <table id="tabel" class="table table-sm table-hover m-0 p-0" style="width:100%; font-size: 9pt;">
-                    <thead>
-                        <tr class="align-middle">
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">No</th>
-                            <th scope="col" class="bg-body-secondary border-secondary text-nowrap" style="border-bottom-width: 2px;">Tindakan</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Nama</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Jenis</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Tarif</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Keterangan</th>
-                        </tr>
-                    </thead>
-                    <tbody class="align-top">
-                    </tbody>
-                </table>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="px-3 px-md-4">
+        <div class="d-xxl-flex justify-content-center">
+            <div class="no-fluid-content">
+                <div class="mb-3">
+                    <table id="tabel" class="table table-sm table-hover m-0 p-0" style="width:100%; font-size: 9pt;">
+                        <thead>
+                            <tr class="align-middle">
+                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">No</th>
+                                <th scope="col" class="bg-body-secondary border-secondary text-nowrap" style="border-bottom-width: 2px;">Tindakan</th>
+                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Nama</th>
+                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Jenis</th>
+                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Tarif</th>
+                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Keterangan</th>
+                            </tr>
+                        </thead>
+                        <tbody class="align-top">
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -139,7 +145,7 @@
                 "<'row'<'col-md-12'tr>>" +
                 "<'d-lg-flex justify-content-lg-between align-items-lg-center'<'text-md-center text-lg-start'><'d-md-flex justify-content-md-center d-lg-block'p>>",
             'initComplete': function(settings, json) {
-                $("#tabel").wrap("<div class='card shadow-sm rounded-3 mb-2 overflow-auto position-relative datatables-height'></div>");
+                $("#tabel").wrap("<div class='card shadow-sm rounded-3 mb-3 overflow-auto position-relative datatables-height'></div>");
                 $('.dataTables_filter input[type="search"]').css({
                     'width': '220px'
                 });

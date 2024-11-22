@@ -12,156 +12,162 @@
 <div style="min-width: 1px; max-width: 1px;"></div>
 <?= $this->endSection(); ?>
 <?= $this->section('content'); ?>
-<main class="col-md-9 ms-sm-auto col-lg-10 px-3 px-md-4">
-    <div class="d-xxl-flex justify-content-center">
-        <div class="no-fluid-content">
-            <div class="sticky-top" style="z-index: 99;">
-                <ul class="list-group shadow-sm rounded-top-0 rounded-bottom-3 mb-2">
-                    <li class="list-group-item border-top-0 bg-body-tertiary">
+<main class="col-md-9 ms-sm-auto col-lg-10">
+    <div class="sticky-top" style="z-index: 99;">
+        <ul class="list-group shadow-sm rounded-0 mb-2">
+            <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-tertiary transparent-blur">
+                <div class="d-xxl-flex justify-content-center">
+                    <div class="no-fluid-content">
                         <div class="input-group input-group-sm">
                             <input type="search" class="form-control form-control-sm rounded-start-3" id="externalSearch" placeholder="Cari merek, nama obat, dan isi obat">
                             <button class="btn btn-success btn-sm bg-gradient rounded-end-3" type="button" id="refreshButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan"><i class="fa-solid fa-sync"></i></button>
                         </div>
-                    </li>
-                </ul>
-            </div>
-            <div class="mb-2">
-                <table id="tabel" class="table table-sm table-hover m-0 p-0" style="width:100%; font-size: 9pt;">
-                    <thead>
-                        <tr class="align-middle">
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">No</th>
-                            <th scope="col" class="bg-body-secondary border-secondary text-nowrap" style="border-bottom-width: 2px;">Tindakan</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Merek</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Nama</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Isi</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Kategori</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Bentuk</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Harga Obat</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">PPN</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Mark Up</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Pembulatan Harga</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Penyesuaian Harga</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Harga Jual</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Jumlah Masuk</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Jumlah Keluar</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Sisa Stok</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Terakhir Diperbarui</th>
-                        </tr>
-                    </thead>
-                    <tbody class="align-top">
-                    </tbody>
-                </table>
-            </div>
-            <div class="modal modal-sheet p-4 py-md-5 fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" role="dialog">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content bg-body-tertiary rounded-4 shadow-lg transparent-blur">
-                        <div class="modal-body p-4 text-center">
-                            <h5 class="mb-0" id="deleteMessage"></h5>
-                        </div>
-                        <div class="modal-footer flex-nowrap p-0" style="border-top: 1px solid var(--bs-border-color-translucent);">
-                            <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end" style="border-right: 1px solid var(--bs-border-color-translucent)!important;" data-bs-dismiss="modal">Tidak</button>
-                            <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0" id="confirmDeleteBtn">Ya</button>
-                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal fade" id="obatModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="obatModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-lg modal-fullscreen-lg-down modal-dialog-centered modal-dialog-scrollable rounded-3">
-                    <form id="obatForm" enctype="multipart/form-data" class="modal-content bg-body-tertiary shadow-lg transparent-blur">
-                        <div class="modal-header justify-content-between pt-2 pb-2" style="border-bottom: 1px solid var(--bs-border-color-translucent);">
-                            <h6 class="pe-2 modal-title fs-6 text-truncate" id="obatModalLabel" style="font-weight: bold;"></h6>
-                            <button id="closeBtn" type="button" class="btn btn-danger btn-sm bg-gradient ps-0 pe-0 pt-0 pb-0 rounded-3" data-bs-dismiss="modal" aria-label="Close"><span data-feather="x" class="mb-0" style="width: 30px; height: 30px;"></span></button>
-                        </div>
-                        <div class="modal-body py-2">
-                            <input type="hidden" id="id_obat" name="id_obat">
-                            <div class="form-floating mt-1 mb-1">
-                                <select class="form-select rounded-3" id="id_supplier" name="id_supplier" aria-label="id_supplier">
-                                    <option value="" disabled selected>-- Pilih Merek dan Supplier --</option>
-                                </select>
-                                <label for="id_dokter">Merek dan Supplier*</label>
-                                <div class="invalid-feedback"></div>
-                            </div>
-                            <div class="form-floating mb-1 mt-1">
-                                <input type="text" class="form-control rounded-3" autocomplete="off" dir="auto" placeholder="nama_obat" id="nama_obat" name="nama_obat">
-                                <label for="nama_obat">Nama*</label>
-                                <div class="invalid-feedback"></div>
-                            </div>
-                            <div class="form-floating mb-1 mt-1">
-                                <input type="text" class="form-control rounded-3" autocomplete="off" dir="auto" placeholder="isi_obat" id="isi_obat" name="isi_obat">
-                                <label for="isi_obat">Isi</label>
-                                <div class="invalid-feedback"></div>
-                            </div>
-                            <div class="form-floating mt-1 mb-1">
-                                <input type="text" class="form-control rounded-3" autocomplete="off" dir="auto" placeholder="kategori_obat" id="kategori_obat" name="kategori_obat" list="list_kategori_obat">
-                                <label for="kategori_obat">Kategori Obat</label>
-                                <div class="invalid-feedback"></div>
-                                <datalist id="list_kategori_obat">
-                                    <option value="Antibiotik">
-                                    <option value="Antiinflamasi">
-                                    <option value="Antihistamin">
-                                    <option value="Dekongestan">
-                                    <option value="Pelumas">
-                                    <option value="Antiglaukoma">
-                                    <option value="Antivirus">
-                                    <option value="Antijamur">
-                                    <option value="Suplemen">
-                                </datalist>
-                            </div>
-                            <div class="form-floating mt-1 mb-1">
-                                <select class="form-select rounded-3" id="bentuk_obat" name="bentuk_obat" aria-label="bentuk_obat">
-                                    <option value="" disabled selected>-- Pilih Bentuk --</option>
-                                    <optgroup label="Obat Luar">
-                                        <option value="Tetes">Tetes</option>
-                                        <option value="Salep">Salep</option>
-                                    </optgroup>
-                                    <optgroup label="Obat Dalam">
-                                        <option value="Tablet/Kapsul">Tablet/Kapsul</option>
-                                        <option value="Sirup">Sirup</option>
-                                    </optgroup>
-                                    <optgroup label="Lainnya">
-                                        <option value="Alat Kesehatan">Alat Kesehatan</option>
-                                    </optgroup>
-                                </select>
-                                <label for="bentuk_obat">Bentuk*</label>
-                                <div class="invalid-feedback"></div>
-                            </div>
-                            <div class="form-floating mb-1 mt-1">
-                                <input type="number" class="form-control rounded-3" autocomplete="off" dir="auto" placeholder="harga_obat" id="harga_obat" name="harga_obat">
-                                <label for="harga_obat">Harga Obat (Rp)*</label>
-                                <div class="invalid-feedback"></div>
-                            </div>
-                            <div class="form-floating mb-1 mt-1">
-                                <input type="number" class="form-control rounded-3" autocomplete="off" dir="auto" placeholder="ppn" id="ppn" name="ppn">
-                                <label for="ppn">PPN (%)*</label>
-                                <div class="invalid-feedback"></div>
-                            </div>
-                            <div class="form-floating mb-1 mt-1">
-                                <input type="number" class="form-control rounded-3" autocomplete="off" dir="auto" placeholder="mark_up" id="mark_up" name="mark_up">
-                                <label for="mark_up">Mark Up (%)*</label>
-                                <div class="invalid-feedback"></div>
-                            </div>
-                            <div class="form-floating mb-1 mt-1">
-                                <input type="number" class="form-control rounded-3" autocomplete="off" dir="auto" placeholder="penyesuaian_harga" id="penyesuaian_harga" name="penyesuaian_harga">
-                                <label for="penyesuaian_harga">Penyesuaian Harga (Rp)*</label>
-                                <div class="invalid-feedback"></div>
-                            </div>
-                            <div class="form-floating mb-1 mt-1">
-                                <input type="number" class="form-control rounded-3" autocomplete="off" dir="auto" placeholder="jumlah_masuk" id="jumlah_masuk" name="jumlah_masuk">
-                                <label for="jumlah_masuk" id="stok_label"></label>
-                                <div class="invalid-feedback"></div>
-                            </div>
-                        </div>
-                        <div class="modal-footer justify-content-between pt-2 pb-2" style="border-top: 1px solid var(--bs-border-color-translucent);">
-                            <div>
-                                Harga Jual: <span class="fw-bold date" id="hasil_harga_jual">Rp0</span>
-                            </div>
-                            <button type="submit" id="submitButton" class="btn btn-primary bg-gradient rounded-3">
-                                <i class="fa-solid fa-floppy-disk"></i> Simpan
-                            </button>
-                        </div>
-                    </form>
+            </li>
+        </ul>
+    </div>
+    <div class="px-3 px-md-4">
+        <div class="d-xxl-flex justify-content-center">
+            <div class="no-fluid-content">
+                <div class="mb-3">
+                    <table id="tabel" class="table table-sm table-hover m-0 p-0" style="width:100%; font-size: 9pt;">
+                        <thead>
+                            <tr class="align-middle">
+                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">No</th>
+                                <th scope="col" class="bg-body-secondary border-secondary text-nowrap" style="border-bottom-width: 2px;">Tindakan</th>
+                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Merek</th>
+                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Nama</th>
+                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Isi</th>
+                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Kategori</th>
+                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Bentuk</th>
+                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Harga Obat</th>
+                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">PPN</th>
+                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Mark Up</th>
+                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Pembulatan Harga</th>
+                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Penyesuaian Harga</th>
+                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Harga Jual</th>
+                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Jumlah Masuk</th>
+                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Jumlah Keluar</th>
+                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Sisa Stok</th>
+                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Terakhir Diperbarui</th>
+                            </tr>
+                        </thead>
+                        <tbody class="align-top">
+                        </tbody>
+                    </table>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="modal modal-sheet p-4 py-md-5 fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content bg-body-tertiary rounded-4 shadow-lg transparent-blur">
+                <div class="modal-body p-4 text-center">
+                    <h5 class="mb-0" id="deleteMessage"></h5>
+                </div>
+                <div class="modal-footer flex-nowrap p-0" style="border-top: 1px solid var(--bs-border-color-translucent);">
+                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end" style="border-right: 1px solid var(--bs-border-color-translucent)!important;" data-bs-dismiss="modal">Tidak</button>
+                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0" id="confirmDeleteBtn">Ya</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="obatModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="obatModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-fullscreen-lg-down modal-dialog-centered modal-dialog-scrollable rounded-3">
+            <form id="obatForm" enctype="multipart/form-data" class="modal-content bg-body-tertiary shadow-lg transparent-blur">
+                <div class="modal-header justify-content-between pt-2 pb-2" style="border-bottom: 1px solid var(--bs-border-color-translucent);">
+                    <h6 class="pe-2 modal-title fs-6 text-truncate" id="obatModalLabel" style="font-weight: bold;"></h6>
+                    <button id="closeBtn" type="button" class="btn btn-danger btn-sm bg-gradient ps-0 pe-0 pt-0 pb-0 rounded-3" data-bs-dismiss="modal" aria-label="Close"><span data-feather="x" class="mb-0" style="width: 30px; height: 30px;"></span></button>
+                </div>
+                <div class="modal-body py-2">
+                    <input type="hidden" id="id_obat" name="id_obat">
+                    <div class="form-floating mt-1 mb-1">
+                        <select class="form-select rounded-3" id="id_supplier" name="id_supplier" aria-label="id_supplier">
+                            <option value="" disabled selected>-- Pilih Merek dan Supplier --</option>
+                        </select>
+                        <label for="id_dokter">Merek dan Supplier*</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="form-floating mb-1 mt-1">
+                        <input type="text" class="form-control rounded-3" autocomplete="off" dir="auto" placeholder="nama_obat" id="nama_obat" name="nama_obat">
+                        <label for="nama_obat">Nama*</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="form-floating mb-1 mt-1">
+                        <input type="text" class="form-control rounded-3" autocomplete="off" dir="auto" placeholder="isi_obat" id="isi_obat" name="isi_obat">
+                        <label for="isi_obat">Isi</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="form-floating mt-1 mb-1">
+                        <input type="text" class="form-control rounded-3" autocomplete="off" dir="auto" placeholder="kategori_obat" id="kategori_obat" name="kategori_obat" list="list_kategori_obat">
+                        <label for="kategori_obat">Kategori Obat</label>
+                        <div class="invalid-feedback"></div>
+                        <datalist id="list_kategori_obat">
+                            <option value="Antibiotik">
+                            <option value="Antiinflamasi">
+                            <option value="Antihistamin">
+                            <option value="Dekongestan">
+                            <option value="Pelumas">
+                            <option value="Antiglaukoma">
+                            <option value="Antivirus">
+                            <option value="Antijamur">
+                            <option value="Suplemen">
+                        </datalist>
+                    </div>
+                    <div class="form-floating mt-1 mb-1">
+                        <select class="form-select rounded-3" id="bentuk_obat" name="bentuk_obat" aria-label="bentuk_obat">
+                            <option value="" disabled selected>-- Pilih Bentuk --</option>
+                            <optgroup label="Obat Luar">
+                                <option value="Tetes">Tetes</option>
+                                <option value="Salep">Salep</option>
+                            </optgroup>
+                            <optgroup label="Obat Dalam">
+                                <option value="Tablet/Kapsul">Tablet/Kapsul</option>
+                                <option value="Sirup">Sirup</option>
+                            </optgroup>
+                            <optgroup label="Lainnya">
+                                <option value="Alat Kesehatan">Alat Kesehatan</option>
+                            </optgroup>
+                        </select>
+                        <label for="bentuk_obat">Bentuk*</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="form-floating mb-1 mt-1">
+                        <input type="number" class="form-control rounded-3" autocomplete="off" dir="auto" placeholder="harga_obat" id="harga_obat" name="harga_obat">
+                        <label for="harga_obat">Harga Obat (Rp)*</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="form-floating mb-1 mt-1">
+                        <input type="number" class="form-control rounded-3" autocomplete="off" dir="auto" placeholder="ppn" id="ppn" name="ppn">
+                        <label for="ppn">PPN (%)*</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="form-floating mb-1 mt-1">
+                        <input type="number" class="form-control rounded-3" autocomplete="off" dir="auto" placeholder="mark_up" id="mark_up" name="mark_up">
+                        <label for="mark_up">Mark Up (%)*</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="form-floating mb-1 mt-1">
+                        <input type="number" class="form-control rounded-3" autocomplete="off" dir="auto" placeholder="penyesuaian_harga" id="penyesuaian_harga" name="penyesuaian_harga">
+                        <label for="penyesuaian_harga">Penyesuaian Harga (Rp)*</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="form-floating mb-1 mt-1">
+                        <input type="number" class="form-control rounded-3" autocomplete="off" dir="auto" placeholder="jumlah_masuk" id="jumlah_masuk" name="jumlah_masuk">
+                        <label for="jumlah_masuk" id="stok_label"></label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between pt-2 pb-2" style="border-top: 1px solid var(--bs-border-color-translucent);">
+                    <div>
+                        Harga Jual: <span class="fw-bold date" id="hasil_harga_jual">Rp0</span>
+                    </div>
+                    <button type="submit" id="submitButton" class="btn btn-primary bg-gradient rounded-3">
+                        <i class="fa-solid fa-floppy-disk"></i> Simpan
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </main>
@@ -206,7 +212,7 @@
                 "<'row'<'col-md-12'tr>>" +
                 "<'d-lg-flex justify-content-lg-between align-items-lg-center'<'text-md-center text-lg-start'><'d-md-flex justify-content-md-center d-lg-block'p>>",
             'initComplete': function(settings, json) {
-                $("#tabel").wrap("<div class='card shadow-sm rounded-3 mb-2 shadow-sm overflow-auto position-relative datatables-height'></div>");
+                $("#tabel").wrap("<div class='card shadow-sm rounded-3 mb-3 shadow-sm overflow-auto position-relative datatables-height'></div>");
                 $('.dataTables_filter input[type="search"]').css({
                     'width': '220px'
                 });

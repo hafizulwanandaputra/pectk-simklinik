@@ -132,7 +132,7 @@
 
             <div class="card shadow-sm rounded-3 overflow-auto">
                 <?php if (session()->get('role') == 'Dokter' || session()->get('role') == 'Admin') : ?>
-                    <div class="card-header" id="tambahDetailContainer" style="display: none;">
+                    <div class="card-header bg-body-tertiary" id="tambahDetailContainer" style="display: none;">
                         <form id="tambahDetail" enctype="multipart/form-data">
                             <div class="row g-2">
                                 <div class="col-12">
@@ -198,16 +198,25 @@
                                 <td colspan="5" class="text-center">Memuat detail resep...</td>
                             </tr>
                         </tbody>
-                        <tbody>
-                            <tr>
-                                <th scope="col" class="bg-body-secondary border-secondary text-nowrap" style="border-bottom-width: 0; border-top-width: 2px;" colspan="1"></th>
-                                <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 2px;">Total</th>
-                                <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="jumlah_resep"></th>
-                                <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;"></th>
-                                <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="total_harga"></th>
-                            </tr>
-                        </tbody>
                     </table>
+                </div>
+                <div class="card-footer bg-body-tertiary">
+                    <div class="row d-flex align-items-end">
+                        <div class="col fw-medium text-nowrap">Total Resep</div>
+                        <div class="col text-end">
+                            <div class="date text-nowrap placeholder-glow" id="jumlah_resep">
+                                <span class="placeholder w-100"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row d-flex align-items-end">
+                        <div class="col fw-medium text-nowrap">Total Harga</div>
+                        <div class="col text-end">
+                            <div class="date text-nowrap placeholder-glow fw-bold" id="total_harga">
+                                <span class="placeholder w-100"></span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 

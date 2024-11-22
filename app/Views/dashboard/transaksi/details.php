@@ -106,7 +106,7 @@
             <div class="row gy-3 mb-2">
                 <div class="col-lg-6">
                     <div class="card h-100 shadow-sm rounded-3 overflow-auto">
-                        <div class="card-header" id="tambahLayananContainer" style="display: none;">
+                        <div class="card-header bg-body-tertiary" id="tambahLayananContainer" style="display: none;">
                             <form id="tambahLayanan" enctype="multipart/form-data">
                                 <div class="mb-2">
                                     <select class="form-select rounded-3 form-tindakan" id="id_layanan" name="id_layanan" aria-label="id_layanan">
@@ -150,11 +150,11 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="card-footer">
+                        <div class="card-footer bg-body-tertiary">
                             <div class="row d-flex align-items-end">
                                 <div class="col fw-medium text-nowrap">Sub Total</div>
                                 <div class="col text-end">
-                                    <div class="date text-nowrap placeholder-glow" id="subtotal_layanan">
+                                    <div class="date text-nowrap placeholder-glow fw-bold" id="subtotal_layanan">
                                         <span class="placeholder w-100"></span>
                                     </div>
                                 </div>
@@ -164,7 +164,7 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="card h-100 shadow-sm rounded-3 overflow-auto">
-                        <div class="card-header" id="tambahObatAlkesContainer" style="display: none;">
+                        <div class="card-header bg-body-tertiary" id="tambahObatAlkesContainer" style="display: none;">
                             <form id="tambahObatAlkes" enctype="multipart/form-data">
                                 <div class="mb-2">
                                     <select class="form-select rounded-3" id="id_resep" name="id_resep" aria-label="id_resep">
@@ -203,11 +203,11 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="card-footer">
+                        <div class="card-footer bg-body-tertiary">
                             <div class="row d-flex align-items-end">
                                 <div class="col fw-medium text-nowrap">Sub Total</div>
                                 <div class="col text-end">
-                                    <div class="date text-nowrap placeholder-glow" id="subtotal_obat_alkes">
+                                    <div class="date text-nowrap placeholder-glow fw-bold" id="subtotal_obat_alkes">
                                         <span class="placeholder w-100"></span>
                                     </div>
                                 </div>

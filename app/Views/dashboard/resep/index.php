@@ -12,12 +12,12 @@
 <div style="min-width: 1px; max-width: 1px;"></div>
 <?= $this->endSection(); ?>
 <?= $this->section('content'); ?>
-<main class="col-md-9 ms-sm-auto col-lg-10 px-3 px-md-4">
-    <div class="d-xxl-flex justify-content-center">
-        <div class="no-fluid-content">
-            <div class="sticky-top" style="z-index: 99;">
-                <ul class="list-group shadow-sm rounded-top-0 rounded-bottom-3 mb-2">
-                    <li class="list-group-item border-top-0 bg-body-tertiary">
+<main class="col-md-9 ms-sm-auto col-lg-10">
+    <div class="sticky-top" style="z-index: 99;">
+        <ul class="list-group shadow-sm rounded-0 mb-2">
+            <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-tertiary transparent-blur">
+                <div class="d-xxl-flex justify-content-center">
+                    <div class="no-fluid-content">
                         <div class="d-flex flex-column flex-lg-row mb-1 gap-2 mb-2">
                             <div class="input-group input-group-sm">
                                 <input type="date" id="tanggalFilter" class="form-control rounded-start-3">
@@ -61,74 +61,80 @@
                                 </div>
                             </div>
                         </div>
-                    </li>
-                </ul>
-            </div>
-            <div class="shadow-sm rounded-3">
-                <?php if (session()->get('role') != 'Apoteker') : ?>
-                    <div class="d-grid gap-2">
-                        <button class="btn btn-primary btn-sm bg-gradient rounded-top-3 rounded-bottom-0" type="button" data-bs-toggle="collapse" data-bs-target="#tambahPasienForm" aria-expanded="false" aria-controls="tambahPasienForm">
-                            <i class="fa-solid fa-plus"></i> Tambah Resep Dokter
-                        </button>
                     </div>
-                    <ul id="tambahPasienForm" class="list-group rounded-0 collapse">
-                        <li class="list-group-item border-top-0 border-bottom-0 bg-body-tertiary">
-                            <form id="resepForm" enctype="multipart/form-data" class="d-flex flex-column gap-2">
-                                <div class="flex-fill">
-                                    <select class="form-select rounded-3" id="nomor_registrasi" name="nomor_registrasi" aria-label="nomor_registrasi">
-                                        <option value="" disabled selected>-- Pilih Pasien --</option>
-                                    </select>
-                                    <div class="invalid-feedback"></div>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="px-3 px-md-4">
+        <div class="d-xxl-flex justify-content-center">
+            <div class="no-fluid-content">
+                <div class="shadow-sm rounded-3">
+                    <?php if (session()->get('role') != 'Apoteker') : ?>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-primary btn-sm bg-gradient rounded-top-3 rounded-bottom-0" type="button" data-bs-toggle="collapse" data-bs-target="#tambahPasienForm" aria-expanded="false" aria-controls="tambahPasienForm">
+                                <i class="fa-solid fa-plus"></i> Tambah Resep Dokter
+                            </button>
+                        </div>
+                        <ul id="tambahPasienForm" class="list-group rounded-0 collapse">
+                            <li class="list-group-item border-top-0 border-bottom-0 bg-body-tertiary">
+                                <form id="resepForm" enctype="multipart/form-data" class="d-flex flex-column gap-2">
+                                    <div class="flex-fill">
+                                        <select class="form-select rounded-3" id="nomor_registrasi" name="nomor_registrasi" aria-label="nomor_registrasi">
+                                            <option value="" disabled selected>-- Pilih Pasien --</option>
+                                        </select>
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                    <div class="d-grid gap-2 d-md-flex justify-content-md-end" id="submitButtonContainer">
+                                        <button type="submit" id="submitButton" class="btn btn-primary bg-gradient rounded-3" disabled>
+                                            <i class="fa-solid fa-plus"></i> Tambah
+                                        </button>
+                                    </div>
+                                </form>
+                            </li>
+                        </ul>
+                    <?php endif; ?>
+                    <ul id="resepContainer" class="list-group <?= (session()->get('role') != 'Apoteker') ? 'rounded-top-0 rounded-bottom-3' : 'rounded-3'; ?>">
+                        <?php for ($i = 0; $i < 12; $i++) : ?>
+                            <li class="list-group-item <?= (session()->get('role') != 'Apoteker') ? 'border-top-0' : ''; ?> bg-body-tertiary pb-3 pt-3" style="cursor: wait;">
+                                <div class="d-flex">
+                                    <div class="align-self-center w-100">
+                                        <h5 class="card-title placeholder-glow">
+                                            <span class="placeholder" style="width: 100%"></span>
+                                        </h5>
+                                        <h6 class="card-subtitle mb-2 placeholder-glow">
+                                            <span class="placeholder" style="width: 25%;"></span><br>
+                                            <span class="placeholder" style="width: 12.5%;"></span>
+                                        </h6>
+                                        <p class="card-text placeholder-glow">
+                                            <small>
+                                                <span class="placeholder" style="width: 12.5%;"></span><br>
+                                                <span class="placeholder" style="width: 12.5%;"></span><br>
+                                                <span class="placeholder" style="width: 12.5%;"></span><br>
+                                                <span class="placeholder" style="width: 12.5%;"></span><br>
+                                                <span class="placeholder" style="width: 12.5%;"></span><br>
+                                                <span class="placeholder" style="width: 12.5%;"></span><br>
+                                                <span class="placeholder" style="width: 9%;"></span><br>
+                                                <span class="placeholder" style="width: 9%;"></span>
+                                            </small>
+                                        </p>
+                                    </div>
                                 </div>
-                                <div class="d-grid gap-2 d-md-flex justify-content-md-end" id="submitButtonContainer">
-                                    <button type="submit" id="submitButton" class="btn btn-primary bg-gradient rounded-3" disabled>
-                                        <i class="fa-solid fa-plus"></i> Tambah
-                                    </button>
+                                <hr>
+                                <div class="d-grid gap-2 d-flex justify-content-end">
+                                    <a class="btn btn-body bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                                    <?php if (session()->get('role') != 'Apoteker'): ?>
+                                        <a class="btn btn-danger bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                                    <?php endif; ?>
                                 </div>
-                            </form>
-                        </li>
+                            </li>
+                        <?php endfor; ?>
                     </ul>
-                <?php endif; ?>
-                <ul id="resepContainer" class="list-group <?= (session()->get('role') != 'Apoteker') ? 'rounded-top-0 rounded-bottom-3' : 'rounded-3'; ?>">
-                    <?php for ($i = 0; $i < 12; $i++) : ?>
-                        <li class="list-group-item <?= (session()->get('role') != 'Apoteker') ? 'border-top-0' : ''; ?> bg-body-tertiary pb-3 pt-3" style="cursor: wait;">
-                            <div class="d-flex">
-                                <div class="align-self-center w-100">
-                                    <h5 class="card-title placeholder-glow">
-                                        <span class="placeholder" style="width: 100%"></span>
-                                    </h5>
-                                    <h6 class="card-subtitle mb-2 placeholder-glow">
-                                        <span class="placeholder" style="width: 25%;"></span><br>
-                                        <span class="placeholder" style="width: 12.5%;"></span>
-                                    </h6>
-                                    <p class="card-text placeholder-glow">
-                                        <small>
-                                            <span class="placeholder" style="width: 12.5%;"></span><br>
-                                            <span class="placeholder" style="width: 12.5%;"></span><br>
-                                            <span class="placeholder" style="width: 12.5%;"></span><br>
-                                            <span class="placeholder" style="width: 12.5%;"></span><br>
-                                            <span class="placeholder" style="width: 12.5%;"></span><br>
-                                            <span class="placeholder" style="width: 12.5%;"></span><br>
-                                            <span class="placeholder" style="width: 9%;"></span><br>
-                                            <span class="placeholder" style="width: 9%;"></span>
-                                        </small>
-                                    </p>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="d-grid gap-2 d-flex justify-content-end">
-                                <a class="btn btn-body bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
-                                <?php if (session()->get('role') != 'Apoteker'): ?>
-                                    <a class="btn btn-danger bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
-                                <?php endif; ?>
-                            </div>
-                        </li>
-                    <?php endfor; ?>
-                </ul>
+                </div>
+                <nav id="paginationNav" class="d-flex justify-content-center justify-content-lg-end mt-3 overflow-auto w-100">
+                    <ul class="pagination pagination-sm" style="--bs-pagination-border-radius: var(--bs-border-radius-lg);"></ul>
+                </nav>
             </div>
-            <nav id="paginationNav" class="d-flex justify-content-center justify-content-lg-end mt-3 overflow-auto w-100">
-                <ul class="pagination pagination-sm" style="--bs-pagination-border-radius: var(--bs-border-radius-lg);"></ul>
-            </nav>
         </div>
     </div>
     <div class="modal modal-sheet p-4 py-md-5 fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" role="dialog">

@@ -84,7 +84,7 @@
             </fieldset>
 
             <div class="card shadow-sm rounded-3 overflow-auto">
-                <div class="card-header" id="tambahDetailContainer" style="display: none;">
+                <div class="card-header bg-body-tertiary" id="tambahDetailContainer" style="display: none;">
                     <form id="tambahDetail" enctype="multipart/form-data">
                         <div class="mb-2">
                             <select class="form-select rounded-3" id="id_obat" name="id_obat" aria-label="id_obat">
@@ -123,18 +123,41 @@
                                 <td colspan="7" class="text-center">Memuat detail pembelian...</td>
                             </tr>
                         </tbody>
-                        <tbody>
-                            <tr>
-                                <th scope="col" class="bg-body-secondary border-secondary text-nowrap" style="border-bottom-width: 0; border-top-width: 2px;" colspan="1"></th>
-                                <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 2px;">Total</th>
-                                <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="total_qty"></th>
-                                <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="total_masuk"></th>
-                                <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="total_blm_diterima"></th>
-                                <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;"></th>
-                                <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="total_harga"></th>
-                            </tr>
-                        </tbody>
                     </table>
+                </div>
+                <div class="card-footer bg-body-tertiary">
+                    <div class="row d-flex align-items-end">
+                        <div class="col fw-medium text-nowrap">Total Qty</div>
+                        <div class="col text-end">
+                            <div class="date text-nowrap placeholder-glow" id="total_qty">
+                                <span class="placeholder w-100"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row d-flex align-items-end">
+                        <div class="col fw-medium text-nowrap">Total Masuk</div>
+                        <div class="col text-end">
+                            <div class="date text-nowrap placeholder-glow" id="total_masuk">
+                                <span class="placeholder w-100"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row d-flex align-items-end">
+                        <div class="col fw-medium text-nowrap">Total Belum Diterima</div>
+                        <div class="col text-end">
+                            <div class="date text-nowrap placeholder-glow" id="total_blm_diterima">
+                                <span class="placeholder w-100"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row d-flex align-items-end">
+                        <div class="col fw-medium text-nowrap">Total Harga</div>
+                        <div class="col text-end">
+                            <div class="date text-nowrap placeholder-glow fw-bold" id="total_harga">
+                                <span class="placeholder w-100"></span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
