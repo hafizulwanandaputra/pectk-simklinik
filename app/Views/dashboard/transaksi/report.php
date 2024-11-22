@@ -50,13 +50,17 @@
                                     <td colspan="9" class="text-center" style="cursor: wait;">Memuat data transaksi...</td>
                                 </tr>
                             </tbody>
-                            <tbody>
-                                <tr>
-                                    <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 2px;" colspan="8">Total Pemasukan</th>
-                                    <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="total_all"></th>
-                                </tr>
-                            </tbody>
                         </table>
+                        <div class="card-footer bg-body-tertiary">
+                            <div class="row d-flex align-items-end">
+                                <div class="col fw-medium text-nowrap">Total Pemasukan</div>
+                                <div class="col text-end">
+                                    <div class="date text-nowrap placeholder-glow fw-bold" id="total_all">
+                                        <span class="placeholder w-100"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div id="reportBtns" style="display: none;">
                         <hr>
@@ -129,6 +133,7 @@
                     </tr>
                 `;
                 $('#datatransaksi').append(emptyRow); // Menambahkan baris kosong ke tabel
+                $('#total_all').text('Rp0');
                 return; // Keluar dari fungsi
             }
 
@@ -151,6 +156,7 @@
                     </tr>
                 `;
                 $('#datatransaksi').append(emptyRow); // Menambahkan baris pesan ke tabel
+                $('#total_all').text('Rp0');
             }
 
             // Mengurutkan data transaksi berdasarkan no_kwitansi

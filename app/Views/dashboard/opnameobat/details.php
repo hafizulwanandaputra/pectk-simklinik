@@ -52,13 +52,17 @@
                             <td colspan="3" class="text-center">Memuat detail obat...</td>
                         </tr>
                     </tbody>
-                    <tbody>
-                        <tr>
-                            <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 2px;" colspan="2">Total</th>
-                            <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="total_stok"></th>
-                        </tr>
-                    </tbody>
                 </table>
+                <div class="card-footer bg-body-tertiary">
+                    <div class="row d-flex align-items-end">
+                        <div class="col fw-medium text-nowrap">Total</div>
+                        <div class="col text-end">
+                            <div class="date text-nowrap placeholder-glow fw-bold" id="total_stok">
+                                <span class="placeholder w-100"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div id="exportOpnameObatBtn">

@@ -70,14 +70,25 @@
                                             <td colspan="6" class="text-center" style="cursor: wait;">Memuat data resep...</td>
                                         </tr>
                                     </tbody>
-                                    <tbody>
-                                        <tr>
-                                            <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 2px;" colspan="4">Total Keseluruhan</th>
-                                            <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="total_keluar_harian"></th>
-                                            <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="total_harga_harian"></th>
-                                        </tr>
-                                    </tbody>
                                 </table>
+                                <div class="card-footer bg-body-tertiary">
+                                    <div class="row d-flex align-items-end">
+                                        <div class="col fw-medium text-nowrap">Total Obat Keluar</div>
+                                        <div class="col text-end">
+                                            <div class="date text-nowrap placeholder-glow" id="total_keluar_harian">
+                                                <span class="placeholder w-100"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row d-flex align-items-end">
+                                        <div class="col fw-medium text-nowrap">Total Harga</div>
+                                        <div class="col text-end">
+                                            <div class="date text-nowrap placeholder-glow fw-bold" id="total_harga_harian">
+                                                <span class="placeholder w-100"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div id="reportBtns1" style="display: none;">
                                 <hr>
@@ -116,14 +127,25 @@
                                             <td colspan="7" class="text-center" style="cursor: wait;">Memuat data resep...</td>
                                         </tr>
                                     </tbody>
-                                    <tbody>
-                                        <tr>
-                                            <th scope="col" class="bg-body-secondary border-secondary text-end" style="border-bottom-width: 0; border-top-width: 2px;" colspan="5">Total Keseluruhan</th>
-                                            <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="total_keluar_bulanan"></th>
-                                            <th scope="col" class="bg-body-secondary border-secondary text-end date" style="border-bottom-width: 0; border-top-width: 2px;" id="total_harga_bulanan"></th>
-                                        </tr>
-                                    </tbody>
                                 </table>
+                                <div class="card-footer bg-body-tertiary">
+                                    <div class="row d-flex align-items-end">
+                                        <div class="col fw-medium text-nowrap">Total Obat Keluar</div>
+                                        <div class="col text-end">
+                                            <div class="date text-nowrap placeholder-glow" id="total_keluar_bulanan">
+                                                <span class="placeholder w-100"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row d-flex align-items-end">
+                                        <div class="col fw-medium text-nowrap">Total Harga</div>
+                                        <div class="col text-end">
+                                            <div class="date text-nowrap placeholder-glow fw-bold" id="total_harga_bulanan">
+                                                <span class="placeholder w-100"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div id="reportBtns2" style="display: none;">
                                 <hr>
@@ -280,6 +302,8 @@
                     </tr>
                 `;
                 $('#resepharian').append(emptyRow); // Menambahkan baris kosong ke tabel
+                $('#total_keluar_harian').text('0');
+                $('#total_harga_harian').text('Rp0');
                 return; // Keluar dari fungsi
             }
 
@@ -413,6 +437,8 @@
                     </tr>
                 `;
                 $('#resepbulanan').append(emptyRow); // Menambahkan baris kosong ke tabel
+                $('#total_keluar_bulanan').text('0');
+                $('#total_harga_bulanan').text('Rp0');
                 return; // Keluar dari fungsi
             }
 
