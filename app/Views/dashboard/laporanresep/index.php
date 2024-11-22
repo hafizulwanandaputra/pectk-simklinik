@@ -404,8 +404,6 @@
 
     // Event listener ketika kotak centang diubah
     $('.dokter-checkbox-1').on('change', function() {
-        $('#resepharian').empty(); // Kosongkan tabel resep
-        $('#resepharian').append(loading1); // Menampilkan loading indicator
         fetchResep1(); // Memanggil fungsi untuk mengambil data resep
     });
 
@@ -538,8 +536,6 @@
 
     // Event listener ketika kotak centang diubah
     $('.dokter-checkbox-2').on('change', function() {
-        $('#resepbulanan').empty(); // Kosongkan tabel resep
-        $('#resepbulanan').append(loading2); // Menampilkan loading indicator
         fetchResep2(); // Memanggil fungsi untuk mengambil data resep
     });
 
