@@ -109,7 +109,7 @@
                     <thead>
                         <tr class="align-middle">
                             <th scope="col" class="bg-body-secondary border-secondary text-nowrap tindakan" style="border-bottom-width: 2px; width: 0%;">Tindakan</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">Nama Obat</th>
+                            <th scope="col" class="bg-body-secondary border-secondary col-resize" style="border-bottom-width: 2px; width: 100%;">Nama Obat</th>
                             <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Jumlah</th>
                             <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Obat Masuk</th>
                             <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Obat Belum Diterima</th>
@@ -302,6 +302,7 @@
             let totalBlmDiterima = 0;
 
             if (data.length === 0) {
+                $('.col-resize').css('min-width', '0');
                 // Tampilkan pesan jika tidak ada data
                 const emptyRow = `
                     <tr>
@@ -312,6 +313,7 @@
                 $('#completeBtn').prop('disabled', true);
                 $('#printBtn').prop('disabled', true);
             } else {
+                $('.col-resize').css('min-width', '256px');
                 data.forEach(function(detail_pembelian_obat) {
                     const jumlah = parseInt(detail_pembelian_obat.jumlah); // Konversi jumlah ke integer
                     const obat_masuk = parseInt(detail_pembelian_obat.obat_masuk_baru); // Konversi obat_masuk ke integer
@@ -332,7 +334,7 @@
                                 <button class="btn btn-outline-danger text-nowrap bg-gradient rounded-end-3 delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${detail_pembelian_obat.id_detail_pembelian_obat}" data-name="${detail_pembelian_obat.nama_obat}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
                             </div>
                         </td>
-                        <td class="text-nowrap">
+                        <td>
                             ${detail_pembelian_obat.nama_obat}<br><small>${detail_pembelian_obat.kategori_obat} • ${detail_pembelian_obat.bentuk_obat}</small>
                             <ul class="list-group shadow-sm rounded-3" id="item-${detail_pembelian_obat.id_detail_pembelian_obat}">
                             </ul>
@@ -390,6 +392,7 @@
             $('[data-bs-toggle="tooltip"]').tooltip();
         } catch (error) {
             showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+            $('.col-resize').css('min-width', '0');
             $('#detail_pembelian_obat').empty();
         } finally {
             // Hide the spinner when done
