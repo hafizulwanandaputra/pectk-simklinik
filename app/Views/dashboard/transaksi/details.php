@@ -189,7 +189,7 @@
                             <thead>
                                 <tr class="align-middle">
                                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Tindakan</th>
-                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">Nama Obat dan Alkes</th>
+                                    <th scope="col" class="bg-body-secondary border-secondary col-resize" style="border-bottom-width: 2px; width: 100%;">Nama Obat dan Alkes</th>
                                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Harga</th>
                                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Diskon</th>
                                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Pembayaran</th>
@@ -637,6 +637,7 @@
             let totalPembayaran = 0;
 
             if (data.length === 0) {
+                $('.col-resize').css('min-width', '0');
                 // Tampilkan pesan jika tidak ada data
                 const emptyRow = `
                     <tr>
@@ -646,6 +647,7 @@
                 $('#list_obat_alkes').append(emptyRow);
                 $('#processBtn').prop('disabled', true);
             } else {
+                $('.col-resize').css('min-width', '256px');
                 data.forEach(function(obat_alkes) {
                     const diskon = parseInt(obat_alkes.diskon); // Konversi jumlah ke integer
                     const qty_transaksi = parseInt(obat_alkes.qty_transaksi);
@@ -679,7 +681,7 @@
                         const total_harga = Math.round((jumlah * harga_satuan) * (1 - (diskon / 100))); // Hitung total harga
 
                         const obat_alkesElement = `
-                                <li>${detail_resep.nama_obat}<br><small>${detail_resep.kategori_obat} • ${detail_resep.bentuk_obat} • ${detail_resep.signa} • ${detail_resep.cara_pakai} • ${jumlah.toLocaleString('id-ID')} × Rp${harga_satuan.toLocaleString('id-ID')} × ${diskon}% = Rp${total_harga.toLocaleString('id-ID')}<br>${detail_resep.catatan}</small></li>
+                                <li>${detail_resep.nama_obat}<br><small>${detail_resep.kategori_obat} • ${detail_resep.bentuk_obat} • ${detail_resep.signa} • ${detail_resep.cara_pakai}<br>${jumlah.toLocaleString('id-ID')} × Rp${harga_satuan.toLocaleString('id-ID')} × ${diskon}% = Rp${total_harga.toLocaleString('id-ID')}<br>${detail_resep.catatan}</small></li>
                             `;
 
                         $(`#obat-${obat_alkes.id_detail_transaksi}`).append(obat_alkesElement);
@@ -699,6 +701,7 @@
             $('[data-bs-toggle="tooltip"]').tooltip();
         } catch (error) {
             showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+            $('.col-resize').css('min-width', '0');
             $('#list_obat_alkes').empty();
         } finally {
             // Hide the spinner when done
