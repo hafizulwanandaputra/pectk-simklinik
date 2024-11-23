@@ -109,7 +109,7 @@
                     <thead>
                         <tr class="align-middle">
                             <th scope="col" class="bg-body-secondary border-secondary text-nowrap tindakan" style="border-bottom-width: 2px; width: 0%;">Tindakan</th>
-                            <th scope="col" class="bg-body-secondary border-secondary col-resize" style="border-bottom-width: 2px; width: 100%;">Nama Obat</th>
+                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">Nama Obat</th>
                             <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Jumlah</th>
                             <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Obat Masuk</th>
                             <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Obat Belum Diterima</th>
@@ -302,7 +302,6 @@
             let totalBlmDiterima = 0;
 
             if (data.length === 0) {
-                $('.col-resize').css('min-width', '0');
                 // Tampilkan pesan jika tidak ada data
                 const emptyRow = `
                     <tr>
@@ -313,7 +312,6 @@
                 $('#completeBtn').prop('disabled', true);
                 $('#printBtn').prop('disabled', true);
             } else {
-                $('.col-resize').css('min-width', '256px');
                 data.forEach(function(detail_pembelian_obat) {
                     const jumlah = parseInt(detail_pembelian_obat.jumlah); // Konversi jumlah ke integer
                     const obat_masuk = parseInt(detail_pembelian_obat.obat_masuk_baru); // Konversi obat_masuk ke integer
@@ -353,8 +351,8 @@
                         const itemElement = `
                                 <li class="list-group-item bg-body-tertiary">
                                     <div class="fw-bold">${item.no_batch}</div>
-                                    <div class="date">Kadaluwarsa: ${item.expired}</div>
-                                    <div class="date">Jumlah: ${jumlah_item}</div>
+                                    <div class="date text-nowrap">Kadaluwarsa: ${item.expired}</div>
+                                    <div class="date text-nowrap">Jumlah: ${jumlah_item}</div>
                                     <div class="btn-group" role="group">
                                         <button class="btn btn-outline-body text-nowrap bg-gradient rounded-start-3 edit-batch-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${item.id_item_obat}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
                                         <button class="btn btn-outline-danger text-nowrap bg-gradient rounded-end-3 delete-batch-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${item.id_item_obat}" data-name="${item.no_batch}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
@@ -392,7 +390,6 @@
             $('[data-bs-toggle="tooltip"]').tooltip();
         } catch (error) {
             showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
-            $('.col-resize').css('min-width', '0');
             $('#detail_pembelian_obat').empty();
         } finally {
             // Hide the spinner when done

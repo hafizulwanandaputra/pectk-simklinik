@@ -88,11 +88,11 @@ class Home extends BaseController
         // Memeriksa peran pengguna untuk menghitung resep
         if (session()->get('role') == 'Dokter') {
             // Jika pengguna adalah dokter, hitung resep berdasarkan nama dokter
-            $total_resep_blm_status = $resep->where('status', 0)->where('dokter', session()->get('fullname'))->countAllResults(); // Total resep belum status berdasarkan dokter
-            $total_resep_sdh_status = $resep->where('status', 1)->where('dokter', session()->get('fullname'))->countAllResults(); // Total resep sudah status berdasarkan dokter
-            $resepbydoktergraph = $resep->select('dokter, COUNT(*) AS jumlah')->where('dokter', session()->get('fullname'))->where('status', 1)->groupBy('dokter')->get(); // Resep yang Diberikan Menurut Dokter
+            $total_resep_blm_status = $resep->where('status', 0)->where('dokter !=', 'Resep Luar')->countAllResults(); // Total resep belum status berdasarkan dokter
+            $total_resep_sdh_status = $resep->where('status', 1)->where('dokter !=', 'Resep Luar')->countAllResults(); // Total resep sudah status berdasarkan dokter
+            $resepbydoktergraph = $resep->select('dokter, COUNT(*) AS jumlah')->where('dokter !=', 'Resep Luar')->where('status', 1)->groupBy('dokter')->get(); // Resep yang Diberikan Menurut Dokter
             $resepgraph = $resep->select('DATE_FORMAT(resep.tanggal_resep, "%Y-%m") AS bulan, dokter, COUNT(*) AS total_resep')
-                ->where('dokter', session()->get('fullname'))
+                ->where('dokter !=', 'Resep Luar')
                 ->where('resep.status', 1)
                 ->groupBy('DATE_FORMAT(resep.tanggal_resep, "%Y-%m"), dokter')
                 ->get()

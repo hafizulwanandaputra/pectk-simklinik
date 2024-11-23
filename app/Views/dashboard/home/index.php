@@ -140,40 +140,27 @@
                             </div>
                         </div>
                     </div>
-                    <?php if (session()->get('role') != "Dokter") : ?>
-                        <div class="col">
-                            <div class="card bg-body-tertiary w-100 rounded-3 shadow-sm">
-                                <div class="card-header w-100 text-truncate">Resep Menurut Dokter</div>
-                                <div class="card-body">
-                                    <div class="ratio ratio-16x9 w-100">
-                                        <canvas id="resepbydoktergraph"></canvas>
-                                    </div>
+                    <div class="col">
+                        <div class="card bg-body-tertiary w-100 rounded-3 shadow-sm">
+                            <div class="card-header w-100 text-truncate">Resep Menurut Dokter</div>
+                            <div class="card-body">
+                                <div class="ratio ratio-16x9 w-100">
+                                    <canvas id="resepbydoktergraph"></canvas>
                                 </div>
                             </div>
                         </div>
-                        <div class="col">
-                            <div class="card bg-body-tertiary w-100 rounded-3 shadow-sm">
-                                <div class="card-header w-100 text-truncate">Resep Per Bulan</div>
-                                <div class="card-body">
-                                    <div class="ratio ratio-16x9 w-100">
-                                        <canvas id="resepgraph"></canvas>
-                                    </div>
+                    </div>
+                    <div class="col">
+                        <div class="card bg-body-tertiary w-100 rounded-3 shadow-sm">
+                            <div class="card-header w-100 text-truncate">Resep Per Bulan</div>
+                            <div class="card-body">
+                                <div class="ratio ratio-16x9 w-100">
+                                    <canvas id="resepgraph"></canvas>
                                 </div>
-                            </div>
-                        </div>
-                    <?php else : ?>
-                </div>
-                <div class="mb-2">
-                    <div class="card bg-body-tertiary w-100 rounded-3 shadow-sm">
-                        <div class="card-header w-100 text-truncate">Resep Per Bulan</div>
-                        <div class="card-body">
-                            <div class="ratio ratio-16x9 <?= (session()->get('role') == 'Dokter') ? 'ratio-onecol' : ''; ?> w-100">
-                                <canvas id="resepgraph"></canvas>
                             </div>
                         </div>
                     </div>
                 </div>
-            <?php endif; ?>
             </fieldset>
         <?php endif; ?>
         <?php if (session()->get('role') == "Admin" || session()->get('role') == "Kasir") : ?>
@@ -317,7 +304,7 @@
         });
     }
     Chart.defaults.font.family = '"Helvetica Neue", Helvetica, Arial, "Liberation Sans", sans-serif';
-    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Apoteker") : ?>
+    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Apoteker" || session()->get('role') == "Dokter") : ?>
         const data_resepbydoktergraph = [];
         const label_resepbydoktergraph = [];
     <?php endif; ?>
@@ -328,7 +315,7 @@
         const label_pemasukanperbulangraph = [];
     <?php endif; ?>
 
-    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Apoteker") : ?>
+    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Apoteker" || session()->get('role') == "Dokter") : ?>
         <?php foreach ($resepbydoktergraph->getResult() as $key => $resepbydoktergraph) : ?>
             data_resepbydoktergraph.push(<?= $resepbydoktergraph->jumlah; ?>);
             label_resepbydoktergraph.push('<?= $resepbydoktergraph->dokter; ?>');
@@ -345,7 +332,7 @@
         <?php endforeach; ?>
     <?php endif; ?>
 
-    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Apoteker") : ?>
+    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Apoteker" || session()->get('role') == "Dokter") : ?>
         var data_content_resepbydoktergraph = {
             labels: label_resepbydoktergraph,
             datasets: [{
@@ -356,8 +343,6 @@
                 data: data_resepbydoktergraph
             }]
         }
-    <?php endif; ?>
-    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Apoteker" || session()->get('role') == "Dokter") : ?>
         var data_content_resepgraph = {
             labels: <?= $labels_resep ?>,
             datasets: <?= $datasets_resep ?>
@@ -390,7 +375,7 @@
         }
     <?php endif; ?>
 
-    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Apoteker") : ?>
+    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Apoteker" || session()->get('role') == "Dokter") : ?>
         var chart_resepbydoktergraph = createChart(document.getElementById('resepbydoktergraph').getContext('2d'), {
             type: 'pie',
             data: data_content_resepbydoktergraph,
@@ -410,8 +395,6 @@
                 }
             }
         })
-    <?php endif; ?>
-    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Apoteker" || session()->get('role') == "Dokter") : ?>
         var chart_resepgraph = createChart(document.getElementById('resepgraph').getContext('2d'), {
             type: 'line',
             data: data_content_resepgraph,

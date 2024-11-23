@@ -141,8 +141,22 @@
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="col-6">
-                                <input type="text" id="signa" name="signa" class="form-control form-control-sm rounded-3" placeholder="Dosis" autocomplete="off">
+                                <input type="text" id="signa" name="signa" class="form-control form-control-sm rounded-3" placeholder="Dosis" list="list_signa" autocomplete="off">
                                 <div class="invalid-feedback"></div>
+                                <datalist id="list_signa">
+                                    <option value="1×½">
+                                    <option value="1×1">
+                                    <option value="2×½">
+                                    <option value="2×1">
+                                    <option value="3×½">
+                                    <option value="3×1">
+                                    <option value="4×½">
+                                    <option value="4×1">
+                                    <option value="5×½">
+                                    <option value="5×1">
+                                    <option value="6×½">
+                                    <option value="6×1">
+                                </datalist>
                             </div>
                             <div class="col-6">
                                 <input type="text" id="catatan" name="catatan" class="form-control form-control-sm rounded-3" placeholder="Catatan" list="list_catatan" autocomplete="off">
@@ -586,8 +600,22 @@
                         <input type="hidden" id="id_detail_resep" name="id_detail_resep" value="${response.data.id_detail_resep}">
                         <div class="row g-2">
                             <div class="col-6">
-                                <input type="text" id="signa_edit" name="signa_edit" class="form-control form-control-sm rounded-3" placeholder="Dosis" value="${response.data.signa}" autocomplete="off">
+                                <input type="text" id="signa_edit" name="signa_edit" class="form-control form-control-sm rounded-3" placeholder="Dosis" value="${response.data.signa}" list="list_signa_edit" autocomplete="off">
                                 <div class="invalid-feedback"></div>
+                                <datalist id="list_signa_edit">
+                                    <option value="1×½">
+                                    <option value="1×1">
+                                    <option value="2×½">
+                                    <option value="2×1">
+                                    <option value="3×½">
+                                    <option value="3×1">
+                                    <option value="4×½">
+                                    <option value="4×1">
+                                    <option value="5×½">
+                                    <option value="5×1">
+                                    <option value="6×½">
+                                    <option value="6×1">
+                                </datalist>
                             </div>
                             <div class="col-6">
                                 <input type="text" id="catatan_edit" name="catatan_edit" class="form-control form-control-sm rounded-3" placeholder="Catatan" value="${response.data.catatan}" list="list_catatan_edit" autocomplete="off">

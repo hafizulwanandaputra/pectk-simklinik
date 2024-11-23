@@ -644,7 +644,7 @@ class Resep extends BaseController
             // Memeriksa apakah jumlah keluar melebihi stok
             if ($new_jumlah_keluar > $obat['jumlah_masuk']) {
                 $db->transRollback();
-                return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Jumlah obat melebihi stok', 'errors' => NULL]);
+                return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Jumlah obat melebihi stok<br>Maksimum: ' . ($obat['jumlah_masuk'] - $obat['jumlah_keluar']), 'errors' => NULL]);
             }
 
             // Menghitung jumlah resep
@@ -769,7 +769,7 @@ class Resep extends BaseController
             // Memeriksa apakah jumlah keluar melebihi stok
             if ($new_jumlah_keluar > $obat['jumlah_masuk']) {
                 $db->transRollback();
-                return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Jumlah obat melebihi stok', 'errors' => NULL]);
+                return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Jumlah obat melebihi stok<br>Maksimum: ' . ($obat['jumlah_masuk'] - $obat['jumlah_keluar'] + $detail_resep['jumlah']), 'errors' => NULL]);
             }
 
             // Menghitung jumlah resep
