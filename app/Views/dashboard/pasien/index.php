@@ -179,10 +179,10 @@
             });
         } catch (error) {
             // Menangani error jika permintaan gagal
-            console.error(error.response.data.error); // Menampilkan error di konsol
+            console.error(error.response.data.details); // Menampilkan error di konsol
             const errorRow = `
                 <div class="accordion-item shadow-sm p-3 p-3">
-                    <h2 class="text-center text-danger mb-0" style="font-weight: 300;">${error.response.data.error}</h2>
+                    <h2 class="text-center text-danger mb-0" style="font-weight: 300;">${error.response.data.error}<br>${error.response.data.details.message}</h2>
                 </div>
             `;
             $('#datapasien').empty(); // Kosongkan tabel pasien

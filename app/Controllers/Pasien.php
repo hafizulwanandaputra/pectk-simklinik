@@ -60,9 +60,28 @@ class Pasien extends BaseController
                     'data' => $data,
                 ]);
             } catch (RequestException $e) {
-                // Menangani kesalahan saat melakukan permintaan API
+                // Periksa apakah ada respons dari API
+                $response = $e->getResponse();
+                $errorDetails = [];
+
+                // Jika ada respons, coba parse JSON-nya
+                if ($response) {
+                    $body = $response->getBody()->getContents();
+                    $errorDetails = json_decode($body, true);
+
+                    // Jika parsing gagal, simpan teks asli
+                    if (json_last_error() !== JSON_ERROR_NONE) {
+                        $errorDetails = ['raw_error' => $body];
+                    }
+                } else {
+                    // Jika tidak ada respons, gunakan pesan kesalahan default
+                    $errorDetails = ['message' => $e->getMessage()];
+                }
+
+                // Mengembalikan respons dengan detail kesalahan
                 return $this->response->setStatusCode(500)->setJSON([
-                    'error' => 'Gagal mengambil data pasien<br>' . $e->getMessage(),
+                    'error' => 'Gagal mengambil data pasien',
+                    'details' => $errorDetails,
                 ]);
             }
         } else {

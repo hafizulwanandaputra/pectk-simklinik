@@ -214,7 +214,7 @@
                     showFailedToast('Gagal mendapatkan pasien.');
                 }
             } catch (error) {
-                showFailedToast('Gagal mendapatkan pasien.<br>' + error);
+                showFailedToast(`${error.response.data.error}<br>${error.response.data.details.message}`);
             }
         }
     <?php endif; ?>
@@ -586,8 +586,10 @@
                     }
                 }
             } catch (error) {
-                if (error.response.request.status === 500 || error.response.request.status === 404) {
+                if (error.response.request.status === 404) {
                     showFailedToast(error.response.data.message);
+                } else if (error.response.request.status === 422) {
+                    showFailedToast(`${error.response.data.error}<br>${error.response.data.details.message}`);
                 } else {
                     showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
                 }

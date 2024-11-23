@@ -207,9 +207,28 @@ class Resep extends BaseController
                     'data' => $options,
                 ]);
             } catch (RequestException $e) {
-                // Menangani error saat permintaan API
-                return $this->response->setStatusCode(500)->setJSON([
-                    'error' => 'Gagal mengambil data pasien: ' . $e->getMessage(),
+                // Periksa apakah ada respons dari API
+                $response = $e->getResponse();
+                $errorDetails = [];
+
+                // Jika ada respons, coba parse JSON-nya
+                if ($response) {
+                    $body = $response->getBody()->getContents();
+                    $errorDetails = json_decode($body, true);
+
+                    // Jika parsing gagal, simpan teks asli
+                    if (json_last_error() !== JSON_ERROR_NONE) {
+                        $errorDetails = ['raw_error' => $body];
+                    }
+                } else {
+                    // Jika tidak ada respons, gunakan pesan kesalahan default
+                    $errorDetails = ['message' => $e->getMessage()];
+                }
+
+                // Mengembalikan respons dengan detail kesalahan
+                return $this->response->setStatusCode(422)->setJSON([
+                    'error' => 'Terjadi kesalahan saat mengambil data pasien',
+                    'details' => $errorDetails,
                 ]);
             }
         } else {
@@ -309,9 +328,30 @@ class Resep extends BaseController
                 // Menyimpan data resep ke dalam model
                 $this->ResepModel->save($data);
                 return $this->response->setJSON(['success' => true, 'message' => 'Resep berhasil ditambahkan']);
-            } catch (\Exception $e) {
-                // Menangani kesalahan saat mengambil data
-                return $this->response->setStatusCode(500)->setJSON(['success' => false, 'message' => 'Terjadi kesalahan saat mengambil data: ' . $e->getMessage(), 'errors' => NULL]);
+            } catch (RequestException $e) {
+                // Periksa apakah ada respons dari API
+                $response = $e->getResponse();
+                $errorDetails = [];
+
+                // Jika ada respons, coba parse JSON-nya
+                if ($response) {
+                    $body = $response->getBody()->getContents();
+                    $errorDetails = json_decode($body, true);
+
+                    // Jika parsing gagal, simpan teks asli
+                    if (json_last_error() !== JSON_ERROR_NONE) {
+                        $errorDetails = ['raw_error' => $body];
+                    }
+                } else {
+                    // Jika tidak ada respons, gunakan pesan kesalahan default
+                    $errorDetails = ['message' => $e->getMessage()];
+                }
+
+                // Mengembalikan respons dengan detail kesalahan
+                return $this->response->setStatusCode(500)->setJSON([
+                    'error' => 'Terjadi kesalahan saat mengambil data pasien, data resep gagal ditambahkan!',
+                    'details' => $errorDetails,
+                ]);
             }
         } else {
             // Mengembalikan status 404 jika peran tidak diizinkan
