@@ -294,7 +294,7 @@
                         </div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
-                        <input type="number" class="form-control" autocomplete="off" dir="auto" placeholder="terima_uang" id="terima_uang" name="terima_uang">
+                        <input type="number" class="form-control rounded-3" autocomplete="off" dir="auto" placeholder="terima_uang" id="terima_uang" name="terima_uang">
                         <label for="terima_uang">Terima Uang (Rp)*</label>
                         <div class="invalid-feedback"></div>
                     </div>
@@ -308,7 +308,7 @@
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1" id="bank_field" style="display: none;">
-                        <input type="text" class="form-control" autocomplete="off" dir="auto" placeholder="bank" id="bank" name="bank" list="bank_list">
+                        <input type="text" class="form-control rounded-3" autocomplete="off" dir="auto" placeholder="bank" id="bank" name="bank" list="bank_list">
                         <label for="bank">Bank/E-wallet*</label>
                         <div class="invalid-feedback"></div>
                         <datalist id="bank_list">
@@ -371,7 +371,7 @@
                         </div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
-                        <input type="password" class="form-control" autocomplete="off" dir="auto" placeholder="password" id="password" name="password">
+                        <input type="password" class="form-control rounded-3" autocomplete="off" dir="auto" placeholder="password" id="password" name="password">
                         <label for="password">Masukkan Kata Sandi Transaksi*</label>
                         <div class="invalid-feedback"></div>
                     </div>
