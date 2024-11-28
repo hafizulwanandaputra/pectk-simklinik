@@ -45,7 +45,7 @@
                         </label>
                     </div>
                     <input type="hidden" name="url" value="<?= (isset($_GET['redirect'])) ? base_url('/' . urldecode($_GET['redirect'])) : base_url('/home'); ?>">
-                    <button id="loginBtn" class="w-100 btn btn-lg btn-primary bg-gradient" type="submit">
+                    <button id="loginBtn" class="w-100 btn btn-lg btn-primary rounded bg-gradient" type="submit">
                         <i class="fa-solid fa-right-to-bracket"></i> MASUK
                     </button>
                     <?= form_close(); ?>

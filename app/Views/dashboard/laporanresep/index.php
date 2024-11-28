@@ -39,7 +39,7 @@
             <div class="mb-3">
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane show active" id="resepharian-container" role="tabpanel" aria-labelledby="resepharian-container-tab" tabindex="0">
-                        <fieldset class="border rounded-3 px-2 py-0 mb-3" id="dokter-harian" style="display: none;">
+                        <fieldset class="border rounded px-2 py-0 mb-3" id="dokter-harian" style="display: none;">
                             <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Daftar Dokter</legend>
                             <div class="form-check">
                                 <?php foreach ($daftarDokter as $dokter) : ?>
@@ -97,7 +97,7 @@
                         </div>
                     </div>
                     <div class="tab-pane" id="resepbulanan-container" role="tabpanel" aria-labelledby="resepbulanan-container-tab" tabindex="0">
-                        <fieldset class="border rounded-3 px-2 py-0 mb-3" id="dokter-bulanan" style="display: none;">
+                        <fieldset class="border rounded px-2 py-0 mb-3" id="dokter-bulanan" style="display: none;">
                             <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Daftar Dokter</legend>
                             <div class="form-check">
                                 <?php foreach ($daftarDokter as $dokter) : ?>
