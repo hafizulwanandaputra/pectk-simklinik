@@ -183,7 +183,7 @@
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="col-6">
-                                <input type="number" id="jumlah" name="jumlah" class="form-control form-control-sm " placeholder="Jumlah">
+                                <input type="number" id="jumlah" name="jumlah" class="form-control form-control-sm " placeholder="Qty">
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="d-grid gap-2 d-lg-flex justify-content-lg-end">
@@ -201,7 +201,7 @@
                         <tr class="align-middle">
                             <th scope="col" class="bg-body-secondary border-secondary text-nowrap tindakan" style="border-bottom-width: 2px; width: 0%;">Tindakan</th>
                             <th scope="col" class="bg-body-secondary border-secondary col-resize" style="border-bottom-width: 2px; width: 100%;">Obat</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Jumlah</th>
+                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Qty</th>
                             <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Harga Satuan</th>
                             <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Harga</th>
                         </tr>
@@ -646,7 +646,7 @@
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="col-6">
-                                <input type="text" id="jumlah_edit" name="jumlah_edit" class="form-control form-control-sm " placeholder="Jumlah" value="${response.data.jumlah}" autocomplete="off">
+                                <input type="text" id="jumlah_edit" name="jumlah_edit" class="form-control form-control-sm " placeholder="Qty" value="${response.data.jumlah}" autocomplete="off">
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-2">
