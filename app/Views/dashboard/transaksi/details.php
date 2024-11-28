@@ -43,7 +43,7 @@
 <?= $this->section('content'); ?>
 <main class="col-md-9 ms-sm-auto col-lg-10 px-3 pt-3">
     <div class="no-fluid-content">
-        <fieldset class="border rounded-3 px-2 py-0 mb-3">
+        <fieldset class="border rounded px-2 py-0 mb-3">
             <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Informasi Transaksi</legend>
             <div class="row">
                 <div class="col-lg-6" style="font-size: 9pt;">
@@ -119,26 +119,26 @@
 
         <div class="row gy-3 mb-2">
             <div class="col-lg-6">
-                <div class="card h-100 shadow-sm rounded-3 overflow-auto">
+                <div class="card h-100 shadow-sm  overflow-auto">
                     <div class="card-header bg-body-tertiary" id="tambahLayananContainer" style="display: none;">
                         <form id="tambahLayanan" enctype="multipart/form-data">
                             <div class="mb-2">
-                                <select class="form-select rounded-3 form-tindakan" id="id_layanan" name="id_layanan" aria-label="id_layanan">
+                                <select class="form-select  form-tindakan" id="id_layanan" name="id_layanan" aria-label="id_layanan">
                                     <option value="" disabled selected>-- Pilih Tindakan --</option>
                                 </select>
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="d-flex flex-column flex-lg-row gap-2">
                                 <div class="flex-fill">
-                                    <input type="number" id="qty_transaksi" name="qty_transaksi" class="form-control rounded-3 form-tindakan" placeholder="Qty" autocomplete="off">
+                                    <input type="number" id="qty_transaksi" name="qty_transaksi" class="form-control  form-tindakan" placeholder="Qty" autocomplete="off">
                                     <div class="invalid-feedback"></div>
                                 </div>
                                 <div class="flex-fill">
-                                    <input type="number" id="diskon_layanan" name="diskon_layanan" class="form-control rounded-3 form-tindakan" placeholder="Diskon (%)" autocomplete="off">
+                                    <input type="number" id="diskon_layanan" name="diskon_layanan" class="form-control  form-tindakan" placeholder="Diskon (%)" autocomplete="off">
                                     <div class="invalid-feedback"></div>
                                 </div>
                                 <div class="d-grid d-lg-block w-auto">
-                                    <button type="submit" id="addLayananButton" class="btn btn-primary bg-gradient rounded-3 text-nowrap">
+                                    <button type="submit" id="addLayananButton" class="btn btn-primary bg-gradient  text-nowrap">
                                         <i class="fa-solid fa-plus"></i> Tambah
                                     </button>
                                 </div>
@@ -177,22 +177,22 @@
                 </div>
             </div>
             <div class="col-lg-6">
-                <div class="card h-100 shadow-sm rounded-3 overflow-auto">
+                <div class="card h-100 shadow-sm  overflow-auto">
                     <div class="card-header bg-body-tertiary" id="tambahObatAlkesContainer" style="display: none;">
                         <form id="tambahObatAlkes" enctype="multipart/form-data">
                             <div class="mb-2">
-                                <select class="form-select rounded-3" id="id_resep" name="id_resep" aria-label="id_resep">
+                                <select class="form-select " id="id_resep" name="id_resep" aria-label="id_resep">
                                     <option value="" disabled selected>-- Pilih Resep --</option>
                                 </select>
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="d-flex flex-column flex-lg-row gap-2">
                                 <div class="flex-fill">
-                                    <input type="number" id="diskon_obatalkes" name="diskon_obatalkes" class="form-control rounded-3" placeholder="Diskon (%)" autocomplete="off">
+                                    <input type="number" id="diskon_obatalkes" name="diskon_obatalkes" class="form-control " placeholder="Diskon (%)" autocomplete="off">
                                     <div class="invalid-feedback"></div>
                                 </div>
                                 <div class="d-grid d-lg-block w-auto">
-                                    <button type="submit" id="addObatAlkesButton" class="btn btn-primary bg-gradient rounded-3 text-nowrap">
+                                    <button type="submit" id="addObatAlkesButton" class="btn btn-primary bg-gradient  text-nowrap">
                                         <i class="fa-solid fa-plus"></i> Tambah
                                     </button>
                                 </div>
@@ -267,9 +267,9 @@
         <div id="prosesTransaksi">
             <hr>
             <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-3">
-                <button class="btn btn-body rounded-3 bg-gradient" type="button" id="printBtn" onclick="window.open(`<?= base_url('/transaksi/struk/' . $transaksi['id_transaksi']) ?>`)" disabled><i class="fa-solid fa-print"></i> Cetak Struk/Kuitansi</button>
-                <button class="btn btn-danger rounded-3 bg-gradient" type="button" id="cancelBtn" data-id="<?= $transaksi['id_transaksi'] ?>" disabled><i class="fa-solid fa-xmark"></i> Batalkan Transaksi</button>
-                <button class="btn btn-success rounded-3 bg-gradient" type="button" id="processBtn" data-id="<?= $transaksi['id_transaksi'] ?>" disabled><i class="fa-solid fa-money-bills"></i> Proses Transaksi</button>
+                <button class="btn btn-body  bg-gradient" type="button" id="printBtn" onclick="window.open(`<?= base_url('/transaksi/struk/' . $transaksi['id_transaksi']) ?>`)" disabled><i class="fa-solid fa-print"></i> Cetak Struk/Kuitansi</button>
+                <button class="btn btn-danger  bg-gradient" type="button" id="cancelBtn" data-id="<?= $transaksi['id_transaksi'] ?>" disabled><i class="fa-solid fa-xmark"></i> Batalkan Transaksi</button>
+                <button class="btn btn-success  bg-gradient" type="button" id="processBtn" data-id="<?= $transaksi['id_transaksi'] ?>" disabled><i class="fa-solid fa-money-bills"></i> Proses Transaksi</button>
             </div>
         </div>
     </div>
@@ -289,14 +289,14 @@
     </div>
 
     <div class="modal fade" id="transaksiModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="transaksiModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable rounded-3">
+        <div class="modal-dialog modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable ">
             <form id="transaksiForm" enctype="multipart/form-data" class="modal-content bg-body-tertiary shadow-lg transparent-blur">
                 <div class="modal-header justify-content-between pt-2 pb-2" style="border-bottom: 1px solid var(--bs-border-color-translucent);">
                     <h6 class="pe-2 modal-title fs-6 text-truncate" id="transaksiModalLabel" style="font-weight: bold;"></h6>
-                    <button id="transaksiCloseBtn" type="button" class="btn btn-danger btn-sm bg-gradient ps-0 pe-0 pt-0 pb-0 rounded-3" data-bs-dismiss="modal" aria-label="Close"><span data-feather="x" class="mb-0" style="width: 30px; height: 30px;"></span></button>
+                    <button id="transaksiCloseBtn" type="button" class="btn btn-danger bg-gradient" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
                 </div>
                 <div class="modal-body py-2">
-                    <div id="mediaAlert" class="alert alert-info rounded-3 mb-1 mt-1" role="alert">
+                    <div id="mediaAlert" class="alert alert-info  mb-1 mt-1" role="alert">
                         <div class="d-flex align-items-start">
                             <div style="width: 12px; text-align: center;">
                                 <i class="fa-solid fa-circle-info"></i>
@@ -309,12 +309,12 @@
                         </div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
-                        <input type="number" class="form-control rounded-3" autocomplete="off" dir="auto" placeholder="terima_uang" id="terima_uang" name="terima_uang">
+                        <input type="number" class="form-control " autocomplete="off" dir="auto" placeholder="terima_uang" id="terima_uang" name="terima_uang">
                         <label for="terima_uang">Terima Uang (Rp)*</label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mt-1 mb-1">
-                        <select class="form-select rounded-3" id="metode_pembayaran" name="metode_pembayaran" aria-label="metode_pembayaran">
+                        <select class="form-select " id="metode_pembayaran" name="metode_pembayaran" aria-label="metode_pembayaran">
                             <option value="" disabled selected>-- Pilih Metode Pembayaran --</option>
                             <option value="Tunai">Tunai</option>
                             <option value="QRIS/Transfer Bank">QRIS/Transfer Bank</option>
@@ -323,7 +323,7 @@
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1" id="bank_field" style="display: none;">
-                        <input type="text" class="form-control rounded-3" autocomplete="off" dir="auto" placeholder="bank" id="bank" name="bank" list="bank_list">
+                        <input type="text" class="form-control " autocomplete="off" dir="auto" placeholder="bank" id="bank" name="bank" list="bank_list">
                         <label for="bank">Bank/E-wallet*</label>
                         <div class="invalid-feedback"></div>
                         <datalist id="bank_list">
@@ -347,7 +347,7 @@
                     </div>
                 </div>
                 <div class="modal-footer justify-content-end pt-2 pb-2" style="border-top: 1px solid var(--bs-border-color-translucent);">
-                    <button type="submit" id="submitButton" class="btn btn-primary bg-gradient rounded-3">
+                    <button type="submit" id="submitButton" class="btn btn-primary bg-gradient ">
                         <i class="fa-solid fa-money-bill-transfer"></i> Proses
                     </button>
                 </div>
@@ -356,14 +356,14 @@
     </div>
 
     <div class="modal fade" id="batalTransaksiModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="batalTransaksiModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable rounded-3">
+        <div class="modal-dialog modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable ">
             <form id="batalTransaksiForm" enctype="multipart/form-data" class="modal-content bg-body-tertiary shadow-lg transparent-blur">
                 <div class="modal-header justify-content-between pt-2 pb-2" style="border-bottom: 1px solid var(--bs-border-color-translucent);">
                     <h6 class="pe-2 modal-title fs-6 text-truncate" id="batalTransaksiModalLabel" style="font-weight: bold;"></h6>
-                    <button id="batalTransaksiCloseBtn" type="button" class="btn btn-danger btn-sm bg-gradient ps-0 pe-0 pt-0 pb-0 rounded-3" data-bs-dismiss="modal" aria-label="Close"><span data-feather="x" class="mb-0" style="width: 30px; height: 30px;"></span></button>
+                    <button id="batalTransaksiCloseBtn" type="button" class="btn btn-danger bg-gradient" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
                 </div>
                 <div class="modal-body py-2">
-                    <div class="alert alert-warning rounded-3 mb-1 mt-1" role="alert">
+                    <div class="alert alert-warning  mb-1 mt-1" role="alert">
                         <div class="d-flex align-items-start">
                             <div style="width: 12px; text-align: center;">
                                 <i class="fa-solid fa-triangle-exclamation"></i>
@@ -375,7 +375,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="alert alert-warning rounded-3 mb-1 mt-1" id="capsLockStatus" role="alert" style="display: none;">
+                    <div class="alert alert-warning  mb-1 mt-1" id="capsLockStatus" role="alert" style="display: none;">
                         <div class="d-flex align-items-start">
                             <div style="width: 12px; text-align: center;">
                                 <i class="fa-solid fa-triangle-exclamation"></i>
@@ -386,13 +386,13 @@
                         </div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
-                        <input type="password" class="form-control rounded-3" autocomplete="off" dir="auto" placeholder="password" id="password" name="password">
+                        <input type="password" class="form-control " autocomplete="off" dir="auto" placeholder="password" id="password" name="password">
                         <label for="password">Masukkan Kata Sandi Transaksi*</label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
                 <div class="modal-footer justify-content-end pt-2 pb-2" style="border-top: 1px solid var(--bs-border-color-translucent);">
-                    <button type="submit" id="cancelSubmitButton" class="btn btn-danger bg-gradient rounded-3">
+                    <button type="submit" id="cancelSubmitButton" class="btn btn-danger bg-gradient ">
                         <i class="fa-solid fa-xmark"></i> Batalkan
                     </button>
                 </div>
@@ -589,8 +589,8 @@
                         <tr>
                             <td class="tindakan">
                             <div class="btn-group" role="group">
-                                <button class="btn btn-outline-body text-nowrap bg-gradient rounded-start-3 edit-layanan-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${layanan.id_detail_transaksi}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
-                                <button class="btn btn-outline-danger text-nowrap bg-gradient rounded-end-3 delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${layanan.id_detail_transaksi}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
+                                <button class="btn btn-outline-body text-nowrap bg-gradient  edit-layanan-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${layanan.id_detail_transaksi}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
+                                <button class="btn btn-outline-danger text-nowrap bg-gradient  delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${layanan.id_detail_transaksi}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
                             </div>
                         </td>
                         <td>
@@ -672,8 +672,8 @@
                         <tr>
                             <td class="tindakan">
                             <div class="btn-group" role="group">
-                                <button class="btn btn-outline-body text-nowrap bg-gradient rounded-start-3 edit-obatalkes-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${obat_alkes.id_detail_transaksi}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
-                                <button class="btn btn-outline-danger text-nowrap bg-gradient rounded-end-3 delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${obat_alkes.id_detail_transaksi}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
+                                <button class="btn btn-outline-body text-nowrap bg-gradient  edit-obatalkes-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${obat_alkes.id_detail_transaksi}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
+                                <button class="btn btn-outline-danger text-nowrap bg-gradient  delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${obat_alkes.id_detail_transaksi}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
                             </div>
                         </td>
                         <td>
@@ -802,15 +802,15 @@
                             <div class="d-flex flex-column flex-lg-row gap-1">
                                 <input type="hidden" id="id_detail_transaksi" name="id_detail_transaksi" value="${response.data.id_detail_transaksi}">
                                 <div class="flex-fill">
-                                    <input type="number" id="qty_transaksi_edit" name="qty_transaksi_edit" class="form-control rounded-3" placeholder="Diskon (%)" value="${response.data.qty_transaksi}" autocomplete="off">
+                                    <input type="number" id="qty_transaksi_edit" name="qty_transaksi_edit" class="form-control " placeholder="Diskon (%)" value="${response.data.qty_transaksi}" autocomplete="off">
                                     <div class="invalid-feedback"></div>
                                 </div>
                                 <div class="flex-fill">
-                                    <input type="number" id="diskon_layanan_edit" name="diskon_layanan_edit" class="form-control rounded-3" placeholder="Diskon (%)" value="${response.data.diskon}" autocomplete="off">
+                                    <input type="number" id="diskon_layanan_edit" name="diskon_layanan_edit" class="form-control " placeholder="Diskon (%)" value="${response.data.diskon}" autocomplete="off">
                                     <div class="invalid-feedback"></div>
                                 </div>
                                 <div class="d-grid d-lg-block w-auto">
-                                    <button type="submit" id="editLayananButton" class="btn btn-primary bg-gradient rounded-3">
+                                    <button type="submit" id="editLayananButton" class="btn btn-primary bg-gradient ">
                                         <i class="fa-solid fa-pen-to-square"></i> Edit
                                     </button>
                                 </div>
@@ -936,11 +936,11 @@
                             <div class="d-flex flex-column flex-lg-row gap-1">
                                 <input type="hidden" id="id_detail_transaksi" name="id_detail_transaksi" value="${response.data.id_detail_transaksi}">
                                 <div class="flex-fill">
-                                    <input type="number" id="diskon_obatalkes_edit" name="diskon_obatalkes_edit" class="form-control rounded-3" placeholder="Diskon (%)" value="${response.data.diskon}" autocomplete="off">
+                                    <input type="number" id="diskon_obatalkes_edit" name="diskon_obatalkes_edit" class="form-control " placeholder="Diskon (%)" value="${response.data.diskon}" autocomplete="off">
                                     <div class="invalid-feedback"></div>
                                 </div>
                                 <div class="d-grid d-lg-block w-auto">
-                                    <button type="submit" id="editObatAlkesButton" class="btn btn-primary bg-gradient rounded-3">
+                                    <button type="submit" id="editObatAlkesButton" class="btn btn-primary bg-gradient ">
                                         <i class="fa-solid fa-pen-to-square"></i> Edit
                                     </button>
                                 </div>

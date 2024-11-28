@@ -10,7 +10,7 @@
                     <h1 class="h3 mb-2 fw-bold">Kasir dan Farmasi</h1>
                     <h6>Klinik Utama Mata Padang Eye Center Teluk Kuantan</h6>
                     <div class="form-floating">
-                        <input type="text" class="form-control username rounded-top-3 <?= (validation_show_error('username')) ? 'is-invalid' : ''; ?>" id="floatingInput" name="username" placeholder="Username" value="" autocomplete="off" list="username">
+                        <input type="text" class="form-control username <?= (validation_show_error('username')) ? 'is-invalid' : ''; ?>" id="floatingInput" name="username" placeholder="Username" value="" autocomplete="off" list="username">
                         <datalist id="username">
                             <?php foreach ($users as $user) : ?>
                                 <option value="<?= $user['username'] ?>">
@@ -28,7 +28,7 @@
                         </label>
                     </div>
                     <div class="form-floating">
-                        <input type="password" class="form-control rounded-bottom-3 <?= (validation_show_error('password')) ? 'is-invalid' : ''; ?>" id="floatingPassword" name="password" placeholder="Password" autocomplete="off" data-bs-toggle="popover"
+                        <input type="password" class="form-control <?= (validation_show_error('password')) ? 'is-invalid' : ''; ?>" id="floatingPassword" name="password" placeholder="Password" autocomplete="off" data-bs-toggle="popover"
                             data-bs-placement="top"
                             data-bs-trigger="manual"
                             data-bs-title="<em>CAPS LOCK</em> AKTIF"
@@ -45,7 +45,7 @@
                         </label>
                     </div>
                     <input type="hidden" name="url" value="<?= (isset($_GET['redirect'])) ? base_url('/' . urldecode($_GET['redirect'])) : base_url('/home'); ?>">
-                    <button id="loginBtn" class="w-100 btn btn-lg btn-primary rounded-3 bg-gradient" type="submit">
+                    <button id="loginBtn" class="w-100 btn btn-lg btn-primary bg-gradient" type="submit">
                         <i class="fa-solid fa-right-to-bracket"></i> MASUK
                     </button>
                     <?= form_close(); ?>
@@ -61,7 +61,7 @@
 </main>
 <div class="toast-container position-fixed top-0 start-50 translate-middle-x p-3">
     <?php if (session()->getFlashdata('msg')) : ?>
-        <div id="msgToast" class="toast align-items-center text-bg-success border border-success rounded-3 transparent-blur" role="alert" aria-live="assertive" aria-atomic="true">
+        <div id="msgToast" class="toast align-items-center text-bg-success border border-success transparent-blur" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-body d-flex align-items-start">
                 <div style="width: 24px; text-align: center;">
                     <i class="fa-solid fa-circle-check"></i>
@@ -74,7 +74,7 @@
         </div>
     <?php endif; ?>
     <?php if (isset($_GET['redirect'])) : ?>
-        <div id="redirectToast" class="toast align-items-center text-bg-danger border border-danger rounded-3 transparent-blur" role="alert" aria-live="assertive" aria-atomic="true">
+        <div id="redirectToast" class="toast align-items-center text-bg-danger border border-danger transparent-blur" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-body d-flex align-items-start">
                 <div style="width: 24px; text-align: center;">
                     <i class="fa-solid fa-circle-xmark"></i>
@@ -87,7 +87,7 @@
         </div>
     <?php endif; ?>
     <?php if (session()->getFlashdata('error')) : ?>
-        <div id="errorToast" class="toast align-items-center text-bg-danger border border-danger rounded-3 transparent-blur" role="alert" aria-live="assertive" aria-atomic="true">
+        <div id="errorToast" class="toast align-items-center text-bg-danger border border-danger transparent-blur" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-body d-flex align-items-start">
                 <div style="width: 24px; text-align: center;">
                     <i class="fa-solid fa-circle-xmark"></i>
@@ -100,7 +100,7 @@
         </div>
     <?php endif; ?>
     <?php if (validation_show_error('username') || validation_show_error('password')) : ?>
-        <div id="validationToast" class="toast align-items-center text-bg-danger border border-danger rounded-3 transparent-blur" role="alert" aria-live="assertive" aria-atomic="true">
+        <div id="validationToast" class="toast align-items-center text-bg-danger border border-danger transparent-blur" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-body d-flex align-items-start">
                 <div style="width: 24px; text-align: center;">
                     <i class="fa-solid fa-circle-xmark"></i>

@@ -28,7 +28,7 @@
 <?= $this->section('content'); ?>
 <main class="col-md-9 ms-sm-auto col-lg-10 px-3 pt-3">
     <div class="no-fluid-content">
-        <fieldset class="border rounded-3 px-2 py-0 mb-3">
+        <fieldset class="border rounded px-2 py-0 mb-3">
             <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Informasi Pasien Rawat Jalan</legend>
             <div class="row">
                 <div class="col-lg-6" style="font-size: 9pt;">
@@ -129,19 +129,19 @@
             </div>
         </fieldset>
 
-        <div class="card shadow-sm rounded-3 overflow-auto">
+        <div class="card shadow-sm  overflow-auto">
             <?php if (session()->get('role') == 'Dokter' || session()->get('role') == 'Admin') : ?>
                 <div class="card-header bg-body-tertiary" id="tambahDetailContainer" style="display: none;">
                     <form id="tambahDetail" enctype="multipart/form-data">
                         <div class="row g-2">
                             <div class="col-12">
-                                <select class="form-select form-select-sm rounded-3" id="id_obat" name="id_obat" aria-label="id_obat" autocomplete="off">
+                                <select class="form-select form-select-sm " id="id_obat" name="id_obat" aria-label="id_obat" autocomplete="off">
                                     <option value="" disabled selected>-- Pilih Obat --</option>
                                 </select>
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="col-6">
-                                <input type="text" id="signa" name="signa" class="form-control form-control-sm rounded-3" placeholder="Dosis" list="list_signa" autocomplete="off">
+                                <input type="text" id="signa" name="signa" class="form-control form-control-sm " placeholder="Dosis" list="list_signa" autocomplete="off">
                                 <div class="invalid-feedback"></div>
                                 <datalist id="list_signa">
                                     <option value="1×½">
@@ -159,7 +159,7 @@
                                 </datalist>
                             </div>
                             <div class="col-6">
-                                <input type="text" id="catatan" name="catatan" class="form-control form-control-sm rounded-3" placeholder="Catatan" list="list_catatan" autocomplete="off">
+                                <input type="text" id="catatan" name="catatan" class="form-control form-control-sm " placeholder="Catatan" list="list_catatan" autocomplete="off">
                                 <div class="invalid-feedback"></div>
                                 <datalist id="list_catatan">
                                     <option value="1 Tetes">
@@ -170,7 +170,7 @@
                                 </datalist>
                             </div>
                             <div class="col-6">
-                                <select class="form-select form-select-sm  rounded-3" id="cara_pakai" name="cara_pakai" aria-label="cara_pakai">
+                                <select class="form-select form-select-sm  " id="cara_pakai" name="cara_pakai" aria-label="cara_pakai">
                                     <option value="" disabled selected>-- Pilih Cara Pakai --</option>
                                     <option value="Mata Kanan">Mata Kanan</option>
                                     <option value="Mata Kiri">Mata Kiri</option>
@@ -183,11 +183,11 @@
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="col-6">
-                                <input type="number" id="jumlah" name="jumlah" class="form-control form-control-sm rounded-3" placeholder="Jumlah">
+                                <input type="number" id="jumlah" name="jumlah" class="form-control form-control-sm " placeholder="Jumlah">
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="d-grid gap-2 d-lg-flex justify-content-lg-end">
-                                <button type="submit" id="addButton" class="btn btn-primary bg-gradient rounded-3 text-nowrap">
+                                <button type="submit" id="addButton" class="btn btn-primary bg-gradient  text-nowrap">
                                     <i class="fa-solid fa-plus"></i> Tambah
                                 </button>
                             </div>
@@ -237,15 +237,15 @@
             <hr>
             <?php if (session()->get('role') != 'Dokter') : ?>
                 <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-2">
-                    <button class="btn btn-body rounded-3 bg-gradient" type="button" id="printBtn1" onclick="window.open(`<?= base_url('/resep/etiket-dalam/' . $resep['id_resep']) ?>`)" disabled><i class="fa-solid fa-print"></i> Cetak E-Tiket Obat Dalam</button>
-                    <button class="btn btn-body rounded-3 bg-gradient" type="button" id="printBtn2" onclick="window.open(`<?= base_url('/resep/etiket-luar/' . $resep['id_resep']) ?>`)" disabled><i class="fa-solid fa-print"></i> Cetak E-Tiket Obat Luar</button>
-                    <button class="btn btn-body rounded-3 bg-gradient" type="button" id="printBtn3" onclick="window.open(`<?= base_url('/resep/print/' . $resep['id_resep']) ?>`)" disabled><i class="fa-solid fa-print"></i> Cetak Resep</button>
+                    <button class="btn btn-body  bg-gradient" type="button" id="printBtn1" onclick="window.open(`<?= base_url('/resep/etiket-dalam/' . $resep['id_resep']) ?>`)" disabled><i class="fa-solid fa-print"></i> Cetak E-Tiket Obat Dalam</button>
+                    <button class="btn btn-body  bg-gradient" type="button" id="printBtn2" onclick="window.open(`<?= base_url('/resep/etiket-luar/' . $resep['id_resep']) ?>`)" disabled><i class="fa-solid fa-print"></i> Cetak E-Tiket Obat Luar</button>
+                    <button class="btn btn-body  bg-gradient" type="button" id="printBtn3" onclick="window.open(`<?= base_url('/resep/print/' . $resep['id_resep']) ?>`)" disabled><i class="fa-solid fa-print"></i> Cetak Resep</button>
                 </div>
             <?php endif; ?>
             <?php if (session()->get('role') != 'Apoteker') : ?>
                 <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-2">
-                    <button class="btn btn-danger rounded-3 bg-gradient" type="button" id="cancelConfirmBtn" disabled><i class="fa-solid fa-xmark"></i> Batalkan Konfirmasi</button>
-                    <button class="btn btn-success rounded-3 bg-gradient" type="button" id="confirmBtn" disabled><i class="fa-solid fa-check-double"></i> Konfirmasi</button>
+                    <button class="btn btn-danger  bg-gradient" type="button" id="cancelConfirmBtn" disabled><i class="fa-solid fa-xmark"></i> Batalkan Konfirmasi</button>
+                    <button class="btn btn-success  bg-gradient" type="button" id="confirmBtn" disabled><i class="fa-solid fa-check-double"></i> Konfirmasi</button>
                 </div>
             <?php endif; ?>
         </div>
@@ -411,8 +411,8 @@
                     <tr>
                         <td class="tindakan">
                             <div class="btn-group" role="group">
-                                <button class="btn btn-outline-body text-nowrap bg-gradient rounded-start-3 edit-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${detail_resep.id_detail_resep}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
-                                <button class="btn btn-outline-danger text-nowrap bg-gradient rounded-end-3 delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${detail_resep.id_detail_resep}" data-name="${detail_resep.nama_obat}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
+                                <button class="btn btn-outline-body text-nowrap bg-gradient  edit-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${detail_resep.id_detail_resep}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
+                                <button class="btn btn-outline-danger text-nowrap bg-gradient  delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${detail_resep.id_detail_resep}" data-name="${detail_resep.nama_obat}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
                             </div>
                         </td>
                         <td><i class="fa-solid fa-prescription"></i> ${detail_resep.nama_obat}
@@ -604,7 +604,7 @@
                         <input type="hidden" id="id_detail_resep" name="id_detail_resep" value="${response.data.id_detail_resep}">
                         <div class="row g-2">
                             <div class="col-6">
-                                <input type="text" id="signa_edit" name="signa_edit" class="form-control form-control-sm rounded-3" placeholder="Dosis" value="${response.data.signa}" list="list_signa_edit" autocomplete="off">
+                                <input type="text" id="signa_edit" name="signa_edit" class="form-control form-control-sm " placeholder="Dosis" value="${response.data.signa}" list="list_signa_edit" autocomplete="off">
                                 <div class="invalid-feedback"></div>
                                 <datalist id="list_signa_edit">
                                     <option value="1×½">
@@ -622,7 +622,7 @@
                                 </datalist>
                             </div>
                             <div class="col-6">
-                                <input type="text" id="catatan_edit" name="catatan_edit" class="form-control form-control-sm rounded-3" placeholder="Catatan" value="${response.data.catatan}" list="list_catatan_edit" autocomplete="off">
+                                <input type="text" id="catatan_edit" name="catatan_edit" class="form-control form-control-sm " placeholder="Catatan" value="${response.data.catatan}" list="list_catatan_edit" autocomplete="off">
                                 <div class="invalid-feedback"></div>
                                 <datalist id="list_catatan_edit">
                                     <option value="1 Tetes">
@@ -633,7 +633,7 @@
                                 </datalist>
                             </div>
                             <div class="col-6">
-                                <select class="form-select form-select-sm  rounded-3" id="cara_pakai_edit" name="cara_pakai_edit" aria-label="cara_pakai">
+                                <select class="form-select form-select-sm  " id="cara_pakai_edit" name="cara_pakai_edit" aria-label="cara_pakai">
                                     <option value="" disabled selected>-- Pilih Cara Pakai --</option>
                                     <option value="Mata Kanan">Mata Kanan</option>
                                     <option value="Mata Kiri">Mata Kiri</option>
@@ -646,11 +646,11 @@
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="col-6">
-                                <input type="text" id="jumlah_edit" name="jumlah_edit" class="form-control form-control-sm rounded-3" placeholder="Jumlah" value="${response.data.jumlah}" autocomplete="off">
+                                <input type="text" id="jumlah_edit" name="jumlah_edit" class="form-control form-control-sm " placeholder="Jumlah" value="${response.data.jumlah}" autocomplete="off">
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-2">
-                                <button type="submit" id="addButton" class="btn btn-primary bg-gradient rounded-3 text-nowrap">
+                                <button type="submit" id="addButton" class="btn btn-primary bg-gradient  text-nowrap">
                                     <i class="fa-solid fa-pen-to-square"></i> Edit
                                 </button>
                             </div>

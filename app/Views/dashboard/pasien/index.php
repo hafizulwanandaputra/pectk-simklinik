@@ -15,9 +15,9 @@
             <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-tertiary transparent-blur">
                 <div class="no-fluid-content">
                     <div class="input-group input-group-sm">
-                        <input type="date" id="tanggal" name="tanggal" class="form-control rounded-start-3">
+                        <input type="date" id="tanggal" name="tanggal" class="form-control ">
                         <button class="btn btn-danger bg-gradient" type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
-                        <button class="btn btn-success bg-gradient rounded-end-3" type="button" id="refreshButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan" disabled><i class="fa-solid fa-sync"></i></button>
+                        <button class="btn btn-success bg-gradient " type="button" id="refreshButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan" disabled><i class="fa-solid fa-sync"></i></button>
                     </div>
                 </div>
             </li>
@@ -25,7 +25,7 @@
     </div>
     <div class="px-3">
         <div class="no-fluid-content">
-            <div class="alert alert-info rounded-3 mb-2" role="alert">
+            <div class="alert alert-info  mb-2" role="alert">
                 <div class="d-flex align-items-start">
                     <div style="width: 12px; text-align: center;">
                         <i class="fa-solid fa-circle-info"></i>
@@ -36,7 +36,7 @@
                 </div>
             </div>
 
-            <div class="accordion mb-3" id="datapasien" style="--bs-accordion-border-radius: var(--bs-border-radius-lg); --bs-accordion-inner-border-radius: calc(var(--bs-border-radius-lg) - (var(--bs-border-width)));">
+            <div class="accordion mb-3" id="datapasien">
                 <div class="accordion-item shadow-sm p-3 p-3">
                     <h2 class="text-center text-muted mb-0" style="font-weight: 300;">Memuat data pasien rawat jalan...</h2>
                 </div>

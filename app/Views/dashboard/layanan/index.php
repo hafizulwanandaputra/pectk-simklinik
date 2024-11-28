@@ -15,8 +15,8 @@
             <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-tertiary transparent-blur">
                 <div class="no-fluid-content">
                     <div class="input-group input-group-sm">
-                        <input type="search" class="form-control form-control-sm rounded-start-3" id="externalSearch" placeholder="Cari nama tindakan">
-                        <button class="btn btn-success btn-sm bg-gradient rounded-end-3" type="button" id="refreshButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan"><i class="fa-solid fa-sync"></i></button>
+                        <input type="search" class="form-control form-control-sm " id="externalSearch" placeholder="Cari nama tindakan">
+                        <button class="btn btn-success btn-sm bg-gradient " type="button" id="refreshButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan"><i class="fa-solid fa-sync"></i></button>
                     </div>
                 </div>
             </li>
@@ -57,21 +57,21 @@
         </div>
     </div>
     <div class="modal fade" id="layananModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="layananModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable rounded-3">
+        <div class="modal-dialog modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable ">
             <form id="layananForm" enctype="multipart/form-data" class="modal-content bg-body-tertiary shadow-lg transparent-blur">
                 <div class="modal-header justify-content-between pt-2 pb-2" style="border-bottom: 1px solid var(--bs-border-color-translucent);">
                     <h6 class="pe-2 modal-title fs-6 text-truncate" id="layananModalLabel" style="font-weight: bold;"></h6>
-                    <button id="closeBtn" type="button" class="btn btn-danger btn-sm bg-gradient ps-0 pe-0 pt-0 pb-0 rounded-3" data-bs-dismiss="modal" aria-label="Close"><span data-feather="x" class="mb-0" style="width: 30px; height: 30px;"></span></button>
+                    <button id="closeBtn" type="button" class="btn btn-danger bg-gradient" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
                 </div>
                 <div class="modal-body py-2">
                     <input type="hidden" id="id_layanan" name="id_layanan">
                     <div class="form-floating mb-1 mt-1">
-                        <input type="text" class="form-control rounded-3" autocomplete="off" dir="auto" placeholder="nama_layanan" id="nama_layanan" name="nama_layanan">
+                        <input type="text" class="form-control " autocomplete="off" dir="auto" placeholder="nama_layanan" id="nama_layanan" name="nama_layanan">
                         <label for="nama_layanan">Nama*</label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mt-1 mb-1">
-                        <select class="form-select rounded-3 rounded-3" id="jenis_layanan" name="jenis_layanan" aria-label="jenis_layanan">
+                        <select class="form-select  " id="jenis_layanan" name="jenis_layanan" aria-label="jenis_layanan">
                             <option value="" disabled selected>-- Pilih Jenis --</option>
                             <option value="Rawat Jalan">Rawat Jalan</option>
                             <option value="Pemeriksaan Penunjang">Pemeriksaan Penunjang</option>
@@ -81,18 +81,18 @@
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
-                        <input type="number" class="form-control rounded-3" autocomplete="off" dir="auto" placeholder="tarif" id="tarif" name="tarif">
+                        <input type="number" class="form-control " autocomplete="off" dir="auto" placeholder="tarif" id="tarif" name="tarif">
                         <label for="tarif">Tarif (Rp)*</label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
-                        <input type="text" class="form-control rounded-3" autocomplete="off" dir="auto" placeholder="keterangan" id="keterangan" name="keterangan">
+                        <input type="text" class="form-control " autocomplete="off" dir="auto" placeholder="keterangan" id="keterangan" name="keterangan">
                         <label for="keterangan">Keterangan</label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
                 <div class="modal-footer justify-content-end pt-2 pb-2" style="border-top: 1px solid var(--bs-border-color-translucent);">
-                    <button type="submit" id="submitButton" class="btn btn-primary bg-gradient rounded-3">
+                    <button type="submit" id="submitButton" class="btn btn-primary bg-gradient ">
                         <i class="fa-solid fa-floppy-disk"></i> Simpan
                     </button>
                 </div>
@@ -141,7 +141,7 @@
                 "<'row'<'col-md-12'tr>>" +
                 "<'d-lg-flex justify-content-lg-between align-items-lg-center'<'text-md-center text-lg-start'><'d-md-flex justify-content-md-center d-lg-block'p>>",
             'initComplete': function(settings, json) {
-                $("#tabel").wrap("<div class='card shadow-sm rounded-3 mb-3 overflow-auto position-relative datatables-height'></div>");
+                $("#tabel").wrap("<div class='card shadow-sm  mb-3 overflow-auto position-relative datatables-height'></div>");
                 $('.dataTables_filter input[type="search"]').css({
                     'width': '220px'
                 });
@@ -157,12 +157,11 @@
                     '--bs-pagination-border-radius': 'var(--bs-border-radius-lg)'
                 });
                 $(".page-item .page-link").addClass("bg-gradient");
-                $('select[name="tabel_length"]').addClass("rounded-3");
             },
             'buttons': [{
                 // Tombol Tambah Tindakan
                 text: '<i class="fa-solid fa-plus"></i> Tambah Tindakan',
-                className: 'btn-primary btn-sm bg-gradient rounded-3',
+                className: 'btn-primary btn-sm bg-gradient ',
                 attr: {
                     id: 'addLayananBtn'
                 },
@@ -217,8 +216,8 @@
                     data: null,
                     render: function(data, type, row) {
                         return `<div class="btn-group" role="group">
-                                    <button class="btn btn-outline-body text-nowrap bg-gradient rounded-start-3 edit-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${row.id_layanan}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
-                                    <button class="btn btn-outline-danger text-nowrap bg-gradient rounded-end-3 delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${row.id_layanan}" data-name="${row.nama_layanan}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
+                                    <button class="btn btn-outline-body text-nowrap bg-gradient  edit-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${row.id_layanan}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
+                                    <button class="btn btn-outline-danger text-nowrap bg-gradient  delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${row.id_layanan}" data-name="${row.nama_layanan}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
                                 </div>`;
                     }
                 },

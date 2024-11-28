@@ -19,15 +19,15 @@
                 <div class="no-fluid-content">
                     <div class="d-flex flex-column flex-lg-row mb-1 gap-2 mb-2">
                         <div class="input-group input-group-sm">
-                            <input type="date" id="tanggalFilter" class="form-control rounded-start-3">
-                            <button class="btn btn-danger btn-sm bg-gradient rounded-end-3" type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
+                            <input type="date" id="tanggalFilter" class="form-control ">
+                            <button class="btn btn-danger btn-sm bg-gradient " type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
                         </div>
                         <div class="input-group input-group-sm flex-fill">
-                            <input type="search" id="searchInput" class="form-control rounded-start-3" placeholder="Cari pasien">
-                            <button class="btn btn-success btn-sm bg-gradient rounded-end-3" type="button" id="refreshButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan"><i class="fa-solid fa-sync"></i></button>
+                            <input type="search" id="searchInput" class="form-control " placeholder="Cari pasien">
+                            <button class="btn btn-success btn-sm bg-gradient " type="button" id="refreshButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan"><i class="fa-solid fa-sync"></i></button>
                         </div>
                     </div>
-                    <div class="accordion" id="accordionFilter" style="--bs-accordion-border-radius: var(--bs-border-radius-lg); --bs-accordion-inner-border-radius: calc(var(--bs-border-radius-lg) - (var(--bs-border-width)));">
+                    <div class="accordion" id="accordionFilter">
                         <div class="accordion-item">
                             <h2 class="accordion-header">
                                 <button class="accordion-button p-2 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFilter" aria-expanded="false" aria-controls="collapseFilter">
@@ -37,23 +37,23 @@
                             <div id="collapseFilter" class="accordion-collapse collapse" data-bs-parent="#accordionFilter">
                                 <div class="accordion-body px-2 py-1">
                                     <div class="d-flex flex-column flex-lg-row mb-1 gap-1 my-1">
-                                        <select id="statusFilter" class="form-select form-select-sm w-auto rounded-3 flex-fill">
+                                        <select id="statusFilter" class="form-select form-select-sm w-auto  flex-fill">
                                             <option value="">Semua Status Transaksi</option>
                                             <option value="1">Diproses</option>
                                             <option value="0">Belum Diproses</option>
                                         </select>
-                                        <select id="namesFilter" class="form-select form-select-sm w-auto rounded-3 flex-fill">
+                                        <select id="namesFilter" class="form-select form-select-sm w-auto  flex-fill">
                                             <option value="">Semua Nama</option>
                                             <option value="1">Dengan Nama</option>
                                             <option value="0">Anonim</option>
                                         </select>
-                                        <select id="genderFilter" class="form-select form-select-sm w-auto rounded-3 flex-fill">
+                                        <select id="genderFilter" class="form-select form-select-sm w-auto  flex-fill">
                                             <option value="">Semua Jenis Kelamin</option>
                                             <option value="L">Laki-Laki</option>
                                             <option value="P">Perempuan</option>
                                         </select>
                                     </div>
-                                    <select id="apotekerFilter" class="form-select form-select-sm rounded-3 my-1">
+                                    <select id="apotekerFilter" class="form-select form-select-sm  my-1">
                                         <option value="">Semua Apoteker</option>
                                     </select>
                                 </div>
@@ -66,13 +66,13 @@
     </div>
     <div class="px-3">
         <div class="no-fluid-content">
-            <div class="shadow-sm rounded-3">
+            <div class="shadow-sm rounded">
                 <div class="d-grid gap-2">
-                    <button class="btn btn-primary btn-sm bg-gradient rounded-top-3 rounded-bottom-0" type="button" id="addButton">
+                    <button class="btn btn-primary btn-sm bg-gradient  rounded-bottom-0" type="button" id="addButton">
                         <i class="fa-solid fa-plus"></i> Tambah Resep Luar
                     </button>
                 </div>
-                <ul id="resepContainer" class="list-group rounded-top-0 rounded-bottom-3">
+                <ul id="resepContainer" class="list-group rounded-top-0 ">
                     <?php for ($i = 0; $i < 12; $i++) : ?>
                         <li class="list-group-item bg-body-tertiary pb-3 pt-3" style="cursor: wait;">
                             <div class="d-flex">
@@ -98,9 +98,9 @@
                             </div>
                             <hr>
                             <div class="d-grid gap-2 d-flex justify-content-end">
-                                <a class="btn btn-body bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
-                                <a class="btn btn-body bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
-                                <a class="btn btn-danger bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                                <a class="btn btn-body bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                                <a class="btn btn-body bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                                <a class="btn btn-danger bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
                             </div>
                         </li>
                     <?php endfor; ?>
@@ -126,16 +126,16 @@
         </div>
     </div>
     <div class="modal fade" id="resepluarModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="resepluarModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable rounded-3">
+        <div class="modal-dialog modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable ">
             <form id="resepluarForm" enctype="multipart/form-data" class="modal-content bg-body-tertiary shadow-lg transparent-blur">
                 <div class="modal-header justify-content-between pt-2 pb-2" style="border-bottom: 1px solid var(--bs-border-color-translucent);">
                     <h6 class="pe-2 modal-title fs-6 text-truncate" id="resepluarModalLabel" style="font-weight: bold;"></h6>
-                    <button id="closeBtn" type="button" class="btn btn-danger btn-sm bg-gradient ps-0 pe-0 pt-0 pb-0 rounded-3" data-bs-dismiss="modal" aria-label="Close"><span data-feather="x" class="mb-0" style="width: 30px; height: 30px;"></span></button>
+                    <button id="closeBtn" type="button" class="btn btn-danger bg-gradient" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
                 </div>
                 <div class="modal-body py-2">
                     <input type="hidden" id="id_resep" name="id_resep">
                     <div class="form-floating mb-1 mt-1">
-                        <input type="text" class="form-control rounded-3" autocomplete="off" dir="auto" placeholder="nama_pasien" id="nama_pasien" name="nama_pasien">
+                        <input type="text" class="form-control " autocomplete="off" dir="auto" placeholder="nama_pasien" id="nama_pasien" name="nama_pasien">
                         <label for="nama_pasien">Nama Pasien</label>
                         <div class="invalid-feedback"></div>
                     </div>
@@ -160,18 +160,18 @@
                         </div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
-                        <input type="date" class="form-control rounded-3" autocomplete="off" dir="auto" placeholder="tanggal_lahir" id="tanggal_lahir" name="tanggal_lahir">
+                        <input type="date" class="form-control " autocomplete="off" dir="auto" placeholder="tanggal_lahir" id="tanggal_lahir" name="tanggal_lahir">
                         <label for="tanggal_lahir">Tanggal Lahir</label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
-                        <input type="text" class="form-control rounded-3" autocomplete="off" dir="auto" placeholder="alamat" id="alamat" name="alamat">
+                        <input type="text" class="form-control " autocomplete="off" dir="auto" placeholder="alamat" id="alamat" name="alamat">
                         <label for="alamat_pasien">Alamat</label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
                 <div class="modal-footer justify-content-end pt-2 pb-2" style="border-top: 1px solid var(--bs-border-color-translucent);">
-                    <button type="submit" id="submitButton" class="btn btn-primary bg-gradient rounded-3">
+                    <button type="submit" id="submitButton" class="btn btn-primary bg-gradient ">
                         <i class="fa-solid fa-floppy-disk"></i> Simpan
                     </button>
                 </div>
@@ -210,9 +210,9 @@
                 </div>
                 <hr>
                 <div class="d-grid gap-2 d-flex justify-content-end">
-                    <a class="btn btn-body bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
-                    <a class="btn btn-body bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
-                    <a class="btn btn-danger bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                    <a class="btn btn-body bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                    <a class="btn btn-body bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                    <a class="btn btn-danger bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
                 </div>
             </li>
     `;
@@ -342,13 +342,13 @@
                 </div>
                 <hr>
                 <div class="d-grid gap-2 d-flex justify-content-end">
-                    <button type="button" class="btn btn-body btn-sm bg-gradient rounded-3" onclick="window.location.href = '<?= base_url('resepluar/detailresep') ?>/${resep.id_resep}';">
+                    <button type="button" class="btn btn-body btn-sm bg-gradient " onclick="window.location.href = '<?= base_url('resepluar/detailresep') ?>/${resep.id_resep}';">
                         <i class="fa-solid fa-circle-info"></i> Detail
                     </button>
-                    <button type="button" class="btn btn-body btn-sm bg-gradient rounded-3 edit-btn" data-id="${resep.id_resep}">
+                    <button type="button" class="btn btn-body btn-sm bg-gradient  edit-btn" data-id="${resep.id_resep}">
                         <i class="fa-solid fa-pen-to-square"></i> Edit Identitas
                     </button>
-                    <button type="button" class="btn btn-danger btn-sm bg-gradient rounded-3 delete-btn" data-id="${resep.id_resep}" data-name="${resep.nama_pasien}" data-date="${resep.tanggal_resep}">
+                    <button type="button" class="btn btn-danger btn-sm bg-gradient  delete-btn" data-id="${resep.id_resep}" data-name="${resep.nama_pasien}" data-date="${resep.tanggal_resep}">
                         <i class="fa-solid fa-trash"></i> Hapus
                     </button>
                 </div>

@@ -18,14 +18,14 @@
             <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-tertiary transparent-blur">
                 <div class="no-fluid-content">
                     <div class="input-group input-group-sm mb-2">
-                        <input type="date" id="tanggalFilter" class="form-control rounded-start-3">
-                        <button class="btn btn-danger btn-sm bg-gradient rounded-end-3" type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
+                        <input type="date" id="tanggalFilter" class="form-control ">
+                        <button class="btn btn-danger btn-sm bg-gradient " type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
                     </div>
                     <div class="input-group input-group-sm">
-                        <select id="apotekerFilter" class="form-select form-select-sm rounded-start-3">
+                        <select id="apotekerFilter" class="form-select form-select-sm ">
                             <option value="">Semua Apoteker</option>
                         </select>
-                        <button class="btn btn-success btn-sm bg-gradient rounded-end-3" type="button" id="refreshButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan"><i class="fa-solid fa-sync"></i></button>
+                        <button class="btn btn-success btn-sm bg-gradient " type="button" id="refreshButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan"><i class="fa-solid fa-sync"></i></button>
                     </div>
                 </div>
             </li>
@@ -33,15 +33,15 @@
     </div>
     <div class="px-3">
         <div class="no-fluid-content">
-            <div class="shadow-sm rounded-3">
+            <div class="shadow-sm rounded">
                 <form id="opnameObatForm" enctype="multipart/form-data">
                     <div class="d-grid gap-2">
-                        <button type="submit" id="addButton" class="btn btn-primary btn-sm bg-gradient rounded-top-3 rounded-bottom-0">
+                        <button type="submit" id="addButton" class="btn btn-primary btn-sm bg-gradient  rounded-bottom-0">
                             <i class="fa-solid fa-plus"></i> Buat Laporan Baru
                         </button>
                     </div>
                 </form>
-                <ul id="opnameObatContainer" class="list-group rounded-top-0 rounded-bottom-3">
+                <ul id="opnameObatContainer" class="list-group rounded-top-0 ">
                     <?php for ($i = 0; $i < 12; $i++) : ?>
                         <li class="list-group-item bg-body-tertiary border-top-0 pb-3 pt-3" style="cursor: wait;">
                             <div class="d-flex">
@@ -56,8 +56,8 @@
                             </div>
                             <hr>
                             <div class="d-grid gap-2 d-flex justify-content-end">
-                                <a class="btn btn-body bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
-                                <a class="btn btn-danger bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                                <a class="btn btn-body bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                                <a class="btn btn-danger bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
                             </div>
                         </li>
                     <?php endfor; ?>
@@ -103,8 +103,8 @@
                 </div>
                 <hr>
                 <div class="d-grid gap-2 d-flex justify-content-end">
-                    <a class="btn btn-body bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
-                    <a class="btn btn-danger bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                    <a class="btn btn-body bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                    <a class="btn btn-danger bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
                 </div>
             </li>
     `;
@@ -196,10 +196,10 @@
                 </div>
                 <hr>
                 <div class="d-grid gap-2 d-flex justify-content-end">
-                    <button type="button" class="btn btn-body btn-sm bg-gradient rounded-3" onclick="window.location.href = '<?= base_url('opnameobat/detailopnameobat') ?>/${opname_obat.id_opname_obat}';">
+                    <button type="button" class="btn btn-body btn-sm bg-gradient " onclick="window.location.href = '<?= base_url('opnameobat/detailopnameobat') ?>/${opname_obat.id_opname_obat}';">
                         <i class="fa-solid fa-circle-info"></i> Detail
                     </button>
-                    <button type="button" class="btn btn-danger btn-sm bg-gradient rounded-3 delete-btn" data-id="${opname_obat.id_opname_obat}" data-name="${opname_obat.apoteker}" data-date="${opname_obat.tanggal}">
+                    <button type="button" class="btn btn-danger btn-sm bg-gradient  delete-btn" data-id="${opname_obat.id_opname_obat}" data-name="${opname_obat.apoteker}" data-date="${opname_obat.tanggal}">
                         <i class="fa-solid fa-trash"></i> Hapus
                     </button>
                 </div>

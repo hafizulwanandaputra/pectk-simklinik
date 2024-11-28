@@ -12,7 +12,7 @@
 <?= $this->section('content'); ?>
 <main class="col-md-9 ms-sm-auto col-lg-10 px-3 pt-3">
     <div class="no-fluid-content">
-        <div class="alert alert-info rounded-3" role="alert">
+        <div class="alert alert-info " role="alert">
             <div class="d-flex align-items-start">
                 <div style="width: 12px; text-align: center;">
                     <i class="fa-solid fa-circle-info"></i>
@@ -22,7 +22,7 @@
                 </div>
             </div>
         </div>
-        <div class="alert alert-warning rounded-3" id="capsLockStatus" role="alert" style="display: none;">
+        <div class="alert alert-warning " id="capsLockStatus" role="alert" style="display: none;">
             <div class="d-flex align-items-start">
                 <div style="width: 12px; text-align: center;">
                     <i class="fa-solid fa-triangle-exclamation"></i>
@@ -33,17 +33,17 @@
             </div>
         </div>
         <?= form_open_multipart('/settings/updatepwdtransaksi', 'id="changePasswordForm"'); ?>
-        <fieldset class="border rounded-3 px-2 py-0">
+        <fieldset class="border rounded px-2 py-0">
             <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Kata Sandi Transaksi</legend>
             <div class="form-floating mb-2">
-                <input type="password" class="form-control rounded-3 <?= (validation_show_error('new_password1')) ? 'is-invalid' : ''; ?>" id="new_password1" name="new_password1" placeholder="new_password1">
+                <input type="password" class="form-control  <?= (validation_show_error('new_password1')) ? 'is-invalid' : ''; ?>" id="new_password1" name="new_password1" placeholder="new_password1">
                 <label for="new_password1">Kata Sandi Baru</label>
                 <div class="invalid-feedback">
                     <?= validation_show_error('new_password1'); ?>
                 </div>
             </div>
             <div class="form-floating mb-2">
-                <input type="password" class="form-control rounded-3 <?= (validation_show_error('new_password2')) ? 'is-invalid' : ''; ?>" id="new_password2" name="new_password2" placeholder="new_password2">
+                <input type="password" class="form-control  <?= (validation_show_error('new_password2')) ? 'is-invalid' : ''; ?>" id="new_password2" name="new_password2" placeholder="new_password2">
                 <label for="new_password2">Konfirmsi Kata Sandi Baru</label>
                 <div class="invalid-feedback">
                     <?= validation_show_error('new_password2'); ?>
@@ -52,7 +52,7 @@
         </fieldset>
         <hr>
         <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
-            <button class="btn btn-primary rounded-3 bg-gradient" type="submit" id="submitBtn"><i class="fa-solid fa-pen-to-square"></i> Ubah</button>
+            <button class="btn btn-primary  bg-gradient" type="submit" id="submitBtn"><i class="fa-solid fa-pen-to-square"></i> Ubah</button>
         </div>
         <?= form_close(); ?>
     </div>

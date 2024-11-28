@@ -28,7 +28,7 @@
 <?= $this->section('content'); ?>
 <main class="col-md-9 ms-sm-auto col-lg-10 px-3 pt-3">
     <div class="no-fluid-content">
-        <fieldset class="border rounded-3 px-2 py-0 mb-3">
+        <fieldset class="border rounded px-2 py-0 mb-3">
             <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Informasi Obat Masuk</legend>
             <div style="font-size: 9pt;">
                 <div class="mb-2 row">
@@ -82,22 +82,22 @@
             </div>
         </fieldset>
 
-        <div class="card shadow-sm rounded-3 overflow-auto">
+        <div class="card shadow-sm  overflow-auto">
             <div class="card-header bg-body-tertiary" id="tambahDetailContainer" style="display: none;">
                 <form id="tambahDetail" enctype="multipart/form-data">
                     <div class="mb-2">
-                        <select class="form-select rounded-3" id="id_obat" name="id_obat" aria-label="id_obat">
+                        <select class="form-select " id="id_obat" name="id_obat" aria-label="id_obat">
                             <option value="" disabled selected>-- Pilih Obat --</option>
                         </select>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="d-flex flex-column flex-lg-row gap-2">
                         <div class="flex-fill">
-                            <input type="number" id="jumlah" name="jumlah" class="form-control rounded-3" placeholder="Jumlah" autocomplete="off">
+                            <input type="number" id="jumlah" name="jumlah" class="form-control " placeholder="Jumlah" autocomplete="off">
                             <div class="invalid-feedback"></div>
                         </div>
                         <div class="d-grid d-lg-block w-auto">
-                            <button type="submit" id="addButton" class="btn btn-primary bg-gradient rounded-3 text-nowrap">
+                            <button type="submit" id="addButton" class="btn btn-primary bg-gradient  text-nowrap">
                                 <i class="fa-solid fa-plus"></i> Tambah
                             </button>
                         </div>
@@ -163,8 +163,8 @@
         <div id="terimaObat">
             <hr>
             <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
-                <button class="btn btn-outline-success rounded-3 bg-gradient" type="button" id="printBtn" onclick="startDownload()" disabled><i class="fa-solid fa-file-excel"></i> Buat Faktur (Excel)</button>
-                <button class="btn btn-primary rounded-3 bg-gradient" type="button" id="completeBtn" data-id="<?= $pembelianobat['id_pembelian_obat'] ?>" disabled><i class="fa-solid fa-check-double"></i> Terima Obat</button>
+                <button class="btn btn-outline-success  bg-gradient" type="button" id="printBtn" onclick="startDownload()" disabled><i class="fa-solid fa-file-excel"></i> Buat Faktur (Excel)</button>
+                <button class="btn btn-primary  bg-gradient" type="button" id="completeBtn" data-id="<?= $pembelianobat['id_pembelian_obat'] ?>" disabled><i class="fa-solid fa-check-double"></i> Terima Obat</button>
             </div>
         </div>
     </div>
@@ -327,14 +327,14 @@
                     <tr>
                         <td class="tindakan">
                             <div class="btn-group" role="group">
-                                <button class="btn btn-outline-primary text-nowrap bg-gradient rounded-start-3 add-batch-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${detail_pembelian_obat.id_detail_pembelian_obat}" data-bs-toggle="tooltip" data-bs-title="Tambah Item Obat"><i class="fa-solid fa-plus"></i></button>
+                                <button class="btn btn-outline-primary text-nowrap bg-gradient  add-batch-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${detail_pembelian_obat.id_detail_pembelian_obat}" data-bs-toggle="tooltip" data-bs-title="Tambah Item Obat"><i class="fa-solid fa-plus"></i></button>
                                 <button class="btn btn-outline-body text-nowrap bg-gradient edit-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${detail_pembelian_obat.id_detail_pembelian_obat}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
-                                <button class="btn btn-outline-danger text-nowrap bg-gradient rounded-end-3 delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${detail_pembelian_obat.id_detail_pembelian_obat}" data-name="${detail_pembelian_obat.nama_obat}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
+                                <button class="btn btn-outline-danger text-nowrap bg-gradient  delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${detail_pembelian_obat.id_detail_pembelian_obat}" data-name="${detail_pembelian_obat.nama_obat}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
                             </div>
                         </td>
                         <td>
                             ${detail_pembelian_obat.nama_obat}<br><small>${detail_pembelian_obat.kategori_obat} • ${detail_pembelian_obat.bentuk_obat}</small>
-                            <ul class="list-group shadow-sm rounded-3" id="item-${detail_pembelian_obat.id_detail_pembelian_obat}">
+                            <ul class="list-group shadow-sm " id="item-${detail_pembelian_obat.id_detail_pembelian_obat}">
                             </ul>
                         </td>
                         <td class="date text-end">${jumlah.toLocaleString('id-ID')}</td>
@@ -354,8 +354,8 @@
                                     <div class="date text-nowrap">Kadaluwarsa: ${item.expired}</div>
                                     <div class="date text-nowrap">Jumlah: ${jumlah_item}</div>
                                     <div class="btn-group" role="group">
-                                        <button class="btn btn-outline-body text-nowrap bg-gradient rounded-start-3 edit-batch-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${item.id_item_obat}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
-                                        <button class="btn btn-outline-danger text-nowrap bg-gradient rounded-end-3 delete-batch-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${item.id_item_obat}" data-name="${item.no_batch}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
+                                        <button class="btn btn-outline-body text-nowrap bg-gradient  edit-batch-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${item.id_item_obat}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
+                                        <button class="btn btn-outline-danger text-nowrap bg-gradient  delete-batch-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${item.id_item_obat}" data-name="${item.no_batch}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
                                     </div>
                                 </li>
                             `;
@@ -492,11 +492,11 @@
                                 <input type="hidden" id="id_detail_pembelian_obat" name="id_detail_pembelian_obat" value="${response.data.id_detail_pembelian_obat}">
                                 <input type="hidden" id="id_obat_edit" name="id_obat_edit" value="${response.data.id_obat}">
                                 <div class="flex-fill">
-                                    <input type="number" id="jumlah_edit" name="jumlah_edit" class="form-control rounded-3" placeholder="Jumlah" value="${response.data.jumlah}" autocomplete="off">
+                                    <input type="number" id="jumlah_edit" name="jumlah_edit" class="form-control " placeholder="Jumlah" value="${response.data.jumlah}" autocomplete="off">
                                     <div class="invalid-feedback"></div>
                                 </div>
                                 <div class="d-grid d-lg-block w-auto">
-                                    <button type="submit" id="editButton" class="btn btn-primary bg-gradient rounded-3">
+                                    <button type="submit" id="editButton" class="btn btn-primary bg-gradient ">
                                         <i class="fa-solid fa-pen-to-square"></i> Edit
                                     </button>
                                 </div>
@@ -694,19 +694,19 @@
                             </div>
                             <div class="d-flex flex-column flex-lg-row gap-1">
                                 <div class="flex-fill">
-                                    <input type="text" id="no_batch" name="no_batch" class="form-control rounded-3" placeholder="Nomor Batch" autocomplete="off">
+                                    <input type="text" id="no_batch" name="no_batch" class="form-control " placeholder="Nomor Batch" autocomplete="off">
                                     <div class="invalid-feedback"></div>
                                 </div>
                                 <div class="flex-fill">
-                                    <input type="date" id="expired" name="expired" class="form-control rounded-3" placeholder="Kedaluwarsa">
+                                    <input type="date" id="expired" name="expired" class="form-control " placeholder="Kedaluwarsa">
                                     <div class="invalid-feedback"></div>
                                 </div>
                                 <div class="flex-fill">
-                                    <input type="number" id="jumlah_item" name="jumlah_item" class="form-control rounded-3" placeholder="Jumlah Diterima" autocomplete="off">
+                                    <input type="number" id="jumlah_item" name="jumlah_item" class="form-control " placeholder="Jumlah Diterima" autocomplete="off">
                                     <div class="invalid-feedback"></div>
                                 </div>
                                 <div class="d-grid d-lg-block w-auto">
-                                    <button type="submit" id="addBatchButton" class="btn btn-primary bg-gradient rounded-3">
+                                    <button type="submit" id="addBatchButton" class="btn btn-primary bg-gradient ">
                                         <i class="fa-solid fa-plus"></i> Tambah
                                     </button>
                                 </div>
@@ -824,19 +824,19 @@
                             <div class="d-flex flex-column flex-xl-row gap-1">
                                 <input type="hidden" id="id_detail_pembelian_obat" name="id_detail_pembelian_obat" value="${response.data.id_detail_pembelian_obat}">
                                 <div class="flex-fill">
-                                    <input type="text" id="no_batch_edit" name="no_batch_edit" class="form-control rounded-3" placeholder="Nomor Batch" value="${response.data.no_batch}" autocomplete="off">
+                                    <input type="text" id="no_batch_edit" name="no_batch_edit" class="form-control " placeholder="Nomor Batch" value="${response.data.no_batch}" autocomplete="off">
                                     <div class="invalid-feedback"></div>
                                 </div>
                                 <div class="flex-fill">
-                                    <input type="date" id="expired_edit" name="expired_edit" class="form-control rounded-3" placeholder="Kedaluwarsa" value="${response.data.expired}">
+                                    <input type="date" id="expired_edit" name="expired_edit" class="form-control " placeholder="Kedaluwarsa" value="${response.data.expired}">
                                     <div class="invalid-feedback"></div>
                                 </div>
                                 <div class="flex-fill">
-                                    <input type="number" id="jumlah_item_edit" name="jumlah_item_edit" class="form-control rounded-3" placeholder="Jumlah Diterima" value="${response.data.jumlah_item}" autocomplete="off">
+                                    <input type="number" id="jumlah_item_edit" name="jumlah_item_edit" class="form-control " placeholder="Jumlah Diterima" value="${response.data.jumlah_item}" autocomplete="off">
                                     <div class="invalid-feedback"></div>
                                 </div>
                                 <div class="d-grid d-xl-block w-auto">
-                                    <button type="submit" id="editBatchButton" class="btn btn-primary bg-gradient rounded-3">
+                                    <button type="submit" id="editBatchButton" class="btn btn-primary bg-gradient ">
                                         <i class="fa-solid fa-pen-to-square"></i> Edit
                                     </button>
                                 </div>

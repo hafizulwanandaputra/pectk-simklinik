@@ -169,7 +169,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
             backdrop-filter: blur(20px);
             border: 1px solid var(--bs-border-color-translucent);
             box-shadow: var(--bs-box-shadow) !important;
-            border-radius: var(--bs-border-radius-lg) !important;
+            border-radius: var(--bs-border-radius) !important;
         }
 
         table.dataTable {
@@ -278,7 +278,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                     <div class="ps-2 text-start text-success-emphasis">KASIR DAN FARMASI<br><span class="fw-bold">PEC</span> TELUK KUANTAN</div>
                 </span>
             </div>
-            <button type="button" class="btn btn-outline-success bg-gradient d-md-none mx-3 rounded-3" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation"><i class="fa-solid fa-bars"></i></button>
+            <button type="button" class="btn btn-outline-success bg-gradient d-md-none mx-3" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation"><i class="fa-solid fa-bars"></i></button>
             <div class="d-flex flex-nowrap w-100 align-items-center" style="min-height: 48px; max-height: 48px;">
                 <div class="w-100 ps-3 pe-1 pe-lg-3 text-truncate">
                     <?= $this->renderSection('title'); ?>
@@ -305,7 +305,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                     <div class="ps-2 text-start text-success-emphasis">KASIR DAN FARMASI<br><span class="fw-bold">PEC</span> TELUK KUANTAN</div>
                                 </span>
                             </div>
-                            <button id="closeOffcanvasBtn" type="button" class="btn btn-success btn-sm bg-gradient ps-0 pe-0 pt-0 pb-0 rounded-3" data-bs-dismiss="offcanvas" aria-label="Close"><span data-feather="chevrons-right" class="mb-0" style="width: 30px; height: 30px;"></span></button>
+                            <button id="closeOffcanvasBtn" type="button" class="btn btn-success bg-gradient" data-bs-dismiss="offcanvas" aria-label="Close"><i class="fa-solid fa-angles-right"></i></button>
                         </div>
                         <div class="offcanvas-body p-1">
                             <div class="d-flex justify-content-center">
@@ -542,7 +542,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
         </div>
         <div id="toastContainer" class="toast-container position-fixed top-0 p-3" aria-live="polite" aria-atomic="true">
             <?php if (session()->getFlashdata('info')) : ?>
-                <div id="infoToast" class="toast align-items-center text-bg-info border border-info rounded-3 transparent-blur" role="alert" aria-live="assertive" aria-atomic="true">
+                <div id="infoToast" class="toast align-items-center text-bg-info border border-info transparent-blur" role="alert" aria-live="assertive" aria-atomic="true">
                     <div class="toast-body d-flex align-items-start">
                         <div style="width: 24px; text-align: center;">
                             <i class="fa-solid fa-circle-info"></i>
@@ -556,7 +556,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
             <?php endif; ?>
 
             <?php if (session()->getFlashdata('msg')) : ?>
-                <div id="msgToast" class="toast align-items-center text-bg-success border border-success rounded-3 transparent-blur" role="alert" aria-live="assertive" aria-atomic="true">
+                <div id="msgToast" class="toast align-items-center text-bg-success border border-success transparent-blur" role="alert" aria-live="assertive" aria-atomic="true">
                     <div class="toast-body d-flex align-items-start">
                         <div style="width: 24px; text-align: center;">
                             <i class="fa-solid fa-circle-check"></i>
@@ -570,7 +570,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
             <?php endif; ?>
 
             <?php if (session()->getFlashdata('error')) : ?>
-                <div id="errorToast" class="toast align-items-center text-bg-danger border border-danger rounded-3 transparent-blur" role="alert" aria-live="assertive" aria-atomic="true">
+                <div id="errorToast" class="toast align-items-center text-bg-danger border border-danger transparent-blur" role="alert" aria-live="assertive" aria-atomic="true">
                     <div class="toast-body d-flex align-items-start">
                         <div style="width: 24px; text-align: center;">
                             <i class="fa-solid fa-circle-xmark"></i>

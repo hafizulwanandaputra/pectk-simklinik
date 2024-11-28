@@ -13,7 +13,7 @@
     <div class="no-fluid-content">
         <?php if (session()->get('role') == "Admin") : ?>
             <h5>Transaksi</h5>
-            <ul class="list-group shadow-sm rounded-3 mb-3">
+            <ul class="list-group shadow-sm  mb-3">
                 <li class="list-group-item p-1 list-group-item-action">
                     <div class="d-flex align-items-start">
                         <a href="<?= base_url('/settings/pwdtransaksi'); ?>" class="stretched-link" style="min-width: 48px; max-width: 48px; text-align: center;">
@@ -30,7 +30,7 @@
             </ul>
         <?php endif; ?>
         <h5>Pengguna</h5>
-        <ul class="list-group shadow-sm rounded-3 mb-3">
+        <ul class="list-group shadow-sm  mb-3">
             <?php if (session()->get('role') == "Admin") : ?>
                 <li class="list-group-item p-1 list-group-item-action">
                     <div class="d-flex align-items-start">
@@ -74,7 +74,7 @@
             </li>
         </ul>
         <h5>Sistem</h5>
-        <ul class="list-group shadow-sm rounded-3 mb-3">
+        <ul class="list-group shadow-sm  mb-3">
             <li class="list-group-item p-1 list-group-item-action">
                 <div class="d-flex align-items-start">
                     <a href="<?= base_url('/settings/about'); ?>" class="stretched-link" style="min-width: 48px; max-width: 48px; text-align: center;">

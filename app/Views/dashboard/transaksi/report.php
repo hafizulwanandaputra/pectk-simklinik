@@ -16,9 +16,9 @@
             <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-tertiary transparent-blur">
                 <div class="no-fluid-content">
                     <div class="input-group input-group-sm">
-                        <input type="date" id="tanggal" name="tanggal" class="form-control rounded-start-3">
+                        <input type="date" id="tanggal" name="tanggal" class="form-control ">
                         <button class="btn btn-danger bg-gradient" type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
-                        <button class="btn btn-success bg-gradient rounded-end-3" type="button" id="refreshButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan" disabled><i class="fa-solid fa-sync"></i></button>
+                        <button class="btn btn-success bg-gradient " type="button" id="refreshButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan" disabled><i class="fa-solid fa-sync"></i></button>
                     </div>
                 </div>
             </li>
@@ -27,7 +27,7 @@
     <div class="px-3">
         <div class="no-fluid-content">
             <div class="mb-3">
-                <div class="card shadow-sm rounded-3 overflow-auto">
+                <div class="card shadow-sm  overflow-auto">
                     <div class="table-responsive">
                         <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
                             <thead>
@@ -64,7 +64,7 @@
                 <div id="reportBtns" style="display: none;">
                     <hr>
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
-                        <button class="btn btn-success rounded-3 bg-gradient" type="button" id="reportBtn" onclick="downloadReport()"><i class="fa-solid fa-file-excel"></i> Buat Laporan (Excel)</button>
+                        <button class="btn btn-success  bg-gradient" type="button" id="reportBtn" onclick="downloadReport()"><i class="fa-solid fa-file-excel"></i> Buat Laporan (Excel)</button>
                     </div>
                 </div>
             </div>

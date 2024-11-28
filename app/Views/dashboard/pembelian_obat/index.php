@@ -19,15 +19,15 @@
                 <div class="no-fluid-content">
                     <div class="d-flex flex-column flex-lg-row mb-1 gap-2 mb-2">
                         <div class="input-group input-group-sm">
-                            <input type="date" id="tanggalFilter" class="form-control rounded-start-3">
-                            <button class="btn btn-danger btn-sm bg-gradient rounded-end-3" type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
+                            <input type="date" id="tanggalFilter" class="form-control ">
+                            <button class="btn btn-danger btn-sm bg-gradient " type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
                         </div>
                         <div class="input-group input-group-sm flex-fill">
-                            <input type="search" id="searchInput" class="form-control rounded-start-3" placeholder="Cari merek dan nama supplier">
-                            <button class="btn btn-success btn-sm bg-gradient rounded-end-3" type="button" id="refreshButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan"><i class="fa-solid fa-sync"></i></button>
+                            <input type="search" id="searchInput" class="form-control " placeholder="Cari merek dan nama supplier">
+                            <button class="btn btn-success btn-sm bg-gradient " type="button" id="refreshButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan"><i class="fa-solid fa-sync"></i></button>
                         </div>
                     </div>
-                    <div class="accordion" id="accordionFilter" style="--bs-accordion-border-radius: var(--bs-border-radius-lg); --bs-accordion-inner-border-radius: calc(var(--bs-border-radius-lg) - (var(--bs-border-width)));">
+                    <div class="accordion" id="accordionFilter">
                         <div class="accordion-item">
                             <h2 class="accordion-header">
                                 <button class="accordion-button p-2 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFilter" aria-expanded="false" aria-controls="collapseFilter">
@@ -37,13 +37,13 @@
                             <div id="collapseFilter" class="accordion-collapse collapse" data-bs-parent="#accordionFilter">
                                 <div class="accordion-body px-2 py-1">
                                     <div class="d-flex flex-column flex-lg-row mb-1 gap-1 my-1">
-                                        <select id="statusFilter" class="form-select form-select-sm w-auto rounded-3 flex-fill">
+                                        <select id="statusFilter" class="form-select form-select-sm w-auto  flex-fill">
                                             <option value="">Semua Status Terima</option>
                                             <option value="1">Diterima</option>
                                             <option value="0">Belum Diterima</option>
                                         </select>
                                     </div>
-                                    <select id="apotekerFilter" class="form-select form-select-sm rounded-3 my-1">
+                                    <select id="apotekerFilter" class="form-select form-select-sm  my-1">
                                         <option value="">Semua Apoteker</option>
                                     </select>
                                 </div>
@@ -56,9 +56,9 @@
     </div>
     <div class="px-3">
         <div class="no-fluid-content">
-            <div class="shadow-sm rounded-3">
+            <div class="shadow-sm rounded">
                 <div class="d-grid gap-2">
-                    <button class="btn btn-primary btn-sm bg-gradient rounded-top-3 rounded-bottom-0" type="button" data-bs-toggle="collapse" data-bs-target="#pembelianObatFormContainter" aria-expanded="false" aria-controls="pembelianObatFormContainter">
+                    <button class="btn btn-primary btn-sm bg-gradient  rounded-bottom-0" type="button" data-bs-toggle="collapse" data-bs-target="#pembelianObatFormContainter" aria-expanded="false" aria-controls="pembelianObatFormContainter">
                         <i class="fa-solid fa-plus"></i> Tambah Pembelian Obat
                     </button>
                 </div>
@@ -66,20 +66,20 @@
                     <li class="list-group-item border-top-0 border-bottom-0 bg-body-tertiary">
                         <form id="pembelianObatForm" enctype="multipart/form-data" class="d-flex flex-column gap-2">
                             <div class="flex-fill">
-                                <select class="form-select rounded-3" id="id_supplier" name="id_supplier" aria-label="id_supplier">
+                                <select class="form-select " id="id_supplier" name="id_supplier" aria-label="id_supplier">
                                     <option value="" disabled selected>-- Pilih Supplier --</option>
                                 </select>
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="d-grid gap-2 d-md-flex justify-content-md-end" id="submitButtonContainer">
-                                <button type="submit" id="submitButton" class="btn btn-primary bg-gradient rounded-3" disabled>
+                                <button type="submit" id="submitButton" class="btn btn-primary bg-gradient " disabled>
                                     <i class="fa-solid fa-plus"></i> Tambah
                                 </button>
                             </div>
                         </form>
                     </li>
                 </ul>
-                <ul id="pembelianObatContainer" class="list-group rounded-top-0 rounded-bottom-3">
+                <ul id="pembelianObatContainer" class="list-group rounded-top-0 ">
                     <?php for ($i = 0; $i < 12; $i++) : ?>
                         <li class="list-group-item bg-body-tertiary pb-3 pt-3" style="cursor: wait;">
                             <div class="d-flex">
@@ -103,8 +103,8 @@
                             </div>
                             <hr>
                             <div class="d-grid gap-2 d-flex justify-content-end">
-                                <a class="btn btn-body bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
-                                <a class="btn btn-danger bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                                <a class="btn btn-body bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                                <a class="btn btn-danger bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
                             </div>
                         </li>
                     <?php endfor; ?>
@@ -159,8 +159,8 @@
                 </div>
                 <hr>
                 <div class="d-grid gap-2 d-flex justify-content-end">
-                    <a class="btn btn-body bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
-                    <a class="btn btn-danger bg-gradient rounded-3 disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                    <a class="btn btn-body bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                    <a class="btn btn-danger bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
                 </div>
             </li>
     `;
@@ -289,10 +289,10 @@
                 </div>
                 <hr>
                 <div class="d-grid gap-2 d-flex justify-content-end">
-                    <button type="button" class="btn btn-body btn-sm bg-gradient rounded-3" onclick="window.location.href = '<?= base_url('pembelianobat/detailpembelianobat') ?>/${pembelian_obat.id_pembelian_obat}';">
+                    <button type="button" class="btn btn-body btn-sm bg-gradient " onclick="window.location.href = '<?= base_url('pembelianobat/detailpembelianobat') ?>/${pembelian_obat.id_pembelian_obat}';">
                         <i class="fa-solid fa-circle-info"></i> Detail
                     </button>
-                    <button type="button" class="btn btn-danger btn-sm bg-gradient rounded-3 delete-btn" data-id="${pembelian_obat.id_pembelian_obat}" data-name="${pembelian_obat.supplier_nama_supplier}" data-date="${pembelian_obat.tgl_pembelian}">
+                    <button type="button" class="btn btn-danger btn-sm bg-gradient  delete-btn" data-id="${pembelian_obat.id_pembelian_obat}" data-name="${pembelian_obat.supplier_nama_supplier}" data-date="${pembelian_obat.tgl_pembelian}">
                         <i class="fa-solid fa-trash"></i> Hapus
                     </button>
                 </div>

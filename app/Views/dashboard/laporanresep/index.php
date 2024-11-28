@@ -16,19 +16,19 @@
                 <div class="no-fluid-content">
                     <nav>
                         <div class="nav nav-underline nav-justified mb-2" id="nav-tab" role="tablist">
-                            <button class="nav-link rounded-top-3 active" id="resepharian-container-tab" data-bs-toggle="tab" data-bs-target="#resepharian-container" type="button" role="tab" aria-controls="resepharian-container" aria-selected="true">Harian</button>
-                            <button class="nav-link rounded-top-3" id="resepbulanan-container-tab" data-bs-toggle="tab" data-bs-target="#resepbulanan-container" type="button" role="tab" aria-controls="resepbulanan-container" aria-selected="false">Bulanan</button>
+                            <button class="nav-link  active" id="resepharian-container-tab" data-bs-toggle="tab" data-bs-target="#resepharian-container" type="button" role="tab" aria-controls="resepharian-container" aria-selected="true">Harian</button>
+                            <button class="nav-link " id="resepbulanan-container-tab" data-bs-toggle="tab" data-bs-target="#resepbulanan-container" type="button" role="tab" aria-controls="resepbulanan-container" aria-selected="false">Bulanan</button>
                         </div>
                     </nav>
                     <div class="input-group input-group-sm" id="tanggal_form">
-                        <input type="date" id="tanggal" name="tanggal" class="form-control rounded-start-3">
+                        <input type="date" id="tanggal" name="tanggal" class="form-control ">
                         <button class="btn btn-danger bg-gradient" type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
-                        <button class="btn btn-success bg-gradient rounded-end-3" type="button" id="refreshButton1" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan" disabled><i class="fa-solid fa-sync"></i></button>
+                        <button class="btn btn-success bg-gradient " type="button" id="refreshButton1" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan" disabled><i class="fa-solid fa-sync"></i></button>
                     </div>
                     <div class="input-group input-group-sm" id="bulan_form" style="display: none;">
-                        <input type="month" id="bulan" name="bulan" class="form-control rounded-start-3">
+                        <input type="month" id="bulan" name="bulan" class="form-control ">
                         <button class="btn btn-danger bg-gradient" type="button" id="clearBlnButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Bulan"><i class="fa-solid fa-xmark"></i></button>
-                        <button class="btn btn-success bg-gradient rounded-end-3" type="button" id="refreshButton2" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan" disabled><i class="fa-solid fa-sync"></i></button>
+                        <button class="btn btn-success bg-gradient " type="button" id="refreshButton2" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan" disabled><i class="fa-solid fa-sync"></i></button>
                     </div>
                 </div>
             </li>
@@ -50,7 +50,7 @@
                                 <?php endforeach; ?>
                             </div>
                         </fieldset>
-                        <div class="card shadow-sm rounded-3 overflow-auto">
+                        <div class="card shadow-sm  overflow-auto">
                             <div class="table-responsive">
                                 <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
                                     <thead>
@@ -92,7 +92,7 @@
                         <div id="reportBtns1" style="display: none;">
                             <hr>
                             <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
-                                <button class="btn btn-success rounded-3 bg-gradient" type="button" id="reportBtn1" onclick="downloadReport1()"><i class="fa-solid fa-file-excel"></i> Buat Laporan (Excel)</button>
+                                <button class="btn btn-success  bg-gradient" type="button" id="reportBtn1" onclick="downloadReport1()"><i class="fa-solid fa-file-excel"></i> Buat Laporan (Excel)</button>
                             </div>
                         </div>
                     </div>
@@ -108,7 +108,7 @@
                                 <?php endforeach; ?>
                             </div>
                         </fieldset>
-                        <div class="card shadow-sm rounded-3 overflow-auto">
+                        <div class="card shadow-sm  overflow-auto">
                             <div class="table-responsive">
                                 <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
                                     <thead>
@@ -151,7 +151,7 @@
                         <div id="reportBtns2" style="display: none;">
                             <hr>
                             <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
-                                <button class="btn btn-success rounded-3 bg-gradient" type="button" id="reportBtn2" onclick="downloadReport2()"><i class="fa-solid fa-file-excel"></i> Buat Laporan (Excel)</button>
+                                <button class="btn btn-success  bg-gradient" type="button" id="reportBtn2" onclick="downloadReport2()"><i class="fa-solid fa-file-excel"></i> Buat Laporan (Excel)</button>
                             </div>
                         </div>
                     </div>
