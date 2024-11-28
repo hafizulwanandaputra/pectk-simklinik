@@ -236,7 +236,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
             }
 
             #sidebarMenu2 {
-                height: calc(100% - 96px);
+                height: calc(100% - 48px);
                 padding-top: 0;
             }
 

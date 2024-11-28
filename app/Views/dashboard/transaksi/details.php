@@ -13,6 +13,21 @@
         /* Ensures placement isn't affected by overflow */
         z-index: 1050;
     }
+
+    .custom-counter {
+        list-style-type: none;
+    }
+
+    .custom-counter li {
+        counter-increment: step-counter;
+    }
+
+    .custom-counter li::before {
+        content: counter(step-counter) ".";
+        font-variant-numeric: tabular-nums;
+        font-weight: bold;
+        padding-right: 0.5rem;
+    }
 </style>
 <?= $this->endSection(); ?>
 <?= $this->section('title'); ?>
@@ -637,7 +652,6 @@
             let totalPembayaran = 0;
 
             if (data.length === 0) {
-                $('.col-resize').css('min-width', '0');
                 // Tampilkan pesan jika tidak ada data
                 const emptyRow = `
                     <tr>
@@ -647,14 +661,13 @@
                 $('#list_obat_alkes').append(emptyRow);
                 $('#processBtn').prop('disabled', true);
             } else {
-                $('.col-resize').css('min-width', '256px');
                 data.forEach(function(obat_alkes) {
                     const diskon = parseInt(obat_alkes.diskon); // Konversi jumlah ke integer
                     const qty_transaksi = parseInt(obat_alkes.qty_transaksi);
                     const harga_transaksi = parseInt(obat_alkes.harga_transaksi); // Konversi harga satuan ke integer
                     const total_pembayaran = Math.round((harga_transaksi * qty_transaksi) * (1 - (diskon / 100))); // Hitung total harga
                     totalPembayaran += total_pembayaran;
-                    const dokter = obat_alkes.resep.dokter == null ? `Resep Luar` : obat_alkes.resep.dokter;
+                    const dokter = obat_alkes.resep.dokter == `Resep Luar` ? `` : ` <span><small><strong>Dokter</strong>: ${obat_alkes.resep.dokter}</small></span>`;
                     const tindakanElement = `
                         <tr>
                             <td class="tindakan">
@@ -664,9 +677,9 @@
                             </div>
                         </td>
                         <td>
-                            <span>${dokter}</span>
-                            <ol class="ps-4 mb-0" id="obat-${obat_alkes.id_detail_transaksi}">
+                            <ol class="ps-0 mb-0 custom-counter" id="obat-${obat_alkes.id_detail_transaksi}">
                             </ol>
+                            ${dokter}
                         </td>
                         <td class="date text-end">Rp${harga_transaksi.toLocaleString('id-ID')}</td>
                         <td class="date text-end">${diskon.toLocaleString('id-ID')}%</td>
@@ -681,7 +694,7 @@
                         const total_harga = Math.round((jumlah * harga_satuan) * (1 - (diskon / 100))); // Hitung total harga
 
                         const obat_alkesElement = `
-                                <li>${detail_resep.nama_obat}<br><small>${detail_resep.kategori_obat} • ${detail_resep.bentuk_obat} • ${detail_resep.signa} • ${detail_resep.cara_pakai}<br>${jumlah.toLocaleString('id-ID')} × Rp${harga_satuan.toLocaleString('id-ID')} × ${diskon}% = Rp${total_harga.toLocaleString('id-ID')}<br>${detail_resep.catatan}</small></li>
+                                <li>${detail_resep.nama_obat}<br><small>${jumlah.toLocaleString('id-ID')} × Rp${harga_satuan.toLocaleString('id-ID')} × ${diskon}% = Rp${total_harga.toLocaleString('id-ID')}</small></li>
                             `;
 
                         $(`#obat-${obat_alkes.id_detail_transaksi}`).append(obat_alkesElement);
