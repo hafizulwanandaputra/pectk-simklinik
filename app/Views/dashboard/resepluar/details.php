@@ -311,7 +311,7 @@
                         <small>
                             <ul class="ps-3 mb-0">
                                 <li>${detail_resep.kategori_obat}, ${detail_resep.bentuk_obat}</li>
-                                <li>${detail_resep.signa} hari, ${detail_resep.cara_pakai}, ${detail_resep.catatan}</li>
+                                <li>${detail_resep.signa}, ${detail_resep.cara_pakai}, ${detail_resep.catatan}</li>
                             </ul>
                         </small></td>
                         <td class="date text-end">${jumlah.toLocaleString('id-ID')}</td>
