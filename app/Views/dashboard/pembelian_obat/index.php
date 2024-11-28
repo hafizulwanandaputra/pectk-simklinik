@@ -111,7 +111,7 @@
                 </ul>
             </div>
             <nav id="paginationNav" class="d-flex justify-content-center justify-content-lg-end mt-3 overflow-auto w-100">
-                <ul class="pagination pagination-sm" style="--bs-pagination-border-radius: var(--bs-border-radius-lg);"></ul>
+                <ul class="pagination pagination-sm"></ul>
             </nav>
         </div>
     </div>

@@ -153,9 +153,6 @@
             "drawCallback": function() {
                 $(".pagination").wrap("<div class='overflow-auto'></div>");
                 $(".pagination").addClass("pagination-sm");
-                $('.pagination-sm').css({
-                    '--bs-pagination-border-radius': 'var(--bs-border-radius-lg)'
-                });
                 $(".page-item .page-link").addClass("bg-gradient");
             },
             'buttons': [{
