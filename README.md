@@ -80,7 +80,7 @@ Diperlukan PHP versi 8.1 atau yang lebih tinggi, dengan ekstensi berikut terpasa
 - [fileinfo](https://php.net/manual/en/fileinfo.installation.php) untuk mengekspor file excel dengan gambar yang dihasilkan dari [PHPSpreadsheet](https://github.com/PHPOffice/PhpSpreadsheet)
 - [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) untuk menghubungkan basis data MySQL.
 
-> [![!WARNING]]
+> [!WARNING]
 >
 > - Tanggal akhir masa pakai PHP 7.4 adalah 28 November 2022.
 > - Tanggal akhir masa pakai PHP 8.0 adalah 26 November 2023.
