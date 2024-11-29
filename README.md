@@ -92,6 +92,7 @@ Diperlukan PHP versi 8.1 atau yang lebih tinggi, dengan ekstensi berikut terpasa
 Aplikasi ini digunakan untuk:
 
 > [**Klinik Mata Utama Padang Eye Center Teluk Kuantan**](https://maps.app.goo.gl/xfF4Zm7i6BJDxDXS8)
+>
 > Jl. Rusdi S. Abrus No. 35, LK III Sinambek, Sungai Jering, Kuantan Tengah, Kuantan Singingi, Riau, Indonesia
 
 © 2024 Klinik Mata Utama Padang Eye Center Teluk Kuantan
@@ -191,6 +192,7 @@ PHP version 8.1 or higher is required, with the following extensions installed:
 This application is used for:
 
 > [**Main Eye Clinic of Padang Eye Center Teluk Kuantan**](https://maps.app.goo.gl/xfF4Zm7i6BJDxDXS8)
+>
 > Jl. Rusdi S. Abrus No. 35, LK III Sinambek, Sungai Jering, Kuantan Tengah, Kuantan Singingi, Riau, Indonesia
 
 © 2024 Main Eye Clinic of Padang Eye Center Teluk Kuantan
