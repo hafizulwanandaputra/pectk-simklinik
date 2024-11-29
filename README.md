@@ -96,6 +96,7 @@ Aplikasi ini digunakan untuk:
 > Jl. Rusdi S. Abrus No. 35, LK III Sinambek, Sungai Jering, Kuantan Tengah, Kuantan Singingi, Riau, Indonesia
 
 © 2024 Klinik Mata Utama Padang Eye Center Teluk Kuantan
+
 Kode sumber aplikasi ini dilisensikan di bawah Lisensi MIT
 
 # Cashier and Pharmacy for Main Eye Clinic of Padang Eye Center Teluk Kuantan
@@ -196,4 +197,5 @@ This application is used for:
 > Jl. Rusdi S. Abrus No. 35, LK III Sinambek, Sungai Jering, Kuantan Tengah, Kuantan Singingi, Riau, Indonesia
 
 © 2024 Main Eye Clinic of Padang Eye Center Teluk Kuantan
+
 The source code of this application is licensed under MIT License
