@@ -284,11 +284,11 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                     <?= $this->renderSection('title'); ?>
                 </div>
                 <div class="d-flex justify-content-center">
-                    <div class="vr d-none d-lg-block border-success-subtle" style="height: 32px;"></div>
+                    <div class="vr d-none d-xl-block border-success-subtle" style="height: 32px;"></div>
                 </div>
                 <div class="mx-3">
                     <a href="#" class="d-flex align-items-center text-success-emphasis text-decoration-none" data-bs-toggle="offcanvas" data-bs-target="#userOffcanvas" role="button" aria-controls="userOffcanvas">
-                        <div class="me-2 d-none d-lg-block text-end lh-1">
+                        <div class="me-2 d-none d-xl-block text-end lh-1">
                             <span class="text-nowrap" style="font-size: 10pt;"><?= session()->get('fullname') ?></span><br>
                             <span class="text-nowrap" style="font-size: 8pt;">@<?= session()->get('username') ?> • <span class="date"><?= $_SERVER['REMOTE_ADDR'] ?></span></span>
                         </div>
