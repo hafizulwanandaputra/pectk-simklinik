@@ -45,7 +45,7 @@ Untuk menyiapkan aplikasi PWA:
 4. Jika konfigurasi memenuhi persyaratan PWA, Anda dapat menginstal PWA. Anda dapat meluncurkannya dari menu atau daftar aplikasi. Jangan lupa untuk menjalankan `php spark serve` (atau `php spark serve --port 8081` jika Anda menggunakan port yang berbeda) sebelum meluncurkan aplikasi.
 5. Jika tidak menggunakan `localhost` yang dilayani menggunakan atau tidak menggunakan `php spark serve` seperti domain atau alamat IP server Anda, Anda harus menggunakan HTTPS.
 
-> [!PERINGATAN]
+> [!WARNING]
 >
 > Anda perlu menginstal ulang PWA jika port atau URL diubah. Pastikan port atau URL yang digunakan untuk PWA tidak bentrok dengan proyek lain.
 
@@ -80,7 +80,7 @@ Diperlukan PHP versi 8.1 atau yang lebih tinggi, dengan ekstensi berikut terpasa
 - [fileinfo](https://php.net/manual/en/fileinfo.installation.php) untuk mengekspor file excel dengan gambar yang dihasilkan dari [PHPSpreadsheet](https://github.com/PHPOffice/PhpSpreadsheet)
 - [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) untuk menghubungkan basis data MySQL.
 
-> [!PERINGATAN]
+> [![!WARNING]]
 >
 > - Tanggal akhir masa pakai PHP 7.4 adalah 28 November 2022.
 > - Tanggal akhir masa pakai PHP 8.0 adalah 26 November 2023.
