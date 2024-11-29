@@ -1,6 +1,6 @@
 # Kasir dan Farmasi Klinik Utama Mata Padang Eye Center Teluk Kuantan
 
-**Aplikasi Kasir dan Farmasi Klinik Utama Mata Padang Eye Center Teluk Kuantan** adalah sebuah sistem yang digunakan untuk memanajemen stok obat, resep obat, dan transaksi yang digunakan di Klinik Utama Mata Padang Eye Center Teluk Kuantan. Aplikasi ini didasarkan pada [HWPweb Admin Template](https://github.com/hafizulwanandaputra/hwpweb-admin-template) yang juga didasarkan pada CodeIgniter 4.
+**Aplikasi Kasir dan Farmasi Klinik Utama Mata Padang Eye Center Teluk Kuantan** adalah sebuah sistem yang digunakan untuk memanajemen stok obat, resep obat, dan transaksi yang digunakan di Klinik Utama Mata Padang Eye Center Teluk Kuantan. Aplikasi ini didasarkan pada [HWPweb Admin Template](https://github.com/hafizulwanandaputra/hwpweb-admin-template) yang juga didasarkan pada [CodeIgniter 4](https://github.com/codeigniter4/appstarter).
 
 ## Instalasi
 
@@ -99,7 +99,7 @@ Kode sumber aplikasi ini dilisensikan di bawah Lisensi MIT
 
 # Cashier and Pharmacy for Main Eye Clinic of Padang Eye Center Teluk Kuantan
 
-**Cashier and Pharmacy Application for Main Eye Clinic of Padang Eye Center Teluk Kuantan** is a system used to manage medicine stock, medicine prescriptions, and transactions used at Main Eye Clinic of Padang Eye Center Teluk Kuantan. This application is based on [HWPweb Admin Template](https://github.com/hafizulwanandaputra/hwpweb-admin-template) which is also based on CodeIgniter 4..
+**Cashier and Pharmacy Application for Main Eye Clinic of Padang Eye Center Teluk Kuantan** is a system used to manage medicine stock, medicine prescriptions, and transactions used at Main Eye Clinic of Padang Eye Center Teluk Kuantan. This application is based on [HWPweb Admin Template](https://github.com/hafizulwanandaputra/hwpweb-admin-template) which is also based on [CodeIgniter 4](https://github.com/codeigniter4/appstarter).
 
 ## Installation
 
