@@ -61,7 +61,7 @@ $tanggal = Time::parse($transaksi['tgl_transaksi']);
                         </div>
                     </td>
                     <td style="width: 0%;">
-                        <div style="font-size: 18pt;">KWITANSI</div>
+                        <div style="font-size: 18pt;">KUITANSI</div>
                     </td>
                 </tr>
             </thead>
@@ -76,7 +76,7 @@ $tanggal = Time::parse($transaksi['tgl_transaksi']);
                         <div><?= $transaksi['no_rm'] ?></div>
                     </td>
                     <td style="width: 15%; vertical-align: top; padding: 0;">
-                        <div>Nomor Kwitansi:</div>
+                        <div>Nomor Kuitansi:</div>
                     </td>
                     <td style="width: 35%; vertical-align: top; padding: 0;">
                         <div><?= $transaksi['no_kwitansi'] ?></div>
