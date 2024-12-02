@@ -408,6 +408,10 @@
                 responsive: true,
                 maintainAspectRatio: false,
                 locale: 'id-ID',
+                interaction: {
+                    intersect: false,
+                    mode: 'index',
+                },
                 plugins: {
                     legend: {
                         display: false
@@ -463,6 +467,10 @@
                 responsive: true,
                 maintainAspectRatio: false,
                 locale: 'id-ID',
+                interaction: {
+                    intersect: false,
+                    mode: 'index',
+                },
                 plugins: {
                     legend: {
                         display: false
@@ -497,6 +505,10 @@
                 responsive: true,
                 maintainAspectRatio: false,
                 locale: 'id-ID',
+                interaction: {
+                    intersect: false,
+                    mode: 'index',
+                },
                 plugins: {
                     legend: {
                         display: false
