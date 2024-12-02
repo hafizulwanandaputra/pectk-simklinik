@@ -369,7 +369,7 @@
                 label: 'Pemasukan Per Bulan',
                 borderWidth: 2,
                 pointStyle: 'rectRot',
-                fill: true,
+                fill: false,
                 data: data_pemasukanperbulangraph
             }]
         }

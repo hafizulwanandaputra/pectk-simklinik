@@ -133,7 +133,7 @@ class Home extends BaseController
                 'label' => $dokter,
                 'borderWidth' => 2,
                 'pointStyle' => 'rectRot',
-                'fill' => true,
+                'fill' => false,
                 'data' => []
             ];
 
@@ -183,7 +183,7 @@ class Home extends BaseController
                 'label' => $kasir,
                 'borderWidth' => 2,
                 'pointStyle' => 'rectRot',
-                'fill' => true,
+                'fill' => false,
                 'data' => []
             ];
 
