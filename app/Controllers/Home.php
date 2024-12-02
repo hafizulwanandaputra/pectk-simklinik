@@ -132,7 +132,9 @@ class Home extends BaseController
             $dataset = [
                 'label' => $dokter,
                 'borderWidth' => 2,
-                'pointStyle' => 'rectRot',
+                'pointStyle' => 'circle',
+                'pointRadius' => 6,
+                'pointHoverRadius' => 12,
                 'fill' => false,
                 'data' => []
             ];
@@ -182,7 +184,9 @@ class Home extends BaseController
             $dataset = [
                 'label' => $kasir,
                 'borderWidth' => 2,
-                'pointStyle' => 'rectRot',
+                'pointStyle' => 'circle',
+                'pointRadius' => 6,
+                'pointHoverRadius' => 12,
                 'fill' => false,
                 'data' => []
             ];

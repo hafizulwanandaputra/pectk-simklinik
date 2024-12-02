@@ -338,7 +338,9 @@
             datasets: [{
                 label: 'Resep Menurut Dokter',
                 borderWidth: 2,
-                pointStyle: 'rectRot',
+                pointStyle: 'circle',
+                pointRadius: 6,
+                pointHoverRadius: 12,
                 fill: true,
                 data: data_resepbydoktergraph
             }]
@@ -354,7 +356,9 @@
             datasets: [{
                 label: 'Transaksi Menurut Petugas Kasir',
                 borderWidth: 2,
-                pointStyle: 'rectRot',
+                pointStyle: 'circle',
+                pointRadius: 6,
+                pointHoverRadius: 12,
                 fill: true,
                 data: data_transaksibykasirgraph
             }]
@@ -368,8 +372,10 @@
             datasets: [{
                 label: 'Pemasukan Per Bulan',
                 borderWidth: 2,
-                pointStyle: 'rectRot',
-                fill: false,
+                pointStyle: 'circle',
+                pointRadius: 6,
+                pointHoverRadius: 12,
+                fill: true,
                 data: data_pemasukanperbulangraph
             }]
         }
