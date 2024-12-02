@@ -368,9 +368,8 @@
             labels: label_pemasukanperbulangraph,
             datasets: [{
                 label: 'Pemasukan Per Bulan',
-                pointStyle: 'circle',
-                pointRadius: 6,
-                pointHoverRadius: 12,
+                borderWidth: 2,
+                borderRadius: 10,
                 fill: true,
                 data: data_pemasukanperbulangraph
             }]
@@ -389,6 +388,9 @@
                     legend: {
                         display: true,
                         position: 'bottom'
+                    },
+                    filler: {
+                        drawTime: 'beforeDraw'
                     }
                 },
                 scale: {
@@ -449,6 +451,9 @@
                     legend: {
                         display: true,
                         position: 'bottom'
+                    },
+                    filler: {
+                        drawTime: 'beforeDraw'
                     }
                 },
                 scale: {
@@ -497,7 +502,7 @@
             }
         })
         var chart_pemasukanperbulangraph = createChart(document.getElementById('pemasukanperbulangraph').getContext('2d'), {
-            type: 'line',
+            type: 'bar',
             data: data_content_pemasukanperbulangraph,
             options: {
                 responsive: true,
