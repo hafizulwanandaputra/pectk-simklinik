@@ -7,7 +7,7 @@
 
     @media (max-width: 991.98px) {
         .ratio-onecol {
-            --bs-aspect-ratio: 56.25%;
+            --bs-aspect-ratio: 75%;
         }
     }
 </style>
@@ -144,7 +144,7 @@
                         <div class="card bg-body-tertiary w-100  shadow-sm">
                             <div class="card-header w-100 text-truncate">Resep Menurut Dokter</div>
                             <div class="card-body">
-                                <div class="ratio ratio-16x9 w-100">
+                                <div class="ratio ratio-4x3 w-100">
                                     <canvas id="resepbydoktergraph"></canvas>
                                 </div>
                             </div>
@@ -154,7 +154,7 @@
                         <div class="card bg-body-tertiary w-100  shadow-sm">
                             <div class="card-header w-100 text-truncate">Resep Per Bulan</div>
                             <div class="card-body">
-                                <div class="ratio ratio-16x9 w-100">
+                                <div class="ratio ratio-4x3 w-100">
                                     <canvas id="resepgraph"></canvas>
                                 </div>
                             </div>
@@ -187,7 +187,7 @@
                         <div class="card bg-body-tertiary w-100  shadow-sm">
                             <div class="card-header w-100 text-truncate">Transaksi Menurut Petugas Kasir</div>
                             <div class="card-body">
-                                <div class="ratio ratio-16x9 w-100">
+                                <div class="ratio ratio-4x3 w-100">
                                     <canvas id="transaksibykasirgraph"></canvas>
                                 </div>
                             </div>
@@ -197,7 +197,7 @@
                         <div class="card bg-body-tertiary w-100  shadow-sm">
                             <div class="card-header w-100 text-truncate">Transaksi Per Bulan</div>
                             <div class="card-body">
-                                <div class="ratio ratio-16x9 w-100">
+                                <div class="ratio ratio-4x3 w-100">
                                     <canvas id="transaksiperbulangraph"></canvas>
                                 </div>
                             </div>
