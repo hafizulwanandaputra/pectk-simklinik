@@ -97,6 +97,11 @@ class Home extends BaseController
                 ->groupBy('DATE_FORMAT(resep.tanggal_resep, "%Y-%m"), dokter')
                 ->get()
                 ->getResultArray();
+            $resepallgraph = $resep->select('DATE_FORMAT(resep.tanggal_resep, "%Y-%m") AS bulan, COUNT(*) AS total_resep')
+                ->where('dokter !=', 'Resep Luar')
+                ->where('resep.status', 1)
+                ->groupBy('DATE_FORMAT(resep.tanggal_resep, "%Y-%m")')
+                ->get(); // Resep Per Bulan
         } else {
             $total_resep_blm_status = $resep->where('status', 0)->countAllResults(); // Total resep belum status
             $total_resep_sdh_status = $resep->where('status', 1)->countAllResults(); // Total resep sudah status
@@ -106,6 +111,10 @@ class Home extends BaseController
                 ->groupBy('DATE_FORMAT(resep.tanggal_resep, "%Y-%m"), dokter')
                 ->get()
                 ->getResultArray();
+            $resepallgraph = $resep->select('DATE_FORMAT(resep.tanggal_resep, "%Y-%m") AS bulan, COUNT(*) AS total_resep')
+                ->where('resep.status', 1)
+                ->groupBy('DATE_FORMAT(resep.tanggal_resep, "%Y-%m")')
+                ->get(); // Resep Per Bulan
         }
 
         // Inisialisasi array untuk labels (bulan unik) dan datasets
@@ -197,6 +206,8 @@ class Home extends BaseController
             $datasets_transaksi[] = $dataset;
         }
 
+        $transaksiperbulanallgraph = $transaksi->select('DATE_FORMAT(transaksi.tgl_transaksi, "%Y-%m") AS bulan, COUNT(*) AS total_transaksi')->where('transaksi.lunas', 1)->groupBy('DATE_FORMAT(transaksi.tgl_transaksi, "%Y-%m")')->get(); // Transaksi Per Bulan
+
         $total_pemasukan = $transaksi->where('lunas', 1)->selectSum('total_pembayaran')->get()->getRow()->total_pembayaran; // Total Pemasukan
 
         $pemasukanperbulangraph = $transaksi->select('DATE_FORMAT(transaksi.tgl_transaksi, "%Y-%m") AS bulan, SUM(total_pembayaran) AS total_pemasukan')->where('transaksi.lunas', 1)->groupBy('DATE_FORMAT(transaksi.tgl_transaksi, "%Y-%m")')->get(); // Pemasukan Per Bulan
@@ -223,11 +234,13 @@ class Home extends BaseController
             'resepbydoktergraph' => $resepbydoktergraph,
             'labels_resep' => json_encode($labels_resep),
             'datasets_resep' => json_encode($datasets_resep),
+            'resepallgraph' => $resepallgraph,
             'total_transaksi_blm_lunas' => $total_transaksi_blm_lunas,
             'total_transaksi_sdh_lunas' => $total_transaksi_sdh_lunas,
             'transaksibykasirgraph' => $transaksibykasirgraph,
             'labels_transaksi' => json_encode($labels_transaksi),
             'datasets_transaksi' => json_encode($datasets_transaksi),
+            'transaksiperbulanallgraph' => $transaksiperbulanallgraph,
             'total_pemasukan' => $total_pemasukan,
             'pemasukanperbulangraph' => $pemasukanperbulangraph,
             'total_user' => $total_user,

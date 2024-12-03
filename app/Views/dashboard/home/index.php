@@ -152,11 +152,21 @@
                     </div>
                     <div class="col">
                         <div class="card bg-body-tertiary w-100  shadow-sm">
-                            <div class="card-header w-100 text-truncate">Resep Per Bulan</div>
+                            <div class="card-header w-100 text-truncate">Resep Per Bulan Menurut Dokter</div>
                             <div class="card-body">
                                 <div class="ratio ratio-4x3 w-100">
                                     <canvas id="resepgraph"></canvas>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <div class="card bg-body-tertiary w-100  shadow-sm">
+                        <div class="card-header w-100 text-truncate">Resep Per Bulan Keseluruhan</div>
+                        <div class="card-body">
+                            <div class="ratio ratio-onecol w-100">
+                                <canvas id="resepallgraph"></canvas>
                             </div>
                         </div>
                     </div>
@@ -195,11 +205,21 @@
                     </div>
                     <div class="col">
                         <div class="card bg-body-tertiary w-100  shadow-sm">
-                            <div class="card-header w-100 text-truncate">Transaksi Per Bulan</div>
+                            <div class="card-header w-100 text-truncate">Transaksi Per Bulan Menurut Petugas Kasir</div>
                             <div class="card-body">
                                 <div class="ratio ratio-4x3 w-100">
                                     <canvas id="transaksiperbulangraph"></canvas>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <div class="card bg-body-tertiary w-100  shadow-sm">
+                        <div class="card-header w-100 text-truncate">Transaksi Per Bulan Keseluruhan</div>
+                        <div class="card-body">
+                            <div class="ratio ratio-onecol w-100">
+                                <canvas id="transaksiperbulanallgraph"></canvas>
                             </div>
                         </div>
                     </div>
@@ -306,10 +326,14 @@
     <?php if (session()->get('role') == "Admin" || session()->get('role') == "Apoteker" || session()->get('role') == "Dokter") : ?>
         const data_resepbydoktergraph = [];
         const label_resepbydoktergraph = [];
+        const data_resepallgraph = [];
+        const label_resepallgraph = [];
     <?php endif; ?>
     <?php if (session()->get('role') == "Admin" || session()->get('role') == "Kasir") : ?>
         const data_transaksibykasirgraph = [];
         const label_transaksibykasirgraph = [];
+        const data_transaksiperbulanallgraph = [];
+        const label_transaksiperbulanallgraph = [];
         const data_pemasukanperbulangraph = [];
         const label_pemasukanperbulangraph = [];
     <?php endif; ?>
@@ -319,11 +343,19 @@
             data_resepbydoktergraph.push(<?= $resepbydoktergraph->jumlah; ?>);
             label_resepbydoktergraph.push('<?= $resepbydoktergraph->dokter; ?>');
         <?php endforeach; ?>
+        <?php foreach ($resepallgraph->getResult() as $key => $resepallgraph) : ?>
+            data_resepallgraph.push(<?= $resepallgraph->total_resep; ?>);
+            label_resepallgraph.push('<?= $resepallgraph->bulan; ?>');
+        <?php endforeach; ?>
     <?php endif; ?>
     <?php if (session()->get('role') == "Admin" || session()->get('role') == "Kasir") : ?>
         <?php foreach ($transaksibykasirgraph->getResult() as $key => $transaksibykasirgraph) : ?>
             data_transaksibykasirgraph.push(<?= $transaksibykasirgraph->jumlah; ?>);
             label_transaksibykasirgraph.push('<?= $transaksibykasirgraph->kasir; ?>');
+        <?php endforeach; ?>
+        <?php foreach ($transaksiperbulanallgraph->getResult() as $key => $transaksiperbulanallgraph) : ?>
+            data_transaksiperbulanallgraph.push(<?= $transaksiperbulanallgraph->total_transaksi; ?>);
+            label_transaksiperbulanallgraph.push('<?= $transaksiperbulanallgraph->bulan; ?>');
         <?php endforeach; ?>
         <?php foreach ($pemasukanperbulangraph->getResult() as $key => $pemasukanperbulangraph) : ?>
             data_pemasukanperbulangraph.push(<?= $pemasukanperbulangraph->total_pemasukan; ?>);
@@ -347,6 +379,16 @@
             labels: <?= $labels_resep ?>,
             datasets: <?= $datasets_resep ?>
         }
+        var data_content_resepallgraph = {
+            labels: label_resepallgraph,
+            datasets: [{
+                label: 'Resep Per Bulan',
+                borderWidth: 2,
+                borderRadius: 10,
+                fill: true,
+                data: data_resepallgraph
+            }]
+        }
     <?php endif; ?>
     <?php if (session()->get('role') == "Admin" || session()->get('role') == "Kasir") : ?>
         var data_content_transaksibykasirgraph = {
@@ -358,6 +400,16 @@
                 pointHoverRadius: 12,
                 fill: true,
                 data: data_transaksibykasirgraph
+            }]
+        }
+        var data_content_transaksiperbulanallgraph = {
+            labels: label_transaksiperbulanallgraph,
+            datasets: [{
+                label: 'Transaksi Per Bulan',
+                borderWidth: 2,
+                borderRadius: 10,
+                fill: true,
+                data: data_transaksiperbulanallgraph
             }]
         }
         var data_content_transaksiperbulangraph = {
@@ -438,6 +490,44 @@
                 }
             }
         })
+        var chart_resepallgraph = createChart(document.getElementById('resepallgraph').getContext('2d'), {
+            type: 'bar',
+            data: data_content_resepallgraph,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                locale: 'id-ID',
+                interaction: {
+                    intersect: false,
+                    mode: 'index',
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Bulan'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Resep yang Diproses'
+                        }
+                    }
+                },
+                scale: {
+                    ticks: {
+                        precision: 0
+                    }
+                }
+            }
+        })
     <?php endif; ?>
     <?php if (session()->get('role') == "Admin" || session()->get('role') == "Kasir") : ?>
         var chart_transaksibykasirgraph = createChart(document.getElementById('transaksibykasirgraph').getContext('2d'), {
@@ -466,6 +556,44 @@
         var chart_transaksiperbulangraph = createChart(document.getElementById('transaksiperbulangraph').getContext('2d'), {
             type: 'line',
             data: data_content_transaksiperbulangraph,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                locale: 'id-ID',
+                interaction: {
+                    intersect: false,
+                    mode: 'index',
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Bulan'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Transaksi yang Diproses'
+                        }
+                    }
+                },
+                scale: {
+                    ticks: {
+                        precision: 0
+                    }
+                }
+            }
+        })
+        var chart_transaksiperbulanallgraph = createChart(document.getElementById('transaksiperbulanallgraph').getContext('2d'), {
+            type: 'bar',
+            data: data_content_transaksiperbulanallgraph,
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
