@@ -114,7 +114,6 @@
                                     <thead>
                                         <tr class="align-middle">
                                             <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">No</th>
-                                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Tanggal</th>
                                             <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 50%;">Dokter</th>
                                             <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 50%;">Nama Obat</th>
                                             <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Harga Satuan</th>
@@ -124,7 +123,7 @@
                                     </thead>
                                     <tbody class="align-top" id="resepbulanan">
                                         <tr>
-                                            <td colspan="7" class="text-center" style="cursor: wait;">Memuat data resep...</td>
+                                            <td colspan="6" class="text-center" style="cursor: wait;">Memuat data resep...</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -266,7 +265,7 @@
     `;
     const loading2 = `
         <tr>
-            <td colspan="7" class="text-center" style="cursor: wait;">Memuat data resep...</td>
+            <td colspan="6" class="text-center" style="cursor: wait;">Memuat data resep...</td>
         </tr>
     `;
 
@@ -431,7 +430,7 @@
                 // Tampilkan pesan jika tidak ada data
                 const emptyRow = `
                     <tr>
-                        <td colspan="7" class="text-center">Silakan masukkan bulan</td>
+                        <td colspan="6" class="text-center">Silakan masukkan bulan</td>
                     </tr>
                 `;
                 $('#resepbulanan').append(emptyRow); // Menambahkan baris kosong ke tabel
@@ -459,7 +458,7 @@
                 const message = response.data.message == null ? `Tidak ada resep yang digunakan pada ${bulan}` : response.data.message;
                 const emptyRow = `
                     <tr>
-                        <td colspan="7" class="text-center">${message}</td>
+                        <td colspan="6" class="text-center">${message}</td>
                     </tr>
                 `;
                 $('#resepbulanan').append(emptyRow); // Menambahkan baris pesan ke tabel
@@ -476,7 +475,6 @@
                 const resepElement = `
                     <tr>
                         <td class="date text-nowrap text-center">${index + 1}</td>
-                        <td class="date text-nowrap">${resep.tanggal}</td>
                         <td>${resep.dokter}</td>
                         <td>${resep.nama_obat}</td>
                         <td class="date text-end">Rp${harga_satuan.toLocaleString('id-ID')}</td>
@@ -507,7 +505,7 @@
             console.error(error); // Menampilkan error di konsol
             const errorRow = `
                 <tr>
-                    <td colspan="7" class="text-center text-danger">${error}</td>
+                    <td colspan="6" class="text-center text-danger">${error}</td>
                 </tr>
             `;
             $('#resepbulanan').empty(); // Kosongkan tabel resep
