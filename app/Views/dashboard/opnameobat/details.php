@@ -19,16 +19,16 @@
             <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Informasi Laporan Stok Obat</legend>
             <div style="font-size: 9pt;">
                 <div class="mb-2 row">
-                    <div class="col-lg-3 fw-medium">Tanggal dan Waktu</div>
-                    <div class="col-lg">
+                    <div class="col-5 col-lg-3 fw-medium">Tanggal dan Waktu</div>
+                    <div class="col">
                         <div class="date">
                             <?= $opname_obat['tanggal'] ?>
                         </div>
                     </div>
                 </div>
                 <div class="mb-2 row">
-                    <div class="col-lg-3 fw-medium">Apoteker</div>
-                    <div class="col-lg">
+                    <div class="col-5 col-lg-3 fw-medium">Apoteker</div>
+                    <div class="col">
                         <div class="date">
                             <?= $opname_obat['apoteker'] ?>
                         </div>

@@ -33,40 +33,40 @@
             <div class="row">
                 <div class="col-lg-6" style="font-size: 9pt;">
                     <div class="mb-2 row">
-                        <div class="col-lg-4 fw-medium">Tanggal dan Waktu</div>
-                        <div class="col-lg">
+                        <div class="col-5 col-lg-4 fw-medium">Tanggal dan Waktu</div>
+                        <div class="col">
                             <div class="date">
                                 <?= $resep['tanggal_resep'] ?>
                             </div>
                         </div>
                     </div>
                     <div class="mb-2 row">
-                        <div class="col-lg-4 fw-medium">Dokter</div>
-                        <div class="col-lg">
+                        <div class="col-5 col-lg-4 fw-medium">Dokter</div>
+                        <div class="col">
                             <div class="date">
                                 <?= $resep['dokter'] ?>
                             </div>
                         </div>
                     </div>
                     <div class="mb-2 row">
-                        <div class="col-lg-4 fw-medium">Nama Pasien</div>
-                        <div class="col-lg">
+                        <div class="col-5 col-lg-4 fw-medium">Nama Pasien</div>
+                        <div class="col">
                             <div class="date">
                                 <?= $resep['nama_pasien'] ?>
                             </div>
                         </div>
                     </div>
                     <div class="mb-2 row">
-                        <div class="col-lg-4 fw-medium">Nomor Rekam Medis</div>
-                        <div class="col-lg">
+                        <div class="col-5 col-lg-4 fw-medium">Nomor Rekam Medis</div>
+                        <div class="col">
                             <div class="date">
                                 <?= $resep['no_rm'] ?>
                             </div>
                         </div>
                     </div>
                     <div class="mb-2 row">
-                        <div class="col-lg-4 fw-medium">Nomor Registrasi</div>
-                        <div class="col-lg">
+                        <div class="col-5 col-lg-4 fw-medium">Nomor Registrasi</div>
+                        <div class="col">
                             <div class="date">
                                 <?= $resep['nomor_registrasi'] ?>
                             </div>
@@ -75,8 +75,8 @@
                 </div>
                 <div class="col-lg-6" style="font-size: 9pt;">
                     <div class="mb-2 row">
-                        <div class="col-lg-4 fw-medium">Jenis Kelamin</div>
-                        <div class="col-lg">
+                        <div class="col-5 col-lg-4 fw-medium">Jenis Kelamin</div>
+                        <div class="col">
                             <div class="date">
                                 <?php
                                 if ($resep['jenis_kelamin'] == 'L') {
@@ -91,32 +91,32 @@
                         </div>
                     </div>
                     <div class="mb-2 row">
-                        <div class="col-lg-4 fw-medium">Tanggal Lahir</div>
-                        <div class="col-lg">
+                        <div class="col-5 col-lg-4 fw-medium">Tanggal Lahir</div>
+                        <div class="col">
                             <div class="date">
                                 <?= $resep['tanggal_lahir'] ?>
                             </div>
                         </div>
                     </div>
                     <div class="mb-2 row">
-                        <div class="col-lg-4 fw-medium">Alamat</div>
-                        <div class="col-lg">
+                        <div class="col-5 col-lg-4 fw-medium">Alamat</div>
+                        <div class="col">
                             <div class="date">
                                 <?= $resep['alamat'] ?>
                             </div>
                         </div>
                     </div>
                     <div class="mb-2 row">
-                        <div class="col-lg-4 fw-medium">Nomor Telepon</div>
-                        <div class="col-lg">
+                        <div class="col-5 col-lg-4 fw-medium">Nomor Telepon</div>
+                        <div class="col">
                             <div class="date">
                                 <?= $resep['telpon'] ?>
                             </div>
                         </div>
                     </div>
                     <div class="mb-2 row">
-                        <div class="col-lg-4 fw-medium">Status Konfirmasi</div>
-                        <div class="col-lg">
+                        <div class="col-5 col-lg-4 fw-medium">Status Konfirmasi</div>
+                        <div class="col">
                             <div class="date" id="confirmedStatus">
                                 Memuat status...
                             </div>

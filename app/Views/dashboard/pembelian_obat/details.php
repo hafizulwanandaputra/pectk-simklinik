@@ -32,48 +32,48 @@
             <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Informasi Obat Masuk</legend>
             <div style="font-size: 9pt;">
                 <div class="mb-2 row">
-                    <div class="col-lg-3 fw-medium">Tanggal dan Waktu</div>
-                    <div class="col-lg">
+                    <div class="col-5 col-lg-3 fw-medium">Tanggal dan Waktu</div>
+                    <div class="col">
                         <div class="date">
                             <?= $pembelianobat['tgl_pembelian'] ?>
                         </div>
                     </div>
                 </div>
                 <div class="mb-2 row">
-                    <div class="col-lg-3 fw-medium">Nama Supplier</div>
-                    <div class="col-lg">
+                    <div class="col-5 col-lg-3 fw-medium">Nama Supplier</div>
+                    <div class="col">
                         <div class="date">
                             <?= $pembelianobat['nama_supplier'] ?>
                         </div>
                     </div>
                 </div>
                 <div class="mb-2 row">
-                    <div class="col-lg-3 fw-medium">Alamat Supplier</div>
-                    <div class="col-lg">
+                    <div class="col-5 col-lg-3 fw-medium">Alamat Supplier</div>
+                    <div class="col">
                         <div class="date">
                             <?= $pembelianobat['alamat_supplier'] ?>
                         </div>
                     </div>
                 </div>
                 <div class="mb-2 row">
-                    <div class="col-lg-3 fw-medium">Nomor Telepon Supplier</div>
-                    <div class="col-lg">
+                    <div class="col-5 col-lg-3 fw-medium">Nomor Telepon Supplier</div>
+                    <div class="col">
                         <div class="date">
                             <?= ($pembelianobat['kontak_supplier'] == '') ? '<em>Tidak ada</em>' : $pembelianobat['kontak_supplier']; ?>
                         </div>
                     </div>
                 </div>
                 <div class="mb-2 row">
-                    <div class="col-lg-3 fw-medium">Merek</div>
-                    <div class="col-lg">
+                    <div class="col-5 col-lg-3 fw-medium">Merek</div>
+                    <div class="col">
                         <div class="date">
                             <?= ($pembelianobat['merek'] == '') ? '<em>Tanpa Merek</em>' : $pembelianobat['merek']; ?>
                         </div>
                     </div>
                 </div>
                 <div class="mb-2 row">
-                    <div class="col-lg-3 fw-medium">Apoteker</div>
-                    <div class="col-lg">
+                    <div class="col-5 col-lg-3 fw-medium">Apoteker</div>
+                    <div class="col">
                         <div class="date">
                             <?= $pembelianobat['apoteker'] ?>
                         </div>

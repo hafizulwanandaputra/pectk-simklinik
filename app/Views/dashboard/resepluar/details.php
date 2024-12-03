@@ -32,24 +32,24 @@
             <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Informasi Pasien Resep Luar</legend>
             <div style="font-size: 9pt;">
                 <div class="mb-2 row">
-                    <div class="col-lg-3 fw-medium">Tanggal dan Waktu</div>
-                    <div class="col-lg">
+                    <div class="col-5 col-lg-3 fw-medium">Tanggal dan Waktu</div>
+                    <div class="col">
                         <div class="date">
                             <?= $resep['tanggal_resep'] ?>
                         </div>
                     </div>
                 </div>
                 <div class="mb-2 row">
-                    <div class="col-lg-3 fw-medium">Nama Pasien</div>
-                    <div class="col-lg">
+                    <div class="col-5 col-lg-3 fw-medium">Nama Pasien</div>
+                    <div class="col">
                         <div class="date">
                             <?= ($resep['nama_pasien'] == NULL) ? '<em>Anonim</em>' : $resep['nama_pasien']; ?>
                         </div>
                     </div>
                 </div>
                 <div class="mb-2 row">
-                    <div class="col-lg-3 fw-medium">Jenis Kelamin</div>
-                    <div class="col-lg">
+                    <div class="col-5 col-lg-3 fw-medium">Jenis Kelamin</div>
+                    <div class="col">
                         <div class="date">
                             <?php
                             if ($resep['jenis_kelamin'] == 'L') {
@@ -64,24 +64,24 @@
                     </div>
                 </div>
                 <div class="mb-2 row">
-                    <div class="col-lg-3 fw-medium">Tanggal Lahir</div>
-                    <div class="col-lg">
+                    <div class="col-5 col-lg-3 fw-medium">Tanggal Lahir</div>
+                    <div class="col">
                         <div class="date">
                             <?= $resep['tanggal_lahir'] ?>
                         </div>
                     </div>
                 </div>
                 <div class="mb-2 row">
-                    <div class="col-lg-3 fw-medium">Alamat</div>
-                    <div class="col-lg">
+                    <div class="col-5 col-lg-3 fw-medium">Alamat</div>
+                    <div class="col">
                         <div class="date">
                             <?= ($resep['alamat'] == NULL) ? '<em>Tidak ada</em>' : $resep['alamat']; ?>
                         </div>
                     </div>
                 </div>
                 <div class="mb-2 row">
-                    <div class="col-lg-3 fw-medium">Apoteker</div>
-                    <div class="col-lg">
+                    <div class="col-5 col-lg-3 fw-medium">Apoteker</div>
+                    <div class="col">
                         <div class="date">
                             <?= $resep['apoteker'] ?>
                         </div>
