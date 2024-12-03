@@ -221,6 +221,11 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
             max-width: 1140px;
         }
 
+        .no-caret::after {
+            display: none;
+            /* Hilangkan ikon panah ke bawah */
+        }
+
         @media (max-width: 767.98px) {
             .toast-container {
                 padding-top: 7rem !important;

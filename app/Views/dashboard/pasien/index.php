@@ -17,7 +17,21 @@
                     <div class="input-group input-group-sm">
                         <input type="date" id="tanggal" name="tanggal" class="form-control ">
                         <button class="btn btn-danger bg-gradient" type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
-                        <button class="btn btn-success bg-gradient " type="button" id="refreshButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan" disabled><i class="fa-solid fa-sync"></i></button>
+                        <button class="btn btn-info bg-gradient dropdown-toggle no-caret" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-info"></i></button>
+                        <ul class="dropdown-menu dropdown-menu-end bg-body-tertiary shadow-sm">
+                            <li>
+                                <h6 class="dropdown-header text-wrap" style="max-width: 600px;">Data-data pasien rawat jalan ini diperoleh dari <em>Application Programming Interface</em> (API) Sistem Informasi Manajemen Klinik Utama Mata Padang Eye Center Teluk Kuantan</h6>
+                            </li>
+                            <li>
+                                <a class="dropdown-item px-2 py-1" href="https://pectk.padangeyecenter.com/klinik" target="_blank">
+                                    <div class="d-flex align-items-start">
+                                        <span style="min-width: 32px; max-width: 32px; text-align: center;"><i class="fa-solid fa-up-right-from-square"></i></span>
+                                        <span>Buka SIM Klinik</span>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                        <button class="btn btn-success bg-gradient" type="button" id="refreshButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan" disabled><i class="fa-solid fa-sync"></i></button>
                     </div>
                 </div>
             </li>
@@ -25,17 +39,6 @@
     </div>
     <div class="px-3">
         <div class="no-fluid-content">
-            <div class="alert alert-info  mb-2" role="alert">
-                <div class="d-flex align-items-start">
-                    <div style="width: 12px; text-align: center;">
-                        <i class="fa-solid fa-circle-info"></i>
-                    </div>
-                    <div class="w-100 ms-3">
-                        Data-data pasien rawat jalan ini diperoleh dari <em>Application Programming Interface</em> (API) <a href="https://pectk.padangeyecenter.com/klinik" class="alert-link" target="_blank">Sistem Informasi Manajemen Klinik Utama Mata Padang Eye Center Teluk Kuantan</a>
-                    </div>
-                </div>
-            </div>
-
             <div class="accordion mb-3" id="datapasien">
                 <div class="accordion-item shadow-sm p-3 p-3">
                     <h2 class="text-center text-muted mb-0" style="font-weight: 300;">Memuat data pasien rawat jalan...</h2>
