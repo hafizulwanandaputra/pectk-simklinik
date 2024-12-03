@@ -63,7 +63,7 @@
                     </button>
                 </div>
                 <ul id="pembelianObatFormContainter" class="list-group rounded-0 collapse">
-                    <li class="list-group-item border-top-0 border-bottom-0 bg-body-tertiary">
+                    <li class="list-group-item border-top-0 bg-body-tertiary">
                         <form id="pembelianObatForm" enctype="multipart/form-data" class="d-flex flex-column gap-2">
                             <div class="flex-fill">
                                 <select class="form-select " id="id_supplier" name="id_supplier" aria-label="id_supplier">
@@ -81,7 +81,7 @@
                 </ul>
                 <ul id="pembelianObatContainer" class="list-group rounded-top-0 ">
                     <?php for ($i = 0; $i < 12; $i++) : ?>
-                        <li class="list-group-item bg-body-tertiary pb-3 pt-3" style="cursor: wait;">
+                        <li class="list-group-item border-top-0 bg-body-tertiary pb-3 pt-3" style="cursor: wait;">
                             <div class="d-flex">
                                 <div class="align-self-center w-100">
                                     <h5 class="card-title placeholder-glow">
@@ -137,7 +137,7 @@
     let currentPage = 1;
     let pembelianObatId = null;
     var placeholder = `
-            <li class="list-group-item bg-body-tertiary pb-3 pt-3" style="cursor: wait;">
+            <li class="list-group-item border-top-0 bg-body-tertiary pb-3 pt-3" style="cursor: wait;">
                 <div class="d-flex">
                     <div class="align-self-center w-100">
                         <h5 class="card-title placeholder-glow">
@@ -254,7 +254,7 @@
             if (data.total === 0) {
                 $('#paginationNav ul').empty();
                 $('#pembelianObatContainer').append(
-                    '<li class="list-group-item bg-body-tertiary pb-3 pt-3">' +
+                    '<li class="list-group-item border-top-0 bg-body-tertiary pb-3 pt-3">' +
                     '    <h1 class="display-4 text-center text-muted" style="font-weight: 200;">Data Kosong</h1>' +
                     '</li>'
                 );
@@ -267,7 +267,7 @@
                         `<span class="badge bg-success bg-gradient">Diterima</span>` :
                         `<span class="badge bg-danger bg-gradient">Belum Diterima</span>`;
                     const pembelian_obatElement = `
-            <li class="list-group-item bg-body-tertiary pb-3 pt-3">
+            <li class="list-group-item border-top-0 bg-body-tertiary pb-3 pt-3">
                 <div class="d-flex">
                     <div class="align-self-center w-100">
                         <h5 class="card-title">

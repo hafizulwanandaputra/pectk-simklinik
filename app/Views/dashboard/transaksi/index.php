@@ -74,7 +74,7 @@
                     </button>
                 </div>
                 <ul id="transaksiFormContainer" class="list-group rounded-0 collapse">
-                    <li class="list-group-item border-top-0 border-bottom-0 bg-body-tertiary">
+                    <li class="list-group-item border-top-0 bg-body-tertiary">
                         <div class="row gy-3">
                             <div class="col-lg-6">
                                 <fieldset class="border rounded px-2 py-0">
@@ -117,7 +117,7 @@
                 </ul>
                 <ul id="transaksiContainer" class="list-group rounded-top-0 ">
                     <?php for ($i = 0; $i < 12; $i++) : ?>
-                        <li class="list-group-item bg-body-tertiary pb-3 pt-3" style="cursor: wait;">
+                        <li class="list-group-item border-top-0 bg-body-tertiary pb-3 pt-3" style="cursor: wait;">
                             <div class="d-flex">
                                 <div class="align-self-center w-100">
                                     <h5 class="card-title placeholder-glow">
@@ -175,7 +175,7 @@
     let currentPage = 1;
     let transaksiId = null;
     var placeholder = `
-            <li class="list-group-item bg-body-tertiary pb-3 pt-3" style="cursor: wait;">
+            <li class="list-group-item border-top-0 bg-body-tertiary pb-3 pt-3" style="cursor: wait;">
                 <div class="d-flex">
                     <div class="align-self-center w-100">
                         <h5 class="card-title placeholder-glow">
@@ -330,7 +330,7 @@
             if (data.total === 0) {
                 $('#paginationNav ul').empty();
                 $('#transaksiContainer').append(
-                    '<li class="list-group-item bg-body-tertiary pb-3 pt-3">' +
+                    '<li class="list-group-item border-top-0 bg-body-tertiary pb-3 pt-3">' +
                     '    <h1 class="display-4 text-center text-muted" style="font-weight: 200;">Data Kosong</h1>' +
                     '</li>'
                 );
@@ -355,7 +355,7 @@
                         transaksi.metode_pembayaran + bank;
                     const jenisResep = transaksi.id_resep ? `<span class="badge bg-secondary bg-gradient text-nowrap">RESEP LUAR</span>` : `<span class="badge bg-success bg-gradient text-nowrap">RESEP DOKTER</span>`;
                     const transaksiElement = `
-                    <li class="list-group-item bg-body-tertiary pb-3 pt-3">
+                    <li class="list-group-item border-top-0 bg-body-tertiary pb-3 pt-3">
                         <div class="d-flex">
                             <div class="align-self-center w-100">
                                 <h5 class="card-title">

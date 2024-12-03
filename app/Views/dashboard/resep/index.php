@@ -74,7 +74,7 @@
                         </button>
                     </div>
                     <ul id="tambahPasienForm" class="list-group rounded-0 collapse">
-                        <li class="list-group-item border-top-0 border-bottom-0 bg-body-tertiary">
+                        <li class="list-group-item border-top-0 bg-body-tertiary">
                             <form id="resepForm" enctype="multipart/form-data" class="d-flex flex-column gap-2">
                                 <div class="flex-fill">
                                     <select class="form-select " id="nomor_registrasi" name="nomor_registrasi" aria-label="nomor_registrasi">
@@ -292,7 +292,7 @@
             if (data.total === 0) {
                 $('#paginationNav ul').empty();
                 $('#resepContainer').append(
-                    '<li class="list-group-item bg-body-tertiary pb-3 pt-3">' +
+                    '<li class="list-group-item <?= (session()->get('role') != 'Apoteker') ? 'border-top-0' : ''; ?> bg-body-tertiary pb-3 pt-3">' +
                     '    <h1 class="display-4 text-center text-muted" style="font-weight: 200;">Data Kosong</h1>' +
                     '</li>'
                 );
@@ -319,7 +319,7 @@
                         <i class="fa-solid fa-trash"></i> Hapus
                     </button>`;
                     const resepElement = `
-            <li class="list-group-item bg-body-tertiary pb-3 pt-3">
+            <li class="list-group-item <?= (session()->get('role') != 'Apoteker') ? 'border-top-0' : ''; ?> bg-body-tertiary pb-3 pt-3">
                 <div class="d-flex">
                     <div class="align-self-center w-100">
                         <h5 class="card-title">
