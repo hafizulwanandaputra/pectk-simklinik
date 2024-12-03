@@ -131,8 +131,9 @@ class Home extends BaseController
         foreach ($data_per_dokter as $dokter => $data_bulan) {
             $dataset = [
                 'label' => $dokter,
-                'borderWidth' => 2,
-                'pointStyle' => 'rectRot',
+                'pointStyle' => 'circle',
+                'pointRadius' => 6,
+                'pointHoverRadius' => 12,
                 'fill' => false,
                 'data' => []
             ];
@@ -181,8 +182,8 @@ class Home extends BaseController
         foreach ($data_per_kasir as $kasir => $data_bulan) {
             $dataset = [
                 'label' => $kasir,
-                'borderWidth' => 2,
-                'pointStyle' => 'rectRot',
+                'pointRadius' => 6,
+                'pointHoverRadius' => 12,
                 'fill' => false,
                 'data' => []
             ];

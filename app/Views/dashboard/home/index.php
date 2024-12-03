@@ -7,7 +7,7 @@
 
     @media (max-width: 991.98px) {
         .ratio-onecol {
-            --bs-aspect-ratio: 56.25%;
+            --bs-aspect-ratio: 75%;
         }
     }
 </style>
@@ -144,7 +144,7 @@
                         <div class="card bg-body-tertiary w-100  shadow-sm">
                             <div class="card-header w-100 text-truncate">Resep Menurut Dokter</div>
                             <div class="card-body">
-                                <div class="ratio ratio-16x9 w-100">
+                                <div class="ratio ratio-4x3 w-100">
                                     <canvas id="resepbydoktergraph"></canvas>
                                 </div>
                             </div>
@@ -154,7 +154,7 @@
                         <div class="card bg-body-tertiary w-100  shadow-sm">
                             <div class="card-header w-100 text-truncate">Resep Per Bulan</div>
                             <div class="card-body">
-                                <div class="ratio ratio-16x9 w-100">
+                                <div class="ratio ratio-4x3 w-100">
                                     <canvas id="resepgraph"></canvas>
                                 </div>
                             </div>
@@ -187,7 +187,7 @@
                         <div class="card bg-body-tertiary w-100  shadow-sm">
                             <div class="card-header w-100 text-truncate">Transaksi Menurut Petugas Kasir</div>
                             <div class="card-body">
-                                <div class="ratio ratio-16x9 w-100">
+                                <div class="ratio ratio-4x3 w-100">
                                     <canvas id="transaksibykasirgraph"></canvas>
                                 </div>
                             </div>
@@ -197,7 +197,7 @@
                         <div class="card bg-body-tertiary w-100  shadow-sm">
                             <div class="card-header w-100 text-truncate">Transaksi Per Bulan</div>
                             <div class="card-body">
-                                <div class="ratio ratio-16x9 w-100">
+                                <div class="ratio ratio-4x3 w-100">
                                     <canvas id="transaksiperbulangraph"></canvas>
                                 </div>
                             </div>
@@ -236,7 +236,6 @@
 </script>
 <?= $this->endSection(); ?>
 <?= $this->section('chartjs'); ?>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js" integrity="sha512-SIMGYRUjwY8+gKg7nn9EItdD8LCADSDfJNutF9TPrvEo86sQmFMh6MyralfIyhADlajSxqc7G0gs7+MwWF/ogQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
     // Array to keep track of chart instances
     const chartInstances = [];
@@ -337,8 +336,9 @@
             labels: label_resepbydoktergraph,
             datasets: [{
                 label: 'Resep Menurut Dokter',
-                borderWidth: 2,
-                pointStyle: 'rectRot',
+                pointStyle: 'circle',
+                pointRadius: 6,
+                pointHoverRadius: 12,
                 fill: true,
                 data: data_resepbydoktergraph
             }]
@@ -353,8 +353,9 @@
             labels: label_transaksibykasirgraph,
             datasets: [{
                 label: 'Transaksi Menurut Petugas Kasir',
-                borderWidth: 2,
-                pointStyle: 'rectRot',
+                pointStyle: 'circle',
+                pointRadius: 6,
+                pointHoverRadius: 12,
                 fill: true,
                 data: data_transaksibykasirgraph
             }]
@@ -368,8 +369,8 @@
             datasets: [{
                 label: 'Pemasukan Per Bulan',
                 borderWidth: 2,
-                pointStyle: 'rectRot',
-                fill: false,
+                borderRadius: 10,
+                fill: true,
                 data: data_pemasukanperbulangraph
             }]
         }
@@ -385,7 +386,11 @@
                 locale: 'id-ID',
                 plugins: {
                     legend: {
-                        display: false
+                        display: true,
+                        position: 'bottom'
+                    },
+                    filler: {
+                        drawTime: 'beforeDraw'
                     }
                 },
                 scale: {
@@ -402,6 +407,10 @@
                 responsive: true,
                 maintainAspectRatio: false,
                 locale: 'id-ID',
+                interaction: {
+                    intersect: false,
+                    mode: 'index',
+                },
                 plugins: {
                     legend: {
                         display: false
@@ -440,7 +449,11 @@
                 locale: 'id-ID',
                 plugins: {
                     legend: {
-                        display: false
+                        display: true,
+                        position: 'bottom'
+                    },
+                    filler: {
+                        drawTime: 'beforeDraw'
                     }
                 },
                 scale: {
@@ -457,6 +470,10 @@
                 responsive: true,
                 maintainAspectRatio: false,
                 locale: 'id-ID',
+                interaction: {
+                    intersect: false,
+                    mode: 'index',
+                },
                 plugins: {
                     legend: {
                         display: false
@@ -485,12 +502,16 @@
             }
         })
         var chart_pemasukanperbulangraph = createChart(document.getElementById('pemasukanperbulangraph').getContext('2d'), {
-            type: 'line',
+            type: 'bar',
             data: data_content_pemasukanperbulangraph,
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
                 locale: 'id-ID',
+                interaction: {
+                    intersect: false,
+                    mode: 'index',
+                },
                 plugins: {
                     legend: {
                         display: false
