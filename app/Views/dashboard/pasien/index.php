@@ -148,6 +148,12 @@
                 } else if (jenis_kelamin === 'P') {
                     jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap" style="background-color: Pink"><i class="fa-solid fa-venus"></i> PEREMPUAN</span>`;
                 }
+                let jenis_kelamin_string = pasien.jenis_kelamin;
+                if (jenis_kelamin_string === 'L') {
+                    jenis_kelamin_string = `Laki-laki`;
+                } else if (jenis_kelamin_string === 'P') {
+                    jenis_kelamin_string = `Perempuan`;
+                }
                 // Gunakan pesan jika tidak ada nomor telepon
                 const telpon = pasien.telpon ? pasien.telpon : "<em>Tidak ada</em>";
                 const usia = hitungUsia(pasien.tanggal_lahir, pasien.tanggal_registrasi); // Menghitung usia pasien
@@ -166,14 +172,72 @@
                     </div>
                     <div id="collapse-${index + 1}" class="accordion-collapse collapse" data-bs-parent="#datapasien">
                         <div class="accordion-body px-3 py-2">
-                            <small class="date">
-                                Nomor Rekam Medis: ${pasien.no_rm}<br>
-                                Tempat Lahir: ${pasien.tempat_lahir}<br>
-                                Tanggal Lahir: ${pasien.tanggal_lahir}<br>
-                                Usia: ${usia.usia} tahun ${usia.bulan} bulan<br>
-                                Alamat: ${pasien.alamat}<br>
-                                Telepon: ${telpon}
+                            <div class="row">
+                            <div class="col-lg-6">
+                            <div class="fw-bold mb-2 border-bottom">Identitas Pasien</div>
+                            <small>
+                                <div class="mb-2 row">
+                                    <div class="col-5 col-lg-4 fw-medium">Nama</div>
+                                        <div class="col">
+                                            ${pasien.nama_pasien}
+                                        </div>
+                                </div>
+                                <div class="mb-2 row">
+                                    <div class="col-5 col-lg-4 fw-medium">Nomor RM</div>
+                                        <div class="col date">
+                                            ${pasien.no_rm}
+                                        </div>
+                                </div>
+                                <div class="mb-2 row">
+                                    <div class="col-5 col-lg-4 fw-medium">Jenis Kelamin</div>
+                                        <div class="col">
+                                            ${jenis_kelamin_string}
+                                        </div>
+                                </div>
+                                <div class="mb-2 row">
+                                    <div class="col-5 col-lg-4 fw-medium">Tempat/Tgl Lahir</div>
+                                        <div class="col">
+                                            ${pasien.tempat_lahir}, <span class="date">${pasien.tanggal_lahir}</span>
+                                        </div>
+                                </div>
+                                <div class="mb-2 row">
+                                    <div class="col-5 col-lg-4 fw-medium">Usia</div>
+                                        <div class="col date">
+                                            ${usia.usia} tahun ${usia.bulan} bulan
+                                        </div>
+                                </div>
+                                <div class="mb-2 row">
+                                    <div class="col-5 col-lg-4 fw-medium">Alamat</div>
+                                        <div class="col">
+                                            ${pasien.alamat}
+                                        </div>
+                                </div>
+                                <div class="mb-2 row">
+                                    <div class="col-5 col-lg-4 fw-medium">Nomor Telepon</div>
+                                        <div class="col date">
+                                            ${telpon}
+                                        </div>
+                                </div>
                             </small>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="fw-bold mb-2 border-bottom">Rawat Jalan</div>
+                            <small>
+                                <div class="mb-2 row">
+                                    <div class="col-5 col-lg-4 fw-medium">Nomor Registrasi</div>
+                                        <div class="col date">
+                                            ${pasien.nomor_registrasi}
+                                        </div>
+                                </div>
+                                <div class="mb-2 row">
+                                    <div class="col-5 col-lg-4 fw-medium">Dokter</div>
+                                        <div class="col">
+                                            ${pasien.dokter}
+                                        </div>
+                                </div>
+                            </small>
+                        </div>
+                        </div>
                         </div>
                     </div>
                 </div>
