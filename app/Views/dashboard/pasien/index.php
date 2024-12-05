@@ -195,7 +195,7 @@
                                             </div>
                                         </div>
                                         <div class="mb-1 row">
-                                            <div class="col-5 col-lg-4 fw-medium">Tempat/Tgl Lahir</div>
+                                            <div class="col-5 col-lg-4 fw-medium">Tempat/Tanggal Lahir</div>
                                             <div class="col">
                                                 ${pasien.tempat_lahir}, <span class="date text-nowrap">${pasien.tanggal_lahir}</span>
                                             </div>

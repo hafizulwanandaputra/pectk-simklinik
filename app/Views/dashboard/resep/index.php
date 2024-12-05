@@ -92,7 +92,7 @@
                                 </div>
                                 <div class="d-grid gap-2 d-lg-flex justify-content-lg-end" id="submitButtonContainer">
                                     <div class="btn-group">
-                                        <button class="btn btn-secondary bg-gradient dropdown-toggle dropdown-toggle-split no-caret" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <button class="btn btn-body bg-gradient dropdown-toggle dropdown-toggle-split no-caret" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                             <i class="fa-solid fa-circle-question"></i>
                                         </button>
                                         <ul class="dropdown-menu dropdown-menu-end bg-body-tertiary shadow-sm transparent-blur">
@@ -127,7 +127,6 @@
                                         <span class="placeholder" style="width: 25%;"></span><br>
                                         <span class="placeholder" style="width: 12.5%;"></span>
                                     </h6>
-                                    <hr class="mt-0">
                                     <div class="card-text placeholder-glow">
                                         <div style="font-size: 0.75em;">
                                             <div class="row">
@@ -238,7 +237,6 @@
                             <span class="placeholder" style="width: 25%;"></span><br>
                             <span class="placeholder" style="width: 12.5%;"></span>
                         </h6>
-                        <hr class="mt-0">
                         <div class="card-text placeholder-glow">
                             <div style="font-size: 0.75em;">
                                 <div class="row">
@@ -450,7 +448,6 @@
                         <h6 class="card-subtitle mb-2">
                             ${resep.dokter}<br>${jenis_kelamin}
                         </h6>
-                        <hr class="mt-0">
                         <div class="card-text">
                             <div style="font-size: 0.75em;">
                                 <div class="row">
@@ -462,13 +459,13 @@
                                             </div>
                                         </div>
                                         <div class="mb-1 row">
-                                            <div class="col-5 col-lg-4 fw-medium">Tgl dan Waktu</div>
+                                            <div class="col-5 col-lg-4 fw-medium">Tanggal dan Waktu</div>
                                             <div class="col date">
                                                 ${resep.tanggal_resep}
                                             </div>
                                         </div>
                                         <div class="mb-1 row">
-                                            <div class="col-5 col-lg-4 fw-medium">Nomor RM</div>
+                                            <div class="col-5 col-lg-4 fw-medium">Nomor Rekam Medis</div>
                                             <div class="col date">
                                                 ${resep.no_rm}
                                             </div>

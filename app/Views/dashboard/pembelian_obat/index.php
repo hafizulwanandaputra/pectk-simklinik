@@ -91,7 +91,6 @@
                                     <h6 class="card-subtitle mb-2 placeholder-glow">
                                         <span class="placeholder w-100" style="max-width: 200px;"></span>
                                     </h6>
-                                    <hr class="mt-0">
                                     <div class="card-text">
                                         <div style="font-size: 0.75em;">
                                             <div class="row">
@@ -182,7 +181,6 @@
                         <h6 class="card-subtitle mb-2 placeholder-glow">
                             <span class="placeholder w-100" style="max-width: 200px;"></span>
                         </h6>
-                        <hr class="mt-0">
                         <div class="card-text placeholder-glow">
                             <div style="font-size: 0.75em;">
                                 <div class="row">
@@ -347,7 +345,6 @@
                         <h6 class="card-subtitle mb-2">
                             ${pembelian_obat.apoteker}
                         </h6>
-                        <hr class="mt-0">
                         <div class="card-text">
                             <div style="font-size: 0.75em;">
                                 <div class="row">
@@ -359,7 +356,7 @@
                                             </div>
                                         </div>
                                         <div class="mb-1 row">
-                                            <div class="col-5 col-lg-4 fw-medium">Tgl dan Waktu</div>
+                                            <div class="col-5 col-lg-4 fw-medium">Tanggal dan Waktu</div>
                                             <div class="col date">
                                                 ${pembelian_obat.tgl_pembelian}
                                             </div>
