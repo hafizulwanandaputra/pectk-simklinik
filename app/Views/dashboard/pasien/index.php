@@ -2,9 +2,23 @@
 <?= $this->section('title'); ?>
 <div class="d-flex justify-content-start align-items-center">
     <span class="fw-medium fs-5 flex-fill text-truncate"><?= $headertitle; ?> <span id="total_rajal" class="date"></span></span>
-    <div id="loadingSpinner" class="spinner-border spinner-border-sm" role="status">
+    <div id="loadingSpinner" class="spinner-border spinner-border-sm me-3" role="status">
         <span class="visually-hidden">Loading...</span>
     </div>
+    <a class="fs-5 text-success-emphasis dropdown-toggle no-caret" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-circle-question"></i></a>
+    <ul class="dropdown-menu dropdown-menu-end bg-body-tertiary shadow-sm transparent-blur">
+        <li>
+            <h6 class="dropdown-header text-wrap" style="max-width: 600px;">Data-data pasien rawat jalan ini diperoleh dari <em>Application Programming Interface</em> (API) Sistem Informasi Manajemen Klinik Utama Mata Padang Eye Center Teluk Kuantan</h6>
+        </li>
+        <li>
+            <a class="dropdown-item px-2 py-1" href="https://pectk.padangeyecenter.com/klinik" target="_blank">
+                <div class="d-flex align-items-start">
+                    <span style="min-width: 32px; max-width: 32px; text-align: center;"><i class="fa-solid fa-up-right-from-square"></i></span>
+                    <span>Buka SIM Klinik</span>
+                </div>
+            </a>
+        </li>
+    </ul>
 </div>
 <div style="min-width: 1px; max-width: 1px;"></div>
 <?= $this->endSection(); ?>
@@ -17,20 +31,6 @@
                     <div class="input-group input-group-sm">
                         <input type="date" id="tanggal" name="tanggal" class="form-control ">
                         <button class="btn btn-danger bg-gradient" type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
-                        <button class="btn btn-info bg-gradient dropdown-toggle no-caret" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-info"></i></button>
-                        <ul class="dropdown-menu dropdown-menu-end bg-body-tertiary shadow-sm">
-                            <li>
-                                <h6 class="dropdown-header text-wrap" style="max-width: 600px;">Data-data pasien rawat jalan ini diperoleh dari <em>Application Programming Interface</em> (API) Sistem Informasi Manajemen Klinik Utama Mata Padang Eye Center Teluk Kuantan</h6>
-                            </li>
-                            <li>
-                                <a class="dropdown-item px-2 py-1" href="https://pectk.padangeyecenter.com/klinik" target="_blank">
-                                    <div class="d-flex align-items-start">
-                                        <span style="min-width: 32px; max-width: 32px; text-align: center;"><i class="fa-solid fa-up-right-from-square"></i></span>
-                                        <span>Buka SIM Klinik</span>
-                                    </div>
-                                </a>
-                            </li>
-                        </ul>
                         <button class="btn btn-success bg-gradient" type="button" id="refreshButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan" disabled><i class="fa-solid fa-sync"></i></button>
                     </div>
                 </div>
