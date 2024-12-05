@@ -110,7 +110,7 @@
                                             <div class="row">
                                                 <div class="col-lg-6">
                                                     <div class="mb-1 row placeholder-glow">
-                                                        <div class="col-5 col-lg-3 fw-medium">
+                                                        <div class="col-5 col-lg-4 fw-medium">
                                                             <span class="placeholder w-100"></span>
                                                         </div>
                                                         <div class="col placeholder-glow">
@@ -118,7 +118,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="mb-1 row placeholder-glow">
-                                                        <div class="col-5 col-lg-3 fw-medium">
+                                                        <div class="col-5 col-lg-4 fw-medium">
                                                             <span class="placeholder w-100"></span>
                                                         </div>
                                                         <div class="col placeholder-glow">
@@ -126,7 +126,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="mb-1 row placeholder-glow">
-                                                        <div class="col-5 col-lg-3 fw-medium">
+                                                        <div class="col-5 col-lg-4 fw-medium">
                                                             <span class="placeholder w-100"></span>
                                                         </div>
                                                         <div class="col placeholder-glow">
@@ -134,7 +134,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="mb-1 row placeholder-glow">
-                                                        <div class="col-5 col-lg-3 fw-medium">
+                                                        <div class="col-5 col-lg-4 fw-medium">
                                                             <span class="placeholder w-100"></span>
                                                         </div>
                                                         <div class="col placeholder-glow">
@@ -144,7 +144,7 @@
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <div class="mb-1 row placeholder-glow">
-                                                        <div class="col-5 col-lg-3 fw-medium">
+                                                        <div class="col-5 col-lg-4 fw-medium">
                                                             <span class="placeholder w-100"></span>
                                                         </div>
                                                         <div class="col placeholder-glow">
@@ -152,7 +152,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="mb-1 row placeholder-glow">
-                                                        <div class="col-5 col-lg-3 fw-medium">
+                                                        <div class="col-5 col-lg-4 fw-medium">
                                                             <span class="placeholder w-100"></span>
                                                         </div>
                                                         <div class="col placeholder-glow">
@@ -221,7 +221,7 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="mb-1 row placeholder-glow">
-                                            <div class="col-5 col-lg-3 fw-medium">
+                                            <div class="col-5 col-lg-4 fw-medium">
                                                 <span class="placeholder w-100"></span>
                                             </div>
                                             <div class="col placeholder-glow">
@@ -229,7 +229,7 @@
                                             </div>
                                         </div>
                                         <div class="mb-1 row placeholder-glow">
-                                            <div class="col-5 col-lg-3 fw-medium">
+                                            <div class="col-5 col-lg-4 fw-medium">
                                                 <span class="placeholder w-100"></span>
                                             </div>
                                             <div class="col placeholder-glow">
@@ -237,7 +237,7 @@
                                             </div>
                                         </div>
                                         <div class="mb-1 row placeholder-glow">
-                                            <div class="col-5 col-lg-3 fw-medium">
+                                            <div class="col-5 col-lg-4 fw-medium">
                                                 <span class="placeholder w-100"></span>
                                             </div>
                                             <div class="col placeholder-glow">
@@ -245,7 +245,7 @@
                                             </div>
                                         </div>
                                         <div class="mb-1 row placeholder-glow">
-                                            <div class="col-5 col-lg-3 fw-medium">
+                                            <div class="col-5 col-lg-4 fw-medium">
                                                 <span class="placeholder w-100"></span>
                                             </div>
                                             <div class="col placeholder-glow">
@@ -255,7 +255,7 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="mb-1 row placeholder-glow">
-                                            <div class="col-5 col-lg-3 fw-medium">
+                                            <div class="col-5 col-lg-4 fw-medium">
                                                 <span class="placeholder w-100"></span>
                                             </div>
                                             <div class="col placeholder-glow">
@@ -263,7 +263,7 @@
                                             </div>
                                         </div>
                                         <div class="mb-1 row placeholder-glow">
-                                            <div class="col-5 col-lg-3 fw-medium">
+                                            <div class="col-5 col-lg-4 fw-medium">
                                                 <span class="placeholder w-100"></span>
                                             </div>
                                             <div class="col placeholder-glow">

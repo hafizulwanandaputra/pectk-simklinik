@@ -121,7 +121,7 @@
                                 Memuat status...
                             </div>
                             <?php if (session()->get('role') != 'Dokter') : ?>
-                                <button id="refreshConfirmed" type="button" class="btn btn-link" style="--bs-btn-padding-y: 0; --bs-btn-padding-x: 0; --bs-btn-font-size: 1em;">Perbarui Status</button>
+                                <a id="refreshConfirmed" href="#">Perbarui Status</a>
                             <?php endif; ?>
                         </div>
                     </div>
@@ -832,7 +832,8 @@
             }
         });
 
-        $('#refreshConfirmed').on('click', function() {
+        $('#refreshConfirmed').on('click', function(e) {
+            e.preventDefault();
             fetchStatusKonfirmasi();
             fetchDetailResep();
             <?= (session()->get('role') != 'Apoteker') ? 'fetchObatOptions();' : '' ?>
