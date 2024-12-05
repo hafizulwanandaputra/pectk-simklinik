@@ -227,7 +227,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
             padding-left: calc(var(--bs-gutter-x) * 0.5);
             margin-right: auto;
             margin-left: auto;
-            max-width: 1140px;
+            max-width: 960px;
         }
 
         .no-caret::after {
