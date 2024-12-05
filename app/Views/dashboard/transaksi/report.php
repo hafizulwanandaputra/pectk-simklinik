@@ -12,7 +12,7 @@
 <?= $this->section('content'); ?>
 <main class="main-content-inside">
     <div class="sticky-top" style="z-index: 99;">
-        <ul class="list-group shadow-sm rounded-0 mb-2">
+        <ul class="list-group shadow-sm rounded-0">
             <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-tertiary transparent-blur">
                 <div class="no-fluid-content">
                     <div class="input-group input-group-sm">
@@ -24,7 +24,7 @@
             </li>
         </ul>
     </div>
-    <div class="px-3">
+    <div class="px-3 mt-3">
         <div class="no-fluid-content">
             <div class="mb-3">
                 <div class="card shadow-sm  overflow-auto">

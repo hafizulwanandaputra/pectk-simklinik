@@ -6,7 +6,7 @@
     <div id="loadingSpinner" class="spinner-border spinner-border-sm me-3" role="status">
         <span class="visually-hidden">Loading...</span>
     </div>
-    <a id="toggleFilter" class="fs-5 text-success-emphasis" href="#"><i class="fa-solid fa-filter"></i></a>
+    <a id="toggleFilter" class="fs-5 text-success-emphasis" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Pencarian"><i class="fa-solid fa-magnifying-glass"></i></a>
 </div>
 <div style="min-width: 1px; max-width: 1px;"></div>
 <?= $this->endSection(); ?>
