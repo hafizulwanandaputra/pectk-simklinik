@@ -1,5 +1,12 @@
 <?= $this->extend('dashboard/templates/dashboard'); ?>
 <?= $this->section('css'); ?>
+<style>
+    @media (min-width: 992px) {
+        .max-width-flex {
+            width: 600px;
+        }
+    }
+</style>
 <?= $this->include('select2/normal'); ?>
 <?= $this->endSection(); ?>
 <?= $this->section('title'); ?>
@@ -83,10 +90,26 @@
                                     </select>
                                     <div class="invalid-feedback"></div>
                                 </div>
-                                <div class="d-grid gap-2 d-md-flex justify-content-md-end" id="submitButtonContainer">
-                                    <button type="submit" id="submitButton" class="btn btn-primary bg-gradient " disabled>
-                                        <i class="fa-solid fa-plus"></i> Tambah
-                                    </button>
+                                <div class="d-grid gap-2 d-lg-flex justify-content-lg-end" id="submitButtonContainer">
+                                    <div class="btn-group">
+                                        <button class="btn btn-secondary bg-gradient dropdown-toggle dropdown-toggle-split no-caret" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="fa-solid fa-circle-question"></i>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-end bg-body-tertiary shadow-sm transparent-blur">
+                                            <h6 class="dropdown-header text-wrap max-width-flex">Data-data pasien rawat jalan ini diperoleh dari <em>Application Programming Interface</em> (API) Sistem Informasi Manajemen Klinik Utama Mata Padang Eye Center Teluk Kuantan berdasarkan tanggal hari ini</h6>
+                                            <li>
+                                                <a class="dropdown-item px-2 py-1" href="https://pectk.padangeyecenter.com/klinik" target="_blank">
+                                                    <div class="d-flex align-items-start">
+                                                        <span style="min-width: 32px; max-width: 32px; text-align: center;"><i class="fa-solid fa-up-right-from-square"></i></span>
+                                                        <span>Buka SIM Klinik</span>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                        <button type="submit" id="submitButton" class="btn btn-primary bg-gradient" disabled>
+                                            <i class="fa-solid fa-plus"></i> Tambah
+                                        </button>
+                                    </div>
                                 </div>
                             </form>
                         </li>

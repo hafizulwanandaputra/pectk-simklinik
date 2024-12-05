@@ -72,7 +72,7 @@
                                 </select>
                                 <div class="invalid-feedback"></div>
                             </div>
-                            <div class="d-grid gap-2 d-md-flex justify-content-md-end" id="submitButtonContainer">
+                            <div class="d-grid gap-2 d-lg-flex justify-content-lg-end" id="submitButtonContainer">
                                 <button type="submit" id="submitButton" class="btn btn-primary bg-gradient " disabled>
                                     <i class="fa-solid fa-plus"></i> Tambah
                                 </button>
