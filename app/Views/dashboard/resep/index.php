@@ -5,16 +5,17 @@
 <?= $this->section('title'); ?>
 <div class="d-flex justify-content-start align-items-center">
     <span class="fw-medium fs-5 flex-fill text-truncate"><?= $headertitle; ?> <span id="totalRecords" class="date"></span></span></span>
-    <div id="loadingSpinner" class="spinner-border spinner-border-sm" role="status">
+    <div id="loadingSpinner" class="spinner-border spinner-border-sm me-3" role="status">
         <span class="visually-hidden">Loading...</span>
     </div>
+    <a id="toggleFilter" class="fs-5 text-success-emphasis" href="#"><i class="fa-solid fa-filter"></i></a>
 </div>
 <div style="min-width: 1px; max-width: 1px;"></div>
 <?= $this->endSection(); ?>
 <?= $this->section('content'); ?>
 <main class="main-content-inside">
-    <div class="sticky-top" style="z-index: 99;">
-        <ul class="list-group shadow-sm rounded-0 mb-2">
+    <div id="filterFields" class="sticky-top" style="z-index: 99; display: none;">
+        <ul class="list-group shadow-sm rounded-0">
             <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-tertiary transparent-blur">
                 <div class="no-fluid-content">
                     <div class="d-flex flex-column flex-lg-row mb-1 gap-2 mb-2">
@@ -64,7 +65,7 @@
             </li>
         </ul>
     </div>
-    <div class="px-3">
+    <div class="px-3 mt-3">
         <div class="no-fluid-content">
             <div class="shadow-sm rounded">
                 <?php if (session()->get('role') != 'Apoteker') : ?>
@@ -613,6 +614,36 @@
         $('#searchInput').on('input', function() {
             currentPage = 1;
             fetchResep();
+        });
+
+        const toggleFilter = $('#toggleFilter');
+        const filterFields = $('#filterFields');
+        const toggleStateKey = 'filterFieldsToggleState';
+
+        // Fungsi untuk menyimpan status toggle di local storage
+        function saveToggleState(state) {
+            localStorage.setItem(toggleStateKey, state ? 'visible' : 'hidden');
+        }
+
+        // Fungsi untuk memuat status toggle dari local storage
+        function loadToggleState() {
+            return localStorage.getItem(toggleStateKey);
+        }
+
+        // Atur status awal berdasarkan local storage
+        const initialState = loadToggleState();
+        if (initialState === 'visible') {
+            filterFields.show();
+        } else {
+            filterFields.hide(); // Sembunyikan jika 'hidden' atau belum ada data
+        }
+
+        // Event klik untuk toggle
+        toggleFilter.on('click', function(e) {
+            e.preventDefault();
+            const isVisible = filterFields.is(':visible');
+            filterFields.toggle(!isVisible);
+            saveToggleState(!isVisible);
         });
 
         // Store the ID of the user to be deleted
