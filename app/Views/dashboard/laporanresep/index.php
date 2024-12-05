@@ -9,7 +9,7 @@
 <div style="min-width: 1px; max-width: 1px;"></div>
 <?= $this->endSection(); ?>
 <?= $this->section('content'); ?>
-<main class="col-md-9 ms-sm-auto col-lg-10">
+<main class="main-content-inside">
     <div class="sticky-top" style="z-index: 99;">
         <ul class="list-group shadow-sm rounded-0 mb-2">
             <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-tertiary transparent-blur">
@@ -39,8 +39,8 @@
             <div class="mb-3">
                 <div class="tab-content" id="nav-tabContent">
                     <div class="tab-pane show active" id="resepharian-container" role="tabpanel" aria-labelledby="resepharian-container-tab" tabindex="0">
-                        <fieldset class="border rounded px-2 py-0 mb-3" id="dokter-harian" style="display: none;">
-                            <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Daftar Dokter</legend>
+                        <div class="mb-3" id="dokter-harian" style="display: none;">
+                            <div class="fw-bold mb-2 border-bottom">Daftar Dokter</div>
                             <div class="form-check">
                                 <?php foreach ($daftarDokter as $dokter) : ?>
                                     <label class="form-check-label">
@@ -49,10 +49,10 @@
                                     </label><br>
                                 <?php endforeach; ?>
                             </div>
-                        </fieldset>
+                        </div>
                         <div class="card shadow-sm  overflow-auto">
                             <div class="table-responsive">
-                                <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
+                                <table class="table table-sm mb-0" style="width:100%; font-size: 0.75rem;">
                                     <thead>
                                         <tr class="align-middle">
                                             <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">No</th>
@@ -97,8 +97,8 @@
                         </div>
                     </div>
                     <div class="tab-pane" id="resepbulanan-container" role="tabpanel" aria-labelledby="resepbulanan-container-tab" tabindex="0">
-                        <fieldset class="border rounded px-2 py-0 mb-3" id="dokter-bulanan" style="display: none;">
-                            <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Daftar Dokter</legend>
+                        <div class="mb-3" id="dokter-bulanan" style="display: none;">
+                            <div class="fw-bold mb-2 border-bottom">Daftar Dokter</div>
                             <div class="form-check">
                                 <?php foreach ($daftarDokter as $dokter) : ?>
                                     <label class="form-check-label">
@@ -107,10 +107,10 @@
                                     </label><br>
                                 <?php endforeach; ?>
                             </div>
-                        </fieldset>
+                        </div>
                         <div class="card shadow-sm  overflow-auto">
                             <div class="table-responsive">
-                                <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
+                                <table class="table table-sm mb-0" style="width:100%; font-size: 0.75rem;">
                                     <thead>
                                         <tr class="align-middle">
                                             <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">No</th>

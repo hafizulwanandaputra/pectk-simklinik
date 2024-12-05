@@ -10,7 +10,7 @@
 <div style="min-width: 1px; max-width: 1px;"></div>
 <?= $this->endSection(); ?>
 <?= $this->section('content'); ?>
-<main class="col-md-9 ms-sm-auto col-lg-10 px-3 pt-3">
+<main class="main-content-inside px-3 pt-3">
     <div class="no-fluid-content">
         <div class="alert alert-info " role="alert">
             <div class="d-flex align-items-start">
@@ -33,8 +33,8 @@
             </div>
         </div>
         <?= form_open_multipart('/settings/changepassword/update', 'id="changePasswordForm"'); ?>
-        <fieldset class="border rounded px-2 py-0">
-            <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Kata Sandi Pengguna</legend>
+        <div class="mb-3">
+            <div class="fw-bold mb-2 border-bottom">Kata Sandi Pengguna</div>
             <div class="form-floating mb-2">
                 <input type="password" class="form-control  <?= (validation_show_error('current_password')) ? 'is-invalid' : ''; ?>" id="current_password" name="current_password" placeholder="current_password">
                 <label for="current_password">Kata Sandi Lama</label>
@@ -56,7 +56,7 @@
                     <?= validation_show_error('new_password2'); ?>
                 </div>
             </div>
-        </fieldset>
+        </div>
         <hr>
         <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
             <button class="btn btn-primary  bg-gradient" type="submit" id="submitBtn"><i class="fa-solid fa-pen-to-square"></i> Ubah</button>

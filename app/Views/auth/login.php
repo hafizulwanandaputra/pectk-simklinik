@@ -52,7 +52,7 @@
                 </div>
                 <p>Lupa kata sandi? Silakan hubungi admin sistem.</p>
                 <!-- FOOTER -->
-                <div class="modal-footer d-block" style="font-size: 9pt; border-top: 1px solid var(--bs-border-color-translucent);">
+                <div class="modal-footer d-block" style="font-size: 0.75em; border-top: 1px solid var(--bs-border-color-translucent);">
                     <span class="text-center">&copy; 2024 <?= (date('Y') !== "2024") ? "- " . date('Y') : ''; ?> Klinik Utama Mata Padang Eye Center Teluk Kuantan</span>
                 </div>
             </div>

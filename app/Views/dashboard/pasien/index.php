@@ -9,7 +9,7 @@
 <div style="min-width: 1px; max-width: 1px;"></div>
 <?= $this->endSection(); ?>
 <?= $this->section('content'); ?>
-<main class="col-md-9 ms-sm-auto col-lg-10">
+<main class="main-content-inside">
     <div class="sticky-top" style="z-index: 99;">
         <ul class="list-group shadow-sm rounded-0 mb-2">
             <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-tertiary transparent-blur">
@@ -173,71 +173,71 @@
                     <div id="collapse-${index + 1}" class="accordion-collapse collapse" data-bs-parent="#datapasien">
                         <div class="accordion-body px-3 py-2">
                             <div class="row">
-                            <div class="col-lg-6">
-                            <div class="fw-bold mb-2 border-bottom">Identitas Pasien</div>
-                            <small>
-                                <div class="mb-2 row">
-                                    <div class="col-5 col-lg-4 fw-medium">Nama</div>
-                                        <div class="col">
-                                            ${pasien.nama_pasien}
+                                <div class="col-lg-6">
+                                    <div class="fw-bold mb-2 border-bottom">Identitas Pasien</div>
+                                    <div style="font-size: 0.75em;">
+                                        <div class="mb-1 row">
+                                            <div class="col-5 col-lg-4 fw-medium">Nama</div>
+                                            <div class="col">
+                                                ${pasien.nama_pasien}
+                                            </div>
                                         </div>
-                                </div>
-                                <div class="mb-2 row">
-                                    <div class="col-5 col-lg-4 fw-medium">Nomor RM</div>
-                                        <div class="col date">
-                                            ${pasien.no_rm}
+                                        <div class="mb-1 row">
+                                            <div class="col-5 col-lg-4 fw-medium">Nomor RM</div>
+                                            <div class="col date">
+                                                ${pasien.no_rm}
+                                            </div>
                                         </div>
-                                </div>
-                                <div class="mb-2 row">
-                                    <div class="col-5 col-lg-4 fw-medium">Jenis Kelamin</div>
-                                        <div class="col">
-                                            ${jenis_kelamin_string}
+                                        <div class="mb-1 row">
+                                            <div class="col-5 col-lg-4 fw-medium">Jenis Kelamin</div>
+                                            <div class="col">
+                                                ${jenis_kelamin_string}
+                                            </div>
                                         </div>
-                                </div>
-                                <div class="mb-2 row">
-                                    <div class="col-5 col-lg-4 fw-medium">Tempat/Tgl Lahir</div>
-                                        <div class="col">
-                                            ${pasien.tempat_lahir}, <span class="date">${pasien.tanggal_lahir}</span>
+                                        <div class="mb-1 row">
+                                            <div class="col-5 col-lg-4 fw-medium">Tempat/Tgl Lahir</div>
+                                            <div class="col">
+                                                ${pasien.tempat_lahir}, <span class="date text-nowrap">${pasien.tanggal_lahir}</span>
+                                            </div>
                                         </div>
-                                </div>
-                                <div class="mb-2 row">
-                                    <div class="col-5 col-lg-4 fw-medium">Usia</div>
-                                        <div class="col date">
-                                            ${usia.usia} tahun ${usia.bulan} bulan
+                                        <div class="mb-1 row">
+                                            <div class="col-5 col-lg-4 fw-medium">Usia</div>
+                                            <div class="col date">
+                                                ${usia.usia} tahun ${usia.bulan} bulan
+                                            </div>
                                         </div>
-                                </div>
-                                <div class="mb-2 row">
-                                    <div class="col-5 col-lg-4 fw-medium">Alamat</div>
-                                        <div class="col">
-                                            ${pasien.alamat}
+                                        <div class="mb-1 row">
+                                            <div class="col-5 col-lg-4 fw-medium">Alamat</div>
+                                            <div class="col">
+                                                ${pasien.alamat}
+                                            </div>
                                         </div>
-                                </div>
-                                <div class="mb-2 row">
-                                    <div class="col-5 col-lg-4 fw-medium">Nomor Telepon</div>
-                                        <div class="col date">
-                                            ${telpon}
+                                        <div class="mb-1 row">
+                                            <div class="col-5 col-lg-4 fw-medium">Nomor Telepon</div>
+                                            <div class="col date">
+                                                ${telpon}
+                                            </div>
                                         </div>
+                                    </div>
                                 </div>
-                            </small>
-                        </div>
-                        <div class="col-lg-6">
-                            <div class="fw-bold mb-2 border-bottom">Rawat Jalan</div>
-                            <small>
-                                <div class="mb-2 row">
-                                    <div class="col-5 col-lg-4 fw-medium">Nomor Registrasi</div>
-                                        <div class="col date">
-                                            ${pasien.nomor_registrasi}
+                                <div class="col-lg-6">
+                                    <div class="fw-bold mb-2 border-bottom">Rawat Jalan</div>
+                                    <div style="font-size: 0.75em;">
+                                        <div class="mb-1 row">
+                                            <div class="col-5 col-lg-4 fw-medium">Nomor Registrasi</div>
+                                            <div class="col date">
+                                                ${pasien.nomor_registrasi}
+                                            </div>
                                         </div>
-                                </div>
-                                <div class="mb-2 row">
-                                    <div class="col-5 col-lg-4 fw-medium">Dokter</div>
-                                        <div class="col">
-                                            ${pasien.dokter}
+                                        <div class="mb-1 row">
+                                            <div class="col-5 col-lg-4 fw-medium">Dokter</div>
+                                            <div class="col">
+                                                ${pasien.dokter}
+                                            </div>
                                         </div>
+                                    </div>
                                 </div>
-                            </small>
-                        </div>
-                        </div>
+                            </div>
                         </div>
                     </div>
                 </div>

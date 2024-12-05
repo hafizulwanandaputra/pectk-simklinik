@@ -12,7 +12,7 @@
 <div style="min-width: 1px; max-width: 1px;"></div>
 <?= $this->endSection(); ?>
 <?= $this->section('content'); ?>
-<main class="col-md-9 ms-sm-auto col-lg-10">
+<main class="main-content-inside">
     <div class="sticky-top" style="z-index: 99;">
         <ul class="list-group shadow-sm rounded-0 mb-2">
             <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-tertiary transparent-blur">
@@ -103,18 +103,67 @@
                                         <span class="placeholder" style="width: 25%;"></span><br>
                                         <span class="placeholder" style="width: 12.5%;"></span>
                                     </h6>
-                                    <p class="card-text placeholder-glow">
-                                        <small>
-                                            <span class="placeholder" style="width: 12.5%;"></span><br>
-                                            <span class="placeholder" style="width: 12.5%;"></span><br>
-                                            <span class="placeholder" style="width: 12.5%;"></span><br>
-                                            <span class="placeholder" style="width: 12.5%;"></span><br>
-                                            <span class="placeholder" style="width: 12.5%;"></span><br>
-                                            <span class="placeholder" style="width: 12.5%;"></span><br>
-                                            <span class="placeholder" style="width: 9%;"></span><br>
-                                            <span class="placeholder" style="width: 9%;"></span>
-                                        </small>
-                                    </p>
+                                    <hr class="mt-0">
+                                    <div class="card-text placeholder-glow">
+                                        <div style="font-size: 0.75em;">
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="mb-1 row placeholder-glow">
+                                                        <div class="col-5 col-lg-3 fw-medium">
+                                                            <span class="placeholder w-100"></span>
+                                                        </div>
+                                                        <div class="col placeholder-glow">
+                                                            <span class="placeholder w-100"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-1 row placeholder-glow">
+                                                        <div class="col-5 col-lg-3 fw-medium">
+                                                            <span class="placeholder w-100"></span>
+                                                        </div>
+                                                        <div class="col placeholder-glow">
+                                                            <span class="placeholder w-100"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-1 row placeholder-glow">
+                                                        <div class="col-5 col-lg-3 fw-medium">
+                                                            <span class="placeholder w-100"></span>
+                                                        </div>
+                                                        <div class="col placeholder-glow">
+                                                            <span class="placeholder w-100"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-1 row placeholder-glow">
+                                                        <div class="col-5 col-lg-3 fw-medium">
+                                                            <span class="placeholder w-100"></span>
+                                                        </div>
+                                                        <div class="col placeholder-glow">
+                                                            <span class="placeholder w-100"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <div class="mb-1 row placeholder-glow">
+                                                        <div class="col-5 col-lg-3 fw-medium">
+                                                            <span class="placeholder w-100"></span>
+                                                        </div>
+                                                        <div class="col placeholder-glow">
+                                                            <span class="placeholder w-100"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-1 row placeholder-glow">
+                                                        <div class="col-5 col-lg-3 fw-medium">
+                                                            <span class="placeholder w-100"></span>
+                                                        </div>
+                                                        <div class="col placeholder-glow">
+                                                            <span class="placeholder w-100"></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <span class="placeholder w-100" style="max-width: 100px;"></span><br>
+                                        <span class="placeholder w-100" style="max-width: 100px;"></span>
+                                    </div>
                                 </div>
                             </div>
                             <hr>
@@ -165,18 +214,67 @@
                             <span class="placeholder" style="width: 25%;"></span><br>
                             <span class="placeholder" style="width: 12.5%;"></span>
                         </h6>
-                        <p class="card-text placeholder-glow">
-                            <small>
-                                <span class="placeholder" style="width: 12.5%;"></span><br>
-                                <span class="placeholder" style="width: 12.5%;"></span><br>
-                                <span class="placeholder" style="width: 12.5%;"></span><br>
-                                <span class="placeholder" style="width: 12.5%;"></span><br>
-                                <span class="placeholder" style="width: 12.5%;"></span><br>
-                                <span class="placeholder" style="width: 12.5%;"></span><br>
-                                <span class="placeholder" style="width: 9%;"></span><br>
-                                <span class="placeholder" style="width: 9%;"></span>
-                            </small>
-                        </p>
+                        <hr class="mt-0">
+                        <div class="card-text placeholder-glow">
+                            <div style="font-size: 0.75em;">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="mb-1 row placeholder-glow">
+                                            <div class="col-5 col-lg-3 fw-medium">
+                                                <span class="placeholder w-100"></span>
+                                            </div>
+                                            <div class="col placeholder-glow">
+                                                <span class="placeholder w-100"></span>
+                                            </div>
+                                        </div>
+                                        <div class="mb-1 row placeholder-glow">
+                                            <div class="col-5 col-lg-3 fw-medium">
+                                                <span class="placeholder w-100"></span>
+                                            </div>
+                                            <div class="col placeholder-glow">
+                                                <span class="placeholder w-100"></span>
+                                            </div>
+                                        </div>
+                                        <div class="mb-1 row placeholder-glow">
+                                            <div class="col-5 col-lg-3 fw-medium">
+                                                <span class="placeholder w-100"></span>
+                                            </div>
+                                            <div class="col placeholder-glow">
+                                                <span class="placeholder w-100"></span>
+                                            </div>
+                                        </div>
+                                        <div class="mb-1 row placeholder-glow">
+                                            <div class="col-5 col-lg-3 fw-medium">
+                                                <span class="placeholder w-100"></span>
+                                            </div>
+                                            <div class="col placeholder-glow">
+                                                <span class="placeholder w-100"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-1 row placeholder-glow">
+                                            <div class="col-5 col-lg-3 fw-medium">
+                                                <span class="placeholder w-100"></span>
+                                            </div>
+                                            <div class="col placeholder-glow">
+                                                <span class="placeholder w-100"></span>
+                                            </div>
+                                        </div>
+                                        <div class="mb-1 row placeholder-glow">
+                                            <div class="col-5 col-lg-3 fw-medium">
+                                                <span class="placeholder w-100"></span>
+                                            </div>
+                                            <div class="col placeholder-glow">
+                                                <span class="placeholder w-100"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <span class="placeholder w-100" style="max-width: 100px;"></span><br>
+                            <span class="placeholder w-100" style="max-width: 100px;"></span>
+                        </div>
                     </div>
                 </div>
                 <hr>
@@ -328,17 +426,54 @@
                         <h6 class="card-subtitle mb-2">
                             ${resep.dokter}<br>${jenis_kelamin}
                         </h6>
-                        <p class="card-text">
-                            <small class="date">
-                                ID Resep: ${resep.id_resep}<br>
-                                Tanggal dan Waktu Resep: ${resep.tanggal_resep}<br>
-                                Nomor Rekam Medis: ${resep.no_rm}<br>
-                                Nomor Registrasi: ${resep.nomor_registrasi}<br>
-                                Total Resep: ${jumlah_resep.toLocaleString('id-ID')}<br>
-                                Total Harga: Rp${total_biaya.toLocaleString('id-ID')}<br>
-                                ${confirmedBadge}<br>${statusBadge}
-                            </small>
-                        </p>
+                        <hr class="mt-0">
+                        <div class="card-text">
+                            <div style="font-size: 0.75em;">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="mb-1 row">
+                                            <div class="col-5 col-lg-4 fw-medium">ID</div>
+                                            <div class="col date">
+                                                ${resep.id_resep}
+                                            </div>
+                                        </div>
+                                        <div class="mb-1 row">
+                                            <div class="col-5 col-lg-4 fw-medium">Tgl dan Waktu</div>
+                                            <div class="col date">
+                                                ${resep.tanggal_resep}
+                                            </div>
+                                        </div>
+                                        <div class="mb-1 row">
+                                            <div class="col-5 col-lg-4 fw-medium">Nomor RM</div>
+                                            <div class="col date">
+                                                ${resep.no_rm}
+                                            </div>
+                                        </div>
+                                        <div class="mb-1 row">
+                                            <div class="col-5 col-lg-4 fw-medium">Nomor Registrasi</div>
+                                            <div class="col date">
+                                                ${resep.nomor_registrasi}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-1 row">
+                                            <div class="col-5 col-lg-4 fw-medium">Total Resep</div>
+                                            <div class="col date">
+                                                ${jumlah_resep.toLocaleString('id-ID')}
+                                            </div>
+                                        </div>
+                                        <div class="mb-1 row">
+                                            <div class="col-5 col-lg-4 fw-medium">Total Harga</div>
+                                            <div class="col date">
+                                                Rp${total_biaya.toLocaleString('id-ID')}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            ${confirmedBadge}<br>${statusBadge}
+                        </div>
                     </div>
                 </div>
                 <hr>

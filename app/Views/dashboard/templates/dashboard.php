@@ -110,6 +110,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
             /* Prevent header from shrinking */
         }
 
+
         .main-content-wrapper {
             display: flex;
             flex: 1;
@@ -134,9 +135,16 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
 
         .main-content {
             flex: 1;
-            /* Allows the content area to grow and fill remaining space */
             overflow: auto;
-            /* Enables scrolling in the content area */
+        }
+
+        .main-content-inside {
+            margin-left: 200px;
+        }
+
+        #sidebarMenu,
+        #sidebarHeader {
+            min-width: 200px;
         }
 
         .profilephotosidebar {
@@ -234,6 +242,10 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                 left: 50% !important;
             }
 
+            .main-content-inside {
+                margin-left: 0;
+            }
+
             .sidebar {
                 top: 48px;
                 backdrop-filter: blur(20px);
@@ -248,9 +260,14 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
             }
 
             #sidebarMenu {
+                min-width: 0;
                 opacity: 0;
                 transition: opacity 0.25s ease-out, transform 0.25s ease-out;
                 transform: translateY(-10px);
+            }
+
+            #sidebarHeader {
+                min-width: 0;
             }
 
             #sidebarMenu.show {
@@ -279,7 +296,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
     <div class="wrapper">
         <!-- HEADER -->
         <header class="navbar sticky-top flex-md-nowrap p-0 shadow-sm bg-success-subtle text-success-emphasis border-bottom border-success-subtle header">
-            <div class="d-flex justify-content-center align-items-center col-md-3 col-lg-2 me-0 px-3 py-md-1" style="min-height: 48px; max-height: 48px;">
+            <div id="sidebarHeader" class="d-flex justify-content-center align-items-center me-0 px-3 py-md-1" style="min-height: 48px; max-height: 48px;">
                 <span class="navbar-brand mx-0 text-start text-md-center lh-sm d-flex justify-content-center align-items-center" style="font-size: 7.5pt;">
                     <img src="<?= base_url('/assets/images/logo_pec.png'); ?>" alt="KLINIK MATA PECTK" height="24px">
                     <div class="ps-2 text-start text-success-emphasis">KASIR DAN FARMASI<br><span class="fw-bold">PEC</span> TELUK KUANTAN</div>
@@ -296,8 +313,8 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                 <div class="mx-3">
                     <a href="#" class="d-flex align-items-center text-success-emphasis text-decoration-none" data-bs-toggle="offcanvas" data-bs-target="#userOffcanvas" role="button" aria-controls="userOffcanvas">
                         <div class="me-2 d-none d-xl-block text-end lh-1">
-                            <span class="text-nowrap" style="font-size: 10pt;"><?= session()->get('fullname') ?></span><br>
-                            <span class="text-nowrap" style="font-size: 8pt;">@<?= session()->get('username') ?> • <span class="date"><?= $_SERVER['REMOTE_ADDR'] ?></span></span>
+                            <span class="text-nowrap" style="font-size: 0.85em;"><?= session()->get('fullname') ?></span><br>
+                            <span class="text-nowrap" style="font-size: 0.7em;">@<?= session()->get('username') ?> • <span class="date"><?= $_SERVER['REMOTE_ADDR'] ?></span></span>
                         </div>
                         <div class="rounded-pill bg-body profilephotosidebar d-flex justify-content-center align-items-center" style="min-height: 32px; max-height: 32px;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
@@ -306,8 +323,8 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                         </div>
                     </a>
                     <div class="offcanvas offcanvas-end bg-success-subtle text-success-emphasis shadow-sm" tabindex="-1" id="userOffcanvas" aria-labelledby="userOffcanvasLabel" style="border-left: var(--bs-offcanvas-border-width) solid var(--bs-success-border-subtle);">
-                        <div class="offcanvas-header pt-0 pb-0 d-flex justify-content-between">
-                            <div style="min-height: 48px; max-height: 48px;">
+                        <div class="offcanvas-header pt-0 pb-0 d-flex justify-content-between align-items-center" style="min-height: 48px; max-height: 48px;">
+                            <div>
                                 <span class="navbar-brand mx-0 text-start text-md-center lh-sm d-flex justify-content-center align-items-center" style="font-size: 7.5pt;">
                                     <img src="<?= base_url('/assets/images/logo_pec.png'); ?>" alt="KLINIK MATA PECTK" height="24px">
                                     <div class="ps-2 text-start text-success-emphasis">KASIR DAN FARMASI<br><span class="fw-bold">PEC</span> TELUK KUANTAN</div>
@@ -326,11 +343,11 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                             <div class="text-center w-100 lh-sm mb-3">
                                 <span>
                                     <?= session()->get('fullname'); ?><br>
-                                    <span style="font-size: 10pt;">@<?= session()->get('username'); ?></span><br>
-                                    <span style="font-size: 9pt;"><?= session()->get('role'); ?></span><br>
-                                    <span class="date" style="font-size: 9pt;">Alamat IP: <?= $_SERVER['REMOTE_ADDR'] ?></span><br>
-                                    <span class="date" style="font-size: 9pt;">Waktu masuk: <?= session()->get('created_at'); ?></span><br>
-                                    <span class="date" style="font-size: 9pt;">Kedaluwarsa: <?= session()->get('expires_at'); ?></span>
+                                    <span style="font-size: 0.85em;">@<?= session()->get('username'); ?></span><br>
+                                    <span style="font-size: 0.75em;"><?= session()->get('role'); ?></span><br>
+                                    <span class="date" style="font-size: 0.75em;">Alamat IP: <?= $_SERVER['REMOTE_ADDR'] ?></span><br>
+                                    <span class="date" style="font-size: 0.75em;">Waktu masuk: <?= session()->get('created_at'); ?></span><br>
+                                    <span class="date" style="font-size: 0.75em;">Kedaluwarsa: <?= session()->get('expires_at'); ?></span>
                                 </span>
                             </div>
                             <hr class="my-1 border-success-subtle opacity-100">
@@ -382,7 +399,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
 
         <!-- CONTENTS -->
         <div class="main-content-wrapper">
-            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block sidebar bg-success-subtle text-success-emphasis shadow-sm collapse">
+            <nav id="sidebarMenu" class="d-md-block sidebar bg-success-subtle text-success-emphasis shadow-sm collapse">
                 <div id="sidebarMenu2" class="position-sticky sidebar-sticky p-1">
                     <ul class="nav nav-pills flex-column">
                         <li class="nav-item">

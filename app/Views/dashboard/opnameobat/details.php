@@ -13,12 +13,12 @@
 <div style="min-width: 1px; max-width: 1px;"></div>
 <?= $this->endSection(); ?>
 <?= $this->section('content'); ?>
-<main class="col-md-9 ms-sm-auto col-lg-10 px-3 pt-3">
+<main class="main-content-inside px-3 pt-3">
     <div class="no-fluid-content">
-        <fieldset class="border rounded px-2 py-0 mb-3">
-            <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Informasi Laporan Stok Obat</legend>
-            <div style="font-size: 9pt;">
-                <div class="mb-2 row">
+        <div class="mb-3">
+            <div class="fw-bold mb-2 border-bottom">Informasi Laporan Stok Obat</div>
+            <div style="font-size: 0.75rem;">
+                <div class="mb-1 row">
                     <div class="col-5 col-lg-3 fw-medium">Tanggal dan Waktu</div>
                     <div class="col">
                         <div class="date">
@@ -26,7 +26,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="mb-2 row">
+                <div class="mb-1 row">
                     <div class="col-5 col-lg-3 fw-medium">Apoteker</div>
                     <div class="col">
                         <div class="date">
@@ -35,11 +35,11 @@
                     </div>
                 </div>
             </div>
-        </fieldset>
+        </div>
 
         <div class="card shadow-sm  overflow-auto">
             <div class="table-responsive">
-                <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
+                <table class="table table-sm mb-0" style="width:100%; font-size: 0.75rem;">
                     <thead>
                         <tr class="align-middle">
                             <th scope="col" class="bg-body-secondary border-secondary text-nowrap tindakan" style="border-bottom-width: 2px; width: 0%;">No</th>

@@ -22,7 +22,7 @@
 <div style="min-width: 1px; max-width: 1px;"></div>
 <?= $this->endSection(); ?>
 <?= $this->section('content'); ?>
-<main class="col-md-9 ms-sm-auto col-lg-10 px-3">
+<main class="main-content-inside px-3">
     <div class="no-fluid-content">
         <div class="d-flex justify-content-start align-items-start pt-3">
             <h1 class="h2 mb-0 me-3"><i class="fa-regular fa-face-smile-beam"></i></h1>
@@ -30,8 +30,8 @@
         </div>
         <hr>
         <?php if (session()->get('role') == "Admin") : ?>
-            <fieldset class="border rounded px-2 py-0 mb-3">
-                <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Admin</legend>
+            <div class="mb-3">
+                <div class="fw-bold mb-2 border-bottom">Admin</div>
                 <div class="mb-2">
                     <div class="card bg-body-tertiary w-100  shadow-sm">
                         <div class="card-header w-100 text-truncate">Pengguna Keseluruhan</div>
@@ -84,11 +84,11 @@
                         </div>
                     </div>
                 </div>
-            </fieldset>
+            </div>
         <?php endif; ?>
         <?php if (session()->get('role') == "Admin" || session()->get('role') == "Apoteker" || session()->get('role') == "Dokter") : ?>
-            <fieldset class="border rounded px-2 py-0 mb-3">
-                <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Farmasi</legend>
+            <div class="mb-3">
+                <div class="fw-bold mb-2 border-bottom">Farmasi</div>
                 <div class="row row-cols-1 row-cols-lg-2 g-2 mb-2">
                     <?php if (session()->get('role') != "Dokter") : ?>
                         <div class="col">
@@ -171,11 +171,11 @@
                         </div>
                     </div>
                 </div>
-            </fieldset>
+            </div>
         <?php endif; ?>
         <?php if (session()->get('role') == "Admin" || session()->get('role') == "Kasir") : ?>
-            <fieldset class="border rounded px-2 py-0 mb-3">
-                <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Kasir</legend>
+            <div class="mb-3">
+                <div class="fw-bold mb-2 border-bottom">Kasir</div>
                 <div class="row row-cols-1 row-cols-lg-2 g-2 mb-2">
                     <div class="col">
                         <div class="card bg-danger-subtle border-danger-subtle text-danger-emphasis w-100  shadow-sm">
@@ -242,7 +242,7 @@
                         </div>
                     </div>
                 </div>
-            </fieldset>
+            </div>
         <?php endif; ?>
     </div>
 </main>

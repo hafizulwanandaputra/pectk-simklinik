@@ -26,12 +26,12 @@
 <div style="min-width: 1px; max-width: 1px;"></div>
 <?= $this->endSection(); ?>
 <?= $this->section('content'); ?>
-<main class="col-md-9 ms-sm-auto col-lg-10 px-3 pt-3">
+<main class="main-content-inside px-3 pt-3">
     <div class="no-fluid-content">
-        <fieldset class="border rounded px-2 py-0 mb-3">
-            <legend class="float-none w-auto mb-0 px-1 fs-6 fw-bold">Informasi Obat Masuk</legend>
-            <div style="font-size: 9pt;">
-                <div class="mb-2 row">
+        <div class="mb-3">
+            <div class="fw-bold mb-2 border-bottom">Informasi Obat Masuk</div>
+            <div style="font-size: 0.75em;">
+                <div class="mb-1 row">
                     <div class="col-5 col-lg-3 fw-medium">Tanggal dan Waktu</div>
                     <div class="col">
                         <div class="date">
@@ -39,7 +39,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="mb-2 row">
+                <div class="mb-1 row">
                     <div class="col-5 col-lg-3 fw-medium">Nama Supplier</div>
                     <div class="col">
                         <div class="date">
@@ -47,7 +47,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="mb-2 row">
+                <div class="mb-1 row">
                     <div class="col-5 col-lg-3 fw-medium">Alamat Supplier</div>
                     <div class="col">
                         <div class="date">
@@ -55,7 +55,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="mb-2 row">
+                <div class="mb-1 row">
                     <div class="col-5 col-lg-3 fw-medium">Nomor Telepon Supplier</div>
                     <div class="col">
                         <div class="date">
@@ -63,7 +63,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="mb-2 row">
+                <div class="mb-1 row">
                     <div class="col-5 col-lg-3 fw-medium">Merek</div>
                     <div class="col">
                         <div class="date">
@@ -71,7 +71,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="mb-2 row">
+                <div class="mb-1 row">
                     <div class="col-5 col-lg-3 fw-medium">Apoteker</div>
                     <div class="col">
                         <div class="date">
@@ -80,7 +80,7 @@
                     </div>
                 </div>
             </div>
-        </fieldset>
+        </div>
 
         <div class="card shadow-sm  overflow-auto">
             <div class="card-header bg-body-tertiary" id="tambahDetailContainer" style="display: none;">
@@ -105,7 +105,7 @@
                 </form>
             </div>
             <div class="card-body p-0 m-0 table-responsive">
-                <table class="table table-sm mb-0" style="width:100%; font-size: 9pt;">
+                <table class="table table-sm mb-0" style="width:100%; font-size: 0.75em;">
                     <thead>
                         <tr class="align-middle">
                             <th scope="col" class="bg-body-secondary border-secondary text-nowrap tindakan" style="border-bottom-width: 2px; width: 0%;">Tindakan</th>
@@ -327,9 +327,9 @@
                     <tr>
                         <td class="tindakan">
                             <div class="btn-group" role="group">
-                                <button class="btn btn-outline-primary text-nowrap bg-gradient  add-batch-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${detail_pembelian_obat.id_detail_pembelian_obat}" data-bs-toggle="tooltip" data-bs-title="Tambah Item Obat"><i class="fa-solid fa-plus"></i></button>
-                                <button class="btn btn-outline-body text-nowrap bg-gradient edit-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${detail_pembelian_obat.id_detail_pembelian_obat}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
-                                <button class="btn btn-outline-danger text-nowrap bg-gradient  delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${detail_pembelian_obat.id_detail_pembelian_obat}" data-name="${detail_pembelian_obat.nama_obat}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
+                                <button class="btn btn-outline-primary text-nowrap bg-gradient  add-batch-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${detail_pembelian_obat.id_detail_pembelian_obat}" data-bs-toggle="tooltip" data-bs-title="Tambah Item Obat"><i class="fa-solid fa-plus"></i></button>
+                                <button class="btn btn-outline-body text-nowrap bg-gradient edit-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${detail_pembelian_obat.id_detail_pembelian_obat}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
+                                <button class="btn btn-outline-danger text-nowrap bg-gradient  delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${detail_pembelian_obat.id_detail_pembelian_obat}" data-name="${detail_pembelian_obat.nama_obat}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
                             </div>
                         </td>
                         <td>
@@ -354,8 +354,8 @@
                                     <div class="date text-nowrap">Kadaluwarsa: ${item.expired}</div>
                                     <div class="date text-nowrap">Jumlah: ${jumlah_item}</div>
                                     <div class="btn-group" role="group">
-                                        <button class="btn btn-outline-body text-nowrap bg-gradient  edit-batch-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${item.id_item_obat}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
-                                        <button class="btn btn-outline-danger text-nowrap bg-gradient  delete-batch-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 9pt;" data-id="${item.id_item_obat}" data-name="${item.no_batch}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
+                                        <button class="btn btn-outline-body text-nowrap bg-gradient  edit-batch-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${item.id_item_obat}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
+                                        <button class="btn btn-outline-danger text-nowrap bg-gradient  delete-batch-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${item.id_item_obat}" data-name="${item.no_batch}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
                                     </div>
                                 </li>
                             `;
