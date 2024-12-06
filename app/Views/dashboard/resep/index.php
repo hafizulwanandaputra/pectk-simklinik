@@ -11,10 +11,11 @@
 <?= $this->endSection(); ?>
 <?= $this->section('title'); ?>
 <div class="d-flex justify-content-start align-items-center">
-    <div class="flex-fill text-truncate" style="line-height: 0.95;">
-        <span class="fw-medium fs-6"><?= $headertitle; ?></span>
-        <br>
-        <span class="fw-medium" style="font-size: 0.7em;">Menampilkan: <span id="totalRecords" class="date"></span></span>
+    <div class="flex-fill text-truncate">
+        <div class="d-flex flex-column">
+            <div class="fw-medium fs-6 lh-sm"><?= $headertitle; ?></div>
+            <div class="fw-medium" style="font-size: 0.75em;">Menampilkan <span id="totalRecords">0</span> resep</div>
+        </div>
     </div>
     <div id="loadingSpinner" class="spinner-border spinner-border-sm me-3" role="status">
         <span class="visually-hidden">Loading...</span>

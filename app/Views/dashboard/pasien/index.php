@@ -1,10 +1,11 @@
 <?= $this->extend('dashboard/templates/dashboard'); ?>
 <?= $this->section('title'); ?>
 <div class="d-flex justify-content-start align-items-center">
-    <div class="flex-fill text-truncate" style="line-height: 0.95;">
-        <span class="fw-medium fs-6"><?= $headertitle; ?></span>
-        <br>
-        <span class="fw-medium" style="font-size: 0.7em;">Menampilkan: <span id="total_rajal" class="date"></span></span>
+    <div class="flex-fill text-truncate">
+        <div class="d-flex flex-column">
+            <div class="fw-medium fs-6 lh-sm"><?= $headertitle; ?></div>
+            <div class="fw-medium" style="font-size: 0.75em;">Menampilkan <span id="total_rajal">0</span> pasien rawat jalan</div>
+        </div>
     </div>
     <div id="loadingSpinner" class="spinner-border spinner-border-sm me-3" role="status">
         <span class="visually-hidden">Loading...</span>
@@ -115,7 +116,7 @@
                     </div>
                 `;
                 $('#datapasien').append(emptyRow); // Menambahkan baris kosong ke tabel
-                $('#total_rajal').text(''); // Kosongkan total
+                $('#total_rajal').text('0'); // Kosongkan total
                 return; // Keluar dari fungsi
             }
 

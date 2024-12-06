@@ -315,9 +315,11 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                 </div>
                 <div class="mx-3">
                     <a href="#" class="d-flex align-items-center text-success-emphasis text-decoration-none" data-bs-toggle="offcanvas" data-bs-target="#userOffcanvas" role="button" aria-controls="userOffcanvas">
-                        <div class="me-2 d-none d-xl-block text-end lh-1">
-                            <span class="text-nowrap" style="font-size: 0.85em;"><?= session()->get('fullname') ?></span><br>
-                            <span class="text-nowrap" style="font-size: 0.7em;">@<?= session()->get('username') ?> • <span class="date"><?= $_SERVER['REMOTE_ADDR'] ?></span></span>
+                        <div class="me-2 d-none d-xl-block text-end">
+                            <div class="d-flex flex-column">
+                                <div class="text-nowrap fs-6 lh-sm"><?= session()->get('fullname') ?></div>
+                                <div class="text-nowrap" style="font-size: 0.75em;">@<?= session()->get('username') ?> • <span class="date"><?= $_SERVER['REMOTE_ADDR'] ?></span></div>
+                            </div>
                         </div>
                         <div class="rounded-pill bg-body profilephotosidebar d-flex justify-content-center align-items-center" style="min-height: 32px; max-height: 32px;">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
