@@ -97,20 +97,14 @@
                                 </div>
                                 <div class="d-grid gap-2 d-lg-flex justify-content-lg-end" id="submitButtonContainer">
                                     <div class="btn-group">
-                                        <button class="btn btn-body bg-gradient dropdown-toggle dropdown-toggle-split no-caret" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <a tabindex="0" class="btn btn-body bg-gradient" role="button"
+                                            data-bs-toggle="popover"
+                                            data-bs-placement="left"
+                                            data-bs-trigger="focus"
+                                            data-bs-title="Dari mana data-data ini diperoleh?"
+                                            data-bs-content="<p>Data-data pasien rawat jalan ini diperoleh dari <em>Application Programming Interface</em> (API) Sistem Informasi Manajemen Klinik Utama Mata Padang Eye Center Teluk Kuantan.</p><div class='d-flex justify-content-end'><a href='https://pectk.padangeyecenter.com/klinik' class='btn btn-body bg-gradient btn-sm' role='button' target='_blank'><i class='fa-solid fa-up-right-from-square'></i> Buka SIM Klinik</a></div>">
                                             <i class="fa-solid fa-circle-question"></i>
-                                        </button>
-                                        <ul class="dropdown-menu dropdown-menu-end bg-body-tertiary shadow-sm transparent-blur">
-                                            <h6 class="dropdown-header text-wrap max-width-flex">Data-data pasien rawat jalan ini diperoleh dari <em>Application Programming Interface</em> (API) Sistem Informasi Manajemen Klinik Utama Mata Padang Eye Center Teluk Kuantan berdasarkan tanggal hari ini</h6>
-                                            <li>
-                                                <a class="dropdown-item px-2 py-1" href="https://pectk.padangeyecenter.com/klinik" target="_blank">
-                                                    <div class="d-flex align-items-start">
-                                                        <span style="min-width: 32px; max-width: 32px; text-align: center;"><i class="fa-solid fa-up-right-from-square"></i></span>
-                                                        <span>Buka SIM Klinik</span>
-                                                    </div>
-                                                </a>
-                                            </li>
-                                        </ul>
+                                        </a>
                                         <button type="submit" id="submitButton" class="btn btn-primary bg-gradient" disabled>
                                             <i class="fa-solid fa-plus"></i> Tambah
                                         </button>
@@ -630,6 +624,16 @@
     });
 
     $(document).ready(async function() {
+        $('[data-bs-toggle="popover"]').popover({
+            trigger: 'focus',
+            html: true,
+            template: '<div class="popover shadow-lg" role="tooltip">' +
+                '<div class="popover-arrow"></div>' +
+                '<h3 class="popover-header"></h3>' +
+                '<div class="popover-body"></div>' +
+                '</div>'
+        });
+
         $('#nomor_registrasi').select2({
             dropdownParent: $('#resepForm'),
             theme: "bootstrap-5",

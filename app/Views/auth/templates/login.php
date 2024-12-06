@@ -63,7 +63,12 @@
         $(document).ready(function() {
             const passwordInput = $('#floatingPassword');
             const popover = new bootstrap.Popover(passwordInput[0], {
-                html: true, // Mengaktifkan dukungan HTML di dalam konten popover
+                html: true,
+                template: '<div class="popover shadow-lg" role="tooltip">' +
+                    '<div class="popover-arrow"></div>' +
+                    '<h3 class="popover-header"></h3>' +
+                    '<div class="popover-body"></div>' +
+                    '</div>'
             });
 
             let capsLockActive = false; // Status Caps Lock sebelumnya

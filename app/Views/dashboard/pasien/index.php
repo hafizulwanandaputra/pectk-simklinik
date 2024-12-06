@@ -10,20 +10,13 @@
     <div id="loadingSpinner" class="spinner-border spinner-border-sm me-3" role="status">
         <span class="visually-hidden">Loading...</span>
     </div>
-    <a class="fs-5 text-success-emphasis dropdown-toggle no-caret" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-circle-question"></i></a>
-    <ul class="dropdown-menu dropdown-menu-end bg-body-tertiary shadow-sm transparent-blur">
-        <li>
-            <h6 class="dropdown-header text-wrap" style="max-width: 600px;">Data-data pasien rawat jalan ini diperoleh dari <em>Application Programming Interface</em> (API) Sistem Informasi Manajemen Klinik Utama Mata Padang Eye Center Teluk Kuantan</h6>
-        </li>
-        <li>
-            <a class="dropdown-item px-2 py-1" href="https://pectk.padangeyecenter.com/klinik" target="_blank">
-                <div class="d-flex align-items-start">
-                    <span style="min-width: 32px; max-width: 32px; text-align: center;"><i class="fa-solid fa-up-right-from-square"></i></span>
-                    <span>Buka SIM Klinik</span>
-                </div>
-            </a>
-        </li>
-    </ul>
+    <a tabindex="0" class="fs-5 text-success-emphasis" role="button"
+        data-bs-toggle="popover"
+        data-bs-trigger="focus"
+        data-bs-title="Dari mana data-data ini diperoleh?"
+        data-bs-content="<p>Data-data pasien rawat jalan ini diperoleh dari <em>Application Programming Interface</em> (API) Sistem Informasi Manajemen Klinik Utama Mata Padang Eye Center Teluk Kuantan.</p><div class='d-flex justify-content-end'><a href='https://pectk.padangeyecenter.com/klinik' class='btn btn-body bg-gradient btn-sm' role='button' target='_blank'><i class='fa-solid fa-up-right-from-square'></i> Buka SIM Klinik</a></div>">
+        <i class="fa-solid fa-circle-question"></i>
+    </a>
 </div>
 <div style="min-width: 1px; max-width: 1px;"></div>
 <?= $this->endSection(); ?>
@@ -273,6 +266,16 @@
     });
 
     $(document).ready(function() {
+        $('[data-bs-toggle="popover"]').popover({
+            trigger: 'focus',
+            html: true,
+            template: '<div class="popover shadow-lg" role="tooltip">' +
+                '<div class="popover-arrow"></div>' +
+                '<h3 class="popover-header"></h3>' +
+                '<div class="popover-body"></div>' +
+                '</div>'
+        });
+
         // Menangani event klik pada tombol bersihkan
         $('#clearTglButton').on('click', function() {
             $('#tanggal').val(''); // Kosongkan tanggal
