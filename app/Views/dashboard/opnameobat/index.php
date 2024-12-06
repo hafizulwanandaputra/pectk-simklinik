@@ -8,7 +8,8 @@
     <div id="loadingSpinner" class="spinner-border spinner-border-sm me-3" role="status">
         <span class="visually-hidden">Loading...</span>
     </div>
-    <a id="toggleFilter" class="fs-5 text-success-emphasis" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Pencarian"><i class="fa-solid fa-magnifying-glass"></i></a>
+    <a id="toggleFilter" class="fs-5 me-3 text-success-emphasis" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Pencarian"><i class="fa-solid fa-magnifying-glass"></i></a>
+    <a id="refreshButton" class="fs-5 text-success-emphasis" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan"><i class="fa-solid fa-sync"></i></a>
 </div>
 <div style="min-width: 1px; max-width: 1px;"></div>
 <?= $this->endSection(); ?>
@@ -26,7 +27,6 @@
                         <select id="apotekerFilter" class="form-select form-select-sm ">
                             <option value="">Semua Apoteker</option>
                         </select>
-                        <button class="btn btn-success btn-sm bg-gradient " type="button" id="refreshButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan"><i class="fa-solid fa-sync"></i></button>
                     </div>
                 </div>
             </li>
@@ -451,7 +451,8 @@
                 $('#opnameObatForm select').prop('disabled', false);
             }
         });
-        $('#refreshButton').on('click', async function() {
+        $('#refreshButton').on('click', async function(e) {
+            e.preventDefault();
             // Simpan nilai pilihan apoteker saat ini
             const selectedApoteker = $('apotekerFilter').val();
             await fetchApotekerOptions(selectedApoteker);

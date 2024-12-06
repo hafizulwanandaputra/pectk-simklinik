@@ -8,7 +8,8 @@
     <div id="loadingSpinner" class="spinner-border spinner-border-sm me-3" role="status">
         <span class="visually-hidden">Loading...</span>
     </div>
-    <a id="toggleFilter" class="fs-5 text-success-emphasis" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Pencarian"><i class="fa-solid fa-magnifying-glass"></i></a>
+    <a id="toggleFilter" class="fs-5 me-3 text-success-emphasis" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Pencarian"><i class="fa-solid fa-magnifying-glass"></i></a>
+    <a id="refreshButton" class="fs-5 text-success-emphasis" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan"><i class="fa-solid fa-sync"></i></a>
 </div>
 <div style="min-width: 1px; max-width: 1px;"></div>
 <?= $this->endSection(); ?>
@@ -20,7 +21,6 @@
                 <div class="no-fluid-content">
                     <div class="input-group input-group-sm">
                         <input type="search" class="form-control form-control-sm " id="externalSearch" placeholder="Cari merek, nama obat, dan isi obat">
-                        <button class="btn btn-success btn-sm bg-gradient " type="button" id="refreshButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan"><i class="fa-solid fa-sync"></i></button>
                     </div>
                 </div>
             </li>
@@ -434,7 +434,8 @@
             table.search(this.value).draw(); // Trigger search on the table
         });
 
-        $('#refreshButton').on('click', async function() {
+        $('#refreshButton').on('click', function(e) {
+            e.preventDefault();
             table.ajax.reload(null, false);
         });
 

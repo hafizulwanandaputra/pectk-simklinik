@@ -16,7 +16,8 @@
         <span class="visually-hidden">Loading...</span>
     </div>
     <a class="fs-5 me-3 text-success-emphasis" href="<?= base_url('transaksi/report') ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Laporan Transaksi Harian"><i class="fa-solid fa-file-export"></i></a>
-    <a id="toggleFilter" class="fs-5 text-success-emphasis" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Pencarian"><i class="fa-solid fa-magnifying-glass"></i></a>
+    <a id="toggleFilter" class="fs-5 me-3 text-success-emphasis" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Pencarian"><i class="fa-solid fa-magnifying-glass"></i></a>
+    <a id="refreshButton" class="fs-5 text-success-emphasis" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan"><i class="fa-solid fa-sync"></i></a>
 </div>
 <div style="min-width: 1px; max-width: 1px;"></div>
 <?= $this->endSection(); ?>
@@ -33,7 +34,6 @@
                         </div>
                         <div class="input-group input-group-sm">
                             <input type="search" id="searchInput" class="form-control " placeholder="Cari pasien">
-                            <button class="btn btn-success btn-sm bg-gradient " type="button" id="refreshButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan"><i class="fa-solid fa-sync"></i></button>
                         </div>
                     </div>
                     <div class="accordion" id="accordionFilter">
@@ -919,7 +919,8 @@
                 $('#transaksiForm2 select').prop('disabled', false);
             }
         });
-        $('#refreshButton').on('click', async function() {
+        $('#refreshButton').on('click', async function(e) {
+            e.preventDefault();
             // Simpan nilai pilihan kasir saat ini
             const selectedKasir = $('#kasirFilter').val();
             // Panggil fungsi untuk memperbarui opsi kasir
