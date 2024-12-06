@@ -1,7 +1,11 @@
 <?= $this->extend('dashboard/templates/dashboard'); ?>
 <?= $this->section('title'); ?>
 <div class="d-flex justify-content-start align-items-center">
-    <span class="fw-medium fs-5 flex-fill text-truncate"><?= $headertitle; ?> <span id="total_rajal" class="date"></span></span>
+    <div class="flex-fill text-truncate" style="line-height: 0.95;">
+        <span class="fw-medium fs-6"><?= $headertitle; ?></span>
+        <br>
+        <span class="fw-medium" style="font-size: 0.7em;">Menampilkan: <span id="total_rajal" class="date"></span></span>
+    </div>
     <div id="loadingSpinner" class="spinner-border spinner-border-sm me-3" role="status">
         <span class="visually-hidden">Loading...</span>
     </div>
@@ -121,7 +125,7 @@
 
             $('#datapasien').empty(); // Kosongkan tabel pasien
             $('#refreshButton').prop('disabled', false); // Aktifkan tombol refresh
-            $('#total_rajal').text(`(${data.length})`); // Jumlah data
+            $('#total_rajal').text(data.length.toLocaleString('id-ID')); // Jumlah data
 
             // Cek apakah data pasien kosong
             if (data.length === 0) {

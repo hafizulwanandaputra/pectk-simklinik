@@ -4,7 +4,11 @@
 <?= $this->endSection(); ?>
 <?= $this->section('title'); ?>
 <div class="d-flex justify-content-start align-items-center">
-    <span class="fw-medium fs-5 flex-fill text-truncate"><?= $headertitle; ?> <span id="totalRecords" class="date"></span></span></span>
+    <div class="flex-fill text-truncate" style="line-height: 0.95;">
+        <span class="fw-medium fs-6"><?= $headertitle; ?></span>
+        <br>
+        <span class="fw-medium" style="font-size: 0.7em;">Menampilkan: <span id="totalRecords" class="date"></span></span>
+    </div>
     <div id="loadingSpinner" class="spinner-border spinner-border-sm me-3" role="status">
         <span class="visually-hidden">Loading...</span>
     </div>
@@ -172,7 +176,7 @@
 
             const data = response.data;
             $('#opnameObatContainer').empty();
-            $('#totalRecords').text(`(${data.total.toLocaleString('id-ID')})`);
+            $('#totalRecords').text(data.total.toLocaleString('id-ID'));
 
             if (data.total === 0) {
                 $('#paginationNav ul').empty();
