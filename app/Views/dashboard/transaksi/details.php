@@ -375,18 +375,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="alert alert-warning  mb-1 mt-1" id="capsLockStatus" role="alert" style="display: none;">
-                        <div class="d-flex align-items-start">
-                            <div style="width: 12px; text-align: center;">
-                                <i class="fa-solid fa-triangle-exclamation"></i>
-                            </div>
-                            <div class="w-100 ms-3">
-                                <strong><em>CAPS LOCK</em> AKTIF!</strong> Harap periksa status <em>Caps Lock</em> pada papan tombol (<em>keyboard</em>) Anda.
-                            </div>
-                        </div>
-                    </div>
                     <div class="form-floating mb-1 mt-1">
-                        <input type="password" class="form-control " autocomplete="off" dir="auto" placeholder="password" id="password" name="password">
+                        <input type="password" class="form-control " autocomplete="off" dir="auto" placeholder="password" id="password" name="password" data-bs-toggle="popover"
+                            data-bs-placement="top"
+                            data-bs-trigger="manual"
+                            data-bs-title="<em>CAPS LOCK</em> AKTIF"
+                            data-bs-content="Harap periksa status <em>Caps Lock</em> pada papan tombol (<em>keyboard</em>) Anda.">
                         <label for="password">Masukkan Kata Sandi Transaksi*</label>
                         <div class="invalid-feedback"></div>
                     </div>
@@ -403,13 +397,45 @@
 <?= $this->endSection(); ?>
 <?= $this->section('javascript'); ?>
 <script>
-    function checkCapsLockStatus(event) {
-        if (event.originalEvent.getModifierState("CapsLock")) {
-            $('#capsLockStatus').show();
-        } else {
-            $('#capsLockStatus').hide();
-        }
-    }
+    // Menangani semua input password dengan jQuery
+    $('input[type="password"]').each(function() {
+        const passwordInput = $(this); // Menggunakan jQuery untuk elemen input
+        const popover = new bootstrap.Popover(passwordInput[0], {
+            html: true,
+            template: '<div class="popover shadow-lg" role="tooltip">' +
+                '<div class="popover-arrow"></div>' +
+                '<h3 class="popover-header"></h3>' +
+                '<div class="popover-body">Caps Lock aktif!</div>' +
+                '</div>'
+        });
+
+        let capsLockActive = false; // Status Caps Lock sebelumnya
+
+        // Menambahkan event listener untuk 'focus' pada setiap input password
+        passwordInput.on('focus', function() {
+            passwordInput[0].addEventListener('keyup', function(event) {
+                const currentCapsLock = event.getModifierState('CapsLock'); // Memeriksa status Caps Lock
+
+                // Jika status Caps Lock berubah
+                if (currentCapsLock !== capsLockActive) {
+                    capsLockActive = currentCapsLock; // Perbarui status
+                    if (capsLockActive) {
+                        popover.show(); // Tampilkan popover jika Caps Lock aktif
+                    } else {
+                        popover.hide(); // Sembunyikan popover jika Caps Lock tidak aktif
+                    }
+                }
+            });
+        });
+
+        // Menambahkan event listener untuk 'blur' pada setiap input password
+        passwordInput.on('blur', function() {
+            popover.hide(); // Sembunyikan popover saat kehilangan fokus
+            passwordInput[0].removeEventListener('keyup', function() {}); // Hapus listener keyup saat blur
+            capsLockActive = false; // Reset status Caps Lock
+        });
+    });
+
     async function fetchTindakanOptions() {
         try {
             const [rawatJalanList, pemeriksaanPenunjangList, OperasiList] = await Promise.all([
@@ -629,15 +655,7 @@
         } finally {
             // Hide the spinner when done
             $('#loadingSpinner').hide();
-        } // Deteksi perubahan status Caps Lock saat tombol ditekan
-        $(document).on('keydown', function(event) {
-            checkCapsLockStatus(event);
-        });
-
-        // Deteksi perubahan status Caps Lock saat tombol ditekan
-        $('input[type="password"]').on('keydown', function(event) {
-            checkCapsLockStatus(event);
-        });
+        }
     }
 
     async function fetchObatAlkes() {
@@ -735,16 +753,6 @@
             theme: "bootstrap-5",
             width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
             placeholder: $(this).data('placeholder'),
-        });
-
-        // Deteksi perubahan status Caps Lock saat tombol ditekan
-        $(document).on('keydown', function(event) {
-            checkCapsLockStatus(event);
-        });
-
-        // Deteksi perubahan status Caps Lock saat tombol ditekan
-        $('input[type="password"]').on('keydown', function(event) {
-            checkCapsLockStatus(event);
         });
 
         var detailTransaksiId;

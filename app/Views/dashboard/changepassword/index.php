@@ -36,21 +36,33 @@
         <div class="mb-3">
             <div class="fw-bold mb-2 border-bottom">Kata Sandi Pengguna</div>
             <div class="form-floating mb-2">
-                <input type="password" class="form-control  <?= (validation_show_error('current_password')) ? 'is-invalid' : ''; ?>" id="current_password" name="current_password" placeholder="current_password">
+                <input type="password" class="form-control  <?= (validation_show_error('current_password')) ? 'is-invalid' : ''; ?>" id="current_password" name="current_password" placeholder="current_password" data-bs-toggle="popover"
+                    data-bs-placement="top"
+                    data-bs-trigger="manual"
+                    data-bs-title="<em>CAPS LOCK</em> AKTIF"
+                    data-bs-content="Harap periksa status <em>Caps Lock</em> pada papan tombol (<em>keyboard</em>) Anda.">
                 <label for="current_password">Kata Sandi Lama</label>
                 <div class="invalid-feedback">
                     <?= validation_show_error('current_password'); ?>
                 </div>
             </div>
             <div class="form-floating mb-2">
-                <input type="password" class="form-control  <?= (validation_show_error('new_password1')) ? 'is-invalid' : ''; ?>" id="new_password1" name="new_password1" placeholder="new_password1">
+                <input type="password" class="form-control  <?= (validation_show_error('new_password1')) ? 'is-invalid' : ''; ?>" id="new_password1" name="new_password1" placeholder="new_password1" data-bs-toggle="popover"
+                    data-bs-placement="top"
+                    data-bs-trigger="manual"
+                    data-bs-title="<em>CAPS LOCK</em> AKTIF"
+                    data-bs-content="Harap periksa status <em>Caps Lock</em> pada papan tombol (<em>keyboard</em>) Anda.">
                 <label for="new_password1">Kata Sandi Baru</label>
                 <div class="invalid-feedback">
                     <?= validation_show_error('new_password1'); ?>
                 </div>
             </div>
             <div class="form-floating mb-2">
-                <input type="password" class="form-control  <?= (validation_show_error('new_password2')) ? 'is-invalid' : ''; ?>" id="new_password2" name="new_password2" placeholder="new_password2">
+                <input type="password" class="form-control  <?= (validation_show_error('new_password2')) ? 'is-invalid' : ''; ?>" id="new_password2" name="new_password2" placeholder="new_password2" data-bs-toggle="popover"
+                    data-bs-placement="top"
+                    data-bs-trigger="manual"
+                    data-bs-title="<em>CAPS LOCK</em> AKTIF"
+                    data-bs-content="Harap periksa status <em>Caps Lock</em> pada papan tombol (<em>keyboard</em>) Anda.">
                 <label for="new_password2">Konfirmsi Kata Sandi Baru</label>
                 <div class="invalid-feedback">
                     <?= validation_show_error('new_password2'); ?>
@@ -67,24 +79,46 @@
 <?= $this->endSection(); ?>
 <?= $this->section('javascript'); ?>
 <script>
-    function checkCapsLockStatus(event) {
-        if (event.originalEvent.getModifierState("CapsLock")) {
-            $('#capsLockStatus').show();
-        } else {
-            $('#capsLockStatus').hide();
-        }
-    }
     $(document).ready(function() {
         $('#loadingSpinner').hide(); // Menyembunyikan spinner loading saat halaman siap
 
-        // Deteksi perubahan status Caps Lock saat tombol ditekan
-        $(document).on('keydown', function(event) {
-            checkCapsLockStatus(event);
-        });
+        // Menangani semua input password dengan jQuery
+        $('input[type="password"]').each(function() {
+            const passwordInput = $(this); // Menggunakan jQuery untuk elemen input
+            const popover = new bootstrap.Popover(passwordInput[0], {
+                html: true,
+                template: '<div class="popover shadow-lg" role="tooltip">' +
+                    '<div class="popover-arrow"></div>' +
+                    '<h3 class="popover-header"></h3>' +
+                    '<div class="popover-body">Caps Lock aktif!</div>' +
+                    '</div>'
+            });
 
-        // Deteksi perubahan status Caps Lock saat tombol ditekan
-        $('input[type="password"]').on('keydown', function(event) {
-            checkCapsLockStatus(event);
+            let capsLockActive = false; // Status Caps Lock sebelumnya
+
+            // Menambahkan event listener untuk 'focus' pada setiap input password
+            passwordInput.on('focus', function() {
+                passwordInput[0].addEventListener('keyup', function(event) {
+                    const currentCapsLock = event.getModifierState('CapsLock'); // Memeriksa status Caps Lock
+
+                    // Jika status Caps Lock berubah
+                    if (currentCapsLock !== capsLockActive) {
+                        capsLockActive = currentCapsLock; // Perbarui status
+                        if (capsLockActive) {
+                            popover.show(); // Tampilkan popover jika Caps Lock aktif
+                        } else {
+                            popover.hide(); // Sembunyikan popover jika Caps Lock tidak aktif
+                        }
+                    }
+                });
+            });
+
+            // Menambahkan event listener untuk 'blur' pada setiap input password
+            passwordInput.on('blur', function() {
+                popover.hide(); // Sembunyikan popover saat kehilangan fokus
+                passwordInput[0].removeEventListener('keyup', function() {}); // Hapus listener keyup saat blur
+                capsLockActive = false; // Reset status Caps Lock
+            });
         });
 
         // Menangani event klik pada tombol dengan ID 'submitBtn'

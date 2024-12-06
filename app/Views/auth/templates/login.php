@@ -61,39 +61,43 @@
     <script src="<?= base_url(); ?>assets_public/fontawesome/js/all.js"></script>
     <script>
         $(document).ready(function() {
-            const passwordInput = $('#floatingPassword');
-            const popover = new bootstrap.Popover(passwordInput[0], {
-                html: true,
-                template: '<div class="popover shadow-lg" role="tooltip">' +
-                    '<div class="popover-arrow"></div>' +
-                    '<h3 class="popover-header"></h3>' +
-                    '<div class="popover-body"></div>' +
-                    '</div>'
-            });
-
-            let capsLockActive = false; // Status Caps Lock sebelumnya
-
-            passwordInput.on('focus', function() {
-                $(document).on('keydown', function(event) {
-                    const currentCapsLock = event.originalEvent.getModifierState('CapsLock');
-
-                    // Jika status Caps Lock berubah
-                    if (currentCapsLock !== capsLockActive) {
-                        capsLockActive = currentCapsLock; // Perbarui status
-
-                        if (capsLockActive) {
-                            popover.show();
-                        } else {
-                            popover.hide();
-                        }
-                    }
+            // Menangani semua input password dengan jQuery
+            $('input[type="password"]').each(function() {
+                const passwordInput = $(this); // Menggunakan jQuery untuk elemen input
+                const popover = new bootstrap.Popover(passwordInput[0], {
+                    html: true,
+                    template: '<div class="popover shadow-lg" role="tooltip">' +
+                        '<div class="popover-arrow"></div>' +
+                        '<h3 class="popover-header"></h3>' +
+                        '<div class="popover-body">Caps Lock aktif!</div>' +
+                        '</div>'
                 });
-            });
 
-            passwordInput.on('blur', function() {
-                popover.hide(); // Sembunyikan popover saat kehilangan fokus
-                $(document).off('keydown'); // Lepas listener saat blur
-                capsLockActive = false; // Reset status
+                let capsLockActive = false; // Status Caps Lock sebelumnya
+
+                // Menambahkan event listener untuk 'focus' pada setiap input password
+                passwordInput.on('focus', function() {
+                    passwordInput[0].addEventListener('keyup', function(event) {
+                        const currentCapsLock = event.getModifierState('CapsLock'); // Memeriksa status Caps Lock
+
+                        // Jika status Caps Lock berubah
+                        if (currentCapsLock !== capsLockActive) {
+                            capsLockActive = currentCapsLock; // Perbarui status
+                            if (capsLockActive) {
+                                popover.show(); // Tampilkan popover jika Caps Lock aktif
+                            } else {
+                                popover.hide(); // Sembunyikan popover jika Caps Lock tidak aktif
+                            }
+                        }
+                    });
+                });
+
+                // Menambahkan event listener untuk 'blur' pada setiap input password
+                passwordInput.on('blur', function() {
+                    popover.hide(); // Sembunyikan popover saat kehilangan fokus
+                    passwordInput[0].removeEventListener('keyup', function() {}); // Hapus listener keyup saat blur
+                    capsLockActive = false; // Reset status Caps Lock
+                });
             });
 
             // Mengecek apakah elemen dengan id 'redirectToast' ada di dalam dokumen
