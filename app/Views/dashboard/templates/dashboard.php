@@ -326,7 +326,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                         </div>
                     </a>
                     <div class="offcanvas offcanvas-end bg-success-subtle text-success-emphasis shadow-sm" tabindex="-1" id="userOffcanvas" aria-labelledby="userOffcanvasLabel" style="border-left: var(--bs-offcanvas-border-width) solid var(--bs-success-border-subtle);">
-                        <div class="offcanvas-header pt-0 pb-0 d-flex justify-content-between align-items-center" style="min-height: 48px; max-height: 48px;">
+                        <div class="offcanvas-header pt-0 pb-0 d-flex justify-content-between align-items-center" style="min-height: 48px;">
                             <div>
                                 <span class="navbar-brand mx-0 text-start text-md-center lh-sm d-flex justify-content-center align-items-center" style="font-size: 7.5pt;">
                                     <img src="<?= base_url('/assets/images/logo_pec.png'); ?>" alt="KLINIK MATA PECTK" height="24px">
