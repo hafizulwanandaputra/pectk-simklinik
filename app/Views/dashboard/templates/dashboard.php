@@ -236,6 +236,10 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
             /* Hilangkan ikon panah ke bawah */
         }
 
+        .kbd {
+            border-radius: 4px !important;
+        }
+
         @media (max-width: 767.98px) {
             .toast-container {
                 padding-top: 7rem !important;

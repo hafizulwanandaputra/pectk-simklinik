@@ -37,6 +37,10 @@
             background-color: #dbf4f1;
         }
 
+        .kbd {
+            border-radius: 4px !important;
+        }
+
         @media (prefers-color-scheme: dark) {
             body {
                 background: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)), url('<?= base_url('/assets/images/pec-dark.jpg'); ?>');

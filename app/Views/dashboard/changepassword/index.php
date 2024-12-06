@@ -40,7 +40,7 @@
                     data-bs-placement="top"
                     data-bs-trigger="manual"
                     data-bs-title="<em>CAPS LOCK</em> AKTIF"
-                    data-bs-content="Harap periksa status <em>Caps Lock</em> pada papan tombol (<em>keyboard</em>) Anda.">
+                    data-bs-content="Harap periksa status <span class='badge text-bg-dark bg-gradient kbd'>Caps Lock</span> pada papan tombol (<em>keyboard</em>) Anda.">
                 <label for="current_password">Kata Sandi Lama</label>
                 <div class="invalid-feedback">
                     <?= validation_show_error('current_password'); ?>
@@ -51,7 +51,7 @@
                     data-bs-placement="top"
                     data-bs-trigger="manual"
                     data-bs-title="<em>CAPS LOCK</em> AKTIF"
-                    data-bs-content="Harap periksa status <em>Caps Lock</em> pada papan tombol (<em>keyboard</em>) Anda.">
+                    data-bs-content="Harap periksa status <span class='badge text-bg-dark bg-gradient kbd'>Caps Lock</span> pada papan tombol (<em>keyboard</em>) Anda.">
                 <label for="new_password1">Kata Sandi Baru</label>
                 <div class="invalid-feedback">
                     <?= validation_show_error('new_password1'); ?>
@@ -62,7 +62,7 @@
                     data-bs-placement="top"
                     data-bs-trigger="manual"
                     data-bs-title="<em>CAPS LOCK</em> AKTIF"
-                    data-bs-content="Harap periksa status <em>Caps Lock</em> pada papan tombol (<em>keyboard</em>) Anda.">
+                    data-bs-content="Harap periksa status <span class='badge text-bg-dark bg-gradient kbd'>Caps Lock</span> pada papan tombol (<em>keyboard</em>) Anda.">
                 <label for="new_password2">Konfirmsi Kata Sandi Baru</label>
                 <div class="invalid-feedback">
                     <?= validation_show_error('new_password2'); ?>

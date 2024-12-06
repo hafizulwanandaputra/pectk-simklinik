@@ -380,7 +380,7 @@
                             data-bs-placement="top"
                             data-bs-trigger="manual"
                             data-bs-title="<em>CAPS LOCK</em> AKTIF"
-                            data-bs-content="Harap periksa status <em>Caps Lock</em> pada papan tombol (<em>keyboard</em>) Anda.">
+                            data-bs-content="Harap periksa status <span class='badge text-bg-dark bg-gradient kbd'>Caps Lock</span> pada papan tombol (<em>keyboard</em>) Anda.">
                         <label for="password">Masukkan Kata Sandi Transaksi*</label>
                         <div class="invalid-feedback"></div>
                     </div>

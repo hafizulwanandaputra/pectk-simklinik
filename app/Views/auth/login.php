@@ -32,7 +32,7 @@
                             data-bs-placement="top"
                             data-bs-trigger="manual"
                             data-bs-title="<em>CAPS LOCK</em> AKTIF"
-                            data-bs-content="Harap periksa status <em>Caps Lock</em> pada papan tombol (<em>keyboard</em>) Anda.">
+                            data-bs-content="Harap periksa status <span class='badge text-bg-dark bg-gradient kbd'>Caps Lock</span> pada papan tombol (<em>keyboard</em>) Anda.">
                         <label for="floatingPassword">
                             <div class="d-flex align-items-start">
                                 <div style="width: 12px; text-align: center;">
