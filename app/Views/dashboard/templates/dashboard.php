@@ -144,6 +144,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
 
         #sidebarMenu,
         #sidebarHeader {
+            max-width: 210px;
             min-width: 210px;
         }
 
@@ -260,6 +261,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
             }
 
             #sidebarMenu {
+                max-width: 100%;
                 min-width: 0;
                 opacity: 0;
                 transition: opacity 0.25s ease-out, transform 0.25s ease-out;
@@ -267,6 +269,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
             }
 
             #sidebarHeader {
+                max-width: 100%;
                 min-width: 0;
             }
 
