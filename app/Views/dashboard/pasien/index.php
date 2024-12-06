@@ -183,7 +183,7 @@
                                             </div>
                                         </div>
                                         <div class="mb-1 row">
-                                            <div class="col-5 col-lg-4 fw-medium">Nomor RM</div>
+                                            <div class="col-5 col-lg-4 fw-medium">Nomor Rekam Medis</div>
                                             <div class="col date">
                                                 ${pasien.no_rm}
                                             </div>
