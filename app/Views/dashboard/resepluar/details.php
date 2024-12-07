@@ -18,7 +18,12 @@
 <?= $this->section('title'); ?>
 <div class="d-flex justify-content-start align-items-center">
     <a class="fs-6 me-3 text-success-emphasis" href="<?= base_url('/resepluar'); ?>"><i class="fa-solid fa-arrow-left"></i></a>
-    <span class="fw-medium fs-6 flex-fill text-truncate"><?= $headertitle; ?></span>
+    <div class="flex-fill text-truncate">
+        <div class="d-flex flex-column">
+            <div class="fw-medium fs-6 lh-sm"><?= $headertitle; ?></div>
+            <div class="fw-medium" style="font-size: 0.75em;"><?= $resep['id_resep'] ?> • <?= $resep['nama_pasien'] ?></div>
+        </div>
+    </div>
     <div id="loadingSpinner" class="spinner-border spinner-border-sm" role="status">
         <span class="visually-hidden">Loading...</span>
     </div>

@@ -407,7 +407,7 @@ class ResepLuar extends BaseController
                 // Menyiapkan data untuk tampilan
                 $data = [
                     'resep' => $resep,
-                    'title' => 'Detail Resep Luar ' . $resep['nama_pasien'] . ' (' . $id . ') - ' . $this->systemName,
+                    'title' => 'Detail Resep Luar ' . $resep['nama_pasien'] . ' (ID ' . $id . ') - ' . $this->systemName,
                     'headertitle' => 'Detail Resep Luar',
                     'agent' => $this->request->getUserAgent() // Menyimpan informasi tentang user agent
                 ];

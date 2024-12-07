@@ -458,7 +458,7 @@ class Resep extends BaseController
                 // Menyiapkan data untuk tampilan
                 $data = [
                     'resep' => $resep,
-                    'title' => 'Detail Resep Dokter ' . $resep['nama_pasien'] . ' (' . $id . ') - ' . $this->systemName,
+                    'title' => 'Detail Resep Dokter ' . $resep['nama_pasien'] . ' (ID ' . $id . ') - ' . $this->systemName,
                     'headertitle' => 'Detail Resep Dokter',
                     'agent' => $this->request->getUserAgent() // Menyimpan informasi tentang user agent
                 ];
