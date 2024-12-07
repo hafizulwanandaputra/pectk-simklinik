@@ -14,7 +14,7 @@
     <div class="flex-fill text-truncate">
         <div class="d-flex flex-column">
             <div class="fw-medium fs-6 lh-sm"><?= $headertitle; ?></div>
-            <div class="fw-medium" style="font-size: 0.75em;">Menampilkan <span id="totalRecords">0</span> transaksi</div>
+            <div class="fw-medium" style="font-size: 0.75em;"><span id="totalRecords">0</span> transaksi</div>
         </div>
     </div>
     <div id="loadingSpinner" class="spinner-border spinner-border-sm me-3" role="status">
