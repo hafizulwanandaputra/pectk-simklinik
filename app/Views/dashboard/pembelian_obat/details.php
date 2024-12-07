@@ -17,14 +17,14 @@
 <?= $this->endSection(); ?>
 <?= $this->section('title'); ?>
 <div class="d-flex justify-content-start align-items-center">
-    <a class="fs-6 me-3 text-success-emphasis" href="<?= base_url('/pembelianobat'); ?>"><i class="fa-solid fa-arrow-left"></i></a>
+    <a class="fs-5 me-3 text-success-emphasis" href="<?= base_url('/pembelianobat'); ?>"><i class="fa-solid fa-arrow-left"></i></a>
     <div class="flex-fill text-truncate">
         <div class="d-flex flex-column">
             <div class="fw-medium fs-6 lh-sm"><?= $headertitle; ?></div>
-            <div class="fw-medium" style="font-size: 0.75em;"><?= $pembelianobat['nama_supplier'] ?></div>
+            <div class="fw-medium" style="font-size: 0.75em;"><?= ($pembelianobat['merek'] == '') ? '<em>Tanpa Merek</em>' : $pembelianobat['merek']; ?> • <?= $pembelianobat['nama_supplier'] ?> • <?= $pembelianobat['tgl_pembelian'] ?></div>
         </div>
     </div>
-    <div id="loadingSpinner" class="spinner-border spinner-border-sm" role="status">
+    <div id="loadingSpinner" class="spinner-border spinner-border-sm" role="status" style="min-width: 1rem;">
         <span class="visually-hidden">Loading...</span>
     </div>
 </div>

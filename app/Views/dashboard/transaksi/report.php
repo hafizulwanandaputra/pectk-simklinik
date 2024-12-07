@@ -1,9 +1,9 @@
 <?= $this->extend('dashboard/templates/dashboard'); ?>
 <?= $this->section('title'); ?>
 <div class="d-flex justify-content-start align-items-center">
-    <a class="fs-6 me-3 text-success-emphasis" href="<?= base_url('/transaksi'); ?>"><i class="fa-solid fa-arrow-left"></i></a>
-    <span class="fw-medium fs-6 flex-fill text-truncate"><?= $headertitle; ?></span>
-    <div id="loadingSpinner" class="spinner-border spinner-border-sm" role="status">
+    <a class="fs-5 me-3 text-success-emphasis" href="<?= base_url('/transaksi'); ?>"><i class="fa-solid fa-arrow-left"></i></a>
+    <span class="fw-medium fs-5 flex-fill text-truncate"><?= $headertitle; ?></span>
+    <div id="loadingSpinner" class="spinner-border spinner-border-sm mx-2" role="status" style="min-width: 1rem;">
         <span class="visually-hidden">Loading...</span>
     </div>
 </div>

@@ -7,10 +7,10 @@
             <div class="fw-medium" style="font-size: 0.75em;"><span id="total_rajal">0</span> pasien rawat jalan</div>
         </div>
     </div>
-    <div id="loadingSpinner" class="spinner-border spinner-border-sm me-3" role="status">
+    <div id="loadingSpinner" class="spinner-border spinner-border-sm mx-2" role="status" style="min-width: 1rem;">
         <span class="visually-hidden">Loading...</span>
     </div>
-    <a tabindex="0" class="fs-6 text-success-emphasis" role="button"
+    <a tabindex="0" class="fs-6 mx-2 text-success-emphasis" role="button"
         data-bs-toggle="popover"
         data-bs-trigger="focus"
         data-bs-title="Dari mana data-data ini diperoleh?"
