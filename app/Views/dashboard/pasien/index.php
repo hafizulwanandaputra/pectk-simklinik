@@ -10,7 +10,7 @@
     <div id="loadingSpinner" class="spinner-border spinner-border-sm me-3" role="status">
         <span class="visually-hidden">Loading...</span>
     </div>
-    <a tabindex="0" class="fs-5 text-success-emphasis" role="button"
+    <a tabindex="0" class="fs-6 text-success-emphasis" role="button"
         data-bs-toggle="popover"
         data-bs-trigger="focus"
         data-bs-title="Dari mana data-data ini diperoleh?"
