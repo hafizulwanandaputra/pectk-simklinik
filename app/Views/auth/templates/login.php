@@ -164,7 +164,7 @@
                 $('#loginForm').submit(); // Mengirimkan form login
                 $('input').prop('disabled', true).removeClass('is-invalid'); // Menonaktifkan semua input dan menghapus kelas 'is-invalid'
                 $('#loginBtn').prop('disabled', true).html(`
-            <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+            <span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span>
             <span role="status">SILAKAN TUNGGU...</span>
         `); // Menampilkan spinner dan teks 'SILAKAN TUNGGU...' pada tombol login
             });
