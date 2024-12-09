@@ -128,22 +128,22 @@
                     <div class="card-header bg-body-tertiary" id="tambahLayananContainer" style="display: none;">
                         <form id="tambahLayanan" enctype="multipart/form-data">
                             <div class="mb-2">
-                                <select class="form-select  form-tindakan" id="id_layanan" name="id_layanan" aria-label="id_layanan">
+                                <select class="form-select form-select-sm form-tindakan" id="id_layanan" name="id_layanan" aria-label="id_layanan">
                                     <option value="" disabled selected>-- Pilih Tindakan --</option>
                                 </select>
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="d-flex flex-column flex-lg-row gap-2">
                                 <div class="flex-fill">
-                                    <input type="number" id="qty_transaksi" name="qty_transaksi" class="form-control  form-tindakan" placeholder="Qty" autocomplete="off">
+                                    <input type="number" id="qty_transaksi" name="qty_transaksi" class="form-control form-control-sm form-tindakan" placeholder="Qty" autocomplete="off">
                                     <div class="invalid-feedback"></div>
                                 </div>
                                 <div class="flex-fill">
-                                    <input type="number" id="diskon_layanan" name="diskon_layanan" class="form-control  form-tindakan" placeholder="Diskon (%)" autocomplete="off">
+                                    <input type="number" id="diskon_layanan" name="diskon_layanan" class="form-control form-control-sm form-tindakan" placeholder="Diskon (%)" autocomplete="off">
                                     <div class="invalid-feedback"></div>
                                 </div>
                                 <div class="d-grid d-lg-block w-auto">
-                                    <button type="submit" id="addLayananButton" class="btn btn-primary bg-gradient  text-nowrap">
+                                    <button type="submit" id="addLayananButton" class="btn btn-primary bg-gradient btn-sm text-nowrap">
                                         <i class="fa-solid fa-plus"></i> Tambah
                                     </button>
                                 </div>
@@ -186,18 +186,18 @@
                     <div class="card-header bg-body-tertiary" id="tambahObatAlkesContainer" style="display: none;">
                         <form id="tambahObatAlkes" enctype="multipart/form-data">
                             <div class="mb-2">
-                                <select class="form-select " id="id_resep" name="id_resep" aria-label="id_resep">
+                                <select class="form-select form-select-sm" id="id_resep" name="id_resep" aria-label="id_resep">
                                     <option value="" disabled selected>-- Pilih Resep --</option>
                                 </select>
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="d-flex flex-column flex-lg-row gap-2">
                                 <div class="flex-fill">
-                                    <input type="number" id="diskon_obatalkes" name="diskon_obatalkes" class="form-control " placeholder="Diskon (%)" autocomplete="off">
+                                    <input type="number" id="diskon_obatalkes" name="diskon_obatalkes" class="form-control form-control-sm" placeholder="Diskon (%)" autocomplete="off">
                                     <div class="invalid-feedback"></div>
                                 </div>
                                 <div class="d-grid d-lg-block w-auto">
-                                    <button type="submit" id="addObatAlkesButton" class="btn btn-primary bg-gradient  text-nowrap">
+                                    <button type="submit" id="addObatAlkesButton" class="btn btn-primary bg-gradient btn-sm text-nowrap">
                                         <i class="fa-solid fa-plus"></i> Tambah
                                     </button>
                                 </div>
@@ -815,15 +815,15 @@
                             <div class="d-flex flex-column flex-lg-row gap-1">
                                 <input type="hidden" id="id_detail_transaksi" name="id_detail_transaksi" value="${response.data.id_detail_transaksi}">
                                 <div class="flex-fill">
-                                    <input type="number" id="qty_transaksi_edit" name="qty_transaksi_edit" class="form-control " placeholder="Diskon (%)" value="${response.data.qty_transaksi}" autocomplete="off">
+                                    <input type="number" id="qty_transaksi_edit" name="qty_transaksi_edit" class="form-control form-control-sm" placeholder="Diskon (%)" value="${response.data.qty_transaksi}" autocomplete="off">
                                     <div class="invalid-feedback"></div>
                                 </div>
                                 <div class="flex-fill">
-                                    <input type="number" id="diskon_layanan_edit" name="diskon_layanan_edit" class="form-control " placeholder="Diskon (%)" value="${response.data.diskon}" autocomplete="off">
+                                    <input type="number" id="diskon_layanan_edit" name="diskon_layanan_edit" class="form-control form-control-sm" placeholder="Diskon (%)" value="${response.data.diskon}" autocomplete="off">
                                     <div class="invalid-feedback"></div>
                                 </div>
                                 <div class="d-grid d-lg-block w-auto">
-                                    <button type="submit" id="editLayananButton" class="btn btn-primary bg-gradient ">
+                                    <button type="submit" id="editLayananButton" class="btn btn-primary bg-gradient btn-sm">
                                         <i class="fa-solid fa-pen-to-square"></i> Edit
                                     </button>
                                 </div>
@@ -846,7 +846,7 @@
                     $('#editLayanan .is-invalid').removeClass('is-invalid');
                     $('#editLayanan .invalid-feedback').text('').hide();
                     $('#editLayananButton').prop('disabled', true).html(`
-                        <span class="spinner-border spinner-border-sm" aria-hidden="true"></span> Edit
+                        <span class="spinner-border" style="width: 14px; height: 14px;" aria-hidden="true"></span> Edit
                     `);
 
                     // Disable form inputs
@@ -949,11 +949,11 @@
                             <div class="d-flex flex-column flex-lg-row gap-1">
                                 <input type="hidden" id="id_detail_transaksi" name="id_detail_transaksi" value="${response.data.id_detail_transaksi}">
                                 <div class="flex-fill">
-                                    <input type="number" id="diskon_obatalkes_edit" name="diskon_obatalkes_edit" class="form-control " placeholder="Diskon (%)" value="${response.data.diskon}" autocomplete="off">
+                                    <input type="number" id="diskon_obatalkes_edit" name="diskon_obatalkes_edit" class="form-control form-control-sm" placeholder="Diskon (%)" value="${response.data.diskon}" autocomplete="off">
                                     <div class="invalid-feedback"></div>
                                 </div>
                                 <div class="d-grid d-lg-block w-auto">
-                                    <button type="submit" id="editObatAlkesButton" class="btn btn-primary bg-gradient ">
+                                    <button type="submit" id="editObatAlkesButton" class="btn btn-primary bg-gradient btn-sm">
                                         <i class="fa-solid fa-pen-to-square"></i> Edit
                                     </button>
                                 </div>
@@ -976,7 +976,7 @@
                     $('#editObatAlkes .is-invalid').removeClass('is-invalid');
                     $('#editObatAlkes .invalid-feedback').text('').hide();
                     $('#editObatAlkesButton').prop('disabled', true).html(`
-                        <span class="spinner-border spinner-border-sm" aria-hidden="true"></span> Edit
+                        <span class="spinner-border" style="width: 14px; height: 14px;" aria-hidden="true"></span> Edit
                     `);
 
                     // Disable form inputs
@@ -1068,7 +1068,7 @@
             $('#tambahLayanan .is-invalid').removeClass('is-invalid');
             $('#tambahLayanan .invalid-feedback').text('').hide();
             $('#addLayananButton').prop('disabled', true).html(`
-                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span> Tambah
+                <span class="spinner-border" style="width: 14px; height: 14px;" aria-hidden="true"></span> Tambah
             `);
 
             // Disable form inputs
@@ -1149,7 +1149,7 @@
             $('#tambahObatAlkes .is-invalid').removeClass('is-invalid');
             $('#tambahObatAlkes .invalid-feedback').text('').hide();
             $('#addObatAlkesButton').prop('disabled', true).html(`
-                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span> Tambah
+                <span class="spinner-border" style="width: 14px; height: 14px;" aria-hidden="true"></span> Tambah
             `);
 
             // Disable form inputs

@@ -90,13 +90,13 @@
                         <li class="list-group-item border-top-0 bg-body-tertiary">
                             <form id="resepForm" enctype="multipart/form-data" class="d-flex flex-column gap-2">
                                 <div class="flex-fill">
-                                    <select class="form-select " id="nomor_registrasi" name="nomor_registrasi" aria-label="nomor_registrasi">
+                                    <select class="form-select form-select-sm" id="nomor_registrasi" name="nomor_registrasi" aria-label="nomor_registrasi">
                                         <option value="" disabled selected>-- Pilih Pasien --</option>
                                     </select>
                                     <div class="invalid-feedback"></div>
                                 </div>
                                 <div class="d-grid gap-2 d-lg-flex justify-content-lg-end" id="submitButtonContainer">
-                                    <div class="btn-group">
+                                    <div class="btn-group btn-group-sm">
                                         <a tabindex="0" class="btn btn-body bg-gradient" role="button"
                                             data-bs-toggle="popover"
                                             data-bs-placement="left"
@@ -728,7 +728,7 @@
             $('#resepForm .is-invalid').removeClass('is-invalid');
             $('#resepForm .invalid-feedback').text('').hide();
             $('#submitButton').prop('disabled', true).html(`
-                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span> Tambah
+                <span class="spinner-border" style="width: 14px; height: 14px;" aria-hidden="true"></span> Tambah
             `);
 
             // Disable form inputs

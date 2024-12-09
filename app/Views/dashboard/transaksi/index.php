@@ -94,13 +94,13 @@
                                     <div class="fw-bold mb-2 border-bottom">Tambah Pasien Rawat Jalan</div>
                                     <form id="transaksiForm1" enctype="multipart/form-data" class="d-flex flex-column mb-2 gap-2">
                                         <div class="flex-fill">
-                                            <select class="form-select " id="nomor_registrasi" name="nomor_registrasi" aria-label="nomor_registrasi">
+                                            <select class="form-select form-select-sm" id="nomor_registrasi" name="nomor_registrasi" aria-label="nomor_registrasi">
                                                 <option value="" disabled selected>-- Pilih Pasien Rawat Jalan --</option>
                                             </select>
                                             <div class="invalid-feedback"></div>
                                         </div>
                                         <div class="d-grid gap-2 d-lg-flex justify-content-lg-end">
-                                            <div class="btn-group">
+                                            <div class="btn-group btn-group-sm">
                                                 <a tabindex="0" class="btn btn-body bg-gradient" role="button"
                                                     data-bs-toggle="popover"
                                                     data-bs-placement="left"
@@ -109,7 +109,7 @@
                                                     data-bs-content="<p>Data-data pasien rawat jalan ini diperoleh dari <em>Application Programming Interface</em> (API) Sistem Informasi Manajemen Klinik Utama Mata Padang Eye Center Teluk Kuantan.</p><div class='d-flex justify-content-end'><a href='https://pectk.padangeyecenter.com/klinik' class='btn btn-body bg-gradient btn-sm' role='button' target='_blank'><i class='fa-solid fa-up-right-from-square'></i> Buka SIM Klinik</a></div>">
                                                     <i class="fa-solid fa-circle-question"></i>
                                                 </a>
-                                                <button type="submit" id="submitButton1" class="btn btn-primary bg-gradient " disabled>
+                                                <button type="submit" id="submitButton1" class="btn btn-primary bg-gradient" disabled>
                                                     <i class="fa-solid fa-plus"></i> Tambah
                                                 </button>
                                             </div>
@@ -122,13 +122,13 @@
                                     <div class="fw-bold mb-2 border-bottom">Tambah Pasien dari Resep Luar</div>
                                     <form id="transaksiForm2" enctype="multipart/form-data" class="d-flex flex-column mb-2 gap-2">
                                         <div class="flex-fill">
-                                            <select class="form-select " id="id_resep" name="id_resep" aria-label="id_resep">
+                                            <select class="form-select form-select-sm" id="id_resep" name="id_resep" aria-label="id_resep">
                                                 <option value="" disabled selected>-- Pilih Pasien dari Resep Luar --</option>
                                             </select>
                                             <div class="invalid-feedback"></div>
                                         </div>
                                         <div class="d-grid gap-2 d-lg-flex justify-content-lg-end">
-                                            <button type="submit" id="submitButton2" class="btn btn-primary bg-gradient " disabled>
+                                            <button type="submit" id="submitButton2" class="btn btn-primary bg-gradient btn-sm" disabled>
                                                 <i class="fa-solid fa-plus"></i> Tambah
                                             </button>
                                         </div>
@@ -773,7 +773,7 @@
             $('#transaksiForm1 .is-invalid').removeClass('is-invalid');
             $('#transaksiForm1 .invalid-feedback').text('').hide();
             $('#submitButton1').prop('disabled', true).html(`
-                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span> Tambah
+                <span class="spinner-border" style="width: 14px; height: 14px;" aria-hidden="true"></span> Tambah
             `);
 
             // Disable form inputs
@@ -857,7 +857,7 @@
             $('#transaksiForm2 .is-invalid').removeClass('is-invalid');
             $('#transaksiForm2 .invalid-feedback').text('').hide();
             $('#submitButton2').prop('disabled', true).html(`
-                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span> Tambah
+                <span class="spinner-border" style="width: 14px; height: 14px;" aria-hidden="true"></span> Tambah
             `);
 
             // Disable form inputs

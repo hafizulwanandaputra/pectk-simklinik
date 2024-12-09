@@ -91,18 +91,18 @@
             <div class="card-header bg-body-tertiary" id="tambahDetailContainer" style="display: none;">
                 <form id="tambahDetail" enctype="multipart/form-data">
                     <div class="mb-2">
-                        <select class="form-select " id="id_obat" name="id_obat" aria-label="id_obat">
+                        <select class="form-select form-select-sm" id="id_obat" name="id_obat" aria-label="id_obat">
                             <option value="" disabled selected>-- Pilih Obat --</option>
                         </select>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="d-flex flex-column flex-lg-row gap-2">
                         <div class="flex-fill">
-                            <input type="number" id="jumlah" name="jumlah" class="form-control " placeholder="Jumlah" autocomplete="off">
+                            <input type="number" id="jumlah" name="jumlah" class="form-control form-control-sm" placeholder="Jumlah" autocomplete="off">
                             <div class="invalid-feedback"></div>
                         </div>
                         <div class="d-grid d-lg-block w-auto">
-                            <button type="submit" id="addButton" class="btn btn-primary bg-gradient  text-nowrap">
+                            <button type="submit" id="addButton" class="btn btn-primary bg-gradient btn-sm text-nowrap">
                                 <i class="fa-solid fa-plus"></i> Tambah
                             </button>
                         </div>
@@ -332,9 +332,9 @@
                     <tr>
                         <td class="tindakan">
                             <div class="btn-group" role="group">
-                                <button class="btn btn-outline-primary text-nowrap bg-gradient  add-batch-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${detail_pembelian_obat.id_detail_pembelian_obat}" data-bs-toggle="tooltip" data-bs-title="Tambah Item Obat"><i class="fa-solid fa-plus"></i></button>
+                                <button class="btn btn-outline-primary text-nowrap bg-gradient add-batch-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${detail_pembelian_obat.id_detail_pembelian_obat}" data-bs-toggle="tooltip" data-bs-title="Tambah Item Obat"><i class="fa-solid fa-plus"></i></button>
                                 <button class="btn btn-outline-body text-nowrap bg-gradient edit-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${detail_pembelian_obat.id_detail_pembelian_obat}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
-                                <button class="btn btn-outline-danger text-nowrap bg-gradient  delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${detail_pembelian_obat.id_detail_pembelian_obat}" data-name="${detail_pembelian_obat.nama_obat}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
+                                <button class="btn btn-outline-danger text-nowrap bg-gradient delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${detail_pembelian_obat.id_detail_pembelian_obat}" data-name="${detail_pembelian_obat.nama_obat}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
                             </div>
                         </td>
                         <td>
@@ -359,8 +359,8 @@
                                     <div class="date text-nowrap">Kadaluwarsa: ${item.expired}</div>
                                     <div class="date text-nowrap">Jumlah: ${jumlah_item}</div>
                                     <div class="btn-group" role="group">
-                                        <button class="btn btn-outline-body text-nowrap bg-gradient  edit-batch-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${item.id_item_obat}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
-                                        <button class="btn btn-outline-danger text-nowrap bg-gradient  delete-batch-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${item.id_item_obat}" data-name="${item.no_batch}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
+                                        <button class="btn btn-outline-body text-nowrap bg-gradient edit-batch-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${item.id_item_obat}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
+                                        <button class="btn btn-outline-danger text-nowrap bg-gradient delete-batch-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${item.id_item_obat}" data-name="${item.no_batch}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
                                     </div>
                                 </li>
                             `;
@@ -497,11 +497,11 @@
                                 <input type="hidden" id="id_detail_pembelian_obat" name="id_detail_pembelian_obat" value="${response.data.id_detail_pembelian_obat}">
                                 <input type="hidden" id="id_obat_edit" name="id_obat_edit" value="${response.data.id_obat}">
                                 <div class="flex-fill">
-                                    <input type="number" id="jumlah_edit" name="jumlah_edit" class="form-control " placeholder="Jumlah" value="${response.data.jumlah}" autocomplete="off">
+                                    <input type="number" id="jumlah_edit" name="jumlah_edit" class="form-control form-control-sm" placeholder="Jumlah" value="${response.data.jumlah}" autocomplete="off">
                                     <div class="invalid-feedback"></div>
                                 </div>
                                 <div class="d-grid d-lg-block w-auto">
-                                    <button type="submit" id="editButton" class="btn btn-primary bg-gradient ">
+                                    <button type="submit" id="editButton" class="btn btn-primary bg-gradient btn-sm">
                                         <i class="fa-solid fa-pen-to-square"></i> Edit
                                     </button>
                                 </div>
@@ -524,7 +524,7 @@
                     $('#editDetail .is-invalid').removeClass('is-invalid');
                     $('#editDetail .invalid-feedback').text('').hide();
                     $('#editButton').prop('disabled', true).html(`
-                        <span class="spinner-border spinner-border-sm" aria-hidden="true"></span> Edit
+                        <span class="spinner-border" style="width: 14px; height: 14px;" aria-hidden="true"></span> Edit
                     `);
 
                     // Disable form inputs
@@ -613,7 +613,7 @@
             $('#tambahDetail .is-invalid').removeClass('is-invalid');
             $('#tambahDetail .invalid-feedback').text('').hide();
             $('#addButton').prop('disabled', true).html(`
-                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span> Tambah
+                <span class="spinner-border" style="width: 14px; height: 14px;" aria-hidden="true"></span> Tambah
             `);
 
             // Disable form inputs
@@ -699,19 +699,19 @@
                             </div>
                             <div class="d-flex flex-column flex-lg-row gap-1">
                                 <div class="flex-fill">
-                                    <input type="text" id="no_batch" name="no_batch" class="form-control " placeholder="Nomor Batch" autocomplete="off">
+                                    <input type="text" id="no_batch" name="no_batch" class="form-control form-control-sm" placeholder="Nomor Batch" autocomplete="off">
                                     <div class="invalid-feedback"></div>
                                 </div>
                                 <div class="flex-fill">
-                                    <input type="date" id="expired" name="expired" class="form-control " placeholder="Kedaluwarsa">
+                                    <input type="date" id="expired" name="expired" class="form-control form-control-sm" placeholder="Kedaluwarsa">
                                     <div class="invalid-feedback"></div>
                                 </div>
                                 <div class="flex-fill">
-                                    <input type="number" id="jumlah_item" name="jumlah_item" class="form-control " placeholder="Jumlah Diterima" autocomplete="off">
+                                    <input type="number" id="jumlah_item" name="jumlah_item" class="form-control form-control-sm" placeholder="Jumlah Diterima" autocomplete="off">
                                     <div class="invalid-feedback"></div>
                                 </div>
                                 <div class="d-grid d-lg-block w-auto">
-                                    <button type="submit" id="addBatchButton" class="btn btn-primary bg-gradient ">
+                                    <button type="submit" id="addBatchButton" class="btn btn-primary bg-gradient btn-sm">
                                         <i class="fa-solid fa-plus"></i> Tambah
                                     </button>
                                 </div>
@@ -734,7 +734,7 @@
                 $('#addBatch .is-invalid').removeClass('is-invalid');
                 $('#addBatch .invalid-feedback').text('').hide();
                 $('#addBatchButton').prop('disabled', true).html(`
-                        <span class="spinner-border spinner-border-sm" aria-hidden="true"></span> Tambah
+                        <span class="spinner-border" style="width: 14px; height: 14px;" aria-hidden="true"></span> Tambah
                     `);
 
                 // Disable form inputs
@@ -829,19 +829,19 @@
                             <div class="d-flex flex-column flex-xl-row gap-1">
                                 <input type="hidden" id="id_detail_pembelian_obat" name="id_detail_pembelian_obat" value="${response.data.id_detail_pembelian_obat}">
                                 <div class="flex-fill">
-                                    <input type="text" id="no_batch_edit" name="no_batch_edit" class="form-control " placeholder="Nomor Batch" value="${response.data.no_batch}" autocomplete="off">
+                                    <input type="text" id="no_batch_edit" name="no_batch_edit" class="form-control form-control-sm" placeholder="Nomor Batch" value="${response.data.no_batch}" autocomplete="off">
                                     <div class="invalid-feedback"></div>
                                 </div>
                                 <div class="flex-fill">
-                                    <input type="date" id="expired_edit" name="expired_edit" class="form-control " placeholder="Kedaluwarsa" value="${response.data.expired}">
+                                    <input type="date" id="expired_edit" name="expired_edit" class="form-control form-control-sm" placeholder="Kedaluwarsa" value="${response.data.expired}">
                                     <div class="invalid-feedback"></div>
                                 </div>
                                 <div class="flex-fill">
-                                    <input type="number" id="jumlah_item_edit" name="jumlah_item_edit" class="form-control " placeholder="Jumlah Diterima" value="${response.data.jumlah_item}" autocomplete="off">
+                                    <input type="number" id="jumlah_item_edit" name="jumlah_item_edit" class="form-control form-control-sm" placeholder="Jumlah Diterima" value="${response.data.jumlah_item}" autocomplete="off">
                                     <div class="invalid-feedback"></div>
                                 </div>
                                 <div class="d-grid d-xl-block w-auto">
-                                    <button type="submit" id="editBatchButton" class="btn btn-primary bg-gradient ">
+                                    <button type="submit" id="editBatchButton" class="btn btn-primary bg-gradient btn-sm text-nowrap">
                                         <i class="fa-solid fa-pen-to-square"></i> Edit
                                     </button>
                                 </div>
@@ -863,7 +863,7 @@
                     $('#editBatch .is-invalid').removeClass('is-invalid');
                     $('#editBatch .invalid-feedback').text('').hide();
                     $('#editBatchButton').prop('disabled', true).html(`
-                        <span class="spinner-border spinner-border-sm" aria-hidden="true"></span> Edit
+                        <span class="spinner-border" style="width: 14px; height: 14px;" aria-hidden="true"></span> Edit
                     `);
 
                     // Disable form inputs

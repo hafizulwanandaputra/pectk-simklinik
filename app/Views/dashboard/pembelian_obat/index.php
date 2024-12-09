@@ -72,13 +72,13 @@
                     <li class="list-group-item border-top-0 bg-body-tertiary">
                         <form id="pembelianObatForm" enctype="multipart/form-data" class="d-flex flex-column gap-2">
                             <div class="flex-fill">
-                                <select class="form-select " id="id_supplier" name="id_supplier" aria-label="id_supplier">
+                                <select class="form-select form-select-sm" id="id_supplier" name="id_supplier" aria-label="id_supplier">
                                     <option value="" disabled selected>-- Pilih Supplier --</option>
                                 </select>
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="d-grid gap-2 d-lg-flex justify-content-lg-end" id="submitButtonContainer">
-                                <button type="submit" id="submitButton" class="btn btn-primary bg-gradient " disabled>
+                                <button type="submit" id="submitButton" class="btn btn-primary bg-gradient btn-sm" disabled>
                                     <i class="fa-solid fa-plus"></i> Tambah
                                 </button>
                             </div>
@@ -607,7 +607,7 @@
             $('#pembelianObatForm .is-invalid').removeClass('is-invalid');
             $('#pembelianObatForm .invalid-feedback').text('').hide();
             $('#submitButton').prop('disabled', true).html(`
-                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span> Tambah
+                <span class="spinner-border" style="width: 14px; height: 14px;" aria-hidden="true"></span> Tambah
             `);
 
             // Disable form inputs
