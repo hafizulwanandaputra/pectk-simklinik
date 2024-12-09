@@ -369,7 +369,7 @@
             const $this = $(this); // Menyimpan referensi ke tombol yang diklik
             const id = $(this).data('id'); // Mengambil ID pengguna dari atribut data
             $('[data-bs-toggle="tooltip"]').tooltip('hide'); // Menyembunyikan tooltip
-            $this.prop('disabled', true).html(`<span class="spinner-border" style="width: 11px; height: 11px;" aria-hidden="true"></span>`); // Menampilkan spinner
+            $this.prop('disabled', true).html(`<span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span>`); // Menampilkan spinner
 
             try {
                 // Melakukan permintaan dengan Axios untuk mendapatkan data pengguna

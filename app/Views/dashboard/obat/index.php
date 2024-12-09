@@ -551,7 +551,7 @@
             const $this = $(this);
             const id = $(this).data('id');
             $('[data-bs-toggle="tooltip"]').tooltip('hide');
-            $this.prop('disabled', true).html(`<span class="spinner-border" style="width: 11px; height: 11px;" aria-hidden="true"></span>`);
+            $this.prop('disabled', true).html(`<span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span>`);
 
             try {
                 const response = await axios.get(`<?= base_url('/obat/obat') ?>/${id}`);

@@ -799,7 +799,7 @@
             const id = $(this).data('id');
             const $row = $this.closest('tr');
             $('[data-bs-toggle="tooltip"]').tooltip('hide');
-            $this.prop('disabled', true).html(`<span class="spinner-border" style="width: 11px; height: 11px;" aria-hidden="true"></span>`);
+            $this.prop('disabled', true).html(`<span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span>`);
             $('#editLayananTransaksi').remove();
             $('#editObatAlkesTransaksi').remove();
             try {
@@ -846,7 +846,7 @@
                     $('#editLayanan .is-invalid').removeClass('is-invalid');
                     $('#editLayanan .invalid-feedback').text('').hide();
                     $('#editLayananButton').prop('disabled', true).html(`
-                        <span class="spinner-border" style="width: 14px; height: 14px;" aria-hidden="true"></span> Edit
+                        <span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span> Edit
                     `);
 
                     // Disable form inputs
@@ -933,7 +933,7 @@
             const id = $(this).data('id');
             const $row = $this.closest('tr');
             $('[data-bs-toggle="tooltip"]').tooltip('hide');
-            $this.prop('disabled', true).html(`<span class="spinner-border" style="width: 11px; height: 11px;" aria-hidden="true"></span>`);
+            $this.prop('disabled', true).html(`<span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span>`);
             $('#editLayananTransaksi').remove();
             $('#editObatAlkesTransaksi').remove();
             try {
@@ -976,7 +976,7 @@
                     $('#editObatAlkes .is-invalid').removeClass('is-invalid');
                     $('#editObatAlkes .invalid-feedback').text('').hide();
                     $('#editObatAlkesButton').prop('disabled', true).html(`
-                        <span class="spinner-border" style="width: 14px; height: 14px;" aria-hidden="true"></span> Edit
+                        <span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span> Edit
                     `);
 
                     // Disable form inputs
@@ -1068,7 +1068,7 @@
             $('#tambahLayanan .is-invalid').removeClass('is-invalid');
             $('#tambahLayanan .invalid-feedback').text('').hide();
             $('#addLayananButton').prop('disabled', true).html(`
-                <span class="spinner-border" style="width: 14px; height: 14px;" aria-hidden="true"></span> Tambah
+                <span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span> Tambah
             `);
 
             // Disable form inputs
@@ -1149,7 +1149,7 @@
             $('#tambahObatAlkes .is-invalid').removeClass('is-invalid');
             $('#tambahObatAlkes .invalid-feedback').text('').hide();
             $('#addObatAlkesButton').prop('disabled', true).html(`
-                <span class="spinner-border" style="width: 14px; height: 14px;" aria-hidden="true"></span> Tambah
+                <span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span> Tambah
             `);
 
             // Disable form inputs

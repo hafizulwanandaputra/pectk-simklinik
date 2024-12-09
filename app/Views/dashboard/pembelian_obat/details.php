@@ -479,7 +479,7 @@
             const id = $(this).data('id');
             const $row = $this.closest('tr');
             $('[data-bs-toggle="tooltip"]').tooltip('hide');
-            $this.prop('disabled', true).html(`<span class="spinner-border" style="width: 11px; height: 11px;" aria-hidden="true"></span>`);
+            $this.prop('disabled', true).html(`<span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span>`);
             $('#editDetailPembelian').remove();
             $('#addBatchPembelian').remove();
             $('#editBatchPembelian').remove();
@@ -524,7 +524,7 @@
                     $('#editDetail .is-invalid').removeClass('is-invalid');
                     $('#editDetail .invalid-feedback').text('').hide();
                     $('#editButton').prop('disabled', true).html(`
-                        <span class="spinner-border" style="width: 14px; height: 14px;" aria-hidden="true"></span> Edit
+                        <span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span> Edit
                     `);
 
                     // Disable form inputs
@@ -613,7 +613,7 @@
             $('#tambahDetail .is-invalid').removeClass('is-invalid');
             $('#tambahDetail .invalid-feedback').text('').hide();
             $('#addButton').prop('disabled', true).html(`
-                <span class="spinner-border" style="width: 14px; height: 14px;" aria-hidden="true"></span> Tambah
+                <span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span> Tambah
             `);
 
             // Disable form inputs
@@ -734,7 +734,7 @@
                 $('#addBatch .is-invalid').removeClass('is-invalid');
                 $('#addBatch .invalid-feedback').text('').hide();
                 $('#addBatchButton').prop('disabled', true).html(`
-                        <span class="spinner-border" style="width: 14px; height: 14px;" aria-hidden="true"></span> Tambah
+                        <span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span> Tambah
                     `);
 
                 // Disable form inputs
@@ -813,7 +813,7 @@
             const id = $(this).data('id');
             const $row = $this.closest('li');
             $('[data-bs-toggle="tooltip"]').tooltip('hide');
-            $this.prop('disabled', true).html(`<span class="spinner-border" style="width: 11px; height: 11px;" aria-hidden="true"></span>`);
+            $this.prop('disabled', true).html(`<span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span>`);
             $('#editDetailPembelian').remove();
             $('#addBatchPembelian').remove();
             $('#editBatchPembelian').remove();
@@ -863,7 +863,7 @@
                     $('#editBatch .is-invalid').removeClass('is-invalid');
                     $('#editBatch .invalid-feedback').text('').hide();
                     $('#editBatchButton').prop('disabled', true).html(`
-                        <span class="spinner-border" style="width: 14px; height: 14px;" aria-hidden="true"></span> Edit
+                        <span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span> Edit
                     `);
 
                     // Disable form inputs

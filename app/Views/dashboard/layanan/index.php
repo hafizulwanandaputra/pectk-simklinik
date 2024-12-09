@@ -324,7 +324,7 @@
             const id = $(this).data('id'); // Dapatkan ID layanan
             $('[data-bs-toggle="tooltip"]').tooltip('hide'); // Sembunyikan tooltip
             $this.prop('disabled', true).html(`
-                <span class="spinner-border" style="width: 11px; height: 11px;" aria-hidden="true"></span>
+                <span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span>
             `); // Ubah tombol menjadi indikator loading
 
             try {

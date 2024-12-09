@@ -607,7 +607,7 @@
             $('#pembelianObatForm .is-invalid').removeClass('is-invalid');
             $('#pembelianObatForm .invalid-feedback').text('').hide();
             $('#submitButton').prop('disabled', true).html(`
-                <span class="spinner-border" style="width: 14px; height: 14px;" aria-hidden="true"></span> Tambah
+                <span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span> Tambah
             `);
 
             // Disable form inputs

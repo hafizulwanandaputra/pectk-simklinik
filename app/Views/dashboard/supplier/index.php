@@ -326,7 +326,7 @@
             const $this = $(this);
             const id = $(this).data('id'); // Ambil ID supplier
             $('[data-bs-toggle="tooltip"]').tooltip('hide'); // Sembunyikan tooltip
-            $this.prop('disabled', true).html(`<span class="spinner-border" style="width: 11px; height: 11px;" aria-hidden="true"></span>`);
+            $this.prop('disabled', true).html(`<span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span>`);
 
             try {
                 const response = await axios.get(`<?= base_url('/supplier/supplier') ?>/${id}`);

@@ -773,7 +773,7 @@
             $('#transaksiForm1 .is-invalid').removeClass('is-invalid');
             $('#transaksiForm1 .invalid-feedback').text('').hide();
             $('#submitButton1').prop('disabled', true).html(`
-                <span class="spinner-border" style="width: 14px; height: 14px;" aria-hidden="true"></span> Tambah
+                <span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span> Tambah
             `);
 
             // Disable form inputs
@@ -857,7 +857,7 @@
             $('#transaksiForm2 .is-invalid').removeClass('is-invalid');
             $('#transaksiForm2 .invalid-feedback').text('').hide();
             $('#submitButton2').prop('disabled', true).html(`
-                <span class="spinner-border" style="width: 14px; height: 14px;" aria-hidden="true"></span> Tambah
+                <span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span> Tambah
             `);
 
             // Disable form inputs

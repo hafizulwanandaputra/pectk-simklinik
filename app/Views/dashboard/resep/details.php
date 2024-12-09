@@ -594,7 +594,7 @@
             const id = $(this).data('id');
             const $row = $this.closest('tr');
             $('[data-bs-toggle="tooltip"]').tooltip('hide');
-            $this.prop('disabled', true).html(`<span class="spinner-border" style="width: 11px; height: 11px;" aria-hidden="true"></span>`);
+            $this.prop('disabled', true).html(`<span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span>`);
             $('#editDetailResep').remove();
             try {
                 const response = await axios.get(`<?= base_url('/resep/detailresepitem') ?>/${id}`);
@@ -679,7 +679,7 @@
                     $('#editDetail .is-invalid').removeClass('is-invalid');
                     $('#editDetail .invalid-feedback').text('').hide();
                     $('#editButton').prop('disabled', true).html(`
-                        <span class="spinner-border" style="width: 14px; height: 14px;" aria-hidden="true"></span> Edit
+                        <span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span> Edit
                     `);
 
                     // Disable form inputs
@@ -769,7 +769,7 @@
             $('#tambahDetail .is-invalid').removeClass('is-invalid');
             $('#tambahDetail .invalid-feedback').text('').hide();
             $('#addButton').prop('disabled', true).html(`
-                <span class="spinner-border" style="width: 14px; height: 14px;" aria-hidden="true"></span> Tambah
+                <span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span> Tambah
             `);
 
             // Disable form inputs
