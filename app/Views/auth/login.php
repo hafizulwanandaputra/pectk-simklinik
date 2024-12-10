@@ -74,27 +74,31 @@
                             </div>
                         </label>
                     </div>
-                    <div class="form-floating mb-3">
-                        <input type="password" class="form-control form-control-sm <?= (validation_show_error('password')) ? 'is-invalid' : ''; ?>" id="floatingPassword" name="password" placeholder="Kata Sandi" autocomplete="off" data-bs-toggle="popover"
-                            data-bs-placement="top"
-                            data-bs-trigger="manual"
-                            data-bs-title="<em>CAPS LOCK</em> AKTIF"
-                            data-bs-content="Harap periksa status <span class='badge text-bg-dark bg-gradient kbd'>Caps Lock</span> pada papan tombol (<em>keyboard</em>) Anda.">
-                        <label for="floatingPassword">
-                            <div class="d-flex align-items-start">
-                                <div style="width: 12px; text-align: center;">
-                                    <i class="fa-solid fa-key"></i>
+                    <div class="d-flex flex-column flex-md-row column-gap-3">
+                        <div class="flex-fill form-floating mb-3 mb-md-0">
+                            <input type="password" class="form-control form-control-sm <?= (validation_show_error('password')) ? 'is-invalid' : ''; ?>" id="floatingPassword" name="password" placeholder="Kata Sandi" autocomplete="off" data-bs-toggle="popover"
+                                data-bs-placement="top"
+                                data-bs-trigger="manual"
+                                data-bs-title="<em>CAPS LOCK</em> AKTIF"
+                                data-bs-content="Harap periksa status <span class='badge text-bg-dark bg-gradient kbd'>Caps Lock</span> pada papan tombol (<em>keyboard</em>) Anda.">
+                            <label for="floatingPassword">
+                                <div class="d-flex align-items-start">
+                                    <div style="width: 12px; text-align: center;">
+                                        <i class="fa-solid fa-key"></i>
+                                    </div>
+                                    <div class="w-100 ms-3">
+                                        Kata Sandi
+                                    </div>
                                 </div>
-                                <div class="w-100 ms-3">
-                                    Kata Sandi
-                                </div>
-                            </div>
-                        </label>
+                            </label>
+                        </div>
+                        <div class="d-grid w-auto">
+                            <button id="loginBtn" class="w-100 btn btn-primary bg-gradient fs-4" type="submit">
+                                <i class="fa-solid fa-right-to-bracket"></i> <span class="d-md-none">MASUK</span>
+                            </button>
+                        </div>
                     </div>
                     <input type="hidden" name="url" value="<?= (isset($_GET['redirect'])) ? base_url('/' . urldecode($_GET['redirect'])) : base_url('/home'); ?>">
-                    <button id="loginBtn" class="w-100 btn btn-primary bg-gradient" type="submit">
-                        <i class="fa-solid fa-right-to-bracket"></i> MASUK
-                    </button>
                     <hr class="border-success-subtle opacity-100">
                     <div class="text-center text-success-emphasis" style="font-size: 0.75em;">
                         <span class="">&copy; 2024 <?= (date('Y') !== "2024") ? "- " . date('Y') : ''; ?> <?= $companyName ?></span>
@@ -265,8 +269,7 @@
                 $('#loginForm').submit(); // Mengirimkan form login
                 $('input').prop('disabled', true).removeClass('is-invalid'); // Menonaktifkan semua input dan menghapus kelas 'is-invalid'
                 $('#loginBtn').prop('disabled', true).html(`
-            <span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span>
-            <span role="status">SILAKAN TUNGGU...</span>
+            <span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span>  <span class="d-md-none">SILAKAN TUNGGU</span>
         `); // Menampilkan spinner dan teks 'SILAKAN TUNGGU...' pada tombol login
             });
         });
