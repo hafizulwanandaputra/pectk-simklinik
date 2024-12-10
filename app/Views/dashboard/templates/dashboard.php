@@ -139,13 +139,13 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
         }
 
         .main-content-inside {
-            margin-left: 210px;
+            margin-left: 220px;
         }
 
         #sidebarMenu,
         #sidebarHeader {
-            max-width: 210px;
-            min-width: 210px;
+            max-width: 220px;
+            min-width: 220px;
         }
 
         .profilephotosidebar {
