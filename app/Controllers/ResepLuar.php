@@ -393,6 +393,9 @@ class ResepLuar extends BaseController
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+            // Menghubungkan ke database
+            $db = db_connect();
+
             // Ambil resep luar berdasarkan ID
             $resep = $this->ResepModel
                 ->where('nomor_registrasi', null)
@@ -402,6 +405,32 @@ class ResepLuar extends BaseController
                 ->where('dokter', 'Resep Luar')
                 ->find($id);
 
+            // Query untuk item sebelumnya
+            $previous = $db->table('resep')
+                ->where('nomor_registrasi', null)
+                ->where('no_rm', null)
+                ->where('telpon', null)
+                ->where('tempat_lahir', null)
+                ->where('dokter', 'Resep Luar')
+                ->where('resep.id_resep <', $id) // Kondisi untuk id sebelumnya
+                ->orderBy('resep.id_resep', 'DESC') // Urutan descending
+                ->limit(1) // Batas 1 hasil
+                ->get()
+                ->getRowArray();
+
+            // Query untuk item berikutnya
+            $next = $db->table('resep')
+                ->where('nomor_registrasi', null)
+                ->where('no_rm', null)
+                ->where('telpon', null)
+                ->where('tempat_lahir', null)
+                ->where('dokter', 'Resep Luar')
+                ->where('resep.id_resep >', $id) // Kondisi untuk id berikutnya
+                ->orderBy('resep.id_resep', 'ASC') // Urutan ascending
+                ->limit(1) // Batas 1 hasil
+                ->get()
+                ->getRowArray();
+
             // Memeriksa apakah resep tidak kosong
             if (!empty($resep)) {
                 // Menyiapkan data untuk tampilan
@@ -409,7 +438,9 @@ class ResepLuar extends BaseController
                     'resep' => $resep,
                     'title' => 'Detail Resep Luar ' . $resep['nama_pasien'] . ' (ID ' . $id . ') - ' . $this->systemName,
                     'headertitle' => 'Detail Resep Luar',
-                    'agent' => $this->request->getUserAgent() // Menyimpan informasi tentang user agent
+                    'agent' => $this->request->getUserAgent(), // Menyimpan informasi tentang user agent
+                    'previous' => $previous,
+                    'next' => $next
                 ];
                 // Mengembalikan tampilan detail resep
                 return view('dashboard/resepluar/details', $data);

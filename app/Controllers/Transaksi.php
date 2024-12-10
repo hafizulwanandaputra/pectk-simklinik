@@ -561,11 +561,30 @@ class Transaksi extends BaseController
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+            // Menghubungkan ke database
+            $db = db_connect();
+
             // Mengambil data transaksi berdasarkan ID
             $transaksi = $this->TransaksiModel->find($id);
             $LayananModel = new LayananModel();
             // Mengambil jenis layanan yang dikelompokkan
             $layanan = $LayananModel->select('jenis_layanan')->groupBy('jenis_layanan')->findAll();
+
+            // Query untuk item sebelumnya
+            $previous = $db->table('transaksi')
+                ->where('transaksi.id_transaksi <', $id) // Kondisi untuk id sebelumnya
+                ->orderBy('transaksi.id_transaksi', 'DESC') // Urutan descending
+                ->limit(1) // Batas 1 hasil
+                ->get()
+                ->getRowArray();
+
+            // Query untuk item berikutnya
+            $next = $db->table('transaksi')
+                ->where('transaksi.id_transaksi >', $id) // Kondisi untuk id berikutnya
+                ->orderBy('transaksi.id_transaksi', 'ASC') // Urutan ascending
+                ->limit(1) // Batas 1 hasil
+                ->get()
+                ->getRowArray();
 
             // Memeriksa apakah transaksi ditemukan
             if (!empty($transaksi)) {
@@ -575,7 +594,9 @@ class Transaksi extends BaseController
                     'layanan' => $layanan,
                     'title' => 'Detail Transaksi ' . $transaksi['no_kwitansi'] . ' - ' . $this->systemName,
                     'headertitle' => 'Detail Transaksi',
-                    'agent' => $this->request->getUserAgent()
+                    'agent' => $this->request->getUserAgent(),
+                    'previous' => $previous,
+                    'next' => $next
                 ];
                 // Mengembalikan tampilan detail transaksi
                 return view('dashboard/transaksi/details', $data);

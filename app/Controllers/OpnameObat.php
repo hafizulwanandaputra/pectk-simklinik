@@ -204,20 +204,40 @@ class OpnameObat extends BaseController
         }
     }
 
-    // DETAIL PEMBELIAN OBAT
+    // DETAIL OPNAME OBAT
     public function detailopnameobat($id)
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+            // Menghubungkan ke database
+            $db = db_connect();
             // Mengambil opname obat
             $opname_obat = $this->OpnameObatModel->find($id);
+
+            // Query untuk item sebelumnya
+            $previous = $db->table('opname_obat')
+                ->where('opname_obat.id_opname_obat <', $id) // Kondisi untuk id sebelumnya
+                ->orderBy('opname_obat.id_opname_obat', 'DESC') // Urutan descending
+                ->limit(1) // Batas 1 hasil
+                ->get()
+                ->getRowArray();
+
+            // Query untuk item berikutnya
+            $next = $db->table('opname_obat')
+                ->where('opname_obat.id_opname_obat >', $id) // Kondisi untuk id berikutnya
+                ->orderBy('opname_obat.id_opname_obat', 'ASC') // Urutan ascending
+                ->limit(1) // Batas 1 hasil
+                ->get()
+                ->getRowArray();
 
             // Menyiapkan data untuk ditampilkan
             $data = [
                 'opname_obat' => $opname_obat,
                 'title' => 'Detail Laporan Stok Obat ' . $opname_obat['tanggal'] . ' - ' . $this->systemName,
                 'headertitle' => 'Detail Laporan Stok Obat',
-                'agent' => $this->request->getUserAgent()
+                'agent' => $this->request->getUserAgent(),
+                'previous' => $previous,
+                'next' => $next
             ];
 
             // Mengembalikan view dengan data yang telah disiapkan

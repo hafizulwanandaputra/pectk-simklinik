@@ -24,9 +24,19 @@
             <div class="fw-medium" style="font-size: 0.75em;"><?= ($pembelianobat['merek'] == '') ? '<em>Tanpa Merek</em>' : $pembelianobat['merek']; ?> • <?= $pembelianobat['nama_supplier'] ?> • <?= $pembelianobat['tgl_pembelian'] ?></div>
         </div>
     </div>
-    <div id="loadingSpinner" class="spinner-border spinner-border-sm" role="status" style="min-width: 1rem;">
+    <div id="loadingSpinner" class="spinner-border spinner-border-sm mx-2" role="status" style="min-width: 1rem;">
         <span class="visually-hidden">Loading...</span>
     </div>
+    <?php if ($previous): ?>
+        <a class="fs-6 mx-2 text-success-emphasis" href="<?= site_url('pembelianobat/detailpembelianobat/' . $previous['id_pembelian_obat']) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="<?= ($previous['merek'] == '') ? 'Tanpa Merek' : $previous['merek']; ?> • <?= $previous['nama_supplier'] ?> • <?= $previous['tgl_pembelian'] ?>"><i class="fa-solid fa-circle-arrow-left"></i></a>
+    <?php else: ?>
+        <span class="fs-6 mx-2 text-success-emphasis" style="cursor: no-drop; opacity: .5;" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Tidak ada pembelian sebelumnya"><i class="fa-solid fa-circle-arrow-left"></i></span>
+    <?php endif; ?>
+    <?php if ($next): ?>
+        <a class="fs-6 mx-2 text-success-emphasis" href="<?= site_url('pembelianobat/detailpembelianobat/' . $next['id_pembelian_obat']) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="<?= ($next['merek'] == '') ? 'Tanpa Merek' : $next['merek']; ?> • <?= $next['nama_supplier'] ?> • <?= $next['tgl_pembelian'] ?>"><i class="fa-solid fa-circle-arrow-right"></i></a>
+    <?php else: ?>
+        <span class="fs-6 mx-2 text-success-emphasis" style="cursor: no-drop; opacity: .5;" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Tidak ada pembelian berikutnya"><i class="fa-solid fa-circle-arrow-right"></i></span>
+    <?php endif; ?>
 </div>
 <div style="min-width: 1px; max-width: 1px;"></div>
 <?= $this->endSection(); ?>

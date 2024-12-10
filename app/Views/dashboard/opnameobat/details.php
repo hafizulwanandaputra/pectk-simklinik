@@ -14,6 +14,16 @@
     <div id="loadingSpinner" class="spinner-border spinner-border-sm mx-2" role="status" style="min-width: 1rem;">
         <span class="visually-hidden">Loading...</span>
     </div>
+    <?php if ($previous): ?>
+        <a class="fs-6 mx-2 text-success-emphasis" href="<?= site_url('opnameobat/detailopnameobat/' . $previous['id_opname_obat']) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="<?= $previous['tanggal'] ?>"><i class="fa-solid fa-circle-arrow-left"></i></a>
+    <?php else: ?>
+        <span class="fs-6 mx-2 text-success-emphasis" style="cursor: no-drop; opacity: .5;" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Tidak ada laporan sebelumnya"><i class="fa-solid fa-circle-arrow-left"></i></span>
+    <?php endif; ?>
+    <?php if ($next): ?>
+        <a class="fs-6 mx-2 text-success-emphasis" href="<?= site_url('opnameobat/detailopnameobat/' . $next['id_opname_obat']) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="<?= $next['tanggal'] ?>"><i class="fa-solid fa-circle-arrow-right"></i></a>
+    <?php else: ?>
+        <span class="fs-6 mx-2 text-success-emphasis" style="cursor: no-drop; opacity: .5;" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Tidak ada laporan berikutnya"><i class="fa-solid fa-circle-arrow-right"></i></span>
+    <?php endif; ?>
 </div>
 <div style="min-width: 1px; max-width: 1px;"></div>
 <?= $this->endSection(); ?>

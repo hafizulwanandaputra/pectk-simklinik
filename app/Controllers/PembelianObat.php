@@ -443,17 +443,39 @@ class PembelianObat extends BaseController
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+            // Menghubungkan ke database
+            $db = db_connect();
             // Mengambil detail pembelian obat dengan bergabung dengan tabel supplier
             $pembelianobat = $this->PembelianObatModel
                 ->join('supplier', 'supplier.id_supplier = pembelian_obat.id_supplier', 'inner')
                 ->find($id);
+
+            // Query untuk item sebelumnya
+            $previous = $db->table('pembelian_obat')
+                ->join('supplier', 'supplier.id_supplier = pembelian_obat.id_supplier', 'inner') // Join tabel supplier
+                ->where('pembelian_obat.id_pembelian_obat <', $id) // Kondisi untuk id sebelumnya
+                ->orderBy('pembelian_obat.id_pembelian_obat', 'DESC') // Urutan descending
+                ->limit(1) // Batas 1 hasil
+                ->get()
+                ->getRowArray();
+
+            // Query untuk item berikutnya
+            $next = $db->table('pembelian_obat')
+                ->join('supplier', 'supplier.id_supplier = pembelian_obat.id_supplier', 'inner') // Join tabel supplier
+                ->where('pembelian_obat.id_pembelian_obat >', $id) // Kondisi untuk id berikutnya
+                ->orderBy('pembelian_obat.id_pembelian_obat', 'ASC') // Urutan ascending
+                ->limit(1) // Batas 1 hasil
+                ->get()
+                ->getRowArray();
 
             // Menyiapkan data untuk ditampilkan
             $data = [
                 'pembelianobat' => $pembelianobat,
                 'title' => 'Detail Obat Masuk dengan ID ' . $id . ' - ' . $this->systemName,
                 'headertitle' => 'Detail Obat Masuk',
-                'agent' => $this->request->getUserAgent()
+                'agent' => $this->request->getUserAgent(),
+                'previous' => $previous,
+                'next' => $next
             ];
 
             // Mengembalikan view dengan data yang telah disiapkan

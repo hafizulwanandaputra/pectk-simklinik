@@ -444,6 +444,9 @@ class Resep extends BaseController
     {
         // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Apoteker' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Apoteker') {
+            // Menghubungkan ke database
+            $db = db_connect();
+
             // ambil resep berdasarkan ID
             $resep = $this->ResepModel
                 ->where('nomor_registrasi IS NOT NULL')
@@ -453,6 +456,32 @@ class Resep extends BaseController
                 ->where('dokter !=', 'Resep Luar')
                 ->find($id);
 
+            // Query untuk item sebelumnya
+            $previous = $db->table('resep')
+                ->where('nomor_registrasi IS NOT NULL')
+                ->where('no_rm IS NOT NULL')
+                ->where('telpon IS NOT NULL')
+                ->where('tempat_lahir IS NOT NULL')
+                ->where('dokter !=', 'Resep Luar')
+                ->where('resep.id_resep <', $id) // Kondisi untuk id sebelumnya
+                ->orderBy('resep.id_resep', 'DESC') // Urutan descending
+                ->limit(1) // Batas 1 hasil
+                ->get()
+                ->getRowArray();
+
+            // Query untuk item berikutnya
+            $next = $db->table('resep')
+                ->where('nomor_registrasi IS NOT NULL')
+                ->where('no_rm IS NOT NULL')
+                ->where('telpon IS NOT NULL')
+                ->where('tempat_lahir IS NOT NULL')
+                ->where('dokter !=', 'Resep Luar')
+                ->where('resep.id_resep >', $id) // Kondisi untuk id berikutnya
+                ->orderBy('resep.id_resep', 'ASC') // Urutan ascending
+                ->limit(1) // Batas 1 hasil
+                ->get()
+                ->getRowArray();
+
             // Memeriksa apakah resep tidak kosong
             if (!empty($resep)) {
                 // Menyiapkan data untuk tampilan
@@ -460,7 +489,9 @@ class Resep extends BaseController
                     'resep' => $resep,
                     'title' => 'Detail Resep Dokter ' . $resep['nama_pasien'] . ' (ID ' . $id . ') - ' . $this->systemName,
                     'headertitle' => 'Detail Resep Dokter',
-                    'agent' => $this->request->getUserAgent() // Menyimpan informasi tentang user agent
+                    'agent' => $this->request->getUserAgent(), // Menyimpan informasi tentang user agent
+                    'previous' => $previous,
+                    'next' => $next
                 ];
                 // Mengembalikan tampilan detail resep
                 return view('dashboard/resep/details', $data);
