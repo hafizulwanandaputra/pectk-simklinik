@@ -22,6 +22,11 @@
     <link href="<?= base_url(); ?>assets_public/fonts/inter-hwp/inter-hwp.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/fonts/base-font.css" rel="stylesheet">
     <style>
+        html,
+        body {
+            height: 100%;
+        }
+
         .kbd {
             border-radius: 4px !important;
         }
@@ -29,65 +34,66 @@
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
 </head>
 
-<body class="bg-success-subtle d-flex justify-content-center align-items-center vh-100">
-
-    <div class="container col-xl-10 col-xxl-8 px-4 py-5">
-        <div class="row align-items-center g-lg-5 py-5">
-            <div class="col-lg-7 text-center text-lg-start">
-                <img class="mb-3" src="<?= base_url('/assets/images/logo_pec.png'); ?>" width="128px">
-                <h1 class="display-5 fw-bold lh-1 text-success-emphasis mb-3">Kasir dan Farmasi<br>PEC Teluk Kuantan</h1>
-                <p class="col-lg-10 fs-4 text-success-emphasis">Sistem Informasi Kasir dan Farmasi Klinik Utama Mata Padang Eye Center Teluk Kuantan</p>
-            </div>
-            <div class="col-md-10 mx-auto col-lg-5">
-                <?= form_open('check-login', 'id="loginForm"'); ?>
-                <div class="p-4 border rounded-3 bg-body-tertiary transparent-blur shadow-lg">
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control <?= (validation_show_error('username')) ? 'is-invalid' : ''; ?>" id="floatingInput" name="username" placeholder="Nama Pengguna" value="" autocomplete="off" list="username">
-                        <datalist id="username">
-                            <?php foreach ($users as $user) : ?>
-                                <option value="<?= $user['username'] ?>">
-                                <?php endforeach; ?>
-                        </datalist>
-                        <label for="floatingInput">
-                            <div class="d-flex align-items-start">
-                                <div style="width: 12px; text-align: center;">
-                                    <i class="fa-solid fa-user"></i>
-                                </div>
-                                <div class="w-100 ms-3">
-                                    Nama Pengguna
-                                </div>
-                            </div>
-                        </label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input type="password" class="form-control <?= (validation_show_error('password')) ? 'is-invalid' : ''; ?>" id="floatingPassword" name="password" placeholder="Kata Sandi" autocomplete="off" data-bs-toggle="popover"
-                            data-bs-placement="top"
-                            data-bs-trigger="manual"
-                            data-bs-title="<em>CAPS LOCK</em> AKTIF"
-                            data-bs-content="Harap periksa status <span class='badge text-bg-dark bg-gradient kbd'>Caps Lock</span> pada papan tombol (<em>keyboard</em>) Anda.">
-                        <label for="floatingPassword">
-                            <div class="d-flex align-items-start">
-                                <div style="width: 12px; text-align: center;">
-                                    <i class="fa-solid fa-key"></i>
-                                </div>
-                                <div class="w-100 ms-3">
-                                    Kata Sandi
-                                </div>
-                            </div>
-                        </label>
-                    </div>
-                    <input type="hidden" name="url" value="<?= (isset($_GET['redirect'])) ? base_url('/' . urldecode($_GET['redirect'])) : base_url('/home'); ?>">
-                    <button id="loginBtn" class="w-100 btn btn-lg btn-primary bg-gradient rounded" type="submit">
-                        <i class="fa-solid fa-right-to-bracket"></i> MASUK
-                    </button>
-                    <hr>
-                    <div class="text-center">
-                        <small class="text-body-secondary">
-                            <span class="">&copy; 2024 <?= (date('Y') !== "2024") ? "- " . date('Y') : ''; ?> Klinik Utama Mata Padang Eye Center Teluk Kuantan</span>
-                        </small>
-                    </div>
+<body class="bg-success-subtle d-flex flex-column h-100">
+    <div class="my-sm-auto">
+        <div class="container col-xl-10 col-xxl-8 px-3 py-3">
+            <div class="row align-items-center g-lg-5 py-3">
+                <div class="col-lg-7 text-center text-lg-start">
+                    <img class="mb-3" src="<?= base_url('/assets/images/logo_pec.png'); ?>" width="128px">
+                    <h1 class="display-6 fw-bold lh-1 text-success-emphasis mb-3">Kasir dan Farmasi<br>PEC Teluk Kuantan</h1>
+                    <p class="col-lg-10 fs-6 text-success-emphasis"><?= $systemName ?><br><small class="fw-bold"><em><?= $systemSubtitleName ?></small></em></p>
                 </div>
-                <?= form_close(); ?>
+                <div class="col-md-10 mx-auto col-lg-5">
+                    <?= form_open('check-login', 'id="loginForm"'); ?>
+                    <div class="p-4 border rounded-3 bg-body-tertiary transparent-blur shadow-lg">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control form-control-sm <?= (validation_show_error('username')) ? 'is-invalid' : ''; ?>" id="floatingInput" name="username" placeholder="Nama Pengguna" value="" autocomplete="off" list="username">
+                            <datalist id="username">
+                                <?php foreach ($users as $user) : ?>
+                                    <option value="<?= $user['username'] ?>">
+                                    <?php endforeach; ?>
+                            </datalist>
+                            <label for="floatingInput">
+                                <div class="d-flex align-items-start">
+                                    <div style="width: 12px; text-align: center;">
+                                        <i class="fa-solid fa-user"></i>
+                                    </div>
+                                    <div class="w-100 ms-3">
+                                        Nama Pengguna
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control form-control-sm <?= (validation_show_error('password')) ? 'is-invalid' : ''; ?>" id="floatingPassword" name="password" placeholder="Kata Sandi" autocomplete="off" data-bs-toggle="popover"
+                                data-bs-placement="top"
+                                data-bs-trigger="manual"
+                                data-bs-title="<em>CAPS LOCK</em> AKTIF"
+                                data-bs-content="Harap periksa status <span class='badge text-bg-dark bg-gradient kbd'>Caps Lock</span> pada papan tombol (<em>keyboard</em>) Anda.">
+                            <label for="floatingPassword">
+                                <div class="d-flex align-items-start">
+                                    <div style="width: 12px; text-align: center;">
+                                        <i class="fa-solid fa-key"></i>
+                                    </div>
+                                    <div class="w-100 ms-3">
+                                        Kata Sandi
+                                    </div>
+                                </div>
+                            </label>
+                        </div>
+                        <input type="hidden" name="url" value="<?= (isset($_GET['redirect'])) ? base_url('/' . urldecode($_GET['redirect'])) : base_url('/home'); ?>">
+                        <button id="loginBtn" class="w-100 btn btn-primary bg-gradient" type="submit">
+                            <i class="fa-solid fa-right-to-bracket"></i> MASUK
+                        </button>
+                        <hr>
+                        <div class="text-center">
+                            <small class="text-body-secondary">
+                                <span class="">&copy; 2024 <?= (date('Y') !== "2024") ? "- " . date('Y') : ''; ?> <?= $companyName ?></span>
+                            </small>
+                        </div>
+                    </div>
+                    <?= form_close(); ?>
+                </div>
             </div>
         </div>
     </div>

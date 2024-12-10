@@ -20,7 +20,10 @@ class Auth extends BaseController
         $data = [
             'title' => $this->systemName, // Judul halaman
             'users' => $users, // Daftar pengguna
-            'agent' => $this->request->getUserAgent() // Mendapatkan user agent dari request
+            'agent' => $this->request->getUserAgent(), // Mendapatkan user agent dari request
+            'systemName' => $this->systemName,
+            'systemSubtitleName' => $this->systemSubtitleName,
+            'companyName' => $this->companyName
         ];
         // Mengembalikan tampilan halaman login dengan data yang telah disiapkan
         return view('auth/login', $data);
