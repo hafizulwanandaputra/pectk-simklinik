@@ -35,7 +35,7 @@
 </head>
 
 <body class="bg-success-subtle d-flex flex-column h-100">
-    <div class="my-sm-auto">
+    <div class="my-lg-auto">
         <div class="container col-xl-10 col-xxl-8 px-3 py-3">
             <div class="row align-items-center g-lg-5 py-3">
                 <div class="col-lg-7 text-center text-lg-start">
