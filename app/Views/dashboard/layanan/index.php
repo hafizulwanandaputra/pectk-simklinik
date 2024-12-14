@@ -165,7 +165,7 @@
             "drawCallback": function() {
                 $(".pagination").wrap("<div class='overflow-auto'></div>");
                 $(".pagination").addClass("pagination-sm");
-                $(".page-item .page-link").addClass("bg-gradient");
+                $(".page-item .page-link").addClass("bg-gradient date");
                 var pageInfo = this.api().page.info();
                 var infoText = `${pageInfo.recordsDisplay}`;
                 $('#total_datatables').html(infoText);

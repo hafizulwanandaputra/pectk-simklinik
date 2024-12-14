@@ -32,12 +32,12 @@
         <ul class="list-group shadow-sm rounded-0">
             <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-tertiary transparent-blur">
                 <div class="no-fluid-content">
-                    <div class="d-flex flex-column flex-lg-row mb-1 gap-2 mb-2">
-                        <div class="input-group input-group-sm">
+                    <div class="d-flex flex-column flex-lg-row gap-2 mb-2">
+                        <div class="input-group input-group-sm w-auto">
                             <input type="date" id="tanggalFilter" class="form-control ">
                             <button class="btn btn-danger btn-sm bg-gradient " type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
                         </div>
-                        <div class="input-group input-group-sm">
+                        <div class="input-group input-group-sm flex-grow-1">
                             <input type="search" id="searchInput" class="form-control " placeholder="Cari pasien">
                         </div>
                     </div>
