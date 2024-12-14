@@ -1,7 +1,12 @@
 <?= $this->extend('dashboard/templates/dashboard'); ?>
 <?= $this->section('title'); ?>
 <div class="d-flex justify-content-start align-items-center">
-    <span class="fw-medium fs-5 flex-fill text-truncate"><?= $headertitle; ?></span>
+    <div class="flex-fill text-truncate">
+        <div class="d-flex flex-column">
+            <div class="fw-medium fs-6 lh-sm"><?= $headertitle; ?></div>
+            <div class="fw-medium" style="font-size: 0.75em;"><span id="total_datatables">0</span> pengguna</div>
+        </div>
+    </div>
     <div id="loadingSpinner" class="spinner-border spinner-border-sm mx-2" role="status" style="min-width: 1rem;">
         <span class="visually-hidden">Loading...</span>
     </div>
@@ -176,10 +181,7 @@
                     "sNext": '<i class="fa-solid fa-angle-right"></i>'
                 }
             },
-            'dom': "<'d-lg-flex justify-content-lg-between align-items-lg-center mb-0'<'text-md-center text-lg-start'i><'d-md-flex justify-content-md-center d-lg-block'f>>" +
-                "<'d-lg-flex justify-content-lg-between align-items-lg-top'<'text-md-center text-lg-start mt-2'l><'mt-2 mb-2'B>>" +
-                "<'row'<'col-md-12'tr>>" +
-                "<'d-lg-flex justify-content-lg-between align-items-lg-center'<'text-md-center text-lg-start'><'d-md-flex justify-content-md-center d-lg-block'p>>",
+            'dom': "<'d-lg-flex justify-content-lg-between align-items-lg-top'<'text-md-center text-lg-start'l><'mt-2 mt-lg-0 mb-2'B>>" + "<'row'<'col-md-12'tr>>" + "<'d-lg-flex justify-content-lg-between align-items-lg-center'<'text-md-center text-lg-start'><'d-md-flex justify-content-md-center d-lg-block'p>>",
             'initComplete': function(settings, json) {
                 $("#tabel").wrap("<div class='card shadow-sm  mb-3 overflow-auto position-relative datatables-height'></div>");
                 $('.dataTables_filter input[type="search"]').css({
@@ -194,6 +196,9 @@
                 $(".pagination").wrap("<div class='overflow-auto'></div>");
                 $(".pagination").addClass("pagination-sm");
                 $(".page-item .page-link").addClass("bg-gradient");
+                var pageInfo = this.api().page.info();
+                var infoText = `${pageInfo.recordsDisplay}`;
+                $('#total_datatables').html(infoText);
             },
             'buttons': [{
                 // Tombol Tambah Pengguna
