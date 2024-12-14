@@ -423,7 +423,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                 </div>
                             </a>
                         </li>
-                        <?php if (session()->get('role') == "Admin") : ?>
+                        <?php if (session()->get('role') == "Dokter" || session()->get('role') == "Admin") : ?>
                             <li class="nav-item">
                                 <a class="nav-link p-2 <?= ($activeSegment === 'pasien') ? 'active bg-success' : '' ?>" href=" <?= base_url('/pasien'); ?>">
                                     <div class="d-flex align-items-start <?= ($activeSegment === 'pasien') ? 'text-white' : 'text-success-emphasis' ?>">

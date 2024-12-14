@@ -11,7 +11,7 @@ class Pasien extends BaseController
     public function index()
     {
         // Memeriksa peran pengguna, hanya 'Admin' yang diizinkan
-        if (session()->get('role') == 'Admin') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
             // Menyiapkan data untuk tampilan
             $data = [
                 'title' => 'Pasien Rawat Jalan - ' . $this->systemName,
@@ -29,7 +29,7 @@ class Pasien extends BaseController
     public function pasienapi()
     {
         // Memeriksa peran pengguna, hanya 'Admin' yang diizinkan
-        if (session()->get('role') == 'Admin') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
             // Mengambil tanggal dari query string
             $tanggal = $this->request->getGet('tanggal');
 
