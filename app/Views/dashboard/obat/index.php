@@ -24,8 +24,17 @@
         <ul class="list-group shadow-sm rounded-0">
             <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-tertiary transparent-blur">
                 <div class="no-fluid-content">
-                    <div class="input-group input-group-sm">
-                        <input type="search" class="form-control form-control-sm " id="externalSearch" placeholder="Cari merek, nama obat, dan isi obat">
+                    <div class="d-flex flex-row gap-2">
+                        <select class="form-select form-select-sm w-auto" id="length-menu">
+                            <option value="12">12</option>
+                            <option value="24">24</option>
+                            <option value="36">36</option>
+                            <option value="48">48</option>
+                            <option value="60">60</option>
+                        </select>
+                        <div class="input-group input-group-sm flex-grow-1">
+                            <input type="search" class="form-control form-control-sm " id="externalSearch" placeholder="Cari merek, nama obat, dan isi obat">
+                        </div>
                     </div>
                 </div>
             </li>
@@ -209,7 +218,7 @@
                     "sNext": '<i class="fa-solid fa-angle-right"></i>'
                 }
             },
-            'dom': "<'d-lg-flex justify-content-lg-between align-items-lg-top'<'text-md-center text-lg-start'l><'mt-2 mt-lg-0 mb-2'B>>" + "<'row'<'col-md-12'tr>>" + "<'d-lg-flex justify-content-lg-between align-items-lg-center'<'text-md-center text-lg-start'><'d-md-flex justify-content-md-center d-lg-block'p>>",
+            'dom': "<'d-grid'<'mt-0 mb-md-2'B>>" + "<'row'<'col-md-12'tr>>" + "<'d-lg-flex justify-content-lg-between align-items-lg-center'<'text-md-center text-lg-start'><'d-md-flex justify-content-md-center d-lg-block'p>>",
             'initComplete': function(settings, json) {
                 $("#tabel").wrap("<div class='card shadow-sm  mb-3 overflow-auto position-relative datatables-height'></div>");
                 $('.dataTables_filter input[type="search"]').css({
@@ -437,6 +446,12 @@
         // Bind the external search input to the table search
         $('#externalSearch').on('input', function() {
             table.search(this.value).draw(); // Trigger search on the table
+        });
+
+        // Kendalikan jumlah baris dengan dropdown custom
+        $('#length-menu').on('change', function() {
+            var length = $(this).val(); // Ambil nilai dari dropdown
+            table.page.len(length).draw(); // Atur jumlah baris dan refresh tabel
         });
 
         $('#refreshButton').on('click', function(e) {
