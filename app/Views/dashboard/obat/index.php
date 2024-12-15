@@ -97,22 +97,22 @@
                         <select class="form-select " id="id_supplier" name="id_supplier" aria-label="id_supplier">
                             <option value="" disabled selected>-- Pilih Merek dan Supplier --</option>
                         </select>
-                        <label for="id_dokter">Merek dan Supplier*</label>
+                        <label for="id_dokter">Merek dan Supplier</label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
                         <input type="text" class="form-control " autocomplete="off" dir="auto" placeholder="nama_obat" id="nama_obat" name="nama_obat">
-                        <label for="nama_obat">Nama*</label>
+                        <label for="nama_obat">Nama</label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
                         <input type="text" class="form-control " autocomplete="off" dir="auto" placeholder="isi_obat" id="isi_obat" name="isi_obat">
-                        <label for="isi_obat">Isi</label>
+                        <label for="isi_obat">Isi (Opsional)</label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mt-1 mb-1">
                         <input type="text" class="form-control " autocomplete="off" dir="auto" placeholder="kategori_obat" id="kategori_obat" name="kategori_obat" list="list_kategori_obat">
-                        <label for="kategori_obat">Kategori Obat</label>
+                        <label for="kategori_obat">Kategori Obat (Opsional)</label>
                         <div class="invalid-feedback"></div>
                         <datalist id="list_kategori_obat">
                             <option value="Antibiotik">
@@ -141,27 +141,27 @@
                                 <option value="Alat Kesehatan">Alat Kesehatan</option>
                             </optgroup>
                         </select>
-                        <label for="bentuk_obat">Bentuk*</label>
+                        <label for="bentuk_obat">Bentuk</label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
                         <input type="number" class="form-control " autocomplete="off" dir="auto" placeholder="harga_obat" id="harga_obat" name="harga_obat">
-                        <label for="harga_obat">Harga Obat (Rp)*</label>
+                        <label for="harga_obat">Harga Obat (Rp)</label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
                         <input type="number" class="form-control " autocomplete="off" dir="auto" placeholder="ppn" id="ppn" name="ppn">
-                        <label for="ppn">PPN (%)*</label>
+                        <label for="ppn">PPN (%)</label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
                         <input type="number" class="form-control " autocomplete="off" dir="auto" placeholder="mark_up" id="mark_up" name="mark_up">
-                        <label for="mark_up">Mark Up (%)*</label>
+                        <label for="mark_up">Mark Up (%)</label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
                         <input type="number" class="form-control " autocomplete="off" dir="auto" placeholder="penyesuaian_harga" id="penyesuaian_harga" name="penyesuaian_harga">
-                        <label for="penyesuaian_harga">Penyesuaian Harga (Rp)*</label>
+                        <label for="penyesuaian_harga">Penyesuaian Harga (Rp)</label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
@@ -549,7 +549,7 @@
         // Event handler untuk menampilkan modal tambah obat
         $('#addObatBtn').click(function() {
             $('#obatModalLabel').text('Tambah Obat');
-            $('#stok_label').text('Jumlah Stok Awal*');
+            $('#stok_label').text('Jumlah Stok Awal');
             $('#obatModal').modal('show');
         });
 
@@ -587,7 +587,7 @@
                 $('#mark_up').val(response.data.mark_up);
                 $('#penyesuaian_harga').val(response.data.penyesuaian_harga);
                 $('#jumlah_masuk').val('0');
-                $('#stok_label').text(`Tambah/Kurangi Stok* (masuk: ${response.data.jumlah_masuk}; keluar: ${response.data.jumlah_keluar}; stok: ${response.data.jumlah_masuk - response.data.jumlah_keluar})`);
+                $('#stok_label').text(`Tambah/Kurangi Stok (masuk: ${response.data.jumlah_masuk}; keluar: ${response.data.jumlah_keluar}; stok: ${response.data.jumlah_masuk - response.data.jumlah_keluar})`);
                 hitungHargaJual();
                 $('#obatModal').modal('show');
             } catch (error) {

@@ -122,12 +122,12 @@
                     <input type="hidden" id="original_username" name="original_username">
                     <div class="form-floating mb-1 mt-1">
                         <input type="text" class="form-control " autocomplete="off" dir="auto" placeholder="fullname" id="fullname" name="fullname">
-                        <label for="fullname">Nama Lengkap*</label>
+                        <label for="fullname">Nama Lengkap</label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
                         <input type="text" class="form-control " autocomplete="off" dir="auto" placeholder="username" id="username" name="username">
-                        <label for="username">Nama Pengguna*</label>
+                        <label for="username">Nama Pengguna</label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">

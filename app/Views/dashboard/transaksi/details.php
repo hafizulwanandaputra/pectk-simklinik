@@ -325,7 +325,7 @@
                     </div>
                     <div class="form-floating mb-1 mt-1">
                         <input type="number" class="form-control " autocomplete="off" dir="auto" placeholder="terima_uang" id="terima_uang" name="terima_uang">
-                        <label for="terima_uang">Terima Uang (Rp)*</label>
+                        <label for="terima_uang">Terima Uang (Rp)</label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mt-1 mb-1">
@@ -334,7 +334,7 @@
                             <option value="Tunai">Tunai</option>
                             <option value="QRIS/Transfer Bank">QRIS/Transfer Bank</option>
                         </select>
-                        <label for="metode_pembayaran">Metode Pembayaran*</label>
+                        <label for="metode_pembayaran">Metode Pembayaran</label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1" id="bank_field" style="display: none;">
@@ -396,7 +396,7 @@
                             data-bs-trigger="manual"
                             data-bs-title="<em>CAPS LOCK</em> AKTIF"
                             data-bs-content="Harap periksa status <span class='badge text-bg-dark bg-gradient kbd'>Caps Lock</span> pada papan tombol (<em>keyboard</em>) Anda.">
-                        <label for="password">Masukkan Kata Sandi Transaksi*</label>
+                        <label for="password">Masukkan Kata Sandi Transaksi</label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>

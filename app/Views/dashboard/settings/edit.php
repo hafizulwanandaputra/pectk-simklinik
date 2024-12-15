@@ -18,7 +18,7 @@
             <div class="fw-bold mb-2 border-bottom">Informasi Pengguna</div>
             <div class="form-floating mb-2">
                 <input type="text" class="form-control  <?= (validation_show_error('username')) ? 'is-invalid' : ''; ?>" id="username" name="username" value="<?= (old('username')) ? old('username') : htmlspecialchars(session()->get('username')); ?>" autocomplete="off" dir="auto" placeholder="username">
-                <label for="username">Nama Pengguna*</label>
+                <label for="username">Nama Pengguna</label>
                 <div class="invalid-feedback">
                     <?= validation_show_error('username'); ?>
                 </div>
