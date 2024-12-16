@@ -82,7 +82,7 @@
         <div class="no-fluid-content">
             <div class="shadow-sm rounded">
                 <div class="d-grid gap-2">
-                    <button class="btn btn-primary btn-sm bg-gradient  rounded-bottom-0" type="button" data-bs-toggle="collapse" data-bs-target="#transaksiFormContainer" aria-expanded="false" aria-controls="transaksiFormContainer">
+                    <button id="collapseList" class="btn btn-primary btn-sm bg-gradient  rounded-bottom-0" type="button" data-bs-toggle="collapse" data-bs-target="#transaksiFormContainer" aria-expanded="false" aria-controls="transaksiFormContainer">
                         <i class="fa-solid fa-plus"></i> Tambah Transaksi
                     </button>
                 </div>
@@ -101,12 +101,11 @@
                                         </div>
                                         <div class="d-grid gap-2 d-lg-flex justify-content-lg-end">
                                             <div class="btn-group btn-group-sm">
-                                                <a tabindex="0" class="btn btn-body bg-gradient" role="button"
+                                                <a id="APIInfoPopover" tabindex="0" class="btn btn-body bg-gradient" role="button"
                                                     data-bs-toggle="popover"
                                                     data-bs-placement="left"
-                                                    data-bs-trigger="focus"
                                                     data-bs-title="Dari mana data-data ini diperoleh?"
-                                                    data-bs-content="<p>Data-data pasien rawat jalan ini diperoleh dari <em>Application Programming Interface</em> (API) Sistem Informasi Manajemen Klinik Utama Mata Padang Eye Center Teluk Kuantan.</p><div class='d-flex justify-content-end'><a href='https://pectk.padangeyecenter.com/klinik' class='btn btn-body bg-gradient btn-sm' role='button' target='_blank'><i class='fa-solid fa-up-right-from-square'></i> Buka SIM Klinik</a></div>">
+                                                    data-bs-content="<p>Data-data pasien rawat jalan ini diperoleh dari <em>Application Programming Interface</em> (API) Sistem Informasi Manajemen Klinik Utama Mata Padang Eye Center Teluk Kuantan.</p><p><small>Klik tombol <i class='fa-solid fa-circle-question'></i> lagi untuk menutup <em>popover</em> ini.</small></p><div class='d-flex justify-content-end'><a href='https://pectk.padangeyecenter.com/klinik' class='btn btn-body bg-gradient btn-sm' role='button' target='_blank'><i class='fa-solid fa-up-right-from-square'></i> Buka SIM Klinik</a></div>">
                                                     <i class="fa-solid fa-circle-question"></i>
                                                 </a>
                                                 <button type="submit" id="submitButton1" class="btn btn-primary bg-gradient" disabled>
@@ -658,13 +657,17 @@
 
     $(document).ready(async function() {
         $('[data-bs-toggle="popover"]').popover({
-            trigger: 'focus',
             html: true,
             template: '<div class="popover shadow-lg" role="tooltip">' +
                 '<div class="popover-arrow"></div>' +
                 '<h3 class="popover-header"></h3>' +
                 '<div class="popover-body"></div>' +
                 '</div>'
+        });
+
+        // Hilangkan popover ketika tombol #collapseList diklik
+        $('#collapseList').on('click', function() {
+            $('#APIInfoPopover').popover('hide');
         });
 
         $('#nomor_registrasi').select2({

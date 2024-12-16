@@ -12,9 +12,8 @@
     </div>
     <a tabindex="0" class="fs-6 mx-2 text-success-emphasis" role="button"
         data-bs-toggle="popover"
-        data-bs-trigger="focus"
         data-bs-title="Dari mana data-data ini diperoleh?"
-        data-bs-content="<p>Data-data pasien rawat jalan ini diperoleh dari <em>Application Programming Interface</em> (API) Sistem Informasi Manajemen Klinik Utama Mata Padang Eye Center Teluk Kuantan.</p><div class='d-flex justify-content-end'><a href='https://pectk.padangeyecenter.com/klinik' class='btn btn-body bg-gradient btn-sm' role='button' target='_blank'><i class='fa-solid fa-up-right-from-square'></i> Buka SIM Klinik</a></div>">
+        data-bs-content="<p>Data-data pasien rawat jalan ini diperoleh dari <em>Application Programming Interface</em> (API) Sistem Informasi Manajemen Klinik Utama Mata Padang Eye Center Teluk Kuantan.</p><p><small>Klik tombol <i class='fa-solid fa-circle-question'></i> lagi untuk menutup <em>popover</em> ini.</small></p><div class='d-flex justify-content-end'><a href='https://pectk.padangeyecenter.com/klinik' class='btn btn-body bg-gradient btn-sm' role='button' target='_blank'><i class='fa-solid fa-up-right-from-square'></i> Buka SIM Klinik</a></div>">
         <i class="fa-solid fa-circle-question"></i>
     </a>
 </div>
@@ -267,7 +266,6 @@
 
     $(document).ready(function() {
         $('[data-bs-toggle="popover"]').popover({
-            trigger: 'focus',
             html: true,
             template: '<div class="popover shadow-lg" role="tooltip">' +
                 '<div class="popover-arrow"></div>' +
