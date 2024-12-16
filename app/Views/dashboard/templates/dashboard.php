@@ -28,7 +28,6 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
     <link href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&family=Noto+Sans+Arabic:wdth,wght@62.5..100,100..900&family=Noto+Sans+Mono:wdth,wght@62.5..100,100..900&family=Noto+Sans:ital,wdth,wght@0,62.5..100,100..900;1,62.5..100,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://use.typekit.net/dew1xab.css">
     <link href="<?= base_url(); ?>assets_public/fonts/inter-hwp/inter-hwp.css" rel="stylesheet">
-    <link href="<?= base_url(); ?>assets_public/fonts/public-sans/public-sans.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/fonts/base-font.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/fontawesome/css/all.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
