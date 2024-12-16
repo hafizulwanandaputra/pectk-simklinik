@@ -315,6 +315,8 @@
                         hasExternalMedicine = true;
                     }
 
+                    const kategori_obat = detail_resep.kategori_obat ? `${detail_resep.kategori_obat}, ` : ``;
+
                     const detail_resepElement = `
                     <tr>
                         <td class="tindakan">
@@ -326,7 +328,7 @@
                         <td><i class="fa-solid fa-prescription"></i> ${detail_resep.nama_obat}
                         <small>
                             <ul class="ps-3 mb-0">
-                                <li>${detail_resep.kategori_obat}, ${detail_resep.bentuk_obat}</li>
+                                <li>${kategori_obat}${detail_resep.bentuk_obat}</li>
                                 <li>${detail_resep.signa}, ${detail_resep.cara_pakai}, ${detail_resep.catatan}</li>
                             </ul>
                         </small></td>
