@@ -20,6 +20,7 @@
     <div id="loadingSpinner" class="spinner-border spinner-border-sm mx-2" role="status" style="min-width: 1rem;">
         <span class="visually-hidden">Loading...</span>
     </div>
+    <a class="fs-6 mx-2 text-success-emphasis" href="https://pectk.padangeyecenter.com/emr" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Buka Sistem Rekam Medis Elektronik" target="_blank"><i class="fa-solid fa-file-medical"></i></a>
     <a id="toggleFilter" class="fs-6 mx-2 text-success-emphasis" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Pencarian"><i class="fa-solid fa-magnifying-glass"></i></a>
     <a id="refreshButton" class="fs-6 mx-2 text-success-emphasis" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan"><i class="fa-solid fa-sync"></i></a>
 </div>
