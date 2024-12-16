@@ -1,4 +1,8 @@
 <style>
+    .select2-dropdown {
+        box-shadow: var(--bs-box-shadow-sm);
+    }
+
     .select2-container--bootstrap-5 .select2-selection {
         color: var(--bs-body-color);
         background-color: var(--bs-body-bg);

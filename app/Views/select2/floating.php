@@ -1,4 +1,8 @@
 <style>
+    .select2-dropdown {
+        box-shadow: var(--bs-box-shadow-sm) !important;
+    }
+
     .select2-container--bootstrap-5 .select2-selection {
         height: calc(3.5rem + calc(var(--bs-border-width)* 2));
         min-height: calc(3.5rem + calc(var(--bs-border-width)* 2));
