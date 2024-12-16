@@ -27,6 +27,7 @@
     <div id="loadingSpinner" class="spinner-border spinner-border-sm mx-2" role="status" style="min-width: 1rem;">
         <span class="visually-hidden">Loading...</span>
     </div>
+    <a id="refreshButton" class="fs-6 mx-2 text-success-emphasis" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan"><i class="fa-solid fa-sync"></i></a>
     <?php if ($previous): ?>
         <a class="fs-6 mx-2 text-success-emphasis" href="<?= site_url('pembelianobat/detailpembelianobat/' . $previous['id_pembelian_obat']) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="<?= ($previous['merek'] == '') ? 'Tanpa Merek' : $previous['merek']; ?> • <?= $previous['nama_supplier'] ?> • <?= $previous['tgl_pembelian'] ?>"><i class="fa-solid fa-circle-arrow-left"></i></a>
     <?php else: ?>
@@ -980,6 +981,13 @@
                 $('#deleteItemModal').modal('hide');
                 $('#deleteItemModal button').prop('disabled', false);
             }
+        });
+
+        $('#refreshButton').on('click', function(e) {
+            e.preventDefault();
+            fetchDetailPembelianObat();
+            fetchObatOptions();
+            fetchStatusPembelian();
         });
 
         fetchDetailPembelianObat();

@@ -42,6 +42,7 @@
     <div id="loadingSpinner" class="spinner-border spinner-border-sm mx-2" role="status" style="min-width: 1rem;">
         <span class="visually-hidden">Loading...</span>
     </div>
+    <a id="refreshButton" class="fs-6 mx-2 text-success-emphasis" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan"><i class="fa-solid fa-sync"></i></a>
     <?php if ($previous): ?>
         <a class="fs-6 mx-2 text-success-emphasis" href="<?= site_url('transaksi/detailtransaksi/' . $previous['id_transaksi']) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="<?= $previous['no_kwitansi'] ?> • <?= ($previous['nama_pasien'] == NULL) ? '<em>Anonim</em>' : $previous['nama_pasien']; ?> • <?= $previous['tgl_transaksi'] ?>"><i class="fa-solid fa-circle-arrow-left"></i></a>
     <?php else: ?>
@@ -1440,6 +1441,16 @@
             $('#batalTransaksiForm')[0].reset();
             $('#batalTransaksiForm .is-invalid').removeClass('is-invalid');
             $('#batalTransaksiForm .invalid-feedback').text('').hide();
+        });
+        $('#refreshButton').on('click', function(e) {
+            e.preventDefault();
+            toggleBankField();
+            fetchLayanan();
+            fetchObatAlkes();
+            fetchTindakanOptions();
+            fetchResepOptions();
+            fetchStatusTransaksi();
+            transactionProcessBtn();
         });
         toggleBankField();
         fetchLayanan();

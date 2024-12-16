@@ -27,6 +27,7 @@
     <div id="loadingSpinner" class="spinner-border spinner-border-sm mx-2" role="status" style="min-width: 1rem;">
         <span class="visually-hidden">Loading...</span>
     </div>
+    <a id="refreshButton" class="fs-6 mx-2 text-success-emphasis" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan"><i class="fa-solid fa-sync"></i></a>
     <?php if ($previous): ?>
         <a class="fs-6 mx-2 text-success-emphasis" href="<?= site_url('resep/detailresep/' . $previous['id_resep']) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="<?= $previous['id_resep'] ?> • <?= $previous['nama_pasien'] ?> • <?= $previous['tanggal_resep'] ?>"><i class="fa-solid fa-circle-arrow-left"></i></a>
     <?php else: ?>
@@ -135,9 +136,6 @@
                             <div class="date" id="confirmedStatus">
                                 Memuat status...
                             </div>
-                            <?php if (session()->get('role') != 'Dokter') : ?>
-                                <a id="refreshConfirmed" href="#">Perbarui Status</a>
-                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -847,7 +845,7 @@
             }
         });
 
-        $('#refreshConfirmed').on('click', function(e) {
+        $('#refreshButton').on('click', function(e) {
             e.preventDefault();
             fetchStatusKonfirmasi();
             fetchDetailResep();
