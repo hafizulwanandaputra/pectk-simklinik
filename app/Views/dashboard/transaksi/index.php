@@ -88,11 +88,11 @@
                 </div>
                 <ul id="transaksiFormContainer" class="list-group rounded-0 collapse">
                     <li class="list-group-item border-top-0 bg-body-tertiary">
-                        <div class="row gy-3">
+                        <div class="row g-3">
                             <div class="col-lg-6">
                                 <div>
                                     <div class="fw-bold mb-2 border-bottom">Tambah Pasien Rawat Jalan</div>
-                                    <form id="transaksiForm1" enctype="multipart/form-data" class="d-flex flex-column mb-2 gap-2">
+                                    <form id="transaksiForm1" enctype="multipart/form-data" class="d-flex flex-column gap-2">
                                         <div class="flex-fill">
                                             <select class="form-select form-select-sm" id="nomor_registrasi" name="nomor_registrasi" aria-label="nomor_registrasi">
                                                 <option value="" disabled selected>-- Pilih Pasien Rawat Jalan --</option>
@@ -119,7 +119,7 @@
                             <div class="col-lg-6">
                                 <div>
                                     <div class="fw-bold mb-2 border-bottom">Tambah Pasien dari Resep Luar</div>
-                                    <form id="transaksiForm2" enctype="multipart/form-data" class="d-flex flex-column mb-2 gap-2">
+                                    <form id="transaksiForm2" enctype="multipart/form-data" class="d-flex flex-column gap-2">
                                         <div class="flex-fill">
                                             <select class="form-select form-select-sm" id="id_resep" name="id_resep" aria-label="id_resep">
                                                 <option value="" disabled selected>-- Pilih Pasien dari Resep Luar --</option>

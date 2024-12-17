@@ -169,7 +169,7 @@
                     </div>
                     <div id="collapse-${index + 1}" class="accordion-collapse collapse" data-bs-parent="#datapasien">
                         <div class="accordion-body px-3 py-2">
-                            <div class="row">
+                            <div class="row g-3">
                                 <div class="col-lg-6">
                                     <div class="fw-bold mb-2 border-bottom">Identitas Pasien</div>
                                     <div style="font-size: 0.75em;">
