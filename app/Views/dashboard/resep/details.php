@@ -106,7 +106,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="mb-1 row">
+                    <div class="mb-0 row">
                         <div class="col-5 col-lg-4 fw-medium">Tanggal Lahir</div>
                         <div class="col">
                             <div class="date">
@@ -114,7 +114,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="mb-1 row">
+                    <div class="mb-0 row">
                         <div class="col-5 col-lg-4 fw-medium">Alamat</div>
                         <div class="col">
                             <div class="date">
@@ -122,7 +122,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="mb-1 row">
+                    <div class="mb-0 row">
                         <div class="col-5 col-lg-4 fw-medium">Nomor Telepon</div>
                         <div class="col">
                             <div class="date">
@@ -130,7 +130,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="mb-1 row">
+                    <div class="mb-0 row">
                         <div class="col-5 col-lg-4 fw-medium">Status Konfirmasi</div>
                         <div class="col">
                             <div class="date" id="confirmedStatus">
