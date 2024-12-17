@@ -576,6 +576,15 @@
         fetchResep();
     });
 
+    $(document).on('visibilitychange', async function() {
+        if (document.visibilityState === "visible") {
+            const selectedApoteker = $('#apotekerFilter').val();
+            // Panggil fungsi untuk memperbarui opsi apoteker
+            await fetchApotekerOptions(selectedApoteker);
+            fetchResep(); // Refresh articles on button click
+        }
+    });
+
     $(document).ready(async function() {
         $('#searchInput').on('input', function() {
             currentPage = 1;

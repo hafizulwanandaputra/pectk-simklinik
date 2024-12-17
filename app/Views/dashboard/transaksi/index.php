@@ -655,6 +655,18 @@
         toggleSubmitButton2();
     });
 
+    $(document).on('visibilitychange', async function() {
+        if (document.visibilityState === "visible") {
+            // Simpan nilai pilihan kasir saat ini
+            const selectedKasir = $('#kasirFilter').val();
+            // Panggil fungsi untuk memperbarui opsi kasir
+            await fetchKasirOptions(selectedKasir);
+            fetchPasienOptions1();
+            fetchPasienOptions2();
+            fetchTransaksi(); // Refresh articles on button click
+        }
+    });
+
     $(document).ready(async function() {
         $('[data-bs-toggle="popover"]').popover({
             html: true,

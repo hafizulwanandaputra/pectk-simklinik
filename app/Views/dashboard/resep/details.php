@@ -501,6 +501,15 @@
         }
     }
 
+    $(document).on('visibilitychange', function() {
+        if (document.visibilityState === "visible") {
+            fetchStatusKonfirmasi();
+            fetchDetailResep();
+            <?= (session()->get('role') != 'Apoteker') ? 'fetchObatOptions();' : '' ?>
+            <?= (session()->get('role') != 'Apoteker') ? 'fetchStatusResep();' : '' ?>
+        }
+    });
+
     $(document).ready(function() {
         $('[data-bs-toggle="tooltip"]').tooltip();
         $('#id_obat').select2({

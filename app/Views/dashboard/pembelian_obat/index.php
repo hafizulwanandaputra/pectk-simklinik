@@ -512,6 +512,18 @@
     $('#id_supplier').on('change.select2', function() {
         toggleSubmitButton();
     });
+
+    $(document).on('visibilitychange', async function() {
+        if (document.visibilityState === "visible") {
+            // Simpan nilai pilihan apoteker saat ini
+            const selectedApoteker = $('#apotekerFilter').val();
+            // Panggil fungsi untuk memperbarui opsi apoteker
+            await fetchApotekerOptions(selectedApoteker);
+            fetchPembelianObat();
+            fetchSupplierOptions();
+        }
+    });
+
     $(document).ready(async function() {
         $('#id_supplier').select2({
             dropdownParent: $('#pembelianObatForm'),

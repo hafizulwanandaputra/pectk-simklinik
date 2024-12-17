@@ -413,6 +413,14 @@
         }
     }
 
+    $(document).on('visibilitychange', function() {
+        if (document.visibilityState === "visible") {
+            fetchDetailPembelianObat();
+            fetchObatOptions();
+            fetchStatusPembelian();
+        }
+    });
+
     $(document).ready(function() {
         $('[data-bs-toggle="tooltip"]').tooltip();
         $('#id_obat').select2({

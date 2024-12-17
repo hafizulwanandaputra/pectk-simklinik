@@ -255,6 +255,12 @@
         fetchTransaksi(); // Memanggil fungsi untuk mengambil data transaksi
     });
 
+    $(document).on('visibilitychange', function() {
+        if (document.visibilityState === "visible") {
+            fetchTransaksi();
+        }
+    });
+
     $(document).ready(function() {
         // Menangani event klik pada tombol bersihkan
         $('#clearTglButton').on('click', function() {

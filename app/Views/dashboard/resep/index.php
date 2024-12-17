@@ -623,6 +623,15 @@
         toggleSubmitButton();
     });
 
+    $(document).on('visibilitychange', async function() {
+        if (document.visibilityState === "visible") {
+            // Simpan nilai pilihan dokter saat ini
+            const selectedDokter = $('#dokterFilter').val();
+            <?= (session()->get('role') != 'Apoteker') ? 'await Promise.all([fetchPasienOptions(), fetchDokterOptions(selectedDokter)]);' : 'await fetchDokterOptions(selectedDokter);' ?>
+            fetchResep();
+        }
+    });
+
     $(document).ready(async function() {
         $('[data-bs-toggle="popover"]').popover({
             html: true,
@@ -804,14 +813,11 @@
             e.preventDefault();
             // Simpan nilai pilihan dokter saat ini
             const selectedDokter = $('#dokterFilter').val();
-            <?= (session()->get('role') != 'Apoteker') ? 'fetchPasienOptions();' : '' ?>
-            // Panggil fungsi untuk memperbarui opsi dokter
-            await fetchDokterOptions(selectedDokter);
+            <?= (session()->get('role') != 'Apoteker') ? 'await Promise.all([fetchPasienOptions(), fetchDokterOptions(selectedDokter)]);' : 'await fetchDokterOptions(selectedDokter);' ?>
             fetchResep();
         });
 
-        <?= (session()->get('role') != 'Apoteker') ? 'fetchPasienOptions();' : '' ?>
-        await fetchDokterOptions();
+        <?= (session()->get('role') != 'Apoteker') ? 'await Promise.all([fetchPasienOptions(), fetchDokterOptions()]);' : 'await fetchDokterOptions();' ?>
         fetchResep();
         toggleSubmitButton();
     });

@@ -335,6 +335,12 @@
             table.page.len(length).draw(); // Atur jumlah baris dan refresh tabel
         });
 
+        $(document).on('visibilitychange', function() {
+            if (document.visibilityState === "visible") {
+                table.ajax.reload(null, false); // Reload data tanpa reset paging
+            }
+        });
+
         $('#refreshButton').on('click', function(e) {
             e.preventDefault();
             table.ajax.reload(null, false);

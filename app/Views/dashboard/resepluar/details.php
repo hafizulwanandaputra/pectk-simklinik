@@ -371,6 +371,14 @@
         }
     }
 
+    $(document).on('visibilitychange', function() {
+        if (document.visibilityState === "visible") {
+            fetchDetailResep();
+            fetchObatOptions();
+            fetchStatusResep();
+        }
+    });
+
     $(document).ready(function() {
         $('[data-bs-toggle="tooltip"]').tooltip();
         $('#id_obat').select2({

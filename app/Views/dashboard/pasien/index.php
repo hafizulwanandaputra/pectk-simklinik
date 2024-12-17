@@ -264,6 +264,12 @@
         fetchPasien(); // Memanggil fungsi untuk mengambil data pasien
     });
 
+    $(document).on('visibilitychange', function() {
+        if (document.visibilityState === "visible") {
+            fetchPasien();
+        }
+    });
+
     $(document).ready(function() {
         $('[data-bs-toggle="popover"]').popover({
             html: true,

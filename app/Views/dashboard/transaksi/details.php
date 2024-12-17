@@ -756,6 +756,18 @@
         }
     }
 
+    $(document).on('visibilitychange', function() {
+        if (document.visibilityState === "visible") {
+            toggleBankField();
+            fetchLayanan();
+            fetchObatAlkes();
+            fetchTindakanOptions();
+            fetchResepOptions();
+            fetchStatusTransaksi();
+            transactionProcessBtn();
+        }
+    });
+
     $(document).ready(function() {
         $('[data-bs-toggle="tooltip"]').tooltip();
         $('#id_layanan').select2({

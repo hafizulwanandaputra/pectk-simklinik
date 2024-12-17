@@ -170,6 +170,12 @@
         }
     }
 
+    $(document).on('visibilitychange', function() {
+        if (document.visibilityState === "visible") {
+            fetchDetailOpnameObat();
+        }
+    });
+
     $(document).ready(function() {
         fetchDetailOpnameObat();
     });
