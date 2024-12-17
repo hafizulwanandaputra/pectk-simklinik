@@ -20,7 +20,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght,XTRA@8..144,100..1000,530&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&family=Noto+Sans+Arabic:wdth,wght@62.5..100,100..900&family=Noto+Sans+Mono:wdth,wght@62.5..100,100..900&family=Noto+Sans:ital,wdth,wght@0,62.5..100,100..900;1,62.5..100,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://use.typekit.net/dew1xab.css">
-    <link href="<?= base_url(); ?>assets_public/fonts/inter-hwp/inter-hwp.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/fonts/base-font.css" rel="stylesheet">
     <style>
         /* Custom Scrollbar Styles */
