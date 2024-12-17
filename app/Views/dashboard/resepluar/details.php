@@ -21,7 +21,7 @@
     <div class="flex-fill text-truncate">
         <div class="d-flex flex-column">
             <div class="fw-medium fs-6 lh-sm"><?= $headertitle; ?></div>
-            <div class="fw-medium" style="font-size: 0.75em;"><?= $resep['id_resep'] ?> • <?= ($resep['nama_pasien'] == NULL) ? '<em>Anonim</em>' : $resep['nama_pasien']; ?> • <?= $resep['tanggal_resep'] ?></div>
+            <div class="fw-medium lh-sm" style="font-size: 0.75em;"><?= $resep['id_resep'] ?> • <?= ($resep['nama_pasien'] == NULL) ? '<em>Anonim</em>' : $resep['nama_pasien']; ?> • <?= $resep['tanggal_resep'] ?></div>
         </div>
     </div>
     <div id="loadingSpinner" class="spinner-border spinner-border-sm mx-2" role="status" style="min-width: 1rem;">
