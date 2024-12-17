@@ -1,6 +1,4 @@
 :root {
-  font-variant-numeric: proportional-nums;
-
   --bs-gradient: linear-gradient(180deg,
       rgba(255, 255, 255, 0.25) 0%,
       rgba(255, 255, 255, 0) 10px,
@@ -16,10 +14,6 @@
 
 iframe {
   color-scheme: light;
-}
-
-* {
-  font-variant-numeric: proportional-nums;
 }
 
 .jawi {
