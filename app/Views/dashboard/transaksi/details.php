@@ -63,7 +63,7 @@
             <div class="fw-bold mb-2 border-bottom">Informasi Transaksi</div>
             <div class="row">
                 <div class="col-lg-6" style="font-size: 0.75em;">
-                    <div class="mb-1 row">
+                    <div class="mb-0 row">
                         <div class="col-5 col-lg-4 fw-medium">Nomor Rekam Medis</div>
                         <div class="col">
                             <div class="date">
@@ -71,7 +71,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="mb-1 row">
+                    <div class="mb-0 row">
                         <div class="col-5 col-lg-4 fw-medium">Nama Pasien</div>
                         <div class="col">
                             <div>
@@ -79,7 +79,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="mb-1 row">
+                    <div class="mb-0 row">
                         <div class="col-5 col-lg-4 fw-medium">Nomor HP</div>
                         <div class="col">
                             <div class="date">
@@ -87,7 +87,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="mb-1 row">
+                    <div class="mb-0 row">
                         <div class="col-5 col-lg-4 fw-medium">Alamat</div>
                         <div class="col">
                             <div>
@@ -97,7 +97,7 @@
                     </div>
                 </div>
                 <div class="col-lg-6" style="font-size: 0.75em;">
-                    <div class="mb-1 row">
+                    <div class="mb-0 row">
                         <div class="col-5 col-lg-4 fw-medium">Nomor Kuitansi</div>
                         <div class="col">
                             <div class="date">
@@ -105,7 +105,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="mb-1 row">
+                    <div class="mb-0 row">
                         <div class="col-5 col-lg-4 fw-medium">Tanggal dan Waktu</div>
                         <div class="col">
                             <div class="date">
@@ -113,7 +113,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="mb-1 row">
+                    <div class="mb-0 row">
                         <div class="col-5 col-lg-4 fw-medium">Dokter</div>
                         <div class="col">
                             <div>
@@ -121,7 +121,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="mb-1 row">
+                    <div class="mb-0 row">
                         <div class="col-5 col-lg-4 fw-medium">Kasir</div>
                         <div class="col">
                             <div>
@@ -247,7 +247,7 @@
             </div>
         </div>
 
-        <div class="mb-1 row d-flex align-items-end">
+        <div class="mb-0 row d-flex align-items-end">
             <div class="col fw-medium text-nowrap">Grand Total</div>
             <div class="col text-end">
                 <div class="fs-4 date text-nowrap placeholder-glow" style="font-weight: 900;" id="total_pembayaran">
@@ -255,7 +255,7 @@
                 </div>
             </div>
         </div>
-        <div class="mb-1 row d-flex align-items-end">
+        <div class="mb-0 row d-flex align-items-end">
             <div class="col fw-medium text-nowrap">Terima Uang</div>
             <div class="col text-end">
                 <div class="date text-nowrap placeholder-glow" id="terima_uang_table">
@@ -263,7 +263,7 @@
                 </div>
             </div>
         </div>
-        <div class="mb-1 row d-flex align-items-end">
+        <div class="mb-0 row d-flex align-items-end">
             <div class="col fw-medium text-nowrap">Uang Kembali</div>
             <div class="col text-end">
                 <div class="date text-nowrap placeholder-glow" id="uang_kembali_table">
@@ -271,7 +271,7 @@
                 </div>
             </div>
         </div>
-        <div class="mb-1 row d-flex align-items-end">
+        <div class="mb-0 row d-flex align-items-end">
             <div class="col fw-medium text-nowrap">Metode Bayar</div>
             <div class="col text-end">
                 <div class="date text-nowrap placeholder-glow" id="metode_pembayaran_table">

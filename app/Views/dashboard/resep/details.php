@@ -48,7 +48,7 @@
             <div class="fw-bold mb-2 border-bottom">Informasi Pasien Rawat Jalan</div>
             <div class="row">
                 <div class="col-lg-6" style="font-size: 0.75em;">
-                    <div class="mb-1 row">
+                    <div class="mb-0 row">
                         <div class="col-5 col-lg-4 fw-medium">Tanggal dan Waktu</div>
                         <div class="col">
                             <div class="date">
@@ -56,7 +56,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="mb-1 row">
+                    <div class="mb-0 row">
                         <div class="col-5 col-lg-4 fw-medium">Dokter</div>
                         <div class="col">
                             <div class="date">
@@ -64,7 +64,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="mb-1 row">
+                    <div class="mb-0 row">
                         <div class="col-5 col-lg-4 fw-medium">Nama Pasien</div>
                         <div class="col">
                             <div class="date">
@@ -72,7 +72,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="mb-1 row">
+                    <div class="mb-0 row">
                         <div class="col-5 col-lg-4 fw-medium">Nomor Rekam Medis</div>
                         <div class="col">
                             <div class="date">
@@ -80,7 +80,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="mb-1 row">
+                    <div class="mb-0 row">
                         <div class="col-5 col-lg-4 fw-medium">Nomor Registrasi</div>
                         <div class="col">
                             <div class="date">
@@ -90,7 +90,7 @@
                     </div>
                 </div>
                 <div class="col-lg-6" style="font-size: 0.75em;">
-                    <div class="mb-1 row">
+                    <div class="mb-0 row">
                         <div class="col-5 col-lg-4 fw-medium">Jenis Kelamin</div>
                         <div class="col">
                             <div class="date">

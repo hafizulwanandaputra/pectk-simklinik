@@ -153,7 +153,7 @@
                                         <div style="font-size: 0.75em;">
                                             <div class="row">
                                                 <div class="col-lg-6">
-                                                    <div class="mb-1 row placeholder-glow">
+                                                    <div class="mb-0 row placeholder-glow">
                                                         <div class="col-5 col-lg-4 fw-medium">
                                                             <span class="placeholder w-100"></span>
                                                         </div>
@@ -161,7 +161,7 @@
                                                             <span class="placeholder w-100"></span>
                                                         </div>
                                                     </div>
-                                                    <div class="mb-1 row placeholder-glow">
+                                                    <div class="mb-0 row placeholder-glow">
                                                         <div class="col-5 col-lg-4 fw-medium">
                                                             <span class="placeholder w-100"></span>
                                                         </div>
@@ -169,7 +169,7 @@
                                                             <span class="placeholder w-100"></span>
                                                         </div>
                                                     </div>
-                                                    <div class="mb-1 row placeholder-glow">
+                                                    <div class="mb-0 row placeholder-glow">
                                                         <div class="col-5 col-lg-4 fw-medium">
                                                             <span class="placeholder w-100"></span>
                                                         </div>
@@ -179,7 +179,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6">
-                                                    <div class="mb-1 row placeholder-glow">
+                                                    <div class="mb-0 row placeholder-glow">
                                                         <div class="col-5 col-lg-4 fw-medium">
                                                             <span class="placeholder w-100"></span>
                                                         </div>
@@ -187,7 +187,7 @@
                                                             <span class="placeholder w-100"></span>
                                                         </div>
                                                     </div>
-                                                    <div class="mb-1 row placeholder-glow">
+                                                    <div class="mb-0 row placeholder-glow">
                                                         <div class="col-5 col-lg-4 fw-medium">
                                                             <span class="placeholder w-100"></span>
                                                         </div>
@@ -252,7 +252,7 @@
                             <div style="font-size: 0.75em;">
                                 <div class="row">
                                     <div class="col-lg-6">
-                                        <div class="mb-1 row placeholder-glow">
+                                        <div class="mb-0 row placeholder-glow">
                                             <div class="col-5 col-lg-4 fw-medium">
                                                 <span class="placeholder w-100"></span>
                                             </div>
@@ -260,7 +260,7 @@
                                                 <span class="placeholder w-100"></span>
                                             </div>
                                         </div>
-                                        <div class="mb-1 row placeholder-glow">
+                                        <div class="mb-0 row placeholder-glow">
                                             <div class="col-5 col-lg-4 fw-medium">
                                                 <span class="placeholder w-100"></span>
                                             </div>
@@ -268,7 +268,7 @@
                                                 <span class="placeholder w-100"></span>
                                             </div>
                                         </div>
-                                        <div class="mb-1 row placeholder-glow">
+                                        <div class="mb-0 row placeholder-glow">
                                             <div class="col-5 col-lg-4 fw-medium">
                                                 <span class="placeholder w-100"></span>
                                             </div>
@@ -278,7 +278,7 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
-                                        <div class="mb-1 row placeholder-glow">
+                                        <div class="mb-0 row placeholder-glow">
                                             <div class="col-5 col-lg-4 fw-medium">
                                                 <span class="placeholder w-100"></span>
                                             </div>
@@ -286,7 +286,7 @@
                                                 <span class="placeholder w-100"></span>
                                             </div>
                                         </div>
-                                        <div class="mb-1 row placeholder-glow">
+                                        <div class="mb-0 row placeholder-glow">
                                             <div class="col-5 col-lg-4 fw-medium">
                                                 <span class="placeholder w-100"></span>
                                             </div>
@@ -472,19 +472,19 @@
                                     <div style="font-size: 0.75em;">
                                         <div class="row">
                                             <div class="col-lg-6">
-                                                <div class="mb-1 row">
+                                                <div class="mb-0 row">
                                                     <div class="col-5 col-lg-4 fw-medium">ID</div>
                                                     <div class="col date">
                                                         ${transaksi.id_transaksi}
                                                     </div>
                                                 </div>
-                                                <div class="mb-1 row">
+                                                <div class="mb-0 row">
                                                     <div class="col-5 col-lg-4 fw-medium">Nomor Kuitansi</div>
                                                     <div class="col date">
                                                         ${transaksi.no_kwitansi}
                                                     </div>
                                                 </div>
-                                                <div class="mb-1 row">
+                                                <div class="mb-0 row">
                                                     <div class="col-5 col-lg-4 fw-medium">Tanggal dan Waktu</div>
                                                     <div class="col date">
                                                         ${transaksi.tgl_transaksi}
@@ -492,13 +492,13 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
-                                                <div class="mb-1 row">
+                                                <div class="mb-0 row">
                                                     <div class="col-5 col-lg-4 fw-medium">Grand Total</div>
                                                     <div class="col date">
                                                         Rp${total_pembayaran.toLocaleString('id-ID')}
                                                     </div>
                                                 </div>
-                                                <div class="mb-1 row">
+                                                <div class="mb-0 row">
                                                     <div class="col-5 col-lg-4 fw-medium">Metode</div>
                                                     <div class="col">
                                                         ${metode_pembayaran}

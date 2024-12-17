@@ -47,7 +47,7 @@
         <div class="mb-3">
             <div class="fw-bold mb-2 border-bottom">Informasi Obat Masuk</div>
             <div style="font-size: 0.75em;">
-                <div class="mb-1 row">
+                <div class="mb-0 row">
                     <div class="col-5 col-lg-3 fw-medium">Tanggal dan Waktu</div>
                     <div class="col">
                         <div class="date">
@@ -55,7 +55,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="mb-1 row">
+                <div class="mb-0 row">
                     <div class="col-5 col-lg-3 fw-medium">Nama Supplier</div>
                     <div class="col">
                         <div class="date">
@@ -63,7 +63,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="mb-1 row">
+                <div class="mb-0 row">
                     <div class="col-5 col-lg-3 fw-medium">Alamat Supplier</div>
                     <div class="col">
                         <div class="date">
@@ -71,7 +71,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="mb-1 row">
+                <div class="mb-0 row">
                     <div class="col-5 col-lg-3 fw-medium">Nomor Telepon Supplier</div>
                     <div class="col">
                         <div class="date">
@@ -79,7 +79,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="mb-1 row">
+                <div class="mb-0 row">
                     <div class="col-5 col-lg-3 fw-medium">Merek</div>
                     <div class="col">
                         <div class="date">
@@ -87,7 +87,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="mb-1 row">
+                <div class="mb-0 row">
                     <div class="col-5 col-lg-3 fw-medium">Apoteker</div>
                     <div class="col">
                         <div class="date">
