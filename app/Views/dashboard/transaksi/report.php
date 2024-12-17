@@ -255,12 +255,6 @@
         fetchTransaksi(); // Memanggil fungsi untuk mengambil data transaksi
     });
 
-    $(document).on('visibilitychange', function() {
-        if (document.visibilityState === "visible") {
-            fetchTransaksi();
-        }
-    });
-
     $(document).ready(function() {
         // Menangani event klik pada tombol bersihkan
         $('#clearTglButton').on('click', function() {
@@ -268,6 +262,11 @@
             $('#datatransaksi').empty(); // Kosongkan tabel transaksi
             $('#datatransaksi').append(loading); // Tampilkan loading indicator
             fetchTransaksi(); // Panggil fungsi untuk mengambil data transaksi
+        });
+        $(document).on('visibilitychange', function() {
+            if (document.visibilityState === "visible") {
+                fetchTransaksi();
+            }
         });
         // Menangani event klik pada tombol refresh
         $('#refreshButton').on('click', function() {

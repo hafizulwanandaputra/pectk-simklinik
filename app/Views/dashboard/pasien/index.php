@@ -264,12 +264,6 @@
         fetchPasien(); // Memanggil fungsi untuk mengambil data pasien
     });
 
-    $(document).on('visibilitychange', function() {
-        if (document.visibilityState === "visible") {
-            fetchPasien();
-        }
-    });
-
     $(document).ready(function() {
         $('[data-bs-toggle="popover"]').popover({
             html: true,
@@ -286,6 +280,11 @@
             $('#datapasien').empty(); // Kosongkan tabel pasien
             $('#datapasien').append(loading); // Menampilkan loading indicator
             fetchPasien(); // Memanggil fungsi untuk mengambil data pasien
+        });
+        $(document).on('visibilitychange', function() {
+            if (document.visibilityState === "visible") {
+                fetchPasien();
+            }
         });
         // Menangani event klik pada tombol refresh
         $('#refreshButton').on('click', function() {

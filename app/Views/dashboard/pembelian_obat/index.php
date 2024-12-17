@@ -513,17 +513,6 @@
         toggleSubmitButton();
     });
 
-    $(document).on('visibilitychange', async function() {
-        if (document.visibilityState === "visible") {
-            // Simpan nilai pilihan apoteker saat ini
-            const selectedApoteker = $('#apotekerFilter').val();
-            // Panggil fungsi untuk memperbarui opsi apoteker
-            await fetchApotekerOptions(selectedApoteker);
-            fetchPembelianObat();
-            fetchSupplierOptions();
-        }
-    });
-
     $(document).ready(async function() {
         $('#id_supplier').select2({
             dropdownParent: $('#pembelianObatForm'),
@@ -683,6 +672,16 @@
                     <i class="fa-solid fa-plus"></i> Tambah
                 `);
                 $('#pembelianObatForm select').prop('disabled', false);
+            }
+        });
+        $(document).on('visibilitychange', async function() {
+            if (document.visibilityState === "visible") {
+                // Simpan nilai pilihan apoteker saat ini
+                const selectedApoteker = $('#apotekerFilter').val();
+                // Panggil fungsi untuk memperbarui opsi apoteker
+                await fetchApotekerOptions(selectedApoteker);
+                fetchPembelianObat();
+                fetchSupplierOptions();
             }
         });
         $('#refreshButton').on('click', async function(e) {

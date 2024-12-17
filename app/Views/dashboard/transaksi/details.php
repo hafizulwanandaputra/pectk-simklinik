@@ -756,18 +756,6 @@
         }
     }
 
-    $(document).on('visibilitychange', function() {
-        if (document.visibilityState === "visible") {
-            toggleBankField();
-            fetchLayanan();
-            fetchObatAlkes();
-            fetchTindakanOptions();
-            fetchResepOptions();
-            fetchStatusTransaksi();
-            transactionProcessBtn();
-        }
-    });
-
     $(document).ready(function() {
         $('[data-bs-toggle="tooltip"]').tooltip();
         $('#id_layanan').select2({
@@ -1454,6 +1442,19 @@
             $('#batalTransaksiForm .is-invalid').removeClass('is-invalid');
             $('#batalTransaksiForm .invalid-feedback').text('').hide();
         });
+
+        $(document).on('visibilitychange', function() {
+            if (document.visibilityState === "visible") {
+                toggleBankField();
+                fetchLayanan();
+                fetchObatAlkes();
+                fetchTindakanOptions();
+                fetchResepOptions();
+                fetchStatusTransaksi();
+                transactionProcessBtn();
+            }
+        });
+
         $('#refreshButton').on('click', function(e) {
             e.preventDefault();
             toggleBankField();

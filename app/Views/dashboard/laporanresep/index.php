@@ -533,14 +533,13 @@
         fetchResep2(); // Memanggil fungsi untuk mengambil data resep
     });
 
-    $(document).on('visibilitychange', function() {
-        if (document.visibilityState === "visible") {
-            fetchResep1();
-            fetchResep2();
-        }
-    });
-
     $(document).ready(function() {
+        $(document).on('visibilitychange', function() {
+            if (document.visibilityState === "visible") {
+                fetchResep1();
+                fetchResep2();
+            }
+        });
         // Menangani event klik pada tombol bersihkan tanggal
         $('#clearTglButton').on('click', function() {
             $('#tanggal').val(''); // Kosongkan tanggal

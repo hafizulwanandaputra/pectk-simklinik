@@ -371,14 +371,6 @@
         }
     }
 
-    $(document).on('visibilitychange', function() {
-        if (document.visibilityState === "visible") {
-            fetchDetailResep();
-            fetchObatOptions();
-            fetchStatusResep();
-        }
-    });
-
     $(document).ready(function() {
         $('[data-bs-toggle="tooltip"]').tooltip();
         $('#id_obat').select2({
@@ -666,6 +658,14 @@
                     <i class="fa-solid fa-plus"></i> Tambah
                 `);
                 $('#tambahDetail input, #tambahDetail select').prop('disabled', false);
+            }
+        });
+
+        $(document).on('visibilitychange', function() {
+            if (document.visibilityState === "visible") {
+                fetchDetailResep();
+                fetchObatOptions();
+                fetchStatusResep();
             }
         });
 

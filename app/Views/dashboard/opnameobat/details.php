@@ -170,13 +170,12 @@
         }
     }
 
-    $(document).on('visibilitychange', function() {
-        if (document.visibilityState === "visible") {
-            fetchDetailOpnameObat();
-        }
-    });
-
     $(document).ready(function() {
+        $(document).on('visibilitychange', function() {
+            if (document.visibilityState === "visible") {
+                fetchDetailOpnameObat();
+            }
+        });
         fetchDetailOpnameObat();
     });
     // Show toast notification

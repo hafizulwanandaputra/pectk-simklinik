@@ -297,15 +297,6 @@
         }
     });
 
-    $(document).on('visibilitychange', async function() {
-        if (document.visibilityState === "visible") {
-            // Simpan nilai pilihan apoteker saat ini
-            const selectedApoteker = $('apotekerFilter').val();
-            await fetchApotekerOptions(selectedApoteker);
-            fetchOpnameObat(); // Refresh articles on button click
-        }
-    });
-
     $(document).ready(async function() {
         const toggleFilter = $('#toggleFilter');
         const filterFields = $('#filterFields');
@@ -463,6 +454,14 @@
                     <i class="fa-solid fa-plus"></i> Buat Laporan Baru
                 `);
                 $('#opnameObatForm select').prop('disabled', false);
+            }
+        });
+        $(document).on('visibilitychange', async function() {
+            if (document.visibilityState === "visible") {
+                // Simpan nilai pilihan apoteker saat ini
+                const selectedApoteker = $('apotekerFilter').val();
+                await fetchApotekerOptions(selectedApoteker);
+                fetchOpnameObat(); // Refresh articles on button click
             }
         });
         $('#refreshButton').on('click', async function(e) {

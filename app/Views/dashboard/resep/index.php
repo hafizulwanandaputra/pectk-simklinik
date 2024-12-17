@@ -623,15 +623,6 @@
         toggleSubmitButton();
     });
 
-    $(document).on('visibilitychange', async function() {
-        if (document.visibilityState === "visible") {
-            // Simpan nilai pilihan dokter saat ini
-            const selectedDokter = $('#dokterFilter').val();
-            <?= (session()->get('role') != 'Apoteker') ? 'await Promise.all([fetchPasienOptions(), fetchDokterOptions(selectedDokter)]);' : 'await fetchDokterOptions(selectedDokter);' ?>
-            fetchResep();
-        }
-    });
-
     $(document).ready(async function() {
         $('[data-bs-toggle="popover"]').popover({
             html: true,
@@ -807,6 +798,14 @@
                     <i class="fa-solid fa-plus"></i> Tambah
                 `);
                 $('#resepForm select').prop('disabled', false);
+            }
+        });
+        $(document).on('visibilitychange', async function() {
+            if (document.visibilityState === "visible") {
+                // Simpan nilai pilihan dokter saat ini
+                const selectedDokter = $('#dokterFilter').val();
+                <?= (session()->get('role') != 'Apoteker') ? 'await Promise.all([fetchPasienOptions(), fetchDokterOptions(selectedDokter)]);' : 'await fetchDokterOptions(selectedDokter);' ?>
+                fetchResep();
             }
         });
         $('#refreshButton').on('click', async function(e) {

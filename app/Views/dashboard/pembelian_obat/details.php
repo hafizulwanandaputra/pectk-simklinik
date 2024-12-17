@@ -413,14 +413,6 @@
         }
     }
 
-    $(document).on('visibilitychange', function() {
-        if (document.visibilityState === "visible") {
-            fetchDetailPembelianObat();
-            fetchObatOptions();
-            fetchStatusPembelian();
-        }
-    });
-
     $(document).ready(function() {
         $('[data-bs-toggle="tooltip"]').tooltip();
         $('#id_obat').select2({
@@ -988,6 +980,14 @@
             } finally {
                 $('#deleteItemModal').modal('hide');
                 $('#deleteItemModal button').prop('disabled', false);
+            }
+        });
+
+        $(document).on('visibilitychange', function() {
+            if (document.visibilityState === "visible") {
+                fetchDetailPembelianObat();
+                fetchObatOptions();
+                fetchStatusPembelian();
             }
         });
 
