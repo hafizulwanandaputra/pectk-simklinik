@@ -183,7 +183,7 @@
                                             </div>
                                         </div>
                                         <div class="mb-0 row">
-                                            <div class="col-5 col-lg-4 fw-medium">Nomor Rekam Medis</div>
+                                            <div class="col-5 col-lg-4 fw-medium">Nomor <span class="d-none d-sm-inline">Rekam Medis</span><span class="d-inline d-sm-none">RM</span></div>
                                             <div class="col date">
                                                 ${pasien.no_rm}
                                             </div>
@@ -195,7 +195,7 @@
                                             </div>
                                         </div>
                                         <div class="mb-0 row">
-                                            <div class="col-5 col-lg-4 fw-medium">Tempat/Tanggal Lahir</div>
+                                            <div class="col-5 col-lg-4 fw-medium">Tempat/<span class="d-none d-sm-inline">Tanggal</span><span class="d-inline d-sm-none">Tgl</span> Lahir</div>
                                             <div class="col">
                                                 ${pasien.tempat_lahir}, <span class="date text-nowrap">${pasien.tanggal_lahir}</span>
                                             </div>
