@@ -382,7 +382,7 @@ class Transaksi extends BaseController
                 $tahun = $date->format('y'); // Tahun (2 digit)
 
                 // Mengambil nomor registrasi terakhir untuk di-increment
-                $lastNoReg = $this->TransaksiModel->getLastNoReg($tahun, $bulan, $tanggal);
+                $lastNoReg = $this->TransaksiModel->getLastNoReg1($tahun, $bulan, $tanggal);
                 $lastNumber = $lastNoReg ? intval(substr($lastNoReg, -4)) : 0; // Mendapatkan nomor terakhir
                 $nextNumber = str_pad($lastNumber + 1, 4, '0', STR_PAD_LEFT); // Menyiapkan nomor berikutnya
 
@@ -485,12 +485,12 @@ class Transaksi extends BaseController
             $tahun = $date->format('y'); // Tahun (2 digit)
 
             // Mengambil nomor registrasi terakhir untuk di-increment
-            $lastNoReg = $this->TransaksiModel->getLastNoReg($tahun, $bulan, $tanggal);
+            $lastNoReg = $this->TransaksiModel->getLastNoReg2($tahun, $bulan, $tanggal);
             $lastNumber = $lastNoReg ? intval(substr($lastNoReg, -4)) : 0; // Mendapatkan nomor terakhir
             $nextNumber = str_pad($lastNumber + 1, 4, '0', STR_PAD_LEFT); // Menyiapkan nomor berikutnya
 
             // Memformat nomor kwitansi
-            $no_kwitansi = sprintf('TRJ%s%s%s-%s', $tanggal, $bulan, $tahun, $nextNumber);
+            $no_kwitansi = sprintf('TRL%s%s%s-%s', $tanggal, $bulan, $tahun, $nextNumber);
 
             // Menyimpan data transaksi
             $data = [
