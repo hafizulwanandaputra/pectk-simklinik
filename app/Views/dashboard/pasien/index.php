@@ -176,44 +176,44 @@
                                 <div class="col-lg-6">
                                     <div class="fw-bold mb-2 border-bottom">Identitas Pasien</div>
                                     <div style="font-size: 0.75em;">
-                                        <div class="mb-0 row">
-                                            <div class="col-5 col-lg-4 fw-medium">Nama</div>
+                                        <div class="mb-0 row g-1">
+                                            <div class="col-5 fw-medium text-truncate">Nama</div>
                                             <div class="col">
                                                 ${pasien.nama_pasien}
                                             </div>
                                         </div>
-                                        <div class="mb-0 row">
-                                            <div class="col-5 col-lg-4 fw-medium">Nomor <span class="d-none d-sm-inline">Rekam Medis</span><span class="d-inline d-sm-none">RM</span></div>
+                                        <div class="mb-0 row g-1">
+                                            <div class="col-5 fw-medium text-truncate">Nomor Rekam Medis</div>
                                             <div class="col date">
                                                 ${pasien.no_rm}
                                             </div>
                                         </div>
-                                        <div class="mb-0 row">
-                                            <div class="col-5 col-lg-4 fw-medium">Jenis Kelamin</div>
+                                        <div class="mb-0 row g-1">
+                                            <div class="col-5 fw-medium text-truncate">Jenis Kelamin</div>
                                             <div class="col">
                                                 ${jenis_kelamin_string}
                                             </div>
                                         </div>
-                                        <div class="mb-0 row">
-                                            <div class="col-5 col-lg-4 fw-medium">Tempat/<span class="d-none d-sm-inline">Tanggal</span><span class="d-inline d-sm-none">Tgl</span> Lahir</div>
+                                        <div class="mb-0 row g-1">
+                                            <div class="col-5 fw-medium text-truncate">Tempat/Tanggal Lahir</div>
                                             <div class="col">
                                                 ${pasien.tempat_lahir}, <span class="date text-nowrap">${pasien.tanggal_lahir}</span>
                                             </div>
                                         </div>
-                                        <div class="mb-0 row">
-                                            <div class="col-5 col-lg-4 fw-medium">Usia</div>
+                                        <div class="mb-0 row g-1">
+                                            <div class="col-5 fw-medium text-truncate">Usia</div>
                                             <div class="col date">
                                                 ${usia.usia} tahun ${usia.bulan} bulan
                                             </div>
                                         </div>
-                                        <div class="mb-0 row">
-                                            <div class="col-5 col-lg-4 fw-medium">Alamat</div>
+                                        <div class="mb-0 row g-1">
+                                            <div class="col-5 fw-medium text-truncate">Alamat</div>
                                             <div class="col">
                                                 ${pasien.alamat}
                                             </div>
                                         </div>
-                                        <div class="mb-0 row">
-                                            <div class="col-5 col-lg-4 fw-medium">Nomor Telepon</div>
+                                        <div class="mb-0 row g-1">
+                                            <div class="col-5 fw-medium text-truncate">Nomor Telepon</div>
                                             <div class="col date">
                                                 ${telpon}
                                             </div>
@@ -223,14 +223,14 @@
                                 <div class="col-lg-6">
                                     <div class="fw-bold mb-2 border-bottom">Rawat Jalan</div>
                                     <div style="font-size: 0.75em;">
-                                        <div class="mb-0 row">
-                                            <div class="col-5 col-lg-4 fw-medium">Nomor Registrasi</div>
+                                        <div class="mb-0 row g-1">
+                                            <div class="col-5 fw-medium text-truncate">Nomor Registrasi</div>
                                             <div class="col date">
                                                 ${pasien.nomor_registrasi}
                                             </div>
                                         </div>
-                                        <div class="mb-0 row">
-                                            <div class="col-5 col-lg-4 fw-medium">Dokter</div>
+                                        <div class="mb-0 row g-1">
+                                            <div class="col-5 fw-medium text-truncate">Dokter</div>
                                             <div class="col">
                                                 ${pasien.dokter}
                                             </div>

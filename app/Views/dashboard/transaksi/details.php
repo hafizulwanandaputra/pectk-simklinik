@@ -61,34 +61,34 @@
     <div class="no-fluid-content">
         <div class="mb-3">
             <div class="fw-bold mb-2 border-bottom">Informasi Transaksi</div>
-            <div class="row">
+            <div class="row gx-3">
                 <div class="col-lg-6" style="font-size: 0.75em;">
-                    <div class="mb-0 row">
-                        <div class="col-5 col-lg-4 fw-medium">Nomor Rekam Medis</div>
+                    <div class="mb-0 row g-1">
+                        <div class="col-5 fw-medium text-truncate">Nomor Rekam Medis</div>
                         <div class="col">
                             <div class="date">
                                 <?= ($transaksi['no_rm'] == NULL) ? '<em>Tidak ada</em>' : $transaksi['no_rm']; ?>
                             </div>
                         </div>
                     </div>
-                    <div class="mb-0 row">
-                        <div class="col-5 col-lg-4 fw-medium">Nama Pasien</div>
+                    <div class="mb-0 row g-1">
+                        <div class="col-5 fw-medium text-truncate">Nama Pasien</div>
                         <div class="col">
                             <div>
                                 <?= ($transaksi['nama_pasien'] == NULL) ? '<em>Anonim</em>' : $transaksi['nama_pasien']; ?>
                             </div>
                         </div>
                     </div>
-                    <div class="mb-0 row">
-                        <div class="col-5 col-lg-4 fw-medium">Nomor HP</div>
+                    <div class="mb-0 row g-1">
+                        <div class="col-5 fw-medium text-truncate">Nomor HP</div>
                         <div class="col">
                             <div class="date">
                                 <?= ($transaksi['telpon'] == NULL) ? '<em>Tidak ada</em>' : $transaksi['telpon']; ?>
                             </div>
                         </div>
                     </div>
-                    <div class="mb-0 row">
-                        <div class="col-5 col-lg-4 fw-medium">Alamat</div>
+                    <div class="mb-0 row g-1">
+                        <div class="col-5 fw-medium text-truncate">Alamat</div>
                         <div class="col">
                             <div>
                                 <?= ($transaksi['alamat'] == NULL) ? '<em>Tidak ada</em>' : $transaksi['alamat']; ?>
@@ -97,32 +97,32 @@
                     </div>
                 </div>
                 <div class="col-lg-6" style="font-size: 0.75em;">
-                    <div class="mb-0 row">
-                        <div class="col-5 col-lg-4 fw-medium">Nomor Kuitansi</div>
+                    <div class="mb-0 row g-1">
+                        <div class="col-5 fw-medium text-truncate">Nomor Kuitansi</div>
                         <div class="col">
                             <div class="date">
                                 <?= $transaksi['no_kwitansi'] ?>
                             </div>
                         </div>
                     </div>
-                    <div class="mb-0 row">
-                        <div class="col-5 col-lg-4 fw-medium">Tanggal dan Waktu</div>
+                    <div class="mb-0 row g-1">
+                        <div class="col-5 fw-medium text-truncate">Tanggal dan Waktu</div>
                         <div class="col">
                             <div class="date">
                                 <?= $transaksi['tgl_transaksi'] ?>
                             </div>
                         </div>
                     </div>
-                    <div class="mb-0 row">
-                        <div class="col-5 col-lg-4 fw-medium">Dokter</div>
+                    <div class="mb-0 row g-1">
+                        <div class="col-5 fw-medium text-truncate">Dokter</div>
                         <div class="col">
                             <div>
                                 <?= $transaksi['dokter'] ?>
                             </div>
                         </div>
                     </div>
-                    <div class="mb-0 row">
-                        <div class="col-5 col-lg-4 fw-medium">Kasir</div>
+                    <div class="mb-0 row g-1">
+                        <div class="col-5 fw-medium text-truncate">Kasir</div>
                         <div class="col">
                             <div>
                                 <?= $transaksi['kasir'] ?>
@@ -133,7 +133,7 @@
             </div>
         </div>
 
-        <div class="row gy-3 mb-2">
+        <div class="row g-3 mb-2">
             <div class="col-lg-6">
                 <div class="card h-100 shadow-sm  overflow-auto">
                     <div class="card-header bg-body-tertiary" id="tambahLayananContainer" style="display: none;">
@@ -247,7 +247,7 @@
             </div>
         </div>
 
-        <div class="mb-0 row d-flex align-items-end">
+        <div class="mb-0 row g-1 d-flex align-items-end">
             <div class="col fw-medium text-nowrap">Grand Total</div>
             <div class="col text-end">
                 <div class="fs-4 date text-nowrap placeholder-glow" style="font-weight: 900;" id="total_pembayaran">
@@ -255,7 +255,7 @@
                 </div>
             </div>
         </div>
-        <div class="mb-0 row d-flex align-items-end">
+        <div class="mb-0 row g-1 d-flex align-items-end">
             <div class="col fw-medium text-nowrap">Terima Uang</div>
             <div class="col text-end">
                 <div class="date text-nowrap placeholder-glow" id="terima_uang_table">
@@ -263,7 +263,7 @@
                 </div>
             </div>
         </div>
-        <div class="mb-0 row d-flex align-items-end">
+        <div class="mb-0 row g-1 d-flex align-items-end">
             <div class="col fw-medium text-nowrap">Uang Kembali</div>
             <div class="col text-end">
                 <div class="date text-nowrap placeholder-glow" id="uang_kembali_table">
@@ -271,7 +271,7 @@
                 </div>
             </div>
         </div>
-        <div class="mb-0 row d-flex align-items-end">
+        <div class="mb-0 row g-1 d-flex align-items-end">
             <div class="col fw-medium text-nowrap">Metode Bayar</div>
             <div class="col text-end">
                 <div class="date text-nowrap placeholder-glow" id="metode_pembayaran_table">
