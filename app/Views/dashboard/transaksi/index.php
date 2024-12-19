@@ -88,7 +88,7 @@
                 </div>
                 <ul id="transaksiFormContainer" class="list-group rounded-0 collapse">
                     <li class="list-group-item border-top-0 bg-body-tertiary">
-                        <div class="row gx-3">
+                        <div class="row g-3">
                             <div class="col-lg-6">
                                 <div>
                                     <div class="fw-bold mb-2 border-bottom">Tambah Pasien Rawat Jalan</div>
