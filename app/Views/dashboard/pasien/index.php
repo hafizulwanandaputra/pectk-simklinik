@@ -160,13 +160,13 @@
                 <div class="accordion-item shadow-sm">
                     <div class="accordion-header">
                         <button class="accordion-button px-3 py-2 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-${index + 1}" aria-expanded="false" aria-controls="collapse-${index + 1}">
-                            <div class="pe-3">
-                                <h5 class="d-flex date justify-content-start mb-0">
+                            <div class="pe-3 text-truncate">
+                                <h5 class="d-flex date justify-content-start mb-0 text-truncate">
                                     <span class="badge bg-body text-body border border-secondary px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">${index + 1}</span>
-                                    <span class="ms-1 align-self-center">${pasien.nama_pasien}</span>
+                                    <span class="ms-1 align-self-center text-truncate">${pasien.nama_pasien}</span>
                                 </h5>
-                                <h6 class="card-subtitle">${pasien.dokter}</h6>
-                                <p class="card-text"><small class="date">${pasien.nomor_registrasi} ${jenis_kelamin}</small></p>
+                                <h6 class="card-subtitle text-truncate">${pasien.dokter}</h6>
+                                <p class="card-text text-truncate"><small class="date">${pasien.nomor_registrasi} ${jenis_kelamin}</small></p>
                             </div>
                         </button>
                     </div>
