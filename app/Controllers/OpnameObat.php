@@ -81,6 +81,14 @@ class OpnameObat extends BaseController
 
             // Menambahkan nomor urut ke data pembelian obat
             $dataOpnameObat = array_map(function ($data, $index) use ($startNumber) {
+                $db = db_connect();
+                // Query untuk menghitung total stok dari detail_opname_obat sesuai id_opname_obat
+                $totalStokQuery = $db->table('detail_opname_obat')
+                    ->selectSum('sisa_stok', 'total_stok')
+                    ->where('id_opname_obat', $data['id_opname_obat'])
+                    ->get()
+                    ->getRowArray();
+                $data['sisa_stok'] = $totalStokQuery['total_stok'] ?? 0; // Default 0 jika null
                 $data['number'] = $startNumber + $index;
                 return $data;
             }, $OpnameObat, array_keys($OpnameObat));
