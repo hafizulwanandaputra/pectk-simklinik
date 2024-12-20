@@ -183,8 +183,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <span class="placeholder w-100" style="max-width: 100px;"></span><br>
-                                        <span class="placeholder w-100" style="max-width: 100px;"></span>
+                                        <span class="placeholder w-100" style="max-width: 100px;"></span> <span class="placeholder w-100" style="max-width: 100px;"></span>
                                     </div>
                                 </div>
                             </div>
@@ -293,8 +292,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <span class="placeholder w-100" style="max-width: 100px;"></span><br>
-                            <span class="placeholder w-100" style="max-width: 100px;"></span>
+                            <span class="placeholder w-100" style="max-width: 100px;"></span> <span class="placeholder w-100" style="max-width: 100px;"></span>
                         </div>
                     </div>
                 </div>
@@ -493,7 +491,7 @@
                                     </div>
                                 </div>
                             </div>
-                            ${confirmedBadge}<br>${statusBadge}
+                            ${confirmedBadge} ${statusBadge}
                         </div>
                     </div>
                 </div>
