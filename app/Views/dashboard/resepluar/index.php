@@ -87,8 +87,8 @@
                                         <span class="badge bg-body text-body border py-1 px-2 date placeholder" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><span class="spinner-border" style="width: 0.9em; height: 0.9em;" aria-hidden="true"></span></span> <span class="placeholder ms-1" style="width: 100%"></span>
                                     </h5>
                                     <h6 class="card-subtitle mb-2 placeholder-glow">
-                                        <span class="placeholder" style="width: 25%;"></span><br>
-                                        <span class="placeholder" style="width: 12.5%;"></span>
+                                        <span class="placeholder" style="width: 100%;"></span><br>
+                                        <span class="placeholder" style="width: 100%;"></span>
                                     </h6>
                                     <div class="card-text placeholder-glow">
                                         <div style="font-size: 0.75em;">
@@ -240,8 +240,8 @@
                             <span class="badge bg-body text-body border py-1 px-2 date placeholder" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><span class="spinner-border" style="width: 0.9em; height: 0.9em;" aria-hidden="true"></span></span> <span class="placeholder ms-1" style="width: 100%"></span>
                         </h5>
                         <h6 class="card-subtitle mb-2 placeholder-glow">
-                            <span class="placeholder" style="width: 25%;"></span><br>
-                            <span class="placeholder" style="width: 12.5%;"></span>
+                            <span class="placeholder" style="width: 100%;"></span><br>
+                                        <span class="placeholder" style="width: 100%;"></span>
                         </h6>
                         <div class="card-text placeholder-glow">
                             <div style="font-size: 0.75em;">

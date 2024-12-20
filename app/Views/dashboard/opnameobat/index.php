@@ -57,7 +57,7 @@
                                         <span class="badge bg-body text-body border py-1 px-2 date placeholder" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><span class="spinner-border" style="width: 0.9em; height: 0.9em;" aria-hidden="true"></span></span>
                                     </h5>
                                     <h6 class="card-subtitle placeholder-glow">
-                                        <span class="placeholder" style="width: 25%;"></span>
+                                        <span class="placeholder" style="width: 100%;"></span>
                                     </h6>
                                 </div>
                             </div>
@@ -105,7 +105,7 @@
                             <span class="badge bg-body text-body border py-1 px-2 date placeholder" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><span class="spinner-border" style="width: 0.9em; height: 0.9em;" aria-hidden="true"></span></span>
                         </h5>
                         <h6 class="card-subtitle placeholder-glow">
-                            <span class="placeholder" style="width: 25%;"></span>
+                            <span class="placeholder" style="width: 100%;"></span>
                         </h6>
                     </div>
                 </div>
