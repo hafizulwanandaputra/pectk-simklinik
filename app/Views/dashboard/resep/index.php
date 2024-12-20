@@ -137,7 +137,7 @@
                                     </h5>
                                     <h6 class="card-subtitle mb-2 placeholder-glow">
                                         <span class="placeholder" style="width: 100%;"></span><br>
-                                        <span class="placeholder" style="width: 100%;"></span>
+                                        <span class="placeholder w-100" style="max-width: 100px;"></span> <span class="placeholder w-100" style="max-width: 100px;"></span>
                                     </h6>
                                     <div class="card-text placeholder-glow">
                                         <div style="font-size: 0.75em;">
@@ -246,7 +246,7 @@
                         </h5>
                         <h6 class="card-subtitle mb-2 placeholder-glow">
                             <span class="placeholder" style="width: 100%;"></span><br>
-                            <span class="placeholder" style="width: 100%;"></span>
+                            <span class="placeholder w-100" style="max-width: 100px;"></span> <span class="placeholder w-100" style="max-width: 100px;"></span>
                         </h6>
                         <div class="card-text placeholder-glow">
                             <div style="font-size: 0.75em;">
