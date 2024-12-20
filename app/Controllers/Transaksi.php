@@ -76,8 +76,14 @@ class Transaksi extends BaseController
             // Menerapkan filter jenis jika ada
             if ($jenis === 'Resep Luar') {
                 $TransaksiModel->where('dokter', 'Resep Luar'); // Resep Luar
-            } elseif ($jenis === 'Resep Dokter') {
-                $TransaksiModel->where('dokter !=', 'Resep Luar'); // Resep Dokter
+            } elseif ($jenis === 'Rawat Jalan') {
+                $TransaksiModel
+                    ->like('nomor_registrasi', 'RJ')
+                    ->where('dokter !=', 'Resep Luar'); // Resep Dokter
+            } elseif ($jenis === 'Rawat Inap') {
+                $TransaksiModel
+                    ->like('nomor_registrasi', 'RI')
+                    ->where('dokter !=', 'Resep Luar'); // Resep Dokter
             }
 
             // Menerapkan filter names jika disediakan

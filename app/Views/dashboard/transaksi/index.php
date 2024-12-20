@@ -57,8 +57,9 @@
                                             <option value="0">Belum Diproses</option>
                                         </select>
                                         <select id="jenisFilter" class="form-select form-select-sm w-auto  flex-fill">
-                                            <option value="">Semua Resep</option>
-                                            <option value="Resep Dokter">Resep Dokter</option>
+                                            <option value="">Semua Jenis</option>
+                                            <option value="Rawat Jalan">Rawat Jalan</option>
+                                            <option value="Rawat Inap">Rawat Inap</option>
                                             <option value="Resep Luar">Resep Luar</option>
                                         </select>
                                         <select id="namesFilter" class="form-select form-select-sm w-auto  flex-fill">
@@ -457,7 +458,13 @@
                     const metode_pembayaran = transaksi.metode_pembayaran == '' ?
                         `<em>Belum ada</em>` :
                         transaksi.metode_pembayaran + bank;
-                    const jenisResep = transaksi.id_resep ? `<span class="badge bg-secondary bg-gradient text-nowrap">RESEP LUAR</span>` : `<span class="badge bg-success bg-gradient text-nowrap">RESEP DOKTER</span>`;
+                    let nomor_registrasi = transaksi.nomor_registrasi || "";
+                    if (nomor_registrasi.includes("RJ")) {
+                        nomor_registrasi = `<span class="badge bg-success bg-gradient text-nowrap"><i class="fa-solid fa-hospital-user"></i> RAWAT JALAN</span>`;
+                    } else if (nomor_registrasi.includes("RI")) {
+                        nomor_registrasi = `<span class="badge bg-success bg-gradient text-nowrap"><i class="fa-solid fa-bed-pulse"></i> RAWAT INAP</span>`;
+                    }
+                    const jenisResep = transaksi.id_resep ? `<span class="badge bg-secondary bg-gradient text-nowrap"><i class="fa-solid fa-prescription-bottle-medical"></i> RESEP LUAR</span>` : nomor_registrasi;
                     const transaksiElement = `
                     <li class="list-group-item border-top-0 bg-body-tertiary pb-3 pt-3">
                         <div class="d-flex">
