@@ -49,23 +49,36 @@
                                 </button>
                             </h2>
                             <div id="collapseFilter" class="accordion-collapse collapse" data-bs-parent="#accordionFilter">
-                                <div class="accordion-body px-2 py-1">
-                                    <div class="d-flex flex-column flex-lg-row mb-1 gap-1 my-1">
-                                        <select id="statusFilter" class="form-select form-select-sm w-auto  flex-fill">
-                                            <option value="">Semua Status Transaksi</option>
-                                            <option value="1">Diproses</option>
-                                            <option value="0">Belum Diproses</option>
-                                        </select>
-                                        <select id="confirmedFilter" class="form-select form-select-sm w-auto  flex-fill">
-                                            <option value="">Semua Status Konfirmasi</option>
-                                            <option value="1">Dikonfirmasi</option>
-                                            <option value="0">Belum Dikonfirmasi</option>
-                                        </select>
-                                        <select id="genderFilter" class="form-select form-select-sm w-auto  flex-fill">
-                                            <option value="">Semua Jenis Kelamin</option>
-                                            <option value="L">Laki-Laki</option>
-                                            <option value="P">Perempuan</option>
-                                        </select>
+                                <div class="accordion-body px-2 py-1 mt-1">
+                                    <div class="row row-cols-1 row-cols-sm-2 g-1">
+                                        <div class="col">
+                                            <select id="statusFilter" class="form-select form-select-sm">
+                                                <option value="">Semua Status Transaksi</option>
+                                                <option value="1">Diproses</option>
+                                                <option value="0">Belum Diproses</option>
+                                            </select>
+                                        </div>
+                                        <div class="col">
+                                            <select id="jenisFilter" class="form-select form-select-sm">
+                                                <option value="">Semua Jenis</option>
+                                                <option value="Rawat Jalan">Rawat Jalan</option>
+                                                <option value="Rawat Inap">Rawat Inap</option>
+                                            </select>
+                                        </div>
+                                        <div class="col">
+                                            <select id="confirmedFilter" class="form-select form-select-sm">
+                                                <option value="">Semua Status Konfirmasi</option>
+                                                <option value="1">Dikonfirmasi</option>
+                                                <option value="0">Belum Dikonfirmasi</option>
+                                            </select>
+                                        </div>
+                                        <div class="col">
+                                            <select id="genderFilter" class="form-select form-select-sm">
+                                                <option value="">Semua Jenis Kelamin</option>
+                                                <option value="L">Laki-Laki</option>
+                                                <option value="P">Perempuan</option>
+                                            </select>
+                                        </div>
                                     </div>
                                     <select id="dokterFilter" class="form-select form-select-sm  my-1">
                                         <option value="">Semua Dokter</option>
@@ -380,6 +393,7 @@
         const search = $('#searchInput').val();
         const offset = (currentPage - 1) * limit;
         const status = $('#statusFilter').val();
+        const jenis = $('#jenisFilter').val();
         const gender = $('#genderFilter').val();
         const confirmed = $('#confirmedFilter').val();
         const dokter = $('#dokterFilter').val();
@@ -395,6 +409,7 @@
                     limit: limit,
                     offset: offset,
                     status: status,
+                    jenis: jenis,
                     gender: gender,
                     dokter: dokter,
                     confirmed: confirmed,
@@ -435,6 +450,12 @@
                     const deleteButton = `<button type="button" class="btn btn-danger btn-sm bg-gradient  delete-btn" data-id="${resep.id_resep}" data-name="${resep.nama_pasien}" data-date="${resep.tanggal_resep}">
                         <i class="fa-solid fa-trash"></i> Hapus
                     </button>`;
+                    let nomor_registrasi = resep.nomor_registrasi || "";
+                    if (nomor_registrasi.includes("RJ")) {
+                        nomor_registrasi = `<span class="badge bg-success bg-gradient text-nowrap"><i class="fa-solid fa-hospital-user"></i> RAWAT JALAN</span>`;
+                    } else if (nomor_registrasi.includes("RI")) {
+                        nomor_registrasi = `<span class="badge bg-success bg-gradient text-nowrap"><i class="fa-solid fa-bed-pulse"></i> RAWAT INAP</span>`;
+                    }
                     const resepElement = `
             <li class="list-group-item <?= (session()->get('role') != 'Apoteker') ? 'border-top-0' : ''; ?> bg-body-tertiary pb-3 pt-3">
                 <div class="d-flex">
@@ -444,7 +465,7 @@
                             <span class="ms-1 align-self-center">${resep.nama_pasien}</span>
                         </h5>
                         <h6 class="card-subtitle mb-2">
-                            ${resep.dokter}<br>${jenis_kelamin}
+                            ${resep.dokter}<br>${jenis_kelamin} ${nomor_registrasi}
                         </h6>
                         <div class="card-text">
                             <div style="font-size: 0.75em;">
@@ -591,7 +612,7 @@
         }
     });
 
-    $('#statusFilter, #genderFilter, #confirmedFilter, #dokterFilter, #tanggalFilter').on('change', function() {
+    $('#statusFilter, #jenisFilter, #genderFilter, #confirmedFilter, #dokterFilter, #tanggalFilter').on('change', function() {
         $('#resepContainer').empty();
         for (let i = 0; i < limit; i++) {
             $('#resepContainer').append(placeholder);

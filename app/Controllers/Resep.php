@@ -46,6 +46,7 @@ class Resep extends BaseController
             $limit = $this->request->getGet('limit');
             $offset = $this->request->getGet('offset');
             $status = $this->request->getGet('status');
+            $jenis = $this->request->getGet('jenis');
             $gender = $this->request->getGet('gender');
             $dokter = $this->request->getGet('dokter');
             $confirmed = $this->request->getGet('confirmed');
@@ -64,6 +65,13 @@ class Resep extends BaseController
                 $ResepModel->where('status', 1); // Mengambil resep dengan status aktif
             } elseif ($status === '0') {
                 $ResepModel->where('status', 0); // Mengambil resep dengan status non-aktif
+            }
+
+            // Menerapkan filter jenis jika disediakan
+            if ($jenis === 'Rawat Jalan') {
+                $ResepModel->like('nomor_registrasi', 'RJ'); // Mengambil pasien rawat jalan
+            } elseif ($jenis === 'Rawat Inap') {
+                $ResepModel->like('nomor_registrasi', 'RI'); // Mengambil pasien rawat inap
             }
 
             // Menerapkan filter gender jika disediakan
