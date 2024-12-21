@@ -20,7 +20,7 @@
     <div id="loadingSpinner" class="spinner-border spinner-border-sm mx-2" role="status" style="min-width: 1rem;">
         <span class="visually-hidden">Loading...</span>
     </div>
-    <a class="fs-6 mx-2 text-success-emphasis" href="<?= base_url('transaksi/report') ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Laporan Transaksi Harian"><i class="fa-solid fa-file-export"></i></a>
+    <a class="fs-6 mx-2 text-success-emphasis" href="<?= base_url('transaksi/report') ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Laporan Transaksi Harian"><i class="fa-solid fa-file-invoice"></i></a>
     <a id="toggleFilter" class="fs-6 mx-2 text-success-emphasis" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Pencarian"><i class="fa-solid fa-magnifying-glass"></i></a>
     <a id="refreshButton" class="fs-6 mx-2 text-success-emphasis" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan"><i class="fa-solid fa-sync"></i></a>
 </div>
