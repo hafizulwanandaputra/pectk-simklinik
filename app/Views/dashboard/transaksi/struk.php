@@ -69,41 +69,71 @@ $tanggal = Time::parse($transaksi['tgl_transaksi']);
         <table class="table" style="width: 100%; margin-bottom: 4px;">
             <tbody>
                 <tr>
-                    <td style="width: 15%; vertical-align: top; padding: 0;">
-                        <div>Nomor RM:</div>
-                    </td>
-                    <td style="width: 35%; vertical-align: top; padding: 0;">
-                        <div><?= $transaksi['no_rm'] ?></div>
-                    </td>
-                    <td style="width: 15%; vertical-align: top; padding: 0;">
-                        <div>Nomor Kuitansi:</div>
-                    </td>
-                    <td style="width: 35%; vertical-align: top; padding: 0;">
-                        <div><?= $transaksi['no_kwitansi'] ?></div>
-                    </td>
+                    <?php if ($transaksi['dokter'] == 'Resep Luar') : ?>
+                        <td style="width: 15%; vertical-align: top; padding: 0;">
+                            <div>Nama Pasien:</div>
+                        </td>
+                        <td style="width: 35%; vertical-align: top; padding: 0;">
+                            <div><?= ($transaksi['nama_pasien'] == NULL) ? '<em>Anonim</em>' : $transaksi['nama_pasien']; ?></div>
+                        </td>
+                        <td style="width: 15%; vertical-align: top; padding: 0;">
+                            <div>Nomor Kuitansi:</div>
+                        </td>
+                        <td style="width: 35%; vertical-align: top; padding: 0;">
+                            <div><?= $transaksi['no_kwitansi'] ?></div>
+                        </td>
+                    <?php else : ?>
+                        <td style="width: 15%; vertical-align: top; padding: 0;">
+                            <div>Nomor RM:</div>
+                        </td>
+                        <td style="width: 35%; vertical-align: top; padding: 0;">
+                            <div><?= $transaksi['no_rm'] ?></div>
+                        </td>
+                        <td style="width: 15%; vertical-align: top; padding: 0;">
+                            <div>Nomor Kuitansi:</div>
+                        </td>
+                        <td style="width: 35%; vertical-align: top; padding: 0;">
+                            <div><?= $transaksi['no_kwitansi'] ?></div>
+                        </td>
+                    <?php endif; ?>
                 </tr>
                 <tr>
-                    <td style="width: 15%; vertical-align: top; padding: 0;">
-                        <div>Nama Pasien:</div>
-                    </td>
-                    <td style="width: 35%; vertical-align: top; padding: 0;">
-                        <div><?= ($transaksi['nama_pasien'] == NULL) ? '<em>Anonim</em>' : $transaksi['nama_pasien']; ?></div>
-                    </td>
-                    <td style="width: 15%; vertical-align: top; padding: 0;">
-                        <div>Tanggal/Waktu:</div>
-                    </td>
-                    <td style="width: 35%; vertical-align: top; padding: 0;">
-                        <div><?= $tanggal ?></div>
-                    </td>
+                    <?php if ($transaksi['dokter'] == 'Resep Luar') : ?>
+                        <td style="width: 15%; vertical-align: top; padding: 0;">
+                            <div>No. Telp:</div>
+                        </td>
+                        <td style="width: 35%; vertical-align: top; padding: 0;">
+                            <div><?= $transaksi['telpon'] ?></div>
+                        </td>
+                        <td style="width: 15%; vertical-align: top; padding: 0;">
+                            <div>Tanggal/Waktu:</div>
+                        </td>
+                        <td style="width: 35%; vertical-align: top; padding: 0;">
+                            <div><?= $tanggal ?></div>
+                        </td>
+                    <?php else : ?>
+                        <td style="width: 15%; vertical-align: top; padding: 0;">
+                            <div>Nama Pasien:</div>
+                        </td>
+                        <td style="width: 35%; vertical-align: top; padding: 0;">
+                            <div><?= ($transaksi['nama_pasien'] == NULL) ? '<em>Anonim</em>' : $transaksi['nama_pasien']; ?></div>
+                        </td>
+                        <td style="width: 15%; vertical-align: top; padding: 0;">
+                            <div>Tanggal/Waktu:</div>
+                        </td>
+                        <td style="width: 35%; vertical-align: top; padding: 0;">
+                            <div><?= $tanggal ?></div>
+                        </td>
+                    <?php endif; ?>
                 </tr>
                 <tr>
-                    <td style="width: 15%; vertical-align: top; padding: 0;">
-                        <div>No. Telp:</div>
-                    </td>
-                    <td style="width: 35%; vertical-align: top; padding: 0;">
-                        <div><?= $transaksi['telpon'] ?></div>
-                    </td>
                     <?php if ($transaksi['dokter'] != 'Resep Luar') : ?>
+                        <td style="width: 15%; vertical-align: top; padding: 0;">
+                            <div>No. Telp:</div>
+                        </td>
+                        <td style="width: 35%; vertical-align: top; padding: 0;">
+                            <div><?= $transaksi['telpon'] ?></div>
+                        </td>
                         <td style="width: 15%; vertical-align: top; padding: 0;">
                             <div>Dokter:</div>
                         </td>
