@@ -54,7 +54,7 @@ $tanggal_lahir = Time::parse($resep['tanggal_lahir']);
     <div class="container-fluid my-3">
         <?php foreach ($detail_resep as $detail) : ?>
             <center>
-                <h2 style="font-size: 5.7pt;">KLINIK MATA<br>PADANG EYE CENTER • TELUK KUANTAN</h2>
+                <h2 style="font-size: 5.7pt;">KLINIK UTAMA MATA<br>PADANG EYE CENTER TELUK KUANTAN</h2>
             </center>
             <table width="100%">
                 <tbody style="vertical-align: top;">
@@ -80,7 +80,7 @@ $tanggal_lahir = Time::parse($resep['tanggal_lahir']);
             <div class="box">
                 <?= $detail['nama_obat'] ?>
                 <br>
-                <span style="font-size: 7pt;"><?= $detail['signa'] ?> hari • <?= $detail['catatan'] ?></span>
+                <span style="font-size: 7pt;"><?= $detail['signa'] ?> • <?= $detail['catatan'] ?></span>
                 <br>
                 <?= $detail['cara_pakai'] ?>
                 <?php if ($detail['bentuk_obat'] == 'Tetes' || $detail['bentuk_obat'] == 'Salep') : ?>
