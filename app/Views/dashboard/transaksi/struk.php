@@ -100,10 +100,10 @@ $tanggal = Time::parse($transaksi['tgl_transaksi']);
                 <tr>
                     <?php if ($transaksi['dokter'] == 'Resep Luar') : ?>
                         <td style="width: 15%; vertical-align: top; padding: 0;">
-                            <div>No. Telp:</div>
+                            <div>Alamat:</div>
                         </td>
                         <td style="width: 35%; vertical-align: top; padding: 0;">
-                            <div><?= $transaksi['telpon'] ?></div>
+                            <div><?= $transaksi['alamat'] ?></div>
                         </td>
                         <td style="width: 15%; vertical-align: top; padding: 0;">
                             <div>Tanggal/Waktu:</div>
@@ -129,7 +129,7 @@ $tanggal = Time::parse($transaksi['tgl_transaksi']);
                 <tr>
                     <?php if ($transaksi['dokter'] != 'Resep Luar') : ?>
                         <td style="width: 15%; vertical-align: top; padding: 0;">
-                            <div>No. Telp:</div>
+                            <div>No. Telepon:</div>
                         </td>
                         <td style="width: 35%; vertical-align: top; padding: 0;">
                             <div><?= $transaksi['telpon'] ?></div>
@@ -142,14 +142,16 @@ $tanggal = Time::parse($transaksi['tgl_transaksi']);
                         </td>
                     <?php endif; ?>
                 </tr>
-                <tr>
-                    <td style="width: 15%; vertical-align: top; padding: 0;">
-                        <div>Alamat:</div>
-                    </td>
-                    <td style="width: 35%; vertical-align: top; padding: 0;" colspan="2">
-                        <div><?= $transaksi['alamat'] ?></div>
-                    </td>
-                </tr>
+                <?php if ($transaksi['dokter'] != 'Resep Luar') : ?>
+                    <tr>
+                        <td style="width: 15%; vertical-align: top; padding: 0;">
+                            <div>Alamat:</div>
+                        </td>
+                        <td style="width: 35%; vertical-align: top; padding: 0;" colspan="2">
+                            <div><?= $transaksi['alamat'] ?></div>
+                        </td>
+                    </tr>
+                <?php endif; ?>
             </tbody>
         </table>
         <table class="table listtable" style="width: 100%; margin-bottom: 4px;">
