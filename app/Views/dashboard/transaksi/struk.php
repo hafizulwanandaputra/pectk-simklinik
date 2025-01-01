@@ -129,7 +129,7 @@ $tanggal = Time::parse($transaksi['tgl_transaksi']);
                 <tr>
                     <?php if ($transaksi['dokter'] != 'Resep Luar') : ?>
                         <td style="width: 15%; vertical-align: top; padding: 0;">
-                            <div>No. Telepon:</div>
+                            <div>Nomor HP:</div>
                         </td>
                         <td style="width: 35%; vertical-align: top; padding: 0;">
                             <div><?= $transaksi['telpon'] ?></div>

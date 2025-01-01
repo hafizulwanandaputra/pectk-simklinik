@@ -160,7 +160,7 @@ $tanggalFormat = $formatter->format($tanggal_isi_resep);
                 </tr>
                 <tr>
                     <td style="width: 25%; vertical-align: top; padding: 0;">
-                        <div>Nomor Telepon:</div>
+                        <div>Nomor HP:</div>
                     </td>
                     <td style="width: 75%; vertical-align: top; padding: 0;">
                         <div><?= $resep['telpon'] ?></div>
