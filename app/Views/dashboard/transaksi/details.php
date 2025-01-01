@@ -134,65 +134,67 @@
         </div>
 
         <div class="row g-3 mb-2">
-            <div class="col-lg-6">
-                <div class="card h-100 shadow-sm  overflow-auto">
-                    <div class="card-header bg-body-tertiary" id="tambahLayananContainer" style="display: none;">
-                        <form id="tambahLayanan" enctype="multipart/form-data">
-                            <div class="mb-2">
-                                <select class="form-select form-select-sm form-tindakan" id="id_layanan" name="id_layanan" aria-label="id_layanan">
-                                    <option value="" disabled selected>-- Pilih Tindakan --</option>
-                                </select>
-                                <div class="invalid-feedback"></div>
-                            </div>
-                            <div class="d-flex flex-column flex-lg-row gap-2">
-                                <div class="flex-fill">
-                                    <input type="number" id="qty_transaksi" name="qty_transaksi" class="form-control form-control-sm form-tindakan" placeholder="Qty" autocomplete="off">
+            <?php if ($transaksi['dokter'] != 'Resep Luar') : ?>
+                <div class="col-lg-6">
+                    <div class="card h-100 shadow-sm  overflow-auto">
+                        <div class="card-header bg-body-tertiary" id="tambahLayananContainer" style="display: none;">
+                            <form id="tambahLayanan" enctype="multipart/form-data">
+                                <div class="mb-2">
+                                    <select class="form-select form-select-sm form-tindakan" id="id_layanan" name="id_layanan" aria-label="id_layanan">
+                                        <option value="" disabled selected>-- Pilih Tindakan --</option>
+                                    </select>
                                     <div class="invalid-feedback"></div>
                                 </div>
-                                <div class="flex-fill">
-                                    <input type="number" id="diskon_layanan" name="diskon_layanan" class="form-control form-control-sm form-tindakan" placeholder="Diskon (%)" autocomplete="off">
-                                    <div class="invalid-feedback"></div>
+                                <div class="d-flex flex-column flex-lg-row gap-2">
+                                    <div class="flex-fill">
+                                        <input type="number" id="qty_transaksi" name="qty_transaksi" class="form-control form-control-sm form-tindakan" placeholder="Qty" autocomplete="off">
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                    <div class="flex-fill">
+                                        <input type="number" id="diskon_layanan" name="diskon_layanan" class="form-control form-control-sm form-tindakan" placeholder="Diskon (%)" autocomplete="off">
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                    <div class="d-grid d-lg-block w-auto">
+                                        <button type="submit" id="addLayananButton" class="btn btn-primary bg-gradient btn-sm text-nowrap">
+                                            <i class="fa-solid fa-plus"></i> Tambah
+                                        </button>
+                                    </div>
                                 </div>
-                                <div class="d-grid d-lg-block w-auto">
-                                    <button type="submit" id="addLayananButton" class="btn btn-primary bg-gradient btn-sm text-nowrap">
-                                        <i class="fa-solid fa-plus"></i> Tambah
-                                    </button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="card-body p-0 m-0 table-responsive">
-                        <table class="table table-sm mb-0" style="width:100%; font-size: 0.75em;">
-                            <thead>
-                                <tr class="align-middle">
-                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Tindakan</th>
-                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">Nama Tindakan</th>
-                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Qty</th>
-                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Harga</th>
-                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Diskon</th>
-                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total</th>
-                                </tr>
-                            </thead>
-                            <tbody class="align-top" id="list_layanan">
-                                <tr>
-                                    <td colspan="6" class="text-center">Memuat detail transaksi...</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="card-footer bg-body-tertiary">
-                        <div class="row d-flex align-items-end">
-                            <div class="col fw-medium text-nowrap">Sub Total</div>
-                            <div class="col text-end">
-                                <div class="date text-nowrap placeholder-glow fw-bold" id="subtotal_layanan">
-                                    <span class="placeholder w-100"></span>
+                            </form>
+                        </div>
+                        <div class="card-body p-0 m-0 table-responsive">
+                            <table class="table table-sm mb-0" style="width:100%; font-size: 0.75em;">
+                                <thead>
+                                    <tr class="align-middle">
+                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Tindakan</th>
+                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">Nama Tindakan</th>
+                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Qty</th>
+                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Harga</th>
+                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Diskon</th>
+                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="align-top" id="list_layanan">
+                                    <tr>
+                                        <td colspan="6" class="text-center">Memuat detail transaksi...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="card-footer bg-body-tertiary">
+                            <div class="row d-flex align-items-end">
+                                <div class="col fw-medium text-nowrap">Sub Total</div>
+                                <div class="col text-end">
+                                    <div class="date text-nowrap placeholder-glow fw-bold" id="subtotal_layanan">
+                                        <span class="placeholder w-100"></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-lg-6">
+            <?php endif; ?>
+            <div class="<?= ($transaksi['dokter'] == 'Resep Luar') ? 'col' : 'col-lg-6'; ?>">
                 <div class="card h-100 shadow-sm  overflow-auto">
                     <div class="card-header bg-body-tertiary" id="tambahObatAlkesContainer" style="display: none;">
                         <form id="tambahObatAlkes" enctype="multipart/form-data">
@@ -787,9 +789,9 @@
 
             try {
                 await axios.delete(`<?= base_url('/transaksi/hapusdetailtransaksi') ?>/${detailTransaksiId}`);
-                fetchLayanan();
+                <?= ($transaksi['dokter'] != 'Resep Luar') ? 'fetchLayanan();' : ''; ?>
                 fetchObatAlkes();
-                fetchTindakanOptions();
+                <?= ($transaksi['dokter'] != 'Resep Luar') ? 'fetchTindakanOptions();' : ''; ?>
                 fetchResepOptions();
                 fetchStatusTransaksi();
                 transactionProcessBtn();
@@ -875,9 +877,9 @@
                             $('#editLayanan .is-invalid').removeClass('is-invalid');
                             $('#editLayanan .invalid-feedback').text('').hide();
                             $('#editLayananTransaksi').remove();
-                            fetchLayanan();
+                            <?= ($transaksi['dokter'] != 'Resep Luar') ? 'fetchLayanan();' : ''; ?>
                             fetchObatAlkes();
-                            fetchTindakanOptions();
+                            <?= ($transaksi['dokter'] != 'Resep Luar') ? 'fetchTindakanOptions();' : ''; ?>
                             fetchResepOptions();
                             fetchStatusTransaksi();
                             transactionProcessBtn();
@@ -1005,9 +1007,9 @@
                             $('#editObatAlkes .is-invalid').removeClass('is-invalid');
                             $('#editObatAlkes .invalid-feedback').text('').hide();
                             $('#editObatAlkesTransaksi').remove();
-                            fetchLayanan();
+                            <?= ($transaksi['dokter'] != 'Resep Luar') ? 'fetchLayanan();' : ''; ?>
                             fetchObatAlkes();
-                            fetchTindakanOptions();
+                            <?= ($transaksi['dokter'] != 'Resep Luar') ? 'fetchTindakanOptions();' : ''; ?>
                             fetchResepOptions();
                             fetchStatusTransaksi();
                             transactionProcessBtn();
@@ -1099,9 +1101,9 @@
                     $('#diskon_layanan').val('');
                     $('#tambahLayanan .is-invalid').removeClass('is-invalid');
                     $('#tambahLayanan .invalid-feedback').text('').hide();
-                    fetchLayanan();
+                    <?= ($transaksi['dokter'] != 'Resep Luar') ? 'fetchLayanan();' : ''; ?>
                     fetchObatAlkes();
-                    fetchTindakanOptions();
+                    <?= ($transaksi['dokter'] != 'Resep Luar') ? 'fetchTindakanOptions();' : ''; ?>
                     fetchStatusTransaksi();
                     transactionProcessBtn();
                 } else {
@@ -1179,7 +1181,7 @@
                     $('#diskon_obatalkes').val('');
                     $('#tambahObatAlkes .is-invalid').removeClass('is-invalid');
                     $('#tambahObatAlkes .invalid-feedback').text('').hide();
-                    fetchLayanan();
+                    <?= ($transaksi['dokter'] != 'Resep Luar') ? 'fetchLayanan();' : ''; ?>
                     fetchObatAlkes();
                     fetchResepOptions();
                     fetchStatusTransaksi();
@@ -1275,7 +1277,7 @@
                 if (response.data.success) {
                     showSuccessToast(response.data.message, 'success');
                     $('#transaksiModal').modal('hide');
-                    fetchLayanan();
+                    <?= ($transaksi['dokter'] != 'Resep Luar') ? 'fetchLayanan();' : ''; ?>
                     fetchObatAlkes();
                     fetchStatusTransaksi();
                     transactionProcessBtn();
@@ -1352,7 +1354,7 @@
                 if (response.data.success) {
                     showSuccessToast(response.data.message, 'success');
                     $('#batalTransaksiModal').modal('hide');
-                    fetchLayanan();
+                    <?= ($transaksi['dokter'] != 'Resep Luar') ? 'fetchLayanan();' : ''; ?>
                     fetchObatAlkes();
                     fetchStatusTransaksi();
                     transactionProcessBtn();
@@ -1446,9 +1448,9 @@
         $(document).on('visibilitychange', function() {
             if (document.visibilityState === "visible") {
                 toggleBankField();
-                fetchLayanan();
+                <?= ($transaksi['dokter'] != 'Resep Luar') ? 'fetchLayanan();' : ''; ?>
                 fetchObatAlkes();
-                fetchTindakanOptions();
+                <?= ($transaksi['dokter'] != 'Resep Luar') ? 'fetchTindakanOptions();' : ''; ?>
                 fetchResepOptions();
                 fetchStatusTransaksi();
                 transactionProcessBtn();
@@ -1458,17 +1460,17 @@
         $('#refreshButton').on('click', function(e) {
             e.preventDefault();
             toggleBankField();
-            fetchLayanan();
+            <?= ($transaksi['dokter'] != 'Resep Luar') ? 'fetchLayanan();' : ''; ?>
             fetchObatAlkes();
-            fetchTindakanOptions();
+            <?= ($transaksi['dokter'] != 'Resep Luar') ? 'fetchTindakanOptions();' : ''; ?>
             fetchResepOptions();
             fetchStatusTransaksi();
             transactionProcessBtn();
         });
         toggleBankField();
-        fetchLayanan();
+        <?= ($transaksi['dokter'] != 'Resep Luar') ? 'fetchLayanan();' : ''; ?>
         fetchObatAlkes();
-        fetchTindakanOptions();
+        <?= ($transaksi['dokter'] != 'Resep Luar') ? 'fetchTindakanOptions();' : ''; ?>
         fetchResepOptions();
         fetchStatusTransaksi();
         transactionProcessBtn();

@@ -1324,6 +1324,7 @@ class Transaksi extends BaseController
                         $resep = $db->table('resep');
                         $resep->where('id_resep', $detail['id_resep']); // Memastikan mencocokkan berdasarkan id_resep
                         $resep->update([
+                            'confirmed' => 1, // Mengonfirmasi resep ketika transaksi diproses
                             'status' => 1, // Memperbarui status resep menjadi selesai
                         ]);
                     }

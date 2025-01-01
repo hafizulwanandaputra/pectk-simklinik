@@ -77,9 +77,9 @@ $tanggalFormat = $formatter->format($tanggal_isi_resep);
                         <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/logo_pec.png')) ?>" width="64px" alt="">
                     </th>
                     <td style="width: 100%;">
-                        <h2 style="margin: 0; padding: 0;">KLINIK MATA PEC TELUK KUANTAN</h2>
+                        <h3 style="margin: 0; padding: 0;">KLINIK UTAMA MATA PADANG EYE CENTER TELUK KUANTAN</h3>
                         <div>
-                            <div>Jl. Rusdi S. Abrus LK III Sinambek, Kelurahan Sungai Jering, Kecamatan Kuantan Tengah, Kabupaten Kuantan Singingi, Riau.</div>
+                            <div>Jl. Rusdi S. Abrus No. 35, LK III Sinambek, Kelurahan Sungai Jering, Kecamatan Kuantan Tengah, Kabupaten Kuantan Singingi, Riau.</div>
                         </div>
                     </td>
                 </tr>
