@@ -5,29 +5,6 @@
   --bs-font-monospace: ui-monospace, SFMono-Regular, "SF Mono", "Noto Sans Mono", "Noto Color Emoji", "Apple Color Emoji", monospace, "Segoe UI Emoji";
 }
 
-@supports (font-variation-settings: normal) {
-  :root {
-    --bs-font-sans-serif: "Roboto Flex", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-      "Noto Sans", "Noto Sans Arabic", "Noto Color Emoji", "Apple Color Emoji", sans-serif, "Segoe UI Emoji";
-  }
-
-  *,
-  body {
-    font-variation-settings:
-      "slnt" 0,
-      "wdth" 100,
-      "GRAD" 0,
-      "XOPQ" 96,
-      "XTRA" 480,
-      "YOPQ" 79,
-      "YTAS" 750,
-      "YTDE" -203,
-      "YTFI" 738,
-      "YTLC" 530,
-      "YTUC" 712;
-  }
-}
-
 .date {
   font-variant-numeric: tabular-nums;
 }
