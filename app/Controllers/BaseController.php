@@ -48,7 +48,7 @@ abstract class BaseController extends Controller
      *
      * @var string
      */
-    protected $systemName = "Kasir dan Farmasi Klinik Utama Mata Padang Eye Center Teluk Kuantan";
+    protected $systemName = "Sistem Informasi Manajemen Klinik Utama Mata Padang Eye Center Teluk Kuantan";
 
     /**
      * System subtitle name property.
