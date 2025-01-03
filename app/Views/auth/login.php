@@ -108,7 +108,7 @@
             <div class="row align-items-center">
                 <div class="col-md-6 col-lg-7 text-center text-md-start align-self-start">
                     <img class="mb-3" src="<?= base_url('/assets/images/logo_pec.png'); ?>" width="128px">
-                    <h1 class="display-6 fw-bold lh-1 text-success-emphasis mb-3">Kasir dan Farmasi<br>PEC Teluk Kuantan</h1>
+                    <h1 class="display-6 fw-bold lh-1 text-success-emphasis mb-3">SIM Klinik<br>PEC Teluk Kuantan</h1>
                     <p class="fs-6 text-success-emphasis"><?= $systemName ?><br><small class="fw-bold"><em><?= $systemSubtitleName ?></small></em></p>
                 </div>
                 <div class="col-md">

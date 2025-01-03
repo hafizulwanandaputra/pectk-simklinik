@@ -306,7 +306,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
             <div id="sidebarHeader" class="d-flex justify-content-center align-items-center me-0 px-3 py-md-1" style="min-height: 48px; max-height: 48px;">
                 <span class="navbar-brand mx-0 text-start text-md-center lh-sm d-flex justify-content-center align-items-center" style="font-size: 7.5pt;">
                     <img src="<?= base_url('/assets/images/logo_pec.png'); ?>" alt="KLINIK MATA PECTK" height="24px">
-                    <div class="ps-2 text-start text-success-emphasis">KASIR DAN FARMASI<br><span class="fw-bold">PEC</span> TELUK KUANTAN</div>
+                    <div class="ps-2 text-start text-success-emphasis">SIM KLINIK<br><span class="fw-bold">PEC</span> TELUK KUANTAN</div>
                 </span>
             </div>
             <button type="button" class="btn btn-outline-success bg-gradient d-md-none mx-3" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation"><i class="fa-solid fa-bars"></i></button>
@@ -336,7 +336,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                             <div>
                                 <span class="navbar-brand mx-0 text-start text-md-center lh-sm d-flex justify-content-center align-items-center" style="font-size: 7.5pt;">
                                     <img src="<?= base_url('/assets/images/logo_pec.png'); ?>" alt="KLINIK MATA PECTK" height="24px">
-                                    <div class="ps-2 text-start text-success-emphasis">KASIR DAN FARMASI<br><span class="fw-bold">PEC</span> TELUK KUANTAN</div>
+                                    <div class="ps-2 text-start text-success-emphasis">SIM KLINIK<br><span class="fw-bold">PEC</span> TELUK KUANTAN</div>
                                 </span>
                             </div>
                             <button id="closeOffcanvasBtn" type="button" class="btn btn-success bg-gradient" data-bs-dismiss="offcanvas" aria-label="Close"><i class="fa-solid fa-angles-right"></i></button>
