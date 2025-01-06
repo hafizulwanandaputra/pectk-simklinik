@@ -19,6 +19,10 @@ $routes->get('/(?i)pasien', 'Pasien::index');
 $routes->get('/(?i)pasien/(?i)pasienlist', 'Pasien::pasienlist');
 $routes->get('/(?i)pasien/(?i)pasien/(:any)', 'Pasien::pasien/$1');
 $routes->post('/(?i)pasien/(?i)create', 'Pasien::create');
+$routes->get('/(?i)pasien/(?i)provinsi', 'Pasien::provinsi');
+$routes->get('/(?i)pasien/(?i)kabupaten', 'Pasien::kabupaten');
+$routes->get('/(?i)pasien/(?i)kecamatan', 'Pasien::kecamatan');
+$routes->get('/(?i)pasien/(?i)kelurahan', 'Pasien::kelurahan');
 $routes->post('/(?i)pasien/(?i)update/(:any)', 'Pasien::update/$1');
 $routes->delete('/(?i)pasien/(?i)delete/(:any)', 'Pasien::delete/$1');
 
