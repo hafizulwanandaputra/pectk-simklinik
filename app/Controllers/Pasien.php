@@ -142,6 +142,7 @@ class Pasien extends BaseController
 
             // Query untuk item sebelumnya
             $previous = $db->table('pasien')
+                ->where('pasien.id_pasien <', $id) // Kondisi untuk id sebelumnya
                 ->orderBy('pasien.id_pasien', 'DESC') // Urutan descending
                 ->limit(1) // Batas 1 hasil
                 ->get()
@@ -149,6 +150,7 @@ class Pasien extends BaseController
 
             // Query untuk item berikutnya
             $next = $db->table('pasien')
+                ->where('pasien.id_pasien >', $id) // Kondisi untuk id berikutnya
                 ->orderBy('pasien.id_pasien', 'ASC') // Urutan ascending
                 ->limit(1) // Batas 1 hasil
                 ->get()
@@ -159,7 +161,7 @@ class Pasien extends BaseController
                 // Menyiapkan data untuk tampilan
                 $data = [
                     'pasien' => $pasien,
-                    'title' => 'Detail Pasien ' . $pasien['nama_pasien'] . ' (ID ' . $pasien['no_rm'] . ') - ' . $this->systemName,
+                    'title' => 'Detail Pasien ' . $pasien['nama_pasien'] . ' (' . $pasien['no_rm'] . ') - ' . $this->systemName,
                     'systemname' => $this->systemName,
                     'headertitle' => 'Detail Pasien',
                     'agent' => $this->request->getUserAgent(), // Menyimpan informasi tentang user agent
