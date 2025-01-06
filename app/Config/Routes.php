@@ -17,14 +17,14 @@ $routes->get('/(?i)home', 'Home::index');
 // PASIEN
 $routes->get('/(?i)pasien', 'Pasien::index');
 $routes->get('/(?i)pasien/(?i)pasienlist', 'Pasien::pasienlist');
+$routes->get('/(?i)pasien/(?i)detailpasien/(:any)', 'Pasien::detailpasien/$1');
 $routes->get('/(?i)pasien/(?i)pasien/(:any)', 'Pasien::pasien/$1');
 $routes->post('/(?i)pasien/(?i)create', 'Pasien::create');
 $routes->get('/(?i)pasien/(?i)provinsi', 'Pasien::provinsi');
-$routes->get('/(?i)pasien/(?i)kabupaten', 'Pasien::kabupaten');
-$routes->get('/(?i)pasien/(?i)kecamatan', 'Pasien::kecamatan');
-$routes->get('/(?i)pasien/(?i)kelurahan', 'Pasien::kelurahan');
+$routes->get('/(?i)pasien/(?i)kabupaten/(:any)', 'Pasien::kabupaten/$1');
+$routes->get('/(?i)pasien/(?i)kecamatan/(:any)', 'Pasien::kecamatan/$1');
+$routes->get('/(?i)pasien/(?i)kelurahan/(:any)', 'Pasien::kelurahan/$1');
 $routes->post('/(?i)pasien/(?i)update/(:any)', 'Pasien::update/$1');
-$routes->delete('/(?i)pasien/(?i)delete/(:any)', 'Pasien::delete/$1');
 
 // RAWAT JALAN
 $routes->get('/(?i)rawatjalan', 'RawatJalan::index');
