@@ -49,7 +49,7 @@
                 </form>
                 <ul id="opnameObatContainer" class="list-group rounded-top-0 ">
                     <?php for ($i = 0; $i < 12; $i++) : ?>
-                        <li class="list-group-item bg-body-tertiary border-top-0 pb-3 pt-3" style="cursor: wait;">
+                        <li class="list-group-item border-top-0 pb-3 pt-3" style="cursor: wait;">
                             <div class="d-flex">
                                 <div class="align-self-center w-100">
                                     <h5 class="card-title d-flex justify-content-start placeholder-glow">
@@ -97,7 +97,7 @@
     let currentPage = 1;
     let pembelianObatId = null;
     var placeholder = `
-            <li class="list-group-item border-top-0 bg-body-tertiary pb-3 pt-3" style="cursor: wait;">
+            <li class="list-group-item border-top-0 pb-3 pt-3" style="cursor: wait;">
                 <div class="d-flex">
                     <div class="align-self-center w-100">
                         <h5 class="card-title d-flex justify-content-start placeholder-glow">
@@ -184,7 +184,7 @@
             if (data.total === 0) {
                 $('#paginationNav ul').empty();
                 $('#opnameObatContainer').append(
-                    '<li class="list-group-item border-top-0 bg-body-tertiary pb-3 pt-3">' +
+                    '<li class="list-group-item border-top-0 pb-3 pt-3">' +
                     '    <h1 class="display-4 text-center text-muted" style="font-weight: 200;">Data Kosong</h1>' +
                     '</li>'
                 );
@@ -192,7 +192,7 @@
                 data.opname_obat.forEach(function(opname_obat) {
                     const sisa_stok = parseInt(opname_obat.sisa_stok);
                     const opnameObatElement = `
-            <li class="list-group-item border-top-0 bg-body-tertiary pb-3 pt-3">
+            <li class="list-group-item border-top-0 pb-3 pt-3">
                 <div class="d-flex">
                     <div class="align-self-center w-100">
                         <h5 class="card-title d-flex date justify-content-between">

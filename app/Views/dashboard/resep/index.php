@@ -129,7 +129,7 @@
                 <?php endif; ?>
                 <ul id="resepContainer" class="list-group <?= (session()->get('role') != 'Apoteker') ? 'rounded-top-0 ' : ''; ?>">
                     <?php for ($i = 0; $i < 12; $i++) : ?>
-                        <li class="list-group-item <?= (session()->get('role') != 'Apoteker') ? 'border-top-0' : ''; ?> bg-body-tertiary pb-3 pt-3" style="cursor: wait;">
+                        <li class="list-group-item <?= (session()->get('role') != 'Apoteker') ? 'border-top-0' : ''; ?> pb-3 pt-3" style="cursor: wait;">
                             <div class="d-flex">
                                 <div class="align-self-center w-100">
                                     <h5 class="card-title d-flex placeholder-glow">
@@ -238,7 +238,7 @@
     let currentPage = 1;
     let pembelianObatId = null;
     var placeholder = `
-            <li class="list-group-item <?= (session()->get('role') != 'Apoteker') ? 'border-top-0' : ''; ?> bg-body-tertiary pb-3 pt-3" style="cursor: wait;">
+            <li class="list-group-item <?= (session()->get('role') != 'Apoteker') ? 'border-top-0' : ''; ?> pb-3 pt-3" style="cursor: wait;">
                 <div class="d-flex">
                     <div class="align-self-center w-100">
                         <h5 class="card-title d-flex placeholder-glow">
@@ -424,7 +424,7 @@
             if (data.total === 0) {
                 $('#paginationNav ul').empty();
                 $('#resepContainer').append(
-                    '<li class="list-group-item <?= (session()->get('role') != 'Apoteker') ? 'border-top-0' : ''; ?> bg-body-tertiary pb-3 pt-3">' +
+                    '<li class="list-group-item <?= (session()->get('role') != 'Apoteker') ? 'border-top-0' : ''; ?> pb-3 pt-3">' +
                     '    <h1 class="display-4 text-center text-muted" style="font-weight: 200;">Data Kosong</h1>' +
                     '</li>'
                 );
@@ -457,7 +457,7 @@
                         nomor_registrasi = `<span class="badge bg-success bg-gradient text-nowrap"><i class="fa-solid fa-bed-pulse"></i> RAWAT INAP</span>`;
                     }
                     const resepElement = `
-            <li class="list-group-item <?= (session()->get('role') != 'Apoteker') ? 'border-top-0' : ''; ?> bg-body-tertiary pb-3 pt-3">
+            <li class="list-group-item <?= (session()->get('role') != 'Apoteker') ? 'border-top-0' : ''; ?> pb-3 pt-3">
                 <div class="d-flex">
                     <div class="align-self-center w-100">
                         <h5 class="card-title d-flex date justify-content-start">

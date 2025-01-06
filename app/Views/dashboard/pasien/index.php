@@ -36,9 +36,9 @@
                         <i class="fa-solid fa-plus"></i> Tambah Pasien
                     </button>
                 </div>
-                <ul id="pasienContainer" class="list-group rounded-top-0 ">
+                <div id="pasienContainer" class="list-group rounded-top-0 ">
                     <?php for ($i = 0; $i < 12; $i++) : ?>
-                        <li class="list-group-item bg-body-tertiary border-top-0 pb-3 pt-3" style="cursor: wait;">
+                        <span class="list-group-item border-top-0 pb-3 pt-3" style="cursor: wait;">
                             <div class="d-flex">
                                 <div class="align-self-center w-100">
                                     <h5 class="card-title d-flex justify-content-start placeholder-glow">
@@ -90,12 +90,9 @@
                                 </div>
                             </div>
                             <hr>
-                            <div class="d-grid gap-2 d-flex justify-content-end">
-                                <a class="btn btn-body bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
-                            </div>
-                        </li>
+                        </span>
                     <?php endfor; ?>
-                </ul>
+                </div>
             </div>
             <nav id="paginationNav" class="d-flex justify-content-center justify-content-lg-end mt-3 overflow-auto w-100">
                 <ul class="pagination pagination-sm"></ul>
@@ -126,7 +123,7 @@
     let currentPage = 1;
     let pembelianObatId = null;
     var placeholder = `
-                        <li class="list-group-item bg-body-tertiary border-top-0 pb-3 pt-3" style="cursor: wait;">
+                        <span class="list-group-item border-top-0 pb-3 pt-3" style="cursor: wait;">
                             <div class="d-flex">
                                 <div class="align-self-center w-100">
                                     <h5 class="card-title d-flex justify-content-start placeholder-glow">
@@ -177,11 +174,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <hr>
-                            <div class="d-grid gap-2 d-flex justify-content-end">
-                                <a class="btn btn-body bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
-                            </div>
-                        </li>
+                        </span>
     `;
 
     async function fetchPasien() {
@@ -220,7 +213,7 @@
                         jenis_kelamin = `Perempuan`;
                     }
                     const pasienElement = `
-            <li class="list-group-item border-top-0 bg-body-tertiary pb-3 pt-3">
+            <a href="<?= base_url('pasien/detailpasien') ?>/${pasien.id_pasien}" class="list-group-item list-group-item-action border-top-0 pb-3 pt-3">
                 <div class="d-flex">
                     <div class="align-self-center w-100">
                         <h5 class="card-title d-flex date justify-content-between">
@@ -264,13 +257,7 @@
                                     </div>
                     </div>
                 </div>
-                <hr>
-                <div class="d-grid gap-2 d-flex justify-content-end">
-                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('pasien/detailpasien') ?>/${pasien.id_pasien}';">
-                        <i class="fa-solid fa-circle-info"></i> Detail
-                    </button>
-                </div>
-            </li>
+            </a>
                 `;
 
                     $('#pasienContainer').append(pasienElement);
