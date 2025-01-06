@@ -54,23 +54,23 @@ class Pasien extends Migration
                 'null' => true,
             ],
             'provinsi' => [
-                'type' => 'VARCHAR',
-                'constraint' => 128,
+                'type' => 'CHAR',
+                'constraint' => 2,
                 'null' => true,
             ],
             'kabupaten' => [
-                'type' => 'VARCHAR',
-                'constraint' => 128,
+                'type' => 'CHAR',
+                'constraint' => 4,
                 'null' => true,
             ],
             'kecamatan' => [
-                'type' => 'VARCHAR',
-                'constraint' => 128,
+                'type' => 'CHAR',
+                'constraint' => 6,
                 'null' => true,
             ],
             'kelurahan' => [
-                'type' => 'VARCHAR',
-                'constraint' => 128,
+                'type' => 'CHAR',
+                'constraint' => 10,
                 'null' => true,
             ],
             'rt' => [
