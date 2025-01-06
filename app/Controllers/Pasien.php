@@ -46,13 +46,11 @@ class Pasien extends BaseController
 
             $PasienModel = $this->PasienModel;
 
-            $PasienModel->select('pasien.*'); // Mengambil semua kolom dari tabel pasien
-
             // Menerapkan filter pencarian berdasarkan nomor rekam medis dan nama pasien, pasien
             if ($search) {
                 $PasienModel->groupStart()
-                    ->orLike('no_rm', $search)
-                    ->like('nama_pasien', $search)
+                    ->like('no_rm', $search)
+                    ->orLike('nama_pasien', $search)
                     ->groupEnd();
             }
 
@@ -89,7 +87,7 @@ class Pasien extends BaseController
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Dokter' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Rekam Medis') {
             // Menghasilkan nomor rekam medis baru
-            $lastRecord = $this->PasienModel->orderBy('id', 'DESC')->first(); // Dapatkan data terakhir berdasarkan ID
+            $lastRecord = $this->PasienModel->orderBy('id_pasien', 'DESC')->first(); // Dapatkan data terakhir berdasarkan ID
             $lastNoRm = $lastRecord ? str_replace('-', '', $lastRecord['no_rm']) : '000000'; // Nomor default jika tidak ada data
 
             $newNoRmNumeric = (int)$lastNoRm + 1; // Auto increment
@@ -124,7 +122,7 @@ class Pasien extends BaseController
             $newId = $this->PasienModel->insertID();
 
             // Redirect ke halaman detail pasien
-            return redirect()->to(base_url('detailpasien/' . $newId));
+            return redirect()->to(base_url('pasien/detailpasien/' . $newId));
         } else {
             // Jika peran tidak dikenali, lemparkan pengecualian 404
             throw PageNotFoundException::forPageNotFound();
