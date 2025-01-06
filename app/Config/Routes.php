@@ -24,6 +24,7 @@ $routes->get('/(?i)pasien/(?i)provinsi', 'Pasien::provinsi');
 $routes->get('/(?i)pasien/(?i)kabupaten/(:any)', 'Pasien::kabupaten/$1');
 $routes->get('/(?i)pasien/(?i)kecamatan/(:any)', 'Pasien::kecamatan/$1');
 $routes->get('/(?i)pasien/(?i)kelurahan/(:any)', 'Pasien::kelurahan/$1');
+$routes->get('/(?i)pasien/(?i)rawatjalanlist/(:any)', 'Pasien::rawatjalanlist/$1');
 $routes->post('/(?i)pasien/(?i)update/(:any)', 'Pasien::update/$1');
 
 // RAWAT JALAN
