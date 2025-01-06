@@ -2,20 +2,24 @@
 
 namespace App\Controllers;
 
+use App\Models\PasienModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\RequestException;
 
 class Pasien extends BaseController
 {
+    protected $PasienModel;
+    public function __construct()
+    {
+        $this->PasienModel = new PasienModel();
+    }
     public function index()
     {
-        // Memeriksa peran pengguna, hanya 'Admin' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
+        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', dan 'Rekam Medis' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Rekam Medis') {
             // Menyiapkan data untuk tampilan
             $data = [
-                'title' => 'Pasien Rawat Jalan - ' . $this->systemName,
-                'headertitle' => 'Pasien Rawat Jalan',
+                'title' => 'Pasien - ' . $this->systemName,
+                'headertitle' => 'Pasien',
                 'agent' => $this->request->getUserAgent() // Mengambil informasi user agent
             ];
             // Menampilkan tampilan untuk halaman pasien
@@ -26,64 +30,51 @@ class Pasien extends BaseController
         }
     }
 
-    public function pasienapi()
+    public function pasienlist()
     {
-        // Memeriksa peran pengguna, hanya 'Admin' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
-            // Mengambil tanggal dari query string
-            $tanggal = $this->request->getGet('tanggal');
+        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', dan 'Rekam Medis' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Rekam Medis') {
+            // Mengambil parameter pencarian, limit, offset, dan status dari query string
+            $search = $this->request->getGet('search');
+            $limit = $this->request->getGet('limit');
+            $offset = $this->request->getGet('offset');
 
-            // Memeriksa apakah tanggal diisi
-            if (!$tanggal) {
-                return $this->response->setStatusCode(400)->setJSON([
-                    'error' => 'Tanggal harus diisi',
-                ]);
+            // Menentukan limit dan offset
+            $limit = $limit ? intval($limit) : 0;
+            $offset = $offset ? intval($offset) : 0;
+
+            $PasienModel = $this->PasienModel;
+
+            $PasienModel->select('pasien.*'); // Mengambil semua kolom dari tabel pasien
+
+            // Menerapkan filter pencarian berdasarkan nomor rekam medis dan nama pasien, pasien
+            if ($search) {
+                $PasienModel->groupStart()
+                    ->orLike('no_rm', $search)
+                    ->like('nama_pasien', $search)
+                    ->groupEnd();
             }
 
-            // Membuat klien HTTP Guzzle baru
-            $client = new Client();
+            // Menghitung total hasil pencarian
+            $total = $PasienModel->countAllResults(false);
 
-            try {
-                // Mengirim permintaan GET ke API
-                $response = $client->request('GET', env('API-URL') . $tanggal, [
-                    'headers' => [
-                        'Accept' => 'application/json', // Menyatakan format data yang diinginkan
-                        'x-key' => env('X-KEY') // Menyertakan kunci API untuk autentikasi
-                    ],
-                ]);
+            // Mendapatkan hasil yang sudah dipaginasi
+            $Pasien = $PasienModel->orderBy('id_pasien', 'DESC')->findAll($limit, $offset);
 
-                // Mendekode JSON dan menangani potensi kesalahan
-                $data = json_decode($response->getBody()->getContents(), true);
+            // Menghitung nomor urut untuk halaman saat ini
+            $startNumber = $offset + 1;
 
-                // Mengembalikan respons JSON dengan data pasien
-                return $this->response->setJSON([
-                    'data' => $data,
-                ]);
-            } catch (RequestException $e) {
-                // Periksa apakah ada respons dari API
-                $response = $e->getResponse();
-                $errorDetails = [];
+            // Menambahkan nomor urut ke setiap pasien
+            $dataPasien = array_map(function ($data, $index) use ($startNumber) {
+                $data['number'] = $startNumber + $index; // Menetapkan nomor urut
+                return $data; // Mengembalikan data yang telah ditambahkan nomor urut
+            }, $Pasien, array_keys($Pasien));
 
-                // Jika ada respons, coba parse JSON-nya
-                if ($response) {
-                    $body = $response->getBody()->getContents();
-                    $errorDetails = json_decode($body, true);
-
-                    // Jika parsing gagal, simpan teks asli
-                    if (json_last_error() !== JSON_ERROR_NONE) {
-                        $errorDetails = ['raw_error' => $body];
-                    }
-                } else {
-                    // Jika tidak ada respons, gunakan pesan kesalahan default
-                    $errorDetails = ['message' => $e->getMessage()];
-                }
-
-                // Mengembalikan respons dengan detail kesalahan
-                return $this->response->setStatusCode(500)->setJSON([
-                    'error' => 'Gagal mengambil data pasien',
-                    'details' => $errorDetails,
-                ]);
-            }
+            // Mengembalikan data pasien dalam format JSON
+            return $this->response->setJSON([
+                'pasien' => $dataPasien,
+                'total' => $total // Mengembalikan total hasil
+            ]);
         } else {
             // Jika peran tidak dikenali, kembalikan status 404
             return $this->response->setStatusCode(404)->setJSON([
