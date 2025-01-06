@@ -4,31 +4,25 @@
     <div class="flex-fill text-truncate">
         <div class="d-flex flex-column">
             <div class="fw-medium fs-6 lh-sm"><?= $headertitle; ?></div>
-            <div class="fw-medium lh-sm" style="font-size: 0.75em;"><span id="total_rajal">0</span> pasien rawat jalan</div>
+            <div class="fw-medium lh-sm" style="font-size: 0.75em;"><span id="totalRecords">0</span> pasien</div>
         </div>
     </div>
     <div id="loadingSpinner" class="spinner-border spinner-border-sm mx-2" role="status" style="min-width: 1rem;">
         <span class="visually-hidden">Loading...</span>
     </div>
-    <a tabindex="0" class="fs-6 mx-2 text-success-emphasis" role="button"
-        data-bs-toggle="popover"
-        data-bs-title="Dari mana data-data ini diperoleh?"
-        data-bs-content="<p>Data-data pasien rawat jalan ini diperoleh dari <em>Application Programming Interface</em> (API) Sistem Informasi Manajemen Klinik Utama Mata Padang Eye Center Teluk Kuantan.</p><p><small>Klik tombol <i class='fa-solid fa-circle-question'></i> lagi untuk menutup <em>popover</em> ini.</small></p><div class='d-flex justify-content-end'><a href='https://pectk.padangeyecenter.com/klinik' class='btn btn-body bg-gradient btn-sm' role='button' target='_blank'><i class='fa-solid fa-up-right-from-square'></i> Buka SIM Klinik</a></div>">
-        <i class="fa-solid fa-circle-question"></i>
-    </a>
+    <a id="toggleFilter" class="fs-6 mx-2 text-success-emphasis" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Pencarian"><i class="fa-solid fa-magnifying-glass"></i></a>
+    <a id="refreshButton" class="fs-6 mx-2 text-success-emphasis" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan"><i class="fa-solid fa-sync"></i></a>
 </div>
 <div style="min-width: 1px; max-width: 1px;"></div>
 <?= $this->endSection(); ?>
 <?= $this->section('content'); ?>
 <main class="main-content-inside">
-    <div class="sticky-top" style="z-index: 99;">
+    <div id="filterFields" class="sticky-top" style="z-index: 99; display: none;">
         <ul class="list-group shadow-sm rounded-0">
             <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-tertiary transparent-blur">
                 <div class="no-fluid-content">
                     <div class="input-group input-group-sm">
-                        <input type="date" id="tanggal" name="tanggal" class="form-control ">
-                        <button class="btn btn-danger bg-gradient" type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
-                        <button class="btn btn-success bg-gradient" type="button" id="refreshButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan" disabled><i class="fa-solid fa-sync"></i></button>
+                        <input type="search" id="searchInput" class="form-control" placeholder="Cari nomor rekam medis dan nama pasien">
                     </div>
                 </div>
             </li>
@@ -36,10 +30,52 @@
     </div>
     <div class="px-3 mt-3">
         <div class="no-fluid-content">
-            <div class="accordion mb-3" id="datapasien">
-                <div class="accordion-item shadow-sm p-3 p-3">
-                    <h2 class="text-center text-muted mb-0" style="font-weight: 300;">Memuat data pasien rawat jalan...</h2>
+            <div class="shadow-sm rounded">
+                <div class="d-grid gap-2">
+                    <button class="btn btn-primary btn-sm bg-gradient  rounded-bottom-0" type="button" id="addButton">
+                        <i class="fa-solid fa-plus"></i> Tambah Pasien
+                    </button>
                 </div>
+                <ul id="pasienContainer" class="list-group rounded-top-0 ">
+                    <?php for ($i = 0; $i < 12; $i++) : ?>
+                        <li class="list-group-item bg-body-tertiary border-top-0 pb-3 pt-3" style="cursor: wait;">
+                            <div class="d-flex">
+                                <div class="align-self-center w-100">
+                                    <h5 class="card-title d-flex justify-content-start placeholder-glow">
+                                        <span class="badge bg-body text-body border py-1 px-2 date placeholder" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><span class="spinner-border" style="width: 0.9em; height: 0.9em;" aria-hidden="true"></span></span> <span class="placeholder mx-1" style="width: 100%"></span>
+                                        <span class="badge bg-body text-body border py-1 px-2 date placeholder" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><span class="spinner-border" style="width: 0.9em; height: 0.9em;" aria-hidden="true"></span></span>
+                                    </h5>
+                                    <h6 class="card-subtitle placeholder-glow">
+                                        <span class="placeholder" style="width: 100%;"></span>
+                                    </h6>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="d-grid gap-2 d-flex justify-content-end">
+                                <a class="btn btn-body bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                            </div>
+                        </li>
+                    <?php endfor; ?>
+                </ul>
+            </div>
+            <nav id="paginationNav" class="d-flex justify-content-center justify-content-lg-end mt-3 overflow-auto w-100">
+                <ul class="pagination pagination-sm"></ul>
+            </nav>
+        </div>
+    </div>
+    <div class="modal modal-sheet p-4 py-md-5 fade" id="addModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content bg-body-tertiary rounded-4 shadow-lg transparent-blur">
+                <?= form_open_multipart('/pasien/create', 'id="addForm"'); ?>
+                <div class="modal-body p-4 text-center">
+                    <h5 id="addMessage"></h5>
+                    <h6 class="mb-0" id="addSubmessage"></h6>
+                </div>
+                <div class="modal-footer flex-nowrap p-0" style="border-top: 1px solid var(--bs-border-color-translucent);">
+                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end" style="border-right: 1px solid var(--bs-border-color-translucent)!important;" data-bs-dismiss="modal">Tidak</button>
+                    <button type="submit" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0" id="confirmAddBtn">Ya</button>
+                </div>
+                <?= form_close(); ?>
             </div>
         </div>
     </div>
@@ -47,134 +83,75 @@
 <?= $this->endSection(); ?>
 <?= $this->section('javascript'); ?>
 <script>
-    // HTML untuk menunjukkan bahwa data pasien sedang dimuat
-    const loading = `
-        <div class="accordion-item shadow-sm p-3 p-3">
-            <h2 class="text-center text-muted mb-0" style="font-weight: 300;">Memuat data pasien rawat jalan...</h2>
-        </div>
+    let limit = 12;
+    let currentPage = 1;
+    let pembelianObatId = null;
+    var placeholder = `
+                        <li class="list-group-item bg-body-tertiary border-top-0 pb-3 pt-3" style="cursor: wait;">
+                            <div class="d-flex">
+                                <div class="align-self-center w-100">
+                                    <h5 class="card-title d-flex justify-content-start placeholder-glow">
+                                        <span class="badge bg-body text-body border py-1 px-2 date placeholder" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><span class="spinner-border" style="width: 0.9em; height: 0.9em;" aria-hidden="true"></span></span> <span class="placeholder mx-1" style="width: 100%"></span>
+                                        <span class="badge bg-body text-body border py-1 px-2 date placeholder" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><span class="spinner-border" style="width: 0.9em; height: 0.9em;" aria-hidden="true"></span></span>
+                                    </h5>
+                                    <h6 class="card-subtitle placeholder-glow">
+                                        <span class="placeholder" style="width: 100%;"></span>
+                                    </h6>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="d-grid gap-2 d-flex justify-content-end">
+                                <a class="btn btn-body bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                            </div>
+                        </li>
     `;
 
-    // Fungsi untuk menghitung usia dan sisa bulan berdasarkan tanggal lahir
-    function hitungUsia(tanggalLahir, tanggalRegistrasi) {
-        const lahir = new Date(tanggalLahir); // Mengubah tanggal lahir menjadi objek Date
-        const sekarang = new Date(tanggalRegistrasi); // Mengubah tanggal registrasi menjadi objek Date
-
-        // Menghitung usia dalam tahun
-        let usia = sekarang.getFullYear() - lahir.getFullYear();
-
-        // Menghitung selisih bulan
-        let bulan = sekarang.getMonth() - lahir.getMonth();
-
-        // Menghitung selisih hari untuk memastikan bulan tidak negatif
-        const hari = sekarang.getDate() - lahir.getDate();
-
-        // Periksa apakah bulan/hari ulang tahun belum terlewati di tahun ini
-        if (bulan < 0 || (bulan === 0 && hari < 0)) {
-            usia--; // Kurangi usia jika ulang tahun belum terlewati
-            bulan += 12; // Tambahkan 12 bulan jika bulan menjadi negatif
-        }
-
-        // Jika hari di bulan ini belum cukup, kurangi bulan
-        if (hari < 0) {
-            bulan--;
-        }
-
-        // Pastikan bulan berada dalam rentang 0-11
-        if (bulan < 0) {
-            bulan += 12;
-        }
-
-        return {
-            usia,
-            bulan
-        }; // Mengembalikan usia dan sisa bulan
-    }
-
-    // Fungsi untuk mengambil data pasien dari API
     async function fetchPasien() {
-        $('#loadingSpinner').show(); // Menampilkan spinner loading
+        const search = $('#searchInput').val();
+        const offset = (currentPage - 1) * limit;
+
+        // Show the spinner
+        $('#loadingSpinner').show();
 
         try {
-            // Ambil nilai tanggal dari input
-            const tanggal = $('#tanggal').val();
-
-            // Cek apakah tanggal diinput
-            if (!tanggal) {
-                $('#datapasien').empty(); // Kosongkan tabel pasien
-                $('#refreshButton').prop('disabled', true); // Nonaktifkan tombol refresh
-                const emptyRow = `
-                    <div class="accordion-item shadow-sm p-3 p-3">
-                        <h2 class="text-center text-muted mb-0" style="font-weight: 300;">Silakan masukkan tanggal</h2>
-                    </div>
-                `;
-                $('#datapasien').append(emptyRow); // Menambahkan baris kosong ke tabel
-                $('#total_rajal').text('0'); // Kosongkan total
-                return; // Keluar dari fungsi
-            }
-
-            // Mengambil data pasien dari API berdasarkan tanggal
-            const response = await axios.get(`<?= base_url('pasien/pasienapi') ?>?tanggal=${tanggal}`);
-            const data = response.data.data; // Mendapatkan data pasien
-
-            $('#datapasien').empty(); // Kosongkan tabel pasien
-            $('#refreshButton').prop('disabled', false); // Aktifkan tombol refresh
-            $('#total_rajal').text(data.length.toLocaleString('id-ID')); // Jumlah data
-
-            // Cek apakah data pasien kosong
-            if (data.length === 0) {
-                // Tampilkan pesan jika tidak ada data
-                const emptyRow = `
-                    <div class="accordion-item shadow-sm p-3 p-3">
-                        <h2 class="text-center text-muted mb-0" style="font-weight: 300;">Tidak ada pasien yang berobat pada ${tanggal}</h2>
-                    </div>
-                `;
-                $('#datapasien').append(emptyRow); // Menambahkan baris pesan ke tabel
-            }
-
-            // Mengurutkan data pasien berdasarkan nomor registrasi
-            data.sort((a, b) => a.nomor_registrasi.localeCompare(b.nomor_registrasi, 'en', {
-                numeric: true
-            }));
-
-            // Menambahkan setiap pasien ke tabel
-            data.forEach(function(pasien, index) {
-                // Mengkondisikan jenis kelamin
-                let jenis_kelamin = pasien.jenis_kelamin;
-                if (jenis_kelamin === 'L') {
-                    jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap" style="background-color: SkyBlue"><i class="fa-solid fa-mars"></i> LAKI-LAKI</span>`;
-                } else if (jenis_kelamin === 'P') {
-                    jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap" style="background-color: Pink"><i class="fa-solid fa-venus"></i> PEREMPUAN</span>`;
+            const response = await axios.get('<?= base_url('pasien/pasienlist') ?>', {
+                params: {
+                    search: search,
+                    limit: limit,
+                    offset: offset
                 }
-                let jenis_kelamin_string = pasien.jenis_kelamin;
-                if (jenis_kelamin_string === 'L') {
-                    jenis_kelamin_string = `Laki-laki`;
-                } else if (jenis_kelamin_string === 'P') {
-                    jenis_kelamin_string = `Perempuan`;
-                }
-                // Gunakan pesan jika tidak ada nomor telepon
-                const telpon = pasien.telpon ? pasien.telpon : "<em>Tidak ada</em>";
-                const usia = hitungUsia(pasien.tanggal_lahir, pasien.tanggal_registrasi); // Menghitung usia pasien
+            });
 
-                // Membuat elemen baris untuk setiap pasien
-                const pasienElement = `
-                <div class="accordion-item shadow-sm">
-                    <div class="accordion-header">
-                        <button class="accordion-button px-3 py-2 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-${index + 1}" aria-expanded="false" aria-controls="collapse-${index + 1}">
-                            <div class="pe-3 text-truncate">
-                                <h5 class="d-flex date justify-content-start mb-0 text-truncate">
-                                    <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">${index + 1}</span>
-                                    <span class="ms-1 align-self-center text-truncate">${pasien.nama_pasien}</span>
-                                </h5>
-                                <h6 class="card-subtitle text-truncate">${pasien.dokter}</h6>
-                                <p class="card-text text-truncate"><small class="date">${pasien.nomor_registrasi} ${jenis_kelamin}</small></p>
+            const data = response.data;
+            $('#pasienContainer').empty();
+            $('#totalRecords').text(data.total.toLocaleString('id-ID'));
+
+            if (data.total === 0) {
+                $('#paginationNav ul').empty();
+                $('#pasienContainer').append(
+                    '<li class="list-group-item border-top-0 bg-body-tertiary pb-3 pt-3">' +
+                    '    <h1 class="display-4 text-center text-muted" style="font-weight: 200;">Data Kosong</h1>' +
+                    '</li>'
+                );
+            } else {
+                data.pasien.forEach(function(pasien) {
+                    let jenis_kelamin = pasien.jenis_kelamin;
+                    if (jenis_kelamin === 'L') {
+                        jenis_kelamin = `Laki-Laki`;
+                    } else if (jenis_kelamin === 'P') {
+                        jenis_kelamin = `Perempuan`;
+                    }
+                    const pasienElement = `
+            <li class="list-group-item border-top-0 bg-body-tertiary pb-3 pt-3">
+                <div class="d-flex">
+                    <div class="align-self-center w-100">
+                        <h5 class="card-title d-flex date justify-content-between">
+                            <div class="d-flex justify-content-start text-truncate">
+                                <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">${pasien.number}</span>
+                                <span class="mx-1 align-self-center text-truncate">${pasien.nama_pasien}</span>
                             </div>
-                        </button>
-                    </div>
-                    <div id="collapse-${index + 1}" class="accordion-collapse collapse" data-bs-parent="#datapasien">
-                        <div class="accordion-body px-3 py-2">
-                            <div class="row g-3">
-                                <div class="col-lg-6">
-                                    <div class="fw-bold mb-2 border-bottom">Identitas Pasien</div>
+                            <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">${pasien.no_rm}</span>
+                        </h5>
                                     <div style="font-size: 0.75em;">
                                         <div class="mb-0 row g-1">
                                             <div class="col-5 fw-medium text-truncate">Nama</div>
@@ -183,27 +160,15 @@
                                             </div>
                                         </div>
                                         <div class="mb-0 row g-1">
-                                            <div class="col-5 fw-medium text-truncate">Nomor Rekam Medis</div>
-                                            <div class="col date">
-                                                ${pasien.no_rm}
-                                            </div>
-                                        </div>
-                                        <div class="mb-0 row g-1">
                                             <div class="col-5 fw-medium text-truncate">Jenis Kelamin</div>
                                             <div class="col">
-                                                ${jenis_kelamin_string}
+                                                ${jenis_kelamin}
                                             </div>
                                         </div>
                                         <div class="mb-0 row g-1">
                                             <div class="col-5 fw-medium text-truncate">Tempat/Tanggal Lahir</div>
                                             <div class="col">
                                                 ${pasien.tempat_lahir}, <span class="date text-nowrap">${pasien.tanggal_lahir}</span>
-                                            </div>
-                                        </div>
-                                        <div class="mb-0 row g-1">
-                                            <div class="col-5 fw-medium text-truncate">Usia</div>
-                                            <div class="col date">
-                                                ${usia.usia} tahun ${usia.bulan} bulan
                                             </div>
                                         </div>
                                         <div class="mb-0 row g-1">
@@ -215,56 +180,134 @@
                                         <div class="mb-0 row g-1">
                                             <div class="col-5 fw-medium text-truncate">Nomor Telepon</div>
                                             <div class="col date">
-                                                ${telpon}
+                                                ${pasien.telpon}
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="fw-bold mb-2 border-bottom">Rawat Jalan</div>
-                                    <div style="font-size: 0.75em;">
-                                        <div class="mb-0 row g-1">
-                                            <div class="col-5 fw-medium text-truncate">Nomor Registrasi</div>
-                                            <div class="col date">
-                                                ${pasien.nomor_registrasi}
-                                            </div>
-                                        </div>
-                                        <div class="mb-0 row g-1">
-                                            <div class="col-5 fw-medium text-truncate">Dokter</div>
-                                            <div class="col">
-                                                ${pasien.dokter}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
-                `;
-                $('#datapasien').append(pasienElement); // Menambahkan elemen pasien ke tabel
-            });
-        } catch (error) {
-            // Menangani error jika permintaan gagal
-            console.error(error.response.data.details); // Menampilkan error di konsol
-            const errorRow = `
-                <div class="accordion-item shadow-sm p-3 p-3">
-                    <h2 class="text-center text-danger mb-0" style="font-weight: 300;">${error.response.data.error}<br>${error.response.data.details.message}</h2>
+                <hr>
+                <div class="d-grid gap-2 d-flex justify-content-end">
+                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('pasien/detailpasien') ?>/${pasien.id_pasien}';">
+                        <i class="fa-solid fa-circle-info"></i> Detail
+                    </button>
                 </div>
-            `;
-            $('#datapasien').empty(); // Kosongkan tabel pasien
-            $('#datapasien').append(errorRow); // Menambahkan baris error ke tabel
+            </li>
+                `;
+
+                    $('#pasienContainer').append(pasienElement);
+                });
+
+                // Pagination logic with ellipsis for more than 3 pages
+                const totalPages = Math.ceil(data.total / limit);
+                $('#paginationNav ul').empty();
+
+                if (currentPage > 1) {
+                    $('#paginationNav ul').append(`
+                    <li class="page-item">
+                        <a class="page-link bg-gradient date" href="#" data-page="${currentPage - 1}">
+                            <i class="fa-solid fa-angle-left"></i>
+                        </a>
+                    </li>
+                `);
+                }
+
+                if (totalPages > 5) {
+                    $('#paginationNav ul').append(`
+                    <li class="page-item ${currentPage === 1 ? 'active' : ''}">
+                        <a class="page-link bg-gradient date" href="#" data-page="1">1</a>
+                    </li>
+                `);
+
+                    if (currentPage > 3) {
+                        $('#paginationNav ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">…</span></li>');
+                    }
+
+                    for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
+                        $('#paginationNav ul').append(`
+                        <li class="page-item ${i === currentPage ? 'active' : ''}">
+                            <a class="page-link bg-gradient date" href="#" data-page="${i}">${i}</a>
+                        </li>
+                    `);
+                    }
+
+                    if (currentPage < totalPages - 2) {
+                        $('#paginationNav ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">…</span></li>');
+                    }
+
+                    $('#paginationNav ul').append(`
+                    <li class="page-item ${currentPage === totalPages ? 'active' : ''}">
+                        <a class="page-link bg-gradient date" href="#" data-page="${totalPages}">${totalPages}</a>
+                    </li>
+                `);
+                } else {
+                    // Show all pages if total pages are 3 or fewer
+                    for (let i = 1; i <= totalPages; i++) {
+                        $('#paginationNav ul').append(`
+                        <li class="page-item ${i === currentPage ? 'active' : ''}">
+                            <a class="page-link bg-gradient date" href="#" data-page="${i}">${i}</a>
+                        </li>
+                    `);
+                    }
+                }
+
+                if (currentPage < totalPages) {
+                    $('#paginationNav ul').append(`
+                    <li class="page-item">
+                        <a class="page-link bg-gradient date" href="#" data-page="${currentPage + 1}">
+                            <i class="fa-solid fa-angle-right"></i>
+                        </a>
+                    </li>
+                `);
+                }
+            }
+        } catch (error) {
+            showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+            $('#pasienContainer').empty();
+            $('#paginationNav ul').empty();
         } finally {
-            // Sembunyikan spinner loading setelah selesai
+            // Hide the spinner when done
             $('#loadingSpinner').hide();
         }
     }
 
-    // Event listener ketika tanggal diubah
-    $('#tanggal').on('change', function() {
-        $('#datapasien').empty(); // Kosongkan tabel pasien
-        $('#datapasien').append(loading); // Menampilkan loading indicator
-        fetchPasien(); // Memanggil fungsi untuk mengambil data pasien
+    $(document).on('click', '#paginationNav a', function(event) {
+        event.preventDefault(); // Prevents default behavior (scrolling)
+        const page = $(this).data('page');
+        if (page) {
+            currentPage = page;
+            fetchResep();
+        }
+    });
+
+    const toggleFilter = $('#toggleFilter');
+    const filterFields = $('#filterFields');
+    const toggleStateKey = 'filterFieldsToggleState';
+
+    // Fungsi untuk menyimpan status toggle di local storage
+    function saveToggleState(state) {
+        localStorage.setItem(toggleStateKey, state ? 'visible' : 'hidden');
+    }
+
+    // Fungsi untuk memuat status toggle dari local storage
+    function loadToggleState() {
+        return localStorage.getItem(toggleStateKey);
+    }
+
+    // Atur status awal berdasarkan local storage
+    const initialState = loadToggleState();
+    if (initialState === 'visible') {
+        filterFields.show();
+    } else {
+        filterFields.hide(); // Sembunyikan jika 'hidden' atau belum ada data
+    }
+
+    // Event klik untuk toggle
+    toggleFilter.on('click', function(e) {
+        e.preventDefault();
+        const isVisible = filterFields.is(':visible');
+        filterFields.toggle(!isVisible);
+        saveToggleState(!isVisible);
     });
 
     $(document).ready(function() {
@@ -277,20 +320,34 @@
                 '</div>'
         });
 
-        // Menangani event klik pada tombol bersihkan
-        $('#clearTglButton').on('click', function() {
-            $('#tanggal').val(''); // Kosongkan tanggal
-            $('#datapasien').empty(); // Kosongkan tabel pasien
-            $('#datapasien').append(loading); // Menampilkan loading indicator
-            fetchPasien(); // Memanggil fungsi untuk mengambil data pasien
+        $('#searchInput').on('input', function() {
+            currentPage = 1;
+            fetchPasien();
         });
+
+        $('#addButton').on('click', function() {
+            $('[data-bs-toggle="tooltip"]').tooltip('hide');
+            $('#addMessage').html(`Tambah Pasien Baru?`);
+            $('#addSubmessage').html(`Pastikan Anda telah benar-benar berobat dan membawa kartu identitas yang diperlukan. Ini akan menambahkan nomor rekam medis baru.`);
+            $('#addModal').modal('show');
+        });
+
+        $(document).on('click', '#confirmAddBtn', function(e) {
+            e.preventDefault();
+            $('#addForm').submit();
+            $('#deleteModal button').prop('disabled', true);
+            $('#deleteMessage').addClass('mb-0').html('Menambahkan, silakan tunggu...');
+            $('#deleteSubmessage').hide();
+        });
+
         $(document).on('visibilitychange', function() {
             if (document.visibilityState === "visible") {
                 fetchPasien();
             }
         });
         // Menangani event klik pada tombol refresh
-        $('#refreshButton').on('click', function() {
+        $('#refreshButton').on('click', function(e) {
+            e.preventDefault();
             fetchPasien(); // Panggil fungsi untuk mengambil data pasien
         });
 
