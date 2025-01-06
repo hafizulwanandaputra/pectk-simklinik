@@ -16,7 +16,19 @@ $routes->get('/(?i)home', 'Home::index');
 
 // PASIEN
 $routes->get('/(?i)pasien', 'Pasien::index');
-$routes->get('/(?i)pasien/(?i)pasienapi', 'Pasien::pasienapi');
+$routes->get('/(?i)pasien/(?i)pasienlist', 'Pasien::pasienlist');
+$routes->get('/(?i)pasien/(?i)pasien/(:any)', 'Pasien::pasien/$1');
+$routes->post('/(?i)pasien/(?i)create', 'Pasien::create');
+$routes->post('/(?i)pasien/(?i)update/(:any)', 'Pasien::update/$1');
+$routes->delete('/(?i)pasien/(?i)delete/(:any)', 'Pasien::delete/$1');
+
+// RAWAT JALAN
+$routes->get('/(?i)rawatjalan', 'RawatJalan::index');
+$routes->get('/(?i)rawatjalan/(?i)rawatjalanlist', 'RawatJalan::pasienlist');
+$routes->get('/(?i)rawatjalan/(?i)rawatjalan/(:any)', 'RawatJalan::pasien/$1');
+$routes->post('/(?i)rawatjalan/(?i)create', 'RawatJalan::create');
+$routes->post('/(?i)rawatjalan/(?i)update/(:any)', 'RawatJalan::update/$1');
+$routes->post('/(?i)rawatjalan/(?i)cancel/(:any)', 'RawatJalan::cancel/$1');
 
 // SUPPLIER
 $routes->get('/(?i)supplier', 'Supplier::index');
