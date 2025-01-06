@@ -423,15 +423,27 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                 </div>
                             </a>
                         </li>
-                        <?php if (session()->get('role') == "Dokter" || session()->get('role') == "Admin") : ?>
+                        <?php if (session()->get('role') == "Dokter" || session()->get('role') == "Admin" || session()->get('role') == "Rekam Medis") : ?>
                             <li class="nav-item">
                                 <a class="nav-link p-2 <?= ($activeSegment === 'pasien') ? 'active bg-success' : '' ?>" href=" <?= base_url('/pasien'); ?>">
                                     <div class="d-flex align-items-start <?= ($activeSegment === 'pasien') ? 'text-white' : 'text-success-emphasis' ?>">
                                         <div style="min-width: 24px; max-width: 24px; text-align: center;">
+                                            <i class="fa-solid fa-user-injured"></i>
+                                        </div>
+                                        <div class="flex-fill ms-2">
+                                            Pasien
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link p-2 <?= ($activeSegment === 'rawatjalan') ? 'active bg-success' : '' ?>" href=" <?= base_url('/rawatjalan'); ?>">
+                                    <div class="d-flex align-items-start <?= ($activeSegment === 'rawatjalan') ? 'text-white' : 'text-success-emphasis' ?>">
+                                        <div style="min-width: 24px; max-width: 24px; text-align: center;">
                                             <i class="fa-solid fa-hospital-user"></i>
                                         </div>
                                         <div class="flex-fill ms-2">
-                                            Pasien Rawat Jalan
+                                            Rawat Jalan
                                         </div>
                                     </div>
                                 </a>
