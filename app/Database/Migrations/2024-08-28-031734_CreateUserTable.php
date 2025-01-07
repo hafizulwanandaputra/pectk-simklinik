@@ -36,6 +36,11 @@ class CreateUserTable extends Migration
                 'type' => 'VARCHAR',
                 'constraint' => '128',
             ],
+            'kode_antrian' => [
+                'type' => 'VARCHAR',
+                'constraint' => '24',
+                'null' => true,
+            ],
             'active' => [
                 'type' => 'BOOLEAN',
             ],
