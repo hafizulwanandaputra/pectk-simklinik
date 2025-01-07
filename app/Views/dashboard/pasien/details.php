@@ -63,15 +63,16 @@
                     <?= form_open_multipart('/pasien/update/' . $pasien['id_pasien'], 'id="pasienForm"'); ?>
                     <?= csrf_field(); ?>
                     <div class="mb-3">
-                        <div class="mb-0 row g-1 d-flex align-items-end">
-                            <div class="col fw-medium text-nowrap">Didaftarkan</div>
-                            <div class="col text-end">
-                                <div class="date text-nowrap">
-                                    <?= $pasien['tanggal_daftar'] ?>
+                        <div class="mb-2 py-1 px-2 bg-body-tertiary border rounded">
+                            <div class="mb-0 row g-1 d-flex align-items-end">
+                                <div class="col fw-medium text-nowrap">Didaftarkan</div>
+                                <div class="col text-end">
+                                    <div class="date text-nowrap">
+                                        <?= $pasien['tanggal_daftar'] ?>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <hr class="mt-1">
                         <div class="mb-2">
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="nama_pasien" name="nama_pasien" value="" autocomplete="off" dir="auto" placeholder="nama_pasien">
