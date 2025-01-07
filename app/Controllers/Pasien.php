@@ -440,6 +440,8 @@ class Pasien extends BaseController
             // Menetapkan aturan validasi dasar
             $validation->setRules([
                 'nama_pasien' => 'required',
+                'nik' => 'max_length[16]',
+                'no_bpjs' => 'max_length[16]',
                 'tempat_lahir' => 'required',
                 'tanggal_lahir' => 'required',
                 'jenis_kelamin' => 'required',
