@@ -17,7 +17,7 @@ class Pasien extends Migration
             ],
             'no_rm' => [
                 'type' => 'VARCHAR',
-                'constraint' => 24,
+                'constraint' => 8,
             ],
             'nama_pasien' => [
                 'type' => 'VARCHAR',
@@ -107,6 +107,9 @@ class Pasien extends Migration
                 'type' => 'VARCHAR',
                 'constraint' => 24,
                 'null' => true,
+            ],
+            'tanggal_daftar' => [
+                'type' => 'DATETIME',
             ],
         ]);
         $this->forge->addKey('id_pasien', true);

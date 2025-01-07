@@ -1,6 +1,6 @@
 <?= $this->extend('dashboard/templates/dashboard'); ?>
 <?= $this->section('css'); ?>
-<?= $this->include('select2/normal'); ?>
+<?= $this->include('select2/floating'); ?>
 <style>
     /* Ensures the dropdown is visible outside the parent with overflow auto */
     .select2-container {
@@ -41,239 +41,271 @@
 <div style="min-width: 1px; max-width: 1px;"></div>
 <?= $this->endSection(); ?>
 <?= $this->section('content'); ?>
-<main class="main-content-inside px-3 pt-3">
-    <div class="no-fluid-content">
-        <?= form_open_multipart('/pasien/update/' . $pasien['id_pasien'], 'id="pasienForm"'); ?>
-        <?= csrf_field(); ?>
-        <div class="mb-3">
-            <div class="mb-2">
-                <div class="form-floating">
-                    <input type="text" class="form-control" id="nama_pasien" name="nama_pasien" value="" autocomplete="off" dir="auto" placeholder="nama_pasien">
-                    <label for="nama_pasien">Nama</label>
-                    <div class="invalid-feedback"></div>
-                </div>
-            </div>
-            <div class="mb-2 row row-cols-1 row-cols-lg-2 g-2">
-                <div class="col">
-                    <div class="form-floating">
-                        <input type="number" class="form-control" id="nik" name="nik" value="" autocomplete="off" dir="auto" placeholder="nik">
-                        <label for="nik">Nomor Induk Kependudukan (NIK)</label>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-floating">
-                        <input type="number" class="form-control" id="no_bpjs" name="no_bpjs" value="" autocomplete="off" dir="auto" placeholder="no_bpjs">
-                        <label for="no_bpjs">Nomor BPJS</label>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-floating">
-                        <input type="text" class="form-control" id="tempat_lahir" name="tempat_lahir" value="" autocomplete="off" dir="auto" placeholder="tempat_lahir">
-                        <label for="tempat_lahir">Tempat Lahir</label>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-floating">
-                        <input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir" value="" autocomplete="off" dir="auto" placeholder="tanggal_lahir">
-                        <label for="tanggal_lahir">Tanggal Lahir</label>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="mb-2">
-                <div class="col col-form-label">
-                    <div class="d-flex align-items-center justify-content-evenly">
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="jenis_kelamin" id="jenis_kelamin1" value="L">
-                            <label class="form-check-label" for="jenis_kelamin1">
-                                Laki-Laki
-                            </label>
+<main class="main-content-inside">
+    <div class="sticky-top" style="z-index: 99;">
+        <ul class="list-group shadow-sm rounded-0">
+            <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-tertiary transparent-blur">
+                <div class="no-fluid-content">
+                    <nav>
+                        <div class="nav nav-underline nav-justified" id="nav-tab" role="tablist">
+                            <button class="nav-link  active" id="pasien-container-tab" data-bs-toggle="tab" data-bs-target="#pasien-container" type="button" role="tab" aria-controls="pasien-container" aria-selected="true">Identitas Pasien</button>
+                            <button class="nav-link " id="rawatjalan-container-tab" data-bs-toggle="tab" data-bs-target="#rawatjalan-container" type="button" role="tab" aria-controls="rawatjalan-container" aria-selected="false">Rawat Jalan</button>
                         </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="jenis_kelamin" id="jenis_kelamin2" value="P">
-                            <label class="form-check-label" for="jenis_kelamin2">
-                                Perempuan
-                            </label>
+                    </nav>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="px-3 mt-3">
+        <div class="no-fluid-content">
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane show active" id="pasien-container" role="tabpanel" aria-labelledby="pasien-container-tab" tabindex="0">
+                    <?= form_open_multipart('/pasien/update/' . $pasien['id_pasien'], 'id="pasienForm"'); ?>
+                    <?= csrf_field(); ?>
+                    <div class="mb-3">
+                        <div class="mb-0 row g-1 d-flex align-items-end">
+                            <div class="col fw-medium text-nowrap">Didaftarkan</div>
+                            <div class="col text-end">
+                                <div class="date text-nowrap">
+                                    <?= $pasien['tanggal_daftar'] ?>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="mt-1">
+                        <div class="mb-2">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="nama_pasien" name="nama_pasien" value="" autocomplete="off" dir="auto" placeholder="nama_pasien">
+                                <label for="nama_pasien">Nama</label>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                        </div>
+                        <div class="mb-2 row row-cols-1 row-cols-lg-2 g-2">
+                            <div class="col">
+                                <div class="form-floating">
+                                    <input type="number" class="form-control" id="nik" name="nik" value="" autocomplete="off" dir="auto" placeholder="nik">
+                                    <label for="nik">Nomor Induk Kependudukan (Opsional)</label>
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-floating">
+                                    <input type="number" class="form-control" id="no_bpjs" name="no_bpjs" value="" autocomplete="off" dir="auto" placeholder="no_bpjs">
+                                    <label for="no_bpjs">Nomor BPJS (Opsional)</label>
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="tempat_lahir" name="tempat_lahir" value="" autocomplete="off" dir="auto" placeholder="tempat_lahir">
+                                    <label for="tempat_lahir">Tempat Lahir</label>
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-floating">
+                                    <input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir" value="" autocomplete="off" dir="auto" placeholder="tanggal_lahir">
+                                    <label for="tanggal_lahir">Tanggal Lahir</label>
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-2">
+                            <div class="col col-form-label">
+                                <div class="d-flex align-items-center justify-content-evenly">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="jenis_kelamin" id="jenis_kelamin1" value="L">
+                                        <label class="form-check-label" for="jenis_kelamin1">
+                                            Laki-Laki
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="jenis_kelamin" id="jenis_kelamin2" value="P">
+                                        <label class="form-check-label" for="jenis_kelamin2">
+                                            Perempuan
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="invalid-feedback text-center"></div>
+                            </div>
+                        </div>
+                        <div class="mb-2">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="alamat" name="alamat" value="" autocomplete="off" dir="auto" placeholder="alamat">
+                                <label for="alamat">Alamat</label>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                        </div>
+                        <div class="mb-2 row row-cols-1 row-cols-lg-2 g-2">
+                            <div class="col">
+                                <div class="form-floating">
+                                    <select class="form-select" id="provinsi" name="provinsi" aria-label="provinsi">
+                                        <option value="" selected>-- Pilih Provinsi --</option>
+                                    </select>
+                                    <label for="provinsi">Provinsi</label>
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-floating">
+                                    <select class="form-select" id="kabupaten" name="kabupaten" aria-label="kabupaten">
+                                        <option value="" selected>-- Pilih Kabupaten/Kota --</option>
+                                    </select>
+                                    <label for="kabupaten">Kabupaten/Kota</label>
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-floating">
+                                    <select class="form-select" id="kecamatan" name="kecamatan" aria-label="kecamatan">
+                                        <option value="" selected>-- Pilih Kecamatan --</option>
+                                    </select>
+                                    <label for="kecamatan">Kecamatan</label>
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-floating">
+                                    <select class="form-select" id="kelurahan" name="kelurahan" aria-label="kelurahan">
+                                        <option value="" selected>-- Pilih Desa/Kelurahan --</option>
+                                    </select>
+                                    <label for="kelurahan">Desa/Kelurahan</label>
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-floating">
+                                    <input type="number" class="form-control" id="rt" name="rt" value="" autocomplete="off" dir="auto" placeholder="rt">
+                                    <label for="rt">RT (Opsional)</label>
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-floating">
+                                    <input type="number" class="form-control" id="rw" name="rw" value="" autocomplete="off" dir="auto" placeholder="rw">
+                                    <label for="rw">RW (Opsional)</label>
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-floating">
+                                    <input type="number" class="form-control" id="telpon" name="telpon" value="" autocomplete="off" dir="auto" placeholder="telpon">
+                                    <label for="telpon">Nomor HP (Opsional)</label>
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-floating">
+                                    <select class="form-select" id="kewarganegaraan" name="kewarganegaraan" aria-label="kewarganegaraan">
+                                        <option value="" selected>-- Pilih Kewarganegaraan --</option>
+                                        <option value="INDONESIA">INDONESIA</option>
+                                        <option value="WARGA NEGARA ASING">WARGA NEGARA ASING</option>
+                                    </select>
+                                    <label for="kewarganegaraan">Kewarganegaraan</label>
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-floating">
+                                    <select class="form-select" id="agama" name="agama" aria-label="agama">
+                                        <option value="" selected>-- Pilih Agama --</option>
+                                        <option value="Islam">Islam</option>
+                                        <option value="Kristen">Kristen</option>
+                                        <option value="Kristen Protestan">Kristen Protestan</option>
+                                        <option value="Kristen Katolik">Kristen Katolik</option>
+                                        <option value="Hindu">Hindu</option>
+                                        <option value="Buddha">Buddha</option>
+                                        <option value="Konghucu">Konghucu</option>
+                                    </select>
+                                    <label for="agama">Agama</label>
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-floating">
+                                    <select class="form-select" id="status_nikah" name="status_nikah" aria-label="status_nikah">
+                                        <option value="" selected>-- Pilih Status Perkawinan --</option>
+                                        <option value="BELUM MENIKAH">BELUM MENIKAH</option>
+                                        <option value="MENIKAH">MENIKAH</option>
+                                        <option value="JANDA">JANDA</option>
+                                        <option value="DUDA">DUDA</option>
+                                        <option value="CERAI">CERAI</option>
+                                    </select>
+                                    <label for="status_nikah">Status Perkawinan</label>
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-2">
+                            <div class="form-floating">
+                                <select class="form-select" id="pekerjaan" name="pekerjaan" aria-label="pekerjaan">
+                                    <option value="" selected>-- Pilih Pekerjaan --</option>
+                                    <option value="TIDAK BEKERJA">
+                                        TIDAK BEKERJA</option>
+                                    <option value="I R T">
+                                        I R T</option>
+                                    <option value="BURUH">
+                                        BURUH</option>
+                                    <option value="PELAJAR">
+                                        PELAJAR</option>
+                                    <option value="MAHASISWA">
+                                        MAHASISWA</option>
+                                    <option value="WIRASWASTA">
+                                        WIRASWASTA</option>
+                                    <option value="P N S">
+                                        P N S</option>
+                                    <option value="PEDAGANG">
+                                        PEDAGANG</option>
+                                    <option value="KARYAWAN/TI">
+                                        KARYAWAN/TI</option>
+                                    <option value="SWASTA">
+                                        SWASTA</option>
+                                    <option value="KARYAWAN RS">
+                                        KARYAWAN RS</option>
+                                    <option value="PETANI">
+                                        PETANI</option>
+                                    <option value="PERAWAT">
+                                        PERAWAT</option>
+                                    <option value="BIDAN">
+                                        BIDAN</option>
+                                    <option value="DOKTER">
+                                        DOKTER</option>
+                                    <option value="TUKANG">
+                                        TUKANG</option>
+                                    <option value="SOPIR">
+                                        SOPIR</option>
+                                    <option value="DOSEN">
+                                        DOSEN</option>
+                                    <option value="GURU">
+                                        GURU</option>
+                                    <option value="BUMN">
+                                        BUMN</option>
+                                    <option value="PENSIUNAN">
+                                        PENSIUNAN</option>
+                                    <option value="ABRI">
+                                        ABRI</option>
+                                    <option value="POLRI">
+                                        POLRI</option>
+                                </select>
+                                <label for="pekerjaan">Pekerjaan</label>
+                                <div class="invalid-feedback"></div>
+                            </div>
                         </div>
                     </div>
-                    <div class="invalid-feedback text-center"></div>
-                </div>
-            </div>
-            <div class="mb-2">
-                <div class="form-floating">
-                    <input type="text" class="form-control" id="alamat" name="alamat" value="" autocomplete="off" dir="auto" placeholder="alamat">
-                    <label for="alamat">Alamat</label>
-                    <div class="invalid-feedback"></div>
-                </div>
-            </div>
-            <div class="mb-2 row row-cols-1 row-cols-lg-2 g-2">
-                <div class="col">
-                    <div class="form-floating">
-                        <select class="form-select" id="provinsi" name="provinsi" aria-label="provinsi">
-                            <option value="" selected>-- Pilih Provinsi --</option>
-                        </select>
-                        <label for="provinsi">Provinsi</label>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-floating">
-                        <select class="form-select" id="kabupaten" name="kabupaten" aria-label="kabupaten">
-                            <option value="" selected>-- Pilih Kabupaten/Kota --</option>
-                        </select>
-                        <label for="kabupaten">Kabupaten/Kota</label>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-floating">
-                        <select class="form-select" id="kecamatan" name="kecamatan" aria-label="kecamatan">
-                            <option value="" selected>-- Pilih Kecamatan --</option>
-                        </select>
-                        <label for="kecamatan">Kecamatan</label>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-floating">
-                        <select class="form-select" id="kelurahan" name="kelurahan" aria-label="kelurahan">
-                            <option value="" selected>-- Pilih Desa/Kelurahan --</option>
-                        </select>
-                        <label for="kelurahan">Desa/Kelurahan</label>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-floating">
-                        <input type="number" class="form-control" id="rt" name="rt" value="" autocomplete="off" dir="auto" placeholder="rt">
-                        <label for="rt">RT</label>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-floating">
-                        <input type="number" class="form-control" id="rw" name="rw" value="" autocomplete="off" dir="auto" placeholder="rw">
-                        <label for="rw">RW</label>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-floating">
-                        <input type="number" class="form-control" id="telpon" name="telpon" value="" autocomplete="off" dir="auto" placeholder="telpon">
-                        <label for="telpon">Nomor HP</label>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-floating">
-                        <select class="form-select" id="kewarganegaraan" name="kewarganegaraan" aria-label="kewarganegaraan">
-                            <option value="" selected>-- Pilih Kewarganegaraan --</option>
-                            <option value="WNI">INDONESIA</option>
-                            <option value="WNA">WARGA NEGARA ASING</option>
-                        </select>
-                        <label for="kewarganegaraan">Kewarganegaraan</label>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-floating">
-                        <select class="form-select" id="agama" name="agama" aria-label="agama">
-                            <option value="" selected>-- Pilih Agama --</option>
-                            <option value="1">Islam</option>
-                            <option value="2">Kristen</option>
-                            <option value="3">Kristen Protestan</option>
-                            <option value="4">Kristen Katolik</option>
-                            <option value="5">Hindu</option>
-                            <option value="6">Buddha</option>
-                            <option value="7">Konghucu</option>
-                        </select>
-                        <label for="agama">Agama</label>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-floating">
-                        <select class="form-select" id="status_nikah" name="status_nikah" aria-label="status_nikah">
-                            <option value="" selected>-- Pilih Status Perkawinan --</option>
-                            <option value="1">BELUM MENIKAH</option>
-                            <option value="2">MENIKAH</option>
-                            <option value="3">JANDA</option>
-                            <option value="4">DUDA</option>
-                            <option value="5">CERAI</option>
-                        </select>
-                        <label for="status_nikah">Status Perkawinan</label>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="mb-2">
-                <div class="form-floating">
-                    <select class="form-select" id="pekerjaan" name="pekerjaan" aria-label="pekerjaan">
-                        <option value="" selected>-- Pilih Pekerjaan --</option>
-                        <option value="1">
-                            TIDAK BEKERJA</option>
-                        <option value="2">
-                            I R T</option>
-                        <option value="3">
-                            BURUH</option>
-                        <option value="4">
-                            PELAJAR</option>
-                        <option value="5">
-                            MAHASISWA</option>
-                        <option value="6">
-                            WIRASWASTA</option>
-                        <option value="7">
-                            P N S</option>
-                        <option value="8">
-                            PEDAGANG</option>
-                        <option value="9">
-                            KARYAWAN/TI</option>
-                        <option value="10">
-                            SWASTA</option>
-                        <option value="11">
-                            KARYAWAN RS</option>
-                        <option value="12">
-                            PETANI</option>
-                        <option value="13">
-                            PERAWAT</option>
-                        <option value="14">
-                            BIDAN</option>
-                        <option value="15">
-                            DOKTER</option>
-                        <option value="16">
-                            TUKANG</option>
-                        <option value="17">
-                            SOPIR</option>
-                        <option value="18">
-                            DOSEN</option>
-                        <option value="19">
-                            GURU</option>
-                        <option value="20">
-                            BUMN</option>
-                        <option value="21">
-                            PENSIUNAN</option>
-                        <option value="22">
-                            ABRI</option>
-                        <option value="23">
-                            POLRI</option>
-                    </select>
-                    <label for="pekerjaan">Pekerjaan</label>
-                    <div class="invalid-feedback"></div>
-                </div>
-            </div>
-        </div>
 
-        <div>
-            <hr>
-            <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
-                <button class="btn btn-body  bg-gradient" type="button" id="printBtn1" onclick="window.open(`<?= base_url('/pasien/etiket/' . $pasien['id_pasien']) ?>`)"><i class="fa-solid fa-print"></i> Cetak E-Tiket</button>
-                <button class="btn btn-primary  bg-gradient" type="submit" id="submitBtn"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
+                    <div>
+                        <hr>
+                        <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-3">
+                            <button class="btn btn-body  bg-gradient" type="button" id="printBtn1" onclick="window.open(`<?= base_url('/pasien/kiup/' . $pasien['id_pasien']) ?>`)"><i class="fa-solid fa-print"></i> Cetak KIUP</button>
+                            <button class="btn btn-body  bg-gradient" type="button" id="printBtn1" onclick="window.open(`<?= base_url('/pasien/barcode/' . $pasien['id_pasien']) ?>`)"><i class="fa-solid fa-print"></i> Cetak <em>Barcode</em></button>
+                            <button class="btn btn-primary  bg-gradient" type="submit" id="submitBtn"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
+                        </div>
+                    </div>
+                    <?= form_close(); ?>
+                </div>
+                <div class="tab-pane show active" id="rawatjalan-container" role="tabpanel" aria-labelledby="rawatjalan-container-tab" tabindex="0">
+                </div>
             </div>
         </div>
-        <?= form_close(); ?>
     </div>
 
     <div class="modal modal-sheet p-4 py-md-5 fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" role="dialog">
@@ -411,7 +443,7 @@
     }
 
     // Event handler saat provinsi dipilih
-    $('#provinsi').on('change', function() {
+    $('#provinsi').on('change.select2', function() {
         const provinsiId = $(this).val();
         if (provinsiId) {
             loadKabupaten(provinsiId);
@@ -425,7 +457,7 @@
     });
 
     // Event handler saat kabupaten dipilih
-    $('#kabupaten').on('change', function() {
+    $('#kabupaten').on('change.select2', function() {
         const kabupatenId = $(this).val();
         if (kabupatenId) {
             loadKecamatan(kabupatenId);
@@ -438,13 +470,20 @@
     });
 
     // Event handler saat kecamatan dipilih
-    $('#kecamatan').on('change', function() {
+    $('#kecamatan').on('change.select2', function() {
         const kecamatanId = $(this).val();
         if (kecamatanId) {
             loadKelurahan(kecamatanId);
         } else {
             $('#kelurahan').empty().append('<option value="">-- Pilih Desa/Kelurahan --</option>');
         }
+    });
+
+    $('#provinsi, #kabupaten, #kecamatan, #kelurahan').select2({
+        dropdownParent: $('#pasienForm'),
+        theme: "bootstrap-5",
+        width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+        placeholder: $(this).data('placeholder'),
     });
 
     $(document).ready(async function() {
