@@ -4,6 +4,9 @@ namespace App\Controllers;
 
 use App\Models\PasienModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
+use Dompdf\Dompdf;
+use Picqer\Barcode\BarcodeGeneratorPNG;
+use SimpleSoftwareIO\QrCode\Generator;
 
 class Pasien extends BaseController
 {
@@ -15,8 +18,8 @@ class Pasien extends BaseController
 
     public function index()
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', dan 'Rekam Medis' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Rekam Medis') {
+        // Memeriksa peran pengguna, hanya 'Admin' dan 'Rekam Medis' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Rekam Medis') {
             // Menyiapkan data untuk tampilan
             $data = [
                 'title' => 'Pasien - ' . $this->systemName,
@@ -33,8 +36,8 @@ class Pasien extends BaseController
 
     public function pasienlist()
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', dan 'Rekam Medis' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Rekam Medis') {
+        // Memeriksa peran pengguna, hanya 'Admin' dan 'Rekam Medis' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Rekam Medis') {
             // Mengambil parameter pencarian, limit, offset, dan status dari query string
             $search = $this->request->getGet('search');
             $limit = $this->request->getGet('limit');
@@ -85,7 +88,7 @@ class Pasien extends BaseController
     public function create()
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Dokter' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Rekam Medis') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Rekam Medis') {
             // Menghasilkan nomor rekam medis baru
             $lastRecord = $this->PasienModel->orderBy('id_pasien', 'DESC')->first(); // Dapatkan data terakhir berdasarkan ID
             $lastNoRm = $lastRecord ? str_replace('-', '', $lastRecord['no_rm']) : '000000'; // Nomor default jika tidak ada data
@@ -115,6 +118,7 @@ class Pasien extends BaseController
                 'agama' => NULL,
                 'status_nikah' => NULL,
                 'pekerjaan' => NULL,
+                'tanggal_daftar' => date("Y-m-d H:i:s"),
             ];
             $this->PasienModel->insert($data);
 
@@ -131,8 +135,8 @@ class Pasien extends BaseController
 
     public function detailpasien($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', dan 'Rekam Medis' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Rekam Medis') {
+        // Memeriksa peran pengguna, hanya 'Admin' dan 'Rekam Medis' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Rekam Medis') {
             // Menghubungkan ke database
             $db = db_connect();
 
@@ -180,10 +184,146 @@ class Pasien extends BaseController
         }
     }
 
+    public function kiup($id)
+    {
+        // Memeriksa peran pengguna, hanya 'Admin' dan 'Rekam Medis' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Rekam Medis') {
+            $db = db_connect();
+
+            // ambil pasien berdasarkan ID
+            $pasien = $this->PasienModel
+                ->find($id);
+
+            // Ambil tabel reg_provinces
+            $provinsi = $db->table('reg_provinces');
+            $provinsi->select('name');
+            $provinsi->where('id', $pasien['provinsi']);
+
+            // Query untuk mendapatkan nama provinsi
+            $res_provinsi = $provinsi->get()->getRow();
+
+            if ($res_provinsi) {
+                // Ubah ID menjadi nama provinsi
+                $pasien['provinsi'] = $res_provinsi->name;
+            }
+
+            // Ambil tabel reg_regencies
+            $kabupaten = $db->table('reg_regencies');
+            $kabupaten->select('name');
+            $kabupaten->where('id', $pasien['kabupaten']);
+
+            // Query untuk mendapatkan nama kabupaten
+            $res_kabupaten = $kabupaten->get()->getRow();
+
+            if ($res_kabupaten) {
+                // Ubah ID menjadi nama kabupaten
+                $pasien['kabupaten'] = $res_kabupaten->name;
+            }
+
+            // Ambil tabel reg_districts
+            $kecamatan = $db->table('reg_districts');
+            $kecamatan->select('name');
+            $kecamatan->where('id', $pasien['kecamatan']);
+
+            // Query untuk mendapatkan nama kecamatan
+            $res_kecamatan = $kecamatan->get()->getRow();
+
+            if ($res_kecamatan) {
+                // Ubah ID menjadi nama kecamatan
+                $pasien['kecamatan'] = $res_kecamatan->name;
+            }
+
+            // Ambil tabel reg_villages
+            $kelurahan = $db->table('reg_villages');
+            $kelurahan->select('name');
+            $kelurahan->where('id', $pasien['kelurahan']);
+
+            // Query untuk mendapatkan nama kelurahan
+            $res_kelurahan = $kelurahan->get()->getRow();
+
+            if ($res_kelurahan) {
+                // Ubah ID menjadi nama kelurahan
+                $pasien['kelurahan'] = $res_kelurahan->name;
+            }
+
+            $qrcode = new Generator;
+            $qrNoRMSVG = $qrcode->size(64)->generate($pasien['no_rm']);
+            $qrNoRM = base64_encode($qrNoRMSVG);
+
+            // Memeriksa apakah pasien tidak kosong
+            if (!empty($pasien)) {
+                // Menyiapkan data untuk tampilan
+                $data = [
+                    'pasien' => $pasien,
+                    'qrNoRM' => $qrNoRM,
+                    'title' => 'KIUP ' . $pasien['nama_pasien'] . ' (' . $pasien['no_rm'] . ') - ' . $this->systemName,
+                    'agent' => $this->request->getUserAgent()
+                ];
+                // return view('dashboard/pasien/kiup', $data);
+                // die;
+                // Menghasilkan PDF menggunakan Dompdf
+                $dompdf = new Dompdf();
+                $html = view('dashboard/pasien/kiup', $data);
+                $dompdf->loadHtml($html);
+                $dompdf->render();
+                $dompdf->stream('kiup-' . $pasien['no_rm'] . '-' . urlencode($pasien['nama_pasien']) . '.pdf', [
+                    'Attachment' => FALSE // Menghasilkan PDF tanpa mengunduh
+                ]);
+            } else {
+                // Menampilkan halaman tidak ditemukan jika pasien tidak ditemukan
+                throw PageNotFoundException::forPageNotFound();
+            }
+        } else {
+            // Jika peran tidak dikenali, lemparkan pengecualian 404
+            throw PageNotFoundException::forPageNotFound();
+        }
+    }
+
+    public function barcode($id)
+    {
+        // Memeriksa peran pengguna, hanya 'Admin' dan 'Rekam Medis' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Rekam Medis') {
+            // ambil pasien berdasarkan ID
+            $pasien = $this->PasienModel
+                ->find($id);
+
+            // === Generate Barcode ===
+            $barcodeGenerator = new BarcodeGeneratorPNG();
+            $bcNoRM = base64_encode($barcodeGenerator->getBarcode($pasien['no_rm'], $barcodeGenerator::TYPE_CODE_128));
+
+            // Memeriksa apakah pasien tidak kosong
+            if (!empty($pasien)) {
+                // Menyiapkan data untuk tampilan
+                $data = [
+                    'pasien' => $pasien,
+                    'bcNoRM' => $bcNoRM,
+                    'title' => 'Barcode ' . $pasien['nama_pasien'] . ' (' . $pasien['no_rm'] . ') - ' . $this->systemName,
+                    'agent' => $this->request->getUserAgent()
+                ];
+                // return view('dashboard/pasien/barcode', $data);
+                // die;
+                // Menghasilkan PDF menggunakan Dompdf
+                $dompdf = new Dompdf();
+                $html = view('dashboard/pasien/barcode', $data);
+                $dompdf->loadHtml($html);
+                $dompdf->render();
+                $dompdf->stream('barcode-' . $pasien['no_rm'] . '-' . urlencode($pasien['nama_pasien']) . '.pdf', [
+                    'Attachment' => FALSE // Menghasilkan PDF tanpa mengunduh
+                ]);
+            } else {
+                // Menampilkan halaman tidak ditemukan jika pasien tidak ditemukan
+                throw PageNotFoundException::forPageNotFound();
+            }
+        } else {
+            // Jika peran tidak dikenali, lemparkan pengecualian 404
+            throw PageNotFoundException::forPageNotFound();
+        }
+    }
+
     public function pasien($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Rekam Medis' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Rekam Medis') {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Rekam Medis' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Rekam Medis') {
             // Mengambil data pasien berdasarkan ID
             $data = $this->PasienModel->find($id); // Mengambil pasien
             return $this->response->setJSON($data); // Mengembalikan data pasien dalam format JSON
@@ -197,8 +337,8 @@ class Pasien extends BaseController
 
     public function provinsi()
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Rekam Medis' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Rekam Medis') {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Rekam Medis' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Rekam Medis') {
             // Membuat koneksi ke database
             $db = db_connect();
 
@@ -221,8 +361,8 @@ class Pasien extends BaseController
 
     public function kabupaten($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Rekam Medis' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Rekam Medis') {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Rekam Medis' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Rekam Medis') {
             // Membuat koneksi ke database
             $db = db_connect();
 
@@ -245,8 +385,8 @@ class Pasien extends BaseController
 
     public function kecamatan($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Rekam Medis' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Rekam Medis') {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Rekam Medis' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Rekam Medis') {
             // Membuat koneksi ke database
             $db = db_connect();
 
@@ -269,8 +409,8 @@ class Pasien extends BaseController
 
     public function kelurahan($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Rekam Medis' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Rekam Medis') {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Rekam Medis' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Rekam Medis') {
             // Membuat koneksi ke database
             $db = db_connect();
 
@@ -294,7 +434,7 @@ class Pasien extends BaseController
     public function update($id)
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Dokter' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Rekam Medis') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Rekam Medis') {
             // Validasi input
             $validation = \Config\Services::validation();
             // Menetapkan aturan validasi dasar
@@ -344,6 +484,7 @@ class Pasien extends BaseController
                 'agama' => $this->request->getPost('agama'),
                 'status_nikah' => $this->request->getPost('status_nikah'),
                 'pekerjaan' => $this->request->getPost('pekerjaan'),
+                'tanggal_daftar' => $pasien['tanggal_daftar'],
             ];
             $this->PasienModel->save($data);
             return $this->response->setJSON(['success' => true, 'message' => 'Data pasien berhasil diperbarui']);
