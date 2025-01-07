@@ -90,22 +90,22 @@ class Pasien extends Migration
             ],
             'kewarganegaraan' => [
                 'type' => 'VARCHAR',
-                'constraint' => 128,
+                'constraint' => 24,
                 'null' => true,
             ],
             'agama' => [
                 'type' => 'VARCHAR',
-                'constraint' => 128,
+                'constraint' => 24,
                 'null' => true,
             ],
             'status_nikah' => [
                 'type' => 'VARCHAR',
-                'constraint' => 128,
+                'constraint' => 24,
                 'null' => true,
             ],
             'pekerjaan' => [
                 'type' => 'VARCHAR',
-                'constraint' => 128,
+                'constraint' => 24,
                 'null' => true,
             ],
         ]);

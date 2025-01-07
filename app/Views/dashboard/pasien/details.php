@@ -46,7 +46,6 @@
         <?= form_open_multipart('/pasien/update/' . $pasien['id_pasien'], 'id="pasienForm"'); ?>
         <?= csrf_field(); ?>
         <div class="mb-3">
-            <div class="fw-bold mb-2 border-bottom">Identitas Pasien</div>
             <div class="mb-2">
                 <div class="form-floating">
                     <input type="text" class="form-control" id="nama_pasien" name="nama_pasien" value="" autocomplete="off" dir="auto" placeholder="nama_pasien">
@@ -57,14 +56,14 @@
             <div class="mb-2 row row-cols-1 row-cols-lg-2 g-2">
                 <div class="col">
                     <div class="form-floating">
-                        <input type="text" class="form-control" id="nik" name="nik" value="" autocomplete="off" dir="auto" placeholder="nik">
+                        <input type="number" class="form-control" id="nik" name="nik" value="" autocomplete="off" dir="auto" placeholder="nik">
                         <label for="nik">Nomor Induk Kependudukan (NIK)</label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-floating">
-                        <input type="text" class="form-control" id="no_bpjs" name="no_bpjs" value="" autocomplete="off" dir="auto" placeholder="no_bpjs">
+                        <input type="number" class="form-control" id="no_bpjs" name="no_bpjs" value="" autocomplete="off" dir="auto" placeholder="no_bpjs">
                         <label for="no_bpjs">Nomor BPJS</label>
                         <div class="invalid-feedback"></div>
                     </div>
@@ -84,16 +83,24 @@
                     </div>
                 </div>
             </div>
-            <div class="mb-2 row row-cols-2 g-2 radio-btn">
-                <div class="col d-grid">
-                    <input type="radio" class="btn-check" name="jenis_kelamin" id="jenis_kelamin1" autocomplete="off" value="L">
-                    <label class="btn btn-body text-primary" for="jenis_kelamin1"><i class="fa-solid fa-mars"></i> Laki-Laki</label>
+            <div class="mb-2">
+                <div class="col col-form-label">
+                    <div class="d-flex align-items-center justify-content-evenly">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="jenis_kelamin" id="jenis_kelamin1" value="L">
+                            <label class="form-check-label" for="jenis_kelamin1">
+                                Laki-Laki
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="jenis_kelamin" id="jenis_kelamin2" value="P">
+                            <label class="form-check-label" for="jenis_kelamin2">
+                                Perempuan
+                            </label>
+                        </div>
+                    </div>
+                    <div class="invalid-feedback text-center"></div>
                 </div>
-                <div class="col d-grid">
-                    <input type="radio" class="btn-check" name="jenis_kelamin" id="jenis_kelamin2" autocomplete="off" value="P">
-                    <label class="btn btn-body text-danger" for="jenis_kelamin2"><i class="fa-solid fa-venus"></i> Perempuan</label>
-                </div>
-                <div class="invalid-feedback"></div>
             </div>
             <div class="mb-2">
                 <div class="form-floating">
@@ -106,34 +113,155 @@
                 <div class="col">
                     <div class="form-floating">
                         <select class="form-select" id="provinsi" name="provinsi" aria-label="provinsi">
-                            <option value="" disabled selected>-- Pilih Provinsi --</option>
+                            <option value="" selected>-- Pilih Provinsi --</option>
                         </select>
                         <label for="provinsi">Provinsi</label>
+                        <div class="invalid-feedback"></div>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-floating">
                         <select class="form-select" id="kabupaten" name="kabupaten" aria-label="kabupaten">
-                            <option value="" disabled selected>-- Pilih Kabupaten/Kota --</option>
+                            <option value="" selected>-- Pilih Kabupaten/Kota --</option>
                         </select>
                         <label for="kabupaten">Kabupaten/Kota</label>
+                        <div class="invalid-feedback"></div>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-floating">
                         <select class="form-select" id="kecamatan" name="kecamatan" aria-label="kecamatan">
-                            <option value="" disabled selected>-- Pilih Kecamatan --</option>
+                            <option value="" selected>-- Pilih Kecamatan --</option>
                         </select>
                         <label for="kecamatan">Kecamatan</label>
+                        <div class="invalid-feedback"></div>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-floating">
                         <select class="form-select" id="kelurahan" name="kelurahan" aria-label="kelurahan">
-                            <option value="" disabled selected>-- Pilih Desa/Kelurahan --</option>
+                            <option value="" selected>-- Pilih Desa/Kelurahan --</option>
                         </select>
                         <label for="kelurahan">Desa/Kelurahan</label>
+                        <div class="invalid-feedback"></div>
                     </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating">
+                        <input type="number" class="form-control" id="rt" name="rt" value="" autocomplete="off" dir="auto" placeholder="rt">
+                        <label for="rt">RT</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating">
+                        <input type="number" class="form-control" id="rw" name="rw" value="" autocomplete="off" dir="auto" placeholder="rw">
+                        <label for="rw">RW</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating">
+                        <input type="number" class="form-control" id="telpon" name="telpon" value="" autocomplete="off" dir="auto" placeholder="telpon">
+                        <label for="telpon">Nomor HP</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating">
+                        <select class="form-select" id="kewarganegaraan" name="kewarganegaraan" aria-label="kewarganegaraan">
+                            <option value="" selected>-- Pilih Kewarganegaraan --</option>
+                            <option value="WNI">INDONESIA</option>
+                            <option value="WNA">WARGA NEGARA ASING</option>
+                        </select>
+                        <label for="kewarganegaraan">Kewarganegaraan</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating">
+                        <select class="form-select" id="agama" name="agama" aria-label="agama">
+                            <option value="" selected>-- Pilih Agama --</option>
+                            <option value="1">Islam</option>
+                            <option value="2">Kristen</option>
+                            <option value="3">Kristen Protestan</option>
+                            <option value="4">Kristen Katolik</option>
+                            <option value="5">Hindu</option>
+                            <option value="6">Buddha</option>
+                            <option value="7">Konghucu</option>
+                        </select>
+                        <label for="agama">Agama</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-floating">
+                        <select class="form-select" id="status_nikah" name="status_nikah" aria-label="status_nikah">
+                            <option value="" selected>-- Pilih Status Perkawinan --</option>
+                            <option value="1">BELUM MENIKAH</option>
+                            <option value="2">MENIKAH</option>
+                            <option value="3">JANDA</option>
+                            <option value="4">DUDA</option>
+                            <option value="5">CERAI</option>
+                        </select>
+                        <label for="status_nikah">Status Perkawinan</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-2">
+                <div class="form-floating">
+                    <select class="form-select" id="pekerjaan" name="pekerjaan" aria-label="pekerjaan">
+                        <option value="" selected>-- Pilih Pekerjaan --</option>
+                        <option value="1">
+                            TIDAK BEKERJA</option>
+                        <option value="2">
+                            I R T</option>
+                        <option value="3">
+                            BURUH</option>
+                        <option value="4">
+                            PELAJAR</option>
+                        <option value="5">
+                            MAHASISWA</option>
+                        <option value="6">
+                            WIRASWASTA</option>
+                        <option value="7">
+                            P N S</option>
+                        <option value="8">
+                            PEDAGANG</option>
+                        <option value="9">
+                            KARYAWAN/TI</option>
+                        <option value="10">
+                            SWASTA</option>
+                        <option value="11">
+                            KARYAWAN RS</option>
+                        <option value="12">
+                            PETANI</option>
+                        <option value="13">
+                            PERAWAT</option>
+                        <option value="14">
+                            BIDAN</option>
+                        <option value="15">
+                            DOKTER</option>
+                        <option value="16">
+                            TUKANG</option>
+                        <option value="17">
+                            SOPIR</option>
+                        <option value="18">
+                            DOSEN</option>
+                        <option value="19">
+                            GURU</option>
+                        <option value="20">
+                            BUMN</option>
+                        <option value="21">
+                            PENSIUNAN</option>
+                        <option value="22">
+                            ABRI</option>
+                        <option value="23">
+                            POLRI</option>
+                    </select>
+                    <label for="pekerjaan">Pekerjaan</label>
+                    <div class="invalid-feedback"></div>
                 </div>
             </div>
         </div>
@@ -185,16 +313,20 @@
                 $("input[name='jenis_kelamin'][value='" + selectedGender + "']").prop('checked', true);
             }
             $('#alamat').val(data.alamat);
-            // Atur lokasi secara berurutan
-            if (data.provinsi) {
-                await loadProvinsi(data.provinsi); // Muat dan pilih provinsi
-                if (data.kabupaten) {
-                    await loadKabupaten(data.provinsi, data.kabupaten); // Muat dan pilih kabupaten
-                    if (data.kecamatan) {
-                        await loadKecamatan(data.kabupaten, data.kecamatan); // Muat dan pilih kecamatan
-                        if (data.kelurahan) {
-                            await loadKelurahan(data.kecamatan, data.kelurahan); // Muat dan pilih kelurahan
-                        }
+            $('#rt').val(data.rt);
+            $('#rw').val(data.rw);
+            $('#telpon').val(data.telpon);
+            $('#kewarganegaraan').val(data.kewarganegaraan);
+            $('#agama').val(data.agama);
+            $('#status_nikah').val(data.status_nikah);
+            $('#pekerjaan').val(data.pekerjaan);
+            await loadProvinsi(data.provinsi); // Muat dan pilih provinsi
+            if (data.kabupaten) {
+                await loadKabupaten(data.provinsi, data.kabupaten); // Muat dan pilih kabupaten
+                if (data.kecamatan) {
+                    await loadKecamatan(data.kabupaten, data.kecamatan); // Muat dan pilih kecamatan
+                    if (data.kelurahan) {
+                        await loadKelurahan(data.kecamatan, data.kelurahan); // Muat dan pilih kelurahan
                     }
                 }
             }
@@ -231,8 +363,7 @@
                 .append('<option value="">-- Pilih Kabupaten/Kota --</option>')
                 .append(
                     kabupaten.map(k => `<option value="${k.id}">${k.name}</option>`)
-                )
-                .prop('disabled', false);
+                );
             if (selectedKabupaten) {
                 $('#kabupaten').val(selectedKabupaten).trigger('change');
             }
@@ -338,7 +469,7 @@
             $('#pasienForm .is-invalid').removeClass('is-invalid');
             $('#pasienForm .invalid-feedback').text('').hide();
             $('#submitBtn').prop('disabled', true).html(`
-                <span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span> Tambah
+                <span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span> Simpan
             `);
 
             // Disable form inputs
@@ -369,7 +500,7 @@
                             // Handle radio button group separately
                             if (field === 'jenis_kelamin') {
                                 const radioGroup = $("input[name='jenis_kelamin']");
-                                const feedbackElement = radioGroup.closest('.radio-btn').find('.invalid-feedback');
+                                const feedbackElement = radioGroup.closest('.col-form-label').find('.invalid-feedback');
 
                                 if (radioGroup.length > 0 && feedbackElement.length > 0) {
                                     radioGroup.addClass('is-invalid');
