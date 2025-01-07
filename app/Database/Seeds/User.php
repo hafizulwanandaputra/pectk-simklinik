@@ -14,6 +14,7 @@ class User extends Seeder
             'password' => password_hash('12345', PASSWORD_DEFAULT),
             'profilephoto' => NULL,
             'role' => 'Admin',
+            'kode_antrian' => NULL,
             'active' => '1',
             'registered' => date('Y-m-d H:i:s'),
         ];
