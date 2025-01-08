@@ -123,10 +123,10 @@ class Pasien extends BaseController
                 'rt' => NULL,
                 'rw' => NULL,
                 'telpon' => NULL,
-                'kewarganegaraan' => NULL,
-                'agama' => NULL,
-                'status_nikah' => NULL,
-                'pekerjaan' => NULL,
+                'kewarganegaraan' => '',
+                'agama' => '',
+                'status_nikah' => '',
+                'pekerjaan' => '',
                 'tanggal_daftar' => date("Y-m-d H:i:s"),
             ];
             $this->PasienModel->insert($data);
@@ -352,8 +352,8 @@ class Pasien extends BaseController
             $db = db_connect();
 
             // Menggunakan Query Builder untuk mengambil data provinsi
-            $builder = $db->table('reg_provinces');
-            $result = $builder->select('id, name')->get()->getResultArray();
+            $builder = $db->table('master_provinsi');
+            $result = $builder->select('provinsiId, provinsiNama')->get()->getResultArray();
 
             // Mengembalikan data dalam format JSON
             return $this->response->setJSON([
@@ -376,8 +376,8 @@ class Pasien extends BaseController
             $db = db_connect();
 
             // Menggunakan Query Builder untuk mengambil data kabupaten
-            $builder = $db->table('reg_regencies');
-            $result = $builder->select('id, name')->where('province_id', $id)->get()->getResultArray();
+            $builder = $db->table('master_kabupaten');
+            $result = $builder->select('kabupatenId, kabupatenNama')->where('provinsiId', $id)->get()->getResultArray();
 
             // Mengembalikan data dalam format JSON
             return $this->response->setJSON([
@@ -400,8 +400,8 @@ class Pasien extends BaseController
             $db = db_connect();
 
             // Menggunakan Query Builder untuk mengambil data kecamatan
-            $builder = $db->table('reg_districts');
-            $result = $builder->select('id, name')->where('regency_id', $id)->get()->getResultArray();
+            $builder = $db->table('master_kecamatan');
+            $result = $builder->select('kecamatanId, kecamatanNama')->where('kabupatenId', $id)->get()->getResultArray();
 
             // Mengembalikan data dalam format JSON
             return $this->response->setJSON([
@@ -423,9 +423,9 @@ class Pasien extends BaseController
             // Membuat koneksi ke database
             $db = db_connect();
 
-            // Menggunakan Query Builder untuk mengambil data kecamatan
-            $builder = $db->table('reg_villages');
-            $result = $builder->select('id, name')->where('district_id', $id)->get()->getResultArray();
+            // Menggunakan Query Builder untuk mengambil data kelurahan
+            $builder = $db->table('master_kelurahan');
+            $result = $builder->select('kelurahanId, kelurahanNama')->where('kecamatanId', $id)->get()->getResultArray();
 
             // Mengembalikan data dalam format JSON
             return $this->response->setJSON([
@@ -749,16 +749,19 @@ class Pasien extends BaseController
             // Menetapkan aturan validasi dasar
             $validation->setRules([
                 'nama_pasien' => 'required',
-                'nik' => 'max_length[16]',
-                'no_bpjs' => 'max_length[16]',
+                'nik' => 'numeric',
+                'no_bpjs' => 'numeric',
                 'tempat_lahir' => 'required',
                 'tanggal_lahir' => 'required',
                 'jenis_kelamin' => 'required',
                 'alamat' => 'required',
                 'provinsi' => 'required',
-                'kabupaten' => 'required',
+                'kabupatesn' => 'required',
                 'kecamatan' => 'required',
                 'kelurahan' => 'required',
+                'rt' => 'numeric',
+                'rw' => 'numeric',
+                'telpon' => 'numeric',
                 'kewarganegaraan' => 'required',
                 'agama' => 'required',
                 'status_nikah' => 'required',

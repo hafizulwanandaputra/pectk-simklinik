@@ -255,8 +255,8 @@
                                 <div class="form-floating">
                                     <select class="form-select" id="kewarganegaraan" name="kewarganegaraan" aria-label="kewarganegaraan">
                                         <option value="" selected>-- Pilih Kewarganegaraan --</option>
-                                        <option value="INDONESIA">INDONESIA</option>
-                                        <option value="WARGA NEGARA ASING">WARGA NEGARA ASING</option>
+                                        <option value="WNI">INDONESIA</option>
+                                        <option value="WNA">WARGA NEGARA ASING</option>
                                     </select>
                                     <label for="kewarganegaraan">Kewarganegaraan</label>
                                     <div class="invalid-feedback"></div>
@@ -266,13 +266,13 @@
                                 <div class="form-floating">
                                     <select class="form-select" id="agama" name="agama" aria-label="agama">
                                         <option value="" selected>-- Pilih Agama --</option>
-                                        <option value="Islam">Islam</option>
-                                        <option value="Kristen">Kristen</option>
-                                        <option value="Kristen Protestan">Kristen Protestan</option>
-                                        <option value="Kristen Katolik">Kristen Katolik</option>
-                                        <option value="Hindu">Hindu</option>
-                                        <option value="Buddha">Buddha</option>
-                                        <option value="Konghucu">Konghucu</option>
+                                        <option value="1">Islam</option>
+                                        <option value="2">Kristen</option>
+                                        <option value="3">Kristen Protestan</option>
+                                        <option value="4">Kristen Katolik</option>
+                                        <option value="5">Hindu</option>
+                                        <option value="6">Buddha</option>
+                                        <option value="7">Konghucu</option>
                                     </select>
                                     <label for="agama">Agama</label>
                                     <div class="invalid-feedback"></div>
@@ -282,11 +282,11 @@
                                 <div class="form-floating">
                                     <select class="form-select" id="status_nikah" name="status_nikah" aria-label="status_nikah">
                                         <option value="" selected>-- Pilih Status Perkawinan --</option>
-                                        <option value="BELUM MENIKAH">BELUM MENIKAH</option>
-                                        <option value="MENIKAH">MENIKAH</option>
-                                        <option value="JANDA">JANDA</option>
-                                        <option value="DUDA">DUDA</option>
-                                        <option value="CERAI">CERAI</option>
+                                        <option value="1">BELUM MENIKAH</option>
+                                        <option value="2">MENIKAH</option>
+                                        <option value="3">JANDA</option>
+                                        <option value="4">DUDA</option>
+                                        <option value="5">CERAI</option>
                                     </select>
                                     <label for="status_nikah">Status Perkawinan</label>
                                     <div class="invalid-feedback"></div>
@@ -297,51 +297,51 @@
                             <div class="form-floating">
                                 <select class="form-select" id="pekerjaan" name="pekerjaan" aria-label="pekerjaan">
                                     <option value="" selected>-- Pilih Pekerjaan --</option>
-                                    <option value="TIDAK BEKERJA">
+                                    <option value="1">
                                         TIDAK BEKERJA</option>
-                                    <option value="I R T">
+                                    <option value="2">
                                         I R T</option>
-                                    <option value="BURUH">
+                                    <option value="3">
                                         BURUH</option>
-                                    <option value="PELAJAR">
+                                    <option value="4">
                                         PELAJAR</option>
-                                    <option value="MAHASISWA">
+                                    <option value="5">
                                         MAHASISWA</option>
-                                    <option value="WIRASWASTA">
+                                    <option value="6" selected>
                                         WIRASWASTA</option>
-                                    <option value="P N S">
+                                    <option value="7">
                                         P N S</option>
-                                    <option value="PEDAGANG">
+                                    <option value="8">
                                         PEDAGANG</option>
-                                    <option value="KARYAWAN/TI">
+                                    <option value="9">
                                         KARYAWAN/TI</option>
-                                    <option value="SWASTA">
+                                    <option value="10">
                                         SWASTA</option>
-                                    <option value="KARYAWAN RS">
+                                    <option value="11">
                                         KARYAWAN RS</option>
-                                    <option value="PETANI">
+                                    <option value="12">
                                         PETANI</option>
-                                    <option value="PERAWAT">
+                                    <option value="13">
                                         PERAWAT</option>
-                                    <option value="BIDAN">
+                                    <option value="14">
                                         BIDAN</option>
-                                    <option value="DOKTER">
+                                    <option value="15">
                                         DOKTER</option>
-                                    <option value="TUKANG">
+                                    <option value="16">
                                         TUKANG</option>
-                                    <option value="SOPIR">
+                                    <option value="17">
                                         SOPIR</option>
-                                    <option value="DOSEN">
+                                    <option value="18">
                                         DOSEN</option>
-                                    <option value="GURU">
+                                    <option value="19">
                                         GURU</option>
-                                    <option value="BUMN">
+                                    <option value="20">
                                         BUMN</option>
-                                    <option value="PENSIUNAN">
+                                    <option value="21">
                                         PENSIUNAN</option>
-                                    <option value="ABRI">
+                                    <option value="22">
                                         ABRI</option>
-                                    <option value="POLRI">
+                                    <option value="23">
                                         POLRI</option>
                                 </select>
                                 <label for="pekerjaan">Pekerjaan</label>
@@ -360,7 +360,7 @@
                     </div>
                     <?= form_close(); ?>
                 </div>
-                <div class="tab-pane show active" id="rawatjalan-container" role="tabpanel" aria-labelledby="rawatjalan-container-tab" tabindex="0">
+                <div class="tab-pane" id="rawatjalan-container" role="tabpanel" aria-labelledby="rawatjalan-container-tab" tabindex="0">
                     <div class="shadow-sm rounded">
                         <div class="d-grid gap-2">
                             <button class="btn btn-primary btn-sm bg-gradient  rounded-bottom-0" type="button" id="addRajalButton">
@@ -592,7 +592,7 @@
             const response = await axios.get('<?= base_url('pasien/provinsi') ?>'); // Ganti dengan URL API yang sesuai
             const provinsi = response.data.data; // Sesuaikan dengan struktur data API
             $('#provinsi').append(
-                provinsi.map(p => `<option value="${p.id}">${p.name}</option>`)
+                provinsi.map(p => `<option value="${p.provinsiId}">${p.provinsiNama}</option>`)
             );
             if (selectedProvinsi) {
                 $('#provinsi').val(selectedProvinsi).trigger('change');
@@ -611,7 +611,7 @@
                 .empty()
                 .append('<option value="">-- Pilih Kabupaten/Kota --</option>')
                 .append(
-                    kabupaten.map(k => `<option value="${k.id}">${k.name}</option>`)
+                    kabupaten.map(k => `<option value="${k.kabupatenId}">${k.kabupatenNama}</option>`)
                 );
             if (selectedKabupaten) {
                 $('#kabupaten').val(selectedKabupaten).trigger('change');
@@ -630,7 +630,7 @@
                 .empty()
                 .append('<option value="">-- Pilih Kecamatan --</option>')
                 .append(
-                    kecamatan.map(k => `<option value="${k.id}">${k.name}</option>`)
+                    kecamatan.map(k => `<option value="${k.kecamatanId}">${k.kecamatanNama}</option>`)
                 );
             if (selectedKecamatan) {
                 $('#kecamatan').val(selectedKecamatan).trigger('change');
@@ -649,7 +649,7 @@
                 .empty()
                 .append('<option value="">-- Pilih Desa/Kelurahan --</option>')
                 .append(
-                    kelurahan.map(k => `<option value="${k.id}">${k.name}</option>`)
+                    kelurahan.map(k => `<option value="${k.kelurahanId}">${k.kelurahanNama}</option>`)
                 );
             if (selectedKelurahan) {
                 $('#kelurahan').val(selectedKelurahan);
