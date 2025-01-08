@@ -21,7 +21,7 @@
     <div class="flex-fill text-truncate">
         <div class="d-flex flex-column">
             <div class="fw-medium fs-6 lh-sm"><?= $headertitle; ?></div>
-            <div class="fw-medium lh-sm" style="font-size: 0.75em;"><?= $pasien['no_rm'] ?> • <span id="nama_pasien_header"><?= $pasien['nama_pasien']; ?></span></div>
+            <div class="fw-medium lh-sm" style="font-size: 0.75em;"><?= $pasien['no_rm'] ?> • <span id="nama_pasien_header"><?= $pasien['nama_pasien']; ?></span> • <span id="totalRecords">0</span> rawat jalan</div>
         </div>
     </div>
     <div id="loadingSpinner" class="spinner-border spinner-border-sm mx-2" role="status" style="min-width: 1rem;">
@@ -52,6 +52,63 @@
                             <button class="nav-link " id="rawatjalan-container-tab" data-bs-toggle="tab" data-bs-target="#rawatjalan-container" type="button" role="tab" aria-controls="rawatjalan-container" aria-selected="false">Rawat Jalan</button>
                         </div>
                     </nav>
+                    <div class="mt-2" id="tanggal_form" style="display: none;">
+                        <div class="input-group input-group-sm">
+                            <input type="date" id="tanggal" name="tanggal" class="form-control ">
+                            <button class="btn btn-danger bg-gradient" type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
+                            <button class="btn btn-success bg-gradient " type="button" id="refreshButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan" disabled><i class="fa-solid fa-sync"></i></button>
+                        </div>
+                        <div class="accordion mt-2" id="accordionFilter">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button p-2 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFilter" aria-expanded="false" aria-controls="collapseFilter">
+                                        Pencarian Tambahan
+                                    </button>
+                                </h2>
+                                <div id="collapseFilter" class="accordion-collapse collapse" data-bs-parent="#accordionFilter">
+                                    <div class="accordion-body px-2 py-1 mt-1">
+                                        <div class="row row-cols-1 row-cols-sm-2 g-1">
+                                            <div class="col">
+                                                <select id="kunjunganFilter" class="form-select form-select-sm">
+                                                    <option value="">Semua Jenis Kunjungan</option>
+                                                </select>
+                                            </div>
+                                            <div class="col">
+                                                <select id="jaminanFilter" class="form-select form-select-sm">
+                                                    <option value="">Semua Jaminan</option>
+                                                </select>
+                                            </div>
+                                            <div class="col">
+                                                <select id="ruanganFilter" class="form-select form-select-sm">
+                                                    <option value="">Semua Ruangan</option>
+                                                </select>
+                                            </div>
+                                            <div class="col">
+                                                <select id="dokterFilter" class="form-select form-select-sm">
+                                                    <option value="">Semua Dokter</option>
+                                                </select>
+                                            </div>
+                                            <div class="col">
+                                                <select id="pendaftarFilter" class="form-select form-select-sm">
+                                                    <option value="">Semua Pendaftar</option>
+                                                </select>
+                                            </div>
+                                            <div class="col">
+                                                <select id="statusFilter" class="form-select form-select-sm">
+                                                    <option value="">Semua Status</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <select id="transaksiFilter" class="form-select form-select-sm my-1">
+                                            <option value="">Semua Status Transaksi</option>
+                                            <option value="1">Diproses</option>
+                                            <option value="0">Belum Diproses</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </li>
         </ul>
@@ -304,6 +361,90 @@
                     <?= form_close(); ?>
                 </div>
                 <div class="tab-pane show active" id="rawatjalan-container" role="tabpanel" aria-labelledby="rawatjalan-container-tab" tabindex="0">
+                    <div class="shadow-sm rounded">
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-primary btn-sm bg-gradient  rounded-bottom-0" type="button" id="addRajalButton">
+                                <i class="fa-solid fa-plus"></i> Registrasi Rawat Jalan
+                            </button>
+                        </div>
+                        <ul id="rajalContainer" class="list-group rounded-top-0 ">
+                            <?php for ($i = 0; $i < 12; $i++) : ?>
+                                <li class="list-group-item border-top-0 pb-3 pt-3" style="cursor: wait;">
+                                    <div class="d-flex">
+                                        <div class="align-self-center w-100">
+                                            <h5 class="card-title d-flex justify-content-start placeholder-glow">
+                                                <span class="badge bg-body text-body border py-1 px-2 date placeholder" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><span class="spinner-border" style="width: 0.9em; height: 0.9em;" aria-hidden="true"></span></span> <span class="placeholder mx-1" style="width: 100%"></span>
+                                                <span class="badge bg-body text-body border py-1 px-2 date placeholder" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><span class="spinner-border" style="width: 0.9em; height: 0.9em;" aria-hidden="true"></span></span>
+                                            </h5>
+                                            <h6 class="card-subtitle placeholder-glow">
+                                                <span class="placeholder" style="width: 100%;"></span>
+                                            </h6>
+                                            <div class="card-text placeholder-glow">
+                                                <div style="font-size: 0.75em;">
+                                                    <div class="row gx-3">
+                                                        <div class="col-lg-6">
+                                                            <div class="mb-0 row g-1 placeholder-glow">
+                                                                <div class="col-5 fw-medium text-truncate">
+                                                                    <span class="placeholder w-100"></span>
+                                                                </div>
+                                                                <div class="col placeholder-glow">
+                                                                    <span class="placeholder w-100"></span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb-0 row g-1 placeholder-glow">
+                                                                <div class="col-5 fw-medium text-truncate">
+                                                                    <span class="placeholder w-100"></span>
+                                                                </div>
+                                                                <div class="col placeholder-glow">
+                                                                    <span class="placeholder w-100"></span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb-0 row g-1 placeholder-glow">
+                                                                <div class="col-5 fw-medium text-truncate">
+                                                                    <span class="placeholder w-100"></span>
+                                                                </div>
+                                                                <div class="col placeholder-glow">
+                                                                    <span class="placeholder w-100"></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="mb-0 row g-1 placeholder-glow">
+                                                                <div class="col-5 fw-medium text-truncate">
+                                                                    <span class="placeholder w-100"></span>
+                                                                </div>
+                                                                <div class="col placeholder-glow">
+                                                                    <span class="placeholder w-100"></span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb-0 row g-1 placeholder-glow">
+                                                                <div class="col-5 fw-medium text-truncate">
+                                                                    <span class="placeholder w-100"></span>
+                                                                </div>
+                                                                <div class="col placeholder-glow">
+                                                                    <span class="placeholder w-100"></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <span class="placeholder w-100" style="max-width: 100px;"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="d-grid gap-2 d-flex justify-content-end">
+                                        <a class="btn btn-body bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                                        <a class="btn btn-body bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                                        <a class="btn btn-danger bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                                    </div>
+                                </li>
+                            <?php endfor; ?>
+                        </ul>
+                    </div>
+                    <nav id="paginationNav" class="d-flex justify-content-center justify-content-lg-end mt-3 overflow-auto w-100">
+                        <ul class="pagination pagination-sm"></ul>
+                    </nav>
                 </div>
             </div>
         </div>
@@ -326,6 +467,81 @@
 <?= $this->endSection(); ?>
 <?= $this->section('javascript'); ?>
 <script>
+    let limit = 12;
+    let currentPage = 1;
+    let rajalId = null;
+    var placeholder = `
+                                <li class="list-group-item border-top-0 pb-3 pt-3" style="cursor: wait;">
+                                    <div class="d-flex">
+                                        <div class="align-self-center w-100">
+                                            <h5 class="card-title d-flex justify-content-start placeholder-glow">
+                                                <span class="badge bg-body text-body border py-1 px-2 date placeholder" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><span class="spinner-border" style="width: 0.9em; height: 0.9em;" aria-hidden="true"></span></span> <span class="placeholder mx-1" style="width: 100%"></span>
+                                                <span class="badge bg-body text-body border py-1 px-2 date placeholder" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><span class="spinner-border" style="width: 0.9em; height: 0.9em;" aria-hidden="true"></span></span>
+                                            </h5>
+                                            <h6 class="card-subtitle placeholder-glow">
+                                                <span class="placeholder" style="width: 100%;"></span>
+                                            </h6>
+                                            <div class="card-text placeholder-glow">
+                                                <div style="font-size: 0.75em;">
+                                                    <div class="row gx-3">
+                                                        <div class="col-lg-6">
+                                                            <div class="mb-0 row g-1 placeholder-glow">
+                                                                <div class="col-5 fw-medium text-truncate">
+                                                                    <span class="placeholder w-100"></span>
+                                                                </div>
+                                                                <div class="col placeholder-glow">
+                                                                    <span class="placeholder w-100"></span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb-0 row g-1 placeholder-glow">
+                                                                <div class="col-5 fw-medium text-truncate">
+                                                                    <span class="placeholder w-100"></span>
+                                                                </div>
+                                                                <div class="col placeholder-glow">
+                                                                    <span class="placeholder w-100"></span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb-0 row g-1 placeholder-glow">
+                                                                <div class="col-5 fw-medium text-truncate">
+                                                                    <span class="placeholder w-100"></span>
+                                                                </div>
+                                                                <div class="col placeholder-glow">
+                                                                    <span class="placeholder w-100"></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-6">
+                                                            <div class="mb-0 row g-1 placeholder-glow">
+                                                                <div class="col-5 fw-medium text-truncate">
+                                                                    <span class="placeholder w-100"></span>
+                                                                </div>
+                                                                <div class="col placeholder-glow">
+                                                                    <span class="placeholder w-100"></span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb-0 row g-1 placeholder-glow">
+                                                                <div class="col-5 fw-medium text-truncate">
+                                                                    <span class="placeholder w-100"></span>
+                                                                </div>
+                                                                <div class="col placeholder-glow">
+                                                                    <span class="placeholder w-100"></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <span class="placeholder w-100" style="max-width: 100px;"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <div class="d-grid gap-2 d-flex justify-content-end">
+                                        <a class="btn btn-body bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                                        <a class="btn btn-danger bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                                    </div>
+                                </li>
+    `;
+
     async function fetchPasien() {
         $('#loadingSpinner').show();
 
@@ -487,6 +703,394 @@
         placeholder: $(this).data('placeholder'),
     });
 
+    $('#pasien-container-tab').on('click', function() {
+        $('#tanggal_form').hide();
+    });
+
+    async function fetchJenisKunjunganOptions() {
+        try {
+            // Panggil API dengan query string tanggal
+            const response = await axios.get(`<?= base_url('pasien/kunjunganoptions/' . $pasien['id_pasien']) ?>`);
+
+            if (response.data.success) {
+                const options = response.data.data;
+                const select = $('#kunjunganFilter');
+
+                // Hapus opsi yang ada, kecuali opsi pertama (default)
+                select.find('option:not(:first)').remove();
+
+                // Tambahkan opsi ke elemen select
+                options.forEach(option => {
+                    select.append(`<option value="${option.value}">${option.text}</option>`);
+                });
+            } else {
+                showFailedToast('Gagal mendapatkan jenis kunjungan.');
+            }
+        } catch (error) {
+            showFailedToast(`${error.response.data.error}<br>${error.response.data.details.message}`);
+        }
+    }
+
+    async function fetchJaminanOptions() {
+        try {
+            // Panggil API dengan query string tanggal
+            const response = await axios.get(`<?= base_url('pasien/jaminanoptions/' . $pasien['id_pasien']) ?>`);
+
+            if (response.data.success) {
+                const options = response.data.data;
+                const select = $('#jaminanFilter');
+
+                // Hapus opsi yang ada, kecuali opsi pertama (default)
+                select.find('option:not(:first)').remove();
+
+                // Tambahkan opsi ke elemen select
+                options.forEach(option => {
+                    select.append(`<option value="${option.value}">${option.text}</option>`);
+                });
+            } else {
+                showFailedToast('Gagal mendapatkan jaminan.');
+            }
+        } catch (error) {
+            showFailedToast(`${error.response.data.error}<br>${error.response.data.details.message}`);
+        }
+    }
+
+    async function fetchRuanganOptions() {
+        try {
+            // Panggil API dengan query string tanggal
+            const response = await axios.get(`<?= base_url('pasien/ruanganoptions') ?>`);
+
+            if (response.data.success) {
+                const options = response.data.data;
+                const select = $('#ruanganFilter');
+
+                // Hapus opsi yang ada, kecuali opsi pertama (default)
+                select.find('option:not(:first)').remove();
+
+                // Tambahkan opsi ke elemen select
+                options.forEach(option => {
+                    select.append(`<option value="${option.value}">${option.text}</option>`);
+                });
+            } else {
+                showFailedToast('Gagal mendapatkan ruangan.');
+            }
+        } catch (error) {
+            showFailedToast(`${error.response.data.error}<br>${error.response.data.details.message}`);
+        }
+    }
+
+    async function fetchDokterOptions() {
+        try {
+            // Panggil API dengan query string tanggal
+            const response = await axios.get(`<?= base_url('pasien/dokteroptions') ?>`);
+
+            if (response.data.success) {
+                const options = response.data.data;
+                const select = $('#dokterFilter');
+
+                // Hapus opsi yang ada, kecuali opsi pertama (default)
+                select.find('option:not(:first)').remove();
+
+                // Tambahkan opsi ke elemen select
+                options.forEach(option => {
+                    select.append(`<option value="${option.value}">${option.text}</option>`);
+                });
+            } else {
+                showFailedToast('Gagal mendapatkan dokter.');
+            }
+        } catch (error) {
+            showFailedToast(`${error.response.data.error}<br>${error.response.data.details.message}`);
+        }
+    }
+
+    async function fetchPendaftarOptions() {
+        try {
+            // Panggil API dengan query string tanggal
+            const response = await axios.get(`<?= base_url('pasien/pendaftaroptions/' . $pasien['id_pasien']) ?>`);
+
+            if (response.data.success) {
+                const options = response.data.data;
+                const select = $('#pendaftarFilter');
+
+                // Hapus opsi yang ada, kecuali opsi pertama (default)
+                select.find('option:not(:first)').remove();
+
+                // Tambahkan opsi ke elemen select
+                options.forEach(option => {
+                    select.append(`<option value="${option.value}">${option.text}</option>`);
+                });
+            } else {
+                showFailedToast('Gagal mendapatkan pendaftar.');
+            }
+        } catch (error) {
+            showFailedToast(`${error.response.data.error}<br>${error.response.data.details.message}`);
+        }
+    }
+
+    async function fetchStatusOptions() {
+        try {
+            // Panggil API dengan query string tanggal
+            const response = await axios.get(`<?= base_url('pasien/statusoptions/' . $pasien['id_pasien']) ?>`);
+
+            if (response.data.success) {
+                const options = response.data.data;
+                const select = $('#statusFilter');
+
+                // Hapus opsi yang ada, kecuali opsi pertama (default)
+                select.find('option:not(:first)').remove();
+
+                // Tambahkan opsi ke elemen select
+                options.forEach(option => {
+                    select.append(`<option value="${option.value}">${option.text}</option>`);
+                });
+            } else {
+                showFailedToast('Gagal mendapatkan status.');
+            }
+        } catch (error) {
+            showFailedToast(`${error.response.data.error}<br>${error.response.data.details.message}`);
+        }
+    }
+
+    async function fetchRajal() {
+        const offset = (currentPage - 1) * limit;
+        const tanggal = $('#tanggal').val();
+        const jenis_kunjungan = $('#kunjunganFilter').val();
+        const jaminan = $('#jaminanFilter').val();
+        const ruangan = $('#ruanganFilter').val();
+        const dokter = $('#dokterFilter').val();
+        const pendaftar = $('#pendaftarFilter').val();
+        const status = $('#statusFilter').val();
+        const transaksi = $('#transaksiFilter').val();
+
+        // Show the spinner
+        $('#loadingSpinner').show();
+
+        try {
+            const response = await axios.get('<?= base_url('pasien/rawatjalanlist/' . $pasien['id_pasien']) ?>', {
+                params: {
+                    limit: limit,
+                    offset: offset,
+                    tanggal: tanggal,
+                    jenis_kunjungan: jenis_kunjungan,
+                    jaminan: jaminan,
+                    ruangan: ruangan,
+                    dokter: dokter,
+                    pendaftar: pendaftar,
+                    status: status,
+                    transaksi: transaksi
+                }
+            });
+
+            const data = response.data;
+            $('#rajalContainer').empty();
+            $('#totalRecords').text(data.total.toLocaleString('id-ID'));
+
+            if (data.total === 0) {
+                $('#paginationNav ul').empty();
+                $('#rajalContainer').append(
+                    '<li class="list-group-item border-top-0 pb-3 pt-3">' +
+                    '    <h1 class="display-4 text-center text-muted" style="font-weight: 200;">Data Kosong</h1>' +
+                    '</li>'
+                );
+            } else {
+                data.rajal.forEach(function(rajal) {
+                    const transaksiBadge = rajal.transaksi == '1' ?
+                        `<span class="badge bg-success bg-gradient">Transaksi Diproses</span>` :
+                        `<span class="badge bg-danger bg-gradient">Transaksi Belum Diproses</span>`;
+                    let status = rajal.status;
+                    if (status === 'DAFTAR') {
+                        status = `<span class="badge bg-success bg-gradient">Didaftarkan</span> ${transaksiBadge}`;
+                    } else if (status === 'BATAL') {
+                        status = `<span class="badge bg-danger bg-gradient">Rawat Jalan Batal</span>`;
+                    }
+                    const rajalElement = `
+            <li class="list-group-item border-top-0 pb-3 pt-3">
+                <div class="d-flex">
+                    <div class="align-self-center w-100">
+                        <h5 class="card-title d-flex date justify-content-between">
+                            <div>
+                                <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">${rajal.number}</span>
+                                <span class="align-self-center date">${rajal.nomor_registrasi}</span>
+                            </div>
+                            <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">${rajal.no_antrian}</span>
+                        </h5>
+                        <h6 class="card-subtitle date">
+                            ${rajal.pendaftar}
+                        </h6>
+                        <div class="card-text">
+                            <div style="font-size: 0.75em;">
+                                <div class="row gx-3">
+                                    <div class="col-lg-6">
+                                        <div class="mb-0 row g-1">
+                                            <div class="col-5 fw-medium text-truncate">Tanggal dan Waktu</div>
+                                            <div class="col date">
+                                                ${rajal.tanggal_registrasi}
+                                            </div>
+                                        </div>
+                                        <div class="mb-0 row g-1">
+                                            <div class="col-5 fw-medium text-truncate">Jenis Kunjungan</div>
+                                            <div class="col date">
+                                                ${rajal.jenis_kunjungan}
+                                            </div>
+                                        </div>
+                                        <div class="mb-0 row g-1">
+                                            <div class="col-5 fw-medium text-truncate">Ruangan</div>
+                                            <div class="col">
+                                                ${rajal.ruangan}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="mb-0 row g-1">
+                                            <div class="col-5 fw-medium text-truncate">Dokter</div>
+                                            <div class="col date">
+                                                ${rajal.dokter}
+                                            </div>
+                                        </div>
+                                        <div class="mb-0 row g-1">
+                                            <div class="col-5 fw-medium text-truncate">Keluhan</div>
+                                            <div class="col date">
+                                                ${rajal.keluhan}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            ${status}
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="d-grid gap-2 d-flex justify-content-end">
+                    <button type="button" class="btn btn-body btn-sm bg-gradient edit-btn" data-id="${rajal.id_rajal}">
+                        <i class="fa-solid fa-pen-to-square"></i> Edit Rajal
+                    </button>
+                    <button type="button" class="btn btn-danger btn-sm bg-gradient delete-btn" data-id="${rajal.id_rajal}" data-name="${rajal.nomor_registrasi}" data-date="${rajal.tanggal_rajal}">
+                        <i class="fa-solid fa-xmark"></i> Batalkan
+                    </button>
+                </div>
+            </li>
+                `;
+
+                    $('#rajalContainer').append(rajalElement);
+                });
+
+                // Pagination logic with ellipsis for more than 3 pages
+                const totalPages = Math.ceil(data.total / limit);
+                $('#paginationNav ul').empty();
+
+                if (currentPage > 1) {
+                    $('#paginationNav ul').append(`
+                    <li class="page-item">
+                        <a class="page-link bg-gradient date" href="#" data-page="${currentPage - 1}">
+                            <i class="fa-solid fa-angle-left"></i>
+                        </a>
+                    </li>
+                `);
+                }
+
+                if (totalPages > 5) {
+                    $('#paginationNav ul').append(`
+                    <li class="page-item ${currentPage === 1 ? 'active' : ''}">
+                        <a class="page-link bg-gradient date" href="#" data-page="1">1</a>
+                    </li>
+                `);
+
+                    if (currentPage > 3) {
+                        $('#paginationNav ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">…</span></li>');
+                    }
+
+                    for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
+                        $('#paginationNav ul').append(`
+                        <li class="page-item ${i === currentPage ? 'active' : ''}">
+                            <a class="page-link bg-gradient date" href="#" data-page="${i}">${i}</a>
+                        </li>
+                    `);
+                    }
+
+                    if (currentPage < totalPages - 2) {
+                        $('#paginationNav ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">…</span></li>');
+                    }
+
+                    $('#paginationNav ul').append(`
+                    <li class="page-item ${currentPage === totalPages ? 'active' : ''}">
+                        <a class="page-link bg-gradient date" href="#" data-page="${totalPages}">${totalPages}</a>
+                    </li>
+                `);
+                } else {
+                    // Show all pages if total pages are 3 or fewer
+                    for (let i = 1; i <= totalPages; i++) {
+                        $('#paginationNav ul').append(`
+                        <li class="page-item ${i === currentPage ? 'active' : ''}">
+                            <a class="page-link bg-gradient date" href="#" data-page="${i}">${i}</a>
+                        </li>
+                    `);
+                    }
+                }
+
+                if (currentPage < totalPages) {
+                    $('#paginationNav ul').append(`
+                    <li class="page-item">
+                        <a class="page-link bg-gradient date" href="#" data-page="${currentPage + 1}">
+                            <i class="fa-solid fa-angle-right"></i>
+                        </a>
+                    </li>
+                `);
+                }
+            }
+        } catch (error) {
+            showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+            $('#rajalContainer').empty();
+            $('#paginationNav ul').empty();
+        } finally {
+            // Hide the spinner when done
+            $('#loadingSpinner').hide();
+        }
+    }
+
+    $(document).on('click', '#paginationNav a', function(event) {
+        event.preventDefault(); // Prevents default behavior (scrolling)
+        const page = $(this).data('page');
+        if (page) {
+            currentPage = page;
+            fetchRajal();
+        }
+    });
+
+    $('#tanggal, #kunjunganFilter, #jaminanFilter, #ruanganFilter, #dokterFilter, #pendaftarFilter, #statusFilter, #transaksiFilter').on('change', function() {
+        $('#rajalContainer').empty();
+        for (let i = 0; i < limit; i++) {
+            $('#rajalContainer').append(placeholder);
+        }
+        fetchRajal();
+    });
+
+    $('#clearTglButton').on('click', function() {
+        $('#tanggal').val('');
+        $('#rajalContainer').empty();
+        for (let i = 0; i < limit; i++) {
+            $('#rajalContainer').append(placeholder);
+        }
+        fetchRajal();
+    });
+
+    $('#refreshButton').on('click', async function(e) {
+        e.preventDefault();
+        await Promise.all([
+            fetchJenisKunjunganOptions(),
+            fetchJaminanOptions(),
+            fetchRuanganOptions(),
+            fetchDokterOptions(),
+            fetchPendaftarOptions(),
+            fetchStatusOptions()
+        ]);
+        fetchRajal();
+    });
+
+    $('#rawatjalan-container-tab').on('click', function() {
+        $('#tanggal_form').show();
+    });
+
     $(document).ready(async function() {
         $('[data-bs-toggle="tooltip"]').tooltip();
         $('#id_obat').select2({
@@ -495,9 +1099,6 @@
             width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
             placeholder: $(this).data('placeholder'),
         });
-
-        var detailResepId;
-        var detailResepName;
 
         $('#pasienForm').submit(async function(e) {
             e.preventDefault();
@@ -585,7 +1186,29 @@
                 $('#pasienForm input, #pasienForm select').prop('disabled', false);
             }
         });
+        $(document).on('visibilitychange', async function() {
+            if (document.visibilityState === "visible") {
+                await Promise.all([
+                    fetchJenisKunjunganOptions(),
+                    fetchJaminanOptions(),
+                    fetchRuanganOptions(),
+                    fetchDokterOptions(),
+                    fetchPendaftarOptions(),
+                    fetchStatusOptions()
+                ]);
+                fetchRajal();
+            }
+        });
         await fetchPasien();
+        await Promise.all([
+            fetchJenisKunjunganOptions(),
+            fetchJaminanOptions(),
+            fetchRuanganOptions(),
+            fetchDokterOptions(),
+            fetchPendaftarOptions(),
+            fetchStatusOptions()
+        ]);
+        fetchRajal();
     });
     // Show toast notification
     <?= $this->include('toast/index') ?>

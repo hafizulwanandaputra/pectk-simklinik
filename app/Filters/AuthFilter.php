@@ -34,6 +34,7 @@ class AuthFilter implements FilterInterface
             session()->remove('password');
             session()->remove('profilephoto');
             session()->remove('role');
+            session()->remove('kode_antrian');
             session()->remove('session_token');
             session()->remove('created_at');
             session()->remove('expires_at');

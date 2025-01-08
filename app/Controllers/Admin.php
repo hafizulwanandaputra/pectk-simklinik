@@ -56,6 +56,8 @@ class Admin extends BaseController
                 2 => 'fullname',
                 3 => 'username',
                 4 => 'role',
+                5 => 'kode_antrian',
+                6 => 'registered',
             ];
 
             // Mendapatkan kolom untuk diurutkan
@@ -138,6 +140,13 @@ class Admin extends BaseController
                 return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
             }
 
+            if ($this->request->getPost('role') == 'Dokter') {
+                // Generate kode antrian
+                $kode_antrian = $this->generateKodeAntrian();
+            } else {
+                $kode_antrian = NULL;
+            }
+
             // Menyimpan data pengguna baru
             $data = [
                 'fullname' => $this->request->getPost('fullname'),
@@ -145,6 +154,7 @@ class Admin extends BaseController
                 // Menghitung hash password menggunakan username
                 'password' => password_hash($this->request->getPost('username'), PASSWORD_DEFAULT),
                 'role' => $this->request->getPost('role'),
+                'kode_antrian' => $kode_antrian,
                 'active' => 0, // Status aktif pengguna awalnya diset ke 0
                 'registered' => date('Y-m-d H:i:s') // Tanggal pendaftaran saat ini
             ];
@@ -159,6 +169,59 @@ class Admin extends BaseController
             ]);
         }
     }
+
+    /**
+     * Fungsi untuk menghasilkan kode antrian yang terdiri dari huruf (A-Z, AA-ZZ, dst.).
+     *
+     * @return string Kode antrian berikutnya.
+     */
+    private function generateKodeAntrian()
+    {
+        // Ambil kode antrian terakhir dari database
+        $lastKode = $this->AuthModel->select('kode_antrian')
+            ->where('role', 'Dokter')
+            ->orderBy('id_user', 'DESC') // Mengurutkan berdasarkan ID terbaru
+            ->first();
+
+        // Jika belum ada kode antrian, mulai dari 'A'
+        if (!$lastKode || empty($lastKode['kode_antrian'])) {
+            return 'A';
+        }
+
+        // Ambil kode terakhir
+        $lastChar = $lastKode['kode_antrian'];
+
+        // Hitung kode berikutnya
+        $nextKode = $this->incrementKodeAntrian($lastChar);
+
+        return $nextKode;
+    }
+
+    /**
+     * Fungsi untuk menghitung kode antrian berikutnya.
+     *
+     * @param string $current Kode antrian saat ini.
+     * @return string Kode antrian berikutnya.
+     */
+    private function incrementKodeAntrian(string $current): string
+    {
+        $length = strlen($current);
+        $index = $length - 1;
+
+        while ($index >= 0) {
+            if ($current[$index] === 'Z') {
+                $current[$index] = 'A'; // Reset ke 'A' jika mencapai 'Z'
+                $index--; // Lanjutkan ke huruf sebelumnya
+            } else {
+                $current[$index] = chr(ord($current[$index]) + 1); // Increment huruf
+                return $current;
+            }
+        }
+
+        // Jika semua huruf adalah 'Z', tambahkan huruf baru di depan
+        return 'A' . $current;
+    }
+
 
     public function update()
     {

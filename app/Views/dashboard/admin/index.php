@@ -48,6 +48,7 @@
                             <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Nama Lengkap</th>
                             <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Nama Pengguna</th>
                             <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Jenis Pengguna</th>
+                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Kode Antrian</th>
                             <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Aktif Sejak</th>
                         </tr>
                     </thead>
@@ -134,6 +135,8 @@
                         <select class="form-select " id="role" name="role" aria-label="role">
                             <option value="" disabled selected>-- Pilih Jenis Pengguna --</option>
                             <option value="Admin">Admin</option>
+                            <option value="Rekam Medis">Rekam Medis</option>
+                            <option value="Perawat">Perawat</option>
                             <option value="Apoteker">Apoteker</option>
                             <option value="Dokter">Dokter</option>
                             <option value="Kasir">Kasir</option>
@@ -293,6 +296,9 @@
                 },
                 {
                     data: 'role'
+                },
+                {
+                    data: 'kode_antrian'
                 },
                 {
                     data: 'registered',
