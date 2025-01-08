@@ -203,56 +203,95 @@ class Pasien extends BaseController
             $pasien = $this->PasienModel
                 ->find($id);
 
-            // Ambil tabel reg_provinces
-            $provinsi = $db->table('reg_provinces');
-            $provinsi->select('name');
-            $provinsi->where('id', $pasien['provinsi']);
+            // Ambil tabel master_provinsi
+            $provinsi = $db->table('master_provinsi');
+            $provinsi->select('provinsiNama');
+            $provinsi->where('provinsiId', $pasien['provinsi']);
 
             // Query untuk mendapatkan nama provinsi
             $res_provinsi = $provinsi->get()->getRow();
 
             if ($res_provinsi) {
                 // Ubah ID menjadi nama provinsi
-                $pasien['provinsi'] = $res_provinsi->name;
+                $pasien['provinsi'] = $res_provinsi->provinsiNama;
             }
 
-            // Ambil tabel reg_regencies
-            $kabupaten = $db->table('reg_regencies');
-            $kabupaten->select('name');
-            $kabupaten->where('id', $pasien['kabupaten']);
+            // Ambil tabel master_kabupaten
+            $kabupaten = $db->table('master_kabupaten');
+            $kabupaten->select('kabupatenNama');
+            $kabupaten->where('kabupatenId', $pasien['kabupaten']);
 
             // Query untuk mendapatkan nama kabupaten
             $res_kabupaten = $kabupaten->get()->getRow();
 
             if ($res_kabupaten) {
                 // Ubah ID menjadi nama kabupaten
-                $pasien['kabupaten'] = $res_kabupaten->name;
+                $pasien['kabupaten'] = $res_kabupaten->kabupatenNama;
             }
 
-            // Ambil tabel reg_districts
-            $kecamatan = $db->table('reg_districts');
-            $kecamatan->select('name');
-            $kecamatan->where('id', $pasien['kecamatan']);
+            // Ambil tabel master_kecamatan
+            $kecamatan = $db->table('master_kecamatan');
+            $kecamatan->select('kecamatanNama');
+            $kecamatan->where('kecamatanId', $pasien['kecamatan']);
 
             // Query untuk mendapatkan nama kecamatan
             $res_kecamatan = $kecamatan->get()->getRow();
 
             if ($res_kecamatan) {
                 // Ubah ID menjadi nama kecamatan
-                $pasien['kecamatan'] = $res_kecamatan->name;
+                $pasien['kecamatan'] = $res_kecamatan->kecamatanNama;
             }
 
-            // Ambil tabel reg_villages
-            $kelurahan = $db->table('reg_villages');
-            $kelurahan->select('name');
-            $kelurahan->where('id', $pasien['kelurahan']);
+            // Ambil tabel master_kelurahan
+            $kelurahan = $db->table('master_kelurahan');
+            $kelurahan->select('kelurahanNama');
+            $kelurahan->where('kelurahanId', $pasien['kelurahan']);
 
             // Query untuk mendapatkan nama kelurahan
             $res_kelurahan = $kelurahan->get()->getRow();
 
             if ($res_kelurahan) {
                 // Ubah ID menjadi nama kelurahan
-                $pasien['kelurahan'] = $res_kelurahan->name;
+                $pasien['kelurahan'] = $res_kelurahan->kelurahanNama;
+            }
+
+            // Ambil tabel master_agama
+            $agama = $db->table('master_agama');
+            $agama->select('agamaNama');
+            $agama->where('agamaId', $pasien['agama']);
+
+            // Query untuk mendapatkan nama agama
+            $res_agama = $agama->get()->getRow();
+
+            if ($res_agama) {
+                // Ubah ID menjadi nama agama
+                $pasien['agama'] = $res_agama->agamaNama;
+            }
+
+            // Ambil tabel master_pekerjaan
+            $pekerjaan = $db->table('master_pekerjaan');
+            $pekerjaan->select('pekerjaanNama');
+            $pekerjaan->where('pekerjaanId', $pasien['pekerjaan']);
+
+            // Query untuk mendapatkan nama pekerjaan
+            $res_pekerjaan = $pekerjaan->get()->getRow();
+
+            if ($res_pekerjaan) {
+                // Ubah ID menjadi nama pekerjaan
+                $pasien['pekerjaan'] = $res_pekerjaan->pekerjaanNama;
+            }
+
+            // Ambil tabel master_status_pernikahan
+            $pernikahan = $db->table('master_status_pernikahan');
+            $pernikahan->select('pernikahanStatus');
+            $pernikahan->where('pernikahanId', $pasien['pernikahan']);
+
+            // Query untuk mendapatkan nama pernikahan
+            $res_pernikahan = $pernikahan->get()->getRow();
+
+            if ($res_pernikahan) {
+                // Ubah ID menjadi nama pernikahan
+                $pasien['pernikahan'] = $res_pernikahan->pernikahanStatus;
             }
 
             $qrcode = new Generator;
@@ -508,7 +547,7 @@ class Pasien extends BaseController
 
             // Menambahkan filter untuk rawat jalan agar hanya menampilkan rawat jalan dari salah satu pasien
             $RawatJalanModel->groupStart()
-                ->where('id_pasien', $id)
+                ->where('no_rm', $id)
                 ->groupEnd();
 
             // Menghitung total hasil pencarian
@@ -539,13 +578,13 @@ class Pasien extends BaseController
         }
     }
 
-    public function kunjunganoptions($id)
+    public function kunjunganoptions($no_rm)
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Rekam Medis' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Rekam Medis') {
             // Mengambil jenis kunjungan dari tabel rawat jalan
             $rawatJalan = $this->RawatJalanModel
-                ->where('id_pasien', $id)
+                ->where('no_rm', $no_rm)
                 ->groupBy('jenis_kunjungan')
                 ->orderBy('jenis_kunjungan', 'ASC')
                 ->findAll();
@@ -573,13 +612,13 @@ class Pasien extends BaseController
         }
     }
 
-    public function jaminanoptions($id)
+    public function jaminanoptions($no_rm)
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Rekam Medis' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Rekam Medis') {
             // Mengambil jaminan dari tabel rawat jalan
             $rawatJalan = $this->RawatJalanModel
-                ->where('id_pasien', $id)
+                ->where('no_rm', $no_rm)
                 ->groupBy('jaminan')
                 ->orderBy('jaminan', 'ASC')
                 ->findAll();
@@ -672,13 +711,13 @@ class Pasien extends BaseController
         }
     }
 
-    public function pendaftaroptions($id)
+    public function pendaftaroptions($no_rm)
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Rekam Medis' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Rekam Medis') {
             // Mengambil pendaftar dari tabel rawat jalan
             $rawatJalan = $this->RawatJalanModel
-                ->where('id_pasien', $id)
+                ->where('no_rm', $no_rm)
                 ->groupBy('pendaftar')
                 ->orderBy('pendaftar', 'ASC')
                 ->findAll();
@@ -706,13 +745,13 @@ class Pasien extends BaseController
         }
     }
 
-    public function statusoptions($id)
+    public function statusoptions($no_rm)
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Rekam Medis' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Rekam Medis') {
             // Mengambil status dari tabel rawat jalan
             $rawatJalan = $this->RawatJalanModel
-                ->where('id_pasien', $id)
+                ->where('no_rm', $no_rm)
                 ->groupBy('status')
                 ->orderBy('status', 'ASC')
                 ->findAll();
