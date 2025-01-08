@@ -54,9 +54,16 @@ class RawatJalan extends Migration
                 'type' => 'VARCHAR',
                 'constraint' => 256,
             ],
+            'pendaftar' => [
+                'type' => 'VARCHAR',
+                'constraint' => 512,
+            ],
             'status' => [
                 'type' => 'VARCHAR',
                 'constraint' => 256,
+            ],
+            'transaksi' => [
+                'type' => 'BOOLEAN',
             ],
         ]);
         $this->forge->addKey('id_rawat_jalan', true);
