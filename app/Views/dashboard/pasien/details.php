@@ -21,7 +21,7 @@
     <div class="flex-fill text-truncate">
         <div class="d-flex flex-column">
             <div class="fw-medium fs-6 lh-sm"><?= $headertitle; ?></div>
-            <div class="fw-medium lh-sm" style="font-size: 0.75em;"><?= $pasien['no_rm'] ?> • <span id="nama_pasien_header"><?= $pasien['nama_pasien']; ?></span> • <span id="totalRecords">0</span> rawat jalan</div>
+            <div class="fw-medium lh-sm" style="font-size: 0.75em;"><?= $pasien['no_rm'] ?> • <span id="nama_pasien_header"><?= $pasien['nama_pasien']; ?></span></div>
         </div>
     </div>
     <div id="loadingSpinner" class="spinner-border spinner-border-sm mx-2" role="status" style="min-width: 1rem;">
@@ -49,7 +49,7 @@
                     <nav>
                         <div class="nav nav-underline nav-justified" id="nav-tab" role="tablist">
                             <button class="nav-link  active" id="pasien-container-tab" data-bs-toggle="tab" data-bs-target="#pasien-container" type="button" role="tab" aria-controls="pasien-container" aria-selected="true">Identitas Pasien</button>
-                            <button class="nav-link " id="rawatjalan-container-tab" data-bs-toggle="tab" data-bs-target="#rawatjalan-container" type="button" role="tab" aria-controls="rawatjalan-container" aria-selected="false">Rawat Jalan</button>
+                            <button class="nav-link " id="rawatjalan-container-tab" data-bs-toggle="tab" data-bs-target="#rawatjalan-container" type="button" role="tab" aria-controls="rawatjalan-container" aria-selected="false">Rawat Jalan <span id="totalRecords" class="badge bg-body border text-body">0</span></button>
                         </div>
                     </nav>
                     <div class="mt-2" id="tanggal_form" style="display: none;">
