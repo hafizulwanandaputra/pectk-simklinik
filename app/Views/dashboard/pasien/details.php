@@ -28,12 +28,12 @@
         <span class="visually-hidden">Loading...</span>
     </div>
     <?php if ($previous): ?>
-        <a class="fs-6 mx-2 text-success-emphasis" href="<?= site_url('pasien/detailpasien/' . $previous['id_pasien']) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="<?= $previous['no_rm'] ?> • <?= $previous['nama_pasien'] == NULL; ?>"><i class="fa-solid fa-circle-arrow-left"></i></a>
+        <a class="fs-6 mx-2 text-success-emphasis" href="<?= site_url('pasien/detailpasien/' . $previous['id_pasien']) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="<?= $previous['no_rm'] ?> • <?= $previous['nama_pasien']; ?>"><i class="fa-solid fa-circle-arrow-left"></i></a>
     <?php else: ?>
         <span class="fs-6 mx-2 text-success-emphasis" style="cursor: no-drop; opacity: .5;" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Tidak ada pasien sebelumnya"><i class="fa-solid fa-circle-arrow-left"></i></span>
     <?php endif; ?>
     <?php if ($next): ?>
-        <a class="fs-6 mx-2 text-success-emphasis" href="<?= site_url('pasien/detailpasien/' . $next['id_pasien']) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="<?= $next['no_rm'] ?> • <?= $next['nama_pasien'] == NULL; ?>"><i class="fa-solid fa-circle-arrow-right"></i></a>
+        <a class="fs-6 mx-2 text-success-emphasis" href="<?= site_url('pasien/detailpasien/' . $next['id_pasien']) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="<?= $next['no_rm'] ?> • <?= $next['nama_pasien']; ?>"><i class="fa-solid fa-circle-arrow-right"></i></a>
     <?php else: ?>
         <span class="fs-6 mx-2 text-success-emphasis" style="cursor: no-drop; opacity: .5;" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Tidak ada pasien berikutnya"><i class="fa-solid fa-circle-arrow-right"></i></span>
     <?php endif; ?>
@@ -56,7 +56,7 @@
                         <div class="input-group input-group-sm">
                             <input type="date" id="tanggal" name="tanggal" class="form-control ">
                             <button class="btn btn-danger bg-gradient" type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
-                            <button class="btn btn-success bg-gradient " type="button" id="refreshButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan" disabled><i class="fa-solid fa-sync"></i></button>
+                            <button class="btn btn-success bg-gradient " type="button" id="refreshButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan"><i class="fa-solid fa-sync"></i></button>
                         </div>
                         <div class="accordion mt-2" id="accordionFilter">
                             <div class="accordion-item">
@@ -708,6 +708,7 @@
     });
 
     async function fetchJenisKunjunganOptions() {
+        $('#loadingSpinner').show();
         try {
             // Panggil API dengan query string tanggal
             const response = await axios.get(`<?= base_url('pasien/kunjunganoptions/' . $pasien['no_rm']) ?>`);
@@ -732,6 +733,7 @@
     }
 
     async function fetchJaminanOptions() {
+        $('#loadingSpinner').show();
         try {
             // Panggil API dengan query string tanggal
             const response = await axios.get(`<?= base_url('pasien/jaminanoptions/' . $pasien['no_rm']) ?>`);
@@ -756,6 +758,7 @@
     }
 
     async function fetchRuanganOptions() {
+        $('#loadingSpinner').show();
         try {
             // Panggil API dengan query string tanggal
             const response = await axios.get(`<?= base_url('pasien/ruanganoptions') ?>`);
@@ -780,6 +783,7 @@
     }
 
     async function fetchDokterOptions() {
+        $('#loadingSpinner').show();
         try {
             // Panggil API dengan query string tanggal
             const response = await axios.get(`<?= base_url('pasien/dokteroptions') ?>`);
@@ -804,6 +808,7 @@
     }
 
     async function fetchPendaftarOptions() {
+        $('#loadingSpinner').show();
         try {
             // Panggil API dengan query string tanggal
             const response = await axios.get(`<?= base_url('pasien/pendaftaroptions/' . $pasien['no_rm']) ?>`);
@@ -828,6 +833,7 @@
     }
 
     async function fetchStatusOptions() {
+        $('#loadingSpinner').show();
         try {
             // Panggil API dengan query string tanggal
             const response = await axios.get(`<?= base_url('pasien/statusoptions/' . $pasien['no_rm']) ?>`);
@@ -962,11 +968,14 @@
                 </div>
                 <hr>
                 <div class="d-grid gap-2 d-flex justify-content-end">
+                    <button type="button" class="btn btn-body btn-sm bg-gradient " onclick="window.open('<?= base_url('rawatjalan/struk') ?>/${rajal.id_rawat_jalan}');">
+                        <i class="fa-solid fa-print"></i> Struk
+                    </button>
                     <button type="button" class="btn btn-body btn-sm bg-gradient edit-btn" data-id="${rajal.id_rajal}">
-                        <i class="fa-solid fa-pen-to-square"></i> Edit Rajal
+                        <i class="fa-solid fa-pen-to-square"></i> Edit
                     </button>
                     <button type="button" class="btn btn-danger btn-sm bg-gradient delete-btn" data-id="${rajal.id_rajal}" data-name="${rajal.nomor_registrasi}" data-date="${rajal.tanggal_rajal}">
-                        <i class="fa-solid fa-xmark"></i> Batalkan
+                        <i class="fa-solid fa-xmark"></i> Batal
                     </button>
                 </div>
             </li>
