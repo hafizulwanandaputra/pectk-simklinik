@@ -109,6 +109,14 @@
                     </tr>
                     <tr>
                         <td style="width: 25%; vertical-align: top; padding: 0;">
+                            <div>No BPJS:</div>
+                        </td>
+                        <td style="width: 75%; vertical-align: top; padding: 0;">
+                            <div><?= $pasien['no_bpjs'] ?></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 25%; vertical-align: top; padding: 0;">
                             <div>Jenis Kelamin:</div>
                         </td>
                         <td style="width: 75%; vertical-align: top; padding: 0;">

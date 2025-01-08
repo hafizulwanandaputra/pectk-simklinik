@@ -710,7 +710,7 @@
     async function fetchJenisKunjunganOptions() {
         try {
             // Panggil API dengan query string tanggal
-            const response = await axios.get(`<?= base_url('pasien/kunjunganoptions/' . $pasien['id_pasien']) ?>`);
+            const response = await axios.get(`<?= base_url('pasien/kunjunganoptions/' . $pasien['no_rm']) ?>`);
 
             if (response.data.success) {
                 const options = response.data.data;
@@ -734,7 +734,7 @@
     async function fetchJaminanOptions() {
         try {
             // Panggil API dengan query string tanggal
-            const response = await axios.get(`<?= base_url('pasien/jaminanoptions/' . $pasien['id_pasien']) ?>`);
+            const response = await axios.get(`<?= base_url('pasien/jaminanoptions/' . $pasien['no_rm']) ?>`);
 
             if (response.data.success) {
                 const options = response.data.data;
@@ -806,7 +806,7 @@
     async function fetchPendaftarOptions() {
         try {
             // Panggil API dengan query string tanggal
-            const response = await axios.get(`<?= base_url('pasien/pendaftaroptions/' . $pasien['id_pasien']) ?>`);
+            const response = await axios.get(`<?= base_url('pasien/pendaftaroptions/' . $pasien['no_rm']) ?>`);
 
             if (response.data.success) {
                 const options = response.data.data;
@@ -830,7 +830,7 @@
     async function fetchStatusOptions() {
         try {
             // Panggil API dengan query string tanggal
-            const response = await axios.get(`<?= base_url('pasien/statusoptions/' . $pasien['id_pasien']) ?>`);
+            const response = await axios.get(`<?= base_url('pasien/statusoptions/' . $pasien['no_rm']) ?>`);
 
             if (response.data.success) {
                 const options = response.data.data;
@@ -866,7 +866,7 @@
         $('#loadingSpinner').show();
 
         try {
-            const response = await axios.get('<?= base_url('pasien/rawatjalanlist/' . $pasien['id_pasien']) ?>', {
+            const response = await axios.get('<?= base_url('pasien/rawatjalanlist/' . $pasien['no_rm']) ?>', {
                 params: {
                     limit: limit,
                     offset: offset,
@@ -901,7 +901,7 @@
                     if (status === 'DAFTAR') {
                         status = `<span class="badge bg-success bg-gradient">Didaftarkan</span> ${transaksiBadge}`;
                     } else if (status === 'BATAL') {
-                        status = `<span class="badge bg-danger bg-gradient">Rawat Jalan Batal</span>`;
+                        status = `<span class="badge bg-danger bg-gradient">Rawat Jalan Batal</span> <em>${rajal.alasan_batal}</em>`;
                     }
                     const rajalElement = `
             <li class="list-group-item border-top-0 pb-3 pt-3">
@@ -912,7 +912,7 @@
                                 <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">${rajal.number}</span>
                                 <span class="align-self-center date">${rajal.nomor_registrasi}</span>
                             </div>
-                            <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">${rajal.no_antrian}</span>
+                            <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">${rajal.kode_antrian}${rajal.no_antrian}</span>
                         </h5>
                         <h6 class="card-subtitle date">
                             ${rajal.pendaftar}
