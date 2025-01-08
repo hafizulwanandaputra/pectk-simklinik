@@ -907,7 +907,20 @@
                     if (status === 'DAFTAR') {
                         status = `<span class="badge bg-success bg-gradient">Didaftarkan</span> ${transaksiBadge}`;
                     } else if (status === 'BATAL') {
-                        status = `<span class="badge bg-danger bg-gradient">Rawat Jalan Batal</span> <em>${rajal.alasan_batal}</em>`;
+                        status = `<span class="badge bg-danger bg-gradient">Rawat Jalan Batal</span> <span class="badge bg-body border text-body bg-gradient">${rajal.alasan_batal}</span>`;
+                    }
+                    let pembatal = rajal.status;
+                    if (pembatal === 'BATAL') {
+                        pembatal = `
+                            <div class="mb-0 row g-1">
+                                <div class="col-5 fw-medium text-truncate">Dibatalkan oleh</div>
+                                <div class="col date">
+                                    ${rajal.pembatal}
+                                </div>
+                            </div>
+                        `;
+                    } else if (pembatal === 'DAFTAR') {
+                        pembatal = ``;
                     }
                     const rajalElement = `
             <li class="list-group-item border-top-0 pb-3 pt-3">
@@ -959,6 +972,7 @@
                                                 ${rajal.keluhan}
                                             </div>
                                         </div>
+                                        ${pembatal}
                                     </div>
                                 </div>
                             </div>
