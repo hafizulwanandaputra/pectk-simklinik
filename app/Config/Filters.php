@@ -56,6 +56,8 @@ class Filters extends BaseConfig
                 '/home/*',
                 '/pasien',
                 '/pasien/*',
+                '/rawatjalan',
+                '/rawatjalan/*',
                 '/dokter',
                 '/dokter/*',
                 '/supplier',
