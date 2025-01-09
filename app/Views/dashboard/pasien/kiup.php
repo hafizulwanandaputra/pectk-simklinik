@@ -93,7 +93,10 @@
                 <tbody>
                     <tr>
                         <td style="width: 25%; vertical-align: top; padding: 0;">
-                            <div>Nama Pasien:</div>
+                            <div>Nama Pasien</div>
+                        </td>
+                        <td style="width: 0%; vertical-align: top; padding: 0;">
+                            <div>:</div>
                         </td>
                         <td style="width: 75%; vertical-align: top; padding: 0;">
                             <div><?= $pasien['nama_pasien'] ?></div>
@@ -101,7 +104,10 @@
                     </tr>
                     <tr>
                         <td style="width: 25%; vertical-align: top; padding: 0;">
-                            <div>NIK:</div>
+                            <div>NIK</div>
+                        </td>
+                        <td style="width: 0%; vertical-align: top; padding: 0;">
+                            <div>:</div>
                         </td>
                         <td style="width: 75%; vertical-align: top; padding: 0;">
                             <div><?= $pasien['nik'] ?></div>
@@ -109,7 +115,10 @@
                     </tr>
                     <tr>
                         <td style="width: 25%; vertical-align: top; padding: 0;">
-                            <div>No BPJS:</div>
+                            <div>No BPJS</div>
+                        </td>
+                        <td style="width: 0%; vertical-align: top; padding: 0;">
+                            <div>:</div>
                         </td>
                         <td style="width: 75%; vertical-align: top; padding: 0;">
                             <div><?= $pasien['no_bpjs'] ?></div>
@@ -117,7 +126,10 @@
                     </tr>
                     <tr>
                         <td style="width: 25%; vertical-align: top; padding: 0;">
-                            <div>Jenis Kelamin:</div>
+                            <div>Jenis Kelamin</div>
+                        </td>
+                        <td style="width: 0%; vertical-align: top; padding: 0;">
+                            <div>:</div>
                         </td>
                         <td style="width: 75%; vertical-align: top; padding: 0;">
                             <div>
@@ -131,7 +143,10 @@
                     </tr>
                     <tr>
                         <td style="width: 25%; vertical-align: top; padding: 0;">
-                            <div>Tempat dan Tanggal Lahir:</div>
+                            <div>Tempat dan Tanggal Lahir</div>
+                        </td>
+                        <td style="width: 0%; vertical-align: top; padding: 0;">
+                            <div>:</div>
                         </td>
                         <td style="width: 75%; vertical-align: top; padding: 0;">
                             <div><?= $pasien['tempat_lahir'] ?>, <?= $pasien['tanggal_lahir'] ?></div>
@@ -139,7 +154,10 @@
                     </tr>
                     <tr>
                         <td style="width: 25%; vertical-align: top; padding: 0;">
-                            <div>Alamat:</div>
+                            <div>Alamat</div>
+                        </td>
+                        <td style="width: 0%; vertical-align: top; padding: 0;">
+                            <div>:</div>
                         </td>
                         <td style="width: 75%; vertical-align: top; padding: 0;">
                             <div><?= $pasien['alamat'] ?></div>
@@ -147,7 +165,10 @@
                     </tr>
                     <tr>
                         <td style="width: 25%; vertical-align: top; padding: 0;">
-                            <div style="padding-left: 1cm;">RT/RW:</div>
+                            <div style="padding-left: 1cm;">RT/RW</div>
+                        </td>
+                        <td style="width: 0%; vertical-align: top; padding: 0;">
+                            <div>:</div>
                         </td>
                         <td style="width: 75%; vertical-align: top; padding: 0;">
                             <div><?= $pasien['rt'] ?>/<?= $pasien['rw'] ?></div>
@@ -155,7 +176,10 @@
                     </tr>
                     <tr>
                         <td style="width: 25%; vertical-align: top; padding: 0;">
-                            <div style="padding-left: 1cm;">Kelurahan:</div>
+                            <div style="padding-left: 1cm;">Kelurahan</div>
+                        </td>
+                        <td style="width: 0%; vertical-align: top; padding: 0;">
+                            <div>:</div>
                         </td>
                         <td style="width: 75%; vertical-align: top; padding: 0;">
                             <div><?= $pasien['kelurahan'] ?></div>
@@ -163,7 +187,10 @@
                     </tr>
                     <tr>
                         <td style="width: 25%; vertical-align: top; padding: 0;">
-                            <div style="padding-left: 1cm;">Kecamatan:</div>
+                            <div style="padding-left: 1cm;">Kecamatan</div>
+                        </td>
+                        <td style="width: 0%; vertical-align: top; padding: 0;">
+                            <div>:</div>
                         </td>
                         <td style="width: 75%; vertical-align: top; padding: 0;">
                             <div><?= $pasien['kecamatan'] ?></div>
@@ -171,7 +198,10 @@
                     </tr>
                     <tr>
                         <td style="width: 25%; vertical-align: top; padding: 0;">
-                            <div style="padding-left: 1cm;">Kab/Kota:</div>
+                            <div style="padding-left: 1cm;">Kab/Kota</div>
+                        </td>
+                        <td style="width: 0%; vertical-align: top; padding: 0;">
+                            <div>:</div>
                         </td>
                         <td style="width: 75%; vertical-align: top; padding: 0;">
                             <div><?= $pasien['kabupaten'] ?></div>
@@ -179,7 +209,10 @@
                     </tr>
                     <tr>
                         <td style="width: 25%; vertical-align: top; padding: 0;">
-                            <div style="padding-left: 1cm;">Provinsi:</div>
+                            <div style="padding-left: 1cm;">Provinsi</div>
+                        </td>
+                        <td style="width: 0%; vertical-align: top; padding: 0;">
+                            <div>:</div>
                         </td>
                         <td style="width: 75%; vertical-align: top; padding: 0;">
                             <div><?= $pasien['provinsi'] ?></div>
@@ -187,7 +220,10 @@
                     </tr>
                     <tr>
                         <td style="width: 25%; vertical-align: top; padding: 0;">
-                            <div>Agama:</div>
+                            <div>Agama</div>
+                        </td>
+                        <td style="width: 0%; vertical-align: top; padding: 0;">
+                            <div>:</div>
                         </td>
                         <td style="width: 75%; vertical-align: top; padding: 0;">
                             <div><?= $pasien['agama'] ?></div>
@@ -195,7 +231,10 @@
                     </tr>
                     <tr>
                         <td style="width: 25%; vertical-align: top; padding: 0;">
-                            <div>Pekerjaan:</div>
+                            <div>Pekerjaan</div>
+                        </td>
+                        <td style="width: 0%; vertical-align: top; padding: 0;">
+                            <div>:</div>
                         </td>
                         <td style="width: 75%; vertical-align: top; padding: 0;">
                             <div><?= $pasien['pekerjaan'] ?></div>
@@ -203,7 +242,10 @@
                     </tr>
                     <tr>
                         <td style="width: 25%; vertical-align: top; padding: 0;">
-                            <div>Status Perkawinan:</div>
+                            <div>Status Perkawinan</div>
+                        </td>
+                        <td style="width: 0%; vertical-align: top; padding: 0;">
+                            <div>:</div>
                         </td>
                         <td style="width: 75%; vertical-align: top; padding: 0;">
                             <div><?= $pasien['status_nikah'] ?></div>
@@ -211,7 +253,10 @@
                     </tr>
                     <tr>
                         <td style="width: 25%; vertical-align: top; padding: 0;">
-                            <div>Nomor HP:</div>
+                            <div>Nomor HP</div>
+                        </td>
+                        <td style="width: 0%; vertical-align: top; padding: 0;">
+                            <div>:</div>
                         </td>
                         <td style="width: 75%; vertical-align: top; padding: 0;">
                             <div><?= $pasien['telpon'] ?></div>
@@ -219,7 +264,10 @@
                     </tr>
                     <tr>
                         <td style="width: 25%; vertical-align: top; padding: 0;">
-                            <div>Didaftarkan:</div>
+                            <div>Didaftarkan</div>
+                        </td>
+                        <td style="width: 0%; vertical-align: top; padding: 0;">
+                            <div>:</div>
                         </td>
                         <td style="width: 75%; vertical-align: top; padding: 0;">
                             <div><?= $pasien['tanggal_daftar'] ?></div>

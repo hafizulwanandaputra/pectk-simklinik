@@ -129,6 +129,14 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="mb-0 row g-1 d-flex align-items-end">
+                                <div class="col fw-medium text-nowrap">Nomor Rekam Medis</div>
+                                <div class="col text-end">
+                                    <div class="date text-nowrap">
+                                        <?= $pasien['no_rm'] ?>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="mb-2">
                             <div class="form-floating">
@@ -307,7 +315,7 @@
                                         PELAJAR</option>
                                     <option value="5">
                                         MAHASISWA</option>
-                                    <option value="6" selected>
+                                    <option value="6">
                                         WIRASWASTA</option>
                                     <option value="7">
                                         P N S</option>
@@ -639,7 +647,12 @@
             $('#nik').val(data.nik);
             $('#no_bpjs').val(data.no_bpjs);
             $('#tempat_lahir').val(data.tempat_lahir);
-            $('#tanggal_lahir').val(data.tanggal_lahir);
+            $('#tanggal_lahir').flatpickr({
+                altInput: true,
+                allowInput: true,
+                altFormat: "d-m-Y",
+                defaultDate: data.tanggal_lahir
+            });
             const selectedGender = response.data.jenis_kelamin;
             if (selectedGender) {
                 $("input[name='jenis_kelamin'][value='" + selectedGender + "']").prop('checked', true);
@@ -649,9 +662,15 @@
             $('#rw').val(data.rw);
             $('#telpon').val(data.telpon);
             $('#kewarganegaraan').val(data.kewarganegaraan);
-            $('#agama').val(data.agama);
-            $('#status_nikah').val(data.status_nikah);
-            $('#pekerjaan').val(data.pekerjaan);
+            if (data.agama > 0) {
+                $('#agama').val(data.agama);
+            }
+            if (data.status_nikah > 0) {
+                $('#status_nikah').val(data.status_nikah);
+            }
+            if (data.pekerjaan > 0) {
+                $('#pekerjaan').val(data.pekerjaan);
+            }
             await loadProvinsi(data.provinsi); // Muat dan pilih provinsi
             if (data.kabupaten) {
                 await loadKabupaten(data.provinsi, data.kabupaten); // Muat dan pilih kabupaten
