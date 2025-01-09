@@ -101,18 +101,9 @@
                                             <div class="invalid-feedback"></div>
                                         </div>
                                         <div class="d-grid gap-2 d-lg-flex justify-content-lg-end">
-                                            <div class="btn-group btn-group-sm">
-                                                <a id="APIInfoPopover" tabindex="0" class="btn btn-body bg-gradient" role="button"
-                                                    data-bs-toggle="popover"
-                                                    data-bs-placement="left"
-                                                    data-bs-title="Dari mana data-data ini diperoleh?"
-                                                    data-bs-content="<p>Data-data pasien rawat jalan ini diperoleh dari <em>Application Programming Interface</em> (API) Sistem Informasi Manajemen Klinik Utama Mata Padang Eye Center Teluk Kuantan.</p><p><small>Klik tombol <i class='fa-solid fa-circle-question'></i> lagi untuk menutup <em>popover</em> ini.</small></p><div class='d-flex justify-content-end'><a href='https://pectk.padangeyecenter.com/klinik' class='btn btn-body bg-gradient btn-sm' role='button' target='_blank'><i class='fa-solid fa-up-right-from-square'></i> Buka SIM Klinik</a></div>">
-                                                    <i class="fa-solid fa-circle-question"></i>
-                                                </a>
-                                                <button type="submit" id="submitButton1" class="btn btn-primary bg-gradient" disabled>
-                                                    <i class="fa-solid fa-plus"></i> Tambah
-                                                </button>
-                                            </div>
+                                            <button type="submit" id="submitButton1" class="btn btn-primary bg-gradient" disabled>
+                                                <i class="fa-solid fa-plus"></i> Tambah
+                                            </button>
                                         </div>
                                     </form>
                                 </div>

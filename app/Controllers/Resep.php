@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\ResepModel;
 use App\Models\DetailResepModel;
+use App\Models\RawatJalanModel;
 use App\Models\ObatModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use Dompdf\Dompdf;
@@ -14,10 +15,12 @@ class Resep extends BaseController
 {
     protected $ResepModel;
     protected $DetailResepModel;
+    protected $RawatJalanModel;
     public function __construct()
     {
         $this->ResepModel = new ResepModel();
         $this->DetailResepModel = new DetailResepModel();
+        $this->RawatJalanModel = new RawatJalanModel();
     }
 
     public function index()
@@ -180,65 +183,31 @@ class Resep extends BaseController
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Dokter' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
+            $data = $this->RawatJalanModel
+                ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
+                ->like('tanggal_registrasi', date('Y-m-d'))
+                ->where('status', 'DAFTAR')
+                ->findAll();
 
-            $client = new Client(); // Membuat klien HTTP Guzzle baru
-
-            try {
-                // Mengirim permintaan GET ke API
-                $response = $client->request('GET', env('API-URL') . date('Y-m-d'), [
-                    'headers' => [
-                        'Accept' => 'application/json',
-                        'x-key' => env('X-KEY') // Mengatur header API
-                    ],
-                ]);
-
-                // Mendekode JSON dan menangani potensi error
-                $data = json_decode($response->getBody()->getContents(), true);
-
-                $options = [];
-                // Menyusun opsi dari data pasien yang diterima
-                foreach ($data as $row) {
-                    if ($row['jenis_kelamin'] == 'L') {
-                        $jenis_kelamin = 'Laki-Laki';
-                    } else if ($row['jenis_kelamin'] == 'P') {
-                        $jenis_kelamin = 'Perempuan';
-                    }
-                    $options[] = [
-                        'value' => $row['nomor_registrasi'],
-                        'text' => $row['nama_pasien'] . ' (' . $jenis_kelamin . ' - ' . $row['no_rm'] . ' - ' . $row['nomor_registrasi'] . ' - ' . $row['dokter'] . ')' // Menyusun teks yang ditampilkan
-                    ];
+            $options = [];
+            // Menyusun opsi dari data pasien yang diterima
+            foreach ($data as $row) {
+                if ($row['jenis_kelamin'] == 'L') {
+                    $jenis_kelamin = 'Laki-Laki';
+                } else if ($row['jenis_kelamin'] == 'P') {
+                    $jenis_kelamin = 'Perempuan';
                 }
-
-                // Mengembalikan data pasien dalam format JSON
-                return $this->response->setJSON([
-                    'success' => true,
-                    'data' => $options,
-                ]);
-            } catch (RequestException $e) {
-                // Periksa apakah ada respons dari API
-                $response = $e->getResponse();
-                $errorDetails = [];
-
-                // Jika ada respons, coba parse JSON-nya
-                if ($response) {
-                    $body = $response->getBody()->getContents();
-                    $errorDetails = json_decode($body, true);
-
-                    // Jika parsing gagal, simpan teks asli
-                    if (json_last_error() !== JSON_ERROR_NONE) {
-                        $errorDetails = ['raw_error' => $body];
-                    }
-                } else {
-                    // Jika tidak ada respons, gunakan pesan kesalahan default
-                    $errorDetails = ['message' => $e->getMessage()];
-                }
-
-                // Mengembalikan respons dengan detail kesalahan
-                return $this->response->setStatusCode(422)->setJSON([
-                    'error' => 'Terjadi kesalahan saat mengambil data pasien',
-                    'details' => $errorDetails,
-                ]);
+                $options[] = [
+                    'value' => $row['nomor_registrasi'],
+                    'text' => $row['nama_pasien'] . ' (' . $jenis_kelamin . ' - ' . $row['no_rm'] . ' - ' . $row['nomor_registrasi'] . ' - ' . $row['dokter'] . ')' // Menyusun teks yang ditampilkan
+                ];
             }
+
+            // Mengembalikan data pasien dalam format JSON
+            return $this->response->setJSON([
+                'success' => true,
+                'data' => $options,
+            ]);
         } else {
             // Mengembalikan status 404 jika peran tidak diizinkan
             return $this->response->setStatusCode(404)->setJSON([
@@ -287,80 +256,48 @@ class Resep extends BaseController
             // Mengambil nomor registrasi dan tanggal dari permintaan POST
             $nomorRegistrasi = $this->request->getPost('nomor_registrasi');
 
-            // Mengambil data dari API eksternal menggunakan Guzzle
-            $client = new Client();
-            try {
-                // Mengirim permintaan GET ke API
-                $response = $client->request('GET', env('API-URL') . date('Y-m-d'), [
-                    'headers' => [
-                        'x-key' => env('X-KEY'), // Mengatur header API
-                    ],
-                ]);
+            $data = $this->RawatJalanModel
+                ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
+                ->like('tanggal_registrasi', date('Y-m-d'))
+                ->where('status', 'DAFTAR')
+                ->findAll();
 
-                // Mendekode JSON yang diterima dari API
-                $dataFromApi = json_decode($response->getBody(), true);
-
-                // Memeriksa apakah data mengandung nomor registrasi yang diminta
-                $patientData = null;
-                foreach ($dataFromApi as $patient) {
-                    if ($patient['nomor_registrasi'] == $nomorRegistrasi) {
-                        $patientData = $patient; // Menyimpan data pasien jika ditemukan
-                        break;
-                    }
+            // Memeriksa apakah data mengandung nomor registrasi yang diminta
+            $patientData = null;
+            foreach ($data as $patient) {
+                if ($patient['nomor_registrasi'] == $nomorRegistrasi) {
+                    $patientData = $patient; // Menyimpan data pasien jika ditemukan
+                    break;
                 }
-
-                // Jika data pasien tidak ditemukan
-                if (!$patientData) {
-                    return $this->response->setStatusCode(404)->setJSON(['success' => false, 'message' => 'Data pasien tidak ditemukan', 'errors' => NULL]);
-                }
-
-                // Menyiapkan data untuk disimpan
-                $data = [
-                    'nomor_registrasi' => $nomorRegistrasi,
-                    'no_rm' => $patientData['no_rm'],
-                    'nama_pasien' => $patientData['nama_pasien'],
-                    'alamat' => $patientData['alamat'],
-                    'telpon' => $patientData['telpon'],
-                    'jenis_kelamin' => $patientData['jenis_kelamin'],
-                    'tempat_lahir' => $patientData['tempat_lahir'],
-                    'tanggal_lahir' => $patientData['tanggal_lahir'],
-                    'dokter' => session()->get('fullname'), // Menyimpan nama dokter yang sedang login
-                    'apoteker' => NULL,
-                    'tanggal_resep' => date('Y-m-d H:i:s'), // Menyimpan tanggal resep saat ini
-                    'jumlah_resep' => 0,
-                    'total_biaya' => 0,
-                    'confirmed' => 0,
-                    'status' => 0,
-                ];
-
-                // Menyimpan data resep ke dalam model
-                $this->ResepModel->save($data);
-                return $this->response->setJSON(['success' => true, 'message' => 'Resep berhasil ditambahkan']);
-            } catch (RequestException $e) {
-                // Periksa apakah ada respons dari API
-                $response = $e->getResponse();
-                $errorDetails = [];
-
-                // Jika ada respons, coba parse JSON-nya
-                if ($response) {
-                    $body = $response->getBody()->getContents();
-                    $errorDetails = json_decode($body, true);
-
-                    // Jika parsing gagal, simpan teks asli
-                    if (json_last_error() !== JSON_ERROR_NONE) {
-                        $errorDetails = ['raw_error' => $body];
-                    }
-                } else {
-                    // Jika tidak ada respons, gunakan pesan kesalahan default
-                    $errorDetails = ['message' => $e->getMessage()];
-                }
-
-                // Mengembalikan respons dengan detail kesalahan
-                return $this->response->setStatusCode(500)->setJSON([
-                    'error' => 'Terjadi kesalahan saat mengambil data pasien, data resep gagal ditambahkan!',
-                    'details' => $errorDetails,
-                ]);
             }
+
+            // Jika data pasien tidak ditemukan
+            if (!$patientData) {
+                return $this->response->setStatusCode(404)->setJSON(['success' => false, 'message' => 'Data pasien tidak ditemukan', 'errors' => NULL]);
+            }
+
+            // Menyiapkan data untuk disimpan
+            $data = [
+                'nomor_registrasi' => $nomorRegistrasi,
+                'no_rm' => $patientData['no_rm'],
+                'nama_pasien' => $patientData['nama_pasien'],
+                'alamat' => $patientData['alamat'],
+                'telpon' => $patientData['telpon'],
+                'jenis_kelamin' => $patientData['jenis_kelamin'],
+                'tempat_lahir' => $patientData['tempat_lahir'],
+                'tanggal_lahir' => $patientData['tanggal_lahir'],
+                'dokter' => session()->get('fullname'), // Menyimpan nama dokter yang sedang login
+                'apoteker' => NULL,
+                'tanggal_resep' => date('Y-m-d H:i:s'), // Menyimpan tanggal resep saat ini
+                'jumlah_resep' => 0,
+                'total_biaya' => 0,
+                'confirmed' => 0,
+                'status' => 0,
+            ];
+
+            // Menyimpan data resep ke dalam model
+            $this->ResepModel->save($data);
+            return $this->response->setJSON(['success' => true, 'message' => 'Resep berhasil ditambahkan']);
         } else {
             // Mengembalikan status 404 jika peran tidak diizinkan
             return $this->response->setStatusCode(404)->setJSON([
