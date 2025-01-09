@@ -206,12 +206,19 @@
                 );
             } else {
                 data.pasien.forEach(function(pasien) {
+                    const nama_pasien = pasien.nama_pasien ? pasien.nama_pasien : "<em>Belum Diisi</em>";
                     let jenis_kelamin = pasien.jenis_kelamin;
                     if (jenis_kelamin === 'L') {
                         jenis_kelamin = `Laki-Laki`;
                     } else if (jenis_kelamin === 'P') {
                         jenis_kelamin = `Perempuan`;
+                    } else {
+                        jenis_kelamin = `<em>Tidak ada</em>`;
                     }
+                    const tempat_lahir = pasien.tempat_lahir ? pasien.tempat_lahir : "<em>Tidak ada</em>";
+                    const tanggal_lahir = pasien.tanggal_lahir ? pasien.tanggal_lahir : "<em>Tidak ada</em>";
+                    const alamat = pasien.alamat ? pasien.alamat : "<em>Tidak ada</em>";
+                    const telpon = pasien.telpon ? pasien.telpon : "<em>Tidak ada</em>";
                     const pasienElement = `
             <a href="<?= base_url('pasien/detailpasien') ?>/${pasien.id_pasien}" class="list-group-item list-group-item-action border-top-0 pb-3 pt-3">
                 <div class="d-flex">
@@ -219,7 +226,7 @@
                         <h5 class="card-title d-flex date justify-content-between">
                             <div class="d-flex justify-content-start text-truncate">
                                 <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">${pasien.number}</span>
-                                <span class="mx-1 align-self-center text-truncate">${pasien.nama_pasien}</span>
+                                <span class="mx-1 align-self-center text-truncate">${nama_pasien}</span>
                             </div>
                             <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">${pasien.no_rm}</span>
                         </h5>
@@ -227,7 +234,7 @@
                                         <div class="mb-0 row g-1">
                                             <div class="col-5 fw-medium text-truncate">Nama</div>
                                             <div class="col">
-                                                ${pasien.nama_pasien}
+                                                ${nama_pasien}
                                             </div>
                                         </div>
                                         <div class="mb-0 row g-1">
@@ -239,19 +246,19 @@
                                         <div class="mb-0 row g-1">
                                             <div class="col-5 fw-medium text-truncate">Tempat/Tanggal Lahir</div>
                                             <div class="col">
-                                                ${pasien.tempat_lahir}, <span class="date text-nowrap">${pasien.tanggal_lahir}</span>
+                                                ${tempat_lahir}, <span class="date text-nowrap">${tanggal_lahir}</span>
                                             </div>
                                         </div>
                                         <div class="mb-0 row g-1">
                                             <div class="col-5 fw-medium text-truncate">Alamat</div>
                                             <div class="col">
-                                                ${pasien.alamat}
+                                                ${alamat}
                                             </div>
                                         </div>
                                         <div class="mb-0 row g-1">
                                             <div class="col-5 fw-medium text-truncate">Nomor Telepon</div>
                                             <div class="col date">
-                                                ${pasien.telpon}
+                                                ${telpon}
                                             </div>
                                         </div>
                                     </div>

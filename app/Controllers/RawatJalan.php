@@ -47,93 +47,14 @@ class RawatJalan extends BaseController
     {
         // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', 'Perawat', atau 'Rekam Medis' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat'  || session()->get('role') == 'Rekam Medis') {
-            // Mengambil parameter pencarian, limit, offset, dan status dari query string
-            $limit = $this->request->getGet('limit');
-            $offset = $this->request->getGet('offset');
-            $tanggal = $this->request->getGet('tanggal');
-            $jenis_kunjungan = $this->request->getGet('jenis_kunjungan');
-            $jaminan = $this->request->getGet('jaminan');
-            $ruangan = $this->request->getGet('ruangan');
-            $dokter = $this->request->getGet('dokter');
-            $pendaftar = $this->request->getGet('pendaftar');
-            $status = $this->request->getGet('status');
-            $transaksi = $this->request->getGet('transaksi');
+            $rawatjalan = $this->RawatJalanModel
+                ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
+                ->like('tanggal_registrasi', $tanggal)
+                ->findAll();
 
-            // Menentukan limit dan offset
-            $limit = $limit ? intval($limit) : 0;
-            $offset = $offset ? intval($offset) : 0;
-
-            $RawatJalanModel = $this->RawatJalanModel;
-
-            $RawatJalanModel->select('rawat_jalan.*'); // Mengambil semua kolom dari tabel resep
-
-            // Mengaplikasikan filter tanggal jika diberikan
-            if ($tanggal) {
-                $RawatJalanModel->like('tanggal_registrasi', $tanggal);
-            }
-
-            // Menerapkan filter untuk kunjungan
-            if ($jenis_kunjungan) {
-                $RawatJalanModel->where('jenis_kunjungan', $jenis_kunjungan); // Menambahkan filter berdasarkan kunjungan
-            }
-
-            // Menerapkan filter untuk jaminan
-            if ($jaminan) {
-                $RawatJalanModel->where('jaminan', $jaminan); // Menambahkan filter berdasarkan jaminan
-            }
-
-            // Menerapkan filter untuk ruangan
-            if ($ruangan) {
-                $RawatJalanModel->where('ruangan', $ruangan); // Menambahkan filter berdasarkan ruangan
-            }
-
-            // Menerapkan filter untuk dokter
-            if ($dokter) {
-                $RawatJalanModel->where('dokter', $dokter); // Menambahkan filter berdasarkan dokter
-            }
-
-            // Menerapkan filter untuk pendaftar
-            if ($pendaftar) {
-                $RawatJalanModel->where('pendaftar', $pendaftar); // Menambahkan filter berdasarkan pendaftar
-            }
-
-            // Menerapkan filter untuk status
-            if ($status) {
-                $RawatJalanModel->where('status', $status); // Menambahkan filter berdasarkan status
-            }
-
-            // Menerapkan filter transaksi
-            if ($transaksi === '1') {
-                $RawatJalanModel->where('transaksi', 1); // Mengambil rawat jalan yang sudah ditransaksikan
-            } elseif ($transaksi === '0') {
-                $RawatJalanModel->where('transaksi', 0); // Mengambil rawat jalan yang belum ditransaksikan
-            }
-
-            // Menambahkan filter untuk rawat jalan agar hanya menampilkan rawat jalan dari salah satu pasien
-            $RawatJalanModel->groupStart()
-                ->where('tanggal', $tanggal)
-                ->groupEnd()
-                ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner');
-
-            // Menghitung total hasil pencarian
-            $total = $RawatJalanModel->countAllResults(false);
-
-            // Mendapatkan hasil yang sudah dipaginasi
-            $Pasien = $RawatJalanModel->orderBy('id_rawat_jalan', 'DESC')->findAll($limit, $offset);
-
-            // Menghitung nomor urut untuk halaman saat ini
-            $startNumber = $offset + 1;
-
-            // Menambahkan nomor urut ke setiap pasien
-            $dataRajal = array_map(function ($data, $index) use ($startNumber) {
-                $data['number'] = $startNumber + $index; // Menetapkan nomor urut
-                return $data; // Mengembalikan data yang telah ditambahkan nomor urut
-            }, $Pasien, array_keys($Pasien));
-
-            // Mengembalikan data pasien dalam format JSON
+            // Mengembalikan respons JSON dengan data pasien
             return $this->response->setJSON([
-                'rajal' => $dataRajal,
-                'total' => $total // Mengembalikan total hasil
+                'data' => $rawatjalan,
             ]);
         } else {
             // Jika peran tidak dikenali, kembalikan status 404
