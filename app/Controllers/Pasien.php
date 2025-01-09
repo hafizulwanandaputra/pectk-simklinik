@@ -284,14 +284,14 @@ class Pasien extends BaseController
             // Ambil tabel master_status_pernikahan
             $pernikahan = $db->table('master_status_pernikahan');
             $pernikahan->select('pernikahanStatus');
-            $pernikahan->where('pernikahanId', $pasien['pernikahan']);
+            $pernikahan->where('pernikahanId', $pasien['status_nikah']);
 
             // Query untuk mendapatkan nama pernikahan
             $res_pernikahan = $pernikahan->get()->getRow();
 
             if ($res_pernikahan) {
                 // Ubah ID menjadi nama pernikahan
-                $pasien['pernikahan'] = $res_pernikahan->pernikahanStatus;
+                $pasien['status_nikah'] = $res_pernikahan->pernikahanStatus;
             }
 
             $qrcode = new Generator;
@@ -612,25 +612,24 @@ class Pasien extends BaseController
         }
     }
 
-    public function jaminanoptions($no_rm)
+    public function jaminanoptions()
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Rekam Medis' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Rekam Medis') {
-            // Mengambil jaminan dari tabel rawat jalan
-            $rawatJalan = $this->RawatJalanModel
-                ->where('no_rm', $no_rm)
-                ->groupBy('jaminan')
-                ->orderBy('jaminan', 'ASC')
-                ->findAll();
+            // Mengambil jaminan dari tabel master jaminan
+            $db = db_connect();
+            $masterjaminan = $db->table('master_jaminan')
+                ->where('jaminanStatus', 'AKTIF')
+                ->get()->getResultArray();
 
             // Menyiapkan array opsi untuk dikirim dalam respon
             $options = [];
-            // Menyusun opsi dari data rawat jalan yang diterima
-            foreach ($rawatJalan as $jaminan) {
+            // Menyusun opsi dari data pengguna yang diterima
+            foreach ($masterjaminan as $jaminan) {
                 // Menambahkan opsi ke dalam array
                 $options[] = [
-                    'value' => $jaminan['jaminan'], // Nilai untuk opsi
-                    'text'  => $jaminan['jaminan'] // Teks untuk opsi
+                    'value'  => $jaminan['jaminanKode'], // Teks untuk opsi
+                    'text'  => $jaminan['jaminanNama'] // Teks untuk opsi
                 ];
             }
 
@@ -686,6 +685,7 @@ class Pasien extends BaseController
             // Mengambil ruangan dari tabel pengguna
             $auth = $this->AuthModel
                 ->where('role', 'Dokter')
+                ->where('active', 1)
                 ->findAll();
 
             // Menyiapkan array opsi untuk dikirim dalam respon
@@ -788,19 +788,19 @@ class Pasien extends BaseController
             // Menetapkan aturan validasi dasar
             $validation->setRules([
                 'nama_pasien' => 'required',
-                'nik' => 'numeric',
-                'no_bpjs' => 'numeric',
+                'nik' => 'numeric|permit_empty',
+                'no_bpjs' => 'numeric|permit_empty',
                 'tempat_lahir' => 'required',
                 'tanggal_lahir' => 'required',
                 'jenis_kelamin' => 'required',
                 'alamat' => 'required',
                 'provinsi' => 'required',
-                'kabupatesn' => 'required',
+                'kabupaten' => 'required',
                 'kecamatan' => 'required',
                 'kelurahan' => 'required',
-                'rt' => 'numeric',
-                'rw' => 'numeric',
-                'telpon' => 'numeric',
+                'rt' => 'numeric|permit_empty',
+                'rw' => 'numeric|permit_empty',
+                'telpon' => 'numeric|permit_empty',
                 'kewarganegaraan' => 'required',
                 'agama' => 'required',
                 'status_nikah' => 'required',

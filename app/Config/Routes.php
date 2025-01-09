@@ -28,7 +28,7 @@ $routes->get('/(?i)pasien/(?i)kiup/(:any)', 'Pasien::kiup/$1');
 $routes->get('/(?i)pasien/(?i)barcode/(:any)', 'Pasien::barcode/$1');
 $routes->get('/(?i)pasien/(?i)rawatjalanlist/(:any)', 'Pasien::rawatjalanlist/$1');
 $routes->get('/(?i)pasien/(?i)kunjunganoptions/(:any)', 'Pasien::kunjunganoptions/$1');
-$routes->get('/(?i)pasien/(?i)jaminanoptions/(:any)', 'Pasien::jaminanoptions/$1');
+$routes->get('/(?i)pasien/(?i)jaminanoptions', 'Pasien::jaminanoptions');
 $routes->get('/(?i)pasien/(?i)ruanganoptions', 'Pasien::ruanganoptions');
 $routes->get('/(?i)pasien/(?i)dokteroptions', 'Pasien::dokteroptions');
 $routes->get('/(?i)pasien/(?i)pendaftaroptions/(:any)', 'Pasien::pendaftaroptions/$1');
@@ -44,9 +44,8 @@ $routes->get('/(?i)rawatjalan/(?i)jaminanoptions', 'Pasien::jaminanoptions');
 $routes->get('/(?i)rawatjalan/(?i)ruanganoptions', 'Pasien::ruanganoptions');
 $routes->get('/(?i)rawatjalan/(?i)dokteroptions', 'Pasien::dokteroptions');
 $routes->get('/(?i)rawatjalan/(?i)statusoptions', 'Pasien::statusoptions');
-$routes->post('/(?i)rawatjalan/(?i)create', 'RawatJalan::create');
-$routes->post('/(?i)rawatjalan/(?i)update/(:any)', 'RawatJalan::update/$1');
-$routes->post('/(?i)rawatjalan/(?i)struk/(:any)', 'RawatJalan::struk/$1');
+$routes->post('/(?i)rawatjalan/(?i)create/(:any)', 'RawatJalan::create/$1');
+$routes->get('/(?i)rawatjalan/(?i)struk/(:any)', 'RawatJalan::struk/$1');
 $routes->post('/(?i)rawatjalan/(?i)cancel/(:any)', 'RawatJalan::cancel/$1');
 
 // SUPPLIER
