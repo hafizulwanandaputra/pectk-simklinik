@@ -17,10 +17,10 @@ $usia = $sekarang->diff($tanggal_lahir);
     <title><?= $title; ?></title>
     <style>
         @page {
-            size: 70mm 100mm;
+            size: 80mm 100mm;
             margin-top: 0.15cm;
-            margin-left: 0.4cm;
-            margin-right: 0.4cm;
+            margin-left: 1cm;
+            margin-right: 1cm;
             margin-bottom: 0.15cm;
         }
 
