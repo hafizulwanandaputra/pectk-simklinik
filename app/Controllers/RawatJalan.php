@@ -99,6 +99,7 @@ class RawatJalan extends BaseController
             $tanggal = date('dmy');
             $lastReg = $db->table('rawat_jalan')
                 ->select('RIGHT(nomor_registrasi, 3) AS last_number')
+                ->where('jaminan', $jaminan)
                 ->where('tanggal_registrasi >=', date('Y-m-d 00:00:00'))
                 ->where('tanggal_registrasi <=', date('Y-m-d 23:59:59'))
                 ->orderBy('nomor_registrasi', 'DESC')
