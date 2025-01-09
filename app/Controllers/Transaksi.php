@@ -6,6 +6,7 @@ use App\Models\TransaksiModel;
 use App\Models\DetailTransaksiModel;
 use App\Models\LayananModel;
 use App\Models\ResepModel;
+use App\Models\RawatJalanModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use DateTime;
 use Dompdf\Dompdf;
@@ -20,10 +21,12 @@ class Transaksi extends BaseController
 {
     protected $TransaksiModel;
     protected $DetailTransaksiModel;
+    protected $RawatJalanModel;
     public function __construct()
     {
         $this->TransaksiModel = new TransaksiModel();
         $this->DetailTransaksiModel = new DetailTransaksiModel();
+        $this->RawatJalanModel = new RawatJalanModel();
     }
 
     public function index()
@@ -194,70 +197,37 @@ class Transaksi extends BaseController
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
-            $client = new Client(); // Membuat klien HTTP Guzzle baru
+            $data = $this->RawatJalanModel
+                ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
+                ->like('tanggal_registrasi', date('Y-m-d'))
+                ->where('status', 'DAFTAR')
+                ->findAll();
 
-            try {
-                // Mengirim permintaan GET ke API
-                $response = $client->request('GET', env('API-URL') . date('Y-m-d'), [
-                    'headers' => [
-                        'Accept' => 'application/json',
-                        'x-key' => env('X-KEY') // Mengatur header API
-                    ],
-                ]);
+            // Mengambil nomor_registrasi yang sudah terpakai di transaksi
+            $db = \Config\Database::connect();
+            $usedNoReg = $db->table('transaksi')->select('nomor_registrasi')->get()->getResultArray();
+            $usedNoReg = array_column($usedNoReg, 'nomor_registrasi');
 
-                // Mendekode JSON dan menangani potensi error
-                $data = json_decode($response->getBody()->getContents(), true);
-
-                // Mengambil nomor_registrasi yang sudah terpakai di transaksi
-                $db = \Config\Database::connect();
-                $usedNoReg = $db->table('transaksi')->select('nomor_registrasi')->get()->getResultArray();
-                $usedNoReg = array_column($usedNoReg, 'nomor_registrasi');
-
-                $options = [];
-                // Menyusun opsi dari data rawat jalan yang diterima
-                foreach ($data as $row) {
-                    // Memeriksa apakah nomor_registrasi ada dalam daftar nomor_registrasi yang terpakai
-                    if (in_array($row['nomor_registrasi'], $usedNoReg)) {
-                        continue; // Lewati rawat jalan yang sudah terpakai
-                    }
-
-                    // Menambahkan opsi ke dalam array
-                    $options[] = [
-                        'value' => $row['nomor_registrasi'], // Nilai untuk opsi
-                        'text' => $row['nama_pasien'] . ' (' . $row['nomor_registrasi'] . ' - ' . $row['no_rm'] . ' - ' . $row['tanggal_lahir'] . ')' // Teks untuk opsi
-                    ];
+            $options = [];
+            // Menyusun opsi dari data rawat jalan yang diterima
+            foreach ($data as $row) {
+                // Memeriksa apakah nomor_registrasi ada dalam daftar nomor_registrasi yang terpakai
+                if (in_array($row['nomor_registrasi'], $usedNoReg)) {
+                    continue; // Lewati rawat jalan yang sudah terpakai
                 }
 
-                // Mengembalikan data rawat jalan dalam format JSON
-                return $this->response->setJSON([
-                    'success' => true, // Indikator sukses
-                    'data' => $options, // Data opsi
-                ]);
-            } catch (RequestException $e) {
-                // Periksa apakah ada respons dari API
-                $response = $e->getResponse();
-                $errorDetails = [];
-
-                // Jika ada respons, coba parse JSON-nya
-                if ($response) {
-                    $body = $response->getBody()->getContents();
-                    $errorDetails = json_decode($body, true);
-
-                    // Jika parsing gagal, simpan teks asli
-                    if (json_last_error() !== JSON_ERROR_NONE) {
-                        $errorDetails = ['raw_error' => $body];
-                    }
-                } else {
-                    // Jika tidak ada respons, gunakan pesan kesalahan default
-                    $errorDetails = ['message' => $e->getMessage()];
-                }
-
-                // Mengembalikan respons dengan detail kesalahan
-                return $this->response->setStatusCode(500)->setJSON([
-                    'error' => 'Terjadi kesalahan saat mengambil data pasien',
-                    'details' => $errorDetails,
-                ]);
+                // Menambahkan opsi ke dalam array
+                $options[] = [
+                    'value' => $row['nomor_registrasi'], // Nilai untuk opsi
+                    'text' => $row['nama_pasien'] . ' (' . $row['nomor_registrasi'] . ' - ' . $row['no_rm'] . ' - ' . $row['tanggal_lahir'] . ')' // Teks untuk opsi
+                ];
             }
+
+            // Mengembalikan data rawat jalan dalam format JSON
+            return $this->response->setJSON([
+                'success' => true, // Indikator sukses
+                'data' => $options, // Data opsi
+            ]);
         } else {
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan', // Pesan jika peran tidak valid
@@ -354,93 +324,61 @@ class Transaksi extends BaseController
             // Mengambil nomor registrasi dari permintaan POST
             $nomorRegistrasi = $this->request->getPost('nomor_registrasi');
 
-            // Mengambil data dari API eksternal menggunakan Guzzle
-            $client = new Client();
-            try {
-                // Mengirim permintaan GET ke API
-                $response = $client->request('GET', env('API-URL') . date('Y-m-d'), [
-                    'headers' => [
-                        'x-key' => env('X-KEY'), // Mengatur header API
-                    ],
-                ]);
+            $data = $this->RawatJalanModel
+                ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
+                ->like('tanggal_registrasi', date('Y-m-d'))
+                ->where('status', 'DAFTAR')
+                ->findAll();
 
-                // Mendekode JSON yang diterima dari API
-                $dataFromApi = json_decode($response->getBody(), true);
-
-                // Memeriksa apakah data mengandung nomor registrasi yang diminta
-                $resepData = null;
-                foreach ($dataFromApi as $patient) {
-                    if ($patient['nomor_registrasi'] == $nomorRegistrasi) {
-                        $resepData = $patient; // Menyimpan data pasien jika ditemukan
-                        break;
-                    }
+            // Memeriksa apakah data mengandung nomor registrasi yang diminta
+            $resepData = null;
+            foreach ($data as $patient) {
+                if ($patient['nomor_registrasi'] == $nomorRegistrasi) {
+                    $resepData = $patient; // Menyimpan data pasien jika ditemukan
+                    break;
                 }
-
-                // Jika data pasien tidak ditemukan
-                if (!$resepData) {
-                    return $this->response->setJSON(['success' => false, 'message' => 'Data pasien tidak ditemukan', 'errors' => NULL]);
-                }
-
-                // Mendapatkan tanggal saat ini
-                $date = new \DateTime();
-                $tanggal = $date->format('d'); // Hari (2 digit)
-                $bulan = $date->format('m'); // Bulan (2 digit)
-                $tahun = $date->format('y'); // Tahun (2 digit)
-
-                // Mengambil nomor registrasi terakhir untuk di-increment
-                $lastNoReg = $this->TransaksiModel->getLastNoReg1($tahun, $bulan, $tanggal);
-                $lastNumber = $lastNoReg ? intval(substr($lastNoReg, -4)) : 0; // Mendapatkan nomor terakhir
-                $nextNumber = str_pad($lastNumber + 1, 4, '0', STR_PAD_LEFT); // Menyiapkan nomor berikutnya
-
-                // Memformat nomor kwitansi
-                $no_kwitansi = sprintf('TRJ%s%s%s-%s', $tanggal, $bulan, $tahun, $nextNumber);
-
-                // Menyimpan data transaksi
-                $data = [
-                    'id_resep' => NULL, // ID resep diatur ke NULL
-                    'nomor_registrasi' => $nomorRegistrasi, // Nomor registrasi
-                    'no_rm' => $resepData['no_rm'], // Nomor rekam medis
-                    'nama_pasien' => $resepData['nama_pasien'], // Nama pasien
-                    'alamat' => $resepData['alamat'], // Alamat pasien
-                    'telpon' => $resepData['telpon'], // Nomor telepon pasien
-                    'jenis_kelamin' => $resepData['jenis_kelamin'], // Jenis kelamin pasien
-                    'tempat_lahir' => $resepData['tempat_lahir'], // Tempat lahir pasien
-                    'tanggal_lahir' => $resepData['tanggal_lahir'], // Tanggal lahir pasien
-                    'dokter' => $resepData['dokter'], // Tanggal lahir pasien
-                    'kasir' => session()->get('fullname'), // Nama kasir dari session
-                    'no_kwitansi' => $no_kwitansi, // Nomor kwitansi
-                    'tgl_transaksi' => date('Y-m-d H:i:s'), // Tanggal dan waktu transaksi
-                    'total_pembayaran' => 0, // Total pembayaran awal
-                    'metode_pembayaran' => '', // Metode pembayaran (kosong pada awalnya)
-                    'lunas' => 0, // Status lunas (0 berarti belum lunas)
-                ];
-                $this->TransaksiModel->save($data); // Menyimpan data transaksi ke database
-                return $this->response->setJSON(['success' => true, 'message' => 'Transaksi berhasil ditambahkan']); // Mengembalikan respon sukses
-            } catch (RequestException $e) {
-                // Periksa apakah ada respons dari API
-                $response = $e->getResponse();
-                $errorDetails = [];
-
-                // Jika ada respons, coba parse JSON-nya
-                if ($response) {
-                    $body = $response->getBody()->getContents();
-                    $errorDetails = json_decode($body, true);
-
-                    // Jika parsing gagal, simpan teks asli
-                    if (json_last_error() !== JSON_ERROR_NONE) {
-                        $errorDetails = ['raw_error' => $body];
-                    }
-                } else {
-                    // Jika tidak ada respons, gunakan pesan kesalahan default
-                    $errorDetails = ['message' => $e->getMessage()];
-                }
-
-                // Mengembalikan respons dengan detail kesalahan
-                return $this->response->setStatusCode(422)->setJSON([
-                    'error' => 'Terjadi kesalahan saat mengambil data pasien',
-                    'details' => $errorDetails,
-                ]);
             }
+
+            // Jika data pasien tidak ditemukan
+            if (!$resepData) {
+                return $this->response->setJSON(['success' => false, 'message' => 'Data pasien tidak ditemukan', 'errors' => NULL]);
+            }
+
+            // Mendapatkan tanggal saat ini
+            $date = new \DateTime();
+            $tanggal = $date->format('d'); // Hari (2 digit)
+            $bulan = $date->format('m'); // Bulan (2 digit)
+            $tahun = $date->format('y'); // Tahun (2 digit)
+
+            // Mengambil nomor registrasi terakhir untuk di-increment
+            $lastNoReg = $this->TransaksiModel->getLastNoReg1($tahun, $bulan, $tanggal);
+            $lastNumber = $lastNoReg ? intval(substr($lastNoReg, -4)) : 0; // Mendapatkan nomor terakhir
+            $nextNumber = str_pad($lastNumber + 1, 4, '0', STR_PAD_LEFT); // Menyiapkan nomor berikutnya
+
+            // Memformat nomor kwitansi
+            $no_kwitansi = sprintf('TRJ%s%s%s-%s', $tanggal, $bulan, $tahun, $nextNumber);
+
+            // Menyimpan data transaksi
+            $data = [
+                'id_resep' => NULL, // ID resep diatur ke NULL
+                'nomor_registrasi' => $nomorRegistrasi, // Nomor registrasi
+                'no_rm' => $resepData['no_rm'], // Nomor rekam medis
+                'nama_pasien' => $resepData['nama_pasien'], // Nama pasien
+                'alamat' => $resepData['alamat'], // Alamat pasien
+                'telpon' => $resepData['telpon'], // Nomor telepon pasien
+                'jenis_kelamin' => $resepData['jenis_kelamin'], // Jenis kelamin pasien
+                'tempat_lahir' => $resepData['tempat_lahir'], // Tempat lahir pasien
+                'tanggal_lahir' => $resepData['tanggal_lahir'], // Tanggal lahir pasien
+                'dokter' => $resepData['dokter'], // Tanggal lahir pasien
+                'kasir' => session()->get('fullname'), // Nama kasir dari session
+                'no_kwitansi' => $no_kwitansi, // Nomor kwitansi
+                'tgl_transaksi' => date('Y-m-d H:i:s'), // Tanggal dan waktu transaksi
+                'total_pembayaran' => 0, // Total pembayaran awal
+                'metode_pembayaran' => '', // Metode pembayaran (kosong pada awalnya)
+                'lunas' => 0, // Status lunas (0 berarti belum lunas)
+            ];
+            $this->TransaksiModel->save($data); // Menyimpan data transaksi ke database
+            return $this->response->setJSON(['success' => true, 'message' => 'Transaksi berhasil ditambahkan']); // Mengembalikan respon sukses
         } else {
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan', // Pesan jika peran tidak valid
