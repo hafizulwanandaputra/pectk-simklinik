@@ -348,7 +348,7 @@
         const page = $(this).data('page');
         if (page) {
             currentPage = page;
-            fetchResep();
+            fetchPasien();
         }
     });
 
