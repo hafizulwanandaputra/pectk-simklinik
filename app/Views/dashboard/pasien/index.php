@@ -400,7 +400,7 @@
         $('#addButton').on('click', function() {
             $('[data-bs-toggle="tooltip"]').tooltip('hide');
             $('#addMessage').html(`Tambah Pasien Baru?`);
-            $('#addSubmessage').html(`Pastikan Anda telah benar-benar berobat dan membawa kartu identitas yang diperlukan. Ini akan menambahkan nomor rekam medis baru.`);
+            $('#addSubmessage').html(`Pastikan pasien tersebut benar-benar berobat dan membawa kartu identitas yang diperlukan. Ini akan menambahkan nomor rekam medis baru.`);
             $('#addModal').modal('show');
         });
 

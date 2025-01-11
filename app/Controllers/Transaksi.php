@@ -1269,6 +1269,22 @@ class Transaksi extends BaseController
                 }
             }
 
+            // Mengambil nomor_registrasi dari tabel transaksi
+            $transaksi->select('nomor_registrasi');
+            $transaksi->where('id_transaksi', $id_transaksi);
+            $transaksiData = $transaksi->get()->getRowArray(); // Mengambil data transaksi
+
+            if ($transaksiData && isset($transaksiData['nomor_registrasi'])) {
+                $nomorRegistrasi = $transaksiData['nomor_registrasi'];
+
+                // Memperbarui transaksi menjadi 1 pada tabel rawat_jalan
+                $rawatJalan = $db->table('rawat_jalan');
+                $rawatJalan->where('nomor_registrasi', $nomorRegistrasi);
+                $rawatJalan->update([
+                    'transaksi' => 1, // Menandai transaksi selesai
+                ]);
+            }
+
             // Memeriksa status transaksi
             if ($db->transStatus() === false) {
                 $db->transRollback();  // Rollback jika ada masalah
@@ -1341,6 +1357,21 @@ class Transaksi extends BaseController
                             ]);
                         }
                     }
+                }
+
+                $transaksi->select('nomor_registrasi');
+                $transaksi->where('id_transaksi', $id_transaksi);
+                $transaksiData = $transaksi->get()->getRowArray(); // Mengambil data transaksi
+
+                if ($transaksiData && isset($transaksiData['nomor_registrasi'])) {
+                    $nomorRegistrasi = $transaksiData['nomor_registrasi'];
+
+                    // Memperbarui transaksi menjadi 0 pada tabel rawat_jalan
+                    $rawatJalan = $db->table('rawat_jalan');
+                    $rawatJalan->where('nomor_registrasi', $nomorRegistrasi);
+                    $rawatJalan->update([
+                        'transaksi' => 0, // Menandai transaksi dibatalkan
+                    ]);
                 }
 
                 // Kirim pesan pembatalan berhasil jika kata sandi yang dimasukkan benar
