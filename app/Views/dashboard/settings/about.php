@@ -57,7 +57,7 @@ if (stripos($browser, 'Chrome') !== false) {
 <main class="main-content-inside px-3 pt-3">
     <div class="no-fluid-content">
         <div>
-            <p><span class="h2"><?= $systemName ?></span><br><span class="fs-4"><?= $systemSubtitleName ?></span><br>&copy; 2024 <?= (date('Y') !== "2024") ? "- " . date('Y') : ''; ?> <?= $companyName ?></p>
+            <p><span class="h2"><?= $systemName ?></span><br><span class="fs-4"><?= $systemSubtitleName ?></span><br>&copy; 2025 <?= (date('Y') !== "2025") ? "- " . date('Y') : ''; ?> <?= $companyName ?></p>
         </div>
         <hr>
         <h5>Informasi Klien</h5>
@@ -161,7 +161,7 @@ if (stripos($browser, 'Chrome') !== false) {
                         <p class="mb-0" style="font-size: 1.75rem!important;"><i class="fa-solid fa-database"></i></p>
                     </a>
                     <div class="align-self-center flex-fill ps-1 text-wrap overflow-hidden" style="text-overflow: ellipsis;">
-                        <h5 class="card-title">Versi Peladen Basis Data MySQL/MariaDB</h5>
+                        <h5 class="card-title">Versi Peladen Basis Data MySQL</h5>
                         <span><?= esc($version) ?> (<?= esc($version_comment) . ' • ' . esc($version_compile_os) . ' ' . esc($version_compile_machine) ?>)</span>
                     </div>
                 </div>

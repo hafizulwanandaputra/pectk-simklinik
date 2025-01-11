@@ -158,7 +158,7 @@
                     <input type="hidden" name="url" value="<?= (isset($_GET['redirect'])) ? base_url('/' . urldecode($_GET['redirect'])) : base_url('/home'); ?>">
                     <hr class="border-success-subtle opacity-100">
                     <div class="text-center text-success-emphasis" style="font-size: 0.75em;">
-                        <span class="">&copy; 2024 <?= (date('Y') !== "2024") ? "- " . date('Y') : ''; ?> <?= $companyName ?></span>
+                        <span class="">&copy; 2025 <?= (date('Y') !== "2025") ? "- " . date('Y') : ''; ?> <?= $companyName ?></span>
                     </div>
                     <?= form_close(); ?>
                 </div>

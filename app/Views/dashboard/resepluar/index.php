@@ -406,6 +406,7 @@
                     const statusButtons = resep.status == '1' ?
                         `disabled` :
                         ``;
+                    const tanggal_lahir = resep.tanggal_lahir === '0000-00-00' ? '<em>Tidak ada</em>' : resep.tanggal_lahir;
                     const resepElement = `
             <li class="list-group-item border-top-0 pb-3 pt-3">
                 <div class="d-flex">
@@ -422,15 +423,15 @@
                                 <div class="row gx-3">
                                     <div class="col-lg-6">
                                         <div class="mb-0 row g-1">
-                                            <div class="col-5 fw-medium text-truncate">ID</div>
-                                            <div class="col date">
-                                                ${resep.id_resep}
-                                            </div>
-                                        </div>
-                                        <div class="mb-0 row g-1">
                                             <div class="col-5 fw-medium text-truncate">Tanggal dan Waktu</div>
                                             <div class="col date">
                                                 ${resep.tanggal_resep}
+                                            </div>
+                                        </div>
+                                        <div class="mb-0 row g-1">
+                                            <div class="col-5 fw-medium text-truncate">Tanggal Lahir</div>
+                                            <div class="col date">
+                                                ${tanggal_lahir}
                                             </div>
                                         </div>
                                         <div class="mb-0 row g-1">
@@ -586,6 +587,12 @@
         // Tampilkan modal tambah layanan
         $('#addButton').click(function() {
             $('#resepluarModalLabel').text('Tambah Resep Luar'); // Ubah judul modal menjadi 'Tambah Resep Luar'
+            $('#tanggal_lahir').flatpickr({
+                altInput: true,
+                allowInput: true,
+                altFormat: "d-m-Y",
+                defaultDate: ''
+            });
             $('#resepluarModal').modal('show'); // Tampilkan modal resep luar
         });
 
@@ -602,9 +609,9 @@
             $this.prop('disabled', true).html(`
                 <span class="spinner-border" style="width: 15px; height: 15px;" aria-hidden="true"></span> Edit Identitas
             `); // Ubah tombol menjadi indikator loading
-
             try {
                 const response = await axios.get(`<?= base_url('/resepluar/resep') ?>/${id}`); // Ambil data resep luar berdasarkan ID
+                const tanggal_lahir = response.data.tanggal_lahir === '0000-00-00' ? '' : response.data.tanggal_lahir;
                 $('#resepluarModalLabel').text('Edit Identitas Pasien'); // Ubah judul modal menjadi 'Edit Identitas Pasien'
                 $('#id_resep').val(response.data.id_resep);
                 $('#nama_pasien').val(response.data.nama_pasien);
@@ -613,7 +620,12 @@
                 if (selectedGender) {
                     $("input[name='jenis_kelamin'][value='" + selectedGender + "']").prop('checked', true);
                 }
-                $('#tanggal_lahir').val(response.data.tanggal_lahir);
+                $('#tanggal_lahir').flatpickr({
+                    altInput: true,
+                    allowInput: true,
+                    altFormat: "d-m-Y",
+                    defaultDate: tanggal_lahir
+                });
                 $('#resepluarModal').modal('show'); // Tampilkan modal dengan data resep luar
             } catch (error) {
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error); // Tampilkan pesan kesalahan
@@ -811,6 +823,22 @@
         $('#resepluarModal').on('hidden.bs.modal', function() {
             $('#resepluarForm')[0].reset();
             $('#resepluarForm .is-invalid').removeClass('is-invalid');
+            // Hapus nilai input secara langsung
+            $('#tanggal_lahir').val('');
+
+            // Hapus instance flatpickr lama jika ada
+            const flatpickrInstance = $('#tanggal_lahir').data('flatpickr');
+            if (flatpickrInstance) {
+                flatpickrInstance.destroy();
+            }
+
+            // Inisialisasi ulang flatpickr
+            $('#tanggal_lahir').flatpickr({
+                altInput: true,
+                allowInput: true,
+                altFormat: "d-m-Y",
+                defaultDate: '' // Default kosong
+            });
             $('#resepluarForm .invalid-feedback').text('').hide();
         });
         await fetchApotekerOptions();

@@ -158,14 +158,6 @@
                                                             <span class="placeholder w-100"></span>
                                                         </div>
                                                     </div>
-                                                    <div class="mb-0 row g-1 placeholder-glow">
-                                                        <div class="col-5 fw-medium text-truncate">
-                                                            <span class="placeholder w-100"></span>
-                                                        </div>
-                                                        <div class="col placeholder-glow">
-                                                            <span class="placeholder w-100"></span>
-                                                        </div>
-                                                    </div>
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <div class="mb-0 row g-1 placeholder-glow">
@@ -243,14 +235,6 @@
                             <div style="font-size: 0.75em;">
                                 <div class="row gx-3">
                                     <div class="col-lg-6">
-                                        <div class="mb-0 row g-1 placeholder-glow">
-                                            <div class="col-5 fw-medium text-truncate">
-                                                <span class="placeholder w-100"></span>
-                                            </div>
-                                            <div class="col placeholder-glow">
-                                                <span class="placeholder w-100"></span>
-                                            </div>
-                                        </div>
                                         <div class="mb-0 row g-1 placeholder-glow">
                                             <div class="col-5 fw-medium text-truncate">
                                                 <span class="placeholder w-100"></span>
@@ -462,12 +446,6 @@
                             <div style="font-size: 0.75em;">
                                 <div class="row gx-3">
                                     <div class="col-lg-6">
-                                        <div class="mb-0 row g-1">
-                                            <div class="col-5 fw-medium text-truncate">ID</div>
-                                            <div class="col date">
-                                                ${resep.id_resep}
-                                            </div>
-                                        </div>
                                         <div class="mb-0 row g-1">
                                             <div class="col-5 fw-medium text-truncate">Tanggal dan Waktu</div>
                                             <div class="col date">

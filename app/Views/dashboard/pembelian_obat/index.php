@@ -98,42 +98,28 @@
                                     </h6>
                                     <div class="card-text placeholder-glow">
                                         <div style="font-size: 0.75em;">
-                                            <div class="row gx-3">
-                                                <div class="col-lg-6">
-                                                    <div class="mb-0 row g-1 placeholder-glow">
-                                                        <div class="col-5 fw-medium text-truncate">
-                                                            <span class="placeholder w-100"></span>
-                                                        </div>
-                                                        <div class="col placeholder-glow">
-                                                            <span class="placeholder w-100"></span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="mb-0 row g-1 placeholder-glow">
-                                                        <div class="col-5 fw-medium text-truncate">
-                                                            <span class="placeholder w-100"></span>
-                                                        </div>
-                                                        <div class="col placeholder-glow">
-                                                            <span class="placeholder w-100"></span>
-                                                        </div>
-                                                    </div>
+                                            <div class="mb-0 row g-1 placeholder-glow">
+                                                <div class="col-5 fw-medium text-truncate">
+                                                    <span class="placeholder w-100"></span>
                                                 </div>
-                                                <div class="col-lg-6">
-                                                    <div class="mb-0 row g-1 placeholder-glow">
-                                                        <div class="col-5 fw-medium text-truncate">
-                                                            <span class="placeholder w-100"></span>
-                                                        </div>
-                                                        <div class="col placeholder-glow">
-                                                            <span class="placeholder w-100"></span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="mb-0 row g-1 placeholder-glow">
-                                                        <div class="col-5 fw-medium text-truncate">
-                                                            <span class="placeholder w-100"></span>
-                                                        </div>
-                                                        <div class="col placeholder-glow">
-                                                            <span class="placeholder w-100"></span>
-                                                        </div>
-                                                    </div>
+                                                <div class="col placeholder-glow">
+                                                    <span class="placeholder w-100"></span>
+                                                </div>
+                                            </div>
+                                            <div class="mb-0 row g-1 placeholder-glow">
+                                                <div class="col-5 fw-medium text-truncate">
+                                                    <span class="placeholder w-100"></span>
+                                                </div>
+                                                <div class="col placeholder-glow">
+                                                    <span class="placeholder w-100"></span>
+                                                </div>
+                                            </div>
+                                            <div class="mb-0 row g-1 placeholder-glow">
+                                                <div class="col-5 fw-medium text-truncate">
+                                                    <span class="placeholder w-100"></span>
+                                                </div>
+                                                <div class="col placeholder-glow">
+                                                    <span class="placeholder w-100"></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -188,44 +174,30 @@
                         </h6>
                         <div class="card-text placeholder-glow">
                             <div style="font-size: 0.75em;">
-                                <div class="row gx-3">
-                                    <div class="col-lg-6">
-                                        <div class="mb-0 row g-1 placeholder-glow">
-                                            <div class="col-5 fw-medium text-truncate">
-                                                <span class="placeholder w-100"></span>
-                                            </div>
-                                            <div class="col placeholder-glow">
-                                                <span class="placeholder w-100"></span>
-                                            </div>
+                                    <div class="mb-0 row g-1 placeholder-glow">
+                                        <div class="col-5 fw-medium text-truncate">
+                                            <span class="placeholder w-100"></span>
                                         </div>
-                                        <div class="mb-0 row g-1 placeholder-glow">
-                                            <div class="col-5 fw-medium text-truncate">
-                                                <span class="placeholder w-100"></span>
-                                            </div>
-                                            <div class="col placeholder-glow">
-                                                <span class="placeholder w-100"></span>
-                                            </div>
+                                        <div class="col placeholder-glow">
+                                            <span class="placeholder w-100"></span>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
-                                        <div class="mb-0 row g-1 placeholder-glow">
-                                            <div class="col-5 fw-medium text-truncate">
-                                                <span class="placeholder w-100"></span>
-                                            </div>
-                                            <div class="col placeholder-glow">
-                                                <span class="placeholder w-100"></span>
-                                            </div>
+                                    <div class="mb-0 row g-1 placeholder-glow">
+                                        <div class="col-5 fw-medium text-truncate">
+                                            <span class="placeholder w-100"></span>
                                         </div>
-                                        <div class="mb-0 row g-1 placeholder-glow">
-                                            <div class="col-5 fw-medium text-truncate">
-                                                <span class="placeholder w-100"></span>
-                                            </div>
-                                            <div class="col placeholder-glow">
-                                                <span class="placeholder w-100"></span>
-                                            </div>
+                                        <div class="col placeholder-glow">
+                                            <span class="placeholder w-100"></span>
                                         </div>
                                     </div>
-                                </div>
+                                    <div class="mb-0 row g-1 placeholder-glow">
+                                        <div class="col-5 fw-medium text-truncate">
+                                            <span class="placeholder w-100"></span>
+                                        </div>
+                                        <div class="col placeholder-glow">
+                                            <span class="placeholder w-100"></span>
+                                        </div>
+                                    </div>
                             </div>
                             <span class="placeholder w-100" style="max-width: 100px;"></span>
                         </div>
@@ -353,36 +325,24 @@
                         </h6>
                         <div class="card-text">
                             <div style="font-size: 0.75em;">
-                                <div class="row gx-3">
-                                    <div class="col-lg-6">
-                                        <div class="mb-0 row g-1">
-                                            <div class="col-5 fw-medium text-truncate">ID</div>
-                                            <div class="col date">
-                                                ${pembelian_obat.id_pembelian_obat}
-                                            </div>
-                                        </div>
-                                        <div class="mb-0 row g-1">
-                                            <div class="col-5 fw-medium text-truncate">Tanggal dan Waktu</div>
-                                            <div class="col date">
-                                                ${pembelian_obat.tgl_pembelian}
-                                            </div>
+                                    <div class="mb-0 row g-1">
+                                        <div class="col-5 fw-medium text-truncate">Tanggal dan Waktu</div>
+                                        <div class="col date">
+                                            ${pembelian_obat.tgl_pembelian}
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
-                                        <div class="mb-0 row g-1">
-                                            <div class="col-5 fw-medium text-truncate">Total Item</div>
-                                            <div class="col date">
-                                                ${total_qty.toLocaleString('id-ID')}
-                                            </div>
-                                        </div>
-                                        <div class="mb-0 row g-1">
-                                            <div class="col-5 fw-medium text-truncate">Total Harga</div>
-                                            <div class="col date">
-                                                Rp${total_biaya.toLocaleString('id-ID')}
-                                            </div>
+                                    <div class="mb-0 row g-1">
+                                        <div class="col-5 fw-medium text-truncate">Total Item</div>
+                                        <div class="col date">
+                                            ${total_qty.toLocaleString('id-ID')}
                                         </div>
                                     </div>
-                                </div>
+                                    <div class="mb-0 row g-1">
+                                        <div class="col-5 fw-medium text-truncate">Total Harga</div>
+                                        <div class="col date">
+                                            Rp${total_biaya.toLocaleString('id-ID')}
+                                        </div>
+                                    </div>
                             </div>
                             ${statusBadge}
                         </div>
