@@ -189,9 +189,18 @@ class Resep extends BaseController
                 ->where('status', 'DAFTAR')
                 ->findAll();
 
+            // Mengambil nomor_registrasi yang sudah terpakai di resep
+            $db = \Config\Database::connect();
+            $usedNoReg = $db->table('resep')->select('nomor_registrasi')->get()->getResultArray();
+            $usedNoReg = array_column($usedNoReg, 'nomor_registrasi');
+
             $options = [];
             // Menyusun opsi dari data pasien yang diterima
             foreach ($data as $row) {
+                // Memeriksa apakah nomor_registrasi ada dalam daftar nomor_registrasi yang terpakai
+                if (in_array($row['nomor_registrasi'], $usedNoReg)) {
+                    continue; // Lewati rawat jalan yang sudah terpakai
+                }
                 if ($row['jenis_kelamin'] == 'L') {
                     $jenis_kelamin = 'Laki-Laki';
                 } else if ($row['jenis_kelamin'] == 'P') {
