@@ -249,7 +249,7 @@
                                         </div>
                                     </div>
                                     <div>
-                                    <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Rekam Medis') : ?>
+                                    <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Admission') : ?>
                                         <div class="d-grid gap-2 d-flex justify-content-end mt-2">
                                             <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('pasien/detailpasien') ?>/${rawatjalan.id_pasien}'">
                                                 <i class="fa-solid fa-user-injured"></i> Lihat Pasien
@@ -314,7 +314,7 @@
                                         </div>
                                     </div>
                                     <div>
-                                    <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Rekam Medis') : ?>
+                                    <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Admission') : ?>
                                         <div class="d-grid gap-2 d-flex justify-content-end mt-2">
                                             <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/struk') ?>/${rawatjalan.id_rawat_jalan}');">
                                                 <i class="fa-solid fa-print"></i> Struk
