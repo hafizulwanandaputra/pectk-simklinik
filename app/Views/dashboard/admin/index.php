@@ -135,7 +135,7 @@
                         <select class="form-select " id="role" name="role" aria-label="role">
                             <option value="" disabled selected>-- Pilih Jenis Pengguna --</option>
                             <option value="Admin">Admin</option>
-                            <option value="Rekam Medis">Rekam Medis</option>
+                            <option value="Admission">Admission</option>
                             <option value="Perawat">Perawat</option>
                             <option value="Apoteker">Apoteker</option>
                             <option value="Dokter">Dokter</option>
