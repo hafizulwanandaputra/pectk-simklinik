@@ -192,7 +192,7 @@
                                 <h6 class="card-subtitle text-truncate">${rawatjalan.dokter}</h6>
                                 <div class="card-text text-truncate"><small class="date">${rawatjalan.nomor_registrasi} ${jenis_kelamin}</small></div>
                                 <div>
-                                    ${status}
+                                    <span class="badge bg-body text-body border date" style="font-weight: 900;">${rawatjalan.kode_antrian}${rawatjalan.no_antrian}</span> ${status}
                                 </div>
                             </div>
                         </button>
