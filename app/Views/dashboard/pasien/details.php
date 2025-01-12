@@ -1083,7 +1083,7 @@
                     if (status === 'DAFTAR') {
                         status = `<span class="badge bg-success bg-gradient">Didaftarkan</span> ${transaksiBadge}`;
                     } else if (status === 'BATAL') {
-                        status = `<span class="badge bg-danger bg-gradient">Rawat Jalan Batal</span>`;
+                        status = `<span class="badge bg-danger bg-gradient">Dibatalkan</span>`;
                     }
                     let pembatal = rajal.status;
                     if (pembatal === 'BATAL') {
