@@ -149,6 +149,36 @@
                 const telpon = rawatjalan.telpon ? rawatjalan.telpon : "<em>Tidak ada</em>";
                 const usia = hitungUsia(rawatjalan.tanggal_lahir, rawatjalan.tanggal_registrasi); // Menghitung usia pasien
 
+                const transaksiBadge = rawatjalan.transaksi == '1' ?
+                    `<span class="badge bg-success bg-gradient">Transaksi Diproses</span>` :
+                    `<span class="badge bg-danger bg-gradient">Transaksi Belum Diproses</span>`;
+
+                let status = rawatjalan.status;
+                if (status === 'DAFTAR') {
+                    status = `<span class="badge bg-success bg-gradient">Didaftarkan</span> ${transaksiBadge}`;
+                } else if (status === 'BATAL') {
+                    status = `<span class="badge bg-danger bg-gradient">Rawat Jalan Batal</span>`;
+                }
+                let pembatal = rawatjalan.status;
+                if (pembatal === 'BATAL') {
+                    pembatal = `
+                            <div class="mb-0 row g-1">
+                                <div class="col-5 fw-medium text-truncate">Dibatalkan oleh</div>
+                                <div class="col date">
+                                    ${rawatjalan.pembatal}
+                                </div>
+                            </div>
+                            <div class="mb-0 row g-1">
+                                <div class="col-5 fw-medium text-truncate">Alasan Pembatalan</div>
+                                <div class="col date">
+                                    ${rawatjalan.alasan_batal}
+                                </div>
+                            </div>
+                        `;
+                } else if (pembatal === 'DAFTAR') {
+                    pembatal = ``;
+                }
+
                 // Membuat elemen baris untuk setiap rawatjalan
                 const rawatJalanElement = `
                 <div class="accordion-item shadow-sm">
@@ -160,88 +190,140 @@
                                     <span class="ms-1 align-self-center text-truncate">${rawatjalan.nama_pasien}</span>
                                 </h5>
                                 <h6 class="card-subtitle text-truncate">${rawatjalan.dokter}</h6>
-                                <p class="card-text text-truncate"><small class="date">${rawatjalan.nomor_registrasi} ${jenis_kelamin}</small></p>
+                                <div class="card-text text-truncate"><small class="date">${rawatjalan.nomor_registrasi} ${jenis_kelamin}</small></div>
+                                <div>
+                                    ${status}
+                                </div>
                             </div>
                         </button>
                     </div>
                     <div id="collapse-${index + 1}" class="accordion-collapse collapse" data-bs-parent="#rawatjalan">
                         <div class="accordion-body px-3 py-2">
                             <div class="row g-3">
-                                <div class="col-lg-6">
-                                    <div class="fw-bold mb-2 border-bottom">Identitas Pasien</div>
-                                    <div style="font-size: 0.75em;">
-                                        <div class="mb-0 row g-1">
-                                            <div class="col-5 fw-medium text-truncate">Nama</div>
-                                            <div class="col">
-                                                ${rawatjalan.nama_pasien}
+                                <div class="col-lg-6 d-flex flex-column justify-content-between">
+                                    <div>
+                                        <div class="fw-bold mb-2 border-bottom">Identitas Pasien</div>
+                                        <div style="font-size: 0.75em;">
+                                            <div class="mb-0 row g-1">
+                                                <div class="col-5 fw-medium text-truncate">Nama</div>
+                                                <div class="col">
+                                                    ${rawatjalan.nama_pasien}
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="mb-0 row g-1">
-                                            <div class="col-5 fw-medium text-truncate">Nomor Rekam Medis</div>
-                                            <div class="col date">
-                                                ${rawatjalan.no_rm}
+                                            <div class="mb-0 row g-1">
+                                                <div class="col-5 fw-medium text-truncate">Nomor Rekam Medis</div>
+                                                <div class="col date">
+                                                    ${rawatjalan.no_rm}
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="mb-0 row g-1">
-                                            <div class="col-5 fw-medium text-truncate">Jenis Kelamin</div>
-                                            <div class="col">
-                                                ${jenis_kelamin_string}
+                                            <div class="mb-0 row g-1">
+                                                <div class="col-5 fw-medium text-truncate">Jenis Kelamin</div>
+                                                <div class="col">
+                                                    ${jenis_kelamin_string}
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="mb-0 row g-1">
-                                            <div class="col-5 fw-medium text-truncate">Tempat/Tanggal Lahir</div>
-                                            <div class="col">
-                                                ${rawatjalan.tempat_lahir}, <span class="date text-nowrap">${rawatjalan.tanggal_lahir}</span>
+                                            <div class="mb-0 row g-1">
+                                                <div class="col-5 fw-medium text-truncate">Tempat/Tanggal Lahir</div>
+                                                <div class="col">
+                                                    ${rawatjalan.tempat_lahir}, <span class="date text-nowrap">${rawatjalan.tanggal_lahir}</span>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="mb-0 row g-1">
-                                            <div class="col-5 fw-medium text-truncate">Usia</div>
-                                            <div class="col date">
-                                                ${usia.usia} tahun ${usia.bulan} bulan
+                                            <div class="mb-0 row g-1">
+                                                <div class="col-5 fw-medium text-truncate">Usia</div>
+                                                <div class="col date">
+                                                    ${usia.usia} tahun ${usia.bulan} bulan
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="mb-0 row g-1">
-                                            <div class="col-5 fw-medium text-truncate">Alamat</div>
-                                            <div class="col">
-                                                ${rawatjalan.alamat}
+                                            <div class="mb-0 row g-1">
+                                                <div class="col-5 fw-medium text-truncate">Alamat</div>
+                                                <div class="col">
+                                                    ${rawatjalan.alamat}
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="mb-0 row g-1">
-                                            <div class="col-5 fw-medium text-truncate">Nomor Telepon</div>
-                                            <div class="col date">
-                                                ${telpon}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6">
-                                    <div class="fw-bold mb-2 border-bottom">Rawat Jalan</div>
-                                    <div style="font-size: 0.75em;">
-                                        <div class="mb-0 row g-1">
-                                            <div class="col-5 fw-medium text-truncate">Nomor Registrasi</div>
-                                            <div class="col date">
-                                                ${rawatjalan.nomor_registrasi}
-                                            </div>
-                                        </div>
-                                        <div class="mb-0 row g-1">
-                                            <div class="col-5 fw-medium text-truncate">Dokter</div>
-                                            <div class="col">
-                                                ${rawatjalan.dokter}
+                                            <div class="mb-0 row g-1">
+                                                <div class="col-5 fw-medium text-truncate">Nomor Telepon</div>
+                                                <div class="col date">
+                                                    ${telpon}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <div>
+                                    <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Rekam Medis') : ?>
+                                        <div class="d-grid gap-2 d-flex justify-content-end mt-2">
+                                            <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('pasien/detailpasien') ?>/${rawatjalan.id_pasien}'">
+                                                <i class="fa-solid fa-user-injured"></i> Lihat Pasien
+                                            </button>
+                                        </div>
+                                    <?php endif; ?>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 d-flex flex-column justify-content-between">
+                                    <div>
+                                        <div class="fw-bold mb-2 border-bottom">Rawat Jalan</div>
+                                        <div style="font-size: 0.75em;">
+                                            <div class="mb-0 row g-1">
+                                                <div class="col-5 fw-medium text-truncate">Nomor Registrasi</div>
+                                                <div class="col date">
+                                                    ${rawatjalan.nomor_registrasi}
+                                                </div>
+                                            </div>
+                                            <div class="mb-0 row g-1">
+                                                <div class="col-5 fw-medium text-truncate">Tanggal dan Waktu</div>
+                                                <div class="col date">
+                                                    ${rawatjalan.tanggal_registrasi}
+                                                </div>
+                                            </div>
+                                            <div class="mb-0 row g-1">
+                                                <div class="col-5 fw-medium text-truncate">Jenis Kunjungan</div>
+                                                <div class="col">
+                                                    ${rawatjalan.jenis_kunjungan}
+                                                </div>
+                                            </div>
+                                            <div class="mb-0 row g-1">
+                                                <div class="col-5 fw-medium text-truncate">Status Kunjungan</div>
+                                                <div class="col">
+                                                    ${rawatjalan.status_kunjungan}
+                                                </div>
+                                            </div>
+                                            <div class="mb-0 row g-1">
+                                                <div class="col-5 fw-medium text-truncate">Jaminan</div>
+                                                <div class="col">
+                                                    ${rawatjalan.jaminan}
+                                                </div>
+                                            </div>
+                                            <div class="mb-0 row g-1">
+                                                <div class="col-5 fw-medium text-truncate">Ruangan</div>
+                                                <div class="col">
+                                                    ${rawatjalan.ruangan}
+                                                </div>
+                                            </div>
+                                            <div class="mb-0 row g-1">
+                                                <div class="col-5 fw-medium text-truncate">Dokter</div>
+                                                <div class="col">
+                                                    ${rawatjalan.dokter}
+                                                </div>
+                                            </div>
+                                            <div class="mb-0 row g-1">
+                                                <div class="col-5 fw-medium text-truncate">Keluhan</div>
+                                                <div class="col">
+                                                    ${rawatjalan.keluhan}
+                                                </div>
+                                            </div>
+                                            ${pembatal}
+                                        </div>
+                                    </div>
+                                    <div>
+                                    <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Rekam Medis') : ?>
+                                        <div class="d-grid gap-2 d-flex justify-content-end mt-2">
+                                            <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/struk') ?>/${rawatjalan.id_rawat_jalan}');">
+                                                <i class="fa-solid fa-print"></i> Struk
+                                            </button>
+                                        </div>
+                                    <?php endif; ?>
+                                    </div>
                                 </div>
                             </div>
-                            <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Rekam Medis') : ?>
-                            <div class="d-grid gap-2 d-flex justify-content-end mt-2">
-                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/struk') ?>/${rawatjalan.id_rawat_jalan}');">
-                                    <i class="fa-solid fa-print"></i> Struk
-                                </button>
-                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('pasien/detailpasien') ?>/${rawatjalan.id_pasien}'">
-                                    <i class="fa-solid fa-user-injured"></i> Lihat Pasien
-                                </button>
-                            </div>
-                            <?php endif; ?>
                         </div>
                     </div>
                 </div>

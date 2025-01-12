@@ -571,6 +571,29 @@ class Pasien extends BaseController
                 return $data; // Mengembalikan data yang telah ditambahkan nomor urut
             }, $Pasien, array_keys($Pasien));
 
+            $db = db_connect();
+
+            // Ambil semua data dari master_jaminan untuk di-cache
+            $jaminanList = $db->table('master_jaminan')
+                ->select('jaminanKode, jaminanNama')
+                ->get()
+                ->getResultArray();
+
+            // Ubah data menjadi array dengan key sebagai jaminanKode untuk akses cepat
+            $jaminanMap = [];
+            foreach ($jaminanList as $jaminan) {
+                $jaminanMap[$jaminan['jaminanKode']] = $jaminan['jaminanNama'];
+            }
+
+            // Loop untuk mengganti nilai 'jaminan' di $rawatjalan
+            foreach ($dataRajal as &$rajal) {
+                if (isset($jaminanMap[$rajal['jaminan']])) {
+                    $rajal['jaminan'] = $jaminanMap[$rajal['jaminan']];
+                } else {
+                    $rajal['jaminan'] = 'Tidak Diketahui'; // Default jika kode jaminan tidak ditemukan
+                }
+            }
+
             // Mengembalikan data pasien dalam format JSON
             return $this->response->setJSON([
                 'rajal' => $dataRajal,

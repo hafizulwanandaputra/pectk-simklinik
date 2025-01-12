@@ -415,6 +415,14 @@
                                                                     <span class="placeholder w-100"></span>
                                                                 </div>
                                                             </div>
+                                                            <div class="mb-0 row g-1 placeholder-glow">
+                                                                <div class="col-5 fw-medium text-truncate">
+                                                                    <span class="placeholder w-100"></span>
+                                                                </div>
+                                                                <div class="col placeholder-glow">
+                                                                    <span class="placeholder w-100"></span>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                         <div class="col-lg-6">
                                                             <div class="mb-0 row g-1 placeholder-glow">
@@ -575,6 +583,14 @@
                                                 <div style="font-size: 0.75em;">
                                                     <div class="row gx-3">
                                                         <div class="col-lg-6">
+                                                            <div class="mb-0 row g-1 placeholder-glow">
+                                                                <div class="col-5 fw-medium text-truncate">
+                                                                    <span class="placeholder w-100"></span>
+                                                                </div>
+                                                                <div class="col placeholder-glow">
+                                                                    <span class="placeholder w-100"></span>
+                                                                </div>
+                                                            </div>
                                                             <div class="mb-0 row g-1 placeholder-glow">
                                                                 <div class="col-5 fw-medium text-truncate">
                                                                     <span class="placeholder w-100"></span>
@@ -1067,7 +1083,7 @@
                     if (status === 'DAFTAR') {
                         status = `<span class="badge bg-success bg-gradient">Didaftarkan</span> ${transaksiBadge}`;
                     } else if (status === 'BATAL') {
-                        status = `<span class="badge bg-danger bg-gradient">Rawat Jalan Batal</span> <span class="badge bg-body border text-body bg-gradient">${rajal.alasan_batal}</span>`;
+                        status = `<span class="badge bg-danger bg-gradient">Rawat Jalan Batal</span>`;
                     }
                     let pembatal = rajal.status;
                     if (pembatal === 'BATAL') {
@@ -1078,9 +1094,21 @@
                                     ${rajal.pembatal}
                                 </div>
                             </div>
+                            <div class="mb-0 row g-1">
+                                <div class="col-5 fw-medium text-truncate">Alasan Pembatalan</div>
+                                <div class="col date">
+                                    ${rajal.alasan_batal}
+                                </div>
+                            </div>
                         `;
                     } else if (pembatal === 'DAFTAR') {
                         pembatal = ``;
+                    }
+                    let tblbatal = rajal.status;
+                    if (tblbatal === 'BATAL') {
+                        tblbatal = `disabled`;
+                    } else if (tblbatal === 'DAFTAR') {
+                        tblbatal = ``;
                     }
                     const transaksi = rajal.transaksi == '1' ?
                         `disabled` :
@@ -1116,6 +1144,18 @@
                                             </div>
                                         </div>
                                         <div class="mb-0 row g-1">
+                                            <div class="col-5 fw-medium text-truncate">Status Kunjungan</div>
+                                            <div class="col date">
+                                                ${rajal.status_kunjungan}
+                                            </div>
+                                        </div>
+                                        <div class="mb-0 row g-1">
+                                            <div class="col-5 fw-medium text-truncate">Jaminan</div>
+                                            <div class="col date">
+                                                ${rajal.jaminan}
+                                            </div>
+                                        </div>
+                                        <div class="mb-0 row g-1">
                                             <div class="col-5 fw-medium text-truncate">Ruangan</div>
                                             <div class="col">
                                                 ${rajal.ruangan}
@@ -1148,7 +1188,7 @@
                     <button type="button" class="btn btn-body btn-sm bg-gradient " onclick="window.open('<?= base_url('rawatjalan/struk') ?>/${rajal.id_rawat_jalan}');">
                         <i class="fa-solid fa-print"></i> Struk
                     </button>
-                    <button type="button" class="btn btn-danger btn-sm bg-gradient cancel-btn" data-id="${rajal.id_rawat_jalan}" ${transaksi}>
+                    <button type="button" class="btn btn-danger btn-sm bg-gradient cancel-btn" data-id="${rajal.id_rawat_jalan}" ${transaksi} ${tblbatal}>
                         <i class="fa-solid fa-xmark"></i> Batal
                     </button>
                 </div>
@@ -1505,7 +1545,7 @@
             // Clear previous validation states
             $('#batalRajalForm .is-invalid').removeClass('is-invalid');
             $('#batalRajalForm .invalid-feedback').text('').hide();
-            $('#submitButton').prop('disabled', true).html(`
+            $('#cancelSubmitButton').prop('disabled', true).html(`
                 <span class="spinner-border spinner-border-sm" aria-hidden="true"></span> Simpan
             `);
 
@@ -1587,7 +1627,7 @@
                     showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
                 }
             } finally {
-                $('#submitButton').prop('disabled', false).html(`
+                $('#cancelSubmitButton').prop('disabled', false).html(`
                     <i class="fa-solid fa-floppy-disk"></i> Simpan
                 `);
                 $('#batalRajalForm input, #batalrajalForm select').prop('disabled', false);
