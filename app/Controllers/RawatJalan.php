@@ -25,8 +25,8 @@ class RawatJalan extends BaseController
 
     public function index()
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', 'Perawat', atau 'Admission' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Admission') {
+        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', 'Perawat', atau 'Admisi' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Admisi') {
             // Menyiapkan data untuk tampilan
             $data = [
                 'title' => 'Rawat Jalan - ' . $this->systemName,
@@ -43,8 +43,8 @@ class RawatJalan extends BaseController
 
     public function rawatjalanlist($tanggal)
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', 'Perawat', atau 'Admission' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat'  || session()->get('role') == 'Admission') {
+        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', 'Perawat', atau 'Admisi' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat'  || session()->get('role') == 'Admisi') {
             $rawatjalan = $this->RawatJalanModel
                 ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
                 ->like('tanggal_registrasi', $tanggal)
@@ -87,8 +87,8 @@ class RawatJalan extends BaseController
 
     public function create($no_rm)
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Admission' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admission') {
+        // Memeriksa peran pengguna, hanya 'Admin', 'Admisi' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') {
             // Validasi input
             $validation = \Config\Services::validation();
             // Menetapkan aturan validasi dasar
@@ -204,8 +204,8 @@ class RawatJalan extends BaseController
 
     public function struk($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' dan 'Admission' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admission') {
+        // Memeriksa peran pengguna, hanya 'Admin' dan 'Admisi' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') {
             $db = db_connect();
 
             // ambil rajal berdasarkan ID
@@ -243,8 +243,8 @@ class RawatJalan extends BaseController
 
     public function cancel($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Admission' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admission') {
+        // Memeriksa peran pengguna, hanya 'Admin', 'Admisi' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') {
             // Validasi input
             $validation = \Config\Services::validation();
             // Menetapkan aturan validasi dasar
