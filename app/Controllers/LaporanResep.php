@@ -174,7 +174,7 @@ class LaporanResep extends BaseController
                 $drawing->setDescription('Logo PEC-TK'); // Deskripsi gambar
                 $drawing->setPath($gambarPath); // Path ke gambar
                 $drawing->setCoordinates('A1'); // Koordinat sel tempat gambar akan ditambahkan
-                $drawing->setHeight(38); // Tinggi gambar dalam piksel (opsional)
+                $drawing->setHeight(36); // Tinggi gambar dalam piksel (opsional)
                 $drawing->setWorksheet($sheet); // Menambahkan gambar ke worksheet
 
                 // Menambahkan informasi tanggal dan supplier
@@ -432,7 +432,7 @@ class LaporanResep extends BaseController
                 $drawing->setDescription('Logo PEC-TK'); // Deskripsi gambar
                 $drawing->setPath($gambarPath); // Path ke gambar
                 $drawing->setCoordinates('A1'); // Koordinat sel tempat gambar akan ditambahkan
-                $drawing->setHeight(38); // Tinggi gambar dalam piksel (opsional)
+                $drawing->setHeight(36); // Tinggi gambar dalam piksel (opsional)
                 $drawing->setWorksheet($sheet); // Menambahkan gambar ke worksheet
 
                 // Menambahkan informasi tanggal dan supplier

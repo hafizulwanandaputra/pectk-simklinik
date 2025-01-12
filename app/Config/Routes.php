@@ -33,6 +33,7 @@ $routes->get('/(?i)pasien/(?i)ruanganoptions', 'Pasien::ruanganoptions');
 $routes->get('/(?i)pasien/(?i)dokteroptions', 'Pasien::dokteroptions');
 $routes->get('/(?i)pasien/(?i)pendaftaroptions/(:any)', 'Pasien::pendaftaroptions/$1');
 $routes->get('/(?i)pasien/(?i)statusoptions/(:any)', 'Pasien::statusoptions/$1');
+$routes->get('/(?i)pasien/(?i)exportexcel', 'Pasien::exportexcel');
 $routes->post('/(?i)pasien/(?i)update/(:any)', 'Pasien::update/$1');
 
 // RAWAT JALAN

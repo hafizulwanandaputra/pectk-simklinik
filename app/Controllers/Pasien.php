@@ -7,7 +7,13 @@ use App\Models\RawatJalanModel;
 use App\Models\PoliklinikModel;
 use App\Models\AuthModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
+use DateTime;
 use Dompdf\Dompdf;
+use IntlDateFormatter;
+use PhpOffice\PhpSpreadsheet\Cell\DataType;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Picqer\Barcode\BarcodeGeneratorPNG;
 use SimpleSoftwareIO\QrCode\Generator;
 
@@ -776,6 +782,256 @@ class Pasien extends BaseController
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan', // Pesan jika peran tidak valid
             ]);
+        }
+    }
+
+    public function exportexcel()
+    {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Rekam Medis' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Rekam Medis') {
+            // Ambil semua data pasien
+            $pasien = $this->PasienModel->findAll();
+
+            // Membuat nama file
+            $filename = 'DATA PASIEN PECTK';
+
+            $spreadsheet = new Spreadsheet();
+            $sheet = $spreadsheet->getActiveSheet();
+
+            // Menambahkan informasi header di spreadsheet
+            $sheet->setCellValue('A1', 'KLINIK UTAMA MATA PADANG EYE CENTER TELUK KUANTAN');
+            $sheet->setCellValue('A2', 'Jl. Rusdi S. Abrus No. 35 LK III Sinambek, Kelurahan Sungai Jering, Kecamatan Kuantan Tengah, Kabupaten Kuantan Singingi, Riau.');
+            $sheet->setCellValue('A3', 'DATA PASIEN RAWAT JALAN');
+
+            // Path gambar yang ingin ditambahkan
+            $gambarPath = FCPATH . 'assets/images/logo_pec.png'; // Ganti dengan path gambar Anda
+
+            // Membuat objek Drawing
+            $drawing = new Drawing();
+            $drawing->setName('Logo PEC-TK'); // Nama gambar
+            $drawing->setDescription('Logo PEC-TK'); // Deskripsi gambar
+            $drawing->setPath($gambarPath); // Path ke gambar
+            $drawing->setCoordinates('A1'); // Koordinat sel tempat gambar akan ditambahkan
+            $drawing->setHeight(36); // Tinggi gambar dalam piksel (opsional)
+            $drawing->setWorksheet($sheet); // Menambahkan gambar ke worksheet
+
+            // Menambahkan header tabel detail laporan resep
+            $sheet->setCellValue('A4', 'No');
+            $sheet->setCellValue('B4', 'Tanggal dan Waktu');
+            $sheet->setCellValue('C4', 'Nama');
+            $sheet->setCellValue('D4', 'Tempat dan Tanggal Lahir');
+            $sheet->setCellValue('E4', 'NIK');
+            $sheet->setCellValue('F4', 'Alamat');
+            $sheet->setCellValue('G4', 'L/P');
+            $sheet->setCellValue('H4', 'Agama');
+            $sheet->setCellValue('I4', 'Nomor HP');
+            $sheet->setCellValue('J4', 'Provinsi');
+            $sheet->setCellValue('K4', 'Kab/Kota');
+            $sheet->setCellValue('L4', 'Kecamatan');
+            $sheet->setCellValue('M4', 'Desa/Kelurahan');
+            $sheet->setCellValue('N4', 'No RM');
+            $sheet->setCellValue('O4', 'Status Nikah');
+            $sheet->setCellValue('P4', 'Pekerjaan');
+
+            // Mengatur tata letak dan gaya untuk header
+            $spreadsheet->getActiveSheet()->mergeCells('A1:P1');
+            $spreadsheet->getActiveSheet()->mergeCells('A2:P2');
+            $spreadsheet->getActiveSheet()->mergeCells('A3:P3');
+            $spreadsheet->getActiveSheet()->getPageSetup()
+                ->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
+            $spreadsheet->getActiveSheet()->getPageSetup()
+                ->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_A4);
+            $spreadsheet->getDefaultStyle()->getFont()->setName('Helvetica');
+            $spreadsheet->getDefaultStyle()->getFont()->setSize(8);
+
+            $column = 5; // Baris awal data
+            $nomor = 1;  // Nomor urut resep
+
+            foreach ($pasien as $list) {
+                $db = db_connect();
+
+                // Ambil tabel master_provinsi
+                $provinsi = $db->table('master_provinsi');
+                $provinsi->select('provinsiNama');
+                $provinsi->where('provinsiId', $list['provinsi']);
+
+                // Query untuk mendapatkan nama provinsi
+                $res_provinsi = $provinsi->get()->getRow();
+
+                if ($res_provinsi) {
+                    // Ubah ID menjadi nama provinsi
+                    $list['provinsi'] = $res_provinsi->provinsiNama;
+                }
+
+                // Ambil tabel master_kabupaten
+                $kabupaten = $db->table('master_kabupaten');
+                $kabupaten->select('kabupatenNama');
+                $kabupaten->where('kabupatenId', $list['kabupaten']);
+
+                // Query untuk mendapatkan nama kabupaten
+                $res_kabupaten = $kabupaten->get()->getRow();
+
+                if ($res_kabupaten) {
+                    // Ubah ID menjadi nama kabupaten
+                    $list['kabupaten'] = $res_kabupaten->kabupatenNama;
+                }
+
+                // Ambil tabel master_kecamatan
+                $kecamatan = $db->table('master_kecamatan');
+                $kecamatan->select('kecamatanNama');
+                $kecamatan->where('kecamatanId', $list['kecamatan']);
+
+                // Query untuk mendapatkan nama kecamatan
+                $res_kecamatan = $kecamatan->get()->getRow();
+
+                if ($res_kecamatan) {
+                    // Ubah ID menjadi nama kecamatan
+                    $list['kecamatan'] = $res_kecamatan->kecamatanNama;
+                }
+
+                // Ambil tabel master_kelurahan
+                $kelurahan = $db->table('master_kelurahan');
+                $kelurahan->select('kelurahanNama');
+                $kelurahan->where('kelurahanId', $list['kelurahan']);
+
+                // Query untuk mendapatkan nama kelurahan
+                $res_kelurahan = $kelurahan->get()->getRow();
+
+                if ($res_kelurahan) {
+                    // Ubah ID menjadi nama kelurahan
+                    $list['kelurahan'] = $res_kelurahan->kelurahanNama;
+                }
+
+                // Ambil tabel master_agama
+                $agama = $db->table('master_agama');
+                $agama->select('agamaNama');
+                $agama->where('agamaId', $list['agama']);
+
+                // Query untuk mendapatkan nama agama
+                $res_agama = $agama->get()->getRow();
+
+                if ($res_agama) {
+                    // Ubah ID menjadi nama agama
+                    $list['agama'] = $res_agama->agamaNama;
+                }
+
+                // Ambil tabel master_pekerjaan
+                $pekerjaan = $db->table('master_pekerjaan');
+                $pekerjaan->select('pekerjaanNama');
+                $pekerjaan->where('pekerjaanId', $list['pekerjaan']);
+
+                // Query untuk mendapatkan nama pekerjaan
+                $res_pekerjaan = $pekerjaan->get()->getRow();
+
+                if ($res_pekerjaan) {
+                    // Ubah ID menjadi nama pekerjaan
+                    $list['pekerjaan'] = $res_pekerjaan->pekerjaanNama;
+                }
+
+                // Ambil tabel master_status_pernikahan
+                $pernikahan = $db->table('master_status_pernikahan');
+                $pernikahan->select('pernikahanStatus');
+                $pernikahan->where('pernikahanId', $list['status_nikah']);
+
+                // Query untuk mendapatkan nama pernikahan
+                $res_pernikahan = $pernikahan->get()->getRow();
+
+                if ($res_pernikahan) {
+                    // Ubah ID menjadi nama pernikahan
+                    $list['status_nikah'] = $res_pernikahan->pernikahanStatus;
+                }
+
+                // Isi data resep
+                $sheet->setCellValue('A' . $column, $nomor++);
+                $sheet->setCellValue('B' . $column, $list['tanggal_daftar']);
+                $sheet->setCellValue('C' . $column, $list['nama_pasien']);
+                $sheet->setCellValue('D' . $column, $list['tempat_lahir'] . ', ' . $list['tanggal_lahir']);
+                $sheet->setCellValueExplicit('E' . $column, $list['nik'], DataType::TYPE_STRING);
+                $sheet->setCellValue('F' . $column, $list['alamat']);
+                $sheet->setCellValue('G' . $column, $list['jenis_kelamin']);
+                $sheet->setCellValue('H' . $column, $list['agama']);
+                $sheet->setCellValueExplicit('I' . $column, $list['telpon'], DataType::TYPE_STRING);
+                $sheet->setCellValue('J' . $column, $list['provinsi']);
+                $sheet->setCellValue('K' . $column, $list['kabupaten']);
+                $sheet->setCellValue('L' . $column, $list['kecamatan']);
+                $sheet->setCellValue('M' . $column, $list['kelurahan']);
+                $sheet->setCellValue('N' . $column, $list['no_rm']);
+                $sheet->setCellValue('O' . $column, $list['status_nikah']);
+                $sheet->setCellValue('P' . $column, $list['pekerjaan']);
+
+                // Atur nomor ke rata tengah
+                $sheet->getStyle("A{$column}")->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+
+                // Tambahkan baris pemisah antar transaksi
+                $column++;
+            }
+
+            // Mengatur gaya teks untuk header dan total
+            $sheet->getStyle('A1')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+            $sheet->getStyle('A1')->getFont()->setSize(12);
+            $sheet->getStyle('A2')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+            $sheet->getStyle('A2')->getFont()->setSize(8);
+            $sheet->getStyle('A3')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+            $sheet->getStyle('A3')->getFont()->setSize(12);
+            $sheet->getStyle('A4:P4')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+            $sheet->getStyle('A' . ($column))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT);
+
+            // Mengatur gaya font untuk header dan total
+            $sheet->getStyle('A1:A4')->getFont()->setBold(TRUE);
+            $sheet->getStyle('A4:P4')->getFont()->setBold(TRUE);
+            $sheet->getStyle('A4:P4')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+            $sheet->getStyle('A' . ($column) . ':P' . ($column))->getFont()->setBold(TRUE);
+
+            // Menambahkan border untuk header dan tabel
+            $headerBorder1 = [
+                'borders' => [
+                    'bottom' => [
+                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                        'color' => ['argb' => 'FF000000']
+                    ]
+                ]
+            ];
+            $sheet->getStyle('A2:P2')->applyFromArray($headerBorder1);
+            $tableBorder = [
+                'borders' => [
+                    'allBorders' => [
+                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                        'color' => ['argb' => 'FF000000']
+                    ]
+                ]
+            ];
+            $sheet->getStyle('A4:P' . ($column - 1))->applyFromArray($tableBorder);
+            $sheet->getStyle('A4:P' . ($column - 1))->getAlignment()->setWrapText(true);
+            $sheet->getStyle('A5:P' . ($column + 1))->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
+
+            // Mengatur lebar kolom
+            $sheet->getColumnDimension('A')->setWidth(50, 'px');
+            $sheet->getColumnDimension('B')->setWidth(135, 'px');
+            $sheet->getColumnDimension('C')->setWidth(200, 'px');
+            $sheet->getColumnDimension('D')->setWidth(200, 'px');
+            $sheet->getColumnDimension('E')->setWidth(135, 'px');
+            $sheet->getColumnDimension('F')->setWidth(135, 'px');
+            $sheet->getColumnDimension('G')->setWidth(30, 'px');
+            $sheet->getColumnDimension('H')->setWidth(135, 'px');
+            $sheet->getColumnDimension('I')->setWidth(135, 'px');
+            $sheet->getColumnDimension('J')->setWidth(135, 'px');
+            $sheet->getColumnDimension('K')->setWidth(135, 'px');
+            $sheet->getColumnDimension('L')->setWidth(135, 'px');
+            $sheet->getColumnDimension('M')->setWidth(135, 'px');
+            $sheet->getColumnDimension('N')->setWidth(75, 'px');
+            $sheet->getColumnDimension('O')->setWidth(135, 'px');
+            $sheet->getColumnDimension('P')->setWidth(135, 'px');
+
+            // Menyimpan file spreadsheet dan mengirimkan ke browser
+            $writer = new Xlsx($spreadsheet);
+            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheet.sheet');
+            header('Content-Disposition: attachment;filename=' . $filename . '.xlsx');
+            header('Cache-Control: max-age=0');
+            $writer->save('php://output');
+            exit();
+        } else {
+            // Menghasilkan exception jika peran tidak diizinkan
+            throw PageNotFoundException::forPageNotFound();
         }
     }
 
