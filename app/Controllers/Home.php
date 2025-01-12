@@ -68,6 +68,8 @@ class Home extends BaseController
         // Menghubungkan ke database
         $db = db_connect();
         // Mendapatkan tabel-tabel yang diperlukan
+        $pasien = $db->table('pasien');
+        $rawatjalan = $db->table('rawat_jalan');
         $supplier = $db->table('supplier');
         $obat = $db->table('obat');
         $pembelian_obat = $db->table('pembelian_obat');
@@ -80,6 +82,9 @@ class Home extends BaseController
         $kasir = $transaksi->select('kasir')->where('lunas', 1)->groupBy('kasir')->get()->getResultArray(); // Dokter
 
         // Menghitung total data dari setiap tabel
+        $total_pasien = $pasien->countAllResults(); // Total pasien
+        $total_rawatjalan = $rawatjalan->like('tanggal_registrasi', date('Y-m-d H:i:s'))->where('status', 'DAFTAR')->countAllResults(); // Total rawat jalan hari ini
+        $total_rawatjalan_batal = $rawatjalan->like('tanggal_registrasi', date('Y-m-d H:i:s'))->where('status', 'BATAL')->countAllResults(); // Total rawat jalan yang batal hari ini
         $total_supplier = $supplier->countAllResults(); // Total supplier
         $total_obat = $obat->countAllResults(); // Total obat
         $total_pembelian_obat_blm_diterima = $pembelian_obat->where('diterima', 0)->countAllResults(); // Total pembelian obat belum diterima
@@ -223,6 +228,9 @@ class Home extends BaseController
 
         // Menyusun data untuk ditampilkan di view
         $data = [
+            'total_pasien' => $total_pasien,
+            'total_rawatjalan' => $total_rawatjalan,
+            'total_rawatjalan_batal' => $total_rawatjalan_batal,
             'dokter' => $dokter,
             'kasir' => $kasir,
             'total_supplier' => $total_supplier,
