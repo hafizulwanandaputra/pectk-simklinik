@@ -426,7 +426,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                 </div>
                             </a>
                         </li>
-                        <?php if (session()->get('role') == "Admin" || session()->get('role') == "Admission") : ?>
+                        <?php if (session()->get('role') == "Admin" || session()->get('role') == "Admisi") : ?>
                             <li class="nav-item">
                                 <a class="nav-link p-2 <?= ($activeSegment === 'pasien') ? 'active bg-success' : '' ?>" href=" <?= base_url('/pasien'); ?>">
                                     <div class="d-flex align-items-start <?= ($activeSegment === 'pasien') ? 'text-white' : 'text-success-emphasis' ?>">
@@ -440,7 +440,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                 </a>
                             </li>
                         <?php endif; ?>
-                        <?php if (session()->get('role') == "Dokter" || session()->get('role') == "Admin" || session()->get('role') == "Admission") : ?>
+                        <?php if (session()->get('role') == "Dokter" || session()->get('role') == "Admin" || session()->get('role') == "Admisi") : ?>
                             <li class="nav-item">
                                 <a class="nav-link p-2 <?= ($activeSegment === 'rawatjalan') ? 'active bg-success' : '' ?>" href=" <?= base_url('/rawatjalan'); ?>">
                                     <div class="d-flex align-items-start <?= ($activeSegment === 'rawatjalan') ? 'text-white' : 'text-success-emphasis' ?>">

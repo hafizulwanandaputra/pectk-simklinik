@@ -33,8 +33,8 @@ class Pasien extends BaseController
 
     public function index()
     {
-        // Memeriksa peran pengguna, hanya 'Admin' dan 'Admission' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admission') {
+        // Memeriksa peran pengguna, hanya 'Admin' dan 'Admisi' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') {
             // Menyiapkan data untuk tampilan
             $data = [
                 'title' => 'Pasien - ' . $this->systemName,
@@ -51,8 +51,8 @@ class Pasien extends BaseController
 
     public function pasienlist()
     {
-        // Memeriksa peran pengguna, hanya 'Admin' dan 'Admission' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admission') {
+        // Memeriksa peran pengguna, hanya 'Admin' dan 'Admisi' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') {
             // Mengambil parameter pencarian, limit, offset, dan status dari query string
             $search = $this->request->getGet('search');
             $limit = $this->request->getGet('limit');
@@ -103,7 +103,7 @@ class Pasien extends BaseController
     public function create()
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Dokter' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admission') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') {
             // Menghasilkan nomor rekam medis baru
             $lastRecord = $this->PasienModel->orderBy('id_pasien', 'DESC')->first(); // Dapatkan data terakhir berdasarkan ID
             $lastNoRm = $lastRecord ? str_replace('-', '', $lastRecord['no_rm']) : '000000'; // Nomor default jika tidak ada data
@@ -150,8 +150,8 @@ class Pasien extends BaseController
 
     public function detailpasien($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' dan 'Admission' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admission') {
+        // Memeriksa peran pengguna, hanya 'Admin' dan 'Admisi' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') {
             // Menghubungkan ke database
             $db = db_connect();
 
@@ -201,8 +201,8 @@ class Pasien extends BaseController
 
     public function kiup($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' dan 'Admission' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admission') {
+        // Memeriksa peran pengguna, hanya 'Admin' dan 'Admisi' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') {
             $db = db_connect();
 
             // ambil pasien berdasarkan ID
@@ -335,8 +335,8 @@ class Pasien extends BaseController
 
     public function barcode($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' dan 'Admission' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admission') {
+        // Memeriksa peran pengguna, hanya 'Admin' dan 'Admisi' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') {
             // ambil pasien berdasarkan ID
             $pasien = $this->PasienModel
                 ->find($id);
@@ -376,8 +376,8 @@ class Pasien extends BaseController
 
     public function pasien($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Admission' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admission') {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Admisi' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') {
             // Mengambil data pasien berdasarkan ID
             $data = $this->PasienModel->find($id); // Mengambil pasien
             return $this->response->setJSON($data); // Mengembalikan data pasien dalam format JSON
@@ -391,8 +391,8 @@ class Pasien extends BaseController
 
     public function provinsi()
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Admission' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admission') {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Admisi' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') {
             // Membuat koneksi ke database
             $db = db_connect();
 
@@ -415,8 +415,8 @@ class Pasien extends BaseController
 
     public function kabupaten($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Admission' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admission') {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Admisi' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') {
             // Membuat koneksi ke database
             $db = db_connect();
 
@@ -439,8 +439,8 @@ class Pasien extends BaseController
 
     public function kecamatan($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Admission' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admission') {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Admisi' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') {
             // Membuat koneksi ke database
             $db = db_connect();
 
@@ -463,8 +463,8 @@ class Pasien extends BaseController
 
     public function kelurahan($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Admission' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admission') {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Admisi' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') {
             // Membuat koneksi ke database
             $db = db_connect();
 
@@ -487,8 +487,8 @@ class Pasien extends BaseController
 
     public function rawatjalanlist($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' dan 'Admission' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admission') {
+        // Memeriksa peran pengguna, hanya 'Admin' dan 'Admisi' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') {
             // Mengambil parameter pencarian, limit, offset, dan status dari query string
             $limit = $this->request->getGet('limit');
             $offset = $this->request->getGet('offset');
@@ -609,8 +609,8 @@ class Pasien extends BaseController
 
     public function kunjunganoptions($no_rm)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Admission' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admission') {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Admisi' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') {
             // Mengambil jenis kunjungan dari tabel rawat jalan
             $rawatJalan = $this->RawatJalanModel
                 ->where('no_rm', $no_rm)
@@ -643,8 +643,8 @@ class Pasien extends BaseController
 
     public function jaminanoptions()
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Admission' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admission') {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Admisi' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') {
             // Mengambil jaminan dari tabel master jaminan
             $db = db_connect();
             $masterjaminan = $db->table('master_jaminan')
@@ -676,8 +676,8 @@ class Pasien extends BaseController
 
     public function ruanganoptions()
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Admission' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admission') {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Admisi' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') {
             // Mengambil ruangan dari tabel poliklinik
             $poliklinik = $this->PoliklinikModel
                 ->where('status', 1)
@@ -709,8 +709,8 @@ class Pasien extends BaseController
 
     public function dokteroptions()
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Admission' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admission') {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Admisi' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') {
             // Mengambil ruangan dari tabel pengguna
             $auth = $this->AuthModel
                 ->where('role', 'Dokter')
@@ -742,8 +742,8 @@ class Pasien extends BaseController
 
     public function pendaftaroptions($no_rm)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Admission' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admission') {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Admisi' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') {
             // Mengambil pendaftar dari tabel rawat jalan
             $rawatJalan = $this->RawatJalanModel
                 ->where('no_rm', $no_rm)
@@ -776,8 +776,8 @@ class Pasien extends BaseController
 
     public function statusoptions($no_rm)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Admission' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admission') {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Admisi' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') {
             // Mengambil status dari tabel rawat jalan
             $rawatJalan = $this->RawatJalanModel
                 ->where('no_rm', $no_rm)
@@ -810,8 +810,8 @@ class Pasien extends BaseController
 
     public function exportexcel()
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Admission' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admission') {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Admisi' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') {
             // Ambil semua data pasien
             $pasien = $this->PasienModel->findAll();
 
@@ -1060,8 +1060,8 @@ class Pasien extends BaseController
 
     public function update($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Dokter' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admission') {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Admisi' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') {
             // Validasi input
             $validation = \Config\Services::validation();
             // Menetapkan aturan validasi dasar
