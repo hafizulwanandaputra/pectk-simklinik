@@ -57,7 +57,7 @@ $usia = $sekarang->diff($tanggal_lahir);
     <div class="container-fluid my-3">
         <center>
             <div style="padding-top: 0.2cm; padding-bottom: 0.1cm;">
-                <strong><?= $pasien['nama_pasien'] ?><br>[ <?= $pasien['jenis_kelamin'] ?> ] <?= $pasien['tanggal_lahir'] ?> (<?= $usia->y . " tahun " . $usia->m . " bulan" ?>)</strong>
+                <strong style="white-space: nowrap;"><?= $pasien['nama_pasien'] ?><br>[ <?= $pasien['jenis_kelamin'] ?> ] <?= $pasien['tanggal_lahir'] ?> (<?= $usia->y . " tahun " . $usia->m . " bulan" ?>)</strong>
             </div>
             <div>
                 <img src="data:image/png;base64,<?= $bcNoRM ?>" width="160mm" alt="Barcode">

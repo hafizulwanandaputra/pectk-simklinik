@@ -11,6 +11,7 @@
         <span class="visually-hidden">Loading...</span>
     </div>
     <a id="toggleFilter" class="fs-6 mx-2 text-success-emphasis" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Pencarian"><i class="fa-solid fa-magnifying-glass"></i></a>
+    <a id="exportButton" class="fs-6 mx-2 text-success-emphasis" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Ekspor Excel"><i class="fa-solid fa-file-excel"></i></a>
     <a id="refreshButton" class="fs-6 mx-2 text-success-emphasis" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan"><i class="fa-solid fa-sync"></i></a>
 </div>
 <div style="min-width: 1px; max-width: 1px;"></div>
@@ -375,8 +376,8 @@
     }
 
     // Event klik untuk toggle
-    toggleFilter.on('click', function(e) {
-        e.preventDefault();
+    toggleFilter.on('click', function(ə) {
+        ə.preventDefault();
         const isVisible = filterFields.is(':visible');
         filterFields.toggle(!isVisible);
         saveToggleState(!isVisible);
@@ -397,6 +398,37 @@
             fetchPasien();
         });
 
+        $('#exportButton').on('click', async function(ə) {
+            ə.preventDefault();
+            $('#loadingSpinner').show(); // Menampilkan spinner
+
+            try {
+                // Mengambil file dari server
+                const response = await axios.get(`<?= base_url('pasien/exportexcel') ?>`, {
+                    responseType: 'blob' // Mendapatkan data sebagai blob
+                });
+
+                // Mendapatkan nama file dari header Content-Disposition
+                const disposition = response.headers['content-disposition'];
+                const filename = disposition ? disposition.split('filename=')[1].split(';')[0].replace(/"/g, '') : '.xlsx';
+
+                // Membuat URL unduhan
+                const url = window.URL.createObjectURL(new Blob([response.data]));
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = filename; // Menggunakan nama file dari header
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+
+                window.URL.revokeObjectURL(url); // Membebaskan URL yang dibuat
+            } catch (error) {
+                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+            } finally {
+                $('#loadingSpinner').hide(); // Menyembunyikan spinner setelah unduhan selesai
+            }
+        });
+
         $('#addButton').on('click', function() {
             $('[data-bs-toggle="tooltip"]').tooltip('hide');
             $('#addMessage').html(`Tambah Pasien Baru?`);
@@ -404,8 +436,8 @@
             $('#addModal').modal('show');
         });
 
-        $(document).on('click', '#confirmAddBtn', function(e) {
-            e.preventDefault();
+        $(document).on('click', '#confirmAddBtn', function(ə) {
+            ə.preventDefault();
             $('#addForm').submit();
             $('#addModal button').prop('disabled', true);
             $('#addMessage').addClass('mb-0').html('Menambahkan, silakan tunggu...');
@@ -418,8 +450,8 @@
             }
         });
         // Menangani event klik pada tombol refresh
-        $('#refreshButton').on('click', function(e) {
-            e.preventDefault();
+        $('#refreshButton').on('click', function(ə) {
+            ə.preventDefault();
             fetchPasien(); // Panggil fungsi untuk mengambil data pasien
         });
 
