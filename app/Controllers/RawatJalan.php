@@ -50,6 +50,29 @@ class RawatJalan extends BaseController
                 ->like('tanggal_registrasi', $tanggal)
                 ->findAll();
 
+            $db = db_connect();
+
+            // Ambil semua data dari master_jaminan untuk di-cache
+            $jaminanList = $db->table('master_jaminan')
+                ->select('jaminanKode, jaminanNama')
+                ->get()
+                ->getResultArray();
+
+            // Ubah data menjadi array dengan key sebagai jaminanKode untuk akses cepat
+            $jaminanMap = [];
+            foreach ($jaminanList as $jaminan) {
+                $jaminanMap[$jaminan['jaminanKode']] = $jaminan['jaminanNama'];
+            }
+
+            // Loop untuk mengganti nilai 'jaminan' di $rawatjalan
+            foreach ($rawatjalan as &$rajal) {
+                if (isset($jaminanMap[$rajal['jaminan']])) {
+                    $rajal['jaminan'] = $jaminanMap[$rajal['jaminan']];
+                } else {
+                    $rajal['jaminan'] = 'Tidak Diketahui'; // Default jika kode jaminan tidak ditemukan
+                }
+            }
+
             // Mengembalikan respons JSON dengan data pasien
             return $this->response->setJSON([
                 'data' => $rawatjalan,
@@ -242,18 +265,20 @@ class RawatJalan extends BaseController
                 ->get()->getRowArray();
 
             if ($rajal['transaksi'] == 1) {
-                return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Rawat jalan tidak dapat dibatalkan karena transaksi sudah diproses']);
-            } else {
-                $rajalq = $db->table('rawat_jalan')
-                    ->where('id_rawat_jalan', $id);
-                // Mengupdate status rawat jalan menjadi 'BATAL'
-                $rajalq->update([
-                    'status' => 'BATAL',
-                    'alasan_batal' => $this->request->getPost('alasan_batal'),
-                    'pembatal' => session()->get('fullname')
-                ]);
-                return $this->response->setJSON(['success' => true, 'message' => 'Rawat jalan berhasil dibatalkan']);
+                return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Rawat jalan ini tidak dapat dibatalkan karena transaksi sudah diproses']);
             }
+            if ($rajal['status'] == 'BATAL') {
+                return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Rawat jalan ini sudah dibatalkan sebelumnya']);
+            }
+            $rajalq = $db->table('rawat_jalan')
+                ->where('id_rawat_jalan', $id);
+            // Mengupdate status rawat jalan menjadi 'BATAL'
+            $rajalq->update([
+                'status' => 'BATAL',
+                'alasan_batal' => $this->request->getPost('alasan_batal'),
+                'pembatal' => session()->get('fullname')
+            ]);
+            return $this->response->setJSON(['success' => true, 'message' => 'Rawat jalan berhasil dibatalkan']);
         } else {
             // Jika peran tidak dikenali, lemparkan pengecualian 404
             throw PageNotFoundException::forPageNotFound();
