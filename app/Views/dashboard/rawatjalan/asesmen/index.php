@@ -56,16 +56,753 @@
     </div>
     <div class="px-3 mt-3">
         <div class="no-fluid-content">
-            <h1>HALAMAN UJI COBA</h1>
+            <?= form_open_multipart('/rawatjalan/asesmen/update/' . $asesmen['id_asesmen'], 'id="asesmenForm"'); ?>
+            <?= csrf_field(); ?>
+            <div class="mb-3">
+                <div class="fw-bold mb-2 border-bottom">Anamnesis (S)</div>
+                <div class="mb-2">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="keluhan_utama" name="keluhan_utama" value="" autocomplete="off" dir="auto" placeholder="keluhan_utama">
+                        <label for="keluhan_utama">Keluhan Utama</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+                <div class="mb-2 row row-cols-1 row-cols-lg-2 g-2">
+                    <div class="col">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" id="riwayat_penyakit_sekarang" name="riwayat_penyakit_sekarang" value="" autocomplete="off" dir="auto" placeholder="riwayat_penyakit_sekarang">
+                            <label for="riwayat_penyakit_sekarang">Riwayat Penyakit Sekarang</label>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" id="riwayat_penyakit_dahulu" name="riwayat_penyakit_dahulu" value="" autocomplete="off" dir="auto" placeholder="riwayat_penyakit_dahulu">
+                            <label for="riwayat_penyakit_dahulu">Riwayat Penyakit Dahulu</label>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" id="riwayat_penyakit_keluarga" name="riwayat_penyakit_keluarga" value="" autocomplete="off" dir="auto" placeholder="riwayat_penyakit_keluarga">
+                            <label for="riwayat_penyakit_keluarga">Riwayat Penyakit Keluarga</label>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" id="riwayat_pengobatan" name="riwayat_pengobatan" value="" autocomplete="off" dir="auto" placeholder="riwayat_pengobatan">
+                            <label for="riwayat_pengobatan">Riwayat Pengobatan</label>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="riwayat_sosial_pekerjaan" name="riwayat_sosial_pekerjaan" value="" autocomplete="off" dir="auto" placeholder="riwayat_sosial_pekerjaan">
+                        <label for="riwayat_sosial_pekerjaan">Riwayat Pekerjaan</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <div class="fw-bold mb-2 border-bottom">Pemeriksaan Umum</div>
+                <div class="row row-cols-1 row-cols-lg-2 g-2 align-items-start">
+                    <div class="row row-cols-1 g-2 align-items-start">
+                        <div class="col">
+                            <div class="form-floating">
+                                <select class="form-select" id="kesadaran" name="kesadaran" aria-label="kesadaran">
+                                    <option value="" selected>-- Pilih Kesadaran --</option>
+                                    <option value="Compos Mentis (GCS 14-15)">Compos Mentis (GCS 14-15)</option>
+                                    <option value="Apatis (GCS 12-13)">Apatis (GCS 12-13)</option>
+                                    <option value="Somnolen (GCS 10-11)">Somnolen (GCS 10-11)</option>
+                                    <option value="Delirium (GCS 9-7)">Delirium (GCS 9-7)</option>
+                                    <option value="Stupor (Suporos Comma) (GCS 4-6)">Stupor (Suporos Comma) (GCS 4-6)</option>
+                                    <option value="Koma (GCS 3)">Koma (GCS 3)</option>
+                                </select>
+                                <label for="kesadaran">Kesadaran</label>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="tekanan_darah" name="tekanan_darah" value="" autocomplete="off" dir="auto" placeholder="tekanan_darah">
+                                <label for="tekanan_darah">Tekanan Darah (mmHg)</label>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="nadi" name="nadi" value="" autocomplete="off" dir="auto" placeholder="nadi">
+                                <label for="nadi">Nadi (x/menit)</label>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="suhu" name="suhu" value="" autocomplete="off" dir="auto" placeholder="suhu">
+                                <label for="suhu">Suhu (°C)</label>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="pernapasan" name="pernapasan" value="" autocomplete="off" dir="auto" placeholder="pernapasan">
+                                <label for="pernapasan">Pernapasan (x/menit)</label>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row row-cols-1 g-2 align-items-start">
+                        <div class="col">
+                            <div class="row g-1">
+                                <label for="keadaan_umum" class="col col-form-label">Keadaan Umum</label>
+                                <div class="col col-form-label">
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="keadaan_umum" id="keadaan_umum1" value="BAIK">
+                                            <label class="form-check-label" for="keadaan_umum1">
+                                                Baik
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="keadaan_umum" id="keadaan_umum2" value="SEDANG">
+                                            <label class="form-check-label" for="keadaan_umum2">
+                                                Sedang
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="keadaan_umum" id="keadaan_umum3" value="BURUK">
+                                            <label class="form-check-label" for="keadaan_umum3">
+                                                Buruk
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="invalid-feedback text-center"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="kesadaran_mental" name="kesadaran_mental" value="" autocomplete="off" dir="auto" placeholder="kesadaran_mental">
+                                <label for="kesadaran_mental">Kesadaran / Mental</label>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="row g-1">
+                                <label for="alergi" class="col col-form-label">Alergi</label>
+                                <div class="col col-form-label">
+                                    <div class="d-flex align-items-center justify-content-evenly">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="alergi" id="alergi1" value="YA">
+                                            <label class="form-check-label" for="alergi1">
+                                                Ya
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="alergi" id="alergi2" value="TIDAK">
+                                            <label class="form-check-label" for="alergi2">
+                                                Tidak
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="invalid-feedback text-center"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="alergi_keterangan" name="alergi_keterangan" value="" autocomplete="off" dir="auto" placeholder="alergi_keterangan">
+                                <label for="alergi_keterangan">Keterangan Alergi</label>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="sakit_lainnya" name="sakit_lainnya" value="" autocomplete="off" dir="auto" placeholder="sakit_lainnya">
+                                <label for="sakit_lainnya">Sakit Lainnya</label>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <div class="fw-bold mb-2 border-bottom">Pemeriksaan Fisik (O)</div>
+                <div class="card overflow-auto">
+                    <div class="table-responsive">
+                        <table class="table m-0 table-borderless">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="align-middle"></th>
+                                    <th scope="col" class="text-center align-middle">UCVA</th>
+                                    <th scope="col" class="text-center align-middle">BCVA</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row" class="text-center align-middle">OD</th>
+                                    <td class="align-middle">
+                                        <input type="text" class="form-control" id="od_ucva" name="od_ucva" value="" autocomplete="off" dir="auto" placeholder="OD UCVA">
+                                        <div class="invalid-feedback"></div>
+                                    </td>
+                                    <td class="align-middle">
+                                        <input type="text" class="form-control" id="od_bcva" name="od_bcva" value="" autocomplete="off" dir="auto" placeholder="OD BCVA">
+                                        <div class="invalid-feedback"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="text-center align-middle">OS</th>
+                                    <td class="align-middle">
+                                        <input type="text" class="form-control" id="os_ucva" name="os_ucva" value="" autocomplete="off" dir="auto" placeholder="OS UCVA">
+                                        <div class="invalid-feedback"></div>
+                                    </td>
+                                    <td class="align-middle">
+                                        <input type="text" class="form-control" id="os_bcva" name="os_bcva" value="" autocomplete="off" dir="auto" placeholder="OS BCVA">
+                                        <div class="invalid-feedback"></div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <div class="fw-bold mb-2 border-bottom">Diagnosis Medis (A)</div>
+                <div class="table-responsive mb-3">
+                    <table class="table mb-0 table-borderless">
+                        <tbody>
+                            <tr>
+                                <td class="align-middle ps-0 pe-1 pt-0 pb-1" style="min-width: 200px;">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="diagnosa_medis_1" name="diagnosa_medis_1" value="" autocomplete="off" dir="auto" placeholder="diagnosa_medis_1">
+                                        <label for="diagnosa_medis_1">Diagnosis Medis 1</label>
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </td>
+                                <td class="align-middle ps-1 pe-0 pt-0 pb-1" style="min-width: 100px;">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="icdx_kode_1" name="icdx_kode_1" value="" autocomplete="off" dir="auto" placeholder="icdx_kode_1" list="icdx_kode_1_list">
+                                        <label for="icdx_kode_1">ICD 10</label>
+                                        <datalist id="icdx_kode_1_list">
+                                        </datalist>
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="align-middle ps-0 pe-1 pt-1 pb-1" style="min-width: 200px;">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="diagnosa_medis_2" name="diagnosa_medis_2" value="" autocomplete="off" dir="auto" placeholder="diagnosa_medis_2">
+                                        <label for="diagnosa_medis_2">Diagnosis Medis 2</label>
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </td>
+                                <td class="align-middle ps-1 pe-0 pt-1 pb-1" style="min-width: 100px;">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="icdx_kode_2" name="icdx_kode_2" value="" autocomplete="off" dir="auto" placeholder="icdx_kode_2" list="icdx_kode_2_list">
+                                        <label for="icdx_kode_2">ICD 10</label>
+                                        <datalist id="icdx_kode_2_list">
+                                        </datalist>
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="align-middle ps-0 pe-1 pt-1 pb-1" style="min-width: 200px;">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="diagnosa_medis_3" name="diagnosa_medis_3" value="" autocomplete="off" dir="auto" placeholder="diagnosa_medis_3">
+                                        <label for="diagnosa_medis_3">Diagnosis Medis 3</label>
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </td>
+                                <td class="align-middle ps-1 pe-0 pt-1 pb-1" style="min-width: 100px;">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="icdx_kode_3" name="icdx_kode_3" value="" autocomplete="off" dir="auto" placeholder="icdx_kode_3" list="icdx_kode_3_list">
+                                        <label for="icdx_kode_3">ICD 10</label>
+                                        <datalist id="icdx_kode_3_list">
+                                        </datalist>
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="align-middle ps-0 pe-1 pt-1 pb-1" style="min-width: 200px;">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="diagnosa_medis_4" name="diagnosa_medis_4" value="" autocomplete="off" dir="auto" placeholder="diagnosa_medis_4">
+                                        <label for="diagnosa_medis_4">Diagnosis Medis 4</label>
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </td>
+                                <td class="align-middle ps-1 pe-0 pt-1 pb-1" style="min-width: 100px;">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="icdx_kode_4" name="icdx_kode_4" value="" autocomplete="off" dir="auto" placeholder="icdx_kode_4" list="icdx_kode_4_list">
+                                        <label for="icdx_kode_4">ICD 10</label>
+                                        <datalist id="icdx_kode_4_list">
+                                        </datalist>
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="align-middle ps-0 pe-1 pt-1 pb-0" style="min-width: 200px;">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="diagnosa_medis_5" name="diagnosa_medis_5" value="" autocomplete="off" dir="auto" placeholder="diagnosa_medis_5">
+                                        <label for="diagnosa_medis_5">Diagnosis Medis 5</label>
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </td>
+                                <td class="align-middle ps-1 pe-0 pt-1 pb-0" style="min-width: 100px;">
+                                    <div class="form-floating">
+                                        <input type="text" class="form-control" id="icdx_kode_5" name="icdx_kode_5" value="" autocomplete="off" dir="auto" placeholder="icdx_kode_5" list="icdx_kode_5_list">
+                                        <label for="icdx_kode_5">ICD 10</label>
+                                        <datalist id="icdx_kode_5_list">
+                                        </datalist>
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div
+                    </div>
+                <div class="mb-3">
+                    <div class="fw-bold mb-2 border-bottom">Terapi (P)</div>
+                    <div class="table-responsive mb-3">
+                        <table class="table mb-0 table-borderless">
+                            <tbody>
+                                <tr>
+                                    <td class="align-middle ps-0 pe-1 pt-0 pb-1" style="min-width: 200px;">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="terapi_1" name="terapi_1" value="" autocomplete="off" dir="auto" placeholder="terapi_1">
+                                            <label for="terapi_1">Diagnosis Medis 1</label>
+                                            <div class="invalid-feedback"></div>
+                                        </div>
+                                    </td>
+                                    <td class="align-middle ps-1 pe-0 pt-0 pb-1" style="min-width: 100px;">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="icd9_kode_1" name="icd9_kode_1" value="" autocomplete="off" dir="auto" placeholder="icd9_kode_1" list="icd9_kode_1_list">
+                                            <label for="icd9_kode_1">ICD 9</label>
+                                            <datalist id="icd9_kode_1_list">
+                                            </datalist>
+                                            <div class="invalid-feedback"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="align-middle ps-0 pe-1 pt-1 pb-1" style="min-width: 200px;">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="terapi_2" name="terapi_2" value="" autocomplete="off" dir="auto" placeholder="terapi_2">
+                                            <label for="terapi_2">Diagnosis Medis 2</label>
+                                            <div class="invalid-feedback"></div>
+                                        </div>
+                                    </td>
+                                    <td class="align-middle ps-1 pe-0 pt-1 pb-1" style="min-width: 100px;">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="icd9_kode_2" name="icd9_kode_2" value="" autocomplete="off" dir="auto" placeholder="icd9_kode_2" list="icd9_kode_2_list">
+                                            <label for="icd9_kode_2">ICD 9</label>
+                                            <datalist id="icd9_kode_2_list">
+                                            </datalist>
+                                            <div class="invalid-feedback"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="align-middle ps-0 pe-1 pt-1 pb-1" style="min-width: 200px;">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="terapi_3" name="terapi_3" value="" autocomplete="off" dir="auto" placeholder="terapi_3">
+                                            <label for="terapi_3">Diagnosis Medis 3</label>
+                                            <div class="invalid-feedback"></div>
+                                        </div>
+                                    </td>
+                                    <td class="align-middle ps-1 pe-0 pt-1 pb-1" style="min-width: 100px;">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="icd9_kode_3" name="icd9_kode_3" value="" autocomplete="off" dir="auto" placeholder="icd9_kode_3" list="icd9_kode_3_list">
+                                            <label for="icd9_kode_3">ICD 9</label>
+                                            <datalist id="icd9_kode_3_list">
+                                            </datalist>
+                                            <div class="invalid-feedback"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="align-middle ps-0 pe-1 pt-1 pb-1" style="min-width: 200px;">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="terapi_4" name="terapi_4" value="" autocomplete="off" dir="auto" placeholder="terapi_4">
+                                            <label for="terapi_4">Diagnosis Medis 4</label>
+                                            <div class="invalid-feedback"></div>
+                                        </div>
+                                    </td>
+                                    <td class="align-middle ps-1 pe-0 pt-1 pb-1" style="min-width: 100px;">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="icd9_kode_4" name="icd9_kode_4" value="" autocomplete="off" dir="auto" placeholder="icd9_kode_4" list="icd9_kode_4_list">
+                                            <label for="icd9_kode_4">ICD 9</label>
+                                            <datalist id="icd9_kode_4_list">
+                                            </datalist>
+                                            <div class="invalid-feedback"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="align-middle ps-0 pe-1 pt-1 pb-0" style="min-width: 200px;">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="terapi_5" name="terapi_5" value="" autocomplete="off" dir="auto" placeholder="terapi_5">
+                                            <label for="terapi_5">Diagnosis Medis 5</label>
+                                            <div class="invalid-feedback"></div>
+                                        </div>
+                                    </td>
+                                    <td class="align-middle ps-1 pe-0 pt-1 pb-0" style="min-width: 100px;">
+                                        <div class="form-floating">
+                                            <input type="text" class="form-control" id="icd9_kode_5" name="icd9_kode_5" value="" autocomplete="off" dir="auto" placeholder="icd9_kode_5" list="icd9_kode_5_list">
+                                            <label for="icd9_kode_5">ICD 9</label>
+                                            <datalist id="icd9_kode_5_list">
+                                            </datalist>
+                                            <div class="invalid-feedback"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div>
+                    <hr>
+                    <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-3">
+                        <button class="btn btn-primary bg-gradient" type="submit" id="submitBtn"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
+                    </div>
+                </div>
+                <?= form_close(); ?>
+            </div>
         </div>
-    </div>
 
 </main>
 <?= $this->endSection(); ?>
 <?= $this->section('javascript'); ?>
 <script>
+    async function fetchAsesmen() {
+        $('#loadingSpinner').show();
+
+        try {
+            const response = await axios.get('<?= base_url('rawatjalan/asesmen/view/') . $asesmen['id_asesmen'] ?>');
+            const data = response.data;
+
+            // Anamnesis (S)
+            $('#keluhan_utama').val(data.keluhan_utama);
+            $('#riwayat_penyakit_sekarang').val(data.riwayat_penyakit_sekarang);
+            $('#riwayat_penyakit_dahulu').val(data.no_bpjs);
+            $('#riwayat_penyakit_keluarga').val(data.riwayat_penyakit_keluarga);
+            $('#riwayat_pengobatan').val(data.riwayat_pengobatan);
+            $('#riwayat_sosial_pekerjaan').val(data.riwayat_sosial_pekerjaan);
+
+            // Pemeriksaan Umum
+            $('#kesadaran').val(data.kesadaran);
+            $('#tekanan_darah').val(data.tekanan_darah);
+            $('#nadi').val(data.nadi);
+            $('#suhu').val(data.suhu);
+            $('#pernapasan').val(data.pernapasan);
+            const keadaan_umum = data.keadaan_umum;
+            if (keadaan_umum) {
+                $("input[name='keadaan_umum'][value='" + keadaan_umum + "']").prop('checked', true);
+            }
+            $('#kesadaran_mental').val(data.kesadaran_mental);
+            const alergi = data.alergi;
+            if (alergi) {
+                $("input[name='alergi'][value='" + alergi + "']").prop('checked', true);
+            }
+            $('#alergi_keterangan').val(data.alergi_keterangan);
+            $('#sakit_lainnya').val(data.sakit_lainnya);
+
+            // Pemeriksaan Fisik (O)
+            $('#od_ucva').val(data.od_ucva);
+            $('#od_bcva').val(data.od_bcva);
+            $('#os_ucva').val(data.os_ucva);
+            $('#os_bcva').val(data.os_bcva);
+
+            // Diagnosis Medis (A)
+            $('#diagnosa_medis_1').val(data.diagnosa_medis_1);
+            $('#icdx_kode_1').val(data.icdx_kode_1);
+            $('#diagnosa_medis_2').val(data.diagnosa_medis_2);
+            $('#icdx_kode_2').val(data.icdx_kode_2);
+            $('#diagnosa_medis_3').val(data.diagnosa_medis_3);
+            $('#icdx_kode_3').val(data.icdx_kode_3);
+            $('#diagnosa_medis_4').val(data.diagnosa_medis_4);
+            $('#icdx_kode_4').val(data.icdx_kode_4);
+            $('#diagnosa_medis_5').val(data.diagnosa_medis_5);
+            $('#icdx_kode_5').val(data.icdx_kode_5);
+
+            // Terapi (P)
+            $('#terapi_1').val(data.terapi_1);
+            $('#icd9_kode_1').val(data.icd9_kode_1);
+            $('#terapi_2').val(data.terapi_2);
+            $('#icd9_kode_2').val(data.icd9_kode_2);
+            $('#terapi_3').val(data.terapi_3);
+            $('#icd9_kode_3').val(data.icd9_kode_3);
+            $('#terapi_4').val(data.terapi_4);
+            $('#icd9_kode_4').val(data.icd9_kode_4);
+            $('#terapi_5').val(data.terapi_5);
+            $('#icd9_kode_5').val(data.icd9_kode_5);
+        } catch (error) {
+            showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+        } finally {
+            $('#loadingSpinner').hide();
+        }
+    }
+
+    async function loadICDX1(query) {
+        try {
+            const response = await axios.get('<?= base_url('rawatjalan/asesmen/icdx') ?>', {
+                params: {
+                    search: query
+                } // Kirim query pencarian
+            });
+            const icdx = response.data.data;
+            const dataList = $('#icdx_kode_1_list');
+            dataList.empty(); // Kosongkan datalist
+            icdx.forEach(item => {
+                dataList.append(`<option value="${item.icdKode}">${item.icdNamaIndonesia}</option>`);
+            });
+        } catch (error) {
+            console.error('Gagal memuat ICD 10:', error);
+        }
+    }
+
+    async function loadICDX2(query) {
+        try {
+            const response = await axios.get('<?= base_url('rawatjalan/asesmen/icdx') ?>', {
+                params: {
+                    search: query
+                } // Kirim query pencarian
+            });
+            const icdx = response.data.data;
+            const dataList = $('#icdx_kode_2_list');
+            dataList.empty(); // Kosongkan datalist
+            icdx.forEach(item => {
+                dataList.append(`<option value="${item.icdKode}">${item.icdNamaIndonesia}</option>`);
+            });
+        } catch (error) {
+            console.error('Gagal memuat ICD 10:', error);
+        }
+    }
+
+    async function loadICDX3(query) {
+        try {
+            const response = await axios.get('<?= base_url('rawatjalan/asesmen/icdx') ?>', {
+                params: {
+                    search: query
+                } // Kirim query pencarian
+            });
+            const icdx = response.data.data;
+            const dataList = $('#icdx_kode_3_list');
+            dataList.empty(); // Kosongkan datalist
+            icdx.forEach(item => {
+                dataList.append(`<option value="${item.icdKode}">${item.icdNamaIndonesia}</option>`);
+            });
+        } catch (error) {
+            console.error('Gagal memuat ICD 10:', error);
+        }
+    }
+
+    async function loadICDX4(query) {
+        try {
+            const response = await axios.get('<?= base_url('rawatjalan/asesmen/icdx') ?>', {
+                params: {
+                    search: query
+                } // Kirim query pencarian
+            });
+            const icdx = response.data.data;
+            const dataList = $('#icdx_kode_4_list');
+            dataList.empty(); // Kosongkan datalist
+            icdx.forEach(item => {
+                dataList.append(`<option value="${item.icdKode}">${item.icdNamaIndonesia}</option>`);
+            });
+        } catch (error) {
+            console.error('Gagal memuat ICD 10:', error);
+        }
+    }
+
+    async function loadICDX5(query) {
+        try {
+            const response = await axios.get('<?= base_url('rawatjalan/asesmen/icdx') ?>', {
+                params: {
+                    search: query
+                } // Kirim query pencarian
+            });
+            const icdx = response.data.data;
+            const dataList = $('#icdx_kode_5_list');
+            dataList.empty(); // Kosongkan datalist
+            icdx.forEach(item => {
+                dataList.append(`<option value="${item.icdKode}">${item.icdNamaIndonesia}</option>`);
+            });
+        } catch (error) {
+            console.error('Gagal memuat ICD 10:', error);
+        }
+    }
+
+    // Event listener untuk input
+    $('#icdx_kode_1').on('input', function() {
+        const query = $(this).val();
+        loadICDX1(query);
+    });
+
+    // Event listener untuk input
+    $('#icdx_kode_2').on('input', function() {
+        const query = $(this).val();
+        loadICDX2(query);
+    });
+
+    // Event listener untuk input
+    $('#icdx_kode_3').on('input', function() {
+        const query = $(this).val();
+        loadICDX3(query);
+    });
+
+    // Event listener untuk input
+    $('#icdx_kode_4').on('input', function() {
+        const query = $(this).val();
+        loadICDX4(query);
+    });
+
+    // Event listener untuk input
+    $('#icdx_kode_5').on('input', function() {
+        const query = $(this).val();
+        loadICDX5(query);
+    });
+
+    async function loadICD91(query) {
+        try {
+            const response = await axios.get('<?= base_url('rawatjalan/asesmen/icd9') ?>', {
+                params: {
+                    search: query
+                } // Kirim query pencarian
+            });
+            const icd9 = response.data.data;
+            const dataList = $('#icd9_kode_1_list');
+            dataList.empty(); // Kosongkan datalist
+            icd9.forEach(item => {
+                dataList.append(`<option value="${item.icdKode}">${item.icdNamaIndonesia}</option>`);
+            });
+        } catch (error) {
+            console.error('Gagal memuat ICD 10:', error);
+        }
+    }
+
+    async function loadICD92(query) {
+        try {
+            const response = await axios.get('<?= base_url('rawatjalan/asesmen/icd9') ?>', {
+                params: {
+                    search: query
+                } // Kirim query pencarian
+            });
+            const icd9 = response.data.data;
+            const dataList = $('#icd9_kode_2_list');
+            dataList.empty(); // Kosongkan datalist
+            icd9.forEach(item => {
+                dataList.append(`<option value="${item.icdKode}">${item.icdNamaIndonesia}</option>`);
+            });
+        } catch (error) {
+            console.error('Gagal memuat ICD 10:', error);
+        }
+    }
+
+    async function loadICD93(query) {
+        try {
+            const response = await axios.get('<?= base_url('rawatjalan/asesmen/icd9') ?>', {
+                params: {
+                    search: query
+                } // Kirim query pencarian
+            });
+            const icd9 = response.data.data;
+            const dataList = $('#icd9_kode_3_list');
+            dataList.empty(); // Kosongkan datalist
+            icd9.forEach(item => {
+                dataList.append(`<option value="${item.icdKode}">${item.icdNamaIndonesia}</option>`);
+            });
+        } catch (error) {
+            console.error('Gagal memuat ICD 10:', error);
+        }
+    }
+
+    async function loadICD94(query) {
+        try {
+            const response = await axios.get('<?= base_url('rawatjalan/asesmen/icd9') ?>', {
+                params: {
+                    search: query
+                } // Kirim query pencarian
+            });
+            const icd9 = response.data.data;
+            const dataList = $('#icd9_kode_4_list');
+            dataList.empty(); // Kosongkan datalist
+            icd9.forEach(item => {
+                dataList.append(`<option value="${item.icdKode}">${item.icdNamaIndonesia}</option>`);
+            });
+        } catch (error) {
+            console.error('Gagal memuat ICD 10:', error);
+        }
+    }
+
+    async function loadICD95(query) {
+        try {
+            const response = await axios.get('<?= base_url('rawatjalan/asesmen/icd9') ?>', {
+                params: {
+                    search: query
+                } // Kirim query pencarian
+            });
+            const icd9 = response.data.data;
+            const dataList = $('#icd9_kode_5_list');
+            dataList.empty(); // Kosongkan datalist
+            icd9.forEach(item => {
+                dataList.append(`<option value="${item.icdKode}">${item.icdNamaIndonesia}</option>`);
+            });
+        } catch (error) {
+            console.error('Gagal memuat ICD 10:', error);
+        }
+    }
+
+    // Event listener untuk input
+    $('#icd9_kode_1').on('input', function() {
+        const query = $(this).val();
+        loadICD91(query);
+    });
+
+    // Event listener untuk input
+    $('#icd9_kode_2').on('input', function() {
+        const query = $(this).val();
+        loadICD92(query);
+    });
+
+    // Event listener untuk input
+    $('#icd9_kode_3').on('input', function() {
+        const query = $(this).val();
+        loadICD93(query);
+    });
+
+    // Event listener untuk input
+    $('#icd9_kode_4').on('input', function() {
+        const query = $(this).val();
+        loadICD94(query);
+    });
+
+    // Event listener untuk input
+    $('#icd9_kode_5').on('input', function() {
+        const query = $(this).val();
+        loadICD95(query);
+    });
+
     $(document).ready(async function() {
-        $('#loadingSpinner').hide();
+        await fetchAsesmen();
+        await Promise.all([
+            loadICDX1(),
+            loadICDX2(),
+            loadICDX3(),
+            loadICDX4(),
+            loadICDX5(),
+            loadICD91(),
+            loadICD92(),
+            loadICD93(),
+            loadICD94(),
+            loadICD95()
+        ]);
     });
     // Show toast notification
     <?= $this->include('toast/index') ?>

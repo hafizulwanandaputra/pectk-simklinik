@@ -110,10 +110,6 @@ class Resep extends BaseController
 
             // Menambahkan filter untuk resep di mana nomor_registrasi, no_rm, dan dokter adalah bukan NULL
             $ResepModel->groupStart()
-                ->where('nomor_registrasi IS NOT NULL')
-                ->where('no_rm IS NOT NULL')
-                ->where('telpon IS NOT NULL')
-                ->where('tempat_lahir IS NOT NULL')
                 ->where('dokter !=', 'Resep Luar')
                 ->groupEnd();
 
@@ -189,7 +185,7 @@ class Resep extends BaseController
                 ->where('status', 'DAFTAR')
                 ->findAll();
 
-            // Mengambil nomor_registrasi yang sudah terpakai di resep
+            // // Mengambil nomor_registrasi yang sudah terpakai di resep
             $db = \Config\Database::connect();
             $usedNoReg = $db->table('resep')->select('nomor_registrasi')->get()->getResultArray();
             $usedNoReg = array_column($usedNoReg, 'nomor_registrasi');
@@ -197,7 +193,7 @@ class Resep extends BaseController
             $options = [];
             // Menyusun opsi dari data pasien yang diterima
             foreach ($data as $row) {
-                // Memeriksa apakah nomor_registrasi ada dalam daftar nomor_registrasi yang terpakai
+                // // Memeriksa apakah nomor_registrasi ada dalam daftar nomor_registrasi yang terpakai
                 if (in_array($row['nomor_registrasi'], $usedNoReg)) {
                     continue; // Lewati rawat jalan yang sudah terpakai
                 }
