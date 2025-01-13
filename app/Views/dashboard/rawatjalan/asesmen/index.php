@@ -490,7 +490,7 @@
             // Anamnesis (S)
             $('#keluhan_utama').val(data.keluhan_utama);
             $('#riwayat_penyakit_sekarang').val(data.riwayat_penyakit_sekarang);
-            $('#riwayat_penyakit_dahulu').val(data.no_bpjs);
+            $('#riwayat_penyakit_dahulu').val(data.riwayat_penyakit_dahulu);
             $('#riwayat_penyakit_keluarga').val(data.riwayat_penyakit_keluarga);
             $('#riwayat_pengobatan').val(data.riwayat_pengobatan);
             $('#riwayat_sosial_pekerjaan').val(data.riwayat_sosial_pekerjaan);
@@ -790,6 +790,104 @@
     });
 
     $(document).ready(async function() {
+        $('#asesmenForm').submit(async function(ə) {
+            ə.preventDefault();
+
+            const formData = new FormData(this);
+            console.log("Form Data:", $(this).serialize());
+
+            // Clear previous validation states
+            $('#asesmenForm .is-invalid').removeClass('is-invalid');
+            $('#asesmenForm .invalid-feedback').text('').hide();
+            $('#submitBtn').prop('disabled', true).html(`
+                <span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span> Simpan
+            `);
+
+            // Disable form inputs
+            $('#asesmenForm input, #asesmenForm select').prop('disabled', true);
+
+            try {
+                const response = await axios.post(`<?= base_url('/rawatjalan/asesmen/update/' . $asesmen['id_asesmen']) ?>`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
+
+                if (response.data.success) {
+                    showSuccessToast(response.data.message);
+                    await fetchAsesmen();
+                    await Promise.all([
+                        loadICDX1(),
+                        loadICDX2(),
+                        loadICDX3(),
+                        loadICDX4(),
+                        loadICDX5(),
+                        loadICD91(),
+                        loadICD92(),
+                        loadICD93(),
+                        loadICD94(),
+                        loadICD95()
+                    ]);
+                } else {
+                    console.log("Validation Errors:", response.data.errors);
+
+                    // Clear previous validation states
+                    $('#asesmenForm .is-invalid').removeClass('is-invalid');
+                    $('#asesmenForm .invalid-feedback').text('').hide();
+
+                    // Display new validation errors
+                    for (const field in response.data.errors) {
+                        if (response.data.errors.hasOwnProperty(field)) {
+                            const fieldElement = $('#' + field);
+
+                            // Handle radio button group separately
+                            if (field === 'alergi' || field === 'keadaan_umum') {
+                                const radioGroup = $("input[type='radio']");
+                                const feedbackElement = radioGroup.closest('.col-form-label').find('.invalid-feedback');
+
+                                if (radioGroup.length > 0 && feedbackElement.length > 0) {
+                                    radioGroup.addClass('is-invalid');
+                                    feedbackElement.text(response.data.errors[field]).show();
+
+                                    // Remove error message when the user selects any radio button in the group
+                                    radioGroup.on('change', function() {
+                                        $("input[type='radio']").removeClass('is-invalid');
+                                        feedbackElement.removeAttr('style').hide();
+                                    });
+                                }
+                            } else {
+                                const feedbackElement = fieldElement.siblings('.invalid-feedback');
+
+                                if (fieldElement.length > 0 && feedbackElement.length > 0) {
+                                    fieldElement.addClass('is-invalid');
+                                    feedbackElement.text(response.data.errors[field]).show();
+
+                                    // Remove error message when the user corrects the input
+                                    fieldElement.on('input change', function() {
+                                        $(this).removeClass('is-invalid');
+                                        $(this).siblings('.invalid-feedback').text('').hide();
+                                    });
+                                } else {
+                                    console.warn("Elemen tidak ditemukan pada field:", field);
+                                }
+                            }
+                        }
+                    }
+                    console.error('Perbaiki kesalahan pada formulir.');
+                }
+            } catch (error) {
+                if (error.response.request.status === 422 || error.response.request.status === 401) {
+                    showFailedToast(error.response.data.message);
+                } else {
+                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                }
+            } finally {
+                $('#submitBtn').prop('disabled', false).html(`
+                    <i class="fa-solid fa-floppy-disk"></i> Simpan
+                `);
+                $('#asesmenForm input, #asesmenForm select').prop('disabled', false);
+            }
+        });
         await fetchAsesmen();
         await Promise.all([
             loadICDX1(),
