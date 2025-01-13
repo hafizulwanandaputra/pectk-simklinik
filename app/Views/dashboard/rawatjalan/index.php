@@ -249,7 +249,7 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <div class="d-grid gap-2 mt-2">
+                                        <div class="d-flex flex-wrap justify-content-end gap-2 mt-2">
                                             <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') : ?>
                                                 <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('pasien/detailpasien') ?>/${rawatjalan.id_pasien}'">
                                                     <i class="fa-solid fa-user-injured"></i> Lihat Pasien
@@ -314,31 +314,27 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') : ?>
-                                            <div class="d-grid gap-2 mt-2">
+                                        <div class="d-flex flex-wrap justify-content-end gap-2 mt-2">
+                                            <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') : ?>
                                                 <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/struk') ?>/${rawatjalan.id_rawat_jalan}');">
                                                     <i class="fa-solid fa-print"></i> Struk
                                                 </button>
-                                            </div>
-                                        <?php endif; ?>
-                                        <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat') : ?>
-                                            <div class="d-grid gap-2 mt-2">
+                                            <?php endif; ?>
+                                            <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat') : ?>
                                                 <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/asesmen') ?>/${rawatjalan.id_rawat_jalan}';">
                                                     <i class="fa-solid fa-user-check"></i> Asesmen
                                                 </button>
                                                 <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/skrining') ?>/${rawatjalan.id_rawat_jalan}';">
                                                     <i class="fa-solid fa-user-check"></i> Skrining
                                                 </button>
-                                            </div>
-                                            <div class="d-grid gap-2 mt-2">
                                                 <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/edukasi') ?>/${rawatjalan.id_rawat_jalan}';">
                                                     <i class="fa-solid fa-user-graduate"></i> Edukasi
                                                 </button>
                                                 <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/penunjang') ?>/${rawatjalan.id_rawat_jalan}';">
                                                     <i class="fa-solid fa-stethoscope"></i> Penunjang
                                                 </button>
-                                            </div>
-                                        <?php endif; ?>
+                                            <?php endif; ?>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

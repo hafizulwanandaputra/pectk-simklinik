@@ -21,11 +21,34 @@ class Asesmen extends BaseController
     {
         // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', 'Perawat', atau 'Admisi' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
+            $db = db_connect();
+
+            // Inisialisasi rawat jalan
             $rawatjalan = $this->RawatJalanModel
                 ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
                 ->find($id);
 
-            $db = db_connect();
+            // Memeriksa apakah asesmen sudah ada
+            $asesmen = $db->table('medrec_assesment')
+                ->where('nomor_registrasi', $rawatjalan['nomor_registrasi'])
+                ->get()
+                ->getRowArray();
+
+            if (!$asesmen) {
+                // Jika asesmen tidak ditemukan, buat asesmen baru dengan query builder
+                $db->table('medrec_assesment')->insert([
+                    'nomor_registrasi' => $rawatjalan['nomor_registrasi'],
+                    'no_rm' => $rawatjalan['no_rm'],
+                    'nama_dokter' => $rawatjalan['dokter'],
+                    'tanggal_registrasi' => date('Y-m-d H:i:s')
+                ]);
+
+                // Setelah asesmen dibuat, ambil kembali data asesmen menggunakan query builder
+                $asesmen = $db->table('medrec_assesment')
+                    ->where('nomor_registrasi', $rawatjalan['nomor_registrasi'])
+                    ->get()
+                    ->getRowArray();
+            }
 
             // Query untuk item sebelumnya
             $previous = $db->table('rawat_jalan')
@@ -48,6 +71,7 @@ class Asesmen extends BaseController
             // Menyiapkan data untuk tampilan
             $data = [
                 'rawatjalan' => $rawatjalan,
+                '$asesmen' => $asesmen,
                 'title' => 'Asesmen ' . $rawatjalan['nama_pasien'] . ' (' . $rawatjalan['no_rm'] . ') - ' . $rawatjalan['nomor_registrasi'] . ' - ' . $this->systemName,
                 'headertitle' => 'Asesmen',
                 'agent' => $this->request->getUserAgent(), // Mengambil informasi user agent
