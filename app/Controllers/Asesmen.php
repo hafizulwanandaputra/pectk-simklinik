@@ -6,6 +6,8 @@ use App\Controllers\BaseController;
 use App\Models\RawatJalanModel;
 use App\Models\AsesmenModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
+use Dompdf\Dompdf;
+use Picqer\Barcode\BarcodeGeneratorPNG;
 
 class Asesmen extends BaseController
 {
@@ -178,6 +180,57 @@ class Asesmen extends BaseController
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan',
             ]);
+        }
+    }
+
+    public function export($id)
+    {
+        // Memeriksa peran pengguna, hanya 'Admin' dan 'Admisi' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
+            $db = db_connect();
+
+            // Inisialisasi rawat jalan
+            $rawatjalan = $this->RawatJalanModel
+                ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
+                ->find($id);
+
+            // Memeriksa apakah asesmen sudah ada
+            $asesmen = $db->table('medrec_assesment')
+                ->where('nomor_registrasi', $rawatjalan['nomor_registrasi'])
+                ->get()
+                ->getRowArray();
+
+            // === Generate Barcode ===
+            $barcodeGenerator = new BarcodeGeneratorPNG();
+            $bcNoReg = base64_encode($barcodeGenerator->getBarcode($rawatjalan['nomor_registrasi'], $barcodeGenerator::TYPE_CODE_128));
+
+            // Memeriksa apakah pasien tidak kosong
+            if ($asesmen) {
+                // Menyiapkan data untuk tampilan
+                $data = [
+                    'rawatjalan' => $rawatjalan,
+                    'asesmen' => $asesmen,
+                    'bcNoReg' => $bcNoReg,
+                    'title' => 'Asesmen ' . $rawatjalan['nama_pasien'] . ' (' . $rawatjalan['no_rm'] . ') - ' . $rawatjalan['nomor_registrasi'] . ' - ' . $this->systemName,
+                    'agent' => $this->request->getUserAgent()
+                ];
+                // return view('dashboard/rawatjalan/asesmen/form', $data);
+                // die;
+                // Menghasilkan PDF menggunakan Dompdf
+                $dompdf = new Dompdf();
+                $html = view('dashboard/rawatjalan/asesmen/form', $data);
+                $dompdf->loadHtml($html);
+                $dompdf->render();
+                $dompdf->stream(str_replace('-', '', $rawatjalan['no_rm']) . '.pdf', [
+                    'Attachment' => FALSE // Menghasilkan PDF tanpa mengunduh
+                ]);
+            } else {
+                // Menampilkan halaman tidak ditemukan jika pasien tidak ditemukan
+                throw PageNotFoundException::forPageNotFound();
+            }
+        } else {
+            // Jika peran tidak dikenali, lemparkan pengecualian 404
+            throw PageNotFoundException::forPageNotFound();
         }
     }
 
