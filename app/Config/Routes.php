@@ -48,6 +48,12 @@ $routes->post('/(?i)rawatjalan/(?i)create/(:any)', 'RawatJalan::create/$1');
 $routes->get('/(?i)rawatjalan/(?i)struk/(:any)', 'RawatJalan::struk/$1');
 $routes->post('/(?i)rawatjalan/(?i)cancel/(:any)', 'RawatJalan::cancel/$1');
 
+// ASESMEN
+$routes->get('/(?i)rawatjalan/(?i)asesmen/(:any)', 'Asesmen::index/$1');
+$routes->get('/(?i)rawatjalan/(?i)asesmen/view(:any)', 'Asesmen::view/$1');
+$routes->post('/(?i)rawatjalan/(?i)asesmen/create(:any)', 'Asesmen::create/$1');
+$routes->post('/(?i)rawatjalan/(?i)asesmen/update(:any)', 'Asesmen::update/$1');
+
 // SUPPLIER
 $routes->get('/(?i)supplier', 'Supplier::index');
 $routes->post('/(?i)supplier/(?i)supplierlist', 'Supplier::supplierlist');
