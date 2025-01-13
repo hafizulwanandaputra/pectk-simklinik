@@ -95,10 +95,6 @@ class ResepLuar extends BaseController
 
             // Menambahkan filter untuk resep di mana nomor_registrasi, no_rm, dan dokter adalah NULL
             $ResepModel->groupStart()
-                ->where('nomor_registrasi', null)
-                ->where('no_rm', null)
-                ->where('telpon', null)
-                ->where('tempat_lahir', null)
                 ->where('dokter', 'Resep Luar')
                 ->groupEnd();
 

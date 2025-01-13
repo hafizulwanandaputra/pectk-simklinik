@@ -71,7 +71,7 @@ class Asesmen extends BaseController
             // Menyiapkan data untuk tampilan
             $data = [
                 'rawatjalan' => $rawatjalan,
-                '$asesmen' => $asesmen,
+                'asesmen' => $asesmen,
                 'title' => 'Asesmen ' . $rawatjalan['nama_pasien'] . ' (' . $rawatjalan['no_rm'] . ') - ' . $rawatjalan['nomor_registrasi'] . ' - ' . $this->systemName,
                 'headertitle' => 'Asesmen',
                 'agent' => $this->request->getUserAgent(), // Mengambil informasi user agent
@@ -83,6 +83,101 @@ class Asesmen extends BaseController
         } else {
             // Jika peran tidak dikenali, lemparkan pengecualian 404
             throw PageNotFoundException::forPageNotFound();
+        }
+    }
+
+    public function view($id)
+    {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Admisi' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
+            // Mengambil data asesmen berdasarkan ID
+            $data = $this->AsesmenModel->find($id); // Mengambil asesmen
+            return $this->response->setJSON($data); // Mengembalikan data asesmen dalam format JSON
+        } else {
+            // Mengembalikan status 404 jika peran tidak diizinkan
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
+        }
+    }
+
+    public function icdx()
+    {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Admisi' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
+            // Mendapatkan parameter pencarian dari permintaan GET
+            $search = $this->request->getGet('search');
+
+            // Jika parameter pencarian kosong, kembalikan data kosong
+            if (empty($search)) {
+                return $this->response->setJSON([
+                    'status' => 'success',
+                    'data' => [] // Data kosong
+                ]);
+            }
+
+            // Membuat koneksi ke database
+            $db = db_connect();
+
+            // Menggunakan Query Builder untuk mengambil data ICD-X
+            $builder = $db->table('icd_x');
+            $builder->select('icdKode, icdNamaIndonesia');
+
+            // Menambahkan filter pencarian
+            $builder->like('icdKode', $search);
+
+            $result = $builder->get()->getResultArray();
+
+            // Mengembalikan data dalam format JSON
+            return $this->response->setJSON([
+                'status' => 'success',
+                'data' => $result
+            ]);
+        } else {
+            // Mengembalikan status 404 jika peran tidak diizinkan
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
+        }
+    }
+
+    public function icd9()
+    {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Admisi' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
+            // Mendapatkan parameter pencarian dari permintaan GET
+            $search = $this->request->getGet('search');
+
+            // Jika parameter pencarian kosong, kembalikan data kosong
+            if (empty($search)) {
+                return $this->response->setJSON([
+                    'status' => 'success',
+                    'data' => [] // Data kosong
+                ]);
+            }
+
+            // Membuat koneksi ke database
+            $db = db_connect();
+
+            // Menggunakan Query Builder untuk mengambil data ICD-X
+            $builder = $db->table('icd_9');
+            $builder->select('icdKode, icdNamaIndonesia');
+
+            // Menambahkan filter pencarian
+            $builder->like('icdKode', $search);
+
+            $result = $builder->get()->getResultArray();
+
+            // Mengembalikan data dalam format JSON
+            return $this->response->setJSON([
+                'status' => 'success',
+                'data' => $result
+            ]);
+        } else {
+            // Mengembalikan status 404 jika peran tidak diizinkan
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
         }
     }
 }
