@@ -69,6 +69,14 @@ class Skrining extends BaseController
                 ->get()
                 ->getRowArray();
 
+            // Query untuk daftar rawat jalan berdasarkan no_rm
+            $listRawatJalan = $db->table('rawat_jalan')
+                ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
+                ->where('rawat_jalan.no_rm', $rawatjalan['no_rm'])
+                ->orderBy('rawat_jalan.id_rawat_jalan', 'DESC')
+                ->get()
+                ->getResultArray();
+
             // Menyiapkan data untuk tampilan
             $data = [
                 'rawatjalan' => $rawatjalan,
@@ -77,7 +85,8 @@ class Skrining extends BaseController
                 'headertitle' => 'Skrining',
                 'agent' => $this->request->getUserAgent(), // Mengambil informasi user agent
                 'previous' => $previous,
-                'next' => $next
+                'next' => $next,
+                'listRawatJalan' => $listRawatJalan
             ];
             // Menampilkan tampilan untuk halaman skrining
             return view('dashboard/rawatjalan/skrining/index', $data);

@@ -1,3 +1,7 @@
+<?php
+$uri = service('uri'); // Load the URI service
+$activeSegment = $uri->getSegment(3); // Get the first segment
+?>
 <?= $this->extend('dashboard/templates/dashboard'); ?>
 <?= $this->section('css'); ?>
 <?= $this->include('select2/floating'); ?>
@@ -62,6 +66,11 @@
     </div>
     <div class="px-3 mt-3">
         <div class="no-fluid-content">
+            <nav class="nav nav-underline flex-nowrap overflow-auto mb-3">
+                <?php foreach ($listRawatJalan as $list) : ?>
+                    <a class="nav-link text-nowrap <?= ($activeSegment === $list['id_rawat_jalan']) ? 'active' : '' ?>" href="<?= base_url('rawatjalan/skrining/' . $list['id_rawat_jalan']); ?>"><?= $list['nomor_registrasi']; ?></a>
+                <?php endforeach; ?>
+            </nav>
             <?= form_open_multipart('/rawatjalan/skrining/update/' . $skrining['id_skrining'], 'id="skriningForm"'); ?>
             <?= csrf_field(); ?>
             <div class="mb-3">
@@ -324,8 +333,9 @@
 
             // Skrining Nyeri
             $('#nyeri_kategori').val(data.nyeri_kategori);
-            $('#nyeri_skala_value').text(data.nyeri_skala);
-            $('#nyeri_skala').val(data.nyeri_skala);
+            const nyeri_skala = data.nyeri_skala === null ? 0 : data.nyeri_skala;
+            $('#nyeri_skala_value').text(nyeri_skala);
+            $('#nyeri_skala').val(nyeri_skala);
             $('#nyeri_lokasi').val(data.nyeri_lokasi);
             $('#nyeri_karakteristik').val(data.nyeri_karakteristik);
             $('#nyeri_durasi').val(data.nyeri_durasi);
