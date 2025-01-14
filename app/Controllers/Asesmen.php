@@ -70,6 +70,14 @@ class Asesmen extends BaseController
                 ->get()
                 ->getRowArray();
 
+            // Query untuk daftar rawat jalan berdasarkan no_rm
+            $listRawatJalan = $db->table('rawat_jalan')
+                ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
+                ->where('rawat_jalan.no_rm', $rawatjalan['no_rm'])
+                ->orderBy('rawat_jalan.id_rawat_jalan', 'DESC')
+                ->get()
+                ->getResultArray();
+
             // Menyiapkan data untuk tampilan
             $data = [
                 'rawatjalan' => $rawatjalan,
@@ -78,7 +86,8 @@ class Asesmen extends BaseController
                 'headertitle' => 'Asesmen',
                 'agent' => $this->request->getUserAgent(), // Mengambil informasi user agent
                 'previous' => $previous,
-                'next' => $next
+                'next' => $next,
+                'listRawatJalan' => $listRawatJalan
             ];
             // Menampilkan tampilan untuk halaman pasien
             return view('dashboard/rawatjalan/asesmen/index', $data);

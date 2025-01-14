@@ -1,3 +1,7 @@
+<?php
+$uri = service('uri'); // Load the URI service
+$activeSegment = $uri->getSegment(3); // Get the first segment
+?>
 <?= $this->extend('dashboard/templates/dashboard'); ?>
 <?= $this->section('css'); ?>
 <?= $this->include('select2/floating'); ?>
@@ -62,6 +66,11 @@
     </div>
     <div class="px-3 mt-3">
         <div class="no-fluid-content">
+            <nav class="nav nav-underline flex-nowrap overflow-auto mb-3">
+                <?php foreach ($listRawatJalan as $list) : ?>
+                    <a class="nav-link text-nowrap <?= ($activeSegment === $list['id_rawat_jalan']) ? 'active' : '' ?>" href="<?= base_url('rawatjalan/asesmen/' . $list['id_rawat_jalan']); ?>"><?= $list['nomor_registrasi']; ?></a>
+                <?php endforeach; ?>
+            </nav>
             <?= form_open_multipart('/rawatjalan/asesmen/update/' . $asesmen['id_asesmen'], 'id="asesmenForm"'); ?>
             <?= csrf_field(); ?>
             <div class="mb-3">
