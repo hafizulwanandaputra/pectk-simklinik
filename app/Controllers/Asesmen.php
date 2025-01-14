@@ -287,6 +287,9 @@ class Asesmen extends BaseController
                 'icd9_kode_4' => $this->request->getPost('icd9_kode_4') ?: NULL,
                 'terapi_5' => $this->request->getPost('terapi_5') ?: NULL,
                 'icd9_kode_5' => $this->request->getPost('icd9_kode_5') ?: NULL,
+                'persetujuan_dokter' => $asesmen['persetujuan_dokter'],
+                'nama_dokter' => $asesmen['nama_dokter'],
+                'tanggal_registrasi' => $asesmen['tanggal_registrasi'],
             ];
             $this->AsesmenModel->save($data);
             return $this->response->setJSON(['success' => true, 'message' => 'Asesmen berhasil diperbarui']);
