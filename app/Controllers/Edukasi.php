@@ -4,19 +4,19 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\RawatJalanModel;
-use App\Models\SkriningModel;
+use App\Models\EdukasiModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use Dompdf\Dompdf;
 use Picqer\Barcode\BarcodeGeneratorPNG;
 
-class Skrining extends BaseController
+class Edukasi extends BaseController
 {
     protected $RawatJalanModel;
-    protected $SkriningModel;
+    protected $EdukasiModel;
     public function __construct()
     {
         $this->RawatJalanModel = new RawatJalanModel();
-        $this->SkriningModel = new SkriningModel();
+        $this->EdukasiModel = new EdukasiModel();
     }
 
     public function index($id)
@@ -35,22 +35,22 @@ class Skrining extends BaseController
                 throw PageNotFoundException::forPageNotFound();
             }
 
-            // Memeriksa apakah skrining sudah ada
-            $skrining = $db->table('medrec_skrining')
+            // Memeriksa apakah edukasi sudah ada
+            $edukasi = $db->table('medrec_edukasi')
                 ->where('nomor_registrasi', $rawatjalan['nomor_registrasi'])
                 ->get()
                 ->getRowArray();
 
-            if (!$skrining) {
-                // Jika skrining tidak ditemukan, buat skrining baru dengan query builder
-                $db->table('medrec_skrining')->insert([
+            if (!$edukasi) {
+                // Jika edukasi tidak ditemukan, buat edukasi baru dengan query builder
+                $db->table('medrec_edukasi')->insert([
                     'nomor_registrasi' => $rawatjalan['nomor_registrasi'],
                     'no_rm' => $rawatjalan['no_rm'],
                     'waktu_dibuat' => date('Y-m-d H:i:s')
                 ]);
 
-                // Setelah skrining dibuat, ambil kembali data skrining menggunakan query builder
-                $skrining = $db->table('medrec_skrining')
+                // Setelah edukasi dibuat, ambil kembali data edukasi menggunakan query builder
+                $edukasi = $db->table('medrec_edukasi')
                     ->where('nomor_registrasi', $rawatjalan['nomor_registrasi'])
                     ->get()
                     ->getRowArray();
@@ -83,19 +83,25 @@ class Skrining extends BaseController
                 ->get()
                 ->getResultArray();
 
+            // Query untuk opsi pendidikan
+            $pendidikan = $db->table('master_pendidikan')
+                ->get()
+                ->getResultArray();
+
             // Menyiapkan data untuk tampilan
             $data = [
                 'rawatjalan' => $rawatjalan,
-                'skrining' => $skrining,
-                'title' => 'Skrining ' . $rawatjalan['nama_pasien'] . ' (' . $rawatjalan['no_rm'] . ') - ' . $rawatjalan['nomor_registrasi'] . ' - ' . $this->systemName,
-                'headertitle' => 'Skrining',
+                'edukasi' => $edukasi,
+                'title' => 'Edukasi ' . $rawatjalan['nama_pasien'] . ' (' . $rawatjalan['no_rm'] . ') - ' . $rawatjalan['nomor_registrasi'] . ' - ' . $this->systemName,
+                'headertitle' => 'Edukasi',
                 'agent' => $this->request->getUserAgent(), // Mengambil informasi user agent
                 'previous' => $previous,
                 'next' => $next,
-                'listRawatJalan' => $listRawatJalan
+                'listRawatJalan' => $listRawatJalan,
+                'pendidikan' => $pendidikan,
             ];
             // Menampilkan tampilan untuk halaman skrining
-            return view('dashboard/rawatjalan/skrining/index', $data);
+            return view('dashboard/rawatjalan/edukasi/index', $data);
         } else {
             // Jika peran tidak dikenali, lemparkan pengecualian 404
             throw PageNotFoundException::forPageNotFound();
@@ -104,10 +110,11 @@ class Skrining extends BaseController
 
     public function view($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Perawat' yang diizinkan
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Admisi' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat') {
             // Mengambil data skrining berdasarkan ID
-            $data = $this->SkriningModel->find($id); // Mengambil skrining
+            $data = $this->EdukasiModel->find($id); // Mengambil skrining
+            $data['hambatan'] = explode(',', $data['hambatan']); // Ubah CSV menjadi array
             return $this->response->setJSON($data); // Mengembalikan data skrining dalam format JSON
         } else {
             // Mengembalikan status 404 jika peran tidak diizinkan
@@ -133,31 +140,46 @@ class Skrining extends BaseController
                 throw PageNotFoundException::forPageNotFound();
             }
 
-            // Memeriksa apakah skrining sudah ada
-            $skrining = $db->table('medrec_skrining')
+            // Memeriksa apakah edukasi sudah ada
+            $edukasi = $db->table('medrec_edukasi')
                 ->where('nomor_registrasi', $rawatjalan['nomor_registrasi'])
                 ->get()
                 ->getRowArray();
+
+            // Ambil tabel master_pendidikan
+            $pendidikan = $db->table('master_pendidikan');
+            $pendidikan->select('keterangan');
+            $pendidikan->where('pendidikan', $edukasi['pendidikan']);
+
+            // Query untuk mendapatkan nama pendidikan
+            $res_pendidikan = $pendidikan->get()->getRow();
+
+            if ($res_pendidikan) {
+                // Ubah pendidikan menjadi keterangan
+                $edukasi['pendidikan'] = $res_pendidikan->keterangan;
+            }
+
+            $edukasi['hambatan'] = str_replace(',', ', ', $edukasi['hambatan']);
 
             // === Generate Barcode ===
             $barcodeGenerator = new BarcodeGeneratorPNG();
             $bcNoReg = base64_encode($barcodeGenerator->getBarcode($rawatjalan['nomor_registrasi'], $barcodeGenerator::TYPE_CODE_128));
 
             // Memeriksa apakah pasien tidak kosong
-            if ($skrining) {
+            if ($edukasi) {
                 // Menyiapkan data untuk tampilan
                 $data = [
                     'rawatjalan' => $rawatjalan,
-                    'skrining' => $skrining,
+                    'edukasi' => $edukasi,
                     'bcNoReg' => $bcNoReg,
                     'title' => 'Skrining ' . $rawatjalan['nama_pasien'] . ' (' . $rawatjalan['no_rm'] . ') - ' . $rawatjalan['nomor_registrasi'] . ' - ' . $this->systemName,
                     'agent' => $this->request->getUserAgent()
                 ];
-                // return view('dashboard/rawatjalan/skrining/form', $data);
+                // return view('dashboard/rawatjalan/edukasi/form', $data);
                 // die;
                 // Menghasilkan PDF menggunakan Dompdf
                 $dompdf = new Dompdf();
-                $html = view('dashboard/rawatjalan/skrining/form', $data);
+                $html = view('dashboard/rawatjalan/edukasi/form', $data);
                 $dompdf->loadHtml($html);
                 $dompdf->render();
                 $dompdf->stream(str_replace('-', '', $rawatjalan['no_rm']) . '.pdf', [
@@ -175,36 +197,37 @@ class Skrining extends BaseController
 
     public function update($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Perawat' yang diizinkan
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Admisi' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat') {
             // Ambil resep luar
-            $skrining = $this->SkriningModel->find($id);
+            $edukasi = $this->EdukasiModel->find($id);
 
-            // Simpan data skrining
+            // Proses data hambatan dari select multiple
+            $hambatan = $this->request->getPost('hambatan');
+            $hambatan_csv = is_array($hambatan) ? implode(',', $hambatan) : NULL;
+
+            // Simpan data edukasi
             $data = [
-                'id_skrining' => $id,
-                'no_rm' => $skrining['no_rm'],
-                'nomor_registrasi' => $skrining['nomor_registrasi'],
-                'jatuh_sempoyongan' => $this->request->getPost('jatuh_sempoyongan') ?: NULL,
-                'jatuh_penopang' => $this->request->getPost('jatuh_penopang') ?: NULL,
-                'jatuh_info_dokter' => $this->request->getPost('jatuh_info_dokter') ?: NULL,
-                'jatuh_info_pukul' => $this->request->getPost('jatuh_info_pukul') ?: NULL,
-                'status_fungsional' => $this->request->getPost('status_fungsional') ?: NULL,
-                'status_info_pukul' => $this->request->getPost('status_info_pukul') ?: NULL,
-                'nyeri_kategori' => $this->request->getPost('nyeri_kategori') ?: NULL,
-                'nyeri_skala' => $this->request->getPost('nyeri_skala') ?: NULL,
-                'nyeri_lokasi' => $this->request->getPost('nyeri_lokasi') ?: NULL,
-                'nyeri_karakteristik' => $this->request->getPost('nyeri_karakteristik') ?: NULL,
-                'nyeri_durasi' => $this->request->getPost('nyeri_durasi') ?: NULL,
-                'nyeri_frekuensi' => $this->request->getPost('nyeri_frekuensi') ?: NULL,
-                'nyeri_hilang_bila' => $this->request->getPost('nyeri_hilang_bila') ?: NULL,
-                'nyeri_hilang_lainnya' => $this->request->getPost('nyeri_hilang_lainnya') ?: NULL,
-                'nyeri_info_dokter' => $this->request->getPost('nyeri_info_dokter') ?: NULL,
-                'nyeri_info_pukul' => $this->request->getPost('nyeri_info_pukul') ?: NULL,
-                'waktu_dibuat' => $skrining['waktu_dibuat'],
+                'id_edukasi' => $id,
+                'no_rm' => $edukasi['no_rm'],
+                'nomor_registrasi' => $edukasi['nomor_registrasi'],
+                'bahasa' => $this->request->getPost('bahasa') ?: NULL,
+                'bahasa_lainnya' => $this->request->getPost('bahasa_lainnya') ?: NULL,
+                'penterjemah' => $this->request->getPost('penterjemah') ?: NULL,
+                'pendidikan' => $this->request->getPost('pendidikan') ?: NULL,
+                'baca_tulis' => $this->request->getPost('baca_tulis') ?: NULL,
+                'cara_belajar' => $this->request->getPost('cara_belajar') ?: NULL,
+                'budaya' => $this->request->getPost('budaya') ?: NULL,
+                'hambatan' => $hambatan_csv,
+                'keyakinan' => $this->request->getPost('keyakinan') ?: NULL,
+                'keyakinan_khusus' => $this->request->getPost('keyakinan_khusus') ?: NULL,
+                'topik_pembelajaran' => $this->request->getPost('topik_pembelajaran') ?: NULL,
+                'topik_lainnya' => $this->request->getPost('topik_lainnya') ?: NULL,
+                'kesediaan_pasien' => $this->request->getPost('kesediaan_pasien') ?: NULL,
+                'waktu_dibuat' => $edukasi['waktu_dibuat'],
             ];
-            $this->SkriningModel->save($data);
-            return $this->response->setJSON(['success' => true, 'message' => 'Skrining berhasil diperbarui']);
+            $this->EdukasiModel->save($data);
+            return $this->response->setJSON(['success' => true, 'message' => 'Edukasi berhasil diperbarui']);
         } else {
             // Jika peran tidak dikenali, lemparkan pengecualian 404
             throw PageNotFoundException::forPageNotFound();
