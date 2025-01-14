@@ -204,7 +204,14 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                     </div>
                 </div>
                 <div class="mb-2">
-                    <label for="nyeri_skala" class="form-label">Skala Nyeri (<span id="nyeri_skala_value" class="date">0</span>)</label>
+                    <div class="mb-0 row g-1 align-items-end">
+                        <label for="nyeri_skala" class="col col-form-label">Skala Nyeri</label>
+                        <div class="col col-form-label text-end">
+                            <div class="date text-nowrap fw-bold" id="nyeri_skala_value">
+                                0
+                            </div>
+                        </div>
+                    </div>
                     <input type="range" class="form-range" min="0" max="10" id="nyeri_skala" name="nyeri_skala" value="0">
                 </div>
                 <div class="mb-2">
