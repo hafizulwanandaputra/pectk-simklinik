@@ -57,6 +57,13 @@ $routes->get('/(?i)rawatjalan/(?i)asesmen/(?i)export/(:any)', 'Asesmen::export/$
 $routes->post('/(?i)rawatjalan/(?i)asesmen/(?i)create/(:any)', 'Asesmen::create/$1');
 $routes->post('/(?i)rawatjalan/(?i)asesmen/(?i)update/(:any)', 'Asesmen::update/$1');
 
+// SKRINING
+$routes->get('/(?i)rawatjalan/(?i)skrining/(:num)', 'Skrining::index/$1');
+$routes->get('/(?i)rawatjalan/(?i)skrining/(?i)view/(:any)', 'Skrining::view/$1');
+$routes->get('/(?i)rawatjalan/(?i)skrining/(?i)export/(:any)', 'Skrining::export/$1');
+$routes->post('/(?i)rawatjalan/(?i)skrining/(?i)create/(:any)', 'Skrining::create/$1');
+$routes->post('/(?i)rawatjalan/(?i)skrining/(?i)update/(:any)', 'Skrining::update/$1');
+
 // SUPPLIER
 $routes->get('/(?i)supplier', 'Supplier::index');
 $routes->post('/(?i)supplier/(?i)supplierlist', 'Supplier::supplierlist');

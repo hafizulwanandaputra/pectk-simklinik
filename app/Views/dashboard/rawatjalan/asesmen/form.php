@@ -130,7 +130,7 @@ $waktuFormatted = $dateTime->format('H.i.s');
                 <tr>
                     <td style="width: 60%; vertical-align: top; padding: 0;">
                         <h2 style="padding: 0;">ASESMEN PASIEN RAWAT JALAN</h2>
-                        <div>Diperiksa pada: <?= $asesmen['tanggal_registrasi']; ?></div>
+                        <div>Tanggal registrasi: <?= $rawatjalan['tanggal_registrasi']; ?></div>
                     </td>
                     <td style="width: 40%; max-width: 5cm; vertical-align: top; padding: 0.1cm; border: 1px solid black; font-size: 8pt; overflow: hidden;">
                         <center>
