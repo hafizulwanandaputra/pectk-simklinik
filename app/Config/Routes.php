@@ -64,6 +64,20 @@ $routes->get('/(?i)rawatjalan/(?i)skrining/(?i)export/(:any)', 'Skrining::export
 $routes->post('/(?i)rawatjalan/(?i)skrining/(?i)create/(:any)', 'Skrining::create/$1');
 $routes->post('/(?i)rawatjalan/(?i)skrining/(?i)update/(:any)', 'Skrining::update/$1');
 
+// EDUKASI
+$routes->get('/(?i)rawatjalan/(?i)edukasi/(:num)', 'Edukasi::index/$1');
+$routes->get('/(?i)rawatjalan/(?i)edukasi/(?i)view/(:any)', 'Edukasi::view/$1');
+$routes->get('/(?i)rawatjalan/(?i)edukasi/(?i)export/(:any)', 'Edukasi::export/$1');
+$routes->post('/(?i)rawatjalan/(?i)edukasi/(?i)create/(:any)', 'Edukasi::create/$1');
+$routes->post('/(?i)rawatjalan/(?i)edukasi/(?i)update/(:any)', 'Edukasi::update/$1');
+
+// EVALUASI EDUKASI
+$routes->get('/(?i)rawatjalan/(?i)edukasi/(?i)evaluasi', 'EdukasiEvaluasi::index');
+$routes->get('/(?i)rawatjalan/(?i)edukasi/(?i)evaluasi/(?i)view/(:any)', 'EdukasiEvaluasi::view/$1');
+$routes->post('/(?i)rawatjalan/(?i)edukasi/(?i)evaluasi/(?i)create/(:any)', 'EdukasiEvaluasi::create/$1');
+$routes->post('/(?i)rawatjalan/(?i)edukasi/(?i)evaluasi/(?i)update/(:any)', 'EdukasiEvaluasi::update/$1');
+$routes->delete('/(?i)rawatjalan/(?i)edukasi/(?i)evaluasi/(?i)delete/(:any)', 'EdukasiEvaluasi::delete/$1');
+
 // SUPPLIER
 $routes->get('/(?i)supplier', 'Supplier::index');
 $routes->post('/(?i)supplier/(?i)supplierlist', 'Supplier::supplierlist');

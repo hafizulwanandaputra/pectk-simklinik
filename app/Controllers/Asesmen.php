@@ -105,7 +105,7 @@ class Asesmen extends BaseController
 
     public function view($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Admisi' yang diizinkan
+        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', 'Perawat', atau 'Admisi' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
             // Mengambil data asesmen berdasarkan ID
             $data = $this->AsesmenModel->find($id); // Mengambil asesmen
@@ -120,7 +120,7 @@ class Asesmen extends BaseController
 
     public function icdx()
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Admisi' yang diizinkan
+        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', 'Perawat', atau 'Admisi' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
             // Mendapatkan parameter pencarian dari permintaan GET
             $search = $this->request->getGet('search');
@@ -160,7 +160,7 @@ class Asesmen extends BaseController
 
     public function icd9()
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Admisi' yang diizinkan
+        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', 'Perawat', atau 'Admisi' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
             // Mendapatkan parameter pencarian dari permintaan GET
             $search = $this->request->getGet('search');
@@ -200,7 +200,7 @@ class Asesmen extends BaseController
 
     public function export($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' dan 'Admisi' yang diizinkan
+        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', 'Perawat', atau 'Admisi' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
             $db = db_connect();
 
@@ -256,7 +256,7 @@ class Asesmen extends BaseController
 
     public function update($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Admisi' yang diizinkan
+        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', 'Perawat', atau 'Admisi' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
             // Ambil resep luar
             $asesmen = $this->AsesmenModel->find($id);
