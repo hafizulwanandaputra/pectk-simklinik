@@ -45,11 +45,17 @@
     <div class="sticky-top" style="z-index: 99;">
         <ul class="list-group shadow-sm rounded-0">
             <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-tertiary transparent-blur">
-                <nav class="nav nav-underline nav-justified">
-                    <a class="nav-link active" href="<?= base_url('rawatjalan/asesmen/' . $rawatjalan['id_rawat_jalan']); ?>">Asesmen</a>
-                    <a class="nav-link" href="<?= base_url('rawatjalan/skrining/' . $rawatjalan['id_rawat_jalan']); ?>">Skrining</a>
-                    <a class="nav-link" href="<?= base_url('rawatjalan/edukasi/' . $rawatjalan['id_rawat_jalan']); ?>">Edukasi</a>
-                    <a class="nav-link" href="<?= base_url('rawatjalan/penunjang/' . $rawatjalan['id_rawat_jalan']); ?>">Penunjang</a>
+                <nav class="nav nav-underline nav-justified flex-nowrap overflow-auto">
+                    <a class="nav-link text-nowrap active" href="<?= base_url('rawatjalan/asesmen/' . $rawatjalan['id_rawat_jalan']); ?>">Asesmen</a>
+                    <?php if (session()->get('role') != 'Dokter') : ?>
+                        <a class="nav-link text-nowrap" href="<?= base_url('rawatjalan/skrining/' . $rawatjalan['id_rawat_jalan']); ?>">Skrining</a>
+                        <a class="nav-link text-nowrap" href="<?= base_url('rawatjalan/edukasi/' . $rawatjalan['id_rawat_jalan']); ?>">Edukasi</a>
+                    <?php endif; ?>
+                    <a class="nav-link text-nowrap" href="<?= base_url('rawatjalan/penunjang/' . $rawatjalan['id_rawat_jalan']); ?>">Penunjang</a>
+                    <?php if (session()->get('role') != 'Perawat') : ?>
+                        <a class="nav-link text-nowrap" href="<?= base_url('rawatjalan/resepobat/' . $rawatjalan['id_rawat_jalan']); ?>">Resep Obat</a>
+                        <a class="nav-link text-nowrap" href="<?= base_url('rawatjalan/resepkacamata/' . $rawatjalan['id_rawat_jalan']); ?>">Resep Kacamata</a>
+                    <?php endif; ?>
                 </nav>
             </li>
         </ul>
