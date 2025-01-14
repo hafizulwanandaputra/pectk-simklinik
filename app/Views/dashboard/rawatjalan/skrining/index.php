@@ -184,12 +184,12 @@
                 <div class="mb-2">
                     <div class="form-floating">
                         <select class="form-select" id="nyeri_kategori" name="nyeri_kategori" aria-label="nyeri_kategori">
-                            <option value="" disabled selected>-- Pilih Status Fungsional --</option>
+                            <option value="" disabled selected>-- Pilih Kategori Nyeri --</option>
                             <option value="TIDAK ADA">TIDAK ADA</option>
                             <option value="KRONIS">KRONIS</option>
                             <option value="AKUT">AKUT</option>
                         </select>
-                        <label for="nyeri_kategori">Status Fungsional</label>
+                        <label for="nyeri_kategori">Kategori Nyeri</label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>

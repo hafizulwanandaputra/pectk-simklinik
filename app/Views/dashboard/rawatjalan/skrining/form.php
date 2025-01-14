@@ -8,24 +8,14 @@ $sekarang = new DateTime();
 // Hitung selisih antara tanggal sekarang dan tanggal lahir
 $usia = $sekarang->diff($tanggal_lahir);
 
-$tanggalRegistrasi = $asesmen['tanggal_registrasi']; // Misalnya: "2025-01-14 15:23:45"
-
-// Pastikan input adalah format tanggal dan waktu yang valid
-$dateTime = new DateTime($tanggalRegistrasi);
-
-// Format tanggal dalam Bahasa Indonesia
-$tanggalFormatter = new IntlDateFormatter(
-    'id_ID',
-    IntlDateFormatter::FULL,
-    IntlDateFormatter::NONE,
-    'Asia/Jakarta',
-    IntlDateFormatter::GREGORIAN,
-    'd MMMM yyyy'
-);
-$tanggalFormatted = $tanggalFormatter->format($dateTime);
-
-// Format waktu
-$waktuFormatted = $dateTime->format('H.i.s');
+// Logika penentuan risiko
+if ($skrining['jatuh_sempoyongan'] === 'YA' && $skrining['jatuh_penopang'] === 'YA') {
+    $hasil = 'Risiko Tinggi (ditemukan a dan b)';
+} elseif ($skrining['jatuh_sempoyongan'] === 'YA' || $skrining['jatuh_penopang'] === 'YA') {
+    $hasil = 'Risiko Rendah (ditemukan a atau b)';
+} else {
+    $hasil = 'Tidak Berisiko (tidak ditemukan a dan b)';
+}
 ?>
 <!doctype html>
 <html lang="id">
@@ -120,7 +110,7 @@ $waktuFormatted = $dateTime->format('H.i.s');
                         </div>
                     </td>
                     <td style="width: 0%;">
-                        <div style="white-space: nowrap;"><strong>FRM: 2a hal 3<br>Rev: 006</strong></div>
+                        <div style="white-space: nowrap;"><strong>FRM: 2a hal 1<br>Rev: 003</strong></div>
                     </td>
                 </tr>
             </thead>
@@ -129,7 +119,7 @@ $waktuFormatted = $dateTime->format('H.i.s');
             <tbody>
                 <tr>
                     <td style="width: 60%; vertical-align: top; padding: 0;">
-                        <h2 style="padding: 0;">ASESMEN PASIEN RAWAT JALAN</h2>
+                        <h2 style="padding: 0;">SKRINING PASIEN RAWAT JALAN</h2>
                         <div>Tanggal registrasi: <?= $rawatjalan['tanggal_registrasi']; ?></div>
                     </td>
                     <td style="width: 40%; max-width: 5cm; vertical-align: top; padding: 0.1cm; border: 1px solid black; font-size: 8pt; overflow: hidden;">
@@ -145,364 +135,211 @@ $waktuFormatted = $dateTime->format('H.i.s');
             </tbody>
         </table>
         <div class="box">
-            <h3 style="padding-left: 0.25cm; padding-right: 0.25cm; margin: 0;">ANAMNESIS (S):</h3>
+            <h3 style="padding-left: 0.25cm; padding-right: 0.25cm; padding-top: 0.25cm; margin: 0;">I. SKRINING RISIKO CEDERA / JATUH (<em>GET UP AND GO SCORE</em>)</h3>
             <table class="table" style="width: 100%; margin-bottom: 4px;">
                 <tbody>
                     <tr>
-                        <td colspan="2" style="width: 100%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            <div><strong>KELUHAN UTAMA:</strong></div>
-                            <div style="padding-left: 0.5cm; height: 1cm; max-height: 1cm; overflow: hidden; font-size: 8pt;"><?= $asesmen['keluhan_utama'] ?></div>
+                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            a.
+                        </td>
+                        <td style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            Perhatikan cara berjalan pasien saat duduk di kursi. Apakah pasien tampak tidak seimbang (sempoyongan/limbung)?
+                        </td>
+                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            :
+                        </td>
+                        <td style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            <?= $skrining['jatuh_sempoyongan'] ?>
                         </td>
                     </tr>
                     <tr>
-                        <td style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            <div><strong>RIWAYAT PENYAKIT SEKARANG:</strong></div>
-                            <div style="padding-left: 0.5cm; height: 1cm; max-height: 1cm; overflow: hidden; font-size: 8pt;"><?= $asesmen['riwayat_penyakit_sekarang'] ?></div>
+                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            b.
                         </td>
                         <td style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            <div><strong>RIWAYAT PENYAKIT DAHULU:</strong></div>
-                            <div style="padding-left: 0.5cm; height: 1cm; max-height: 1cm; overflow: hidden; font-size: 8pt;"><?= $asesmen['riwayat_penyakit_dahulu'] ?></div>
+                            Apakah pasien memegang pinggiran kursi atau meja atau benda lain sebagai penopang saat akan duduk?
                         </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            <div><strong>RIWAYAT PENYAKIT DALAM KELUARGA:</strong></div>
-                            <div style="padding-left: 0.5cm; height: 1cm; max-height: 1cm; overflow: hidden; font-size: 8pt;"><?= $asesmen['riwayat_penyakit_keluarga'] ?></div>
+                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            :
                         </td>
                         <td style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            <div><strong>RIWAYAT PENGOBATAN:</strong></div>
-                            <div style="padding-left: 0.5cm; height: 1cm; max-height: 1cm; overflow: hidden; font-size: 8pt;"><?= $asesmen['riwayat_pengobatan'] ?></div>
+                            <?= $skrining['jatuh_penopang'] ?>
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2" style="width: 100%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            <div><strong>RIWAYAT PEKERJAAN, SOSIAL, EKONOMI, KEJIWAAN, DAN KEBIASAAN:</strong></div>
-                            <div style="padding-left: 0.5cm; height: 1cm; max-height: 1cm; overflow: hidden; font-size: 8pt;"><?= $asesmen['riwayat_sosial_pekerjaan'] ?></div>
+                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;"></td>
+                        <td style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            Hasil
+                        </td>
+                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            :
+                        </td>
+                        <td style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            <?= $hasil ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;"></td>
+                        <td style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            Diberitahukan ke dokter
+                        </td>
+                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            :
+                        </td>
+                        <td style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            <?= $skrining['jatuh_info_dokter'] ?> <?= ($skrining['jatuh_info_dokter'] == 'YA') ? '(' . $skrining['jatuh_info_pukul'] . ')' : ''; ?>
                         </td>
                     </tr>
                 </tbody>
             </table>
-            <h3 style="padding-left: 0.25cm; padding-right: 0.25cm; margin: 0;">PEMERIKSAAN UMUM:</h3>
+            <div style="padding-left: 0.25cm; padding-right: 0.25cm; margin: 0;">
+                <small>
+                    <table class="table" style="width: 100%; margin-bottom: 4px;">
+                        <tbody>
+                            <tr>
+                                <td style="width: 0%; vertical-align: top; padding: 0;">
+                                    Keterangan:
+                                </td>
+                                <td style="width: 100%; vertical-align: top; padding: 0;">
+                                    Skrining risiko cedera/jatuh pasien rawat jalan <em>one day care</em>.<br>Jika temuan risiko tinggi, maka pasangkan gelang kuning pada pasien.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </small>
+            </div>
+            <hr>
+            <h3 style="padding-left: 0.25cm; padding-right: 0.25cm; margin: 0;">II. STATUS FUNGSIONAL</h3>
             <table class="table" style="width: 100%; margin-bottom: 4px;">
                 <tbody>
                     <tr>
                         <td style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            <table class="table" style="width: 100%; margin-bottom: 4px; border: 1px solid black;">
-                                <tbody>
-                                    <tr>
-                                        <td style="width: 40%; vertical-align: top; padding: 0;">
-                                            Kesadaran
-                                        </td>
-                                        <td style="width: 0%; vertical-align: top; padding: 0;">
-                                            :
-                                        </td>
-                                        <td style="width: 60%; vertical-align: top; padding: 0;">
-                                            <?= $asesmen['kesadaran'] ?>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="width: 40%; vertical-align: top; padding: 0;">
-                                            Tekanan Darah
-                                        </td>
-                                        <td style="width: 0%; vertical-align: top; padding: 0;">
-                                            :
-                                        </td>
-                                        <td style="width: 60%; vertical-align: top; padding: 0;">
-                                            <?= $asesmen['tekanan_darah'] ?> mmHg
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="width: 40%; vertical-align: top; padding: 0;">
-                                            Nadi
-                                        </td>
-                                        <td style="width: 0%; vertical-align: top; padding: 0;">
-                                            :
-                                        </td>
-                                        <td style="width: 60%; vertical-align: top; padding: 0;">
-                                            <?= $asesmen['nadi'] ?>×/menit
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="width: 40%; vertical-align: top; padding: 0;">
-                                            Suhu
-                                        </td>
-                                        <td style="width: 0%; vertical-align: top; padding: 0;">
-                                            :
-                                        </td>
-                                        <td style="width: 60%; vertical-align: top; padding: 0;">
-                                            <?= $asesmen['suhu'] ?>°C
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="width: 40%; vertical-align: top; padding: 0;">
-                                            Suhu
-                                        </td>
-                                        <td style="width: 0%; vertical-align: top; padding: 0;">
-                                            :
-                                        </td>
-                                        <td style="width: 60%; vertical-align: top; padding: 0;">
-                                            <?= $asesmen['pernapasan'] ?>×/menit
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            Status fungsional
+                        </td>
+                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            :
                         </td>
                         <td style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            <table class="table" style="width: 100%; margin-bottom: 4px; border: 1px solid black;">
-                                <tbody>
-                                    <tr>
-                                        <td style="width: 40%; vertical-align: top; padding: 0;">
-                                            Keadaan Umum
-                                        </td>
-                                        <td style="width: 0%; vertical-align: top; padding: 0;">
-                                            :
-                                        </td>
-                                        <td style="width: 60%; vertical-align: top; padding: 0;">
-                                            <?= $asesmen['keadaan_umum'] ?>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="width: 40%; vertical-align: top; padding: 0;">
-                                            Kesadaran Mental
-                                        </td>
-                                        <td style="width: 0%; vertical-align: top; padding: 0;">
-                                            :
-                                        </td>
-                                        <td style="width: 60%; vertical-align: top; padding: 0;">
-                                            <?= $asesmen['kesadaran_mental'] ?>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="width: 40%; vertical-align: top; padding: 0;">
-                                            Alergi
-                                        </td>
-                                        <td style="width: 0%; vertical-align: top; padding: 0;">
-                                            :
-                                        </td>
-                                        <td style="width: 60%; vertical-align: top; padding: 0;">
-                                            <?= $asesmen['alergi'] ?>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="width: 40%; vertical-align: top; padding: 0;">
-                                            Ket. Alergi
-                                        </td>
-                                        <td style="width: 0%; vertical-align: top; padding: 0;">
-                                            :
-                                        </td>
-                                        <td style="width: 60%; vertical-align: top; padding: 0;">
-                                            <?= $asesmen['alergi_keterangan'] ?>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="width: 40%; vertical-align: top; padding: 0;">
-                                            Penyakit Lainnya
-                                        </td>
-                                        <td style="width: 0%; vertical-align: top; padding: 0;">
-                                            :
-                                        </td>
-                                        <td style="width: 60%; vertical-align: top; padding: 0;">
-                                            <?= $asesmen['sakit_lainnya'] ?>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <?= $skrining['status_fungsional'] ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            Diberitahukan ke dokter pukul
+                        </td>
+                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            :
+                        </td>
+                        <td style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            <?= $skrining['status_info_pukul'] ?>
                         </td>
                     </tr>
                 </tbody>
             </table>
-            <h3 style="padding-left: 0.25cm; padding-right: 0.25cm; margin: 0;">PEMERIKSAAN FISIK (O):</h3>
-            <table class="table" style="width: 100%; margin-bottom: 4px; border-collapse: collapse; padding-left: 0.25cm; padding-right: 0.25cm;">
-                <tr>
-                    <td style="width: 0%; text-align: center; vertical-align: middle;"></td>
-                    <td style="width: 50%; text-align: center; vertical-align: middle;">UCVA</td>
-                    <td style="width: 50%; text-align: center; vertical-align: middle;">BCVA</td>
-                </tr>
-                <tr>
-                    <td style="width: 0%; text-align: center; vertical-align: middle;">OD</td>
-                    <td style="width: 50%; text-align: center; vertical-align: middle; font-size: 12pt;" class="border-bottom-right"><?= $asesmen['od_ucva'] ?></td>
-                    <td style="width: 50%; text-align: center; vertical-align: middle; font-size: 12pt;" class="border-bottom-left"><?= $asesmen['od_bcva'] ?></td>
-                </tr>
-                <tr>
-                    <td style="width: 0%; text-align: center; vertical-align: middle;">OS</td>
-                    <td style="width: 50%; text-align: center; vertical-align: middle; font-size: 12pt;" class="border-top-right"><?= $asesmen['os_ucva'] ?></td>
-                    <td style="width: 50%; text-align: center; vertical-align: middle; font-size: 12pt;" class="border-top-left"><?= $asesmen['os_bcva'] ?></td>
-                </tr>
-            </table>
-            <h3 style="padding-left: 0.25cm; padding-right: 0.25cm; margin: 0;">DIAGNOSIS MEDIS (A):</h3>
-            <table class="table" style="width: 100%; margin-bottom: 4px; font-size: 8pt; padding-left: 0.25cm; padding-right: 0.25cm;">
-                <tbody>
-                    <tr>
-                        <td style="width: 85%; vertical-align: top; white-space: nowrap; overflow: hidden;"></td>
-                        <td colspan="3" style="width: 15%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center;">
-                            ICD 10
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 85%; vertical-align: top; white-space: nowrap; overflow: hidden; border-bottom: 1px dotted black;">
-                            <?= $asesmen['diagnosa_medis_1'] ?>
-                        </td>
-                        <td style="width: 0%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center;">
-                            (
-                        </td>
-                        <td style="width: 15%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center; border-bottom: 1px dotted black;">
-                            <?= $asesmen['icdx_kode_1'] ?>
-                        </td>
-                        <td style="width: 0%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center;">
-                            )
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 85%; vertical-align: top; white-space: nowrap; overflow: hidden; border-bottom: 1px dotted black;">
-                            <?= $asesmen['diagnosa_medis_2'] ?>
-                        </td>
-                        <td style="width: 0%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center;">
-                            (
-                        </td>
-                        <td style="width: 15%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center; border-bottom: 1px dotted black;">
-                            <?= $asesmen['icdx_kode_2'] ?>
-                        </td>
-                        <td style="width: 0%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center;">
-                            )
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 85%; vertical-align: top; white-space: nowrap; overflow: hidden; border-bottom: 1px dotted black;">
-                            <?= $asesmen['diagnosa_medis_3'] ?>
-                        </td>
-                        <td style="width: 0%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center;">
-                            (
-                        </td>
-                        <td style="width: 15%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center; border-bottom: 1px dotted black;">
-                            <?= $asesmen['icdx_kode_3'] ?>
-                        </td>
-                        <td style="width: 0%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center;">
-                            )
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 85%; vertical-align: top; white-space: nowrap; overflow: hidden; border-bottom: 1px dotted black;">
-                            <?= $asesmen['diagnosa_medis_4'] ?>
-                        </td>
-                        <td style="width: 0%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center;">
-                            (
-                        </td>
-                        <td style="width: 15%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center; border-bottom: 1px dotted black;">
-                            <?= $asesmen['icdx_kode_4'] ?>
-                        </td>
-                        <td style="width: 0%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center;">
-                            )
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 85%; vertical-align: top; white-space: nowrap; overflow: hidden; border-bottom: 1px dotted black;">
-                            <?= $asesmen['diagnosa_medis_5'] ?>
-                        </td>
-                        <td style="width: 0%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center;">
-                            (
-                        </td>
-                        <td style="width: 15%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center; border-bottom: 1px dotted black;">
-                            <?= $asesmen['icdx_kode_5'] ?>
-                        </td>
-                        <td style="width: 0%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center;">
-                            )
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <h3 style="padding-left: 0.25cm; padding-right: 0.25cm; margin: 0;">TERAPI (P):</h3>
-            <table class="table" style="width: 100%; margin-bottom: 4px; font-size: 8pt; padding-left: 0.25cm; padding-right: 0.25cm;">
-                <tbody>
-                    <tr>
-                        <td style="width: 85%; vertical-align: top; white-space: nowrap; overflow: hidden;"></td>
-                        <td colspan="3" style="width: 15%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center;">
-                            ICD 9
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 85%; vertical-align: top; white-space: nowrap; overflow: hidden; border-bottom: 1px dotted black;">
-                            <?= $asesmen['terapi_1'] ?>
-                        </td>
-                        <td style="width: 0%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center;">
-                            (
-                        </td>
-                        <td style="width: 15%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center; border-bottom: 1px dotted black;">
-                            <?= $asesmen['icd9_kode_1'] ?>
-                        </td>
-                        <td style="width: 0%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center;">
-                            )
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 85%; vertical-align: top; white-space: nowrap; overflow: hidden; border-bottom: 1px dotted black;">
-                            <?= $asesmen['terapi_2'] ?>
-                        </td>
-                        <td style="width: 0%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center;">
-                            (
-                        </td>
-                        <td style="width: 15%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center; border-bottom: 1px dotted black;">
-                            <?= $asesmen['icd9_kode_2'] ?>
-                        </td>
-                        <td style="width: 0%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center;">
-                            )
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 85%; vertical-align: top; white-space: nowrap; overflow: hidden; border-bottom: 1px dotted black;">
-                            <?= $asesmen['terapi_3'] ?>
-                        </td>
-                        <td style="width: 0%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center;">
-                            (
-                        </td>
-                        <td style="width: 15%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center; border-bottom: 1px dotted black;">
-                            <?= $asesmen['icd9_kode_3'] ?>
-                        </td>
-                        <td style="width: 0%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center;">
-                            )
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 85%; vertical-align: top; white-space: nowrap; overflow: hidden; border-bottom: 1px dotted black;">
-                            <?= $asesmen['terapi_4'] ?>
-                        </td>
-                        <td style="width: 0%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center;">
-                            (
-                        </td>
-                        <td style="width: 15%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center; border-bottom: 1px dotted black;">
-                            <?= $asesmen['icd9_kode_4'] ?>
-                        </td>
-                        <td style="width: 0%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center;">
-                            )
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 85%; vertical-align: top; white-space: nowrap; overflow: hidden; border-bottom: 1px dotted black;">
-                            <?= $asesmen['terapi_5'] ?>
-                        </td>
-                        <td style="width: 0%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center;">
-                            (
-                        </td>
-                        <td style="width: 15%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center; border-bottom: 1px dotted black;">
-                            <?= $asesmen['icd9_kode_5'] ?>
-                        </td>
-                        <td style="width: 0%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center;">
-                            )
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <hr>
+            <h3 style="padding-left: 0.25cm; padding-right: 0.25cm; margin: 0;">II. SKRINING NYERI</h3>
+            <center>
+                <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/skala_nyeri.png')) ?>" width="480px" alt="">
+            </center>
             <table class="table" style="width: 100%; margin-bottom: 4px;">
                 <tbody>
                     <tr>
-                        <td style="width: 50%; text-align: center; vertical-align: top; padding-bottom: 1.25cm;"></td>
-                        <td style="width: 50%; text-align: center; vertical-align: top; padding-bottom: 1.25cm;">
-                            <div>Tanggal <?= $tanggalFormatted ?> pukul <?= $waktuFormatted ?><br>DPJP</div>
+                        <td style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            Kategori nyeri
+                        </td>
+                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            :
+                        </td>
+                        <td style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            <?= $skrining['nyeri_kategori'] ?>
                         </td>
                     </tr>
                     <tr>
-                        <td style="width: 50%; text-align: center; vertical-align: top;"></td>
-                        <td style="width: 50%; text-align: center; vertical-align: top;">
-                            <div><?= $asesmen['nama_dokter'] ?></div>
+                        <td style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            Skala Nyeri
+                        </td>
+                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            :
+                        </td>
+                        <td style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            <?= $skrining['nyeri_skala'] ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            Lokasi nyeri
+                        </td>
+                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            :
+                        </td>
+                        <td style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            <?= $skrining['nyeri_lokasi'] ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            Karakteristik nyeri
+                        </td>
+                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            :
+                        </td>
+                        <td style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            <?= $skrining['nyeri_karakteristik'] ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            Durasi Nyeri
+                        </td>
+                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            :
+                        </td>
+                        <td style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            <?= $skrining['nyeri_durasi'] ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            Frekuensi nyeri
+                        </td>
+                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            :
+                        </td>
+                        <td style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            <?= $skrining['nyeri_frekuensi'] ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            Nyeri hilang bila
+                        </td>
+                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            :
+                        </td>
+                        <td style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            <?= ($skrining['nyeri_hilang_bila'] == NULL) ? 'TIDAK ADA' : $skrining['nyeri_hilang_bila']; ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            Jika lain-lain, sebutkan
+                        </td>
+                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            :
+                        </td>
+                        <td style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            <?= $skrining['nyeri_hilang_lainnya'] ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            Diberitahukan ke dokter
+                        </td>
+                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            :
+                        </td>
+                        <td style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            <?= $skrining['nyeri_info_dokter'] ?> <?= ($skrining['nyeri_info_dokter'] == 'YA') ? '(' . $skrining['nyeri_info_pukul'] . ')' : ''; ?>
                         </td>
                     </tr>
                 </tbody>
