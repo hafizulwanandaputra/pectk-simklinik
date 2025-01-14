@@ -187,7 +187,7 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                 <div class="mb-2">
                     <center>
                         <figure class="figure mb-0">
-                            <img src="<?= base_url('assets/images/skala_nyeri.png') ?>" class="figure-img img-fluid rounded border shadow-sm" alt="Skala Nyeri">
+                            <img src="<?= base_url('assets/images/skala_nyeri.png') ?>" class="figure-img img-fluid rounded border shadow-sm mb-0 pb-0" alt="Skala Nyeri">
                         </figure>
                     </center>
                 </div>
