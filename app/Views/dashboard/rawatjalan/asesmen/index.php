@@ -60,6 +60,7 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                         <a class="nav-link text-nowrap" href="<?= base_url('rawatjalan/resepobat/' . $rawatjalan['id_rawat_jalan']); ?>">Resep Obat</a>
                         <a class="nav-link text-nowrap" href="<?= base_url('rawatjalan/resepkacamata/' . $rawatjalan['id_rawat_jalan']); ?>">Resep Kacamata</a>
                     <?php endif; ?>
+                    <a class="nav-link text-nowrap" href="<?= base_url('rawatjalan/lptindakan/' . $rawatjalan['id_rawat_jalan']); ?>">Laporan Tindakan</a>
                 </nav>
             </li>
         </ul>
