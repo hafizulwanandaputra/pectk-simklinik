@@ -134,7 +134,7 @@
                         <div class="col">
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="nadi" name="nadi" value="" autocomplete="off" dir="auto" placeholder="nadi">
-                                <label for="nadi">Nadi (x/menit)</label>
+                                <label for="nadi">Nadi (×/menit)</label>
                                 <div class="invalid-feedback"></div>
                             </div>
                         </div>
@@ -148,7 +148,7 @@
                         <div class="col">
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="pernapasan" name="pernapasan" value="" autocomplete="off" dir="auto" placeholder="pernapasan">
-                                <label for="pernapasan">Pernapasan (x/menit)</label>
+                                <label for="pernapasan">Pernapasan (×/menit)</label>
                                 <div class="invalid-feedback"></div>
                             </div>
                         </div>
