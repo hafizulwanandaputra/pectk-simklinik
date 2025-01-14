@@ -28,7 +28,12 @@ class Asesmen extends BaseController
             // Inisialisasi rawat jalan
             $rawatjalan = $this->RawatJalanModel
                 ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
+                ->where('rawat_jalan.status', 'DAFTAR')
                 ->find($id);
+
+            if (!$rawatjalan) {
+                throw PageNotFoundException::forPageNotFound();
+            }
 
             // Memeriksa apakah asesmen sudah ada
             $asesmen = $db->table('medrec_assesment')
@@ -74,6 +79,7 @@ class Asesmen extends BaseController
             $listRawatJalan = $db->table('rawat_jalan')
                 ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
                 ->where('rawat_jalan.no_rm', $rawatjalan['no_rm'])
+                ->where('rawat_jalan.status', 'DAFTAR')
                 ->orderBy('rawat_jalan.id_rawat_jalan', 'DESC')
                 ->get()
                 ->getResultArray();
@@ -201,7 +207,12 @@ class Asesmen extends BaseController
             // Inisialisasi rawat jalan
             $rawatjalan = $this->RawatJalanModel
                 ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
+                ->where('rawat_jalan.status', 'DAFTAR')
                 ->find($id);
+
+            if (!$rawatjalan) {
+                throw PageNotFoundException::forPageNotFound();
+            }
 
             // Memeriksa apakah asesmen sudah ada
             $asesmen = $db->table('medrec_assesment')
