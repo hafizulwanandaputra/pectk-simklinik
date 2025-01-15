@@ -78,7 +78,7 @@ class PenunjangScan extends BaseController
             // Set base validation rules
             $validation->setRules([
                 'pemeriksaan' => 'required',
-                'gambar' => 'max_size[gambar,8192]|is_image[gambar]',
+                'gambar' => 'uploaded[gambar]|max_size[gambar,8192]|is_image[gambar]',
             ]);
 
             if (!$this->validate($validation->getRules())) {
