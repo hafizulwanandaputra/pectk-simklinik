@@ -1,0 +1,6 @@
+scan_penunjang/*
+ttd_edukator_evaluasi/*
+ttd_pasien_evaluasi/*
+!scan_penunjang/index.html
+!ttd_edukator_evaluasi/index.html
+!ttd_pasien_evaluasi/index.html

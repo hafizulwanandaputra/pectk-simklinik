@@ -57,13 +57,8 @@ writable/logs/*
 writable/session/*
 !writable/session/index.html
 
-writable/uploads/scan_penunjang/*
-writable/uploads/ttd_edukator_evaluasi/*
-writable/uploads/ttd_pasien_evaluasi/*
+writable/uploads/*
 !writable/uploads/index.html
-!writable/uploads/scan_penunjang/index.html
-!writable/uploads/ttd_edukator_evaluasi/index.html
-!writable/uploads/ttd_pasien_evaluasi/index.html
 
 writable/debugbar/*
 !writable/debugbar/.gitkeep
