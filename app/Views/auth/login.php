@@ -101,7 +101,7 @@
 
         .svg-inline--fa {
             vertical-align: middle;
-            transform: translateY(-0.05em);
+            transform: translateY(-0.1em);
         }
     </style>
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
