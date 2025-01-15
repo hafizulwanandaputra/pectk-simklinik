@@ -59,6 +59,10 @@ writable/session/*
 
 writable/uploads/*
 !writable/uploads/index.html
+writable/uploads/ttd_edukator_evaluasi/*
+!writable/uploads/ttd_edukator_evaluasi
+writable/uploads/ttd_pasien_evaluasi/*
+!writable/uploads/ttd_pasien_evaluasi
 
 writable/debugbar/*
 !writable/debugbar/.gitkeep
