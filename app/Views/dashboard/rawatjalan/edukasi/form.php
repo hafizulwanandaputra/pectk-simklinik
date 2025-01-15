@@ -285,7 +285,7 @@ $usia = $sekarang->diff($tanggal_lahir);
                                 </td>
                                 <td style="width: 0%; vertical-align: middle; padding-left: 0.125cm; padding-right: 0.125cm; border: 1px solid black;">
                                     <?php if ($evaluasi['tanda_tangan_edukator'] != NULL) : ?>
-                                        <img src="data:image/png;base64,<?= base64_encode(file_get_contents(WRITEPATH . 'uploads/ttd_edukator_evaluasi/' . $evaluasi['tanda_tangan_edukator'])) ?>" width="36px" alt="">
+                                        <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'uploads/ttd_edukator_evaluasi/' . $evaluasi['tanda_tangan_edukator'])) ?>" width="36px" alt="">
                                     <?php endif; ?>
                                 </td>
                                 <td style="width: 0%; vertical-align: middle; padding-left: 0.125cm; padding-right: 0.125cm; border: 1px solid black;">
@@ -293,7 +293,7 @@ $usia = $sekarang->diff($tanggal_lahir);
                                 </td>
                                 <td style="width: 0%; vertical-align: middle; padding-left: 0.125cm; padding-right: 0.125cm; border: 1px solid black;">
                                     <?php if ($evaluasi['tanda_tangan_edukator'] != NULL) : ?>
-                                        <img src="data:image/png;base64,<?= base64_encode(file_get_contents(WRITEPATH . 'uploads/ttd_pasien_evaluasi/' . $evaluasi['tanda_tangan_pasien'])) ?>" width="36px" alt="">
+                                        <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'uploads/ttd_pasien_evaluasi/' . $evaluasi['tanda_tangan_pasien'])) ?>" width="36px" alt="">
                                     <?php endif; ?>
                                 </td>
                                 <td style="width: 50%; vertical-align: middle; padding-left: 0.125cm; padding-right: 0.125cm; border: 1px solid black;">

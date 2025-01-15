@@ -112,7 +112,7 @@ class PenunjangScan extends BaseController
             if ($gambar && $gambar->isValid() && !$gambar->hasMoved()) {
                 $extension = $gambar->getExtension();
                 $gambar_name = $this->request->getPost('pemeriksaan') . '_' . $rawatjalan['nomor_registrasi'] . '_' . $id_eksekusi . '.' . $extension;
-                $gambar->move(WRITEPATH . 'uploads/scan_penunjang', $gambar_name);
+                $gambar->move(FCPATH . 'uploads/scan_penunjang', $gambar_name);
 
                 // Update nama file ke database
                 $this->PenunjangScanModel->update($id_eksekusi, ['gambar' => $gambar_name]);
@@ -161,10 +161,10 @@ class PenunjangScan extends BaseController
                 $extension = $gambar->getExtension();
                 $id_penunjang_scan = $this->request->getVar('id_penunjang_scan'); // Pastikan mengambil id yang benar
                 if ($penunjang_scan['gambar']) {
-                    unlink(WRITEPATH . 'uploads/scan_penunjang/' . $penunjang_scan['gambar']);
+                    unlink(FCPATH . 'uploads/scan_penunjang/' . $penunjang_scan['gambar']);
                 }
                 $gambar_name = $this->request->getPost('pemeriksaan') . '_' . $penunjang_scan['nomor_registrasi'] . '_' . $id_penunjang_scan . '.' . $extension;
-                $gambar->move(WRITEPATH . 'uploads/scan_penunjang', $gambar_name);
+                $gambar->move(FCPATH . 'uploads/scan_penunjang', $gambar_name);
                 $data['gambar'] = $gambar_name;
             }
 
@@ -178,25 +178,25 @@ class PenunjangScan extends BaseController
         }
     }
 
-    public function gambar($filename)
-    {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Perawat' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter'  || session()->get('role') == 'Perawat') {
-            $path = WRITEPATH . 'uploads/scan_penunjang/' . $filename;
+    // public function gambar($filename)
+    // {
+    //     // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Perawat' yang diizinkan
+    //     if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter'  || session()->get('role') == 'Perawat') {
+    //         $path = FCPATH . 'uploads/scan_penunjang/' . $filename;
 
-            if (is_file($path)) {
-                $mime = mime_content_type($path);
-                header('Content-Type: ' . $mime);
-                readfile($path);
-                exit;
-            }
+    //         if (is_file($path)) {
+    //             $mime = mime_content_type($path);
+    //             header('Content-Type: ' . $mime);
+    //             readfile($path);
+    //             exit;
+    //         }
 
-            throw PageNotFoundException::forPageNotFound();
-        } else {
-            // Jika peran tidak dikenali, lemparkan pengecualian 404
-            throw PageNotFoundException::forPageNotFound();
-        }
-    }
+    //         throw PageNotFoundException::forPageNotFound();
+    //     } else {
+    //         // Jika peran tidak dikenali, lemparkan pengecualian 404
+    //         throw PageNotFoundException::forPageNotFound();
+    //     }
+    // }
 
     public function delete($id)
     {
@@ -206,7 +206,7 @@ class PenunjangScan extends BaseController
             if ($penunjang_scan) {
                 // Hapus tanda tangan edukator
                 if ($penunjang_scan['gambar']) {
-                    unlink(WRITEPATH . 'uploads/scan_penunjang/' . $penunjang_scan['gambar']);
+                    unlink(FCPATH . 'uploads/scan_penunjang/' . $penunjang_scan['gambar']);
                 }
 
                 // Hapus evaluasi

@@ -123,7 +123,7 @@ class EdukasiEvaluasi extends BaseController
             if ($tanda_tangan_edukator && $tanda_tangan_edukator->isValid() && !$tanda_tangan_edukator->hasMoved()) {
                 $extension = $tanda_tangan_edukator->getExtension();
                 $tanda_tangan_edukator_name = 'ttd_edukator_' . $rawatjalan['nomor_registrasi'] . '_' . $id_eksekusi . '.' . $extension;
-                $tanda_tangan_edukator->move(WRITEPATH . 'uploads/ttd_edukator_evaluasi', $tanda_tangan_edukator_name);
+                $tanda_tangan_edukator->move(FCPATH . 'uploads/ttd_edukator_evaluasi', $tanda_tangan_edukator_name);
 
                 // Update nama file ke database
                 $this->EdukasiEvaluasiModel->update($id_eksekusi, ['tanda_tangan_edukator' => $tanda_tangan_edukator_name]);
@@ -134,7 +134,7 @@ class EdukasiEvaluasi extends BaseController
             if ($tanda_tangan_pasien && $tanda_tangan_pasien->isValid() && !$tanda_tangan_pasien->hasMoved()) {
                 $extension = $tanda_tangan_pasien->getExtension();
                 $tanda_tangan_pasien_name = 'ttd_pasien_' . $rawatjalan['nomor_registrasi'] . '_' . $id_eksekusi . '.' . $extension;
-                $tanda_tangan_pasien->move(WRITEPATH . 'uploads/ttd_pasien_evaluasi', $tanda_tangan_pasien_name);
+                $tanda_tangan_pasien->move(FCPATH . 'uploads/ttd_pasien_evaluasi', $tanda_tangan_pasien_name);
 
                 // Update nama file ke database
                 $this->EdukasiEvaluasiModel->update($id_eksekusi, ['tanda_tangan_pasien' => $tanda_tangan_pasien_name]);
@@ -194,10 +194,10 @@ class EdukasiEvaluasi extends BaseController
                 $extension = $tanda_tangan_edukator->getExtension();
                 $id_edukasi_evaluasi = $this->request->getVar('id_edukasi_evaluasi'); // Pastikan mengambil id yang benar
                 if ($edukasi_evaluasi['tanda_tangan_edukator']) {
-                    unlink(WRITEPATH . 'uploads/ttd_edukator_evaluasi/' . $edukasi_evaluasi['tanda_tangan_edukator']);
+                    unlink(FCPATH . 'uploads/ttd_edukator_evaluasi/' . $edukasi_evaluasi['tanda_tangan_edukator']);
                 }
                 $tanda_tangan_edukator_name = 'ttd_edukator_' . $edukasi_evaluasi['nomor_registrasi'] . '_' . $id_edukasi_evaluasi . '.' . $extension;
-                $tanda_tangan_edukator->move(WRITEPATH . 'uploads/ttd_edukator_evaluasi', $tanda_tangan_edukator_name);
+                $tanda_tangan_edukator->move(FCPATH . 'uploads/ttd_edukator_evaluasi', $tanda_tangan_edukator_name);
                 $data['tanda_tangan_edukator'] = $tanda_tangan_edukator_name;
             }
 
@@ -207,10 +207,10 @@ class EdukasiEvaluasi extends BaseController
                 $extension = $tanda_tangan_pasien->getExtension();
                 $id_edukasi_evaluasi = $this->request->getVar('id_edukasi_evaluasi'); // Ambil id yang benar
                 if ($edukasi_evaluasi['tanda_tangan_pasien']) {
-                    unlink(WRITEPATH . 'uploads/ttd_pasien_evaluasi/' . $edukasi_evaluasi['tanda_tangan_pasien']);
+                    unlink(FCPATH . 'uploads/ttd_pasien_evaluasi/' . $edukasi_evaluasi['tanda_tangan_pasien']);
                 }
                 $tanda_tangan_pasien_name = 'ttd_pasien_' . $edukasi_evaluasi['nomor_registrasi'] . '_' . $id_edukasi_evaluasi . '.' . $extension;
-                $tanda_tangan_pasien->move(WRITEPATH . 'uploads/ttd_pasien_evaluasi', $tanda_tangan_pasien_name);
+                $tanda_tangan_pasien->move(FCPATH . 'uploads/ttd_pasien_evaluasi', $tanda_tangan_pasien_name);
                 $data['tanda_tangan_pasien'] = $tanda_tangan_pasien_name;
             }
 
@@ -224,45 +224,45 @@ class EdukasiEvaluasi extends BaseController
         }
     }
 
-    public function tandatanganedukator($filename)
-    {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Admisi' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat') {
-            $path = WRITEPATH . 'uploads/ttd_edukator_evaluasi/' . $filename;
+    // public function tandatanganedukator($filename)
+    // {
+    //     // Memeriksa peran pengguna, hanya 'Admin' atau 'Admisi' yang diizinkan
+    //     if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat') {
+    //         $path = FCPATH . 'uploads/ttd_edukator_evaluasi/' . $filename;
 
-            if (is_file($path)) {
-                $mime = mime_content_type($path);
-                header('Content-Type: ' . $mime);
-                readfile($path);
-                exit;
-            }
+    //         if (is_file($path)) {
+    //             $mime = mime_content_type($path);
+    //             header('Content-Type: ' . $mime);
+    //             readfile($path);
+    //             exit;
+    //         }
 
-            throw PageNotFoundException::forPageNotFound();
-        } else {
-            // Jika peran tidak dikenali, lemparkan pengecualian 404
-            throw PageNotFoundException::forPageNotFound();
-        }
-    }
+    //         throw PageNotFoundException::forPageNotFound();
+    //     } else {
+    //         // Jika peran tidak dikenali, lemparkan pengecualian 404
+    //         throw PageNotFoundException::forPageNotFound();
+    //     }
+    // }
 
-    public function tandatanganpasien($filename)
-    {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Admisi' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat') {
-            $path = WRITEPATH . 'uploads/ttd_pasien_evaluasi/' . $filename;
+    // public function tandatanganpasien($filename)
+    // {
+    //     // Memeriksa peran pengguna, hanya 'Admin' atau 'Admisi' yang diizinkan
+    //     if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat') {
+    //         $path = FCPATH . 'uploads/ttd_pasien_evaluasi/' . $filename;
 
-            if (is_file($path)) {
-                $mime = mime_content_type($path);
-                header('Content-Type: ' . $mime);
-                readfile($path);
-                exit;
-            }
+    //         if (is_file($path)) {
+    //             $mime = mime_content_type($path);
+    //             header('Content-Type: ' . $mime);
+    //             readfile($path);
+    //             exit;
+    //         }
 
-            throw PageNotFoundException::forPageNotFound();
-        } else {
-            // Jika peran tidak dikenali, lemparkan pengecualian 404
-            throw PageNotFoundException::forPageNotFound();
-        }
-    }
+    //         throw PageNotFoundException::forPageNotFound();
+    //     } else {
+    //         // Jika peran tidak dikenali, lemparkan pengecualian 404
+    //         throw PageNotFoundException::forPageNotFound();
+    //     }
+    // }
 
     public function delete($id)
     {
@@ -272,12 +272,12 @@ class EdukasiEvaluasi extends BaseController
             if ($edukasi_evaluasi) {
                 // Hapus tanda tangan edukator
                 if ($edukasi_evaluasi['tanda_tangan_edukator']) {
-                    unlink(WRITEPATH . 'uploads/ttd_edukator_evaluasi/' . $edukasi_evaluasi['tanda_tangan_edukator']);
+                    unlink(FCPATH . 'uploads/ttd_edukator_evaluasi/' . $edukasi_evaluasi['tanda_tangan_edukator']);
                 }
 
                 // Hapus tanda tangan pasien
                 if ($edukasi_evaluasi['tanda_tangan_pasien']) {
-                    unlink(WRITEPATH . 'uploads/ttd_pasien_evaluasi/' . $edukasi_evaluasi['tanda_tangan_pasien']);
+                    unlink(FCPATH . 'uploads/ttd_pasien_evaluasi/' . $edukasi_evaluasi['tanda_tangan_pasien']);
                 }
 
                 // Hapus evaluasi
