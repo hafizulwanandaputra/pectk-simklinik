@@ -245,7 +245,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
 
         .svg-inline--fa {
             vertical-align: middle;
-            transform: translateY(-0.05em);
+            transform: translateY(-0.1em);
         }
 
         @media (max-width: 767.98px) {
