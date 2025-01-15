@@ -272,7 +272,7 @@ $usia = $sekarang->diff($tanggal_lahir);
                         <?php foreach ($edukasi_evaluasi as $evaluasi) : ?>
                             <tr>
                                 <td style="width: 0%; vertical-align: middle; padding-left: 0.125cm; padding-right: 0.125cm; border: 1px solid black; white-space: nowrap;">
-                                    <?= $evaluasi['waktu_dibuat'] ?>
+                                    <?= date('Y-m-d', strtotime($evaluasi['waktu_dibuat'])) ?>
                                 </td>
                                 <td style="width: 0%; vertical-align: middle; padding-left: 0.125cm; padding-right: 0.125cm; border: 1px solid black;">
                                     <?= $evaluasi['unit'] ?>
