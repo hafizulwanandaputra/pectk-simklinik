@@ -176,10 +176,15 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                         <i class="fa-solid fa-plus"></i> Tambah Pemindaian
                     </button>
                 </div>
+                <center id="empty-placeholder" class="my-3" style="display: none;">
+                    <h1><i class="fa-solid fa-stethoscope"></i></h1>
+                    <h3>Pemindaian Pemeriksaan Penunjang</h3>
+                    <div class="text-muted">Klik "Tambah Pemindaian" untuk menambahkan pemindaian pemeriksaan penunjang</div>
+                </center>
                 <div id="scanPenunjangList" class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-3">
-                    <?php for ($i = 0; $i < 12; $i++) : ?>
+                    <?php for ($i = 0; $i < 6; $i++) : ?>
                         <div class="col">
-                            <div class="card shadow-sm h-100">
+                            <div class="card shadow-sm h-100" style="cursor: wait;">
                                 <div class="card-img-top" style="background-color: var(--bs-card-cap-bg); aspect-ratio: 16/9; background-position: center; background-repeat: no-repeat; background-size: cover; position: relative; border-bottom: var(--bs-card-border-width) solid var(--bs-card-border-color);"></div>
                                 <div class="card-body">
                                     <div class="d-flex">
@@ -385,37 +390,16 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
             let totalPembayaran = 0;
 
             if (data.length === 0) {
-                // Tampilkan pesan jika tidak ada data
-                const emptyRow = `
-                        <div class="col">
-                            <div class="card shadow-sm h-100">
-                                <div class="card-img-top" style="background-color: var(--bs-card-cap-bg); aspect-ratio: 16/9; background-position: center; background-repeat: no-repeat; background-size: cover; position: relative; border-bottom: var(--bs-card-border-width) solid var(--bs-card-border-color);"></div>
-                                <div class="card-body">
-                                    <div class="d-flex">
-                                        <div class="align-self-center w-100 fw-bold">
-                                            Tidak ada pemindaian
-                                        </div>
-                                    </div>
-                                    <hr>
-                                    <div class="w-100">
-                                        Klik tombol "Tambah Pemindaian"<br>
-                                        Pemindaian pada pemeriksaan penunjang ini akan ditampilkan di sini
-                                    </div>
-                                </div>
-                                <div class="card-footer d-flex justify-content-end gap-1">
-                                    <a class="btn btn-body btn-sm bg-gradient disabled placeholder" aria-disabled="true" style="width: 32px; height: 31px;"></a>
-                                    <a class="btn btn-danger bg-gradient disabled placeholder" aria-disabled="true" style="width: 32px; height: 31px;"></a>
-                                </div>
-                            </div>
-                        </div>
-                `;
-                $('#scanPenunjangList').append(emptyRow);
+                $('#empty-placeholder').show();
+                $('#scanPenunjangList').hide();
             } else {
+                $('#empty-placeholder').hide();
                 data.forEach(function(penunjang_scan) {
+                    const keterangan = penunjang_scan.keterangan ? penunjang_scan.keterangan : `<em>Tidak ada keterangan</em>`;
                     const penunjangScanElement = `
                 <div class="col">
                     <div class="card shadow-sm h-100">
-                        <div class="card-img-top" style="background-image: url('<?= base_url('uploads/scan_penunjang') ?>/${penunjang_scan.gambar}'); background-color: var(--bs-card-cap-bg); aspect-ratio: 16/9; background-position: center; background-repeat: no-repeat; background-size: cover; position: relative; border-bottom: var(--bs-card-border-width) solid var(--bs-card-border-color);"></div>
+                        <div class="card-img-top" style="background-image: url('<?= base_url('uploads/scan_penunjang') ?>/${penunjang_scan.gambar}?t=${new Date().getTime()}'); background-color: var(--bs-card-cap-bg); aspect-ratio: 16/9; background-position: center; background-repeat: no-repeat; background-size: cover; position: relative; border-bottom: var(--bs-card-border-width) solid var(--bs-card-border-color);"></div>
                         <div class="card-body">
                             <div class="d-inline-flex">
                                 <div class="align-self-center">
@@ -424,17 +408,18 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                             </div>
                             <hr>
                             <div>
-                                <small class="text-body-secondary">${penunjang_scan.keterangan}</small><br>
+                                <small class="text-body-secondary">${keterangan}</small><br>
                                 <small class="text-body-secondary date">${penunjang_scan.waktu_dibuat}</small>
                             </div>
                         </div>
                         <div class="card-footer d-flex justify-content-end gap-1">
-                            <button class="btn btn-body btn-sm bg-gradient edit-btn" data-id="${penunjang_scan.id_penunjang_scan}"><i class="fa-solid fa-pen-to-square"></i></button>
-                            <button class="btn btn-danger btn-sm bg-gradient delete-btn" data-id="${penunjang_scan.id_penunjang_scan}"><i class="fa-solid fa-trash"></i></button>
+                            <button class="btn btn-body btn-sm bg-gradient edit-btn" data-id="${penunjang_scan.id_penunjang_scan}"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
+                            <button class="btn btn-danger btn-sm bg-gradient delete-btn" data-id="${penunjang_scan.id_penunjang_scan}"><i class="fa-solid fa-trash"></i> Hapus</button>
                         </div>                               
                     </div>
                 </div>
                     `;
+                    $('#scanPenunjangList').show();
                     $('#scanPenunjangList').append(penunjangScanElement);
                 });
             }
@@ -619,7 +604,7 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                 $('#uploadPercentage').html('0%');
                 $('#cancelButton').prop('disabled', true).hide();
                 $('#submitButton').prop('disabled', false).html(`
-                    <i class="fa-solid fa-floppy-disk"></i> Save
+                    <i class="fa-solid fa-floppy-disk"></i> Simpan
                 `);
                 $('#scanForm input').prop('disabled', false);
             }
