@@ -512,8 +512,8 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                         <div class="date text-nowrap text-muted"><small>Pasien/Keluarga/Lainnya: ${evaluasi_edukasi.nama_pasien_keluarga}</small></div>
                         ${evaluasi}
                         <div class="btn-group float-end" role="group">
-                            <button class="btn btn-outline-body text-nowrap bg-gradient edit-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${evaluasi_edukasi.id_edukasi_evaluasi}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
-                            <button class="btn btn-outline-danger text-nowrap bg-gradient delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${evaluasi_edukasi.id_edukasi_evaluasi}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i> Hapus</button>
+                            <button class="btn btn-outline-body text-nowrap bg-gradient edit-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${evaluasi_edukasi.id_edukasi_evaluasi}"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
+                            <button class="btn btn-outline-danger text-nowrap bg-gradient delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${evaluasi_edukasi.id_edukasi_evaluasi}"><i class="fa-solid fa-trash"></i> Hapus</button>
                         </div>
                     </li>
                     `;
