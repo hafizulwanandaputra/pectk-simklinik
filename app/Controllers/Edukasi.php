@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\RawatJalanModel;
 use App\Models\EdukasiModel;
+use App\Models\EdukasiEvaluasiModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use Dompdf\Dompdf;
 use Picqer\Barcode\BarcodeGeneratorPNG;
@@ -13,10 +14,12 @@ class Edukasi extends BaseController
 {
     protected $RawatJalanModel;
     protected $EdukasiModel;
+    protected $EdukasiEvaluasiModel;
     public function __construct()
     {
         $this->RawatJalanModel = new RawatJalanModel();
         $this->EdukasiModel = new EdukasiModel();
+        $this->EdukasiEvaluasiModel = new EdukasiEvaluasiModel();
     }
 
     public function index($id)
@@ -161,6 +164,12 @@ class Edukasi extends BaseController
 
             $edukasi['hambatan'] = str_replace(',', ', ', $edukasi['hambatan']);
 
+            // Memeriksa apakah evaluasi edukasi sudah ada
+            $edukasi_evaluasi = $db->table('medrec_edukasi_evaluasi')
+                ->where('nomor_registrasi', $rawatjalan['nomor_registrasi'])
+                ->get()
+                ->getResultArray();
+
             // === Generate Barcode ===
             $barcodeGenerator = new BarcodeGeneratorPNG();
             $bcNoReg = base64_encode($barcodeGenerator->getBarcode($rawatjalan['nomor_registrasi'], $barcodeGenerator::TYPE_CODE_128));
@@ -171,6 +180,7 @@ class Edukasi extends BaseController
                 $data = [
                     'rawatjalan' => $rawatjalan,
                     'edukasi' => $edukasi,
+                    'edukasi_evaluasi' => $edukasi_evaluasi,
                     'bcNoReg' => $bcNoReg,
                     'title' => 'Skrining ' . $rawatjalan['nama_pasien'] . ' (' . $rawatjalan['no_rm'] . ') - ' . $rawatjalan['nomor_registrasi'] . ' - ' . $this->systemName,
                     'agent' => $this->request->getUserAgent()

@@ -268,6 +268,40 @@ $usia = $sekarang->diff($tanggal_lahir);
                             </th>
                         </tr>
                     </thead>
+                    <tbody>
+                        <?php foreach ($edukasi_evaluasi as $evaluasi) : ?>
+                            <tr>
+                                <td style="width: 0%; vertical-align: middle; padding-left: 0.125cm; padding-right: 0.125cm; border: 1px solid black; white-space: nowrap;">
+                                    <?= $evaluasi['waktu_dibuat'] ?>
+                                </td>
+                                <td style="width: 0%; vertical-align: middle; padding-left: 0.125cm; padding-right: 0.125cm; border: 1px solid black;">
+                                    <?= $evaluasi['unit'] ?>
+                                </td>
+                                <td style="width: 50%; vertical-align: middle; padding-left: 0.125cm; padding-right: 0.125cm; border: 1px solid black;">
+                                    <?= $evaluasi['informasi_edukasi'] ?>
+                                </td>
+                                <td style="width: 0%; vertical-align: middle; padding-left: 0.125cm; padding-right: 0.125cm; border: 1px solid black;">
+                                    <?= $evaluasi['nama_edukator'] ?> (<?= $evaluasi['profesi_edukator'] ?>)
+                                </td>
+                                <td style="width: 0%; vertical-align: middle; padding-left: 0.125cm; padding-right: 0.125cm; border: 1px solid black;">
+                                    <?php if ($evaluasi['tanda_tangan_edukator'] != NULL) : ?>
+                                        <img src="data:image/png;base64,<?= base64_encode(file_get_contents(WRITEPATH . 'uploads/ttd_edukator_evaluasi/' . $evaluasi['tanda_tangan_edukator'])) ?>" width="36px" alt="">
+                                    <?php endif; ?>
+                                </td>
+                                <td style="width: 0%; vertical-align: middle; padding-left: 0.125cm; padding-right: 0.125cm; border: 1px solid black;">
+                                    <?= $evaluasi['nama_pasien_keluarga'] ?>
+                                </td>
+                                <td style="width: 0%; vertical-align: middle; padding-left: 0.125cm; padding-right: 0.125cm; border: 1px solid black;">
+                                    <?php if ($evaluasi['tanda_tangan_edukator'] != NULL) : ?>
+                                        <img src="data:image/png;base64,<?= base64_encode(file_get_contents(WRITEPATH . 'uploads/ttd_pasien_evaluasi/' . $evaluasi['tanda_tangan_pasien'])) ?>" width="36px" alt="">
+                                    <?php endif; ?>
+                                </td>
+                                <td style="width: 50%; vertical-align: middle; padding-left: 0.125cm; padding-right: 0.125cm; border: 1px solid black;">
+                                    <?= $evaluasi['evaluasi'] ?>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
                 </table>
             </div>
         </div>
