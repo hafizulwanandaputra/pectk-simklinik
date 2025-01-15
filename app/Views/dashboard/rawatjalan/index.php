@@ -319,6 +319,7 @@
                                                 <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/struk') ?>/${rawatjalan.id_rawat_jalan}');">
                                                     <i class="fa-solid fa-print"></i> Struk
                                                 </button>
+                                                <?php if (session()->get('role') != 'Admin') : ?>
                                                 <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/asesmen/export') ?>/${rawatjalan.id_rawat_jalan}');">
                                                     <i class="fa-solid fa-print"></i> Asesmen
                                                 </button>
@@ -331,6 +332,7 @@
                                                 <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/penunjang/export') ?>/${rawatjalan.id_rawat_jalan}');">
                                                     <i class="fa-solid fa-print"></i> Penunjang
                                                 </button>
+                                                <?php endif; ?>
                                             <?php endif; ?>
                                             <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') : ?>
                                                 <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/asesmen') ?>/${rawatjalan.id_rawat_jalan}';">
