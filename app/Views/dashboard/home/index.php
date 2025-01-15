@@ -86,9 +86,9 @@
                 </div>
             </div>
         <?php endif; ?>
-        <?php if (session()->get('role') == "Admin" || session()->get('role') == "Admisi") : ?>
+        <?php if (session()->get('role') == "Admin" || session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admisi") : ?>
             <div class="mb-3">
-                <div class="fw-bold mb-2 border-bottom">Admisi</div>
+                <div class="fw-bold mb-2 border-bottom">Pasien dan Rawat Jalan</div>
                 <div class="mb-2">
                     <div class="card bg-body-tertiary w-100  shadow-sm">
                         <div class="card-header w-100 text-truncate">Total Pasien</div>
