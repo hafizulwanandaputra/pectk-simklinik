@@ -86,14 +86,16 @@ $routes->get('/(?i)rawatjalan/(?i)penunjang/(?i)view/(:any)', 'Penunjang::view/$
 $routes->get('/(?i)rawatjalan/(?i)penunjang/(?i)export/(:any)', 'Penunjang::export/$1');
 $routes->post('/(?i)rawatjalan/(?i)penunjang/(?i)create/(:any)', 'Penunjang::create/$1');
 $routes->post('/(?i)rawatjalan/(?i)penunjang/(?i)update/(:any)', 'Penunjang::update/$1');
+$routes->get('/(?i)rawatjalan/(?i)penunjang/(?i)ruanganoptions', 'Penunjang::ruanganoptions');
+$routes->get('/(?i)rawatjalan/(?i)penunjang/(?i)dokteroptions', 'Penunjang::dokteroptions');
 
 // PINDAI PEMERIKSAAN PENUNJANG
-$routes->get('/(?i)rawatjalan/(?i)penunjang/(?i)scan/(?i)list/(:any)', 'ScanPenunjang::index/$1');
-$routes->get('/(?i)rawatjalan/(?i)penunjang/(?i)scan/(?i)view/(:any)', 'ScanPenunjang::view/$1');
-$routes->post('/(?i)rawatjalan/(?i)penunjang/(?i)scan/(?i)create/(:any)', 'ScanPenunjang::create/$1');
-$routes->post('/(?i)rawatjalan/(?i)penunjang/(?i)scan/(?i)update', 'ScanPenunjang::update');
-$routes->delete('/(?i)rawatjalan/(?i)penunjang/(?i)scan/(?i)delete/(:any)', 'ScanPenunjang::delete/$1');
-$routes->get('/(?i)uploads/(?i)scan_penunjang/(:any)', 'ScanPenunjang::tandatanganedukator/$1');
+$routes->get('/(?i)rawatjalan/(?i)penunjang/(?i)scan/(?i)list/(:any)', 'PenunjangScan::index/$1');
+$routes->get('/(?i)rawatjalan/(?i)penunjang/(?i)scan/(?i)view/(:any)', 'PenunjangScan::view/$1');
+$routes->post('/(?i)rawatjalan/(?i)penunjang/(?i)scan/(?i)create/(:any)', 'PenunjangScan::create/$1');
+$routes->post('/(?i)rawatjalan/(?i)penunjang/(?i)scan/(?i)update', 'PenunjangScan::update');
+$routes->delete('/(?i)rawatjalan/(?i)penunjang/(?i)scan/(?i)delete/(:any)', 'PenunjangScan::delete/$1');
+$routes->get('/(?i)uploads/(?i)scan_penunjang/(:any)', 'PenunjangScan::gambar/$1');
 
 // SUPPLIER
 $routes->get('/(?i)supplier', 'Supplier::index');
