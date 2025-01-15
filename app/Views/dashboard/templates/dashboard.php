@@ -243,6 +243,11 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
             border-radius: 4px !important;
         }
 
+        .svg-inline--fa {
+            vertical-align: middle;
+            transform: translateY(-0.05em);
+        }
+
         @media (max-width: 767.98px) {
             .toast-container {
                 padding-top: 7rem !important;
