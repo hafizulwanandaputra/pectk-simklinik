@@ -47,64 +47,66 @@
             <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-tertiary transparent-blur">
                 <div class="no-fluid-content">
                     <nav>
-                        <div class="nav nav-underline nav-justified" id="nav-tab" role="tablist">
-                            <button class="nav-link  active" id="pasien-container-tab" data-bs-toggle="tab" data-bs-target="#pasien-container" type="button" role="tab" aria-controls="pasien-container" aria-selected="true">Identitas Pasien</button>
-                            <button class="nav-link " id="rawatjalan-container-tab" data-bs-toggle="tab" data-bs-target="#rawatjalan-container" type="button" role="tab" aria-controls="rawatjalan-container" aria-selected="false">Rawat Jalan <span id="totalRecords" class="badge bg-body border text-body">0</span></button>
+                        <div class="nav nav-underline nav-justified flex-nowrap overflow-auto" id="nav-tab" role="tablist">
+                            <button class="nav-link py-1 active" id="pasien-container-tab" data-bs-toggle="tab" data-bs-target="#pasien-container" type="button" role="tab" aria-controls="pasien-container" aria-selected="true">Identitas Pasien</button>
+                            <button class="nav-link py-1" id="rawatjalan-container-tab" data-bs-toggle="tab" data-bs-target="#rawatjalan-container" type="button" role="tab" aria-controls="rawatjalan-container" aria-selected="false">Rawat Jalan <span id="totalRecords" class="badge bg-body border text-body">0</span></button>
                         </div>
                     </nav>
-                    <div class="mt-2" id="tanggal_form" style="display: none;">
-                        <div class="input-group input-group-sm">
-                            <input type="date" id="tanggal" name="tanggal" class="form-control ">
-                            <button class="btn btn-danger bg-gradient" type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
-                            <button class="btn btn-success bg-gradient " type="button" id="refreshButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan"><i class="fa-solid fa-sync"></i></button>
-                        </div>
-                        <div class="accordion mt-2" id="accordionFilter">
-                            <div class="accordion-item">
-                                <h2 class="accordion-header">
-                                    <button class="accordion-button p-2 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFilter" aria-expanded="false" aria-controls="collapseFilter">
-                                        Pencarian Tambahan
-                                    </button>
-                                </h2>
-                                <div id="collapseFilter" class="accordion-collapse collapse" data-bs-parent="#accordionFilter">
-                                    <div class="accordion-body px-2 py-1 mt-1">
-                                        <div class="row row-cols-1 row-cols-sm-2 g-1">
-                                            <div class="col">
-                                                <select id="kunjunganFilter" class="form-select form-select-sm">
-                                                    <option value="">Semua Jenis Kunjungan</option>
-                                                </select>
-                                            </div>
-                                            <div class="col">
-                                                <select id="jaminanFilter" class="form-select form-select-sm">
-                                                    <option value="">Semua Jaminan</option>
-                                                </select>
-                                            </div>
-                                            <div class="col">
-                                                <select id="ruanganFilter" class="form-select form-select-sm">
-                                                    <option value="">Semua Ruangan</option>
-                                                </select>
-                                            </div>
-                                            <div class="col">
-                                                <select id="dokterFilter" class="form-select form-select-sm">
-                                                    <option value="">Semua Dokter</option>
-                                                </select>
-                                            </div>
-                                            <div class="col">
-                                                <select id="pendaftarFilter" class="form-select form-select-sm">
-                                                    <option value="">Semua Pendaftar</option>
-                                                </select>
-                                            </div>
-                                            <div class="col">
-                                                <select id="statusFilter" class="form-select form-select-sm">
-                                                    <option value="">Semua Status</option>
-                                                </select>
-                                            </div>
+                </div>
+            </li>
+            <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-tertiary transparent-blur" id="tanggal_form" style="display: none;">
+                <div class="no-fluid-content">
+                    <div class="input-group input-group-sm">
+                        <input type="date" id="tanggal" name="tanggal" class="form-control ">
+                        <button class="btn btn-danger bg-gradient" type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
+                        <button class="btn btn-success bg-gradient " type="button" id="refreshButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan"><i class="fa-solid fa-sync"></i></button>
+                    </div>
+                    <div class="accordion mt-2" id="accordionFilter">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button p-2 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFilter" aria-expanded="false" aria-controls="collapseFilter">
+                                    Pencarian Tambahan
+                                </button>
+                            </h2>
+                            <div id="collapseFilter" class="accordion-collapse collapse" data-bs-parent="#accordionFilter">
+                                <div class="accordion-body px-2 py-1 mt-1">
+                                    <div class="row row-cols-1 row-cols-sm-2 g-1">
+                                        <div class="col">
+                                            <select id="kunjunganFilter" class="form-select form-select-sm">
+                                                <option value="">Semua Jenis Kunjungan</option>
+                                            </select>
                                         </div>
-                                        <select id="transaksiFilter" class="form-select form-select-sm my-1">
-                                            <option value="">Semua Status Transaksi</option>
-                                            <option value="1">Diproses</option>
-                                            <option value="0">Belum Diproses</option>
-                                        </select>
+                                        <div class="col">
+                                            <select id="jaminanFilter" class="form-select form-select-sm">
+                                                <option value="">Semua Jaminan</option>
+                                            </select>
+                                        </div>
+                                        <div class="col">
+                                            <select id="ruanganFilter" class="form-select form-select-sm">
+                                                <option value="">Semua Ruangan</option>
+                                            </select>
+                                        </div>
+                                        <div class="col">
+                                            <select id="dokterFilter" class="form-select form-select-sm">
+                                                <option value="">Semua Dokter</option>
+                                            </select>
+                                        </div>
+                                        <div class="col">
+                                            <select id="pendaftarFilter" class="form-select form-select-sm">
+                                                <option value="">Semua Pendaftar</option>
+                                            </select>
+                                        </div>
+                                        <div class="col">
+                                            <select id="statusFilter" class="form-select form-select-sm">
+                                                <option value="">Semua Status</option>
+                                            </select>
+                                        </div>
                                     </div>
+                                    <select id="transaksiFilter" class="form-select form-select-sm my-1">
+                                        <option value="">Semua Status Transaksi</option>
+                                        <option value="1">Diproses</option>
+                                        <option value="0">Belum Diproses</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
