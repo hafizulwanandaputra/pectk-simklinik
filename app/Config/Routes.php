@@ -72,11 +72,13 @@ $routes->post('/(?i)rawatjalan/(?i)edukasi/(?i)create/(:any)', 'Edukasi::create/
 $routes->post('/(?i)rawatjalan/(?i)edukasi/(?i)update/(:any)', 'Edukasi::update/$1');
 
 // EVALUASI EDUKASI
-$routes->get('/(?i)rawatjalan/(?i)edukasi/(?i)evaluasi', 'EdukasiEvaluasi::index');
+$routes->get('/(?i)rawatjalan/(?i)edukasi/(?i)evaluasi/(?i)list/(:any)', 'EdukasiEvaluasi::index/$1');
 $routes->get('/(?i)rawatjalan/(?i)edukasi/(?i)evaluasi/(?i)view/(:any)', 'EdukasiEvaluasi::view/$1');
 $routes->post('/(?i)rawatjalan/(?i)edukasi/(?i)evaluasi/(?i)create/(:any)', 'EdukasiEvaluasi::create/$1');
-$routes->post('/(?i)rawatjalan/(?i)edukasi/(?i)evaluasi/(?i)update/(:any)', 'EdukasiEvaluasi::update/$1');
+$routes->post('/(?i)rawatjalan/(?i)edukasi/(?i)evaluasi/(?i)update', 'EdukasiEvaluasi::update');
 $routes->delete('/(?i)rawatjalan/(?i)edukasi/(?i)evaluasi/(?i)delete/(:any)', 'EdukasiEvaluasi::delete/$1');
+$routes->get('/(?i)uploads/(?i)ttd_edukator_evaluasi/(:any)', 'EdukasiEvaluasi::tandatanganedukator/$1');
+$routes->get('/(?i)uploads/(?i)ttd_pasien_evaluasi/(:any)', 'EdukasiEvaluasi::tandatanganpasien/$1');
 
 // SUPPLIER
 $routes->get('/(?i)supplier', 'Supplier::index');

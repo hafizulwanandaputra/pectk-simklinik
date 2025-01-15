@@ -286,12 +286,144 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                     </div>
                 </div>
             </div>
+            <?= form_close(); ?>
             <div class="mb-3">
                 <div class="fw-bold mb-2 border-bottom">Evaluasi Edukasi</div>
+                <div class="d-grid gap-2">
+                    <button class="btn btn-primary btn-sm bg-gradient mb-2" type="button" id="addEvaluasiButton">
+                        <i class="fa-solid fa-plus"></i> Tambah Evaluasi
+                    </button>
+                </div>
+                <ul class="list-group shadow-sm" id="evaluasiEdukasiList">
+                    <li class="list-group-item bg-body-tertiary">
+                        <div class="fw-bold text-center">Memuat evaluasi edukasi...</div>
+                    </li>
+                </ul>
             </div>
-            <?= form_close(); ?>
         </div>
-
+    </div>
+    <div class="modal fade" id="evaluasiModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="evaluasiModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <form id="evaluasiForm" enctype="multipart/form-data" class="modal-content bg-body-tertiary shadow-lg transparent-blur">
+                <div class="modal-header justify-content-between pt-2 pb-2" style="border-bottom: 1px solid var(--bs-border-color-translucent);">
+                    <h6 class="pe-2 modal-title fs-6 text-truncate" id="evaluasiModalLabel" style="font-weight: bold;"></h6>
+                    <button id="closeBtn" type="button" class="btn btn-danger bg-gradient" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div class="modal-body py-2">
+                    <input type="hidden" id="id_edukasi_evaluasi" name="id_edukasi_evaluasi" value="">
+                    <div class="form-floating mb-1 mt-1">
+                        <input type="text" class="form-control" dir="auto" placeholder="unit" id="unit" name="unit">
+                        <label for="unit">Unit</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="form-floating mb-1 mt-1">
+                        <select class="form-select" id="informasi_edukasi" name="informasi_edukasi" aria-label="informasi_edukasi">
+                            <option value="" disabled selected>-- Pilih Informasi Edukasi --</option>
+                            <option value="Penyakit yang di derita pasien">Penyakit yang di derita pasien</option>
+                            <option value="Rencana tindakan/terapi">Rencana tindakan/terapi</option>
+                            <option value="Pengobatan dan prosedur yang diberikan/diperlukan">Pengobatan dan prosedur yang diberikan/diperlukan</option>
+                            <option value="Hasil pelayanan, termasuk terjadinya kejadian yang tidak diharapkan">Hasil pelayanan, termasuk terjadinya kejadian yang tidak diharapkan</option>
+                        </select>
+                        <label for="status_fungsional">Keyakinan</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="form-floating mb-1 mt-1">
+                        <input type="text" class="form-control" dir="auto" placeholder="nama_edukator" id="nama_edukator" name="nama_edukator">
+                        <label for="nama_edukator">Nama Edukator</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="form-floating mb-1 mt-1">
+                        <input type="text" class="form-control" dir="auto" placeholder="profesi_edukator" id="profesi_edukator" name="profesi_edukator">
+                        <label for="profesi_edukator">Profesi Edukator</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="mb-1 mt-1">
+                        <label for="tanda_tangan_edukator" class="form-label mb-0">Tanda Tangan Edukator (maks 8 MB)</label>
+                        <input class="form-control" type="file" id="tanda_tangan_edukator" name="tanda_tangan_edukator" accept="image/*">
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div id="tanda_tangan_edukator_preview_div" style="display: none;" class="mb-1 mt-1">
+                        <div class="d-flex justify-content-center">
+                            <img id="tanda_tangan_edukator_preview" src="#" alt="Tanda Tangan Edukator" class="img-thumbnail" style="max-width: 100%">
+                        </div>
+                    </div>
+                    <div class="form-floating mb-1 mt-1">
+                        <input type="text" class="form-control" autocomplete="off" dir="auto" placeholder="nama_pasien_keluarga" id="nama_pasien_keluarga" name="nama_pasien_keluarga">
+                        <label for="nama_pasien_keluarga">Nama Pasien/Keluarga/Lainnya</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="mb-1 mt-1">
+                        <label for="tanda_tangan_pasien" class="form-label mb-0">Tanda Tangan Pasien (maks 8 MB)</label>
+                        <input class="form-control" type="file" id="tanda_tangan_pasien" name="tanda_tangan_pasien" accept="image/*">
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div id="tanda_tangan_pasien_preview_div" style="display: none;" class="mb-1 mt-1">
+                        <div class="d-flex justify-content-center">
+                            <img id="tanda_tangan_pasien_preview" src="#" alt="Tanda Tangan Pasien" class="img-thumbnail" style="max-width: 100%">
+                        </div>
+                    </div>
+                    <div class="mb-1 mt-1">
+                        <label for="evaluasi">
+                            Evaluasi
+                        </label>
+                        <div class="d-flex align-items-center justify-content-evenly">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="evaluasi" id="evaluasi1" value="MENGERTI">
+                                <label class="form-check-label" for="evaluasi1">
+                                    Mengerti
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="evaluasi" id="evaluasi2" value="RE-EDUKASI">
+                                <label class="form-check-label" for="evaluasi2">
+                                    Re-edukasi
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="evaluasi" id="evaluasi3" value="RE-DEMONSTRASI">
+                                <label class="form-check-label" for="evaluasi3">
+                                    Re-demonstrasi
+                                </label>
+                            </div>
+                        </div>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-end pt-2 pb-2" style="border-top: 1px solid var(--bs-border-color-translucent);">
+                    <!-- Progress bar -->
+                    <div class="mb-1 mt-1 w-100" id="uploadProgressDiv">
+                        <div class="progress" style="border-top: 1px solid var(--bs-border-color-translucent); border-bottom: 1px solid var(--bs-border-color-translucent); border-left: 1px solid var(--bs-border-color-translucent); border-right: 1px solid var(--bs-border-color-translucent);">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-gradient" role="progressbar" style="width: 0%; transition: none;" id="uploadProgressBar"></div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between w-100">
+                        <div>
+                            <button type="button" id="cancelButton" class="btn btn-danger bg-gradient" style="display: none;" disabled>
+                                <i class="fa-solid fa-xmark"></i> Batalkan
+                            </button>
+                        </div>
+                        <button type="submit" id="submitButton" class="btn btn-primary bg-gradient">
+                            <i class="fa-solid fa-floppy-disk"></i> Simpan
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="modal modal-sheet p-4 py-md-5 fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content bg-body-tertiary rounded-4 shadow-lg transparent-blur">
+                <div class="modal-body p-4 text-center">
+                    <h5 id="deleteMessage"></h5>
+                    <h6 class="mb-0" id="deleteSubmessage"></h6>
+                </div>
+                <div class="modal-footer flex-nowrap p-0" style="border-top: 1px solid var(--bs-border-color-translucent);">
+                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end" style="border-right: 1px solid var(--bs-border-color-translucent)!important;" data-bs-dismiss="modal">Tidak</button>
+                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0" id="confirmDeleteBtn">Ya</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
 <?= $this->endSection(); ?>
 <?= $this->section('javascript'); ?>
@@ -342,7 +474,295 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
         }
     }
 
+    async function fetchEvaluasiEdukasi() {
+        $('#loadingSpinner').show();
+
+        try {
+            const response = await axios.get('<?= base_url('rawatjalan/edukasi/evaluasi/list/') . $rawatjalan['id_rawat_jalan'] ?>');
+
+            const data = response.data;
+            $('#evaluasiEdukasiList').empty();
+
+            let totalPembayaran = 0;
+
+            if (data.length === 0) {
+                // Tampilkan pesan jika tidak ada data
+                const emptyRow = `
+                    <li class="list-group-item bg-body-tertiary">
+                        <div class="fw-bold text-center">Tidak ada evaluasi edukasi. Klik "Tambah Evaluasi" untuk menambahkan evaluasi edukasi.</div>
+                    </li>
+                `;
+                $('#evaluasiEdukasiList').append(emptyRow);
+            } else {
+                data.forEach(function(evaluasi_edukasi) {
+                    let evaluasi = evaluasi_edukasi.evaluasi;
+                    if (evaluasi === 'MENGERTI') {
+                        evaluasi = `<span class="badge text-bg-success bg-gradient">Mengerti</span>`;
+                    } else if (evaluasi === 'RE-EDUKASI') {
+                        evaluasi = `<span class="badge text-bg-warning bg-gradient">Re-edukasi</span>`;
+                    } else if (evaluasi === 'RE-DEMONSTRASI') {
+                        evaluasi = `<span class="badge text-bg-warning bg-gradient">Re-demonstrasi</span>`;
+                    }
+                    const evaluasiEdukasiElement = `
+                    <li class="list-group-item bg-body-tertiary">
+                        <div class="fw-bold fs-5">${evaluasi_edukasi.waktu_dibuat}</div>
+                        <div class="date text-nowrap">${evaluasi_edukasi.unit}</div>
+                        <div class="date text-nowrap">${evaluasi_edukasi.informasi_edukasi}</div>
+                        <div class="date text-nowrap text-muted"><small>Edukator: ${evaluasi_edukasi.nama_edukator} (${evaluasi_edukasi.profesi_edukator})</small></div>
+                        <div class="date text-nowrap text-muted"><small>Pasien/Keluarga/Lainnya: ${evaluasi_edukasi.nama_pasien_keluarga}</small></div>
+                        ${evaluasi}
+                        <div class="btn-group float-end" role="group">
+                            <button class="btn btn-outline-body text-nowrap bg-gradient edit-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${evaluasi_edukasi.id_edukasi_evaluasi}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
+                            <button class="btn btn-outline-danger text-nowrap bg-gradient delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${evaluasi_edukasi.id_edukasi_evaluasi}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i> Hapus</button>
+                        </div>
+                    </li>
+                    `;
+                    $('#evaluasiEdukasiList').append(evaluasiEdukasiElement);
+                });
+            }
+        } catch (error) {
+            showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+            $('#evaluasiEdukasiList').empty();
+        } finally {
+            // Hide the spinner when done
+            $('#loadingSpinner').hide();
+        }
+    }
+
+
     $(document).ready(async function() {
+        // Tampilkan modal tambah evaluasi edukasi
+        $('#addEvaluasiButton').click(function() {
+            $('#evaluasiModalLabel').text('Tambah Evaluasi Edukasi'); // Ubah judul modal menjadi 'Tambah Evaluasi Edukasi'
+            $('#is_edit').val('');
+            $('#evaluasiModal').modal('show'); // Tampilkan modal resep luar
+        });
+
+        $('#tanda_tangan_edukator').change(function() {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $('#tanda_tangan_edukator_preview').attr('src', e.target.result);
+                $('#tanda_tangan_edukator_preview_div').show();
+            };
+            reader.readAsDataURL(this.files[0]);
+        });
+
+        $('#tanda_tangan_pasien').change(function() {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $('#tanda_tangan_pasien_preview').attr('src', e.target.result);
+                $('#tanda_tangan_pasien_preview_div').show();
+            };
+            reader.readAsDataURL(this.files[0]);
+        });
+
+        $(document).on('click', '.edit-btn', async function() {
+            var $this = $(this);
+            var id = $this.data('id');
+            $this.prop('disabled', true).html(`<span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span> Edit`);
+
+            try {
+                let response = await axios.get(`<?= base_url('/rawatjalan/edukasi/evaluasi/view') ?>/` + id);
+                let data = response.data;
+                console.log(data);
+
+                $('#evaluasiModalLabel').text('Edit Evaluasi Edukasi');
+                $('#id_edukasi_evaluasi').val(data.id_edukasi_evaluasi);
+                $('#unit').val(data.unit);
+                $('#informasi_edukasi').val(data.informasi_edukasi);
+                $('#nama_edukator').val(data.nama_edukator);
+                $('#profesi_edukator').val(data.profesi_edukator);
+                if (data.tanda_tangan_edukator) {
+                    $('#tanda_tangan_edukator_preview').attr('src', `<?= base_url('uploads/ttd_edukator_evaluasi') ?>/` + data.tanda_tangan_edukator);
+                    $('#tanda_tangan_edukator_preview_div').show();
+                } else {
+                    $('#tanda_tangan_edukator_preview_div').hide();
+                }
+                $('#nama_pasien_keluarga').val(data.nama_pasien_keluarga);
+                if (data.tanda_tangan_pasien) {
+                    $('#tanda_tangan_pasien_preview').attr('src', `<?= base_url('uploads/ttd_pasien_evaluasi') ?>/` + data.tanda_tangan_pasien);
+                    $('#tanda_tangan_pasien_preview_div').show();
+                } else {
+                    $('#tanda_tangan_pasien_preview_div').hide();
+                }
+                const evaluasi = data.evaluasi;
+                if (evaluasi) {
+                    $("input[name='evaluasi'][value='" + evaluasi + "']").prop('checked', true);
+                }
+                $('#evaluasiModal').modal('show');
+            } catch (error) {
+                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+            } finally {
+                $this.prop('disabled', false).html(`<i class="fa-solid fa-pen-to-square"></i> Edit`);
+            }
+        });
+
+        // Store the ID of the example to be deleted
+        var id_edukasi_evaluasi;
+
+        // Show delete confirmation modal
+        $(document).on('click', '.delete-btn', function() {
+            id_edukasi_evaluasi = $(this).data('id');
+            $('[data-bs-toggle="tooltip"]').tooltip('hide');
+            $('#deleteMessage').html(`Hapus evaluasi edukasi ini?`);
+            $('#deleteModal').modal('show');
+        });
+
+        // Confirm deletion
+        $('#confirmDeleteBtn').click(async function() {
+            $('#deleteModal button').prop('disabled', true);
+            $('#deleteMessage').html(`Menghapus, silakan tunggu...`);
+
+            try {
+                // Perform the delete operation
+                let response = await axios.delete('<?= base_url('/rawatjalan/edukasi/evaluasi/delete') ?>/' + id_edukasi_evaluasi);
+
+                // Show success message
+                showSuccessToast(response.data.message);
+
+                // Reload the table
+                fetchEvaluasiEdukasi();
+            } catch (error) {
+                // Handle any error responses
+                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+            } finally {
+                // Re-enable the delete button and hide the modal
+                $('#deleteModal').modal('hide');
+                $('#deleteModal button').prop('disabled', false);
+            }
+        });
+
+        $('#evaluasiForm').submit(async function(ə) {
+            ə.preventDefault();
+
+            var url = $('#id_edukasi_evaluasi').val() ? `<?= base_url('rawatjalan/edukasi/evaluasi/update') ?>` : `<?= base_url('/rawatjalan/edukasi/evaluasi/create/' . $rawatjalan['id_rawat_jalan']) ?>`;
+            var formData = new FormData(this);
+            console.log("Form URL:", url);
+            console.log("Form Data:", formData);
+
+            const CancelToken = axios.CancelToken;
+            const source = CancelToken.source();
+
+            // Clear previous validation states
+            $('#evaluasiForm .is-invalid').removeClass('is-invalid');
+            $('#evaluasiForm .invalid-feedback').text('').hide();
+
+            // Show processing button and progress bar
+            $('#uploadProgressBar').removeClass('bg-danger').css('width', '0%');
+            $('#cancelButton').prop('disabled', false).show();
+            $('#submitButton').prop('disabled', true).html(`
+                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                <span role="status">Processing <span id="uploadPercentage" style="font-variant-numeric: tabular-nums;">0%</span></span>
+            `);
+
+            // Disable form inputs
+            $('#evaluasiForm input').prop('disabled', true);
+
+            try {
+                // Perform the post request with progress handling
+                let response = await axios.post(url, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    },
+                    onUploadProgress: function(progressEvent) {
+                        if (progressEvent.lengthComputable) {
+                            var percent = Math.round((progressEvent.loaded / progressEvent.total) * 100);
+                            $('#uploadProgressBar').css('width', percent + '%');
+                            $('#uploadPercentage').html(percent + '%');
+                        }
+                    },
+                    cancelToken: source.token // Attach the token here
+                });
+
+                // Handle successful response
+                if (response.data.success) {
+                    showSuccessToast(response.data.message, 'success');
+                    $('#evaluasiModal').modal('hide');
+                    $('#uploadProgressBar').css('width', '0%');
+                    fetchEvaluasiEdukasi();
+                } else {
+                    console.log("Validation Errors:", response.data.errors);
+
+                    // Clear previous validation states
+                    $('#edukasiForm .is-invalid').removeClass('is-invalid');
+                    $('#edukasiForm .invalid-feedback').text('').hide();
+
+                    // Display new validation errors
+                    for (const field in response.data.errors) {
+                        if (response.data.errors.hasOwnProperty(field)) {
+                            const fieldElement = $('#' + field);
+
+                            // Handle radio button group separately
+                            if (field === 'evaluasi') {
+                                const radioGroup = $("input[type='radio']");
+                                const feedbackElement = radioGroup.closest('.col-form-label').find('.invalid-feedback');
+
+                                if (radioGroup.length > 0 && feedbackElement.length > 0) {
+                                    radioGroup.addClass('is-invalid');
+                                    feedbackElement.text(response.data.errors[field]).show();
+
+                                    // Remove error message when the user selects any radio button in the group
+                                    radioGroup.on('change', function() {
+                                        $("input[type='radio']").removeClass('is-invalid');
+                                        feedbackElement.removeAttr('style').hide();
+                                    });
+                                }
+                            } else {
+                                const feedbackElement = fieldElement.siblings('.invalid-feedback');
+
+                                if (fieldElement.length > 0 && feedbackElement.length > 0) {
+                                    fieldElement.addClass('is-invalid');
+                                    feedbackElement.text(response.data.errors[field]).show();
+
+                                    // Remove error message when the user corrects the input
+                                    fieldElement.on('input change', function() {
+                                        $(this).removeClass('is-invalid');
+                                        $(this).siblings('.invalid-feedback').text('').hide();
+                                    });
+                                } else {
+                                    console.warn("Elemen tidak ditemukan pada field:", field);
+                                }
+                            }
+                        }
+                    }
+                    console.error('Perbaiki kesalahan pada formulir.');
+                    $('#uploadProgressBar').addClass('bg-danger');
+                }
+            } catch (error) {
+                if (axios.isCancel(error)) {
+                    showFailedToast(error.message);
+                    $('#uploadProgressBar').css('width', '0%');
+                } else {
+                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                    $('#uploadProgressBar').addClass('bg-danger');
+                }
+            } finally {
+                // Reset the form and UI elements
+                $('#uploadPercentage').html('0%');
+                $('#cancelButton').prop('disabled', true).hide();
+                $('#submitButton').prop('disabled', false).html(`
+                    <i class="fa-solid fa-floppy-disk"></i> Save
+                `);
+                $('#evaluasiForm input').prop('disabled', false);
+            }
+
+            // Attach the cancel functionality to the close button
+            $('#closeBtn, #cancelButton').on('click', function() {
+                source.cancel('Penambahan evaluasi edukasi telah dibatalkan.');
+            });
+        });
+
+        // Reset form saat modal ditutup
+        $('#evaluasiModal').on('hidden.bs.modal', function() {
+            $('#evaluasiForm')[0].reset();
+            $('#tanda_tangan_edukator_preview').attr('src', '#');
+            $('#tanda_tangan_edukator_preview_div').hide();
+            $('#tanda_tangan_pasien_preview').attr('src', '#');
+            $('#tanda_tangan_pasien_preview_div').hide();
+            $('#evaluasiForm .is-invalid').removeClass('is-invalid');
+            $('#evaluasiForm .invalid-feedback').text('').hide();
+        });
+
         $('#edukasiForm').submit(async function(ə) {
             ə.preventDefault();
 
@@ -429,7 +849,8 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                 $('#edukasiForm input, #edukasiForm select').prop('disabled', false);
             }
         });
-        fetchEdukasi();
+        await fetchEdukasi();
+        fetchEvaluasiEdukasi();
     });
     // Show toast notification
     <?= $this->include('toast/index') ?>
