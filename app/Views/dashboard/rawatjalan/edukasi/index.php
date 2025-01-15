@@ -328,12 +328,12 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
-                        <input type="text" class="form-control" dir="auto" placeholder="nama_edukator" id="nama_edukator" name="nama_edukator">
+                        <input type="text" class="form-control" autocomplete="off" dir="auto" placeholder="nama_edukator" id="nama_edukator" name="nama_edukator">
                         <label for="nama_edukator">Nama Edukator</label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
-                        <input type="text" class="form-control" dir="auto" placeholder="profesi_edukator" id="profesi_edukator" name="profesi_edukator">
+                        <input type="text" class="form-control" autocomplete="off" dir="auto" placeholder="profesi_edukator" id="profesi_edukator" name="profesi_edukator">
                         <label for="profesi_edukator">Profesi Edukator</label>
                         <div class="invalid-feedback"></div>
                     </div>
