@@ -677,7 +677,7 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
             $('#cancelButton').prop('disabled', false).show();
             $('#submitButton').prop('disabled', true).html(`
                 <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
-                <span role="status">Processing <span id="uploadPercentage" style="font-variant-numeric: tabular-nums;">0%</span></span>
+                <span role="status">Memproses <span id="uploadPercentage" style="font-variant-numeric: tabular-nums;">0%</span></span>
             `);
 
             // Disable form inputs
@@ -766,7 +766,7 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                 $('#uploadPercentage').html('0%');
                 $('#cancelButton').prop('disabled', true).hide();
                 $('#submitButton').prop('disabled', false).html(`
-                    <i class="fa-solid fa-floppy-disk"></i> Save
+                    <i class="fa-solid fa-floppy-disk"></i> Simpan
                 `);
                 $('#evaluasiForm input').prop('disabled', false);
             }
