@@ -88,6 +88,9 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <div class="d-flex flex-wrap justify-content-end gap-2 mt-2">
+                                        <button type="button" class="btn btn-body btn-sm bg-gradient" style="width: 80px; height: 31px;" disabled></button>
+                                    </div>
                                 </div>
                             </div>
                             <hr>
@@ -123,60 +126,6 @@
     let limit = 12;
     let currentPage = 1;
     let pembelianObatId = null;
-    var placeholder = `
-                        <span class="list-group-item border-top-0 pb-3 pt-3" style="cursor: wait;">
-                            <div class="d-flex">
-                                <div class="align-self-center w-100">
-                                    <h5 class="card-title d-flex justify-content-start placeholder-glow">
-                                        <span class="badge bg-body text-body border py-1 px-2 date placeholder" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><span class="spinner-border" style="width: 0.9em; height: 0.9em;" aria-hidden="true"></span></span> <span class="placeholder mx-1" style="width: 100%"></span>
-                                        <span class="badge bg-body text-body border py-1 px-2 date placeholder" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><span class="spinner-border" style="width: 0.9em; height: 0.9em;" aria-hidden="true"></span></span>
-                                    </h5>
-                                    <div style="font-size: 0.75em;">
-                                        <div class="mb-0 row g-1 placeholder-glow">
-                                            <div class="col-5 fw-medium text-truncate">
-                                                <span class="placeholder w-100"></span>
-                                            </div>
-                                            <div class="col placeholder-glow">
-                                                <span class="placeholder w-100"></span>
-                                            </div>
-                                        </div>
-                                        <div class="mb-0 row g-1 placeholder-glow">
-                                            <div class="col-5 fw-medium text-truncate">
-                                                <span class="placeholder w-100"></span>
-                                            </div>
-                                            <div class="col placeholder-glow">
-                                                <span class="placeholder w-100"></span>
-                                            </div>
-                                        </div>
-                                        <div class="mb-0 row g-1 placeholder-glow">
-                                            <div class="col-5 fw-medium text-truncate">
-                                                <span class="placeholder w-100"></span>
-                                            </div>
-                                            <div class="col placeholder-glow">
-                                                <span class="placeholder w-100"></span>
-                                            </div>
-                                        </div>
-                                        <div class="mb-0 row g-1 placeholder-glow">
-                                            <div class="col-5 fw-medium text-truncate">
-                                                <span class="placeholder w-100"></span>
-                                            </div>
-                                            <div class="col placeholder-glow">
-                                                <span class="placeholder w-100"></span>
-                                            </div>
-                                        </div>
-                                        <div class="mb-0 row g-1 placeholder-glow">
-                                            <div class="col-5 fw-medium text-truncate">
-                                                <span class="placeholder w-100"></span>
-                                            </div>
-                                            <div class="col placeholder-glow">
-                                                <span class="placeholder w-100"></span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </span>
-    `;
 
     async function fetchPasien() {
         const search = $('#searchInput').val();
@@ -221,7 +170,7 @@
                     const alamat = pasien.alamat ? pasien.alamat : "<em>Tidak ada</em>";
                     const telpon = pasien.telpon ? pasien.telpon : "<em>Tidak ada</em>";
                     const pasienElement = `
-            <a href="<?= base_url('pasien/detailpasien') ?>/${pasien.id_pasien}" class="list-group-item list-group-item-action border-top-0 pb-3 pt-3">
+            <span class="list-group-item border-top-0 pb-3 pt-3">
                 <div class="d-flex">
                     <div class="align-self-center w-100">
                         <h5 class="card-title d-flex date justify-content-between">
@@ -263,9 +212,14 @@
                                             </div>
                                         </div>
                                     </div>
+                            <div class="d-flex flex-wrap justify-content-end gap-2 mt-2">
+                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('pasien/detailpasien') ?>/${pasien.id_pasien}'">
+                                    <i class="fa-solid fa-user-injured"></i> Lihat Pasien
+                                </button>
+                            </div>        
                     </div>
                 </div>
-            </a>
+            </span>
                 `;
 
                     $('#pasienContainer').append(pasienElement);
