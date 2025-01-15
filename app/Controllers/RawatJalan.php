@@ -41,13 +41,57 @@ class RawatJalan extends BaseController
         }
     }
 
-    public function rawatjalanlist($tanggal)
+    public function rawatjalanlisttanggal($tanggal)
     {
         // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', 'Perawat', atau 'Admisi' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat'  || session()->get('role') == 'Admisi') {
             $rawatjalan = $this->RawatJalanModel
                 ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
                 ->like('tanggal_registrasi', $tanggal)
+                ->findAll();
+
+            $db = db_connect();
+
+            // Ambil semua data dari master_jaminan untuk di-cache
+            $jaminanList = $db->table('master_jaminan')
+                ->select('jaminanKode, jaminanNama')
+                ->get()
+                ->getResultArray();
+
+            // Ubah data menjadi array dengan key sebagai jaminanKode untuk akses cepat
+            $jaminanMap = [];
+            foreach ($jaminanList as $jaminan) {
+                $jaminanMap[$jaminan['jaminanKode']] = $jaminan['jaminanNama'];
+            }
+
+            // Loop untuk mengganti nilai 'jaminan' di $rawatjalan
+            foreach ($rawatjalan as &$rajal) {
+                if (isset($jaminanMap[$rajal['jaminan']])) {
+                    $rajal['jaminan'] = $jaminanMap[$rajal['jaminan']];
+                } else {
+                    $rajal['jaminan'] = 'Tidak Diketahui'; // Default jika kode jaminan tidak ditemukan
+                }
+            }
+
+            // Mengembalikan respons JSON dengan data pasien
+            return $this->response->setJSON([
+                'data' => $rawatjalan,
+            ]);
+        } else {
+            // Jika peran tidak dikenali, kembalikan status 404
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
+        }
+    }
+
+    public function rawatjalanlistrm($no_rm)
+    {
+        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', 'Perawat', atau 'Admisi' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat'  || session()->get('role') == 'Admisi') {
+            $rawatjalan = $this->RawatJalanModel
+                ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
+                ->like('pasien.no_rm', $no_rm)
                 ->findAll();
 
             $db = db_connect();
