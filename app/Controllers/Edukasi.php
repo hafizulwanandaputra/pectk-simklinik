@@ -182,7 +182,7 @@ class Edukasi extends BaseController
                     'edukasi' => $edukasi,
                     'edukasi_evaluasi' => $edukasi_evaluasi,
                     'bcNoReg' => $bcNoReg,
-                    'title' => 'Skrining ' . $rawatjalan['nama_pasien'] . ' (' . $rawatjalan['no_rm'] . ') - ' . $rawatjalan['nomor_registrasi'] . ' - ' . $this->systemName,
+                    'title' => 'Edukasi ' . $rawatjalan['nama_pasien'] . ' (' . $rawatjalan['no_rm'] . ') - ' . $rawatjalan['nomor_registrasi'] . ' - ' . $this->systemName,
                     'agent' => $this->request->getUserAgent()
                 ];
                 // return view('dashboard/rawatjalan/edukasi/form', $data);
