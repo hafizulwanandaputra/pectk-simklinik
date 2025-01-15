@@ -59,6 +59,8 @@ writable/session/*
 
 writable/uploads/*
 !writable/uploads/index.html
+writable/uploads/scan_penunjang/*
+!writable/uploads/scan_penunjang
 writable/uploads/ttd_edukator_evaluasi/*
 !writable/uploads/ttd_edukator_evaluasi
 writable/uploads/ttd_pasien_evaluasi/*
