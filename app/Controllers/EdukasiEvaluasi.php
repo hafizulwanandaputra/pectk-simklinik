@@ -7,8 +7,6 @@ use App\Models\RawatJalanModel;
 use App\Models\EdukasiModel;
 use App\Models\EdukasiEvaluasiModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
-use Dompdf\Dompdf;
-use Picqer\Barcode\BarcodeGeneratorPNG;
 
 class EdukasiEvaluasi extends BaseController
 {

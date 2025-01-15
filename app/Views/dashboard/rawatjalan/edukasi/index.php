@@ -534,7 +534,7 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
         // Tampilkan modal tambah evaluasi edukasi
         $('#addEvaluasiButton').click(function() {
             $('#evaluasiModalLabel').text('Tambah Evaluasi Edukasi'); // Ubah judul modal menjadi 'Tambah Evaluasi Edukasi'
-            $('#is_edit').val('');
+            $('#id_edukasi_evaluasi').val('');
             $('#evaluasiModal').modal('show'); // Tampilkan modal resep luar
         });
 
