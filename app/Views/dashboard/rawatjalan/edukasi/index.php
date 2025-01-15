@@ -67,7 +67,7 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
             </li>
             <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-tertiary transparent-blur">
                 <div class="no-fluid-content">
-                    <nav class="nav nav-underline flex-nowrap overflow-auto">
+                    <nav class="nav nav-underline justify-content-center flex-nowrap overflow-auto">
                         <?php foreach ($listRawatJalan as $list) : ?>
                             <a class="nav-link py-1 text-nowrap <?= ($activeSegment === $list['id_rawat_jalan']) ? 'active' : '' ?>" href="<?= base_url('rawatjalan/edukasi/' . $list['id_rawat_jalan']); ?>"><?= $list['nomor_registrasi']; ?></a>
                         <?php endforeach; ?>
@@ -294,10 +294,38 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                         <i class="fa-solid fa-plus"></i> Tambah Evaluasi
                     </button>
                 </div>
+                <center id="empty-placeholder" class="my-3" style="display: none;">
+                    <h1><i class="fa-solid fa-user-graduate"></i></h1>
+                    <h3>Evaluasi Edukasi Pasien</h3>
+                    <div class="text-muted">Klik "Tambah Evaluasi" untuk menambahkan evaluasi edukasi</div>
+                </center>
                 <ul class="list-group shadow-sm" id="evaluasiEdukasiList">
-                    <li class="list-group-item bg-body-tertiary">
-                        <div class="fw-bold text-center">Memuat evaluasi edukasi...</div>
-                    </li>
+                    <?php for ($i = 0; $i < 4; $i++) : ?>
+                        <li class="list-group-item bg-body-tertiary" style="cursor: wait;">
+                            <div class="fw-bold fs-5 placeholder-glow">
+                                <span class="placeholder w-100"></span>
+                            </div>
+                            <div class="date text-nowrap placeholder-glow">
+                                <span class="placeholder w-100"></span>
+                            </div>
+                            <div class="date text-nowrap placeholder-glow">
+                                <span class="placeholder w-100"></span>
+                            </div>
+                            <div class="date text-nowrap text-muted placeholder-glow"><small>
+                                    <span class="placeholder w-100"></span>
+                                </small></div>
+                            <div class="date text-nowrap text-muted placeholder-glow"><small>
+                                    <span class="placeholder w-100"></span>
+                                </small></div>
+                            <div class="placeholder-glow placeholder-glow">
+                                <span class="placeholder w-100" style="max-width: 128px;"></span>
+                            </div>
+                            <div class="btn-group float-end" role="group">
+                                <button class="btn btn-outline-body text-nowrap bg-gradient edit-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em; width: 80px; height: 30.781px;" disabled></button>
+                                <button class="btn btn-outline-danger text-nowrap bg-gradient delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em; width: 80px; height: 30.781px;" disabled></button>
+                            </div>
+                        </li>
+                    <?php endfor; ?>
                 </ul>
             </div>
         </div>
@@ -486,14 +514,10 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
             let totalPembayaran = 0;
 
             if (data.length === 0) {
-                // Tampilkan pesan jika tidak ada data
-                const emptyRow = `
-                    <li class="list-group-item bg-body-tertiary">
-                        <div class="fw-bold text-center">Tidak ada evaluasi edukasi. Klik "Tambah Evaluasi" untuk menambahkan evaluasi edukasi.</div>
-                    </li>
-                `;
-                $('#evaluasiEdukasiList').append(emptyRow);
+                $('#empty-placeholder').show();
+                $('#evaluasiEdukasiList').hide();
             } else {
+                $('#empty-placeholder').hide();
                 data.forEach(function(evaluasi_edukasi) {
                     let evaluasi = evaluasi_edukasi.evaluasi;
                     if (evaluasi === 'MENGERTI') {
@@ -517,6 +541,7 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                         </div>
                     </li>
                     `;
+                    $('#evaluasiEdukasiList').show();
                     $('#evaluasiEdukasiList').append(evaluasiEdukasiElement);
                 });
             }
