@@ -109,6 +109,7 @@ class Asesmen extends BaseController
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
             // Mengambil data asesmen berdasarkan ID
             $data = $this->AsesmenModel->find($id); // Mengambil asesmen
+            $data['sakit_lainnya'] = explode(',', $data['sakit_lainnya']); // Ubah CSV menjadi array
             return $this->response->setJSON($data); // Mengembalikan data asesmen dalam format JSON
         } else {
             // Mengembalikan status 404 jika peran tidak diizinkan
@@ -220,6 +221,8 @@ class Asesmen extends BaseController
                 ->get()
                 ->getRowArray();
 
+            $asesmen['sakit_lainnya'] = str_replace(',', ', ', $asesmen['sakit_lainnya']);
+
             // === Generate Barcode ===
             $barcodeGenerator = new BarcodeGeneratorPNG();
             $bcNoReg = base64_encode($barcodeGenerator->getBarcode($rawatjalan['nomor_registrasi'], $barcodeGenerator::TYPE_CODE_128));
@@ -266,6 +269,10 @@ class Asesmen extends BaseController
                 throw PageNotFoundException::forPageNotFound();
             }
 
+            // Proses data sakit_lainnya dari select multiple
+            $sakit_lainnya = $this->request->getPost('sakit_lainnya');
+            $sakit_lainnya_csv = is_array($sakit_lainnya) ? implode(',', $sakit_lainnya) : NULL;
+
             // Data yang akan disimpan
             if (session()->get('role') == 'Perawat') {
                 $data = [
@@ -287,7 +294,7 @@ class Asesmen extends BaseController
                     'kesadaran_mental' => $this->request->getPost('kesadaran_mental') ?: NULL,
                     'alergi' => $this->request->getPost('alergi') ?: NULL,
                     'alergi_keterangan' => $this->request->getPost('alergi_keterangan') ?: NULL,
-                    'sakit_lainnya' => $this->request->getPost('sakit_lainnya') ?: NULL,
+                    'sakit_lainnya' => $sakit_lainnya_csv,
                     'persetujuan_dokter' => $asesmen['persetujuan_dokter'],
                     'nama_dokter' => $asesmen['nama_dokter'],
                     'waktu_dibuat' => $asesmen['waktu_dibuat'],
@@ -312,7 +319,7 @@ class Asesmen extends BaseController
                     'kesadaran_mental' => $this->request->getPost('kesadaran_mental') ?: NULL,
                     'alergi' => $this->request->getPost('alergi') ?: NULL,
                     'alergi_keterangan' => $this->request->getPost('alergi_keterangan') ?: NULL,
-                    'sakit_lainnya' => $this->request->getPost('sakit_lainnya') ?: NULL,
+                    'sakit_lainnya' => $sakit_lainnya_csv,
                     'diagnosa_medis_1' => $this->request->getPost('diagnosa_medis_1') ?: NULL,
                     'icdx_kode_1' => $this->request->getPost('icdx_kode_1') ?: NULL,
                     'diagnosa_medis_2' => $this->request->getPost('diagnosa_medis_2') ?: NULL,

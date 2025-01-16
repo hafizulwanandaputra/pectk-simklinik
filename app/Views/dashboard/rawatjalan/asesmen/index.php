@@ -129,7 +129,7 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
             </div>
             <div class="mb-3">
                 <div class="fw-bold mb-2 border-bottom">Pemeriksaan Umum</div>
-                <div class="row row-cols-1 row-cols-lg-2 g-2 align-items-start">
+                <div class="row row-cols-1 row-cols-lg-2 g-2 align-items-start mb-2">
                     <div class="row row-cols-1 g-2 align-items-start">
                         <div class="col">
                             <div class="form-floating">
@@ -240,14 +240,27 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                                 <div class="invalid-feedback"></div>
                             </div>
                         </div>
-                        <div class="col">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" id="sakit_lainnya" name="sakit_lainnya" value="" autocomplete="off" dir="auto" placeholder="sakit_lainnya">
-                                <label for="sakit_lainnya">Sakit Lainnya</label>
-                                <div class="invalid-feedback"></div>
-                            </div>
-                        </div>
                     </div>
+                </div>
+                <div class="mb-2">
+                    <label for="sakit_lainnya" class="form-label">
+                        Sakit Lainnya<br><small class="text-muted">Tekan dan tahan <kbd>Ctrl</kbd> atau <kbd>⌘ Command</kbd> jika tidak bisa memilih lebih dari satu</small>
+                    </label>
+                    <select class="form-select" id="sakit_lainnya" name="sakit_lainnya[]" aria-label="sakit_lainnya" size="12" multiple>
+                        <option value="TIDAK ADA">TIDAK ADA</option>
+                        <option value="ASMA">ASMA</option>
+                        <option value="ASAM URAT">ASAM URAT</option>
+                        <option value="STROKE">STROKE</option>
+                        <option value="KOLESTEROL">KOLESTEROL</option>
+                        <option value="TB PARU">TB PARU</option>
+                        <option value="DIABETES">DIABETES</option>
+                        <option value="HIPERTENSI">HIPERTENSI</option>
+                        <option value="JANTUNG">JANTUNG</option>
+                        <option value="MAGH">MAGH</option>
+                        <option value="TIROID">TIROID</option>
+                        <option value="VERTIGO">VERTIGO</option>
+                    </select>
+                    <div class="invalid-feedback"></div>
                 </div>
             </div>
             <?php if (session()->get('role') != 'Perawat') : ?>
@@ -593,7 +606,14 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                 $("input[name='alergi'][value='" + alergi + "']").prop('checked', true);
             }
             $('#alergi_keterangan').val(data.alergi_keterangan);
-            $('#sakit_lainnya').val(data.sakit_lainnya);
+            const sakit_lainnya = data.sakit_lainnya;
+            $('#sakit_lainnya option').each(function() {
+                const value = $(this).val(); // Dapatkan nilai opsi
+                if (sakit_lainnya.includes(value)) {
+                    // Tandai opsi jika ada dalam array
+                    $(this).prop('selected', true);
+                }
+            });
 
             <?php if (session()->get('role') != 'Perawat') : ?>
                 // Diagnosis Medis (A)
