@@ -66,6 +66,7 @@ class Penunjang extends BaseController
             $previous = $db->table('rawat_jalan')
                 ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
                 ->where('rawat_jalan.id_rawat_jalan <', $id) // Kondisi untuk id sebelumnya
+                ->where('rawat_jalan.status', 'DAFTAR')
                 ->orderBy('rawat_jalan.id_rawat_jalan', 'DESC') // Urutan descending
                 ->limit(1) // Batas 1 hasil
                 ->get()
@@ -75,6 +76,7 @@ class Penunjang extends BaseController
             $next = $db->table('rawat_jalan')
                 ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
                 ->where('rawat_jalan.id_rawat_jalan >', $id) // Kondisi untuk id berikutnya
+                ->where('rawat_jalan.status', 'DAFTAR')
                 ->orderBy('rawat_jalan.id_rawat_jalan', 'ASC') // Urutan ascending
                 ->limit(1) // Batas 1 hasil
                 ->get()
