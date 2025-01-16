@@ -177,7 +177,7 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                     </div>
                     <div class="row row-cols-1 g-2 align-items-start">
                         <div class="col">
-                            <div class="row g-1">
+                            <div class="row g-1 radio-group">
                                 <label for="keadaan_umum" class="col col-form-label">Keadaan Umum</label>
                                 <div class="col col-form-label">
                                     <div class="d-flex align-items-center justify-content-between">
@@ -212,7 +212,7 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                             </div>
                         </div>
                         <div class="col">
-                            <div class="row g-1">
+                            <div class="row g-1 radio-group">
                                 <label for="alergi" class="col col-form-label">Alergi</label>
                                 <div class="col col-form-label">
                                     <div class="d-flex align-items-center justify-content-evenly">
@@ -1121,6 +1121,7 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
             // Reset form saat modal ditutup
             $('#mataModal').on('hidden.bs.modal', function() {
                 $('#mataForm')[0].reset();
+                $('#uploadProgressBar').removeClass('bg-danger').css('width', '0%');
                 $('#gambar_preview').attr('src', '#');
                 $('#gambar_preview_div').hide();
                 $('#mataForm .is-invalid').removeClass('is-invalid');
@@ -1183,9 +1184,9 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                             const fieldElement = $('#' + field);
 
                             // Handle radio button group separately
-                            if (field === 'alergi' || field === 'keadaan_umum') {
-                                const radioGroup = $("input[type='radio']");
-                                const feedbackElement = radioGroup.closest('.col-form-label').find('.invalid-feedback');
+                            if (['alergi', 'keadaan_umum'].includes(field)) {
+                                const radioGroup = $(`input[name='${field}']`); // Ambil grup radio berdasarkan nama
+                                const feedbackElement = radioGroup.closest('.radio-group').find('.invalid-feedback'); // Gunakan pembungkus dengan class tertentu
 
                                 if (radioGroup.length > 0 && feedbackElement.length > 0) {
                                     radioGroup.addClass('is-invalid');
@@ -1193,9 +1194,11 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
 
                                     // Remove error message when the user selects any radio button in the group
                                     radioGroup.on('change', function() {
-                                        $("input[type='radio']").removeClass('is-invalid');
-                                        feedbackElement.removeAttr('style').hide();
+                                        radioGroup.removeClass('is-invalid');
+                                        feedbackElement.text('').hide();
                                     });
+                                } else {
+                                    console.warn("Radio group tidak ditemukan untuk field:", field);
                                 }
                             } else {
                                 const feedbackElement = fieldElement.siblings('.invalid-feedback');

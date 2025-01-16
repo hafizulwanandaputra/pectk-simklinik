@@ -83,7 +83,7 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
             <div class="mb-3">
                 <div class="fw-bold mb-2 border-bottom"><span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">I</span> Skrining Risiko Cedera/Jatuh (<em>Get Up and Go Score</em>)</div>
                 <div class="mb-2">
-                    <div class="row g-1 align-items-center">
+                    <div class="row g-1 align-items-center radio-group">
                         <label for="jatuh_sempoyongan" class="col col-form-label">
                             <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">a</span> Perhatikan cara berjalan pasien saat duduk di kursi. Apakah pasien tampak tidak seimbang (sempoyongan/limbung)?
                         </label>
@@ -107,7 +107,7 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                     </div>
                 </div>
                 <div class="mb-2">
-                    <div class="row g-1 align-items-center">
+                    <div class="row g-1 align-items-center radio-group">
                         <label for="jatuh_penopang" class="col col-form-label">
                             <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">b</span> Apakah pasien memegang pinggiran kursi atau meja atau benda lain sebagai penopang saat akan duduk?
                         </label>
@@ -131,7 +131,7 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                     </div>
                 </div>
                 <div class="mb-2">
-                    <div class="row g-1 align-items-center">
+                    <div class="row g-1 align-items-center radio-group">
                         <label for="jatuh_info_dokter" class="col col-form-label">
                             Diberitahukan ke dokter?
                         </label>
@@ -270,7 +270,7 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                     </div>
                 </div>
                 <div class="mb-2">
-                    <div class="row g-1 align-items-center">
+                    <div class="row g-1 align-items-center radio-group">
                         <label for="nyeri_info_dokter" class="col col-form-label">
                             Diberitahukan ke dokter?
                         </label>
@@ -294,7 +294,7 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                     </div>
                 </div>
                 <div class="mb-2">
-                    <div class="row g-1 align-items-center">
+                    <div class="row g-1 align-items-center radio-group">
                         <label for="nyeri_info_pukul" class="col col-form-label">
                             Pukul diberitahukan
                         </label>
@@ -412,9 +412,9 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                             const fieldElement = $('#' + field);
 
                             // Handle radio button group separately
-                            if (field === 'jatuh_sempoyongan' || field === 'jatuh_penopang' || field === 'jatuh_info_dokter' || field === 'nyeri_info_dokter') {
-                                const radioGroup = $("input[type='radio']");
-                                const feedbackElement = radioGroup.closest('.col-form-label').find('.invalid-feedback');
+                            if (['jatuh_sempoyongan', 'jatuh_penopang', 'jatuh_info_dokter', 'nyeri_info_dokter'].includes(field)) {
+                                const radioGroup = $(`input[name='${field}']`); // Ambil grup radio berdasarkan nama
+                                const feedbackElement = radioGroup.closest('.radio-group').find('.invalid-feedback'); // Gunakan pembungkus dengan class tertentu
 
                                 if (radioGroup.length > 0 && feedbackElement.length > 0) {
                                     radioGroup.addClass('is-invalid');
@@ -422,9 +422,11 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
 
                                     // Remove error message when the user selects any radio button in the group
                                     radioGroup.on('change', function() {
-                                        $("input[type='radio']").removeClass('is-invalid');
-                                        feedbackElement.removeAttr('style').hide();
+                                        radioGroup.removeClass('is-invalid');
+                                        feedbackElement.text('').hide();
                                     });
+                                } else {
+                                    console.warn("Radio group tidak ditemukan untuk field:", field);
                                 }
                             } else {
                                 const feedbackElement = fieldElement.siblings('.invalid-feedback');
