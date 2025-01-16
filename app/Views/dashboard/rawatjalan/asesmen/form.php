@@ -312,23 +312,29 @@ $waktuFormatted = $dateTime->format('H.i.s');
                 </tbody>
             </table>
             <h3 style="padding-left: 0.25cm; padding-right: 0.25cm; margin: 0;">PEMERIKSAAN FISIK (O):</h3>
-            <table class="table" style="width: 100%; margin-bottom: 4px; border-collapse: collapse; padding-left: 0.25cm; padding-right: 0.25cm;">
+            <table class="table" style="width: 100%; margin-bottom: 4px; border-collapse: collapse; padding-left: 0.25cm; padding-right: 0.25cm; border: 1px solid black;">
                 <tr>
-                    <td style="width: 0%; text-align: center; vertical-align: middle;"></td>
-                    <td style="width: 50%; text-align: center; vertical-align: middle;">UCVA</td>
-                    <td style="width: 50%; text-align: center; vertical-align: middle;">BCVA</td>
+                    <th style="width: 0%; text-align: center; vertical-align: middle; border: 1px solid black;"></th>
+                    <th style="width: 50%; text-align: center; vertical-align: middle; border: 1px solid black;">OD</th>
+                    <th style="width: 50%; text-align: center; vertical-align: middle; border: 1px solid black;">OS</th>
                 </tr>
                 <tr>
-                    <td style="width: 0%; text-align: center; vertical-align: middle;">OD</td>
-                    <td style="width: 50%; height: 0.8cm; text-align: center; vertical-align: middle; font-size: 12pt;" class="border-bottom-right"></td>
-                    <td style="width: 50%; height: 0.8cm; text-align: center; vertical-align: middle; font-size: 12pt;" class="border-bottom-left"></td>
+                    <th style="width: 0%; text-align: center; vertical-align: middle; border: 1px solid black; white-space: nowrap;">Visus UCVA</th>
+                    <td style="width: 50%; text-align: center; vertical-align: middle; border: 1px solid black;"><?= $asesmen['od_ucva'] ?></td>
+                    <td style="width: 50%; text-align: center; vertical-align: middle; border: 1px solid black;"><?= $asesmen['os_ucva'] ?></td>
                 </tr>
                 <tr>
-                    <td style="width: 0%; text-align: center; vertical-align: middle;">OS</td>
-                    <td style="width: 50%; height: 0.8cm; text-align: center; vertical-align: middle; font-size: 12pt;" class="border-top-right"></td>
-                    <td style="width: 50%; height: 0.8cm; text-align: center; vertical-align: middle; font-size: 12pt;" class="border-top-left"></td>
+                    <th style="width: 0%; text-align: center; vertical-align: middle; border: 1px solid black; white-space: nowrap;">Visus BCVA</th>
+                    <td style="width: 50%; text-align: center; vertical-align: middle; border: 1px solid black;"><?= $asesmen['od_bcva'] ?></td>
+                    <td style="width: 50%; text-align: center; vertical-align: middle; border: 1px solid black;"><?= $asesmen['os_bcva'] ?></td>
+                </tr>
+                <tr>
+                    <th style="width: 0%; text-align: center; vertical-align: middle; border: 1px solid black; white-space: nowrap;">Tono</th>
+                    <td style="width: 50%; text-align: center; vertical-align: middle; border: 1px solid black;"><?= $asesmen['tono_od'] ?></td>
+                    <td style="width: 50%; text-align: center; vertical-align: middle; border: 1px solid black;"><?= $asesmen['tono_os'] ?></td>
                 </tr>
             </table>
+
             <h3 style="padding-left: 0.25cm; padding-right: 0.25cm; margin: 0;">DIAGNOSIS MEDIS (A):</h3>
             <table class="table" style="width: 100%; margin-bottom: 4px; font-size: 8pt; padding-left: 0.25cm; padding-right: 0.25cm;">
                 <tbody>
