@@ -955,7 +955,8 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                 reader.readAsDataURL(this.files[0]);
             });
 
-            $(document).on('click', '.edit-btn', async function() {
+            $(document).on('click', '.edit-btn', async function(ə) {
+                ə.preventDefault();
                 var $this = $(this);
                 var id = $this.data('id');
                 $this.prop('disabled', true).html(`<span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span> Edit`);
@@ -986,7 +987,8 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
             var id_asesmen_mata;
 
             // Show delete confirmation modal
-            $(document).on('click', '.delete-btn', function() {
+            $(document).on('click', '.delete-btn', function(ə) {
+                ə.preventDefault();
                 id_asesmen_mata = $(this).data('id');
                 $('#deleteMessage').html(`Hapus pemeriksaan fisik ini?`);
                 $('#deleteModal').modal('show');
