@@ -76,7 +76,7 @@ class PenunjangScan extends BaseController
             $validation = \Config\Services::validation();
             // Set base validation rules
             $validation->setRules([
-                'pemeriksaan' => 'required',
+                'pemeriksaan_scan' => 'required',
                 'gambar' => 'uploaded[gambar]|max_size[gambar,8192]|is_image[gambar]',
             ]);
 
@@ -99,7 +99,7 @@ class PenunjangScan extends BaseController
             // Simpan data edukasi
             $data = [
                 'nomor_registrasi' => $rawatjalan['nomor_registrasi'],
-                'pemeriksaan' => $this->request->getPost('pemeriksaan'),
+                'pemeriksaan_scan' => $this->request->getPost('pemeriksaan_scan'),
                 'keterangan' => $this->request->getPost('keterangan'),
                 'waktu_dibuat' => date('Y-m-d H:i:s'),
             ];
@@ -110,7 +110,7 @@ class PenunjangScan extends BaseController
             $gambar = $this->request->getFile('gambar');
             if ($gambar && $gambar->isValid() && !$gambar->hasMoved()) {
                 $extension = $gambar->getExtension();
-                $gambar_name = $this->request->getPost('pemeriksaan') . '_' . $rawatjalan['nomor_registrasi'] . '_' . $id_eksekusi . '.' . $extension;
+                $gambar_name = $this->request->getPost('pemeriksaan_scan') . '_' . $rawatjalan['nomor_registrasi'] . '_' . $id_eksekusi . '.' . $extension;
                 $gambar->move(FCPATH . 'uploads/scan_penunjang', $gambar_name);
 
                 // Update nama file ke database
@@ -134,7 +134,7 @@ class PenunjangScan extends BaseController
             $validation = \Config\Services::validation();
             // Set base validation rules
             $validation->setRules([
-                'pemeriksaan' => 'required',
+                'pemeriksaan_scan' => 'required',
                 'gambar' => 'if_exist|max_size[gambar,8192]|is_image[gambar]',
             ]);
 
@@ -149,7 +149,7 @@ class PenunjangScan extends BaseController
             $data = [
                 'id_penunjang_scan' => $this->request->getPost('id_penunjang_scan'),
                 'nomor_registrasi' => $penunjang_scan['nomor_registrasi'],
-                'pemeriksaan' => $this->request->getPost('pemeriksaan'),
+                'pemeriksaan_scan' => $this->request->getPost('pemeriksaan_scan'),
                 'keterangan' => $this->request->getPost('keterangan'),
                 'waktu_dibuat' => $penunjang_scan['waktu_dibuat'],
             ];
@@ -162,7 +162,7 @@ class PenunjangScan extends BaseController
                 if ($penunjang_scan['gambar']) {
                     unlink(FCPATH . 'uploads/scan_penunjang/' . $penunjang_scan['gambar']);
                 }
-                $gambar_name = $this->request->getPost('pemeriksaan') . '_' . $penunjang_scan['nomor_registrasi'] . '_' . $id_penunjang_scan . '.' . $extension;
+                $gambar_name = $this->request->getPost('pemeriksaan_scan') . '_' . $penunjang_scan['nomor_registrasi'] . '_' . $id_penunjang_scan . '.' . $extension;
                 $gambar->move(FCPATH . 'uploads/scan_penunjang', $gambar_name);
                 $data['gambar'] = $gambar_name;
             }

@@ -103,7 +103,7 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                     </div>
                 </div>
                 <div class="mb-2">
-                    <div class="row g-1 align-items-center">
+                    <div class="row g-1 align-items-center radio-group">
                         <label for="penterjemah" class="col col-form-label">
                             Kebutuhan Penerjemah
                         </label>
@@ -139,7 +139,7 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                     </div>
                 </div>
                 <div class="mb-2">
-                    <div class="row g-1 align-items-center">
+                    <div class="row g-1 align-items-center radio-group">
                         <label for="baca_tulis" class="col col-form-label">
                             Baca dan Tulis
                         </label>
@@ -163,7 +163,7 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                     </div>
                 </div>
                 <div class="mb-2">
-                    <div class="row g-1 align-items-center">
+                    <div class="row g-1 align-items-center radio-group">
                         <label for="cara_belajar" class="col col-form-label">
                             Pilihan Cara Belajar
                         </label>
@@ -255,7 +255,7 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                     </div>
                 </div>
                 <div class="mb-2">
-                    <div class="row g-1 align-items-center">
+                    <div class="row g-1 align-items-center radio-group">
                         <label for="kesediaan_pasien" class="col col-form-label">
                             Kesediaan pasien dan keluarga untuk menerima informasi dan edukasi
                         </label>
@@ -390,7 +390,7 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                             <img id="tanda_tangan_pasien_preview" src="#" alt="Tanda Tangan Pasien" class="img-thumbnail" style="max-width: 100%">
                         </div>
                     </div>
-                    <div class="mb-1 mt-1">
+                    <div class="mb-1 mt-1 radio-group">
                         <label for="evaluasi">
                             Evaluasi
                         </label>
@@ -709,18 +709,17 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                     console.log("Validation Errors:", response.data.errors);
 
                     // Clear previous validation states
-                    $('#edukasiForm .is-invalid').removeClass('is-invalid');
-                    $('#edukasiForm .invalid-feedback').text('').hide();
+                    $('#evaluasiForm .is-invalid').removeClass('is-invalid');
+                    $('#evaluasiForm .invalid-feedback').text('').hide();
 
                     // Display new validation errors
                     for (const field in response.data.errors) {
                         if (response.data.errors.hasOwnProperty(field)) {
                             const fieldElement = $('#' + field);
 
-                            // Handle radio button group separately
-                            if (field === 'evaluasi') {
-                                const radioGroup = $("input[type='radio']");
-                                const feedbackElement = radioGroup.closest('.col-form-label').find('.invalid-feedback');
+                            if (['evaluasi'].includes(field)) {
+                                const radioGroup = $(`input[name='${field}']`); // Ambil grup radio berdasarkan nama
+                                const feedbackElement = radioGroup.closest('.radio-group').find('.invalid-feedback'); // Gunakan pembungkus dengan class tertentu
 
                                 if (radioGroup.length > 0 && feedbackElement.length > 0) {
                                     radioGroup.addClass('is-invalid');
@@ -728,9 +727,11 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
 
                                     // Remove error message when the user selects any radio button in the group
                                     radioGroup.on('change', function() {
-                                        $("input[type='radio']").removeClass('is-invalid');
-                                        feedbackElement.removeAttr('style').hide();
+                                        radioGroup.removeClass('is-invalid');
+                                        feedbackElement.text('').hide();
                                     });
+                                } else {
+                                    console.warn("Radio group tidak ditemukan untuk field:", field);
                                 }
                             } else {
                                 const feedbackElement = fieldElement.siblings('.invalid-feedback');
@@ -780,6 +781,7 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
         // Reset form saat modal ditutup
         $('#evaluasiModal').on('hidden.bs.modal', function() {
             $('#evaluasiForm')[0].reset();
+            $('#uploadProgressBar').removeClass('bg-danger').css('width', '0%');
             $('#tanda_tangan_edukator_preview').attr('src', '#');
             $('#tanda_tangan_edukator_preview_div').hide();
             $('#tanda_tangan_pasien_preview').attr('src', '#');
@@ -827,9 +829,9 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                             const fieldElement = $('#' + field);
 
                             // Handle radio button group separately
-                            if (field === 'penterjemah' || field === 'baca_tulis' || field === 'cara_belajar' || field === 'kesediaan_pasien') {
-                                const radioGroup = $("input[type='radio']");
-                                const feedbackElement = radioGroup.closest('.col-form-label').find('.invalid-feedback');
+                            if (['penterjemah', 'baca_tulis', 'cara_belajar', 'kesediaan_pasien'].includes(field)) {
+                                const radioGroup = $(`input[name='${field}']`); // Ambil grup radio berdasarkan nama
+                                const feedbackElement = radioGroup.closest('.radio-group').find('.invalid-feedback'); // Gunakan pembungkus dengan class tertentu
 
                                 if (radioGroup.length > 0 && feedbackElement.length > 0) {
                                     radioGroup.addClass('is-invalid');
@@ -837,9 +839,11 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
 
                                     // Remove error message when the user selects any radio button in the group
                                     radioGroup.on('change', function() {
-                                        $("input[type='radio']").removeClass('is-invalid');
-                                        feedbackElement.removeAttr('style').hide();
+                                        radioGroup.removeClass('is-invalid');
+                                        feedbackElement.text('').hide();
                                     });
+                                } else {
+                                    console.warn("Radio group tidak ditemukan untuk field:", field);
                                 }
                             } else {
                                 const feedbackElement = fieldElement.siblings('.invalid-feedback');

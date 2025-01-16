@@ -219,7 +219,7 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                 <div class="modal-body py-2">
                     <input type="hidden" id="id_penunjang_scan" name="id_penunjang_scan" value="">
                     <div class="form-floating mb-1 mt-1">
-                        <select class="form-select" id="pemeriksaan_scan" name="pemeriksaan" aria-label="pemeriksaan_scan">
+                        <select class="form-select" id="pemeriksaan_scan" name="pemeriksaan_scan" aria-label="pemeriksaan_scan">
                             <option value="" disabled selected>-- Pilih Pemeriksaan --</option>
                             <option value="AUTOREF">AUTOREF</option>
                             <option value="TONO">TONO</option>
@@ -403,7 +403,7 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                         <div class="card-body">
                             <div class="d-inline-flex">
                                 <div class="align-self-center">
-                                    <span class="card-text fw-bold">${penunjang_scan.pemeriksaan}</span>
+                                    <span class="card-text fw-bold">${penunjang_scan.pemeriksaan_scan}</span>
                                 </div>
                             </div>
                             <hr>
@@ -461,7 +461,7 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
 
                 $('#scanModalLabel').text('Edit Evaluasi Edukasi');
                 $('#id_penunjang_scan').val(data.id_penunjang_scan);
-                $('#pemeriksaan_scan').val(data.pemeriksaan);
+                $('#pemeriksaan_scan').val(data.pemeriksaan_scan);
                 if (data.gambar) {
                     $('#gambar_preview').attr('src', `<?= base_url('uploads/scan_penunjang') ?>/` + data.gambar);
                     $('#gambar_preview_div').show();
@@ -616,6 +616,7 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
         // Reset form saat modal ditutup
         $('#scanModal').on('hidden.bs.modal', function() {
             $('#scanForm')[0].reset();
+            $('#uploadProgressBar').removeClass('bg-danger').css('width', '0%');
             $('#gambar_preview').attr('src', '#');
             $('#gambar_preview_div').hide();
             $('#scanForm .is-invalid').removeClass('is-invalid');
