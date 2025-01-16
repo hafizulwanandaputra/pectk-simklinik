@@ -101,7 +101,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                         <select class="form-select" id="dokter_pengirim" name="dokter_pengirim" aria-label="dokter_pengirim">
                             <option value="" disabled selected>-- Pilih Dokter --</option>
                         </select>
-                        <label for="dokter_pengirim">Bahasa</label>
+                        <label for="dokter_pengirim">Dokter Pengirim</label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>

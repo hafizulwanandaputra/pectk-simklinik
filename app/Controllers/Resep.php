@@ -183,6 +183,7 @@ class Resep extends BaseController
                 ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
                 ->like('tanggal_registrasi', date('Y-m-d'))
                 ->where('status', 'DAFTAR')
+                ->orderBy('rawat_jalan.id_rawat_jalan', 'DESC')
                 ->findAll();
 
             // // Mengambil nomor_registrasi yang sudah terpakai di resep

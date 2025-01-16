@@ -48,6 +48,7 @@ class RawatJalan extends BaseController
             $rawatjalan = $this->RawatJalanModel
                 ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
                 ->like('tanggal_registrasi', $tanggal)
+                ->orderBy('rawat_jalan.id_rawat_jalan', 'DESC')
                 ->findAll();
 
             $db = db_connect();
@@ -92,6 +93,7 @@ class RawatJalan extends BaseController
             $rawatjalan = $this->RawatJalanModel
                 ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
                 ->like('pasien.no_rm', $no_rm)
+                ->orderBy('rawat_jalan.id_rawat_jalan', 'DESC')
                 ->findAll();
 
             $db = db_connect();

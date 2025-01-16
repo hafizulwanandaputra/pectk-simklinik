@@ -156,11 +156,6 @@
                 $('#rawatjalan-tanggal').append(emptyRow); // Menambahkan baris pesan ke tabel
             }
 
-            // Mengurutkan data rawatjalan berdasarkan nomor registrasi
-            data.sort((a, b) => a.nomor_registrasi.localeCompare(b.nomor_registrasi, 'en', {
-                numeric: true
-            }));
-
             // Menambahkan setiap rawatjalan ke tabel
             data.forEach(function(rawatjalan, index) {
                 // Mengkondisikan jenis kelamin
@@ -208,6 +203,58 @@
                         `;
                 } else if (pembatal === 'DAFTAR') {
                     pembatal = ``;
+                }
+                let tombol_rme = rawatjalan.status;
+                if (tombol_rme === 'DAFTAR') {
+                    tombol_rme = `
+                                        <div class="d-flex flex-wrap justify-content-end gap-2 mt-2">
+                                            <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') : ?>
+                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/struk') ?>/${rawatjalan.id_rawat_jalan}');">
+                                                    <i class="fa-solid fa-print"></i> Struk
+                                                </button>
+                                                <?php if (session()->get('role') != 'Admin') : ?>
+                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/asesmen/export') ?>/${rawatjalan.id_rawat_jalan}');">
+                                                    <i class="fa-solid fa-print"></i> Asesmen
+                                                </button>
+                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/skrining/export') ?>/${rawatjalan.id_rawat_jalan}');">
+                                                    <i class="fa-solid fa-print"></i> Skrining
+                                                </button>
+                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/edukasi/export') ?>/${rawatjalan.id_rawat_jalan}');">
+                                                    <i class="fa-solid fa-print"></i> Edukasi
+                                                </button>
+                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/penunjang/export') ?>/${rawatjalan.id_rawat_jalan}');">
+                                                    <i class="fa-solid fa-print"></i> Penunjang
+                                                </button>
+                                                <?php endif; ?>
+                                            <?php endif; ?>
+                                            <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') : ?>
+                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/asesmen') ?>/${rawatjalan.id_rawat_jalan}';">
+                                                    <i class="fa-solid fa-user-check"></i> Asesmen
+                                                </button>
+                                                <?php if (session()->get('role') != 'Dokter') : ?>
+                                                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/skrining') ?>/${rawatjalan.id_rawat_jalan}';">
+                                                        <i class="fa-solid fa-user-check"></i> Skrining
+                                                    </button>
+                                                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/edukasi') ?>/${rawatjalan.id_rawat_jalan}';">
+                                                        <i class="fa-solid fa-user-graduate"></i> Edukasi
+                                                    </button>
+                                                <?php endif; ?>
+                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/penunjang') ?>/${rawatjalan.id_rawat_jalan}';">
+                                                    <i class="fa-solid fa-stethoscope"></i> Penunjang
+                                                </button>
+                                            <?php endif; ?>
+                                        </div>
+                        `;
+                } else if (tombol_rme === 'BATAL') {
+                    tombol_rme = `
+                                        <div class="d-flex flex-wrap justify-content-end gap-2 mt-2">
+                                            <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') : ?>
+                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/struk') ?>/${rawatjalan.id_rawat_jalan}');">
+                                                    <i class="fa-solid fa-print"></i> Struk
+                                                </button>
+                                            <?php endif; ?>
+                                        </div>
+                    `;
                 }
 
                 // Membuat elemen baris untuk setiap rawatjalan
@@ -345,43 +392,7 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <div class="d-flex flex-wrap justify-content-end gap-2 mt-2">
-                                            <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') : ?>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/struk') ?>/${rawatjalan.id_rawat_jalan}');">
-                                                    <i class="fa-solid fa-print"></i> Struk
-                                                </button>
-                                                <?php if (session()->get('role') != 'Admin') : ?>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/asesmen/export') ?>/${rawatjalan.id_rawat_jalan}');">
-                                                    <i class="fa-solid fa-print"></i> Asesmen
-                                                </button>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/skrining/export') ?>/${rawatjalan.id_rawat_jalan}');">
-                                                    <i class="fa-solid fa-print"></i> Skrining
-                                                </button>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/edukasi/export') ?>/${rawatjalan.id_rawat_jalan}');">
-                                                    <i class="fa-solid fa-print"></i> Edukasi
-                                                </button>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/penunjang/export') ?>/${rawatjalan.id_rawat_jalan}');">
-                                                    <i class="fa-solid fa-print"></i> Penunjang
-                                                </button>
-                                                <?php endif; ?>
-                                            <?php endif; ?>
-                                            <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') : ?>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/asesmen') ?>/${rawatjalan.id_rawat_jalan}';">
-                                                    <i class="fa-solid fa-user-check"></i> Asesmen
-                                                </button>
-                                                <?php if (session()->get('role') != 'Dokter') : ?>
-                                                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/skrining') ?>/${rawatjalan.id_rawat_jalan}';">
-                                                        <i class="fa-solid fa-user-check"></i> Skrining
-                                                    </button>
-                                                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/edukasi') ?>/${rawatjalan.id_rawat_jalan}';">
-                                                        <i class="fa-solid fa-user-graduate"></i> Edukasi
-                                                    </button>
-                                                <?php endif; ?>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/penunjang') ?>/${rawatjalan.id_rawat_jalan}';">
-                                                    <i class="fa-solid fa-stethoscope"></i> Penunjang
-                                                </button>
-                                            <?php endif; ?>
-                                        </div>
+                                        ${tombol_rme}
                                     </div>
                                 </div>
                             </div>
@@ -447,11 +458,6 @@
                 $('#rawatjalan-no_rm').append(emptyRow); // Menambahkan baris pesan ke tabel
             }
 
-            // Mengurutkan data rawatjalan berdasarkan nomor registrasi
-            data.sort((a, b) => a.nomor_registrasi.localeCompare(b.nomor_registrasi, 'en', {
-                numeric: true
-            }));
-
             // Menambahkan setiap rawatjalan ke tabel
             data.forEach(function(rawatjalan, index) {
                 // Mengkondisikan jenis kelamin
@@ -499,6 +505,58 @@
                         `;
                 } else if (pembatal === 'DAFTAR') {
                     pembatal = ``;
+                }
+                let tombol_rme = rawatjalan.status;
+                if (tombol_rme === 'DAFTAR') {
+                    tombol_rme = `
+                                        <div class="d-flex flex-wrap justify-content-end gap-2 mt-2">
+                                            <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') : ?>
+                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/struk') ?>/${rawatjalan.id_rawat_jalan}');">
+                                                    <i class="fa-solid fa-print"></i> Struk
+                                                </button>
+                                                <?php if (session()->get('role') != 'Admin') : ?>
+                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/asesmen/export') ?>/${rawatjalan.id_rawat_jalan}');">
+                                                    <i class="fa-solid fa-print"></i> Asesmen
+                                                </button>
+                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/skrining/export') ?>/${rawatjalan.id_rawat_jalan}');">
+                                                    <i class="fa-solid fa-print"></i> Skrining
+                                                </button>
+                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/edukasi/export') ?>/${rawatjalan.id_rawat_jalan}');">
+                                                    <i class="fa-solid fa-print"></i> Edukasi
+                                                </button>
+                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/penunjang/export') ?>/${rawatjalan.id_rawat_jalan}');">
+                                                    <i class="fa-solid fa-print"></i> Penunjang
+                                                </button>
+                                                <?php endif; ?>
+                                            <?php endif; ?>
+                                            <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') : ?>
+                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/asesmen') ?>/${rawatjalan.id_rawat_jalan}';">
+                                                    <i class="fa-solid fa-user-check"></i> Asesmen
+                                                </button>
+                                                <?php if (session()->get('role') != 'Dokter') : ?>
+                                                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/skrining') ?>/${rawatjalan.id_rawat_jalan}';">
+                                                        <i class="fa-solid fa-user-check"></i> Skrining
+                                                    </button>
+                                                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/edukasi') ?>/${rawatjalan.id_rawat_jalan}';">
+                                                        <i class="fa-solid fa-user-graduate"></i> Edukasi
+                                                    </button>
+                                                <?php endif; ?>
+                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/penunjang') ?>/${rawatjalan.id_rawat_jalan}';">
+                                                    <i class="fa-solid fa-stethoscope"></i> Penunjang
+                                                </button>
+                                            <?php endif; ?>
+                                        </div>
+                        `;
+                } else if (tombol_rme === 'BATAL') {
+                    tombol_rme = `
+                                        <div class="d-flex flex-wrap justify-content-end gap-2 mt-2">
+                                            <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') : ?>
+                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/struk') ?>/${rawatjalan.id_rawat_jalan}');">
+                                                    <i class="fa-solid fa-print"></i> Struk
+                                                </button>
+                                            <?php endif; ?>
+                                        </div>
+                    `;
                 }
 
                 // Membuat elemen baris untuk setiap rawatjalan
@@ -636,43 +694,7 @@
                                         </div>
                                     </div>
                                     <div>
-                                        <div class="d-flex flex-wrap justify-content-end gap-2 mt-2">
-                                            <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') : ?>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/struk') ?>/${rawatjalan.id_rawat_jalan}');">
-                                                    <i class="fa-solid fa-print"></i> Struk
-                                                </button>
-                                                <?php if (session()->get('role') != 'Admin') : ?>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/asesmen/export') ?>/${rawatjalan.id_rawat_jalan}');">
-                                                    <i class="fa-solid fa-print"></i> Asesmen
-                                                </button>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/skrining/export') ?>/${rawatjalan.id_rawat_jalan}');">
-                                                    <i class="fa-solid fa-print"></i> Skrining
-                                                </button>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/edukasi/export') ?>/${rawatjalan.id_rawat_jalan}');">
-                                                    <i class="fa-solid fa-print"></i> Edukasi
-                                                </button>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/penunjang/export') ?>/${rawatjalan.id_rawat_jalan}');">
-                                                    <i class="fa-solid fa-print"></i> Penunjang
-                                                </button>
-                                                <?php endif; ?>
-                                            <?php endif; ?>
-                                            <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') : ?>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/asesmen') ?>/${rawatjalan.id_rawat_jalan}';">
-                                                    <i class="fa-solid fa-user-check"></i> Asesmen
-                                                </button>
-                                                <?php if (session()->get('role') != 'Dokter') : ?>
-                                                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/skrining') ?>/${rawatjalan.id_rawat_jalan}';">
-                                                        <i class="fa-solid fa-user-check"></i> Skrining
-                                                    </button>
-                                                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/edukasi') ?>/${rawatjalan.id_rawat_jalan}';">
-                                                        <i class="fa-solid fa-user-graduate"></i> Edukasi
-                                                    </button>
-                                                <?php endif; ?>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/penunjang') ?>/${rawatjalan.id_rawat_jalan}';">
-                                                    <i class="fa-solid fa-stethoscope"></i> Penunjang
-                                                </button>
-                                            <?php endif; ?>
-                                        </div>
+                                        ${tombol_rme}
                                     </div>
                                 </div>
                             </div>

@@ -295,11 +295,6 @@
                 // Clear existing options except the first one
                 select.find('option:not(:first)').remove();
 
-                // Sort the options by 'value' in ascending order
-                options.sort((a, b) => b.value.localeCompare(a.value, 'en', {
-                    numeric: true
-                }));
-
                 // Loop through the options and append them to the select element
                 options.forEach(option => {
                     select.append(`<option value="${option.value}">${option.text}</option>`);
@@ -319,11 +314,6 @@
 
                 // Clear existing options except the first one
                 select.find('option:not(:first)').remove();
-
-                // Sort the options by 'value' in ascending order
-                options.sort((a, b) => b.value.localeCompare(a.value, 'en', {
-                    numeric: true
-                }));
 
                 // Loop through the options and append them to the select element
                 options.forEach(option => {
