@@ -4,25 +4,25 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\RawatJalanModel;
-use App\Models\PenunjangModel;
-use App\Models\PenunjangScanModel;
+use App\Models\AsesmenModel;
+use App\Models\AsesmenMataModel;
 
-class PenunjangScan extends BaseController
+class AsesmenMata extends BaseController
 {
     protected $RawatJalanModel;
-    protected $PenunjangModel;
-    protected $PenunjangScanModel;
+    protected $AsesmenModel;
+    protected $AsesmenMataModel;
     public function __construct()
     {
         $this->RawatJalanModel = new RawatJalanModel();
-        $this->PenunjangModel = new PenunjangModel();
-        $this->PenunjangScanModel = new PenunjangScanModel();
+        $this->AsesmenModel = new AsesmenModel();
+        $this->AsesmenMataModel = new AsesmenMataModel();
     }
 
     public function index($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Perawat' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter'  || session()->get('role') == 'Perawat') {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Dokter' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
             $db = db_connect();
 
             // Inisialisasi rawat jalan
@@ -39,12 +39,12 @@ class PenunjangScan extends BaseController
             }
 
             // Memeriksa apakah evaluasi edukasi sudah ada
-            $penunjang_scan = $db->table('medrec_permintaan_penunjang_scan')
+            $asesmen_mata = $db->table('medrec_assesment_mata')
                 ->where('nomor_registrasi', $rawatjalan['nomor_registrasi'])
                 ->get()
                 ->getResultArray();
 
-            return $this->response->setJSON($penunjang_scan);
+            return $this->response->setJSON($asesmen_mata);
         } else {
             // Mengembalikan status 404 jika peran tidak diizinkan
             return $this->response->setStatusCode(404)->setJSON([
@@ -55,10 +55,10 @@ class PenunjangScan extends BaseController
 
     public function view($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Perawat' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter'  || session()->get('role') == 'Perawat') {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Dokter' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
             // Mengambil data skrining berdasarkan ID
-            $data = $this->PenunjangScanModel->find($id); // Mengambil skrining
+            $data = $this->AsesmenMataModel->find($id); // Mengambil skrining
             return $this->response->setJSON($data); // Mengembalikan data skrining dalam format JSON
         } else {
             // Mengembalikan status 404 jika peran tidak diizinkan
@@ -70,13 +70,12 @@ class PenunjangScan extends BaseController
 
     public function create($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Perawat' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter'  || session()->get('role') == 'Perawat') {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Dokter' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
             // Validate
             $validation = \Config\Services::validation();
             // Set base validation rules
             $validation->setRules([
-                'pemeriksaan' => 'required',
                 'gambar' => 'uploaded[gambar]|max_size[gambar,8192]|is_image[gambar]',
             ]);
 
@@ -99,25 +98,24 @@ class PenunjangScan extends BaseController
             // Simpan data edukasi
             $data = [
                 'nomor_registrasi' => $rawatjalan['nomor_registrasi'],
-                'pemeriksaan' => $this->request->getPost('pemeriksaan'),
                 'keterangan' => $this->request->getPost('keterangan'),
                 'waktu_dibuat' => date('Y-m-d H:i:s'),
             ];
-            $this->PenunjangScanModel->save($data);
-            $id_eksekusi = $this->PenunjangScanModel->getInsertID();
+            $this->AsesmenMataModel->save($data);
+            $id_eksekusi = $this->AsesmenMataModel->getInsertID();
 
             // Proses file tanda tangan edukator (jika ada)
             $gambar = $this->request->getFile('gambar');
             if ($gambar && $gambar->isValid() && !$gambar->hasMoved()) {
                 $extension = $gambar->getExtension();
-                $gambar_name = $this->request->getPost('pemeriksaan') . '_' . $rawatjalan['nomor_registrasi'] . '_' . $id_eksekusi . '.' . $extension;
-                $gambar->move(FCPATH . 'uploads/scan_penunjang', $gambar_name);
+                $gambar_name = 'mata_' . $rawatjalan['nomor_registrasi'] . '_' . $id_eksekusi . '.' . $extension;
+                $gambar->move(FCPATH . 'uploads/asesmen_mata', $gambar_name);
 
                 // Update nama file ke database
-                $this->PenunjangScanModel->update($id_eksekusi, ['gambar' => $gambar_name]);
+                $this->AsesmenMataModel->update($id_eksekusi, ['gambar' => $gambar_name]);
             }
 
-            return $this->response->setJSON(['success' => true, 'message' => 'Pemindaian berhasil ditambahkan']);
+            return $this->response->setJSON(['success' => true, 'message' => 'Pemeriksaan fisik berhasil ditambahkan']);
         } else {
             // Mengembalikan status 404 jika peran tidak diizinkan
             return $this->response->setStatusCode(404)->setJSON([
@@ -128,13 +126,12 @@ class PenunjangScan extends BaseController
 
     public function update()
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Perawat' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter'  || session()->get('role') == 'Perawat') {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Dokter' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
             // Validate
             $validation = \Config\Services::validation();
             // Set base validation rules
             $validation->setRules([
-                'pemeriksaan' => 'required',
                 'gambar' => 'if_exist|max_size[gambar,8192]|is_image[gambar]',
             ]);
 
@@ -143,13 +140,12 @@ class PenunjangScan extends BaseController
             }
 
             // Ambil resep luar
-            $penunjang_scan = $this->PenunjangScanModel->find($this->request->getPost('id_penunjang_scan'));
+            $penunjang_scan = $this->AsesmenMataModel->find($this->request->getPost('id_asesmen_mata'));
 
             // Simpan data edukasi
             $data = [
-                'id_penunjang_scan' => $this->request->getPost('id_penunjang_scan'),
+                'id_asesmen_mata' => $this->request->getPost('id_asesmen_mata'),
                 'nomor_registrasi' => $penunjang_scan['nomor_registrasi'],
-                'pemeriksaan' => $this->request->getPost('pemeriksaan'),
                 'keterangan' => $this->request->getPost('keterangan'),
                 'waktu_dibuat' => $penunjang_scan['waktu_dibuat'],
             ];
@@ -158,17 +154,17 @@ class PenunjangScan extends BaseController
             $gambar = $this->request->getFile('gambar');
             if ($gambar && $gambar->isValid() && !$gambar->hasMoved()) {
                 $extension = $gambar->getExtension();
-                $id_penunjang_scan = $this->request->getVar('id_penunjang_scan'); // Pastikan mengambil id yang benar
+                $id_asesmen_mata = $this->request->getVar('id_asesmen_mata'); // Pastikan mengambil id yang benar
                 if ($penunjang_scan['gambar']) {
-                    unlink(FCPATH . 'uploads/scan_penunjang/' . $penunjang_scan['gambar']);
+                    unlink(FCPATH . 'uploads/asesmen_mata/' . $penunjang_scan['gambar']);
                 }
-                $gambar_name = $this->request->getPost('pemeriksaan') . '_' . $penunjang_scan['nomor_registrasi'] . '_' . $id_penunjang_scan . '.' . $extension;
-                $gambar->move(FCPATH . 'uploads/scan_penunjang', $gambar_name);
+                $gambar_name = 'mata_' . $penunjang_scan['nomor_registrasi'] . '_' . $id_asesmen_mata . '.' . $extension;
+                $gambar->move(FCPATH . 'uploads/asesmen_mata', $gambar_name);
                 $data['gambar'] = $gambar_name;
             }
 
-            $this->PenunjangScanModel->save($data);
-            return $this->response->setJSON(['success' => true, 'message' => 'Pemindaian berhasil diperbarui']);
+            $this->AsesmenMataModel->save($data);
+            return $this->response->setJSON(['success' => true, 'message' => 'Pemeriksaan fisik berhasil diperbarui']);
         } else {
             // Mengembalikan status 404 jika peran tidak diizinkan
             return $this->response->setStatusCode(404)->setJSON([
@@ -181,7 +177,7 @@ class PenunjangScan extends BaseController
     // {
     //     // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Perawat' yang diizinkan
     //     if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter'  || session()->get('role') == 'Perawat') {
-    //         $path = FCPATH . 'uploads/scan_penunjang/' . $filename;
+    //         $path = FCPATH . 'uploads/asesmen_mata/' . $filename;
 
     //         if (is_file($path)) {
     //             $mime = mime_content_type($path);
@@ -199,23 +195,23 @@ class PenunjangScan extends BaseController
 
     public function delete($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Perawat' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter'  || session()->get('role') == 'Perawat') {
-            $penunjang_scan = $this->PenunjangScanModel->find($id);
-            if ($penunjang_scan) {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Dokter' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
+            $asesmen_mata = $this->AsesmenMataModel->find($id);
+            if ($asesmen_mata) {
                 // Hapus tanda tangan edukator
-                if ($penunjang_scan['gambar']) {
-                    unlink(FCPATH . 'uploads/scan_penunjang/' . $penunjang_scan['gambar']);
+                if ($asesmen_mata['gambar']) {
+                    unlink(FCPATH . 'uploads/asesmen_mata/' . $asesmen_mata['gambar']);
                 }
 
                 // Hapus evaluasi
-                $this->PenunjangScanModel->delete($id);
+                $this->AsesmenMataModel->delete($id);
                 $db = db_connect();
                 // Reset Nilai Auto Increment
-                $db->query('ALTER TABLE `medrec_permintaan_penunjang_scan` auto_increment = 1');
-                return $this->response->setJSON(['success' => true, 'message' => 'Pemindaian berhasil dihapus']);
+                $db->query('ALTER TABLE `medrec_assesment_mata` auto_increment = 1');
+                return $this->response->setJSON(['success' => true, 'message' => 'Pemeriksaan fisik berhasil dihapus']);
             } else {
-                return $this->response->setStatusCode(404)->setJSON(['success' => false, 'message' => 'Pemindaian tidak ditemukan']);
+                return $this->response->setStatusCode(404)->setJSON(['success' => false, 'message' => 'Pemeriksaan fisik tidak ditemukan']);
             }
         } else {
             // Mengembalikan status 404 jika peran tidak diizinkan

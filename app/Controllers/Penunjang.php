@@ -7,7 +7,6 @@ use App\Models\RawatJalanModel;
 use App\Models\PenunjangModel;
 use App\Models\PoliklinikModel;
 use App\Models\AuthModel;
-use App\Models\EdukasiEvaluasiModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use Dompdf\Dompdf;
 use Picqer\Barcode\BarcodeGeneratorPNG;
@@ -18,14 +17,12 @@ class Penunjang extends BaseController
     protected $PenunjangModel;
     protected $PoliklinikModel;
     protected $AuthModel;
-    protected $EdukasiEvaluasiModel;
     public function __construct()
     {
         $this->RawatJalanModel = new RawatJalanModel();
         $this->PenunjangModel = new PenunjangModel();
         $this->PoliklinikModel = new PoliklinikModel();
         $this->AuthModel = new AuthModel();
-        $this->EdukasiEvaluasiModel = new EdukasiEvaluasiModel();
     }
 
     public function index($id)
@@ -277,7 +274,7 @@ class Penunjang extends BaseController
                 'waktu_dibuat' => $penunjang['waktu_dibuat'],
             ];
             $this->PenunjangModel->save($data);
-            return $this->response->setJSON(['success' => true, 'message' => 'Edukasi berhasil diperbarui']);
+            return $this->response->setJSON(['success' => true, 'message' => 'Pemeriksaan penunjang berhasil diperbarui']);
         } else {
             // Jika peran tidak dikenali, lemparkan pengecualian 404
             throw PageNotFoundException::forPageNotFound();

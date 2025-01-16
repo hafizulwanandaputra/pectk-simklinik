@@ -6,7 +6,6 @@ use App\Controllers\BaseController;
 use App\Models\RawatJalanModel;
 use App\Models\EdukasiModel;
 use App\Models\EdukasiEvaluasiModel;
-use CodeIgniter\Exceptions\PageNotFoundException;
 
 class EdukasiEvaluasi extends BaseController
 {

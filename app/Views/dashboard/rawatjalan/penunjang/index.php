@@ -432,7 +432,6 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
         }
     }
 
-
     $(document).ready(async function() {
         // Tampilkan modal tambah scan penunjang
         $('#addScanButton').click(function() {
@@ -484,7 +483,6 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
         // Show delete confirmation modal
         $(document).on('click', '.delete-btn', function() {
             id_penunjang_scan = $(this).data('id');
-            $('[data-bs-toggle="tooltip"]').tooltip('hide');
             $('#deleteMessage').html(`Hapus pemindaian pemeriksaan penunjang ini?`);
             $('#deleteModal').modal('show');
         });
@@ -565,8 +563,8 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                     console.log("Validation Errors:", response.data.errors);
 
                     // Clear previous validation states
-                    $('#edukasiForm .is-invalid').removeClass('is-invalid');
-                    $('#edukasiForm .invalid-feedback').text('').hide();
+                    $('#scanForm .is-invalid').removeClass('is-invalid');
+                    $('#scanForm .invalid-feedback').text('').hide();
 
                     // Display new validation errors
                     for (const field in response.data.errors) {

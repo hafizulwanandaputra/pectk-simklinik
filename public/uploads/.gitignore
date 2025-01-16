@@ -1,6 +1,8 @@
+asesmen_mata/*
 scan_penunjang/*
 ttd_edukator_evaluasi/*
 ttd_pasien_evaluasi/*
+!asesmen_mata/index.html
 !scan_penunjang/index.html
 !ttd_edukator_evaluasi/index.html
 !ttd_pasien_evaluasi/index.html
