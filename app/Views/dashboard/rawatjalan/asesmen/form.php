@@ -410,7 +410,7 @@ $waktuFormatted = $dateTime->format('H.i.s');
                     </tr>
                 </tbody>
             </table>
-            <h3 style="padding-left: 0.25cm; padding-right: 0.25cm; margin: 0;">TERAPI (P):</h3>
+            <h3 style="padding-left: 0.25cm; padding-right: 0.25cm; margin: 0;">TINDAKAN (P):</h3>
             <table class="table" style="width: 100%; margin-bottom: 4px; font-size: 8pt; padding-left: 0.25cm; padding-right: 0.25cm;">
                 <tbody>
                     <tr>

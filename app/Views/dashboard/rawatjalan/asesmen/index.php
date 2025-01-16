@@ -401,7 +401,7 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                         </table>
                     </div>
                     <div class="mb-3">
-                        <div class="fw-bold mb-2 border-bottom">Terapi (P)</div>
+                        <div class="fw-bold mb-2 border-bottom">Tindakan (P)</div>
                         <div class="table-responsive mb-3">
                             <table class="table mb-0 table-borderless">
                                 <tbody>
@@ -409,7 +409,7 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                                         <td class="align-middle ps-0 pe-1 pt-0 pb-1" style="min-width: 200px;">
                                             <div class="form-floating">
                                                 <input type="text" class="form-control" id="terapi_1" name="terapi_1" value="" autocomplete="off" dir="auto" placeholder="terapi_1">
-                                                <label for="terapi_1">Diagnosis Medis 1</label>
+                                                <label for="terapi_1">Tindakan 1</label>
                                                 <div class="invalid-feedback"></div>
                                             </div>
                                         </td>
@@ -427,7 +427,7 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                                         <td class="align-middle ps-0 pe-1 pt-1 pb-1" style="min-width: 200px;">
                                             <div class="form-floating">
                                                 <input type="text" class="form-control" id="terapi_2" name="terapi_2" value="" autocomplete="off" dir="auto" placeholder="terapi_2">
-                                                <label for="terapi_2">Diagnosis Medis 2</label>
+                                                <label for="terapi_2">Tindakan 2</label>
                                                 <div class="invalid-feedback"></div>
                                             </div>
                                         </td>
@@ -445,7 +445,7 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                                         <td class="align-middle ps-0 pe-1 pt-1 pb-1" style="min-width: 200px;">
                                             <div class="form-floating">
                                                 <input type="text" class="form-control" id="terapi_3" name="terapi_3" value="" autocomplete="off" dir="auto" placeholder="terapi_3">
-                                                <label for="terapi_3">Diagnosis Medis 3</label>
+                                                <label for="terapi_3">Tindakan 3</label>
                                                 <div class="invalid-feedback"></div>
                                             </div>
                                         </td>
@@ -463,7 +463,7 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                                         <td class="align-middle ps-0 pe-1 pt-1 pb-1" style="min-width: 200px;">
                                             <div class="form-floating">
                                                 <input type="text" class="form-control" id="terapi_4" name="terapi_4" value="" autocomplete="off" dir="auto" placeholder="terapi_4">
-                                                <label for="terapi_4">Diagnosis Medis 4</label>
+                                                <label for="terapi_4">Tindakan 4</label>
                                                 <div class="invalid-feedback"></div>
                                             </div>
                                         </td>
@@ -481,7 +481,7 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                                         <td class="align-middle ps-0 pe-1 pt-1 pb-0" style="min-width: 200px;">
                                             <div class="form-floating">
                                                 <input type="text" class="form-control" id="terapi_5" name="terapi_5" value="" autocomplete="off" dir="auto" placeholder="terapi_5">
-                                                <label for="terapi_5">Diagnosis Medis 5</label>
+                                                <label for="terapi_5">Tindakan 5</label>
                                                 <div class="invalid-feedback"></div>
                                             </div>
                                         </td>
