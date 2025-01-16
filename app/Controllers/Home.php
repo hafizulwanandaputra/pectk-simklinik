@@ -83,8 +83,8 @@ class Home extends BaseController
 
         // Menghitung total data dari setiap tabel
         $total_pasien = $pasien->countAllResults(); // Total pasien
-        $total_rawatjalan = $rawatjalan->like('tanggal_registrasi', date('Y-m-d H:i:s'))->where('status', 'DAFTAR')->countAllResults(); // Total rawat jalan hari ini
-        $total_rawatjalan_batal = $rawatjalan->like('tanggal_registrasi', date('Y-m-d H:i:s'))->where('status', 'BATAL')->countAllResults(); // Total rawat jalan yang batal hari ini
+        $total_rawatjalan = $rawatjalan->like('tanggal_registrasi', date('Y-m-d'))->where('status', 'DAFTAR')->countAllResults(); // Total rawat jalan hari ini
+        $total_rawatjalan_batal = $rawatjalan->like('tanggal_registrasi', date('Y-m-d'))->where('status', 'BATAL')->countAllResults(); // Total rawat jalan yang batal hari ini
         $total_supplier = $supplier->countAllResults(); // Total supplier
         $total_obat = $obat->countAllResults(); // Total obat
         $total_pembelian_obat_blm_diterima = $pembelian_obat->where('diterima', 0)->countAllResults(); // Total pembelian obat belum diterima
