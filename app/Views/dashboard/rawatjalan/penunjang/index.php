@@ -1,6 +1,14 @@
 <?php
 $uri = service('uri'); // Load the URI service
 $activeSegment = $uri->getSegment(3); // Get the first segment
+// Tanggal lahir pasien
+$tanggal_lahir = new DateTime($rawatjalan['tanggal_lahir']);
+
+// Tanggal registrasi
+$registrasi = new DateTime(date('Y-m-d', strtotime($rawatjalan['tanggal_registrasi'])));
+
+// Hitung selisih antara tanggal sekarang dan tanggal lahir
+$usia = $registrasi->diff($tanggal_lahir);
 ?>
 <?= $this->extend('dashboard/templates/dashboard'); ?>
 <?= $this->section('css'); ?>
@@ -25,7 +33,7 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
     <div class="flex-fill text-truncate">
         <div class="d-flex flex-column">
             <div class="fw-medium fs-6 lh-sm"><?= $headertitle; ?></div>
-            <div class="fw-medium lh-sm" style="font-size: 0.75em;"><?= $rawatjalan['nomor_registrasi']; ?> • <?= $rawatjalan['no_rm'] ?> • <?= $rawatjalan['nama_pasien']; ?></div>
+            <div class="fw-medium lh-sm" style="font-size: 0.75em;"><?= $rawatjalan['nama_pasien']; ?> • <?= $usia->y . " tahun " . $usia->m . " bulan" ?> • <?= $rawatjalan['no_rm'] ?> • <?= $rawatjalan['nomor_registrasi']; ?></div>
         </div>
     </div>
     <div id="loadingSpinner" class="spinner-border spinner-border-sm mx-2" role="status" style="min-width: 1rem;">
