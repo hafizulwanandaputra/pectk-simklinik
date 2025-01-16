@@ -302,25 +302,25 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                         <?php endfor; ?>
                     </div>
                     <div class="card overflow-auto mt-3 shadow-sm">
-                        <div class="table-responsive">
+                        <div class="table-responsive m-1">
                             <table class="table m-0 table-borderless">
                                 <thead>
                                     <tr>
-                                        <th scope="col" class="align-middle"></th>
-                                        <th scope="col" class="text-center align-middle">OD</th>
-                                        <th scope="col" class="text-center align-middle">OS</th>
+                                        <th scope="col" class="p-1 align-middle"></th>
+                                        <th scope="col" class="text-center p-1 align-middle">OD</th>
+                                        <th scope="col" class="text-center p-1 align-middle">OS</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <th scope="row" class="text-center align-middle">Visus UCVA</th>
-                                        <td class="align-middle">
+                                        <th scope="row" class="text-center align-middle p-1 text-nowrap">Visus UCVA</th>
+                                        <td class="align-middle p-1">
                                             <input type="text" class="form-control" id="od_ucva" name="od_ucva" value="" autocomplete="off" dir="auto" placeholder="" list="od_ucva_list">
                                             <datalist id="od_ucva_list">
                                             </datalist>
                                             <div class="invalid-feedback"></div>
                                         </td>
-                                        <td class="align-middle">
+                                        <td class="align-middle p-1">
                                             <input type="text" class="form-control" id="os_ucva" name="os_ucva" value="" autocomplete="off" dir="auto" placeholder="" list="os_ucva_list">
                                             <datalist id="os_ucva_list">
                                             </datalist>
@@ -328,14 +328,14 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th scope="row" class="text-center align-middle">Visus BCVA</th>
-                                        <td class="align-middle">
+                                        <th scope="row" class="text-center align-middle p-1 text-nowrap">Visus BCVA</th>
+                                        <td class="align-middle p-1">
                                             <input type="text" class="form-control" id="od_bcva" name="od_bcva" value="" autocomplete="off" dir="auto" placeholder="" list="od_bcva_list">
                                             <datalist id="od_bcva_list">
                                             </datalist>
                                             <div class="invalid-feedback"></div>
                                         </td>
-                                        <td class="align-middle">
+                                        <td class="align-middle p-1">
                                             <input type="text" class="form-control" id="os_bcva" name="os_bcva" value="" autocomplete="off" dir="auto" placeholder="" list="os_bcva_list">
                                             <datalist id="os_bcva_list">
                                             </datalist>
@@ -343,12 +343,12 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                                         </td>
                                     </tr>
                                     <tr>
-                                        <th scope="row" class="text-center align-middle">Tono</th>
-                                        <td class="align-middle">
+                                        <th scope="row" class="text-center align-middle p-1 text-nowrap">Tono</th>
+                                        <td class="align-middle p-1">
                                             <input type="text" class="form-control" id="tono_od" name="tono_od" value="" autocomplete="off" dir="auto" placeholder="">
                                             <div class="invalid-feedback"></div>
                                         </td>
-                                        <td class="align-middle">
+                                        <td class="align-middle p-1">
                                             <input type="text" class="form-control" id="tono_os" name="tono_os" value="" autocomplete="off" dir="auto" placeholder="">
                                             <div class="invalid-feedback"></div>
                                         </td>
