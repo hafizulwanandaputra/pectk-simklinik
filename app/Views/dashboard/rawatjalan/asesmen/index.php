@@ -301,7 +301,7 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                             </div>
                         <?php endfor; ?>
                     </div>
-                    <div class="card overflow-auto">
+                    <div class="card overflow-auto mt-3 shadow-sm">
                         <div class="table-responsive">
                             <table class="table m-0 table-borderless">
                                 <thead>
