@@ -260,7 +260,7 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                     </div>
                     <center id="empty-placeholder" class="my-3" style="display: none;">
                         <h1><i class="fa-solid fa-eye"></i></h1>
-                        <h3>Pemeriksaan FIsik</h3>
+                        <h3>Pemeriksaan Fisik</h3>
                         <div class="text-muted">Klik "Pemeriksaan Fisik" untuk menambahkan pemeriksaan fisik</div>
                     </center>
                     <div id="pemeriksaanFisikList" class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-3">
