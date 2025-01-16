@@ -250,163 +250,63 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                     </div>
                 </div>
             </div>
-            <div class="mb-3">
-                <div class="fw-bold mb-2 border-bottom">Pemeriksaan Fisik (O)</div>
-                <div class="card overflow-auto">
-                    <div class="table-responsive">
-                        <table class="table m-0 table-borderless">
-                            <thead>
-                                <tr>
-                                    <th scope="col" class="align-middle"></th>
-                                    <th scope="col" class="text-center align-middle">UCVA</th>
-                                    <th scope="col" class="text-center align-middle">BCVA</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th scope="row" class="text-center align-middle">OD</th>
-                                    <td class="align-middle">
-                                        <input type="text" class="form-control" id="od_ucva" name="od_ucva" value="" autocomplete="off" dir="auto" placeholder="OD UCVA">
-                                        <div class="invalid-feedback"></div>
-                                    </td>
-                                    <td class="align-middle">
-                                        <input type="text" class="form-control" id="od_bcva" name="od_bcva" value="" autocomplete="off" dir="auto" placeholder="OD BCVA">
-                                        <div class="invalid-feedback"></div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row" class="text-center align-middle">OS</th>
-                                    <td class="align-middle">
-                                        <input type="text" class="form-control" id="os_ucva" name="os_ucva" value="" autocomplete="off" dir="auto" placeholder="OS UCVA">
-                                        <div class="invalid-feedback"></div>
-                                    </td>
-                                    <td class="align-middle">
-                                        <input type="text" class="form-control" id="os_bcva" name="os_bcva" value="" autocomplete="off" dir="auto" placeholder="OS BCVA">
-                                        <div class="invalid-feedback"></div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+            <?php if (session()->get('role') != 'Perawat') : ?>
+                <div class="mb-3">
+                    <div class="fw-bold mb-2 border-bottom">Pemeriksaan Fisik (O)</div>
+                    <div class="d-grid gap-2">
+                        <button class="btn btn-primary btn-sm bg-gradient mb-2" type="button" id="addMataButton">
+                            <i class="fa-solid fa-plus"></i> Tambah Pemeriksaan Fisik
+                        </button>
+                    </div>
+                    <center id="empty-placeholder" class="my-3" style="display: none;">
+                        <h1><i class="fa-solid fa-eye"></i></h1>
+                        <h3>Pemeriksaan FIsik</h3>
+                        <div class="text-muted">Klik "Pemeriksaan Fisik" untuk menambahkan pemeriksaan fisik</div>
+                    </center>
+                    <div id="pemeriksaanFisikList" class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-3">
+                        <?php for ($i = 0; $i < 6; $i++) : ?>
+                            <div class="col">
+                                <div class="card shadow-sm h-100" style="cursor: wait;">
+                                    <div class="card-img-top" style="background-color: var(--bs-card-cap-bg); aspect-ratio: 16/9; background-position: center; background-repeat: no-repeat; background-size: cover; position: relative; border-bottom: var(--bs-card-border-width) solid var(--bs-card-border-color);"></div>
+                                    <div class="card-body">
+                                        <div class="d-flex">
+                                            <div class="align-self-center w-100 placeholder-glow">
+                                                <span class="placeholder" style="width: 100%;"></span><br>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <div class="w-100 placeholder-glow">
+                                            <span class="placeholder" style="width: 100%;"></span><br>
+                                            <span class="placeholder" style="width: 100%;"></span>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer d-flex justify-content-end gap-1">
+                                        <a class="btn btn-body btn-sm bg-gradient disabled placeholder" aria-disabled="true" style="width: 32px; height: 31px;"></a>
+                                        <a class="btn btn-danger bg-gradient disabled placeholder" aria-disabled="true" style="width: 32px; height: 31px;"></a>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php endfor; ?>
                     </div>
                 </div>
-            </div>
-            <div class="mb-3">
-                <div class="fw-bold mb-2 border-bottom">Diagnosis Medis (A)</div>
-                <div class="table-responsive mb-3">
-                    <table class="table mb-0 table-borderless">
-                        <tbody>
-                            <tr>
-                                <td class="align-middle ps-0 pe-1 pt-0 pb-1" style="min-width: 200px;">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" id="diagnosa_medis_1" name="diagnosa_medis_1" value="" autocomplete="off" dir="auto" placeholder="diagnosa_medis_1">
-                                        <label for="diagnosa_medis_1">Diagnosis Medis 1</label>
-                                        <div class="invalid-feedback"></div>
-                                    </div>
-                                </td>
-                                <td class="align-middle ps-1 pe-0 pt-0 pb-1" style="min-width: 100px;">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" id="icdx_kode_1" name="icdx_kode_1" value="" autocomplete="off" dir="auto" placeholder="icdx_kode_1" list="icdx_kode_1_list">
-                                        <label for="icdx_kode_1">ICD 10</label>
-                                        <datalist id="icdx_kode_1_list">
-                                        </datalist>
-                                        <div class="invalid-feedback"></div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="align-middle ps-0 pe-1 pt-1 pb-1" style="min-width: 200px;">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" id="diagnosa_medis_2" name="diagnosa_medis_2" value="" autocomplete="off" dir="auto" placeholder="diagnosa_medis_2">
-                                        <label for="diagnosa_medis_2">Diagnosis Medis 2</label>
-                                        <div class="invalid-feedback"></div>
-                                    </div>
-                                </td>
-                                <td class="align-middle ps-1 pe-0 pt-1 pb-1" style="min-width: 100px;">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" id="icdx_kode_2" name="icdx_kode_2" value="" autocomplete="off" dir="auto" placeholder="icdx_kode_2" list="icdx_kode_2_list">
-                                        <label for="icdx_kode_2">ICD 10</label>
-                                        <datalist id="icdx_kode_2_list">
-                                        </datalist>
-                                        <div class="invalid-feedback"></div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="align-middle ps-0 pe-1 pt-1 pb-1" style="min-width: 200px;">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" id="diagnosa_medis_3" name="diagnosa_medis_3" value="" autocomplete="off" dir="auto" placeholder="diagnosa_medis_3">
-                                        <label for="diagnosa_medis_3">Diagnosis Medis 3</label>
-                                        <div class="invalid-feedback"></div>
-                                    </div>
-                                </td>
-                                <td class="align-middle ps-1 pe-0 pt-1 pb-1" style="min-width: 100px;">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" id="icdx_kode_3" name="icdx_kode_3" value="" autocomplete="off" dir="auto" placeholder="icdx_kode_3" list="icdx_kode_3_list">
-                                        <label for="icdx_kode_3">ICD 10</label>
-                                        <datalist id="icdx_kode_3_list">
-                                        </datalist>
-                                        <div class="invalid-feedback"></div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="align-middle ps-0 pe-1 pt-1 pb-1" style="min-width: 200px;">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" id="diagnosa_medis_4" name="diagnosa_medis_4" value="" autocomplete="off" dir="auto" placeholder="diagnosa_medis_4">
-                                        <label for="diagnosa_medis_4">Diagnosis Medis 4</label>
-                                        <div class="invalid-feedback"></div>
-                                    </div>
-                                </td>
-                                <td class="align-middle ps-1 pe-0 pt-1 pb-1" style="min-width: 100px;">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" id="icdx_kode_4" name="icdx_kode_4" value="" autocomplete="off" dir="auto" placeholder="icdx_kode_4" list="icdx_kode_4_list">
-                                        <label for="icdx_kode_4">ICD 10</label>
-                                        <datalist id="icdx_kode_4_list">
-                                        </datalist>
-                                        <div class="invalid-feedback"></div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="align-middle ps-0 pe-1 pt-1 pb-0" style="min-width: 200px;">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" id="diagnosa_medis_5" name="diagnosa_medis_5" value="" autocomplete="off" dir="auto" placeholder="diagnosa_medis_5">
-                                        <label for="diagnosa_medis_5">Diagnosis Medis 5</label>
-                                        <div class="invalid-feedback"></div>
-                                    </div>
-                                </td>
-                                <td class="align-middle ps-1 pe-0 pt-1 pb-0" style="min-width: 100px;">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" id="icdx_kode_5" name="icdx_kode_5" value="" autocomplete="off" dir="auto" placeholder="icdx_kode_5" list="icdx_kode_5_list">
-                                        <label for="icdx_kode_5">ICD 10</label>
-                                        <datalist id="icdx_kode_5_list">
-                                        </datalist>
-                                        <div class="invalid-feedback"></div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div
-                    </div>
                 <div class="mb-3">
-                    <div class="fw-bold mb-2 border-bottom">Terapi (P)</div>
+                    <div class="fw-bold mb-2 border-bottom">Diagnosis Medis (A)</div>
                     <div class="table-responsive mb-3">
                         <table class="table mb-0 table-borderless">
                             <tbody>
                                 <tr>
                                     <td class="align-middle ps-0 pe-1 pt-0 pb-1" style="min-width: 200px;">
                                         <div class="form-floating">
-                                            <input type="text" class="form-control" id="terapi_1" name="terapi_1" value="" autocomplete="off" dir="auto" placeholder="terapi_1">
-                                            <label for="terapi_1">Diagnosis Medis 1</label>
+                                            <input type="text" class="form-control" id="diagnosa_medis_1" name="diagnosa_medis_1" value="" autocomplete="off" dir="auto" placeholder="diagnosa_medis_1">
+                                            <label for="diagnosa_medis_1">Diagnosis Medis 1</label>
                                             <div class="invalid-feedback"></div>
                                         </div>
                                     </td>
                                     <td class="align-middle ps-1 pe-0 pt-0 pb-1" style="min-width: 100px;">
                                         <div class="form-floating">
-                                            <input type="text" class="form-control" id="icd9_kode_1" name="icd9_kode_1" value="" autocomplete="off" dir="auto" placeholder="icd9_kode_1" list="icd9_kode_1_list">
-                                            <label for="icd9_kode_1">ICD 9</label>
-                                            <datalist id="icd9_kode_1_list">
+                                            <input type="text" class="form-control" id="icdx_kode_1" name="icdx_kode_1" value="" autocomplete="off" dir="auto" placeholder="icdx_kode_1" list="icdx_kode_1_list">
+                                            <label for="icdx_kode_1">ICD 10</label>
+                                            <datalist id="icdx_kode_1_list">
                                             </datalist>
                                             <div class="invalid-feedback"></div>
                                         </div>
@@ -415,16 +315,16 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                                 <tr>
                                     <td class="align-middle ps-0 pe-1 pt-1 pb-1" style="min-width: 200px;">
                                         <div class="form-floating">
-                                            <input type="text" class="form-control" id="terapi_2" name="terapi_2" value="" autocomplete="off" dir="auto" placeholder="terapi_2">
-                                            <label for="terapi_2">Diagnosis Medis 2</label>
+                                            <input type="text" class="form-control" id="diagnosa_medis_2" name="diagnosa_medis_2" value="" autocomplete="off" dir="auto" placeholder="diagnosa_medis_2">
+                                            <label for="diagnosa_medis_2">Diagnosis Medis 2</label>
                                             <div class="invalid-feedback"></div>
                                         </div>
                                     </td>
                                     <td class="align-middle ps-1 pe-0 pt-1 pb-1" style="min-width: 100px;">
                                         <div class="form-floating">
-                                            <input type="text" class="form-control" id="icd9_kode_2" name="icd9_kode_2" value="" autocomplete="off" dir="auto" placeholder="icd9_kode_2" list="icd9_kode_2_list">
-                                            <label for="icd9_kode_2">ICD 9</label>
-                                            <datalist id="icd9_kode_2_list">
+                                            <input type="text" class="form-control" id="icdx_kode_2" name="icdx_kode_2" value="" autocomplete="off" dir="auto" placeholder="icdx_kode_2" list="icdx_kode_2_list">
+                                            <label for="icdx_kode_2">ICD 10</label>
+                                            <datalist id="icdx_kode_2_list">
                                             </datalist>
                                             <div class="invalid-feedback"></div>
                                         </div>
@@ -433,16 +333,16 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                                 <tr>
                                     <td class="align-middle ps-0 pe-1 pt-1 pb-1" style="min-width: 200px;">
                                         <div class="form-floating">
-                                            <input type="text" class="form-control" id="terapi_3" name="terapi_3" value="" autocomplete="off" dir="auto" placeholder="terapi_3">
-                                            <label for="terapi_3">Diagnosis Medis 3</label>
+                                            <input type="text" class="form-control" id="diagnosa_medis_3" name="diagnosa_medis_3" value="" autocomplete="off" dir="auto" placeholder="diagnosa_medis_3">
+                                            <label for="diagnosa_medis_3">Diagnosis Medis 3</label>
                                             <div class="invalid-feedback"></div>
                                         </div>
                                     </td>
                                     <td class="align-middle ps-1 pe-0 pt-1 pb-1" style="min-width: 100px;">
                                         <div class="form-floating">
-                                            <input type="text" class="form-control" id="icd9_kode_3" name="icd9_kode_3" value="" autocomplete="off" dir="auto" placeholder="icd9_kode_3" list="icd9_kode_3_list">
-                                            <label for="icd9_kode_3">ICD 9</label>
-                                            <datalist id="icd9_kode_3_list">
+                                            <input type="text" class="form-control" id="icdx_kode_3" name="icdx_kode_3" value="" autocomplete="off" dir="auto" placeholder="icdx_kode_3" list="icdx_kode_3_list">
+                                            <label for="icdx_kode_3">ICD 10</label>
+                                            <datalist id="icdx_kode_3_list">
                                             </datalist>
                                             <div class="invalid-feedback"></div>
                                         </div>
@@ -451,16 +351,16 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                                 <tr>
                                     <td class="align-middle ps-0 pe-1 pt-1 pb-1" style="min-width: 200px;">
                                         <div class="form-floating">
-                                            <input type="text" class="form-control" id="terapi_4" name="terapi_4" value="" autocomplete="off" dir="auto" placeholder="terapi_4">
-                                            <label for="terapi_4">Diagnosis Medis 4</label>
+                                            <input type="text" class="form-control" id="diagnosa_medis_4" name="diagnosa_medis_4" value="" autocomplete="off" dir="auto" placeholder="diagnosa_medis_4">
+                                            <label for="diagnosa_medis_4">Diagnosis Medis 4</label>
                                             <div class="invalid-feedback"></div>
                                         </div>
                                     </td>
                                     <td class="align-middle ps-1 pe-0 pt-1 pb-1" style="min-width: 100px;">
                                         <div class="form-floating">
-                                            <input type="text" class="form-control" id="icd9_kode_4" name="icd9_kode_4" value="" autocomplete="off" dir="auto" placeholder="icd9_kode_4" list="icd9_kode_4_list">
-                                            <label for="icd9_kode_4">ICD 9</label>
-                                            <datalist id="icd9_kode_4_list">
+                                            <input type="text" class="form-control" id="icdx_kode_4" name="icdx_kode_4" value="" autocomplete="off" dir="auto" placeholder="icdx_kode_4" list="icdx_kode_4_list">
+                                            <label for="icdx_kode_4">ICD 10</label>
+                                            <datalist id="icdx_kode_4_list">
                                             </datalist>
                                             <div class="invalid-feedback"></div>
                                         </div>
@@ -469,16 +369,16 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                                 <tr>
                                     <td class="align-middle ps-0 pe-1 pt-1 pb-0" style="min-width: 200px;">
                                         <div class="form-floating">
-                                            <input type="text" class="form-control" id="terapi_5" name="terapi_5" value="" autocomplete="off" dir="auto" placeholder="terapi_5">
-                                            <label for="terapi_5">Diagnosis Medis 5</label>
+                                            <input type="text" class="form-control" id="diagnosa_medis_5" name="diagnosa_medis_5" value="" autocomplete="off" dir="auto" placeholder="diagnosa_medis_5">
+                                            <label for="diagnosa_medis_5">Diagnosis Medis 5</label>
                                             <div class="invalid-feedback"></div>
                                         </div>
                                     </td>
                                     <td class="align-middle ps-1 pe-0 pt-1 pb-0" style="min-width: 100px;">
                                         <div class="form-floating">
-                                            <input type="text" class="form-control" id="icd9_kode_5" name="icd9_kode_5" value="" autocomplete="off" dir="auto" placeholder="icd9_kode_5" list="icd9_kode_5_list">
-                                            <label for="icd9_kode_5">ICD 9</label>
-                                            <datalist id="icd9_kode_5_list">
+                                            <input type="text" class="form-control" id="icdx_kode_5" name="icdx_kode_5" value="" autocomplete="off" dir="auto" placeholder="icdx_kode_5" list="icdx_kode_5_list">
+                                            <label for="icdx_kode_5">ICD 10</label>
+                                            <datalist id="icdx_kode_5_list">
                                             </datalist>
                                             <div class="invalid-feedback"></div>
                                         </div>
@@ -487,7 +387,106 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                             </tbody>
                         </table>
                     </div>
-                </div>
+                    <div class="mb-3">
+                        <div class="fw-bold mb-2 border-bottom">Terapi (P)</div>
+                        <div class="table-responsive mb-3">
+                            <table class="table mb-0 table-borderless">
+                                <tbody>
+                                    <tr>
+                                        <td class="align-middle ps-0 pe-1 pt-0 pb-1" style="min-width: 200px;">
+                                            <div class="form-floating">
+                                                <input type="text" class="form-control" id="terapi_1" name="terapi_1" value="" autocomplete="off" dir="auto" placeholder="terapi_1">
+                                                <label for="terapi_1">Diagnosis Medis 1</label>
+                                                <div class="invalid-feedback"></div>
+                                            </div>
+                                        </td>
+                                        <td class="align-middle ps-1 pe-0 pt-0 pb-1" style="min-width: 100px;">
+                                            <div class="form-floating">
+                                                <input type="text" class="form-control" id="icd9_kode_1" name="icd9_kode_1" value="" autocomplete="off" dir="auto" placeholder="icd9_kode_1" list="icd9_kode_1_list">
+                                                <label for="icd9_kode_1">ICD 9</label>
+                                                <datalist id="icd9_kode_1_list">
+                                                </datalist>
+                                                <div class="invalid-feedback"></div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-middle ps-0 pe-1 pt-1 pb-1" style="min-width: 200px;">
+                                            <div class="form-floating">
+                                                <input type="text" class="form-control" id="terapi_2" name="terapi_2" value="" autocomplete="off" dir="auto" placeholder="terapi_2">
+                                                <label for="terapi_2">Diagnosis Medis 2</label>
+                                                <div class="invalid-feedback"></div>
+                                            </div>
+                                        </td>
+                                        <td class="align-middle ps-1 pe-0 pt-1 pb-1" style="min-width: 100px;">
+                                            <div class="form-floating">
+                                                <input type="text" class="form-control" id="icd9_kode_2" name="icd9_kode_2" value="" autocomplete="off" dir="auto" placeholder="icd9_kode_2" list="icd9_kode_2_list">
+                                                <label for="icd9_kode_2">ICD 9</label>
+                                                <datalist id="icd9_kode_2_list">
+                                                </datalist>
+                                                <div class="invalid-feedback"></div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-middle ps-0 pe-1 pt-1 pb-1" style="min-width: 200px;">
+                                            <div class="form-floating">
+                                                <input type="text" class="form-control" id="terapi_3" name="terapi_3" value="" autocomplete="off" dir="auto" placeholder="terapi_3">
+                                                <label for="terapi_3">Diagnosis Medis 3</label>
+                                                <div class="invalid-feedback"></div>
+                                            </div>
+                                        </td>
+                                        <td class="align-middle ps-1 pe-0 pt-1 pb-1" style="min-width: 100px;">
+                                            <div class="form-floating">
+                                                <input type="text" class="form-control" id="icd9_kode_3" name="icd9_kode_3" value="" autocomplete="off" dir="auto" placeholder="icd9_kode_3" list="icd9_kode_3_list">
+                                                <label for="icd9_kode_3">ICD 9</label>
+                                                <datalist id="icd9_kode_3_list">
+                                                </datalist>
+                                                <div class="invalid-feedback"></div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-middle ps-0 pe-1 pt-1 pb-1" style="min-width: 200px;">
+                                            <div class="form-floating">
+                                                <input type="text" class="form-control" id="terapi_4" name="terapi_4" value="" autocomplete="off" dir="auto" placeholder="terapi_4">
+                                                <label for="terapi_4">Diagnosis Medis 4</label>
+                                                <div class="invalid-feedback"></div>
+                                            </div>
+                                        </td>
+                                        <td class="align-middle ps-1 pe-0 pt-1 pb-1" style="min-width: 100px;">
+                                            <div class="form-floating">
+                                                <input type="text" class="form-control" id="icd9_kode_4" name="icd9_kode_4" value="" autocomplete="off" dir="auto" placeholder="icd9_kode_4" list="icd9_kode_4_list">
+                                                <label for="icd9_kode_4">ICD 9</label>
+                                                <datalist id="icd9_kode_4_list">
+                                                </datalist>
+                                                <div class="invalid-feedback"></div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-middle ps-0 pe-1 pt-1 pb-0" style="min-width: 200px;">
+                                            <div class="form-floating">
+                                                <input type="text" class="form-control" id="terapi_5" name="terapi_5" value="" autocomplete="off" dir="auto" placeholder="terapi_5">
+                                                <label for="terapi_5">Diagnosis Medis 5</label>
+                                                <div class="invalid-feedback"></div>
+                                            </div>
+                                        </td>
+                                        <td class="align-middle ps-1 pe-0 pt-1 pb-0" style="min-width: 100px;">
+                                            <div class="form-floating">
+                                                <input type="text" class="form-control" id="icd9_kode_5" name="icd9_kode_5" value="" autocomplete="off" dir="auto" placeholder="icd9_kode_5" list="icd9_kode_5_list">
+                                                <label for="icd9_kode_5">ICD 9</label>
+                                                <datalist id="icd9_kode_5_list">
+                                                </datalist>
+                                                <div class="invalid-feedback"></div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                <?php endif; ?>
                 <div>
                     <hr>
                     <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-3">
@@ -496,9 +495,69 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                     </div>
                 </div>
                 <?= form_close(); ?>
+                </div>
+        </div>
+    </div>
+    <div class="modal fade" id="mataModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="mataModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <form id="mataForm" enctype="multipart/form-data" class="modal-content bg-body-tertiary shadow-lg transparent-blur">
+                <div class="modal-header justify-content-between pt-2 pb-2" style="border-bottom: 1px solid var(--bs-border-color-translucent);">
+                    <h6 class="pe-2 modal-title fs-6 text-truncate" id="mataModalLabel" style="font-weight: bold;"></h6>
+                    <button id="closeBtn" type="button" class="btn btn-danger bg-gradient" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div class="modal-body py-2">
+                    <input type="hidden" id="id_asesmen_mata" name="id_asesmen_mata" value="">
+                    <div class="mb-1 mt-1">
+                        <label for="gambar" class="form-label mb-0">Unggah Gambar (maks 8 MB)</label>
+                        <input class="form-control" type="file" id="gambar" name="gambar" accept="image/*">
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div id="gambar_preview_div" style="display: none;" class="mb-1 mt-1">
+                        <div class="d-flex justify-content-center">
+                            <img id="gambar_preview" src="#" alt="Gambar" class="img-thumbnail" style="max-width: 100%">
+                        </div>
+                    </div>
+                    <div class="form-floating mb-1 mt-1">
+                        <input type="text" class="form-control" autocomplete="off" dir="auto" placeholder="keterangan" id="keterangan" name="keterangan">
+                        <label for="keterangan">Keterangan</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-end pt-2 pb-2" style="border-top: 1px solid var(--bs-border-color-translucent);">
+                    <!-- Progress bar -->
+                    <div class="mb-1 mt-1 w-100" id="uploadProgressDiv">
+                        <div class="progress" style="border-top: 1px solid var(--bs-border-color-translucent); border-bottom: 1px solid var(--bs-border-color-translucent); border-left: 1px solid var(--bs-border-color-translucent); border-right: 1px solid var(--bs-border-color-translucent);">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-gradient" role="progressbar" style="width: 0%; transition: none;" id="uploadProgressBar"></div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between w-100">
+                        <div>
+                            <button type="button" id="cancelButton" class="btn btn-danger bg-gradient" style="display: none;" disabled>
+                                <i class="fa-solid fa-xmark"></i> Batalkan
+                            </button>
+                        </div>
+                        <button type="submit" id="submitButton" class="btn btn-primary bg-gradient">
+                            <i class="fa-solid fa-floppy-disk"></i> Simpan
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="modal modal-sheet p-4 py-md-5 fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content bg-body-tertiary rounded-4 shadow-lg transparent-blur">
+                <div class="modal-body p-4 text-center">
+                    <h5 id="deleteMessage"></h5>
+                    <h6 class="mb-0" id="deleteSubmessage"></h6>
+                </div>
+                <div class="modal-footer flex-nowrap p-0" style="border-top: 1px solid var(--bs-border-color-translucent);">
+                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end" style="border-right: 1px solid var(--bs-border-color-translucent)!important;" data-bs-dismiss="modal">Tidak</button>
+                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0" id="confirmDeleteBtn">Ya</button>
+                </div>
             </div>
         </div>
-
+    </div>
 </main>
 <?= $this->endSection(); ?>
 <?= $this->section('javascript'); ?>
@@ -536,35 +595,31 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
             $('#alergi_keterangan').val(data.alergi_keterangan);
             $('#sakit_lainnya').val(data.sakit_lainnya);
 
-            // Pemeriksaan Fisik (O)
-            $('#od_ucva').val(data.od_ucva);
-            $('#od_bcva').val(data.od_bcva);
-            $('#os_ucva').val(data.os_ucva);
-            $('#os_bcva').val(data.os_bcva);
+            <?php if (session()->get('role') != 'Perawat') : ?>
+                // Diagnosis Medis (A)
+                $('#diagnosa_medis_1').val(data.diagnosa_medis_1);
+                $('#icdx_kode_1').val(data.icdx_kode_1);
+                $('#diagnosa_medis_2').val(data.diagnosa_medis_2);
+                $('#icdx_kode_2').val(data.icdx_kode_2);
+                $('#diagnosa_medis_3').val(data.diagnosa_medis_3);
+                $('#icdx_kode_3').val(data.icdx_kode_3);
+                $('#diagnosa_medis_4').val(data.diagnosa_medis_4);
+                $('#icdx_kode_4').val(data.icdx_kode_4);
+                $('#diagnosa_medis_5').val(data.diagnosa_medis_5);
+                $('#icdx_kode_5').val(data.icdx_kode_5);
 
-            // Diagnosis Medis (A)
-            $('#diagnosa_medis_1').val(data.diagnosa_medis_1);
-            $('#icdx_kode_1').val(data.icdx_kode_1);
-            $('#diagnosa_medis_2').val(data.diagnosa_medis_2);
-            $('#icdx_kode_2').val(data.icdx_kode_2);
-            $('#diagnosa_medis_3').val(data.diagnosa_medis_3);
-            $('#icdx_kode_3').val(data.icdx_kode_3);
-            $('#diagnosa_medis_4').val(data.diagnosa_medis_4);
-            $('#icdx_kode_4').val(data.icdx_kode_4);
-            $('#diagnosa_medis_5').val(data.diagnosa_medis_5);
-            $('#icdx_kode_5').val(data.icdx_kode_5);
-
-            // Terapi (P)
-            $('#terapi_1').val(data.terapi_1);
-            $('#icd9_kode_1').val(data.icd9_kode_1);
-            $('#terapi_2').val(data.terapi_2);
-            $('#icd9_kode_2').val(data.icd9_kode_2);
-            $('#terapi_3').val(data.terapi_3);
-            $('#icd9_kode_3').val(data.icd9_kode_3);
-            $('#terapi_4').val(data.terapi_4);
-            $('#icd9_kode_4').val(data.icd9_kode_4);
-            $('#terapi_5').val(data.terapi_5);
-            $('#icd9_kode_5').val(data.icd9_kode_5);
+                // Terapi (P)
+                $('#terapi_1').val(data.terapi_1);
+                $('#icd9_kode_1').val(data.icd9_kode_1);
+                $('#terapi_2').val(data.terapi_2);
+                $('#icd9_kode_2').val(data.icd9_kode_2);
+                $('#terapi_3').val(data.terapi_3);
+                $('#icd9_kode_3').val(data.icd9_kode_3);
+                $('#terapi_4').val(data.terapi_4);
+                $('#icd9_kode_4').val(data.icd9_kode_4);
+                $('#terapi_5').val(data.terapi_5);
+                $('#icd9_kode_5').val(data.icd9_kode_5);
+            <?php endif; ?>
         } catch (error) {
             showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
         } finally {
@@ -572,247 +627,487 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
         }
     }
 
-    async function loadICDX1(query) {
-        try {
-            const response = await axios.get('<?= base_url('rawatjalan/asesmen/icdx') ?>', {
-                params: {
-                    search: query
-                } // Kirim query pencarian
-            });
-            const icdx = response.data.data;
-            const dataList = $('#icdx_kode_1_list');
-            dataList.empty(); // Kosongkan datalist
-            icdx.forEach(item => {
-                dataList.append(`<option value="${item.icdKode}">${item.icdNamaIndonesia}</option>`);
-            });
-        } catch (error) {
-            console.error('Gagal memuat ICD 10:', error);
+    <?php if (session()->get('role') != 'Perawat') : ?>
+        async function fetchAsesmenMata() {
+            $('#loadingSpinner').show();
+
+            try {
+                const response = await axios.get('<?= base_url('rawatjalan/asesmen/mata/list/') . $rawatjalan['id_rawat_jalan'] ?>');
+
+                const data = response.data;
+                $('#pemeriksaanFisikList').empty();
+
+                let totalPembayaran = 0;
+
+                if (data.length === 0) {
+                    $('#empty-placeholder').show();
+                    $('#pemeriksaanFisikList').hide();
+                } else {
+                    $('#empty-placeholder').hide();
+                    data.forEach(function(asesmen_mata) {
+                        const keterangan = asesmen_mata.keterangan ? asesmen_mata.keterangan : `<em>Tidak ada keterangan</em>`;
+                        const penunjangScanElement = `
+                <div class="col">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-img-top" style="background-image: url('<?= base_url('uploads/asesmen_mata') ?>/${asesmen_mata.gambar}?t=${new Date().getTime()}'); background-color: var(--bs-card-cap-bg); aspect-ratio: 16/9; background-position: center; background-repeat: no-repeat; background-size: cover; position: relative; border-bottom: var(--bs-card-border-width) solid var(--bs-card-border-color);"></div>
+                        <div class="card-body">
+                            <div>
+                                <small class="text-body-secondary">${keterangan}</small><br>
+                                <small class="text-body-secondary date">${asesmen_mata.waktu_dibuat}</small>
+                            </div>
+                        </div>
+                        <div class="card-footer d-flex justify-content-end gap-1">
+                            <button class="btn btn-body btn-sm bg-gradient edit-btn" data-id="${asesmen_mata.id_asesmen_mata}"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
+                            <button class="btn btn-danger btn-sm bg-gradient delete-btn" data-id="${asesmen_mata.id_asesmen_mata}"><i class="fa-solid fa-trash"></i> Hapus</button>
+                        </div>                               
+                    </div>
+                </div>
+                    `;
+                        $('#pemeriksaanFisikList').show();
+                        $('#pemeriksaanFisikList').append(penunjangScanElement);
+                    });
+                }
+            } catch (error) {
+                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                $('#pemeriksaanFisikList').empty();
+            } finally {
+                // Hide the spinner when done
+                $('#loadingSpinner').hide();
+            }
         }
-    }
 
-    async function loadICDX2(query) {
-        try {
-            const response = await axios.get('<?= base_url('rawatjalan/asesmen/icdx') ?>', {
-                params: {
-                    search: query
-                } // Kirim query pencarian
-            });
-            const icdx = response.data.data;
-            const dataList = $('#icdx_kode_2_list');
-            dataList.empty(); // Kosongkan datalist
-            icdx.forEach(item => {
-                dataList.append(`<option value="${item.icdKode}">${item.icdNamaIndonesia}</option>`);
-            });
-        } catch (error) {
-            console.error('Gagal memuat ICD 10:', error);
+        async function loadICDX1(query) {
+            try {
+                const response = await axios.get('<?= base_url('rawatjalan/asesmen/icdx') ?>', {
+                    params: {
+                        search: query
+                    } // Kirim query pencarian
+                });
+                const icdx = response.data.data;
+                const dataList = $('#icdx_kode_1_list');
+                dataList.empty(); // Kosongkan datalist
+                icdx.forEach(item => {
+                    dataList.append(`<option value="${item.icdKode}">${item.icdNamaIndonesia}</option>`);
+                });
+            } catch (error) {
+                console.error('Gagal memuat ICD 10:', error);
+            }
         }
-    }
 
-    async function loadICDX3(query) {
-        try {
-            const response = await axios.get('<?= base_url('rawatjalan/asesmen/icdx') ?>', {
-                params: {
-                    search: query
-                } // Kirim query pencarian
-            });
-            const icdx = response.data.data;
-            const dataList = $('#icdx_kode_3_list');
-            dataList.empty(); // Kosongkan datalist
-            icdx.forEach(item => {
-                dataList.append(`<option value="${item.icdKode}">${item.icdNamaIndonesia}</option>`);
-            });
-        } catch (error) {
-            console.error('Gagal memuat ICD 10:', error);
+        async function loadICDX2(query) {
+            try {
+                const response = await axios.get('<?= base_url('rawatjalan/asesmen/icdx') ?>', {
+                    params: {
+                        search: query
+                    } // Kirim query pencarian
+                });
+                const icdx = response.data.data;
+                const dataList = $('#icdx_kode_2_list');
+                dataList.empty(); // Kosongkan datalist
+                icdx.forEach(item => {
+                    dataList.append(`<option value="${item.icdKode}">${item.icdNamaIndonesia}</option>`);
+                });
+            } catch (error) {
+                console.error('Gagal memuat ICD 10:', error);
+            }
         }
-    }
 
-    async function loadICDX4(query) {
-        try {
-            const response = await axios.get('<?= base_url('rawatjalan/asesmen/icdx') ?>', {
-                params: {
-                    search: query
-                } // Kirim query pencarian
-            });
-            const icdx = response.data.data;
-            const dataList = $('#icdx_kode_4_list');
-            dataList.empty(); // Kosongkan datalist
-            icdx.forEach(item => {
-                dataList.append(`<option value="${item.icdKode}">${item.icdNamaIndonesia}</option>`);
-            });
-        } catch (error) {
-            console.error('Gagal memuat ICD 10:', error);
+        async function loadICDX3(query) {
+            try {
+                const response = await axios.get('<?= base_url('rawatjalan/asesmen/icdx') ?>', {
+                    params: {
+                        search: query
+                    } // Kirim query pencarian
+                });
+                const icdx = response.data.data;
+                const dataList = $('#icdx_kode_3_list');
+                dataList.empty(); // Kosongkan datalist
+                icdx.forEach(item => {
+                    dataList.append(`<option value="${item.icdKode}">${item.icdNamaIndonesia}</option>`);
+                });
+            } catch (error) {
+                console.error('Gagal memuat ICD 10:', error);
+            }
         }
-    }
 
-    async function loadICDX5(query) {
-        try {
-            const response = await axios.get('<?= base_url('rawatjalan/asesmen/icdx') ?>', {
-                params: {
-                    search: query
-                } // Kirim query pencarian
-            });
-            const icdx = response.data.data;
-            const dataList = $('#icdx_kode_5_list');
-            dataList.empty(); // Kosongkan datalist
-            icdx.forEach(item => {
-                dataList.append(`<option value="${item.icdKode}">${item.icdNamaIndonesia}</option>`);
-            });
-        } catch (error) {
-            console.error('Gagal memuat ICD 10:', error);
+        async function loadICDX4(query) {
+            try {
+                const response = await axios.get('<?= base_url('rawatjalan/asesmen/icdx') ?>', {
+                    params: {
+                        search: query
+                    } // Kirim query pencarian
+                });
+                const icdx = response.data.data;
+                const dataList = $('#icdx_kode_4_list');
+                dataList.empty(); // Kosongkan datalist
+                icdx.forEach(item => {
+                    dataList.append(`<option value="${item.icdKode}">${item.icdNamaIndonesia}</option>`);
+                });
+            } catch (error) {
+                console.error('Gagal memuat ICD 10:', error);
+            }
         }
-    }
 
-    // Event listener untuk input
-    $('#icdx_kode_1').on('input', function() {
-        const query = $(this).val();
-        loadICDX1(query);
-    });
-
-    // Event listener untuk input
-    $('#icdx_kode_2').on('input', function() {
-        const query = $(this).val();
-        loadICDX2(query);
-    });
-
-    // Event listener untuk input
-    $('#icdx_kode_3').on('input', function() {
-        const query = $(this).val();
-        loadICDX3(query);
-    });
-
-    // Event listener untuk input
-    $('#icdx_kode_4').on('input', function() {
-        const query = $(this).val();
-        loadICDX4(query);
-    });
-
-    // Event listener untuk input
-    $('#icdx_kode_5').on('input', function() {
-        const query = $(this).val();
-        loadICDX5(query);
-    });
-
-    async function loadICD91(query) {
-        try {
-            const response = await axios.get('<?= base_url('rawatjalan/asesmen/icd9') ?>', {
-                params: {
-                    search: query
-                } // Kirim query pencarian
-            });
-            const icd9 = response.data.data;
-            const dataList = $('#icd9_kode_1_list');
-            dataList.empty(); // Kosongkan datalist
-            icd9.forEach(item => {
-                dataList.append(`<option value="${item.icdKode}">${item.icdNamaIndonesia}</option>`);
-            });
-        } catch (error) {
-            console.error('Gagal memuat ICD 10:', error);
+        async function loadICDX5(query) {
+            try {
+                const response = await axios.get('<?= base_url('rawatjalan/asesmen/icdx') ?>', {
+                    params: {
+                        search: query
+                    } // Kirim query pencarian
+                });
+                const icdx = response.data.data;
+                const dataList = $('#icdx_kode_5_list');
+                dataList.empty(); // Kosongkan datalist
+                icdx.forEach(item => {
+                    dataList.append(`<option value="${item.icdKode}">${item.icdNamaIndonesia}</option>`);
+                });
+            } catch (error) {
+                console.error('Gagal memuat ICD 10:', error);
+            }
         }
-    }
 
-    async function loadICD92(query) {
-        try {
-            const response = await axios.get('<?= base_url('rawatjalan/asesmen/icd9') ?>', {
-                params: {
-                    search: query
-                } // Kirim query pencarian
-            });
-            const icd9 = response.data.data;
-            const dataList = $('#icd9_kode_2_list');
-            dataList.empty(); // Kosongkan datalist
-            icd9.forEach(item => {
-                dataList.append(`<option value="${item.icdKode}">${item.icdNamaIndonesia}</option>`);
-            });
-        } catch (error) {
-            console.error('Gagal memuat ICD 10:', error);
+        // Event listener untuk input
+        $('#icdx_kode_1').on('input', function() {
+            const query = $(this).val();
+            loadICDX1(query);
+        });
+
+        // Event listener untuk input
+        $('#icdx_kode_2').on('input', function() {
+            const query = $(this).val();
+            loadICDX2(query);
+        });
+
+        // Event listener untuk input
+        $('#icdx_kode_3').on('input', function() {
+            const query = $(this).val();
+            loadICDX3(query);
+        });
+
+        // Event listener untuk input
+        $('#icdx_kode_4').on('input', function() {
+            const query = $(this).val();
+            loadICDX4(query);
+        });
+
+        // Event listener untuk input
+        $('#icdx_kode_5').on('input', function() {
+            const query = $(this).val();
+            loadICDX5(query);
+        });
+
+        async function loadICD91(query) {
+            try {
+                const response = await axios.get('<?= base_url('rawatjalan/asesmen/icd9') ?>', {
+                    params: {
+                        search: query
+                    } // Kirim query pencarian
+                });
+                const icd9 = response.data.data;
+                const dataList = $('#icd9_kode_1_list');
+                dataList.empty(); // Kosongkan datalist
+                icd9.forEach(item => {
+                    dataList.append(`<option value="${item.icdKode}">${item.icdNamaIndonesia}</option>`);
+                });
+            } catch (error) {
+                console.error('Gagal memuat ICD 10:', error);
+            }
         }
-    }
 
-    async function loadICD93(query) {
-        try {
-            const response = await axios.get('<?= base_url('rawatjalan/asesmen/icd9') ?>', {
-                params: {
-                    search: query
-                } // Kirim query pencarian
-            });
-            const icd9 = response.data.data;
-            const dataList = $('#icd9_kode_3_list');
-            dataList.empty(); // Kosongkan datalist
-            icd9.forEach(item => {
-                dataList.append(`<option value="${item.icdKode}">${item.icdNamaIndonesia}</option>`);
-            });
-        } catch (error) {
-            console.error('Gagal memuat ICD 10:', error);
+        async function loadICD92(query) {
+            try {
+                const response = await axios.get('<?= base_url('rawatjalan/asesmen/icd9') ?>', {
+                    params: {
+                        search: query
+                    } // Kirim query pencarian
+                });
+                const icd9 = response.data.data;
+                const dataList = $('#icd9_kode_2_list');
+                dataList.empty(); // Kosongkan datalist
+                icd9.forEach(item => {
+                    dataList.append(`<option value="${item.icdKode}">${item.icdNamaIndonesia}</option>`);
+                });
+            } catch (error) {
+                console.error('Gagal memuat ICD 10:', error);
+            }
         }
-    }
 
-    async function loadICD94(query) {
-        try {
-            const response = await axios.get('<?= base_url('rawatjalan/asesmen/icd9') ?>', {
-                params: {
-                    search: query
-                } // Kirim query pencarian
-            });
-            const icd9 = response.data.data;
-            const dataList = $('#icd9_kode_4_list');
-            dataList.empty(); // Kosongkan datalist
-            icd9.forEach(item => {
-                dataList.append(`<option value="${item.icdKode}">${item.icdNamaIndonesia}</option>`);
-            });
-        } catch (error) {
-            console.error('Gagal memuat ICD 10:', error);
+        async function loadICD93(query) {
+            try {
+                const response = await axios.get('<?= base_url('rawatjalan/asesmen/icd9') ?>', {
+                    params: {
+                        search: query
+                    } // Kirim query pencarian
+                });
+                const icd9 = response.data.data;
+                const dataList = $('#icd9_kode_3_list');
+                dataList.empty(); // Kosongkan datalist
+                icd9.forEach(item => {
+                    dataList.append(`<option value="${item.icdKode}">${item.icdNamaIndonesia}</option>`);
+                });
+            } catch (error) {
+                console.error('Gagal memuat ICD 10:', error);
+            }
         }
-    }
 
-    async function loadICD95(query) {
-        try {
-            const response = await axios.get('<?= base_url('rawatjalan/asesmen/icd9') ?>', {
-                params: {
-                    search: query
-                } // Kirim query pencarian
-            });
-            const icd9 = response.data.data;
-            const dataList = $('#icd9_kode_5_list');
-            dataList.empty(); // Kosongkan datalist
-            icd9.forEach(item => {
-                dataList.append(`<option value="${item.icdKode}">${item.icdNamaIndonesia}</option>`);
-            });
-        } catch (error) {
-            console.error('Gagal memuat ICD 10:', error);
+        async function loadICD94(query) {
+            try {
+                const response = await axios.get('<?= base_url('rawatjalan/asesmen/icd9') ?>', {
+                    params: {
+                        search: query
+                    } // Kirim query pencarian
+                });
+                const icd9 = response.data.data;
+                const dataList = $('#icd9_kode_4_list');
+                dataList.empty(); // Kosongkan datalist
+                icd9.forEach(item => {
+                    dataList.append(`<option value="${item.icdKode}">${item.icdNamaIndonesia}</option>`);
+                });
+            } catch (error) {
+                console.error('Gagal memuat ICD 10:', error);
+            }
         }
-    }
 
-    // Event listener untuk input
-    $('#icd9_kode_1').on('input', function() {
-        const query = $(this).val();
-        loadICD91(query);
-    });
+        async function loadICD95(query) {
+            try {
+                const response = await axios.get('<?= base_url('rawatjalan/asesmen/icd9') ?>', {
+                    params: {
+                        search: query
+                    } // Kirim query pencarian
+                });
+                const icd9 = response.data.data;
+                const dataList = $('#icd9_kode_5_list');
+                dataList.empty(); // Kosongkan datalist
+                icd9.forEach(item => {
+                    dataList.append(`<option value="${item.icdKode}">${item.icdNamaIndonesia}</option>`);
+                });
+            } catch (error) {
+                console.error('Gagal memuat ICD 10:', error);
+            }
+        }
 
-    // Event listener untuk input
-    $('#icd9_kode_2').on('input', function() {
-        const query = $(this).val();
-        loadICD92(query);
-    });
+        // Event listener untuk input
+        $('#icd9_kode_1').on('input', function() {
+            const query = $(this).val();
+            loadICD91(query);
+        });
 
-    // Event listener untuk input
-    $('#icd9_kode_3').on('input', function() {
-        const query = $(this).val();
-        loadICD93(query);
-    });
+        // Event listener untuk input
+        $('#icd9_kode_2').on('input', function() {
+            const query = $(this).val();
+            loadICD92(query);
+        });
 
-    // Event listener untuk input
-    $('#icd9_kode_4').on('input', function() {
-        const query = $(this).val();
-        loadICD94(query);
-    });
+        // Event listener untuk input
+        $('#icd9_kode_3').on('input', function() {
+            const query = $(this).val();
+            loadICD93(query);
+        });
 
-    // Event listener untuk input
-    $('#icd9_kode_5').on('input', function() {
-        const query = $(this).val();
-        loadICD95(query);
-    });
+        // Event listener untuk input
+        $('#icd9_kode_4').on('input', function() {
+            const query = $(this).val();
+            loadICD94(query);
+        });
+
+        // Event listener untuk input
+        $('#icd9_kode_5').on('input', function() {
+            const query = $(this).val();
+            loadICD95(query);
+        });
+    <?php endif; ?>
 
     $(document).ready(async function() {
+        <?php if (session()->get('role') != 'Perawat') : ?>
+            // Tampilkan modal tambah mata penunjang
+            $('#addMataButton').click(function() {
+                $('#mataModalLabel').text('Tambah Pemeriksaan Fisik'); // Ubah judul modal menjadi 'Tambah Pemeriksaan Fisik'
+                $('#id_asesmen_mata').val('');
+                $('#mataModal').modal('show'); // Tampilkan modal resep luar
+            });
+
+            $('#gambar').change(function() {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#gambar_preview').attr('src', e.target.result);
+                    $('#gambar_preview_div').show();
+                };
+                reader.readAsDataURL(this.files[0]);
+            });
+
+            $(document).on('click', '.edit-btn', async function() {
+                var $this = $(this);
+                var id = $this.data('id');
+                $this.prop('disabled', true).html(`<span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span> Edit`);
+
+                try {
+                    let response = await axios.get(`<?= base_url('/rawatjalan/asesmen/mata/view') ?>/` + id);
+                    let data = response.data;
+                    console.log(data);
+
+                    $('#mataModalLabel').text('Edit Evaluasi Edukasi');
+                    $('#id_asesmen_mata').val(data.id_asesmen_mata);
+                    if (data.gambar) {
+                        $('#gambar_preview').attr('src', `<?= base_url('uploads/asesmen_mata') ?>/` + data.gambar);
+                        $('#gambar_preview_div').show();
+                    } else {
+                        $('#gambar_preview_div').hide();
+                    }
+                    $('#keterangan').val(data.keterangan);
+                    $('#mataModal').modal('show');
+                } catch (error) {
+                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                } finally {
+                    $this.prop('disabled', false).html(`<i class="fa-solid fa-pen-to-square"></i> Edit`);
+                }
+            });
+
+            // Store the ID of the example to be deleted
+            var id_asesmen_mata;
+
+            // Show delete confirmation modal
+            $(document).on('click', '.delete-btn', function() {
+                id_asesmen_mata = $(this).data('id');
+                $('#deleteMessage').html(`Hapus pemeriksaan fisik ini?`);
+                $('#deleteModal').modal('show');
+            });
+
+            // Confirm deletion
+            $('#confirmDeleteBtn').click(async function() {
+                $('#deleteModal button').prop('disabled', true);
+                $('#deleteMessage').html(`Menghapus, silakan tunggu...`);
+
+                try {
+                    // Perform the delete operation
+                    let response = await axios.delete('<?= base_url('/rawatjalan/asesmen/mata/delete') ?>/' + id_asesmen_mata);
+
+                    // Show success message
+                    showSuccessToast(response.data.message);
+
+                    // Reload the table
+                    fetchAsesmenMata();
+                } catch (error) {
+                    // Handle any error responses
+                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                } finally {
+                    // Re-enable the delete button and hide the modal
+                    $('#deleteModal').modal('hide');
+                    $('#deleteModal button').prop('disabled', false);
+                }
+            });
+
+            $('#mataForm').submit(async function(ə) {
+                ə.preventDefault();
+
+                var url = $('#id_asesmen_mata').val() ? `<?= base_url('rawatjalan/asesmen/mata/update') ?>` : `<?= base_url('/rawatjalan/asesmen/mata/create/' . $rawatjalan['id_rawat_jalan']) ?>`;
+                var formData = new FormData(this);
+                console.log("Form URL:", url);
+                console.log("Form Data:", formData);
+
+                const CancelToken = axios.CancelToken;
+                const source = CancelToken.source();
+
+                // Clear previous validation states
+                $('#mataForm .is-invalid').removeClass('is-invalid');
+                $('#mataForm .invalid-feedback').text('').hide();
+
+                // Show processing button and progress bar
+                $('#uploadProgressBar').removeClass('bg-danger').css('width', '0%');
+                $('#cancelButton').prop('disabled', false).show();
+                $('#submitButton').prop('disabled', true).html(`
+                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                <span role="status">Memproses <span id="uploadPercentage" style="font-variant-numeric: tabular-nums;">0%</span></span>
+            `);
+
+                // Disable form inputs
+                $('#mataForm input').prop('disabled', true);
+
+                try {
+                    // Perform the post request with progress handling
+                    let response = await axios.post(url, formData, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        },
+                        onUploadProgress: function(progressEvent) {
+                            if (progressEvent.lengthComputable) {
+                                var percent = Math.round((progressEvent.loaded / progressEvent.total) * 100);
+                                $('#uploadProgressBar').css('width', percent + '%');
+                                $('#uploadPercentage').html(percent + '%');
+                            }
+                        },
+                        cancelToken: source.token // Attach the token here
+                    });
+
+                    // Handle successful response
+                    if (response.data.success) {
+                        showSuccessToast(response.data.message, 'success');
+                        $('#mataModal').modal('hide');
+                        $('#uploadProgressBar').css('width', '0%');
+                        fetchAsesmenMata();
+                    } else {
+                        console.log("Validation Errors:", response.data.errors);
+
+                        // Clear previous validation states
+                        $('#mataForm .is-invalid').removeClass('is-invalid');
+                        $('#mataForm .invalid-feedback').text('').hide();
+
+                        // Display new validation errors
+                        for (const field in response.data.errors) {
+                            if (response.data.errors.hasOwnProperty(field)) {
+                                const fieldElement = $('#' + field);
+                                const feedbackElement = fieldElement.siblings('.invalid-feedback');
+
+                                if (fieldElement.length > 0 && feedbackElement.length > 0) {
+                                    fieldElement.addClass('is-invalid');
+                                    feedbackElement.text(response.data.errors[field]).show();
+
+                                    // Remove error message when the user corrects the input
+                                    fieldElement.on('input change', function() {
+                                        $(this).removeClass('is-invalid');
+                                        $(this).siblings('.invalid-feedback').text('').hide();
+                                    });
+                                } else {
+                                    console.warn("Elemen tidak ditemukan pada field:", field);
+                                }
+                            }
+                        }
+                        console.error('Perbaiki kesalahan pada formulir.');
+                        $('#uploadProgressBar').addClass('bg-danger');
+                    }
+                } catch (error) {
+                    if (axios.isCancel(error)) {
+                        showFailedToast(error.message);
+                        $('#uploadProgressBar').css('width', '0%');
+                    } else {
+                        showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                        $('#uploadProgressBar').addClass('bg-danger');
+                    }
+                } finally {
+                    // Reset the form and UI elements
+                    $('#uploadPercentage').html('0%');
+                    $('#cancelButton').prop('disabled', true).hide();
+                    $('#submitButton').prop('disabled', false).html(`
+                    <i class="fa-solid fa-floppy-disk"></i> Simpan
+                `);
+                    $('#mataForm input').prop('disabled', false);
+                }
+
+                // Attach the cancel functionality to the close button
+                $('#closeBtn, #cancelButton').on('click', function() {
+                    source.cancel('Penambahan pemeriksaan fisik telah dibatalkan.');
+                });
+            });
+
+            // Reset form saat modal ditutup
+            $('#mataModal').on('hidden.bs.modal', function() {
+                $('#mataForm')[0].reset();
+                $('#gambar_preview').attr('src', '#');
+                $('#gambar_preview_div').hide();
+                $('#mataForm .is-invalid').removeClass('is-invalid');
+                $('#mataForm .invalid-feedback').text('').hide();
+            });
+        <?php endif; ?>
+
         $('#asesmenForm').submit(async function(ə) {
             ə.preventDefault();
 
@@ -838,19 +1133,23 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
 
                 if (response.data.success) {
                     showSuccessToast(response.data.message);
-                    await fetchAsesmen();
-                    await Promise.all([
-                        loadICDX1(),
-                        loadICDX2(),
-                        loadICDX3(),
-                        loadICDX4(),
-                        loadICDX5(),
-                        loadICD91(),
-                        loadICD92(),
-                        loadICD93(),
-                        loadICD94(),
-                        loadICD95()
-                    ]);
+                    <?php if (session()->get('role') != 'Perawat') : ?>
+                        await fetchAsesmen();
+                        Promise.all([
+                            loadICDX1(),
+                            loadICDX2(),
+                            loadICDX3(),
+                            loadICDX4(),
+                            loadICDX5(),
+                            loadICD91(),
+                            loadICD92(),
+                            loadICD93(),
+                            loadICD94(),
+                            loadICD95()
+                        ]);
+                    <?php else : ?>
+                        fetchAsesmen();
+                    <?php endif; ?>
                 } else {
                     console.log("Validation Errors:", response.data.errors);
 
@@ -911,19 +1210,24 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                 $('#asesmenForm input, #asesmenForm select').prop('disabled', false);
             }
         });
-        await fetchAsesmen();
-        await Promise.all([
-            loadICDX1(),
-            loadICDX2(),
-            loadICDX3(),
-            loadICDX4(),
-            loadICDX5(),
-            loadICD91(),
-            loadICD92(),
-            loadICD93(),
-            loadICD94(),
-            loadICD95()
-        ]);
+        <?php if (session()->get('role') != 'Perawat') : ?>
+            await fetchAsesmen();
+            Promise.all([
+                loadICDX1(),
+                loadICDX2(),
+                loadICDX3(),
+                loadICDX4(),
+                loadICDX5(),
+                loadICD91(),
+                loadICD92(),
+                loadICD93(),
+                loadICD94(),
+                loadICD95()
+            ]);
+            fetchAsesmenMata();
+        <?php else : ?>
+            fetchAsesmen();
+        <?php endif; ?>
     });
     // Show toast notification
     <?= $this->include('toast/index') ?>

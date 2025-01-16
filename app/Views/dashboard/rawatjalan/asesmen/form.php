@@ -8,7 +8,7 @@ $sekarang = new DateTime();
 // Hitung selisih antara tanggal sekarang dan tanggal lahir
 $usia = $sekarang->diff($tanggal_lahir);
 
-$tanggalRegistrasi = $asesmen['tanggal_registrasi']; // Misalnya: "2025-01-14 15:23:45"
+$tanggalRegistrasi = $asesmen['waktu_dibuat']; // Misalnya: "2025-01-14 15:23:45"
 
 // Pastikan input adalah format tanggal dan waktu yang valid
 $dateTime = new DateTime($tanggalRegistrasi);
@@ -84,23 +84,23 @@ $waktuFormatted = $dateTime->format('H.i.s');
         }
 
         .border-bottom-right {
-            border-bottom: 2px solid black;
-            border-right: 2px solid black;
+            border-bottom: 2px dotted black;
+            border-right: 2px dotted black;
         }
 
         .border-bottom-left {
-            border-bottom: 2px solid black;
-            border-left: 2px solid black;
+            border-bottom: 2px dotted black;
+            border-left: 2px dotted black;
         }
 
         .border-top-right {
-            border-top: 2px solid black;
-            border-right: 2px solid black;
+            border-top: 2px dotted black;
+            border-right: 2px dotted black;
         }
 
         .border-top-left {
-            border-top: 2px solid black;
-            border-left: 2px solid black;
+            border-top: 2px dotted black;
+            border-left: 2px dotted black;
         }
     </style>
 </head>
@@ -320,13 +320,13 @@ $waktuFormatted = $dateTime->format('H.i.s');
                 </tr>
                 <tr>
                     <td style="width: 0%; text-align: center; vertical-align: middle;">OD</td>
-                    <td style="width: 50%; text-align: center; vertical-align: middle; font-size: 12pt;" class="border-bottom-right"><?= $asesmen['od_ucva'] ?></td>
-                    <td style="width: 50%; text-align: center; vertical-align: middle; font-size: 12pt;" class="border-bottom-left"><?= $asesmen['od_bcva'] ?></td>
+                    <td style="width: 50%; height: 0.8cm; text-align: center; vertical-align: middle; font-size: 12pt;" class="border-bottom-right"></td>
+                    <td style="width: 50%; height: 0.8cm; text-align: center; vertical-align: middle; font-size: 12pt;" class="border-bottom-left"></td>
                 </tr>
                 <tr>
                     <td style="width: 0%; text-align: center; vertical-align: middle;">OS</td>
-                    <td style="width: 50%; text-align: center; vertical-align: middle; font-size: 12pt;" class="border-top-right"><?= $asesmen['os_ucva'] ?></td>
-                    <td style="width: 50%; text-align: center; vertical-align: middle; font-size: 12pt;" class="border-top-left"><?= $asesmen['os_bcva'] ?></td>
+                    <td style="width: 50%; height: 0.8cm; text-align: center; vertical-align: middle; font-size: 12pt;" class="border-top-right"></td>
+                    <td style="width: 50%; height: 0.8cm; text-align: center; vertical-align: middle; font-size: 12pt;" class="border-top-left"></td>
                 </tr>
             </table>
             <h3 style="padding-left: 0.25cm; padding-right: 0.25cm; margin: 0;">DIAGNOSIS MEDIS (A):</h3>

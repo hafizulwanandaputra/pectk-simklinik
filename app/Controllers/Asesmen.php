@@ -47,7 +47,7 @@ class Asesmen extends BaseController
                     'nomor_registrasi' => $rawatjalan['nomor_registrasi'],
                     'no_rm' => $rawatjalan['no_rm'],
                     'nama_dokter' => $rawatjalan['dokter'],
-                    'tanggal_registrasi' => date('Y-m-d H:i:s')
+                    'waktu_dibuat' => date('Y-m-d H:i:s')
                 ]);
 
                 // Setelah asesmen dibuat, ambil kembali data asesmen menggunakan query builder
@@ -120,8 +120,8 @@ class Asesmen extends BaseController
 
     public function icdx()
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', 'Perawat', atau 'Admisi' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
+        // Memeriksa peran pengguna, hanya 'Admin' dan 'Dokter' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
             // Mendapatkan parameter pencarian dari permintaan GET
             $search = $this->request->getGet('search');
 
@@ -160,8 +160,8 @@ class Asesmen extends BaseController
 
     public function icd9()
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', 'Perawat', atau 'Admisi' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
+        // Memeriksa peran pengguna, hanya 'Admin' dan 'Dokter' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
             // Mendapatkan parameter pencarian dari permintaan GET
             $search = $this->request->getGet('search');
 
@@ -258,60 +258,90 @@ class Asesmen extends BaseController
     {
         // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', 'Perawat', atau 'Admisi' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
-            // Ambil resep luar
-            $asesmen = $this->AsesmenModel->find($id);
+            // Ambil data asesmen berdasarkan ID menggunakan Query Builder
+            $db = db_connect();
+            $asesmen = $db->table('medrec_assesment')->where('id_asesmen', $id)->get()->getRowArray();
 
-            // Simpan data asesmen
-            $data = [
-                'id_asesmen' => $id,
-                'no_rm' => $asesmen['no_rm'],
-                'nomor_registrasi' => $asesmen['nomor_registrasi'],
-                'keluhan_utama' => $this->request->getPost('keluhan_utama') ?: NULL,
-                'riwayat_penyakit_sekarang' => $this->request->getPost('riwayat_penyakit_sekarang') ?: NULL,
-                'riwayat_penyakit_dahulu' => $this->request->getPost('riwayat_penyakit_dahulu') ?: NULL,
-                'riwayat_penyakit_keluarga' => $this->request->getPost('riwayat_penyakit_keluarga') ?: NULL,
-                'riwayat_pengobatan' => $this->request->getPost('riwayat_pengobatan') ?: NULL,
-                'riwayat_sosial_pekerjaan' => $this->request->getPost('riwayat_sosial_pekerjaan') ?: NULL,
-                'kesadaran' => $this->request->getPost('kesadaran') ?: NULL,
-                'tekanan_darah' => $this->request->getPost('tekanan_darah') ?: NULL,
-                'nadi' => $this->request->getPost('nadi') ?: NULL,
-                'suhu' => $this->request->getPost('suhu') ?: NULL,
-                'pernapasan' => $this->request->getPost('pernapasan') ?: NULL,
-                'keadaan_umum' => $this->request->getPost('keadaan_umum') ?: NULL,
-                'kesadaran_mental' => $this->request->getPost('kesadaran_mental') ?: NULL,
-                'alergi' => $this->request->getPost('alergi') ?: NULL,
-                'alergi_keterangan' => $this->request->getPost('alergi_keterangan') ?: NULL,
-                'sakit_lainnya' => $this->request->getPost('sakit_lainnya') ?: NULL,
-                'sakit_lainnya' => $this->request->getPost('sakit_lainnya') ?: NULL,
-                'od_ucva' => $this->request->getPost('od_ucva') ?: NULL,
-                'od_bcva' => $this->request->getPost('od_bcva') ?: NULL,
-                'os_ucva' => $this->request->getPost('os_ucva') ?: NULL,
-                'os_bcva' => $this->request->getPost('os_bcva') ?: NULL,
-                'diagnosa_medis_1' => $this->request->getPost('diagnosa_medis_1') ?: NULL,
-                'icdx_kode_1' => $this->request->getPost('icdx_kode_1') ?: NULL,
-                'diagnosa_medis_2' => $this->request->getPost('diagnosa_medis_2') ?: NULL,
-                'icdx_kode_2' => $this->request->getPost('icdx_kode_2') ?: NULL,
-                'diagnosa_medis_3' => $this->request->getPost('diagnosa_medis_3') ?: NULL,
-                'icdx_kode_3' => $this->request->getPost('icdx_kode_3') ?: NULL,
-                'diagnosa_medis_4' => $this->request->getPost('diagnosa_medis_4') ?: NULL,
-                'icdx_kode_4' => $this->request->getPost('icdx_kode_4') ?: NULL,
-                'diagnosa_medis_5' => $this->request->getPost('diagnosa_medis_5') ?: NULL,
-                'icdx_kode_5' => $this->request->getPost('icdx_kode_5') ?: NULL,
-                'terapi_1' => $this->request->getPost('terapi_1') ?: NULL,
-                'icd9_kode_1' => $this->request->getPost('icd9_kode_1') ?: NULL,
-                'terapi_2' => $this->request->getPost('terapi_2') ?: NULL,
-                'icd9_kode_2' => $this->request->getPost('icd9_kode_2') ?: NULL,
-                'terapi_3' => $this->request->getPost('terapi_3') ?: NULL,
-                'icd9_kode_3' => $this->request->getPost('icd9_kode_3') ?: NULL,
-                'terapi_4' => $this->request->getPost('terapi_4') ?: NULL,
-                'icd9_kode_4' => $this->request->getPost('icd9_kode_4') ?: NULL,
-                'terapi_5' => $this->request->getPost('terapi_5') ?: NULL,
-                'icd9_kode_5' => $this->request->getPost('icd9_kode_5') ?: NULL,
-                'persetujuan_dokter' => $asesmen['persetujuan_dokter'],
-                'nama_dokter' => $asesmen['nama_dokter'],
-                'tanggal_registrasi' => $asesmen['tanggal_registrasi'],
-            ];
-            $this->AsesmenModel->save($data);
+            if (!$asesmen) {
+                throw PageNotFoundException::forPageNotFound();
+            }
+
+            // Data yang akan disimpan
+            if (session()->get('role') == 'Perawat') {
+                $data = [
+                    'id_asesmen' => $id,
+                    'no_rm' => $asesmen['no_rm'],
+                    'nomor_registrasi' => $asesmen['nomor_registrasi'],
+                    'keluhan_utama' => $this->request->getPost('keluhan_utama') ?: NULL,
+                    'riwayat_penyakit_sekarang' => $this->request->getPost('riwayat_penyakit_sekarang') ?: NULL,
+                    'riwayat_penyakit_dahulu' => $this->request->getPost('riwayat_penyakit_dahulu') ?: NULL,
+                    'riwayat_penyakit_keluarga' => $this->request->getPost('riwayat_penyakit_keluarga') ?: NULL,
+                    'riwayat_pengobatan' => $this->request->getPost('riwayat_pengobatan') ?: NULL,
+                    'riwayat_sosial_pekerjaan' => $this->request->getPost('riwayat_sosial_pekerjaan') ?: NULL,
+                    'kesadaran' => $this->request->getPost('kesadaran') ?: NULL,
+                    'tekanan_darah' => $this->request->getPost('tekanan_darah') ?: NULL,
+                    'nadi' => $this->request->getPost('nadi') ?: NULL,
+                    'suhu' => $this->request->getPost('suhu') ?: NULL,
+                    'pernapasan' => $this->request->getPost('pernapasan') ?: NULL,
+                    'keadaan_umum' => $this->request->getPost('keadaan_umum') ?: NULL,
+                    'kesadaran_mental' => $this->request->getPost('kesadaran_mental') ?: NULL,
+                    'alergi' => $this->request->getPost('alergi') ?: NULL,
+                    'alergi_keterangan' => $this->request->getPost('alergi_keterangan') ?: NULL,
+                    'sakit_lainnya' => $this->request->getPost('sakit_lainnya') ?: NULL,
+                    'persetujuan_dokter' => $asesmen['persetujuan_dokter'],
+                    'nama_dokter' => $asesmen['nama_dokter'],
+                    'waktu_dibuat' => $asesmen['waktu_dibuat'],
+                ];
+            } else {
+                $data = [
+                    'id_asesmen' => $id,
+                    'no_rm' => $asesmen['no_rm'],
+                    'nomor_registrasi' => $asesmen['nomor_registrasi'],
+                    'keluhan_utama' => $this->request->getPost('keluhan_utama') ?: NULL,
+                    'riwayat_penyakit_sekarang' => $this->request->getPost('riwayat_penyakit_sekarang') ?: NULL,
+                    'riwayat_penyakit_dahulu' => $this->request->getPost('riwayat_penyakit_dahulu') ?: NULL,
+                    'riwayat_penyakit_keluarga' => $this->request->getPost('riwayat_penyakit_keluarga') ?: NULL,
+                    'riwayat_pengobatan' => $this->request->getPost('riwayat_pengobatan') ?: NULL,
+                    'riwayat_sosial_pekerjaan' => $this->request->getPost('riwayat_sosial_pekerjaan') ?: NULL,
+                    'kesadaran' => $this->request->getPost('kesadaran') ?: NULL,
+                    'tekanan_darah' => $this->request->getPost('tekanan_darah') ?: NULL,
+                    'nadi' => $this->request->getPost('nadi') ?: NULL,
+                    'suhu' => $this->request->getPost('suhu') ?: NULL,
+                    'pernapasan' => $this->request->getPost('pernapasan') ?: NULL,
+                    'keadaan_umum' => $this->request->getPost('keadaan_umum') ?: NULL,
+                    'kesadaran_mental' => $this->request->getPost('kesadaran_mental') ?: NULL,
+                    'alergi' => $this->request->getPost('alergi') ?: NULL,
+                    'alergi_keterangan' => $this->request->getPost('alergi_keterangan') ?: NULL,
+                    'sakit_lainnya' => $this->request->getPost('sakit_lainnya') ?: NULL,
+                    'diagnosa_medis_1' => $this->request->getPost('diagnosa_medis_1') ?: NULL,
+                    'icdx_kode_1' => $this->request->getPost('icdx_kode_1') ?: NULL,
+                    'diagnosa_medis_2' => $this->request->getPost('diagnosa_medis_2') ?: NULL,
+                    'icdx_kode_2' => $this->request->getPost('icdx_kode_2') ?: NULL,
+                    'diagnosa_medis_3' => $this->request->getPost('diagnosa_medis_3') ?: NULL,
+                    'icdx_kode_3' => $this->request->getPost('icdx_kode_3') ?: NULL,
+                    'diagnosa_medis_4' => $this->request->getPost('diagnosa_medis_4') ?: NULL,
+                    'icdx_kode_4' => $this->request->getPost('icdx_kode_4') ?: NULL,
+                    'diagnosa_medis_5' => $this->request->getPost('diagnosa_medis_5') ?: NULL,
+                    'icdx_kode_5' => $this->request->getPost('icdx_kode_5') ?: NULL,
+                    'terapi_1' => $this->request->getPost('terapi_1') ?: NULL,
+                    'icd9_kode_1' => $this->request->getPost('icd9_kode_1') ?: NULL,
+                    'terapi_2' => $this->request->getPost('terapi_2') ?: NULL,
+                    'icd9_kode_2' => $this->request->getPost('icd9_kode_2') ?: NULL,
+                    'terapi_3' => $this->request->getPost('terapi_3') ?: NULL,
+                    'icd9_kode_3' => $this->request->getPost('icd9_kode_3') ?: NULL,
+                    'terapi_4' => $this->request->getPost('terapi_4') ?: NULL,
+                    'icd9_kode_4' => $this->request->getPost('icd9_kode_4') ?: NULL,
+                    'terapi_5' => $this->request->getPost('terapi_5') ?: NULL,
+                    'icd9_kode_5' => $this->request->getPost('icd9_kode_5') ?: NULL,
+                    'persetujuan_dokter' => $asesmen['persetujuan_dokter'],
+                    'nama_dokter' => $asesmen['nama_dokter'],
+                    'waktu_dibuat' => $asesmen['waktu_dibuat'],
+                ];
+            }
+
+            // Perbarui data asesmen
+            $db->table('medrec_assesment')->where('id_asesmen', $id)->update($data);
+
             return $this->response->setJSON(['success' => true, 'message' => 'Asesmen berhasil diperbarui']);
         } else {
             // Jika peran tidak dikenali, lemparkan pengecualian 404
