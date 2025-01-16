@@ -107,6 +107,19 @@ $routes->post('/(?i)rawatjalan/(?i)penunjang/(?i)scan/(?i)update', 'PenunjangSca
 $routes->delete('/(?i)rawatjalan/(?i)penunjang/(?i)scan/(?i)delete/(:any)', 'PenunjangScan::delete/$1');
 $routes->get('/(?i)uploads/(?i)scan_penunjang/(:any)', 'PenunjangScan::gambar/$1');
 
+// RESEP OBAT
+$routes->get('/(?i)rawatjalan/(?i)resepobat/(:num)', 'ResepObat::index/$1');
+$routes->post('/(?i)rawatjalan/(?i)resepobat/(?i)create/(:any)', 'ResepObat::create/$1');
+$routes->post('/(?i)rawatjalan/(?i)resepobat/(?i)confirm/(:any)', 'ResepObat::confirm/$1');
+$routes->post('/(?i)rawatjalan/(?i)resepobat/(?i)cancel/(:any)', 'ResepObat::cancel/$1');
+
+// RESEP KACAMATA
+$routes->get('/(?i)rawatjalan/(?i)resepkacamata/(:num)', 'ResepKacamata::index/$1');
+$routes->get('/(?i)rawatjalan/(?i)resepkacamata/(?i)view/(:any)', 'ResepKacamata::view/$1');
+$routes->get('/(?i)rawatjalan/(?i)resepkacamata/(?i)export/(:any)', 'ResepKacamata::export/$1');
+$routes->post('/(?i)rawatjalan/(?i)resepkacamata/(?i)create/(:any)', 'ResepKacamata::create/$1');
+$routes->post('/(?i)rawatjalan/(?i)resepkacamata/(?i)update/(:any)', 'ResepKacamata::update/$1');
+
 // SUPPLIER
 $routes->get('/(?i)supplier', 'Supplier::index');
 $routes->post('/(?i)supplier/(?i)supplierlist', 'Supplier::supplierlist');
@@ -161,30 +174,28 @@ $routes->get('/(?i)opnameobat/(?i)detailopnameobat/(:any)', 'OpnameObat::detailo
 $routes->get('/(?i)opnameobat/(?i)obatlist/(:any)', 'OpnameObat::obatlist/$1');
 $routes->get('/(?i)opnameobat/(?i)exportopnameobat/(:any)', 'OpnameObat::exportopnameobat/$1');
 
-// RESEP DOKTER
-$routes->get('/(?i)resep', 'Resep::index');
-$routes->get('/(?i)resep/(?i)dokterlist', 'Resep::dokterlist');
-$routes->get('/(?i)resep/(?i)listresep', 'Resep::listresep');
-$routes->get('/(?i)resep/(?i)pasienlist', 'Resep::pasienlist');
-$routes->get('/(?i)resep/(?i)resep/(:any)', 'Resep::resep/$1');
-$routes->get('/(?i)resep/(?i)print/(:any)', 'Resep::print/$1');
-$routes->post('/(?i)resep/(?i)create', 'Resep::create');
-$routes->post('/(?i)resep/(?i)confirm/(:any)', 'Resep::confirm/$1');
-$routes->post('/(?i)resep/(?i)cancel/(:any)', 'Resep::cancel/$1');
-$routes->delete('/(?i)resep/(?i)delete/(:any)', 'Resep::delete/$1');
+// RESEP DOKTER (DARI RESEP OBAT RAWAT JALAN)
+$routes->get('/(?i)resep', 'ResepDokter::index');
+$routes->get('/(?i)resep/(?i)dokterlist', 'ResepDokter::dokterlist');
+$routes->get('/(?i)resep/(?i)listresep', 'ResepDokter::listresep');
+$routes->get('/(?i)resep/(?i)pasienlist', 'ResepDokter::pasienlist');
+$routes->get('/(?i)resep/(?i)resep/(:any)', 'ResepDokter::resep/$1');
+$routes->get('/(?i)resep/(?i)print/(:any)', 'ResepDokter::print/$1');
+$routes->post('/(?i)resep/(?i)create', 'ResepDokter::create');
+$routes->post('/(?i)resep/(?i)confirm/(:any)', 'ResepDokter::confirm/$1');
+$routes->post('/(?i)resep/(?i)cancel/(:any)', 'ResepDokter::cancel/$1');
+$routes->delete('/(?i)resep/(?i)delete/(:any)', 'ResepDokter::delete/$1');
 
 // DETAIL RESEP DOKTER
-$routes->get('/(?i)resep/(?i)detailresep/(:any)', 'Resep::detailresep/$1');
-$routes->get('/(?i)resep/(?i)detailreseplist/(:any)', 'Resep::detailreseplist/$1');
-$routes->get('/(?i)resep/(?i)detailresepitem/(:any)', 'Resep::detailresepitem/$1');
-$routes->get('/(?i)resep/(?i)obatlist/(:any)', 'Resep::obatlist/$1');
-$routes->post('/(?i)resep/(?i)tambahdetailresep/(:any)', 'Resep::tambahdetailresep/$1');
-$routes->post('/(?i)resep/(?i)perbaruidetailresep/(:any)', 'Resep::perbaruidetailresep/$1');
-$routes->delete('/(?i)resep/(?i)hapusdetailresep/(:any)', 'Resep::hapusdetailresep/$1');
-$routes->get('/(?i)resep/(?i)keterangan/(:any)', 'Resep::keterangan/$1');
-$routes->post('/(?i)resep/(?i)editketerangan/(:any)', 'Resep::editketerangan/$1');
-$routes->get('/(?i)resep/(?i)etiket-dalam/(:any)', 'Resep::etiketdalam/$1');
-$routes->get('/(?i)resep/(?i)etiket-luar/(:any)', 'Resep::etiketluar/$1');
+$routes->get('/(?i)resep/(?i)detailresep/(:any)', 'ResepDokter::detailresep/$1');
+$routes->get('/(?i)resep/(?i)detailreseplist/(:any)', 'ResepDokter::detailreseplist/$1');
+$routes->get('/(?i)resep/(?i)detailresepitem/(:any)', 'ResepDokter::detailresepitem/$1');
+$routes->get('/(?i)resep/(?i)obatlist/(:any)', 'ResepDokter::obatlist/$1');
+$routes->post('/(?i)resep/(?i)tambahdetailresep/(:any)', 'ResepDokter::tambahdetailresep/$1');
+$routes->post('/(?i)resep/(?i)perbaruidetailresep/(:any)', 'ResepDokter::perbaruidetailresep/$1');
+$routes->delete('/(?i)resep/(?i)hapusdetailresep/(:any)', 'ResepDokter::hapusdetailresep/$1');
+$routes->get('/(?i)resep/(?i)etiket-dalam/(:any)', 'ResepDokter::etiketdalam/$1');
+$routes->get('/(?i)resep/(?i)etiket-luar/(:any)', 'ResepDokter::etiketluar/$1');
 
 // RESEP LUAR
 $routes->get('/(?i)resepluar', 'ResepLuar::index');
@@ -204,8 +215,6 @@ $routes->get('/(?i)resepluar/(?i)obatlist/(:any)', 'ResepLuar::obatlist/$1');
 $routes->post('/(?i)resepluar/(?i)tambahdetailresep/(:any)', 'ResepLuar::tambahdetailresep/$1');
 $routes->post('/(?i)resepluar/(?i)perbaruidetailresep/(:any)', 'ResepLuar::perbaruidetailresep/$1');
 $routes->delete('/(?i)resepluar/(?i)hapusdetailresep/(:any)', 'ResepLuar::hapusdetailresep/$1');
-$routes->get('/(?i)resepluar/(?i)keterangan/(:any)', 'ResepLuar::keterangan/$1');
-$routes->post('/(?i)resepluar/(?i)editketerangan/(:any)', 'ResepLuar::editketerangan/$1');
 $routes->get('/(?i)resepluar/(?i)etiket-dalam/(:any)', 'ResepLuar::etiketdalam/$1');
 $routes->get('/(?i)resepluar/(?i)etiket-luar/(:any)', 'ResepLuar::etiketluar/$1');
 

@@ -8,10 +8,8 @@ use App\Models\RawatJalanModel;
 use App\Models\ObatModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use Dompdf\Dompdf;
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\RequestException;
 
-class Resep extends BaseController
+class ResepDokter extends BaseController
 {
     protected $ResepModel;
     protected $DetailResepModel;
