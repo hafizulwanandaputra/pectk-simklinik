@@ -2,11 +2,11 @@
 // Tanggal lahir pasien
 $tanggal_lahir = new DateTime($rawatjalan['tanggal_lahir']);
 
-// Tanggal sekarang
-$sekarang = new DateTime();
+// Tanggal registrasi
+$registrasi = new DateTime(date('Y-m-d', strtotime($rawatjalan['tanggal_registrasi'])));
 
 // Hitung selisih antara tanggal sekarang dan tanggal lahir
-$usia = $sekarang->diff($tanggal_lahir);
+$usia = $registrasi->diff($tanggal_lahir);
 
 // Logika penentuan risiko
 if ($skrining['jatuh_sempoyongan'] === 'YA' && $skrining['jatuh_penopang'] === 'YA') {
