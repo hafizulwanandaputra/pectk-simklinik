@@ -966,7 +966,7 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                     let data = response.data;
                     console.log(data);
 
-                    $('#mataModalLabel').text('Edit Evaluasi Edukasi');
+                    $('#mataModalLabel').text('Edit Pemeriksaan Fisik');
                     $('#id_asesmen_mata').val(data.id_asesmen_mata);
                     if (data.gambar) {
                         $('#gambar_preview').attr('src', `<?= base_url('uploads/asesmen_mata') ?>/` + data.gambar);
