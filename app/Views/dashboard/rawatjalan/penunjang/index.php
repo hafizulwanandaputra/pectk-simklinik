@@ -67,7 +67,7 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
             </li>
             <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-tertiary transparent-blur">
                 <div class="no-fluid-content">
-                    <nav class="nav nav-underline justify-content-center flex-nowrap overflow-auto">
+                    <nav class="nav nav-underline flex-nowrap overflow-auto">
                         <?php foreach ($listRawatJalan as $list) : ?>
                             <a class="nav-link py-1 text-nowrap <?= ($activeSegment === $list['id_rawat_jalan']) ? 'active' : '' ?>" href="<?= base_url('rawatjalan/edukasi/' . $list['id_rawat_jalan']); ?>"><?= $list['nomor_registrasi']; ?></a>
                         <?php endforeach; ?>

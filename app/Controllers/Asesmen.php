@@ -199,6 +199,39 @@ class Asesmen extends BaseController
         }
     }
 
+    public function listvisus()
+    {
+        // Memeriksa peran pengguna, hanya 'Admin' dan 'Dokter' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
+            // Membuat koneksi ke database
+            $db = db_connect();
+
+            // Menggunakan Query Builder untuk mengambil data ICD-X
+            $builder = $db->table('master_visus');
+            $builder->select('visus_machine');;
+
+            $results = $builder->get()->getResultArray();
+            $options = [];
+            // Menyiapkan opsi untuk ditampilkan
+            foreach ($results as $row) {
+                $options[] = [
+                    'value' => $row['visus_machine']
+                ];
+            }
+
+            // Mengembalikan respons JSON dengan data supplier
+            return $this->response->setJSON([
+                'success' => true,
+                'data' => $options,
+            ]);
+        } else {
+            // Mengembalikan status 404 jika peran tidak diizinkan
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
+        }
+    }
+
     public function export($id)
     {
         // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', 'Perawat', atau 'Admisi' yang diizinkan
@@ -320,6 +353,12 @@ class Asesmen extends BaseController
                     'alergi' => $this->request->getPost('alergi') ?: NULL,
                     'alergi_keterangan' => $this->request->getPost('alergi_keterangan') ?: NULL,
                     'sakit_lainnya' => $sakit_lainnya_csv,
+                    'tono_od' => $this->request->getPost('tono_od'),
+                    'tono_os' => $this->request->getPost('tono_os'),
+                    'od_ucva' => $this->request->getPost('od_ucva'),
+                    'od_bcva' => $this->request->getPost('od_bcva'),
+                    'os_ucva' => $this->request->getPost('os_ucva'),
+                    'os_bcva' => $this->request->getPost('os_bcva'),
                     'diagnosa_medis_1' => $this->request->getPost('diagnosa_medis_1') ?: NULL,
                     'icdx_kode_1' => $this->request->getPost('icdx_kode_1') ?: NULL,
                     'diagnosa_medis_2' => $this->request->getPost('diagnosa_medis_2') ?: NULL,

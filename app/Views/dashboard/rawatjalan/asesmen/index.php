@@ -67,7 +67,7 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
             </li>
             <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-tertiary transparent-blur">
                 <div class="no-fluid-content">
-                    <nav class="nav nav-underline justify-content-center flex-nowrap overflow-auto">
+                    <nav class="nav nav-underline flex-nowrap overflow-auto">
                         <?php foreach ($listRawatJalan as $list) : ?>
                             <a class="nav-link py-1 text-nowrap <?= ($activeSegment === $list['id_rawat_jalan']) ? 'active' : '' ?>" href="<?= base_url('rawatjalan/asesmen/' . $list['id_rawat_jalan']); ?>"><?= $list['nomor_registrasi']; ?></a>
                         <?php endforeach; ?>
@@ -300,6 +300,62 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                                 </div>
                             </div>
                         <?php endfor; ?>
+                    </div>
+                    <div class="card overflow-auto">
+                        <div class="table-responsive">
+                            <table class="table m-0 table-borderless">
+                                <thead>
+                                    <tr>
+                                        <th scope="col" class="align-middle"></th>
+                                        <th scope="col" class="text-center align-middle">OD</th>
+                                        <th scope="col" class="text-center align-middle">OS</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <th scope="row" class="text-center align-middle">Visus UCVA</th>
+                                        <td class="align-middle">
+                                            <input type="text" class="form-control" id="od_ucva" name="od_ucva" value="" autocomplete="off" dir="auto" placeholder="" list="od_ucva_list">
+                                            <datalist id="od_ucva_list">
+                                            </datalist>
+                                            <div class="invalid-feedback"></div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <input type="text" class="form-control" id="os_ucva" name="os_ucva" value="" autocomplete="off" dir="auto" placeholder="" list="os_ucva_list">
+                                            <datalist id="os_ucva_list">
+                                            </datalist>
+                                            <div class="invalid-feedback"></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="text-center align-middle">Visus BCVA</th>
+                                        <td class="align-middle">
+                                            <input type="text" class="form-control" id="od_bcva" name="od_bcva" value="" autocomplete="off" dir="auto" placeholder="" list="od_bcva_list">
+                                            <datalist id="od_bcva_list">
+                                            </datalist>
+                                            <div class="invalid-feedback"></div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <input type="text" class="form-control" id="os_bcva" name="os_bcva" value="" autocomplete="off" dir="auto" placeholder="" list="os_bcva_list">
+                                            <datalist id="os_bcva_list">
+                                            </datalist>
+                                            <div class="invalid-feedback"></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row" class="text-center align-middle">Tono</th>
+                                        <td class="align-middle">
+                                            <input type="text" class="form-control" id="tono_od" name="tono_od" value="" autocomplete="off" dir="auto" placeholder="">
+                                            <div class="invalid-feedback"></div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <input type="text" class="form-control" id="tono_os" name="tono_os" value="" autocomplete="off" dir="auto" placeholder="">
+                                            <div class="invalid-feedback"></div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
                 <div class="mb-3">
@@ -616,6 +672,14 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
             });
 
             <?php if (session()->get('role') != 'Perawat') : ?>
+                // Pemeriksaan Fisik (O)
+                $('#tono_od').val(data.tono_od);
+                $('#tono_os').val(data.tono_os);
+                $('#od_ucva').val(data.od_ucva);
+                $('#od_bcva').val(data.od_bcva);
+                $('#os_ucva').val(data.os_ucva);
+                $('#os_bcva').val(data.os_bcva);
+
                 // Diagnosis Medis (A)
                 $('#diagnosa_medis_1').val(data.diagnosa_medis_1);
                 $('#icdx_kode_1').val(data.icdx_kode_1);
@@ -628,7 +692,7 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                 $('#diagnosa_medis_5').val(data.diagnosa_medis_5);
                 $('#icdx_kode_5').val(data.icdx_kode_5);
 
-                // Terapi (P)
+                // Tindakan (P)
                 $('#terapi_1').val(data.terapi_1);
                 $('#icd9_kode_1').val(data.icd9_kode_1);
                 $('#terapi_2').val(data.terapi_2);
@@ -693,6 +757,27 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
             } finally {
                 // Hide the spinner when done
                 $('#loadingSpinner').hide();
+            }
+        }
+
+        async function loadVisus() {
+            try {
+                const response = await axios.get('<?= base_url('rawatjalan/asesmen/listvisus') ?>');
+                const visus = response.data.data;
+
+                // Array dari ID datalist yang ingin diisi
+                const dataListIds = ['#od_ucva_list', '#os_ucva_list', '#od_bcva_list', '#os_bcva_list'];
+
+                // Kosongkan dan isi setiap datalist
+                dataListIds.forEach(id => {
+                    const dataList = $(id);
+                    dataList.empty(); // Kosongkan datalist sebelumnya
+                    visus.forEach(item => {
+                        dataList.append(`<option value="${item.value}"></option>`);
+                    });
+                });
+            } catch (error) {
+                console.error('Gagal memuat visus:', error);
             }
         }
 
@@ -1170,8 +1255,10 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                             loadICD94(),
                             loadICD95()
                         ]);
+                        loadVisus();
                     <?php else : ?>
                         fetchAsesmen();
+                        loadVisus();
                     <?php endif; ?>
                 } else {
                     console.log("Validation Errors:", response.data.errors);
@@ -1250,8 +1337,10 @@ $activeSegment = $uri->getSegment(3); // Get the first segment
                 loadICD95()
             ]);
             fetchAsesmenMata();
+            loadVisus();
         <?php else : ?>
             fetchAsesmen();
+            loadVisus();
         <?php endif; ?>
     });
     // Show toast notification

@@ -52,6 +52,7 @@ $routes->post('/(?i)rawatjalan/(?i)cancel/(:any)', 'RawatJalan::cancel/$1');
 // ASESMEN
 $routes->get('/(?i)rawatjalan/(?i)asesmen/(:num)', 'Asesmen::index/$1');
 $routes->get('/(?i)rawatjalan/(?i)asesmen/(?i)view/(:any)', 'Asesmen::view/$1');
+$routes->get('/(?i)rawatjalan/(?i)asesmen/(?i)listvisus', 'Asesmen::listvisus');
 $routes->get('/(?i)rawatjalan/(?i)asesmen/(?i)icdx', 'Asesmen::icdx');
 $routes->get('/(?i)rawatjalan/(?i)asesmen/(?i)icd9', 'Asesmen::icd9');
 $routes->get('/(?i)rawatjalan/(?i)asesmen/(?i)export/(:any)', 'Asesmen::export/$1');
