@@ -276,7 +276,7 @@ class Optik extends BaseController
                 'waktu_dibuat' => $optik['waktu_dibuat'],
             ];
             $this->OptikModel->save($data);
-            return $this->response->setJSON(['success' => true, 'message' => 'Optik berhasil diperbarui']);
+            return $this->response->setJSON(['success' => true, 'message' => 'Resep kacamata berhasil diperbarui']);
         } else {
             // Jika peran tidak dikenali, lemparkan pengecualian 404
             throw PageNotFoundException::forPageNotFound();
