@@ -66,7 +66,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             <a class="nav-link py-1 text-nowrap" href="<?= base_url('rawatjalan/penunjang/' . $rawatjalan['id_rawat_jalan']); ?>">Penunjang</a>
                         <?php endif; ?>
                         <?php if (session()->get('role') != 'Perawat') : ?>
-                            <a class="nav-link py-1 text-nowrap active" href="<?= base_url('rawatjalan/resepobat/' . $rawatjalan['id_rawat_jalan']); ?>">Resep Obat</a>
+                            <a class="nav-link py-1 text-nowrap active activeLink" href="<?= base_url('rawatjalan/resepobat/' . $rawatjalan['id_rawat_jalan']); ?>">Resep Obat</a>
                             <a class="nav-link py-1 text-nowrap" href="<?= base_url('rawatjalan/optik/' . $rawatjalan['id_rawat_jalan']); ?>">Resep Kacamata</a>
                         <?php endif; ?>
                         <!-- <a class="nav-link py-1 text-nowrap" href="<?= base_url('rawatjalan/lptindakan/' . $rawatjalan['id_rawat_jalan']); ?>">Laporan Tindakan</a> -->
@@ -77,7 +77,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <div class="no-fluid-content">
                     <nav class="nav nav-underline flex-nowrap overflow-auto">
                         <?php foreach ($listRawatJalan as $list) : ?>
-                            <a class="nav-link py-1 text-nowrap <?= ($activeSegment === $list['id_rawat_jalan']) ? 'active' : '' ?>" href="<?= base_url('rawatjalan/resepobat/' . $list['id_rawat_jalan']); ?>"><?= $list['nomor_registrasi']; ?></a>
+                            <a class="nav-link py-1 text-nowrap <?= ($activeSegment === $list['id_rawat_jalan']) ? 'active activeLink' : '' ?>" href="<?= base_url('rawatjalan/resepobat/' . $list['id_rawat_jalan']); ?>"><?= $list['nomor_registrasi']; ?></a>
                         <?php endforeach; ?>
                     </nav>
                 </div>
@@ -396,6 +396,15 @@ $usia = $registrasi->diff($tanggal_lahir);
             theme: "bootstrap-5",
             width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
             placeholder: $(this).data('placeholder'),
+        });
+
+        // Cari semua elemen dengan kelas 'activeLink' di kedua navigasi
+        $(".nav .activeLink").each(function() {
+            // Scroll ke elemen yang aktif
+            this.scrollIntoView({
+                block: "nearest", // Fokus pada elemen aktif
+                inline: "center" // Elemen di-scroll ke tengah horizontal
+            });
         });
 
         var detailResepId;
