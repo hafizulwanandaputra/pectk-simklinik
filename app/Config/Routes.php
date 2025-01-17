@@ -117,6 +117,13 @@ $routes->get('/(?i)rawatjalan/(?i)optik/(?i)export/(:any)', 'Optik::export/$1');
 $routes->post('/(?i)rawatjalan/(?i)optik/(?i)create/(:any)', 'Optik::create/$1');
 $routes->post('/(?i)rawatjalan/(?i)optik/(?i)update/(:any)', 'Optik::update/$1');
 
+// LAPORAN TINDAKAN RAJAL
+$routes->get('/(?i)rawatjalan/(?i)laporanrajal/(:num)', 'TindakanRajal::index/$1');
+$routes->get('/(?i)rawatjalan/(?i)laporanrajal/(?i)view/(:any)', 'TindakanRajal::view/$1');
+$routes->get('/(?i)rawatjalan/(?i)laporanrajal/(?i)icdx', 'TindakanRajal::icdx');
+$routes->get('/(?i)rawatjalan/(?i)laporanrajal/(?i)export/(:any)', 'TindakanRajal::export/$1');
+$routes->post('/(?i)rawatjalan/(?i)laporanrajal/(?i)update/(:any)', 'TindakanRajal::update/$1');
+
 // SUPPLIER
 $routes->get('/(?i)supplier', 'Supplier::index');
 $routes->post('/(?i)supplier/(?i)supplierlist', 'Supplier::supplierlist');
