@@ -20,7 +20,6 @@
     <div id="loadingSpinner" class="spinner-border spinner-border-sm mx-2" role="status" style="min-width: 1rem;">
         <span class="visually-hidden">Loading...</span>
     </div>
-    <a class="fs-6 mx-2 text-success-emphasis" href="https://pectk.padangeyecenter.com/emr" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Buka Sistem Rekam Medis Elektronik" target="_blank"><i class="fa-solid fa-file-medical"></i></a>
     <a id="toggleFilter" class="fs-6 mx-2 text-success-emphasis" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Pencarian"><i class="fa-solid fa-magnifying-glass"></i></a>
     <a id="refreshButton" class="fs-6 mx-2 text-success-emphasis" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan"><i class="fa-solid fa-sync"></i></a>
 </div>
@@ -66,23 +65,18 @@
                                             </select>
                                         </div>
                                         <div class="col">
-                                            <select id="confirmedFilter" class="form-select form-select-sm">
-                                                <option value="">Semua Status Konfirmasi</option>
-                                                <option value="1">Dikonfirmasi</option>
-                                                <option value="0">Belum Dikonfirmasi</option>
-                                            </select>
-                                        </div>
-                                        <div class="col">
                                             <select id="genderFilter" class="form-select form-select-sm">
                                                 <option value="">Semua Jenis Kelamin</option>
                                                 <option value="L">Laki-Laki</option>
                                                 <option value="P">Perempuan</option>
                                             </select>
                                         </div>
+                                        <div class="col">
+                                            <select id="dokterFilter" class="form-select form-select-sm">
+                                                <option value="">Semua Dokter</option>
+                                            </select>
+                                        </div>
                                     </div>
-                                    <select id="dokterFilter" class="form-select form-select-sm  my-1">
-                                        <option value="">Semua Dokter</option>
-                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -94,33 +88,9 @@
     <div class="px-3 mt-3">
         <div class="no-fluid-content">
             <div class="shadow-sm rounded">
-                <?php if (session()->get('role') != 'Apoteker') : ?>
-                    <div class="d-grid gap-2">
-                        <button id="collapseList" class="btn btn-primary btn-sm bg-gradient  rounded-bottom-0" type="button" data-bs-toggle="collapse" data-bs-target="#tambahPasienForm" aria-expanded="false" aria-controls="tambahPasienForm">
-                            <i class="fa-solid fa-plus"></i> Tambah Resep Dokter
-                        </button>
-                    </div>
-                    <ul id="tambahPasienForm" class="list-group rounded-0 collapse">
-                        <li class="list-group-item border-top-0 bg-body-tertiary">
-                            <form id="resepForm" enctype="multipart/form-data" class="d-flex flex-column gap-2">
-                                <div class="flex-fill">
-                                    <select class="form-select form-select-sm" id="nomor_registrasi" name="nomor_registrasi" aria-label="nomor_registrasi">
-                                        <option value="" disabled selected>-- Pilih Pasien --</option>
-                                    </select>
-                                    <div class="invalid-feedback"></div>
-                                </div>
-                                <div class="d-grid gap-2 d-lg-flex justify-content-lg-end" id="submitButtonContainer">
-                                    <button type="submit" id="submitButton" class="btn btn-primary bg-gradient" disabled>
-                                        <i class="fa-solid fa-plus"></i> Tambah
-                                    </button>
-                                </div>
-                            </form>
-                        </li>
-                    </ul>
-                <?php endif; ?>
-                <ul id="resepContainer" class="list-group <?= (session()->get('role') != 'Apoteker') ? 'rounded-top-0 ' : ''; ?>">
+                <ul id="resepContainer" class="list-group">
                     <?php for ($i = 0; $i < 12; $i++) : ?>
-                        <li class="list-group-item <?= (session()->get('role') != 'Apoteker') ? 'border-top-0' : ''; ?> pb-3 pt-3" style="cursor: wait;">
+                        <li class="list-group-item pb-3 pt-3" style="cursor: wait;">
                             <div class="d-flex">
                                 <div class="align-self-center w-100">
                                     <h5 class="card-title d-flex placeholder-glow">
@@ -186,9 +156,6 @@
                             <hr>
                             <div class="d-grid gap-2 d-flex justify-content-end">
                                 <a class="btn btn-body bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
-                                <?php if (session()->get('role') != 'Apoteker'): ?>
-                                    <a class="btn btn-danger bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
-                                <?php endif; ?>
                             </div>
                         </li>
                     <?php endfor; ?>
@@ -221,7 +188,7 @@
     let currentPage = 1;
     let pembelianObatId = null;
     var placeholder = `
-            <li class="list-group-item <?= (session()->get('role') != 'Apoteker') ? 'border-top-0' : ''; ?> pb-3 pt-3" style="cursor: wait;">
+            <li class="list-group-item pb-3 pt-3" style="cursor: wait;">
                 <div class="d-flex">
                     <div class="align-self-center w-100">
                         <h5 class="card-title d-flex placeholder-glow">
@@ -287,37 +254,9 @@
                 <hr>
                 <div class="d-grid gap-2 d-flex justify-content-end">
                     <a class="btn btn-body bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
-                    <?php if (session()->get('role') != 'Apoteker'): ?>
-                        <a class="btn btn-danger bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
-                    <?php endif; ?>
                 </div>
             </li>
     `;
-    <?php if (session()->get('role') != 'Apoteker') : ?>
-        async function fetchPasienOptions() {
-            try {
-                // Panggil API dengan query string tanggal
-                const response = await axios.get(`<?= base_url('resep/pasienlist') ?>`);
-
-                if (response.data.success) {
-                    const options = response.data.data;
-                    const select = $('#nomor_registrasi');
-
-                    // Hapus opsi yang ada, kecuali opsi pertama (default)
-                    select.find('option:not(:first)').remove();
-
-                    // Tambahkan opsi ke elemen select
-                    options.forEach(option => {
-                        select.append(`<option value="${option.value}">${option.text}</option>`);
-                    });
-                } else {
-                    showFailedToast('Gagal mendapatkan pasien.');
-                }
-            } catch (error) {
-                showFailedToast(`${error.response.data.error}<br>${error.response.data.details.message}`);
-            }
-        }
-    <?php endif; ?>
     async function fetchDokterOptions(selectedDokter = null) {
         // Show the spinner
         $('#loadingSpinner').show();
@@ -365,7 +304,6 @@
         const status = $('#statusFilter').val();
         const jenis = $('#jenisFilter').val();
         const gender = $('#genderFilter').val();
-        const confirmed = $('#confirmedFilter').val();
         const dokter = $('#dokterFilter').val();
         const tanggal = $('#tanggalFilter').val();
 
@@ -382,7 +320,6 @@
                     jenis: jenis,
                     gender: gender,
                     dokter: dokter,
-                    confirmed: confirmed,
                     tanggal: tanggal
                 }
             });
@@ -394,7 +331,7 @@
             if (data.total === 0) {
                 $('#paginationNav ul').empty();
                 $('#resepContainer').append(
-                    '<li class="list-group-item <?= (session()->get('role') != 'Apoteker') ? 'border-top-0' : ''; ?> pb-3 pt-3">' +
+                    '<li class="list-group-item pb-3 pt-3">' +
                     '    <h1 class="display-4 text-center text-muted" style="font-weight: 200;">Data Kosong</h1>' +
                     '</li>'
                 );
@@ -408,18 +345,12 @@
                     }
                     const jumlah_resep = parseInt(resep.jumlah_resep);
                     const total_biaya = parseInt(resep.total_biaya);
-                    const confirmedBadge = resep.confirmed == '1' ?
-                        `<span class="badge bg-success bg-gradient">Dikonfirmasi</span>` :
-                        `<span class="badge bg-danger bg-gradient">Belum Dikonfirmasi</span>`;
                     const statusBadge = resep.status == '1' ?
                         `<span class="badge bg-success bg-gradient">Transaksi Diproses</span>` :
                         `<span class="badge bg-danger bg-gradient">Transaksi Belum Diproses</span>`;
                     const statusButtons = resep.status == '1' ?
                         `disabled` :
                         ``;
-                    const deleteButton = `<button type="button" class="btn btn-danger btn-sm bg-gradient  delete-btn" data-id="${resep.id_resep}" data-name="${resep.nama_pasien}" data-date="${resep.tanggal_resep}">
-                        <i class="fa-solid fa-trash"></i> Hapus
-                    </button>`;
                     let nomor_registrasi = resep.nomor_registrasi || "";
                     if (nomor_registrasi.includes("RJ")) {
                         nomor_registrasi = `<span class="badge bg-success bg-gradient text-nowrap"><i class="fa-solid fa-hospital-user"></i> RAWAT JALAN</span>`;
@@ -427,7 +358,7 @@
                         nomor_registrasi = `<span class="badge bg-success bg-gradient text-nowrap"><i class="fa-solid fa-bed-pulse"></i> RAWAT INAP</span>`;
                     }
                     const resepElement = `
-            <li class="list-group-item <?= (session()->get('role') != 'Apoteker') ? 'border-top-0' : ''; ?> pb-3 pt-3">
+            <li class="list-group-item pb-3 pt-3">
                 <div class="d-flex">
                     <div class="align-self-center w-100">
                         <h5 class="card-title d-flex date justify-content-start">
@@ -476,7 +407,7 @@
                                     </div>
                                 </div>
                             </div>
-                            ${confirmedBadge} ${statusBadge}
+                            ${statusBadge}
                         </div>
                     </div>
                 </div>
@@ -485,7 +416,6 @@
                     <button type="button" class="btn btn-body btn-sm bg-gradient " onclick="window.location.href = '<?= base_url('resep/detailresep') ?>/${resep.id_resep}';">
                         <i class="fa-solid fa-circle-info"></i> Detail
                     </button>
-                    <?= (session()->get('role') == 'Apoteker') ? '' : '${deleteButton}' ?>
                 </div>
             </li>
                 `;
@@ -571,17 +501,15 @@
         const page = $(this).data('page');
         if (page) {
             currentPage = page;
-            <?= (session()->get('role') != 'Apoteker') ? 'fetchPasienOptions();' : '' ?>
             fetchResep();
         }
     });
 
-    $('#statusFilter, #jenisFilter, #genderFilter, #confirmedFilter, #dokterFilter, #tanggalFilter').on('change', function() {
+    $('#statusFilter, #jenisFilter, #genderFilter, #dokterFilter, #tanggalFilter').on('change', function() {
         $('#resepContainer').empty();
         for (let i = 0; i < limit; i++) {
             $('#resepContainer').append(placeholder);
         }
-        <?= (session()->get('role') != 'Apoteker') ? 'fetchPasienOptions();' : '' ?>
         fetchResep();
     });
 
@@ -591,20 +519,7 @@
         for (let i = 0; i < limit; i++) {
             $('#resepContainer').append(placeholder);
         }
-        <?= (session()->get('role') != 'Apoteker') ? 'fetchPasienOptions();' : '' ?>
         fetchResep();
-    });
-
-    function toggleSubmitButton() {
-        var selectedValue = $('#nomor_registrasi').val();
-        if (selectedValue === null || selectedValue === "") {
-            $('#submitButton').prop('disabled', true);
-        } else {
-            $('#submitButton').prop('disabled', false);
-        }
-    }
-    $('#nomor_registrasi').on('change.select2', function() {
-        toggleSubmitButton();
     });
 
     $(document).ready(async function() {
@@ -663,132 +578,11 @@
             saveToggleState(!isVisible);
         });
 
-        // Store the ID of the user to be deleted
-        var resepId;
-        var resepName;
-        var resepDate;
-
-        // Show delete confirmation modal
-        $(document).on('click', '.delete-btn', function() {
-            resepId = $(this).data('id');
-            resepName = $(this).data('name');
-            resepDate = $(this).data('date');
-            $('[data-bs-toggle="tooltip"]').tooltip('hide');
-            $('#deleteMessage').html(`Hapus resep untuk "` + resepName + `"?`);
-            $('#deleteSubmessage').html(`Tanggal Resep: ` + resepDate);
-            $('#deleteModal').modal('show');
-        });
-
-        $('#confirmDeleteBtn').click(async function() {
-            $('#deleteModal button').prop('disabled', true);
-            $('#deleteMessage').addClass('mb-0').html('Mengapus, silakan tunggu...');
-            $('#deleteSubmessage').hide();
-
-            try {
-                await axios.delete(`<?= base_url('/resep/delete') ?>/${resepId}`);
-                // Simpan nilai pilihan dokter saat ini
-                const selectedDokter = $('#dokterFilter').val();
-                <?= (session()->get('role') != 'Apoteker') ? 'fetchPasienOptions();' : '' ?>
-                // Panggil fungsi untuk memperbarui opsi dokter
-                await fetchDokterOptions(selectedDokter);
-                fetchResep();
-            } catch (error) {
-                if (error.response.request.status === 422) {
-                    showFailedToast(error.response.data.message);
-                } else {
-                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
-                }
-            } finally {
-                $('#deleteModal').modal('hide');
-                $('#deleteMessage').removeClass('mb-0');
-                $('#deleteSubmessage').show();
-                $('#deleteModal button').prop('disabled', false);
-            }
-        });
-
-        $('#resepForm').submit(async function(e) {
-            e.preventDefault();
-
-            const formData = new FormData(this);
-            console.log("Form Data:", $(this).serialize());
-
-            // Clear previous validation states
-            $('#resepForm .is-invalid').removeClass('is-invalid');
-            $('#resepForm .invalid-feedback').text('').hide();
-            $('#submitButton').prop('disabled', true).html(`
-                <span class="spinner-border" style="width: 14px; height: 14px;" aria-hidden="true"></span> Tambah
-            `);
-
-            // Disable form inputs
-            $('#resepForm select').prop('disabled', true);
-
-            try {
-                const response = await axios.post(`<?= base_url('resep/create') ?>`, formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                });
-
-                if (response.data.success) {
-                    $('#nomor_registrasi').val(null).trigger('change');
-                    $('#resepForm .is-invalid').removeClass('is-invalid');
-                    $('#resepForm .invalid-feedback').text('').hide();
-                    $('#submitButton').prop('disabled', true);
-                    // Simpan nilai pilihan dokter saat ini
-                    const selectedDokter = $('#dokterFilter').val();
-                    <?= (session()->get('role') != 'Apoteker') ? 'fetchPasienOptions();' : '' ?>
-                    // Panggil fungsi untuk memperbarui opsi dokter
-                    await fetchDokterOptions(selectedDokter);
-                    fetchResep();
-                } else {
-                    console.log("Validation Errors:", response.data.errors);
-
-                    // Clear previous validation states
-                    $('#resepForm .is-invalid').removeClass('is-invalid');
-                    $('#resepForm .invalid-feedback').text('').hide();
-
-                    // Display new validation errors
-                    for (const field in response.data.errors) {
-                        if (response.data.errors.hasOwnProperty(field)) {
-                            const fieldElement = $('#' + field);
-                            const feedbackElement = fieldElement.siblings('.invalid-feedback');
-
-                            if (fieldElement.length > 0 && feedbackElement.length > 0) {
-                                fieldElement.addClass('is-invalid');
-                                feedbackElement.text(response.data.errors[field]).show();
-
-                                // Remove error message when the user corrects the input
-                                fieldElement.on('input change', function() {
-                                    $(this).removeClass('is-invalid');
-                                    $(this).siblings('.invalid-feedback').text('').hide();
-                                });
-                            } else {
-                                console.warn("Elemen tidak ditemukan pada field:", field);
-                            }
-                        }
-                    }
-                }
-            } catch (error) {
-                if (error.response.request.status === 404) {
-                    showFailedToast(error.response.data.message);
-                } else if (error.response.request.status === 422) {
-                    showFailedToast(`${error.response.data.error}<br>${error.response.data.details.message}`);
-                } else {
-                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
-                }
-                $('#submitButton').prop('disabled', false);
-            } finally {
-                $('#submitButton').html(`
-                    <i class="fa-solid fa-plus"></i> Tambah
-                `);
-                $('#resepForm select').prop('disabled', false);
-            }
-        });
         $(document).on('visibilitychange', async function() {
             if (document.visibilityState === "visible") {
                 // Simpan nilai pilihan dokter saat ini
                 const selectedDokter = $('#dokterFilter').val();
-                <?= (session()->get('role') != 'Apoteker') ? 'await Promise.all([fetchPasienOptions(), fetchDokterOptions(selectedDokter)]);' : 'await fetchDokterOptions(selectedDokter);' ?>
+                await fetchDokterOptions(selectedDokter);
                 fetchResep();
             }
         });
@@ -796,13 +590,12 @@
             e.preventDefault();
             // Simpan nilai pilihan dokter saat ini
             const selectedDokter = $('#dokterFilter').val();
-            <?= (session()->get('role') != 'Apoteker') ? 'await Promise.all([fetchPasienOptions(), fetchDokterOptions(selectedDokter)]);' : 'await fetchDokterOptions(selectedDokter);' ?>
+            await fetchDokterOptions(selectedDokter);
             fetchResep();
         });
 
-        <?= (session()->get('role') != 'Apoteker') ? 'await Promise.all([fetchPasienOptions(), fetchDokterOptions()]);' : 'await fetchDokterOptions();' ?>
+        await fetchDokterOptions();
         fetchResep();
-        toggleSubmitButton();
     });
     // Show toast notification
     <?= $this->include('toast/index') ?>

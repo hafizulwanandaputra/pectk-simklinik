@@ -27,8 +27,8 @@ class Penunjang extends BaseController
 
     public function index($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Perawat' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter'  || session()->get('role') == 'Perawat') {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Perawat' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat') {
             $db = db_connect();
 
             // Inisialisasi rawat jalan
@@ -112,8 +112,8 @@ class Penunjang extends BaseController
 
     public function view($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Perawat' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter'  || session()->get('role') == 'Perawat') {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Perawat' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat') {
             // Mengambil data skrining berdasarkan ID
             $data = $this->PenunjangModel->find($id); // Mengambil skrining
             $data['pemeriksaan'] = explode(',', $data['pemeriksaan']); // Ubah CSV menjadi array
@@ -128,8 +128,8 @@ class Penunjang extends BaseController
 
     public function ruanganoptions()
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Perawat' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter'  || session()->get('role') == 'Perawat') {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Perawat' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat') {
             // Mengambil ruangan dari tabel poliklinik
             $poliklinik = $this->PoliklinikModel
                 ->where('status', 1)
@@ -161,8 +161,8 @@ class Penunjang extends BaseController
 
     public function dokteroptions()
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Perawat' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter'  || session()->get('role') == 'Perawat') {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Perawat' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat') {
             // Mengambil ruangan dari tabel pengguna
             $auth = $this->AuthModel
                 ->where('role', 'Dokter')
@@ -194,8 +194,8 @@ class Penunjang extends BaseController
 
     public function export($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', 'Perawat', atau 'Admisi' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
+        // Memeriksa peran pengguna, hanya 'Admin', 'Perawat', atau 'Admisi' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi' || session()->get('role') == 'Perawat') {
             $db = db_connect();
 
             // Inisialisasi rawat jalan
@@ -252,8 +252,8 @@ class Penunjang extends BaseController
 
     public function update($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Perawat' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter'  || session()->get('role') == 'Perawat') {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Perawat' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat') {
             // Ambil resep luar
             $penunjang = $this->PenunjangModel->find($id);
 

@@ -521,7 +521,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                 </a>
                             </li>
                         <?php endif; ?>
-                        <?php if (session()->get('role') == "Dokter" || session()->get('role') == "Apoteker" || session()->get('role') == "Admin") : ?>
+                        <?php if (session()->get('role') == "Apoteker" || session()->get('role') == "Admin") : ?>
                             <li class="nav-item">
                                 <a class="nav-link p-2 <?= ($activeSegment === 'resep') ? 'active bg-success' : '' ?>" href=" <?= base_url('/resep'); ?>">
                                     <div class="d-flex align-items-start <?= ($activeSegment === 'resep') ? 'text-white' : 'text-success-emphasis' ?>">
