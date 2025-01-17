@@ -297,8 +297,8 @@ $usia = $registrasi->diff($tanggal_lahir);
                                         </div>
                                         <hr>
                                         <div class="w-100 placeholder-glow">
-                                            <span class="placeholder" style="width: 100%;"></span><br>
-                                            <span class="placeholder" style="width: 100%;"></span>
+                                            <small><span class="placeholder" style="width: 100%;"></span></small><br>
+                                            <small><small><span class="placeholder" style="width: 100%;"></span></small></small>
                                         </div>
                                     </div>
                                     <div class="card-footer d-flex justify-content-end gap-1">
@@ -561,6 +561,25 @@ $usia = $registrasi->diff($tanggal_lahir);
             </form>
         </div>
     </div>
+    <div class="modal fade" id="mataPreviewModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="mataPreviewModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-fullscreen-lg-down modal-dialog-centered modal-dialog-scrollable">
+            <form id="mataPreviewForm" enctype="multipart/form-data" class="modal-content bg-body-tertiary shadow-lg transparent-blur">
+                <div class="modal-header justify-content-between pt-2 pb-2" style="border-bottom: 1px solid var(--bs-border-color-translucent);">
+                    <h6 class="pe-2 modal-title fs-6 text-truncate" id="mataPreviewModalLabel" style="font-weight: bold;"></h6>
+                    <button id="closeBtn" type="button" class="btn btn-danger bg-gradient" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div class="modal-body py-2">
+                    <div id="gambar_preview_2_div" style="display: none;" class="mb-1 mt-1">
+                        <div class="d-flex justify-content-center">
+                            <img id="gambar_preview_2" src="#" alt="Gambar" class="img-thumbnail" style="width: 100%">
+                        </div>
+                    </div>
+                    <div id="keterangan_preview"></div>
+                    <div><small id="waktu_dibuat_preview" class="text-muted"></small></div>
+                </div>
+            </form>
+        </div>
+    </div>
     <div class="modal modal-sheet p-4 py-md-5 fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content bg-body-tertiary rounded-4 shadow-lg transparent-blur">
@@ -681,11 +700,11 @@ $usia = $registrasi->diff($tanggal_lahir);
                         const penunjangScanElement = `
                 <div class="col">
                     <div class="card shadow-sm h-100">
-                        <div class="card-img-top" style="background-image: url('<?= base_url('uploads/asesmen_mata') ?>/${asesmen_mata.gambar}?t=${new Date().getTime()}'); background-color: var(--bs-card-cap-bg); aspect-ratio: 16/9; background-position: center; background-repeat: no-repeat; background-size: cover; position: relative; border-bottom: var(--bs-card-border-width) solid var(--bs-card-border-color);"></div>
+                        <div class="card-img-top gambar-scan" role="button" style="background-image: url('<?= base_url('uploads/asesmen_mata') ?>/${asesmen_mata.gambar}?t=${new Date().getTime()}'); background-color: var(--bs-card-cap-bg); aspect-ratio: 16/9; background-position: center; background-repeat: no-repeat; background-size: cover; position: relative; border-bottom: var(--bs-card-border-width) solid var(--bs-card-border-color);" data-id="${asesmen_mata.id_asesmen_mata}"></div>
                         <div class="card-body">
                             <div>
-                                <small class="text-body-secondary">${keterangan}</small><br>
-                                <small class="text-body-secondary date">${asesmen_mata.waktu_dibuat}</small>
+                                <small>${keterangan}</small><br>
+                                <small class="text-body-secondary date"><small>${asesmen_mata.waktu_dibuat}</small></small>
                             </div>
                         </div>
                         <div class="card-footer d-flex justify-content-end gap-1">
@@ -988,6 +1007,35 @@ $usia = $registrasi->diff($tanggal_lahir);
                 reader.readAsDataURL(this.files[0]);
             });
 
+            $(document).on('click', '.gambar-scan', async function(ə) {
+                ə.preventDefault();
+                var $this = $(this);
+                var id = $this.data('id');
+                $('#loadingSpinner').show();
+
+                try {
+                    let response = await axios.get(`<?= base_url('/rawatjalan/asesmen/mata/view') ?>/` + id);
+                    let data = response.data;
+                    console.log(data);
+
+                    $('#mataPreviewModalLabel').text('Pratinjau Gambar Pemeriksaan Fisik');
+                    if (data.gambar) {
+                        $('#gambar_preview_2').attr('src', `<?= base_url('uploads/asesmen_mata') ?>/` + data.gambar);
+                        $('#gambar_preview_2_div').show();
+                    } else {
+                        $('#gambar_preview_2_div').hide();
+                    }
+                    const keterangan = data.keterangan ? data.keterangan : `<em>Tidak ada keterangan</em>`;
+                    $('#keterangan_preview').html(keterangan);
+                    $('#waktu_dibuat_preview').text(data.waktu_dibuat);
+                    $('#mataPreviewModal').modal('show');
+                } catch (error) {
+                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                } finally {
+                    $('#loadingSpinner').hide();
+                }
+            });
+
             $(document).on('click', '.edit-btn', async function(ə) {
                 ə.preventDefault();
                 var $this = $(this);
@@ -1151,6 +1199,13 @@ $usia = $registrasi->diff($tanggal_lahir);
                 $('#closeBtn, #cancelButton').on('click', function() {
                     source.cancel('Penambahan pemeriksaan fisik telah dibatalkan.');
                 });
+            });
+
+            $('#mataPreviewModal').on('hidden.bs.modal', function() {
+                $('#gambar_preview_2').attr('src', '#');
+                $('#gambar_preview_2_div').hide();
+                $('#keterangan_preview').html('');
+                $('#waktu_dibuat_preview').text('');
             });
 
             // Reset form saat modal ditutup
