@@ -156,6 +156,7 @@
                             <hr>
                             <div class="d-grid gap-2 d-flex justify-content-end">
                                 <a class="btn btn-body bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                                <a class="btn btn-danger bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
                             </div>
                         </li>
                     <?php endfor; ?>
@@ -254,6 +255,7 @@
                 <hr>
                 <div class="d-grid gap-2 d-flex justify-content-end">
                     <a class="btn btn-body bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                    <a class="btn btn-danger bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
                 </div>
             </li>
     `;
@@ -351,6 +353,7 @@
                     const statusButtons = resep.status == '1' ?
                         `disabled` :
                         ``;
+                    const status = resep.status == '1' ? `disabled` : ``;
                     let nomor_registrasi = resep.nomor_registrasi || "";
                     if (nomor_registrasi.includes("RJ")) {
                         nomor_registrasi = `<span class="badge bg-success bg-gradient text-nowrap"><i class="fa-solid fa-hospital-user"></i> RAWAT JALAN</span>`;
@@ -415,6 +418,9 @@
                 <div class="d-grid gap-2 d-flex justify-content-end">
                     <button type="button" class="btn btn-body btn-sm bg-gradient " onclick="window.location.href = '<?= base_url('resep/detailresep') ?>/${resep.id_resep}';">
                         <i class="fa-solid fa-circle-info"></i> Detail
+                    </button>
+                    <button type="button" class="btn btn-danger btn-sm bg-gradient  delete-btn" data-id="${resep.id_resep}" data-name="${resep.nama_pasien}" data-date="${resep.tanggal_resep}" ${status}>
+                        <i class="fa-solid fa-trash"></i> Hapus
                     </button>
                 </div>
             </li>
@@ -532,17 +538,6 @@
                 '</div>'
         });
 
-        // Hilangkan popover ketika tombol #collapseList diklik
-        $('#collapseList').on('click', function() {
-            $('#APIInfoPopover').popover('hide');
-        });
-
-        $('#nomor_registrasi').select2({
-            dropdownParent: $('#resepForm'),
-            theme: "bootstrap-5",
-            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
-            placeholder: $(this).data('placeholder'),
-        });
         $('#searchInput').on('input', function() {
             currentPage = 1;
             fetchResep();
@@ -576,6 +571,48 @@
             const isVisible = filterFields.is(':visible');
             filterFields.toggle(!isVisible);
             saveToggleState(!isVisible);
+        });
+
+        // Store the ID of the user to be deleted
+        var resepId;
+        var resepName;
+        var resepDate;
+
+        // Show delete confirmation modal
+        $(document).on('click', '.delete-btn', function() {
+            resepId = $(this).data('id');
+            resepName = $(this).data('name');
+            resepDate = $(this).data('date');
+            $('[data-bs-toggle="tooltip"]').tooltip('hide');
+            $('#deleteMessage').html(`Hapus resep untuk "` + resepName + `"?`);
+            $('#deleteSubmessage').html(`Tanggal Resep: ` + resepDate);
+            $('#deleteModal').modal('show');
+        });
+
+        $('#confirmDeleteBtn').click(async function() {
+            $('#deleteModal button').prop('disabled', true);
+            $('#deleteMessage').addClass('mb-0').html('Mengapus, silakan tunggu...');
+            $('#deleteSubmessage').hide();
+
+            try {
+                await axios.delete(`<?= base_url('/resep/delete') ?>/${resepId}`);
+                // Simpan nilai pilihan dokter saat ini
+                const selectedDokter = $('#dokterFilter').val();
+                // Panggil fungsi untuk memperbarui opsi dokter
+                await fetchDokterOptions(selectedDokter);
+                fetchResep();
+            } catch (error) {
+                if (error.response.request.status === 422) {
+                    showFailedToast(error.response.data.message);
+                } else {
+                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                }
+            } finally {
+                $('#deleteModal').modal('hide');
+                $('#deleteMessage').removeClass('mb-0');
+                $('#deleteSubmessage').show();
+                $('#deleteModal button').prop('disabled', false);
+            }
         });
 
         $(document).on('visibilitychange', async function() {
