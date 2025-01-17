@@ -67,7 +67,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                         <?php endif; ?>
                         <?php if (session()->get('role') != 'Perawat') : ?>
                             <a class="nav-link py-1 text-nowrap" href="<?= base_url('rawatjalan/resepobat/' . $rawatjalan['id_rawat_jalan']); ?>">Resep Obat</a>
-                            <!-- <a class="nav-link py-1 text-nowrap" href="<?= base_url('rawatjalan/resepkacamata/' . $rawatjalan['id_rawat_jalan']); ?>">Resep Kacamata</a> -->
+                            <a class="nav-link py-1 text-nowrap" href="<?= base_url('rawatjalan/optik/' . $rawatjalan['id_rawat_jalan']); ?>">Resep Kacamata</a>
                         <?php endif; ?>
                         <!-- <a class="nav-link py-1 text-nowrap" href="<?= base_url('rawatjalan/lptindakan/' . $rawatjalan['id_rawat_jalan']); ?>">Laporan Tindakan</a> -->
                     </nav>
