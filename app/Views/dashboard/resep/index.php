@@ -65,18 +65,23 @@
                                             </select>
                                         </div>
                                         <div class="col">
+                                            <select id="confirmedFilter" class="form-select form-select-sm">
+                                                <option value="">Semua Status Konfirmasi</option>
+                                                <option value="1">Dikonfirmasi</option>
+                                                <option value="0">Belum Dikonfirmasi</option>
+                                            </select>
+                                        </div>
+                                        <div class="col">
                                             <select id="genderFilter" class="form-select form-select-sm">
                                                 <option value="">Semua Jenis Kelamin</option>
                                                 <option value="L">Laki-Laki</option>
                                                 <option value="P">Perempuan</option>
                                             </select>
                                         </div>
-                                        <div class="col">
-                                            <select id="dokterFilter" class="form-select form-select-sm">
-                                                <option value="">Semua Dokter</option>
-                                            </select>
-                                        </div>
                                     </div>
+                                    <select id="dokterFilter" class="form-select form-select-sm  my-1">
+                                        <option value="">Semua Dokter</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -306,6 +311,7 @@
         const status = $('#statusFilter').val();
         const jenis = $('#jenisFilter').val();
         const gender = $('#genderFilter').val();
+        const confirmed = $('#confirmedFilter').val();
         const dokter = $('#dokterFilter').val();
         const tanggal = $('#tanggalFilter').val();
 
@@ -321,6 +327,7 @@
                     status: status,
                     jenis: jenis,
                     gender: gender,
+                    confirmed: confirmed,
                     dokter: dokter,
                     tanggal: tanggal
                 }
@@ -511,7 +518,7 @@
         }
     });
 
-    $('#statusFilter, #jenisFilter, #genderFilter, #dokterFilter, #tanggalFilter').on('change', function() {
+    $('#statusFilter, #jenisFilter, #genderFilter, #confirmedFilter, #dokterFilter, #tanggalFilter').on('change', function() {
         $('#resepContainer').empty();
         for (let i = 0; i < limit; i++) {
             $('#resepContainer').append(placeholder);

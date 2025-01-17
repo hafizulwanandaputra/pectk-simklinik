@@ -82,6 +82,13 @@ class ResepDokter extends BaseController
                 $ResepModel->where('jenis_kelamin', 'P'); // Mengambil resep dari pasien perempuan
             }
 
+            // Menerapkan filter confirmed jika disediakan
+            if ($confirmed === '1') {
+                $ResepModel->where('confirmed', 1); // Mengambil resep dengan confirmed aktif
+            } elseif ($confirmed === '0') {
+                $ResepModel->where('confirmed', 0); // Mengambil resep dengan confirmed non-aktif
+            }
+
             // Mengaplikasikan filter tanggal jika diberikan
             if ($tanggal) {
                 $ResepModel->like('tanggal_resep', $tanggal);
@@ -102,7 +109,6 @@ class ResepDokter extends BaseController
             // Menambahkan filter untuk resep di mana nomor_registrasi, no_rm, dan dokter adalah bukan NULL
             $ResepModel->groupStart()
                 ->where('dokter !=', 'Resep Luar')
-                ->where('confirmed', 1)
                 ->groupEnd();
 
             // Menghitung total hasil pencarian
@@ -337,19 +343,11 @@ class ResepDokter extends BaseController
 
             // ambil resep berdasarkan ID
             $resep = $this->ResepModel
-                ->where('nomor_registrasi IS NOT NULL')
-                ->where('no_rm IS NOT NULL')
-                ->where('telpon IS NOT NULL')
-                ->where('tempat_lahir IS NOT NULL')
                 ->where('dokter !=', 'Resep Luar')
                 ->find($id);
 
             // Query untuk item sebelumnya
             $previous = $db->table('resep')
-                ->where('nomor_registrasi IS NOT NULL')
-                ->where('no_rm IS NOT NULL')
-                ->where('telpon IS NOT NULL')
-                ->where('tempat_lahir IS NOT NULL')
                 ->where('dokter !=', 'Resep Luar')
                 ->where('resep.id_resep <', $id) // Kondisi untuk id sebelumnya
                 ->orderBy('resep.id_resep', 'DESC') // Urutan descending
@@ -359,10 +357,6 @@ class ResepDokter extends BaseController
 
             // Query untuk item berikutnya
             $next = $db->table('resep')
-                ->where('nomor_registrasi IS NOT NULL')
-                ->where('no_rm IS NOT NULL')
-                ->where('telpon IS NOT NULL')
-                ->where('tempat_lahir IS NOT NULL')
                 ->where('dokter !=', 'Resep Luar')
                 ->where('resep.id_resep >', $id) // Kondisi untuk id berikutnya
                 ->orderBy('resep.id_resep', 'ASC') // Urutan ascending
@@ -1011,10 +1005,6 @@ class ResepDokter extends BaseController
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
             // Mengambil data resep berdasarkan id dan status
             $resep = $this->ResepModel
-                ->where('nomor_registrasi IS NOT NULL')
-                ->where('no_rm IS NOT NULL')
-                ->where('telpon IS NOT NULL')
-                ->where('tempat_lahir IS NOT NULL')
                 ->where('dokter !=', 'Resep Luar')
                 ->where('confirmed', 1)
                 ->find($id);
@@ -1067,10 +1057,6 @@ class ResepDokter extends BaseController
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
             // ambil resep berdasarkan ID
             $resep = $this->ResepModel
-                ->where('nomor_registrasi IS NOT NULL')
-                ->where('no_rm IS NOT NULL')
-                ->where('telpon IS NOT NULL')
-                ->where('tempat_lahir IS NOT NULL')
                 ->where('dokter !=', 'Resep Luar')
                 ->where('confirmed', 1)
                 ->find($id);
