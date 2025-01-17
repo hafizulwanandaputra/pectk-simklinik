@@ -59,7 +59,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-tertiary transparent-blur">
                 <div class="no-fluid-content">
                     <nav class="nav nav-underline nav-fill flex-nowrap overflow-auto">
-                        <a class="nav-link py-1 text-nowrap active" href="<?= base_url('rawatjalan/asesmen/' . $rawatjalan['id_rawat_jalan']); ?>">Asesmen</a>
+                        <a class="nav-link py-1 text-nowrap active activeLink" href="<?= base_url('rawatjalan/asesmen/' . $rawatjalan['id_rawat_jalan']); ?>">Asesmen</a>
                         <?php if (session()->get('role') != 'Dokter') : ?>
                             <a class="nav-link py-1 text-nowrap" href="<?= base_url('rawatjalan/skrining/' . $rawatjalan['id_rawat_jalan']); ?>">Skrining</a>
                             <a class="nav-link py-1 text-nowrap" href="<?= base_url('rawatjalan/edukasi/' . $rawatjalan['id_rawat_jalan']); ?>">Edukasi</a>
@@ -77,7 +77,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <div class="no-fluid-content">
                     <nav class="nav nav-underline flex-nowrap overflow-auto">
                         <?php foreach ($listRawatJalan as $list) : ?>
-                            <a class="nav-link py-1 text-nowrap <?= ($activeSegment === $list['id_rawat_jalan']) ? 'active' : '' ?>" href="<?= base_url('rawatjalan/asesmen/' . $list['id_rawat_jalan']); ?>"><?= $list['nomor_registrasi']; ?></a>
+                            <a class="nav-link py-1 text-nowrap <?= ($activeSegment === $list['id_rawat_jalan']) ? 'active activeLink' : '' ?>" href="<?= base_url('rawatjalan/asesmen/' . $list['id_rawat_jalan']); ?>"><?= $list['nomor_registrasi']; ?></a>
                         <?php endforeach; ?>
                     </nav>
                 </div>
@@ -990,6 +990,14 @@ $usia = $registrasi->diff($tanggal_lahir);
     <?php endif; ?>
 
     $(document).ready(async function() {
+        // Cari semua elemen dengan kelas 'activeLink' di kedua navigasi
+        $(".nav .activeLink").each(function() {
+            // Scroll ke elemen yang aktif
+            this.scrollIntoView({
+                block: "nearest", // Fokus pada elemen aktif
+                inline: "center" // Elemen di-scroll ke tengah horizontal
+            });
+        });
         <?php if (session()->get('role') != 'Perawat') : ?>
             // Tampilkan modal tambah mata penunjang
             $('#addMataButton').click(function() {

@@ -63,7 +63,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                         <?php if (session()->get('role') != 'Dokter') : ?>
                             <a class="nav-link py-1 text-nowrap" href="<?= base_url('rawatjalan/skrining/' . $rawatjalan['id_rawat_jalan']); ?>">Skrining</a>
                             <a class="nav-link py-1 text-nowrap" href="<?= base_url('rawatjalan/edukasi/' . $rawatjalan['id_rawat_jalan']); ?>">Edukasi</a>
-                            <a class="nav-link py-1 text-nowrap active" href="<?= base_url('rawatjalan/penunjang/' . $rawatjalan['id_rawat_jalan']); ?>">Penunjang</a>
+                            <a class="nav-link py-1 text-nowrap active activeLink" href="<?= base_url('rawatjalan/penunjang/' . $rawatjalan['id_rawat_jalan']); ?>">Penunjang</a>
                         <?php endif; ?>
                         <?php if (session()->get('role') != 'Perawat') : ?>
                             <a class="nav-link py-1 text-nowrap" href="<?= base_url('rawatjalan/resepobat/' . $rawatjalan['id_rawat_jalan']); ?>">Resep Obat</a>
@@ -77,7 +77,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <div class="no-fluid-content">
                     <nav class="nav nav-underline flex-nowrap overflow-auto">
                         <?php foreach ($listRawatJalan as $list) : ?>
-                            <a class="nav-link py-1 text-nowrap <?= ($activeSegment === $list['id_rawat_jalan']) ? 'active' : '' ?>" href="<?= base_url('rawatjalan/edukasi/' . $list['id_rawat_jalan']); ?>"><?= $list['nomor_registrasi']; ?></a>
+                            <a class="nav-link py-1 text-nowrap <?= ($activeSegment === $list['id_rawat_jalan']) ? 'active activeLink' : '' ?>" href="<?= base_url('rawatjalan/edukasi/' . $list['id_rawat_jalan']); ?>"><?= $list['nomor_registrasi']; ?></a>
                         <?php endforeach; ?>
                     </nav>
                 </div>
@@ -459,6 +459,14 @@ $usia = $registrasi->diff($tanggal_lahir);
     }
 
     $(document).ready(async function() {
+        // Cari semua elemen dengan kelas 'activeLink' di kedua navigasi
+        $(".nav .activeLink").each(function() {
+            // Scroll ke elemen yang aktif
+            this.scrollIntoView({
+                block: "nearest", // Fokus pada elemen aktif
+                inline: "center" // Elemen di-scroll ke tengah horizontal
+            });
+        });
         // Tampilkan modal tambah scan penunjang
         $('#addScanButton').click(function() {
             $('#scanModalLabel').text('Tambah Pemindaian Pemeriksaan Penunjang'); // Ubah judul modal menjadi 'Tambah Pemindaian Pemeriksaan Penunjang'
