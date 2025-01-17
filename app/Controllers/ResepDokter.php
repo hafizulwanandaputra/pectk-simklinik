@@ -255,8 +255,8 @@ class ResepDokter extends BaseController
 
     public function delete($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Dokter' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
             $db = db_connect(); // Menghubungkan ke database
 
             // Mengambil resep
@@ -264,10 +264,6 @@ class ResepDokter extends BaseController
 
             if ($resep['status'] == 1) {
                 return $this->response->setStatusCode(422)->setJSON(['message' => 'Resep ini tidak bisa dihapus karena sudah ditransaksikan']);
-            }
-
-            if ($resep['confirmed'] == 1) {
-                return $this->response->setStatusCode(422)->setJSON(['message' => 'Resep ini tidak bisa dihapus karena sudah dikonfirmasi']);
             }
 
             // Mengambil semua id_obat dan jumlah dari detail_resep yang terkait dengan resep yang dihapus
