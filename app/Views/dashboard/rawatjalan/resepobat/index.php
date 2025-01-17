@@ -39,6 +39,7 @@ $usia = $registrasi->diff($tanggal_lahir);
     <div id="loadingSpinner" class="spinner-border spinner-border-sm mx-2" role="status" style="min-width: 1rem;">
         <span class="visually-hidden">Loading...</span>
     </div>
+    <a id="refreshButton" class="fs-6 mx-2 text-success-emphasis" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan"><i class="fa-solid fa-sync"></i></a>
     <?php if ($previous): ?>
         <a class="fs-6 mx-2 text-success-emphasis" href="<?= site_url('rawatjalan/resepobat/' . $previous['id_rawat_jalan']) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="<?= $previous['nomor_registrasi']; ?> • <?= $previous['no_rm'] ?> • <?= $previous['nama_pasien']; ?>"><i class="fa-solid fa-circle-arrow-left"></i></a>
     <?php else: ?>
