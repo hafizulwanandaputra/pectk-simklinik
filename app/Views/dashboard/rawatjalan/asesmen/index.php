@@ -271,162 +271,237 @@ $usia = $registrasi->diff($tanggal_lahir);
                     <div class="invalid-feedback"></div>
                 </div>
             </div>
-            <?php if (session()->get('role') != 'Perawat') : ?>
-                <div class="mb-3">
-                    <div class="fw-bold mb-2 border-bottom">Pemeriksaan Fisik (O)</div>
+            <div class="mb-3">
+                <div class="fw-bold mb-2 border-bottom">Pemeriksaan Fisik (O)</div>
+                <?php if (session()->get('role') != 'Perawat') : ?>
                     <div class="d-grid gap-2">
                         <button class="btn btn-primary btn-sm bg-gradient mb-2" type="button" id="addMataButton">
                             <i class="fa-solid fa-plus"></i> Tambah Pemeriksaan Fisik
                         </button>
                     </div>
-                    <center id="empty-placeholder" class="my-3" style="display: none;">
-                        <h1><i class="fa-solid fa-eye"></i></h1>
-                        <h3>Pemeriksaan Fisik</h3>
+                <?php endif; ?>
+                <center id="empty-placeholder" class="my-3" style="display: none;">
+                    <h1><i class="fa-solid fa-eye"></i></h1>
+                    <h3>Pemeriksaan Fisik</h3>
+                    <?php if (session()->get('role') != 'Perawat') : ?>
                         <div class="text-muted">Klik "Tambah Pemeriksaan Fisik" untuk menambahkan pemeriksaan fisik</div>
-                    </center>
-                    <div id="pemeriksaanFisikList" class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-3">
-                        <?php for ($i = 0; $i < 6; $i++) : ?>
-                            <div class="col">
-                                <div class="card shadow-sm h-100" style="cursor: wait;">
-                                    <div class="card-img-top" style="background-color: var(--bs-card-cap-bg); aspect-ratio: 16/9; background-position: center; background-repeat: no-repeat; background-size: cover; position: relative; border-bottom: var(--bs-card-border-width) solid var(--bs-card-border-color);"></div>
-                                    <div class="card-body">
-                                        <div class="d-flex">
-                                            <div class="align-self-center w-100 placeholder-glow">
-                                                <span class="placeholder" style="width: 100%;"></span><br>
-                                            </div>
-                                        </div>
-                                        <hr>
-                                        <div class="w-100 placeholder-glow">
-                                            <small><span class="placeholder" style="width: 100%;"></span></small><br>
-                                            <small><small><span class="placeholder" style="width: 100%;"></span></small></small>
+                    <?php else : ?>
+                        <div class="text-muted">Tidak ada pemeriksaan fisik</div>
+                    <?php endif; ?>
+                </center>
+                <div id="pemeriksaanFisikList" class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-3">
+                    <?php for ($i = 0; $i < 6; $i++) : ?>
+                        <div class="col">
+                            <div class="card shadow-sm h-100" style="cursor: wait;">
+                                <div class="card-img-top" style="background-color: var(--bs-card-cap-bg); aspect-ratio: 16/9; background-position: center; background-repeat: no-repeat; background-size: cover; position: relative; border-bottom: var(--bs-card-border-width) solid var(--bs-card-border-color);"></div>
+                                <div class="card-body">
+                                    <div class="d-flex">
+                                        <div class="align-self-center w-100 placeholder-glow">
+                                            <span class="placeholder" style="width: 100%;"></span><br>
                                         </div>
                                     </div>
+                                    <hr>
+                                    <div class="w-100 placeholder-glow">
+                                        <small><span class="placeholder" style="width: 100%;"></span></small><br>
+                                        <small><small><span class="placeholder" style="width: 100%;"></span></small></small>
+                                    </div>
+                                </div>
+                                <?php if (session()->get('role') != 'Perawat') : ?>
                                     <div class="card-footer d-flex justify-content-end gap-1">
                                         <a class="btn btn-body btn-sm bg-gradient disabled placeholder" aria-disabled="true" style="width: 32px; height: 31px;"></a>
                                         <a class="btn btn-danger bg-gradient disabled placeholder" aria-disabled="true" style="width: 32px; height: 31px;"></a>
                                     </div>
-                                </div>
+                                <?php endif; ?>
                             </div>
-                        <?php endfor; ?>
-                    </div>
-                    <div class="card overflow-auto mt-3 shadow-sm">
-                        <div class="table-responsive m-1">
-                            <table class="table m-0 table-borderless">
-                                <thead>
-                                    <tr>
-                                        <th scope="col" class="p-1 align-middle"></th>
-                                        <th scope="col" class="text-center p-1 align-middle">OD</th>
-                                        <th scope="col" class="text-center p-1 align-middle">OS</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <th scope="row" class="text-center align-middle p-1 text-nowrap">Visus UCVA</th>
-                                        <td class="align-middle p-1">
-                                            <input type="text" class="form-control" id="od_ucva" name="od_ucva" value="" autocomplete="off" dir="auto" placeholder="" list="od_ucva_list">
-                                            <datalist id="od_ucva_list">
-                                            </datalist>
-                                            <div class="invalid-feedback"></div>
-                                        </td>
-                                        <td class="align-middle p-1">
-                                            <input type="text" class="form-control" id="os_ucva" name="os_ucva" value="" autocomplete="off" dir="auto" placeholder="" list="os_ucva_list">
-                                            <datalist id="os_ucva_list">
-                                            </datalist>
-                                            <div class="invalid-feedback"></div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row" class="text-center align-middle p-1 text-nowrap">Visus BCVA</th>
-                                        <td class="align-middle p-1">
-                                            <input type="text" class="form-control" id="od_bcva" name="od_bcva" value="" autocomplete="off" dir="auto" placeholder="" list="od_bcva_list">
-                                            <datalist id="od_bcva_list">
-                                            </datalist>
-                                            <div class="invalid-feedback"></div>
-                                        </td>
-                                        <td class="align-middle p-1">
-                                            <input type="text" class="form-control" id="os_bcva" name="os_bcva" value="" autocomplete="off" dir="auto" placeholder="" list="os_bcva_list">
-                                            <datalist id="os_bcva_list">
-                                            </datalist>
-                                            <div class="invalid-feedback"></div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row" class="text-center align-middle p-1 text-nowrap">Tono</th>
-                                        <td class="align-middle p-1">
-                                            <input type="text" class="form-control" id="tono_od" name="tono_od" value="" autocomplete="off" dir="auto" placeholder="">
-                                            <div class="invalid-feedback"></div>
-                                        </td>
-                                        <td class="align-middle p-1">
-                                            <input type="text" class="form-control" id="tono_os" name="tono_os" value="" autocomplete="off" dir="auto" placeholder="">
-                                            <div class="invalid-feedback"></div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
                         </div>
+                    <?php endfor; ?>
+                </div>
+                <div class="card overflow-auto mt-3 shadow-sm">
+                    <div class="table-responsive m-1">
+                        <table class="table m-0 table-borderless">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="p-1 align-middle"></th>
+                                    <th scope="col" class="text-center p-1 align-middle">OD</th>
+                                    <th scope="col" class="text-center p-1 align-middle">OS</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row" class="text-center align-middle p-1 text-nowrap">Visus UCVA</th>
+                                    <td class="align-middle p-1">
+                                        <input type="text" class="form-control" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="od_ucva" name="od_ucva" value="" autocomplete="off" dir="auto" placeholder="" list="od_ucva_list">
+                                        <datalist id="od_ucva_list">
+                                        </datalist>
+                                        <div class="invalid-feedback"></div>
+                                    </td>
+                                    <td class="align-middle p-1">
+                                        <input type="text" class="form-control" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="os_ucva" name="os_ucva" value="" autocomplete="off" dir="auto" placeholder="" list="os_ucva_list">
+                                        <datalist id="os_ucva_list">
+                                        </datalist>
+                                        <div class="invalid-feedback"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="text-center align-middle p-1 text-nowrap">Visus BCVA</th>
+                                    <td class="align-middle p-1">
+                                        <input type="text" class="form-control" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="od_bcva" name="od_bcva" value="" autocomplete="off" dir="auto" placeholder="" list="od_bcva_list">
+                                        <datalist id="od_bcva_list">
+                                        </datalist>
+                                        <div class="invalid-feedback"></div>
+                                    </td>
+                                    <td class="align-middle p-1">
+                                        <input type="text" class="form-control" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="os_bcva" name="os_bcva" value="" autocomplete="off" dir="auto" placeholder="" list="os_bcva_list">
+                                        <datalist id="os_bcva_list">
+                                        </datalist>
+                                        <div class="invalid-feedback"></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row" class="text-center align-middle p-1 text-nowrap">Tono</th>
+                                    <td class="align-middle p-1">
+                                        <input type="text" class="form-control" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="tono_od" name="tono_od" value="" autocomplete="off" dir="auto" placeholder="">
+                                        <div class="invalid-feedback"></div>
+                                    </td>
+                                    <td class="align-middle p-1">
+                                        <input type="text" class="form-control" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="tono_os" name="tono_os" value="" autocomplete="off" dir="auto" placeholder="">
+                                        <div class="invalid-feedback"></div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
+            </div>
+            <div class="mb-3">
+                <div class="fw-bold mb-2 border-bottom">Diagnosis Medis (A)</div>
+                <div class="table-responsive mb-3">
+                    <table class="table mb-0 table-borderless">
+                        <tbody>
+                            <tr>
+                                <td class="align-middle ps-0 pe-1 pt-0 pb-1" style="width: 100%; min-width: 200px;">
+                                    <input type="text" class="form-control" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="diagnosa_medis_1" name="diagnosa_medis_1" value="" autocomplete="off" dir="auto">
+                                    <div class="invalid-feedback"></div>
+                                </td>
+                                <td class="align-middle ps-1 pe-0 pt-0 pb-1" style="width: 0%; min-width: 100px;">
+                                    <input type="text" class="form-control" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="icdx_kode_1" name="icdx_kode_1" value="" autocomplete="off" dir="auto" placeholder="ICD 10" list="icdx_kode_1_list">
+                                    <datalist id="icdx_kode_1_list">
+                                    </datalist>
+                                    <div class="invalid-feedback"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="align-middle ps-0 pe-1 pt-1 pb-1" style="width: 100%; min-width: 200px;">
+                                    <input type="text" class="form-control" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="diagnosa_medis_2" name="diagnosa_medis_2" value="" autocomplete="off" dir="auto">
+                                    <div class="invalid-feedback"></div>
+                                </td>
+                                <td class="align-middle ps-1 pe-0 pt-1 pb-1" style="width: 0%; min-width: 100px;">
+                                    <input type="text" class="form-control" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="icdx_kode_2" name="icdx_kode_2" value="" autocomplete="off" dir="auto" placeholder="ICD 10" list="icdx_kode_2_list">
+                                    <datalist id="icdx_kode_2_list">
+                                    </datalist>
+                                    <div class="invalid-feedback"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="align-middle ps-0 pe-1 pt-1 pb-1" style="width: 100%; min-width: 200px;">
+                                    <input type="text" class="form-control" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="diagnosa_medis_3" name="diagnosa_medis_3" value="" autocomplete="off" dir="auto">
+                                    <div class="invalid-feedback"></div>
+                                </td>
+                                <td class="align-middle ps-1 pe-0 pt-1 pb-1" style="width: 0%; min-width: 100px;">
+                                    <input type="text" class="form-control" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="icdx_kode_3" name="icdx_kode_3" value="" autocomplete="off" dir="auto" placeholder="ICD 10" list="icdx_kode_3_list">
+                                    <datalist id="icdx_kode_3_list">
+                                    </datalist>
+                                    <div class="invalid-feedback"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="align-middle ps-0 pe-1 pt-1 pb-1" style="width: 100%; min-width: 200px;">
+                                    <input type="text" class="form-control" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="diagnosa_medis_4" name="diagnosa_medis_4" value="" autocomplete="off" dir="auto">
+                                    <div class="invalid-feedback"></div>
+                                </td>
+                                <td class="align-middle ps-1 pe-0 pt-1 pb-1" style="width: 0%; min-width: 100px;">
+                                    <input type="text" class="form-control" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="icdx_kode_4" name="icdx_kode_4" value="" autocomplete="off" dir="auto" placeholder="ICD 10" list="icdx_kode_4_list">
+                                    <datalist id="icdx_kode_4_list">
+                                    </datalist>
+                                    <div class="invalid-feedback"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="align-middle ps-0 pe-1 pt-1 pb-0" style="width: 100%; min-width: 200px;">
+                                    <input type="text" class="form-control" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="diagnosa_medis_5" name="diagnosa_medis_5" value="" autocomplete="off" dir="auto">
+                                    <div class="invalid-feedback"></div>
+                                </td>
+                                <td class="align-middle ps-1 pe-0 pt-1 pb-0" style="width: 0%; min-width: 100px;">
+                                    <input type="text" class="form-control" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="icdx_kode_5" name="icdx_kode_5" value="" autocomplete="off" dir="auto" placeholder="ICD 10" list="icdx_kode_5_list">
+                                    <datalist id="icdx_kode_5_list">
+                                    </datalist>
+                                    <div class="invalid-feedback"></div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
                 <div class="mb-3">
-                    <div class="fw-bold mb-2 border-bottom">Diagnosis Medis (A)</div>
+                    <div class="fw-bold mb-2 border-bottom">Tindakan (P)</div>
                     <div class="table-responsive mb-3">
                         <table class="table mb-0 table-borderless">
                             <tbody>
                                 <tr>
                                     <td class="align-middle ps-0 pe-1 pt-0 pb-1" style="width: 100%; min-width: 200px;">
-                                        <input type="text" class="form-control" id="diagnosa_medis_1" name="diagnosa_medis_1" value="" autocomplete="off" dir="auto">
+                                        <input type="text" class="form-control" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="terapi_1" name="terapi_1" value="" autocomplete="off" dir="auto">
                                         <div class="invalid-feedback"></div>
                                     </td>
                                     <td class="align-middle ps-1 pe-0 pt-0 pb-1" style="width: 0%; min-width: 100px;">
-                                        <input type="text" class="form-control" id="icdx_kode_1" name="icdx_kode_1" value="" autocomplete="off" dir="auto" placeholder="ICD 10" list="icdx_kode_1_list">
-                                        <datalist id="icdx_kode_1_list">
+                                        <input type="text" class="form-control" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="icd9_kode_1" name="icd9_kode_1" value="" autocomplete="off" dir="auto" placeholder="ICD 9" list="icd9_kode_1_list">
+                                        <datalist id="icd9_kode_1_list">
                                         </datalist>
                                         <div class="invalid-feedback"></div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="align-middle ps-0 pe-1 pt-1 pb-1" style="width: 100%; min-width: 200px;">
-                                        <input type="text" class="form-control" id="diagnosa_medis_2" name="diagnosa_medis_2" value="" autocomplete="off" dir="auto">
+                                        <input type="text" class="form-control" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="terapi_2" name="terapi_2" value="" autocomplete="off" dir="auto">
                                         <div class="invalid-feedback"></div>
                                     </td>
                                     <td class="align-middle ps-1 pe-0 pt-1 pb-1" style="width: 0%; min-width: 100px;">
-                                        <input type="text" class="form-control" id="icdx_kode_2" name="icdx_kode_2" value="" autocomplete="off" dir="auto" placeholder="ICD 10" list="icdx_kode_2_list">
-                                        <datalist id="icdx_kode_2_list">
+                                        <input type="text" class="form-control" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="icd9_kode_2" name="icd9_kode_2" value="" autocomplete="off" dir="auto" placeholder="ICD 9" list="icd9_kode_2_list">
+                                        <datalist id="icd9_kode_2_list">
                                         </datalist>
                                         <div class="invalid-feedback"></div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="align-middle ps-0 pe-1 pt-1 pb-1" style="width: 100%; min-width: 200px;">
-                                        <input type="text" class="form-control" id="diagnosa_medis_3" name="diagnosa_medis_3" value="" autocomplete="off" dir="auto">
+                                        <input type="text" class="form-control" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="terapi_3" name="terapi_3" value="" autocomplete="off" dir="auto">
                                         <div class="invalid-feedback"></div>
                                     </td>
                                     <td class="align-middle ps-1 pe-0 pt-1 pb-1" style="width: 0%; min-width: 100px;">
-                                        <input type="text" class="form-control" id="icdx_kode_3" name="icdx_kode_3" value="" autocomplete="off" dir="auto" placeholder="ICD 10" list="icdx_kode_3_list">
-                                        <datalist id="icdx_kode_3_list">
+                                        <input type="text" class="form-control" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="icd9_kode_3" name="icd9_kode_3" value="" autocomplete="off" dir="auto" placeholder="ICD 9" list="icd9_kode_3_list">
+                                        <datalist id="icd9_kode_3_list">
                                         </datalist>
                                         <div class="invalid-feedback"></div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="align-middle ps-0 pe-1 pt-1 pb-1" style="width: 100%; min-width: 200px;">
-                                        <input type="text" class="form-control" id="diagnosa_medis_4" name="diagnosa_medis_4" value="" autocomplete="off" dir="auto">
+                                        <input type="text" class="form-control" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="terapi_4" name="terapi_4" value="" autocomplete="off" dir="auto">
                                         <div class="invalid-feedback"></div>
                                     </td>
                                     <td class="align-middle ps-1 pe-0 pt-1 pb-1" style="width: 0%; min-width: 100px;">
-                                        <input type="text" class="form-control" id="icdx_kode_4" name="icdx_kode_4" value="" autocomplete="off" dir="auto" placeholder="ICD 10" list="icdx_kode_4_list">
-                                        <datalist id="icdx_kode_4_list">
+                                        <input type="text" class="form-control" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="icd9_kode_4" name="icd9_kode_4" value="" autocomplete="off" dir="auto" placeholder="ICD 9" list="icd9_kode_4_list">
+                                        <datalist id="icd9_kode_4_list">
                                         </datalist>
                                         <div class="invalid-feedback"></div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="align-middle ps-0 pe-1 pt-1 pb-0" style="width: 100%; min-width: 200px;">
-                                        <input type="text" class="form-control" id="diagnosa_medis_5" name="diagnosa_medis_5" value="" autocomplete="off" dir="auto">
+                                        <input type="text" class="form-control" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="terapi_5" name="terapi_5" value="" autocomplete="off" dir="auto">
                                         <div class="invalid-feedback"></div>
                                     </td>
                                     <td class="align-middle ps-1 pe-0 pt-1 pb-0" style="width: 0%; min-width: 100px;">
-                                        <input type="text" class="form-control" id="icdx_kode_5" name="icdx_kode_5" value="" autocomplete="off" dir="auto" placeholder="ICD 10" list="icdx_kode_5_list">
-                                        <datalist id="icdx_kode_5_list">
+                                        <input type="text" class="form-control" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="icd9_kode_5" name="icd9_kode_5" value="" autocomplete="off" dir="auto" placeholder="ICD 9" list="icd9_kode_5_list">
+                                        <datalist id="icd9_kode_5_list">
                                         </datalist>
                                         <div class="invalid-feedback"></div>
                                     </td>
@@ -434,76 +509,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             </tbody>
                         </table>
                     </div>
-                    <div class="mb-3">
-                        <div class="fw-bold mb-2 border-bottom">Tindakan (P)</div>
-                        <div class="table-responsive mb-3">
-                            <table class="table mb-0 table-borderless">
-                                <tbody>
-                                    <tr>
-                                        <td class="align-middle ps-0 pe-1 pt-0 pb-1" style="width: 100%; min-width: 200px;">
-                                            <input type="text" class="form-control" id="terapi_1" name="terapi_1" value="" autocomplete="off" dir="auto">
-                                            <div class="invalid-feedback"></div>
-                                        </td>
-                                        <td class="align-middle ps-1 pe-0 pt-0 pb-1" style="width: 0%; min-width: 100px;">
-                                            <input type="text" class="form-control" id="icd9_kode_1" name="icd9_kode_1" value="" autocomplete="off" dir="auto" placeholder="ICD 9" list="icd9_kode_1_list">
-                                            <datalist id="icd9_kode_1_list">
-                                            </datalist>
-                                            <div class="invalid-feedback"></div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="align-middle ps-0 pe-1 pt-1 pb-1" style="width: 100%; min-width: 200px;">
-                                            <input type="text" class="form-control" id="terapi_2" name="terapi_2" value="" autocomplete="off" dir="auto">
-                                            <div class="invalid-feedback"></div>
-                                        </td>
-                                        <td class="align-middle ps-1 pe-0 pt-1 pb-1" style="width: 0%; min-width: 100px;">
-                                            <input type="text" class="form-control" id="icd9_kode_2" name="icd9_kode_2" value="" autocomplete="off" dir="auto" placeholder="ICD 9" list="icd9_kode_2_list">
-                                            <datalist id="icd9_kode_2_list">
-                                            </datalist>
-                                            <div class="invalid-feedback"></div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="align-middle ps-0 pe-1 pt-1 pb-1" style="width: 100%; min-width: 200px;">
-                                            <input type="text" class="form-control" id="terapi_3" name="terapi_3" value="" autocomplete="off" dir="auto">
-                                            <div class="invalid-feedback"></div>
-                                        </td>
-                                        <td class="align-middle ps-1 pe-0 pt-1 pb-1" style="width: 0%; min-width: 100px;">
-                                            <input type="text" class="form-control" id="icd9_kode_3" name="icd9_kode_3" value="" autocomplete="off" dir="auto" placeholder="ICD 9" list="icd9_kode_3_list">
-                                            <datalist id="icd9_kode_3_list">
-                                            </datalist>
-                                            <div class="invalid-feedback"></div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="align-middle ps-0 pe-1 pt-1 pb-1" style="width: 100%; min-width: 200px;">
-                                            <input type="text" class="form-control" id="terapi_4" name="terapi_4" value="" autocomplete="off" dir="auto">
-                                            <div class="invalid-feedback"></div>
-                                        </td>
-                                        <td class="align-middle ps-1 pe-0 pt-1 pb-1" style="width: 0%; min-width: 100px;">
-                                            <input type="text" class="form-control" id="icd9_kode_4" name="icd9_kode_4" value="" autocomplete="off" dir="auto" placeholder="ICD 9" list="icd9_kode_4_list">
-                                            <datalist id="icd9_kode_4_list">
-                                            </datalist>
-                                            <div class="invalid-feedback"></div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="align-middle ps-0 pe-1 pt-1 pb-0" style="width: 100%; min-width: 200px;">
-                                            <input type="text" class="form-control" id="terapi_5" name="terapi_5" value="" autocomplete="off" dir="auto">
-                                            <div class="invalid-feedback"></div>
-                                        </td>
-                                        <td class="align-middle ps-1 pe-0 pt-1 pb-0" style="width: 0%; min-width: 100px;">
-                                            <input type="text" class="form-control" id="icd9_kode_5" name="icd9_kode_5" value="" autocomplete="off" dir="auto" placeholder="ICD 9" list="icd9_kode_5_list">
-                                            <datalist id="icd9_kode_5_list">
-                                            </datalist>
-                                            <div class="invalid-feedback"></div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                <?php endif; ?>
+                </div>
                 <div>
                     <hr>
                     <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-3">
@@ -512,55 +518,57 @@ $usia = $registrasi->diff($tanggal_lahir);
                     </div>
                 </div>
                 <?= form_close(); ?>
-                </div>
+            </div>
         </div>
     </div>
-    <div class="modal fade" id="mataModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="mataModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable">
-            <form id="mataForm" enctype="multipart/form-data" class="modal-content bg-body-tertiary shadow-lg transparent-blur">
-                <div class="modal-header justify-content-between pt-2 pb-2" style="border-bottom: 1px solid var(--bs-border-color-translucent);">
-                    <h6 class="pe-2 modal-title fs-6 text-truncate" id="mataModalLabel" style="font-weight: bold;"></h6>
-                    <button id="closeBtn" type="button" class="btn btn-danger bg-gradient" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
-                </div>
-                <div class="modal-body py-2">
-                    <input type="hidden" id="id_asesmen_mata" name="id_asesmen_mata" value="">
-                    <div class="mb-1 mt-1">
-                        <label for="gambar" class="form-label mb-0">Unggah Gambar (maks 8 MB)</label>
-                        <input class="form-control" type="file" id="gambar" name="gambar" accept="image/*">
-                        <div class="invalid-feedback"></div>
+    <?php if (session()->get('role') != 'Perawat') : ?>
+        <div class="modal fade" id="mataModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="mataModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable">
+                <form id="mataForm" enctype="multipart/form-data" class="modal-content bg-body-tertiary shadow-lg transparent-blur">
+                    <div class="modal-header justify-content-between pt-2 pb-2" style="border-bottom: 1px solid var(--bs-border-color-translucent);">
+                        <h6 class="pe-2 modal-title fs-6 text-truncate" id="mataModalLabel" style="font-weight: bold;"></h6>
+                        <button id="closeBtn" type="button" class="btn btn-danger bg-gradient" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
                     </div>
-                    <div id="gambar_preview_div" style="display: none;" class="mb-1 mt-1">
-                        <div class="d-flex justify-content-center">
-                            <img id="gambar_preview" src="#" alt="Gambar" class="img-thumbnail" style="max-width: 100%">
+                    <div class="modal-body py-2">
+                        <input type="hidden" id="id_asesmen_mata" name="id_asesmen_mata" value="">
+                        <div class="mb-1 mt-1">
+                            <label for="gambar" class="form-label mb-0">Unggah Gambar (maks 8 MB)</label>
+                            <input class="form-control" type="file" id="gambar" name="gambar" accept="image/*">
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div id="gambar_preview_div" style="display: none;" class="mb-1 mt-1">
+                            <div class="d-flex justify-content-center">
+                                <img id="gambar_preview" src="#" alt="Gambar" class="img-thumbnail" style="max-width: 100%">
+                            </div>
+                        </div>
+                        <div class="form-floating mb-1 mt-1">
+                            <input type="text" class="form-control" autocomplete="off" dir="auto" placeholder="keterangan" id="keterangan" name="keterangan">
+                            <label for="keterangan">Keterangan</label>
+                            <div class="invalid-feedback"></div>
                         </div>
                     </div>
-                    <div class="form-floating mb-1 mt-1">
-                        <input type="text" class="form-control" autocomplete="off" dir="auto" placeholder="keterangan" id="keterangan" name="keterangan">
-                        <label for="keterangan">Keterangan</label>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                </div>
-                <div class="modal-footer justify-content-end pt-2 pb-2" style="border-top: 1px solid var(--bs-border-color-translucent);">
-                    <!-- Progress bar -->
-                    <div class="mb-1 mt-1 w-100" id="uploadProgressDiv">
-                        <div class="progress" style="border-top: 1px solid var(--bs-border-color-translucent); border-bottom: 1px solid var(--bs-border-color-translucent); border-left: 1px solid var(--bs-border-color-translucent); border-right: 1px solid var(--bs-border-color-translucent);">
-                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-gradient" role="progressbar" style="width: 0%; transition: none;" id="uploadProgressBar"></div>
+                    <div class="modal-footer justify-content-end pt-2 pb-2" style="border-top: 1px solid var(--bs-border-color-translucent);">
+                        <!-- Progress bar -->
+                        <div class="mb-1 mt-1 w-100" id="uploadProgressDiv">
+                            <div class="progress" style="border-top: 1px solid var(--bs-border-color-translucent); border-bottom: 1px solid var(--bs-border-color-translucent); border-left: 1px solid var(--bs-border-color-translucent); border-right: 1px solid var(--bs-border-color-translucent);">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated bg-gradient" role="progressbar" style="width: 0%; transition: none;" id="uploadProgressBar"></div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="d-flex justify-content-between w-100">
-                        <div>
-                            <button type="button" id="cancelButton" class="btn btn-danger bg-gradient" style="display: none;" disabled>
-                                <i class="fa-solid fa-xmark"></i> Batalkan
+                        <div class="d-flex justify-content-between w-100">
+                            <div>
+                                <button type="button" id="cancelButton" class="btn btn-danger bg-gradient" style="display: none;" disabled>
+                                    <i class="fa-solid fa-xmark"></i> Batalkan
+                                </button>
+                            </div>
+                            <button type="submit" id="submitButton" class="btn btn-primary bg-gradient">
+                                <i class="fa-solid fa-floppy-disk"></i> Simpan
                             </button>
                         </div>
-                        <button type="submit" id="submitButton" class="btn btn-primary bg-gradient">
-                            <i class="fa-solid fa-floppy-disk"></i> Simpan
-                        </button>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
-    </div>
+    <?php endif; ?>
     <div class="modal fade" id="mataPreviewModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="mataPreviewModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-fullscreen-lg-down modal-dialog-centered modal-dialog-scrollable">
             <form id="mataPreviewForm" enctype="multipart/form-data" class="modal-content bg-body-tertiary shadow-lg transparent-blur">
@@ -580,20 +588,22 @@ $usia = $registrasi->diff($tanggal_lahir);
             </form>
         </div>
     </div>
-    <div class="modal modal-sheet p-4 py-md-5 fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" role="dialog">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content bg-body-tertiary rounded-4 shadow-lg transparent-blur">
-                <div class="modal-body p-4 text-center">
-                    <h5 id="deleteMessage"></h5>
-                    <h6 class="mb-0" id="deleteSubmessage"></h6>
-                </div>
-                <div class="modal-footer flex-nowrap p-0" style="border-top: 1px solid var(--bs-border-color-translucent);">
-                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end" style="border-right: 1px solid var(--bs-border-color-translucent)!important;" data-bs-dismiss="modal">Tidak</button>
-                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0" id="confirmDeleteBtn">Ya</button>
+    <?php if (session()->get('role') != 'Perawat') : ?>
+        <div class="modal modal-sheet p-4 py-md-5 fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" role="dialog">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content bg-body-tertiary rounded-4 shadow-lg transparent-blur">
+                    <div class="modal-body p-4 text-center">
+                        <h5 id="deleteMessage"></h5>
+                        <h6 class="mb-0" id="deleteSubmessage"></h6>
+                    </div>
+                    <div class="modal-footer flex-nowrap p-0" style="border-top: 1px solid var(--bs-border-color-translucent);">
+                        <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end" style="border-right: 1px solid var(--bs-border-color-translucent)!important;" data-bs-dismiss="modal">Tidak</button>
+                        <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0" id="confirmDeleteBtn">Ya</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    <?php endif; ?>
 </main>
 <?= $this->endSection(); ?>
 <?= $this->section('javascript'); ?>
@@ -678,55 +688,55 @@ $usia = $registrasi->diff($tanggal_lahir);
         }
     }
 
-    <?php if (session()->get('role') != 'Perawat') : ?>
-        async function fetchAsesmenMata() {
-            $('#loadingSpinner').show();
+    async function fetchAsesmenMata() {
+        $('#loadingSpinner').show();
 
-            try {
-                const response = await axios.get('<?= base_url('rawatjalan/asesmen/mata/list/') . $rawatjalan['id_rawat_jalan'] ?>');
+        try {
+            const response = await axios.get('<?= base_url('rawatjalan/asesmen/mata/list/') . $rawatjalan['id_rawat_jalan'] ?>');
 
-                const data = response.data;
-                $('#pemeriksaanFisikList').empty();
+            const data = response.data;
+            $('#pemeriksaanFisikList').empty();
 
-                let totalPembayaran = 0;
+            let totalPembayaran = 0;
 
-                if (data.length === 0) {
-                    $('#empty-placeholder').show();
-                    $('#pemeriksaanFisikList').hide();
-                } else {
-                    $('#empty-placeholder').hide();
-                    data.forEach(function(asesmen_mata) {
-                        const keterangan = asesmen_mata.keterangan ? asesmen_mata.keterangan : `<em>Tidak ada keterangan</em>`;
-                        const penunjangScanElement = `
-                <div class="col">
-                    <div class="card shadow-sm h-100">
-                        <div class="card-img-top gambar-scan" role="button" style="background-image: url('<?= base_url('uploads/asesmen_mata') ?>/${asesmen_mata.gambar}?t=${new Date().getTime()}'); background-color: var(--bs-card-cap-bg); aspect-ratio: 16/9; background-position: center; background-repeat: no-repeat; background-size: cover; position: relative; border-bottom: var(--bs-card-border-width) solid var(--bs-card-border-color);" data-id="${asesmen_mata.id_asesmen_mata}"></div>
-                        <div class="card-body">
-                            <div>
-                                <small>${keterangan}</small><br>
-                                <small class="text-body-secondary date"><small>${asesmen_mata.waktu_dibuat}</small></small>
-                            </div>
+            if (data.length === 0) {
+                $('#empty-placeholder').show();
+                $('#pemeriksaanFisikList').hide();
+            } else {
+                $('#empty-placeholder').hide();
+                data.forEach(function(asesmen_mata) {
+                    const keterangan = asesmen_mata.keterangan ? asesmen_mata.keterangan : `<em>Tidak ada keterangan</em>`;
+                    const penunjangScanElement = `
+            <div class="col">
+                <div class="card shadow-sm h-100">
+                    <div class="card-img-top gambar-scan" role="button" style="background-image: url('<?= base_url('uploads/asesmen_mata') ?>/${asesmen_mata.gambar}?t=${new Date().getTime()}'); background-color: var(--bs-card-cap-bg); aspect-ratio: 16/9; background-position: center; background-repeat: no-repeat; background-size: cover; position: relative; border-bottom: var(--bs-card-border-width) solid var(--bs-card-border-color);" data-id="${asesmen_mata.id_asesmen_mata}"></div>
+                    <div class="card-body">
+                        <div>
+                            <small>${keterangan}</small><br>
+                            <small class="text-body-secondary date"><small>${asesmen_mata.waktu_dibuat}</small></small>
                         </div>
-                        <div class="card-footer d-flex justify-content-end gap-1">
-                            <button class="btn btn-body btn-sm bg-gradient edit-btn" data-id="${asesmen_mata.id_asesmen_mata}"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
-                            <button class="btn btn-danger btn-sm bg-gradient delete-btn" data-id="${asesmen_mata.id_asesmen_mata}"><i class="fa-solid fa-trash"></i> Hapus</button>
-                        </div>                               
                     </div>
+                    <div class="card-footer d-flex justify-content-end gap-1">
+                        <button class="btn btn-body btn-sm bg-gradient edit-btn" data-id="${asesmen_mata.id_asesmen_mata}"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
+                        <button class="btn btn-danger btn-sm bg-gradient delete-btn" data-id="${asesmen_mata.id_asesmen_mata}"><i class="fa-solid fa-trash"></i> Hapus</button>
+                    </div>                               
                 </div>
-                    `;
-                        $('#pemeriksaanFisikList').show();
-                        $('#pemeriksaanFisikList').append(penunjangScanElement);
-                    });
-                }
-            } catch (error) {
-                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
-                $('#pemeriksaanFisikList').empty();
-            } finally {
-                // Hide the spinner when done
-                $('#loadingSpinner').hide();
+            </div>
+                `;
+                    $('#pemeriksaanFisikList').show();
+                    $('#pemeriksaanFisikList').append(penunjangScanElement);
+                });
             }
+        } catch (error) {
+            showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+            $('#pemeriksaanFisikList').empty();
+        } finally {
+            // Hide the spinner when done
+            $('#loadingSpinner').hide();
         }
+    }
 
+    <?php if (session()->get('role') != 'Perawat') : ?>
         async function loadVisus() {
             try {
                 const response = await axios.get('<?= base_url('rawatjalan/asesmen/listvisus') ?>');
@@ -998,6 +1008,36 @@ $usia = $registrasi->diff($tanggal_lahir);
                 inline: "center" // Elemen di-scroll ke tengah horizontal
             });
         });
+
+        $(document).on('click', '.gambar-scan', async function(ə) {
+            ə.preventDefault();
+            var $this = $(this);
+            var id = $this.data('id');
+            $('#loadingSpinner').show();
+
+            try {
+                let response = await axios.get(`<?= base_url('/rawatjalan/asesmen/mata/view') ?>/` + id);
+                let data = response.data;
+                console.log(data);
+
+                $('#mataPreviewModalLabel').text('Pratinjau Gambar Pemeriksaan Fisik');
+                if (data.gambar) {
+                    $('#gambar_preview_2').attr('src', `<?= base_url('uploads/asesmen_mata') ?>/` + data.gambar);
+                    $('#gambar_preview_2_div').show();
+                } else {
+                    $('#gambar_preview_2_div').hide();
+                }
+                const keterangan = data.keterangan ? data.keterangan : `<em>Tidak ada keterangan</em>`;
+                $('#keterangan_preview').html(keterangan);
+                $('#waktu_dibuat_preview').text(data.waktu_dibuat);
+                $('#mataPreviewModal').modal('show');
+            } catch (error) {
+                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+            } finally {
+                $('#loadingSpinner').hide();
+            }
+        });
+
         <?php if (session()->get('role') != 'Perawat') : ?>
             // Tampilkan modal tambah mata penunjang
             $('#addMataButton').click(function() {
@@ -1015,34 +1055,6 @@ $usia = $registrasi->diff($tanggal_lahir);
                 reader.readAsDataURL(this.files[0]);
             });
 
-            $(document).on('click', '.gambar-scan', async function(ə) {
-                ə.preventDefault();
-                var $this = $(this);
-                var id = $this.data('id');
-                $('#loadingSpinner').show();
-
-                try {
-                    let response = await axios.get(`<?= base_url('/rawatjalan/asesmen/mata/view') ?>/` + id);
-                    let data = response.data;
-                    console.log(data);
-
-                    $('#mataPreviewModalLabel').text('Pratinjau Gambar Pemeriksaan Fisik');
-                    if (data.gambar) {
-                        $('#gambar_preview_2').attr('src', `<?= base_url('uploads/asesmen_mata') ?>/` + data.gambar);
-                        $('#gambar_preview_2_div').show();
-                    } else {
-                        $('#gambar_preview_2_div').hide();
-                    }
-                    const keterangan = data.keterangan ? data.keterangan : `<em>Tidak ada keterangan</em>`;
-                    $('#keterangan_preview').html(keterangan);
-                    $('#waktu_dibuat_preview').text(data.waktu_dibuat);
-                    $('#mataPreviewModal').modal('show');
-                } catch (error) {
-                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
-                } finally {
-                    $('#loadingSpinner').hide();
-                }
-            });
 
             $(document).on('click', '.edit-btn', async function(ə) {
                 ə.preventDefault();
@@ -1269,7 +1281,6 @@ $usia = $registrasi->diff($tanggal_lahir);
                         loadVisus();
                     <?php else : ?>
                         fetchAsesmen();
-                        loadVisus();
                     <?php endif; ?>
                 } else {
                     console.log("Validation Errors:", response.data.errors);
@@ -1350,8 +1361,8 @@ $usia = $registrasi->diff($tanggal_lahir);
             fetchAsesmenMata();
             loadVisus();
         <?php else : ?>
-            fetchAsesmen();
-            loadVisus();
+            await fetchAsesmen();
+            fetchAsesmenMata()
         <?php endif; ?>
     });
     // Show toast notification
