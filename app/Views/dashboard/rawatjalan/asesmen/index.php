@@ -372,93 +372,63 @@ $usia = $registrasi->diff($tanggal_lahir);
                         <table class="table mb-0 table-borderless">
                             <tbody>
                                 <tr>
-                                    <td class="align-middle ps-0 pe-1 pt-0 pb-1" style="min-width: 200px;">
-                                        <div class="form-floating">
-                                            <input type="text" class="form-control" id="diagnosa_medis_1" name="diagnosa_medis_1" value="" autocomplete="off" dir="auto" placeholder="diagnosa_medis_1">
-                                            <label for="diagnosa_medis_1">Diagnosis Medis 1</label>
-                                            <div class="invalid-feedback"></div>
-                                        </div>
+                                    <td class="align-middle ps-0 pe-1 pt-0 pb-1" style="width: 100%; min-width: 200px;">
+                                        <input type="text" class="form-control" id="diagnosa_medis_1" name="diagnosa_medis_1" value="" autocomplete="off" dir="auto">
+                                        <div class="invalid-feedback"></div>
                                     </td>
-                                    <td class="align-middle ps-1 pe-0 pt-0 pb-1" style="min-width: 100px;">
-                                        <div class="form-floating">
-                                            <input type="text" class="form-control" id="icdx_kode_1" name="icdx_kode_1" value="" autocomplete="off" dir="auto" placeholder="icdx_kode_1" list="icdx_kode_1_list">
-                                            <label for="icdx_kode_1">ICD 10</label>
-                                            <datalist id="icdx_kode_1_list">
-                                            </datalist>
-                                            <div class="invalid-feedback"></div>
-                                        </div>
+                                    <td class="align-middle ps-1 pe-0 pt-0 pb-1" style="width: 0%; min-width: 100px;">
+                                        <input type="text" class="form-control" id="icdx_kode_1" name="icdx_kode_1" value="" autocomplete="off" dir="auto" placeholder="ICD 10" list="icdx_kode_1_list">
+                                        <datalist id="icdx_kode_1_list">
+                                        </datalist>
+                                        <div class="invalid-feedback"></div>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="align-middle ps-0 pe-1 pt-1 pb-1" style="min-width: 200px;">
-                                        <div class="form-floating">
-                                            <input type="text" class="form-control" id="diagnosa_medis_2" name="diagnosa_medis_2" value="" autocomplete="off" dir="auto" placeholder="diagnosa_medis_2">
-                                            <label for="diagnosa_medis_2">Diagnosis Medis 2</label>
-                                            <div class="invalid-feedback"></div>
-                                        </div>
+                                    <td class="align-middle ps-0 pe-1 pt-1 pb-1" style="width: 100%; min-width: 200px;">
+                                        <input type="text" class="form-control" id="diagnosa_medis_2" name="diagnosa_medis_2" value="" autocomplete="off" dir="auto">
+                                        <div class="invalid-feedback"></div>
                                     </td>
-                                    <td class="align-middle ps-1 pe-0 pt-1 pb-1" style="min-width: 100px;">
-                                        <div class="form-floating">
-                                            <input type="text" class="form-control" id="icdx_kode_2" name="icdx_kode_2" value="" autocomplete="off" dir="auto" placeholder="icdx_kode_2" list="icdx_kode_2_list">
-                                            <label for="icdx_kode_2">ICD 10</label>
-                                            <datalist id="icdx_kode_2_list">
-                                            </datalist>
-                                            <div class="invalid-feedback"></div>
-                                        </div>
+                                    <td class="align-middle ps-1 pe-0 pt-1 pb-1" style="width: 0%; min-width: 100px;">
+                                        <input type="text" class="form-control" id="icdx_kode_2" name="icdx_kode_2" value="" autocomplete="off" dir="auto" placeholder="ICD 10" list="icdx_kode_2_list">
+                                        <datalist id="icdx_kode_2_list">
+                                        </datalist>
+                                        <div class="invalid-feedback"></div>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="align-middle ps-0 pe-1 pt-1 pb-1" style="min-width: 200px;">
-                                        <div class="form-floating">
-                                            <input type="text" class="form-control" id="diagnosa_medis_3" name="diagnosa_medis_3" value="" autocomplete="off" dir="auto" placeholder="diagnosa_medis_3">
-                                            <label for="diagnosa_medis_3">Diagnosis Medis 3</label>
-                                            <div class="invalid-feedback"></div>
-                                        </div>
+                                    <td class="align-middle ps-0 pe-1 pt-1 pb-1" style="width: 100%; min-width: 200px;">
+                                        <input type="text" class="form-control" id="diagnosa_medis_3" name="diagnosa_medis_3" value="" autocomplete="off" dir="auto">
+                                        <div class="invalid-feedback"></div>
                                     </td>
-                                    <td class="align-middle ps-1 pe-0 pt-1 pb-1" style="min-width: 100px;">
-                                        <div class="form-floating">
-                                            <input type="text" class="form-control" id="icdx_kode_3" name="icdx_kode_3" value="" autocomplete="off" dir="auto" placeholder="icdx_kode_3" list="icdx_kode_3_list">
-                                            <label for="icdx_kode_3">ICD 10</label>
-                                            <datalist id="icdx_kode_3_list">
-                                            </datalist>
-                                            <div class="invalid-feedback"></div>
-                                        </div>
+                                    <td class="align-middle ps-1 pe-0 pt-1 pb-1" style="width: 0%; min-width: 100px;">
+                                        <input type="text" class="form-control" id="icdx_kode_3" name="icdx_kode_3" value="" autocomplete="off" dir="auto" placeholder="ICD 10" list="icdx_kode_3_list">
+                                        <datalist id="icdx_kode_3_list">
+                                        </datalist>
+                                        <div class="invalid-feedback"></div>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="align-middle ps-0 pe-1 pt-1 pb-1" style="min-width: 200px;">
-                                        <div class="form-floating">
-                                            <input type="text" class="form-control" id="diagnosa_medis_4" name="diagnosa_medis_4" value="" autocomplete="off" dir="auto" placeholder="diagnosa_medis_4">
-                                            <label for="diagnosa_medis_4">Diagnosis Medis 4</label>
-                                            <div class="invalid-feedback"></div>
-                                        </div>
+                                    <td class="align-middle ps-0 pe-1 pt-1 pb-1" style="width: 100%; min-width: 200px;">
+                                        <input type="text" class="form-control" id="diagnosa_medis_4" name="diagnosa_medis_4" value="" autocomplete="off" dir="auto">
+                                        <div class="invalid-feedback"></div>
                                     </td>
-                                    <td class="align-middle ps-1 pe-0 pt-1 pb-1" style="min-width: 100px;">
-                                        <div class="form-floating">
-                                            <input type="text" class="form-control" id="icdx_kode_4" name="icdx_kode_4" value="" autocomplete="off" dir="auto" placeholder="icdx_kode_4" list="icdx_kode_4_list">
-                                            <label for="icdx_kode_4">ICD 10</label>
-                                            <datalist id="icdx_kode_4_list">
-                                            </datalist>
-                                            <div class="invalid-feedback"></div>
-                                        </div>
+                                    <td class="align-middle ps-1 pe-0 pt-1 pb-1" style="width: 0%; min-width: 100px;">
+                                        <input type="text" class="form-control" id="icdx_kode_4" name="icdx_kode_4" value="" autocomplete="off" dir="auto" placeholder="ICD 10" list="icdx_kode_4_list">
+                                        <datalist id="icdx_kode_4_list">
+                                        </datalist>
+                                        <div class="invalid-feedback"></div>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="align-middle ps-0 pe-1 pt-1 pb-0" style="min-width: 200px;">
-                                        <div class="form-floating">
-                                            <input type="text" class="form-control" id="diagnosa_medis_5" name="diagnosa_medis_5" value="" autocomplete="off" dir="auto" placeholder="diagnosa_medis_5">
-                                            <label for="diagnosa_medis_5">Diagnosis Medis 5</label>
-                                            <div class="invalid-feedback"></div>
-                                        </div>
+                                    <td class="align-middle ps-0 pe-1 pt-1 pb-0" style="width: 100%; min-width: 200px;">
+                                        <input type="text" class="form-control" id="diagnosa_medis_5" name="diagnosa_medis_5" value="" autocomplete="off" dir="auto">
+                                        <div class="invalid-feedback"></div>
                                     </td>
-                                    <td class="align-middle ps-1 pe-0 pt-1 pb-0" style="min-width: 100px;">
-                                        <div class="form-floating">
-                                            <input type="text" class="form-control" id="icdx_kode_5" name="icdx_kode_5" value="" autocomplete="off" dir="auto" placeholder="icdx_kode_5" list="icdx_kode_5_list">
-                                            <label for="icdx_kode_5">ICD 10</label>
-                                            <datalist id="icdx_kode_5_list">
-                                            </datalist>
-                                            <div class="invalid-feedback"></div>
-                                        </div>
+                                    <td class="align-middle ps-1 pe-0 pt-1 pb-0" style="width: 0%; min-width: 100px;">
+                                        <input type="text" class="form-control" id="icdx_kode_5" name="icdx_kode_5" value="" autocomplete="off" dir="auto" placeholder="ICD 10" list="icdx_kode_5_list">
+                                        <datalist id="icdx_kode_5_list">
+                                        </datalist>
+                                        <div class="invalid-feedback"></div>
                                     </td>
                                 </tr>
                             </tbody>
@@ -470,93 +440,63 @@ $usia = $registrasi->diff($tanggal_lahir);
                             <table class="table mb-0 table-borderless">
                                 <tbody>
                                     <tr>
-                                        <td class="align-middle ps-0 pe-1 pt-0 pb-1" style="min-width: 200px;">
-                                            <div class="form-floating">
-                                                <input type="text" class="form-control" id="terapi_1" name="terapi_1" value="" autocomplete="off" dir="auto" placeholder="terapi_1">
-                                                <label for="terapi_1">Tindakan 1</label>
-                                                <div class="invalid-feedback"></div>
-                                            </div>
+                                        <td class="align-middle ps-0 pe-1 pt-0 pb-1" style="width: 100%; min-width: 200px;">
+                                            <input type="text" class="form-control" id="terapi_1" name="terapi_1" value="" autocomplete="off" dir="auto">
+                                            <div class="invalid-feedback"></div>
                                         </td>
-                                        <td class="align-middle ps-1 pe-0 pt-0 pb-1" style="min-width: 100px;">
-                                            <div class="form-floating">
-                                                <input type="text" class="form-control" id="icd9_kode_1" name="icd9_kode_1" value="" autocomplete="off" dir="auto" placeholder="icd9_kode_1" list="icd9_kode_1_list">
-                                                <label for="icd9_kode_1">ICD 9</label>
-                                                <datalist id="icd9_kode_1_list">
-                                                </datalist>
-                                                <div class="invalid-feedback"></div>
-                                            </div>
+                                        <td class="align-middle ps-1 pe-0 pt-0 pb-1" style="width: 0%; min-width: 100px;">
+                                            <input type="text" class="form-control" id="icd9_kode_1" name="icd9_kode_1" value="" autocomplete="off" dir="auto" placeholder="ICD 9" list="icd9_kode_1_list">
+                                            <datalist id="icd9_kode_1_list">
+                                            </datalist>
+                                            <div class="invalid-feedback"></div>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="align-middle ps-0 pe-1 pt-1 pb-1" style="min-width: 200px;">
-                                            <div class="form-floating">
-                                                <input type="text" class="form-control" id="terapi_2" name="terapi_2" value="" autocomplete="off" dir="auto" placeholder="terapi_2">
-                                                <label for="terapi_2">Tindakan 2</label>
-                                                <div class="invalid-feedback"></div>
-                                            </div>
+                                        <td class="align-middle ps-0 pe-1 pt-1 pb-1" style="width: 100%; min-width: 200px;">
+                                            <input type="text" class="form-control" id="terapi_2" name="terapi_2" value="" autocomplete="off" dir="auto">
+                                            <div class="invalid-feedback"></div>
                                         </td>
-                                        <td class="align-middle ps-1 pe-0 pt-1 pb-1" style="min-width: 100px;">
-                                            <div class="form-floating">
-                                                <input type="text" class="form-control" id="icd9_kode_2" name="icd9_kode_2" value="" autocomplete="off" dir="auto" placeholder="icd9_kode_2" list="icd9_kode_2_list">
-                                                <label for="icd9_kode_2">ICD 9</label>
-                                                <datalist id="icd9_kode_2_list">
-                                                </datalist>
-                                                <div class="invalid-feedback"></div>
-                                            </div>
+                                        <td class="align-middle ps-1 pe-0 pt-1 pb-1" style="width: 0%; min-width: 100px;">
+                                            <input type="text" class="form-control" id="icd9_kode_2" name="icd9_kode_2" value="" autocomplete="off" dir="auto" placeholder="ICD 9" list="icd9_kode_2_list">
+                                            <datalist id="icd9_kode_2_list">
+                                            </datalist>
+                                            <div class="invalid-feedback"></div>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="align-middle ps-0 pe-1 pt-1 pb-1" style="min-width: 200px;">
-                                            <div class="form-floating">
-                                                <input type="text" class="form-control" id="terapi_3" name="terapi_3" value="" autocomplete="off" dir="auto" placeholder="terapi_3">
-                                                <label for="terapi_3">Tindakan 3</label>
-                                                <div class="invalid-feedback"></div>
-                                            </div>
+                                        <td class="align-middle ps-0 pe-1 pt-1 pb-1" style="width: 100%; min-width: 200px;">
+                                            <input type="text" class="form-control" id="terapi_3" name="terapi_3" value="" autocomplete="off" dir="auto">
+                                            <div class="invalid-feedback"></div>
                                         </td>
-                                        <td class="align-middle ps-1 pe-0 pt-1 pb-1" style="min-width: 100px;">
-                                            <div class="form-floating">
-                                                <input type="text" class="form-control" id="icd9_kode_3" name="icd9_kode_3" value="" autocomplete="off" dir="auto" placeholder="icd9_kode_3" list="icd9_kode_3_list">
-                                                <label for="icd9_kode_3">ICD 9</label>
-                                                <datalist id="icd9_kode_3_list">
-                                                </datalist>
-                                                <div class="invalid-feedback"></div>
-                                            </div>
+                                        <td class="align-middle ps-1 pe-0 pt-1 pb-1" style="width: 0%; min-width: 100px;">
+                                            <input type="text" class="form-control" id="icd9_kode_3" name="icd9_kode_3" value="" autocomplete="off" dir="auto" placeholder="ICD 9" list="icd9_kode_3_list">
+                                            <datalist id="icd9_kode_3_list">
+                                            </datalist>
+                                            <div class="invalid-feedback"></div>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="align-middle ps-0 pe-1 pt-1 pb-1" style="min-width: 200px;">
-                                            <div class="form-floating">
-                                                <input type="text" class="form-control" id="terapi_4" name="terapi_4" value="" autocomplete="off" dir="auto" placeholder="terapi_4">
-                                                <label for="terapi_4">Tindakan 4</label>
-                                                <div class="invalid-feedback"></div>
-                                            </div>
+                                        <td class="align-middle ps-0 pe-1 pt-1 pb-1" style="width: 100%; min-width: 200px;">
+                                            <input type="text" class="form-control" id="terapi_4" name="terapi_4" value="" autocomplete="off" dir="auto">
+                                            <div class="invalid-feedback"></div>
                                         </td>
-                                        <td class="align-middle ps-1 pe-0 pt-1 pb-1" style="min-width: 100px;">
-                                            <div class="form-floating">
-                                                <input type="text" class="form-control" id="icd9_kode_4" name="icd9_kode_4" value="" autocomplete="off" dir="auto" placeholder="icd9_kode_4" list="icd9_kode_4_list">
-                                                <label for="icd9_kode_4">ICD 9</label>
-                                                <datalist id="icd9_kode_4_list">
-                                                </datalist>
-                                                <div class="invalid-feedback"></div>
-                                            </div>
+                                        <td class="align-middle ps-1 pe-0 pt-1 pb-1" style="width: 0%; min-width: 100px;">
+                                            <input type="text" class="form-control" id="icd9_kode_4" name="icd9_kode_4" value="" autocomplete="off" dir="auto" placeholder="ICD 9" list="icd9_kode_4_list">
+                                            <datalist id="icd9_kode_4_list">
+                                            </datalist>
+                                            <div class="invalid-feedback"></div>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td class="align-middle ps-0 pe-1 pt-1 pb-0" style="min-width: 200px;">
-                                            <div class="form-floating">
-                                                <input type="text" class="form-control" id="terapi_5" name="terapi_5" value="" autocomplete="off" dir="auto" placeholder="terapi_5">
-                                                <label for="terapi_5">Tindakan 5</label>
-                                                <div class="invalid-feedback"></div>
-                                            </div>
+                                        <td class="align-middle ps-0 pe-1 pt-1 pb-0" style="width: 100%; min-width: 200px;">
+                                            <input type="text" class="form-control" id="terapi_5" name="terapi_5" value="" autocomplete="off" dir="auto">
+                                            <div class="invalid-feedback"></div>
                                         </td>
-                                        <td class="align-middle ps-1 pe-0 pt-1 pb-0" style="min-width: 100px;">
-                                            <div class="form-floating">
-                                                <input type="text" class="form-control" id="icd9_kode_5" name="icd9_kode_5" value="" autocomplete="off" dir="auto" placeholder="icd9_kode_5" list="icd9_kode_5_list">
-                                                <label for="icd9_kode_5">ICD 9</label>
-                                                <datalist id="icd9_kode_5_list">
-                                                </datalist>
-                                                <div class="invalid-feedback"></div>
-                                            </div>
+                                        <td class="align-middle ps-1 pe-0 pt-1 pb-0" style="width: 0%; min-width: 100px;">
+                                            <input type="text" class="form-control" id="icd9_kode_5" name="icd9_kode_5" value="" autocomplete="off" dir="auto" placeholder="ICD 9" list="icd9_kode_5_list">
+                                            <datalist id="icd9_kode_5_list">
+                                            </datalist>
+                                            <div class="invalid-feedback"></div>
                                         </td>
                                     </tr>
                                 </tbody>
