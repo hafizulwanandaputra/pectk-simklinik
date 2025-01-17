@@ -130,6 +130,14 @@
                             </div>
                         </div>
                     </div>
+                    <div class="mb-0 row g-1">
+                        <div class="col-5 fw-medium text-truncate">Status Konfirmasi</div>
+                        <div class="col">
+                            <div class="date" id="confirmedStatus">
+                                Memuat status...
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -185,6 +193,26 @@
 <?= $this->endSection(); ?>
 <?= $this->section('javascript'); ?>
 <script>
+    async function fetchStatusKonfirmasi() {
+        $('#confirmedStatus').text('Memuat status...');
+
+        try {
+            const response = await axios.get('<?= base_url('resep/resep/') . $resep['id_resep'] ?>');
+
+            const data = response.data;
+
+            // Cek status konfirmasi
+            if (data.confirmed === "1") {
+                $('#confirmedStatus').text('Dikonfirmasi');
+            } else if (data.confirmed === "0") {
+                $('#confirmedStatus').text('Belum Dikonfirmasi');
+            }
+        } catch (error) {
+            showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+            $('#confirmedStatus').text('Silakan coba lagi! • ' + error);
+        }
+    }
+
     async function fetchDetailResep() {
         $('#loadingSpinner').show();
 
@@ -287,15 +315,17 @@
 
         $(document).on('visibilitychange', function() {
             if (document.visibilityState === "visible") {
+                fetchStatusKonfirmasi();
                 fetchDetailResep();
             }
         });
 
         $('#refreshButton').on('click', function(e) {
             e.preventDefault();
+            fetchStatusKonfirmasi();
             fetchDetailResep();
         });
-
+        fetchStatusKonfirmasi();
         fetchDetailResep();
     });
     // Show toast notification
