@@ -191,9 +191,9 @@ $usia = $registrasi->diff($tanggal_lahir);
             });
             $('#diagnosa').val(data.diagnosa);
             $('#kode_icd_x').val(data.kode_icd_x);
-            const lokas_mata = data.lokas_mata;
-            if (lokas_mata) {
-                $("input[name='lokas_mata'][value='" + lokas_mata + "']").prop('checked', true);
+            const lokasi_mata = data.lokasi_mata;
+            if (lokasi_mata) {
+                $("input[name='lokasi_mata'][value='" + lokasi_mata + "']").prop('checked', true);
             }
             $('#isi_laporan').val(data.isi_laporan);
         } catch (error) {
