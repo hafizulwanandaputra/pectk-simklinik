@@ -62,6 +62,7 @@ $routes->post('/(?i)rawatjalan/(?i)asesmen/(?i)update/(:any)', 'Asesmen::update/
 // ASESMEN MATA
 $routes->get('/(?i)rawatjalan/(?i)asesmen/(?i)mata/(?i)list/(:any)', 'AsesmenMata::index/$1');
 $routes->get('/(?i)rawatjalan/(?i)asesmen/(?i)mata/(?i)view/(:any)', 'AsesmenMata::view/$1');
+$routes->post('/(?i)rawatjalan/(?i)asesmen/(?i)mata/(?i)create/(:any)', 'AsesmenMata::create/$1');
 $routes->post('/(?i)rawatjalan/(?i)asesmen/(?i)mata/(?i)update', 'AsesmenMata::update');
 $routes->delete('/(?i)rawatjalan/(?i)asesmen/(?i)mata/(?i)delete/(:any)', 'AsesmenMata::delete/$1');
 $routes->get('/(?i)uploads/(?i)asesmen_mata/(:any)', 'AsesmenMata::gambar/$1');
