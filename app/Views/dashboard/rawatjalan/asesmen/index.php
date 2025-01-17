@@ -648,39 +648,37 @@ $usia = $registrasi->diff($tanggal_lahir);
                 }
             });
 
-            <?php if (session()->get('role') != 'Perawat') : ?>
-                // Pemeriksaan Fisik (O)
-                $('#tono_od').val(data.tono_od);
-                $('#tono_os').val(data.tono_os);
-                $('#od_ucva').val(data.od_ucva);
-                $('#od_bcva').val(data.od_bcva);
-                $('#os_ucva').val(data.os_ucva);
-                $('#os_bcva').val(data.os_bcva);
+            // Pemeriksaan Fisik (O)
+            $('#tono_od').val(data.tono_od);
+            $('#tono_os').val(data.tono_os);
+            $('#od_ucva').val(data.od_ucva);
+            $('#od_bcva').val(data.od_bcva);
+            $('#os_ucva').val(data.os_ucva);
+            $('#os_bcva').val(data.os_bcva);
 
-                // Diagnosis Medis (A)
-                $('#diagnosa_medis_1').val(data.diagnosa_medis_1);
-                $('#icdx_kode_1').val(data.icdx_kode_1);
-                $('#diagnosa_medis_2').val(data.diagnosa_medis_2);
-                $('#icdx_kode_2').val(data.icdx_kode_2);
-                $('#diagnosa_medis_3').val(data.diagnosa_medis_3);
-                $('#icdx_kode_3').val(data.icdx_kode_3);
-                $('#diagnosa_medis_4').val(data.diagnosa_medis_4);
-                $('#icdx_kode_4').val(data.icdx_kode_4);
-                $('#diagnosa_medis_5').val(data.diagnosa_medis_5);
-                $('#icdx_kode_5').val(data.icdx_kode_5);
+            // Diagnosis Medis (A)
+            $('#diagnosa_medis_1').val(data.diagnosa_medis_1);
+            $('#icdx_kode_1').val(data.icdx_kode_1);
+            $('#diagnosa_medis_2').val(data.diagnosa_medis_2);
+            $('#icdx_kode_2').val(data.icdx_kode_2);
+            $('#diagnosa_medis_3').val(data.diagnosa_medis_3);
+            $('#icdx_kode_3').val(data.icdx_kode_3);
+            $('#diagnosa_medis_4').val(data.diagnosa_medis_4);
+            $('#icdx_kode_4').val(data.icdx_kode_4);
+            $('#diagnosa_medis_5').val(data.diagnosa_medis_5);
+            $('#icdx_kode_5').val(data.icdx_kode_5);
 
-                // Tindakan (P)
-                $('#terapi_1').val(data.terapi_1);
-                $('#icd9_kode_1').val(data.icd9_kode_1);
-                $('#terapi_2').val(data.terapi_2);
-                $('#icd9_kode_2').val(data.icd9_kode_2);
-                $('#terapi_3').val(data.terapi_3);
-                $('#icd9_kode_3').val(data.icd9_kode_3);
-                $('#terapi_4').val(data.terapi_4);
-                $('#icd9_kode_4').val(data.icd9_kode_4);
-                $('#terapi_5').val(data.terapi_5);
-                $('#icd9_kode_5').val(data.icd9_kode_5);
-            <?php endif; ?>
+            // Tindakan (P)
+            $('#terapi_1').val(data.terapi_1);
+            $('#icd9_kode_1').val(data.icd9_kode_1);
+            $('#terapi_2').val(data.terapi_2);
+            $('#icd9_kode_2').val(data.icd9_kode_2);
+            $('#terapi_3').val(data.terapi_3);
+            $('#icd9_kode_3').val(data.icd9_kode_3);
+            $('#terapi_4').val(data.terapi_4);
+            $('#icd9_kode_4').val(data.icd9_kode_4);
+            $('#terapi_5').val(data.terapi_5);
+            $('#icd9_kode_5').val(data.icd9_kode_5);
         } catch (error) {
             showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
         } finally {
@@ -716,10 +714,12 @@ $usia = $registrasi->diff($tanggal_lahir);
                             <small class="text-body-secondary date"><small>${asesmen_mata.waktu_dibuat}</small></small>
                         </div>
                     </div>
+                    <?php if (session()->get('role') != 'Perawat') : ?>
                     <div class="card-footer d-flex justify-content-end gap-1">
                         <button class="btn btn-body btn-sm bg-gradient edit-btn" data-id="${asesmen_mata.id_asesmen_mata}"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
                         <button class="btn btn-danger btn-sm bg-gradient delete-btn" data-id="${asesmen_mata.id_asesmen_mata}"><i class="fa-solid fa-trash"></i> Hapus</button>
-                    </div>                               
+                    </div>
+                    <?php endif; ?>
                 </div>
             </div>
                 `;
