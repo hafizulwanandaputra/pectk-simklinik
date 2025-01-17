@@ -222,7 +222,13 @@ class Optik extends BaseController
             }
 
             // Ambil resep luar
-            $optik = $this->OptikModel->find($id);
+            $optik = $this->OptikModel
+                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_optik.nomor_registrasi')
+                ->find($id);
+
+            if ($optik['transaksi'] == 1) {
+                return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Resep kacamata tidak dapat diperbarui karena transaksi pada rawat jalan ini sudah diproses']);
+            }
 
             // Simpan data optik
             $data = [
