@@ -273,7 +273,7 @@ class Optik extends BaseController
                 'os_quitat_vitror' => $this->request->getPost('os_quitat_vitror'),
                 'os_quitat_pupil' => $this->request->getPost('os_quitat_pupil'),
 
-                'waktu_dibuat' => $skrining['waktu_dibuat'],
+                'waktu_dibuat' => $optik['waktu_dibuat'],
             ];
             $this->OptikModel->save($data);
             return $this->response->setJSON(['success' => true, 'message' => 'Optik berhasil diperbarui']);
