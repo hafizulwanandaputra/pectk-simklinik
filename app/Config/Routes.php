@@ -62,7 +62,6 @@ $routes->post('/(?i)rawatjalan/(?i)asesmen/(?i)update/(:any)', 'Asesmen::update/
 // ASESMEN MATA
 $routes->get('/(?i)rawatjalan/(?i)asesmen/(?i)mata/(?i)list/(:any)', 'AsesmenMata::index/$1');
 $routes->get('/(?i)rawatjalan/(?i)asesmen/(?i)mata/(?i)view/(:any)', 'AsesmenMata::view/$1');
-$routes->post('/(?i)rawatjalan/(?i)asesmen/(?i)mata/(?i)create/(:any)', 'AsesmenMata::create/$1');
 $routes->post('/(?i)rawatjalan/(?i)asesmen/(?i)mata/(?i)update', 'AsesmenMata::update');
 $routes->delete('/(?i)rawatjalan/(?i)asesmen/(?i)mata/(?i)delete/(:any)', 'AsesmenMata::delete/$1');
 $routes->get('/(?i)uploads/(?i)asesmen_mata/(:any)', 'AsesmenMata::gambar/$1');
@@ -71,14 +70,12 @@ $routes->get('/(?i)uploads/(?i)asesmen_mata/(:any)', 'AsesmenMata::gambar/$1');
 $routes->get('/(?i)rawatjalan/(?i)skrining/(:num)', 'Skrining::index/$1');
 $routes->get('/(?i)rawatjalan/(?i)skrining/(?i)view/(:any)', 'Skrining::view/$1');
 $routes->get('/(?i)rawatjalan/(?i)skrining/(?i)export/(:any)', 'Skrining::export/$1');
-$routes->post('/(?i)rawatjalan/(?i)skrining/(?i)create/(:any)', 'Skrining::create/$1');
 $routes->post('/(?i)rawatjalan/(?i)skrining/(?i)update/(:any)', 'Skrining::update/$1');
 
 // EDUKASI
 $routes->get('/(?i)rawatjalan/(?i)edukasi/(:num)', 'Edukasi::index/$1');
 $routes->get('/(?i)rawatjalan/(?i)edukasi/(?i)view/(:any)', 'Edukasi::view/$1');
 $routes->get('/(?i)rawatjalan/(?i)edukasi/(?i)export/(:any)', 'Edukasi::export/$1');
-$routes->post('/(?i)rawatjalan/(?i)edukasi/(?i)create/(:any)', 'Edukasi::create/$1');
 $routes->post('/(?i)rawatjalan/(?i)edukasi/(?i)update/(:any)', 'Edukasi::update/$1');
 
 // EVALUASI EDUKASI
@@ -94,7 +91,6 @@ $routes->get('/(?i)uploads/(?i)ttd_pasien_evaluasi/(:any)', 'EdukasiEvaluasi::ta
 $routes->get('/(?i)rawatjalan/(?i)penunjang/(:num)', 'Penunjang::index/$1');
 $routes->get('/(?i)rawatjalan/(?i)penunjang/(?i)view/(:any)', 'Penunjang::view/$1');
 $routes->get('/(?i)rawatjalan/(?i)penunjang/(?i)export/(:any)', 'Penunjang::export/$1');
-$routes->post('/(?i)rawatjalan/(?i)penunjang/(?i)create/(:any)', 'Penunjang::create/$1');
 $routes->post('/(?i)rawatjalan/(?i)penunjang/(?i)update/(:any)', 'Penunjang::update/$1');
 $routes->get('/(?i)rawatjalan/(?i)penunjang/(?i)ruanganoptions', 'Penunjang::ruanganoptions');
 $routes->get('/(?i)rawatjalan/(?i)penunjang/(?i)dokteroptions', 'Penunjang::dokteroptions');
@@ -114,11 +110,11 @@ $routes->post('/(?i)rawatjalan/(?i)resepobat/(?i)confirm/(:any)', 'ResepObat::co
 $routes->post('/(?i)rawatjalan/(?i)resepobat/(?i)cancel/(:any)', 'ResepObat::cancel/$1');
 
 // RESEP KACAMATA
-$routes->get('/(?i)rawatjalan/(?i)resepkacamata/(:num)', 'ResepKacamata::index/$1');
-$routes->get('/(?i)rawatjalan/(?i)resepkacamata/(?i)view/(:any)', 'ResepKacamata::view/$1');
-$routes->get('/(?i)rawatjalan/(?i)resepkacamata/(?i)export/(:any)', 'ResepKacamata::export/$1');
-$routes->post('/(?i)rawatjalan/(?i)resepkacamata/(?i)create/(:any)', 'ResepKacamata::create/$1');
-$routes->post('/(?i)rawatjalan/(?i)resepkacamata/(?i)update/(:any)', 'ResepKacamata::update/$1');
+$routes->get('/(?i)rawatjalan/(?i)optik/(:num)', 'Optik::index/$1');
+$routes->get('/(?i)rawatjalan/(?i)optik/(?i)view/(:any)', 'Optik::view/$1');
+$routes->get('/(?i)rawatjalan/(?i)optik/(?i)export/(:any)', 'Optik::export/$1');
+$routes->post('/(?i)rawatjalan/(?i)optik/(?i)create/(:any)', 'Optik::create/$1');
+$routes->post('/(?i)rawatjalan/(?i)optik/(?i)update/(:any)', 'Optik::update/$1');
 
 // SUPPLIER
 $routes->get('/(?i)supplier', 'Supplier::index');

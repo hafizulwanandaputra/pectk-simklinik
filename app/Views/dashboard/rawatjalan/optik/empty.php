@@ -40,12 +40,12 @@ $usia = $registrasi->diff($tanggal_lahir);
         <span class="visually-hidden">Loading...</span>
     </div>
     <?php if ($previous): ?>
-        <a class="fs-6 mx-2 text-success-emphasis" href="<?= site_url('rawatjalan/resepobat/' . $previous['id_rawat_jalan']) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="<?= $previous['nomor_registrasi']; ?> • <?= $previous['no_rm'] ?> • <?= $previous['nama_pasien']; ?>"><i class="fa-solid fa-circle-arrow-left"></i></a>
+        <a class="fs-6 mx-2 text-success-emphasis" href="<?= site_url('rawatjalan/optik/' . $previous['id_rawat_jalan']) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="<?= $previous['nomor_registrasi']; ?> • <?= $previous['no_rm'] ?> • <?= $previous['nama_pasien']; ?>"><i class="fa-solid fa-circle-arrow-left"></i></a>
     <?php else: ?>
         <span class="fs-6 mx-2 text-success-emphasis" style="cursor: no-drop; opacity: .5;" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Tidak ada rawat jalan sebelumnya"><i class="fa-solid fa-circle-arrow-left"></i></span>
     <?php endif; ?>
     <?php if ($next): ?>
-        <a class="fs-6 mx-2 text-success-emphasis" href="<?= site_url('rawatjalan/resepobat/' . $next['id_rawat_jalan']) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="<?= $next['nomor_registrasi']; ?> • <?= $next['no_rm'] ?> • <?= $next['nama_pasien']; ?>"><i class="fa-solid fa-circle-arrow-right"></i></a>
+        <a class="fs-6 mx-2 text-success-emphasis" href="<?= site_url('rawatjalan/optik/' . $next['id_rawat_jalan']) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="<?= $next['nomor_registrasi']; ?> • <?= $next['no_rm'] ?> • <?= $next['nama_pasien']; ?>"><i class="fa-solid fa-circle-arrow-right"></i></a>
     <?php else: ?>
         <span class="fs-6 mx-2 text-success-emphasis" style="cursor: no-drop; opacity: .5;" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Tidak ada rawat jalan berikutnya"><i class="fa-solid fa-circle-arrow-right"></i></span>
     <?php endif; ?>
@@ -77,7 +77,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <div class="no-fluid-content">
                     <nav class="nav nav-underline flex-nowrap overflow-auto">
                         <?php foreach ($listRawatJalan as $list) : ?>
-                            <a class="nav-link py-1 text-nowrap <?= ($activeSegment === $list['id_rawat_jalan']) ? 'active' : '' ?>" href="<?= base_url('rawatjalan/resepobat/' . $list['id_rawat_jalan']); ?>"><?= $list['nomor_registrasi']; ?></a>
+                            <a class="nav-link py-1 text-nowrap <?= ($activeSegment === $list['id_rawat_jalan']) ? 'active' : '' ?>" href="<?= base_url('rawatjalan/optik/' . $list['id_rawat_jalan']); ?>"><?= $list['nomor_registrasi']; ?></a>
                         <?php endforeach; ?>
                     </nav>
                 </div>
@@ -86,18 +86,18 @@ $usia = $registrasi->diff($tanggal_lahir);
     </div>
     <div class="px-3 mt-3">
         <div class="no-fluid-content">
-            <?= form_open_multipart('/rawatjalan/resepobat/create/' . $rawatjalan['id_rawat_jalan'], 'id="addResepForm"'); ?>
+            <?= form_open_multipart('/rawatjalan/optik/create/' . $rawatjalan['id_rawat_jalan'], 'id="addOptikForm"'); ?>
             <?= csrf_field(); ?>
             <center id="empty-placeholder" class="my-3">
-                <h1><i class="fa-solid fa-prescription"></i></h1>
-                <h3>Resep Obat</h3>
+                <h1><i class="fa-solid fa-glasses"></i></h1>
+                <h3>Resep Kacamata</h3>
                 <?php if ($rawatjalan['transaksi'] == 1) : ?>
-                    <div class="text-muted">Tidak ada resep obat pada rawat jalan ini</div>
+                    <div class="text-muted">Tidak ada resep kacamata pada rawat jalan ini</div>
                 <?php else : ?>
-                    <div class="text-muted">Klik "Tambah Resep Obat" di bawah ini untuk menambahkan resep obat</div>
+                    <div class="text-muted">Klik "Tambah Resep Kacamata" di bawah ini untuk menambahkan resep kacamata</div>
                     <div class="d-grid gap-2 mt-3">
-                        <button class="btn btn-primary bg-gradient" type="button" id="addResepBtn">
-                            <i class="fa-solid fa-plus"></i> Tambah Resep Obat
+                        <button class="btn btn-primary bg-gradient" type="button" id="addOptikBtn">
+                            <i class="fa-solid fa-plus"></i> Tambah Resep Kacamata
                         </button>
                     </div>
                 <?php endif; ?>
@@ -112,11 +112,11 @@ $usia = $registrasi->diff($tanggal_lahir);
     $(document).ready(function() {
         $('#loadingSpinner').hide();
         <?php if ($rawatjalan['transaksi'] == 0) : ?>
-            $(document).on('click', '#addResepBtn', function(ə) {
+            $(document).on('click', '#addOptikBtn', function(ə) {
                 ə.preventDefault();
-                $('#addResepForm').submit();
+                $('#addOptikForm').submit();
                 $('#loadingSpinner').show();
-                $('#addResepBtn').prop('disabled', true).html(`
+                $('#addOptikBtn').prop('disabled', true).html(`
                 <span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span> Silakan Tunggu..</span>
             `);
             });

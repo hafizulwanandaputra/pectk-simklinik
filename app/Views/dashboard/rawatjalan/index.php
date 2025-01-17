@@ -225,6 +225,9 @@
                                                 <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/penunjang/export') ?>/${rawatjalan.id_rawat_jalan}');">
                                                     <i class="fa-solid fa-print"></i> Penunjang
                                                 </button>
+                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/optik/export') ?>/${rawatjalan.id_rawat_jalan}');">
+                                                    <i class="fa-solid fa-print"></i> Resep Kacamata
+                                                </button>
                                                 <?php endif; ?>
                                             <?php endif; ?>
                                             <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') : ?>
@@ -245,6 +248,9 @@
                                                 <?php if (session()->get('role') != 'Perawat') : ?>
                                                     <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/resepobat') ?>/${rawatjalan.id_rawat_jalan}';">
                                                         <i class="fa-solid fa-prescription"></i> Resep Obat
+                                                    </button>
+                                                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/optik') ?>/${rawatjalan.id_rawat_jalan}';">
+                                                        <i class="fa-solid fa-glasses"></i> Resep Kacamata
                                                     </button>
                                                 <?php endif; ?>
                                             <?php endif; ?>
@@ -532,6 +538,9 @@
                                                 <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/penunjang/export') ?>/${rawatjalan.id_rawat_jalan}');">
                                                     <i class="fa-solid fa-print"></i> Penunjang
                                                 </button>
+                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/optik/export') ?>/${rawatjalan.id_rawat_jalan}');">
+                                                    <i class="fa-solid fa-print"></i> Resep Kacamata
+                                                </button>
                                                 <?php endif; ?>
                                             <?php endif; ?>
                                             <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') : ?>
@@ -552,6 +561,9 @@
                                                 <?php if (session()->get('role') != 'Perawat') : ?>
                                                     <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/resepobat') ?>/${rawatjalan.id_rawat_jalan}';">
                                                         <i class="fa-solid fa-prescription"></i> Resep Obat
+                                                    </button>
+                                                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/optik') ?>/${rawatjalan.id_rawat_jalan}';">
+                                                        <i class="fa-solid fa-glasses"></i> Resep Kacamata
                                                     </button>
                                                 <?php endif; ?>
                                             <?php endif; ?>
