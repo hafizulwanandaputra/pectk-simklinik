@@ -226,8 +226,8 @@ $usia = $registrasi->diff($tanggal_lahir);
                             </div>
                         </div>
                     </div>
-                    <input type="range" class="form-range" min="0" max="10" id="nyeri_skala" name="nyeri_skala" value="0" list="skala_list">
-                    <datalist id="skala_list" class="d-flex justify-content-between">
+                    <input type="range" class="form-range" min="0" max="10" id="nyeri_skala" name="nyeri_skala" value="0" list="skala-list">
+                    <datalist id="skala-list" class="d-flex justify-content-between">
                         <option value="0" label="0"></option>
                         <option value="1" label="1"></option>
                         <option value="2" label="2"></option>
