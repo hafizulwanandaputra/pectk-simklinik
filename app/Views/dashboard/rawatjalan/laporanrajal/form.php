@@ -211,7 +211,7 @@ $waktuFormatted = $dateTime->format('H.i.s');
                     <tr>
                         <td style="width: 100%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
                             <div><strong>ISI LAPORAN:</strong></div>
-                            <div style="padding-left: 0.5cm; overflow: hidden; height: 15cm; max-height: 15cm;"><?= $laporanrajal['isi_laporan'] ?></div>
+                            <div style="padding-left: 0.5cm; overflow: hidden; height: 15cm; max-height: 15cm;"><?= nl2br($laporanrajal['isi_laporan']) ?></div>
                         </td>
                     </tr>
                 </tbody>
