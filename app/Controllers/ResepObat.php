@@ -1,0 +1,229 @@
+<?php
+
+namespace App\Controllers;
+
+use App\Models\ResepModel;
+use App\Models\DetailResepModel;
+use App\Models\RawatJalanModel;
+use CodeIgniter\Exceptions\PageNotFoundException;
+
+class ResepObat extends BaseController
+{
+    protected $ResepModel;
+    protected $DetailResepModel;
+    protected $RawatJalanModel;
+    public function __construct()
+    {
+        $this->ResepModel = new ResepModel();
+        $this->DetailResepModel = new DetailResepModel();
+        $this->RawatJalanModel = new RawatJalanModel();
+    }
+
+    public function index($id)
+    {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Dokter' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
+            $db = db_connect();
+
+            // Inisialisasi rawat jalan
+            $rawatjalan = $this->RawatJalanModel
+                ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
+                ->where('rawat_jalan.status', 'DAFTAR')
+                ->find($id);
+
+            if (!$rawatjalan) {
+                throw PageNotFoundException::forPageNotFound();
+            }
+
+            $title = 'Resep Obat ' . $rawatjalan['nama_pasien'] . ' (' . $rawatjalan['no_rm'] . ') - ' . $rawatjalan['nomor_registrasi'] . ' - ' . $this->systemName;
+            $headertitle = 'Resep Obat';
+
+            // Memeriksa apakah resep sudah ada
+            $resep = $db->table('resep')
+                ->where('nomor_registrasi', $rawatjalan['nomor_registrasi'])
+                ->get()
+                ->getRowArray();
+
+            // Query untuk item sebelumnya
+            $previous = $db->table('rawat_jalan')
+                ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
+                ->where('rawat_jalan.id_rawat_jalan <', $id) // Kondisi untuk id sebelumnya
+                ->where('rawat_jalan.status', 'DAFTAR')
+                ->orderBy('rawat_jalan.id_rawat_jalan', 'DESC') // Urutan descending
+                ->limit(1) // Batas 1 hasil
+                ->get()
+                ->getRowArray();
+
+            // Query untuk item berikutnya
+            $next = $db->table('rawat_jalan')
+                ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
+                ->where('rawat_jalan.id_rawat_jalan >', $id) // Kondisi untuk id berikutnya
+                ->where('rawat_jalan.status', 'DAFTAR')
+                ->orderBy('rawat_jalan.id_rawat_jalan', 'ASC') // Urutan ascending
+                ->limit(1) // Batas 1 hasil
+                ->get()
+                ->getRowArray();
+
+            // Query untuk daftar rawat jalan berdasarkan no_rm
+            $listRawatJalan = $db->table('rawat_jalan')
+                ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
+                ->where('rawat_jalan.no_rm', $rawatjalan['no_rm'])
+                ->where('rawat_jalan.status', 'DAFTAR')
+                ->orderBy('rawat_jalan.id_rawat_jalan', 'DESC')
+                ->get()
+                ->getResultArray();
+
+            if (!$resep) {
+                $data = [
+                    'rawatjalan' => $rawatjalan,
+                    'title' => $title,
+                    'headertitle' => $headertitle, // Judul header
+                    'agent' => $this->request->getUserAgent(), // Mengambil user agent
+                    'previous' => $previous,
+                    'next' => $next,
+                    'listRawatJalan' => $listRawatJalan
+                ];
+                return view('dashboard/rawatjalan/resepobat/empty', $data);
+            }
+
+            // Menyusun data yang akan dikirim ke tampilan
+            $data = [
+                'rawatjalan' => $rawatjalan,
+                'resep' => $resep,
+                'title' => $title,
+                'headertitle' => $headertitle, // Judul header
+                'agent' => $this->request->getUserAgent(), // Mengambil user agent
+                'previous' => $previous,
+                'next' => $next,
+                'listRawatJalan' => $listRawatJalan
+            ];
+            return view('dashboard/rawatjalan/resepobat/index', $data); // Mengembalikan tampilan resep
+        } else {
+            // Menghasilkan exception jika peran tidak diizinkan
+            throw PageNotFoundException::forPageNotFound();
+        }
+    }
+
+    public function create($id)
+    {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Dokter' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
+            // Inisialisasi rawat jalan
+            $rawatjalan = $this->RawatJalanModel
+                ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
+                ->where('rawat_jalan.status', 'DAFTAR')
+                ->find($id);
+
+            if ($rawatjalan['transaksi'] == 1) {
+                session()->setFlashdata('error', 'Resep obat tidak dapat ditambahkan pada rawat jalan yang transaksisnya sudah diproses');
+                return redirect()->back();
+            }
+
+            // Menyiapkan data untuk disimpan
+            $data = [
+                'nomor_registrasi' => $rawatjalan['nomor_registrasi'],
+                'no_rm' => $rawatjalan['no_rm'],
+                'nama_pasien' => $rawatjalan['nama_pasien'],
+                'alamat' => $rawatjalan['alamat'],
+                'telpon' => $rawatjalan['telpon'],
+                'jenis_kelamin' => $rawatjalan['jenis_kelamin'],
+                'tempat_lahir' => $rawatjalan['tempat_lahir'],
+                'tanggal_lahir' => $rawatjalan['tanggal_lahir'],
+                'dokter' => session()->get('fullname'), // Menyimpan nama dokter yang sedang login
+                'apoteker' => NULL,
+                'tanggal_resep' => date('Y-m-d H:i:s'), // Menyimpan tanggal resep saat ini
+                'jumlah_resep' => 0,
+                'total_biaya' => 0,
+                'confirmed' => 0,
+                'status' => 0,
+            ];
+
+            // Menyimpan data resep ke dalam model
+            $this->ResepModel->save($data);
+            return redirect()->back();
+        } else {
+            // Menghasilkan exception jika peran tidak diizinkan
+            throw PageNotFoundException::forPageNotFound();
+        }
+    }
+
+    public function confirm($id)
+    {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Dokter' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
+            $db = db_connect();
+            // Memperbarui resep
+            $resep = $db->table('resep');
+            $prescription = $resep->where('id_resep', $id)->get()->getRow();
+
+            if ($prescription->status == 1) {
+                // Jika resep ini sudah ditransaksikan
+                return $this->response->setStatusCode(401)->setJSON([
+                    'success' => false,
+                    'message' => 'Gagal mengonfirmasi resep, resep ini sudah ditransaksikan.'
+                ]);
+            }
+
+            if (session()->get('role') != 'Admin') {
+                if (!$prescription || $prescription->dokter !== session()->get('fullname')) {
+                    // Jika dokter tidak sesuai atau resep tidak ditemukan
+                    return $this->response->setStatusCode(401)->setJSON([
+                        'success' => false,
+                        'message' => 'Gagal mengonfirmasi resep, dokter tidak sesuai atau resep tidak ditemukan.'
+                    ]);
+                }
+            }
+
+            $resep->where('id_resep', $id);
+            $resep->update([
+                'confirmed' => 1, // Atur sebagai dikonfirmasi
+            ]);
+            return $this->response->setJSON(['success' => true, 'message' => 'Resep berhasil dikonfirmasi dan sudah dapat diproses oleh apoteker']);
+        } else {
+            // Jika peran tidak valid, kembalikan status 404
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
+        }
+    }
+
+    public function cancel($id)
+    {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Dokter' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
+            $db = db_connect();
+            // Memperbarui resep
+            $resep = $db->table('resep');
+            $prescription = $resep->where('id_resep', $id)->get()->getRow();
+
+            if ($prescription->status == 1) {
+                // Jika resep ini sudah ditransaksikan
+                return $this->response->setStatusCode(401)->setJSON([
+                    'success' => false,
+                    'message' => 'Gagal membatalkan konfirmasi resep, resep ini sudah ditransaksikan.'
+                ]);
+            }
+
+            if (session()->get('role') != 'Admin') {
+                if (!$prescription || $prescription->dokter !== session()->get('fullname')) {
+                    // Jika dokter tidak sesuai atau resep tidak ditemukan
+                    return $this->response->setStatusCode(401)->setJSON([
+                        'success' => false,
+                        'message' => 'Gagal membatalkan konfirmasi resep, dokter tidak sesuai atau resep tidak ditemukan.'
+                    ]);
+                }
+            }
+
+            $resep->where('id_resep', $id);
+            $resep->update([
+                'confirmed' => 0, // Atur sebagai tidak dikonfirmasi
+            ]);
+            return $this->response->setJSON(['success' => true, 'message' => 'Resep berhasil dibatalkan konfirmasinya']);
+        } else {
+            // Jika peran tidak valid, kembalikan status 404
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
+        }
+    }
+}

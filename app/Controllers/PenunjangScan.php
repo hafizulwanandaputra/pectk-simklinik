@@ -21,8 +21,8 @@ class PenunjangScan extends BaseController
 
     public function index($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Perawat' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter'  || session()->get('role') == 'Perawat') {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Perawat' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat') {
             $db = db_connect();
 
             // Inisialisasi rawat jalan
@@ -55,8 +55,8 @@ class PenunjangScan extends BaseController
 
     public function view($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Perawat' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter'  || session()->get('role') == 'Perawat') {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Perawat' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat') {
             // Mengambil data skrining berdasarkan ID
             $data = $this->PenunjangScanModel->find($id); // Mengambil skrining
             return $this->response->setJSON($data); // Mengembalikan data skrining dalam format JSON
@@ -70,8 +70,8 @@ class PenunjangScan extends BaseController
 
     public function create($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Perawat' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter'  || session()->get('role') == 'Perawat') {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Perawat' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat') {
             // Validate
             $validation = \Config\Services::validation();
             // Set base validation rules
@@ -128,8 +128,8 @@ class PenunjangScan extends BaseController
 
     public function update()
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Perawat' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter'  || session()->get('role') == 'Perawat') {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Perawat' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat') {
             // Validate
             $validation = \Config\Services::validation();
             // Set base validation rules
@@ -179,8 +179,8 @@ class PenunjangScan extends BaseController
 
     // public function gambar($filename)
     // {
-    //     // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Perawat' yang diizinkan
-    //     if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter'  || session()->get('role') == 'Perawat') {
+    //     // Memeriksa peran pengguna, hanya 'Admin' atau 'Perawat' yang diizinkan
+    //     if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat') {
     //         $path = FCPATH . 'uploads/scan_penunjang/' . $filename;
 
     //         if (is_file($path)) {
@@ -199,8 +199,8 @@ class PenunjangScan extends BaseController
 
     public function delete($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Perawat' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter'  || session()->get('role') == 'Perawat') {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Perawat' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat') {
             $penunjang_scan = $this->PenunjangScanModel->find($id);
             if ($penunjang_scan) {
                 // Hapus tanda tangan edukator

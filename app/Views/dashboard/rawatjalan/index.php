@@ -238,10 +238,15 @@
                                                     <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/edukasi') ?>/${rawatjalan.id_rawat_jalan}';">
                                                         <i class="fa-solid fa-user-graduate"></i> Edukasi
                                                     </button>
+                                                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/penunjang') ?>/${rawatjalan.id_rawat_jalan}';">
+                                                        <i class="fa-solid fa-stethoscope"></i> Penunjang
+                                                    </button>
                                                 <?php endif; ?>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/penunjang') ?>/${rawatjalan.id_rawat_jalan}';">
-                                                    <i class="fa-solid fa-stethoscope"></i> Penunjang
-                                                </button>
+                                                <?php if (session()->get('role') != 'Perawat') : ?>
+                                                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/resepobat') ?>/${rawatjalan.id_rawat_jalan}';">
+                                                        <i class="fa-solid fa-prescription"></i> Resep Obat
+                                                    </button>
+                                                <?php endif; ?>
                                             <?php endif; ?>
                                         </div>
                         `;
@@ -540,10 +545,15 @@
                                                     <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/edukasi') ?>/${rawatjalan.id_rawat_jalan}';">
                                                         <i class="fa-solid fa-user-graduate"></i> Edukasi
                                                     </button>
+                                                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/penunjang') ?>/${rawatjalan.id_rawat_jalan}';">
+                                                        <i class="fa-solid fa-stethoscope"></i> Penunjang
+                                                    </button>
                                                 <?php endif; ?>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/penunjang') ?>/${rawatjalan.id_rawat_jalan}';">
-                                                    <i class="fa-solid fa-stethoscope"></i> Penunjang
-                                                </button>
+                                                <?php if (session()->get('role') != 'Perawat') : ?>
+                                                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/resepobat') ?>/${rawatjalan.id_rawat_jalan}';">
+                                                        <i class="fa-solid fa-prescription"></i> Resep Obat
+                                                    </button>
+                                                <?php endif; ?>
                                             <?php endif; ?>
                                         </div>
                         `;
