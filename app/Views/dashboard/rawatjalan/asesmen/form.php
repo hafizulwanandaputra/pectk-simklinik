@@ -151,33 +151,35 @@ $waktuFormatted = $dateTime->format('H.i.s');
                     <tr>
                         <td colspan="2" style="width: 100%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
                             <div><strong>KELUHAN UTAMA:</strong></div>
-                            <div style="padding-left: 0.5cm; height: 1cm; max-height: 1cm; overflow: hidden; font-size: 8pt;"><?= $asesmen['keluhan_utama'] ?></div>
+                            <div style="padding-left: 0.5cm; overflow: hidden; font-size: 8pt;"><?= $asesmen['keluhan_utama'] ?></div>
                         </td>
                     </tr>
                     <tr>
-                        <td style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                        <td colspan="2" style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
                             <div><strong>RIWAYAT PENYAKIT SEKARANG:</strong></div>
-                            <div style="padding-left: 0.5cm; height: 1cm; max-height: 1cm; overflow: hidden; font-size: 8pt;"><?= $asesmen['riwayat_penyakit_sekarang'] ?></div>
-                        </td>
-                        <td style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            <div><strong>RIWAYAT PENYAKIT DAHULU:</strong></div>
-                            <div style="padding-left: 0.5cm; height: 1cm; max-height: 1cm; overflow: hidden; font-size: 8pt;"><?= $asesmen['riwayat_penyakit_dahulu'] ?></div>
+                            <div style="padding-left: 0.5cm; overflow: hidden; font-size: 8pt;"><?= $asesmen['riwayat_penyakit_sekarang'] ?></div>
                         </td>
                     </tr>
                     <tr>
-                        <td style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            <div><strong>RIWAYAT PENYAKIT DALAM KELUARGA:</strong></div>
-                            <div style="padding-left: 0.5cm; height: 1cm; max-height: 1cm; overflow: hidden; font-size: 8pt;"><?= $asesmen['riwayat_penyakit_keluarga'] ?></div>
+                        <td colspan="2" style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            <div><strong>RIWAYAT PENYAKIT DAHULU:</strong></div>
+                            <div style="padding-left: 0.5cm; overflow: hidden; font-size: 8pt;"><?= $asesmen['riwayat_penyakit_dahulu'] ?></div>
                         </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            <div><strong>RIWAYAT PENYAKIT DALAM KELUARGA:</strong></div>
+                            <div style="padding-left: 0.5cm; overflow: hidden; font-size: 8pt;"><?= $asesmen['riwayat_penyakit_keluarga'] ?></div>
+                        </td>
+                    </tr>
+                    <tr>
                         <td style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
                             <div><strong>RIWAYAT PENGOBATAN:</strong></div>
-                            <div style="padding-left: 0.5cm; height: 1cm; max-height: 1cm; overflow: hidden; font-size: 8pt;"><?= $asesmen['riwayat_pengobatan'] ?></div>
+                            <div style="padding-left: 0.5cm; overflow: hidden; font-size: 8pt;"><?= $asesmen['riwayat_pengobatan'] ?></div>
                         </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" style="width: 100%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                        <td style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
                             <div><strong>RIWAYAT PEKERJAAN, SOSIAL, EKONOMI, KEJIWAAN, DAN KEBIASAAN:</strong></div>
-                            <div style="padding-left: 0.5cm; height: 1cm; max-height: 1cm; overflow: hidden; font-size: 8pt;"><?= $asesmen['riwayat_sosial_pekerjaan'] ?></div>
+                            <div style="padding-left: 0.5cm; overflow: hidden; font-size: 8pt;"><?= $asesmen['riwayat_sosial_pekerjaan'] ?></div>
                         </td>
                     </tr>
                 </tbody>
