@@ -293,7 +293,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                     <?php for ($i = 0; $i < 6; $i++) : ?>
                         <div class="col">
                             <div class="card shadow-sm h-100" style="cursor: wait;">
-                                <div class="card-img-top" style="background-color: var(--bs-card-cap-bg); aspect-ratio: 16/9; background-position: center; background-repeat: no-repeat; background-size: cover; position: relative; border-bottom: var(--bs-card-border-width) solid var(--bs-card-border-color);"></div>
+                                <div class="card-img-top" style="background-color: var(--bs-card-cap-bg); aspect-ratio: 4/3; background-position: center; background-repeat: no-repeat; background-size: cover; position: relative; border-bottom: var(--bs-card-border-width) solid var(--bs-card-border-color);"></div>
                                 <div class="card-body">
                                     <div class="d-flex">
                                         <div class="align-self-center w-100 placeholder-glow">
@@ -569,7 +569,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             </div>
         </div>
     <?php endif; ?>
-    <div class="modal fade" id="mataPreviewModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="mataPreviewModalLabel" aria-hidden="true">
+    <div class="modal fade" id="mataPreviewModal" tabindex="-1" aria-labelledby="mataPreviewModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-fullscreen-lg-down modal-dialog-centered modal-dialog-scrollable">
             <form id="mataPreviewForm" enctype="multipart/form-data" class="modal-content bg-body-tertiary shadow-lg transparent-blur">
                 <div class="modal-header justify-content-between pt-2 pb-2" style="border-bottom: 1px solid var(--bs-border-color-translucent);">
@@ -707,7 +707,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                     const penunjangScanElement = `
             <div class="col">
                 <div class="card shadow-sm h-100">
-                    <div class="card-img-top gambar-scan" role="button" style="background-image: url('<?= base_url('uploads/asesmen_mata') ?>/${asesmen_mata.gambar}?t=${new Date().getTime()}'); background-color: var(--bs-card-cap-bg); aspect-ratio: 16/9; background-position: center; background-repeat: no-repeat; background-size: cover; position: relative; border-bottom: var(--bs-card-border-width) solid var(--bs-card-border-color);" data-id="${asesmen_mata.id_asesmen_mata}"></div>
+                    <div class="card-img-top gambar-scan" role="button" style="background-image: url('<?= base_url('uploads/asesmen_mata') ?>/${asesmen_mata.gambar}?t=${new Date().getTime()}'); background-color: var(--bs-card-cap-bg); aspect-ratio: 4/3; background-position: center; background-repeat: no-repeat; background-size: cover; position: relative; border-bottom: var(--bs-card-border-width) solid var(--bs-card-border-color);" data-id="${asesmen_mata.id_asesmen_mata}"></div>
                     <div class="card-body">
                         <div>
                             <small>${keterangan}</small><br>
