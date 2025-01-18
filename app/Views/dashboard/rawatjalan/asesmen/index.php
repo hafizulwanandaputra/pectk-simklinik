@@ -97,28 +97,28 @@ $usia = $registrasi->diff($tanggal_lahir);
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
+                <div class="mb-2">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="riwayat_penyakit_sekarang" name="riwayat_penyakit_sekarang" value="" autocomplete="off" dir="auto" placeholder="riwayat_penyakit_sekarang">
+                        <label for="riwayat_penyakit_sekarang">Riwayat Penyakit Sekarang</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="riwayat_penyakit_dahulu" name="riwayat_penyakit_dahulu" value="" autocomplete="off" dir="auto" placeholder="riwayat_penyakit_dahulu">
+                        <label for="riwayat_penyakit_dahulu">Riwayat Penyakit Dahulu</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="riwayat_penyakit_keluarga" name="riwayat_penyakit_keluarga" value="" autocomplete="off" dir="auto" placeholder="riwayat_penyakit_keluarga">
+                        <label for="riwayat_penyakit_keluarga">Riwayat Penyakit Keluarga</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
                 <div class="mb-2 row row-cols-1 row-cols-lg-2 g-2">
-                    <div class="col">
-                        <div class="form-floating">
-                            <input type="text" class="form-control" id="riwayat_penyakit_sekarang" name="riwayat_penyakit_sekarang" value="" autocomplete="off" dir="auto" placeholder="riwayat_penyakit_sekarang">
-                            <label for="riwayat_penyakit_sekarang">Riwayat Penyakit Sekarang</label>
-                            <div class="invalid-feedback"></div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-floating">
-                            <input type="text" class="form-control" id="riwayat_penyakit_dahulu" name="riwayat_penyakit_dahulu" value="" autocomplete="off" dir="auto" placeholder="riwayat_penyakit_dahulu">
-                            <label for="riwayat_penyakit_dahulu">Riwayat Penyakit Dahulu</label>
-                            <div class="invalid-feedback"></div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-floating">
-                            <input type="text" class="form-control" id="riwayat_penyakit_keluarga" name="riwayat_penyakit_keluarga" value="" autocomplete="off" dir="auto" placeholder="riwayat_penyakit_keluarga">
-                            <label for="riwayat_penyakit_keluarga">Riwayat Penyakit Keluarga</label>
-                            <div class="invalid-feedback"></div>
-                        </div>
-                    </div>
                     <div class="col">
                         <div class="form-floating">
                             <input type="text" class="form-control" id="riwayat_pengobatan" name="riwayat_pengobatan" value="" autocomplete="off" dir="auto" placeholder="riwayat_pengobatan">
@@ -126,12 +126,12 @@ $usia = $registrasi->diff($tanggal_lahir);
                             <div class="invalid-feedback"></div>
                         </div>
                     </div>
-                </div>
-                <div class="mb-2">
-                    <div class="form-floating">
-                        <input type="text" class="form-control" id="riwayat_sosial_pekerjaan" name="riwayat_sosial_pekerjaan" value="" autocomplete="off" dir="auto" placeholder="riwayat_sosial_pekerjaan">
-                        <label for="riwayat_sosial_pekerjaan">Riwayat Pekerjaan</label>
-                        <div class="invalid-feedback"></div>
+                    <div class="col">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" id="riwayat_sosial_pekerjaan" name="riwayat_sosial_pekerjaan" value="" autocomplete="off" dir="auto" placeholder="riwayat_sosial_pekerjaan">
+                            <label for="riwayat_sosial_pekerjaan">Riwayat Pekerjaan</label>
+                            <div class="invalid-feedback"></div>
+                        </div>
                     </div>
                 </div>
             </div>
