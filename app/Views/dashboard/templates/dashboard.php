@@ -313,7 +313,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
         <header class="navbar sticky-top flex-md-nowrap p-0 shadow-sm bg-success-subtle text-success-emphasis border-bottom border-success-subtle header">
             <div id="sidebarHeader" class="d-flex justify-content-center align-items-center me-0 px-3 py-md-1" style="min-height: 48px; max-height: 48px;">
                 <span class="navbar-brand mx-0 text-start text-md-center lh-sm d-flex justify-content-center align-items-center" style="font-size: 7.5pt;">
-                    <img src="<?= base_url('/assets/images/logo_pec.png'); ?>" alt="KLINIK MATA PECTK" height="24px">
+                    <img src="<?= base_url('/assets/images/pec-klinik-logo.png'); ?>" alt="KLINIK MATA PECTK" height="24px">
                     <div class="ps-2 text-start text-success-emphasis">SIM KLINIK<br><span class="fw-bold">PEC</span> TELUK KUANTAN</div>
                 </span>
             </div>
@@ -343,7 +343,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                         <div class="offcanvas-header pt-0 pb-0 d-flex justify-content-between align-items-center" style="min-height: 48px;">
                             <div>
                                 <span class="navbar-brand mx-0 text-start text-md-center lh-sm d-flex justify-content-center align-items-center" style="font-size: 7.5pt;">
-                                    <img src="<?= base_url('/assets/images/logo_pec.png'); ?>" alt="KLINIK MATA PECTK" height="24px">
+                                    <img src="<?= base_url('/assets/images/pec-klinik-logo.png'); ?>" alt="KLINIK MATA PECTK" height="24px">
                                     <div class="ps-2 text-start text-success-emphasis">SIM KLINIK<br><span class="fw-bold">PEC</span> TELUK KUANTAN</div>
                                 </span>
                             </div>
