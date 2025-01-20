@@ -19,8 +19,8 @@
                         <a href="<?= base_url('/settings/pwdtransaksi'); ?>" class="stretched-link" style="min-width: 3rem; max-width: 3rem; text-align: center;">
                             <p class="mb-0" style="font-size: 1.75rem!important;"><i class="fa-solid fa-key"></i></p>
                         </a>
-                        <div class="align-self-center flex-fill ps-1 text-wrap overflow-hidden" style="text-overflow: ellipsis;">
-                            <h5 class="card-title" style="margin-bottom: 1px;">Ubah Kata Sandi Transaksi</h5>
+                        <div class="align-self-stretch flex-fill ps-1 text-wrap overflow-hidden d-flex align-items-center" style="text-overflow: ellipsis;">
+                            <h5 class="card-title">Ubah Kata Sandi Transaksi</h5>
                         </div>
                         <div class="align-self-center" style="min-width: 3rem; max-width: 3rem; text-align: center;">
                             <span class="text-body-tertiary"><i class="fa-solid fa-angle-right"></i></span>
@@ -37,8 +37,8 @@
                         <a href="<?= base_url('/settings/sessions'); ?>" class="stretched-link" style="min-width: 3rem; max-width: 3rem; text-align: center;">
                             <p class="mb-0" style="font-size: 1.75rem!important;"><i class="fa-solid fa-users-gear"></i></p>
                         </a>
-                        <div class="align-self-center flex-fill ps-1 text-wrap overflow-hidden" style="text-overflow: ellipsis;">
-                            <h5 class="card-title" style="margin-bottom: 1px;">Manajer Sesi</h5>
+                        <div class="align-self-stretch flex-fill ps-1 text-wrap overflow-hidden d-flex align-items-center" style="text-overflow: ellipsis;">
+                            <h5 class="card-title">Manajer Sesi</h5>
                         </div>
                         <div class="align-self-center" style="min-width: 3rem; max-width: 3rem; text-align: center;">
                             <span class="text-body-tertiary"><i class="fa-solid fa-angle-right"></i></span>
@@ -51,8 +51,8 @@
                     <a href="<?= base_url('/settings/edit'); ?>" class="stretched-link" style="min-width: 3rem; max-width: 3rem; text-align: center;">
                         <p class="mb-0" style="font-size: 1.75rem!important;"><i class="fa-solid fa-user-pen"></i></p>
                     </a>
-                    <div class="align-self-center flex-fill ps-1 text-wrap overflow-hidden" style="text-overflow: ellipsis;">
-                        <h5 class="card-title" style="margin-bottom: 1px;">Ubah Informasi Pengguna</h5>
+                    <div class="align-self-stretch flex-fill ps-1 text-wrap overflow-hidden d-flex align-items-center" style="text-overflow: ellipsis;">
+                        <h5 class="card-title">Ubah Informasi Pengguna</h5>
                     </div>
                     <div class="align-self-center" style="min-width: 3rem; max-width: 3rem; text-align: center;">
                         <span class="text-body-tertiary"><i class="fa-solid fa-angle-right"></i></span>
@@ -64,8 +64,8 @@
                     <a href="<?= base_url('/settings/changepassword'); ?>" class="stretched-link" style="min-width: 3rem; max-width: 3rem; text-align: center;">
                         <p class="mb-0" style="font-size: 1.75rem!important;"><i class="fa-solid fa-key"></i></p>
                     </a>
-                    <div class="align-self-center flex-fill ps-1 text-wrap overflow-hidden" style="text-overflow: ellipsis;">
-                        <h5 class="card-title" style="margin-bottom: 1px;">Ubah Kata Sandi Pengguna</h5>
+                    <div class="align-self-stretch flex-fill ps-1 text-wrap overflow-hidden d-flex align-items-center" style="text-overflow: ellipsis;">
+                        <h5 class="card-title">Ubah Kata Sandi Pengguna</h5>
                     </div>
                     <div class="align-self-center" style="min-width: 3rem; max-width: 3rem; text-align: center;">
                         <span class="text-body-tertiary"><i class="fa-solid fa-angle-right"></i></span>
@@ -80,8 +80,8 @@
                     <a href="<?= base_url('/settings/about'); ?>" class="stretched-link" style="min-width: 3rem; max-width: 3rem; text-align: center;">
                         <p class="mb-0" style="font-size: 1.75rem!important;"><i class="fa-solid fa-circle-info"></i></p>
                     </a>
-                    <div class="align-self-center flex-fill ps-1 text-wrap overflow-hidden" style="text-overflow: ellipsis;">
-                        <h5 class="card-title" style="margin-bottom: 1px;">Tentang Sistem</h5>
+                    <div class="align-self-stretch flex-fill ps-1 text-wrap overflow-hidden d-flex align-items-center" style="text-overflow: ellipsis;">
+                        <h5 class="card-title">Tentang Sistem</h5>
                     </div>
                     <div class="align-self-center" style="min-width: 3rem; max-width: 3rem; text-align: center;">
                         <span class="text-body-tertiary"><i class="fa-solid fa-angle-right"></i></span>
