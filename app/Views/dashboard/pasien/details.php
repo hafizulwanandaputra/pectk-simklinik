@@ -172,7 +172,7 @@
                             <div class="col">
                                 <div class="form-floating">
                                     <input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir" value="" autocomplete="off" dir="auto" placeholder="tanggal_lahir">
-                                    <label for="tanggal_lahir">Tanggal Lahir</label>
+                                    <label for="tanggal_lahir">Tanggal Lahir (dd-mm-yyyy)</label>
                                     <div class="invalid-feedback"></div>
                                 </div>
                             </div>
