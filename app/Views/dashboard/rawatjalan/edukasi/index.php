@@ -68,7 +68,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                         <?php if (session()->get('role') != 'Perawat') : ?>
                             <a class="nav-link py-1 text-nowrap" href="<?= base_url('rawatjalan/resepobat/' . $rawatjalan['id_rawat_jalan']); ?>">Resep Obat</a>
                             <a class="nav-link py-1 text-nowrap" href="<?= base_url('rawatjalan/optik/' . $rawatjalan['id_rawat_jalan']); ?>">Resep Kacamata</a>
-                            <a class="nav-link py-1 text-nowrap" href="<?= base_url('rawatjalan/laporanrajal/' . $rawatjalan['id_rawat_jalan']); ?>">Laporan</a>
+                            <a class="nav-link py-1 text-nowrap" href="<?= base_url('rawatjalan/laporanrajal/' . $rawatjalan['id_rawat_jalan']); ?>">Tindakan Rajal</a>
                         <?php endif; ?>
                     </nav>
                 </div>
@@ -208,21 +208,55 @@ $usia = $registrasi->diff($tanggal_lahir);
                 </div>
                 <div class="mb-2">
                     <label for="hambatan" class="form-label">
-                        Hambatan<br><small class="text-muted">Tekan dan tahan <kbd>Ctrl</kbd> atau <kbd>⌘ Command</kbd> jika tidak bisa memilih lebih dari satu</small>
+                        Hambatan
                     </label>
-                    <select class="form-select" id="hambatan" name="hambatan[]" aria-label="hambatan" size="9" multiple>
-                        <option value="TIDAK ADA">TIDAK ADA</option>
-                        <option value="BAHASA">BAHASA</option>
-                        <option value="EMOSIONAL">EMOSIONAL</option>
-                        <option value="FISIK LEMAH">FISIK LEMAH</option>
-                        <option value="GANGGUAN BICARA">GANGGUAN BICARA</option>
-                        <option value="KOGNITIF TERBATAS">KOGNITIF TERBATAS</option>
-                        <option value="MOTIVASI KURANG">MOTIVASI KURANG</option>
-                        <option value="PENDENGARAN TERGANGGU">PENDENGARAN TERGANGGU</option>
-                        <option value="PENGLIHATAN TERGANGGU">PENGLIHATAN TERGANGGU</option>
-                    </select>
+                    <div class="row">
+                        <!-- Kolom Kiri -->
+                        <div class="col-sm">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="hambatan_tidak_ada" name="hambatan[]" value="TIDAK ADA">
+                                <label class="form-check-label" for="hambatan_tidak_ada">TIDAK ADA</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="hambatan_bahasa" name="hambatan[]" value="BAHASA">
+                                <label class="form-check-label" for="hambatan_bahasa">BAHASA</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="hambatan_emosional" name="hambatan[]" value="EMOSIONAL">
+                                <label class="form-check-label" for="hambatan_emosional">EMOSIONAL</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="hambatan_fisik_lemah" name="hambatan[]" value="FISIK LEMAH">
+                                <label class="form-check-label" for="hambatan_fisik_lemah">FISIK LEMAH</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="hambatan_gangguan_bicara" name="hambatan[]" value="GANGGUAN BICARA">
+                                <label class="form-check-label" for="hambatan_gangguan_bicara">GANGGUAN BICARA</label>
+                            </div>
+                        </div>
+                        <!-- Kolom Kanan -->
+                        <div class="col-sm">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="hambatan_kognitif_terbatas" name="hambatan[]" value="KOGNITIF TERBATAS">
+                                <label class="form-check-label" for="hambatan_kognitif_terbatas">KOGNITIF TERBATAS</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="hambatan_motivasi_kurang" name="hambatan[]" value="MOTIVASI KURANG">
+                                <label class="form-check-label" for="hambatan_motivasi_kurang">MOTIVASI KURANG</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="hambatan_pendengaran_terganggu" name="hambatan[]" value="PENDENGARAN TERGANGGU">
+                                <label class="form-check-label" for="hambatan_pendengaran_terganggu">PENDENGARAN TERGANGGU</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="hambatan_penglihatan_terganggu" name="hambatan[]" value="PENGLIHATAN TERGANGGU">
+                                <label class="form-check-label" for="hambatan_penglihatan_terganggu">PENGLIHATAN TERGANGGU</label>
+                            </div>
+                        </div>
+                    </div>
                     <div class="invalid-feedback"></div>
                 </div>
+
                 <div class="mb-2">
                     <div class="form-floating">
                         <select class="form-select" id="keyakinan" name="keyakinan" aria-label="keyakinan">
@@ -492,12 +526,11 @@ $usia = $registrasi->diff($tanggal_lahir);
                 $("input[name='cara_belajar'][value='" + cara_belajar + "']").prop('checked', true);
             }
             $('#budaya').val(data.budaya);
-            const hambatan = data.hambatan;
-            $('#hambatan option').each(function() {
-                const value = $(this).val(); // Dapatkan nilai opsi
+            const hambatan = data.hambatan; // Data dari server
+            $('input[name="hambatan[]"]').each(function() {
+                const value = $(this).val();
                 if (hambatan.includes(value)) {
-                    // Tandai opsi jika ada dalam array
-                    $(this).prop('selected', true);
+                    $(this).prop('checked', true);
                 }
             });
             $('#keyakinan').val(data.keyakinan);

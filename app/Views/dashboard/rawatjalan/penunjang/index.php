@@ -68,7 +68,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                         <?php if (session()->get('role') != 'Perawat') : ?>
                             <a class="nav-link py-1 text-nowrap" href="<?= base_url('rawatjalan/resepobat/' . $rawatjalan['id_rawat_jalan']); ?>">Resep Obat</a>
                             <a class="nav-link py-1 text-nowrap" href="<?= base_url('rawatjalan/optik/' . $rawatjalan['id_rawat_jalan']); ?>">Resep Kacamata</a>
-                            <a class="nav-link py-1 text-nowrap" href="<?= base_url('rawatjalan/laporanrajal/' . $rawatjalan['id_rawat_jalan']); ?>">Laporan</a>
+                            <a class="nav-link py-1 text-nowrap" href="<?= base_url('rawatjalan/laporanrajal/' . $rawatjalan['id_rawat_jalan']); ?>">Tindakan Rajal</a>
                         <?php endif; ?>
                     </nav>
                 </div>
@@ -121,30 +121,96 @@ $usia = $registrasi->diff($tanggal_lahir);
                 </div>
                 <div class="mb-2">
                     <label for="pemeriksaan" class="form-label">
-                        Pemeriksaan<br><small class="text-muted">Tekan dan tahan <kbd>Ctrl</kbd> atau <kbd>⌘ Command</kbd> jika tidak bisa memilih lebih dari satu</small>
+                        Pemeriksaan
                     </label>
-                    <select class="form-select" id="pemeriksaan" name="pemeriksaan[]" aria-label="pemeriksaan" size="16" multiple>
-                        <option value="AUTOREF">AUTOREF</option>
-                        <option value="TONO">TONO</option>
-                        <option value="OCT">OCT</option>
-                        <option value="FOTO FUNDUS">FOTO FUNDUS</option>
-                        <option value="USG">USG</option>
-                        <option value="YAG LASER">YAG LASER</option>
-                        <option value="PERIMETRI">PERIMETRI</option>
-                        <option value="BIOMETRI">BIOMETRI</option>
-                        <option value="LABOR">LABOR</option>
-                        <option value="KERATOMETRI">KERATOMETRI</option>
-                        <option value="EKG">EKG</option>
-                        <option value="CT SCAN">CT SCAN</option>
-                        <option value="FFA">FFA</option>
-                        <option value="ANTERIOR MATA">ANTERIOR MATA</option>
-                        <option value="PALPEBRA">PALPEBRA</option>
-                        <option value="KONJUNGTIVA">KONJUNGTIVA</option>
-                        <option value="KETERANGAN">KETERANGAN</option>
-                        <option value="SURAT KETERANGAN">SURAT KETERANGAN</option>
-                        <option value="SURAT RUJUKAN">SURAT RUJUKAN</option>
-                        <option value="UKURAN KACAMATA">UKURAN KACAMATA</option>
-                    </select>
+                    <div class="row">
+                        <!-- Kolom Kiri -->
+                        <div class="col-sm">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="pemeriksaan_autoref" name="pemeriksaan[]" value="AUTOREF">
+                                <label class="form-check-label" for="pemeriksaan_autoref">AUTOREF</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="pemeriksaan_tono" name="pemeriksaan[]" value="TONO">
+                                <label class="form-check-label" for="pemeriksaan_tono">TONO</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="pemeriksaan_oct" name="pemeriksaan[]" value="OCT">
+                                <label class="form-check-label" for="pemeriksaan_oct">OCT</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="pemeriksaan_foto_fundus" name="pemeriksaan[]" value="FOTO FUNDUS">
+                                <label class="form-check-label" for="pemeriksaan_foto_fundus">FOTO FUNDUS</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="pemeriksaan_usg" name="pemeriksaan[]" value="USG">
+                                <label class="form-check-label" for="pemeriksaan_usg">USG</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="pemeriksaan_yag_laser" name="pemeriksaan[]" value="YAG LASER">
+                                <label class="form-check-label" for="pemeriksaan_yag_laser">YAG LASER</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="pemeriksaan_perimetri" name="pemeriksaan[]" value="PERIMETRI">
+                                <label class="form-check-label" for="pemeriksaan_perimetri">PERIMETRI</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="pemeriksaan_biometri" name="pemeriksaan[]" value="BIOMETRI">
+                                <label class="form-check-label" for="pemeriksaan_biometri">BIOMETRI</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="pemeriksaan_labor" name="pemeriksaan[]" value="LABOR">
+                                <label class="form-check-label" for="pemeriksaan_labor">LABOR</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="pemeriksaan_keratometri" name="pemeriksaan[]" value="KERATOMETRI">
+                                <label class="form-check-label" for="pemeriksaan_keratometri">KERATOMETRI</label>
+                            </div>
+                        </div>
+                        <!-- Kolom Kanan -->
+                        <div class="col-sm">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="pemeriksaan_ekg" name="pemeriksaan[]" value="EKG">
+                                <label class="form-check-label" for="pemeriksaan_ekg">EKG</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="pemeriksaan_ct_scan" name="pemeriksaan[]" value="CT SCAN">
+                                <label class="form-check-label" for="pemeriksaan_ct_scan">CT SCAN</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="pemeriksaan_ffa" name="pemeriksaan[]" value="FFA">
+                                <label class="form-check-label" for="pemeriksaan_ffa">FFA</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="pemeriksaan_anterior_mata" name="pemeriksaan[]" value="ANTERIOR MATA">
+                                <label class="form-check-label" for="pemeriksaan_anterior_mata">ANTERIOR MATA</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="pemeriksaan_palpebra" name="pemeriksaan[]" value="PALPEBRA">
+                                <label class="form-check-label" for="pemeriksaan_palpebra">PALPEBRA</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="pemeriksaan_konjungtiva" name="pemeriksaan[]" value="KONJUNGTIVA">
+                                <label class="form-check-label" for="pemeriksaan_konjungtiva">KONJUNGTIVA</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="pemeriksaan_keterangan" name="pemeriksaan[]" value="KETERANGAN">
+                                <label class="form-check-label" for="pemeriksaan_keterangan">KETERANGAN</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="pemeriksaan_surat_keterangan" name="pemeriksaan[]" value="SURAT KETERANGAN">
+                                <label class="form-check-label" for="pemeriksaan_surat_keterangan">SURAT KETERANGAN</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="pemeriksaan_surat_rujukan" name="pemeriksaan[]" value="SURAT RUJUKAN">
+                                <label class="form-check-label" for="pemeriksaan_surat_rujukan">SURAT RUJUKAN</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="pemeriksaan_ukuran_kacamata" name="pemeriksaan[]" value="UKURAN KACAMATA">
+                                <label class="form-check-label" for="pemeriksaan_ukuran_kacamata">UKURAN KACAMATA</label>
+                            </div>
+                        </div>
+                    </div>
                     <div class="invalid-feedback"></div>
                 </div>
                 <div class="mb-2">
@@ -343,11 +409,11 @@ $usia = $registrasi->diff($tanggal_lahir);
             $('#dokter_pengirim').val(data.dokter_pengirim);
             $('#rujukan_dari').val(data.rujukan_dari);
             const pemeriksaan = data.pemeriksaan;
-            $('#pemeriksaan option').each(function() {
+            $('input[name="pemeriksaan[]"]').each(function() {
                 const value = $(this).val(); // Dapatkan nilai opsi
                 if (pemeriksaan.includes(value)) {
                     // Tandai opsi jika ada dalam array
-                    $(this).prop('selected', true);
+                    $(this).prop('checked', true);
                 }
             });
             $('#pemeriksaan_lainnya').val(data.pemeriksaan_lainnya);

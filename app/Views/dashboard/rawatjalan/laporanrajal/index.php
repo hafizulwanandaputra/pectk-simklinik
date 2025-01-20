@@ -68,7 +68,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                         <?php if (session()->get('role') != 'Perawat') : ?>
                             <a class="nav-link py-1 text-nowrap" href="<?= base_url('rawatjalan/resepobat/' . $rawatjalan['id_rawat_jalan']); ?>">Resep Obat</a>
                             <a class="nav-link py-1 text-nowrap" href="<?= base_url('rawatjalan/optik/' . $rawatjalan['id_rawat_jalan']); ?>">Resep Kacamata</a>
-                            <a class="nav-link py-1 text-nowrap active activeLink" href="<?= base_url('rawatjalan/laporanrajal/' . $rawatjalan['id_rawat_jalan']); ?>">Laporan</a>
+                            <a class="nav-link py-1 text-nowrap active activeLink" href="<?= base_url('rawatjalan/laporanrajal/' . $rawatjalan['id_rawat_jalan']); ?>">Tindakan Rajal</a>
                         <?php endif; ?>
                     </nav>
                 </div>
@@ -96,13 +96,22 @@ $usia = $registrasi->diff($tanggal_lahir);
             <div class="mb-3">
                 <div class="mb-2">
                     <label for="nama_perawat" class="form-label">
-                        Perawat<br><small class="text-muted">Tekan dan tahan <kbd>Ctrl</kbd> atau <kbd>⌘ Command</kbd> jika tidak bisa memilih lebih dari satu</small>
+                        Perawat
                     </label>
-                    <select class="form-select" id="nama_perawat" name="nama_perawat[]" aria-label="nama_perawat" size="<?= $nama_perawat_count ?>" multiple>
-                        <?php foreach ($nama_perawat as $list) : ?>
-                            <option value="<?= $list['fullname'] ?>"><?= $list['fullname'] ?></option>
-                        <?php endforeach; ?>
-                    </select>
+                    <div id="nama_perawat">
+                        <?php
+                        $index = 1; // Mulai dengan angka 1
+                        foreach ($nama_perawat as $list) :
+                        ?>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="perawat_<?= $index ?>" name="nama_perawat[]" value="<?= $list['fullname'] ?>">
+                                <label class="form-check-label" for="perawat_<?= $index ?>"><?= $list['fullname'] ?></label>
+                            </div>
+                        <?php
+                            $index++; // Tambah angka untuk ID berikutnya
+                        endforeach;
+                        ?>
+                    </div>
                     <div class="invalid-feedback"></div>
                 </div>
                 <div class="table-responsive mb-2">
@@ -187,11 +196,11 @@ $usia = $registrasi->diff($tanggal_lahir);
             const data = response.data;
 
             const nama_perawat = data.nama_perawat;
-            $('#nama_perawat option').each(function() {
+            $('input[name="nama_perawat[]"]').each(function() {
                 const value = $(this).val(); // Dapatkan nilai opsi
                 if (nama_perawat.includes(value)) {
                     // Tandai opsi jika ada dalam array
-                    $(this).prop('selected', true);
+                    $(this).prop('checked', true);
                 }
             });
             $('#diagnosa').val(data.diagnosa);
