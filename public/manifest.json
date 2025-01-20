@@ -1,7 +1,7 @@
 {
     "name": "SIM Klinik Mata PEC Teluk Kuantan",
     "short_name": "SIM Klinik Mata PEC Teluk Kuantan",
-    "description": "Sistem Informasi Manajemen Klinik Mata Padang Eye Center Teluk Kuantan",
+    "description": "Aplikasi Sistem Informasi Manajemen Klinik Utama Mata Padang Eye Center Teluk Kuantan adalah sebuah sistem yang digunakan untuk memenuhi proses bisnis pada Klinik Utama Mata Padang Eye Center Teluk Kuantan. Sistem ini memanajemen pasien, rawat jalan, rekam medis elektronik (sedang dalam pengembangan), stok obat, resep obat, dan transaksi. Aplikasi ini didasarkan pada HWPweb Admin Template yang juga didasarkan pada CodeIgniter 4.",
     "start_url": "/",
     "display": "minimal-ui",
     "background_color": "#5eba00",
