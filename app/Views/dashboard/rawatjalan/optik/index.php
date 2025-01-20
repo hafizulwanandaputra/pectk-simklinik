@@ -140,32 +140,34 @@ $usia = $registrasi->diff($tanggal_lahir);
                         <table class="table-sm" style="font-size: 0.75em;">
                             <thead>
                                 <tr>
-                                    <th></th>
-                                    <th colspan="5" class="text-center">
+                                    <th class="border-end"></th>
+                                    <th colspan="5" class="text-center border-end">
                                         <h2 class="mb-0 pt-0">O.D</h2>
                                     </th>
-                                    <th colspan="7" class="text-center">
+                                    <th colspan="5" class="text-center border-start border-end">
                                         <h2 class="mb-0 pt-0">O.S</h2>
+                                    </th>
+                                    <th colspan="2" class="text-center border-start">
                                     </th>
                                 </tr>
                                 <tr>
-                                    <th></th>
-                                    <th style="min-width: 60px;" class="text-center">Vitrum Spher</th>
-                                    <th style="min-width: 60px;" class="text-center">Vitrum Cyldr</th>
-                                    <th style="min-width: 60px;" class="text-center">Axis</th>
-                                    <th style="min-width: 60px;" class="text-center">Prisma</th>
-                                    <th style="min-width: 60px;" class="text-center">Basis</th>
-                                    <th style="min-width: 60px;" class="text-center">Vitrum Spher</th>
-                                    <th style="min-width: 60px;" class="text-center">Vitrum Cyldr</th>
-                                    <th style="min-width: 60px;" class="text-center">Axis</th>
-                                    <th style="min-width: 60px;" class="text-center">Prisma</th>
-                                    <th style="min-width: 60px;" class="text-center">Basis</th>
-                                    <th style="min-width: 60px;" class="text-center">Golor Vitror</th>
-                                    <th style="min-width: 60px;" class="text-center">Distant Pupil</th>
+                                    <th class="border-bottom border-end"></th>
+                                    <th style="min-width: 60px;" class="text-center border-bottom border-start">Vitrum Spher</th>
+                                    <th style="min-width: 60px;" class="text-center border-bottom">Vitrum Cyldr</th>
+                                    <th style="min-width: 60px;" class="text-center border-bottom">Axis</th>
+                                    <th style="min-width: 60px;" class="text-center border-bottom">Prisma</th>
+                                    <th style="min-width: 60px;" class="text-center border-bottom border-end">Basis</th>
+                                    <th style="min-width: 60px;" class="text-center border-bottom border-start">Vitrum Spher</th>
+                                    <th style="min-width: 60px;" class="text-center border-bottom">Vitrum Cyldr</th>
+                                    <th style="min-width: 60px;" class="text-center border-bottom">Axis</th>
+                                    <th style="min-width: 60px;" class="text-center border-bottom">Prisma</th>
+                                    <th style="min-width: 60px;" class="text-center border-bottom border-end">Basis</th>
+                                    <th style="min-width: 60px;" class="text-center border-bottom border-start">Golor Vitror</th>
+                                    <th style="min-width: 60px;" class="text-center border-bottom">Distant Pupil</th>
                                 </tr>
                                 <tr>
-                                    <th class="text-center">Pro Login Quitat</th>
-                                    <th>
+                                    <th class="text-center border-end">Pro Login Quitat</th>
+                                    <th class="border-start">
                                         <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="od_login_spher" name="od_login_spher">
                                     </th>
                                     <th>
@@ -177,10 +179,10 @@ $usia = $registrasi->diff($tanggal_lahir);
                                     <th>
                                         <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="od_login_prisma" name="od_login_prisma">
                                     </th>
-                                    <th>
+                                    <th class="border-end">
                                         <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="od_login_basis" name="od_login_basis">
                                     </th>
-                                    <th>
+                                    <th class="border-start">
                                         <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="os_login_spher" name="os_login_spher">
                                     </th>
                                     <th>
@@ -192,9 +194,9 @@ $usia = $registrasi->diff($tanggal_lahir);
                                     <th>
                                         <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="os_login_prisma" name="os_login_prisma">
                                     </th>
-                                    <th>
+                                    <th class="border-end">
                                         <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="os_login_basis" name="os_login_basis">
-                                    <th>
+                                    <th class="border-start">
                                         <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="os_login_vitror" name="os_login_vitror">
                                     </th>
                                     <th>
@@ -202,8 +204,8 @@ $usia = $registrasi->diff($tanggal_lahir);
                                     </th>
                                 </tr>
                                 <tr>
-                                    <th class="text-center">Pro Domo</th>
-                                    <th>
+                                    <th class="text-center border-end">Pro Domo</th>
+                                    <th class="border-start">
                                         <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="od_domo_spher" name="od_domo_spher">
                                     </th>
                                     <th>
@@ -215,10 +217,10 @@ $usia = $registrasi->diff($tanggal_lahir);
                                     <th>
                                         <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="od_domo_prisma" name="od_domo_prisma">
                                     </th>
-                                    <th>
+                                    <th class="border-end">
                                         <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="od_domo_basis" name="od_domo_basis">
                                     </th>
-                                    <th>
+                                    <th class="border-start">
                                         <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="os_domo_spher" name="os_domo_spher">
                                     </th>
                                     <th>
@@ -230,9 +232,9 @@ $usia = $registrasi->diff($tanggal_lahir);
                                     <th>
                                         <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="os_domo_prisma" name="os_domo_prisma">
                                     </th>
-                                    <th>
+                                    <th class="border-end">
                                         <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="os_domo_basis" name="os_domo_basis">
-                                    <th>
+                                    <th class="border-start">
                                         <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="os_domo_vitror" name="os_domo_vitror">
                                     </th>
                                     <th>
@@ -240,8 +242,8 @@ $usia = $registrasi->diff($tanggal_lahir);
                                     </th>
                                 </tr>
                                 <tr>
-                                    <th class="text-center">Propin Quitat</th>
-                                    <th>
+                                    <th class="text-center border-end">Propin Quitat</th>
+                                    <th class="border-start">
                                         <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="od_quitat_spher" name="od_quitat_spher">
                                     </th>
                                     <th>
@@ -253,10 +255,10 @@ $usia = $registrasi->diff($tanggal_lahir);
                                     <th>
                                         <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="od_quitat_prisma" name="od_quitat_prisma">
                                     </th>
-                                    <th>
+                                    <th class="border-end">
                                         <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="od_quitat_basis" name="od_quitat_basis">
                                     </th>
-                                    <th>
+                                    <th class="border-start">
                                         <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="os_quitat_spher" name="os_quitat_spher">
                                     </th>
                                     <th>
@@ -268,9 +270,9 @@ $usia = $registrasi->diff($tanggal_lahir);
                                     <th>
                                         <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="os_quitat_prisma" name="os_quitat_prisma">
                                     </th>
-                                    <th>
+                                    <th class="border-end">
                                         <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="os_quitat_basis" name="os_quitat_basis">
-                                    <th>
+                                    <th class="border-start">
                                         <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="os_quitat_vitror" name="os_quitat_vitror">
                                     </th>
                                     <th>
