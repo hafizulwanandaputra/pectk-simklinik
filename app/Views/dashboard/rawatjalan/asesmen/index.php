@@ -143,8 +143,8 @@ $usia = $registrasi->diff($tanggal_lahir);
             <div class="mb-3">
                 <div class="fw-bold mb-2 border-bottom">Pemeriksaan Umum</div>
                 <div class="row row-cols-1 row-cols-lg-2 g-2 align-items-start mb-2">
-                    <div class="row row-cols-1 g-2 align-items-start">
-                        <div class="col">
+                    <div class="col-sm">
+                        <div class="mb-2">
                             <div class="form-floating">
                                 <select class="form-select" id="kesadaran" name="kesadaran" aria-label="kesadaran">
                                     <option value="" selected>-- Pilih Kesadaran --</option>
@@ -159,28 +159,28 @@ $usia = $registrasi->diff($tanggal_lahir);
                                 <div class="invalid-feedback"></div>
                             </div>
                         </div>
-                        <div class="col">
+                        <div class="mb-2">
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="tekanan_darah" name="tekanan_darah" value="" autocomplete="off" dir="auto" placeholder="tekanan_darah">
                                 <label for="tekanan_darah">Tekanan Darah (mmHg)</label>
                                 <div class="invalid-feedback"></div>
                             </div>
                         </div>
-                        <div class="col">
+                        <div class="mb-2">
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="nadi" name="nadi" value="" autocomplete="off" dir="auto" placeholder="nadi">
                                 <label for="nadi">Nadi (×/menit)</label>
                                 <div class="invalid-feedback"></div>
                             </div>
                         </div>
-                        <div class="col">
+                        <div class="mb-2">
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="suhu" name="suhu" value="" autocomplete="off" dir="auto" placeholder="suhu">
                                 <label for="suhu">Suhu (°C)</label>
                                 <div class="invalid-feedback"></div>
                             </div>
                         </div>
-                        <div class="col">
+                        <div>
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="pernapasan" name="pernapasan" value="" autocomplete="off" dir="auto" placeholder="pernapasan">
                                 <label for="pernapasan">Pernapasan (×/menit)</label>
@@ -188,9 +188,9 @@ $usia = $registrasi->diff($tanggal_lahir);
                             </div>
                         </div>
                     </div>
-                    <div class="row row-cols-1 g-2 align-items-start">
-                        <div class="col">
-                            <div class="row g-1 radio-group">
+                    <div class="col-sm">
+                        <div class="mb-2">
+                            <div class="row gx-1 radio-group">
                                 <label for="keadaan_umum" class="col col-form-label">Keadaan Umum</label>
                                 <div class="col col-form-label">
                                     <div class="d-flex align-items-center justify-content-between">
@@ -217,15 +217,15 @@ $usia = $registrasi->diff($tanggal_lahir);
                                 </div>
                             </div>
                         </div>
-                        <div class="col">
+                        <div class="mb-2">
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="kesadaran_mental" name="kesadaran_mental" value="" autocomplete="off" dir="auto" placeholder="kesadaran_mental">
                                 <label for="kesadaran_mental">Kesadaran / Mental</label>
                                 <div class="invalid-feedback"></div>
                             </div>
                         </div>
-                        <div class="col">
-                            <div class="row g-1 radio-group">
+                        <div class="mb-2">
+                            <div class="row gx-1 radio-group">
                                 <label for="alergi" class="col col-form-label">Alergi</label>
                                 <div class="col col-form-label">
                                     <div class="d-flex align-items-center justify-content-evenly">
@@ -246,7 +246,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                                 </div>
                             </div>
                         </div>
-                        <div class="col">
+                        <div>
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="alergi_keterangan" name="alergi_keterangan" value="" autocomplete="off" dir="auto" placeholder="alergi_keterangan">
                                 <label for="alergi_keterangan">Keterangan Alergi</label>
