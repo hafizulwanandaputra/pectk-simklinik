@@ -68,7 +68,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                         <?php if (session()->get('role') != 'Perawat') : ?>
                             <a class="nav-link py-1 text-nowrap" href="<?= base_url('rawatjalan/resepobat/' . $rawatjalan['id_rawat_jalan']); ?>">Resep Obat</a>
                             <a class="nav-link py-1 text-nowrap" href="<?= base_url('rawatjalan/optik/' . $rawatjalan['id_rawat_jalan']); ?>">Resep Kacamata</a>
-                            <a class="nav-link py-1 text-nowrap" href="<?= base_url('rawatjalan/laporanrajal/' . $rawatjalan['id_rawat_jalan']); ?>">Laporan</a>
+                            <a class="nav-link py-1 text-nowrap" href="<?= base_url('rawatjalan/laporanrajal/' . $rawatjalan['id_rawat_jalan']); ?>">Tindakan Rajal</a>
                         <?php endif; ?>
                     </nav>
                 </div>
@@ -257,22 +257,64 @@ $usia = $registrasi->diff($tanggal_lahir);
                 </div>
                 <div class="mb-2">
                     <label for="sakit_lainnya" class="form-label">
-                        Sakit Lainnya<br><small class="text-muted">Tekan dan tahan <kbd>Ctrl</kbd> atau <kbd>⌘ Command</kbd> jika tidak bisa memilih lebih dari satu</small>
+                        Sakit Lainnya
                     </label>
-                    <select class="form-select" id="sakit_lainnya" name="sakit_lainnya[]" aria-label="sakit_lainnya" size="12" multiple>
-                        <option value="TIDAK ADA">TIDAK ADA</option>
-                        <option value="ASMA">ASMA</option>
-                        <option value="ASAM URAT">ASAM URAT</option>
-                        <option value="STROKE">STROKE</option>
-                        <option value="KOLESTEROL">KOLESTEROL</option>
-                        <option value="TB PARU">TB PARU</option>
-                        <option value="DIABETES">DIABETES</option>
-                        <option value="HIPERTENSI">HIPERTENSI</option>
-                        <option value="JANTUNG">JANTUNG</option>
-                        <option value="MAGH">MAGH</option>
-                        <option value="TIROID">TIROID</option>
-                        <option value="VERTIGO">VERTIGO</option>
-                    </select>
+                    <div class="row">
+                        <!-- Kolom Kiri -->
+                        <div class="col-sm">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="sakit_lainnya_tidak_ada" name="sakit_lainnya[]" value="TIDAK ADA">
+                                <label class="form-check-label" for="sakit_lainnya_tidak_ada">TIDAK ADA</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="sakit_lainnya_asma" name="sakit_lainnya[]" value="ASMA">
+                                <label class="form-check-label" for="sakit_lainnya_asma">ASMA</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="sakit_lainnya_asam_urat" name="sakit_lainnya[]" value="ASAM URAT">
+                                <label class="form-check-label" for="sakit_lainnya_asam_urat">ASAM URAT</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="sakit_lainnya_stroke" name="sakit_lainnya[]" value="STROKE">
+                                <label class="form-check-label" for="sakit_lainnya_stroke">STROKE</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="sakit_lainnya_kolesterol" name="sakit_lainnya[]" value="KOLESTEROL">
+                                <label class="form-check-label" for="sakit_lainnya_kolesterol">KOLESTEROL</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="sakit_lainnya_tb_paru" name="sakit_lainnya[]" value="TB PARU">
+                                <label class="form-check-label" for="sakit_lainnya_tb_paru">TB PARU</label>
+                            </div>
+                        </div>
+                        <!-- Kolom Kanan -->
+                        <div class="col-sm">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="sakit_lainnya_diabetes" name="sakit_lainnya[]" value="DIABETES">
+                                <label class="form-check-label" for="sakit_lainnya_diabetes">DIABETES</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="sakit_lainnya_hipertensi" name="sakit_lainnya[]" value="HIPERTENSI">
+                                <label class="form-check-label" for="sakit_lainnya_hipertensi">HIPERTENSI</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="sakit_lainnya_jantung" name="sakit_lainnya[]" value="JANTUNG">
+                                <label class="form-check-label" for="sakit_lainnya_jantung">JANTUNG</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="sakit_lainnya_magh" name="sakit_lainnya[]" value="MAGH">
+                                <label class="form-check-label" for="sakit_lainnya_magh">MAGH</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="sakit_lainnya_tiroid" name="sakit_lainnya[]" value="TIROID">
+                                <label class="form-check-label" for="sakit_lainnya_tiroid">TIROID</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="sakit_lainnya_vertigo" name="sakit_lainnya[]" value="VERTIGO">
+                                <label class="form-check-label" for="sakit_lainnya_vertigo">VERTIGO</label>
+                            </div>
+                        </div>
+                    </div>
                     <div class="invalid-feedback"></div>
                 </div>
             </div>
@@ -644,12 +686,11 @@ $usia = $registrasi->diff($tanggal_lahir);
                 $("input[name='alergi'][value='" + alergi + "']").prop('checked', true);
             }
             $('#alergi_keterangan').val(data.alergi_keterangan);
-            const sakit_lainnya = data.sakit_lainnya;
-            $('#sakit_lainnya option').each(function() {
-                const value = $(this).val(); // Dapatkan nilai opsi
+            const sakit_lainnya = data.sakit_lainnya; // Data yang diterima dari server
+            $('input[name="sakit_lainnya[]"]').each(function() {
+                const value = $(this).val(); // Dapatkan nilai dari checkbox
                 if (sakit_lainnya.includes(value)) {
-                    // Tandai opsi jika ada dalam array
-                    $(this).prop('selected', true);
+                    $(this).prop('checked', true); // Tandai sebagai tercentang
                 }
             });
 

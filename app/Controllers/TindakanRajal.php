@@ -114,8 +114,8 @@ class TindakanRajal extends BaseController
                 'laporanrajal' => $laporanrajal,
                 'nama_perawat' => $nama_perawat,
                 'nama_perawat_count' => $nama_perawat_count,
-                'title' => 'Laporan Tindakan Rawat Jalan ' . $rawatjalan['nama_pasien'] . ' (' . $rawatjalan['no_rm'] . ') - ' . $rawatjalan['nomor_registrasi'] . ' - ' . $this->systemName,
-                'headertitle' => 'Laporan Tindakan Rawat Jalan',
+                'title' => 'Tindakan Rawat Jalan ' . $rawatjalan['nama_pasien'] . ' (' . $rawatjalan['no_rm'] . ') - ' . $rawatjalan['nomor_registrasi'] . ' - ' . $this->systemName,
+                'headertitle' => 'Tindakan Rawat Jalan',
                 'agent' => $this->request->getUserAgent(), // Mengambil informasi user agent
                 'previous' => $previous,
                 'next' => $next,
@@ -268,7 +268,7 @@ class TindakanRajal extends BaseController
                 'waktu_dibuat' => $laporanrajal['waktu_dibuat'],
             ];
             $this->TindakanRajalModel->save($data);
-            return $this->response->setJSON(['success' => true, 'message' => 'Laporan tindakan rawat jalan berhasil diperbarui']);
+            return $this->response->setJSON(['success' => true, 'message' => 'Tindakan rawat jalan berhasil diperbarui']);
         } else {
             // Jika peran tidak dikenali, lemparkan pengecualian 404
             throw PageNotFoundException::forPageNotFound();
