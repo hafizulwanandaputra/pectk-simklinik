@@ -114,13 +114,13 @@ $usia = $registrasi->diff($tanggal_lahir);
                         <div>Tanggal registrasi: <?= $rawatjalan['tanggal_registrasi']; ?></div>
                     </td>
                     <td style="width: 40%; max-width: 5cm; vertical-align: top; padding: 0.1cm; border: 1px solid black; font-size: 8pt; overflow: hidden;">
-                        <center>
+                        <div style="text-align: center;">
                             <div style="white-space: nowrap;"><?= $rawatjalan['nama_pasien']; ?></div>
                             <div><?= $rawatjalan['no_rm']; ?></div>
                             <div><?= $rawatjalan['tanggal_lahir']; ?> (<?= $usia->y . " tahun " . $usia->m . " bulan" ?>)</div>
                             <img src="data:image/png;base64,<?= $bcNoReg ?>" width="240mm" alt="Barcode">
                             <div><?= $rawatjalan['nomor_registrasi']; ?></div>
-                        </center>
+                        </div>
                     </td>
                 </tr>
             </tbody>
