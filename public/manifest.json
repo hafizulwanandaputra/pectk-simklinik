@@ -1,6 +1,7 @@
 {
     "name": "SIM Klinik Mata PEC Teluk Kuantan",
     "short_name": "SIM Klinik Mata PEC Teluk Kuantan",
+    "description": "Sistem Informasi Manajemen Klinik Mata Padang Eye Center Teluk Kuantan",
     "start_url": "/",
     "display": "minimal-ui",
     "background_color": "#5eba00",
