@@ -123,13 +123,13 @@ if ($skrining['jatuh_sempoyongan'] === 'YA' && $skrining['jatuh_penopang'] === '
                         <div>Tanggal registrasi: <?= $rawatjalan['tanggal_registrasi']; ?></div>
                     </td>
                     <td style="width: 40%; max-width: 5cm; vertical-align: top; padding: 0.1cm; border: 1px solid black; font-size: 8pt; overflow: hidden;">
-                        <center>
+                        <div style="text-align: center;">
                             <div style="white-space: nowrap;"><?= $rawatjalan['nama_pasien']; ?></div>
                             <div><?= $rawatjalan['no_rm']; ?></div>
                             <div><?= $rawatjalan['tanggal_lahir']; ?> (<?= $usia->y . " tahun " . $usia->m . " bulan" ?>)</div>
                             <img src="data:image/png;base64,<?= $bcNoReg ?>" width="240mm" alt="Barcode">
                             <div><?= $rawatjalan['nomor_registrasi']; ?></div>
-                        </center>
+                        </div>
                     </td>
                 </tr>
             </tbody>
@@ -238,9 +238,9 @@ if ($skrining['jatuh_sempoyongan'] === 'YA' && $skrining['jatuh_penopang'] === '
             </table>
             <hr>
             <h3 style="padding-left: 0.25cm; padding-right: 0.25cm; margin: 0;">II. SKRINING NYERI</h3>
-            <center>
+            <div style="text-align: center;">
                 <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/skala_nyeri.png')) ?>" width="480px" alt="">
-            </center>
+            </div>
             <table class="table" style="width: 100%; margin-bottom: 4px;">
                 <tbody>
                     <tr>

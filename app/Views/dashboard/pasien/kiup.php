@@ -80,10 +80,10 @@
                         <h2>FORMULIR PENDAFTARAN PASIEN BARU</h2>
                     </td>
                     <td style="width: 20%; vertical-align: top; padding: 0;">
-                        <center>
+                        <div style="text-align: center;">
                             <img src="data:image/svg+xml;base64,<?= $qrNoRM ?>" />
                             <div>No RM: <?= $pasien['no_rm']; ?></div>
-                        </center>
+                        </div>
                     </td>
                 </tr>
             </tbody>

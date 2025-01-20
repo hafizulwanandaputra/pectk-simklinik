@@ -97,10 +97,10 @@ $usia = $sekarang->diff($tanggal_lahir);
                 </tr>
             </thead>
         </table>
-        <center>
+        <div style="text-align: center;">
             <div>Nomor Antrian:</div>
             <div style="font-size: 32px;"><strong><?= $rajal['kode_antrian'] . $rajal['no_antrian'] ?></strong></div>
-        </center>
+        </div>
         <div class="box">
             <table class="table" style="width: 100%; margin-bottom: 4px;">
                 <tbody>
@@ -258,14 +258,6 @@ $usia = $sekarang->diff($tanggal_lahir);
                 </tr>
             </table>
         </div>
-        <!-- <center>
-            <div style="padding-top: 0.2cm; padding-bottom: 0.1cm;">
-                <strong><?= $rajal['nama_pasien'] ?><br>[ <?= $rajal['jenis_kelamin'] ?> ] <?= $rajal['tanggal_lahir'] ?> (<?= $usia->y . " tahun " . $usia->m . " bulan" ?>)</strong>
-            </div>
-            <div>
-                <strong><?= $rajal['no_rm'] ?></strong>
-            </div>
-        </center> -->
     </div>
 
 </body>

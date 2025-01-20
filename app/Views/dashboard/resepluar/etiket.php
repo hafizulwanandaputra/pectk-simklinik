@@ -53,9 +53,9 @@ $tanggal_lahir = Time::parse($resep['tanggal_lahir']);
 <body>
     <div class="container-fluid my-3">
         <?php foreach ($detail_resep as $detail) : ?>
-            <center>
+            <div style="text-align: center;">
                 <h2 style="font-size: 5.7pt;">KLINIK UTAMA MATA<br>PADANG EYE CENTER TELUK KUANTAN</h2>
-            </center>
+            </div>
             <table width="100%">
                 <tbody style="vertical-align: top;">
                     <tr>

@@ -123,20 +123,20 @@ $tanggalFormatted = $tanggalFormatter->format($dateTime);
             <thead>
                 <tr>
                     <th style="width: 100%;">
-                        <center>
+                        <div style="text-align: center;">
                             <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/kacamata.png')) ?>" width="360px" alt="">
-                        </center>
+                        </div>
                     </th>
                     <td style="width: 0%;">
                         <table class="table" style="width: 100%;">
                             <tbody>
                                 <tr>
                                     <td style="width: 40%; vertical-align: middle; padding: 0.1cm; border: 1px solid black; font-size: 7pt; overflow: hidden;">
-                                        <center style="width: 0.3cm; height: 0.3cm;">
+                                        <div style="width: 0.3cm; height: 0.3cm; text-align: center;">
                                             <?php if ($optik['tipe_lensa'] == 'TRIFOCUS'): ?>
                                                 <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="100%" alt="">
                                             <?php endif; ?>
-                                        </center>
+                                        </div>
                                     </td>
                                     <td style="width: 60%; vertical-align: middle; padding: 0;">
                                         <div>Trifocus</div>
@@ -144,11 +144,11 @@ $tanggalFormatted = $tanggalFormatter->format($dateTime);
                                 </tr>
                                 <tr>
                                     <td style="width: 40%; vertical-align: middle; padding: 0.1cm; border: 1px solid black; font-size: 7pt; overflow: hidden;">
-                                        <center style="width: 0.3cm; height: 0.3cm;">
+                                        <div style="width: 0.3cm; height: 0.3cm; text-align: center;">
                                             <?php if ($optik['tipe_lensa'] == 'BIFOCUS'): ?>
                                                 <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="100%" alt="">
                                             <?php endif; ?>
-                                        </center>
+                                        </div>
                                     </td>
                                     <td style="width: 60%; vertical-align: middle; padding: 0;">
                                         <div>Bifocus</div>
@@ -156,11 +156,11 @@ $tanggalFormatted = $tanggalFormatter->format($dateTime);
                                 </tr>
                                 <tr>
                                     <td style="width: 40%; vertical-align: middle; padding: 0.1cm; border: 1px solid black; font-size: 7pt; overflow: hidden;">
-                                        <center style="width: 0.3cm; height: 0.3cm;">
+                                        <div style="width: 0.3cm; height: 0.3cm; text-align: center;">
                                             <?php if ($optik['tipe_lensa'] == 'SINGLE FOCUS'): ?>
                                                 <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="100%" alt="">
                                             <?php endif; ?>
-                                        </center>
+                                        </div>
                                     </td>
                                     <td style="width: 60%; vertical-align: middle; padding: 0;">
                                         <div style="white-space: nowrap;">Single Focus</div>
