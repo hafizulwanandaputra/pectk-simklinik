@@ -257,15 +257,11 @@ $usia = $registrasi->diff($tanggal_lahir);
                 </div>
                 <div class="mb-2">
                     <label for="sakit_lainnya" class="form-label">
-                        Sakit Lainnya
+                        Sakit Lainnya<br><small class="text-muted">Abaikan jika tidak ada</small>
                     </label>
                     <div class="row">
                         <!-- Kolom Kiri -->
                         <div class="col-sm">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="sakit_lainnya_tidak_ada" name="sakit_lainnya[]" value="TIDAK ADA">
-                                <label class="form-check-label" for="sakit_lainnya_tidak_ada">TIDAK ADA</label>
-                            </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="sakit_lainnya_asma" name="sakit_lainnya[]" value="ASMA">
                                 <label class="form-check-label" for="sakit_lainnya_asma">ASMA</label>
@@ -286,13 +282,13 @@ $usia = $registrasi->diff($tanggal_lahir);
                                 <input class="form-check-input" type="checkbox" id="sakit_lainnya_tb_paru" name="sakit_lainnya[]" value="TB PARU">
                                 <label class="form-check-label" for="sakit_lainnya_tb_paru">TB PARU</label>
                             </div>
-                        </div>
-                        <!-- Kolom Kanan -->
-                        <div class="col-sm">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="sakit_lainnya_diabetes" name="sakit_lainnya[]" value="DIABETES">
                                 <label class="form-check-label" for="sakit_lainnya_diabetes">DIABETES</label>
                             </div>
+                        </div>
+                        <!-- Kolom Kanan -->
+                        <div class="col-sm">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="sakit_lainnya_hipertensi" name="sakit_lainnya[]" value="HIPERTENSI">
                                 <label class="form-check-label" for="sakit_lainnya_hipertensi">HIPERTENSI</label>

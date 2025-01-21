@@ -208,15 +208,11 @@ $usia = $registrasi->diff($tanggal_lahir);
                 </div>
                 <div class="mb-2">
                     <label for="hambatan" class="form-label">
-                        Hambatan
+                        Hambatan<br><small class="text-muted">Abaikan jika tidak ada</small>
                     </label>
                     <div class="row">
                         <!-- Kolom Kiri -->
                         <div class="col-sm">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="hambatan_tidak_ada" name="hambatan[]" value="TIDAK ADA">
-                                <label class="form-check-label" for="hambatan_tidak_ada">TIDAK ADA</label>
-                            </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="hambatan_bahasa" name="hambatan[]" value="BAHASA">
                                 <label class="form-check-label" for="hambatan_bahasa">BAHASA</label>
