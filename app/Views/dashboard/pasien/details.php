@@ -178,6 +178,9 @@
                             </div>
                         </div>
                         <div class="mb-2">
+                            <label for="status">
+                                Jenis Kelamin
+                            </label>
                             <div class="col col-form-label">
                                 <div class="d-flex align-items-center justify-content-evenly">
                                     <div class="form-check form-check-inline">
@@ -193,7 +196,7 @@
                                         </label>
                                     </div>
                                 </div>
-                                <div class="invalid-feedback text-center"></div>
+                                <div class="invalid-feedback"></div>
                             </div>
                         </div>
                         <div class="mb-2">
