@@ -95,10 +95,10 @@ $usia = $registrasi->diff($tanggal_lahir);
             <?= csrf_field(); ?>
             <div class="mb-3">
                 <div class="mb-2">
-                    <div class="mb-0 row g-1 d-flex align-items-end">
+                    <div class="mb-0 row g-1 overflow-hidden d-flex align-items-end">
                         <div class="col fw-medium text-nowrap">DPJP</div>
                         <div class="col text-end">
-                            <div class="date text-nowrap">
+                            <div class="date text-truncate">
                                 <?= $asesmen['nama_dokter'] ?>
                             </div>
                         </div>

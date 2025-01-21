@@ -161,18 +161,18 @@
                 </table>
             </div>
             <div class="card-footer bg-body-tertiary">
-                <div class="row d-flex align-items-end">
+                <div class="row overflow-hidden d-flex align-items-end">
                     <div class="col fw-medium text-nowrap">Total Resep</div>
                     <div class="col text-end">
-                        <div class="date text-nowrap placeholder-glow" id="jumlah_resep">
+                        <div class="date text-truncate placeholder-glow" id="jumlah_resep">
                             <span class="placeholder w-100"></span>
                         </div>
                     </div>
                 </div>
-                <div class="row d-flex align-items-end">
+                <div class="row overflow-hidden d-flex align-items-end">
                     <div class="col fw-medium text-nowrap">Total Harga</div>
                     <div class="col text-end">
-                        <div class="date text-nowrap placeholder-glow fw-bold" id="total_harga">
+                        <div class="date text-truncate placeholder-glow fw-bold" id="total_harga">
                             <span class="placeholder w-100"></span>
                         </div>
                     </div>
