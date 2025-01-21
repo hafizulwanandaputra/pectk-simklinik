@@ -31,7 +31,7 @@
                 <div class="no-fluid-content">
                     <div class="input-group input-group-sm">
                         <input type="date" id="tanggal" name="tanggal" class="form-control" value="<?= date('Y-m-d') ?>">
-                        <button class="btn btn-danger bg-gradient" type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
+                        <button class="btn btn-primary bg-gradient" type="button" id="setTodayTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Kembali ke Hari Ini"><i class="fa-solid fa-calendar-day"></i></button>
                         <button class="btn btn-success bg-gradient" type="button" id="refreshTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan" disabled><i class="fa-solid fa-sync"></i></button>
                     </div>
                 </div>
@@ -39,9 +39,8 @@
             <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-tertiary transparent-blur" id="no-rm_form" style="display: none;">
                 <form class="no-fluid-content" id="no-rm_form_content">
                     <div class="input-group input-group-sm">
-                        <input type="text" id="no_rm" name="no_rm" class="form-control" placeholder="xx-xx-xx" autocomplete="off" dir="auto">
-                        <button class="btn btn-danger bg-gradient" type="button" id="clearNoRMButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Pencarian"><i class="fa-solid fa-xmark"></i></button>
-                        <button class="btn btn-primary bg-gradient" type="submit" id="no_rm_submitBtn" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Kirim Pencarian"><i class="fa-solid fa-magnifying-glass"></i></button>
+                        <input type="search" id="no_rm" name="no_rm" class="form-control" placeholder="xx-xx-xx" autocomplete="off" dir="auto">
+                        <button class="btn btn-primary bg-gradient" type="submit" id="no_rm_submitBtn" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Cari"><i class="fa-solid fa-magnifying-glass"></i></button>
                         <button class="btn btn-success bg-gradient" type="button" id="refreshNoRMButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan" disabled><i class="fa-solid fa-sync"></i></button>
                     </div>
                 </form>
@@ -798,17 +797,14 @@
 
     $(document).ready(function() {
         // Menangani event klik pada tombol bersihkan
-        $('#clearTglButton').on('click', function() {
-            $('#tanggal').val(''); // Kosongkan tanggal
+        $('#setTodayTglButton').on('click', function() {
+            // Mendapatkan tanggal hari ini dalam format YYYY-MM-DD
+            const today = new Date();
+            const formattedDate = today.toISOString().split('T')[0];
+            $('#tanggal').val(formattedDate); // Setel tanggal ke hari ini
             $('#rawatjalan-tanggal').empty(); // Kosongkan tabel pasien
             $('#rawatjalan-tanggal').append(loading); // Menampilkan loading indicator
             fetchRajalTanggal(); // Memanggil fungsi untuk mengambil data pasien
-        });
-        $('#clearNoRMButton').on('click', function() {
-            $('#no_rm').val(''); // Kosongkan nomor rekam medis
-            $('#rawatjalan-no_rm').empty(); // Kosongkan tabel pasien
-            $('#rawatjalan-no_rm').append(loading); // Menampilkan loading indicator
-            fetchRajalNoRM(); // Memanggil fungsi untuk mengambil data pasien
         });
         $(document).on('visibilitychange', function() {
             if (document.visibilityState === "visible") {
