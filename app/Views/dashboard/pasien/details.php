@@ -487,14 +487,15 @@
                         </div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
-                        <input type="text" class="form-control" autocomplete="off" dir="auto" placeholder="alasan_batal" id="alasan_batal" name="alasan_batal" list="alasan_batal_list">
+                        <select class="form-select" id="alasan_batal" name="alasan_batal" aria-label="alasan_batal">
+                            <option value="" disabled selected>-- Pilih Status Perkawinan --</option>
+                            <option value="Kesalahan dalam Memasukkan Data">Kesalahan dalam Memasukkan Data</option>
+                            <option value="Tidak Jadi Berobat">Tidak Jadi Berobat</option>
+                            <option value="Ganti Jadwal Dokter">Ganti Jadwal Dokter</option>
+                            <option value="Tidak Datang">Tidak Datang</option>
+                        </select>
                         <label for="alasan_batal">Alasan Batal</label>
                         <div class="invalid-feedback"></div>
-                        <datalist id="alasan_batal_list">
-                            <option value="Tidak Jadi Berobat">
-                            <option value="Ganti Jadwal Dokter">
-                            <option value="Tidak Datang">
-                        </datalist>
                     </div>
                 </div>
                 <div class="modal-footer justify-content-end pt-2 pb-2" style="border-top: 1px solid var(--bs-border-color-translucent);">
