@@ -23,11 +23,10 @@
                 <div class="no-fluid-content">
                     <div class="d-flex flex-row gap-2">
                         <select class="form-select form-select-sm w-auto" id="length-menu">
-                            <option value="12">12</option>
-                            <option value="24">24</option>
-                            <option value="36">36</option>
-                            <option value="48">48</option>
-                            <option value="60">60</option>
+                            <option value="25">25</option>
+                            <option value="50">50</option>
+                            <option value="75">75</option>
+                            <option value="100">100</option>
                         </select>
                         <div class="input-group input-group-sm flex-grow-1">
                             <input type="search" class="form-control form-control-sm " id="externalSearch" placeholder="Cari nama lengkap dan nama pengguna">
@@ -185,11 +184,8 @@
                 "caseInsensitive": true
             },
             "searching": false, // Disable the internal search bar
-            'pageLength': 12,
-            'lengthMenu': [
-                [12, 24, 36, 48, 60],
-                [12, 24, 36, 48, 60]
-            ],
+            'pageLength': 25,
+            'lengthMenu': "",
             "autoWidth": true,
             "processing": false,
             "serverSide": true,
