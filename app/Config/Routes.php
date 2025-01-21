@@ -269,6 +269,14 @@ $routes->post('/(?i)transaksi/(?i)perbaruiobatalkes/(:any)', 'Transaksi::perbaru
 $routes->delete('/(?i)transaksi/(?i)hapusdetailtransaksi/(:any)', 'Transaksi::hapusdetailtransaksi/$1');
 $routes->get('/(?i)transaksi/(?i)struk/(:any)', 'Transaksi::struk/$1');
 
+// RUANGAN POLIKLINIK
+$routes->get('/(?i)poliklinik', 'Poliklinik::index');
+$routes->post('/(?i)poliklinik/(?i)polikliniklist', 'Poliklinik::polikliniklist');
+$routes->get('/(?i)poliklinik/(?i)poliklinik/(:any)', 'Poliklinik::poliklinik/$1');
+$routes->post('/(?i)poliklinik/(?i)create', 'Poliklinik::create');
+$routes->post('/(?i)poliklinik/(?i)update', 'Poliklinik::update');
+$routes->delete('/(?i)poliklinik/(?i)delete/(:any)', 'Poliklinik::delete/$1');
+
 // PENGGUNA
 $routes->get('/(?i)admin', 'Admin::index');
 $routes->post('/(?i)admin/(?i)adminlist', 'Admin::adminlist');

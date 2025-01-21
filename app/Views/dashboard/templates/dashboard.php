@@ -572,6 +572,18 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                         <?php endif; ?>
                         <?php if (session()->get('role') == "Admin") : ?>
                             <li class="nav-item">
+                                <a class="nav-link p-2 <?= ($activeSegment === 'poliklinik') ? 'active bg-success' : '' ?>" href=" <?= base_url('/poliklinik'); ?>">
+                                    <div class="d-flex align-items-start <?= ($activeSegment === 'poliklinik') ? 'text-white' : 'text-success-emphasis' ?>">
+                                        <div style="min-width: 24px; max-width: 24px; text-align: center;">
+                                            <i class="fa-solid fa-hospital"></i>
+                                        </div>
+                                        <div class="flex-fill ms-2">
+                                            Ruangan Poliklinik
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link p-2 <?= ($activeSegment === 'admin') ? 'active bg-success' : '' ?>" href=" <?= base_url('/admin'); ?>">
                                     <div class="d-flex align-items-start <?= ($activeSegment === 'admin') ? 'text-white' : 'text-success-emphasis' ?>">
                                         <div style="min-width: 24px; max-width: 24px; text-align: center;">
