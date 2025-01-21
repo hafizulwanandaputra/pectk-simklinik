@@ -254,6 +254,18 @@ class Penunjang extends BaseController
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Perawat' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat') {
+            // Validate
+            $validation = \Config\Services::validation();
+            // Set base validation rules
+            $validation->setRules([
+                'pemeriksaan' => 'required',
+                'lokasi_pemeriksaan' => 'required',
+            ]);
+
+            if (!$this->validate($validation->getRules())) {
+                return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
+            }
+
             // Ambil resep luar
             $penunjang = $this->PenunjangModel->find($id);
 

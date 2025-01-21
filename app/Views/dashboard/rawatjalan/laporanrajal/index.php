@@ -104,7 +104,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                         </div>
                     </div>
                 </div>
-                <div class="mb-2">
+                <div class="mb-2 checkbox-group">
                     <label for="nama_perawat" class="form-label">
                         Perawat
                     </label>
@@ -316,6 +316,23 @@ $usia = $registrasi->diff($tanggal_lahir);
                                     });
                                 } else {
                                     console.warn("Radio group tidak ditemukan untuk field:", field);
+                                }
+                            } else if (['nama_perawat'].includes(field)) {
+                                // Handle checkbox group
+                                const checkboxGroup = $(`input[name='${field}[]']`); // Ambil grup checkbox berdasarkan nama
+                                const feedbackElement = checkboxGroup.closest('.checkbox-group').find('.invalid-feedback'); // Gunakan pembungkus dengan class tertentu
+
+                                if (checkboxGroup.length > 0 && feedbackElement.length > 0) {
+                                    checkboxGroup.addClass('is-invalid');
+                                    feedbackElement.text(response.data.errors[field]).show();
+
+                                    // Remove error message when the user checks any checkbox in the group
+                                    checkboxGroup.on('change', function() {
+                                        checkboxGroup.removeClass('is-invalid');
+                                        feedbackElement.text('').hide();
+                                    });
+                                } else {
+                                    console.warn("Checkbox group tidak ditemukan untuk field:", field);
                                 }
                             } else {
                                 const feedbackElement = fieldElement.siblings('.invalid-feedback');

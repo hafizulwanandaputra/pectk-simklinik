@@ -296,6 +296,26 @@ class Asesmen extends BaseController
     {
         // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', 'Perawat', atau 'Admisi' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
+            // Validate
+            $validation = \Config\Services::validation();
+            $alergi = $this->request->getPost('alergi');
+            // Set base validation rules
+            $validation->setRules([
+                'keluhan_utama' => 'required',
+                'kesadaran' => 'required',
+                'tekanan_darah' => 'required',
+                'nadi' => 'required',
+                'suhu' => 'required',
+                'pernapasan' => 'required',
+                'keadaan_umum' => 'required',
+                'alergi' => 'required',
+                'alergi_keterangan' => $alergi === 'YA' ? 'required' : 'permit_empty',
+            ]);
+
+            if (!$this->validate($validation->getRules())) {
+                return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
+            }
+
             // Ambil data asesmen berdasarkan ID menggunakan Query Builder
             $db = db_connect();
             $asesmen = $db->table('medrec_assesment')->where('id_asesmen', $id)->get()->getRowArray();

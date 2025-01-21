@@ -247,6 +247,19 @@ class TindakanRajal extends BaseController
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Dokter' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
+            // Validate
+            $validation = \Config\Services::validation();
+            // Set base validation rules
+            $validation->setRules([
+                'nama_perawat' => 'required',
+                'lokasi_mata' => 'required',
+                'isi_laporan' => 'required',
+            ]);
+
+            if (!$this->validate($validation->getRules())) {
+                return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
+            }
+
             // Ambil resep luar
             $laporanrajal = $this->TindakanRajalModel->find($id);
 
