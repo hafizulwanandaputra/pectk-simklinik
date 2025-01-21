@@ -4,7 +4,7 @@
     <div class="flex-fill text-truncate">
         <div class="d-flex flex-column">
             <div class="fw-medium fs-6 lh-sm"><?= $headertitle; ?></div>
-            <div class="fw-medium lh-sm" style="font-size: 0.75em;"><span id="total_datatables">0</span> pengguna</div>
+            <div class="fw-medium lh-sm" style="font-size: 0.75em;"><span id="total_datatables">0</span> ruangan</div>
         </div>
     </div>
     <div id="loadingSpinner" class="spinner-border spinner-border-sm mx-2" role="status" style="min-width: 1rem;">
@@ -45,11 +45,8 @@
                         <tr class="align-middle">
                             <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">No.</th>
                             <th scope="col" class="bg-body-secondary border-secondary text-nowrap" style="border-bottom-width: 2px;">Tindakan</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Nama Lengkap</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Nama Pengguna</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Jenis Pengguna</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Kode Antrian</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Aktif Sejak</th>
+                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Nama Ruangan</th>
+                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Status</th>
                         </tr>
                     </thead>
                     <tbody class="align-top">
@@ -71,77 +68,38 @@
             </div>
         </div>
     </div>
-    <div class="modal modal-sheet p-4 py-md-5 fade" id="resetPasswordModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="resetPasswordModalLabel" aria-hidden="true" role="dialog">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content bg-body-tertiary rounded-4 shadow-lg transparent-blur">
-                <div class="modal-body p-4 text-center">
-                    <h5 id="resetPasswordMessage"></h5>
-                    <h6 class="mb-0" id="resetPasswordSubmessage"></h6>
-                </div>
-                <div class="modal-footer flex-nowrap p-0" style="border-top: 1px solid var(--bs-border-color-translucent);">
-                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end" style="border-right: 1px solid var(--bs-border-color-translucent)!important;" data-bs-dismiss="modal">Tidak</button>
-                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0" id="confirmResetPasswordBtn">Ya</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal modal-sheet p-4 py-md-5 fade" id="activateModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="activateModalLabel" aria-hidden="true" role="dialog">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content bg-body-tertiary rounded-4 shadow-lg transparent-blur">
-                <div class="modal-body p-4 text-center">
-                    <h5 class="mb-0" id="activateMessage"></h5>
-                </div>
-                <div class="modal-footer flex-nowrap p-0" style="border-top: 1px solid var(--bs-border-color-translucent);">
-                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end" style="border-right: 1px solid var(--bs-border-color-translucent)!important;" data-bs-dismiss="modal">Tidak</button>
-                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0" id="confirmActivateBtn">Ya</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal modal-sheet p-4 py-md-5 fade" id="deactivateModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deactivateModalLabel" aria-hidden="true" role="dialog">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content bg-body-tertiary rounded-4 shadow-lg transparent-blur">
-                <div class="modal-body p-4 text-center">
-                    <h5 class="mb-0" id="deactivateMessage"></h5>
-                </div>
-                <div class="modal-footer flex-nowrap p-0" style="border-top: 1px solid var(--bs-border-color-translucent);">
-                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end" style="border-right: 1px solid var(--bs-border-color-translucent)!important;" data-bs-dismiss="modal">Tidak</button>
-                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0" id="confirmDeactivateBtn">Ya</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="modal fade" id="userModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
+    <div class="modal fade" id="poliModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="poliModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable ">
-            <form id="userForm" enctype="multipart/form-data" class="modal-content bg-body-tertiary shadow-lg transparent-blur">
+            <form id="poliForm" enctype="multipart/form-data" class="modal-content bg-body-tertiary shadow-lg transparent-blur">
                 <div class="modal-header justify-content-between pt-2 pb-2" style="border-bottom: 1px solid var(--bs-border-color-translucent);">
-                    <h6 class="pe-2 modal-title fs-6 text-truncate" id="userModalLabel" style="font-weight: bold;">Tambah Pengguna</h6>
+                    <h6 class="pe-2 modal-title fs-6 text-truncate" id="poliModalLabel" style="font-weight: bold;">Tambah Pengguna</h6>
                     <button id="closeBtn" type="button" class="btn btn-danger bg-gradient" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
                 </div>
                 <div class="modal-body py-2">
-                    <input type="hidden" id="userId" name="id_user">
-                    <input type="hidden" id="original_username" name="original_username">
+                    <input type="hidden" id="id_poli" name="id_poli">
                     <div class="form-floating mb-1 mt-1">
-                        <input type="text" class="form-control " autocomplete="off" dir="auto" placeholder="fullname" id="fullname" name="fullname">
-                        <label for="fullname">Nama Lengkap</label>
+                        <input type="text" class="form-control " autocomplete="off" dir="auto" placeholder="nama_poli" id="nama_poli" name="nama_poli">
+                        <label for="nama_poli">Nama Ruangan</label>
                         <div class="invalid-feedback"></div>
                     </div>
-                    <div class="form-floating mb-1 mt-1">
-                        <input type="text" class="form-control " autocomplete="off" dir="auto" placeholder="username" id="username" name="username">
-                        <label for="username">Nama Pengguna</label>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                    <div class="form-floating mb-1 mt-1">
-                        <select class="form-select " id="role" name="role" aria-label="role">
-                            <option value="" disabled selected>-- Pilih Jenis Pengguna --</option>
-                            <option value="Admin">Admin</option>
-                            <option value="Admisi">Admisi</option>
-                            <option value="Perawat">Perawat</option>
-                            <option value="Apoteker">Apoteker</option>
-                            <option value="Dokter">Dokter</option>
-                            <option value="Kasir">Kasir</option>
-                        </select>
-                        <label for="role">Jenis Pengguna</label>
+                    <div class="mb-1 mt-1 radio-group">
+                        <label for="status">
+                            Status
+                        </label>
+                        <div class="d-flex align-items-center justify-content-evenly">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="status" id="status1" value="1">
+                                <label class="form-check-label" for="status1">
+                                    Aktif
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="status" id="status2" value="0">
+                                <label class="form-check-label" for="status2">
+                                    Tidak Aktif
+                                </label>
+                            </div>
+                        </div>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
@@ -171,17 +129,17 @@
         var table = $('#tabel').DataTable({
             "oLanguage": {
                 "sDecimal": ",",
-                "sEmptyTable": 'Tidak ada pengguna. Klik "Tambah Pengguna" untuk menambahkan pengguna.',
-                "sInfo": "Menampilkan _START_ hingga _END_ dari _TOTAL_ pengguna",
-                "sInfoEmpty": "Menampilkan 0 hingga 0 dari 0 pengguna",
-                "sInfoFiltered": "(di-filter dari _MAX_ pengguna)",
+                "sEmptyTable": 'Tidak ada ruangan. Klik "Tambah Pengguna" untuk menambahkan ruangan.',
+                "sInfo": "Menampilkan _START_ hingga _END_ dari _TOTAL_ ruangan",
+                "sInfoEmpty": "Menampilkan 0 hingga 0 dari 0 ruangan",
+                "sInfoFiltered": "(di-filter dari _MAX_ ruangan)",
                 "sInfoPostFix": "",
                 "sThousands": ".",
-                "sLengthMenu": "Tampilkan _MENU_ pengguna",
+                "sLengthMenu": "Tampilkan _MENU_ ruangan",
                 "sLoadingRecords": "Memuat...",
                 "sProcessing": "",
                 "sSearch": "Cari:",
-                "sZeroRecords": "Pengguna yang Anda cari tidak ditemukan",
+                "sZeroRecords": "Ruangan yang Anda cari tidak ditemukan",
                 "oAria": {
                     "sOrderable": "Urutkan menurut kolom ini",
                     "sOrderableReverse": "Urutkan terbalik kolom ini"
@@ -214,10 +172,10 @@
             },
             'buttons': [{
                 // Tombol Tambah Pengguna
-                text: '<i class="fa-solid fa-plus"></i> Tambah Pengguna',
+                text: '<i class="fa-solid fa-plus"></i> Tambah Ruangan',
                 className: 'btn-primary btn-sm bg-gradient ',
                 attr: {
-                    id: 'addUserBtn'
+                    id: 'addPoliBtn'
                 },
                 init: function(api, node, config) {
                     $(node).removeClass('btn-secondary')
@@ -237,7 +195,7 @@
             "serverSide": true,
             "ajax": {
                 // URL endpoint untuk melakukan permintaan AJAX
-                "url": "<?= base_url('/admin/adminlist') ?>",
+                "url": "<?= base_url('/poliklinik/polikliniklist') ?>",
                 "type": "POST", // Metode HTTP yang digunakan untuk permintaan (POST)
                 "data": function(d) {
                     // Menambahkan parameter tambahan pada data yang dikirim
@@ -269,41 +227,23 @@
                 {
                     data: null,
                     render: function(data, type, row) {
-                        let statusBtn = row.active == 1 ?
-                            `<button class="btn btn-outline-danger text-nowrap bg-gradient  deactivate-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${row.id_user}" data-username="${row.username}"data-bs-toggle="tooltip" data-bs-title="Nonaktifkan"><i class="fa-solid fa-user-slash"></i></button>` :
-                            `<button class="btn btn-outline-success text-nowrap bg-gradient  activate-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${row.id_user}" data-username="${row.username}"data-bs-toggle="tooltip" data-bs-title="Aktifkan"><i class="fa-solid fa-user-check"></i></i></button>`;
-
                         return `<div class="btn-group" role="group">
-                                    ${statusBtn}
-                                    <button class="btn btn-outline-body text-nowrap bg-gradient  resetpwd-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${row.id_user}" data-username="${row.username}"data-bs-toggle="tooltip" data-bs-title="Atur ulang kata sandi"><i class="fa-solid fa-key"></i></button>
-                                    <button class="btn btn-outline-body text-nowrap bg-gradient edit-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${row.id_user}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
-                                    <button class="btn btn-outline-danger text-nowrap bg-gradient  delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${row.id_user}" data-username="${row.username}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
+                                    <button class="btn btn-outline-body text-nowrap bg-gradient edit-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${row.id_poli}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
+                                    <button class="btn btn-outline-danger text-nowrap bg-gradient  delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${row.id_poli}" data-name="${row.nama_poli}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
                                 </div>`;
                     }
                 },
                 {
+                    data: 'nama_poli'
+                },
+                {
                     data: 'fullname',
                     render: function(data, type, row) {
-                        let statusBadge = row.active == 1 ?
+                        let statusBadge = row.status == 1 ?
                             '<span class="badge bg-success bg-gradient">Aktif</span>' :
                             '<span class="badge bg-danger bg-gradient">Tidak Aktif</span>';
 
-                        return `${data} ${statusBadge}`;
-                    }
-                },
-                {
-                    data: 'username'
-                },
-                {
-                    data: 'role'
-                },
-                {
-                    data: 'kode_antrian'
-                },
-                {
-                    data: 'registered',
-                    render: function(data, type, row) {
-                        return `<span class="date text-nowrap">${data}</span>`;
+                        return `${statusBadge}`;
                     }
                 },
             ],
@@ -314,10 +254,10 @@
                 "target": [1],
                 "orderable": false
             }, {
-                "target": [0, 1],
+                "target": [0, 1, 3],
                 "width": "0%"
             }, {
-                "target": [2, 3, 4],
+                "target": [2],
                 "width": "50%"
             }],
         });
@@ -382,17 +322,16 @@
             saveToggleState(!isVisible);
         });
 
-        // Ketika tombol "Tambah Pengguna" diklik
-        $('#addUserBtn').click(function() {
-            $('#userModalLabel').text('Tambah Pengguna'); // Mengubah label modal
-            $('#userForm')[0].reset(); // Mengatur ulang form
-            $('#userId').val(''); // Mengosongkan ID pengguna
-            $('#original_username').val(''); // Mengosongkan username asli
-            $('#userModal').modal('show'); // Menampilkan modal
+        // Ketika tombol "Tambah Ruangan" diklik
+        $('#addPoliBtn').click(function() {
+            $('#poliModalLabel').text('Tambah Ruangan'); // Mengubah label modal
+            $('#poliForm')[0].reset(); // Mengatur ulang form
+            $('#id_poli').val(''); // Mengosongkan ID poli
+            $('#poliModal').modal('show'); // Menampilkan modal
         });
 
         // Fokus pada field fullname saat modal ditampilkan
-        $('#userModal').on('shown.bs.modal', function() {
+        $('#poliModal').on('shown.bs.modal', function() {
             $('#fullname').trigger('focus'); // Memfokuskan field fullname
         });
 
@@ -405,19 +344,19 @@
 
             try {
                 // Melakukan permintaan dengan Axios untuk mendapatkan data pengguna
-                const response = await axios.get(`<?= base_url('/admin/admin') ?>/${id}`);
+                const response = await axios.get(`<?= base_url('/poliklinik/poliklinik') ?>/${id}`);
 
                 // Memperbarui field modal dengan data pengguna yang diterima
-                $('#userModalLabel').text('Edit Pengguna');
-                $('#userId').val(response.data.id_user);
-                $('#fullname').val(response.data.fullname);
-                $('#username').val(response.data.username);
-                $('#role').val(response.data.role);
-                // Mengatur field hidden original_username
-                $('#original_username').val(response.data.username);
+                $('#poliModalLabel').text('Edit Ruangan');
+                $('#id_poli').val(response.data.id_poli);
+                $('#nama_poli').val(response.data.nama_poli);
+                const status = response.data.status;
+                if (status) {
+                    $("input[name='status'][value='" + status + "']").prop('checked', true);
+                }
 
                 // Menampilkan modal
-                $('#userModal').modal('show');
+                $('#poliModal').modal('show');
             } catch (error) {
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error); // Menampilkan pesan kesalahan
             } finally {
@@ -427,44 +366,16 @@
         });
 
         // Menyimpan ID pengguna yang akan dihapus
-        var userId;
-        var userName;
+        var id_poli;
+        var nama_poli;
 
         // Menampilkan modal konfirmasi penghapusan
         $(document).on('click', '.delete-btn', function() {
-            userId = $(this).data('id'); // Mengambil ID pengguna dari atribut data
-            userName = $(this).data('username'); // Mengambil nama pengguna dari atribut data
+            id_poli = $(this).data('id'); // Mengambil ID pengguna dari atribut data
+            nama_poli = $(this).data('name'); // Mengambil nama pengguna dari atribut data
             $('[data-bs-toggle="tooltip"]').tooltip('hide'); // Menyembunyikan tooltip
-            $('#deleteMessage').html(`Hapus @` + userName + `?`); // Menampilkan pesan konfirmasi penghapusan
+            $('#deleteMessage').html(`Hapus ` + nama_poli + `?`); // Menampilkan pesan konfirmasi penghapusan
             $('#deleteModal').modal('show'); // Menampilkan modal konfirmasi
-        });
-
-        // Menampilkan modal untuk mengaktifkan pengguna
-        $(document).on('click', '.activate-btn', function() {
-            userId = $(this).data('id'); // Mengambil ID pengguna
-            userName = $(this).data('username'); // Mengambil nama pengguna
-            $('[data-bs-toggle="tooltip"]').tooltip('hide'); // Menyembunyikan tooltip
-            $('#activateMessage').html(`Aktifkan @` + userName + `?`); // Menampilkan pesan konfirmasi aktivasi
-            $('#activateModal').modal('show'); // Menampilkan modal aktivasi
-        });
-
-        // Menampilkan modal untuk menonaktifkan pengguna
-        $(document).on('click', '.deactivate-btn', function() {
-            userId = $(this).data('id'); // Mengambil ID pengguna
-            userName = $(this).data('username'); // Mengambil nama pengguna
-            $('[data-bs-toggle="tooltip"]').tooltip('hide'); // Menyembunyikan tooltip
-            $('#deactivateMessage').html(`Nonaktifkan @` + userName + `?`); // Menampilkan pesan konfirmasi nonaktif
-            $('#deactivateModal').modal('show'); // Menampilkan modal nonaktif
-        });
-
-        // Menampilkan modal untuk mengatur ulang kata sandi pengguna
-        $(document).on('click', '.resetpwd-btn', function() {
-            userId = $(this).data('id'); // Mengambil ID pengguna
-            userName = $(this).data('username'); // Mengambil nama pengguna
-            $('[data-bs-toggle="tooltip"]').tooltip('hide'); // Menyembunyikan tooltip
-            $('#resetPasswordMessage').html(`Atur ulang kata sandi @` + userName + `?`); // Menampilkan pesan reset kata sandi
-            $('#resetPasswordSubmessage').html(`Kata sandi pengguna ini akan diatur sama dengan nama pengguna`); // Menjelaskan reset kata sandi
-            $('#resetPasswordModal').modal('show'); // Menampilkan modal reset kata sandi
         });
 
         // Konfirmasi penghapusan pengguna
@@ -473,7 +384,7 @@
             $('#deleteMessage').html('Mengapus, silakan tunggu...'); // Menampilkan pesan loading
 
             try {
-                await axios.delete(`<?= base_url('/admin/delete') ?>/${userId}`); // Menghapus pengguna
+                await axios.delete(`<?= base_url('/poliklinik/delete') ?>/${id_poli}`); // Menghapus pengguna
                 table.ajax.reload(null, false); // Memperbarui tabel
             } catch (error) {
                 // Memeriksa jika error memiliki response dan mengambil pesan kesalahan
@@ -485,78 +396,26 @@
             }
         });
 
-        // Konfirmasi aktivasi pengguna
-        $('#confirmActivateBtn').click(async function() {
-            $('#activateModal button').prop('disabled', true); // Menonaktifkan tombol konfirmasi
-            $('#activateMessage').html('Mengaktifkan, silakan tunggu...'); // Menampilkan pesan loading
-
-            try {
-                await axios.post(`<?= base_url('/admin/activate') ?>/${userId}`); // Mengaktifkan pengguna
-                table.ajax.reload(null, false); // Memperbarui tabel
-            } catch (error) {
-                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error); // Menampilkan pesan kesalahan
-            } finally {
-                $('#activateModal').modal('hide'); // Menyembunyikan modal aktivasi
-                $('#activateModal button').prop('disabled', false); // Mengembalikan status tombol
-            }
-        });
-
-        // Konfirmasi nonaktifkan pengguna
-        $('#confirmDeactivateBtn').click(async function() {
-            $('#deactivateModal button').prop('disabled', true); // Menonaktifkan tombol konfirmasi
-            $('#deactivateMessage').html('Menonaktifkan, silakan tunggu...'); // Menampilkan pesan loading
-
-            try {
-                await axios.post(`<?= base_url('/admin/deactivate') ?>/${userId}`); // Menonaktifkan pengguna
-                table.ajax.reload(null, false); // Memperbarui tabel
-            } catch (error) {
-                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error); // Menampilkan pesan kesalahan
-            } finally {
-                $('#deactivateModal').modal('hide'); // Menyembunyikan modal nonaktif
-                $('#deactivateModal button').prop('disabled', false); // Mengembalikan status tombol
-            }
-        });
-
-        // Konfirmasi reset kata sandi
-        $('#confirmResetPasswordBtn').click(async function() {
-            $('#resetPasswordModal button').prop('disabled', true); // Menonaktifkan tombol konfirmasi
-            $('#resetPasswordMessage').addClass('mb-0').html('Mengatur ulang kata sandi, silakan tunggu...'); // Menampilkan pesan loading
-            $('#resetPasswordSubmessage').hide(); // Menyembunyikan subpesan
-
-            try {
-                await axios.post(`<?= base_url('/admin/resetpassword') ?>/${userId}`); // Mengatur ulang kata sandi pengguna
-                showSuccessToast(`Kata sandi @${userName} berhasil diatur ulang.`); // Menampilkan pesan sukses
-                table.ajax.reload(null, false); // Memperbarui tabel
-            } catch (error) {
-                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error); // Menampilkan pesan kesalahan
-            } finally {
-                $('#resetPasswordModal').modal('hide'); // Menyembunyikan modal reset kata sandi
-                $('#resetPasswordMessage').removeClass('mb-0'); // Menghapus kelas margin
-                $('#resetPasswordSubmessage').show(); // Menampilkan subpesan
-                $('#resetPasswordModal button').prop('disabled', false); // Mengembalikan status tombol
-            }
-        });
-
         // Mengirimkan form pengguna (Tambah/Edit)
-        $('#userForm').submit(async function(e) {
+        $('#poliForm').submit(async function(e) {
             e.preventDefault(); // Mencegah pengiriman form default
 
-            const url = $('#userId').val() ? '<?= base_url('/admin/update') ?>' : '<?= base_url('/admin/create') ?>'; // Menentukan URL berdasarkan apakah pengguna sedang diupdate atau ditambahkan
+            const url = $('#id_poli').val() ? '<?= base_url('/poliklinik/update') ?>' : '<?= base_url('/poliklinik/create') ?>'; // Menentukan URL berdasarkan apakah pengguna sedang diupdate atau ditambahkan
             const formData = new FormData(this); // Mengambil data form
 
             console.log("Form URL:", url); // Menampilkan URL di konsol
             console.log("Form Data:", $(this).serialize()); // Menampilkan data form di konsol
 
             // Menghapus status validasi sebelumnya
-            $('#userForm .is-invalid').removeClass('is-invalid');
-            $('#userForm .invalid-feedback').text('').hide();
+            $('#poliForm .is-invalid').removeClass('is-invalid');
+            $('#poliForm .invalid-feedback').text('').hide();
             $('#submitButton').prop('disabled', true).html(`
                 <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
                 <span role="status">Memproses...</span>
             `); // Mengubah tampilan tombol submit menjadi loading
 
             // Menonaktifkan input form
-            $('#userForm input, #userForm select, #closeBtn').prop('disabled', true);
+            $('#poliForm input, #poliForm select, #closeBtn').prop('disabled', true);
 
             try {
                 const response = await axios.post(url, formData, {
@@ -566,35 +425,51 @@
                 });
 
                 if (response.data.success) {
-                    $('#userModal').modal('hide'); // Menyembunyikan modal setelah sukses
+                    $('#poliModal').modal('hide'); // Menyembunyikan modal setelah sukses
                     table.ajax.reload(null, false); // Memperbarui tabel
                 } else {
-                    console.log("Validation Errors:", response.data.errors); // Menampilkan kesalahan validasi di konsol
+                    console.log("Validation Errors:", response.data.errors);
 
-                    // Menghapus status validasi sebelumnya
-                    $('#userForm .is-invalid').removeClass('is-invalid');
-                    $('#userForm .invalid-feedback').text('').hide();
+                    // Clear previous validation states
+                    $('#poliForm .is-invalid').removeClass('is-invalid');
+                    $('#poliForm .invalid-feedback').text('').hide();
 
-                    // Menampilkan kesalahan validasi baru
+                    // Display new validation errors
                     for (const field in response.data.errors) {
                         if (response.data.errors.hasOwnProperty(field)) {
-                            const fieldElement = $('#' + field); // Mengambil elemen field
-                            const feedbackElement = fieldElement.siblings('.invalid-feedback'); // Mengambil elemen feedback
+                            const fieldElement = $('#' + field);
 
-                            console.log("Target Field:", fieldElement); // Menampilkan elemen target di konsol
-                            console.log("Target Feedback:", feedbackElement); // Menampilkan elemen feedback target di konsol
+                            if (['status'].includes(field)) {
+                                const radioGroup = $(`input[name='${field}']`); // Ambil grup radio berdasarkan nama
+                                const feedbackElement = radioGroup.closest('.radio-group').find('.invalid-feedback'); // Gunakan pembungkus dengan class tertentu
 
-                            if (fieldElement.length > 0 && feedbackElement.length > 0) {
-                                fieldElement.addClass('is-invalid'); // Menandai field sebagai tidak valid
-                                feedbackElement.text(response.data.errors[field]).show(); // Menampilkan pesan kesalahan
+                                if (radioGroup.length > 0 && feedbackElement.length > 0) {
+                                    radioGroup.addClass('is-invalid');
+                                    feedbackElement.text(response.data.errors[field]).show();
 
-                                // Menghapus pesan kesalahan ketika pengguna memperbaiki input
-                                fieldElement.on('input change', function() {
-                                    $(this).removeClass('is-invalid'); // Menghapus tanda tidak valid
-                                    $(this).siblings('.invalid-feedback').text('').hide(); // Menyembunyikan pesan kesalahan
-                                });
+                                    // Remove error message when the user selects any radio button in the group
+                                    radioGroup.on('change', function() {
+                                        radioGroup.removeClass('is-invalid');
+                                        feedbackElement.text('').hide();
+                                    });
+                                } else {
+                                    console.warn("Radio group tidak ditemukan untuk field:", field);
+                                }
                             } else {
-                                console.warn("Elemen tidak ditemukan pada field:", field); // Peringatan jika elemen tidak ditemukan
+                                const feedbackElement = fieldElement.siblings('.invalid-feedback');
+
+                                if (fieldElement.length > 0 && feedbackElement.length > 0) {
+                                    fieldElement.addClass('is-invalid');
+                                    feedbackElement.text(response.data.errors[field]).show();
+
+                                    // Remove error message when the user corrects the input
+                                    fieldElement.on('input change', function() {
+                                        $(this).removeClass('is-invalid');
+                                        $(this).siblings('.invalid-feedback').text('').hide();
+                                    });
+                                } else {
+                                    console.warn("Elemen tidak ditemukan pada field:", field);
+                                }
                             }
                         }
                     }
@@ -607,13 +482,13 @@
                     <i class="fa-solid fa-floppy-disk"></i> Simpan
                 `); // Mengembalikan tampilan tombol submit
 
-                $('#userForm input, #userForm select, #closeBtn').prop('disabled', false); // Mengembalikan status input form
+                $('#poliForm input, #poliForm select, #closeBtn').prop('disabled', false); // Mengembalikan status input form
             }
         });
 
         // Mengatur ulang form dan status validasi saat modal ditutup
-        $('#userModal').on('hidden.bs.modal', function() {
-            $('#userForm')[0].reset(); // Mengatur ulang form
+        $('#poliModal').on('hidden.bs.modal', function() {
+            $('#poliForm')[0].reset(); // Mengatur ulang form
             $('.is-invalid').removeClass('is-invalid'); // Menghapus tanda tidak valid
             $('.invalid-feedback').text('').hide(); // Menyembunyikan semua pesan kesalahan
         });
