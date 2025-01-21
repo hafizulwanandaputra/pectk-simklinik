@@ -441,6 +441,7 @@
         try {
             // Ambil nilai nomor rekam medis dari input
             const no_rm = $('#no_rm').val();
+            const panjang_no_rm = no_rm.length;
 
             // Cek apakah no_rm diinput
             if (!no_rm) {
@@ -467,7 +468,13 @@
             // Cek apakah data rawat jalan kosong
             if (data.length === 0) {
                 // Tampilkan pesan jika tidak ada data
-                const emptyRow = `
+                const emptyRow = panjang_no_rm < 8 ?
+                    `
+                    <div class="accordion-item shadow-sm p-3 p-3">
+                        <h2 class="text-center text-muted mb-0" style="font-weight: 300;">Silakan masukkan nomor rekam medis dengan benar</h2>
+                    </div>
+                ` :
+                    `
                     <div class="accordion-item shadow-sm p-3 p-3">
                         <h2 class="text-center text-muted mb-0" style="font-weight: 300;">Pasien dengan nomor rekam medis ${no_rm} belum pernah berobat</h2>
                     </div>

@@ -92,7 +92,7 @@ class RawatJalan extends BaseController
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat'  || session()->get('role') == 'Admisi') {
             $rawatjalan = $this->RawatJalanModel
                 ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
-                ->like('pasien.no_rm', $no_rm)
+                ->where('pasien.no_rm', $no_rm)
                 ->orderBy('rawat_jalan.id_rawat_jalan', 'DESC')
                 ->findAll();
 
