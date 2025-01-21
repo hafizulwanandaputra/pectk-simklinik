@@ -182,10 +182,10 @@
                             </table>
                         </div>
                         <div class="card-footer bg-body-tertiary">
-                            <div class="row d-flex align-items-end">
+                            <div class="row overflow-hidden d-flex align-items-end">
                                 <div class="col fw-medium text-nowrap">Sub Total</div>
                                 <div class="col text-end">
-                                    <div class="date text-nowrap placeholder-glow fw-bold" id="subtotal_layanan">
+                                    <div class="date text-truncate placeholder-glow fw-bold" id="subtotal_layanan">
                                         <span class="placeholder w-100"></span>
                                     </div>
                                 </div>
@@ -236,10 +236,10 @@
                         </table>
                     </div>
                     <div class="card-footer bg-body-tertiary">
-                        <div class="row d-flex align-items-end">
+                        <div class="row overflow-hidden d-flex align-items-end">
                             <div class="col fw-medium text-nowrap">Sub Total</div>
                             <div class="col text-end">
-                                <div class="date text-nowrap placeholder-glow fw-bold" id="subtotal_obat_alkes">
+                                <div class="date text-truncate placeholder-glow fw-bold" id="subtotal_obat_alkes">
                                     <span class="placeholder w-100"></span>
                                 </div>
                             </div>
@@ -249,34 +249,34 @@
             </div>
         </div>
 
-        <div class="mb-0 row g-1 d-flex align-items-end">
+        <div class="mb-0 row g-1 overflow-hidden d-flex align-items-end">
             <div class="col fw-medium text-nowrap">Grand Total</div>
             <div class="col text-end">
-                <div class="fs-4 date text-nowrap placeholder-glow" style="font-weight: 900;" id="total_pembayaran">
+                <div class="fs-4 date text-truncate placeholder-glow" style="font-weight: 900;" id="total_pembayaran">
                     <span class="placeholder w-100"></span>
                 </div>
             </div>
         </div>
-        <div class="mb-0 row g-1 d-flex align-items-end">
+        <div class="mb-0 row g-1 overflow-hidden d-flex align-items-end">
             <div class="col fw-medium text-nowrap">Terima Uang</div>
             <div class="col text-end">
-                <div class="date text-nowrap placeholder-glow" id="terima_uang_table">
+                <div class="date text-truncate placeholder-glow" id="terima_uang_table">
                     <span class="placeholder w-100"></span>
                 </div>
             </div>
         </div>
-        <div class="mb-0 row g-1 d-flex align-items-end">
+        <div class="mb-0 row g-1 overflow-hidden d-flex align-items-end">
             <div class="col fw-medium text-nowrap">Uang Kembali</div>
             <div class="col text-end">
-                <div class="date text-nowrap placeholder-glow" id="uang_kembali_table">
+                <div class="date text-truncate placeholder-glow" id="uang_kembali_table">
                     <span class="placeholder w-100"></span>
                 </div>
             </div>
         </div>
-        <div class="mb-0 row g-1 d-flex align-items-end">
+        <div class="mb-0 row g-1 overflow-hidden d-flex align-items-end">
             <div class="col fw-medium text-nowrap">Metode Bayar</div>
             <div class="col text-end">
-                <div class="date text-nowrap placeholder-glow" id="metode_pembayaran_table">
+                <div class="date text-truncate placeholder-glow" id="metode_pembayaran_table">
                     <span class="placeholder w-100"></span>
                 </div>
             </div>

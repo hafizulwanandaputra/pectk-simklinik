@@ -79,18 +79,18 @@
                                 </table>
                             </div>
                             <div class="card-footer bg-body-tertiary">
-                                <div class="row d-flex align-items-end">
+                                <div class="row overflow-hidden d-flex align-items-end">
                                     <div class="col fw-medium text-nowrap">Total Obat Keluar</div>
                                     <div class="col text-end">
-                                        <div class="date text-nowrap placeholder-glow" id="total_keluar_harian">
+                                        <div class="date text-truncate placeholder-glow" id="total_keluar_harian">
                                             <span class="placeholder w-100"></span>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row d-flex align-items-end">
+                                <div class="row overflow-hidden d-flex align-items-end">
                                     <div class="col fw-medium text-nowrap">Total Harga</div>
                                     <div class="col text-end">
-                                        <div class="date text-nowrap placeholder-glow fw-bold" id="total_harga_harian">
+                                        <div class="date text-truncate placeholder-glow fw-bold" id="total_harga_harian">
                                             <span class="placeholder w-100"></span>
                                         </div>
                                     </div>
@@ -137,18 +137,18 @@
                                 </table>
                             </div>
                             <div class="card-footer bg-body-tertiary">
-                                <div class="row d-flex align-items-end">
+                                <div class="row overflow-hidden d-flex align-items-end">
                                     <div class="col fw-medium text-nowrap">Total Obat Keluar</div>
                                     <div class="col text-end">
-                                        <div class="date text-nowrap placeholder-glow" id="total_keluar_bulanan">
+                                        <div class="date text-truncate placeholder-glow" id="total_keluar_bulanan">
                                             <span class="placeholder w-100"></span>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row d-flex align-items-end">
+                                <div class="row overflow-hidden d-flex align-items-end">
                                     <div class="col fw-medium text-nowrap">Total Harga</div>
                                     <div class="col text-end">
-                                        <div class="date text-nowrap placeholder-glow fw-bold" id="total_harga_bulanan">
+                                        <div class="date text-truncate placeholder-glow fw-bold" id="total_harga_bulanan">
                                             <span class="placeholder w-100"></span>
                                         </div>
                                     </div>

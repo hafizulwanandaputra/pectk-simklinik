@@ -123,18 +123,18 @@
                     <?= csrf_field(); ?>
                     <div class="mb-3">
                         <div class="mb-2">
-                            <div class="mb-0 row g-1 d-flex align-items-end">
+                            <div class="mb-0 row g-1 overflow-hidden d-flex align-items-end">
                                 <div class="col fw-medium text-nowrap">Didaftarkan</div>
                                 <div class="col text-end">
-                                    <div class="date text-nowrap">
+                                    <div class="date text-truncate">
                                         <?= $pasien['tanggal_daftar'] ?>
                                     </div>
                                 </div>
                             </div>
-                            <div class="mb-0 row g-1 d-flex align-items-end">
+                            <div class="mb-0 row g-1 overflow-hidden d-flex  align-items-end">
                                 <div class="col fw-medium text-nowrap">Nomor Rekam Medis</div>
                                 <div class="col text-end">
-                                    <div class="date text-nowrap">
+                                    <div class="date text-truncate">
                                         <?= $pasien['no_rm'] ?>
                                     </div>
                                 </div>

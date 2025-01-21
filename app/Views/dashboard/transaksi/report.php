@@ -51,10 +51,10 @@
                         </table>
                     </div>
                     <div class="card-footer bg-body-tertiary">
-                        <div class="row d-flex align-items-end">
+                        <div class="row overflow-hidden d-flex align-items-end">
                             <div class="col fw-medium text-nowrap">Total Pemasukan</div>
                             <div class="col text-end">
-                                <div class="date text-nowrap placeholder-glow fw-bold" id="total_all">
+                                <div class="date text-truncate placeholder-glow fw-bold" id="total_all">
                                     <span class="placeholder w-100"></span>
                                 </div>
                             </div>
