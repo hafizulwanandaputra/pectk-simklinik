@@ -95,6 +95,16 @@ $usia = $registrasi->diff($tanggal_lahir);
             <?= csrf_field(); ?>
             <div class="mb-3">
                 <div class="mb-2">
+                    <div class="mb-0 row g-1 d-flex align-items-end">
+                        <div class="col fw-medium text-nowrap">DPJP</div>
+                        <div class="col text-end">
+                            <div class="date text-nowrap">
+                                <?= $laporanrajal['nama_dokter_dpjp'] ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-2">
                     <label for="nama_perawat" class="form-label">
                         Perawat
                     </label>
