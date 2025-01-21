@@ -23,7 +23,7 @@
             <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-tertiary transparent-blur">
                 <div class="no-fluid-content">
                     <div class="input-group input-group-sm">
-                        <input type="search" id="searchInput" class="form-control" placeholder="Cari nomor rekam medis dan nama pasien">
+                        <input type="search" id="searchInput" class="form-control" placeholder="Cari nomor rekam medis atau nama pasien">
                     </div>
                 </div>
             </li>
