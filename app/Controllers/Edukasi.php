@@ -211,6 +211,31 @@ class Edukasi extends BaseController
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Admisi' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat') {
+            // Validate
+            $validation = \Config\Services::validation();
+            $bahasa = $this->request->getPost('bahasa');
+            $keyakinan = $this->request->getPost('keyakinan');
+            $topik_pembelajaran = $this->request->getPost('topik_pembelajaran');
+            // Set base validation rules
+            $validation->setRules([
+                'bahasa' => 'required',
+                'bahasa_lainnya' => $bahasa === 'LAINNYA' ? 'required' : 'permit_empty',
+                'penterjemah' => 'required',
+                'pendidikan' => 'required',
+                'baca_tulis' => 'required',
+                'cara_belajar' => 'required',
+                'budaya' => 'required',
+                'keyakinan' => 'required',
+                'keyakinan_khusus' => $keyakinan === 'KHUSUS' ? 'required' : 'permit_empty',
+                'topik_pembelajaran' => 'required',
+                'topik_lainnya' => $topik_pembelajaran === 'Lainnya' ? 'required' : 'permit_empty',
+                'kesediaan_pasien' => 'required',
+            ]);
+
+            if (!$this->validate($validation->getRules())) {
+                return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
+            }
+
             // Ambil resep luar
             $edukasi = $this->EdukasiModel->find($id);
 

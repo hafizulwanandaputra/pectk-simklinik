@@ -179,6 +179,24 @@ class Skrining extends BaseController
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Perawat' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat') {
+            // Validate
+            $validation = \Config\Services::validation();
+            $nyeri_hilang_bila = $this->request->getPost('nyeri_hilang_bila');
+            // Set base validation rules
+            $validation->setRules([
+                'jatuh_sempoyongan' => 'required',
+                'jatuh_penopang' => 'required',
+                'jatuh_info_dokter' => 'required',
+                'status_fungsional' => 'required',
+                'nyeri_kategori' => 'required',
+                'nyeri_hilang_lainnya' => $nyeri_hilang_bila === 'LAIN-LAIN' ? 'required' : 'permit_empty',
+                'nyeri_info_dokter' => 'required',
+            ]);
+
+            if (!$this->validate($validation->getRules())) {
+                return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
+            }
+
             // Ambil resep luar
             $skrining = $this->SkriningModel->find($id);
 

@@ -223,7 +223,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                                             </label>
                                         </div>
                                     </div>
-                                    <div class="invalid-feedback text-center"></div>
+                                    <div class="invalid-feedback"></div>
                                 </div>
                             </div>
                         </div>
@@ -252,7 +252,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                                             </label>
                                         </div>
                                     </div>
-                                    <div class="invalid-feedback text-center"></div>
+                                    <div class="invalid-feedback"></div>
                                 </div>
                             </div>
                         </div>
