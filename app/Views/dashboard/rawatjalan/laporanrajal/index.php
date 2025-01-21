@@ -170,7 +170,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 </div>
                 <div class="mb-2">
                     <label for="isi_laporan">Isi Laporan</label>
-                    <textarea class="form-control" id="isi_laporan" name="isi_laporan" rows="4" style="resize: none;"></textarea>
+                    <textarea class="form-control" id="isi_laporan" name="isi_laporan" rows="8" style="resize: none;"></textarea>
                     <div class="invalid-feedback"></div>
                 </div>
             </div>
