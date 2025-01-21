@@ -316,8 +316,58 @@ class RawatJalan extends BaseController
             if ($rajal['status'] == 'BATAL') {
                 return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Rawat jalan ini sudah dibatalkan sebelumnya']);
             }
+
             $rajalq = $db->table('rawat_jalan')
                 ->where('id_rawat_jalan', $id);
+
+            // Ambil nomor_registrasi dari data rawat_jalan sebelum dihapus
+            $rawatJalanData = $rajalq->get()->getRow();
+            $nomorRegistrasi = $rawatJalanData->nomor_registrasi ?? null;
+
+            if ($this->request->getPost('alasan_batal') == 'Kesalahan dalam Memasukkan Data') {
+                if ($nomorRegistrasi) {
+                    // Hapus file terkait sebelum menghapus data
+                    $asesmen_mata = $db->table('medrec_assesment_mata')
+                        ->where('nomor_registrasi', $nomorRegistrasi)
+                        ->get()
+                        ->getResultArray();
+                    foreach ($asesmen_mata as $mata) {
+                        if (!empty($mata['gambar']) && file_exists(FCPATH . 'uploads/asesmen_mata/' . $mata['gambar'])) {
+                            unlink(FCPATH . 'uploads/asesmen_mata/' . $mata['gambar']);
+                        }
+                    }
+
+                    $edukasi_evaluasi = $db->table('medrec_edukasi_evaluasi')
+                        ->where('nomor_registrasi', $nomorRegistrasi)
+                        ->get()
+                        ->getResultArray();
+                    foreach ($edukasi_evaluasi as $edukasi) {
+                        if (!empty($edukasi['tanda_tangan_edukator']) && file_exists(FCPATH . 'uploads/ttd_edukator_evaluasi/' . $edukasi['tanda_tangan_edukator'])) {
+                            unlink(FCPATH . 'uploads/ttd_edukator_evaluasi/' . $edukasi['tanda_tangan_edukator']);
+                        }
+                        if (!empty($edukasi['tanda_tangan_pasien']) && file_exists(FCPATH . 'uploads/ttd_pasien_evaluasi/' . $edukasi['tanda_tangan_pasien'])) {
+                            unlink(FCPATH . 'uploads/ttd_pasien_evaluasi/' . $edukasi['tanda_tangan_pasien']);
+                        }
+                    }
+
+                    $penunjang_scan = $db->table('medrec_permintaan_penunjang_scan')
+                        ->where('nomor_registrasi', $nomorRegistrasi)
+                        ->get()
+                        ->getResultArray();
+                    foreach ($penunjang_scan as $scan) {
+                        if (!empty($scan['gambar']) && file_exists(FCPATH . 'uploads/scan_penunjang/' . $scan['gambar'])) {
+                            unlink(FCPATH . 'uploads/scan_penunjang/' . $scan['gambar']);
+                        }
+                    }
+                }
+
+                // Hapus data rawat jalan
+                $db->table('rawat_jalan')->where('id_rawat_jalan', $id)->delete();
+
+                // Reset auto_increment menjadi 1
+                $db->query('ALTER TABLE rawat_jalan AUTO_INCREMENT = 1');
+                return $this->response->setJSON(['success' => true, 'message' => 'Rawat jalan berhasil dihapus karena kesalahan data']);
+            }
             // Mengupdate status rawat jalan menjadi 'BATAL'
             $rajalq->update([
                 'status' => 'BATAL',
