@@ -337,11 +337,11 @@ $usia = $registrasi->diff($tanggal_lahir);
                         <i class="fa-solid fa-plus"></i> Tambah Evaluasi
                     </button>
                 </div>
-                <dic id="empty-placeholder" class="my-3 text-center" style="display: none;">
+                <div id="empty-placeholder" class="my-3 text-center" style="display: none;">
                     <h1><i class="fa-solid fa-user-graduate"></i></h1>
                     <h3>Evaluasi Edukasi Pasien</h3>
                     <div class="text-muted">Klik "Tambah Evaluasi" untuk menambahkan evaluasi edukasi</div>
-                </dic>
+                </div>
                 <ul class="list-group shadow-sm" id="evaluasiEdukasiList">
                     <?php for ($i = 0; $i < 4; $i++) : ?>
                         <li class="list-group-item bg-body-tertiary" style="cursor: wait;">
