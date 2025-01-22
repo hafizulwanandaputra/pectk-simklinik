@@ -146,7 +146,9 @@ class Asesmen extends BaseController
             $builder->select('icdKode, icdNamaIndonesia');
 
             // Menambahkan filter pencarian
-            $builder->like('icdNamaIndonesia', $search);
+            $builder
+                ->like('icdKode', $search)
+                ->orLike('icdNamaIndonesia', $search);
 
             // Menambahkan limit dan offset untuk lazy loading
             $builder->limit($limit, $offset);
@@ -191,7 +193,9 @@ class Asesmen extends BaseController
             $builder->select('icdKode, icdNamaIndonesia');
 
             // Menambahkan filter pencarian
-            $builder->like('icdNamaIndonesia', $search);
+            $builder
+                ->like('icdKode', $search)
+                ->orLike('icdNamaIndonesia', $search);
 
             // Menambahkan limit dan offset untuk lazy loading
             $builder->limit($limit, $offset);
