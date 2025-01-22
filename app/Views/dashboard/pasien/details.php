@@ -485,19 +485,20 @@
                             </div>
                             <div class="w-100 ms-3">
                                 <h4 style="font-weight: 900;">PERINGATAN!</h4>
-                                <p class="mb-0">Pastikan pasien Anda benar-benar batal melakukan rawat jalan dengan alasan yang jelas dan masuk akal. Rawat jalan yang batal tidak dapat digunakan untuk proses poliklinik dan pemberian resep.</p>
+                                <p>Pastikan pasien Anda benar-benar batal melakukan rawat jalan dengan alasan yang jelas dan masuk akal. Rawat jalan yang batal tidak dapat digunakan untuk proses poliklinik dan pemberian resep. Pembatalan tidak bisa dilakukan apabila transaksi rawat jalan ini sudah diproses oleh kasir.</p>
+                                <p class="mb-0">Jika registrasi rawat jalan ini ada kesalahan dalam memasukkan data, silakan pilih "Kesalahan dalam Memasukkan Data". Ini akan menghapus rawat jalan yang dimasukkan dengan data yang salah.</p>
                             </div>
                         </div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
                         <select class="form-select" id="alasan_batal" name="alasan_batal" aria-label="alasan_batal">
-                            <option value="" disabled selected>-- Pilih Status Perkawinan --</option>
+                            <option value="" disabled selected>-- Pilih Alasan Pembatalan --</option>
                             <option value="Kesalahan dalam Memasukkan Data">Kesalahan dalam Memasukkan Data</option>
                             <option value="Tidak Jadi Berobat">Tidak Jadi Berobat</option>
                             <option value="Ganti Jadwal Dokter">Ganti Jadwal Dokter</option>
                             <option value="Tidak Datang">Tidak Datang</option>
                         </select>
-                        <label for="alasan_batal">Alasan Batal</label>
+                        <label for="alasan_batal">Alasan Pembatalan</label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
@@ -1566,6 +1567,7 @@
                 });
 
                 if (response.data.success) {
+                    showSuccessToast(response.data.message);
                     $('#batalRajalModal').modal('hide');
                     const selectedJenisKunjungan = $('#kunjunganFilter, #jenis_kunjungan').val();
                     const selectedJaminan = $('#jaminanFilter, #jaminan').val();
