@@ -101,7 +101,7 @@
                                             <div class="invalid-feedback"></div>
                                         </div>
                                         <div class="d-grid gap-2 d-lg-flex justify-content-lg-end">
-                                            <button type="submit" id="submitButton1" class="btn btn-primary bg-gradient" disabled>
+                                            <button type="submit" id="submitButton1" class="btn btn-primary bg-gradient btn-sm" disabled>
                                                 <i class="fa-solid fa-plus"></i> Tambah
                                             </button>
                                         </div>
