@@ -124,6 +124,20 @@ $routes->get('/(?i)rawatjalan/(?i)laporanrajal/(?i)icdx', 'TindakanRajal::icdx')
 $routes->get('/(?i)rawatjalan/(?i)laporanrajal/(?i)export/(:any)', 'TindakanRajal::export/$1');
 $routes->post('/(?i)rawatjalan/(?i)laporanrajal/(?i)update/(:any)', 'TindakanRajal::update/$1');
 
+// OPERASI
+$routes->get('/(?i)operasi', 'Operasi::index');
+$routes->get('/(?i)operasi/(?i)operasilist', 'Operasi::operasilist');
+$routes->get('/(?i)operasi/(?i)rawatjalanlist', 'Operasi::rawatjalanlist');
+$routes->get('/(?i)operasi/(?i)dokterlist', 'Operasi::dokterlist');
+$routes->post('/(?i)operasi/(?i)create/', 'Operasi::create');
+$routes->post('/(?i)operasi/(?i)delete/(:any)', 'Operasi::delete/$1');
+
+// SPKO
+$routes->get('/(?i)operasi/(?i)spko/(:num)', 'SPOperasi::index/$1');
+$routes->get('/(?i)operasi/(?i)spko/(?i)view/(:any)', 'SPOperasi::view/$1');
+$routes->get('/(?i)operasi/(?i)spko/(?i)export/(:any)', 'SPOperasi::export/$1');
+$routes->post('/(?i)operasi/(?i)spko/(?i)update/(:any)', 'SPOperasi::update/$1');
+
 // SUPPLIER
 $routes->get('/(?i)supplier', 'Supplier::index');
 $routes->post('/(?i)supplier/(?i)supplierlist', 'Supplier::supplierlist');
