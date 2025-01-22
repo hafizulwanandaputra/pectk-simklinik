@@ -265,17 +265,6 @@ $waktuFormatted = $dateTime->format('H.i.s');
                                     </tr>
                                     <tr>
                                         <td style="width: 40%; vertical-align: top; padding: 0;">
-                                            Kesadaran Mental
-                                        </td>
-                                        <td style="width: 0%; vertical-align: top; padding: 0;">
-                                            :
-                                        </td>
-                                        <td style="width: 60%; vertical-align: top; padding: 0;">
-                                            <?= $asesmen['kesadaran_mental'] ?>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td style="width: 40%; vertical-align: top; padding: 0;">
                                             Alergi
                                         </td>
                                         <td style="width: 0%; vertical-align: top; padding: 0;">
