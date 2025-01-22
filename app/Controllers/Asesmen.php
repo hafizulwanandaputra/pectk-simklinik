@@ -303,7 +303,6 @@ class Asesmen extends BaseController
             $validation->setRules([
                 'keluhan_utama' => 'required',
                 'kesadaran' => 'required',
-                'tekanan_darah' => 'required',
                 'nadi' => 'required',
                 'suhu' => 'required',
                 'pernapasan' => 'required',
