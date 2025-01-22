@@ -228,13 +228,6 @@ $usia = $registrasi->diff($tanggal_lahir);
                             </div>
                         </div>
                         <div class="mb-2">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" id="kesadaran_mental" name="kesadaran_mental" value="" autocomplete="off" dir="auto" placeholder="kesadaran_mental">
-                                <label for="kesadaran_mental">Kesadaran / Mental</label>
-                                <div class="invalid-feedback"></div>
-                            </div>
-                        </div>
-                        <div class="mb-2">
                             <div class="row gx-1 radio-group">
                                 <label for="alergi" class="col col-form-label">Alergi</label>
                                 <div class="col col-form-label">
