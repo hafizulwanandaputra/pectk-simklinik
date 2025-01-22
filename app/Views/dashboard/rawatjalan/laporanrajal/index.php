@@ -12,7 +12,7 @@ $usia = $registrasi->diff($tanggal_lahir);
 ?>
 <?= $this->extend('dashboard/templates/dashboard'); ?>
 <?= $this->section('css'); ?>
-<?= $this->include('select2/floating'); ?>
+<?= $this->include('select2/normal'); ?>
 <style>
     /* Ensures the dropdown is visible outside the parent with overflow auto */
     .select2-container {
@@ -124,29 +124,16 @@ $usia = $registrasi->diff($tanggal_lahir);
                     </div>
                     <div class="invalid-feedback"></div>
                 </div>
-                <div class="table-responsive mb-2">
-                    <table class="table mb-0 table-borderless">
-                        <tbody>
-                            <tr>
-                                <td class="align-middle ps-0 pe-1 pt-0 pb-1" style="width: 100%; min-width: 200px;">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" id="diagnosa" name="diagnosa" value="" autocomplete="off" dir="auto" placeholder="diagnosa">
-                                        <label for="keluhan_utama">Diagnosis</label>
-                                        <div class="invalid-feedback"></div>
-                                    </div>
-                                </td>
-                                <td class="align-middle ps-1 pe-0 pt-0 pb-1" style="width: 0%; min-width: 100px;">
-                                    <div class="form-floating">
-                                        <input type="text" class="form-control" id="kode_icd_x" name="kode_icd_x" value="" autocomplete="off" dir="auto" placeholder="kode_icd_x" list="kode_icd_x_list">
-                                        <label for="keluhan_utama">ICD 10</label>
-                                        <datalist id="kode_icd_x_list">
-                                        </datalist>
-                                        <div class="invalid-feedback"></div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="row g-2 align-items-start mb-2">
+                    <div class="col-sm">
+                        <input type="text" class="form-control" id="diagnosa" name="diagnosa" value="" autocomplete="off" dir="auto" placeholder="Diagnosis">
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="col-sm-4">
+                        <select class="form-select" id="kode_icd_x" name="kode_icd_x" placeholder="ICD 10">
+                        </select>
+                        <div class="invalid-feedback"></div>
+                    </div>
                 </div>
                 <div class="mb-2">
                     <div class="row g-1 align-items-center radio-group">
@@ -214,7 +201,10 @@ $usia = $registrasi->diff($tanggal_lahir);
                 }
             });
             $('#diagnosa').val(data.diagnosa);
-            $('#kode_icd_x').val(data.kode_icd_x);
+            if (data.kode_icd_x !== null) {
+                const kode_icd_x = new Option(data.kode_icd_x, data.kode_icd_x, true, true);
+                $('#kode_icd_x').append(kode_icd_x).trigger('change');
+            }
             const lokasi_mata = data.lokasi_mata;
             if (lokasi_mata) {
                 $("input[name='lokasi_mata'][value='" + lokasi_mata + "']").prop('checked', true);
@@ -227,28 +217,60 @@ $usia = $registrasi->diff($tanggal_lahir);
         }
     }
 
-    async function loadICDX(query) {
-        try {
-            const response = await axios.get('<?= base_url('rawatjalan/laporanrajal/icdx') ?>', {
-                params: {
-                    search: query
-                } // Kirim query pencarian
-            });
-            const icdx = response.data.data;
-            const dataList = $('#kode_icd_x_list');
-            dataList.empty(); // Kosongkan datalist
-            icdx.forEach(item => {
-                dataList.append(`<option value="${item.icdKode}">${item.icdNamaIndonesia}</option>`);
-            });
-        } catch (error) {
-            console.error('Gagal memuat ICD 10:', error);
-        }
-    }
+    $('#kode_icd_x').select2({
+        theme: "bootstrap-5",
+        width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+        placeholder: "ICD 10",
+        ajax: {
+            url: '<?= base_url('rawatjalan/laporanrajal/icdx') ?>',
+            dataType: 'json',
+            delay: 250, // Tambahkan debounce
+            data: function(params) {
+                return {
+                    search: params.term, // Pencarian berdasarkan input
+                    offset: (params.page || 0) * 50, // Pagination
+                    limit: 50
+                };
+            },
+            processResults: function(data) {
+                return {
+                    results: data.data.map(item => ({
+                        id: item.icdKode,
+                        text: item.icdKode, // Teks untuk pencarian
+                        nama: item.icdNamaIndonesia // Tambahan data untuk custom HTML
+                    })),
+                    pagination: {
+                        more: data.data.length >= 50
+                    }
+                };
+            }
+        },
+        minimumInputLength: 1,
+        templateResult: function(data) {
+            // Format untuk tampilan hasil pencarian
+            if (!data.id) {
+                return data.text; // Untuk placeholder
+            }
 
-    // Event listener untuk input
-    $('#kode_icd_x').on('input', function() {
-        const query = $(this).val();
-        loadICDX(query);
+            const template = `
+            <div class="d-flex align-items-start">
+                <div class="me-2 font-monospace">
+                    <strong>${data.text}</strong>
+                </div>
+                <div>
+                    ${data.nama}
+                </div>
+            </div>
+        `;
+            return $(template);
+        },
+        templateSelection: function(data) {
+            return data.text && data.text !== 'null' ? data.text : '';
+        },
+        escapeMarkup: function(markup) {
+            // Biarkan HTML tetap diproses
+            return markup;
+        }
     });
 
     $(document).ready(async function() {
@@ -286,8 +308,7 @@ $usia = $registrasi->diff($tanggal_lahir);
 
                 if (response.data.success) {
                     showSuccessToast(response.data.message);
-                    await fetchLaporanRajal();
-                    loadICDX();
+                    fetchLaporanRajal();
                 } else {
                     console.log("Validation Errors:", response.data.errors);
 
@@ -367,8 +388,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 $('#laporanRajalForm input, #laporanRajalForm select').prop('disabled', false);
             }
         });
-        await fetchLaporanRajal();
-        loadICDX();
+        fetchLaporanRajal();
     });
     // Show toast notification
     <?= $this->include('toast/index') ?>

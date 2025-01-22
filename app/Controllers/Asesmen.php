@@ -127,6 +127,8 @@ class Asesmen extends BaseController
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
             // Mendapatkan parameter pencarian dari permintaan GET
             $search = $this->request->getGet('search');
+            $offset = (int) $this->request->getGet('offset') ?? 0; // Default 0 jika tidak ada
+            $limit = (int) $this->request->getGet('limit') ?? 50; // Default 50 jika tidak ada
 
             // Jika parameter pencarian kosong, kembalikan data kosong
             if (empty($search)) {
@@ -144,7 +146,10 @@ class Asesmen extends BaseController
             $builder->select('icdKode, icdNamaIndonesia');
 
             // Menambahkan filter pencarian
-            $builder->like('icdKode', $search);
+            $builder->like('icdNamaIndonesia', $search);
+
+            // Menambahkan limit dan offset untuk lazy loading
+            $builder->limit($limit, $offset);
 
             $result = $builder->get()->getResultArray();
 
@@ -167,6 +172,8 @@ class Asesmen extends BaseController
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
             // Mendapatkan parameter pencarian dari permintaan GET
             $search = $this->request->getGet('search');
+            $offset = (int) $this->request->getGet('offset') ?? 0; // Default 0 jika tidak ada
+            $limit = (int) $this->request->getGet('limit') ?? 50; // Default 50 jika tidak ada
 
             // Jika parameter pencarian kosong, kembalikan data kosong
             if (empty($search)) {
@@ -184,7 +191,10 @@ class Asesmen extends BaseController
             $builder->select('icdKode, icdNamaIndonesia');
 
             // Menambahkan filter pencarian
-            $builder->like('icdKode', $search);
+            $builder->like('icdNamaIndonesia', $search);
+
+            // Menambahkan limit dan offset untuk lazy loading
+            $builder->limit($limit, $offset);
 
             $result = $builder->get()->getResultArray();
 
