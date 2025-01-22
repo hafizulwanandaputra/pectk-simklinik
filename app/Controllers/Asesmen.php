@@ -370,7 +370,6 @@ class Asesmen extends BaseController
                     'suhu' => $this->request->getPost('suhu') ?: NULL,
                     'pernapasan' => $this->request->getPost('pernapasan') ?: NULL,
                     'keadaan_umum' => $this->request->getPost('keadaan_umum') ?: NULL,
-                    'kesadaran_mental' => $this->request->getPost('kesadaran_mental') ?: NULL,
                     'alergi' => $this->request->getPost('alergi') ?: NULL,
                     'alergi_keterangan' => $this->request->getPost('alergi_keterangan') ?: NULL,
                     'sakit_lainnya' => $sakit_lainnya_csv,
