@@ -12,7 +12,7 @@ $usia = $registrasi->diff($tanggal_lahir);
 ?>
 <?= $this->extend('dashboard/templates/dashboard'); ?>
 <?= $this->section('css'); ?>
-<?= $this->include('select2/floating'); ?>
+<?= $this->include('select2/normal'); ?>
 <style>
     /* Ensures the dropdown is visible outside the parent with overflow auto */
     .select2-container {
@@ -421,151 +421,130 @@ $usia = $registrasi->diff($tanggal_lahir);
             </div>
             <div class="mb-3">
                 <div class="fw-bold mb-2 border-bottom">Diagnosis Medis (A)</div>
-                <div class="table-responsive mb-3">
-                    <table class="table mb-0 table-borderless">
-                        <tbody>
-                            <tr>
-                                <td class="align-middle ps-0 pe-1 pt-0 pb-1" style="width: 100%; min-width: 200px;">
-                                    <input type="text" class="form-control" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="diagnosa_medis_1" name="diagnosa_medis_1" value="" autocomplete="off" dir="auto">
-                                    <div class="invalid-feedback"></div>
-                                </td>
-                                <td class="align-middle ps-1 pe-0 pt-0 pb-1" style="width: 0%; min-width: 100px;">
-                                    <input type="text" class="form-control" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="icdx_kode_1" name="icdx_kode_1" value="" autocomplete="off" dir="auto" placeholder="ICD 10" list="icdx_kode_1_list">
-                                    <datalist id="icdx_kode_1_list">
-                                    </datalist>
-                                    <div class="invalid-feedback"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="align-middle ps-0 pe-1 pt-1 pb-1" style="width: 100%; min-width: 200px;">
-                                    <input type="text" class="form-control" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="diagnosa_medis_2" name="diagnosa_medis_2" value="" autocomplete="off" dir="auto">
-                                    <div class="invalid-feedback"></div>
-                                </td>
-                                <td class="align-middle ps-1 pe-0 pt-1 pb-1" style="width: 0%; min-width: 100px;">
-                                    <input type="text" class="form-control" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="icdx_kode_2" name="icdx_kode_2" value="" autocomplete="off" dir="auto" placeholder="ICD 10" list="icdx_kode_2_list">
-                                    <datalist id="icdx_kode_2_list">
-                                    </datalist>
-                                    <div class="invalid-feedback"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="align-middle ps-0 pe-1 pt-1 pb-1" style="width: 100%; min-width: 200px;">
-                                    <input type="text" class="form-control" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="diagnosa_medis_3" name="diagnosa_medis_3" value="" autocomplete="off" dir="auto">
-                                    <div class="invalid-feedback"></div>
-                                </td>
-                                <td class="align-middle ps-1 pe-0 pt-1 pb-1" style="width: 0%; min-width: 100px;">
-                                    <input type="text" class="form-control" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="icdx_kode_3" name="icdx_kode_3" value="" autocomplete="off" dir="auto" placeholder="ICD 10" list="icdx_kode_3_list">
-                                    <datalist id="icdx_kode_3_list">
-                                    </datalist>
-                                    <div class="invalid-feedback"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="align-middle ps-0 pe-1 pt-1 pb-1" style="width: 100%; min-width: 200px;">
-                                    <input type="text" class="form-control" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="diagnosa_medis_4" name="diagnosa_medis_4" value="" autocomplete="off" dir="auto">
-                                    <div class="invalid-feedback"></div>
-                                </td>
-                                <td class="align-middle ps-1 pe-0 pt-1 pb-1" style="width: 0%; min-width: 100px;">
-                                    <input type="text" class="form-control" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="icdx_kode_4" name="icdx_kode_4" value="" autocomplete="off" dir="auto" placeholder="ICD 10" list="icdx_kode_4_list">
-                                    <datalist id="icdx_kode_4_list">
-                                    </datalist>
-                                    <div class="invalid-feedback"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="align-middle ps-0 pe-1 pt-1 pb-0" style="width: 100%; min-width: 200px;">
-                                    <input type="text" class="form-control" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="diagnosa_medis_5" name="diagnosa_medis_5" value="" autocomplete="off" dir="auto">
-                                    <div class="invalid-feedback"></div>
-                                </td>
-                                <td class="align-middle ps-1 pe-0 pt-1 pb-0" style="width: 0%; min-width: 100px;">
-                                    <input type="text" class="form-control" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="icdx_kode_5" name="icdx_kode_5" value="" autocomplete="off" dir="auto" placeholder="ICD 10" list="icdx_kode_5_list">
-                                    <datalist id="icdx_kode_5_list">
-                                    </datalist>
-                                    <div class="invalid-feedback"></div>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="mb-3">
-                    <div class="fw-bold mb-2 border-bottom">Tindakan (P)</div>
-                    <div class="table-responsive mb-3">
-                        <table class="table mb-0 table-borderless">
-                            <tbody>
-                                <tr>
-                                    <td class="align-middle ps-0 pe-1 pt-0 pb-1" style="width: 100%; min-width: 200px;">
-                                        <input type="text" class="form-control" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="terapi_1" name="terapi_1" value="" autocomplete="off" dir="auto">
-                                        <div class="invalid-feedback"></div>
-                                    </td>
-                                    <td class="align-middle ps-1 pe-0 pt-0 pb-1" style="width: 0%; min-width: 100px;">
-                                        <input type="text" class="form-control" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="icd9_kode_1" name="icd9_kode_1" value="" autocomplete="off" dir="auto" placeholder="ICD 9" list="icd9_kode_1_list">
-                                        <datalist id="icd9_kode_1_list">
-                                        </datalist>
-                                        <div class="invalid-feedback"></div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="align-middle ps-0 pe-1 pt-1 pb-1" style="width: 100%; min-width: 200px;">
-                                        <input type="text" class="form-control" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="terapi_2" name="terapi_2" value="" autocomplete="off" dir="auto">
-                                        <div class="invalid-feedback"></div>
-                                    </td>
-                                    <td class="align-middle ps-1 pe-0 pt-1 pb-1" style="width: 0%; min-width: 100px;">
-                                        <input type="text" class="form-control" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="icd9_kode_2" name="icd9_kode_2" value="" autocomplete="off" dir="auto" placeholder="ICD 9" list="icd9_kode_2_list">
-                                        <datalist id="icd9_kode_2_list">
-                                        </datalist>
-                                        <div class="invalid-feedback"></div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="align-middle ps-0 pe-1 pt-1 pb-1" style="width: 100%; min-width: 200px;">
-                                        <input type="text" class="form-control" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="terapi_3" name="terapi_3" value="" autocomplete="off" dir="auto">
-                                        <div class="invalid-feedback"></div>
-                                    </td>
-                                    <td class="align-middle ps-1 pe-0 pt-1 pb-1" style="width: 0%; min-width: 100px;">
-                                        <input type="text" class="form-control" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="icd9_kode_3" name="icd9_kode_3" value="" autocomplete="off" dir="auto" placeholder="ICD 9" list="icd9_kode_3_list">
-                                        <datalist id="icd9_kode_3_list">
-                                        </datalist>
-                                        <div class="invalid-feedback"></div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="align-middle ps-0 pe-1 pt-1 pb-1" style="width: 100%; min-width: 200px;">
-                                        <input type="text" class="form-control" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="terapi_4" name="terapi_4" value="" autocomplete="off" dir="auto">
-                                        <div class="invalid-feedback"></div>
-                                    </td>
-                                    <td class="align-middle ps-1 pe-0 pt-1 pb-1" style="width: 0%; min-width: 100px;">
-                                        <input type="text" class="form-control" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="icd9_kode_4" name="icd9_kode_4" value="" autocomplete="off" dir="auto" placeholder="ICD 9" list="icd9_kode_4_list">
-                                        <datalist id="icd9_kode_4_list">
-                                        </datalist>
-                                        <div class="invalid-feedback"></div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="align-middle ps-0 pe-1 pt-1 pb-0" style="width: 100%; min-width: 200px;">
-                                        <input type="text" class="form-control" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="terapi_5" name="terapi_5" value="" autocomplete="off" dir="auto">
-                                        <div class="invalid-feedback"></div>
-                                    </td>
-                                    <td class="align-middle ps-1 pe-0 pt-1 pb-0" style="width: 0%; min-width: 100px;">
-                                        <input type="text" class="form-control" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="icd9_kode_5" name="icd9_kode_5" value="" autocomplete="off" dir="auto" placeholder="ICD 9" list="icd9_kode_5_list">
-                                        <datalist id="icd9_kode_5_list">
-                                        </datalist>
-                                        <div class="invalid-feedback"></div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                <div class="row g-2 align-items-start mb-2">
+                    <div class="col-sm">
+                        <input type="text" class="form-control my-auto" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="diagnosa_medis_1" name="diagnosa_medis_1" value="" autocomplete="off" dir="auto">
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="col-sm-4">
+                        <select class="form-select " id="icdx_kode_1" name="icdx_kode_1" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?>>
+                        </select>
+                        <div class="invalid-feedback"></div>
                     </div>
                 </div>
-                <div>
-                    <hr>
-                    <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-3">
-                        <button class="btn btn-body  bg-gradient" type="button" onclick="window.open(`<?= base_url('/rawatjalan/asesmen/export/' . $rawatjalan['id_rawat_jalan']) ?>`)"><i class="fa-solid fa-print"></i> Cetak Form</button>
-                        <button class="btn btn-primary bg-gradient" type="submit" id="submitBtn"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
+                <div class="row g-2 align-items-start mb-2">
+                    <div class="col-sm">
+                        <input type="text" class="form-control my-auto" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="diagnosa_medis_2" name="diagnosa_medis_2" value="" autocomplete="off" dir="auto">
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="col-sm-4">
+                        <select class="form-select " id="icdx_kode_2" name="icdx_kode_2" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?>>
+                        </select>
+                        <div class="invalid-feedback"></div>
                     </div>
                 </div>
-                <?= form_close(); ?>
+                <div class="row g-2 align-items-start mb-2">
+                    <div class="col-sm">
+                        <input type="text" class="form-control my-auto" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="diagnosa_medis_3" name="diagnosa_medis_3" value="" autocomplete="off" dir="auto">
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="col-sm-4">
+                        <select class="form-select " id="icdx_kode_3" name="icdx_kode_3" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?>>
+                        </select>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+                <div class="row g-2 align-items-start mb-2">
+                    <div class="col-sm">
+                        <input type="text" class="form-control my-auto" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="diagnosa_medis_4" name="diagnosa_medis_4" value="" autocomplete="off" dir="auto">
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="col-sm-4">
+                        <select class="form-select " id="icdx_kode_4" name="icdx_kode_4" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?>>
+                        </select>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+                <div class="row g-2 align-items-start mb-2">
+                    <div class="col-sm">
+                        <input type="text" class="form-control my-auto" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="diagnosa_medis_5" name="diagnosa_medis_5" value="" autocomplete="off" dir="auto">
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="col-sm-4">
+                        <select class="form-select " id="icdx_kode_5" name="icdx_kode_5" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?>>
+                        </select>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
             </div>
+            <div class="mb-3">
+                <div class="fw-bold mb-2 border-bottom">Tindakan (P)</div>
+                <div class="row g-2 align-items-start mb-2">
+                    <div class="col-sm">
+                        <input type="text" class="form-control my-auto" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="terapi_1" name="terapi_1" value="" autocomplete="off" dir="auto">
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="col-sm-4">
+                        <select class="form-select " id="icd9_kode_1" name="icd9_kode_1" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?>>
+                        </select>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+                <div class="row g-2 align-items-start mb-2">
+                    <div class="col-sm">
+                        <input type="text" class="form-control my-auto" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="terapi_2" name="terapi_2" value="" autocomplete="off" dir="auto">
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="col-sm-4">
+                        <select class="form-select " id="icd9_kode_2" name="icd9_kode_2" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?>>
+                        </select>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+                <div class="row g-2 align-items-start mb-2">
+                    <div class="col-sm">
+                        <input type="text" class="form-control my-auto" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="terapi_3" name="terapi_3" value="" autocomplete="off" dir="auto">
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="col-sm-4">
+                        <select class="form-select " id="icd9_kode_3" name="icd9_kode_3" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?>>
+                        </select>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+                <div class="row g-2 align-items-start mb-2">
+                    <div class="col-sm">
+                        <input type="text" class="form-control my-auto" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="terapi_4" name="terapi_4" value="" autocomplete="off" dir="auto">
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="col-sm-4">
+                        <select class="form-select " id="icd9_kode_4" name="icd9_kode_4" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?>>
+                        </select>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+                <div class="row g-2 align-items-start mb-2">
+                    <div class="col-sm">
+                        <input type="text" class="form-control my-auto" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="terapi_5" name="terapi_5" value="" autocomplete="off" dir="auto">
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="col-sm-4">
+                        <select class="form-select " id="icd9_kode_5" name="icd9_kode_5" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?>>
+                        </select>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <hr>
+                <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-3">
+                    <button class="btn btn-body  bg-gradient" type="button" onclick="window.open(`<?= base_url('/rawatjalan/asesmen/export/' . $rawatjalan['id_rawat_jalan']) ?>`)"><i class="fa-solid fa-print"></i> Cetak Form</button>
+                    <button class="btn btn-primary bg-gradient" type="submit" id="submitBtn"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
+                </div>
+            </div>
+            <?= form_close(); ?>
         </div>
+    </div>
     </div>
     <?php if (session()->get('role') != 'Perawat') : ?>
         <div class="modal fade" id="mataModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="mataModalLabel" aria-hidden="true">
@@ -703,27 +682,635 @@ $usia = $registrasi->diff($tanggal_lahir);
 
             // Diagnosis Medis (A)
             $('#diagnosa_medis_1').val(data.diagnosa_medis_1);
-            $('#icdx_kode_1').val(data.icdx_kode_1);
+            if (data.icdx_kode_1 !== null) {
+                const icdx_kode_1 = new Option(data.icdx_kode_1, data.icdx_kode_1, true, true);
+                $('#icdx_kode_1').append(icdx_kode_1).trigger('change');
+            }
+
             $('#diagnosa_medis_2').val(data.diagnosa_medis_2);
-            $('#icdx_kode_2').val(data.icdx_kode_2);
+            if (data.icdx_kode_2 !== null) {
+                const icdx_kode_2 = new Option(data.icdx_kode_2, data.icdx_kode_2, true, true);
+                $('#icdx_kode_2').append(icdx_kode_2).trigger('change');
+            }
+
             $('#diagnosa_medis_3').val(data.diagnosa_medis_3);
-            $('#icdx_kode_3').val(data.icdx_kode_3);
+            if (data.icdx_kode_3 !== null) {
+                const icdx_kode_3 = new Option(data.icdx_kode_3, data.icdx_kode_3, true, true);
+                $('#icdx_kode_3').append(icdx_kode_3).trigger('change');
+            }
+
             $('#diagnosa_medis_4').val(data.diagnosa_medis_4);
-            $('#icdx_kode_4').val(data.icdx_kode_4);
+            if (data.icdx_kode_4 !== null) {
+                const icdx_kode_4 = new Option(data.icdx_kode_4, data.icdx_kode_4, true, true);
+                $('#icdx_kode_4').append(icdx_kode_4).trigger('change');
+            }
+
             $('#diagnosa_medis_5').val(data.diagnosa_medis_5);
-            $('#icdx_kode_5').val(data.icdx_kode_5);
+            if (data.icdx_kode_5 !== null) {
+                const icdx_kode_5 = new Option(data.icdx_kode_5, data.icdx_kode_5, true, true);
+                $('#icdx_kode_5').append(icdx_kode_5).trigger('change');
+            }
 
             // Tindakan (P)
             $('#terapi_1').val(data.terapi_1);
-            $('#icd9_kode_1').val(data.icd9_kode_1);
+            if (data.icd9_kode_1 !== null) {
+                const icd9_kode_1 = new Option(data.icd9_kode_1, data.icd9_kode_1, true, true);
+                $('#icd9_kode_1').append(icd9_kode_1).trigger('change');
+            }
+
             $('#terapi_2').val(data.terapi_2);
-            $('#icd9_kode_2').val(data.icd9_kode_2);
+            if (data.icd9_kode_2 !== null) {
+                const icd9_kode_2 = new Option(data.icd9_kode_2, data.icd9_kode_2, true, true);
+                $('#icd9_kode_2').append(icd9_kode_2).trigger('change');
+            }
+
             $('#terapi_3').val(data.terapi_3);
-            $('#icd9_kode_3').val(data.icd9_kode_3);
+            if (data.icd9_kode_3 !== null) {
+                const icd9_kode_3 = new Option(data.icd9_kode_3, data.icd9_kode_3, true, true);
+                $('#icd9_kode_3').append(icd9_kode_3).trigger('change');
+            }
+
             $('#terapi_4').val(data.terapi_4);
-            $('#icd9_kode_4').val(data.icd9_kode_4);
+            if (data.icd9_kode_4 !== null) {
+                const icd9_kode_4 = new Option(data.icd9_kode_4, data.icd9_kode_4, true, true);
+                $('#icd9_kode_4').append(icd9_kode_4).trigger('change');
+            }
+
             $('#terapi_5').val(data.terapi_5);
-            $('#icd9_kode_5').val(data.icd9_kode_5);
+            if (data.icd9_kode_5 !== null) {
+                const icd9_kode_5 = new Option(data.icd9_kode_5, data.icd9_kode_5, true, true);
+                $('#icd9_kode_5').append(icd9_kode_5).trigger('change');
+            }
+
+            $('#icdx_kode_1').select2({
+                theme: "bootstrap-5",
+                width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+                placeholder: "ICD 10",
+                disabled: <?= (session()->get('role') == 'Perawat') ? 'true' : 'false' ?>,
+                ajax: {
+                    url: '<?= base_url('rawatjalan/asesmen/icdx') ?>',
+                    dataType: 'json',
+                    delay: 250, // Tambahkan debounce
+                    data: function(params) {
+                        return {
+                            search: params.term, // Pencarian berdasarkan input
+                            offset: (params.page || 0) * 50, // Pagination
+                            limit: 50
+                        };
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: data.data.map(item => ({
+                                id: item.icdKode,
+                                text: item.icdKode, // Teks untuk pencarian
+                                nama: item.icdNamaIndonesia // Tambahan data untuk custom HTML
+                            })),
+                            pagination: {
+                                more: data.data.length >= 50
+                            }
+                        };
+                    }
+                },
+                minimumInputLength: 1,
+                templateResult: function(data) {
+                    // Format untuk tampilan hasil pencarian
+                    if (!data.id) {
+                        return data.text; // Untuk placeholder
+                    }
+
+                    const template = `
+            <div class="d-flex align-items-start">
+                <div class="me-2 font-monospace">
+                    <strong>${data.text}</strong>
+                </div>
+                <div>
+                    ${data.nama}
+                </div>
+            </div>
+        `;
+                    return $(template);
+                },
+                templateSelection: function(data) {
+                    return data.text && data.text !== 'null' ? data.text : '';
+                },
+                escapeMarkup: function(markup) {
+                    // Biarkan HTML tetap diproses
+                    return markup;
+                }
+            });
+
+            $('#icdx_kode_2').select2({
+                theme: "bootstrap-5",
+                width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+                placeholder: "ICD 10",
+                disabled: <?= (session()->get('role') == 'Perawat') ? 'true' : 'false' ?>,
+                ajax: {
+                    url: '<?= base_url('rawatjalan/asesmen/icdx') ?>',
+                    dataType: 'json',
+                    delay: 250, // Tambahkan debounce
+                    data: function(params) {
+                        return {
+                            search: params.term, // Pencarian berdasarkan input
+                            offset: (params.page || 0) * 50, // Pagination
+                            limit: 50
+                        };
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: data.data.map(item => ({
+                                id: item.icdKode,
+                                text: item.icdKode, // Teks untuk pencarian
+                                nama: item.icdNamaIndonesia // Tambahan data untuk custom HTML
+                            })),
+                            pagination: {
+                                more: data.data.length >= 50
+                            }
+                        };
+                    }
+                },
+                minimumInputLength: 1,
+                templateResult: function(data) {
+                    // Format untuk tampilan hasil pencarian
+                    if (!data.id) {
+                        return data.text; // Untuk placeholder
+                    }
+
+                    const template = `
+            <div class="d-flex align-items-start">
+                <div class="me-2 font-monospace">
+                    <strong>${data.text}</strong>
+                </div>
+                <div>
+                    ${data.nama}
+                </div>
+            </div>
+        `;
+                    return $(template);
+                },
+                templateSelection: function(data) {
+                    return data.text && data.text !== 'null' ? data.text : '';
+                },
+                escapeMarkup: function(markup) {
+                    // Biarkan HTML tetap diproses
+                    return markup;
+                }
+            });
+
+            $('#icdx_kode_3').select2({
+                theme: "bootstrap-5",
+                width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+                placeholder: "ICD 10",
+                disabled: <?= (session()->get('role') == 'Perawat') ? 'true' : 'false' ?>,
+                ajax: {
+                    url: '<?= base_url('rawatjalan/asesmen/icdx') ?>',
+                    dataType: 'json',
+                    delay: 250, // Tambahkan debounce
+                    data: function(params) {
+                        return {
+                            search: params.term, // Pencarian berdasarkan input
+                            offset: (params.page || 0) * 50, // Pagination
+                            limit: 50
+                        };
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: data.data.map(item => ({
+                                id: item.icdKode,
+                                text: item.icdKode, // Teks untuk pencarian
+                                nama: item.icdNamaIndonesia // Tambahan data untuk custom HTML
+                            })),
+                            pagination: {
+                                more: data.data.length >= 50
+                            }
+                        };
+                    }
+                },
+                minimumInputLength: 1,
+                templateResult: function(data) {
+                    // Format untuk tampilan hasil pencarian
+                    if (!data.id) {
+                        return data.text; // Untuk placeholder
+                    }
+
+                    const template = `
+            <div class="d-flex align-items-start">
+                <div class="me-2 font-monospace">
+                    <strong>${data.text}</strong>
+                </div>
+                <div>
+                    ${data.nama}
+                </div>
+            </div>
+        `;
+                    return $(template);
+                },
+                templateSelection: function(data) {
+                    return data.text && data.text !== 'null' ? data.text : '';
+                },
+                escapeMarkup: function(markup) {
+                    // Biarkan HTML tetap diproses
+                    return markup;
+                }
+            });
+
+            $('#icdx_kode_4').select2({
+                theme: "bootstrap-5",
+                width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+                placeholder: "ICD 10",
+                disabled: <?= (session()->get('role') == 'Perawat') ? 'true' : 'false' ?>,
+                ajax: {
+                    url: '<?= base_url('rawatjalan/asesmen/icdx') ?>',
+                    dataType: 'json',
+                    delay: 250, // Tambahkan debounce
+                    data: function(params) {
+                        return {
+                            search: params.term, // Pencarian berdasarkan input
+                            offset: (params.page || 0) * 50, // Pagination
+                            limit: 50
+                        };
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: data.data.map(item => ({
+                                id: item.icdKode,
+                                text: item.icdKode, // Teks untuk pencarian
+                                nama: item.icdNamaIndonesia // Tambahan data untuk custom HTML
+                            })),
+                            pagination: {
+                                more: data.data.length >= 50
+                            }
+                        };
+                    }
+                },
+                minimumInputLength: 1,
+                templateResult: function(data) {
+                    // Format untuk tampilan hasil pencarian
+                    if (!data.id) {
+                        return data.text; // Untuk placeholder
+                    }
+
+                    const template = `
+            <div class="d-flex align-items-start">
+                <div class="me-2 font-monospace">
+                    <strong>${data.text}</strong>
+                </div>
+                <div>
+                    ${data.nama}
+                </div>
+            </div>
+        `;
+                    return $(template);
+                },
+                templateSelection: function(data) {
+                    return data.text && data.text !== 'null' ? data.text : '';
+                },
+                escapeMarkup: function(markup) {
+                    // Biarkan HTML tetap diproses
+                    return markup;
+                }
+            });
+
+            $('#icdx_kode_5').select2({
+                theme: "bootstrap-5",
+                width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+                placeholder: "ICD 10",
+                disabled: <?= (session()->get('role') == 'Perawat') ? 'true' : 'false' ?>,
+                ajax: {
+                    url: '<?= base_url('rawatjalan/asesmen/icdx') ?>',
+                    dataType: 'json',
+                    delay: 250, // Tambahkan debounce
+                    data: function(params) {
+                        return {
+                            search: params.term, // Pencarian berdasarkan input
+                            offset: (params.page || 0) * 50, // Pagination
+                            limit: 50
+                        };
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: data.data.map(item => ({
+                                id: item.icdKode,
+                                text: item.icdKode, // Teks untuk pencarian
+                                nama: item.icdNamaIndonesia // Tambahan data untuk custom HTML
+                            })),
+                            pagination: {
+                                more: data.data.length >= 50
+                            }
+                        };
+                    }
+                },
+                minimumInputLength: 1,
+                templateResult: function(data) {
+                    // Format untuk tampilan hasil pencarian
+                    if (!data.id) {
+                        return data.text; // Untuk placeholder
+                    }
+
+                    const template = `
+            <div class="d-flex align-items-start">
+                <div class="me-2 font-monospace">
+                    <strong>${data.text}</strong>
+                </div>
+                <div>
+                    ${data.nama}
+                </div>
+            </div>
+        `;
+                    return $(template);
+                },
+                templateSelection: function(data) {
+                    return data.text && data.text !== 'null' ? data.text : '';
+                },
+                escapeMarkup: function(markup) {
+                    // Biarkan HTML tetap diproses
+                    return markup;
+                }
+            });
+
+            $('#icd9_kode_1').select2({
+                theme: "bootstrap-5",
+                width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+                placeholder: "ICD 9",
+                disabled: <?= (session()->get('role') == 'Perawat') ? 'true' : 'false' ?>,
+                ajax: {
+                    url: '<?= base_url('rawatjalan/asesmen/icd9') ?>',
+                    dataType: 'json',
+                    delay: 250, // Tambahkan debounce
+                    data: function(params) {
+                        return {
+                            search: params.term, // Pencarian berdasarkan input
+                            offset: (params.page || 0) * 50, // Pagination
+                            limit: 50
+                        };
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: data.data.map(item => ({
+                                id: item.icdKode,
+                                text: item.icdKode, // Teks untuk pencarian
+                                nama: item.icdNamaIndonesia // Tambahan data untuk custom HTML
+                            })),
+                            pagination: {
+                                more: data.data.length >= 50
+                            }
+                        };
+                    }
+                },
+                minimumInputLength: 1,
+                templateResult: function(data) {
+                    // Format untuk tampilan hasil pencarian
+                    if (!data.id) {
+                        return data.text; // Untuk placeholder
+                    }
+
+                    const template = `
+            <div class="d-flex align-items-start">
+                <div class="me-2 font-monospace">
+                    <strong>${data.text}</strong>
+                </div>
+                <div>
+                    ${data.nama}
+                </div>
+            </div>
+        `;
+                    return $(template);
+                },
+                templateSelection: function(data) {
+                    return data.text && data.text !== 'null' ? data.text : '';
+                },
+                escapeMarkup: function(markup) {
+                    // Biarkan HTML tetap diproses
+                    return markup;
+                }
+            });
+
+            $('#icd9_kode_2').select2({
+                theme: "bootstrap-5",
+                width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+                placeholder: "ICD 9",
+                disabled: <?= (session()->get('role') == 'Perawat') ? 'true' : 'false' ?>,
+                ajax: {
+                    url: '<?= base_url('rawatjalan/asesmen/icd9') ?>',
+                    dataType: 'json',
+                    delay: 250, // Tambahkan debounce
+                    data: function(params) {
+                        return {
+                            search: params.term, // Pencarian berdasarkan input
+                            offset: (params.page || 0) * 50, // Pagination
+                            limit: 50
+                        };
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: data.data.map(item => ({
+                                id: item.icdKode,
+                                text: item.icdKode, // Teks untuk pencarian
+                                nama: item.icdNamaIndonesia // Tambahan data untuk custom HTML
+                            })),
+                            pagination: {
+                                more: data.data.length >= 50
+                            }
+                        };
+                    }
+                },
+                minimumInputLength: 1,
+                templateResult: function(data) {
+                    // Format untuk tampilan hasil pencarian
+                    if (!data.id) {
+                        return data.text; // Untuk placeholder
+                    }
+
+                    const template = `
+            <div class="d-flex align-items-start">
+                <div class="me-2 font-monospace">
+                    <strong>${data.text}</strong>
+                </div>
+                <div>
+                    ${data.nama}
+                </div>
+            </div>
+        `;
+                    return $(template);
+                },
+                templateSelection: function(data) {
+                    return data.text && data.text !== 'null' ? data.text : '';
+                },
+                escapeMarkup: function(markup) {
+                    // Biarkan HTML tetap diproses
+                    return markup;
+                }
+            });
+
+            $('#icd9_kode_3').select2({
+                theme: "bootstrap-5",
+                width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+                placeholder: "ICD 9",
+                disabled: <?= (session()->get('role') == 'Perawat') ? 'true' : 'false' ?>,
+                ajax: {
+                    url: '<?= base_url('rawatjalan/asesmen/icd9') ?>',
+                    dataType: 'json',
+                    delay: 250, // Tambahkan debounce
+                    data: function(params) {
+                        return {
+                            search: params.term, // Pencarian berdasarkan input
+                            offset: (params.page || 0) * 50, // Pagination
+                            limit: 50
+                        };
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: data.data.map(item => ({
+                                id: item.icdKode,
+                                text: item.icdKode, // Teks untuk pencarian
+                                nama: item.icdNamaIndonesia // Tambahan data untuk custom HTML
+                            })),
+                            pagination: {
+                                more: data.data.length >= 50
+                            }
+                        };
+                    }
+                },
+                minimumInputLength: 1,
+                templateResult: function(data) {
+                    // Format untuk tampilan hasil pencarian
+                    if (!data.id) {
+                        return data.text; // Untuk placeholder
+                    }
+
+                    const template = `
+            <div class="d-flex align-items-start">
+                <div class="me-2 font-monospace">
+                    <strong>${data.text}</strong>
+                </div>
+                <div>
+                    ${data.nama}
+                </div>
+            </div>
+        `;
+                    return $(template);
+                },
+                templateSelection: function(data) {
+                    return data.text && data.text !== 'null' ? data.text : '';
+                },
+                escapeMarkup: function(markup) {
+                    // Biarkan HTML tetap diproses
+                    return markup;
+                }
+            });
+
+            $('#icd9_kode_4').select2({
+                theme: "bootstrap-5",
+                width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+                placeholder: "ICD 9",
+                disabled: <?= (session()->get('role') == 'Perawat') ? 'true' : 'false' ?>,
+                ajax: {
+                    url: '<?= base_url('rawatjalan/asesmen/icd9') ?>',
+                    dataType: 'json',
+                    delay: 250, // Tambahkan debounce
+                    data: function(params) {
+                        return {
+                            search: params.term, // Pencarian berdasarkan input
+                            offset: (params.page || 0) * 50, // Pagination
+                            limit: 50
+                        };
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: data.data.map(item => ({
+                                id: item.icdKode,
+                                text: item.icdKode, // Teks untuk pencarian
+                                nama: item.icdNamaIndonesia // Tambahan data untuk custom HTML
+                            })),
+                            pagination: {
+                                more: data.data.length >= 50
+                            }
+                        };
+                    }
+                },
+                minimumInputLength: 1,
+                templateResult: function(data) {
+                    // Format untuk tampilan hasil pencarian
+                    if (!data.id) {
+                        return data.text; // Untuk placeholder
+                    }
+
+                    const template = `
+            <div class="d-flex align-items-start">
+                <div class="me-2 font-monospace">
+                    <strong>${data.text}</strong>
+                </div>
+                <div>
+                    ${data.nama}
+                </div>
+            </div>
+        `;
+                    return $(template);
+                },
+                templateSelection: function(data) {
+                    return data.text && data.text !== 'null' ? data.text : '';
+                },
+                escapeMarkup: function(markup) {
+                    // Biarkan HTML tetap diproses
+                    return markup;
+                }
+            });
+
+            $('#icd9_kode_5').select2({
+                theme: "bootstrap-5",
+                width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+                placeholder: "ICD 9",
+                disabled: <?= (session()->get('role') == 'Perawat') ? 'true' : 'false' ?>,
+                ajax: {
+                    url: '<?= base_url('rawatjalan/asesmen/icd9') ?>',
+                    dataType: 'json',
+                    delay: 250, // Tambahkan debounce
+                    data: function(params) {
+                        return {
+                            search: params.term, // Pencarian berdasarkan input
+                            offset: (params.page || 0) * 50, // Pagination
+                            limit: 50
+                        };
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: data.data.map(item => ({
+                                id: item.icdKode,
+                                text: item.icdKode, // Teks untuk pencarian
+                                nama: item.icdNamaIndonesia // Tambahan data untuk custom HTML
+                            })),
+                            pagination: {
+                                more: data.data.length >= 50
+                            }
+                        };
+                    }
+                },
+                minimumInputLength: 1,
+                templateResult: function(data) {
+                    // Format untuk tampilan hasil pencarian
+                    if (!data.id) {
+                        return data.text; // Untuk placeholder
+                    }
+
+                    const template = `
+            <div class="d-flex align-items-start">
+                <div class="me-2 font-monospace">
+                    <strong>${data.text}</strong>
+                </div>
+                <div>
+                    ${data.nama}
+                </div>
+            </div>
+        `;
+                    return $(template);
+                },
+                templateSelection: function(data) {
+                    return data.text && data.text !== 'null' ? data.text : '';
+                },
+                escapeMarkup: function(markup) {
+                    // Biarkan HTML tetap diproses
+                    return markup;
+                }
+            });
         } catch (error) {
             showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
         } finally {
@@ -802,246 +1389,6 @@ $usia = $registrasi->diff($tanggal_lahir);
                 console.error('Gagal memuat visus:', error);
             }
         }
-
-        async function loadICDX1(query) {
-            try {
-                const response = await axios.get('<?= base_url('rawatjalan/asesmen/icdx') ?>', {
-                    params: {
-                        search: query
-                    } // Kirim query pencarian
-                });
-                const icdx = response.data.data;
-                const dataList = $('#icdx_kode_1_list');
-                dataList.empty(); // Kosongkan datalist
-                icdx.forEach(item => {
-                    dataList.append(`<option value="${item.icdKode}">${item.icdNamaIndonesia}</option>`);
-                });
-            } catch (error) {
-                console.error('Gagal memuat ICD 10:', error);
-            }
-        }
-
-        async function loadICDX2(query) {
-            try {
-                const response = await axios.get('<?= base_url('rawatjalan/asesmen/icdx') ?>', {
-                    params: {
-                        search: query
-                    } // Kirim query pencarian
-                });
-                const icdx = response.data.data;
-                const dataList = $('#icdx_kode_2_list');
-                dataList.empty(); // Kosongkan datalist
-                icdx.forEach(item => {
-                    dataList.append(`<option value="${item.icdKode}">${item.icdNamaIndonesia}</option>`);
-                });
-            } catch (error) {
-                console.error('Gagal memuat ICD 10:', error);
-            }
-        }
-
-        async function loadICDX3(query) {
-            try {
-                const response = await axios.get('<?= base_url('rawatjalan/asesmen/icdx') ?>', {
-                    params: {
-                        search: query
-                    } // Kirim query pencarian
-                });
-                const icdx = response.data.data;
-                const dataList = $('#icdx_kode_3_list');
-                dataList.empty(); // Kosongkan datalist
-                icdx.forEach(item => {
-                    dataList.append(`<option value="${item.icdKode}">${item.icdNamaIndonesia}</option>`);
-                });
-            } catch (error) {
-                console.error('Gagal memuat ICD 10:', error);
-            }
-        }
-
-        async function loadICDX4(query) {
-            try {
-                const response = await axios.get('<?= base_url('rawatjalan/asesmen/icdx') ?>', {
-                    params: {
-                        search: query
-                    } // Kirim query pencarian
-                });
-                const icdx = response.data.data;
-                const dataList = $('#icdx_kode_4_list');
-                dataList.empty(); // Kosongkan datalist
-                icdx.forEach(item => {
-                    dataList.append(`<option value="${item.icdKode}">${item.icdNamaIndonesia}</option>`);
-                });
-            } catch (error) {
-                console.error('Gagal memuat ICD 10:', error);
-            }
-        }
-
-        async function loadICDX5(query) {
-            try {
-                const response = await axios.get('<?= base_url('rawatjalan/asesmen/icdx') ?>', {
-                    params: {
-                        search: query
-                    } // Kirim query pencarian
-                });
-                const icdx = response.data.data;
-                const dataList = $('#icdx_kode_5_list');
-                dataList.empty(); // Kosongkan datalist
-                icdx.forEach(item => {
-                    dataList.append(`<option value="${item.icdKode}">${item.icdNamaIndonesia}</option>`);
-                });
-            } catch (error) {
-                console.error('Gagal memuat ICD 10:', error);
-            }
-        }
-
-        // Event listener untuk input
-        $('#icdx_kode_1').on('input', function() {
-            const query = $(this).val();
-            loadICDX1(query);
-        });
-
-        // Event listener untuk input
-        $('#icdx_kode_2').on('input', function() {
-            const query = $(this).val();
-            loadICDX2(query);
-        });
-
-        // Event listener untuk input
-        $('#icdx_kode_3').on('input', function() {
-            const query = $(this).val();
-            loadICDX3(query);
-        });
-
-        // Event listener untuk input
-        $('#icdx_kode_4').on('input', function() {
-            const query = $(this).val();
-            loadICDX4(query);
-        });
-
-        // Event listener untuk input
-        $('#icdx_kode_5').on('input', function() {
-            const query = $(this).val();
-            loadICDX5(query);
-        });
-
-        async function loadICD91(query) {
-            try {
-                const response = await axios.get('<?= base_url('rawatjalan/asesmen/icd9') ?>', {
-                    params: {
-                        search: query
-                    } // Kirim query pencarian
-                });
-                const icd9 = response.data.data;
-                const dataList = $('#icd9_kode_1_list');
-                dataList.empty(); // Kosongkan datalist
-                icd9.forEach(item => {
-                    dataList.append(`<option value="${item.icdKode}">${item.icdNamaIndonesia}</option>`);
-                });
-            } catch (error) {
-                console.error('Gagal memuat ICD 10:', error);
-            }
-        }
-
-        async function loadICD92(query) {
-            try {
-                const response = await axios.get('<?= base_url('rawatjalan/asesmen/icd9') ?>', {
-                    params: {
-                        search: query
-                    } // Kirim query pencarian
-                });
-                const icd9 = response.data.data;
-                const dataList = $('#icd9_kode_2_list');
-                dataList.empty(); // Kosongkan datalist
-                icd9.forEach(item => {
-                    dataList.append(`<option value="${item.icdKode}">${item.icdNamaIndonesia}</option>`);
-                });
-            } catch (error) {
-                console.error('Gagal memuat ICD 10:', error);
-            }
-        }
-
-        async function loadICD93(query) {
-            try {
-                const response = await axios.get('<?= base_url('rawatjalan/asesmen/icd9') ?>', {
-                    params: {
-                        search: query
-                    } // Kirim query pencarian
-                });
-                const icd9 = response.data.data;
-                const dataList = $('#icd9_kode_3_list');
-                dataList.empty(); // Kosongkan datalist
-                icd9.forEach(item => {
-                    dataList.append(`<option value="${item.icdKode}">${item.icdNamaIndonesia}</option>`);
-                });
-            } catch (error) {
-                console.error('Gagal memuat ICD 10:', error);
-            }
-        }
-
-        async function loadICD94(query) {
-            try {
-                const response = await axios.get('<?= base_url('rawatjalan/asesmen/icd9') ?>', {
-                    params: {
-                        search: query
-                    } // Kirim query pencarian
-                });
-                const icd9 = response.data.data;
-                const dataList = $('#icd9_kode_4_list');
-                dataList.empty(); // Kosongkan datalist
-                icd9.forEach(item => {
-                    dataList.append(`<option value="${item.icdKode}">${item.icdNamaIndonesia}</option>`);
-                });
-            } catch (error) {
-                console.error('Gagal memuat ICD 10:', error);
-            }
-        }
-
-        async function loadICD95(query) {
-            try {
-                const response = await axios.get('<?= base_url('rawatjalan/asesmen/icd9') ?>', {
-                    params: {
-                        search: query
-                    } // Kirim query pencarian
-                });
-                const icd9 = response.data.data;
-                const dataList = $('#icd9_kode_5_list');
-                dataList.empty(); // Kosongkan datalist
-                icd9.forEach(item => {
-                    dataList.append(`<option value="${item.icdKode}">${item.icdNamaIndonesia}</option>`);
-                });
-            } catch (error) {
-                console.error('Gagal memuat ICD 10:', error);
-            }
-        }
-
-        // Event listener untuk input
-        $('#icd9_kode_1').on('input', function() {
-            const query = $(this).val();
-            loadICD91(query);
-        });
-
-        // Event listener untuk input
-        $('#icd9_kode_2').on('input', function() {
-            const query = $(this).val();
-            loadICD92(query);
-        });
-
-        // Event listener untuk input
-        $('#icd9_kode_3').on('input', function() {
-            const query = $(this).val();
-            loadICD93(query);
-        });
-
-        // Event listener untuk input
-        $('#icd9_kode_4').on('input', function() {
-            const query = $(this).val();
-            loadICD94(query);
-        });
-
-        // Event listener untuk input
-        $('#icd9_kode_5').on('input', function() {
-            const query = $(this).val();
-            loadICD95(query);
-        });
     <?php endif; ?>
 
     $(document).ready(async function() {
@@ -1311,18 +1658,6 @@ $usia = $registrasi->diff($tanggal_lahir);
                     showSuccessToast(response.data.message);
                     <?php if (session()->get('role') != 'Perawat') : ?>
                         await fetchAsesmen();
-                        Promise.all([
-                            loadICDX1(),
-                            loadICDX2(),
-                            loadICDX3(),
-                            loadICDX4(),
-                            loadICDX5(),
-                            loadICD91(),
-                            loadICD92(),
-                            loadICD93(),
-                            loadICD94(),
-                            loadICD95()
-                        ]);
                         loadVisus();
                     <?php else : ?>
                         fetchAsesmen();
@@ -1391,18 +1726,6 @@ $usia = $registrasi->diff($tanggal_lahir);
         });
         <?php if (session()->get('role') != 'Perawat') : ?>
             await fetchAsesmen();
-            Promise.all([
-                loadICDX1(),
-                loadICDX2(),
-                loadICDX3(),
-                loadICDX4(),
-                loadICDX5(),
-                loadICD91(),
-                loadICD92(),
-                loadICD93(),
-                loadICD94(),
-                loadICD95()
-            ]);
             fetchAsesmenMata();
             loadVisus();
         <?php else : ?>
