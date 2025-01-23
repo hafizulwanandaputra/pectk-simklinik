@@ -465,6 +465,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                         }
                     }
                     console.error('Perbaiki kesalahan pada formulir.');
+                    $('#uploadProgressBar').addClass('bg-danger');
                 }
             } catch (error) {
                 if (axios.isCancel(error)) {
