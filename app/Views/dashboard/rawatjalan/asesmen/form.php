@@ -78,7 +78,7 @@ $waktuFormatted = $dateTime->format('H.i.s');
 
         .box {
             border: 1px solid black;
-            height: 22.95cm;
+            height: 22.5cm;
             overflow: hidden;
             padding: 0cm;
         }
@@ -189,7 +189,7 @@ $waktuFormatted = $dateTime->format('H.i.s');
                 <tbody>
                     <tr>
                         <td style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            <table class="table" style="width: 100%; margin-bottom: 4px; border: 1px solid black;">
+                            <table class="table" style="width: 100%; margin-bottom: 4px;">
                                 <tbody>
                                     <tr>
                                         <td style="width: 40%; vertical-align: top; padding: 0;">
@@ -250,7 +250,7 @@ $waktuFormatted = $dateTime->format('H.i.s');
                             </table>
                         </td>
                         <td style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            <table class="table" style="width: 100%; margin-bottom: 4px; border: 1px solid black;">
+                            <table class="table" style="width: 100%; margin-bottom: 4px;">
                                 <tbody>
                                     <tr>
                                         <td style="width: 40%; vertical-align: top; padding: 0;">
@@ -332,7 +332,7 @@ $waktuFormatted = $dateTime->format('H.i.s');
                     <tr>
                         <td style="width: 85%; vertical-align: top; white-space: nowrap; overflow: hidden;"></td>
                         <td colspan="3" style="width: 15%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center;">
-                            ICD 10
+                            ICD-10
                         </td>
                     </tr>
                     <tr>
@@ -413,7 +413,7 @@ $waktuFormatted = $dateTime->format('H.i.s');
                     <tr>
                         <td style="width: 85%; vertical-align: top; white-space: nowrap; overflow: hidden;"></td>
                         <td colspan="3" style="width: 15%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center;">
-                            ICD 9
+                            ICD-9 CM
                         </td>
                     </tr>
                     <tr>
