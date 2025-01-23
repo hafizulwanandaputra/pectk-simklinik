@@ -130,7 +130,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="col-sm-4">
-                        <select class="form-select" id="kode_icd_x" name="kode_icd_x" placeholder="ICD 10">
+                        <select class="form-select" id="kode_icd_x" name="kode_icd_x" placeholder="ICD-10">
                         </select>
                         <div class="invalid-feedback"></div>
                     </div>
@@ -213,7 +213,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             $('#kode_icd_x').select2({
                 theme: "bootstrap-5",
                 width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
-                placeholder: "ICD 10",
+                placeholder: "ICD-10",
                 allowClear: true,
                 ajax: {
                     url: '<?= base_url('rawatjalan/laporanrajal/icdx') ?>',
