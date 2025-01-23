@@ -12,7 +12,7 @@
 
 1. Salin `.env.example` ke `.env` dan sesuaikan untuk aplikasi ini, khususnya `requestURL` dan pengaturan basis data.
 2. Buat basis data MySQL yang sesuai dengan nama basis data yang ditentukan dalam file `.env`.
-3. Impor [file SQL](https://files.aku-hafizulwananda.com/pectk-simklinik-no-data.sql) ini untuk impor tabel-tabel ke dalam basis data.
+3. Gunakan file `pectk-simklinik-no-data.sql` di repositori ini untuk impor tabel-tabel ke dalam basis data.
 4. Jalankan `php spark db:seed User` dan `php spark db:seed PwdTransaksi` untuk menyemai (_seed_) item basis data.
 5. Untuk digunakan dengan server pengembangan PHP, jalankan `php spark serve` untuk memulai server. Biasanya [http://localhost:8080](http://localhost:8080). Anda dapat menggunakan port yang berbeda dengan menggunakan `php spark serve --port 8081`. Ganti `8081` dengan nomor port yang diinginkan. Anda perlu mengubah `requestURL` di `.env` agar sesuai dengan nomor port yang diinginkan.
 6. Untuk penggunaan tanpa server pengembangan PHP seperti Apache atau Nginx, cukup buka dari URL seperti [http://localhost/pectk-farmasi](http://localhost/pectk-farmasi) atau yang lain berdasarkan konfigurasi server web Anda. Anda perlu mengubah `requestURL` di `.env` agar sesuai dengan alamat URL yang diinginkan.
@@ -50,10 +50,11 @@ Untuk menyiapkan aplikasi PWA:
 Ada 4 peran pengguna yang digunakan pada aplikasi ini:
 
 1. **Admin**: digunakan untuk mengelola semua hal dalam aplikasi ini dengan akses eksklusif untuk mengelola pengguna dan sesinya serta membuat kata sandi transaksi untuk pembatalan transaksi.
-2. **Rekam Medis**: digunakan untuk mengelola pasien dan mendaftarkan pasien untuk rawat jalan.
+2. **Admisi**: digunakan untuk mengelola pasien dan mendaftarkan pasien untuk rawat jalan.
 3. **Apoteker**: digunakan untuk mengelola stok obat, resep eksternal, dan mencetak e-tiket serta dokumen resep dari resep dokter yang telah dikonfirmasi.
-4. **Dokter**: digunakan untuk mengelola resep dokter yang diberikan kepada pasien.
+4. **Dokter**: digunakan untuk memberikan diagnosis, tindakan, resep obat, dan resep kacamata yang diberikan kepada pasien, serta membuat surat perintah kamar operasi, laporan rawat jalan, dan laporan-laporan operasi.
 5. **Kasir**: digunakan untuk mengelola tindakan dan melakukan transaksi atas tindakan dan obat-obatan.
+6. **Perawat**: digunakan untuk memberikan asesmen, skrining, edukasi, dan pemeriksaan penunjang kepada pasien.
 
 ## Perubahan Penting dengan index.php
 
@@ -92,7 +93,7 @@ Aplikasi ini digunakan untuk:
 >
 > Jl. Rusdi S. Abrus No. 35, LK III Sinambek, Sungai Jering, Kuantan Tengah, Kuantan Singingi, Riau, Indonesia
 
-© 2024 Klinik Mata Utama Padang Eye Center Teluk Kuantan
+© 2025 Klinik Mata Utama Padang Eye Center Teluk Kuantan
 
 Kode sumber aplikasi ini dilisensikan di bawah Lisensi MIT
 
@@ -110,7 +111,7 @@ Kode sumber aplikasi ini dilisensikan di bawah Lisensi MIT
 
 1. Copy `.env.example` to `.env` and tailor for this app, specifically the `requestURL` and the database settings.
 2. Create MySQL database that matches with database name specified in `.env` file.
-3. Import this [SQL file](https://files.aku-hafizulwananda.com/pectk-simklinik-no-data.sql) to import the tables into the database.
+3. Use the `pectk-simklinik-no-data.sql` file in this repository to import the tables into the database.
 4. Run `php spark db:seed User` and `php spark db:seed PwdTransaksi` to seed the database items.
 5. For use with PHP development server, run `php spark serve` to start the server. Usually [http://localhost:8080](http://localhost:8080). You can use different port by using `php spark serve --port 8081`. Replace `8081` with the desired port number. You need to modify `requestURL` in `.env` to match with the desired port number.
 6. For use without PHP development server such as Apache or Nginx, just open it from URL like [http://localhost/pectk-farmasi](http://localhost/pectk-farmasi) or others based on your web server's configuration. You need to modify `requestURL` in `.env` to match with the desired URL address.
@@ -150,8 +151,9 @@ There are 4 user roles used on this application:
 1. **Admin**: is used to manage everything of this application with exclusively access to manage users and its sessions and generating transaction password for transaction cancellation.
 2. **Medical Records**: used to manage patients and register patients for outpatient care.
 3. **Pharmacist**: is used to manage medicine stocks, external prescriptions, and printing e-ticket and prescription document from confirmed doctor prescriptions.
-4. **Doctor**: is used to manage doctor prescription given to the patient.
+4. **Doctor**: is used to provide diagnoses, procedures, medicine prescriptions, and eyeglass prescriptions given to patients, as well as to create surgery room orders, outpatient reports, and surgical reports.
 5. **Cashier**: is used to manage actions and making transaction of the actions and medicines.
+6. **Nurse**: is used to provide assessment, screening, education, and supporting checks to patients.
 
 ## Important Change with index.php
 
@@ -190,6 +192,6 @@ This application is used for:
 >
 > Jl. Rusdi S. Abrus No. 35, LK III Sinambek, Sungai Jering, Kuantan Tengah, Kuantan Singingi, Riau, Indonesia
 
-© 2024 Main Eye Clinic of Padang Eye Center Teluk Kuantan
+© 2025 Main Eye Clinic of Padang Eye Center Teluk Kuantan
 
 The source code of this application is licensed under MIT License

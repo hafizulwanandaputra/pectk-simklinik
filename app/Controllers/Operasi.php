@@ -19,7 +19,7 @@ class Operasi extends BaseController
     public function index()
     {
         // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Admisi' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Admisi') {
             // Menyiapkan data untuk tampilan
             $data = [
                 'title' => 'Pasien Operasi - ' . $this->systemName,
@@ -37,11 +37,12 @@ class Operasi extends BaseController
     public function operasilist()
     {
         // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Admisi' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Admisi') {
             // Mengambil parameter pencarian, limit, offset, dan status dari query string
             $tanggal = $this->request->getGet('tanggal');
             $search = $this->request->getGet('search');
             $dokter = $this->request->getGet('dokter');
+            $status = $this->request->getGet('status');
             $limit = $this->request->getGet('limit');
             $offset = $this->request->getGet('offset');
 
@@ -64,6 +65,11 @@ class Operasi extends BaseController
             if ($dokter) {
                 $SPOperasiModel
                     ->like('dokter_operator', $dokter);
+            }
+
+            if ($status) {
+                $SPOperasiModel
+                    ->like('status_operasi', $status);
             }
 
             // Menerapkan filter pencarian berdasarkan nama pasien atau tanggal resep
@@ -107,7 +113,7 @@ class Operasi extends BaseController
     public function rawatjalanlist()
     {
         // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Admisi' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Admisi') {
             $data = $this->RawatJalanModel
                 ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
                 ->like('tanggal_registrasi', date('Y-m-d'))
@@ -151,7 +157,7 @@ class Operasi extends BaseController
     public function dokterlist()
     {
         // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Admisi' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Admisi') {
             $db = db_connect();
             // Mengambil kasir dari tabel user
             $spOperasiData = $this->SPOperasiModel
@@ -185,7 +191,7 @@ class Operasi extends BaseController
     public function create()
     {
         // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Admisi' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Admisi') {
             // Melakukan validasi
             $validation = \Config\Services::validation();
             // Menetapkan aturan validasi dasar
@@ -264,6 +270,51 @@ class Operasi extends BaseController
         } else {
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan', // Pesan jika peran tidak valid
+            ]);
+        }
+    }
+
+    public function setstatus()
+    {
+        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Admisi' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Admisi') {
+            // Validate
+            $validation = \Config\Services::validation();
+            // Set base validation rules
+            $validation->setRules([
+                'status_operasi' => 'required',
+            ]);
+
+            if (!$this->validate($validation->getRules())) {
+                return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
+            }
+
+            $db = db_connect();
+
+            if ($this->request->getPost('status_operasi') == 'HAPUS') {
+                $sp_operasi = $db->table('medrec_sp_operasi')
+                    ->where('id_sp_operasi', $this->request->getPost('id_sp_operasi'))
+                    ->get()->getRowArray();
+                if ($sp_operasi['site_marking']) {
+                    unlink(FCPATH . 'uploads/site_marking/' . $sp_operasi['site_marking']);
+                }
+                $db->table('medrec_sp_operasi')
+                    ->where('id_sp_operasi', $this->request->getPost('id_sp_operasi'))
+                    ->delete();
+                $db->query('ALTER TABLE rawat_jalan AUTO_INCREMENT = 1');
+                return $this->response->setJSON(['success' => true, 'message' => 'Pasien operasi berhasil dihapus']);
+            } else {
+                $db->table('medrec_sp_operasi')
+                    ->where('id_sp_operasi', $this->request->getPost('id_sp_operasi'))
+                    ->update([
+                        'status_operasi' => $this->request->getPost('status_operasi'),
+                    ]);
+                return $this->response->setJSON(['success' => true, 'message' => 'Status pasien operasi berhasil diperbarui']);
+            }
+        } else {
+            // Mengembalikan status 404 jika peran tidak diizinkan
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
             ]);
         }
     }

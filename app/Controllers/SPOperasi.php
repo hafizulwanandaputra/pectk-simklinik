@@ -94,7 +94,7 @@ class SPOperasi extends BaseController
     public function view($id)
     {
         // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Admisi' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Admisi') {
             // Mengambil data skrining berdasarkan ID
             $data = $this->SPOperasiModel
                 ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_sp_operasi.nomor_registrasi', 'inner')
@@ -113,7 +113,7 @@ class SPOperasi extends BaseController
     public function export($id)
     {
         // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Admisi' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Admisi') {
             $db = db_connect();
 
             // Inisialisasi rawat jalan
@@ -164,20 +164,27 @@ class SPOperasi extends BaseController
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
             // Validate
             $validation = \Config\Services::validation();
-            // Set base validation rules
-            $validation->setRules([
-                'site_marking' => 'uploaded[site_marking]|max_size[site_marking,8192]|is_image[site_marking]',
-            ]);
-
-            if (!$this->validate($validation->getRules())) {
-                return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
-            }
-
             // Ambil SPKO
             $sp_operasi = $this->SPOperasiModel
                 ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_sp_operasi.nomor_registrasi', 'inner')
                 ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
                 ->find($id);
+            // Set base validation rules
+            $site_marking_validation = ($sp_operasi['site_marking'] == NULL) ? 'uploaded[site_marking]|' : '';
+            $validation->setRules([
+                'tanggal_operasi' => 'required',
+                'jam_operasi' => 'required',
+                'jenis_tindakan' => 'required',
+                'jenis_bius' => 'required',
+                'rajal_ranap' => 'required',
+                'ruang_operasi' => 'required',
+                'dokter_operator' => 'required',
+                'site_marking' => $site_marking_validation . 'max_size[site_marking,8192]|is_image[site_marking]',
+            ]);
+
+            if (!$this->validate($validation->getRules())) {
+                return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
+            }
 
             // Proses data jenis_tindakan dari select multiple
             $jenis_tindakan = $this->request->getPost('jenis_tindakan');
@@ -199,7 +206,7 @@ class SPOperasi extends BaseController
                 'rajal_ranap' => $this->request->getPost('rajal_ranap') ?: NULL,
                 'ruang_operasi' => $this->request->getPost('ruang_operasi') ?: NULL,
                 'dokter_operator' => $this->request->getPost('dokter_operator') ?: NULL,
-                'status_operasi' => $this->request->getPost('status_operasi') ?: NULL,
+                'status_operasi' => $sp_operasi['status_operasi'],
                 'diagnosa_site_marking' => $this->request->getPost('diagnosa_site_marking') ?: NULL,
                 'tindakan_site_marking' => $this->request->getPost('tindakan_site_marking') ?: NULL,
                 'nama_pasien_keluarga' => $this->request->getPost('nama_pasien_keluarga') ?: NULL,
@@ -221,7 +228,7 @@ class SPOperasi extends BaseController
             }
 
             $this->SPOperasiModel->save($data);
-            return $this->response->setJSON(['success' => true, 'message' => 'Pemindaian berhasil diperbarui']);
+            return $this->response->setJSON(['success' => true, 'message' => 'SPKO berhasil diperbarui']);
         } else {
             // Mengembalikan status 404 jika peran tidak diizinkan
             return $this->response->setStatusCode(404)->setJSON([

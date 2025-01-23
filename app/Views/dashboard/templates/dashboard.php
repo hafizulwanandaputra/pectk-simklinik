@@ -448,20 +448,18 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                     </div>
                                 </a>
                             </li>
-                            <?php if (session()->get('role') != "Admisi") : ?>
-                                <li class="nav-item">
-                                    <a class="nav-link p-2 <?= ($activeSegment === 'operasi') ? 'active bg-success' : '' ?>" href=" <?= base_url('/operasi'); ?>">
-                                        <div class="d-flex align-items-start <?= ($activeSegment === 'operasi') ? 'text-white' : 'text-success-emphasis' ?>">
-                                            <div style="min-width: 24px; max-width: 24px; text-align: center;">
-                                                <i class="fa-solid fa-stethoscope"></i>
-                                            </div>
-                                            <div class="flex-fill ms-2">
-                                                Pasien Operasi
-                                            </div>
+                            <li class="nav-item">
+                                <a class="nav-link p-2 <?= ($activeSegment === 'operasi') ? 'active bg-success' : '' ?>" href=" <?= base_url('/operasi'); ?>">
+                                    <div class="d-flex align-items-start <?= ($activeSegment === 'operasi') ? 'text-white' : 'text-success-emphasis' ?>">
+                                        <div style="min-width: 24px; max-width: 24px; text-align: center;">
+                                            <i class="fa-solid fa-stethoscope"></i>
                                         </div>
-                                    </a>
-                                </li>
-                            <?php endif; ?>
+                                        <div class="flex-fill ms-2">
+                                            Pasien Operasi
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
                         <?php endif; ?>
                         <?php if (session()->get('role') == "Apoteker" || session()->get('role') == "Admin") : ?>
                             <li class="nav-item">

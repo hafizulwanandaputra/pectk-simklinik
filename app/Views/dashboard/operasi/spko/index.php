@@ -128,7 +128,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 </div>
                 <div class="mb-2">
                     <div class="row gx-1 radio-group">
-                        <label for="jenis_bius" class="col col-form-label">Jenis Bius</label>
+                        <label for="jenis_bius" class="col col-form-label">Jenis Anestesi</label>
                         <div class="col col-form-label">
                             <div class="d-flex align-items-center justify-content-between">
                                 <div class="form-check form-check-inline">
@@ -433,7 +433,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             const fieldElement = $('#' + field);
 
                             // Handle radio button group separately
-                            if (['jatuh_sempoyongan', 'jatuh_penopang', 'jatuh_info_dokter', 'nyeri_info_dokter'].includes(field)) {
+                            if (['jenis_bius', 'rajal_ranap'].includes(field)) {
                                 const radioGroup = $(`input[name='${field}']`); // Ambil grup radio berdasarkan nama
                                 const feedbackElement = radioGroup.closest('.radio-group').find('.invalid-feedback'); // Gunakan pembungkus dengan class tertentu
 
