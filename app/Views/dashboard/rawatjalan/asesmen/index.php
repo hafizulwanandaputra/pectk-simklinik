@@ -747,6 +747,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
                 placeholder: "ICD 10",
                 disabled: <?= (session()->get('role') == 'Perawat') ? 'true' : 'false' ?>,
+                allowClear: true,
                 ajax: {
                     url: '<?= base_url('rawatjalan/asesmen/icdx') ?>',
                     dataType: 'json',
@@ -812,6 +813,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
                 placeholder: "ICD 10",
                 disabled: <?= (session()->get('role') == 'Perawat') ? 'true' : 'false' ?>,
+                allowClear: true,
                 ajax: {
                     url: '<?= base_url('rawatjalan/asesmen/icdx') ?>',
                     dataType: 'json',
@@ -877,6 +879,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
                 placeholder: "ICD 10",
                 disabled: <?= (session()->get('role') == 'Perawat') ? 'true' : 'false' ?>,
+                allowClear: true,
                 ajax: {
                     url: '<?= base_url('rawatjalan/asesmen/icdx') ?>',
                     dataType: 'json',
@@ -942,6 +945,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
                 placeholder: "ICD 10",
                 disabled: <?= (session()->get('role') == 'Perawat') ? 'true' : 'false' ?>,
+                allowClear: true,
                 ajax: {
                     url: '<?= base_url('rawatjalan/asesmen/icdx') ?>',
                     dataType: 'json',
@@ -1007,6 +1011,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
                 placeholder: "ICD 10",
                 disabled: <?= (session()->get('role') == 'Perawat') ? 'true' : 'false' ?>,
+                allowClear: true,
                 ajax: {
                     url: '<?= base_url('rawatjalan/asesmen/icdx') ?>',
                     dataType: 'json',
@@ -1072,6 +1077,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
                 placeholder: "ICD 9",
                 disabled: <?= (session()->get('role') == 'Perawat') ? 'true' : 'false' ?>,
+                allowClear: true,
                 ajax: {
                     url: '<?= base_url('rawatjalan/asesmen/icd9') ?>',
                     dataType: 'json',
@@ -1137,6 +1143,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
                 placeholder: "ICD 9",
                 disabled: <?= (session()->get('role') == 'Perawat') ? 'true' : 'false' ?>,
+                allowClear: true,
                 ajax: {
                     url: '<?= base_url('rawatjalan/asesmen/icd9') ?>',
                     dataType: 'json',
@@ -1202,6 +1209,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
                 placeholder: "ICD 9",
                 disabled: <?= (session()->get('role') == 'Perawat') ? 'true' : 'false' ?>,
+                allowClear: true,
                 ajax: {
                     url: '<?= base_url('rawatjalan/asesmen/icd9') ?>',
                     dataType: 'json',
@@ -1267,6 +1275,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
                 placeholder: "ICD 9",
                 disabled: <?= (session()->get('role') == 'Perawat') ? 'true' : 'false' ?>,
+                allowClear: true,
                 ajax: {
                     url: '<?= base_url('rawatjalan/asesmen/icd9') ?>',
                     dataType: 'json',
@@ -1332,6 +1341,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
                 placeholder: "ICD 9",
                 disabled: <?= (session()->get('role') == 'Perawat') ? 'true' : 'false' ?>,
+                allowClear: true,
                 ajax: {
                     url: '<?= base_url('rawatjalan/asesmen/icd9') ?>',
                     dataType: 'json',

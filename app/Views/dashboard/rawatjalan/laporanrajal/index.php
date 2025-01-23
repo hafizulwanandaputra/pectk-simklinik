@@ -214,6 +214,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 theme: "bootstrap-5",
                 width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
                 placeholder: "ICD 10",
+                allowClear: true,
                 ajax: {
                     url: '<?= base_url('rawatjalan/laporanrajal/icdx') ?>',
                     dataType: 'json',
