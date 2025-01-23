@@ -167,12 +167,12 @@ class TindakanRajal extends BaseController
 
             // Menggunakan Query Builder untuk mengambil data ICD-X
             $builder = $db->table('icd_x');
-            $builder->select('icdKode, icdNamaIndonesia');
+            $builder->select('icdKode, icdNamaInggris');
 
             // Menambahkan filter pencarian
             $builder
                 ->like('icdKode', $search)
-                ->orLike('icdNamaIndonesia', $search);
+                ->orLike('icdNamaInggris', $search);
 
             // Menambahkan limit dan offset untuk lazy loading
             $builder->limit($limit, $offset);

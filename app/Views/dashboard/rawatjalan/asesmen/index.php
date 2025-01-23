@@ -763,7 +763,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             results: data.data.map(item => ({
                                 id: item.icdKode,
                                 text: item.icdKode, // Teks untuk pencarian
-                                nama: item.icdNamaIndonesia // Tambahan data untuk custom HTML
+                                nama: item.icdNamaInggris // Tambahan data untuk custom HTML
                             })),
                             pagination: {
                                 more: data.data.length >= 50
@@ -796,6 +796,14 @@ $usia = $registrasi->diff($tanggal_lahir);
                 escapeMarkup: function(markup) {
                     // Biarkan HTML tetap diproses
                     return markup;
+                }
+            }).on('select2:select', function(e) {
+                // Dapatkan data item yang dipilih
+                const selectedData = e.params.data;
+
+                // Ubah nilai pada diagnosa_medis_1
+                if (selectedData.nama) {
+                    $('#diagnosa_medis_1').val(selectedData.nama);
                 }
             });
 
@@ -820,7 +828,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             results: data.data.map(item => ({
                                 id: item.icdKode,
                                 text: item.icdKode, // Teks untuk pencarian
-                                nama: item.icdNamaIndonesia // Tambahan data untuk custom HTML
+                                nama: item.icdNamaInggris // Tambahan data untuk custom HTML
                             })),
                             pagination: {
                                 more: data.data.length >= 50
@@ -853,6 +861,14 @@ $usia = $registrasi->diff($tanggal_lahir);
                 escapeMarkup: function(markup) {
                     // Biarkan HTML tetap diproses
                     return markup;
+                }
+            }).on('select2:select', function(e) {
+                // Dapatkan data item yang dipilih
+                const selectedData = e.params.data;
+
+                // Ubah nilai pada diagnosa_medis_1
+                if (selectedData.nama) {
+                    $('#diagnosa_medis_2').val(selectedData.nama);
                 }
             });
 
@@ -877,7 +893,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             results: data.data.map(item => ({
                                 id: item.icdKode,
                                 text: item.icdKode, // Teks untuk pencarian
-                                nama: item.icdNamaIndonesia // Tambahan data untuk custom HTML
+                                nama: item.icdNamaInggris // Tambahan data untuk custom HTML
                             })),
                             pagination: {
                                 more: data.data.length >= 50
@@ -910,6 +926,14 @@ $usia = $registrasi->diff($tanggal_lahir);
                 escapeMarkup: function(markup) {
                     // Biarkan HTML tetap diproses
                     return markup;
+                }
+            }).on('select2:select', function(e) {
+                // Dapatkan data item yang dipilih
+                const selectedData = e.params.data;
+
+                // Ubah nilai pada diagnosa_medis_1
+                if (selectedData.nama) {
+                    $('#diagnosa_medis_3').val(selectedData.nama);
                 }
             });
 
@@ -934,7 +958,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             results: data.data.map(item => ({
                                 id: item.icdKode,
                                 text: item.icdKode, // Teks untuk pencarian
-                                nama: item.icdNamaIndonesia // Tambahan data untuk custom HTML
+                                nama: item.icdNamaInggris // Tambahan data untuk custom HTML
                             })),
                             pagination: {
                                 more: data.data.length >= 50
@@ -967,6 +991,14 @@ $usia = $registrasi->diff($tanggal_lahir);
                 escapeMarkup: function(markup) {
                     // Biarkan HTML tetap diproses
                     return markup;
+                }
+            }).on('select2:select', function(e) {
+                // Dapatkan data item yang dipilih
+                const selectedData = e.params.data;
+
+                // Ubah nilai pada diagnosa_medis_1
+                if (selectedData.nama) {
+                    $('#diagnosa_medis_4').val(selectedData.nama);
                 }
             });
 
@@ -991,7 +1023,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             results: data.data.map(item => ({
                                 id: item.icdKode,
                                 text: item.icdKode, // Teks untuk pencarian
-                                nama: item.icdNamaIndonesia // Tambahan data untuk custom HTML
+                                nama: item.icdNamaInggris // Tambahan data untuk custom HTML
                             })),
                             pagination: {
                                 more: data.data.length >= 50
@@ -1024,6 +1056,14 @@ $usia = $registrasi->diff($tanggal_lahir);
                 escapeMarkup: function(markup) {
                     // Biarkan HTML tetap diproses
                     return markup;
+                }
+            }).on('select2:select', function(e) {
+                // Dapatkan data item yang dipilih
+                const selectedData = e.params.data;
+
+                // Ubah nilai pada diagnosa_medis_1
+                if (selectedData.nama) {
+                    $('#diagnosa_medis_5').val(selectedData.nama);
                 }
             });
 
@@ -1048,7 +1088,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             results: data.data.map(item => ({
                                 id: item.icdKode,
                                 text: item.icdKode, // Teks untuk pencarian
-                                nama: item.icdNamaIndonesia // Tambahan data untuk custom HTML
+                                nama: item.icdNamaInggris // Tambahan data untuk custom HTML
                             })),
                             pagination: {
                                 more: data.data.length >= 50
@@ -1081,6 +1121,14 @@ $usia = $registrasi->diff($tanggal_lahir);
                 escapeMarkup: function(markup) {
                     // Biarkan HTML tetap diproses
                     return markup;
+                }
+            }).on('select2:select', function(e) {
+                // Dapatkan data item yang dipilih
+                const selectedData = e.params.data;
+
+                // Ubah nilai pada terapi_1
+                if (selectedData.nama) {
+                    $('#terapi_1').val(selectedData.nama);
                 }
             });
 
@@ -1105,7 +1153,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             results: data.data.map(item => ({
                                 id: item.icdKode,
                                 text: item.icdKode, // Teks untuk pencarian
-                                nama: item.icdNamaIndonesia // Tambahan data untuk custom HTML
+                                nama: item.icdNamaInggris // Tambahan data untuk custom HTML
                             })),
                             pagination: {
                                 more: data.data.length >= 50
@@ -1138,6 +1186,14 @@ $usia = $registrasi->diff($tanggal_lahir);
                 escapeMarkup: function(markup) {
                     // Biarkan HTML tetap diproses
                     return markup;
+                }
+            }).on('select2:select', function(e) {
+                // Dapatkan data item yang dipilih
+                const selectedData = e.params.data;
+
+                // Ubah nilai pada terapi_1
+                if (selectedData.nama) {
+                    $('#terapi_2').val(selectedData.nama);
                 }
             });
 
@@ -1162,7 +1218,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             results: data.data.map(item => ({
                                 id: item.icdKode,
                                 text: item.icdKode, // Teks untuk pencarian
-                                nama: item.icdNamaIndonesia // Tambahan data untuk custom HTML
+                                nama: item.icdNamaInggris // Tambahan data untuk custom HTML
                             })),
                             pagination: {
                                 more: data.data.length >= 50
@@ -1195,6 +1251,14 @@ $usia = $registrasi->diff($tanggal_lahir);
                 escapeMarkup: function(markup) {
                     // Biarkan HTML tetap diproses
                     return markup;
+                }
+            }).on('select2:select', function(e) {
+                // Dapatkan data item yang dipilih
+                const selectedData = e.params.data;
+
+                // Ubah nilai pada terapi_1
+                if (selectedData.nama) {
+                    $('#terapi_3').val(selectedData.nama);
                 }
             });
 
@@ -1219,7 +1283,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             results: data.data.map(item => ({
                                 id: item.icdKode,
                                 text: item.icdKode, // Teks untuk pencarian
-                                nama: item.icdNamaIndonesia // Tambahan data untuk custom HTML
+                                nama: item.icdNamaInggris // Tambahan data untuk custom HTML
                             })),
                             pagination: {
                                 more: data.data.length >= 50
@@ -1253,6 +1317,14 @@ $usia = $registrasi->diff($tanggal_lahir);
                     // Biarkan HTML tetap diproses
                     return markup;
                 }
+            }).on('select2:select', function(e) {
+                // Dapatkan data item yang dipilih
+                const selectedData = e.params.data;
+
+                // Ubah nilai pada terapi_1
+                if (selectedData.nama) {
+                    $('#terapi_4').val(selectedData.nama);
+                }
             });
 
             $('#icd9_kode_5').select2({
@@ -1276,7 +1348,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             results: data.data.map(item => ({
                                 id: item.icdKode,
                                 text: item.icdKode, // Teks untuk pencarian
-                                nama: item.icdNamaIndonesia // Tambahan data untuk custom HTML
+                                nama: item.icdNamaInggris // Tambahan data untuk custom HTML
                             })),
                             pagination: {
                                 more: data.data.length >= 50
@@ -1309,6 +1381,14 @@ $usia = $registrasi->diff($tanggal_lahir);
                 escapeMarkup: function(markup) {
                     // Biarkan HTML tetap diproses
                     return markup;
+                }
+            }).on('select2:select', function(e) {
+                // Dapatkan data item yang dipilih
+                const selectedData = e.params.data;
+
+                // Ubah nilai pada terapi_1
+                if (selectedData.nama) {
+                    $('#terapi_5').val(selectedData.nama);
                 }
             });
         } catch (error) {

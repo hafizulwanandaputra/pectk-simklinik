@@ -210,6 +210,69 @@ $usia = $registrasi->diff($tanggal_lahir);
                 $("input[name='lokasi_mata'][value='" + lokasi_mata + "']").prop('checked', true);
             }
             $('#isi_laporan').val(data.isi_laporan);
+            $('#kode_icd_x').select2({
+                theme: "bootstrap-5",
+                width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+                placeholder: "ICD 10",
+                ajax: {
+                    url: '<?= base_url('rawatjalan/laporanrajal/icdx') ?>',
+                    dataType: 'json',
+                    delay: 250, // Tambahkan debounce
+                    data: function(params) {
+                        return {
+                            search: params.term, // Pencarian berdasarkan input
+                            offset: (params.page || 0) * 50, // Pagination
+                            limit: 50
+                        };
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: data.data.map(item => ({
+                                id: item.icdKode,
+                                text: item.icdKode, // Teks untuk pencarian
+                                nama: item.icdNamaInggris // Tambahan data untuk custom HTML
+                            })),
+                            pagination: {
+                                more: data.data.length >= 50
+                            }
+                        };
+                    }
+                },
+                minimumInputLength: 1,
+                templateResult: function(data) {
+                    // Format untuk tampilan hasil pencarian
+                    if (!data.id) {
+                        return data.text; // Untuk placeholder
+                    }
+
+                    const template = `
+                    <div class="d-flex align-items-start">
+                        <div class="me-2 font-monospace">
+                            <strong>${data.text}</strong>
+                        </div>
+                        <div>
+                            ${data.nama}
+                        </div>
+                    </div>
+                `;
+                    return $(template);
+                },
+                templateSelection: function(data) {
+                    return data.text && data.text !== 'null' ? data.text : '';
+                },
+                escapeMarkup: function(markup) {
+                    // Biarkan HTML tetap diproses
+                    return markup;
+                }
+            }).on('select2:select', function(e) {
+                // Dapatkan data item yang dipilih
+                const selectedData = e.params.data;
+
+                // Ubah nilai pada diagnosa
+                if (selectedData.nama) {
+                    $('#diagnosa').val(selectedData.nama);
+                }
+            });
         } catch (error) {
             showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
         } finally {
@@ -217,61 +280,6 @@ $usia = $registrasi->diff($tanggal_lahir);
         }
     }
 
-    $('#kode_icd_x').select2({
-        theme: "bootstrap-5",
-        width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
-        placeholder: "ICD 10",
-        ajax: {
-            url: '<?= base_url('rawatjalan/laporanrajal/icdx') ?>',
-            dataType: 'json',
-            delay: 250, // Tambahkan debounce
-            data: function(params) {
-                return {
-                    search: params.term, // Pencarian berdasarkan input
-                    offset: (params.page || 0) * 50, // Pagination
-                    limit: 50
-                };
-            },
-            processResults: function(data) {
-                return {
-                    results: data.data.map(item => ({
-                        id: item.icdKode,
-                        text: item.icdKode, // Teks untuk pencarian
-                        nama: item.icdNamaIndonesia // Tambahan data untuk custom HTML
-                    })),
-                    pagination: {
-                        more: data.data.length >= 50
-                    }
-                };
-            }
-        },
-        minimumInputLength: 1,
-        templateResult: function(data) {
-            // Format untuk tampilan hasil pencarian
-            if (!data.id) {
-                return data.text; // Untuk placeholder
-            }
-
-            const template = `
-            <div class="d-flex align-items-start">
-                <div class="me-2 font-monospace">
-                    <strong>${data.text}</strong>
-                </div>
-                <div>
-                    ${data.nama}
-                </div>
-            </div>
-        `;
-            return $(template);
-        },
-        templateSelection: function(data) {
-            return data.text && data.text !== 'null' ? data.text : '';
-        },
-        escapeMarkup: function(markup) {
-            // Biarkan HTML tetap diproses
-            return markup;
-        }
-    });
 
     $(document).ready(async function() {
         // Cari semua elemen dengan kelas 'activeLink' di kedua navigasi
