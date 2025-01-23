@@ -164,7 +164,7 @@ class SPOperasi extends BaseController
                 $extension = $site_marking->getExtension();
                 $id_penunjang_scan = $this->request->getVar('id_penunjang_scan'); // Pastikan mengambil id yang benar
                 if ($sp_operasi['site_marking']) {
-                    unlink(FCPATH . 'uploads/scan_penunjang/' . $sp_operasi['site_marking']);
+                    unlink(FCPATH . 'uploads/site_marking/' . $sp_operasi['site_marking']);
                 }
                 $site_marking_name = $sp_operasi['no_rm'] . '_' . $sp_operasi['nomor_booking'] . '.' . $extension;
                 $site_marking->move(FCPATH . 'uploads/site_marking', $site_marking_name);
