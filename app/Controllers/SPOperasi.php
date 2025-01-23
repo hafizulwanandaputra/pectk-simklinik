@@ -30,6 +30,14 @@ class SPOperasi extends BaseController
                 throw PageNotFoundException::forPageNotFound();
             }
 
+            $master_tindakan_operasi = $db->table('master_tindakan_operasi')
+                ->get()->getResultArray();
+
+            $dokter = $db->table('user')
+                ->where('role', 'Dokter')
+                ->where('active', 1)
+                ->get()->getResultArray();
+
             // Query untuk item sebelumnya
             $previous = $db->table('medrec_sp_operasi')
                 ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_sp_operasi.nomor_registrasi', 'inner')
@@ -64,6 +72,8 @@ class SPOperasi extends BaseController
             // Menyiapkan data untuk tampilan
             $data = [
                 'operasi' => $sp_operasi,
+                'master_tindakan_operasi' => $master_tindakan_operasi,
+                'dokter' => $dokter,
                 'title' => 'Surat Perintah Kamar Operasi ' . $sp_operasi['nama_pasien'] . ' (' . $sp_operasi['no_rm'] . ') - ' . $sp_operasi['nomor_registrasi'] . ' - ' . $this->systemName,
                 'headertitle' => 'Surat Perintah Kamar Operasi',
                 'agent' => $this->request->getUserAgent(), // Mengambil informasi user agent

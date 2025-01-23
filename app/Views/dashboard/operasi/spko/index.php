@@ -12,7 +12,7 @@ $usia = $registrasi->diff($tanggal_lahir);
 ?>
 <?= $this->extend('dashboard/templates/dashboard'); ?>
 <?= $this->section('css'); ?>
-<?= $this->include('select2/floating'); ?>
+<?= $this->include('select2/normal'); ?>
 <style>
     /* Ensures the dropdown is visible outside the parent with overflow auto */
     .select2-container {
@@ -84,7 +84,137 @@ $usia = $registrasi->diff($tanggal_lahir);
             <?= form_open_multipart('/operasi/spko/update/' . $operasi['id_sp_operasi'], 'id="SPKOForm"'); ?>
             <?= csrf_field(); ?>
             <div class="mb-3">
-
+                <div class="mb-2 row row-cols-1 row-cols-lg-2 g-2">
+                    <div class="col">
+                        <div class="form-floating">
+                            <input type="date" class="form-control" id="tanggal_operasi" name="tanggal_operasi" value="" autocomplete="off" dir="auto" placeholder="tanggal_operasi">
+                            <label for="tanggal_operasi">Tanggal Operasi</label>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-floating">
+                            <input type="time" class="form-control" id="jam_operasi" name="jam_operasi" value="" autocomplete="off" dir="auto" placeholder="jam_operasi">
+                            <label for="jam_operasi">Jam Operasi</label>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="diagnosa" name="diagnosa" value="" autocomplete="off" dir="auto" placeholder="diagnosa">
+                        <label for="diagnosa">Diagnosis</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <label for="jenis_tindakan" class="form-label">
+                        Jenis Tindakan
+                    </label>
+                    <select class="form-select" id="jenis_tindakan" name="jenis_tindakan[]" multiple>
+                        <?php foreach ($master_tindakan_operasi as $list) : ?>
+                            <option value="<?= $list['nama_tindakan'] ?>"><?= $list['nama_tindakan'] ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                    <div class="invalid-feedback"></div>
+                </div>
+                <div class="mb-2">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="indikasi_operasi" name="indikasi_operasi" value="" autocomplete="off" dir="auto" placeholder="indikasi_operasi">
+                        <label for="indikasi_operasi">Indikasi Operasi</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <div class="row gx-1 radio-group">
+                        <label for="jenis_bius" class="col col-form-label">Jenis Bius</label>
+                        <div class="col col-form-label">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="jenis_bius" id="jenis_bius1" value="UMUM">
+                                    <label class="form-check-label" for="jenis_bius1">
+                                        Umum
+                                    </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="jenis_bius" id="jenis_bius2" value="LOKAL">
+                                    <label class="form-check-label" for="jenis_bius2">
+                                        Lokal
+                                    </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="jenis_bius" id="jenis_bius3" value="TOTAL">
+                                    <label class="form-check-label" for="jenis_bius3">
+                                        Total
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <div class="form-floating">
+                        <select class="form-select" id="tipe_bayar" name="tipe_bayar" aria-label="tipe_bayar">
+                            <option value="" selected>Tidak Ada</option>
+                            <option value="PRIBADI">Pribadi</option>
+                            <option value="BPJS">BPJS</option>
+                            <option value="ASURANSI">Asuransi</option>
+                            <option value="JAMINAN PERUSAHAAN">Jaminan Perusahaan</option>
+                        </select>
+                        <label for="tipe_bayar">Tipe Bayar</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <div class="form-floating">
+                        <select class="form-select" id="ruang_operasi" name="ruang_operasi" aria-label="ruang_operasi">
+                            <option value="" disabled selected>-- Pilih Ruangan --</option>
+                            <option value="OK1">OK1</option>
+                        </select>
+                        <label for="ruang_operasi">Ruangan</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <div class="form-floating">
+                        <select class="form-select" id="ruang_operasi" name="ruang_operasi" aria-label="ruang_operasi">
+                            <option value="" disabled selected>-- Pilih Dokter Operator --</option>
+                            <?php foreach ($dokter as $list) : ?>
+                                <option value="<?= $list['fullname'] ?>"><?= $list['fullname'] ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                        <label for="ruang_operasi">Dokter Operator</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <div class="fw-bold mb-2 border-bottom"><em>Site Marking</em></div>
+                <div class="mb-2">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="diagnosa_site_marking" name="diagnosa_site_marking" value="" autocomplete="off" dir="auto" placeholder="diagnosa_site_marking">
+                        <label for="diagnosa_site_marking">Diagnosis</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="tindakan_site_marking" name="tindakan_site_marking" value="" autocomplete="off" dir="auto" placeholder="tindakan_site_marking">
+                        <label for="tindakan_site_marking">Tindakan</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <div class="fw-bold mb-2 border-bottom">Pasien dan Keluarga</div>
+                <div class="mb-2">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="nama_pasien_keluarga" name="nama_pasien_keluarga" value="" autocomplete="off" dir="auto" placeholder="nama_pasien_keluarga	">
+                        <label for="nama_pasien_keluarga">Nama Pasien dan Keluarga</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
             </div>
             <div>
                 <hr>
@@ -95,53 +225,37 @@ $usia = $registrasi->diff($tanggal_lahir);
             </div>
             <?= form_close(); ?>
         </div>
-
+    </div>
 </main>
 <?= $this->endSection(); ?>
 <?= $this->section('javascript'); ?>
 <script>
-    async function fetchSkrining() {
+    async function fetchSPKO() {
         $('#loadingSpinner').show();
 
         try {
             const response = await axios.get('<?= base_url('operasi/spko/view/') . $operasi['id_sp_operasi'] ?>');
             const data = response.data;
 
-            // Skrining Risiko Cedera/Jatuh (Get Up and Go Score)
-            const jatuh_sempoyongan = data.jatuh_sempoyongan;
-            if (jatuh_sempoyongan) {
-                $("input[name='jatuh_sempoyongan'][value='" + jatuh_sempoyongan + "']").prop('checked', true);
+            $('#tanggal_operasi').val(data.tanggal_operasi);
+            $('#jam_operasi').val(data.jam_operasi);
+            $('#diagnosa').val(data.diagnosa);
+            $('#jenis_tindakan').val(data.jenis_tindakan).trigger('change');
+            $('#indikasi_operasi').val(data.indikasi_operasi);
+            const jenis_bius = data.jenis_bius;
+            if (jenis_bius) {
+                $("input[name='jenis_bius'][value='" + jenis_bius + "']").prop('checked', true);
             }
-            const jatuh_penopang = data.jatuh_penopang;
-            if (jatuh_penopang) {
-                $("input[name='jatuh_penopang'][value='" + jatuh_penopang + "']").prop('checked', true);
-            }
-            const jatuh_info_dokter = data.jatuh_info_dokter;
-            if (jatuh_info_dokter) {
-                $("input[name='jatuh_info_dokter'][value='" + jatuh_info_dokter + "']").prop('checked', true);
-            }
-            $('#jatuh_info_pukul').val(data.jatuh_info_pukul);
+            $('#tipe_bayar').val(data.tipe_bayar);
+            $('#ruang_operasi').val(data.ruang_operasi);
+            $('#dokter_operator').val(data.dokter_operator);
 
-            // Status Fungsional
-            $('#status_fungsional').val(data.status_fungsional);
-            $('#status_info_pukul').val(data.status_info_pukul);
+            // Site Marking
+            $('#diagnosa_site_marking').val(data.diagnosa_site_marking);
+            $('#tindakan_site_marking').val(data.tindakan_site_marking);
 
-            // Skrining Nyeri
-            $('#nyeri_kategori').val(data.nyeri_kategori);
-            const nyeri_skala = data.nyeri_skala === null ? 0 : data.nyeri_skala;
-            $('#nyeri_skala_value').text(nyeri_skala);
-            $('#nyeri_skala').val(nyeri_skala);
-            $('#nyeri_lokasi').val(data.nyeri_lokasi);
-            $('#nyeri_karakteristik').val(data.nyeri_karakteristik);
-            $('#nyeri_durasi').val(data.nyeri_durasi);
-            $('#nyeri_frekuensi').val(data.nyeri_frekuensi);
-            $('#nyeri_hilang_bila').val(data.nyeri_hilang_bila);
-            $('#nyeri_hilang_lainnya').val(data.nyeri_hilang_lainnya);
-            const nyeri_info_dokter = data.nyeri_info_dokter;
-            if (nyeri_info_dokter) {
-                $("input[name='nyeri_info_dokter'][value='" + nyeri_info_dokter + "']").prop('checked', true);
-            }
-            $('#nyeri_info_pukul').val(data.nyeri_info_pukul);
+            // Pasien dan Keluarga
+            $('#nama_pasien_keluarga').val(data.nama_pasien_keluarga);
         } catch (error) {
             showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
         } finally {
@@ -150,6 +264,11 @@ $usia = $registrasi->diff($tanggal_lahir);
     }
 
     $(document).ready(async function() {
+        $('#jenis_tindakan').select2({
+            theme: "bootstrap-5",
+            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+            placeholder: "Pilih jenis tindakan"
+        });
         // Cari semua elemen dengan kelas 'activeLink' di kedua navigasi
         $(".nav .activeLink").each(function() {
             // Scroll ke elemen yang aktif
@@ -157,9 +276,6 @@ $usia = $registrasi->diff($tanggal_lahir);
                 block: "nearest", // Fokus pada elemen aktif
                 inline: "center" // Elemen di-scroll ke tengah horizontal
             });
-        });
-        $('#nyeri_skala').on('input', function() {
-            $('#nyeri_skala_value').text($(this).val());
         });
 
         $('#SPKOForm').submit(async function(ə) {
@@ -250,8 +366,8 @@ $usia = $registrasi->diff($tanggal_lahir);
                 $('#SPKOForm input, #SPKOForm select').prop('disabled', false);
             }
         });
-        $('#loadingSpinner').hide();
-        // fetchSkrining();
+        // $('#loadingSpinner').hide();
+        fetchSPKO();
     });
     // Show toast notification
     <?= $this->include('toast/index') ?>

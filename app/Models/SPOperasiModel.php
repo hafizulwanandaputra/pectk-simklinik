@@ -24,7 +24,9 @@ class SPOperasiModel extends Model
         'ruang_operasi',
         'dokter_operator',
         'status_operasi',
-        'stie_marking',
+        'diagnosa_site_marking',
+        'tindakan_site_marking',
+        'site_marking',
         'nama_pasien_keluarga',
         'tanda_tangan_pasien',
         'waktu_dibuat'
