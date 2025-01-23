@@ -59,7 +59,7 @@ $usia = $registrasi->diff($tanggal_lahir);
 
         .box {
             border: 1px solid black;
-            height: 22.95cm;
+            height: 22.5cm;
             overflow: hidden;
             padding: 0cm;
         }
