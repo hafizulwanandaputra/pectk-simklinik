@@ -333,7 +333,7 @@ class RawatJalan extends BaseController
                         ->getResultArray();
                     foreach ($asesmen_mata as $mata) {
                         if (!empty($mata['gambar']) && file_exists(FCPATH . 'uploads/asesmen_mata/' . $mata['gambar'])) {
-                            unlink(FCPATH . 'uploads/asesmen_mata/' . $mata['gambar']);
+                            @unlink(FCPATH . 'uploads/asesmen_mata/' . $mata['gambar']);
                         }
                     }
 
@@ -343,10 +343,10 @@ class RawatJalan extends BaseController
                         ->getResultArray();
                     foreach ($edukasi_evaluasi as $edukasi) {
                         if (!empty($edukasi['tanda_tangan_edukator']) && file_exists(FCPATH . 'uploads/ttd_edukator_evaluasi/' . $edukasi['tanda_tangan_edukator'])) {
-                            unlink(FCPATH . 'uploads/ttd_edukator_evaluasi/' . $edukasi['tanda_tangan_edukator']);
+                            @unlink(FCPATH . 'uploads/ttd_edukator_evaluasi/' . $edukasi['tanda_tangan_edukator']);
                         }
                         if (!empty($edukasi['tanda_tangan_pasien']) && file_exists(FCPATH . 'uploads/ttd_pasien_evaluasi/' . $edukasi['tanda_tangan_pasien'])) {
-                            unlink(FCPATH . 'uploads/ttd_pasien_evaluasi/' . $edukasi['tanda_tangan_pasien']);
+                            @unlink(FCPATH . 'uploads/ttd_pasien_evaluasi/' . $edukasi['tanda_tangan_pasien']);
                         }
                     }
 
@@ -356,7 +356,7 @@ class RawatJalan extends BaseController
                         ->getResultArray();
                     foreach ($penunjang_scan as $scan) {
                         if (!empty($scan['gambar']) && file_exists(FCPATH . 'uploads/scan_penunjang/' . $scan['gambar'])) {
-                            unlink(FCPATH . 'uploads/scan_penunjang/' . $scan['gambar']);
+                            @unlink(FCPATH . 'uploads/scan_penunjang/' . $scan['gambar']);
                         }
                     }
                 }

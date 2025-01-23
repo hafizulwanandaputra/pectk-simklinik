@@ -128,18 +128,26 @@ class AsesmenMata extends BaseController
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Dokter' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
-            // Validate
-            $validation = \Config\Services::validation();
-            // Set base validation rules
-            $validation->setRules([
-                'gambar' => 'if_exist|max_size[gambar,8192]|is_image[gambar]',
-            ]);
+            // Ambil file yang diunggah
+            $gambar = $this->request->getFile('gambar');
 
-            if (!$this->validate($validation->getRules())) {
-                return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
+            // Atur aturan validasi
+            $validationRules = [];
+
+            // Tambahkan validasi file hanya jika file diunggah
+            if ($gambar && $gambar->isValid() && !$gambar->hasMoved()) {
+                $validationRules['gambar'] = 'max_size[gambar,8192]|is_image[gambar]';
             }
 
-            // Ambil resep luar
+            // Lakukan validasi hanya jika ada aturan
+            if (!empty($validationRules) && !$this->validate($validationRules)) {
+                return $this->response->setJSON([
+                    'success' => false,
+                    'errors' => $this->validator->getErrors(),
+                ]);
+            }
+
+            // Ambil data dari model
             $penunjang_scan = $this->AsesmenMataModel->find($this->request->getPost('id_asesmen_mata'));
 
             // Simpan data edukasi
@@ -150,20 +158,25 @@ class AsesmenMata extends BaseController
                 'waktu_dibuat' => $penunjang_scan['waktu_dibuat'],
             ];
 
-            // Unggah gambar
-            $gambar = $this->request->getFile('gambar');
+            // Proses unggah gambar jika ada
             if ($gambar && $gambar->isValid() && !$gambar->hasMoved()) {
                 $extension = $gambar->getExtension();
                 $id_asesmen_mata = $this->request->getVar('id_asesmen_mata'); // Pastikan mengambil id yang benar
+
+                // Hapus file lama jika ada
                 if ($penunjang_scan['gambar']) {
-                    unlink(FCPATH . 'uploads/asesmen_mata/' . $penunjang_scan['gambar']);
+                    @unlink(FCPATH . 'uploads/asesmen_mata/' . $penunjang_scan['gambar']);
                 }
+
+                // Tentukan nama file baru
                 $gambar_name = 'mata_' . $penunjang_scan['nomor_registrasi'] . '_' . $id_asesmen_mata . '.' . $extension;
                 $gambar->move(FCPATH . 'uploads/asesmen_mata', $gambar_name);
                 $data['gambar'] = $gambar_name;
             }
 
+            // Simpan data ke database
             $this->AsesmenMataModel->save($data);
+
             return $this->response->setJSON(['success' => true, 'message' => 'Pemeriksaan fisik berhasil diperbarui']);
         } else {
             // Mengembalikan status 404 jika peran tidak diizinkan
@@ -172,6 +185,7 @@ class AsesmenMata extends BaseController
             ]);
         }
     }
+
 
     // public function gambar($filename)
     // {
@@ -201,7 +215,7 @@ class AsesmenMata extends BaseController
             if ($asesmen_mata) {
                 // Hapus tanda tangan edukator
                 if ($asesmen_mata['gambar']) {
-                    unlink(FCPATH . 'uploads/asesmen_mata/' . $asesmen_mata['gambar']);
+                    @unlink(FCPATH . 'uploads/asesmen_mata/' . $asesmen_mata['gambar']);
                 }
 
                 // Hapus evaluasi

@@ -152,22 +152,34 @@ class EdukasiEvaluasi extends BaseController
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Admisi' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat') {
-            // Validate
-            $validation = \Config\Services::validation();
-            // Set base validation rules
-            $validation->setRules([
+            // Ambil file yang diunggah
+            $tanda_tangan_edukator = $this->request->getFile('tanda_tangan_edukator');
+            $tanda_tangan_pasien = $this->request->getFile('tanda_tangan_pasien');
+
+            // Atur aturan validasi
+            $validationRules = [
                 'unit' => 'required',
                 'informasi_edukasi' => 'required',
                 'nama_edukator' => 'required',
                 'profesi_edukator' => 'required',
-                'tanda_tangan_edukator' => 'if_exist|max_size[tanda_tangan_edukator,8192]|is_image[tanda_tangan_edukator]',
                 'nama_pasien_keluarga' => 'required',
-                'tanda_tangan_pasien' => 'if_exist|max_size[tanda_tangan_pasien,8192]|is_image[tanda_tangan_pasien]',
                 'evaluasi' => 'required',
-            ]);
+            ];
 
-            if (!$this->validate($validation->getRules())) {
-                return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
+            // Tambahkan validasi untuk file jika diunggah
+            if ($tanda_tangan_edukator && $tanda_tangan_edukator->isValid() && !$tanda_tangan_edukator->hasMoved()) {
+                $validationRules['tanda_tangan_edukator'] = 'max_size[tanda_tangan_edukator,8192]|is_image[tanda_tangan_edukator]';
+            }
+            if ($tanda_tangan_pasien && $tanda_tangan_pasien->isValid() && !$tanda_tangan_pasien->hasMoved()) {
+                $validationRules['tanda_tangan_pasien'] = 'max_size[tanda_tangan_pasien,8192]|is_image[tanda_tangan_pasien]';
+            }
+
+            // Lakukan validasi
+            if (!$this->validate($validationRules)) {
+                return $this->response->setJSON([
+                    'success' => false,
+                    'errors' => $this->validator->getErrors(),
+                ]);
             }
 
             // Ambil resep luar
@@ -193,7 +205,7 @@ class EdukasiEvaluasi extends BaseController
                 $extension = $tanda_tangan_edukator->getExtension();
                 $id_edukasi_evaluasi = $this->request->getVar('id_edukasi_evaluasi'); // Pastikan mengambil id yang benar
                 if ($edukasi_evaluasi['tanda_tangan_edukator']) {
-                    unlink(FCPATH . 'uploads/ttd_edukator_evaluasi/' . $edukasi_evaluasi['tanda_tangan_edukator']);
+                    @unlink(FCPATH . 'uploads/ttd_edukator_evaluasi/' . $edukasi_evaluasi['tanda_tangan_edukator']);
                 }
                 $tanda_tangan_edukator_name = 'ttd_edukator_' . $edukasi_evaluasi['nomor_registrasi'] . '_' . $id_edukasi_evaluasi . '.' . $extension;
                 $tanda_tangan_edukator->move(FCPATH . 'uploads/ttd_edukator_evaluasi', $tanda_tangan_edukator_name);
@@ -206,7 +218,7 @@ class EdukasiEvaluasi extends BaseController
                 $extension = $tanda_tangan_pasien->getExtension();
                 $id_edukasi_evaluasi = $this->request->getVar('id_edukasi_evaluasi'); // Ambil id yang benar
                 if ($edukasi_evaluasi['tanda_tangan_pasien']) {
-                    unlink(FCPATH . 'uploads/ttd_pasien_evaluasi/' . $edukasi_evaluasi['tanda_tangan_pasien']);
+                    @unlink(FCPATH . 'uploads/ttd_pasien_evaluasi/' . $edukasi_evaluasi['tanda_tangan_pasien']);
                 }
                 $tanda_tangan_pasien_name = 'ttd_pasien_' . $edukasi_evaluasi['nomor_registrasi'] . '_' . $id_edukasi_evaluasi . '.' . $extension;
                 $tanda_tangan_pasien->move(FCPATH . 'uploads/ttd_pasien_evaluasi', $tanda_tangan_pasien_name);
@@ -271,12 +283,12 @@ class EdukasiEvaluasi extends BaseController
             if ($edukasi_evaluasi) {
                 // Hapus tanda tangan edukator
                 if ($edukasi_evaluasi['tanda_tangan_edukator']) {
-                    unlink(FCPATH . 'uploads/ttd_edukator_evaluasi/' . $edukasi_evaluasi['tanda_tangan_edukator']);
+                    @unlink(FCPATH . 'uploads/ttd_edukator_evaluasi/' . $edukasi_evaluasi['tanda_tangan_edukator']);
                 }
 
                 // Hapus tanda tangan pasien
                 if ($edukasi_evaluasi['tanda_tangan_pasien']) {
-                    unlink(FCPATH . 'uploads/ttd_pasien_evaluasi/' . $edukasi_evaluasi['tanda_tangan_pasien']);
+                    @unlink(FCPATH . 'uploads/ttd_pasien_evaluasi/' . $edukasi_evaluasi['tanda_tangan_pasien']);
                 }
 
                 // Hapus evaluasi
