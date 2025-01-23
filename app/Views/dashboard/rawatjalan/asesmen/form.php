@@ -237,7 +237,7 @@ $waktuFormatted = $dateTime->format('H.i.s');
                                     </tr>
                                     <tr>
                                         <td style="width: 40%; vertical-align: top; padding: 0;">
-                                            Suhu
+                                            Pernapasan
                                         </td>
                                         <td style="width: 0%; vertical-align: top; padding: 0;">
                                             :

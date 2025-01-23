@@ -745,7 +745,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             $('#icdx_kode_1').select2({
                 theme: "bootstrap-5",
                 width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
-                placeholder: "ICD 10",
+                placeholder: "ICD-10",
                 disabled: <?= (session()->get('role') == 'Perawat') ? 'true' : 'false' ?>,
                 allowClear: true,
                 ajax: {
@@ -811,7 +811,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             $('#icdx_kode_2').select2({
                 theme: "bootstrap-5",
                 width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
-                placeholder: "ICD 10",
+                placeholder: "ICD-10",
                 disabled: <?= (session()->get('role') == 'Perawat') ? 'true' : 'false' ?>,
                 allowClear: true,
                 ajax: {
@@ -877,7 +877,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             $('#icdx_kode_3').select2({
                 theme: "bootstrap-5",
                 width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
-                placeholder: "ICD 10",
+                placeholder: "ICD-10",
                 disabled: <?= (session()->get('role') == 'Perawat') ? 'true' : 'false' ?>,
                 allowClear: true,
                 ajax: {
@@ -943,7 +943,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             $('#icdx_kode_4').select2({
                 theme: "bootstrap-5",
                 width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
-                placeholder: "ICD 10",
+                placeholder: "ICD-10",
                 disabled: <?= (session()->get('role') == 'Perawat') ? 'true' : 'false' ?>,
                 allowClear: true,
                 ajax: {
@@ -1009,7 +1009,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             $('#icdx_kode_5').select2({
                 theme: "bootstrap-5",
                 width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
-                placeholder: "ICD 10",
+                placeholder: "ICD-10",
                 disabled: <?= (session()->get('role') == 'Perawat') ? 'true' : 'false' ?>,
                 allowClear: true,
                 ajax: {
@@ -1075,7 +1075,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             $('#icd9_kode_1').select2({
                 theme: "bootstrap-5",
                 width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
-                placeholder: "ICD 9",
+                placeholder: "ICD-9 CM",
                 disabled: <?= (session()->get('role') == 'Perawat') ? 'true' : 'false' ?>,
                 allowClear: true,
                 ajax: {
@@ -1141,7 +1141,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             $('#icd9_kode_2').select2({
                 theme: "bootstrap-5",
                 width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
-                placeholder: "ICD 9",
+                placeholder: "ICD-9 CM",
                 disabled: <?= (session()->get('role') == 'Perawat') ? 'true' : 'false' ?>,
                 allowClear: true,
                 ajax: {
@@ -1207,7 +1207,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             $('#icd9_kode_3').select2({
                 theme: "bootstrap-5",
                 width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
-                placeholder: "ICD 9",
+                placeholder: "ICD-9 CM",
                 disabled: <?= (session()->get('role') == 'Perawat') ? 'true' : 'false' ?>,
                 allowClear: true,
                 ajax: {
@@ -1273,7 +1273,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             $('#icd9_kode_4').select2({
                 theme: "bootstrap-5",
                 width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
-                placeholder: "ICD 9",
+                placeholder: "ICD-9 CM",
                 disabled: <?= (session()->get('role') == 'Perawat') ? 'true' : 'false' ?>,
                 allowClear: true,
                 ajax: {
@@ -1339,7 +1339,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             $('#icd9_kode_5').select2({
                 theme: "bootstrap-5",
                 width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
-                placeholder: "ICD 9",
+                placeholder: "ICD-9 CM",
                 disabled: <?= (session()->get('role') == 'Perawat') ? 'true' : 'false' ?>,
                 allowClear: true,
                 ajax: {
