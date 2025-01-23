@@ -18,8 +18,8 @@ class Operasi extends BaseController
     }
     public function index()
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', 'Perawat', atau 'Admisi' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Admisi') {
+        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Admisi' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
             // Menyiapkan data untuk tampilan
             $data = [
                 'title' => 'Pasien Operasi - ' . $this->systemName,
@@ -36,8 +36,8 @@ class Operasi extends BaseController
 
     public function operasilist()
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', 'Perawat', atau 'Admisi' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Admisi') {
+        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Admisi' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
             // Mengambil parameter pencarian, limit, offset, dan status dari query string
             $tanggal = $this->request->getGet('tanggal');
             $dokter = $this->request->getGet('dokter');
@@ -97,8 +97,8 @@ class Operasi extends BaseController
 
     public function rawatjalanlist()
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Admisi' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
             $data = $this->RawatJalanModel
                 ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
                 ->like('tanggal_registrasi', date('Y-m-d'))
@@ -141,8 +141,8 @@ class Operasi extends BaseController
 
     public function dokterlist()
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Admisi' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
             $db = db_connect();
             // Mengambil kasir dari tabel user
             $spOperasiData = $this->SPOperasiModel
@@ -175,8 +175,8 @@ class Operasi extends BaseController
 
     public function create()
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Admisi' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
             // Melakukan validasi
             $validation = \Config\Services::validation();
             // Menetapkan aturan validasi dasar

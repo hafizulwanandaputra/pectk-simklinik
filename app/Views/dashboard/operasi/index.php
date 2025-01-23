@@ -380,7 +380,7 @@
                         <hr>
                         <div class="d-grid gap-2 d-flex justify-content-end">
                             <button type="button" class="btn btn-body btn-sm bg-gradient " onclick="window.location.href = '<?= base_url('operasi/spko') ?>/${sp_operasi.id_sp_operasi}';">
-                                <i class="fa-solid fa-circle-info"></i> Detail
+                                <i class="fa-solid fa-circle-info"></i> Lihat SPKO
                             </button>
                         </div>
                     </li>
