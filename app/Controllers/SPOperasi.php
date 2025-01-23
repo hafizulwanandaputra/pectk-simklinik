@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\SPOperasiModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
+use Dompdf\Dompdf;
 
 class SPOperasi extends BaseController
 {
@@ -75,7 +76,7 @@ class SPOperasi extends BaseController
                 'operasi' => $sp_operasi,
                 'master_tindakan_operasi' => $master_tindakan_operasi,
                 'dokter' => $dokter,
-                'title' => 'Surat Perintah Kamar Operasi ' . $sp_operasi['nama_pasien'] . ' (' . $sp_operasi['no_rm'] . ') - ' . $sp_operasi['nomor_registrasi'] . ' - ' . $this->systemName,
+                'title' => 'Surat Perintah Kamar Operasi ' . $sp_operasi['nama_pasien'] . ' (' . $sp_operasi['no_rm'] . ') - ' . $sp_operasi['nomor_registrasi'] . ' - ' . $sp_operasi['nomor_booking'] . ' - ' . $this->systemName,
                 'headertitle' => 'Surat Perintah Kamar Operasi',
                 'agent' => $this->request->getUserAgent(), // Mengambil informasi user agent
                 'previous' => $previous,
@@ -106,6 +107,54 @@ class SPOperasi extends BaseController
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan',
             ]);
+        }
+    }
+
+    public function export($id)
+    {
+        // Memeriksa peran pengguna, hanya 'Admin', 'Perawat', atau 'Admisi' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi' || session()->get('role') == 'Perawat') {
+            $db = db_connect();
+
+            // Inisialisasi rawat jalan
+            $sp_operasi = $this->SPOperasiModel
+                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_sp_operasi.nomor_registrasi', 'inner')
+                ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
+                ->find($id);
+
+            if (!$sp_operasi) {
+                throw PageNotFoundException::forPageNotFound();
+            }
+
+            $sp_operasi['jenis_tindakan'] = str_replace(',', '<br>', $sp_operasi['jenis_tindakan']);
+
+
+            // Memeriksa apakah pasien tidak kosong
+            if ($sp_operasi) {
+                // Menyiapkan data untuk tampilan
+                $data = [
+                    'operasi' => $sp_operasi,
+                    'title' => 'Surat Perintah Kamar Operasi ' . $sp_operasi['nama_pasien'] . ' (' . $sp_operasi['no_rm'] . ') - ' . $sp_operasi['nomor_registrasi'] . ' - ' . $sp_operasi['nomor_booking'] . ' - ' . $this->systemName,
+                    'headertitle' => 'Surat Perintah Kamar Operasi',
+                    'agent' => $this->request->getUserAgent(), // Mengambil informasi user agent
+                ];
+                // return view('dashboard/operasi/spko/form', $data);
+                // die;
+                // Menghasilkan PDF menggunakan Dompdf
+                $dompdf = new Dompdf();
+                $html = view('dashboard/operasi/spko/form', $data);
+                $dompdf->loadHtml($html);
+                $dompdf->render();
+                $dompdf->stream('SPKO_' . $sp_operasi['nomor_booking'] . '_' . str_replace('-', '', $sp_operasi['no_rm']) . '.pdf', [
+                    'Attachment' => FALSE // Menghasilkan PDF tanpa mengunduh
+                ]);
+            } else {
+                // Menampilkan halaman tidak ditemukan jika pasien tidak ditemukan
+                throw PageNotFoundException::forPageNotFound();
+            }
+        } else {
+            // Jika peran tidak dikenali, lemparkan pengecualian 404
+            throw PageNotFoundException::forPageNotFound();
         }
     }
 
