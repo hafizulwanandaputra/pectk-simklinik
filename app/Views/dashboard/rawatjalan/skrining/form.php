@@ -68,7 +68,7 @@ if ($skrining['jatuh_sempoyongan'] === 'YA' && $skrining['jatuh_penopang'] === '
 
         .box {
             border: 1px solid black;
-            height: 22.5cm;
+            height: 22.95cm;
             overflow: hidden;
             padding: 0cm;
         }
