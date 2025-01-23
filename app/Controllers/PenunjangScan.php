@@ -130,16 +130,25 @@ class PenunjangScan extends BaseController
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Perawat' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat') {
-            // Validate
-            $validation = \Config\Services::validation();
-            // Set base validation rules
-            $validation->setRules([
-                'pemeriksaan_scan' => 'required',
-                'gambar' => 'if_exist|max_size[gambar,8192]|is_image[gambar]',
-            ]);
+            // Unggah gambar
+            $gambar = $this->request->getFile('gambar');
 
-            if (!$this->validate($validation->getRules())) {
-                return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
+            // Atur aturan validasi
+            $validationRules = [
+                'pemeriksaan_scan' => 'required',
+            ];
+
+            // Tambahkan validasi file hanya jika file diunggah
+            if ($gambar && $gambar->isValid() && !$gambar->hasMoved()) {
+                $validationRules['gambar'] = 'max_size[gambar,8192]|is_image[gambar]';
+            }
+
+            // Lakukan validasi hanya jika ada aturan
+            if (!empty($validationRules) && !$this->validate($validationRules)) {
+                return $this->response->setJSON([
+                    'success' => false,
+                    'errors' => $this->validator->getErrors(),
+                ]);
             }
 
             // Ambil resep luar
@@ -154,13 +163,11 @@ class PenunjangScan extends BaseController
                 'waktu_dibuat' => $penunjang_scan['waktu_dibuat'],
             ];
 
-            // Unggah gambar
-            $gambar = $this->request->getFile('gambar');
             if ($gambar && $gambar->isValid() && !$gambar->hasMoved()) {
                 $extension = $gambar->getExtension();
                 $id_penunjang_scan = $this->request->getVar('id_penunjang_scan'); // Pastikan mengambil id yang benar
                 if ($penunjang_scan['gambar']) {
-                    unlink(FCPATH . 'uploads/scan_penunjang/' . $penunjang_scan['gambar']);
+                    @unlink(FCPATH . 'uploads/scan_penunjang/' . $penunjang_scan['gambar']);
                 }
                 $gambar_name = $this->request->getPost('pemeriksaan_scan') . '_' . $penunjang_scan['nomor_registrasi'] . '_' . $id_penunjang_scan . '.' . $extension;
                 $gambar->move(FCPATH . 'uploads/scan_penunjang', $gambar_name);
@@ -205,7 +212,7 @@ class PenunjangScan extends BaseController
             if ($penunjang_scan) {
                 // Hapus tanda tangan edukator
                 if ($penunjang_scan['gambar']) {
-                    unlink(FCPATH . 'uploads/scan_penunjang/' . $penunjang_scan['gambar']);
+                    @unlink(FCPATH . 'uploads/scan_penunjang/' . $penunjang_scan['gambar']);
                 }
 
                 // Hapus evaluasi

@@ -296,7 +296,7 @@ class Operasi extends BaseController
                     ->where('id_sp_operasi', $this->request->getPost('id_sp_operasi'))
                     ->get()->getRowArray();
                 if ($sp_operasi['site_marking']) {
-                    unlink(FCPATH . 'uploads/site_marking/' . $sp_operasi['site_marking']);
+                    @unlink(FCPATH . 'uploads/site_marking/' . $sp_operasi['site_marking']);
                 }
                 $db->table('medrec_sp_operasi')
                     ->where('id_sp_operasi', $this->request->getPost('id_sp_operasi'))

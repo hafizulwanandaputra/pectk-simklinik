@@ -395,7 +395,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             <option value="Pengobatan dan prosedur yang diberikan/diperlukan">Pengobatan dan prosedur yang diberikan/diperlukan</option>
                             <option value="Hasil pelayanan, termasuk terjadinya kejadian yang tidak diharapkan">Hasil pelayanan, termasuk terjadinya kejadian yang tidak diharapkan</option>
                         </select>
-                        <label for="status_fungsional">Keyakinan</label>
+                        <label for="status_fungsional">Informasi Edukasi</label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
