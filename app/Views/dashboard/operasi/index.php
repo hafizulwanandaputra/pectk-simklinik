@@ -40,10 +40,34 @@
                             <input type="search" id="searchInput" class="form-control " placeholder="Cari nomor rekam medis atau nama pasien">
                         </div>
                     </div>
-                    <div class="input-group input-group-sm">
-                        <select id="dokterFilter" class="form-select form-select-sm ">
-                            <option value="">Semua Dokter</option>
-                        </select>
+                    <div class="accordion" id="accordionFilter">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button p-2 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFilter" aria-expanded="false" aria-controls="collapseFilter">
+                                    Pencarian Tambahan
+                                </button>
+                            </h2>
+                            <div id="collapseFilter" class="accordion-collapse collapse" data-bs-parent="#accordionFilter">
+                                <div class="accordion-body px-2 py-2">
+                                    <div class="row g-1">
+                                        <div class="col-lg">
+                                            <select id="dokterFilter" class="form-select form-select-sm">
+                                                <option value="">Semua Dokter</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-lg">
+                                            <select id="statusFilter" class="form-select form-select-sm">
+                                                <option value="">Semua Status</option>
+                                                <option value="DIJADWAL">Dijadwal</option>
+                                                <option value="OPERASI">Operasi</option>
+                                                <option value="TERLAKSANA">Terlaksana</option>
+                                                <option value="BATAL">Batal</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </li>
@@ -139,18 +163,69 @@
             </nav>
         </div>
     </div>
-    <div class="modal modal-sheet p-4 py-md-5 fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" role="dialog">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content bg-body-tertiary rounded-4 shadow-lg transparent-blur">
-                <div class="modal-body p-4 text-center">
-                    <h5 id="deleteMessage"></h5>
-                    <h6 class="mb-0" id="deleteSubmessage"></h6>
+    <div class="modal fade" id="statusModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="statusModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable">
+            <form id="statusForm" enctype="multipart/form-data" class="modal-content bg-body-tertiary shadow-lg transparent-blur">
+                <div class="modal-header justify-content-between pt-2 pb-2" style="border-bottom: 1px solid var(--bs-border-color-translucent);">
+                    <h6 class="pe-2 modal-title fs-6 text-truncate" id="statusModalLabel" style="font-weight: bold;"></h6>
+                    <button id="closeBtn" type="button" class="btn btn-danger bg-gradient" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
                 </div>
-                <div class="modal-footer flex-nowrap p-0" style="border-top: 1px solid var(--bs-border-color-translucent);">
-                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end" style="border-right: 1px solid var(--bs-border-color-translucent)!important;" data-bs-dismiss="modal">Tidak</button>
-                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0" id="confirmDeleteBtn">Ya</button>
+                <div class="modal-body py-2">
+                    <input type="hidden" id="id_sp_operasi" name="id_sp_operasi" value="">
+                    <div class="mb-1 mt-1 radio-group">
+                        <div class="d-flex flex-wrap justify-content-center">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="status_operasi" id="status_operasi1" value="DIJADWAL">
+                                <label class="form-check-label" for="status_operasi1">
+                                    Dijadwal
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="status_operasi" id="status_operasi2" value="OPERASI">
+                                <label class="form-check-label" for="status_operasi2">
+                                    Operasi
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="status_operasi" id="status_operasi3" value="TERLAKSANA">
+                                <label class="form-check-label" for="status_operasi3">
+                                    Terlaksana
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="status_operasi" id="status_operasi4" value="BATAL">
+                                <label class="form-check-label" for="status_operasi4">
+                                    Batal
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="status_operasi" id="status_operasi5" value="HAPUS">
+                                <label class="form-check-label" for="status_operasi5">
+                                    Hapus
+                                </label>
+                            </div>
+                        </div>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="alert alert-danger mb-1 mt-1" id="deleteAlert" role="alert" style="display: none;">
+                        <div class="d-flex align-items-start">
+                            <div style="width: 12px; text-align: center;">
+                                <i class="fa-solid fa-triangle-exclamation"></i>
+                            </div>
+                            <div class="w-100 ms-3">
+                                Pilihan ini akan menghapus pasien operasi.
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
+                <div class="modal-footer justify-content-end pt-2 pb-2" style="border-top: 1px solid var(--bs-border-color-translucent);">
+                    <div class="d-flex justify-content-end">
+                        <button type="submit" id="statusSubmitButton" class="btn btn-primary bg-gradient">
+                            <i class="fa-solid fa-floppy-disk"></i> Simpan
+                        </button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </main>
@@ -278,6 +353,7 @@
         const search = $('#searchInput').val();
         const offset = (currentPage - 1) * limit;
         const dokter = $('#dokterFilter').val();
+        const status = $('#statusFilter').val();
         const tanggal = $('#tanggalFilter').val();
 
         // Show the spinner
@@ -290,6 +366,7 @@
                     limit: limit,
                     offset: offset,
                     dokter: dokter,
+                    status: status,
                     tanggal: tanggal
                 }
             });
@@ -321,11 +398,11 @@
                     }
                     let statusBadge = sp_operasi.status_operasi;
                     if (statusBadge === 'DIJADWAL') {
-                        statusBadge = `<span class="badge bg-success bg-gradient">Dijadwal</span>`;
+                        statusBadge = `<span class="badge bg-primary bg-gradient">Dijadwal</span>`;
                     } else if (statusBadge === 'OPERASI') {
                         statusBadge = `<span class="badge bg-secondary bg-gradient">Operasi</span>`;
                     } else if (statusBadge === 'TERLAKSANA') {
-                        statusBadge = `<span class="badge bg-primary bg-gradient">Terlaksana</span>`;
+                        statusBadge = `<span class="badge bg-success bg-gradient">Terlaksana</span>`;
                     } else if (statusBadge === 'BATAL') {
                         statusBadge = `<span class="badge bg-danger bg-gradient">Batal</span>`;
                     }
@@ -372,10 +449,21 @@
                             </div>
                         </div>
                         <hr>
-                        <div class="d-grid gap-2 d-flex justify-content-end">
-                            <button type="button" class="btn btn-body btn-sm bg-gradient " onclick="window.location.href = '<?= base_url('operasi/spko') ?>/${sp_operasi.id_sp_operasi}';">
-                                <i class="fa-solid fa-circle-info"></i> Lihat SPKO
-                            </button>
+                        <div>
+                            <div class="d-flex flex-wrap justify-content-end gap-2 mt-2">
+                                <button type="button" class="btn btn-body btn-sm bg-gradient status-btn" data-id="${sp_operasi.id_sp_operasi}">
+                                    <i class="fa-solid fa-gear"></i> Atur Status
+                                </button>
+                                <?php if (session()->get('role') == 'Admisi') : ?>
+                                    <button type="button" class="btn btn-body btn-sm bg-gradient " onclick="window.open('<?= base_url('operasi/spko/export') ?>/${sp_operasi.id_sp_operasi}');">
+                                        <i class="fa-solid fa-print"></i> SPKO
+                                    </button>
+                                <?php else : ?>
+                                    <button type="button" class="btn btn-body btn-sm bg-gradient " onclick="window.location.href = '<?= base_url('operasi/spko') ?>/${sp_operasi.id_sp_operasi}';">
+                                        <i class="fa-solid fa-circle-info"></i> SPKO
+                                    </button>
+                                <?php endif; ?>
+                            </div>
                         </div>
                     </li>
                 `;
@@ -467,7 +555,7 @@
         }
     });
 
-    $('#dokterFilter').on('change', function() {
+    $('#dokterFilter, #statusFilter').on('change', function() {
         $('#spOperasiContainer').empty();
         for (let i = 0; i < limit; i++) {
             $('#spOperasiContainer').append(placeholder);
@@ -550,6 +638,153 @@
             saveToggleState(!isVisible);
         });
 
+        $(document).on('click', '.status-btn', async function() {
+            var $this = $(this);
+            var id = $this.data('id');
+            $this.prop('disabled', true).html(`<span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span> Atur Status`);
+
+            try {
+                let response = await axios.get(`<?= base_url('/operasi/spko/view') ?>/` + id);
+                let data = response.data;
+                console.log(data);
+
+                $('#statusModalLabel').text('Atur Status Pasien Operasi');
+                $('#id_sp_operasi').val(data.id_sp_operasi);;
+                const status_operasi = data.status_operasi;
+                if (status_operasi) {
+                    $("input[name='status_operasi'][value='" + status_operasi + "']").prop('checked', true);
+                }
+                $('#statusModal').modal('show');
+            } catch (error) {
+                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+            } finally {
+                $this.prop('disabled', false).html(`<i class="fa-solid fa-gear"></i> Atur Status`);
+            }
+        });
+
+        $('input[name="status_operasi"]').on('change', function() {
+            if ($('#status_operasi5').is(':checked')) {
+                // Ubah teks, ikon, dan kelas tombol saat status_operasi5 (Hapus) dipilih
+                $('#statusSubmitButton')
+                    .html('<i class="fa-solid fa-trash"></i> Hapus')
+                    .removeClass('btn-primary')
+                    .addClass('btn-danger');
+                $('#deleteAlert').show();
+            } else {
+                // Kembalikan ke semula jika selain status_operasi5 yang dipilih
+                $('#statusSubmitButton')
+                    .html('<i class="fa-solid fa-floppy-disk"></i> Simpan')
+                    .removeClass('btn-danger')
+                    .addClass('btn-primary');
+                $('#deleteAlert').hide();
+            }
+        });
+
+        $('#statusForm').submit(async function(e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+            console.log("Form Data:", $(this).serialize());
+
+            // Clear previous validation states
+            $('#statusForm .is-invalid').removeClass('is-invalid');
+            $('#statusForm .invalid-feedback').text('').hide();
+            $('#statusSubmitButton').prop('disabled', true).html(`
+                <span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span> Memproses...
+            `);
+
+            // Disable form inputs
+            $('#statusForm input').prop('disabled', true);
+
+            try {
+                const response = await axios.post(`<?= base_url('operasi/setstatus') ?>`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
+
+                if (response.data.success) {
+                    showSuccessToast(response.data.message);
+                    $('#statusModal').modal('hide');
+                    $('#nomor_registrasi').val(null).trigger('change');
+                    await fetchDokterOptions();
+                    fetchSPOperasi();
+                    fetchPasienOptions();
+                    toggleSubmitButton();
+                } else {
+                    console.log("Validation Errors:", response.data.errors);
+
+                    // Clear previous validation states
+                    $('#statusForm .is-invalid').removeClass('is-invalid');
+                    $('#statusForm .invalid-feedback').text('').hide();
+
+                    // Display new validation errors
+                    for (const field in response.data.errors) {
+                        if (response.data.errors.hasOwnProperty(field)) {
+                            const fieldElement = $('#' + field);
+                            const feedbackElement = fieldElement.siblings('.invalid-feedback');
+
+                            console.log("Target Field:", fieldElement);
+                            console.log("Target Feedback:", feedbackElement);
+
+                            if (fieldElement.length > 0 && feedbackElement.length > 0) {
+                                fieldElement.addClass('is-invalid');
+                                feedbackElement.text(response.data.errors[field]).show();
+
+                                // Remove error message when the user corrects the input
+                                fieldElement.on('input change', function() {
+                                    $(this).removeClass('is-invalid');
+                                    $(this).siblings('.invalid-feedback').text('').hide();
+                                });
+                            } else {
+                                console.warn("Elemen tidak ditemukan pada field:", field);
+                            }
+                        }
+                    }
+                    console.error('Perbaiki kesalahan pada formulir.');
+                }
+            } catch (error) {
+                if (error.response.request.status === 404) {
+                    showFailedToast(error.response.data.message);
+                } else if (error.response.request.status === 422) {
+                    showFailedToast(`${error.response.data.error}<br>${error.response.data.details.message}`);
+                } else {
+                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                }
+                $('#statusSubmitButton').prop('disabled', false);
+            } finally {
+                if ($('#status_operasi5').is(':checked')) {
+                    // Ubah teks, ikon, dan kelas tombol saat status_operasi5 (Hapus) dipilih
+                    $('#statusSubmitButton')
+                        .prop('disabled', false)
+                        .html('<i class="fa-solid fa-trash"></i> Hapus')
+                        .removeClass('btn-primary')
+                        .addClass('btn-danger');
+                } else {
+                    // Kembalikan ke semula jika selain status_operasi5 yang dipilih
+                    $('#statusSubmitButton')
+                        .prop('disabled', false)
+                        .html('<i class="fa-solid fa-floppy-disk"></i> Simpan')
+                        .removeClass('btn-danger')
+                        .addClass('btn-primary');
+                }
+                $('#statusForm input').prop('disabled', false);
+            }
+        });
+
+        // Reset form saat modal ditutup
+        $('#statusModal').on('hidden.bs.modal', function() {
+            $('#statusForm')[0].reset();
+            $('#statusSubmitButton')
+                .prop('disabled', false)
+                .html('<i class="fa-solid fa-floppy-disk"></i> Simpan')
+                .removeClass('btn-danger')
+                .addClass('btn-primary');
+            $('#deleteAlert').hide();
+            $('#statusForm .is-invalid').removeClass('is-invalid');
+            $('#statusForm .invalid-feedback').text('').hide();
+        });
+
         const selectedDokter = $('dokterFilter').val();
 
         $('#spOperasiForm').submit(async function(e) {
@@ -576,17 +811,11 @@
                 });
 
                 if (response.data.success) {
-                    $('#spOperasiForm')[0].reset();
                     $('#nomor_registrasi').val(null).trigger('change');
-                    $('#transaksiForm .is-invalid').removeClass('is-invalid');
-                    $('#transaksiForm .invalid-feedback').text('').hide();
-                    $('#submitButton').prop('disabled', true);
-                    // Simpan nilai pilihan dokter saat ini
-                    const selectedDokter = $('#dokterFilter').val();
-                    // Panggil fungsi untuk memperbarui opsi dokter
-                    await fetchDokterOptions(selectedDokter);
-                    fetchPasienOptions();
+                    await fetchDokterOptions();
                     fetchSPOperasi();
+                    fetchPasienOptions();
+                    toggleSubmitButton();
                 } else {
                     console.log("Validation Errors:", response.data.errors);
 
