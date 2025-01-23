@@ -386,6 +386,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             const source = CancelToken.source();
 
             // Clear previous validation states
+            $('#uploadProgressBar').removeClass('bg-danger').css('width', '0%');
             $('#SPKOForm .is-invalid').removeClass('is-invalid');
             $('#SPKOForm .invalid-feedback').text('').hide();
             $('#cancelButton').show();
@@ -414,6 +415,7 @@ $usia = $registrasi->diff($tanggal_lahir);
 
                 if (response.data.success) {
                     showSuccessToast(response.data.message);
+                    $('#uploadProgressBar').css('width', '0%');
                     fetchSPKO();
                 } else {
                     console.log("Validation Errors:", response.data.errors);
@@ -473,7 +475,6 @@ $usia = $registrasi->diff($tanggal_lahir);
                     $('#uploadProgressBar').addClass('bg-danger');
                 }
             } finally {
-                $('#uploadProgressBar').css('width', '0%');
                 $('#uploadPercentage').html('0%');
                 $('#cancelButton').hide();
                 $('#submitBtn').prop('disabled', false).html(`
