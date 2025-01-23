@@ -40,6 +40,7 @@ class Operasi extends BaseController
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
             // Mengambil parameter pencarian, limit, offset, dan status dari query string
             $tanggal = $this->request->getGet('tanggal');
+            $search = $this->request->getGet('search');
             $dokter = $this->request->getGet('dokter');
             $limit = $this->request->getGet('limit');
             $offset = $this->request->getGet('offset');
@@ -63,6 +64,14 @@ class Operasi extends BaseController
             if ($dokter) {
                 $SPOperasiModel
                     ->like('dokter_operator', $dokter);
+            }
+
+            // Menerapkan filter pencarian berdasarkan nama pasien atau tanggal resep
+            if ($search) {
+                $SPOperasiModel->groupStart()
+                    ->like('pasien.no_rm', $search)
+                    ->orLike('pasien.nama_pasien', $search)
+                    ->groupEnd();
             }
 
             // Menghitung total hasil
