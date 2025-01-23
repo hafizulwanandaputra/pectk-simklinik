@@ -243,6 +243,8 @@ class Operasi extends BaseController
                 'ruang_operasi' => NULL,
                 'dokter_operator' => 'Belum Ada',
                 'status_operasi' => 'DIJADWAL',
+                'diagnosa_site_marking' => NULL,
+                'tindakan_site_marking' => NULL,
                 'site_marking' => NULL,
                 'nama_pasien_keluarga' => NULL,
                 'tanda_tangan_pasien' => NULL,
