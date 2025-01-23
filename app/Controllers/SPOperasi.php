@@ -117,7 +117,7 @@ class SPOperasi extends BaseController
             $validation = \Config\Services::validation();
             // Set base validation rules
             $validation->setRules([
-                'site_marking' => 'if_exist|max_size[site_marking,8192]|is_image[site_marking]',
+                'site_marking' => 'uploaded[site_marking]|max_size[site_marking,8192]|is_image[site_marking]',
             ]);
 
             if (!$this->validate($validation->getRules())) {
