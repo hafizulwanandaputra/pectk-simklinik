@@ -39,6 +39,7 @@ $usia = $registrasi->diff($tanggal_lahir);
     <div id="loadingSpinner" class="spinner-border spinner-border-sm mx-2" role="status" style="min-width: 1rem;">
         <span class="visually-hidden">Loading...</span>
     </div>
+    <a class="fs-6 mx-2 text-danger" href="#" id="cancelButton" data-bs-placement="bottom" data-bs-title="Batalkan Proses" style="display: none;"><i class="fa-solid fa-xmark"></i></a>
     <?php if ($previous): ?>
         <a class="fs-6 mx-2 text-success-emphasis" href="<?= site_url('operasi/spko/' . $previous['id_sp_operasi']) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="<?= $previous['nomor_registrasi']; ?> • <?= $previous['no_rm'] ?> • <?= $previous['nama_pasien']; ?>"><i class="fa-solid fa-circle-arrow-left"></i></a>
     <?php else: ?>
@@ -70,7 +71,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             <a class="nav-link py-1 <?= ($activeSegment === $list['id_sp_operasi']) ? 'active activeLink' : '' ?>" href="<?= base_url('operasi/spko/' . $list['id_sp_operasi']); ?>">
                                 <div class="text-center">
                                     <div class="text-nowrap lh-sm"><?= $list['nomor_registrasi']; ?></div>
-                                    <div class="text-nowrap lh-sm date" style="font-size: 0.75em;"><?= $list['tanggal_registrasi'] ?></div>
+                                    <div class="text-nowrap lh-sm" style="font-size: 0.75em;"><?= $list['nomor_booking'] ?></div>
                                 </div>
                             </a>
                         <?php endforeach; ?>
@@ -108,7 +109,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                     </div>
                 </div>
                 <div class="mb-2">
-                    <label for="jenis_tindakan" class="form-label">
+                    <label for="jenis_tindakan" class="form-label mb-0">
                         Jenis Tindakan
                     </label>
                     <select class="form-select" id="jenis_tindakan" name="jenis_tindakan[]" multiple>
@@ -167,6 +168,28 @@ $usia = $registrasi->diff($tanggal_lahir);
                     </div>
                 </div>
                 <div class="mb-2">
+                    <div class="row gx-1 radio-group">
+                        <label for="rajal_ranap" class="col col-form-label">Jenis Rawat</label>
+                        <div class="col col-form-label">
+                            <div class="d-flex align-items-center justify-content-evenly">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="rajal_ranap" id="rajal_ranap1" value="RAJAL">
+                                    <label class="form-check-label" for="rajal_ranap1">
+                                        Rawat Jalan
+                                    </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="rajal_ranap" id="rajal_ranap2" value="RANAP">
+                                    <label class="form-check-label" for="rajal_ranap2">
+                                        Rawat Inap
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-2">
                     <div class="form-floating">
                         <select class="form-select" id="ruang_operasi" name="ruang_operasi" aria-label="ruang_operasi">
                             <option value="" disabled selected>-- Pilih Ruangan --</option>
@@ -205,12 +228,25 @@ $usia = $registrasi->diff($tanggal_lahir);
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
+                <div class="mb-2">
+                    <label for="site_marking" class="form-label mb-0">Unggah <em>Site Marking</em> (maks 8 MB)</label>
+                    <div class="d-grid mb-2">
+                        <button class="btn btn-body bg-gradient btn-sm" type="button" id="download-template"><i class="fa-solid fa-download"></i> Unduh Templat <em>Site Marking</em></button>
+                    </div>
+                    <input class="form-control" type="file" id="site_marking" name="site_marking" accept="image/*">
+                    <div class="invalid-feedback"></div>
+                </div>
+                <div id="site_marking_preview_div" style="display: none;" class="mb-2">
+                    <div class="d-flex justify-content-center">
+                        <img id="site_marking_preview" src="#" alt="Gambar" class="img-thumbnail" style="width: 100%; max-width: 256px;">
+                    </div>
+                </div>
             </div>
             <div class="mb-3">
                 <div class="fw-bold mb-2 border-bottom">Pasien dan Keluarga</div>
                 <div class="mb-2">
                     <div class="form-floating">
-                        <input type="text" class="form-control" id="nama_pasien_keluarga" name="nama_pasien_keluarga" value="" autocomplete="off" dir="auto" placeholder="nama_pasien_keluarga	">
+                        <input type="text" class="form-control" id="nama_pasien_keluarga" name="nama_pasien_keluarga" value="" autocomplete="off" dir="auto" placeholder="nama_pasien_keluarga">
                         <label for="nama_pasien_keluarga">Nama Pasien dan Keluarga</label>
                         <div class="invalid-feedback"></div>
                     </div>
@@ -218,6 +254,12 @@ $usia = $registrasi->diff($tanggal_lahir);
             </div>
             <div>
                 <hr>
+                <!-- Progress bar -->
+                <div class="mb-2 mt-1 w-100" id="uploadProgressDiv">
+                    <div class="progress" style="border-top: 1px solid var(--bs-border-color-translucent); border-bottom: 1px solid var(--bs-border-color-translucent); border-left: 1px solid var(--bs-border-color-translucent); border-right: 1px solid var(--bs-border-color-translucent);">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-gradient" role="progressbar" style="width: 0%; transition: none;" id="uploadProgressBar"></div>
+                    </div>
+                </div>
                 <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-3">
                     <button class="btn btn-body  bg-gradient" type="button" onclick="window.open(`<?= base_url('/operasi/spko/export/' . $operasi['id_sp_operasi']) ?>`)"><i class="fa-solid fa-print"></i> Cetak Form</button>
                     <button class="btn btn-primary bg-gradient" type="submit" id="submitBtn"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
@@ -248,11 +290,20 @@ $usia = $registrasi->diff($tanggal_lahir);
             }
             $('#tipe_bayar').val(data.tipe_bayar);
             $('#ruang_operasi').val(data.ruang_operasi);
-            $('#dokter_operator').val(data.dokter_operator);
+            $('#rajal_ranap').val(data.rajal_ranap);
+            if (data.dokter_operator !== 'Belum Ada') {
+                $('#dokter_operator').val(data.dokter_operator);
+            }
 
             // Site Marking
             $('#diagnosa_site_marking').val(data.diagnosa_site_marking);
             $('#tindakan_site_marking').val(data.tindakan_site_marking);
+            if (data.site_marking) {
+                $('#site_marking_preview').attr('src', `<?= base_url('uploads/site_marking') ?>/` + data.site_marking);
+                $('#site_marking_preview_div').show();
+            } else {
+                $('#site_marking_preview_div').hide();
+            }
 
             // Pasien dan Keluarga
             $('#nama_pasien_keluarga').val(data.nama_pasien_keluarga);
@@ -278,17 +329,69 @@ $usia = $registrasi->diff($tanggal_lahir);
             });
         });
 
+        $("#download-template").on("click", async function() {
+            $('#loadingSpinner').show();
+            try {
+                // URL file gambar
+                const fileUrl = "<?= base_url('/assets/images/site_marking.jpg') ?>";
+
+                // Permintaan Axios untuk mendapatkan file gambar
+                const response = await axios.get(fileUrl, {
+                    responseType: "blob", // Mengatur respons sebagai blob
+                });
+
+                // Membuat URL blob
+                const blob = response.data;
+                const downloadUrl = URL.createObjectURL(blob);
+
+                // Membuat elemen <a> untuk mengunduh file
+                const link = document.createElement("a");
+                link.href = downloadUrl;
+                link.download = "site_marking.jpg"; // Nama file yang akan diunduh
+                link.style.display = "none";
+
+                // Menambahkan elemen <a> ke dokumen, lalu klik secara otomatis
+                document.body.appendChild(link);
+                link.click();
+
+                // Membersihkan elemen dan URL blob
+                document.body.removeChild(link);
+                URL.revokeObjectURL(downloadUrl);
+
+                console.log("File berhasil diunduh!");
+            } catch (error) {
+                showFailedToast("Gagal mengunduh file<br>" + error);
+                console.error("Gagal mengunduh file:", error);
+            } finally {
+                $('#loadingSpinner').hide();
+            }
+        });
+
+        $('#site_marking').change(function() {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $('#site_marking_preview').attr('src', e.target.result);
+                $('#site_marking_preview_div').show();
+            };
+            reader.readAsDataURL(this.files[0]);
+        });
+
         $('#SPKOForm').submit(async function(ə) {
             ə.preventDefault();
 
             const formData = new FormData(this);
             console.log("Form Data:", $(this).serialize());
 
+            const CancelToken = axios.CancelToken;
+            const source = CancelToken.source();
+
             // Clear previous validation states
             $('#SPKOForm .is-invalid').removeClass('is-invalid');
             $('#SPKOForm .invalid-feedback').text('').hide();
+            $('#cancelButton').show();
             $('#submitBtn').prop('disabled', true).html(`
-                <span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span> Simpan
+                <span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span>
+                <span role="status">Memproses <span id="uploadPercentage" style="font-variant-numeric: tabular-nums;">0%</span></span>
             `);
 
             // Disable form inputs
@@ -298,12 +401,20 @@ $usia = $registrasi->diff($tanggal_lahir);
                 const response = await axios.post(`<?= base_url('/operasi/spko/update/' . $operasi['id_sp_operasi']) ?>`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
-                    }
+                    },
+                    onUploadProgress: function(progressEvent) {
+                        if (progressEvent.lengthComputable) {
+                            var percent = Math.round((progressEvent.loaded / progressEvent.total) * 100);
+                            $('#uploadProgressBar').css('width', percent + '%');
+                            $('#uploadPercentage').html(percent + '%');
+                        }
+                    },
+                    cancelToken: source.token // Attach the token here
                 });
 
                 if (response.data.success) {
                     showSuccessToast(response.data.message);
-                    fetchSkrining();
+                    fetchSPKO();
                 } else {
                     console.log("Validation Errors:", response.data.errors);
 
@@ -354,17 +465,27 @@ $usia = $registrasi->diff($tanggal_lahir);
                     console.error('Perbaiki kesalahan pada formulir.');
                 }
             } catch (error) {
-                if (error.response.request.status === 422 || error.response.request.status === 401) {
-                    showFailedToast(error.response.data.message);
+                if (axios.isCancel(error)) {
+                    showFailedToast(error.message);
+                    $('#uploadProgressBar').css('width', '0%');
                 } else {
                     showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                    $('#uploadProgressBar').addClass('bg-danger');
                 }
             } finally {
+                $('#uploadProgressBar').css('width', '0%');
+                $('#uploadPercentage').html('0%');
+                $('#cancelButton').hide();
                 $('#submitBtn').prop('disabled', false).html(`
                     <i class="fa-solid fa-floppy-disk"></i> Simpan
                 `);
                 $('#SPKOForm input, #SPKOForm select').prop('disabled', false);
             }
+            // Attach the cancel functionality to the close button
+            $('#cancelButton').on('click', function(ə) {
+                ə.preventDefault();
+                source.cancel('Perubahan pada SPKO ini telah dibatalkan.');
+            });
         });
         // $('#loadingSpinner').hide();
         fetchSPKO();

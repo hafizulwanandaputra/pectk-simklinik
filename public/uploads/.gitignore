@@ -1,8 +1,10 @@
 asesmen_mata/*
 scan_penunjang/*
+site_marking/*
 ttd_edukator_evaluasi/*
 ttd_pasien_evaluasi/*
 !asesmen_mata/index.html
 !scan_penunjang/index.html
+!site_marking/index.html
 !ttd_edukator_evaluasi/index.html
 !ttd_pasien_evaluasi/index.html

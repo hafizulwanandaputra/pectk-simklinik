@@ -31,6 +31,7 @@ class SPOperasi extends BaseController
             }
 
             $master_tindakan_operasi = $db->table('master_tindakan_operasi')
+                ->orderBy('nama_tindakan', 'ASC')
                 ->get()->getResultArray();
 
             $dokter = $db->table('user')
@@ -98,7 +99,80 @@ class SPOperasi extends BaseController
                 ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_sp_operasi.nomor_registrasi', 'inner')
                 ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
                 ->find($id); // Mengambil skrining
+            $data['jenis_tindakan'] = explode(',', $data['jenis_tindakan']); // Ubah CSV menjadi array
             return $this->response->setJSON($data); // Mengembalikan data skrining dalam format JSON
+        } else {
+            // Mengembalikan status 404 jika peran tidak diizinkan
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
+        }
+    }
+
+    public function update($id)
+    {
+        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Admisi' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
+            // Validate
+            $validation = \Config\Services::validation();
+            // Set base validation rules
+            $validation->setRules([
+                'site_marking' => 'if_exist|max_size[gambar,8192]|is_image[gambar]',
+            ]);
+
+            if (!$this->validate($validation->getRules())) {
+                return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
+            }
+
+            // Ambil SPKO
+            $sp_operasi = $this->SPOperasiModel
+                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_sp_operasi.nomor_registrasi', 'inner')
+                ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
+                ->find($id);
+
+            // Proses data jenis_tindakan dari select multiple
+            $jenis_tindakan = $this->request->getPost('jenis_tindakan');
+            $jenis_tindakan_csv = is_array($jenis_tindakan) ? implode(',', $jenis_tindakan) : NULL;
+
+            // Simpan data edukasi
+            $data = [
+                'id_sp_operasi' => $id,
+                'nomor_booking' => $sp_operasi['nomor_booking'],
+                'nomor_registrasi' => $sp_operasi['nomor_registrasi'],
+                'no_rm' => $sp_operasi['no_rm'],
+                'tanggal_operasi' => $this->request->getPost('tanggal_operasi') ?: NULL,
+                'jam_operasi' => $this->request->getPost('jam_operasi') ?: NULL,
+                'diagnosa' => $this->request->getPost('diagnosa') ?: NULL,
+                'jenis_tindakan' => $jenis_tindakan_csv,
+                'indikasi_operasi' => $this->request->getPost('indikasi_operasi') ?: NULL,
+                'jenis_bius' => $this->request->getPost('jenis_bius') ?: NULL,
+                'tipe_bayar' => $this->request->getPost('tipe_bayar') ?: NULL,
+                'rajal_ranap' => $this->request->getPost('rajal_ranap') ?: NULL,
+                'ruang_operasi' => $this->request->getPost('ruang_operasi') ?: NULL,
+                'dokter_operator' => $this->request->getPost('dokter_operator') ?: NULL,
+                'status_operasi' => $this->request->getPost('status_operasi') ?: NULL,
+                'diagnosa_site_marking' => $this->request->getPost('diagnosa_site_marking') ?: NULL,
+                'tindakan_site_marking' => $this->request->getPost('tindakan_site_marking') ?: NULL,
+                'nama_pasien_keluarga' => $this->request->getPost('nama_pasien_keluarga') ?: NULL,
+                'tanda_tangan_pasien' => $sp_operasi['tanda_tangan_pasien'],
+                'waktu_dibuat' => $sp_operasi['waktu_dibuat'],
+            ];
+
+            // Unggah site marking
+            $site_marking = $this->request->getFile('site_marking');
+            if ($site_marking && $site_marking->isValid() && !$site_marking->hasMoved()) {
+                $extension = $site_marking->getExtension();
+                $id_penunjang_scan = $this->request->getVar('id_penunjang_scan'); // Pastikan mengambil id yang benar
+                if ($sp_operasi['site_marking']) {
+                    unlink(FCPATH . 'uploads/scan_penunjang/' . $sp_operasi['site_marking']);
+                }
+                $site_marking_name = $sp_operasi['no_rm'] . '_' . $sp_operasi['nomor_booking'] . '.' . $extension;
+                $site_marking->move(FCPATH . 'uploads/site_marking', $site_marking_name);
+                $data['site_marking'] = $site_marking_name;
+            }
+
+            $this->SPOperasiModel->save($data);
+            return $this->response->setJSON(['success' => true, 'message' => 'Pemindaian berhasil diperbarui']);
         } else {
             // Mengembalikan status 404 jika peran tidak diizinkan
             return $this->response->setStatusCode(404)->setJSON([
