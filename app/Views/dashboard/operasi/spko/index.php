@@ -178,13 +178,13 @@ $usia = $registrasi->diff($tanggal_lahir);
                 </div>
                 <div class="mb-2">
                     <div class="form-floating">
-                        <select class="form-select" id="ruang_operasi" name="ruang_operasi" aria-label="ruang_operasi">
+                        <select class="form-select" id="dokter_operator" name="dokter_operator" aria-label="dokter_operator">
                             <option value="" disabled selected>-- Pilih Dokter Operator --</option>
                             <?php foreach ($dokter as $list) : ?>
                                 <option value="<?= $list['fullname'] ?>"><?= $list['fullname'] ?></option>
                             <?php endforeach; ?>
                         </select>
-                        <label for="ruang_operasi">Dokter Operator</label>
+                        <label for="dokter_operator">Dokter Operator</label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
