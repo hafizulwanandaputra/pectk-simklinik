@@ -79,5 +79,10 @@
         .select2-container--bootstrap-5 .select2-selection--multiple .select2-selection__rendered .select2-selection__choice .select2-selection__choice__remove {
             filter: invert(1) grayscale(100%) brightness(200%);
         }
+
+        .select2-container--bootstrap-5 .select2-selection--multiple .select2-selection__clear,
+        .select2-container--bootstrap-5 .select2-selection--single .select2-selection__clear {
+            filter: invert(1) grayscale(100%) brightness(200%);
+        }
     }
 </style>
