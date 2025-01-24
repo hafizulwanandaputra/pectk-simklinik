@@ -71,7 +71,7 @@
         <div class="modal-dialog modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable ">
             <form id="poliForm" enctype="multipart/form-data" class="modal-content bg-body-tertiary shadow-lg transparent-blur">
                 <div class="modal-header justify-content-between pt-2 pb-2" style="border-bottom: 1px solid var(--bs-border-color-translucent);">
-                    <h6 class="pe-2 modal-title fs-6 text-truncate" id="poliModalLabel" style="font-weight: bold;">Tambah Pengguna</h6>
+                    <h6 class="pe-2 modal-title fs-6 text-truncate" id="poliModalLabel" style="font-weight: bold;"></h6>
                     <button id="closeBtn" type="button" class="btn btn-danger bg-gradient" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
                 </div>
                 <div class="modal-body py-2">
@@ -128,7 +128,7 @@
         var table = $('#tabel').DataTable({
             "oLanguage": {
                 "sDecimal": ",",
-                "sEmptyTable": 'Tidak ada ruangan. Klik "Tambah Pengguna" untuk menambahkan ruangan.',
+                "sEmptyTable": 'Tidak ada ruangan. Klik "Tambah Ruangan" untuk menambahkan ruangan.',
                 "sInfo": "Menampilkan _START_ hingga _END_ dari _TOTAL_ ruangan",
                 "sInfoEmpty": "Menampilkan 0 hingga 0 dari 0 ruangan",
                 "sInfoFiltered": "(di-filter dari _MAX_ ruangan)",
@@ -170,7 +170,6 @@
                 $('#total_datatables').html(infoText);
             },
             'buttons': [{
-                // Tombol Tambah Pengguna
                 text: '<i class="fa-solid fa-plus"></i> Tambah Ruangan',
                 className: 'btn-primary btn-sm bg-gradient ',
                 attr: {
