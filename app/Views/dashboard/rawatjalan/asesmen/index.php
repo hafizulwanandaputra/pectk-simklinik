@@ -780,15 +780,13 @@ $usia = $registrasi->diff($tanggal_lahir);
                     }
 
                     const template = `
-            <div class="d-flex align-items-start">
-                <div class="me-2 font-monospace">
-                    <strong>${data.text}</strong>
-                </div>
-                <div>
-                    ${data.nama}
-                </div>
-            </div>
-        `;
+                        <div>
+                            <strong>${data.text}</strong>
+                        </div>
+                        <div>
+                            <small>${data.nama}</small>
+                        </div>
+                    `;
                     return $(template);
                 },
                 templateSelection: function(data) {
@@ -888,15 +886,13 @@ $usia = $registrasi->diff($tanggal_lahir);
                     }
 
                     const template = `
-            <div class="d-flex align-items-start">
-                <div class="me-2 font-monospace">
-                    <strong>${data.text}</strong>
-                </div>
-                <div>
-                    ${data.nama}
-                </div>
-            </div>
-        `;
+                        <div>
+                            <strong>${data.text}</strong>
+                        </div>
+                        <div>
+                            <small>${data.nama}</small>
+                        </div>
+                    `;
                     return $(template);
                 },
                 templateSelection: function(data) {
