@@ -94,16 +94,10 @@ $usia = $registrasi->diff($tanggal_lahir);
             <?= form_open_multipart('/rawatjalan/asesmen/update/' . $asesmen['id_asesmen'], 'id="asesmenForm"'); ?>
             <?= csrf_field(); ?>
             <div class="mb-3">
-                <div class="mb-2">
-                    <div class="mb-0 row g-1 overflow-hidden d-flex align-items-end">
-                        <div class="col fw-medium text-nowrap">DPJP</div>
-                        <div class="col text-end">
-                            <div class="date text-truncate">
-                                <?= $asesmen['nama_dokter'] ?>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <div class="fw-bold mb-2 border-bottom">Dokter Penanggung Jawab Pelayanan</div>
+                <div><?= $asesmen['nama_dokter'] ?></div>
+            </div>
+            <div class="mb-3">
                 <div class="fw-bold mb-2 border-bottom">Anamnesis (S)</div>
                 <div class="mb-2">
                     <div class="form-floating">
