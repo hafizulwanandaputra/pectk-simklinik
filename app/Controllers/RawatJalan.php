@@ -368,12 +368,15 @@ class RawatJalan extends BaseController
                 $db->query('ALTER TABLE rawat_jalan AUTO_INCREMENT = 1');
                 return $this->response->setJSON(['success' => true, 'message' => 'Rawat jalan berhasil dihapus karena kesalahan data']);
             }
+
             // Mengupdate status rawat jalan menjadi 'BATAL'
-            $rajalq->update([
-                'status' => 'BATAL',
-                'alasan_batal' => $this->request->getPost('alasan_batal'),
-                'pembatal' => session()->get('fullname')
-            ]);
+            $rajalq
+                ->where('id_rawat_jalan', $id)->update([
+                    'id_rawat_jalan' => $id,
+                    'status' => 'BATAL',
+                    'alasan_batal' => $this->request->getPost('alasan_batal'),
+                    'pembatal' => session()->get('fullname')
+                ]);
             return $this->response->setJSON(['success' => true, 'message' => 'Rawat jalan berhasil dibatalkan']);
         } else {
             // Jika peran tidak dikenali, lemparkan pengecualian 404
