@@ -189,7 +189,7 @@
                     <div class="mt-1 mb-0 row g-1">
                         <label for="jenis_kelamin" class="col-3 col-form-label">Jenis Kelamin</label>
                         <div class="col col-form-label">
-                            <div class="d-flex align-items-center justify-content-start">
+                            <div class="d-flex align-items-center justify-content-evenly">
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="jenis_kelamin" id="jenis_kelamin1" value="L">
                                     <label class="form-check-label" for="jenis_kelamin1">
