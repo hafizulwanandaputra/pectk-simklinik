@@ -94,6 +94,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             <?= form_open_multipart('/rawatjalan/penunjang/update/' . $penunjang['id_penunjang'], 'id="penunjangForm"'); ?>
             <?= csrf_field(); ?>
             <div class="mb-3">
+                <div class="fw-bold mb-2 border-bottom">Pemeriksaan Penunjang</div>
                 <div class="mb-2">
                     <div class="form-floating">
                         <input type="text" class="form-control" id="diagnosa" name="diagnosa" value="" autocomplete="off" dir="auto" placeholder="diagnosa">
