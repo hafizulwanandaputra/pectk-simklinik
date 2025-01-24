@@ -425,6 +425,7 @@
                         nomor_registrasi = `<span class="badge bg-success bg-gradient text-nowrap"><i class="fa-solid fa-bed-pulse"></i> RAWAT INAP</span>`;
                     }
                     const jenisResep = transaksi.id_resep ? `<span class="badge bg-secondary bg-gradient text-nowrap"><i class="fa-solid fa-prescription-bottle-medical"></i> RESEP LUAR</span>` : nomor_registrasi;
+                    const statusButtons = transaksi.lunas == '1' ? `disabled` : ``;
                     const transaksiElement = `
                     <li class="list-group-item border-top-0 pb-3 pt-3">
                         <div class="d-flex">
@@ -478,7 +479,7 @@
                             <button type="button" class="btn btn-body btn-sm bg-gradient " onclick="window.location.href = '<?= base_url('transaksi/detailtransaksi') ?>/${transaksi.id_transaksi}';">
                                 <i class="fa-solid fa-circle-info"></i> Detail
                             </button>
-                            <button type="button" class="btn btn-danger btn-sm bg-gradient  delete-btn" data-id="${transaksi.id_transaksi}" data-name="${transaksi.nama_pasien}" data-date="${transaksi.tgl_transaksi}">
+                            <button type="button" class="btn btn-danger btn-sm bg-gradient  delete-btn" data-id="${transaksi.id_transaksi}" data-name="${transaksi.nama_pasien}" data-date="${transaksi.tgl_transaksi}" ${statusButtons}>
                                 <i class="fa-solid fa-trash"></i> Hapus
                             </button>
                         </div>
