@@ -742,7 +742,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 $('#icd9_kode_5').append(icd9_kode_5).trigger('change');
             }
 
-            $('#icdx_kode_1').select2({
+            $('#icdx_kode_1, #icdx_kode_2, #icdx_kode_3, #icdx_kode_4, #icdx_kode_5').select2({
                 theme: "bootstrap-5",
                 width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
                 placeholder: "ICD-10",
@@ -798,7 +798,9 @@ $usia = $registrasi->diff($tanggal_lahir);
                     // Biarkan HTML tetap diproses
                     return markup;
                 }
-            }).on('select2:select', function(e) {
+            });
+
+            $('#icdx_kode_1').on('select2:select', function(e) {
                 // Dapatkan data item yang dipilih
                 const selectedData = e.params.data;
 
@@ -808,63 +810,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 }
             });
 
-            $('#icdx_kode_2').select2({
-                theme: "bootstrap-5",
-                width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
-                placeholder: "ICD-10",
-                disabled: <?= (session()->get('role') == 'Perawat') ? 'true' : 'false' ?>,
-                allowClear: true,
-                ajax: {
-                    url: '<?= base_url('rawatjalan/asesmen/icdx') ?>',
-                    dataType: 'json',
-                    delay: 250, // Tambahkan debounce
-                    data: function(params) {
-                        return {
-                            search: params.term, // Pencarian berdasarkan input
-                            offset: (params.page || 0) * 50, // Pagination
-                            limit: 50
-                        };
-                    },
-                    processResults: function(data) {
-                        return {
-                            results: data.data.map(item => ({
-                                id: item.icdKode,
-                                text: item.icdKode, // Teks untuk pencarian
-                                nama: item.icdNamaInggris // Tambahan data untuk custom HTML
-                            })),
-                            pagination: {
-                                more: data.data.length >= 50
-                            }
-                        };
-                    }
-                },
-                minimumInputLength: 1,
-                templateResult: function(data) {
-                    // Format untuk tampilan hasil pencarian
-                    if (!data.id) {
-                        return data.text; // Untuk placeholder
-                    }
-
-                    const template = `
-            <div class="d-flex align-items-start">
-                <div class="me-2 font-monospace">
-                    <strong>${data.text}</strong>
-                </div>
-                <div>
-                    ${data.nama}
-                </div>
-            </div>
-        `;
-                    return $(template);
-                },
-                templateSelection: function(data) {
-                    return data.text && data.text !== 'null' ? data.text : '';
-                },
-                escapeMarkup: function(markup) {
-                    // Biarkan HTML tetap diproses
-                    return markup;
-                }
-            }).on('select2:select', function(e) {
+            $('#icdx_kode_2').on('select2:select', function(e) {
                 // Dapatkan data item yang dipilih
                 const selectedData = e.params.data;
 
@@ -874,63 +820,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 }
             });
 
-            $('#icdx_kode_3').select2({
-                theme: "bootstrap-5",
-                width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
-                placeholder: "ICD-10",
-                disabled: <?= (session()->get('role') == 'Perawat') ? 'true' : 'false' ?>,
-                allowClear: true,
-                ajax: {
-                    url: '<?= base_url('rawatjalan/asesmen/icdx') ?>',
-                    dataType: 'json',
-                    delay: 250, // Tambahkan debounce
-                    data: function(params) {
-                        return {
-                            search: params.term, // Pencarian berdasarkan input
-                            offset: (params.page || 0) * 50, // Pagination
-                            limit: 50
-                        };
-                    },
-                    processResults: function(data) {
-                        return {
-                            results: data.data.map(item => ({
-                                id: item.icdKode,
-                                text: item.icdKode, // Teks untuk pencarian
-                                nama: item.icdNamaInggris // Tambahan data untuk custom HTML
-                            })),
-                            pagination: {
-                                more: data.data.length >= 50
-                            }
-                        };
-                    }
-                },
-                minimumInputLength: 1,
-                templateResult: function(data) {
-                    // Format untuk tampilan hasil pencarian
-                    if (!data.id) {
-                        return data.text; // Untuk placeholder
-                    }
-
-                    const template = `
-            <div class="d-flex align-items-start">
-                <div class="me-2 font-monospace">
-                    <strong>${data.text}</strong>
-                </div>
-                <div>
-                    ${data.nama}
-                </div>
-            </div>
-        `;
-                    return $(template);
-                },
-                templateSelection: function(data) {
-                    return data.text && data.text !== 'null' ? data.text : '';
-                },
-                escapeMarkup: function(markup) {
-                    // Biarkan HTML tetap diproses
-                    return markup;
-                }
-            }).on('select2:select', function(e) {
+            $('#icdx_kode_3').on('select2:select', function(e) {
                 // Dapatkan data item yang dipilih
                 const selectedData = e.params.data;
 
@@ -940,63 +830,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 }
             });
 
-            $('#icdx_kode_4').select2({
-                theme: "bootstrap-5",
-                width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
-                placeholder: "ICD-10",
-                disabled: <?= (session()->get('role') == 'Perawat') ? 'true' : 'false' ?>,
-                allowClear: true,
-                ajax: {
-                    url: '<?= base_url('rawatjalan/asesmen/icdx') ?>',
-                    dataType: 'json',
-                    delay: 250, // Tambahkan debounce
-                    data: function(params) {
-                        return {
-                            search: params.term, // Pencarian berdasarkan input
-                            offset: (params.page || 0) * 50, // Pagination
-                            limit: 50
-                        };
-                    },
-                    processResults: function(data) {
-                        return {
-                            results: data.data.map(item => ({
-                                id: item.icdKode,
-                                text: item.icdKode, // Teks untuk pencarian
-                                nama: item.icdNamaInggris // Tambahan data untuk custom HTML
-                            })),
-                            pagination: {
-                                more: data.data.length >= 50
-                            }
-                        };
-                    }
-                },
-                minimumInputLength: 1,
-                templateResult: function(data) {
-                    // Format untuk tampilan hasil pencarian
-                    if (!data.id) {
-                        return data.text; // Untuk placeholder
-                    }
-
-                    const template = `
-            <div class="d-flex align-items-start">
-                <div class="me-2 font-monospace">
-                    <strong>${data.text}</strong>
-                </div>
-                <div>
-                    ${data.nama}
-                </div>
-            </div>
-        `;
-                    return $(template);
-                },
-                templateSelection: function(data) {
-                    return data.text && data.text !== 'null' ? data.text : '';
-                },
-                escapeMarkup: function(markup) {
-                    // Biarkan HTML tetap diproses
-                    return markup;
-                }
-            }).on('select2:select', function(e) {
+            $('#icdx_kode_4').on('select2:select', function(e) {
                 // Dapatkan data item yang dipilih
                 const selectedData = e.params.data;
 
@@ -1006,63 +840,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 }
             });
 
-            $('#icdx_kode_5').select2({
-                theme: "bootstrap-5",
-                width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
-                placeholder: "ICD-10",
-                disabled: <?= (session()->get('role') == 'Perawat') ? 'true' : 'false' ?>,
-                allowClear: true,
-                ajax: {
-                    url: '<?= base_url('rawatjalan/asesmen/icdx') ?>',
-                    dataType: 'json',
-                    delay: 250, // Tambahkan debounce
-                    data: function(params) {
-                        return {
-                            search: params.term, // Pencarian berdasarkan input
-                            offset: (params.page || 0) * 50, // Pagination
-                            limit: 50
-                        };
-                    },
-                    processResults: function(data) {
-                        return {
-                            results: data.data.map(item => ({
-                                id: item.icdKode,
-                                text: item.icdKode, // Teks untuk pencarian
-                                nama: item.icdNamaInggris // Tambahan data untuk custom HTML
-                            })),
-                            pagination: {
-                                more: data.data.length >= 50
-                            }
-                        };
-                    }
-                },
-                minimumInputLength: 1,
-                templateResult: function(data) {
-                    // Format untuk tampilan hasil pencarian
-                    if (!data.id) {
-                        return data.text; // Untuk placeholder
-                    }
-
-                    const template = `
-            <div class="d-flex align-items-start">
-                <div class="me-2 font-monospace">
-                    <strong>${data.text}</strong>
-                </div>
-                <div>
-                    ${data.nama}
-                </div>
-            </div>
-        `;
-                    return $(template);
-                },
-                templateSelection: function(data) {
-                    return data.text && data.text !== 'null' ? data.text : '';
-                },
-                escapeMarkup: function(markup) {
-                    // Biarkan HTML tetap diproses
-                    return markup;
-                }
-            }).on('select2:select', function(e) {
+            $('#icdx_kode_5').on('select2:select', function(e) {
                 // Dapatkan data item yang dipilih
                 const selectedData = e.params.data;
 
@@ -1072,7 +850,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 }
             });
 
-            $('#icd9_kode_1').select2({
+            $('#icd9_kode_1, #icd9_kode_2, #icd9_kode_3, #icd9_kode_4, #icd9_kode_5').select2({
                 theme: "bootstrap-5",
                 width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
                 placeholder: "ICD-9 CM",
@@ -1128,7 +906,9 @@ $usia = $registrasi->diff($tanggal_lahir);
                     // Biarkan HTML tetap diproses
                     return markup;
                 }
-            }).on('select2:select', function(e) {
+            });
+
+            $('#icd9_kode_1').on('select2:select', function(e) {
                 // Dapatkan data item yang dipilih
                 const selectedData = e.params.data;
 
@@ -1138,63 +918,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 }
             });
 
-            $('#icd9_kode_2').select2({
-                theme: "bootstrap-5",
-                width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
-                placeholder: "ICD-9 CM",
-                disabled: <?= (session()->get('role') == 'Perawat') ? 'true' : 'false' ?>,
-                allowClear: true,
-                ajax: {
-                    url: '<?= base_url('rawatjalan/asesmen/icd9') ?>',
-                    dataType: 'json',
-                    delay: 250, // Tambahkan debounce
-                    data: function(params) {
-                        return {
-                            search: params.term, // Pencarian berdasarkan input
-                            offset: (params.page || 0) * 50, // Pagination
-                            limit: 50
-                        };
-                    },
-                    processResults: function(data) {
-                        return {
-                            results: data.data.map(item => ({
-                                id: item.icdKode,
-                                text: item.icdKode, // Teks untuk pencarian
-                                nama: item.icdNamaInggris // Tambahan data untuk custom HTML
-                            })),
-                            pagination: {
-                                more: data.data.length >= 50
-                            }
-                        };
-                    }
-                },
-                minimumInputLength: 1,
-                templateResult: function(data) {
-                    // Format untuk tampilan hasil pencarian
-                    if (!data.id) {
-                        return data.text; // Untuk placeholder
-                    }
-
-                    const template = `
-            <div class="d-flex align-items-start">
-                <div class="me-2 font-monospace">
-                    <strong>${data.text}</strong>
-                </div>
-                <div>
-                    ${data.nama}
-                </div>
-            </div>
-        `;
-                    return $(template);
-                },
-                templateSelection: function(data) {
-                    return data.text && data.text !== 'null' ? data.text : '';
-                },
-                escapeMarkup: function(markup) {
-                    // Biarkan HTML tetap diproses
-                    return markup;
-                }
-            }).on('select2:select', function(e) {
+            $('#icd9_kode_2').on('select2:select', function(e) {
                 // Dapatkan data item yang dipilih
                 const selectedData = e.params.data;
 
@@ -1204,63 +928,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 }
             });
 
-            $('#icd9_kode_3').select2({
-                theme: "bootstrap-5",
-                width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
-                placeholder: "ICD-9 CM",
-                disabled: <?= (session()->get('role') == 'Perawat') ? 'true' : 'false' ?>,
-                allowClear: true,
-                ajax: {
-                    url: '<?= base_url('rawatjalan/asesmen/icd9') ?>',
-                    dataType: 'json',
-                    delay: 250, // Tambahkan debounce
-                    data: function(params) {
-                        return {
-                            search: params.term, // Pencarian berdasarkan input
-                            offset: (params.page || 0) * 50, // Pagination
-                            limit: 50
-                        };
-                    },
-                    processResults: function(data) {
-                        return {
-                            results: data.data.map(item => ({
-                                id: item.icdKode,
-                                text: item.icdKode, // Teks untuk pencarian
-                                nama: item.icdNamaInggris // Tambahan data untuk custom HTML
-                            })),
-                            pagination: {
-                                more: data.data.length >= 50
-                            }
-                        };
-                    }
-                },
-                minimumInputLength: 1,
-                templateResult: function(data) {
-                    // Format untuk tampilan hasil pencarian
-                    if (!data.id) {
-                        return data.text; // Untuk placeholder
-                    }
-
-                    const template = `
-            <div class="d-flex align-items-start">
-                <div class="me-2 font-monospace">
-                    <strong>${data.text}</strong>
-                </div>
-                <div>
-                    ${data.nama}
-                </div>
-            </div>
-        `;
-                    return $(template);
-                },
-                templateSelection: function(data) {
-                    return data.text && data.text !== 'null' ? data.text : '';
-                },
-                escapeMarkup: function(markup) {
-                    // Biarkan HTML tetap diproses
-                    return markup;
-                }
-            }).on('select2:select', function(e) {
+            $('#icd9_kode_3').on('select2:select', function(e) {
                 // Dapatkan data item yang dipilih
                 const selectedData = e.params.data;
 
@@ -1270,63 +938,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 }
             });
 
-            $('#icd9_kode_4').select2({
-                theme: "bootstrap-5",
-                width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
-                placeholder: "ICD-9 CM",
-                disabled: <?= (session()->get('role') == 'Perawat') ? 'true' : 'false' ?>,
-                allowClear: true,
-                ajax: {
-                    url: '<?= base_url('rawatjalan/asesmen/icd9') ?>',
-                    dataType: 'json',
-                    delay: 250, // Tambahkan debounce
-                    data: function(params) {
-                        return {
-                            search: params.term, // Pencarian berdasarkan input
-                            offset: (params.page || 0) * 50, // Pagination
-                            limit: 50
-                        };
-                    },
-                    processResults: function(data) {
-                        return {
-                            results: data.data.map(item => ({
-                                id: item.icdKode,
-                                text: item.icdKode, // Teks untuk pencarian
-                                nama: item.icdNamaInggris // Tambahan data untuk custom HTML
-                            })),
-                            pagination: {
-                                more: data.data.length >= 50
-                            }
-                        };
-                    }
-                },
-                minimumInputLength: 1,
-                templateResult: function(data) {
-                    // Format untuk tampilan hasil pencarian
-                    if (!data.id) {
-                        return data.text; // Untuk placeholder
-                    }
-
-                    const template = `
-            <div class="d-flex align-items-start">
-                <div class="me-2 font-monospace">
-                    <strong>${data.text}</strong>
-                </div>
-                <div>
-                    ${data.nama}
-                </div>
-            </div>
-        `;
-                    return $(template);
-                },
-                templateSelection: function(data) {
-                    return data.text && data.text !== 'null' ? data.text : '';
-                },
-                escapeMarkup: function(markup) {
-                    // Biarkan HTML tetap diproses
-                    return markup;
-                }
-            }).on('select2:select', function(e) {
+            $('#icd9_kode_4').on('select2:select', function(e) {
                 // Dapatkan data item yang dipilih
                 const selectedData = e.params.data;
 
@@ -1336,63 +948,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 }
             });
 
-            $('#icd9_kode_5').select2({
-                theme: "bootstrap-5",
-                width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
-                placeholder: "ICD-9 CM",
-                disabled: <?= (session()->get('role') == 'Perawat') ? 'true' : 'false' ?>,
-                allowClear: true,
-                ajax: {
-                    url: '<?= base_url('rawatjalan/asesmen/icd9') ?>',
-                    dataType: 'json',
-                    delay: 250, // Tambahkan debounce
-                    data: function(params) {
-                        return {
-                            search: params.term, // Pencarian berdasarkan input
-                            offset: (params.page || 0) * 50, // Pagination
-                            limit: 50
-                        };
-                    },
-                    processResults: function(data) {
-                        return {
-                            results: data.data.map(item => ({
-                                id: item.icdKode,
-                                text: item.icdKode, // Teks untuk pencarian
-                                nama: item.icdNamaInggris // Tambahan data untuk custom HTML
-                            })),
-                            pagination: {
-                                more: data.data.length >= 50
-                            }
-                        };
-                    }
-                },
-                minimumInputLength: 1,
-                templateResult: function(data) {
-                    // Format untuk tampilan hasil pencarian
-                    if (!data.id) {
-                        return data.text; // Untuk placeholder
-                    }
-
-                    const template = `
-            <div class="d-flex align-items-start">
-                <div class="me-2 font-monospace">
-                    <strong>${data.text}</strong>
-                </div>
-                <div>
-                    ${data.nama}
-                </div>
-            </div>
-        `;
-                    return $(template);
-                },
-                templateSelection: function(data) {
-                    return data.text && data.text !== 'null' ? data.text : '';
-                },
-                escapeMarkup: function(markup) {
-                    // Biarkan HTML tetap diproses
-                    return markup;
-                }
-            }).on('select2:select', function(e) {
+            $('#icd9_kode_5').on('select2:select', function(e) {
                 // Dapatkan data item yang dipilih
                 const selectedData = e.params.data;
 
