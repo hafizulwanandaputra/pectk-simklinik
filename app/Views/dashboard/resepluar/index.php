@@ -403,9 +403,7 @@
                     const statusBadge = resep.status == '1' ?
                         `<span class="badge bg-success bg-gradient">Transaksi Diproses</span>` :
                         `<span class="badge bg-danger bg-gradient">Transaksi Belum Diproses</span>`;
-                    const statusButtons = resep.status == '1' ?
-                        `disabled` :
-                        ``;
+                    const statusButtons = resep.status == '1' ? `disabled` : ``;
                     const tanggal_lahir = resep.tanggal_lahir === '0000-00-00' ? '<em>Tidak ada</em>' : resep.tanggal_lahir;
                     const resepElement = `
             <li class="list-group-item border-top-0 pb-3 pt-3">
@@ -466,10 +464,10 @@
                     <button type="button" class="btn btn-body btn-sm bg-gradient " onclick="window.location.href = '<?= base_url('resepluar/detailresep') ?>/${resep.id_resep}';">
                         <i class="fa-solid fa-circle-info"></i> Detail
                     </button>
-                    <button type="button" class="btn btn-body btn-sm bg-gradient  edit-btn" data-id="${resep.id_resep}">
+                    <button type="button" class="btn btn-body btn-sm bg-gradient  edit-btn" data-id="${resep.id_resep}" ${statusButtons}>
                         <i class="fa-solid fa-pen-to-square"></i> Edit Identitas
                     </button>
-                    <button type="button" class="btn btn-danger btn-sm bg-gradient  delete-btn" data-id="${resep.id_resep}" data-name="${resep.nama_pasien}" data-date="${resep.tanggal_resep}">
+                    <button type="button" class="btn btn-danger btn-sm bg-gradient  delete-btn" data-id="${resep.id_resep}" data-name="${resep.nama_pasien}" data-date="${resep.tanggal_resep}" ${statusButtons}>
                         <i class="fa-solid fa-trash"></i> Hapus
                     </button>
                 </div>

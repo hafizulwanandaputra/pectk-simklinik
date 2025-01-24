@@ -357,9 +357,7 @@
                     const statusBadge = resep.status == '1' ?
                         `<span class="badge bg-success bg-gradient">Transaksi Diproses</span>` :
                         `<span class="badge bg-danger bg-gradient">Transaksi Belum Diproses</span>`;
-                    const statusButtons = resep.status == '1' ?
-                        `disabled` :
-                        ``;
+                    const statusButtons = resep.status == '1' ? `disabled` : ``;
                     const status = resep.status == '1' ? `disabled` : ``;
                     let nomor_registrasi = resep.nomor_registrasi || "";
                     if (nomor_registrasi.includes("RJ")) {
