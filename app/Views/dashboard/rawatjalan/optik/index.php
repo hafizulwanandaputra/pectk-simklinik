@@ -136,7 +136,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                     </div>
                 </div>
                 <div class="card overflow-auto mt-3 shadow-sm">
-                    <div class="table-responsive m-1">
+                    <div class="table-responsive">
                         <table class="table-sm" style="font-size: 0.75em;">
                             <thead>
                                 <tr>
