@@ -731,7 +731,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             `);
 
             // Disable form inputs
-            $('#evaluasiForm input').prop('disabled', true);
+            $('#evaluasiForm input, #evaluasiForm button').prop('disabled', true);
 
             try {
                 // Perform the post request with progress handling
@@ -819,7 +819,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 $('#submitButton').prop('disabled', false).html(`
                     <i class="fa-solid fa-floppy-disk"></i> Simpan
                 `);
-                $('#evaluasiForm input').prop('disabled', false);
+                $('#evaluasiForm input, #evaluasiForm button').prop('disabled', false);
             }
 
             // Attach the cancel functionality to the close button

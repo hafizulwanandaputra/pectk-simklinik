@@ -299,7 +299,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             `);
 
             // Disable form inputs
-            $('#laporanRajalForm input, #laporanRajalForm select').prop('disabled', true);
+            $('#laporanRajalForm input, #laporanRajalForm select, #laporanRajalForm button').prop('disabled', true);
 
             try {
                 const response = await axios.post(`<?= base_url('/rawatjalan/laporanrajal/update/' . $laporanrajal['id_lp_tindakan_rajal']) ?>`, formData, {
@@ -387,7 +387,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 $('#submitBtn').prop('disabled', false).html(`
                     <i class="fa-solid fa-floppy-disk"></i> Simpan
                 `);
-                $('#laporanRajalForm input, #laporanRajalForm select').prop('disabled', false);
+                $('#laporanRajalForm input, #laporanRajalForm select, #laporanRajalForm button').prop('disabled', false);
             }
         });
         fetchLaporanRajal();

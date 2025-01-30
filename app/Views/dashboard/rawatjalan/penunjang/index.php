@@ -781,7 +781,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             `);
 
             // Disable form inputs
-            $('#penunjangForm input, #penunjangForm select').prop('disabled', true);
+            $('#penunjangForm input, #penunjangForm select, #penunjangForm button').prop('disabled', true);
 
             try {
                 const response = await axios.post(`<?= base_url('/rawatjalan/penunjang/update/' . $penunjang['id_penunjang']) ?>`, formData, {
@@ -832,7 +832,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 $('#submitBtn').prop('disabled', false).html(`
                     <i class="fa-solid fa-floppy-disk"></i> Simpan
                 `);
-                $('#penunjangForm input, #penunjangForm select').prop('disabled', false);
+                $('#penunjangForm input, #penunjangForm select, #penunjangForm button').prop('disabled', false);
             }
         });
         await Promise.all([fetchDokterOptions(), fetchRuanganOptions()]);

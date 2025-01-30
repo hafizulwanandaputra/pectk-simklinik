@@ -421,7 +421,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             `);
 
             // Disable form inputs
-            $('#skriningForm input, #skriningForm select').prop('disabled', true);
+            $('#skriningForm input, #skriningForm select, #skriningForm button').prop('disabled', true);
 
             try {
                 const response = await axios.post(`<?= base_url('/rawatjalan/skrining/update/' . $skrining['id_skrining']) ?>`, formData, {
@@ -492,7 +492,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 $('#submitBtn').prop('disabled', false).html(`
                     <i class="fa-solid fa-floppy-disk"></i> Simpan
                 `);
-                $('#skriningForm input, #skriningForm select').prop('disabled', false);
+                $('#skriningForm input, #skriningForm select, #skriningForm button').prop('disabled', false);
             }
         });
         fetchSkrining();

@@ -60,7 +60,6 @@ $usia = $registrasi->diff($tanggal_lahir);
     <div id="loadingSpinner" class="spinner-border spinner-border-sm mx-2" role="status" style="min-width: 1rem;">
         <span class="visually-hidden">Loading...</span>
     </div>
-    <a class="fs-6 mx-2 text-danger" href="#" id="cancelButton" data-bs-placement="bottom" data-bs-title="Batalkan Proses" style="display: none;"><i class="fa-solid fa-xmark"></i></a>
     <?php if ($previous): ?>
         <a class="fs-6 mx-2 text-success-emphasis" href="<?= site_url('operasi/spko/' . $previous['id_sp_operasi']) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="<?= $previous['nomor_booking']; ?> • <?= $previous['no_rm'] ?> • <?= $previous['nama_pasien']; ?>"><i class="fa-solid fa-circle-arrow-left"></i></a>
     <?php else: ?>
@@ -259,8 +258,8 @@ $usia = $registrasi->diff($tanggal_lahir);
                                 </div>
                                 <div class="card-footer d-grid">
                                     <div class="btn-group">
-                                        <button type="button" id="apply_drawing" class="btn btn-success btn-sm bg-gradient"><i class="fa-solid fa-check"></i> Terapkan</button>
                                         <button type="button" id="clear_drawing" class="btn btn-danger btn-sm bg-gradient"><i class="fa-solid fa-xmark"></i> Bersihkan</button>
+                                        <button type="button" id="apply_drawing" class="btn btn-success btn-sm bg-gradient"><i class="fa-solid fa-check"></i> Terapkan</button>
                                     </div>
                                 </div>
                             </div>
@@ -301,12 +300,6 @@ $usia = $registrasi->diff($tanggal_lahir);
             </div>
             <div>
                 <hr>
-                <!-- Progress bar -->
-                <div class="mb-2 mt-1 w-100" id="uploadProgressDiv">
-                    <div class="progress" style="border-top: 1px solid var(--bs-border-color-translucent); border-bottom: 1px solid var(--bs-border-color-translucent); border-left: 1px solid var(--bs-border-color-translucent); border-right: 1px solid var(--bs-border-color-translucent);">
-                        <div class="progress-bar progress-bar-striped progress-bar-animated bg-gradient" role="progressbar" style="width: 0%; transition: none;" id="uploadProgressBar"></div>
-                    </div>
-                </div>
                 <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-3">
                     <button class="btn btn-body  bg-gradient" type="button" onclick="window.open(`<?= base_url('/operasi/spko/export/' . $operasi['id_sp_operasi']) ?>`)"><i class="fa-solid fa-print"></i> Cetak Form</button>
                     <button class="btn btn-primary bg-gradient" type="submit" id="submitBtn"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
@@ -474,6 +467,7 @@ $usia = $registrasi->diff($tanggal_lahir);
         // Batalkan perubahan jika tidak jadi
         $('#cancel_drawing').click(async function() {
             $('#loadingSpinner').show();
+            $(this).prop('disabled', true).html(`<span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span> Batalkan Perubahan`);
             try {
                 const response = await axios.get('<?= base_url('operasi/spko/view/') . $operasi['id_sp_operasi'] ?>');
                 const data = response.data;
@@ -490,6 +484,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
             } finally {
                 $('#loadingSpinner').hide();
+                $(this).prop('disabled', false).html(`<i class="fa-solid fa-xmark"></i> Batalkan Perubahan`)
             }
         });
 
@@ -506,40 +501,27 @@ $usia = $registrasi->diff($tanggal_lahir);
                 formData.append('site_marking', siteMarkingValue);
             }
 
-            const CancelToken = axios.CancelToken;
-            const source = CancelToken.source();
-
             // Clear previous validation states
             $('#uploadProgressBar').removeClass('bg-danger').css('width', '0%');
             $('#SPKOForm .is-invalid').removeClass('is-invalid');
             $('#SPKOForm .invalid-feedback').text('').hide();
-            $('#cancelButton').show();
             $('#submitBtn').prop('disabled', true).html(`
-            <span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span>
-            <span role="status">Memproses <span id="uploadPercentage" style="font-variant-numeric: tabular-nums;">0%</span></span>
-        `);
+                <span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span> Simpan
+            `);
 
             // Disable form inputs
-            $('#SPKOForm input, #SPKOForm select').prop('disabled', true);
+            $('#SPKOForm input, #SPKOForm select, #SPKOForm button').prop('disabled', true);
+            $('#cancel_changes').hide();
 
             try {
                 const response = await axios.post(`<?= base_url('/operasi/spko/update/' . $operasi['id_sp_operasi']) ?>`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
-                    },
-                    onUploadProgress: function(progressEvent) {
-                        if (progressEvent.lengthComputable) {
-                            var percent = Math.round((progressEvent.loaded / progressEvent.total) * 100);
-                            $('#uploadProgressBar').css('width', percent + '%');
-                            $('#uploadPercentage').html(percent + '%');
-                        }
-                    },
-                    cancelToken: source.token // Attach the token here
+                    }
                 });
 
                 if (response.data.success) {
                     showSuccessToast(response.data.message);
-                    $('#uploadProgressBar').css('width', '0%');
                     fetchSPKO();
                 } else {
                     console.log("Validation Errors:", response.data.errors);
@@ -589,30 +571,15 @@ $usia = $registrasi->diff($tanggal_lahir);
                         }
                     }
                     console.error('Perbaiki kesalahan pada formulir.');
-                    $('#uploadProgressBar').addClass('bg-danger');
                 }
             } catch (error) {
-                if (axios.isCancel(error)) {
-                    showFailedToast(error.message);
-                    $('#uploadProgressBar').css('width', '0%');
-                } else {
-                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
-                    $('#uploadProgressBar').addClass('bg-danger');
-                }
+                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
             } finally {
-                $('#uploadPercentage').html('0%');
-                $('#cancelButton').hide();
                 $('#submitBtn').prop('disabled', false).html(`
                 <i class="fa-solid fa-floppy-disk"></i> Simpan
             `);
-                $('#SPKOForm input, #SPKOForm select').prop('disabled', false);
+                $('#SPKOForm input, #SPKOForm select, #SPKOForm button').prop('disabled', false);
             }
-
-            // Attach the cancel functionality to the close button
-            $('#cancelButton').on('click', function(ə) {
-                ə.preventDefault();
-                source.cancel('Perubahan pada SPKO ini telah dibatalkan.');
-            });
         });
         // $('#loadingSpinner').hide();
         fetchSPKO();

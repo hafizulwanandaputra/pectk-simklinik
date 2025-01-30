@@ -389,7 +389,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             `);
 
                 // Disable form inputs
-                $('#optikForm input, #optikForm select').prop('disabled', true);
+                $('#optikForm input, #optikForm select, #optikForm button').prop('disabled', true);
 
                 try {
                     const response = await axios.post(`<?= base_url('/rawatjalan/optik/update/' . $optik['id_optik']) ?>`, formData, {
@@ -460,7 +460,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                     $('#submitBtn').prop('disabled', false).html(`
                     <i class="fa-solid fa-floppy-disk"></i> Simpan
                 `);
-                    $('#optikForm input, #optikForm select').prop('disabled', false);
+                    $('#optikForm input, #optikForm select, #optikForm button').prop('disabled', false);
                 }
             });
         <?php endif; ?>
