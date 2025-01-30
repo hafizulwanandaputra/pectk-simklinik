@@ -134,7 +134,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                     <div class="row gx-1 radio-group">
                         <label for="jenis_bius" class="col col-form-label">Jenis Anestesi</label>
                         <div class="col col-form-label">
-                            <div class="d-flex align-items-center justify-content-between">
+                            <div class="d-flex align-items-center justify-content-evenly">
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="jenis_bius" id="jenis_bius1" value="UMUM">
                                     <label class="form-check-label" for="jenis_bius1">
@@ -145,12 +145,6 @@ $usia = $registrasi->diff($tanggal_lahir);
                                     <input class="form-check-input" type="radio" name="jenis_bius" id="jenis_bius2" value="LOKAL">
                                     <label class="form-check-label" for="jenis_bius2">
                                         Lokal
-                                    </label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="jenis_bius" id="jenis_bius3" value="TOTAL">
-                                    <label class="form-check-label" for="jenis_bius3">
-                                        Total
                                     </label>
                                 </div>
                             </div>
