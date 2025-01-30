@@ -91,18 +91,22 @@ class Home extends BaseController
             ->get();
         $persebaranprovinsigraph = $pasien->select('provinsi, COUNT(*) AS total_provinsi')
             ->orderBy('total_provinsi', 'DESC')
+            ->orderBy('provinsi', 'ASC')
             ->groupBy('provinsi')
             ->get();
         $persebarankabupatengraph = $pasien->select('kabupaten, COUNT(*) AS total_kabupaten')
             ->orderBy('total_kabupaten', 'DESC')
+            ->orderBy('kabupaten', 'ASC')
             ->groupBy('kabupaten')
             ->get();
         $persebarankecamatangraph = $pasien->select('kecamatan, COUNT(*) AS total_kecamatan')
             ->orderBy('total_kecamatan', 'DESC')
+            ->orderBy('kecamatan', 'ASC')
             ->groupBy('kecamatan')
             ->get();
         $persebarankelurahangraph = $pasien->select('kelurahan, COUNT(*) AS total_kelurahan')
             ->orderBy('total_kelurahan', 'DESC')
+            ->orderBy('kelurahan', 'ASC')
             ->groupBy('kelurahan')
             ->get();
         $rawatjalangraph = $rawatjalan->select('DATE_FORMAT(tanggal_registrasi, "%Y-%m") AS bulan, COUNT(*) AS total_rajal')
