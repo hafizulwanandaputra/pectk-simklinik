@@ -428,14 +428,20 @@ $usia = $registrasi->diff($tanggal_lahir);
             $('#cancel_changes').show();
         });
 
-        // Terapkan hasil gambar ke pratinjau
+        // Batalkan perubahan jika tidak jadi
         $('#cancel_drawing').click(async function() {
             $('#loadingSpinner').show();
             try {
                 const response = await axios.get('<?= base_url('operasi/spko/view/') . $operasi['id_sp_operasi'] ?>');
                 const data = response.data;
-                $('#site_marking').val(data.site_marking);
-                $('#site_marking_preview').attr('src', `<?= base_url('uploads/site_marking') ?>/${data.site_marking}?t=${new Date().getTime()}`);
+                if (data.site_marking) {
+                    $('#site_marking_preview').attr('src', `<?= base_url('uploads/site_marking') ?>/${data.site_marking}?t=${new Date().getTime()}`);
+                    $('#site_marking_preview_div').show();
+                    $('#site_marking').val(data.site_marking);
+                } else {
+                    $('#site_marking_preview_div').hide();
+                    $('#site_marking').val('');
+                }
                 $('#cancel_changes').hide();
             } catch (error) {
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
