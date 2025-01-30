@@ -29,6 +29,23 @@ $usia = $registrasi->diff($tanggal_lahir);
     #site_marking_canvas {
         cursor: crosshair;
     }
+
+    .canvas-container::-webkit-scrollbar {
+        width: 16px;
+        height: 16px;
+    }
+
+    .canvas-container::-webkit-scrollbar-track {
+        background-color: var(--bs-secondary-bg);
+    }
+
+    .canvas-container::-webkit-scrollbar-thumb {
+        background-color: var(--bs-secondary);
+    }
+
+    .canvas-container::-webkit-scrollbar-thumb:hover {
+        background-color: var(--bs-body-color);
+    }
 </style>
 <?= $this->endSection(); ?>
 <?= $this->section('title'); ?>
@@ -234,8 +251,10 @@ $usia = $registrasi->diff($tanggal_lahir);
                                 <div class="card-header">Gambar <em>Site Marking</em></div>
                                 <div class="card-body p-2">
                                     <!-- Canvas yang responsif -->
-                                    <div class="rounded border w-100 overflow-auto bg-white text-center">
-                                        <canvas id="site_marking_canvas" width="384" height="411"></canvas>
+                                    <div class="rounded border w-100 overflow-hidden bg-white text-center">
+                                        <div class="canvas-container overflow-x-scroll">
+                                            <canvas id="site_marking_canvas" width="384" height="411"></canvas>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="card-footer d-grid">
@@ -382,26 +401,56 @@ $usia = $registrasi->diff($tanggal_lahir);
             backgroundSnapshot = ctx.getImageData(0, 0, canvas.width, canvas.height); // Simpan gambar latar awal
         };
 
-        // Fungsi untuk mulai menggambar
-        canvas.addEventListener('mousedown', function(e) {
-            isDrawing = true;
-            ctx.beginPath(); // Memulai jalur baru
-            ctx.moveTo(e.offsetX, e.offsetY);
-        });
-
-        // Fungsi untuk menggambar
-        canvas.addEventListener('mousemove', function(e) {
-            if (isDrawing) {
-                ctx.lineTo(e.offsetX, e.offsetY);
-                ctx.stroke();
+        // Fungsi mendapatkan posisi (mouse/touch)
+        function getPosition(event) {
+            let rect = canvas.getBoundingClientRect();
+            if (event.touches) {
+                return {
+                    x: event.touches[0].clientX - rect.left,
+                    y: event.touches[0].clientY - rect.top
+                };
+            } else {
+                return {
+                    x: event.offsetX,
+                    y: event.offsetY
+                };
             }
-        });
+        }
 
-        // Fungsi untuk menghentikan menggambar
-        canvas.addEventListener('mouseup', function() {
+        // Mulai menggambar (mouse & sentuh)
+        function startDrawing(event) {
+            event.preventDefault();
+            isDrawing = true;
+            let pos = getPosition(event);
+            ctx.beginPath();
+            ctx.moveTo(pos.x, pos.y);
+        }
+
+        // Menggambar (mouse & sentuh)
+        function draw(event) {
+            if (!isDrawing) return;
+            event.preventDefault();
+            let pos = getPosition(event);
+            ctx.lineTo(pos.x, pos.y);
+            ctx.stroke();
+        }
+
+        // Selesai menggambar (mouse & sentuh)
+        function stopDrawing(event) {
             isDrawing = false;
-            ctx.beginPath(); // Reset path agar tidak terhubung ke gambar berikutnya
-        });
+            ctx.beginPath(); // Reset jalur agar tidak terhubung ke gambar berikutnya
+        }
+
+        // Event untuk mouse
+        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', stopDrawing);
+        canvas.addEventListener('mouseleave', stopDrawing);
+
+        // Event untuk layar sentuh
+        canvas.addEventListener('touchstart', startDrawing);
+        canvas.addEventListener('touchmove', draw);
+        canvas.addEventListener('touchend', stopDrawing);
 
         // Fungsi untuk membersihkan hanya gambar tanpa latar belakang
         $('#clear_drawing').click(function() {

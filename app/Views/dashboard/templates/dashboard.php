@@ -32,63 +32,6 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <style>
-        /* Custom Scrollbar Styles */
-        html {
-            scrollbar-width: thin;
-            /* For Firefox */
-            scrollbar-color: var(--bs-secondary-color) var(--bs-border-color-translucent);
-        }
-
-        ::-webkit-scrollbar {
-            width: 16px;
-            height: 16px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background-color: var(--bs-border-color-translucent);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background-color: var(--bs-secondary-color);
-            border-radius: 10px;
-            border: 4px solid var(--bs-border-color-translucent);
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background-color: var(--bs-secondary-color);
-        }
-
-        ::-webkit-scrollbar-button:single-button {
-            background-color: var(--bs-secondary-color);
-            border: 1px solid var(--bs-border-color-translucent);
-            width: 16px;
-            height: 16px;
-        }
-
-        ::-webkit-scrollbar-button:single-button:vertical:decrement {
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="%23ffffff" viewBox="0 0 16 16"><path d="M4 10l4-4 4 4H4z"/></svg>');
-            background-repeat: no-repeat;
-            background-position: center;
-        }
-
-        ::-webkit-scrollbar-button:single-button:vertical:increment {
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="%23ffffff" viewBox="0 0 16 16"><path d="M12 6L8 10 4 6h8z"/></svg>');
-            background-repeat: no-repeat;
-            background-position: center;
-        }
-
-        ::-webkit-scrollbar-button:single-button:horizontal:decrement {
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="%23ffffff" viewBox="0 0 16 16"><path d="M10 12l-4-4 4-4v8z"/></svg>');
-            background-repeat: no-repeat;
-            background-position: center;
-        }
-
-        ::-webkit-scrollbar-button:single-button:horizontal:increment {
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" fill="%23ffffff" viewBox="0 0 16 16"><path d="M6 4l4 4-4 4V4z"/></svg>');
-            background-repeat: no-repeat;
-            background-position: center;
-        }
-
         html,
         body {
             height: 100%;
