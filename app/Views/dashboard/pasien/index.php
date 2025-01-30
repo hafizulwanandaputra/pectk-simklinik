@@ -369,7 +369,7 @@
                 <button type="button" class="btn-close" id="closeToast" ${autoHide ? '' : 'disabled'}></button>
             </div>
             <div class="toast-body">
-                <div class="progress">
+                <div class="progress" style="border-top: 1px solid var(--bs-border-color-translucent); border-bottom: 1px solid var(--bs-border-color-translucent); border-left: 1px solid var(--bs-border-color-translucent); border-right: 1px solid var(--bs-border-color-translucent);">
                     <div id="exportProgressBar" class="progress-bar progress-bar-striped bg-gradient ${progressClass}" role="progressbar" style="width: 0%; transition: none"></div>
                 </div>
             </div>
@@ -402,19 +402,21 @@
             try {
                 showExportToast('Mengekspor', 'primary', false);
 
-                // Animasi progress bar
-                let progress = 0;
-                const interval = setInterval(() => {
-                    progress += 10;
-                    $('#exportPercent').text(progress + '%');
-                    $('#exportProgressBar').css('width', progress + '%');
-                    if (progress >= 100) clearInterval(interval);
-                }, 300);
-
-                // Mengambil file dari server
+                // Mengambil file dari server dengan tracking progress
                 const response = await axios.get(`<?= base_url('pasien/exportexcel') ?>`, {
-                    responseType: 'blob' // Mendapatkan data sebagai blob
+                    responseType: 'blob', // Mendapatkan data sebagai blob
+                    onDownloadProgress: function(progressEvent) {
+                        if (progressEvent.lengthComputable) {
+                            let percentComplete = Math.round((progressEvent.loaded / progressEvent.total) * 100);
+                            $('#exportPercent').text(percentComplete + '%');
+                            $('#exportProgressBar').css('width', percentComplete + '%');
+                        }
+                    }
                 });
+
+                // Memastikan progress 100% setelah selesai
+                $('#exportPercent').text('100%');
+                $('#exportProgressBar').css('width', '100%');
 
                 // Mendapatkan nama file dari header Content-Disposition
                 const disposition = response.headers['content-disposition'];
@@ -424,7 +426,7 @@
                 const url = window.URL.createObjectURL(new Blob([response.data]));
                 const a = document.createElement('a');
                 a.href = url;
-                a.download = filename; // Menggunakan nama file dari header
+                a.download = filename;
                 document.body.appendChild(a);
                 a.click();
                 a.remove();
@@ -436,6 +438,7 @@
                 $('#exportPercent').text('');
                 $('#exportProgressBar').removeClass('progress-bar-striped progress-bar-animated').addClass('bg-success').css('width', '100%');
             } catch (error) {
+                console.error(error);
                 showExportToast('Terjadi kesalahan. Silakan coba lagi.', 'error');
                 $('#exportPercent').text('');
                 $('#exportProgressBar').removeClass('progress-bar-striped progress-bar-animated').addClass('bg-danger').css('width', '100%');

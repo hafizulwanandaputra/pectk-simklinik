@@ -814,7 +814,7 @@ class Pasien extends BaseController
             $pasien = $this->PasienModel->findAll();
 
             // Membuat nama file
-            $filename = 'DATA PASIEN PECTK';
+            $filename = 'DATA PASIEN PECTK.xlsx';
 
             $spreadsheet = new Spreadsheet();
             $sheet = $spreadsheet->getActiveSheet();
@@ -1045,10 +1045,17 @@ class Pasien extends BaseController
 
             // Menyimpan file spreadsheet dan mengirimkan ke browser
             $writer = new Xlsx($spreadsheet);
-            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheet.sheet');
-            header('Content-Disposition: attachment;filename=' . $filename . '.xlsx');
-            header('Cache-Control: max-age=0');
-            $writer->save('php://output');
+            // Simpan ke file sementara
+            $temp_file = WRITEPATH . 'exports/' . $filename;
+            $writer->save($temp_file);
+
+            // Kirimkan file dalam mode streaming agar bisa dipantau progresnya
+            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            header('Content-Disposition: attachment; filename="' . $filename . '"');
+            header('Content-Length: ' . filesize($temp_file));
+
+            readfile($temp_file);
+            unlink($temp_file); // Hapus setelah dikirim
             exit();
         } else {
             // Menghasilkan exception jika peran tidak diizinkan
