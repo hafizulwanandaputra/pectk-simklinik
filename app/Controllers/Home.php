@@ -133,6 +133,7 @@ class Home extends BaseController
             $resepgraph = $resep->select('DATE_FORMAT(resep.tanggal_resep, "%Y-%m") AS bulan, dokter, COUNT(*) AS total_resep')
                 ->where('dokter !=', 'Resep Luar')
                 ->where('resep.status', 1)
+                ->orderBy('dokter', 'ASC')
                 ->groupBy('DATE_FORMAT(resep.tanggal_resep, "%Y-%m"), dokter')
                 ->get()
                 ->getResultArray();
@@ -151,6 +152,7 @@ class Home extends BaseController
                 ->get(); // Resep yang Diberikan Menurut Dokter
             $resepgraph = $resep->select('DATE_FORMAT(resep.tanggal_resep, "%Y-%m") AS bulan, dokter, COUNT(*) AS total_resep')
                 ->where('resep.status', 1)
+                ->orderBy('dokter', 'ASC')
                 ->groupBy('DATE_FORMAT(resep.tanggal_resep, "%Y-%m"), dokter')
                 ->get()
                 ->getResultArray();
@@ -211,6 +213,7 @@ class Home extends BaseController
         // Query untuk mendapatkan data transaksi per bulan dan per kasir
         $transaksiperbulangraph = $transaksi->select('DATE_FORMAT(transaksi.tgl_transaksi, "%Y-%m") AS bulan, kasir, COUNT(*) AS total_transaksi')
             ->where('transaksi.lunas', 1)
+            ->orderBy('kasir', 'ASC')
             ->groupBy('DATE_FORMAT(transaksi.tgl_transaksi, "%Y-%m"), kasir')
             ->get()
             ->getResultArray();
