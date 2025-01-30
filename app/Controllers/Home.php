@@ -86,7 +86,7 @@ class Home extends BaseController
         $total_rawatjalan = $rawatjalan->like('tanggal_registrasi', date('Y-m-d'))->where('status', 'DAFTAR')->countAllResults(); // Total rawat jalan hari ini
         $total_rawatjalan_batal = $rawatjalan->like('tanggal_registrasi', date('Y-m-d'))->where('status', 'BATAL')->countAllResults(); // Total rawat jalan yang batal hari ini
         $jeniskelamingraph = $pasien->select('jenis_kelamin, COUNT(*) AS total_jeniskelamin')
-            ->orderBy('total_jeniskelamin', 'DESC')
+            ->orderBy('jenis_kelamin', 'DESC')
             ->groupBy('jenis_kelamin')
             ->get();
         $persebaranprovinsigraph = $pasien->select('provinsi, COUNT(*) AS total_provinsi')
@@ -123,7 +123,7 @@ class Home extends BaseController
             $resepbydoktergraph = $resep->select('dokter, COUNT(*) AS jumlah')
                 ->where('dokter !=', 'Resep Luar')
                 ->where('status', 1)
-                ->orderBy('jumlah', 'DESC')
+                ->orderBy('dokter', 'ASC')
                 ->groupBy('dokter')
                 ->get(); // Resep yang Diberikan Menurut Dokter
             $resepgraph = $resep->select('DATE_FORMAT(resep.tanggal_resep, "%Y-%m") AS bulan, dokter, COUNT(*) AS total_resep')
@@ -142,7 +142,7 @@ class Home extends BaseController
             $total_resep_sdh_status = $resep->where('status', 1)->countAllResults(); // Total resep sudah status
             $resepbydoktergraph = $resep->select('dokter, COUNT(*) AS jumlah')
                 ->where('status', 1)
-                ->orderBy('jumlah', 'DESC')
+                ->orderBy('dokter', 'ASC')
                 ->groupBy('dokter')
                 ->get(); // Resep yang Diberikan Menurut Dokter
             $resepgraph = $resep->select('DATE_FORMAT(resep.tanggal_resep, "%Y-%m") AS bulan, dokter, COUNT(*) AS total_resep')
@@ -200,7 +200,7 @@ class Home extends BaseController
 
         $transaksibykasirgraph = $transaksi->select('kasir, COUNT(*) AS jumlah')
             ->where('lunas', 1)
-            ->orderBy('jumlah', 'DESC')
+            ->orderBy('kasir', 'ASC')
             ->groupBy('kasir')
             ->get(); // Transaksi yang Diproses Menurut Petugas Kasir
 
