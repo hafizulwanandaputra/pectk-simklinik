@@ -86,7 +86,7 @@ class Home extends BaseController
         $total_rawatjalan = $rawatjalan->like('tanggal_registrasi', date('Y-m-d'))->where('status', 'DAFTAR')->countAllResults(); // Total rawat jalan hari ini
         $total_rawatjalan_batal = $rawatjalan->like('tanggal_registrasi', date('Y-m-d'))->where('status', 'BATAL')->countAllResults(); // Total rawat jalan yang batal hari ini
         $jeniskelamingraph = $pasien->select('jenis_kelamin, COUNT(*) AS total_jeniskelamin')
-            ->orderBy('jenis_kelamin', 'DESC')
+            ->orderBy('jenis_kelamin', 'ASC')
             ->groupBy('jenis_kelamin')
             ->get();
         $persebaranprovinsigraph = $pasien->select('provinsi, COUNT(*) AS total_provinsi')
