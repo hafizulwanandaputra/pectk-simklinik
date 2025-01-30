@@ -214,7 +214,7 @@
                                     </div>
                             <div class="d-flex flex-wrap justify-content-end gap-2 mt-2">
                                 <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('pasien/detailpasien') ?>/${pasien.id_pasien}'">
-                                    <i class="fa-solid fa-user-injured"></i> Lihat Pasien
+                                    <i class="fa-solid fa-circle-info"></i> Detail Pasien
                                 </button>
                             </div>        
                     </div>
