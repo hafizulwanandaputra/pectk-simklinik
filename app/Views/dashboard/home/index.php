@@ -170,6 +170,16 @@ $db = db_connect();
                         </div>
                     </div>
                 </div>
+                <div class="mb-2">
+                    <div class="card bg-body-tertiary w-100  shadow-sm">
+                        <div class="card-header w-100 text-truncate">Rawat Jalan Per Bulan</div>
+                        <div class="card-body">
+                            <div class="ratio ratio-onecol w-100">
+                                <canvas id="rawatjalangraph"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         <?php endif; ?>
         <?php if (session()->get('role') == "Admin" || session()->get('role') == "Apoteker" || session()->get('role') == "Dokter") : ?>
@@ -421,6 +431,8 @@ $db = db_connect();
         const label_persebarankecamatangraph = [];
         const data_persebarankelurahangraph = [];
         const label_persebarankelurahangraph = [];
+        const data_rawatjalangraph = [];
+        const label_rawatjalangraph = [];
     <?php endif; ?>
     <?php if (session()->get('role') == "Admin" || session()->get('role') == "Apoteker" || session()->get('role') == "Dokter") : ?>
         const data_resepbydoktergraph = [];
@@ -536,6 +548,10 @@ $db = db_connect();
             data_persebarankelurahangraph.push(<?= $persebarankelurahangraph->total_kelurahan; ?>);
             label_persebarankelurahangraph.push('<?= htmlspecialchars($kelurahanNama, ENT_QUOTES, 'UTF-8'); ?>');
         <?php endforeach; ?>
+        <?php foreach ($rawatjalangraph->getResult() as $key => $rawatjalangraph) : ?>
+            data_rawatjalangraph.push(<?= $rawatjalangraph->total_rajal; ?>);
+            label_rawatjalangraph.push('<?= $rawatjalangraph->bulan; ?>');
+        <?php endforeach; ?>
     <?php endif; ?>
     <?php if (session()->get('role') == "Admin" || session()->get('role') == "Apoteker" || session()->get('role') == "Dokter") : ?>
         <?php foreach ($resepbydoktergraph->getResult() as $key => $resepbydoktergraph) : ?>
@@ -621,6 +637,16 @@ $db = db_connect();
                 data: data_persebarankelurahangraph
             }]
         }
+        var data_content_rawatjalangraph = {
+            labels: label_rawatjalangraph,
+            datasets: [{
+                label: 'Rawat Jalan Per Bulan',
+                pointRadius: 6,
+                pointHoverRadius: 12,
+                fill: false,
+                data: data_rawatjalangraph
+            }]
+        }
     <?php endif; ?>
 
     <?php if (session()->get('role') == "Admin" || session()->get('role') == "Apoteker" || session()->get('role') == "Dokter") : ?>
@@ -644,9 +670,9 @@ $db = db_connect();
             labels: label_resepallgraph,
             datasets: [{
                 label: 'Resep Per Bulan',
-                borderWidth: 2,
-                borderRadius: 10,
-                fill: true,
+                pointRadius: 6,
+                pointHoverRadius: 12,
+                fill: false,
                 data: data_resepallgraph
             }]
         }
@@ -668,9 +694,9 @@ $db = db_connect();
             labels: label_transaksiperbulanallgraph,
             datasets: [{
                 label: 'Transaksi Per Bulan',
-                borderWidth: 2,
-                borderRadius: 10,
-                fill: true,
+                pointRadius: 6,
+                pointHoverRadius: 12,
+                fill: false,
                 data: data_transaksiperbulanallgraph
             }]
         }
@@ -682,9 +708,9 @@ $db = db_connect();
             labels: label_pemasukanperbulangraph,
             datasets: [{
                 label: 'Pemasukan Per Bulan',
-                borderWidth: 2,
-                borderRadius: 10,
-                fill: true,
+                pointRadius: 6,
+                pointHoverRadius: 12,
+                fill: false,
                 data: data_pemasukanperbulangraph
             }]
         }
@@ -817,6 +843,44 @@ $db = db_connect();
                 }
             }
         })
+        var chart_rawatjalangraph = createChart(document.getElementById('rawatjalangraph').getContext('2d'), {
+            type: 'line',
+            data: data_content_rawatjalangraph,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                locale: 'id-ID',
+                interaction: {
+                    intersect: false,
+                    mode: 'index',
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Bulan'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Total Rawat Jalan'
+                        }
+                    }
+                },
+                scale: {
+                    ticks: {
+                        precision: 0
+                    }
+                }
+            }
+        })
     <?php endif; ?>
 
     <?php if (session()->get('role') == "Admin" || session()->get('role') == "Apoteker" || session()->get('role') == "Dokter") : ?>
@@ -882,7 +946,7 @@ $db = db_connect();
             }
         })
         var chart_resepallgraph = createChart(document.getElementById('resepallgraph').getContext('2d'), {
-            type: 'bar',
+            type: 'line',
             data: data_content_resepallgraph,
             options: {
                 responsive: true,
@@ -983,7 +1047,7 @@ $db = db_connect();
             }
         })
         var chart_transaksiperbulanallgraph = createChart(document.getElementById('transaksiperbulanallgraph').getContext('2d'), {
-            type: 'bar',
+            type: 'line',
             data: data_content_transaksiperbulanallgraph,
             options: {
                 responsive: true,
@@ -1021,7 +1085,7 @@ $db = db_connect();
             }
         })
         var chart_pemasukanperbulangraph = createChart(document.getElementById('pemasukanperbulangraph').getContext('2d'), {
-            type: 'bar',
+            type: 'line',
             data: data_content_pemasukanperbulangraph,
             options: {
                 responsive: true,

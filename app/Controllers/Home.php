@@ -100,6 +100,10 @@ class Home extends BaseController
         $persebarankelurahangraph = $pasien->select('kelurahan, COUNT(*) AS total_kelurahan')
             ->groupBy('kelurahan')
             ->get();
+        $rawatjalangraph = $rawatjalan->select('DATE_FORMAT(tanggal_registrasi, "%Y-%m") AS bulan, COUNT(*) AS total_rajal')
+            ->where('status', 'DAFTAR')
+            ->groupBy('DATE_FORMAT(tanggal_registrasi, "%Y-%m")')
+            ->get();
 
         $total_supplier = $supplier->countAllResults(); // Total supplier
         $total_obat = $obat->countAllResults(); // Total obat
@@ -252,6 +256,7 @@ class Home extends BaseController
             'persebarankabupatengraph' => $persebarankabupatengraph,
             'persebarankecamatangraph' => $persebarankecamatangraph,
             'persebarankelurahangraph' => $persebarankelurahangraph,
+            'rawatjalangraph' => $rawatjalangraph,
             'dokter' => $dokter,
             'kasir' => $kasir,
             'total_supplier' => $total_supplier,
