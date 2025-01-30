@@ -357,6 +357,12 @@
                                         <div class="fw-bold mb-2 border-bottom">Rawat Jalan</div>
                                         <div style="font-size: 0.75em;">
                                             <div class="mb-0 row g-1">
+                                                <div class="col-5 fw-medium text-truncate">Operator</div>
+                                                <div class="col date">
+                                                    ${rawatjalan.pendaftar}
+                                                </div>
+                                            </div>
+                                            <div class="mb-0 row g-1">
                                                 <div class="col-5 fw-medium text-truncate">Nomor Registrasi</div>
                                                 <div class="col date">
                                                     ${rawatjalan.nomor_registrasi}
@@ -683,6 +689,12 @@
                                     <div>
                                         <div class="fw-bold mb-2 border-bottom">Rawat Jalan</div>
                                         <div style="font-size: 0.75em;">
+                                            <div class="mb-0 row g-1">
+                                                <div class="col-5 fw-medium text-truncate">Operator</div>
+                                                <div class="col date">
+                                                    ${rawatjalan.pendaftar}
+                                                </div>
+                                            </div>
                                             <div class="mb-0 row g-1">
                                                 <div class="col-5 fw-medium text-truncate">Nomor Registrasi</div>
                                                 <div class="col date">
