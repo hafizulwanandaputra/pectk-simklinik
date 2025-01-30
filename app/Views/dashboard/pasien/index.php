@@ -359,10 +359,11 @@
             // Membuat toast ekspor berjalan
             const toast = $(`
         <div id="exportToast" class="toast show transparent-blur" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="toast-header">
-                <strong class="me-auto">Mengekspor <span class="date" id="exportPercent">0%</span></strong>
-            </div>
             <div class="toast-body">
+                <div class="d-flex justify-content-between mb-1">
+                    <strong>Mengekspor</strong>
+                    <span class="date" id="exportPercent">0%</span>
+                </div>
                 <div class="progress" style="border-top: 1px solid var(--bs-border-color-translucent); border-bottom: 1px solid var(--bs-border-color-translucent); border-left: 1px solid var(--bs-border-color-translucent); border-right: 1px solid var(--bs-border-color-translucent);">
                     <div id="exportProgressBar" class="progress-bar progress-bar-striped progress-bar-animated bg-gradient bg-primary" role="progressbar" style="width: 0%; transition: none"></div>
                 </div>
