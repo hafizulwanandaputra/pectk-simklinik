@@ -75,15 +75,20 @@
 <?= $this->section('javascript'); ?>
 <script>
     async function downloadReport() {
+        $('#reportBtn').prop('disabled', true);
         $('#loadingSpinner').show(); // Menampilkan spinner
 
         // Membuat toast ekspor berjalan
         const toast = $(`
         <div id="exportToast" class="toast show transparent-blur" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-body">
-                <div class="d-flex justify-content-between mb-1">
+                <div class="d-flex justify-content-between align-items-center mb-1">
                     <strong>Mengekspor</strong>
-                    <span class="date" id="exportPercent">0%</span>
+                    <div>
+                        <span class="date" id="exportPercent">0%</span>
+                        <div class="vr"></div>
+                        <button type="button" class="btn-close" aria-label="Close" id="cancelExport"></button>
+                    </div>
                 </div>
                 <div class="progress" style="border-top: 1px solid var(--bs-border-color-translucent); border-bottom: 1px solid var(--bs-border-color-translucent); border-left: 1px solid var(--bs-border-color-translucent); border-right: 1px solid var(--bs-border-color-translucent);">
                     <div id="exportProgressBar" class="progress-bar progress-bar-striped progress-bar-animated bg-gradient bg-primary" role="progressbar" style="width: 0%; transition: none"></div>
@@ -93,6 +98,14 @@
     `);
 
         $('#toastContainer').append(toast);
+
+        const CancelToken = axios.CancelToken;
+        const source = CancelToken.source();
+
+        // Menangani pembatalan ekspor
+        $(document).on('click', '#cancelExport', function() {
+            source.cancel('Ekspor dibatalkan');
+        });
 
         try {
             // Ambil nilai tanggal dari input
@@ -106,7 +119,8 @@
                         $('#exportPercent').text(percentComplete + '%');
                         $('#exportProgressBar').css('width', percentComplete + '%');
                     }
-                }
+                },
+                cancelToken: source.token
             });
 
             // Memastikan progress 100% setelah selesai
@@ -137,10 +151,15 @@
             // Hapus #exportToast dan ganti dengan gagal
             $('#exportToast').fadeOut(300, function() {
                 $(this).remove();
-                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                if (axios.isCancel(error)) {
+                    showFailedToast(error.message); // Pesan pembatalan ekspor
+                } else {
+                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                }
             });
         } finally {
             $('#loadingSpinner').hide(); // Menyembunyikan spinner setelah unduhan selesai
+            $('#reportBtn').prop('disabled', false);
         }
     }
     // HTML untuk menunjukkan bahwa data transaksi sedang dimuat
