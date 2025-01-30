@@ -303,7 +303,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                             <hr class="my-1 border-success-subtle opacity-100">
                             <ul class="nav nav-pills flex-column">
                                 <li class="nav-item">
-                                    <a class="nav-link nav-link-offcanvas p-2" href="<?= base_url('/settings'); ?>">
+                                    <a class="nav-link nav-link-offcanvas px-2 py-1" href="<?= base_url('/settings'); ?>">
                                         <div class="d-flex align-items-start text-success-emphasis">
                                             <div style="min-width: 24px; max-width: 24px; text-align: center;">
                                                 <i class="fa-solid fa-gear"></i>
