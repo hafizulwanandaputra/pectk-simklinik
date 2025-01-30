@@ -132,7 +132,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 </div>
                 <div class="mb-2">
                     <div class="row gx-1 radio-group">
-                        <label for="jenis_bius" class="col col-form-label">Jenis Anestesi</label>
+                        <label for="jenis_bius" class="col col-form-label">Jenis Bius</label>
                         <div class="col col-form-label">
                             <div class="d-flex align-items-center justify-content-evenly">
                                 <div class="form-check form-check-inline">

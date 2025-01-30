@@ -217,7 +217,7 @@ $waktuFormatted = $time->format('H.i');
                     </tr>
                     <tr>
                         <td style="width: 30%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            Jenis Anestesi
+                            Jenis Bius
                         </td>
                         <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
                             :
