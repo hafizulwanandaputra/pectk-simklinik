@@ -410,7 +410,7 @@ $db = db_connect();
     }
     Chart.defaults.font.family = '"Helvetica Neue", Helvetica, Arial, "Liberation Sans", sans-serif';
 
-    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Dokter" || session()->get('role') == "Admisi") : ?>
+    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admisi") : ?>
         const data_jeniskelamingraph = [];
         const label_jeniskelamingraph = [];
         const data_persebaranprovinsigraph = [];
@@ -437,7 +437,7 @@ $db = db_connect();
         const label_pemasukanperbulangraph = [];
     <?php endif; ?>
 
-    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Dokter" || session()->get('role') == "Admisi") : ?>
+    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admisi") : ?>
         <?php foreach ($jeniskelamingraph->getResult() as $key => $jeniskelamingraph) : ?>
             data_jeniskelamingraph.push(<?= $jeniskelamingraph->total_jeniskelamin; ?>);
             <?php
@@ -562,7 +562,7 @@ $db = db_connect();
         <?php endforeach; ?>
     <?php endif; ?>
 
-    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Dokter" || session()->get('role') == "Admisi") : ?>
+    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admisi") : ?>
         var data_content_jeniskelamingraph = {
             labels: label_jeniskelamingraph,
             datasets: [{
@@ -690,7 +690,7 @@ $db = db_connect();
         }
     <?php endif; ?>
 
-    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Apoteker" || session()->get('role') == "Dokter") : ?>
+    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admisi") : ?>
         var chart_jeniskelamingraph = createChart(document.getElementById('jeniskelamingraph').getContext('2d'), {
             type: 'bar',
             data: data_content_jeniskelamingraph,
