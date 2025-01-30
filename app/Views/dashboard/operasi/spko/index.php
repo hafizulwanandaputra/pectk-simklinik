@@ -25,6 +25,10 @@ $usia = $registrasi->diff($tanggal_lahir);
         /* Ensures placement isn't affected by overflow */
         z-index: 1050;
     }
+
+    #site_marking_canvas {
+        cursor: crosshair;
+    }
 </style>
 <?= $this->endSection(); ?>
 <?= $this->section('title'); ?>
@@ -229,16 +233,46 @@ $usia = $registrasi->diff($tanggal_lahir);
                     </div>
                 </div>
                 <div class="mb-2">
-                    <label for="site_marking" class="form-label mb-0">Unggah <em>Site Marking</em> (maks 8 MB)</label>
-                    <div class="d-grid mb-2">
-                        <button class="btn btn-body bg-gradient btn-sm" type="button" id="download-template"><i class="fa-solid fa-download"></i> Unduh Templat <em>Site Marking</em></button>
-                    </div>
-                    <input class="form-control" type="file" id="site_marking" name="site_marking" accept="image/*">
-                    <div class="invalid-feedback"></div>
-                </div>
-                <div id="site_marking_preview_div" style="display: none;" class="mb-2">
-                    <div class="d-flex justify-content-center">
-                        <img id="site_marking_preview" src="#" alt="Gambar" class="img-thumbnail" style="width: 100%; max-width: 256px;">
+                    <div class="mb-2 row row-cols-1 row-cols-lg-2 g-2">
+                        <div class="col">
+                            <!-- Canvas untuk menggambar -->
+                            <div class="card h-100 shadow-sm">
+                                <div class="card-header">Gambar <em>Site Marking</em></div>
+                                <div class="card-body p-2">
+                                    <!-- Canvas yang responsif -->
+                                    <div class="rounded border w-100 overflow-auto bg-white text-center">
+                                        <canvas id="site_marking_canvas" width="384" height="411"></canvas>
+                                    </div>
+                                </div>
+                                <div class="card-footer d-grid">
+                                    <div class="btn-group">
+                                        <button type="button" id="apply_drawing" class="btn btn-success btn-sm bg-gradient"><i class="fa-solid fa-check"></i> Terapkan</button>
+                                        <button type="button" id="clear_drawing" class="btn btn-danger btn-sm bg-gradient"><i class="fa-solid fa-xmark"></i> Bersihkan</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <!-- Pratinjau -->
+                            <div class="card h-100 shadow-sm">
+                                <div class="card-header">Pratinjau <em>Site Marking</em></div>
+                                <div class="card-body p-2">
+                                    <div id="site_marking_preview_div" style="display: none;">
+                                        <div class="d-flex justify-content-center">
+                                            <img id="site_marking_preview" src="#" alt="Gambar" class="img-thumbnail" style="width: 100%; max-width: 384px;">
+                                        </div>
+                                    </div>
+                                    <input type="hidden" id="site_marking" name="site_marking" value="" />
+                                </div>
+                                <div class="card-footer" id="cancel_changes" style="display: none;">
+                                    <div class="d-grid">
+                                        <div class="btn-group">
+                                            <button type="button" id="cancel_drawing" class="btn btn-danger btn-sm bg-gradient"><i class="fa-solid fa-xmark"></i> Batalkan Perubahan</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -302,11 +336,14 @@ $usia = $registrasi->diff($tanggal_lahir);
             $('#diagnosa_site_marking').val(data.diagnosa_site_marking);
             $('#tindakan_site_marking').val(data.tindakan_site_marking);
             if (data.site_marking) {
-                $('#site_marking_preview').attr('src', `<?= base_url('uploads/site_marking') ?>/` + data.site_marking);
+                $('#site_marking_preview').attr('src', `<?= base_url('uploads/site_marking') ?>/${data.site_marking}?t=${new Date().getTime()}`);
                 $('#site_marking_preview_div').show();
+                $('#site_marking').val(data.site_marking);
             } else {
                 $('#site_marking_preview_div').hide();
+                $('#site_marking').val('');
             }
+            $('#cancel_changes').hide();
 
             // Pasien dan Keluarga
             $('#nama_pasien_keluarga').val(data.nama_pasien_keluarga);
@@ -332,58 +369,93 @@ $usia = $registrasi->diff($tanggal_lahir);
             });
         });
 
-        $("#download-template").on("click", async function() {
+        const canvas = document.getElementById('site_marking_canvas');
+        const ctx = canvas.getContext('2d');
+
+        // Atur properti default agar gambar lebih tebal
+        ctx.lineWidth = 5; // Tebal garis
+        ctx.lineCap = 'round'; // Ujung garis membulat
+        ctx.lineJoin = 'round'; // Sudut garis membulat
+
+        const backgroundImage = new Image();
+        backgroundImage.src = '<?= base_url('assets/images/site_marking.jpg') ?>'; // Ganti dengan path gambar latar belakang yang diinginkan
+
+        let backgroundSnapshot = null; // Menyimpan snapshot latar belakang
+        let isDrawing = false;
+
+        backgroundImage.onload = function() {
+            ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+            backgroundSnapshot = ctx.getImageData(0, 0, canvas.width, canvas.height); // Simpan gambar latar awal
+        };
+
+        // Fungsi untuk mulai menggambar
+        canvas.addEventListener('mousedown', function(e) {
+            isDrawing = true;
+            ctx.beginPath(); // Memulai jalur baru
+            ctx.moveTo(e.offsetX, e.offsetY);
+        });
+
+        // Fungsi untuk menggambar
+        canvas.addEventListener('mousemove', function(e) {
+            if (isDrawing) {
+                ctx.lineTo(e.offsetX, e.offsetY);
+                ctx.stroke();
+            }
+        });
+
+        // Fungsi untuk menghentikan menggambar
+        canvas.addEventListener('mouseup', function() {
+            isDrawing = false;
+            ctx.beginPath(); // Reset path agar tidak terhubung ke gambar berikutnya
+        });
+
+        // Fungsi untuk membersihkan hanya gambar tanpa latar belakang
+        $('#clear_drawing').click(function() {
+            if (backgroundSnapshot) {
+                ctx.putImageData(backgroundSnapshot, 0, 0); // Pulihkan snapshot awal
+            } else {
+                ctx.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+            }
+        });
+
+        // Terapkan hasil gambar ke pratinjau
+        $('#apply_drawing').click(function() {
+            const dataURL = canvas.toDataURL('image/png');
+            $('#site_marking_preview').attr('src', dataURL);
+            $('#site_marking_preview_div').show();
+            // Menyimpan gambar base64 ke input tersembunyi
+            $('#site_marking').val(dataURL);
+            $('#cancel_changes').show();
+        });
+
+        // Terapkan hasil gambar ke pratinjau
+        $('#cancel_drawing').click(async function() {
             $('#loadingSpinner').show();
             try {
-                // URL file gambar
-                const fileUrl = "<?= base_url('/assets/images/site_marking.jpg') ?>";
-
-                // Permintaan Axios untuk mendapatkan file gambar
-                const response = await axios.get(fileUrl, {
-                    responseType: "blob", // Mengatur respons sebagai blob
-                });
-
-                // Membuat URL blob
-                const blob = response.data;
-                const downloadUrl = URL.createObjectURL(blob);
-
-                // Membuat elemen <a> untuk mengunduh file
-                const link = document.createElement("a");
-                link.href = downloadUrl;
-                link.download = "site_marking.jpg"; // Nama file yang akan diunduh
-                link.style.display = "none";
-
-                // Menambahkan elemen <a> ke dokumen, lalu klik secara otomatis
-                document.body.appendChild(link);
-                link.click();
-
-                // Membersihkan elemen dan URL blob
-                document.body.removeChild(link);
-                URL.revokeObjectURL(downloadUrl);
-
-                console.log("File berhasil diunduh!");
+                const response = await axios.get('<?= base_url('operasi/spko/view/') . $operasi['id_sp_operasi'] ?>');
+                const data = response.data;
+                $('#site_marking').val(data.site_marking);
+                $('#site_marking_preview').attr('src', `<?= base_url('uploads/site_marking') ?>/${data.site_marking}?t=${new Date().getTime()}`);
+                $('#cancel_changes').hide();
             } catch (error) {
-                showFailedToast("Gagal mengunduh file<br>" + error);
-                console.error("Gagal mengunduh file:", error);
+                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
             } finally {
                 $('#loadingSpinner').hide();
             }
         });
 
-        $('#site_marking').change(function() {
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                $('#site_marking_preview').attr('src', e.target.result);
-                $('#site_marking_preview_div').show();
-            };
-            reader.readAsDataURL(this.files[0]);
-        });
 
+        // Fungsi untuk mengunggah gambar dari kanvas
         $('#SPKOForm').submit(async function(ə) {
             ə.preventDefault();
 
             const formData = new FormData(this);
-            console.log("Form Data:", $(this).serialize());
+            const siteMarkingValue = $('#site_marking').val();
+
+            // Cek apakah site_marking berisi data base64 yang valid
+            if (siteMarkingValue.startsWith('data:image/')) {
+                formData.append('site_marking', siteMarkingValue);
+            }
 
             const CancelToken = axios.CancelToken;
             const source = CancelToken.source();
@@ -394,9 +466,9 @@ $usia = $registrasi->diff($tanggal_lahir);
             $('#SPKOForm .invalid-feedback').text('').hide();
             $('#cancelButton').show();
             $('#submitBtn').prop('disabled', true).html(`
-                <span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span>
-                <span role="status">Memproses <span id="uploadPercentage" style="font-variant-numeric: tabular-nums;">0%</span></span>
-            `);
+            <span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span>
+            <span role="status">Memproses <span id="uploadPercentage" style="font-variant-numeric: tabular-nums;">0%</span></span>
+        `);
 
             // Disable form inputs
             $('#SPKOForm input, #SPKOForm select').prop('disabled', true);
@@ -482,10 +554,11 @@ $usia = $registrasi->diff($tanggal_lahir);
                 $('#uploadPercentage').html('0%');
                 $('#cancelButton').hide();
                 $('#submitBtn').prop('disabled', false).html(`
-                    <i class="fa-solid fa-floppy-disk"></i> Simpan
-                `);
+                <i class="fa-solid fa-floppy-disk"></i> Simpan
+            `);
                 $('#SPKOForm input, #SPKOForm select').prop('disabled', false);
             }
+
             // Attach the cancel functionality to the close button
             $('#cancelButton').on('click', function(ə) {
                 ə.preventDefault();

@@ -160,17 +160,13 @@ class SPOperasi extends BaseController
 
     public function update($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Admisi' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
-            // Validate
             $validation = \Config\Services::validation();
-            // Ambil SPKO
             $sp_operasi = $this->SPOperasiModel
                 ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_sp_operasi.nomor_registrasi', 'inner')
                 ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
                 ->find($id);
-            // Set base validation rules
-            $site_marking_validation = ($sp_operasi['site_marking'] == NULL) ? 'uploaded[site_marking]|' : '';
+
             $validation->setRules([
                 'tanggal_operasi' => 'required',
                 'jam_operasi' => 'required',
@@ -178,19 +174,16 @@ class SPOperasi extends BaseController
                 'jenis_bius' => 'required',
                 'rajal_ranap' => 'required',
                 'ruang_operasi' => 'required',
-                'dokter_operator' => 'required',
-                'site_marking' => $site_marking_validation . 'max_size[site_marking,8192]|is_image[site_marking]',
+                'dokter_operator' => 'required'
             ]);
 
             if (!$this->validate($validation->getRules())) {
                 return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
             }
 
-            // Proses data jenis_tindakan dari select multiple
             $jenis_tindakan = $this->request->getPost('jenis_tindakan');
             $jenis_tindakan_csv = is_array($jenis_tindakan) ? implode(',', $jenis_tindakan) : NULL;
 
-            // Simpan data edukasi
             $data = [
                 'id_sp_operasi' => $id,
                 'nomor_booking' => $sp_operasi['nomor_booking'],
@@ -212,28 +205,29 @@ class SPOperasi extends BaseController
                 'nama_pasien_keluarga' => $this->request->getPost('nama_pasien_keluarga') ?: NULL,
                 'tanda_tangan_pasien' => $sp_operasi['tanda_tangan_pasien'],
                 'waktu_dibuat' => $sp_operasi['waktu_dibuat'],
+                'site_marking' => $sp_operasi['site_marking'] // Gunakan nilai lama sebagai default
             ];
 
-            // Unggah site marking
-            $site_marking = $this->request->getFile('site_marking');
-            if ($site_marking && $site_marking->isValid() && !$site_marking->hasMoved()) {
-                $extension = $site_marking->getExtension();
-                $id_penunjang_scan = $this->request->getVar('id_penunjang_scan'); // Pastikan mengambil id yang benar
+            $site_marking_base64 = $this->request->getPost('site_marking');
+
+            if ($site_marking_base64 != $sp_operasi['site_marking']) {
+                $image_data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $site_marking_base64));
+                $extension = 'png';
+                $site_marking_name = $sp_operasi['no_rm'] . '_' . $sp_operasi['nomor_booking'] . '.' . $extension;
+
                 if ($sp_operasi['site_marking']) {
                     @unlink(FCPATH . 'uploads/site_marking/' . $sp_operasi['site_marking']);
                 }
-                $site_marking_name = $sp_operasi['no_rm'] . '_' . $sp_operasi['nomor_booking'] . '.' . $extension;
-                $site_marking->move(FCPATH . 'uploads/site_marking', $site_marking_name);
-                $data['site_marking'] = $site_marking_name;
+
+                file_put_contents(FCPATH . 'uploads/site_marking/' . $site_marking_name, $image_data);
+                $data['site_marking'] = $site_marking_name; // Perbarui hanya jika ada data baru
             }
 
             $this->SPOperasiModel->save($data);
+
             return $this->response->setJSON(['success' => true, 'message' => 'SPKO berhasil diperbarui']);
         } else {
-            // Mengembalikan status 404 jika peran tidak diizinkan
-            return $this->response->setStatusCode(404)->setJSON([
-                'error' => 'Halaman tidak ditemukan',
-            ]);
+            return $this->response->setStatusCode(404)->setJSON(['error' => 'Halaman tidak ditemukan']);
         }
     }
 }
