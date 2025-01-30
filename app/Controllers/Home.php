@@ -85,6 +85,22 @@ class Home extends BaseController
         $total_pasien = $pasien->countAllResults(); // Total pasien
         $total_rawatjalan = $rawatjalan->like('tanggal_registrasi', date('Y-m-d'))->where('status', 'DAFTAR')->countAllResults(); // Total rawat jalan hari ini
         $total_rawatjalan_batal = $rawatjalan->like('tanggal_registrasi', date('Y-m-d'))->where('status', 'BATAL')->countAllResults(); // Total rawat jalan yang batal hari ini
+        $jeniskelamingraph = $pasien->select('jenis_kelamin, COUNT(*) AS total_jeniskelamin')
+            ->groupBy('jenis_kelamin')
+            ->get();
+        $persebaranprovinsigraph = $pasien->select('provinsi, COUNT(*) AS total_provinsi')
+            ->groupBy('provinsi')
+            ->get();
+        $persebarankabupatengraph = $pasien->select('kabupaten, COUNT(*) AS total_kabupaten')
+            ->groupBy('kabupaten')
+            ->get();
+        $persebarankecamatangraph = $pasien->select('kecamatan, COUNT(*) AS total_kecamatan')
+            ->groupBy('kecamatan')
+            ->get();
+        $persebarankelurahangraph = $pasien->select('kelurahan, COUNT(*) AS total_kelurahan')
+            ->groupBy('kelurahan')
+            ->get();
+
         $total_supplier = $supplier->countAllResults(); // Total supplier
         $total_obat = $obat->countAllResults(); // Total obat
         $total_pembelian_obat_blm_diterima = $pembelian_obat->where('diterima', 0)->countAllResults(); // Total pembelian obat belum diterima
@@ -231,6 +247,11 @@ class Home extends BaseController
             'total_pasien' => $total_pasien,
             'total_rawatjalan' => $total_rawatjalan,
             'total_rawatjalan_batal' => $total_rawatjalan_batal,
+            'jeniskelamingraph' => $jeniskelamingraph,
+            'persebaranprovinsigraph' => $persebaranprovinsigraph,
+            'persebarankabupatengraph' => $persebarankabupatengraph,
+            'persebarankecamatangraph' => $persebarankecamatangraph,
+            'persebarankelurahangraph' => $persebarankelurahangraph,
             'dokter' => $dokter,
             'kasir' => $kasir,
             'total_supplier' => $total_supplier,

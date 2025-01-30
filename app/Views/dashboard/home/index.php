@@ -1,3 +1,6 @@
+<?php
+$db = db_connect();
+?>
 <?= $this->extend('dashboard/templates/dashboard'); ?>
 <?= $this->section('css'); ?>
 <style>
@@ -111,6 +114,58 @@
                             <div class="card-header border-success-subtle w-100 text-truncate">Pasien yang Berobat Hari Ini</div>
                             <div class="card-body">
                                 <h5 class="display-5 fw-medium date mb-0"><?= number_format($total_rawatjalan, 0, ',', '.') ?></h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <div class="card bg-body-tertiary w-100  shadow-sm">
+                        <div class="card-header w-100 text-truncate">Jenis Kelamin Pasien</div>
+                        <div class="card-body">
+                            <div class="ratio ratio-onecol w-100">
+                                <canvas id="jeniskelamingraph"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row row-cols-1 row-cols-lg-2 g-2 mb-2">
+                    <div class="col">
+                        <div class="card bg-body-tertiary w-100  shadow-sm">
+                            <div class="card-header w-100 text-truncate">Persebaran Provinsi Pasien</div>
+                            <div class="card-body">
+                                <div class="ratio ratio-4x3 w-100">
+                                    <canvas id="persebaranprovinsigraph"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card bg-body-tertiary w-100  shadow-sm">
+                            <div class="card-header w-100 text-truncate">Persebaran Kabupaten/Kota Pasien</div>
+                            <div class="card-body">
+                                <div class="ratio ratio-4x3 w-100">
+                                    <canvas id="persebarankabupatengraph"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card bg-body-tertiary w-100  shadow-sm">
+                            <div class="card-header w-100 text-truncate">Persebaran Kecamatan Pasien</div>
+                            <div class="card-body">
+                                <div class="ratio ratio-4x3 w-100">
+                                    <canvas id="persebarankecamatangraph"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card bg-body-tertiary w-100  shadow-sm">
+                            <div class="card-header w-100 text-truncate">Persebaran Kelurahan Pasien</div>
+                            <div class="card-body">
+                                <div class="ratio ratio-4x3 w-100">
+                                    <canvas id="persebarankelurahangraph"></canvas>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -354,6 +409,19 @@
         });
     }
     Chart.defaults.font.family = '"Helvetica Neue", Helvetica, Arial, "Liberation Sans", sans-serif';
+
+    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Dokter" || session()->get('role') == "Admisi") : ?>
+        const data_jeniskelamingraph = [];
+        const label_jeniskelamingraph = [];
+        const data_persebaranprovinsigraph = [];
+        const label_persebaranprovinsigraph = [];
+        const data_persebarankabupatengraph = [];
+        const label_persebarankabupatengraph = [];
+        const data_persebarankecamatangraph = [];
+        const label_persebarankecamatangraph = [];
+        const data_persebarankelurahangraph = [];
+        const label_persebarankelurahangraph = [];
+    <?php endif; ?>
     <?php if (session()->get('role') == "Admin" || session()->get('role') == "Apoteker" || session()->get('role') == "Dokter") : ?>
         const data_resepbydoktergraph = [];
         const label_resepbydoktergraph = [];
@@ -369,6 +437,106 @@
         const label_pemasukanperbulangraph = [];
     <?php endif; ?>
 
+    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Dokter" || session()->get('role') == "Admisi") : ?>
+        <?php foreach ($jeniskelamingraph->getResult() as $key => $jeniskelamingraph) : ?>
+            data_jeniskelamingraph.push(<?= $jeniskelamingraph->total_jeniskelamin; ?>);
+            <?php
+            $jenisKelamin = $jeniskelamingraph->jenis_kelamin;
+            if ($jenisKelamin == 'L') {
+                $jenisKelamin = 'Laki-Laki';
+            } elseif ($jenisKelamin == 'P') {
+                $jenisKelamin = 'Perempuan';
+            } elseif ($jenisKelamin === NULL) {
+                $jenisKelamin = 'Tidak Ada';
+            }
+            ?>
+            label_jeniskelamingraph.push('<?= $jenisKelamin; ?>');
+        <?php endforeach; ?>
+        <?php foreach ($persebaranprovinsigraph->getResult() as $key => $persebaranprovinsigraph) :
+            // Query untuk mencocokkan ID provinsi dengan nama provinsi
+            $provinsiId = $persebaranprovinsigraph->provinsi;
+            $query = $db->table('master_provinsi')
+                ->select('provinsiNama')
+                ->where('provinsiId', $provinsiId)
+                ->get();
+
+            // Ambil nama provinsi
+            $provinsiNama = $query->getRow();
+
+            if ($provinsiNama) {
+                // Ambil nama kelurahan jika ditemukan
+                $provinsiNama = $provinsiNama->provinsiNama;
+            } else {
+                // Jika tidak ditemukan, beri nilai default
+                $provinsiNama = 'Tidak Ada';
+            } ?>
+            data_persebaranprovinsigraph.push(<?= $persebaranprovinsigraph->total_provinsi; ?>);
+            label_persebaranprovinsigraph.push('<?= htmlspecialchars($provinsiNama, ENT_QUOTES, 'UTF-8'); ?>');
+        <?php endforeach; ?>
+        <?php foreach ($persebarankabupatengraph->getResult() as $key => $persebarankabupatengraph) :
+            // Query untuk mencocokkan ID kabupaten dengan nama kabupaten
+            $kabupatenId = $persebarankabupatengraph->kabupaten;
+            $query = $db->table('master_kabupaten')
+                ->select('kabupatenNama')
+                ->where('kabupatenId', $kabupatenId)
+                ->get();
+
+            // Ambil nama kabupaten
+            $kabupatenNama = $query->getRow();
+
+            if ($kabupatenNama) {
+                // Ambil nama kelurahan jika ditemukan
+                $kabupatenNama = $kabupatenNama->kabupatenNama;
+            } else {
+                // Jika tidak ditemukan, beri nilai default
+                $kabupatenNama = 'Tidak Ada';
+            } ?>
+            data_persebarankabupatengraph.push(<?= $persebarankabupatengraph->total_kabupaten; ?>);
+            label_persebarankabupatengraph.push('<?= htmlspecialchars($kabupatenNama, ENT_QUOTES, 'UTF-8'); ?>');
+        <?php endforeach; ?>
+        <?php foreach ($persebarankecamatangraph->getResult() as $key => $persebarankecamatangraph) :
+            // Query untuk mencocokkan ID kecamatan dengan nama kecamatan
+            $kecamatanId = $persebarankecamatangraph->kecamatan;
+            $query = $db->table('master_kecamatan')
+                ->select('kecamatanNama')
+                ->where('kecamatanId', $kecamatanId)
+                ->get();
+
+            // Ambil nama kecamatan
+            $kecamatanNama = $query->getRow();
+
+            if ($kecamatanNama) {
+                // Ambil nama kelurahan jika ditemukan
+                $kecamatanNama = $kecamatanNama->kecamatanNama;
+            } else {
+                // Jika tidak ditemukan, beri nilai default
+                $kecamatanNama = 'Tidak Ada';
+            } ?>
+            data_persebarankecamatangraph.push(<?= $persebarankecamatangraph->total_kecamatan; ?>);
+            label_persebarankecamatangraph.push('<?= htmlspecialchars($kecamatanNama, ENT_QUOTES, 'UTF-8'); ?>');
+        <?php endforeach; ?>
+        <?php foreach ($persebarankelurahangraph->getResult() as $key => $persebarankelurahangraph) :
+            // Query untuk mencocokkan ID kelurahan dengan nama kelurahan
+            $kelurahanId = $persebarankelurahangraph->kelurahan;
+            $query = $db->table('master_kelurahan')
+                ->select('kelurahanNama')
+                ->where('kelurahanId', $kelurahanId)
+                ->get();
+
+            // Ambil nama kelurahan
+            $kelurahanNama = $query->getRow();
+
+            if ($kelurahanNama) {
+                // Ambil nama kelurahan jika ditemukan
+                $kelurahanNama = $kelurahanNama->kelurahanNama;
+            } else {
+                // Jika tidak ditemukan, beri nilai default
+                $kelurahanNama = 'Tidak Ada';
+            } ?>
+            data_persebarankelurahangraph.push(<?= $persebarankelurahangraph->total_kelurahan; ?>);
+            label_persebarankelurahangraph.push('<?= htmlspecialchars($kelurahanNama, ENT_QUOTES, 'UTF-8'); ?>');
+        <?php endforeach; ?>
+    <?php endif; ?>
     <?php if (session()->get('role') == "Admin" || session()->get('role') == "Apoteker" || session()->get('role') == "Dokter") : ?>
         <?php foreach ($resepbydoktergraph->getResult() as $key => $resepbydoktergraph) : ?>
             data_resepbydoktergraph.push(<?= $resepbydoktergraph->jumlah; ?>);
@@ -394,6 +562,67 @@
         <?php endforeach; ?>
     <?php endif; ?>
 
+    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Dokter" || session()->get('role') == "Admisi") : ?>
+        var data_content_jeniskelamingraph = {
+            labels: label_jeniskelamingraph,
+            datasets: [{
+                label: 'Jenis Kelamin',
+                borderWidth: 2,
+                borderRadius: 10,
+                fill: true,
+                data: data_jeniskelamingraph
+            }]
+        }
+        var data_content_persebaranprovinsigraph = {
+            labels: label_persebaranprovinsigraph,
+            datasets: [{
+                label: 'Persebaran Provinsi',
+                pointStyle: 'circle',
+                pointRadius: 6,
+                pointHoverRadius: 12,
+                borderWidth: 0,
+                fill: true,
+                data: data_persebaranprovinsigraph
+            }]
+        }
+        var data_content_persebarankabupatengraph = {
+            labels: label_persebarankabupatengraph,
+            datasets: [{
+                label: 'Persebaran Provinsi',
+                pointStyle: 'circle',
+                pointRadius: 6,
+                pointHoverRadius: 12,
+                borderWidth: 0,
+                fill: true,
+                data: data_persebarankabupatengraph
+            }]
+        }
+        var data_content_persebarankecamatangraph = {
+            labels: label_persebarankecamatangraph,
+            datasets: [{
+                label: 'Persebaran Provinsi',
+                pointStyle: 'circle',
+                pointRadius: 6,
+                pointHoverRadius: 12,
+                borderWidth: 0,
+                fill: true,
+                data: data_persebarankecamatangraph
+            }]
+        }
+        var data_content_persebarankelurahangraph = {
+            labels: label_persebarankelurahangraph,
+            datasets: [{
+                label: 'Persebaran Provinsi',
+                pointStyle: 'circle',
+                pointRadius: 6,
+                pointHoverRadius: 12,
+                borderWidth: 0,
+                fill: true,
+                data: data_persebarankelurahangraph
+            }]
+        }
+    <?php endif; ?>
+
     <?php if (session()->get('role') == "Admin" || session()->get('role') == "Apoteker" || session()->get('role') == "Dokter") : ?>
         var data_content_resepbydoktergraph = {
             labels: label_resepbydoktergraph,
@@ -402,6 +631,7 @@
                 pointStyle: 'circle',
                 pointRadius: 6,
                 pointHoverRadius: 12,
+                borderWidth: 0,
                 fill: true,
                 data: data_resepbydoktergraph
             }]
@@ -429,6 +659,7 @@
                 pointStyle: 'circle',
                 pointRadius: 6,
                 pointHoverRadius: 12,
+                borderWidth: 0,
                 fill: true,
                 data: data_transaksibykasirgraph
             }]
@@ -457,6 +688,135 @@
                 data: data_pemasukanperbulangraph
             }]
         }
+    <?php endif; ?>
+
+    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Apoteker" || session()->get('role') == "Dokter") : ?>
+        var chart_jeniskelamingraph = createChart(document.getElementById('jeniskelamingraph').getContext('2d'), {
+            type: 'bar',
+            data: data_content_jeniskelamingraph,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                locale: 'id-ID',
+                interaction: {
+                    intersect: false,
+                    mode: 'index',
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Jenis Kelamin'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Total Pasien'
+                        }
+                    }
+                },
+                scale: {
+                    ticks: {
+                        precision: 0
+                    }
+                }
+            }
+        })
+        var chart_persebaranprovinsigraph = createChart(document.getElementById('persebaranprovinsigraph').getContext('2d'), {
+            type: 'doughnut',
+            data: data_content_persebaranprovinsigraph,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                locale: 'id-ID',
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    filler: {
+                        drawTime: 'beforeDraw'
+                    }
+                },
+                scale: {
+                    ticks: {
+                        precision: 0
+                    }
+                }
+            }
+        })
+        var chart_persebarankabupatengraph = createChart(document.getElementById('persebarankabupatengraph').getContext('2d'), {
+            type: 'doughnut',
+            data: data_content_persebarankabupatengraph,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                locale: 'id-ID',
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    filler: {
+                        drawTime: 'beforeDraw'
+                    }
+                },
+                scale: {
+                    ticks: {
+                        precision: 0
+                    }
+                }
+            }
+        })
+        var chart_persebarankecamatangraph = createChart(document.getElementById('persebarankecamatangraph').getContext('2d'), {
+            type: 'doughnut',
+            data: data_content_persebarankecamatangraph,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                locale: 'id-ID',
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    filler: {
+                        drawTime: 'beforeDraw'
+                    }
+                },
+                scale: {
+                    ticks: {
+                        precision: 0
+                    }
+                }
+            }
+        })
+        var chart_persebarankelurahangraph = createChart(document.getElementById('persebarankelurahangraph').getContext('2d'), {
+            type: 'doughnut',
+            data: data_content_persebarankelurahangraph,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                locale: 'id-ID',
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    filler: {
+                        drawTime: 'beforeDraw'
+                    }
+                },
+                scale: {
+                    ticks: {
+                        precision: 0
+                    }
+                }
+            }
+        })
     <?php endif; ?>
 
     <?php if (session()->get('role') == "Admin" || session()->get('role') == "Apoteker" || session()->get('role') == "Dokter") : ?>
