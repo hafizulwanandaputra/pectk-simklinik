@@ -411,12 +411,10 @@
                     showSuccessToast('Berhasil diekspor');
                 });
             } catch (error) {
-                console.error(error);
-
                 // Hapus #exportToast dan ganti dengan gagal
                 $('#exportToast').fadeOut(300, function() {
                     $(this).remove();
-                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.');
+                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
                 });
             } finally {
                 $('#loadingSpinner').hide(); // Menyembunyikan spinner setelah unduhan selesai

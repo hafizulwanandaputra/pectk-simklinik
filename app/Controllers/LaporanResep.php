@@ -143,7 +143,7 @@ class LaporanResep extends BaseController
                 throw PageNotFoundException::forPageNotFound();
             } else {
                 // Membuat nama file berdasarkan tanggal pembelian
-                $filename = $tanggal . '-resep';
+                $filename = preg_replace('/[^\w\-]/', '-', $tanggal) . '-resep.xlsx';
                 $tanggalinit = new DateTime($tanggal);
                 // Buat formatter untuk tanggal dan waktu
                 $formatter = new IntlDateFormatter(
@@ -280,10 +280,17 @@ class LaporanResep extends BaseController
 
                 // Menyimpan file spreadsheet dan mengirimkan ke browser
                 $writer = new Xlsx($spreadsheet);
-                header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheet.sheet');
-                header('Content-Disposition: attachment;filename=' . $filename . '.xlsx');
-                header('Cache-Control: max-age=0');
-                $writer->save('php://output');
+                // Simpan ke file sementara
+                $temp_file = WRITEPATH . 'exports/' . $filename;
+                $writer->save($temp_file);
+
+                // Kirimkan file dalam mode streaming agar bisa dipantau progresnya
+                header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                header('Content-Disposition: attachment; filename="' . $filename . '"');
+                header('Content-Length: ' . filesize($temp_file));
+
+                readfile($temp_file);
+                unlink($temp_file); // Hapus setelah dikirim
                 exit();
             }
         } else {
@@ -401,7 +408,7 @@ class LaporanResep extends BaseController
                 throw PageNotFoundException::forPageNotFound();
             } else {
                 // Membuat nama file berdasarkan tanggal pembelian
-                $filename = $bulan . '-resep';
+                $filename = preg_replace('/[^\w\-]/', '-', $bulan) . '-resep.xlsx';
                 $bulaninit = new DateTime($bulan);
                 // Buat formatter untuk tanggal dan waktu
                 $formatter = new IntlDateFormatter(
@@ -538,10 +545,17 @@ class LaporanResep extends BaseController
 
                 // Menyimpan file spreadsheet dan mengirimkan ke browser
                 $writer = new Xlsx($spreadsheet);
-                header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheet.sheet');
-                header('Content-Disposition: attachment;filename=' . $filename . '.xlsx');
-                header('Cache-Control: max-age=0');
-                $writer->save('php://output');
+                // Simpan ke file sementara
+                $temp_file = WRITEPATH . 'exports/' . $filename;
+                $writer->save($temp_file);
+
+                // Kirimkan file dalam mode streaming agar bisa dipantau progresnya
+                header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                header('Content-Disposition: attachment; filename="' . $filename . '"');
+                header('Content-Length: ' . filesize($temp_file));
+
+                readfile($temp_file);
+                unlink($temp_file); // Hapus setelah dikirim
                 exit();
             }
         } else {

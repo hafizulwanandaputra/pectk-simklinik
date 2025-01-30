@@ -1759,7 +1759,7 @@ class Transaksi extends BaseController
                 throw PageNotFoundException::forPageNotFound();
             } else {
                 // Membuat nama file berdasarkan tanggal pembelian
-                $filename = $tgl_transaksi . '-transaksi';
+                $filename = preg_replace('/[^\w\-]/', '-', $tgl_transaksi) . '-transaksi.xlsx';
                 $tanggal = new DateTime($tgl_transaksi);
                 // Buat formatter untuk tanggal dan waktu
                 $formatter = new IntlDateFormatter(
@@ -1966,10 +1966,17 @@ class Transaksi extends BaseController
 
                 // Menyimpan file spreadsheet dan mengirimkan ke browser
                 $writer = new Xlsx($spreadsheet);
-                header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheet.sheet');
-                header('Content-Disposition: attachment;filename=' . $filename . '.xlsx');
-                header('Cache-Control: max-age=0');
-                $writer->save('php://output');
+                // Simpan ke file sementara
+                $temp_file = WRITEPATH . 'exports/' . $filename;
+                $writer->save($temp_file);
+
+                // Kirimkan file dalam mode streaming agar bisa dipantau progresnya
+                header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                header('Content-Disposition: attachment; filename="' . $filename . '"');
+                header('Content-Length: ' . filesize($temp_file));
+
+                readfile($temp_file);
+                unlink($temp_file); // Hapus setelah dikirim
                 exit();
             }
         } else {

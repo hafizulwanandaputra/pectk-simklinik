@@ -95,28 +95,66 @@
     async function startDownload() {
         $('#loadingSpinner').show(); // Menampilkan spinner
 
+        // Membuat toast ekspor berjalan
+        const toast = $(`
+        <div id="exportToast" class="toast show transparent-blur" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-body">
+                <div class="d-flex justify-content-between mb-1">
+                    <strong>Mengekspor</strong>
+                    <span class="date" id="exportPercent">0%</span>
+                </div>
+                <div class="progress" style="border-top: 1px solid var(--bs-border-color-translucent); border-bottom: 1px solid var(--bs-border-color-translucent); border-left: 1px solid var(--bs-border-color-translucent); border-right: 1px solid var(--bs-border-color-translucent);">
+                    <div id="exportProgressBar" class="progress-bar progress-bar-striped progress-bar-animated bg-gradient bg-primary" role="progressbar" style="width: 0%; transition: none"></div>
+                </div>
+            </div>
+        </div>
+    `);
+
+        $('#toastContainer').append(toast);
+
         try {
             // Mengambil file dari server
             const response = await axios.get('<?= base_url('opnameobat/exportopnameobat/' . $opname_obat['id_opname_obat']); ?>', {
-                responseType: 'blob' // Mendapatkan data sebagai blob
+                responseType: 'blob', // Mendapatkan data sebagai blob
+                onDownloadProgress: function(progressEvent) {
+                    if (progressEvent.lengthComputable) {
+                        let percentComplete = Math.round((progressEvent.loaded / progressEvent.total) * 100);
+                        $('#exportPercent').text(percentComplete + '%');
+                        $('#exportProgressBar').css('width', percentComplete + '%');
+                    }
+                }
             });
+
+            // Memastikan progress 100% setelah selesai
+            $('#exportPercent').text('100%');
+            $('#exportProgressBar').css('width', '100%');
 
             // Mendapatkan nama file dari header Content-Disposition
             const disposition = response.headers['content-disposition'];
-            const filename = disposition ? disposition.split('filename=')[1].split(';')[0].replace(/"/g, '') : '.xlsx';
+            const filename = disposition ? disposition.split('filename=')[1].split(';')[0].replace(/"/g, '') : 'export.xlsx';
 
             // Membuat URL unduhan
             const url = window.URL.createObjectURL(new Blob([response.data]));
             const a = document.createElement('a');
             a.href = url;
-            a.download = filename; // Menggunakan nama file dari header
+            a.download = filename;
             document.body.appendChild(a);
             a.click();
             a.remove();
 
             window.URL.revokeObjectURL(url); // Membebaskan URL yang dibuat
+
+            // Hapus #exportToast dan ganti dengan sukses
+            $('#exportToast').fadeOut(300, function() {
+                $('#exportToast').remove();
+                showSuccessToast('Berhasil diekspor');
+            });
         } catch (error) {
-            showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+            // Hapus #exportToast dan ganti dengan gagal
+            $('#exportToast').fadeOut(300, function() {
+                $(this).remove();
+                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+            });
         } finally {
             $('#loadingSpinner').hide(); // Menyembunyikan spinner setelah unduhan selesai
         }
