@@ -86,18 +86,23 @@ class Home extends BaseController
         $total_rawatjalan = $rawatjalan->like('tanggal_registrasi', date('Y-m-d'))->where('status', 'DAFTAR')->countAllResults(); // Total rawat jalan hari ini
         $total_rawatjalan_batal = $rawatjalan->like('tanggal_registrasi', date('Y-m-d'))->where('status', 'BATAL')->countAllResults(); // Total rawat jalan yang batal hari ini
         $jeniskelamingraph = $pasien->select('jenis_kelamin, COUNT(*) AS total_jeniskelamin')
+            ->orderBy('total_jeniskelamin', 'DESC')
             ->groupBy('jenis_kelamin')
             ->get();
         $persebaranprovinsigraph = $pasien->select('provinsi, COUNT(*) AS total_provinsi')
+            ->orderBy('total_provinsi', 'DESC')
             ->groupBy('provinsi')
             ->get();
         $persebarankabupatengraph = $pasien->select('kabupaten, COUNT(*) AS total_kabupaten')
+            ->orderBy('total_kabupaten', 'DESC')
             ->groupBy('kabupaten')
             ->get();
         $persebarankecamatangraph = $pasien->select('kecamatan, COUNT(*) AS total_kecamatan')
+            ->orderBy('total_kecamatan', 'DESC')
             ->groupBy('kecamatan')
             ->get();
         $persebarankelurahangraph = $pasien->select('kelurahan, COUNT(*) AS total_kelurahan')
+            ->orderBy('total_kelurahan', 'DESC')
             ->groupBy('kelurahan')
             ->get();
         $rawatjalangraph = $rawatjalan->select('DATE_FORMAT(tanggal_registrasi, "%Y-%m") AS bulan, COUNT(*) AS total_rajal')
@@ -115,7 +120,12 @@ class Home extends BaseController
             // Jika pengguna adalah dokter, hitung resep berdasarkan nama dokter
             $total_resep_blm_status = $resep->where('status', 0)->where('dokter !=', 'Resep Luar')->countAllResults(); // Total resep belum status berdasarkan dokter
             $total_resep_sdh_status = $resep->where('status', 1)->where('dokter !=', 'Resep Luar')->countAllResults(); // Total resep sudah status berdasarkan dokter
-            $resepbydoktergraph = $resep->select('dokter, COUNT(*) AS jumlah')->where('dokter !=', 'Resep Luar')->where('status', 1)->groupBy('dokter')->get(); // Resep yang Diberikan Menurut Dokter
+            $resepbydoktergraph = $resep->select('dokter, COUNT(*) AS jumlah')
+                ->where('dokter !=', 'Resep Luar')
+                ->where('status', 1)
+                ->orderBy('jumlah', 'DESC')
+                ->groupBy('dokter')
+                ->get(); // Resep yang Diberikan Menurut Dokter
             $resepgraph = $resep->select('DATE_FORMAT(resep.tanggal_resep, "%Y-%m") AS bulan, dokter, COUNT(*) AS total_resep')
                 ->where('dokter !=', 'Resep Luar')
                 ->where('resep.status', 1)
@@ -130,7 +140,11 @@ class Home extends BaseController
         } else {
             $total_resep_blm_status = $resep->where('status', 0)->countAllResults(); // Total resep belum status
             $total_resep_sdh_status = $resep->where('status', 1)->countAllResults(); // Total resep sudah status
-            $resepbydoktergraph = $resep->select('dokter, COUNT(*) AS jumlah')->where('status', 1)->groupBy('dokter')->get(); // Resep yang Diberikan Menurut Dokter
+            $resepbydoktergraph = $resep->select('dokter, COUNT(*) AS jumlah')
+                ->where('status', 1)
+                ->orderBy('jumlah', 'DESC')
+                ->groupBy('dokter')
+                ->get(); // Resep yang Diberikan Menurut Dokter
             $resepgraph = $resep->select('DATE_FORMAT(resep.tanggal_resep, "%Y-%m") AS bulan, dokter, COUNT(*) AS total_resep')
                 ->where('resep.status', 1)
                 ->groupBy('DATE_FORMAT(resep.tanggal_resep, "%Y-%m"), dokter')
@@ -184,7 +198,11 @@ class Home extends BaseController
         $total_transaksi_blm_lunas = $transaksi->where('lunas', 0)->countAllResults(); // Total transaksi belum lunas
         $total_transaksi_sdh_lunas = $transaksi->where('lunas', 1)->countAllResults(); // Total transaksi sudah lunas
 
-        $transaksibykasirgraph = $transaksi->select('kasir, COUNT(*) AS jumlah')->where('lunas', 1)->groupBy('kasir')->get(); // Transaksi yang Diproses Menurut Petugas Kasir
+        $transaksibykasirgraph = $transaksi->select('kasir, COUNT(*) AS jumlah')
+            ->where('lunas', 1)
+            ->orderBy('jumlah', 'DESC')
+            ->groupBy('kasir')
+            ->get(); // Transaksi yang Diproses Menurut Petugas Kasir
 
         // Query untuk mendapatkan data transaksi per bulan dan per kasir
         $transaksiperbulangraph = $transaksi->select('DATE_FORMAT(transaksi.tgl_transaksi, "%Y-%m") AS bulan, kasir, COUNT(*) AS total_transaksi')
