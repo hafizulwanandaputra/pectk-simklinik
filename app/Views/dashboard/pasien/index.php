@@ -352,25 +352,19 @@
             fetchPasien();
         });
 
-        function showExportToast(message, type = 'primary', autoHide = true) {
-            // Hapus toast yang sudah ada
-            $('#exportToast').remove();
+        $('#exportButton').on('click', async function(ə) {
+            ə.preventDefault();
+            $('#loadingSpinner').show(); // Menampilkan spinner
 
-            // Warna progress bar berdasarkan tipe
-            let progressClass = 'bg-primary';
-            if (type === 'success') progressClass = 'bg-success';
-            if (type === 'error') progressClass = 'bg-danger';
-
-            // Membuat elemen toast
+            // Membuat toast ekspor berjalan
             const toast = $(`
         <div id="exportToast" class="toast show transparent-blur" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-header">
-                <strong class="me-auto">${message} <span class="date" id="exportPercent">0%</span></strong>
-                <button type="button" class="btn-close" id="closeToast" ${autoHide ? '' : 'disabled'}></button>
+                <strong class="me-auto">Mengekspor <span class="date" id="exportPercent">0%</span></strong>
             </div>
             <div class="toast-body">
                 <div class="progress" style="border-top: 1px solid var(--bs-border-color-translucent); border-bottom: 1px solid var(--bs-border-color-translucent); border-left: 1px solid var(--bs-border-color-translucent); border-right: 1px solid var(--bs-border-color-translucent);">
-                    <div id="exportProgressBar" class="progress-bar progress-bar-striped bg-gradient ${progressClass}" role="progressbar" style="width: 0%; transition: none"></div>
+                    <div id="exportProgressBar" class="progress-bar progress-bar-striped progress-bar-animated bg-gradient bg-primary" role="progressbar" style="width: 0%; transition: none"></div>
                 </div>
             </div>
         </div>
@@ -378,30 +372,7 @@
 
             $('#toastContainer').append(toast);
 
-            // Event untuk menutup toast
-            $('#closeToast').on('click', function() {
-                $('#exportToast').fadeOut(500, function() {
-                    $(this).remove();
-                });
-            });
-
-            // Auto-hide setelah beberapa detik
-            if (autoHide) {
-                setTimeout(() => {
-                    $('#exportToast').fadeOut(500, function() {
-                        $(this).remove();
-                    });
-                }, 5000); // Hilang setelah 5 detik
-            }
-        }
-
-        $('#exportButton').on('click', async function(ə) {
-            ə.preventDefault();
-            $('#loadingSpinner').show(); // Menampilkan spinner
-
             try {
-                showExportToast('Mengekspor', 'primary', false);
-
                 // Mengambil file dari server dengan tracking progress
                 const response = await axios.get(`<?= base_url('pasien/exportexcel') ?>`, {
                     responseType: 'blob', // Mendapatkan data sebagai blob
@@ -433,15 +404,19 @@
 
                 window.URL.revokeObjectURL(url); // Membebaskan URL yang dibuat
 
-                // Mengubah pesan toast menjadi sukses
-                showExportToast('Berhasil diekspor', 'success');
-                $('#exportPercent').text('');
-                $('#exportProgressBar').removeClass('progress-bar-striped progress-bar-animated').addClass('bg-success').css('width', '100%');
+                // Hapus #exportToast dan ganti dengan sukses
+                $('#exportToast').fadeOut(300, function() {
+                    $('#exportToast').remove();
+                    showSuccessToast('Berhasil diekspor');
+                });
             } catch (error) {
                 console.error(error);
-                showExportToast('Terjadi kesalahan. Silakan coba lagi.', 'error');
-                $('#exportPercent').text('');
-                $('#exportProgressBar').removeClass('progress-bar-striped progress-bar-animated').addClass('bg-danger').css('width', '100%');
+
+                // Hapus #exportToast dan ganti dengan gagal
+                $('#exportToast').fadeOut(300, function() {
+                    $(this).remove();
+                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.');
+                });
             } finally {
                 $('#loadingSpinner').hide(); // Menyembunyikan spinner setelah unduhan selesai
             }
