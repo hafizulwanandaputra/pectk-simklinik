@@ -153,6 +153,8 @@
                             <hr>
                             <div class="d-grid gap-2 d-flex justify-content-end">
                                 <a class="btn btn-body bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                                <a class="btn btn-body bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                                <a class="btn btn-body bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
                             </div>
                         </li>
                     <?php endfor; ?>
@@ -287,6 +289,8 @@
                 </div>
                 <hr>
                 <div class="d-grid gap-2 d-flex justify-content-end">
+                    <a class="btn btn-body bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                    <a class="btn btn-body bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
                     <a class="btn btn-body bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
                 </div>
             </li>
@@ -458,9 +462,15 @@
                                     <button type="button" class="btn btn-body btn-sm bg-gradient " onclick="window.open('<?= base_url('operasi/spko/export') ?>/${sp_operasi.id_sp_operasi}');">
                                         <i class="fa-solid fa-print"></i> SPKO
                                     </button>
+                                    <button type="button" class="btn btn-body btn-sm bg-gradient " onclick="window.open('<?= base_url('operasi/praoperasi/export') ?>/${sp_operasi.id_sp_operasi}');">
+                                        <i class="fa-solid fa-print"></i> Pra Operasi
+                                    </button>
                                 <?php else : ?>
                                     <button type="button" class="btn btn-body btn-sm bg-gradient " onclick="window.location.href = '<?= base_url('operasi/spko') ?>/${sp_operasi.id_sp_operasi}';">
                                         <i class="fa-solid fa-circle-info"></i> SPKO
+                                    </button>
+                                    <button type="button" class="btn btn-body btn-sm bg-gradient " onclick="window.location.href = '<?= base_url('operasi/praoperasi') ?>/${sp_operasi.id_sp_operasi}';">
+                                        <i class="fa-solid fa-user-check"></i> Pra Operasi
                                     </button>
                                 <?php endif; ?>
                             </div>

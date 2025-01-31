@@ -1,0 +1,75 @@
+<?php
+
+namespace App\Models;
+
+use CodeIgniter\Model;
+
+class PraOperasiModel extends Model
+{
+    protected $table = 'medrec_operasi_pra';
+    protected $primaryKey = 'id_operasi_pra';
+    protected $useTimestamps = false;
+    protected $allowedFields = [
+        'nomor_booking',
+        'nomor_registrasi',
+        'no_rm',
+        'perawat_praoperasi',
+        'jenis_operasi',
+        'ctt_vital_suhu',
+        'ctt_vital_nadi',
+        'ctt_vital_rr',
+        'ctt_vital_td',
+        'ctt_vital_nyeri',
+        'ctt_vital_tb',
+        'ctt_vital_bb',
+        'ctt_mental',
+        'ctt_riwayat_sakit',
+        'ctt_riwayat_sakit_lain',
+        'ctt_pengobatan_sekarang',
+        'ctt_alat_bantu',
+        'ctt_operasi_jenis',
+        'ctt_operasi_tanggal',
+        'ctt_operasi_lokasi',
+        'ctt_alergi',
+        'ctt_alergi_jelaskan',
+        'ctt_lab_hb',
+        'ctt_lab_bt',
+        'ctt_lab_ctaptt',
+        'ctt_lab_goldarah',
+        'ctt_lab_urin',
+        'ctt_lab_lainnya',
+        'ctt_haid',
+        'ctt_kepercayaan',
+        'cek_biometri',
+        'cek_retinometri',
+        'cek_labor',
+        'cek_radiologi',
+        'cek_puasa',
+        'cek_instruksi',
+        'cek_lensa',
+        'cek_rotgen',
+        'cek_rotgen_usia',
+        'cek_rotgen_konsul',
+        'cek_penyakit',
+        'cek_hepatitis_akhir',
+        'cek_penyakit_lainnya',
+        'cek_tekanan_darah',
+        'cek_berat_badan',
+        'cek_foto_fundus',
+        'cek_usg',
+        'cek_perhiasan',
+        'cek_ttd',
+        'cek_cuci',
+        'cek_mark',
+        'cek_tetes_pantocain',
+        'cek_tetes_efrisel1',
+        'cek_tetes_efrisel2',
+        'cek_tetes_midriatil1',
+        'cek_tetes_midriatil2',
+        'cek_tetes_midriatil3',
+        'cek_makan',
+        'cek_obat',
+        'cek_jenis_obat',
+        'waktu_dibuat',
+    ];
+}
