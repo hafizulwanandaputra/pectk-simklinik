@@ -13,7 +13,6 @@ class PraOperasiModel extends Model
         'nomor_booking',
         'nomor_registrasi',
         'no_rm',
-        'dokter_operator',
         'perawat_praoperasi',
         'jenis_operasi',
         'ctt_vital_suhu',

@@ -20,7 +20,7 @@ class PraOperasi extends BaseController
 
     public function index($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Admisi' yang diizinkan
+        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Perawat' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
             $db = db_connect();
 
@@ -55,12 +55,8 @@ class PraOperasi extends BaseController
                     ->getRowArray();
             }
 
-            $master_tindakan_operasi = $db->table('master_tindakan_operasi')
-                ->orderBy('nama_tindakan', 'ASC')
-                ->get()->getResultArray();
-
-            $dokter = $db->table('user')
-                ->where('role', 'Dokter')
+            $perawat = $db->table('user')
+                ->where('role', 'Perawat')
                 ->where('active', 1)
                 ->get()->getResultArray();
 
@@ -99,10 +95,9 @@ class PraOperasi extends BaseController
             $data = [
                 'operasi' => $sp_operasi,
                 'operasi_pra' => $operasi_pra,
-                'master_tindakan_operasi' => $master_tindakan_operasi,
-                'dokter' => $dokter,
-                'title' => 'Pra Operasi ' . $sp_operasi['nama_pasien'] . ' (' . $sp_operasi['no_rm'] . ') - ' . $sp_operasi['nomor_registrasi'] . ' - ' . $sp_operasi['nomor_booking'] . ' - ' . $this->systemName,
-                'headertitle' => 'Pra Operasi',
+                'perawat' => $perawat,
+                'title' => 'Pemeriksaan Pra Operasi ' . $sp_operasi['nama_pasien'] . ' (' . $sp_operasi['no_rm'] . ') - ' . $sp_operasi['nomor_registrasi'] . ' - ' . $sp_operasi['nomor_booking'] . ' - ' . $this->systemName,
+                'headertitle' => 'Pemeriksaan Pra Operasi',
                 'agent' => $this->request->getUserAgent(), // Mengambil informasi user agent
                 'previous' => $previous,
                 'next' => $next,
@@ -118,11 +113,11 @@ class PraOperasi extends BaseController
 
     public function view($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Admisi' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Admisi') {
+        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Perawat' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
             // Mengambil data pra operasi berdasarkan ID
-            $data = $this->PraOperasiModel
-                ->find($id); // Mengambil pra operasi
+            $data = $this->PraOperasiModel->find($id); // Mengambil pra operasi
+            $data['ctt_riwayat_sakit'] = explode(',', $data['ctt_riwayat_sakit']);
             return $this->response->setJSON($data); // Mengembalikan data pra operasi dalam format JSON
         } else {
             // Mengembalikan status 404 jika peran tidak diizinkan
@@ -148,26 +143,31 @@ class PraOperasi extends BaseController
                 throw PageNotFoundException::forPageNotFound();
             }
 
-            $sp_operasi['jenis_tindakan'] = str_replace(',', '<br>', $sp_operasi['jenis_tindakan']);
+            $operasi_pra = $db->table('medrec_operasi_pra')
+                ->where('nomor_booking', $sp_operasi['nomor_booking'])
+                ->get()
+                ->getRowArray();
 
+            $operasi_pra['ctt_riwayat_sakit'] = str_replace(',', ', ', $operasi_pra['ctt_riwayat_sakit']);
 
             // Memeriksa apakah pasien tidak kosong
-            if ($sp_operasi) {
+            if ($operasi_pra) {
                 // Menyiapkan data untuk tampilan
                 $data = [
                     'operasi' => $sp_operasi,
-                    'title' => 'Surat Perintah Kamar Operasi ' . $sp_operasi['nama_pasien'] . ' (' . $sp_operasi['no_rm'] . ') - ' . $sp_operasi['nomor_registrasi'] . ' - ' . $sp_operasi['nomor_booking'] . ' - ' . $this->systemName,
-                    'headertitle' => 'Surat Perintah Kamar Operasi',
+                    'operasi_pra' => $operasi_pra,
+                    'title' => 'Pemeriksaan Pra Operasi ' . $sp_operasi['nama_pasien'] . ' (' . $sp_operasi['no_rm'] . ') - ' . $sp_operasi['nomor_registrasi'] . ' - ' . $sp_operasi['nomor_booking'] . ' - ' . $this->systemName,
+                    'headertitle' => 'Pemeriksaan Pra Operasi',
                     'agent' => $this->request->getUserAgent(), // Mengambil informasi user agent
                 ];
-                // return view('dashboard/operasi/spko/form', $data);
+                // return view('dashboard/operasi/praoperasi/form', $data);
                 // die;
                 // Menghasilkan PDF menggunakan Dompdf
                 $dompdf = new Dompdf();
-                $html = view('dashboard/operasi/spko/form', $data);
+                $html = view('dashboard/operasi/praoperasi/form', $data);
                 $dompdf->loadHtml($html);
                 $dompdf->render();
-                $dompdf->stream('SPKO_' . $sp_operasi['nomor_booking'] . '_' . str_replace('-', '', $sp_operasi['no_rm']) . '.pdf', [
+                $dompdf->stream('PraOperasi_' . $sp_operasi['nomor_booking'] . '_' . str_replace('-', '', $sp_operasi['no_rm']) . '.pdf', [
                     'Attachment' => FALSE // Menghasilkan PDF tanpa mengunduh
                 ]);
             } else {
@@ -183,71 +183,100 @@ class PraOperasi extends BaseController
     public function update($id)
     {
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
-            $validation = \Config\Services::validation();
-            $sp_operasi = $this->SPOperasiModel
-                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_sp_operasi.nomor_registrasi', 'inner')
-                ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
-                ->find($id);
+            $db = db_connect();
+            // $validation = \Config\Services::validation();
 
-            $validation->setRules([
-                'tanggal_operasi' => 'required',
-                'jam_operasi' => 'required',
-                'jenis_tindakan' => 'required',
-                'jenis_bius' => 'required',
-                'rajal_ranap' => 'required',
-                'ruang_operasi' => 'required',
-                'dokter_operator' => 'required'
-            ]);
+            $operasi_pra = $db->table('medrec_operasi_pra')
+                ->where('id_operasi_pra', $id)
+                ->get()
+                ->getRowArray();
 
-            if (!$this->validate($validation->getRules())) {
-                return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
-            }
+            // $validation->setRules([
+            //     'tanggal_operasi' => 'required',
+            //     'jam_operasi' => 'required',
+            //     'jenis_tindakan' => 'required',
+            //     'jenis_bius' => 'required',
+            //     'rajal_ranap' => 'required',
+            //     'ruang_operasi' => 'required',
+            //     'dokter_operator' => 'required'
+            // ]);
 
-            $jenis_tindakan = $this->request->getPost('jenis_tindakan');
-            $jenis_tindakan_csv = is_array($jenis_tindakan) ? implode(',', $jenis_tindakan) : NULL;
+            // if (!$this->validate($validation->getRules())) {
+            //     return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
+            // }
+
+            $ctt_riwayat_sakit = $this->request->getPost('ctt_riwayat_sakit');
+            $ctt_riwayat_sakit_csv = is_array($ctt_riwayat_sakit) ? implode(',', $ctt_riwayat_sakit) : NULL;
 
             $data = [
-                'id_sp_operasi' => $id,
-                'nomor_booking' => $sp_operasi['nomor_booking'],
-                'nomor_registrasi' => $sp_operasi['nomor_registrasi'],
-                'no_rm' => $sp_operasi['no_rm'],
-                'tanggal_operasi' => $this->request->getPost('tanggal_operasi') ?: NULL,
-                'jam_operasi' => $this->request->getPost('jam_operasi') ?: NULL,
-                'diagnosa' => $this->request->getPost('diagnosa') ?: NULL,
-                'jenis_tindakan' => $jenis_tindakan_csv,
-                'indikasi_operasi' => $this->request->getPost('indikasi_operasi') ?: NULL,
-                'jenis_bius' => $this->request->getPost('jenis_bius') ?: NULL,
-                'tipe_bayar' => $this->request->getPost('tipe_bayar') ?: NULL,
-                'rajal_ranap' => $this->request->getPost('rajal_ranap') ?: NULL,
-                'ruang_operasi' => $this->request->getPost('ruang_operasi') ?: NULL,
-                'dokter_operator' => $this->request->getPost('dokter_operator') ?: NULL,
-                'status_operasi' => $sp_operasi['status_operasi'],
-                'diagnosa_site_marking' => $this->request->getPost('diagnosa_site_marking') ?: NULL,
-                'tindakan_site_marking' => $this->request->getPost('tindakan_site_marking') ?: NULL,
-                'nama_pasien_keluarga' => $this->request->getPost('nama_pasien_keluarga') ?: NULL,
-                'tanda_tangan_pasien' => $sp_operasi['tanda_tangan_pasien'],
-                'waktu_dibuat' => $sp_operasi['waktu_dibuat'],
-                'site_marking' => $sp_operasi['site_marking'] // Gunakan nilai lama sebagai default
+                'id_operasi_pra' => $id,
+                'nomor_booking' => $operasi_pra['nomor_booking'],
+                'nomor_registrasi' => $operasi_pra['nomor_registrasi'],
+                'no_rm' => $operasi_pra['no_rm'],
+                'perawat_praoperasi' => $this->request->getPost('perawat_praoperasi') ?: NULL,
+                'jenis_operasi' => $this->request->getPost('jenis_operasi') ?: NULL,
+                // BAGIAN A
+                'ctt_vital_suhu' => $this->request->getPost('ctt_vital_suhu') ?: NULL,
+                'ctt_vital_nadi' => $this->request->getPost('ctt_vital_nadi') ?: NULL,
+                'ctt_vital_rr' => $this->request->getPost('ctt_vital_rr') ?: NULL,
+                'ctt_vital_td' => $this->request->getPost('ctt_vital_td') ?: NULL,
+                'ctt_vital_nyeri' => $this->request->getPost('ctt_vital_nyeri') ?: NULL,
+                'ctt_vital_tb' => $this->request->getPost('ctt_vital_tb') ?: NULL,
+                'ctt_vital_bb' => $this->request->getPost('ctt_vital_bb') ?: NULL,
+                'ctt_mental' => $this->request->getPost('ctt_mental') ?: NULL,
+                'ctt_riwayat_sakit' => $ctt_riwayat_sakit_csv,
+                'ctt_riwayat_sakit_lain' => $this->request->getPost('ctt_riwayat_sakit_lain') ?: NULL,
+                'ctt_pengobatan_sekarang' => $this->request->getPost('ctt_pengobatan_sekarang') ?: NULL,
+                'ctt_alat_bantu' => $this->request->getPost('ctt_alat_bantu') ?: NULL,
+                'ctt_operasi_jenis' => $this->request->getPost('ctt_operasi_jenis') ?: NULL,
+                'ctt_operasi_tanggal' => $this->request->getPost('ctt_operasi_tanggal') ?: NULL,
+                'ctt_operasi_lokasi' => $this->request->getPost('ctt_operasi_lokasi') ?: NULL,
+                'ctt_alergi' => $this->request->getPost('ctt_alergi') ?: NULL,
+                'ctt_alergi_jelaskan' => $this->request->getPost('ctt_alergi_jelaskan') ?: NULL,
+                'ctt_lab_hb' => $this->request->getPost('ctt_lab_hb') ?: NULL,
+                'ctt_lab_bt' => $this->request->getPost('ctt_lab_bt') ?: NULL,
+                'ctt_lab_ctaptt' => $this->request->getPost('ctt_lab_ctaptt') ?: NULL,
+                'ctt_lab_goldarah' => $this->request->getPost('ctt_lab_goldarah') ?: NULL,
+                'ctt_lab_urin' => $this->request->getPost('ctt_lab_urin') ?: NULL,
+                'ctt_lab_lainnya' => $this->request->getPost('ctt_lab_lainnya') ?: NULL,
+                'ctt_haid' => $this->request->getPost('ctt_haid') ?: NULL,
+                'ctt_kepercayaan' => $this->request->getPost('ctt_kepercayaan') ?: NULL,
+                // BAGIAN B
+                'cek_biometri' => $this->request->getPost('cek_biometri') ?: NULL,
+                'cek_retinometri' => $this->request->getPost('cek_retinometri') ?: NULL,
+                'cek_labor' => $this->request->getPost('cek_labor') ?: NULL,
+                'cek_radiologi' => $this->request->getPost('cek_radiologi') ?: NULL,
+                'cek_puasa' => $this->request->getPost('cek_puasa') ?: NULL,
+                'cek_instruksi' => $this->request->getPost('cek_instruksi') ?: NULL,
+                'cek_lensa' => $this->request->getPost('cek_lensa') ?: NULL,
+                'cek_rotgen' => $this->request->getPost('cek_rotgen') ?: NULL,
+                'cek_rotgen_usia' => $this->request->getPost('cek_rotgen_usia') ?: NULL,
+                'cek_rotgen_konsul' => $this->request->getPost('cek_rotgen_konsul') ?: NULL,
+                'cek_penyakit' => $this->request->getPost('cek_penyakit') ?: NULL,
+                'cek_hepatitis_akhir' => $this->request->getPost('cek_hepatitis_akhir') ?: NULL,
+                'cek_penyakit_lainnya' => $this->request->getPost('cek_penyakit_lainnya') ?: NULL,
+                'cek_tekanan_darah' => $this->request->getPost('cek_tekanan_darah') ?: NULL,
+                'cek_berat_badan' => $this->request->getPost('cek_berat_badan') ?: NULL,
+                'cek_foto_fundus' => $this->request->getPost('cek_foto_fundus') ?: NULL,
+                'cek_usg' => $this->request->getPost('cek_usg') ?: NULL,
+                'cek_perhiasan' => $this->request->getPost('cek_perhiasan') ?: NULL,
+                'cek_ttd' => $this->request->getPost('cek_ttd') ?: NULL,
+                'cek_cuci' => $this->request->getPost('cek_cuci') ?: NULL,
+                'cek_mark' => $this->request->getPost('cek_mark') ?: NULL,
+                'cek_tetes_pantocain' => $this->request->getPost('cek_tetes_pantocain') ?: NULL,
+                'cek_tetes_efrisel1' => $this->request->getPost('cek_tetes_efrisel1') ?: NULL,
+                'cek_tetes_efrisel2' => $this->request->getPost('cek_tetes_efrisel2') ?: NULL,
+                'cek_tetes_midriatil1' => $this->request->getPost('cek_tetes_midriatil1') ?: NULL,
+                'cek_tetes_midriatil2' => $this->request->getPost('cek_tetes_midriatil2') ?: NULL,
+                'cek_tetes_midriatil3' => $this->request->getPost('cek_tetes_midriatil3') ?: NULL,
+                'cek_makan' => $this->request->getPost('cek_makan') ?: NULL,
+                'cek_obat' => $this->request->getPost('cek_obat') ?: NULL,
+                'cek_jenis_obat' => $this->request->getPost('cek_jenis_obat') ?: NULL,
+                'waktu_dibuat' => $operasi_pra['waktu_dibuat'],
             ];
 
-            $site_marking_base64 = $this->request->getPost('site_marking');
-
-            if ($site_marking_base64 != $sp_operasi['site_marking']) {
-                $image_data = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $site_marking_base64));
-                $extension = 'png';
-                $site_marking_name = $sp_operasi['no_rm'] . '_' . $sp_operasi['nomor_booking'] . '.' . $extension;
-
-                if ($sp_operasi['site_marking']) {
-                    @unlink(FCPATH . 'uploads/site_marking/' . $sp_operasi['site_marking']);
-                }
-
-                file_put_contents(FCPATH . 'uploads/site_marking/' . $site_marking_name, $image_data);
-                $data['site_marking'] = $site_marking_name; // Perbarui hanya jika ada data baru
-            }
-
-            $this->SPOperasiModel->save($data);
-
-            return $this->response->setJSON(['success' => true, 'message' => 'SPKO berhasil diperbarui']);
+            $this->PraOperasiModel->save($data);
+            return $this->response->setJSON(['success' => true, 'message' => 'Pemeriksaan pra operasi berhasil diperbarui']);
         } else {
             return $this->response->setStatusCode(404)->setJSON(['error' => 'Halaman tidak ditemukan']);
         }

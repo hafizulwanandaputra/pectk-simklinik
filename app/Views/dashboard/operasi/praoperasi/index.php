@@ -85,6 +85,31 @@ $usia = $registrasi->diff($tanggal_lahir);
             <?= form_open_multipart('/operasi/praoperasi/update/' . $operasi_pra['id_operasi_pra'], 'id="PraOperasiForm"'); ?>
             <?= csrf_field(); ?>
             <div class="mb-3">
+                <div class="fw-bold mb-2 border-bottom">Dokter Penanggung Jawab Pelayanan</div>
+                <div><?= $operasi['dokter_operator'] ?></div>
+            </div>
+            <div class="mb-3">
+                <div class="mb-2">
+                    <div class="form-floating">
+                        <select class="form-select" id="perawat_praoperasi" name="perawat_praoperasi" aria-label="perawat_praoperasi">
+                            <option value="" selected>-- Pilih Perawat --</option>
+                            <?php foreach ($perawat as $list) : ?>
+                                <option value="<?= $list['fullname'] ?>"><?= $list['fullname'] ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                        <label for="perawat_praoperasi">Perawat Pra Operasi</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="jenis_operasi" name="jenis_operasi" value="" autocomplete="off" dir="auto" placeholder="jenis_operasi">
+                        <label for="jenis_operasi">Jenis Operasi</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
                 <div class="fw-bold mb-2 border-bottom"><span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">A</span> Catatan Keperawatan Pra Operasi<br><small class="text-muted fw-normal">Diisi oleh perawat ruangan maksimal 1 jam sebelum diantar ke kamar operasi</small></div>
                 <div class="mb-2">
                     <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">1</span> Tanda-tanda Vital
@@ -236,7 +261,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 </div>
                 <div class="mb-2">
                     <div class="form-floating">
-                        <input type="text" class="form-control" id="ctt_operasi_tanggal" name="ctt_operasi_tanggal" value="" autocomplete="off" dir="auto" placeholder="ctt_operasi_tanggal">
+                        <input type="date" class="form-control" id="ctt_operasi_tanggal" name="ctt_operasi_tanggal" value="" autocomplete="off" dir="auto" placeholder="ctt_operasi_tanggal">
                         <label for="ctt_operasi_tanggal">Kapan</label>
                         <div class="invalid-feedback"></div>
                     </div>
@@ -252,16 +277,33 @@ $usia = $registrasi->diff($tanggal_lahir);
                     <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">7</span> Alergi
                 </div>
                 <div class="mb-2">
-                    <div class="form-floating">
-                        <input type="text" class="form-control" id="ctt_alergi" name="ctt_alergi" value="" autocomplete="off" dir="auto" placeholder="ctt_alergi">
-                        <label for="ctt_alergi">Jenis Alergi</label>
-                        <div class="invalid-feedback"></div>
+                    <div class="row g-1 align-items-center radio-group">
+                        <label for="ctt_alergi" class="col col-form-label">
+                            Alergi?
+                        </label>
+                        <div class="col col-form-label">
+                            <div class="d-flex align-items-center justify-content-evenly">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="ctt_alergi" id="ctt_alergi1" value="YA">
+                                    <label class="form-check-label" for="ctt_alergi1">
+                                        Ya
+                                    </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="ctt_alergi" id="ctt_alergi2" value="TIDAK">
+                                    <label class="form-check-label" for="ctt_alergi2">
+                                        Tidak
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="invalid-feedback"></div>
+                        </div>
                     </div>
                 </div>
                 <div class="mb-2">
                     <div class="form-floating">
                         <input type="text" class="form-control" id="ctt_alergi_jelaskan" name="ctt_alergi_jelaskan" value="" autocomplete="off" dir="auto" placeholder="ctt_alergi_jelaskan">
-                        <label for="ctt_alergi_jelaskan">Penjelasan</label>
+                        <label for="ctt_alergi_jelaskan">Penjelasan Alergi</label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
@@ -308,7 +350,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <div class="mb-2">
                     <div class="row g-1 align-items-center radio-group">
                         <label for="ctt_haid" class="col col-form-label">
-                            <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">9</span> Jika pasien perempuan, apakah sedang haid/menstruasi?
+                            <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">9</span> Jika pasien perempuan, apakah sedang haid/menstruasi?<?= ($operasi['jenis_kelamin'] == 'L') ? '<br><small class="text-muted fw-normal">Dinonaktifkan untuk pasien laki-laki</small>' : ''; ?>
                         </label>
                         <div class="col col-form-label">
                             <div class="d-flex align-items-center justify-content-evenly">
@@ -843,12 +885,14 @@ $usia = $registrasi->diff($tanggal_lahir);
                                 <div class="badge d-grid bg-body text-body border px-2 me-2 date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">23</div>
                             </td>
                             <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
-                                <div class="d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-center">
+                                <div class="d-flex justify-content-between align-items-center">
                                     <label for="cek_obat">
                                         <div>Obat-obatan sebelumnya</div>
                                     </label>
                                     <div>
-                                        <input type="text" class="form-control form-control-sm" id="cek_obat" name="cek_obat" value="" autocomplete="off" dir="auto">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="cek_obat" name="cek_obat" value="1">
+                                        </div>
                                         <div class="invalid-feedback"></div>
                                     </div>
                                 </div>
@@ -886,47 +930,169 @@ $usia = $registrasi->diff($tanggal_lahir);
 <?= $this->endSection(); ?>
 <?= $this->section('javascript'); ?>
 <script>
-    async function fetchSPKO() {
+    async function fetchPraOperasi() {
         $('#loadingSpinner').show();
 
         try {
             const response = await axios.get('<?= base_url('operasi/praoperasi/view/') . $operasi_pra['id_operasi_pra'] ?>');
             const data = response.data;
 
-            $('#tanggal_operasi').val(data.tanggal_operasi);
-            $('#jam_operasi').val(data.jam_operasi);
-            $('#diagnosa').val(data.diagnosa);
-            $('#jenis_tindakan').val(data.jenis_tindakan).trigger('change');
-            $('#indikasi_operasi').val(data.indikasi_operasi);
-            const jenis_bius = data.jenis_bius;
-            if (jenis_bius) {
-                $("input[name='jenis_bius'][value='" + jenis_bius + "']").prop('checked', true);
+            $('#perawat_praoperasi').val(data.perawat_praoperasi);
+            $('#jenis_operasi').val(data.jenis_operasi);
+
+            // BAGIAN A
+            $('#ctt_vital_suhu').val(data.ctt_vital_suhu);
+            $('#ctt_vital_nadi').val(data.ctt_vital_nadi);
+            $('#ctt_vital_rr').val(data.ctt_vital_rr);
+            $('#ctt_vital_td').val(data.ctt_vital_td);
+            $('#ctt_vital_nyeri').val(data.ctt_vital_nyeri);
+            $('#ctt_vital_tb').val(data.ctt_vital_tb);
+            $('#ctt_vital_bb').val(data.ctt_vital_bb);
+            $('#ctt_mental').val(data.ctt_mental);
+            const ctt_riwayat_sakit = data.ctt_riwayat_sakit;
+            $('input[name="ctt_riwayat_sakit[]"]').each(function() {
+                const value = $(this).val(); // Dapatkan nilai opsi
+                if (ctt_riwayat_sakit.includes(value)) {
+                    // Tandai opsi jika ada dalam array
+                    $(this).prop('checked', true);
+                }
+            });
+            $('#ctt_riwayat_sakit_lain').val(data.ctt_riwayat_sakit_lain);
+            $('#ctt_pengobatan_sekarang').val(data.ctt_pengobatan_sekarang);
+            $('#ctt_alat_bantu').val(data.ctt_alat_bantu);
+            $('#ctt_operasi_jenis').val(data.ctt_operasi_jenis);
+            $('#ctt_operasi_tanggal').val(data.ctt_operasi_tanggal);
+            $('#ctt_operasi_lokasi').val(data.ctt_operasi_lokasi);
+            const ctt_alergi = data.ctt_alergi;
+            if (ctt_alergi) {
+                $("input[name='ctt_alergi'][value='" + ctt_alergi + "']").prop('checked', true);
             }
-            $('#tipe_bayar').val(data.tipe_bayar);
-            $('#ruang_operasi').val(data.ruang_operasi);
-            const rajal_ranap = data.rajal_ranap;
-            if (rajal_ranap) {
-                $("input[name='rajal_ranap'][value='" + rajal_ranap + "']").prop('checked', true);
+            $('#ctt_alergi_jelaskan').val(data.ctt_alergi_jelaskan);
+            const ctt_lab_hb = data.ctt_lab_hb;
+            if (ctt_lab_hb) {
+                $("input[name='ctt_lab_hb'][value='" + ctt_lab_hb + "']").prop('checked', true);
             }
-            if (data.dokter_operator !== 'Belum Ada') {
-                $('#dokter_operator').val(data.dokter_operator);
+            const ctt_lab_bt = data.ctt_lab_bt;
+            if (ctt_lab_bt) {
+                $("input[name='ctt_lab_bt'][value='" + ctt_lab_bt + "']").prop('checked', true);
+            }
+            const ctt_lab_ctaptt = data.ctt_lab_ctaptt;
+            if (ctt_lab_ctaptt) {
+                $("input[name='ctt_lab_ctaptt'][value='" + ctt_lab_ctaptt + "']").prop('checked', true);
+            }
+            const ctt_lab_goldarah = data.ctt_lab_goldarah;
+            if (ctt_lab_goldarah) {
+                $("input[name='ctt_lab_goldarah'][value='" + ctt_lab_goldarah + "']").prop('checked', true);
+            }
+            const ctt_lab_urin = data.ctt_lab_urin;
+            if (ctt_lab_urin) {
+                $("input[name='ctt_lab_urin'][value='" + ctt_lab_urin + "']").prop('checked', true);
+            }
+            $('#ctt_lab_lainnya').val(data.ctt_lab_lainnya);
+            <?php if ($operasi['jenis_kelamin'] == 'L') : ?>
+                $("input[name='ctt_haid']").prop('disabled', true);
+            <?php elseif ($operasi['jenis_kelamin'] == 'P') : ?>
+                const ctt_haid = data.ctt_haid;
+                if (ctt_haid) {
+                    $("input[name='ctt_haid'][value='" + ctt_haid + "']").prop('checked', true);
+                }
+            <?php endif; ?>
+            const ctt_kepercayaan = data.ctt_kepercayaan;
+            if (ctt_kepercayaan) {
+                $("input[name='ctt_kepercayaan'][value='" + ctt_kepercayaan + "']").prop('checked', true);
             }
 
-            // Site Marking
-            $('#diagnosa_site_marking').val(data.diagnosa_site_marking);
-            $('#tindakan_site_marking').val(data.tindakan_site_marking);
-            if (data.site_marking) {
-                $('#site_marking_preview').attr('src', `<?= base_url('uploads/site_marking') ?>/${data.site_marking}?t=${new Date().getTime()}`);
-                $('#site_marking_preview_div').show();
-                $('#site_marking').val(data.site_marking);
-            } else {
-                $('#site_marking_preview_div').hide();
-                $('#site_marking').val('');
+            // BAGIAN B
+            const cek_biometri = data.cek_biometri;
+            if (cek_biometri) {
+                $("input[name='cek_biometri'][value='" + cek_biometri + "']").prop('checked', true);
             }
-            $('#cancel_changes').hide();
-
-            // Pasien dan Keluarga
-            $('#nama_pasien_keluarga').val(data.nama_pasien_keluarga);
+            const cek_retinometri = data.cek_retinometri;
+            if (cek_retinometri) {
+                $("input[name='cek_retinometri'][value='" + cek_retinometri + "']").prop('checked', true);
+            }
+            const cek_labor = data.cek_labor;
+            if (cek_labor) {
+                $("input[name='cek_labor'][value='" + cek_labor + "']").prop('checked', true);
+            }
+            const cek_radiologi = data.cek_radiologi;
+            if (cek_radiologi) {
+                $("input[name='cek_radiologi'][value='" + cek_radiologi + "']").prop('checked', true);
+            }
+            const cek_puasa = data.cek_puasa;
+            if (cek_puasa) {
+                $("input[name='cek_puasa'][value='" + cek_puasa + "']").prop('checked', true);
+            }
+            const cek_instruksi = data.cek_instruksi;
+            if (cek_instruksi) {
+                $("input[name='cek_instruksi'][value='" + cek_instruksi + "']").prop('checked', true);
+            }
+            const cek_lensa = data.cek_lensa;
+            if (cek_lensa) {
+                $("input[name='cek_lensa'][value='" + cek_lensa + "']").prop('checked', true);
+            }
+            const cek_rotgen = data.cek_rotgen;
+            if (cek_rotgen) {
+                $("input[name='cek_rotgen'][value='" + cek_rotgen + "']").prop('checked', true);
+            }
+            const cek_rotgen_usia = data.cek_rotgen_usia;
+            if (cek_rotgen_usia) {
+                $("input[name='cek_rotgen_usia'][value='" + cek_rotgen_usia + "']").prop('checked', true);
+            }
+            const cek_rotgen_konsul = data.cek_rotgen_konsul;
+            if (cek_rotgen_konsul) {
+                $("input[name='cek_rotgen_konsul'][value='" + cek_rotgen_konsul + "']").prop('checked', true);
+            }
+            const cek_penyakit = data.cek_penyakit;
+            if (cek_penyakit) {
+                $("input[name='cek_penyakit'][value='" + cek_penyakit + "']").prop('checked', true);
+            }
+            const cek_hepatitis_akhir = data.cek_hepatitis_akhir;
+            if (cek_hepatitis_akhir) {
+                $("input[name='cek_hepatitis_akhir'][value='" + cek_hepatitis_akhir + "']").prop('checked', true);
+            }
+            $('#cek_penyakit_lainnya').val(data.cek_penyakit_lainnya);
+            $('#cek_tekanan_darah').val(data.cek_tekanan_darah);
+            $('#cek_berat_badan').val(data.cek_berat_badan);
+            const cek_foto_fundus = data.cek_foto_fundus;
+            if (cek_foto_fundus) {
+                $("input[name='cek_foto_fundus'][value='" + cek_foto_fundus + "']").prop('checked', true);
+            }
+            const cek_usg = data.cek_usg;
+            if (cek_usg) {
+                $("input[name='cek_usg'][value='" + cek_usg + "']").prop('checked', true);
+            }
+            const cek_perhiasan = data.cek_perhiasan;
+            if (cek_perhiasan) {
+                $("input[name='cek_perhiasan'][value='" + cek_perhiasan + "']").prop('checked', true);
+            }
+            const cek_ttd = data.cek_ttd;
+            if (cek_ttd) {
+                $("input[name='cek_ttd'][value='" + cek_ttd + "']").prop('checked', true);
+            }
+            const cek_cuci = data.cek_cuci;
+            if (cek_cuci) {
+                $("input[name='cek_cuci'][value='" + cek_cuci + "']").prop('checked', true);
+            }
+            const cek_mark = data.cek_mark;
+            if (cek_mark) {
+                $("input[name='cek_mark'][value='" + cek_mark + "']").prop('checked', true);
+            }
+            $('#cek_tetes_pantocain').val(data.cek_tetes_pantocain);
+            $('#cek_tetes_efrisel1').val(data.cek_tetes_efrisel1);
+            $('#cek_tetes_efrisel2').val(data.cek_tetes_efrisel2);
+            $('#cek_tetes_midriatil1').val(data.cek_tetes_midriatil1);
+            $('#cek_tetes_midriatil2').val(data.cek_tetes_midriatil2);
+            $('#cek_tetes_midriatil3').val(data.cek_tetes_midriatil3);
+            const cek_makan = data.cek_makan;
+            if (cek_makan) {
+                $("input[name='cek_makan'][value='" + cek_makan + "']").prop('checked', true);
+            }
+            const cek_obat = data.cek_obat;
+            if (cek_obat) {
+                $("input[name='cek_obat'][value='" + cek_obat + "']").prop('checked', true);
+            }
+            $('#cek_jenis_obat').val(data.cek_jenis_obat);
         } catch (error) {
             showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
         } finally {
@@ -945,31 +1111,23 @@ $usia = $registrasi->diff($tanggal_lahir);
         });
 
         // Fungsi untuk mengunggah gambar dari kanvas
-        $('#SPKOForm').submit(async function(ə) {
+        $('#PraOperasiForm').submit(async function(ə) {
             ə.preventDefault();
 
             const formData = new FormData(this);
-            const siteMarkingValue = $('#site_marking').val();
-
-            // Cek apakah site_marking berisi data base64 yang valid
-            if (siteMarkingValue.startsWith('data:image/')) {
-                formData.append('site_marking', siteMarkingValue);
-            }
 
             // Clear previous validation states
-            $('#uploadProgressBar').removeClass('bg-danger').css('width', '0%');
-            $('#SPKOForm .is-invalid').removeClass('is-invalid');
-            $('#SPKOForm .invalid-feedback').text('').hide();
+            $('#PraOperasiForm .is-invalid').removeClass('is-invalid');
+            $('#PraOperasiForm .invalid-feedback').text('').hide();
             $('#submitBtn').prop('disabled', true).html(`
                 <span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span> Simpan
             `);
 
             // Disable form inputs
-            $('#SPKOForm input, #SPKOForm select, #SPKOForm button').prop('disabled', true);
-            $('#cancel_changes').hide();
+            $('#PraOperasiForm input, #PraOperasiForm select, #PraOperasiForm button').prop('disabled', true);
 
             try {
-                const response = await axios.post(`<?= base_url('/operasi/spko/update/' . $operasi['id_sp_operasi']) ?>`, formData, {
+                const response = await axios.post(`<?= base_url('/operasi/praoperasi/update/' . $operasi_pra['id_operasi_pra']) ?>`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }
@@ -977,13 +1135,13 @@ $usia = $registrasi->diff($tanggal_lahir);
 
                 if (response.data.success) {
                     showSuccessToast(response.data.message);
-                    fetchSPKO();
+                    fetchPraOperasi();
                 } else {
                     console.log("Validation Errors:", response.data.errors);
 
                     // Clear previous validation states
-                    $('#SPKOForm .is-invalid').removeClass('is-invalid');
-                    $('#SPKOForm .invalid-feedback').text('').hide();
+                    $('#PraOperasiForm .is-invalid').removeClass('is-invalid');
+                    $('#PraOperasiForm .invalid-feedback').text('').hide();
 
                     // Display new validation errors
                     for (const field in response.data.errors) {
@@ -991,7 +1149,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             const fieldElement = $('#' + field);
 
                             // Handle radio button group separately
-                            if (['jenis_bius', 'rajal_ranap'].includes(field)) {
+                            if (['ctt_alergi', 'ctt_haid', 'ctt_kepercayaan'].includes(field)) {
                                 const radioGroup = $(`input[name='${field}']`); // Ambil grup radio berdasarkan nama
                                 const feedbackElement = radioGroup.closest('.radio-group').find('.invalid-feedback'); // Gunakan pembungkus dengan class tertentu
 
@@ -1033,11 +1191,11 @@ $usia = $registrasi->diff($tanggal_lahir);
                 $('#submitBtn').prop('disabled', false).html(`
                 <i class="fa-solid fa-floppy-disk"></i> Simpan
             `);
-                $('#SPKOForm input, #SPKOForm select, #SPKOForm button').prop('disabled', false);
+                $('#PraOperasiForm input, #PraOperasiForm select, #PraOperasiForm button').prop('disabled', false);
             }
         });
-        $('#loadingSpinner').hide();
-        // fetchSPKO();
+        // $('#loadingSpinner').hide();
+        fetchPraOperasi();
     });
     // Show toast notification
     <?= $this->include('toast/index') ?>
