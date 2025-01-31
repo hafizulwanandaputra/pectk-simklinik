@@ -11,4 +11,5 @@ body {
 
 .date {
   font-variant-numeric: tabular-nums;
+  font-feature-settings: "ss04";
 }
