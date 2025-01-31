@@ -4,6 +4,11 @@
   font-feature-settings: "ss04";
 }
 
+html,
+body {
+  font-feature-settings: "ss04";
+}
+
 .date {
   font-variant-numeric: tabular-nums;
 }
