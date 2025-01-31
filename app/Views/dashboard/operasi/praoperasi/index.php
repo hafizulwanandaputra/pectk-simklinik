@@ -138,7 +138,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <div class="mb-2">
                     <div class="form-floating">
                         <input type="text" class="form-control" id="ctt_vital_td" name="ctt_vital_td" value="" autocomplete="off" dir="auto" placeholder="ctt_vital_td">
-                        <label for="ctt_vital_td">Tekanan Darah</label>
+                        <label for="ctt_vital_td">Tekanan Darah (mmHg)</label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
@@ -262,14 +262,14 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <div class="mb-2">
                     <div class="form-floating">
                         <input type="date" class="form-control" id="ctt_operasi_tanggal" name="ctt_operasi_tanggal" value="" autocomplete="off" dir="auto" placeholder="ctt_operasi_tanggal">
-                        <label for="ctt_operasi_tanggal">Kapan</label>
+                        <label for="ctt_operasi_tanggal">Tanggal Operasi</label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
                 <div class="mb-2">
                     <div class="form-floating">
                         <input type="text" class="form-control" id="ctt_operasi_lokasi" name="ctt_operasi_lokasi" value="" autocomplete="off" dir="auto" placeholder="ctt_operasi_lokasi">
-                        <label for="ctt_operasi_lokasi">Lokasi</label>
+                        <label for="ctt_operasi_lokasi">Lokasi Operasi</label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
@@ -279,7 +279,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <div class="mb-2">
                     <div class="row g-1 align-items-center radio-group">
                         <label for="ctt_alergi" class="col col-form-label">
-                            Alergi?
+                            Apakah pasien memiliki riwayat alergi?
                         </label>
                         <div class="col col-form-label">
                             <div class="d-flex align-items-center justify-content-evenly">
@@ -335,7 +335,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="ctt_lab_urin" name="ctt_lab_urin" value="1">
-                                <label class="form-check-label" for="ctt_lab_urin">URINE</label>
+                                <label class="form-check-label" for="ctt_lab_urin">URIN</label>
                             </div>
                         </div>
                     </div>
@@ -773,7 +773,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
                                 <div class="d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-center">
                                     <label for="cek_tetes_pantocain">
-                                        <div>Tetes Pantocain 2% pada jam</div>
+                                        <div>Tetes Pantocain 2%</div>
                                     </label>
                                     <div>
                                         <input type="time" class="form-control form-control-sm" id="cek_tetes_pantocain" name="cek_tetes_pantocain" value="" autocomplete="off" dir="auto">
@@ -789,7 +789,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
                                 <div class="d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-center">
                                     <label for="cek_tetes_efrisel1">
-                                        <div>Tetes Efrisel I pada jam</div>
+                                        <div>Tetes Efrisel I</div>
                                     </label>
                                     <div>
                                         <input type="time" class="form-control form-control-sm" id="cek_tetes_efrisel1" name="cek_tetes_efrisel1" value="" autocomplete="off" dir="auto">
@@ -805,7 +805,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
                                 <div class="d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-center">
                                     <label for="cek_tetes_efrisel2">
-                                        <div>Tetes Efrisel II pada jam</div>
+                                        <div>Tetes Efrisel II</div>
                                     </label>
                                     <div>
                                         <input type="time" class="form-control form-control-sm" id="cek_tetes_efrisel2" name="cek_tetes_efrisel2" value="" autocomplete="off" dir="auto">
@@ -821,7 +821,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
                                 <div class="d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-center">
                                     <label for="cek_tetes_midriatil1">
-                                        <div>Tetes Midriatil I pada jam</div>
+                                        <div>Tetes Midriatil I</div>
                                     </label>
                                     <div>
                                         <input type="time" class="form-control form-control-sm" id="cek_tetes_midriatil1" name="cek_tetes_midriatil1" value="" autocomplete="off" dir="auto">
@@ -837,7 +837,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
                                 <div class="d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-center">
                                     <label for="cek_tetes_midriatil2">
-                                        <div>Tetes Midriatil II pada jam</div>
+                                        <div>Tetes Midriatil II</div>
                                     </label>
                                     <div>
                                         <input type="time" class="form-control form-control-sm" id="cek_tetes_midriatil2" name="cek_tetes_midriatil2" value="" autocomplete="off" dir="auto">
@@ -853,7 +853,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
                                 <div class="d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-center">
                                     <label for="cek_tetes_midriatil3">
-                                        <div>Tetes Midriatil III pada jam</div>
+                                        <div>Tetes Midriatil III</div>
                                     </label>
                                     <div>
                                         <input type="time" class="form-control form-control-sm" id="cek_tetes_midriatil3" name="cek_tetes_midriatil3" value="" autocomplete="off" dir="auto">
@@ -919,7 +919,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             <div>
                 <hr>
                 <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-3">
-                    <button class="btn btn-body  bg-gradient" type="button" onclick="window.open(`<?= base_url('/operasi/spko/export/' . $operasi['id_sp_operasi']) ?>`)"><i class="fa-solid fa-print"></i> Cetak Form</button>
+                    <button class="btn btn-body  bg-gradient" type="button" onclick="window.open(`<?= base_url('/operasi/praoperasi/export/' . $operasi['id_sp_operasi']) ?>`)"><i class="fa-solid fa-print"></i> Cetak Form</button>
                     <button class="btn btn-primary bg-gradient" type="submit" id="submitBtn"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
                 </div>
             </div>
@@ -1192,6 +1192,9 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <i class="fa-solid fa-floppy-disk"></i> Simpan
             `);
                 $('#PraOperasiForm input, #PraOperasiForm select, #PraOperasiForm button').prop('disabled', false);
+                <?php if ($operasi['jenis_kelamin'] == 'L') : ?>
+                    $("input[name='ctt_haid']").prop('disabled', true);
+                <?php endif; ?>
             }
         });
         // $('#loadingSpinner').hide();

@@ -7,6 +7,7 @@ use App\Models\SPOperasiModel;
 use App\Models\PraOperasiModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use Dompdf\Dompdf;
+use Picqer\Barcode\BarcodeGeneratorPNG;
 
 class PraOperasi extends BaseController
 {
@@ -148,6 +149,10 @@ class PraOperasi extends BaseController
                 ->get()
                 ->getRowArray();
 
+            // === Generate Barcode ===
+            $barcodeGenerator = new BarcodeGeneratorPNG();
+            $bcNoReg = base64_encode($barcodeGenerator->getBarcode($sp_operasi['nomor_registrasi'], $barcodeGenerator::TYPE_CODE_128));
+
             $operasi_pra['ctt_riwayat_sakit'] = str_replace(',', ', ', $operasi_pra['ctt_riwayat_sakit']);
 
             // Memeriksa apakah pasien tidak kosong
@@ -156,6 +161,7 @@ class PraOperasi extends BaseController
                 $data = [
                     'operasi' => $sp_operasi,
                     'operasi_pra' => $operasi_pra,
+                    'bcNoReg' => $bcNoReg,
                     'title' => 'Pemeriksaan Pra Operasi ' . $sp_operasi['nama_pasien'] . ' (' . $sp_operasi['no_rm'] . ') - ' . $sp_operasi['nomor_registrasi'] . ' - ' . $sp_operasi['nomor_booking'] . ' - ' . $this->systemName,
                     'headertitle' => 'Pemeriksaan Pra Operasi',
                     'agent' => $this->request->getUserAgent(), // Mengambil informasi user agent
@@ -184,26 +190,39 @@ class PraOperasi extends BaseController
     {
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
             $db = db_connect();
-            // $validation = \Config\Services::validation();
+            $validation = \Config\Services::validation();
 
             $operasi_pra = $db->table('medrec_operasi_pra')
                 ->where('id_operasi_pra', $id)
                 ->get()
                 ->getRowArray();
+            $sp_operasi = $db->table('medrec_sp_operasi')
+                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_sp_operasi.nomor_registrasi', 'inner')
+                ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
+                ->where('nomor_booking', $operasi_pra['nomor_booking'])
+                ->get()
+                ->getRowArray();
+            $ctt_alergi = $this->request->getPost('ctt_alergi');
+            $validation->setRules([
+                'perawat_praoperasi' => 'required',
+                'jenis_operasi' => 'required',
+                'ctt_vital_suhu' => 'required',
+                'ctt_vital_nadi' => 'required',
+                'ctt_vital_rr' => 'required',
+                'ctt_vital_td' => 'required',
+                'ctt_vital_nyeri' => 'required',
+                'ctt_vital_tb' => 'required',
+                'ctt_vital_bb' => 'required',
+                'ctt_mental' => 'required',
+                'ctt_alergi' => 'required',
+                'ctt_alergi_jelaskan' => $ctt_alergi === 'YA' ? 'required' : 'permit_empty',
+                'ctt_haid' => $sp_operasi['jenis_kelamin'] === 'P' ? 'required' : 'permit_empty',
+                'ctt_kepercayaan' => 'required',
+            ]);
 
-            // $validation->setRules([
-            //     'tanggal_operasi' => 'required',
-            //     'jam_operasi' => 'required',
-            //     'jenis_tindakan' => 'required',
-            //     'jenis_bius' => 'required',
-            //     'rajal_ranap' => 'required',
-            //     'ruang_operasi' => 'required',
-            //     'dokter_operator' => 'required'
-            // ]);
-
-            // if (!$this->validate($validation->getRules())) {
-            //     return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
-            // }
+            if (!$this->validate($validation->getRules())) {
+                return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
+            }
 
             $ctt_riwayat_sakit = $this->request->getPost('ctt_riwayat_sakit');
             $ctt_riwayat_sakit_csv = is_array($ctt_riwayat_sakit) ? implode(',', $ctt_riwayat_sakit) : NULL;

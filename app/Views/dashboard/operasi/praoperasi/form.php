@@ -8,12 +8,10 @@ $registrasi = new DateTime(date('Y-m-d', strtotime($operasi['tanggal_registrasi'
 // Hitung selisih antara tanggal sekarang dan tanggal lahir
 $usia = $registrasi->diff($tanggal_lahir);
 
-$tanggal_operasi = $operasi['tanggal_operasi'];
-$jam_operasi = $operasi['jam_operasi'];
+$tanggalRegistrasi = $operasi['tanggal_registrasi']; // Misalnya: "2025-01-14 15:23:45"
 
 // Pastikan input adalah format tanggal dan waktu yang valid
-$date = new DateTime($tanggal_operasi);
-$time = new DateTime($jam_operasi);
+$dateTime = new DateTime($tanggalRegistrasi);
 
 // Format tanggal dalam Bahasa Indonesia
 $tanggalFormatter = new IntlDateFormatter(
@@ -24,10 +22,10 @@ $tanggalFormatter = new IntlDateFormatter(
     IntlDateFormatter::GREGORIAN,
     'd MMMM yyyy'
 );
-$tanggalFormatted = $tanggalFormatter->format($date);
+$tanggalFormatted = $tanggalFormatter->format($dateTime);
 
 // Format waktu
-$waktuFormatted = $time->format('H.i');
+$waktuFormatted = $dateTime->format('H.i.s');
 ?>
 <!doctype html>
 <html lang="id">
@@ -44,7 +42,7 @@ $waktuFormatted = $time->format('H.i');
 
         body {
             font-family: Helvetica, Arial, sans-serif;
-            font-size: 11pt;
+            font-size: 9pt;
         }
 
         .prescription {
@@ -79,9 +77,11 @@ $waktuFormatted = $time->format('H.i');
         }
 
         .box {
-            height: 22.95cm;
+            border: 1px solid black;
+            height: 22.5cm;
             overflow: hidden;
             padding: 0cm;
+            font-size: 8pt;
         }
 
         .border-bottom-right {
@@ -103,6 +103,15 @@ $waktuFormatted = $time->format('H.i');
             border-top: 2px solid black;
             border-left: 2px solid black;
         }
+
+        .full-border {
+            border-collapse: collapse;
+        }
+
+        .full-border th,
+        .full-border td {
+            border: 1px solid black;
+        }
     </style>
 </head>
 
@@ -121,7 +130,7 @@ $waktuFormatted = $time->format('H.i');
                         </div>
                     </td>
                     <td style="width: 0%;">
-                        <div style="white-space: nowrap;"><strong>FRM: 3b<br>Rev: 001</strong></div>
+                        <div style="white-space: nowrap;"><strong>FRM: 5c<br>Rev: 001</strong></div>
                     </td>
                 </tr>
             </thead>
@@ -130,7 +139,18 @@ $waktuFormatted = $time->format('H.i');
             <tbody>
                 <tr>
                     <td style="width: 60%; vertical-align: top; padding: 0;">
-                        <h2 style="padding: 0; text-align: center;">SURAT PERINTAH KAMAR OPERASI</h2>
+                        <h2 style="padding: 0;">CATATAN KEPERAWATAN PRA-OPERASI</h2>
+                        <div>Nomor <em>Booking</em>: <?= $operasi['nomor_booking']; ?></div>
+                        <div>Tanggal operasi: <?= $operasi['tanggal_operasi'] . ' ' . $operasi['jam_operasi']; ?></div>
+                    </td>
+                    <td style="width: 40%; max-width: 5cm; vertical-align: top; padding: 0.1cm; border: 1px solid black; font-size: 8pt; overflow: hidden;">
+                        <div style="text-align: center;">
+                            <div style="white-space: nowrap;"><?= $operasi['nama_pasien']; ?></div>
+                            <div><?= $operasi['no_rm']; ?></div>
+                            <div><?= $operasi['tanggal_lahir']; ?> (<?= $usia->y . " tahun " . $usia->m . " bulan" ?>)</div>
+                            <img src="data:image/png;base64,<?= $bcNoReg ?>" width="240mm" alt="Barcode">
+                            <div><?= $operasi['nomor_registrasi']; ?></div>
+                        </div>
                     </td>
                 </tr>
             </tbody>
@@ -139,187 +159,574 @@ $waktuFormatted = $time->format('H.i');
             <table class="table" style="width: 100%; margin-bottom: 4px;">
                 <tbody>
                     <tr>
-                        <td style="width: 30%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            Nomor Rekam Medis
+                        <td style="width: 40%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            DPJP
                         </td>
                         <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
                             :
                         </td>
-                        <td style="width: 70%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            <?= $operasi['no_rm']; ?>
+                        <td style="width: 60%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            <?= $operasi['dokter_operator'] ?>
                         </td>
                     </tr>
                     <tr>
-                        <td style="width: 30%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            Nama Pasien
+                        <td style="width: 40%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            Perawat Pra Operasi
                         </td>
                         <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
                             :
                         </td>
-                        <td style="width: 70%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            <?= $operasi['nama_pasien']; ?>
+                        <td style="width: 60%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            <?= $operasi_pra['perawat_praoperasi'] ?>
                         </td>
                     </tr>
                     <tr>
-                        <td style="width: 30%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            Tempat dan Tanggal Lahir
-                        </td>
-                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            :
-                        </td>
-                        <td style="width: 70%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            <?= $operasi['tempat_lahir'] . ', ' . $operasi['tanggal_lahir']; ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 30%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            Alamat
-                        </td>
-                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            :
-                        </td>
-                        <td style="width: 70%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            <?= $operasi['alamat']; ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 30%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            Diagnosis
-                        </td>
-                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            :
-                        </td>
-                        <td style="width: 70%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            <?= $operasi['diagnosa']; ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 30%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                        <td style="width: 40%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
                             Jenis Operasi
                         </td>
                         <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
                             :
                         </td>
-                        <td style="width: 70%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            <?= $operasi['jenis_tindakan']; ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 30%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            Indikasi Operasi
-                        </td>
-                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            :
-                        </td>
-                        <td style="width: 70%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            <?= $operasi['indikasi_operasi']; ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 30%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            Jenis Bius
-                        </td>
-                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            :
-                        </td>
-                        <td style="width: 70%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            <?= $operasi['jenis_bius']; ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 30%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            Jenis Rawat (Jalan/Inap)
-                        </td>
-                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            :
-                        </td>
-                        <td style="width: 70%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            <?= $operasi['rajal_ranap']; ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 30%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            Ruangan
-                        </td>
-                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            :
-                        </td>
-                        <td style="width: 70%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            <?= $operasi['ruang_operasi']; ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 30%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            Nama Operator
-                        </td>
-                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            :
-                        </td>
-                        <td style="width: 70%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            <?= $operasi['dokter_operator']; ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 30%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            Tanggal dan Waktu Operasi
-                        </td>
-                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            :
-                        </td>
-                        <td style="width: 70%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            <?= $operasi['tanggal_operasi'] . ' ' . $operasi['jam_operasi']; ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 30%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            Tipe Bayar
-                        </td>
-                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            :
-                        </td>
-                        <td style="width: 70%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            <?= $operasi['tipe_bayar']; ?>
+                        <td style="width: 60%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            <?= $operasi_pra['jenis_operasi'] ?>
                         </td>
                     </tr>
                 </tbody>
             </table>
+            <h3 style="padding-left: 0.25cm; padding-right: 0.25cm; padding-top: 0.25cm; margin: 0;">A. CATATAN KEPERAWATAN PRA OPERASI</h3>
             <table class="table" style="width: 100%; margin-bottom: 4px;">
                 <tbody>
                     <tr>
-                        <td style="width: 100%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            <h3 style="margin: 0;"><em>SITE MARKING</em><br><small>Penandaan Lokasi Operasi</small></h3>
-                            <dl>
-                                <dt><strong>Diagnosis</strong></dt>
-                                <dd><?= ($operasi['diagnosa_site_marking']) ? $operasi['diagnosa_site_marking'] : '-'; ?></dd>
-                                <dt><strong>Tindakan</strong></dt>
-                                <dd><?= ($operasi['tindakan_site_marking']) ? $operasi['tindakan_site_marking'] : '-'; ?></dd>
-                            </dl>
+                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            <strong>1.</strong>
+                        </td>
+                        <td colspan="3" style="width: 100%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            <strong>Tanda-tanda Vital</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;"></td>
+                        <td style="width: 40%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            Suhu
                         </td>
                         <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'uploads/site_marking/' . $operasi['site_marking'])) ?>" width="240px" alt="">
+                            :
+                        </td>
+                        <td style="width: 60%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            <?= $operasi_pra['ctt_vital_suhu'] ?>°C
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;"></td>
+                        <td style="width: 40%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            Nadi
+                        </td>
+                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            :
+                        </td>
+                        <td style="width: 60%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            <?= $operasi_pra['ctt_vital_nadi'] ?>×/menit
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;"></td>
+                        <td style="width: 40%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            Pernapasan
+                        </td>
+                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            :
+                        </td>
+                        <td style="width: 60%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            <?= $operasi_pra['ctt_vital_rr'] ?>×/menit
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;"></td>
+                        <td style="width: 40%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            Tekanan Darah
+                        </td>
+                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            :
+                        </td>
+                        <td style="width: 60%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            <?= $operasi_pra['ctt_vital_td'] ?> mmHg
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            <strong>2.</strong>
+                        </td>
+                        <td colspan="3" style="width: 100%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            <strong>Status Mental</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;"></td>
+                        <td style="width: 40%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            Kesadaran
+                        </td>
+                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            :
+                        </td>
+                        <td style="width: 60%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            <?= $operasi_pra['ctt_mental'] ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            <strong>3.</strong>
+                        </td>
+                        <td style="width: 40%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            <strong>Riwayat Penyakit</strong>
+                        </td>
+                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            :
+                        </td>
+                        <td style="width: 60%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            <?= $operasi_pra['ctt_riwayat_sakit'] ?><?= ($operasi_pra['ctt_riwayat_sakit_lain'] == NULL) ? '' : ', ' . $operasi_pra['ctt_riwayat_sakit_lain'];  ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            <strong>4.</strong>
+                        </td>
+                        <td style="width: 40%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            <strong>Pengobatan Saat Ini</strong>
+                        </td>
+                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            :
+                        </td>
+                        <td style="width: 60%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            <?= $operasi_pra['ctt_pengobatan_sekarang'] ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            <strong>5.</strong>
+                        </td>
+                        <td style="width: 40%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            <strong>Alat Bantu yang Digunakan</strong>
+                        </td>
+                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            :
+                        </td>
+                        <td style="width: 60%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            <?= $operasi_pra['ctt_alat_bantu'] ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            <strong>6.</strong>
+                        </td>
+                        <td colspan="3" style="width: 100%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            <strong>Operasi Sebelumnya</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;"></td>
+                        <td style="width: 40%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            Jenis Operasi
+                        </td>
+                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            :
+                        </td>
+                        <td style="width: 60%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            <?= $operasi_pra['ctt_operasi_jenis'] ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;"></td>
+                        <td style="width: 40%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            Tanggal Operasi
+                        </td>
+                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            :
+                        </td>
+                        <td style="width: 60%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            <?= $operasi_pra['ctt_operasi_tanggal'] ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;"></td>
+                        <td style="width: 40%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            Lokasi Operasi
+                        </td>
+                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            :
+                        </td>
+                        <td style="width: 60%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            <?= $operasi_pra['ctt_operasi_lokasi'] ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            <strong>7.</strong>
+                        </td>
+                        <td style="width: 40%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            <strong>Alergi</strong>
+                        </td>
+                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            :
+                        </td>
+                        <td style="width: 60%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            <?= $operasi_pra['ctt_alergi'] ?> <?= ($operasi_pra['ctt_alergi'] == 'TIDAK' || $operasi_pra['ctt_alergi'] == NULL) ? '' : '(' . $operasi_pra['ctt_alergi_jelaskan'] . ')';  ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            <strong>8.</strong>
+                        </td>
+                        <td style="width: 40%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            <strong>Hasil Laboratorium</strong>
+                        </td>
+                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            :
+                        </td>
+                        <td style="width: 60%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            <table class="table" style="width: 100%;">
+                                <tbody>
+                                    <tr>
+                                        <td style="width: 0%; vertical-align: middle; padding: 0.1cm; border: 1px solid black; font-size: 7pt; overflow: hidden;">
+                                            <div style="width: 0.2cm; height: 0.2cm; text-align: center;">
+                                                <?php if ($operasi_pra['ctt_lab_hb'] == 1): ?>
+                                                    <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="100%" alt="">
+                                                <?php endif; ?>
+                                            </div>
+                                        </td>
+                                        <td style="width: 100%; vertical-align: middle; padding: 0;">
+                                            <div>HB</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 0%; vertical-align: middle; padding: 0.1cm; border: 1px solid black; font-size: 7pt; overflow: hidden;">
+                                            <div style="width: 0.2cm; height: 0.2cm; text-align: center;">
+                                                <?php if ($operasi_pra['ctt_lab_bt'] == 1): ?>
+                                                    <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="100%" alt="">
+                                                <?php endif; ?>
+                                            </div>
+                                        </td>
+                                        <td style="width: 100%; vertical-align: middle; padding: 0;">
+                                            <div>BT</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 0%; vertical-align: middle; padding: 0.1cm; border: 1px solid black; font-size: 7pt; overflow: hidden;">
+                                            <div style="width: 0.2cm; height: 0.2cm; text-align: center;">
+                                                <?php if ($operasi_pra['ctt_lab_ctaptt'] == 1): ?>
+                                                    <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="100%" alt="">
+                                                <?php endif; ?>
+                                            </div>
+                                        </td>
+                                        <td style="width: 100%; vertical-align: middle; padding: 0;">
+                                            <div>CT/APTT</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 0%; vertical-align: middle; padding: 0.1cm; border: 1px solid black; font-size: 7pt; overflow: hidden;">
+                                            <div style="width: 0.2cm; height: 0.2cm; text-align: center;">
+                                                <?php if ($operasi_pra['ctt_lab_goldarah'] == 1): ?>
+                                                    <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="100%" alt="">
+                                                <?php endif; ?>
+                                            </div>
+                                        </td>
+                                        <td style="width: 100%; vertical-align: middle; padding: 0;">
+                                            <div>GOLONGAN DARAH</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 0%; vertical-align: middle; padding: 0.1cm; border: 1px solid black; font-size: 7pt; overflow: hidden;">
+                                            <div style="width: 0.2cm; height: 0.2cm; text-align: center;">
+                                                <?php if ($operasi_pra['ctt_lab_urin'] == 1): ?>
+                                                    <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="100%" alt="">
+                                                <?php endif; ?>
+                                            </div>
+                                        </td>
+                                        <td style="width: 100%; vertical-align: middle; padding: 0;">
+                                            <div>URIN</div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 0%; vertical-align: middle; padding: 0.1cm; border: 1px solid black; font-size: 7pt; overflow: hidden;">
+                                            <div style="width: 0.2cm; height: 0.2cm; text-align: center;">
+                                                <?php if ($operasi_pra['ctt_lab_lainnya'] != NULL): ?>
+                                                    <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="100%" alt="">
+                                                <?php endif; ?>
+                                            </div>
+                                        </td>
+                                        <td style="width: 100%; vertical-align: middle; padding: 0;">
+                                            <div>LAINNYA: <?= ($operasi_pra['ctt_lab_lainnya'] == NULL) ? '' : $operasi_pra['ctt_lab_lainnya']; ?></div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            <strong>9.</strong>
+                        </td>
+                        <td style="width: 40%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            <strong>Haid/menstruasi?</strong>
+                        </td>
+                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            :
+                        </td>
+                        <td style="width: 60%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            <?= ($operasi['jenis_kelamin'] == 'L') ? 'Pasien laki-laki' : $operasi_pra['ctt_haid'];  ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            <strong>10.</strong>
+                        </td>
+                        <td style="width: 40%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            <strong>Perhatian khusus terkait budaya dan kepercayaan?</strong>
+                        </td>
+                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            :
+                        </td>
+                        <td style="width: 60%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
+                            <?= $operasi_pra['ctt_kepercayaan'];  ?>
                         </td>
                     </tr>
                 </tbody>
             </table>
-            <table class="table" style="width: 100%; margin-bottom: 4px;">
-                <tbody>
-                    <tr>
-                        <td style="width: 50%; text-align: center; vertical-align: top; padding-bottom: 2cm;">
-                            <div><br>DPJP</div>
-                        </td>
-                        <td style="width: 50%; text-align: center; vertical-align: top; padding-bottom: 2cm;">
-                            <div>Tanggal <?= $tanggalFormatted ?> pukul <?= $waktuFormatted ?><br>Pasien/Keluarga Pasien</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 50%; text-align: center; vertical-align: top; border-bottom: 1px dotted black;">
-                            <div><?= $operasi['dokter_operator'] ?></div>
-                        </td>
-                        <td style="width: 50%; text-align: center; vertical-align: top; border-bottom: 1px dotted black;">
-                            <div><?= $operasi['nama_pasien_keluarga'] ?></div>
-                        </td>
-                    </tr>
-                </tbody>
+            <h3 style="padding-left: 0.25cm; padding-right: 0.25cm; padding-top: 0.25cm; margin: 0;">B. <em>CHECKLIST</em> PERSIAPAN PASIEN PRA OPERASI</h3>
+            <table class="full-border" style="width: 100%; margin-bottom: 4px; padding-right: 0.25cm; padding-left: 0.25cm;">
+                <tr>
+                    <th style="width: 0%;">No</th>
+                    <th style="width: 60%;">Hal-hal yang harus diperhatikan</th>
+                    <th style="width: 20%;">Cek/Isi</th>
+                    <th style="width: 0%;">No</th>
+                    <th style="width: 60%;">Hal-hal yang harus diperhatikan</th>
+                    <th style="width: 20%;">Cek/Isi</th>
+                </tr>
+
+                <tr>
+                    <td style="text-align: center;">1</td>
+                    <td>Hasil biometri</td>
+                    <td style="text-align: center;">
+                        <?php if ($operasi_pra['cek_biometri'] == 1): ?>
+                            <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
+                        <?php endif; ?>
+                    </td>
+                    <td style="text-align: center;">10</td>
+                    <td>Hasil Foto Fundus</td>
+                    <td style="text-align: center;">
+                        <?php if ($operasi_pra['cek_foto_fundus'] == 1): ?>
+                            <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
+                        <?php endif; ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;">2</td>
+                    <td>Hasil retinometri</td>
+                    <td style="text-align: center;">
+                        <?php if ($operasi_pra['cek_retinometri'] == 1): ?>
+                            <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
+                        <?php endif; ?>
+                    </td>
+                    <td style="text-align: center;">11</td>
+                    <td>Hasil USG</td>
+                    <td style="text-align: center;">
+                        <?php if ($operasi_pra['cek_usg'] == 1): ?>
+                            <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
+                        <?php endif; ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;">3</td>
+                    <td>Hasil laboratorium (labor lengkap/GDS)</td>
+                    <td style="text-align: center;">
+                        <?php if ($operasi_pra['cek_labor'] == 1): ?>
+                            <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
+                        <?php endif; ?>
+                    </td>
+                    <td style="text-align: center;">12</td>
+                    <td>Melepas perhiasan</td>
+                    <td style="text-align: center;">
+                        <?php if ($operasi_pra['cek_perhiasan'] == 1): ?>
+                            <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
+                        <?php endif; ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;">4</td>
+                    <td>Hasil radiologi</td>
+                    <td style="text-align: center;">
+                        <?php if ($operasi_pra['cek_radiologi'] == 1): ?>
+                            <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
+                        <?php endif; ?>
+                    </td>
+                    <td style="text-align: center;">13</td>
+                    <td>Tanda tangan <em>informed concent</em></td>
+                    <td style="text-align: center;">
+                        <?php if ($operasi_pra['cek_ttd'] == 1): ?>
+                            <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
+                        <?php endif; ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;">5</td>
+                    <td>Puasa</td>
+                    <td style="text-align: center;">
+                        <?php if ($operasi_pra['cek_puasa'] == 1): ?>
+                            <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
+                        <?php endif; ?>
+                    </td>
+                    <td style="text-align: center;">14</td>
+                    <td>Cuci muka + ganti pakaian</td>
+                    <td style="text-align: center;">
+                        <?php if ($operasi_pra['cek_cuci'] == 1): ?>
+                            <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
+                        <?php endif; ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;">6</td>
+                    <td>Instruksi khusus dari dokter</td>
+                    <td style="text-align: center;">
+                        <?php if ($operasi_pra['cek_instruksi'] == 1): ?>
+                            <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
+                        <?php endif; ?>
+                    </td>
+                    <td style="text-align: center;">15</td>
+                    <td><em>Sign mark</em> + gelang pasien</td>
+                    <td style="text-align: center;">
+                        <?php if ($operasi_pra['cek_mark'] == 1): ?>
+                            <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
+                        <?php endif; ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: center;">7</td>
+                    <td>Lensa</td>
+                    <td style="text-align: center;">
+                        <?php if ($operasi_pra['cek_lensa'] == 1): ?>
+                            <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
+                        <?php endif; ?>
+                    </td>
+                    <td style="text-align: center;">16</td>
+                    <td>
+                        Tetes Pantocain 2%
+                    </td>
+                    <td style="text-align: center;">
+                        <?= $operasi_pra['cek_tetes_pantocain'] ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td rowspan="3" style="text-align: center;">8</td>
+                    <td>Rontgen</td>
+                    <td style="text-align: center;">
+                        <?php if ($operasi_pra['cek_rotgen'] == 1): ?>
+                            <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
+                        <?php endif; ?>
+                    </td>
+                    <td style="text-align: center;">17</td>
+                    <td>
+                        Tetes Efrisel I
+                    </td>
+                    <td style="text-align: center;">
+                        <?= $operasi_pra['cek_tetes_efrisel1'] ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>ECG, Usia > 40 Tahun</td>
+                    <td style="text-align: center;">
+                        <?php if ($operasi_pra['cek_rotgen_usia'] == 1): ?>
+                            <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
+                        <?php endif; ?>
+                    </td>
+                    <td style="text-align: center;">18</td>
+                    <td>
+                        Tetes Efrisel II
+                    </td>
+                    <td style="text-align: center;">
+                        <?= $operasi_pra['cek_tetes_efrisel2'] ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Hasil konsul dokter anak/<em>internist</em>/retina</td>
+                    <td style="text-align: center;">
+                        <?php if ($operasi_pra['cek_rotgen_konsul'] == 1): ?>
+                            <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
+                        <?php endif; ?>
+                    </td>
+                    <td style="text-align: center;">19</td>
+                    <td>
+                        Tetes Midriatil I
+                    </td>
+                    <td style="text-align: center;">
+                        <?= $operasi_pra['cek_tetes_midriatil1'] ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td rowspan="5" style="text-align: center;">9</td>
+                    <td>Cek File: Hepatitis, DM</td>
+                    <td style="text-align: center;">
+                        <?php if ($operasi_pra['cek_penyakit'] == 1): ?>
+                            <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
+                        <?php endif; ?>
+                    </td>
+                    <td style="text-align: center;">20</td>
+                    <td>
+                        Tetes Midriatil II
+                    </td>
+                    <td style="text-align: center;">
+                        <?= $operasi_pra['cek_tetes_midriatil2'] ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Jika Hepatitis(+), jadwal paling akhir</td>
+                    <td style="text-align: center;">
+                        <?php if ($operasi_pra['cek_hepatitis_akhir'] == 1): ?>
+                            <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
+                        <?php endif; ?>
+                    </td>
+                    <td style="text-align: center;">21</td>
+                    <td>
+                        Tetes Midriatil III
+                    </td>
+                    <td style="text-align: center;">
+                        <?= $operasi_pra['cek_tetes_midriatil3'] ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Penyakit lainnya</td>
+                    <td style="text-align: center;">
+                        <?= $operasi_pra['cek_penyakit_lainnya'] ?>
+                    </td>
+                    <td style="text-align: center;">22</td>
+                    <td>Makan pagi/siang</td>
+                    <td style="text-align: center;">
+                        <?php if ($operasi_pra['cek_makan'] == 1): ?>
+                            <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
+                        <?php endif; ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Tekanan darah</td>
+                    <td style="text-align: center;">
+                        <?= $operasi_pra['cek_tekanan_darah'] ?> mmHg
+                    </td>
+                    <td rowspan="2" style="text-align: center;">23</td>
+                    <td>Obat-obatan sebelumnya</td>
+                    <td style="text-align: center;">
+                        <?php if ($operasi_pra['cek_obat'] == 1): ?>
+                            <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
+                        <?php endif; ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Berat badan</td>
+                    <td style="text-align: center;">
+                        <?= $operasi_pra['cek_berat_badan'] ?> kg
+                    </td>
+                    <td>Jenis obat-obatan</td>
+                    <td style="text-align: center;">
+                        <?= $operasi_pra['cek_jenis_obat'] ?> kg
+                    </td>
+                </tr>
             </table>
         </div>
         <p style="font-size: 9pt;">Dicetak: <?= date("Y-m-d H:i:s") ?></p>
