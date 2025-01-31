@@ -84,6 +84,794 @@ $usia = $registrasi->diff($tanggal_lahir);
         <div class="no-fluid-content">
             <?= form_open_multipart('/operasi/praoperasi/update/' . $operasi_pra['id_operasi_pra'], 'id="PraOperasiForm"'); ?>
             <?= csrf_field(); ?>
+            <div class="mb-3">
+                <div class="fw-bold mb-2 border-bottom"><span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">A</span> Catatan Keperawatan Pra Operasi<br><small class="text-muted fw-normal">Diisi oleh perawat ruangan maksimal 1 jam sebelum diantar ke kamar operasi</small></div>
+                <div class="mb-2">
+                    <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">1</span> Tanda-tanda Vital
+                </div>
+                <div class="mb-2">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="ctt_vital_suhu" name="ctt_vital_suhu" value="" autocomplete="off" dir="auto" placeholder="ctt_vital_suhu">
+                        <label for="ctt_vital_suhu">Suhu (°C)</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="ctt_vital_nadi" name="ctt_vital_nadi" value="" autocomplete="off" dir="auto" placeholder="ctt_vital_nadi">
+                        <label for="ctt_vital_nadi">Nadi (×/menit)</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="ctt_vital_rr" name="ctt_vital_rr" value="" autocomplete="off" dir="auto" placeholder="ctt_vital_rr">
+                        <label for="ctt_vital_rr">Pernapasan (×/menit)</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="ctt_vital_td" name="ctt_vital_td" value="" autocomplete="off" dir="auto" placeholder="ctt_vital_td">
+                        <label for="ctt_vital_td">Tekanan Darah</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="ctt_vital_tb" name="ctt_vital_tb" value="" autocomplete="off" dir="auto" placeholder="ctt_vital_tb">
+                        <label for="ctt_vital_tb">Tinggi Badan (cm)</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="ctt_vital_bb" name="ctt_vital_bb" value="" autocomplete="off" dir="auto" placeholder="ctt_vital_bb">
+                        <label for="ctt_vital_bb">Berat Badan (kg)</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">2</span> Status Mental
+                </div>
+                <div class="mb-2">
+                    <div class="form-floating">
+                        <select class="form-select" id="ctt_mental" name="ctt_mental" aria-label="ctt_mental">
+                            <option value="" selected>-- Pilih Kesadaran --</option>
+                            <option value="Compos Mentis (GCS 14-15)">Compos Mentis (GCS 14-15)</option>
+                            <option value="Apatis (GCS 12-13)">Apatis (GCS 12-13)</option>
+                            <option value="Somnolen (GCS 10-11)">Somnolen (GCS 10-11)</option>
+                            <option value="Delirium (GCS 9-7)">Delirium (GCS 9-7)</option>
+                            <option value="Stupor (Suporos Comma) (GCS 4-6)">Stupor (Suporos Comma) (GCS 4-6)</option>
+                            <option value="Koma (GCS 3)">Koma (GCS 3)</option>
+                        </select>
+                        <label for="ctt_mental">Kesadaran</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <label for="ctt_riwayat_sakit" class="form-label">
+                        <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">3</span> Riwayat Penyakit<br><small class="text-muted">Abaikan jika tidak ada</small>
+                    </label>
+                    <div class="row">
+                        <!-- Kolom Kiri -->
+                        <div class="col-sm">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="ctt_riwayat_sakit_asma" name="ctt_riwayat_sakit[]" value="ASMA">
+                                <label class="form-check-label" for="ctt_riwayat_sakit_asma">ASMA</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="ctt_riwayat_sakit_asam_urat" name="ctt_riwayat_sakit[]" value="ASAM URAT">
+                                <label class="form-check-label" for="ctt_riwayat_sakit_asam_urat">ASAM URAT</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="ctt_riwayat_sakit_stroke" name="ctt_riwayat_sakit[]" value="STROKE">
+                                <label class="form-check-label" for="ctt_riwayat_sakit_stroke">STROKE</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="ctt_riwayat_sakit_kolesterol" name="ctt_riwayat_sakit[]" value="KOLESTEROL">
+                                <label class="form-check-label" for="ctt_riwayat_sakit_kolesterol">KOLESTEROL</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="ctt_riwayat_sakit_tb_paru" name="ctt_riwayat_sakit[]" value="TB PARU">
+                                <label class="form-check-label" for="ctt_riwayat_sakit_tb_paru">TB PARU</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="ctt_riwayat_sakit_diabetes" name="ctt_riwayat_sakit[]" value="DIABETES">
+                                <label class="form-check-label" for="ctt_riwayat_sakit_diabetes">DIABETES</label>
+                            </div>
+                        </div>
+                        <!-- Kolom Kanan -->
+                        <div class="col-sm">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="ctt_riwayat_sakit_hipertensi" name="ctt_riwayat_sakit[]" value="HIPERTENSI">
+                                <label class="form-check-label" for="ctt_riwayat_sakit_hipertensi">HIPERTENSI</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="ctt_riwayat_sakit_jantung" name="ctt_riwayat_sakit[]" value="JANTUNG">
+                                <label class="form-check-label" for="ctt_riwayat_sakit_jantung">JANTUNG</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="ctt_riwayat_sakit_magh" name="ctt_riwayat_sakit[]" value="MAGH">
+                                <label class="form-check-label" for="ctt_riwayat_sakit_magh">MAGH</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="ctt_riwayat_sakit_tiroid" name="ctt_riwayat_sakit[]" value="TIROID">
+                                <label class="form-check-label" for="ctt_riwayat_sakit_tiroid">TIROID</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="ctt_riwayat_sakit_vertigo" name="ctt_riwayat_sakit[]" value="VERTIGO">
+                                <label class="form-check-label" for="ctt_riwayat_sakit_vertigo">VERTIGO</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="invalid-feedback"></div>
+                </div>
+                <div class="mb-2">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="ctt_riwayat_sakit_lain" name="ctt_riwayat_sakit_lain" value="" autocomplete="off" dir="auto" placeholder="ctt_riwayat_sakit_lain">
+                        <label for="ctt_riwayat_sakit_lain">Riwayat Penyakit Lainnya</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <label for="ctt_pengobatan_sekarang" class="mb-2"><span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">4</span> Pengobatan Saat Ini</label>
+                    <input type="text" class="form-control" id="ctt_pengobatan_sekarang" name="ctt_pengobatan_sekarang" value="" autocomplete="off" dir="auto">
+                    <div class="invalid-feedback"></div>
+                </div>
+                <div class="mb-2">
+                    <label for="ctt_alat_bantu" class="mb-2"><span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">5</span> Alat Bantu yang Digunakan</label>
+                    <input type="text" class="form-control" id="ctt_alat_bantu" name="ctt_alat_bantu" value="" autocomplete="off" dir="auto">
+                    <div class="invalid-feedback"></div>
+                </div>
+                <div class="mb-2">
+                    <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">6</span> Operasi Sebelumnya
+                </div>
+                <div class="mb-2">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="ctt_operasi_jenis" name="ctt_operasi_jenis" value="" autocomplete="off" dir="auto" placeholder="ctt_operasi_jenis">
+                        <label for="ctt_operasi_jenis">Jenis Operasi</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="ctt_operasi_tanggal" name="ctt_operasi_tanggal" value="" autocomplete="off" dir="auto" placeholder="ctt_operasi_tanggal">
+                        <label for="ctt_operasi_tanggal">Kapan</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="ctt_operasi_lokasi" name="ctt_operasi_lokasi" value="" autocomplete="off" dir="auto" placeholder="ctt_operasi_lokasi">
+                        <label for="ctt_operasi_lokasi">Lokasi</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">7</span> Alergi
+                </div>
+                <div class="mb-2">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="ctt_alergi" name="ctt_alergi" value="" autocomplete="off" dir="auto" placeholder="ctt_alergi">
+                        <label for="ctt_alergi">Jenis Alergi</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="ctt_alergi_jelaskan" name="ctt_alergi_jelaskan" value="" autocomplete="off" dir="auto" placeholder="ctt_alergi_jelaskan">
+                        <label for="ctt_alergi_jelaskan">Penjelasan</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">8</span> Hasil Laboratorium
+                </div>
+                <div class="mb-2">
+                    <div class="row">
+                        <!-- Kolom Kiri -->
+                        <div class="col-sm">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="ctt_lab_hb" name="ctt_lab_hb" value="1">
+                                <label class="form-check-label" for="ctt_lab_hb">HB</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="ctt_lab_bt" name="ctt_lab_bt" value="1">
+                                <label class="form-check-label" for="ctt_lab_bt">BT</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="ctt_lab_ctaptt" name="ctt_lab_ctaptt" value="1">
+                                <label class="form-check-label" for="ctt_lab_ctaptt">CT/APTT</label>
+                            </div>
+                        </div>
+                        <!-- Kolom Kanan -->
+                        <div class="col-sm">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="ctt_lab_goldarah" name="ctt_lab_goldarah" value="1">
+                                <label class="form-check-label" for="ctt_lab_goldarah">GOLONGAN DARAH</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="ctt_lab_urin" name="ctt_lab_urin" value="1">
+                                <label class="form-check-label" for="ctt_lab_urin">URINE</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="ctt_lab_lainnya" name="ctt_lab_lainnya" value="" autocomplete="off" dir="auto" placeholder="ctt_lab_lainnya">
+                        <label for="ctt_lab_lainnya">Hasil Lainnya</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <div class="row g-1 align-items-center radio-group">
+                        <label for="ctt_haid" class="col col-form-label">
+                            <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">9</span> Jika pasien perempuan, apakah sedang haid/menstruasi?
+                        </label>
+                        <div class="col col-form-label">
+                            <div class="d-flex align-items-center justify-content-evenly">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="ctt_haid" id="ctt_haid1" value="YA">
+                                    <label class="form-check-label" for="ctt_haid1">
+                                        Ya
+                                    </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="ctt_haid" id="ctt_haid2" value="TIDAK">
+                                    <label class="form-check-label" for="ctt_haid2">
+                                        Tidak
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <div class="row g-1 align-items-center radio-group">
+                        <label for="ctt_kepercayaan" class="col col-form-label">
+                            <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">10</span> Perhatian khusus terkait budaya dan kepercayaan?
+                        </label>
+                        <div class="col col-form-label">
+                            <div class="d-flex align-items-center justify-content-evenly">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="ctt_kepercayaan" id="ctt_kepercayaan1" value="YA">
+                                    <label class="form-check-label" for="ctt_kepercayaan1">
+                                        Ya
+                                    </label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="ctt_kepercayaan" id="ctt_kepercayaan2" value="TIDAK">
+                                    <label class="form-check-label" for="ctt_kepercayaan2">
+                                        Tidak
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3 table-responsive">
+                <div class="fw-bold mb-2 border-bottom"><span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">B</span> <em>Checklist</em> Persiapan Pasien Pra Operasi</div>
+                <table class="table table-borderless mb-0">
+                    <tbody>
+                        <tr>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 0%;">
+                                <div class="badge d-grid bg-body text-body border px-2 me-2 date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">1</div>
+                            </td>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <label for="cek_biometri">
+                                        <div>Hasil biometri</div>
+                                    </label>
+                                    <div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="cek_biometri" name="cek_biometri" value="1">
+                                        </div>
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 0%;">
+                                <div class="badge d-grid bg-body text-body border px-2 me-2 date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">2</div>
+                            </td>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <label for="cek_retinometri">
+                                        <div>Hasil retinometri</div>
+                                    </label>
+                                    <div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="cek_retinometri" name="cek_retinometri" value="1">
+                                        </div>
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 0%;">
+                                <div class="badge d-grid bg-body text-body border px-2 me-2 date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">3</div>
+                            </td>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <label for="cek_labor">
+                                        <div>Hasil laboratorium (labor lengkap/GDS)</div>
+                                    </label>
+                                    <div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="cek_labor" name="cek_labor" value="1">
+                                        </div>
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 0%;">
+                                <div class="badge d-grid bg-body text-body border px-2 me-2 date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">4</div>
+                            </td>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <label for="cek_radiologi">
+                                        <div>Hasil radiologi</div>
+                                    </label>
+                                    <div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="cek_radiologi" name="cek_radiologi" value="1">
+                                        </div>
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 0%;">
+                                <div class="badge d-grid bg-body text-body border px-2 me-2 date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">5</div>
+                            </td>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <label for="cek_puasa">
+                                        <div>Puasa</div>
+                                    </label>
+                                    <div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="cek_puasa" name="cek_puasa" value="1">
+                                        </div>
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 0%;">
+                                <div class="badge d-grid bg-body text-body border px-2 me-2 date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">6</div>
+                            </td>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <label for="cek_instruksi">
+                                        <div>Instruksi khusus dari dokter</div>
+                                    </label>
+                                    <div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="cek_instruksi" name="cek_instruksi" value="1">
+                                        </div>
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 0%;">
+                                <div class="badge d-grid bg-body text-body border px-2 me-2 date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">7</div>
+                            </td>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <label for="cek_lensa">
+                                        <div>Lensa</div>
+                                    </label>
+                                    <div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="cek_lensa" name="cek_lensa" value="1">
+                                        </div>
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 0%;">
+                                <div class="badge d-grid bg-body text-body border px-2 me-2 date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">8</div>
+                            </td>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <label for="cek_rotgen">
+                                        <div>Rontgen</div>
+                                    </label>
+                                    <div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="cek_rotgen" name="cek_rotgen" value="1">
+                                        </div>
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 0%;">
+                            </td>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <label for="cek_rotgen_usia">
+                                        <div>ECG, usia > 40 tahun</div>
+                                    </label>
+                                    <div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="cek_rotgen_usia" name="cek_rotgen_usia" value="1">
+                                        </div>
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 0%;">
+                            </td>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <label for="cek_rotgen_konsul">
+                                        <div>Hasil konsul dokter anak/<em>internist</em>/retina</div>
+                                    </label>
+                                    <div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="cek_rotgen_konsul" name="cek_rotgen_konsul" value="1">
+                                        </div>
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 0%;">
+                                <div class="badge d-grid bg-body text-body border px-2 me-2 date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">9</div>
+                            </td>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <label for="cek_penyakit">
+                                        <div>Cek file: Hepatitis, DM</div>
+                                    </label>
+                                    <div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="cek_penyakit" name="cek_penyakit" value="1">
+                                        </div>
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 0%;">
+                            </td>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <label for="cek_hepatitis_akhir">
+                                        <div>Jika Hepatitis(+), jadwal paling akhir</div>
+                                    </label>
+                                    <div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="cek_hepatitis_akhir" name="cek_hepatitis_akhir" value="1">
+                                        </div>
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 0%;">
+                            </td>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
+                                <div class="d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-center">
+                                    <label for="cek_penyakit_lainnya">
+                                        <div>Penyakit lainnya</div>
+                                    </label>
+                                    <div>
+                                        <input type="text" class="form-control form-control-sm" id="cek_penyakit_lainnya" name="cek_penyakit_lainnya" value="" autocomplete="off" dir="auto">
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 0%;">
+                            </td>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
+                                <div class="d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-center">
+                                    <label for="cek_tekanan_darah">
+                                        <div>Tekanan darah (mmHg)</div>
+                                    </label>
+                                    <div>
+                                        <input type="text" class="form-control form-control-sm" id="cek_tekanan_darah" name="cek_tekanan_darah" value="" autocomplete="off" dir="auto">
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 0%;">
+                            </td>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
+                                <div class="d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-center">
+                                    <label for="cek_berat_badan">
+                                        <div>Berat badan (kg)</div>
+                                    </label>
+                                    <div>
+                                        <input type="text" class="form-control form-control-sm" id="cek_berat_badan" name="cek_berat_badan" value="" autocomplete="off" dir="auto">
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 0%;">
+                                <div class="badge d-grid bg-body text-body border px-2 me-2 date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">10</div>
+                            </td>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <label for="cek_foto_fundus">
+                                        <div>Hasil Foto Fundus</div>
+                                    </label>
+                                    <div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="cek_foto_fundus" name="cek_foto_fundus" value="1">
+                                        </div>
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 0%;">
+                                <div class="badge d-grid bg-body text-body border px-2 me-2 date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">11</div>
+                            </td>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <label for="cek_usg">
+                                        <div>Hasil USG</div>
+                                    </label>
+                                    <div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="cek_usg" name="cek_usg" value="1">
+                                        </div>
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 0%;">
+                                <div class="badge d-grid bg-body text-body border px-2 me-2 date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">12</div>
+                            </td>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <label for="cek_perhiasan">
+                                        <div>Melepas perhiasan</div>
+                                    </label>
+                                    <div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="cek_perhiasan" name="cek_perhiasan" value="1">
+                                        </div>
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 0%;">
+                                <div class="badge d-grid bg-body text-body border px-2 me-2 date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">13</div>
+                            </td>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <label for="cek_ttd">
+                                        <div>Tanda tangan <em>informed consent</em></div>
+                                    </label>
+                                    <div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="cek_ttd" name="cek_ttd" value="1">
+                                        </div>
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 0%;">
+                                <div class="badge d-grid bg-body text-body border px-2 me-2 date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">14</div>
+                            </td>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <label for="cek_cuci">
+                                        <div>Cuci muka + ganti pakaian</div>
+                                    </label>
+                                    <div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="cek_cuci" name="cek_cuci" value="1">
+                                        </div>
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 0%;">
+                                <div class="badge d-grid bg-body text-body border px-2 me-2 date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">15</div>
+                            </td>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <label for="cek_mark">
+                                        <div><em>Sign mark</em> + gelang pasien</div>
+                                    </label>
+                                    <div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="cek_mark" name="cek_mark" value="1">
+                                        </div>
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 0%;">
+                                <div class="badge d-grid bg-body text-body border px-2 me-2 date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">16</div>
+                            </td>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
+                                <div class="d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-center">
+                                    <label for="cek_tetes_pantocain">
+                                        <div>Tetes Pantocain 2% pada jam</div>
+                                    </label>
+                                    <div>
+                                        <input type="time" class="form-control form-control-sm" id="cek_tetes_pantocain" name="cek_tetes_pantocain" value="" autocomplete="off" dir="auto">
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 0%;">
+                                <div class="badge d-grid bg-body text-body border px-2 me-2 date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">17</div>
+                            </td>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
+                                <div class="d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-center">
+                                    <label for="cek_tetes_efrisel1">
+                                        <div>Tetes Efrisel I pada jam</div>
+                                    </label>
+                                    <div>
+                                        <input type="time" class="form-control form-control-sm" id="cek_tetes_efrisel1" name="cek_tetes_efrisel1" value="" autocomplete="off" dir="auto">
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 0%;">
+                                <div class="badge d-grid bg-body text-body border px-2 me-2 date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">18</div>
+                            </td>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
+                                <div class="d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-center">
+                                    <label for="cek_tetes_efrisel2">
+                                        <div>Tetes Efrisel II pada jam</div>
+                                    </label>
+                                    <div>
+                                        <input type="time" class="form-control form-control-sm" id="cek_tetes_efrisel2" name="cek_tetes_efrisel2" value="" autocomplete="off" dir="auto">
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 0%;">
+                                <div class="badge d-grid bg-body text-body border px-2 me-2 date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">19</div>
+                            </td>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
+                                <div class="d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-center">
+                                    <label for="cek_tetes_midriatil1">
+                                        <div>Tetes Midriatil I pada jam</div>
+                                    </label>
+                                    <div>
+                                        <input type="time" class="form-control form-control-sm" id="cek_tetes_midriatil1" name="cek_tetes_midriatil1" value="" autocomplete="off" dir="auto">
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 0%;">
+                                <div class="badge d-grid bg-body text-body border px-2 me-2 date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">20</div>
+                            </td>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
+                                <div class="d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-center">
+                                    <label for="cek_tetes_midriatil2">
+                                        <div>Tetes Midriatil II pada jam</div>
+                                    </label>
+                                    <div>
+                                        <input type="time" class="form-control form-control-sm" id="cek_tetes_midriatil2" name="cek_tetes_midriatil2" value="" autocomplete="off" dir="auto">
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 0%;">
+                                <div class="badge d-grid bg-body text-body border px-2 me-2 date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">21</div>
+                            </td>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
+                                <div class="d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-center">
+                                    <label for="cek_tetes_midriatil3">
+                                        <div>Tetes Midriatil III pada jam</div>
+                                    </label>
+                                    <div>
+                                        <input type="time" class="form-control form-control-sm" id="cek_tetes_midriatil3" name="cek_tetes_midriatil3" value="" autocomplete="off" dir="auto">
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 0%;">
+                                <div class="badge d-grid bg-body text-body border px-2 me-2 date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">22</div>
+                            </td>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <label for="cek_makan">
+                                        <div>Makan pagi/siang</div>
+                                    </label>
+                                    <div>
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="cek_makan" name="cek_makan" value="1">
+                                        </div>
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 0%;">
+                                <div class="badge d-grid bg-body text-body border px-2 me-2 date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">23</div>
+                            </td>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
+                                <div class="d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-center">
+                                    <label for="cek_obat">
+                                        <div>Obat-obatan sebelumnya</div>
+                                    </label>
+                                    <div>
+                                        <input type="text" class="form-control form-control-sm" id="cek_obat" name="cek_obat" value="" autocomplete="off" dir="auto">
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 0%;">
+                            </td>
+                            <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
+                                <div class="d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-center">
+                                    <label for="cek_jenis_obat">
+                                        <div>Jenis obat-obatan</div>
+                                    </label>
+                                    <div>
+                                        <input type="text" class="form-control form-control-sm" id="cek_jenis_obat" name="cek_jenis_obat" value="" autocomplete="off" dir="auto">
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
             <div>
                 <hr>
                 <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-3">
