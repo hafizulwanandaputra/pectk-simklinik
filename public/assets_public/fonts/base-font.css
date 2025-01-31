@@ -5,7 +5,10 @@
 }
 
 html,
-body {
+body,
+input,
+select,
+button {
   font-feature-settings: "ss04";
 }
 
