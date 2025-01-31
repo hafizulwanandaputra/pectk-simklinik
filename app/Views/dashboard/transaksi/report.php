@@ -82,12 +82,16 @@
         const toast = $(`
         <div id="exportToast" class="toast show transparent-blur" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-body">
-                <div class="d-flex justify-content-between align-items-center mb-1">
-                    <strong>Mengekspor</strong>
+                <div class="d-flex justify-content-between align-items-start mb-1">
                     <div>
+                        <strong>Mengekspor</strong>
+                    </div>
+                    <div class="d-flex flex-row">
                         <span class="date" id="exportPercent">0%</span>
-                        <div class="vr"></div>
-                        <button type="button" class="btn-close" aria-label="Close" id="cancelExport"></button>
+                        <div class="mb-1 ms-2">
+                            <div class="vr"></div>
+                            <button type="button" class="btn-close" aria-label="Close" id="cancelExport"></button>
+                        </div>
                     </div>
                 </div>
                 <div class="progress" style="border-top: 1px solid var(--bs-border-color-translucent); border-bottom: 1px solid var(--bs-border-color-translucent); border-left: 1px solid var(--bs-border-color-translucent); border-right: 1px solid var(--bs-border-color-translucent);">
