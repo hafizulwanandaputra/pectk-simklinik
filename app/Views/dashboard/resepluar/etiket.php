@@ -3,8 +3,8 @@
 use CodeIgniter\I18n\Time;
 
 $tanggal_resep = Time::parse($resep['tanggal_resep']);
-$tanggal_lahir = Time::parse($resep['tanggal_lahir']);
 if ($resep['tanggal_lahir'] != NULL || $resep['tanggal_lahir'] != '0000-00-00') {
+    $tanggal_lahir = Time::parse($resep['tanggal_lahir']);
     $tanggal_lahir_formatted = $tanggal_lahir->toLocalizedString('dd/MM/yyyy');
 } else {
     $tanggal_lahir_formatted = '<em>Tidak ada</em>';
