@@ -20,6 +20,7 @@ $usia = $sekarang->diff($tanggal_lahir);
         body {
             font-family: Helvetica, Arial, sans-serif;
             font-size: 7.8pt;
+            line-height: 1.2;
         }
 
         table {
