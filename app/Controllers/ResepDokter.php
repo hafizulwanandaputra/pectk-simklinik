@@ -1105,14 +1105,24 @@ class ResepDokter extends BaseController
                 ];
                 // return view('dashboard/resep/struk', $data);
                 // die;
-                // Menghasilkan dan menampilkan struk transaksi dalam format PDF
-                $dompdf = new Dompdf();
-                $html = view('dashboard/resep/struk', $data);
-                $dompdf->loadHtml($html);
-                $dompdf->render();
-                $dompdf->stream('resep-id-' . $resep['id_resep'] . '-' . $resep['tanggal_resep'] . '-' . urlencode($resep['nama_pasien']) . '.pdf', [
-                    'Attachment' => FALSE // Mengunduh PDF atau membuka di browser
-                ]);
+                // Simpan HTML ke file sementara
+                $htmlFile = WRITEPATH . 'temp/output-obat-struk.html';
+                file_put_contents($htmlFile, view('dashboard/resep/struk', $data));
+
+                // Tentukan path output PDF
+                $pdfFile = WRITEPATH . 'temp/output-obat-struk.pdf';
+
+                // Jalankan Puppeteer untuk konversi HTML ke PDF
+                // Keterangan: "node " . FCPATH . "puppeteer-pdf.js $htmlFile $pdfFile panjang lebar marginAtas margin Kanan marginBawah marginKiri"
+                // Silakan lihat puppeteer-pdf.js di folder public untuk keterangan lebih lanjut.
+                $command = env('CMD-ENV') . "node " . FCPATH . "puppeteer-pdf.js $htmlFile $pdfFile 210mm 297mm 1cm 1cm 1cm 1cm";
+                shell_exec($command);
+
+                // Kirim PDF ke browser
+                return $this->response
+                    ->setHeader('Content-Type', 'application/pdf')
+                    ->setHeader('Content-Disposition', 'inline; filename="resep-id-' . $resep['id_resep'] . '-' . $resep['tanggal_resep'] . '-' . urlencode($resep['nama_pasien']) . '.pdf')
+                    ->setBody(file_get_contents($pdfFile));
             } else {
                 // Menampilkan halaman tidak ditemukan jika resep tidak ditemukan
                 throw PageNotFoundException::forPageNotFound();
