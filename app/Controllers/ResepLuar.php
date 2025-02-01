@@ -196,23 +196,16 @@ class ResepLuar extends BaseController
                 return $this->response->setJSON(['success' => false, 'message' => NULL, 'errors' => $validation->getErrors()]);
             }
 
-            // Atur ke null untuk pasien anonim
-            if ($this->request->getPost('nama_pasien') == '') {
-                $nama_pasien = NULL;
-            } else {
-                $nama_pasien = $this->request->getPost('nama_pasien');
-            }
-
             // Menyiapkan data untuk disimpan
             $data = [
                 'nomor_registrasi' => NULL,
                 'no_rm' => NULL,
-                'nama_pasien' => $nama_pasien,
-                'alamat' => $this->request->getPost('alamat'),
+                'nama_pasien' => $this->request->getPost('nama_pasien') ?: null,
+                'alamat' => $this->request->getPost('alamat') ?: null,
                 'telpon' => NULL,
                 'jenis_kelamin' => $this->request->getPost('jenis_kelamin'),
                 'tempat_lahir' => NULL,
-                'tanggal_lahir' => $this->request->getPost('tanggal_lahir'),
+                'tanggal_lahir' => $this->request->getPost('tanggal_lahir') ?: null,
                 'dokter' => 'Resep Luar',
                 'apoteker' => session()->get('fullname'),
                 'tanggal_resep' => date('Y-m-d H:i:s'), // Menyimpan tanggal resep saat ini
@@ -249,13 +242,6 @@ class ResepLuar extends BaseController
                 return $this->response->setJSON(['success' => false, 'message' => NULL, 'errors' => $validation->getErrors()]);
             }
 
-            // Atur ke null untuk pasien anonim
-            if ($this->request->getPost('nama_pasien') == '') {
-                $nama_pasien = NULL;
-            } else {
-                $nama_pasien = $this->request->getPost('nama_pasien');
-            }
-
             // Ambil resep luar
             $resep = $this->ResepModel
                 ->where('nomor_registrasi', null)
@@ -271,12 +257,12 @@ class ResepLuar extends BaseController
                     'id_resep' => $this->request->getPost('id_resep'),
                     'nomor_registrasi' => NULL,
                     'no_rm' => NULL,
-                    'nama_pasien' => $nama_pasien,
-                    'alamat' => $this->request->getPost('alamat'),
+                    'nama_pasien' => $this->request->getPost('nama_pasien') ?: null,
+                    'alamat' => $this->request->getPost('alamat') ?: null,
                     'telpon' => NULL,
                     'jenis_kelamin' => $this->request->getPost('jenis_kelamin'),
                     'tempat_lahir' => NULL,
-                    'tanggal_lahir' => $this->request->getPost('tanggal_lahir'),
+                    'tanggal_lahir' => $this->request->getPost('tanggal_lahir') ?: null,
                     'dokter' => 'Resep Luar',
                     'apoteker' => $resep['apoteker'],
                     'tanggal_resep' => $resep['tanggal_resep'],
