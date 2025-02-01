@@ -217,8 +217,8 @@ class Asesmen extends BaseController
 
     public function listvisus()
     {
-        // Memeriksa peran pengguna, hanya 'Admin' dan 'Dokter' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
+        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', 'Perawat', atau 'Admisi' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
             // Membuat koneksi ke database
             $db = db_connect();
 
@@ -363,6 +363,12 @@ class Asesmen extends BaseController
                     'alergi' => $this->request->getPost('alergi') ?: NULL,
                     'alergi_keterangan' => $this->request->getPost('alergi_keterangan') ?: NULL,
                     'sakit_lainnya' => $sakit_lainnya_csv,
+                    'tono_od' => $this->request->getPost('tono_od'),
+                    'tono_os' => $this->request->getPost('tono_os'),
+                    'od_ucva' => $this->request->getPost('od_ucva'),
+                    'od_bcva' => $this->request->getPost('od_bcva'),
+                    'os_ucva' => $this->request->getPost('os_ucva'),
+                    'os_bcva' => $this->request->getPost('os_bcva'),
                     'persetujuan_dokter' => $asesmen['persetujuan_dokter'],
                     'nama_dokter' => $asesmen['nama_dokter'],
                     'waktu_dibuat' => $asesmen['waktu_dibuat'],

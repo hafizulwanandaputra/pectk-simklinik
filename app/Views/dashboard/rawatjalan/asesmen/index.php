@@ -370,13 +370,13 @@ $usia = $registrasi->diff($tanggal_lahir);
                                 <tr>
                                     <th scope="row" class="text-center align-middle p-1 text-nowrap">Visus UCVA</th>
                                     <td class="align-middle p-1">
-                                        <input type="text" class="form-control" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="od_ucva" name="od_ucva" value="" autocomplete="off" dir="auto" placeholder="" list="od_ucva_list">
+                                        <input type="text" class="form-control" id="od_ucva" name="od_ucva" value="" autocomplete="off" dir="auto" placeholder="" list="od_ucva_list">
                                         <datalist id="od_ucva_list">
                                         </datalist>
                                         <div class="invalid-feedback"></div>
                                     </td>
                                     <td class="align-middle p-1">
-                                        <input type="text" class="form-control" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="os_ucva" name="os_ucva" value="" autocomplete="off" dir="auto" placeholder="" list="os_ucva_list">
+                                        <input type="text" class="form-control" id="os_ucva" name="os_ucva" value="" autocomplete="off" dir="auto" placeholder="" list="os_ucva_list">
                                         <datalist id="os_ucva_list">
                                         </datalist>
                                         <div class="invalid-feedback"></div>
@@ -385,13 +385,13 @@ $usia = $registrasi->diff($tanggal_lahir);
                                 <tr>
                                     <th scope="row" class="text-center align-middle p-1 text-nowrap">Visus BCVA</th>
                                     <td class="align-middle p-1">
-                                        <input type="text" class="form-control" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="od_bcva" name="od_bcva" value="" autocomplete="off" dir="auto" placeholder="" list="od_bcva_list">
+                                        <input type="text" class="form-control" id="od_bcva" name="od_bcva" value="" autocomplete="off" dir="auto" placeholder="" list="od_bcva_list">
                                         <datalist id="od_bcva_list">
                                         </datalist>
                                         <div class="invalid-feedback"></div>
                                     </td>
                                     <td class="align-middle p-1">
-                                        <input type="text" class="form-control" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="os_bcva" name="os_bcva" value="" autocomplete="off" dir="auto" placeholder="" list="os_bcva_list">
+                                        <input type="text" class="form-control" id="os_bcva" name="os_bcva" value="" autocomplete="off" dir="auto" placeholder="" list="os_bcva_list">
                                         <datalist id="os_bcva_list">
                                         </datalist>
                                         <div class="invalid-feedback"></div>
@@ -400,11 +400,11 @@ $usia = $registrasi->diff($tanggal_lahir);
                                 <tr>
                                     <th scope="row" class="text-center align-middle p-1 text-nowrap">Tono</th>
                                     <td class="align-middle p-1">
-                                        <input type="text" class="form-control" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="tono_od" name="tono_od" value="" autocomplete="off" dir="auto" placeholder="">
+                                        <input type="text" class="form-control" id="tono_od" name="tono_od" value="" autocomplete="off" dir="auto" placeholder="">
                                         <div class="invalid-feedback"></div>
                                     </td>
                                     <td class="align-middle p-1">
-                                        <input type="text" class="form-control" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="tono_os" name="tono_os" value="" autocomplete="off" dir="auto" placeholder="">
+                                        <input type="text" class="form-control" id="tono_os" name="tono_os" value="" autocomplete="off" dir="auto" placeholder="">
                                         <div class="invalid-feedback"></div>
                                     </td>
                                 </tr>
