@@ -269,24 +269,24 @@ class RawatJalan extends BaseController
                 ];
                 // return view('dashboard/rawatjalan/struk', $data);
                 // die;
-                // Menghasilkan PDF menggunakan Dompdf
-                $tmp = sys_get_temp_dir();
-                $dompdf = new Dompdf([
-                    'logOutputFile' => '',
-                    // authorize DomPdf to download fonts and other Internet assets
-                    'isRemoteEnabled' => true,
-                    // all directories must exist and not end with /
-                    'fontDir' => $tmp,
-                    'fontCache' => $tmp,
-                    'tempDir' => $tmp,
-                    'chroot' => $tmp,
-                ]);
-                $html = view('dashboard/rawatjalan/struk', $data);
-                $dompdf->loadHtml($html);
-                $dompdf->render();
-                $dompdf->stream($rajal['nomor_registrasi'] . '.pdf', [
-                    'Attachment' => FALSE // Menghasilkan PDF tanpa mengunduh
-                ]);
+                // Simpan HTML ke file sementara
+                $htmlFile = WRITEPATH . 'temp/output.html';
+                file_put_contents($htmlFile, view('dashboard/rawatjalan/struk', $data));
+
+                // Tentukan path output PDF
+                $pdfFile = WRITEPATH . 'temp/output.pdf';
+
+                // Jalankan Puppeteer untuk konversi HTML ke PDF
+                // Keterangan: "node " . FCPATH . "puppeteer-pdf.js $htmlFile $pdfFile panjang lebar marginAtas margin Kanan marginBawah marginKiri"
+                // Silakan lihat puppeteer-pdf.js di folder public untuk keterangan lebih lanjut.
+                $command = "node " . FCPATH . "puppeteer-pdf.js $htmlFile $pdfFile 80mm 100mm 0.1cm 0.82cm 0.1cm 0.82cm";
+                shell_exec($command);
+
+                // Kirim PDF ke browser
+                return $this->response
+                    ->setHeader('Content-Type', 'application/pdf')
+                    ->setHeader('Content-Disposition', 'inline; filename="' . $rajal['nomor_registrasi'] . '.pdf"')
+                    ->setBody(file_get_contents($pdfFile));
             } else {
                 // Menampilkan halaman tidak ditemukan jika pasien tidak ditemukan
                 throw PageNotFoundException::forPageNotFound();

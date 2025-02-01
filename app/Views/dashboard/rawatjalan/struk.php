@@ -17,14 +17,6 @@ $usia = $sekarang->diff($tanggal_lahir);
     <link href="<?= base_url(); ?>assets_public/fonts/helvetica/stylesheet.css" rel="stylesheet">
     <title><?= $title; ?></title>
     <style>
-        @page {
-            size: 80mm 100mm;
-            margin-top: 0.15cm;
-            margin-left: 1cm;
-            margin-right: 1cm;
-            margin-bottom: 0.15cm;
-        }
-
         body {
             font-family: Helvetica, Arial, sans-serif;
             font-size: 7.8pt;
@@ -47,7 +39,6 @@ $usia = $sekarang->diff($tanggal_lahir);
             height: 3.4cm;
             overflow: hidden;
             padding: 0cm;
-            text-align: center;
             font-size: 8.5pt;
         }
 
@@ -76,7 +67,7 @@ $usia = $sekarang->diff($tanggal_lahir);
 </head>
 
 <body>
-    <div class="container-fluid my-3">
+    <div>
         <table class="table" style="width: 100%; margin-bottom: 4px; border-bottom: 2px solid black;">
             <thead>
                 <tr>
@@ -210,33 +201,33 @@ $usia = $sekarang->diff($tanggal_lahir);
         <div style="padding-top: 0.1cm; padding-bottom: 0.1cm; overflow: hidden; border-bottom: 1px solid black;">
             <table class="tindakan">
                 <tr>
-                    <td style="width: 0.2cm; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;"></td>
+                    <td style="width: 0.2cm; min-width: 0.2cm; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;"></td>
                     <td style="width: 40%; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;">Redresing</td>
-                    <td style="width: 0.2cm; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;"> </td>
+                    <td style="width: 0.2cm; min-width: 0.2cm; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;"> </td>
                     <td style="width: 40%; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;">Indirect Fundus Copy</td>
                 </tr>
                 <tr>
-                    <td style="width: 0.2cm; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;"> </td>
+                    <td style="width: 0.2cm; min-width: 0.2cm; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;"> </td>
                     <td style="width: 40%; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;">Autoref Keratometri</td>
-                    <td style="width: 0.2cm; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;"> </td>
+                    <td style="width: 0.2cm; min-width: 0.2cm; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;"> </td>
                     <td style="width: 40%; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;">Korpus Alineum Kornea</td>
                 </tr>
                 <tr>
-                    <td style="width: 0.2cm; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;"> </td>
+                    <td style="width: 0.2cm; min-width: 0.2cm; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;"> </td>
                     <td style="width: 40%; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;">Tonometri</td>
-                    <td style="width: 0.2cm; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;"> </td>
+                    <td style="width: 0.2cm; min-width: 0.2cm; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;"> </td>
                     <td style="width: 40%; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;">Spooling</td>
                 </tr>
                 <tr>
-                    <td style="width: 0.2cm; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;"> </td>
+                    <td style="width: 0.2cm; min-width: 0.2cm; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;"> </td>
                     <td style="width: 40%; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;">Keratometri</td>
-                    <td style="width: 0.2cm; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;"> </td>
+                    <td style="width: 0.2cm; min-width: 0.2cm; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;"> </td>
                     <td style="width: 40%; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;">Retinometri</td>
                 </tr>
                 <tr>
-                    <td style="width: 0.2cm; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;"> </td>
+                    <td style="width: 0.2cm; min-width: 0.2cm; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;"> </td>
                     <td style="width: 40%; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;">Heacting All</td>
-                    <td style="width: 0.2cm; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;"> </td>
+                    <td style="width: 0.2cm; min-width: 0.2cm; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;"> </td>
                     <td style="width: 40%; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;">d.l.l.: ...........................</td>
                 </tr>
             </table>
@@ -244,17 +235,21 @@ $usia = $sekarang->diff($tanggal_lahir);
         <div style="padding-top: 0.1cm; padding-bottom: 0.1cm; overflow: hidden;">
             <table class="tindakan-2">
                 <tr>
-                    <td style="width: 0.2cm; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;"></td>
+                    <td style="width: 0.2cm; min-width: 0.2cm; max-width: 0.2cm; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;"> </td>
                     <td style="width: 40%; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;"><em>Free</em> Konsul</td>
+                    <td style="width: 0.2cm; min-width: 0.2cm; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;"> </td>
                     <td style="text-align: center; width: 40%; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;">Paraf</td>
                 </tr>
                 <tr>
-                    <td style="width: 0.2cm; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;"> </td>
+                    <td style="width: 0.2cm; min-width: 0.2cm; max-width: 0.2cm; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;"> </td>
                     <td style="width: 40%; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;">Obat</td>
+                    <td style="width: 0.2cm; min-width: 0.2cm; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;"> </td>
                     <td style="width: 40%; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;"></td>
                 </tr>
                 <tr>
-                    <td colspan="2" style="border: none; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;"></td>
+                    <td style="width: 0.2cm; min-width: 0.2cm; max-width: 0.2cm; border: none; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;"></td>
+                    <td style="border: none; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;"></td>
+                    <td style="width: 0.2cm; min-width: 0.2cm; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;"> </td>
                     <td style="text-align: center; width: 40%; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;">(.............................)</td>
                 </tr>
             </table>

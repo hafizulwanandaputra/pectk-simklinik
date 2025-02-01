@@ -66,6 +66,9 @@ writable/debugbar/*
 writable/exports/*
 !writable/exports/index.html
 
+writable/temp/*
+!writable/temp/index.html
+
 php_errors.log
 
 #-------------------------
@@ -128,4 +131,10 @@ nb-configuration.xml
 /results/
 /phpunit*.xml
 /.phpunit.*.cache
+
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
 

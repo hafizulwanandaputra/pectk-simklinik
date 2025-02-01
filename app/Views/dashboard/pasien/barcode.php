@@ -17,14 +17,6 @@ $usia = $sekarang->diff($tanggal_lahir);
     <link href="<?= base_url(); ?>assets_public/fonts/helvetica/stylesheet.css" rel="stylesheet">
     <title><?= $title; ?></title>
     <style>
-        @page {
-            size: 50mm 20.15mm;
-            margin-top: 0.05cm;
-            margin-left: 0.05cm;
-            margin-right: 0.05cm;
-            margin-bottom: 0.05cm;
-        }
-
         body {
             font-family: Helvetica, Arial, sans-serif;
             font-size: 7pt;
@@ -55,9 +47,9 @@ $usia = $sekarang->diff($tanggal_lahir);
 </head>
 
 <body>
-    <div class="container-fluid my-3">
+    <div>
         <div style="text-align: center;">
-            <div style="padding-top: 0.2cm; padding-bottom: 0.1cm;">
+            <div style="padding-top: 0.05cm; padding-bottom: 0.1cm;">
                 <strong style="white-space: nowrap;"><?= $pasien['nama_pasien'] ?><br>[ <?= $pasien['jenis_kelamin'] ?> ] <?= $pasien['tanggal_lahir'] ?> (<?= $usia->y . " tahun " . $usia->m . " bulan" ?>)</strong>
             </div>
             <div>

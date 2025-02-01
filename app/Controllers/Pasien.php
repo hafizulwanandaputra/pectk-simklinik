@@ -354,24 +354,24 @@ class Pasien extends BaseController
                 ];
                 // return view('dashboard/pasien/barcode', $data);
                 // die;
-                // Menghasilkan PDF menggunakan Dompdf
-                $tmp = sys_get_temp_dir();
-                $dompdf = new Dompdf([
-                    'logOutputFile' => '',
-                    // authorize DomPdf to download fonts and other Internet assets
-                    'isRemoteEnabled' => true,
-                    // all directories must exist and not end with /
-                    'fontDir' => $tmp,
-                    'fontCache' => $tmp,
-                    'tempDir' => $tmp,
-                    'chroot' => $tmp,
-                ]);
-                $html = view('dashboard/pasien/barcode', $data);
-                $dompdf->loadHtml($html);
-                $dompdf->render();
-                $dompdf->stream('barcode-' . $pasien['no_rm'] . '-' . urlencode($pasien['nama_pasien']) . '.pdf', [
-                    'Attachment' => FALSE // Menghasilkan PDF tanpa mengunduh
-                ]);
+                // Simpan HTML ke file sementara
+                $htmlFile = WRITEPATH . 'temp/output.html';
+                file_put_contents($htmlFile, view('dashboard/pasien/barcode', $data));
+
+                // Tentukan path output PDF
+                $pdfFile = WRITEPATH . 'temp/output.pdf';
+
+                // Jalankan Puppeteer untuk konversi HTML ke PDF
+                // Keterangan: "node " . FCPATH . "puppeteer-pdf.js $htmlFile $pdfFile panjang lebar marginAtas margin Kanan marginBawah marginKiri"
+                // Silakan lihat puppeteer-pdf.js di folder public untuk keterangan lebih lanjut.
+                $command = "node " . FCPATH . "puppeteer-pdf.js $htmlFile $pdfFile 50mm 20.15mm 0.025cm 0.05cm 0.025cm 0.05cm";
+                shell_exec($command);
+
+                // Kirim PDF ke browser
+                return $this->response
+                    ->setHeader('Content-Type', 'application/pdf')
+                    ->setHeader('Content-Disposition', 'inline; filename="' . 'barcode-' . $pasien['no_rm'] . '-' . urlencode($pasien['nama_pasien']) . '.pdf"')
+                    ->setBody(file_get_contents($pdfFile));
             } else {
                 // Menampilkan halaman tidak ditemukan jika pasien tidak ditemukan
                 throw PageNotFoundException::forPageNotFound();
