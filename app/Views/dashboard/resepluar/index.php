@@ -404,7 +404,9 @@
                         `<span class="badge bg-success bg-gradient">Transaksi Diproses</span>` :
                         `<span class="badge bg-danger bg-gradient">Transaksi Belum Diproses</span>`;
                     const statusButtons = resep.status == '1' ? `disabled` : ``;
-                    const tanggal_lahir = resep.tanggal_lahir === '0000-00-00' && resep.tanggal_lahir === null ? '<em>Tidak ada</em>' : resep.tanggal_lahir;
+                    const tanggal_lahir = !resep.tanggal_lahir || resep.tanggal_lahir === '0000-00-00' ?
+                        '<em>Tidak ada</em>' :
+                        resep.tanggal_lahir;
                     const resepElement = `
             <li class="list-group-item border-top-0 pb-3 pt-3">
                 <div class="d-flex">
