@@ -12,7 +12,7 @@
 
 1. Salin `.env.example` ke `.env` dan sesuaikan untuk aplikasi ini, khususnya `requestURL` dan pengaturan basis data.
 2. Buat basis data MySQL yang sesuai dengan nama basis data yang ditentukan dalam file `.env`.
-3. Gunakan file `pectk-simklinik-no-data.sql` di repositori ini untuk impor tabel-tabel ke dalam basis data.
+3. Gunakan file `pectk-simklinik-no-data.sql.gz` di repositori ini untuk impor tabel-tabel ke dalam basis data.
 4. Jalankan `php spark db:seed User` dan `php spark db:seed PwdTransaksi` untuk menyemai (_seed_) item basis data.
 5. Untuk digunakan dengan server pengembangan PHP, jalankan `php spark serve` untuk memulai server. Biasanya [http://localhost:8080](http://localhost:8080). Anda dapat menggunakan port yang berbeda dengan menggunakan `php spark serve --port 8081`. Ganti `8081` dengan nomor port yang diinginkan. Anda perlu mengubah `requestURL` di `.env` agar sesuai dengan nomor port yang diinginkan.
 6. Untuk penggunaan tanpa server pengembangan PHP seperti Apache atau Nginx, cukup buka dari URL seperti [http://localhost/pectk-farmasi](http://localhost/pectk-farmasi) atau yang lain berdasarkan konfigurasi server web Anda. Anda perlu mengubah `requestURL` di `.env` agar sesuai dengan alamat URL yang diinginkan.
@@ -111,7 +111,7 @@ Kode sumber aplikasi ini dilisensikan di bawah Lisensi MIT
 
 1. Copy `.env.example` to `.env` and tailor for this app, specifically the `requestURL` and the database settings.
 2. Create MySQL database that matches with database name specified in `.env` file.
-3. Use the `pectk-simklinik-no-data.sql` file in this repository to import the tables into the database.
+3. Use the `pectk-simklinik-no-data.sql.gz` file in this repository to import the tables into the database.
 4. Run `php spark db:seed User` and `php spark db:seed PwdTransaksi` to seed the database items.
 5. For use with PHP development server, run `php spark serve` to start the server. Usually [http://localhost:8080](http://localhost:8080). You can use different port by using `php spark serve --port 8081`. Replace `8081` with the desired port number. You need to modify `requestURL` in `.env` to match with the desired port number.
 6. For use without PHP development server such as Apache or Nginx, just open it from URL like [http://localhost/pectk-farmasi](http://localhost/pectk-farmasi) or others based on your web server's configuration. You need to modify `requestURL` in `.env` to match with the desired URL address.
