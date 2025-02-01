@@ -18,7 +18,7 @@ $usia = $sekarang->diff($tanggal_lahir);
     <title><?= $title; ?></title>
     <style>
         body {
-            font-family: Helvetica;
+            font-family: Helvetica, Arial, sans-serif;
             font-size: 7pt;
             line-height: 1.2;
         }
