@@ -22,7 +22,11 @@ const fs = require('fs');
         process.exit(1);
     }
 
-    const browser = await puppeteer.launch({ headless: "new" });
+    // Menambahkan opsi --no-sandbox untuk mengatasi masalah sandbox
+    const browser = await puppeteer.launch({
+        headless: true,  // Pastikan mode headless aktif
+        args: ['--no-sandbox', '--disable-setuid-sandbox']  // Menonaktifkan sandbox
+    });
     const page = await browser.newPage();
 
     // Load file HTML ke dalam Puppeteer
