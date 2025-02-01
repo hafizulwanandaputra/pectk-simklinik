@@ -270,7 +270,17 @@ class RawatJalan extends BaseController
                 // return view('dashboard/rawatjalan/struk', $data);
                 // die;
                 // Menghasilkan PDF menggunakan Dompdf
-                $dompdf = new Dompdf();
+                $tmp = sys_get_temp_dir();
+                $dompdf = new Dompdf([
+                    'logOutputFile' => '',
+                    // authorize DomPdf to download fonts and other Internet assets
+                    'isRemoteEnabled' => true,
+                    // all directories must exist and not end with /
+                    'fontDir' => $tmp,
+                    'fontCache' => $tmp,
+                    'tempDir' => $tmp,
+                    'chroot' => $tmp,
+                ]);
                 $html = view('dashboard/rawatjalan/struk', $data);
                 $dompdf->loadHtml($html);
                 $dompdf->render();

@@ -14,6 +14,7 @@ $usia = $sekarang->diff($tanggal_lahir);
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="<?= base_url(); ?>assets_public/fonts/helvetica/stylesheet.css" rel="stylesheet">
     <title><?= $title; ?></title>
     <style>
         @page {
@@ -26,7 +27,7 @@ $usia = $sekarang->diff($tanggal_lahir);
 
         body {
             font-family: Helvetica, Arial, sans-serif;
-            font-size: 8pt;
+            font-size: 7.8pt;
         }
 
         table {
