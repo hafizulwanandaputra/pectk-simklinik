@@ -83,7 +83,7 @@
                     <div class="col-5 fw-medium text-truncate">Tanggal Lahir</div>
                     <div class="col">
                         <div class="date">
-                            <?= $resep['tanggal_lahir'] ?>
+                            <?= (!empty($resep['tanggal_lahir']) && $resep['tanggal_lahir'] != '0000-00-00') ? $resep['tanggal_lahir'] : '<em>Tidak ada</em>'; ?>
                         </div>
                     </div>
                 </div>
