@@ -110,7 +110,7 @@ if ($skrining['jatuh_sempoyongan'] === 'YA' && $skrining['jatuh_penopang'] === '
                         </div>
                     </td>
                     <td style="width: 0%;">
-                        <div style="white-space: nowrap;"><strong>FRM: 2a hal 1<br>Rev: 003</strong></div>
+                        <div style="white-space: nowrap;"><strong>FRM: 2a hal 1<br>Rev: 002</strong></div>
                     </td>
                 </tr>
             </thead>
