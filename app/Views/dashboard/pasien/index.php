@@ -93,7 +93,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <hr>
                         </span>
                     <?php endfor; ?>
                 </div>
