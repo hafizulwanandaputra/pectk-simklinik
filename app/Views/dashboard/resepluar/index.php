@@ -395,7 +395,7 @@
                     } else if (jenis_kelamin === 'P') {
                         jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap" style="background-color: Pink"><i class="fa-solid fa-venus"></i> PEREMPUAN</span>`;
                     }
-                    const alamat = resep.alamat == '' ?
+                    const alamat = !resep.alamat || resep.alamat == '' ?
                         `<em>Tidak ada</em>` :
                         resep.alamat;
                     const jumlah_resep = parseInt(resep.jumlah_resep);
