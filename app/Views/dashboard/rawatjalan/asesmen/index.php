@@ -1004,28 +1004,26 @@ $usia = $registrasi->diff($tanggal_lahir);
         }
     }
 
-    <?php if (session()->get('role') != 'Perawat') : ?>
-        async function loadVisus() {
-            try {
-                const response = await axios.get('<?= base_url('rawatjalan/asesmen/listvisus') ?>');
-                const visus = response.data.data;
+    async function loadVisus() {
+        try {
+            const response = await axios.get('<?= base_url('rawatjalan/asesmen/listvisus') ?>');
+            const visus = response.data.data;
 
-                // Array dari ID datalist yang ingin diisi
-                const dataListIds = ['#od_ucva_list', '#os_ucva_list', '#od_bcva_list', '#os_bcva_list'];
+            // Array dari ID datalist yang ingin diisi
+            const dataListIds = ['#od_ucva_list', '#os_ucva_list', '#od_bcva_list', '#os_bcva_list'];
 
-                // Kosongkan dan isi setiap datalist
-                dataListIds.forEach(id => {
-                    const dataList = $(id);
-                    dataList.empty(); // Kosongkan datalist sebelumnya
-                    visus.forEach(item => {
-                        dataList.append(`<option value="${item.value}"></option>`);
-                    });
+            // Kosongkan dan isi setiap datalist
+            dataListIds.forEach(id => {
+                const dataList = $(id);
+                dataList.empty(); // Kosongkan datalist sebelumnya
+                visus.forEach(item => {
+                    dataList.append(`<option value="${item.value}"></option>`);
                 });
-            } catch (error) {
-                console.error('Gagal memuat visus:', error);
-            }
+            });
+        } catch (error) {
+            console.error('Gagal memuat visus:', error);
         }
-    <?php endif; ?>
+    }
 
     $(document).ready(async function() {
         // Cari semua elemen dengan kelas 'activeLink' di kedua navigasi
@@ -1292,12 +1290,8 @@ $usia = $registrasi->diff($tanggal_lahir);
 
                 if (response.data.success) {
                     showSuccessToast(response.data.message);
-                    <?php if (session()->get('role') != 'Perawat') : ?>
-                        await fetchAsesmen();
-                        loadVisus();
-                    <?php else : ?>
-                        fetchAsesmen();
-                    <?php endif; ?>
+                    await fetchAsesmen();
+                    loadVisus();
                 } else {
                     console.log("Validation Errors:", response.data.errors);
 
@@ -1360,14 +1354,9 @@ $usia = $registrasi->diff($tanggal_lahir);
                 $('#asesmenForm input, #asesmenForm select, #asesmenForm button').prop('disabled', false);
             }
         });
-        <?php if (session()->get('role') != 'Perawat') : ?>
-            await fetchAsesmen();
-            fetchAsesmenMata();
-            loadVisus();
-        <?php else : ?>
-            await fetchAsesmen();
-            fetchAsesmenMata()
-        <?php endif; ?>
+        await fetchAsesmen();
+        fetchAsesmenMata();
+        loadVisus();
     });
     // Show toast notification
     <?= $this->include('toast/index') ?>
