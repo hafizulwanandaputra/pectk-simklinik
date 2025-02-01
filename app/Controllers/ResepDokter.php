@@ -980,14 +980,24 @@ class ResepDokter extends BaseController
                     'detail_resep' => $detail_resep,
                     'title' => 'E-Tiket Resep ' . $id . ' - ' . $this->systemName
                 ];
-                // Menghasilkan PDF menggunakan Dompdf
-                $dompdf = new Dompdf();
-                $html = view('dashboard/resep/etiket', $data);
-                $dompdf->loadHtml($html);
-                $dompdf->render();
-                $dompdf->stream('resep-obat-dalam-id-' . $resep['nomor_registrasi'] . '-' . urlencode($resep['nama_pasien']) . '-' . urlencode($resep['dokter']) . '-' . $resep['tanggal_resep'] . '.pdf', [
-                    'Attachment' => FALSE // Menghasilkan PDF tanpa mengunduh
-                ]);
+                // Simpan HTML ke file sementara
+                $htmlFile = WRITEPATH . 'temp/output-obat-dalam.html';
+                file_put_contents($htmlFile, view('dashboard/resep/etiket', $data));
+
+                // Tentukan path output PDF
+                $pdfFile = WRITEPATH . 'temp/output-obat-dalam.pdf';
+
+                // Jalankan Puppeteer untuk konversi HTML ke PDF
+                // Keterangan: "node " . FCPATH . "puppeteer-pdf.js $htmlFile $pdfFile panjang lebar marginAtas margin Kanan marginBawah marginKiri"
+                // Silakan lihat puppeteer-pdf.js di folder public untuk keterangan lebih lanjut.
+                $command = env('CMD-ENV') . "node " . FCPATH . "puppeteer-pdf.js $htmlFile $pdfFile 5.5cm 3.75cm 0.15cm 0.65cm 0.5cm 0.65cm";
+                shell_exec($command);
+
+                // Kirim PDF ke browser
+                return $this->response
+                    ->setHeader('Content-Type', 'application/pdf')
+                    ->setHeader('Content-Disposition', 'inline; filename="resep-obat-dalam-id-' . $resep['nomor_registrasi'] . '-' . urlencode($resep['nama_pasien']) . '-' . urlencode($resep['dokter']) . '-' . $resep['tanggal_resep'] . '.pdf')
+                    ->setBody(file_get_contents($pdfFile));
             } else {
                 throw PageNotFoundException::forPageNotFound(); // Jika detail resep kosong atau status tidak sesuai
             }
@@ -1032,14 +1042,24 @@ class ResepDokter extends BaseController
                     'detail_resep' => $detail_resep,
                     'title' => 'E-Tiket Resep ' . $id . ' - ' . $this->systemName
                 ];
-                // Menghasilkan PDF menggunakan Dompdf
-                $dompdf = new Dompdf();
-                $html = view('dashboard/resep/etiket', $data);
-                $dompdf->loadHtml($html);
-                $dompdf->render();
-                $dompdf->stream('resep-obat-luar-id-' . $resep['nomor_registrasi'] . '-' . urlencode($resep['nama_pasien']) . '-' . urlencode($resep['dokter']) . '-' . $resep['tanggal_resep'] . '.pdf', [
-                    'Attachment' => FALSE // Menghasilkan PDF tanpa mengunduh
-                ]);
+                // Simpan HTML ke file sementara
+                $htmlFile = WRITEPATH . 'temp/output-obat-luar.html';
+                file_put_contents($htmlFile, view('dashboard/resep/etiket', $data));
+
+                // Tentukan path output PDF
+                $pdfFile = WRITEPATH . 'temp/output-obat-luar.pdf';
+
+                // Jalankan Puppeteer untuk konversi HTML ke PDF
+                // Keterangan: "node " . FCPATH . "puppeteer-pdf.js $htmlFile $pdfFile panjang lebar marginAtas margin Kanan marginBawah marginKiri"
+                // Silakan lihat puppeteer-pdf.js di folder public untuk keterangan lebih lanjut.
+                $command = env('CMD-ENV') . "node " . FCPATH . "puppeteer-pdf.js $htmlFile $pdfFile 5.5cm 3.75cm 0.15cm 0.65cm 0.5cm 0.65cm";
+                shell_exec($command);
+
+                // Kirim PDF ke browser
+                return $this->response
+                    ->setHeader('Content-Type', 'application/pdf')
+                    ->setHeader('Content-Disposition', 'inline; filename="resep-obat-luar-id-' . $resep['nomor_registrasi'] . '-' . urlencode($resep['nama_pasien']) . '-' . urlencode($resep['dokter']) . '-' . $resep['tanggal_resep'] . '.pdf')
+                    ->setBody(file_get_contents($pdfFile));
             } else {
                 throw PageNotFoundException::forPageNotFound(); // Jika detail resep kosong atau status tidak sesuai
             }

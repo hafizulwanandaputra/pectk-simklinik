@@ -17,19 +17,15 @@ if (!empty($resep['tanggal_lahir']) && $resep['tanggal_lahir'] != '0000-00-00') 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="<?= base_url(); ?>assets_public/fonts/helvetica/stylesheet.css" rel="stylesheet">
     <title><?= $title; ?></title>
     <style>
-        @page {
-            size: 5.5cm 3.75cm;
-            margin-top: 0.1cm;
-            margin-left: 0.65cm;
-            margin-right: 0.65cm;
-            margin-bottom: 0.55cm;
-        }
-
         body {
-            font-family: Times, 'Times New Roman', serif;
+            font-family: Helvetica, Arial, sans-serif;
             font-size: 5pt;
+            line-height: 1.2;
+            margin: 0;
+            padding: 0;
         }
 
         table {
@@ -49,6 +45,7 @@ if (!empty($resep['tanggal_lahir']) && $resep['tanggal_lahir'] != '0000-00-00') 
             height: 0.9cm;
             overflow: hidden;
             padding: 0cm;
+            padding-top: 0.02cm;
             font-weight: bold;
             text-align: center;
             font-size: 4.8pt;
@@ -60,7 +57,7 @@ if (!empty($resep['tanggal_lahir']) && $resep['tanggal_lahir'] != '0000-00-00') 
     <div class="container-fluid my-3">
         <?php foreach ($detail_resep as $detail) : ?>
             <div style="text-align: center;">
-                <h2 style="font-size: 5.7pt;">KLINIK UTAMA MATA<br>PADANG EYE CENTER TELUK KUANTAN</h2>
+                <h2 style="font-size: 5.4pt;">KLINIK UTAMA MATA<br>PADANG EYE CENTER TELUK KUANTAN</h2>
             </div>
             <table width="100%">
                 <tbody style="vertical-align: top;">
@@ -92,7 +89,7 @@ if (!empty($resep['tanggal_lahir']) && $resep['tanggal_lahir'] != '0000-00-00') 
                 <?php if ($detail['bentuk_obat'] == 'Tetes' || $detail['bentuk_obat'] == 'Salep') : ?>
                     <br>
                     OBAT LUAR
-                <?php elseif ($detail['bentuk_obat'] == 'Tablet/Kapsul') : ?>
+                <?php elseif ($detail['bentuk_obat'] == 'Tablet/Kapsul' || $detail['bentuk_obat'] == 'Sirup') : ?>
                     <br>
                     OBAT DALAM
                 <?php endif; ?>

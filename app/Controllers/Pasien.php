@@ -314,11 +314,11 @@ class Pasien extends BaseController
                 // return view('dashboard/pasien/kiup', $data);
                 // die;
                 // Simpan HTML ke file sementara
-                $htmlFile = WRITEPATH . 'temp/output.html';
+                $htmlFile = WRITEPATH . 'temp/output-kiup.html';
                 file_put_contents($htmlFile, view('dashboard/pasien/kiup', $data));
 
                 // Tentukan path output PDF
-                $pdfFile = WRITEPATH . 'temp/output.pdf';
+                $pdfFile = WRITEPATH . 'temp/output-kiup.pdf';
 
                 // Jalankan Puppeteer untuk konversi HTML ke PDF
                 // Keterangan: "node " . FCPATH . "puppeteer-pdf.js $htmlFile $pdfFile panjang lebar marginAtas margin Kanan marginBawah marginKiri"
@@ -365,11 +365,11 @@ class Pasien extends BaseController
                 // return view('dashboard/pasien/barcode', $data);
                 // die;
                 // Simpan HTML ke file sementara
-                $htmlFile = WRITEPATH . 'temp/output.html';
+                $htmlFile = WRITEPATH . 'temp/output-barcode.html';
                 file_put_contents($htmlFile, view('dashboard/pasien/barcode', $data));
 
                 // Tentukan path output PDF
-                $pdfFile = WRITEPATH . 'temp/output.pdf';
+                $pdfFile = WRITEPATH . 'temp/output-barcode.pdf';
 
                 // Jalankan Puppeteer untuk konversi HTML ke PDF
                 // Keterangan: "node " . FCPATH . "puppeteer-pdf.js $htmlFile $pdfFile panjang lebar marginAtas margin Kanan marginBawah marginKiri"

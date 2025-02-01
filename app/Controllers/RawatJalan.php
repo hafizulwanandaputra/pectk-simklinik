@@ -270,11 +270,11 @@ class RawatJalan extends BaseController
                 // return view('dashboard/rawatjalan/struk', $data);
                 // die;
                 // Simpan HTML ke file sementara
-                $htmlFile = WRITEPATH . 'temp/output.html';
+                $htmlFile = WRITEPATH . 'temp/output-struk.html';
                 file_put_contents($htmlFile, view('dashboard/rawatjalan/struk', $data));
 
                 // Tentukan path output PDF
-                $pdfFile = WRITEPATH . 'temp/output.pdf';
+                $pdfFile = WRITEPATH . 'temp/output-struk.pdf';
 
                 // Jalankan Puppeteer untuk konversi HTML ke PDF
                 // Keterangan: "node " . FCPATH . "puppeteer-pdf.js $htmlFile $pdfFile panjang lebar marginAtas margin Kanan marginBawah marginKiri"
