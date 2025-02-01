@@ -364,7 +364,7 @@ class Pasien extends BaseController
                 // Jalankan Puppeteer untuk konversi HTML ke PDF
                 // Keterangan: "node " . FCPATH . "puppeteer-pdf.js $htmlFile $pdfFile panjang lebar marginAtas margin Kanan marginBawah marginKiri"
                 // Silakan lihat puppeteer-pdf.js di folder public untuk keterangan lebih lanjut.
-                $command = "node " . FCPATH . "puppeteer-pdf.js $htmlFile $pdfFile 50mm 20.15mm 0.025cm 0.05cm 0.025cm 0.05cm";
+                $command = env('CMD-ENV') . "node " . FCPATH . "puppeteer-pdf.js $htmlFile $pdfFile 50mm 20.15mm 0.025cm 0.05cm 0.025cm 0.05cm";
                 shell_exec($command);
 
                 // Kirim PDF ke browser
