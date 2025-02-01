@@ -37,7 +37,7 @@ $tanggalFormat = $formatter->format($tanggal_isi_resep);
         }
 
         .prescription li::before {
-            content: "R/ ";
+            content: "";
             font-weight: bold;
         }
 
@@ -169,7 +169,7 @@ $tanggalFormat = $formatter->format($tanggal_isi_resep);
         <ul class="prescription">
             <?php foreach ($detailresep as $item) : ?>
                 <li style="padding-bottom: 0.125cm; padding-top: 0.125cm; font-size: 11pt;">
-                    <?= $item['nama_obat'] ?> • <?= $item['jumlah'] ?> item<br><span style="font-size: 10pt;"><?= $item['signa'] ?> • <?= $item['cara_pakai'] ?><br><?= $item['catatan'] ?></span>
+                    <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/resep.png')) ?>" height="20px" style="padding-right: 0.01cm;" alt="R/"><?= $item['nama_obat'] ?> • <?= $item['jumlah'] ?> item<br><span style="font-size: 10pt;"><?= $item['signa'] ?> • <?= $item['cara_pakai'] ?><br><?= $item['catatan'] ?></span>
                 </li>
             <?php endforeach; ?>
         </ul>
