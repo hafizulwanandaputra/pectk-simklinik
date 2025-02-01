@@ -313,14 +313,24 @@ class Pasien extends BaseController
                 ];
                 // return view('dashboard/pasien/kiup', $data);
                 // die;
-                // Menghasilkan PDF menggunakan Dompdf
-                $dompdf = new Dompdf();
-                $html = view('dashboard/pasien/kiup', $data);
-                $dompdf->loadHtml($html);
-                $dompdf->render();
-                $dompdf->stream('kiup-' . $pasien['no_rm'] . '-' . urlencode($pasien['nama_pasien']) . '.pdf', [
-                    'Attachment' => FALSE // Menghasilkan PDF tanpa mengunduh
-                ]);
+                // Simpan HTML ke file sementara
+                $htmlFile = WRITEPATH . 'temp/output.html';
+                file_put_contents($htmlFile, view('dashboard/pasien/kiup', $data));
+
+                // Tentukan path output PDF
+                $pdfFile = WRITEPATH . 'temp/output.pdf';
+
+                // Jalankan Puppeteer untuk konversi HTML ke PDF
+                // Keterangan: "node " . FCPATH . "puppeteer-pdf.js $htmlFile $pdfFile panjang lebar marginAtas margin Kanan marginBawah marginKiri"
+                // Silakan lihat puppeteer-pdf.js di folder public untuk keterangan lebih lanjut.
+                $command = env('CMD-ENV') . "node " . FCPATH . "puppeteer-pdf.js $htmlFile $pdfFile 210mm 297mm 1cm 1cm 1cm 1cm";
+                shell_exec($command);
+
+                // Kirim PDF ke browser
+                return $this->response
+                    ->setHeader('Content-Type', 'application/pdf')
+                    ->setHeader('Content-Disposition', 'inline; filename="' . 'kiup-' . $pasien['no_rm'] . '-' . urlencode($pasien['nama_pasien']) . '.pdf"')
+                    ->setBody(file_get_contents($pdfFile));
             } else {
                 // Menampilkan halaman tidak ditemukan jika pasien tidak ditemukan
                 throw PageNotFoundException::forPageNotFound();

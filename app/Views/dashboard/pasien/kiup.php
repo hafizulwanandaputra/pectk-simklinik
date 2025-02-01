@@ -4,16 +4,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="<?= base_url(); ?>assets_public/fonts/helvetica/stylesheet.css" rel="stylesheet">
     <title><?= $title; ?></title>
     <style>
-        @page {
-            size: 21cm 29.7cm;
-            margin: 1cm;
-        }
-
         body {
             font-family: Helvetica, Arial, sans-serif;
             font-size: 10pt;
+            line-height: 1.2;
         }
 
         .prescription {
@@ -51,7 +48,7 @@
             border: 1px solid black;
             height: 21.5cm;
             overflow: hidden;
-            padding: 0cm;
+            padding: 0.1cm;
         }
     </style>
 </head>
