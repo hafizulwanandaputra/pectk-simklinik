@@ -822,6 +822,7 @@
         // Reset form saat modal ditutup
         $('#resepluarModal').on('hidden.bs.modal', function() {
             $('#resepluarForm')[0].reset();
+            $('#id_resep').val('');
             $('#resepluarForm .is-invalid').removeClass('is-invalid');
             // Hapus nilai input secara langsung
             $('#tanggal_lahir').val('');
