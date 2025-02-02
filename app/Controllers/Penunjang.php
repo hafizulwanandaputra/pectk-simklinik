@@ -8,7 +8,7 @@ use App\Models\PenunjangModel;
 use App\Models\PoliklinikModel;
 use App\Models\AuthModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
-use Dompdf\Dompdf;
+
 use Picqer\Barcode\BarcodeGeneratorPNG;
 
 class Penunjang extends BaseController

@@ -7,7 +7,7 @@ use App\Models\RawatJalanModel;
 use App\Models\PoliklinikModel;
 use App\Models\AuthModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
-use Dompdf\Dompdf;
+
 
 class RawatJalan extends BaseController
 {

@@ -6,7 +6,7 @@ use App\Controllers\BaseController;
 use App\Models\SPOperasiModel;
 use App\Models\PraOperasiModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
-use Dompdf\Dompdf;
+
 use Picqer\Barcode\BarcodeGeneratorPNG;
 
 class PraOperasi extends BaseController

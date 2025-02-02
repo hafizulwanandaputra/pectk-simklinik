@@ -7,7 +7,7 @@ use App\Models\RawatJalanModel;
 use App\Models\TindakanRajalModel;
 use App\Models\AuthModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
-use Dompdf\Dompdf;
+
 use Picqer\Barcode\BarcodeGeneratorPNG;
 
 class TindakanRajal extends BaseController

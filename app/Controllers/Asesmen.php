@@ -6,7 +6,7 @@ use App\Controllers\BaseController;
 use App\Models\RawatJalanModel;
 use App\Models\AsesmenModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
-use Dompdf\Dompdf;
+
 use Picqer\Barcode\BarcodeGeneratorPNG;
 
 class Asesmen extends BaseController

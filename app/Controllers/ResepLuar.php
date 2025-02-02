@@ -6,7 +6,7 @@ use App\Models\ResepModel;
 use App\Models\DetailResepModel;
 use App\Models\ObatModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
-use Dompdf\Dompdf;
+
 
 class ResepLuar extends BaseController
 {

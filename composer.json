@@ -12,7 +12,6 @@
     "require": {
         "php": "^7.4 || ^8.0",
         "codeigniter4/framework": "^4.0",
-        "dompdf/dompdf": "^3.0",
         "dompdf/php-svg-lib": "^1.0",
         "firebase/php-jwt": "^6.10",
         "guzzlehttp/guzzle": "^7.9",
