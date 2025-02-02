@@ -282,6 +282,9 @@ class RawatJalan extends BaseController
                 $command = env('CMD-ENV') . "node " . FCPATH . "puppeteer-pdf.js $htmlFile $pdfFile 80mm 100mm 0.1cm 0.82cm 0.1cm 0.82cm";
                 shell_exec($command);
 
+                // Hapus file HTML
+                @unlink($htmlFile);
+
                 // Kirim PDF ke browser
                 return $this->response
                     ->setHeader('Content-Type', 'application/pdf')

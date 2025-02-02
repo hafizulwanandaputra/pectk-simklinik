@@ -326,6 +326,9 @@ class Pasien extends BaseController
                 $command = env('CMD-ENV') . "node " . FCPATH . "puppeteer-pdf.js $htmlFile $pdfFile 210mm 297mm 1cm 1cm 1cm 1cm";
                 shell_exec($command);
 
+                // Hapus file HTML
+                @unlink($htmlFile);
+
                 // Kirim PDF ke browser
                 return $this->response
                     ->setHeader('Content-Type', 'application/pdf')
@@ -376,6 +379,9 @@ class Pasien extends BaseController
                 // Silakan lihat puppeteer-pdf.js di folder public untuk keterangan lebih lanjut.
                 $command = env('CMD-ENV') . "node " . FCPATH . "puppeteer-pdf.js $htmlFile $pdfFile 50mm 20.15mm 0.025cm 0.05cm 0.025cm 0.05cm";
                 shell_exec($command);
+
+                // Hapus file HTML
+                @unlink($htmlFile);
 
                 // Kirim PDF ke browser
                 return $this->response

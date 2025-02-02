@@ -993,6 +993,9 @@ class ResepDokter extends BaseController
                 $command = env('CMD-ENV') . "node " . FCPATH . "puppeteer-pdf.js $htmlFile $pdfFile 5.5cm 3.75cm 0.15cm 0.65cm 0.5cm 0.65cm";
                 shell_exec($command);
 
+                // Hapus file HTML
+                @unlink($htmlFile);
+
                 // Kirim PDF ke browser
                 return $this->response
                     ->setHeader('Content-Type', 'application/pdf')
@@ -1054,6 +1057,9 @@ class ResepDokter extends BaseController
                 // Silakan lihat puppeteer-pdf.js di folder public untuk keterangan lebih lanjut.
                 $command = env('CMD-ENV') . "node " . FCPATH . "puppeteer-pdf.js $htmlFile $pdfFile 5.5cm 3.75cm 0.15cm 0.65cm 0.5cm 0.65cm";
                 shell_exec($command);
+
+                // Hapus file HTML
+                @unlink($htmlFile);
 
                 // Kirim PDF ke browser
                 return $this->response
@@ -1117,6 +1123,9 @@ class ResepDokter extends BaseController
                 // Silakan lihat puppeteer-pdf.js di folder public untuk keterangan lebih lanjut.
                 $command = env('CMD-ENV') . "node " . FCPATH . "puppeteer-pdf.js $htmlFile $pdfFile 210mm 297mm 1cm 1cm 1cm 1cm";
                 shell_exec($command);
+
+                // Hapus file HTML
+                @unlink($htmlFile);
 
                 // Kirim PDF ke browser
                 return $this->response
