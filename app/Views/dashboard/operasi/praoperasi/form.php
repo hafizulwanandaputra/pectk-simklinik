@@ -489,242 +489,244 @@ $waktuFormatted = $dateTime->format('H.i.s');
                 </tbody>
             </table>
             <h3 style="padding-left: 0.25cm; padding-right: 0.25cm; padding-top: 0.25cm; margin: 0;">B. <em>CHECKLIST</em> PERSIAPAN PASIEN PRA OPERASI</h3>
-            <table class="full-border" style="width: 100%; margin-bottom: 4px; padding-right: 0.25cm; padding-left: 0.25cm;">
-                <tr>
-                    <th style="padding-top: 4px; line-height: 1.0; width: 0%;">No</th>
-                    <th style="padding-top: 4px; line-height: 1.0; width: 50%;">Hal-hal yang harus diperhatikan</th>
-                    <th style="padding-top: 4px; line-height: 1.0; width: 0%;">Cek/Isi</th>
-                    <th style="padding-top: 4px; line-height: 1.0; width: 0%;">No</th>
-                    <th style="padding-top: 4px; line-height: 1.0; width: 50%;">Hal-hal yang harus diperhatikan</th>
-                    <th style="padding-top: 4px; line-height: 1.0; width: 0%;">Cek/Isi</th>
-                </tr>
+            <div style="padding-right: 0.25cm; padding-top: 0.25cm;">
+                <table class="full-border" style="width: 100%; margin-bottom: 4px; padding-right: 0.25cm; padding-left: 0.25cm;">
+                    <tr>
+                        <th style="padding-top: 4px; line-height: 1.0; width: 0%;">No</th>
+                        <th style="padding-top: 4px; line-height: 1.0; width: 50%;">Hal-hal yang harus diperhatikan</th>
+                        <th style="padding-top: 4px; line-height: 1.0; width: 0%;">Cek/Isi</th>
+                        <th style="padding-top: 4px; line-height: 1.0; width: 0%;">No</th>
+                        <th style="padding-top: 4px; line-height: 1.0; width: 50%;">Hal-hal yang harus diperhatikan</th>
+                        <th style="padding-top: 4px; line-height: 1.0; width: 0%;">Cek/Isi</th>
+                    </tr>
 
-                <tr>
-                    <td style="padding-top: 4px; line-height: 1.0; text-align: center;">1</td>
-                    <td style="padding-top: 4px; line-height: 1.0;">Hasil biometri</td>
-                    <td style="padding-top: 4px; line-height: 1.0; text-align: center;">
-                        <?php if ($operasi_pra['cek_biometri'] == 1): ?>
-                            <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
-                        <?php endif; ?>
-                    </td>
-                    <td style="padding-top: 4px; line-height: 1.0; text-align: center;">10</td>
-                    <td style="padding-top: 4px; line-height: 1.0;">Hasil Foto Fundus</td>
-                    <td style="padding-top: 4px; line-height: 1.0; text-align: center;">
-                        <?php if ($operasi_pra['cek_foto_fundus'] == 1): ?>
-                            <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
-                        <?php endif; ?>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="padding-top: 4px; line-height: 1.0; text-align: center;">2</td>
-                    <td style="padding-top: 4px; line-height: 1.0;">Hasil retinometri</td>
-                    <td style="padding-top: 4px; line-height: 1.0; text-align: center;">
-                        <?php if ($operasi_pra['cek_retinometri'] == 1): ?>
-                            <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
-                        <?php endif; ?>
-                    </td>
-                    <td style="padding-top: 4px; line-height: 1.0; text-align: center;">11</td>
-                    <td style="padding-top: 4px; line-height: 1.0;">Hasil USG</td>
-                    <td style="padding-top: 4px; line-height: 1.0; text-align: center;">
-                        <?php if ($operasi_pra['cek_usg'] == 1): ?>
-                            <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
-                        <?php endif; ?>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="padding-top: 4px; line-height: 1.0; text-align: center;">3</td>
-                    <td style="padding-top: 4px; line-height: 1.0;">Hasil laboratorium (labor lengkap/GDS)</td>
-                    <td style="padding-top: 4px; line-height: 1.0; text-align: center;">
-                        <?php if ($operasi_pra['cek_labor'] == 1): ?>
-                            <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
-                        <?php endif; ?>
-                    </td>
-                    <td style="padding-top: 4px; line-height: 1.0; text-align: center;">12</td>
-                    <td style="padding-top: 4px; line-height: 1.0;">Melepas perhiasan</td>
-                    <td style="padding-top: 4px; line-height: 1.0; text-align: center;">
-                        <?php if ($operasi_pra['cek_perhiasan'] == 1): ?>
-                            <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
-                        <?php endif; ?>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="padding-top: 4px; line-height: 1.0; text-align: center;">4</td>
-                    <td style="padding-top: 4px; line-height: 1.0;">Hasil radiologi</td>
-                    <td style="padding-top: 4px; line-height: 1.0; text-align: center;">
-                        <?php if ($operasi_pra['cek_radiologi'] == 1): ?>
-                            <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
-                        <?php endif; ?>
-                    </td>
-                    <td style="padding-top: 4px; line-height: 1.0; text-align: center;">13</td>
-                    <td style="padding-top: 4px; line-height: 1.0;">Tanda tangan <em>informed concent</em></td>
-                    <td style="padding-top: 4px; line-height: 1.0; text-align: center;">
-                        <?php if ($operasi_pra['cek_ttd'] == 1): ?>
-                            <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
-                        <?php endif; ?>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="padding-top: 4px; line-height: 1.0; text-align: center;">5</td>
-                    <td style="padding-top: 4px; line-height: 1.0;">Puasa</td>
-                    <td style="padding-top: 4px; line-height: 1.0; text-align: center;">
-                        <?php if ($operasi_pra['cek_puasa'] == 1): ?>
-                            <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
-                        <?php endif; ?>
-                    </td>
-                    <td style="padding-top: 4px; line-height: 1.0; text-align: center;">14</td>
-                    <td style="padding-top: 4px; line-height: 1.0;">Cuci muka + ganti pakaian</td>
-                    <td style="padding-top: 4px; line-height: 1.0; text-align: center;">
-                        <?php if ($operasi_pra['cek_cuci'] == 1): ?>
-                            <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
-                        <?php endif; ?>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="padding-top: 4px; line-height: 1.0; text-align: center;">6</td>
-                    <td style="padding-top: 4px; line-height: 1.0;">Instruksi khusus dari dokter</td>
-                    <td style="padding-top: 4px; line-height: 1.0; text-align: center;">
-                        <?php if ($operasi_pra['cek_instruksi'] == 1): ?>
-                            <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
-                        <?php endif; ?>
-                    </td>
-                    <td style="padding-top: 4px; line-height: 1.0; text-align: center;">15</td>
-                    <td style="padding-top: 4px; line-height: 1.0;"><em>Sign mark</em> + gelang pasien</td>
-                    <td style="padding-top: 4px; line-height: 1.0; text-align: center;">
-                        <?php if ($operasi_pra['cek_mark'] == 1): ?>
-                            <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
-                        <?php endif; ?>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="padding-top: 4px; line-height: 1.0; text-align: center;">7</td>
-                    <td style="padding-top: 4px; line-height: 1.0;">Lensa</td>
-                    <td style="padding-top: 4px; line-height: 1.0; text-align: center;">
-                        <?php if ($operasi_pra['cek_lensa'] == 1): ?>
-                            <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
-                        <?php endif; ?>
-                    </td>
-                    <td style="padding-top: 4px; line-height: 1.0; text-align: center;">16</td>
-                    <td style="padding-top: 4px; line-height: 1.0;">
-                        Tetes Pantocain 2%
-                    </td>
-                    <td style="padding-top: 4px; line-height: 1.0; text-align: center;">
-                        <?= $operasi_pra['cek_tetes_pantocain'] ?>
-                    </td>
-                </tr>
-                <tr>
-                    <td rowspan="3" style="padding-top: 4px; line-height: 1.0; text-align: center;">8</td>
-                    <td style="padding-top: 4px; line-height: 1.0;">Rontgen</td>
-                    <td style="padding-top: 4px; line-height: 1.0; text-align: center;">
-                        <?php if ($operasi_pra['cek_rotgen'] == 1): ?>
-                            <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
-                        <?php endif; ?>
-                    </td>
-                    <td style="padding-top: 4px; line-height: 1.0; text-align: center;">17</td>
-                    <td style="padding-top: 4px; line-height: 1.0;">
-                        Tetes Efrisel I
-                    </td>
-                    <td style="padding-top: 4px; line-height: 1.0; text-align: center;">
-                        <?= $operasi_pra['cek_tetes_efrisel1'] ?>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="padding-top: 4px; line-height: 1.0;">ECG, Usia > 40 Tahun</td>
-                    <td style="padding-top: 4px; line-height: 1.0; text-align: center;">
-                        <?php if ($operasi_pra['cek_rotgen_usia'] == 1): ?>
-                            <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
-                        <?php endif; ?>
-                    </td>
-                    <td style="padding-top: 4px; line-height: 1.0; text-align: center;">18</td>
-                    <td style="padding-top: 4px; line-height: 1.0;">
-                        Tetes Efrisel II
-                    </td>
-                    <td style="padding-top: 4px; line-height: 1.0; text-align: center;">
-                        <?= $operasi_pra['cek_tetes_efrisel2'] ?>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="padding-top: 4px; line-height: 1.0;">Hasil konsul dokter anak/<em>internist</em>/retina</td>
-                    <td style="padding-top: 4px; line-height: 1.0; text-align: center;">
-                        <?php if ($operasi_pra['cek_rotgen_konsul'] == 1): ?>
-                            <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
-                        <?php endif; ?>
-                    </td>
-                    <td style="padding-top: 4px; line-height: 1.0; text-align: center;">19</td>
-                    <td style="padding-top: 4px; line-height: 1.0;">
-                        Tetes Midriatil I
-                    </td>
-                    <td style="padding-top: 4px; line-height: 1.0; text-align: center;">
-                        <?= $operasi_pra['cek_tetes_midriatil1'] ?>
-                    </td>
-                </tr>
-                <tr>
-                    <td rowspan="5" style="padding-top: 4px; line-height: 1.0; text-align: center;">9</td>
-                    <td style="padding-top: 4px; line-height: 1.0;">Cek File: Hepatitis, DM</td>
-                    <td style="padding-top: 4px; line-height: 1.0; text-align: center;">
-                        <?php if ($operasi_pra['cek_penyakit'] == 1): ?>
-                            <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
-                        <?php endif; ?>
-                    </td>
-                    <td style="padding-top: 4px; line-height: 1.0; text-align: center;">20</td>
-                    <td style="padding-top: 4px; line-height: 1.0;">
-                        Tetes Midriatil II
-                    </td>
-                    <td style="padding-top: 4px; line-height: 1.0; text-align: center;">
-                        <?= $operasi_pra['cek_tetes_midriatil2'] ?>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="padding-top: 4px; line-height: 1.0;">Jika Hepatitis(+), jadwal paling akhir</td>
-                    <td style="padding-top: 4px; line-height: 1.0; text-align: center;">
-                        <?php if ($operasi_pra['cek_hepatitis_akhir'] == 1): ?>
-                            <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
-                        <?php endif; ?>
-                    </td>
-                    <td style="padding-top: 4px; line-height: 1.0; text-align: center;">21</td>
-                    <td style="padding-top: 4px; line-height: 1.0;">
-                        Tetes Midriatil III
-                    </td>
-                    <td style="padding-top: 4px; line-height: 1.0; text-align: center;">
-                        <?= $operasi_pra['cek_tetes_midriatil3'] ?>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="padding-top: 4px; line-height: 1.0;">Penyakit lainnya</td>
-                    <td style="padding-top: 4px; line-height: 1.0; text-align: center;">
-                        <?= $operasi_pra['cek_penyakit_lainnya'] ?>
-                    </td>
-                    <td style="padding-top: 4px; line-height: 1.0; text-align: center;">22</td>
-                    <td style="padding-top: 4px; line-height: 1.0;">Makan pagi/siang</td>
-                    <td style="padding-top: 4px; line-height: 1.0; text-align: center;">
-                        <?php if ($operasi_pra['cek_makan'] == 1): ?>
-                            <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
-                        <?php endif; ?>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="padding-top: 4px; line-height: 1.0;">Tekanan darah</td>
-                    <td style="padding-top: 4px; line-height: 1.0; text-align: center;">
-                        <?= $operasi_pra['cek_tekanan_darah'] ?> mmHg
-                    </td>
-                    <td rowspan="2" style="padding-top: 4px; line-height: 1.0; text-align: center;">23</td>
-                    <td style="padding-top: 4px; line-height: 1.0;">Obat-obatan sebelumnya</td>
-                    <td style="padding-top: 4px; line-height: 1.0; text-align: center;">
-                        <?php if ($operasi_pra['cek_obat'] == 1): ?>
-                            <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
-                        <?php endif; ?>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="padding-top: 4px; line-height: 1.0;">Berat badan</td>
-                    <td style="padding-top: 4px; line-height: 1.0; text-align: center;">
-                        <?= $operasi_pra['cek_berat_badan'] ?> kg
-                    </td>
-                    <td style="padding-top: 4px; line-height: 1.0;">Jenis obat-obatan</td>
-                    <td style="padding-top: 4px; line-height: 1.0; text-align: center;">
-                        <?= $operasi_pra['cek_jenis_obat'] ?> kg
-                    </td>
-                </tr>
-            </table>
+                    <tr>
+                        <td style="padding-top: 4px; line-height: 1.0; text-align: center; white-space: nowrap;">1</td>
+                        <td style="padding-top: 4px; line-height: 1.0;">Hasil biometri</td>
+                        <td style="padding-top: 4px; line-height: 1.0; text-align: center; white-space: nowrap;">
+                            <?php if ($operasi_pra['cek_biometri'] == 1): ?>
+                                <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
+                            <?php endif; ?>
+                        </td>
+                        <td style="padding-top: 4px; line-height: 1.0; text-align: center; white-space: nowrap;">10</td>
+                        <td style="padding-top: 4px; line-height: 1.0;">Hasil Foto Fundus</td>
+                        <td style="padding-top: 4px; line-height: 1.0; text-align: center; white-space: nowrap;">
+                            <?php if ($operasi_pra['cek_foto_fundus'] == 1): ?>
+                                <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding-top: 4px; line-height: 1.0; text-align: center; white-space: nowrap;">2</td>
+                        <td style="padding-top: 4px; line-height: 1.0;">Hasil retinometri</td>
+                        <td style="padding-top: 4px; line-height: 1.0; text-align: center; white-space: nowrap;">
+                            <?php if ($operasi_pra['cek_retinometri'] == 1): ?>
+                                <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
+                            <?php endif; ?>
+                        </td>
+                        <td style="padding-top: 4px; line-height: 1.0; text-align: center; white-space: nowrap;">11</td>
+                        <td style="padding-top: 4px; line-height: 1.0;">Hasil USG</td>
+                        <td style="padding-top: 4px; line-height: 1.0; text-align: center; white-space: nowrap;">
+                            <?php if ($operasi_pra['cek_usg'] == 1): ?>
+                                <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding-top: 4px; line-height: 1.0; text-align: center; white-space: nowrap;">3</td>
+                        <td style="padding-top: 4px; line-height: 1.0;">Hasil laboratorium (labor lengkap/GDS)</td>
+                        <td style="padding-top: 4px; line-height: 1.0; text-align: center; white-space: nowrap;">
+                            <?php if ($operasi_pra['cek_labor'] == 1): ?>
+                                <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
+                            <?php endif; ?>
+                        </td>
+                        <td style="padding-top: 4px; line-height: 1.0; text-align: center; white-space: nowrap;">12</td>
+                        <td style="padding-top: 4px; line-height: 1.0;">Melepas perhiasan</td>
+                        <td style="padding-top: 4px; line-height: 1.0; text-align: center; white-space: nowrap;">
+                            <?php if ($operasi_pra['cek_perhiasan'] == 1): ?>
+                                <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding-top: 4px; line-height: 1.0; text-align: center; white-space: nowrap;">4</td>
+                        <td style="padding-top: 4px; line-height: 1.0;">Hasil radiologi</td>
+                        <td style="padding-top: 4px; line-height: 1.0; text-align: center; white-space: nowrap;">
+                            <?php if ($operasi_pra['cek_radiologi'] == 1): ?>
+                                <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
+                            <?php endif; ?>
+                        </td>
+                        <td style="padding-top: 4px; line-height: 1.0; text-align: center; white-space: nowrap;">13</td>
+                        <td style="padding-top: 4px; line-height: 1.0;">Tanda tangan <em>informed concent</em></td>
+                        <td style="padding-top: 4px; line-height: 1.0; text-align: center; white-space: nowrap;">
+                            <?php if ($operasi_pra['cek_ttd'] == 1): ?>
+                                <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding-top: 4px; line-height: 1.0; text-align: center; white-space: nowrap;">5</td>
+                        <td style="padding-top: 4px; line-height: 1.0;">Puasa</td>
+                        <td style="padding-top: 4px; line-height: 1.0; text-align: center; white-space: nowrap;">
+                            <?php if ($operasi_pra['cek_puasa'] == 1): ?>
+                                <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
+                            <?php endif; ?>
+                        </td>
+                        <td style="padding-top: 4px; line-height: 1.0; text-align: center; white-space: nowrap;">14</td>
+                        <td style="padding-top: 4px; line-height: 1.0;">Cuci muka + ganti pakaian</td>
+                        <td style="padding-top: 4px; line-height: 1.0; text-align: center; white-space: nowrap;">
+                            <?php if ($operasi_pra['cek_cuci'] == 1): ?>
+                                <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding-top: 4px; line-height: 1.0; text-align: center; white-space: nowrap;">6</td>
+                        <td style="padding-top: 4px; line-height: 1.0;">Instruksi khusus dari dokter</td>
+                        <td style="padding-top: 4px; line-height: 1.0; text-align: center; white-space: nowrap;">
+                            <?php if ($operasi_pra['cek_instruksi'] == 1): ?>
+                                <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
+                            <?php endif; ?>
+                        </td>
+                        <td style="padding-top: 4px; line-height: 1.0; text-align: center; white-space: nowrap;">15</td>
+                        <td style="padding-top: 4px; line-height: 1.0;"><em>Sign mark</em> + gelang pasien</td>
+                        <td style="padding-top: 4px; line-height: 1.0; text-align: center; white-space: nowrap;">
+                            <?php if ($operasi_pra['cek_mark'] == 1): ?>
+                                <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding-top: 4px; line-height: 1.0; text-align: center; white-space: nowrap;">7</td>
+                        <td style="padding-top: 4px; line-height: 1.0;">Lensa</td>
+                        <td style="padding-top: 4px; line-height: 1.0; text-align: center; white-space: nowrap;">
+                            <?php if ($operasi_pra['cek_lensa'] == 1): ?>
+                                <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
+                            <?php endif; ?>
+                        </td>
+                        <td style="padding-top: 4px; line-height: 1.0; text-align: center; white-space: nowrap;">16</td>
+                        <td style="padding-top: 4px; line-height: 1.0;">
+                            Tetes Pantocain 2%
+                        </td>
+                        <td style="padding-top: 4px; line-height: 1.0; text-align: center; white-space: nowrap;">
+                            <?= $operasi_pra['cek_tetes_pantocain'] ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td rowspan="3" style="padding-top: 4px; line-height: 1.0; text-align: center; white-space: nowrap;">8</td>
+                        <td style="padding-top: 4px; line-height: 1.0;">Rontgen</td>
+                        <td style="padding-top: 4px; line-height: 1.0; text-align: center; white-space: nowrap;">
+                            <?php if ($operasi_pra['cek_rotgen'] == 1): ?>
+                                <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
+                            <?php endif; ?>
+                        </td>
+                        <td style="padding-top: 4px; line-height: 1.0; text-align: center; white-space: nowrap;">17</td>
+                        <td style="padding-top: 4px; line-height: 1.0;">
+                            Tetes Efrisel I
+                        </td>
+                        <td style="padding-top: 4px; line-height: 1.0; text-align: center; white-space: nowrap;">
+                            <?= $operasi_pra['cek_tetes_efrisel1'] ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding-top: 4px; line-height: 1.0;">ECG, Usia > 40 Tahun</td>
+                        <td style="padding-top: 4px; line-height: 1.0; text-align: center; white-space: nowrap;">
+                            <?php if ($operasi_pra['cek_rotgen_usia'] == 1): ?>
+                                <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
+                            <?php endif; ?>
+                        </td>
+                        <td style="padding-top: 4px; line-height: 1.0; text-align: center; white-space: nowrap;">18</td>
+                        <td style="padding-top: 4px; line-height: 1.0;">
+                            Tetes Efrisel II
+                        </td>
+                        <td style="padding-top: 4px; line-height: 1.0; text-align: center; white-space: nowrap;">
+                            <?= $operasi_pra['cek_tetes_efrisel2'] ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding-top: 4px; line-height: 1.0;">Hasil konsul dokter anak/<em>internist</em>/retina</td>
+                        <td style="padding-top: 4px; line-height: 1.0; text-align: center; white-space: nowrap;">
+                            <?php if ($operasi_pra['cek_rotgen_konsul'] == 1): ?>
+                                <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
+                            <?php endif; ?>
+                        </td>
+                        <td style="padding-top: 4px; line-height: 1.0; text-align: center; white-space: nowrap;">19</td>
+                        <td style="padding-top: 4px; line-height: 1.0;">
+                            Tetes Midriatil I
+                        </td>
+                        <td style="padding-top: 4px; line-height: 1.0; text-align: center; white-space: nowrap;">
+                            <?= $operasi_pra['cek_tetes_midriatil1'] ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td rowspan="5" style="padding-top: 4px; line-height: 1.0; text-align: center; white-space: nowrap;">9</td>
+                        <td style="padding-top: 4px; line-height: 1.0;">Cek File: Hepatitis, DM</td>
+                        <td style="padding-top: 4px; line-height: 1.0; text-align: center; white-space: nowrap;">
+                            <?php if ($operasi_pra['cek_penyakit'] == 1): ?>
+                                <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
+                            <?php endif; ?>
+                        </td>
+                        <td style="padding-top: 4px; line-height: 1.0; text-align: center; white-space: nowrap;">20</td>
+                        <td style="padding-top: 4px; line-height: 1.0;">
+                            Tetes Midriatil II
+                        </td>
+                        <td style="padding-top: 4px; line-height: 1.0; text-align: center; white-space: nowrap;">
+                            <?= $operasi_pra['cek_tetes_midriatil2'] ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding-top: 4px; line-height: 1.0;">Jika Hepatitis(+), jadwal paling akhir</td>
+                        <td style="padding-top: 4px; line-height: 1.0; text-align: center; white-space: nowrap;">
+                            <?php if ($operasi_pra['cek_hepatitis_akhir'] == 1): ?>
+                                <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
+                            <?php endif; ?>
+                        </td>
+                        <td style="padding-top: 4px; line-height: 1.0; text-align: center; white-space: nowrap;">21</td>
+                        <td style="padding-top: 4px; line-height: 1.0;">
+                            Tetes Midriatil III
+                        </td>
+                        <td style="padding-top: 4px; line-height: 1.0; text-align: center; white-space: nowrap;">
+                            <?= $operasi_pra['cek_tetes_midriatil3'] ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding-top: 4px; line-height: 1.0;">Penyakit lainnya</td>
+                        <td style="padding-top: 4px; line-height: 1.0; text-align: center; white-space: nowrap;">
+                            <?= $operasi_pra['cek_penyakit_lainnya'] ?>
+                        </td>
+                        <td style="padding-top: 4px; line-height: 1.0; text-align: center; white-space: nowrap;">22</td>
+                        <td style="padding-top: 4px; line-height: 1.0;">Makan pagi/siang</td>
+                        <td style="padding-top: 4px; line-height: 1.0; text-align: center; white-space: nowrap;">
+                            <?php if ($operasi_pra['cek_makan'] == 1): ?>
+                                <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding-top: 4px; line-height: 1.0;">Tekanan darah</td>
+                        <td style="padding-top: 4px; line-height: 1.0; text-align: center; white-space: nowrap;">
+                            <?= $operasi_pra['cek_tekanan_darah'] ?> mmHg
+                        </td>
+                        <td rowspan="2" style="padding-top: 4px; line-height: 1.0; text-align: center; white-space: nowrap;">23</td>
+                        <td style="padding-top: 4px; line-height: 1.0;">Obat-obatan sebelumnya</td>
+                        <td style="padding-top: 4px; line-height: 1.0; text-align: center; white-space: nowrap;">
+                            <?php if ($operasi_pra['cek_obat'] == 1): ?>
+                                <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding-top: 4px; line-height: 1.0;">Berat badan</td>
+                        <td style="padding-top: 4px; line-height: 1.0; text-align: center; white-space: nowrap;">
+                            <?= $operasi_pra['cek_berat_badan'] ?> kg
+                        </td>
+                        <td style="padding-top: 4px; line-height: 1.0;">Jenis obat-obatan</td>
+                        <td style="padding-top: 4px; line-height: 1.0; text-align: center; white-space: nowrap;">
+                            <?= $operasi_pra['cek_jenis_obat'] ?> kg
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </div>
         <p style="font-size: 9pt;">Dicetak: <?= date("Y-m-d H:i:s") ?></p>
     </div>
