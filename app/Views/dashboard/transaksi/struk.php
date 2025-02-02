@@ -10,16 +10,13 @@ $tanggal = Time::parse($transaksi['tgl_transaksi']);
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="<?= base_url(); ?>assets_public/fonts/helvetica/stylesheet.css" rel="stylesheet">
     <title><?= $title; ?></title>
     <style>
-        @page {
-            size: 21cm 29.7cm;
-            margin: 0.5cm;
-        }
-
         body {
             font-family: Helvetica, Arial, sans-serif;
             font-size: 9pt;
+            line-height: 1.2;
         }
 
         .listtable {
@@ -119,7 +116,7 @@ $tanggal = Time::parse($transaksi['tgl_transaksi']);
                             <div><?= ($transaksi['nama_pasien'] == NULL) ? '<em>Anonim</em>' : $transaksi['nama_pasien']; ?></div>
                         </td>
                         <td style="width: 15%; vertical-align: top; padding: 0;">
-                            <div>Tanggal/Waktu:</div>
+                            <div>Tanggal dan Waktu:</div>
                         </td>
                         <td style="width: 35%; vertical-align: top; padding: 0;">
                             <div><?= $tanggal ?></div>
@@ -176,7 +173,7 @@ $tanggal = Time::parse($transaksi['tgl_transaksi']);
                         <th class="outline-border" style="width: 0%; vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: center; white-space: nowrap;">
                             Disc %
                         </th>
-                        <th colspan="2" class="outline-border" style="width: 40%; vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: center; white-space: nowrap;">
+                        <th colspan="2" class="outline-border" style="width: 0%; vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: center; white-space: nowrap;">
                             Sub Total
                         </th>
                     </tr>
@@ -242,7 +239,7 @@ $tanggal = Time::parse($transaksi['tgl_transaksi']);
                     <th class="outline-border" style="width: 0%; vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: center; white-space: nowrap;">
                         Disc %
                     </th>
-                    <th colspan="2" class="outline-border" style="width: 40%; vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: center; white-space: nowrap;">
+                    <th colspan="2" class="outline-border" style="width: 0%; vertical-align: top; padding-left: 2px; padding-right: 2px; text-align: center; white-space: nowrap;">
                         Sub Total
                     </th>
                 </tr>

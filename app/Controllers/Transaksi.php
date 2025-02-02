@@ -1507,14 +1507,27 @@ class Transaksi extends BaseController
                     'title' => 'Detail Transaksi ' . $id . ' - ' . $this->systemName // Judul halaman
                 ];
 
-                // Menghasilkan dan menampilkan struk transaksi dalam format PDF
-                $dompdf = new Dompdf();
-                $html = view('dashboard/transaksi/struk', $data);
-                $dompdf->loadHtml($html);
-                $dompdf->render();
-                $dompdf->stream('kwitansi-id-' . $transaksi['id_transaksi'] . '-' . $transaksi['no_kwitansi'] . '-' . $transaksi['tgl_transaksi'] . '-' . urlencode($transaksi['nama_pasien']) . '.pdf', [
-                    'Attachment' => FALSE // Mengunduh PDF atau membuka di browser
-                ]);
+                // Simpan HTML ke file sementara
+                $htmlFile = WRITEPATH . 'temp/output-transaksi.html';
+                file_put_contents($htmlFile, view('dashboard/transaksi/struk', $data));
+
+                // Tentukan path output PDF
+                $pdfFile = WRITEPATH . 'temp/output-transaksi.pdf';
+
+                // Jalankan Puppeteer untuk konversi HTML ke PDF
+                // Keterangan: "node " . FCPATH . "puppeteer-pdf.js $htmlFile $pdfFile panjang lebar marginAtas margin Kanan marginBawah marginKiri"
+                // Silakan lihat puppeteer-pdf.js di folder public untuk keterangan lebih lanjut.
+                $command = env('CMD-ENV') . "node " . FCPATH . "puppeteer-pdf.js $htmlFile $pdfFile 210mm 297mm 0.25cm 0.25cm 0.25cm 0.25cm";
+                shell_exec($command);
+
+                // Hapus file HTML
+                @unlink($htmlFile);
+
+                // Kirim PDF ke browser
+                return $this->response
+                    ->setHeader('Content-Type', 'application/pdf')
+                    ->setHeader('Content-Disposition', 'inline; filename="kwitansi-id-' . $transaksi['id_transaksi'] . '-' . $transaksi['no_kwitansi'] . '-' . $transaksi['tgl_transaksi'] . '-' . urlencode($transaksi['nama_pasien']) . '.pdf')
+                    ->setBody(file_get_contents($pdfFile));
             } else {
                 throw PageNotFoundException::forPageNotFound(); // Jika transaksi tidak valid, lempar exception
             }
