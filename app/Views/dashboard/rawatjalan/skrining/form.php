@@ -184,7 +184,7 @@ if ($skrining['jatuh_sempoyongan'] === 'YA' && $skrining['jatuh_penopang'] === '
                             :
                         </td>
                         <td style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            <?= $skrining['jatuh_info_dokter'] ?> <?= ($skrining['jatuh_info_dokter'] == 'YA') ? '(' . $skrining['jatuh_info_pukul'] . ')' : ''; ?>
+                            <?= $skrining['jatuh_info_dokter'] ?> <?= ($skrining['jatuh_info_dokter'] == 'YA') ? ((!empty($skrining['jatuh_info_pukul'])) ? '(' . $skrining['jatuh_info_pukul'] . ')' : '') : ''; ?>
                         </td>
                     </tr>
                 </tbody>
@@ -336,7 +336,7 @@ if ($skrining['jatuh_sempoyongan'] === 'YA' && $skrining['jatuh_penopang'] === '
                             :
                         </td>
                         <td style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            <?= $skrining['nyeri_info_dokter'] ?> <?= ($skrining['nyeri_info_dokter'] == 'YA') ? '(' . $skrining['nyeri_info_pukul'] . ')' : ''; ?>
+                            <?= $skrining['nyeri_info_dokter'] ?> <?= ($skrining['nyeri_info_dokter'] == 'YA') ? ((!empty($skrining['nyeri_info_pukul'])) ? '(' . $skrining['nyeri_info_pukul'] . ')' : '') : ''; ?>
                         </td>
                     </tr>
                 </tbody>
