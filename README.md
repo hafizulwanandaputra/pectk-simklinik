@@ -6,7 +6,7 @@
 
 1. Klon repositori ini.
 2. Arahkan ke folder repositori yang diklon.
-3. Buka aplikasi terminal dan jalankan `composer install`.
+3. Buka aplikasi terminal dan jalankan `composer install --no-dev` dan `npm install`.
 
 ## Pengaturan
 
@@ -19,9 +19,9 @@
    > URL dasar (_base URL_) didasarkan pada nilai `$_SERVER['SERVER_NAME']` PHP. Anda hanya perlu mengubah `requestURL` yang terdiri dari port dan subfolder (jika aplikasi disimpan dalam subfolder).
 7. Masuk menggunakan nama pengguna `admin` dan kata sandi `12345`. Anda perlu mengubah kata sandi dari `{base_url_anda}/settings/changepassword` dan kami sarankan untuk menggunakan kata sandi yang kuat demi keamanan yang lebih baik.
 
-### API Rawat Jalan dari Sistem Informasi Manajemen Klinik
+### Puppeteer untuk ekspor PDF
 
-Anda dapat menentukan `API-URL` (titik akhir URL API) dan `X-KEY` (otorisasi Kunci X) di `.env`. Pastikan Anda telah menyiapkan server API rawat jalan dari Sistem Informasi Manajemen Klinik.
+Ekspor dokumen-dokumen PDF pada sistem ini menggunakan [Puppeteer](https://github.com/puppeteer/puppeteer) yang merupakan pustaka JavaScript untuk Node.js. Pastikan peladen Anda sudah memiliki Node.js. Jika ada masalah terkait dengan Puppeteer, [silakan kunjungi halaman ini](https://pptr.dev/troubleshooting).
 
 ## Pengaturan Aplikasi Web Progresif (PWA)
 
@@ -105,7 +105,7 @@ Kode sumber aplikasi ini dilisensikan di bawah Lisensi MIT
 
 1. Clone this repostiory.
 2. Navigate into cloned repository folder.
-3. Open terminal app and run `composer install`.
+3. Open terminal app and run `composer install --no-dev` and `npm install`.
 
 ## Setup
 
@@ -118,9 +118,9 @@ Kode sumber aplikasi ini dilisensikan di bawah Lisensi MIT
    > The base URL is based on PHP's `$_SERVER['SERVER_NAME']` value. You just need to change the `requestURL` which consists of the port and the subfolder (if the app is stored in a subfolder).
 7. Sign in using username `admin` and password `12345`. You need to change the password from `{your_base_url}/settings/changepassword` and we recommend using a strong password for better security.
 
-### Outpatient API from Clinic's Management Information System
+### Puppeteer for PDF export
 
-You can specify `API-URL` (API URL endpoint) and `X-KEY` (X Key authorization) in `.env`. Make sure you have already set up the outpatient API server from Clinic's Management Information System.
+Export PDF documents on this system using [Puppeteer](https://github.com/puppeteer/puppeteer) which is a JavaScript library for Node.js. Make sure your server has Node.js. If you have any issues with Puppeteer, [please visit this page](https://pptr.dev/troubleshooting).
 
 ## Progressive Web App (PWA) Setup
 
