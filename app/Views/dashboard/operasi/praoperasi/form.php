@@ -140,7 +140,7 @@ $waktuFormatted = $dateTime->format('H.i.s');
                         <div>Nomor <em>Booking</em>: <?= $operasi['nomor_booking']; ?></div>
                         <div>Tanggal operasi: <?= $operasi['tanggal_operasi'] . ' ' . $operasi['jam_operasi']; ?></div>
                     </td>
-                    <td style="width: 40%; max-width: 5cm; vertical-align: top; padding: 0.1cm; border: 1px solid black; font-size: 8pt; overflow: hidden;">
+                    <td style="width: 40%; max-width: 5cm; vertical-align: middle; padding: 0.1cm; border: 1px solid black; font-size: 8pt; overflow: hidden;">
                         <div style="text-align: center;">
                             <div style="white-space: nowrap;"><?= $operasi['nama_pasien']; ?></div>
                             <div><?= $operasi['no_rm']; ?></div>
