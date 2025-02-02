@@ -35,16 +35,13 @@ $waktuFormatted = $time->format('H.i');
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="<?= base_url(); ?>assets_public/fonts/helvetica/stylesheet.css" rel="stylesheet">
     <title><?= $title; ?></title>
     <style>
-        @page {
-            size: 21cm 29.7cm;
-            margin: 1cm;
-        }
-
         body {
             font-family: Helvetica, Arial, sans-serif;
             font-size: 11pt;
+            line-height: 1.2;
         }
 
         .prescription {
@@ -283,6 +280,7 @@ $waktuFormatted = $time->format('H.i');
                     </tr>
                 </tbody>
             </table>
+            <hr>
             <table class="table" style="width: 100%; margin-bottom: 4px;">
                 <tbody>
                     <tr>
@@ -301,6 +299,7 @@ $waktuFormatted = $time->format('H.i');
                     </tr>
                 </tbody>
             </table>
+            <hr>
             <table class="table" style="width: 100%; margin-bottom: 4px;">
                 <tbody>
                     <tr>
