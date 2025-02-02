@@ -36,7 +36,7 @@ $tanggalFormatted = $tanggalFormatter->format($dateTime);
         body {
             font-family: Helvetica, Arial, sans-serif;
             font-size: 9pt;
-            line-height: 1.2;
+            line-height: 1.1;
         }
 
         .prescription {
