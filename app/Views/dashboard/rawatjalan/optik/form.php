@@ -315,7 +315,7 @@ $tanggalFormatted = $tanggalFormatter->format($dateTime);
         <table class="table" style="width: 100%; margin-bottom: 4px;">
             <tbody>
                 <tr>
-                    <td style="width: 60%; max-width: 6cm; vertical-align: top; padding: 0.1cm; border: 1px solid black; font-size: 8pt; overflow: hidden;">
+                    <td style="width: 60%; max-width: 6cm; vertical-align: middle; padding: 0.1cm; border: 1px solid black; font-size: 8pt; overflow: hidden;">
                         <center>
                             <div style="white-space: nowrap;"><?= $rawatjalan['nama_pasien']; ?></div>
                             <div><?= $rawatjalan['no_rm']; ?></div>

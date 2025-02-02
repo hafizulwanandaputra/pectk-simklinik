@@ -110,7 +110,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                         <h2 style="padding: 0;">PEMERIKSAAN PENUNJANG PASIEN RAWAT JALAN</h2>
                         <div>Tanggal registrasi: <?= $rawatjalan['tanggal_registrasi']; ?></div>
                     </td>
-                    <td style="width: 40%; max-width: 5cm; vertical-align: top; padding: 0.1cm; border: 1px solid black; font-size: 8pt; overflow: hidden;">
+                    <td style="width: 40%; max-width: 5cm; vertical-align: middle; padding: 0.1cm; border: 1px solid black; font-size: 8pt; overflow: hidden;">
                         <div style="text-align: center;">
                             <div style="white-space: nowrap;"><?= $rawatjalan['nama_pasien']; ?></div>
                             <div><?= $rawatjalan['no_rm']; ?></div>
