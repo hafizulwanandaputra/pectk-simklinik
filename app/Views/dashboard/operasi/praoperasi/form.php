@@ -489,7 +489,7 @@ $waktuFormatted = $dateTime->format('H.i.s');
                 </tbody>
             </table>
             <h3 style="padding-left: 0.25cm; padding-right: 0.25cm; padding-top: 0.25cm; margin: 0;">B. <em>CHECKLIST</em> PERSIAPAN PASIEN PRA OPERASI</h3>
-            <div style="padding-right: 0.25cm; padding-top: 0.25cm;">
+            <div style="padding-right: 0.25cm; padding-left: 0.25cm;">
                 <table class="full-border" style="width: 100%; margin-bottom: 4px; padding-right: 0.25cm; padding-left: 0.25cm;">
                     <tr>
                         <th style="padding-top: 4px; line-height: 1.0; width: 0%;">No</th>
