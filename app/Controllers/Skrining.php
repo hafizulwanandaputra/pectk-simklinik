@@ -225,7 +225,7 @@ class Skrining extends BaseController
                 'status_fungsional' => $this->request->getPost('status_fungsional') ?: NULL,
                 'status_info_pukul' => $this->request->getPost('status_info_pukul') ?: NULL,
                 'nyeri_kategori' => $this->request->getPost('nyeri_kategori') ?: NULL,
-                'nyeri_skala' => $this->request->getPost('nyeri_skala') ?: NULL,
+                'nyeri_skala' => $this->request->getPost('nyeri_skala') ?: '0',
                 'nyeri_lokasi' => $this->request->getPost('nyeri_lokasi') ?: NULL,
                 'nyeri_karakteristik' => $this->request->getPost('nyeri_karakteristik') ?: NULL,
                 'nyeri_durasi' => $this->request->getPost('nyeri_durasi') ?: NULL,
