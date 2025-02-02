@@ -14,16 +14,13 @@ $usia = $registrasi->diff($tanggal_lahir);
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="<?= base_url(); ?>assets_public/fonts/helvetica/stylesheet.css" rel="stylesheet">
     <title><?= $title; ?></title>
     <style>
-        @page {
-            size: 21cm 29.7cm;
-            margin: 1cm;
-        }
-
         body {
             font-family: Helvetica, Arial, sans-serif;
             font-size: 9pt;
+            line-height: 1.2;
         }
 
         .prescription {
@@ -234,36 +231,36 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <table class="table" style="width: 100%; margin-bottom: 4px; border: 1px solid black; border-collapse: collapse;">
                     <thead>
                         <tr>
-                            <th rowspan="2" style="width: 0%; vertical-align: middle; padding-left: 0.125cm; padding-right: 0.125cm; border: 1px solid black;">
+                            <th rowspan="2" style="width: 0%; vertical-align: middle; padding-top: 4px; padding-left: 0.125cm; padding-right: 0.125cm; border: 1px solid black;">
                                 Tanggal
                             </th>
-                            <th rowspan="2" style="width: 0%; vertical-align: middle; padding-left: 0.125cm; padding-right: 0.125cm; border: 1px solid black;">
+                            <th rowspan="2" style="width: 0%; vertical-align: middle; padding-top: 4px; padding-left: 0.125cm; padding-right: 0.125cm; border: 1px solid black;">
                                 Unit
                             </th>
-                            <th rowspan="2" style="width: 50%; vertical-align: middle; padding-left: 0.125cm; padding-right: 0.125cm; border: 1px solid black;">
+                            <th rowspan="2" style="width: 50%; vertical-align: middle; padding-top: 4px; padding-left: 0.125cm; padding-right: 0.125cm; border: 1px solid black;">
                                 Informasi/Edukasi Tentang
                             </th>
-                            <th colspan="2" style="width: 0%; vertical-align: middle; padding-left: 0.125cm; padding-right: 0.125cm; border: 1px solid black;">
+                            <th colspan="2" style="width: 0%; vertical-align: middle; padding-top: 4px; padding-left: 0.125cm; padding-right: 0.125cm; border: 1px solid black;">
                                 Edukator
                             </th>
-                            <th colspan="2" style="width: 0%; vertical-align: middle; padding-left: 0.125cm; padding-right: 0.125cm; border: 1px solid black;">
+                            <th colspan="2" style="width: 0%; vertical-align: middle; padding-top: 4px; padding-left: 0.125cm; padding-right: 0.125cm; border: 1px solid black;">
                                 Sasaran (Pasien / Keluarga / Lainnya)
                             </th>
-                            <th rowspan="2" style="width: 50%; vertical-align: middle; padding-left: 0.125cm; padding-right: 0.125cm; border: 1px solid black;">
+                            <th rowspan="2" style="width: 50%; vertical-align: middle; padding-top: 4px; padding-left: 0.125cm; padding-right: 0.125cm; border: 1px solid black;">
                                 Evaluasi
                             </th>
                         </tr>
                         <tr>
-                            <th style="width: 0%; vertical-align: middle; padding-left: 0.125cm; padding-right: 0.125cm; border: 1px solid black;">
+                            <th style="width: 0%; vertical-align: middle; padding-top: 4px; padding-left: 0.125cm; padding-right: 0.125cm; border: 1px solid black;">
                                 Nama dan Profesi
                             </th>
-                            <th style="width: 0%; vertical-align: middle; padding-left: 0.125cm; padding-right: 0.125cm; border: 1px solid black;">
+                            <th style="width: 0%; vertical-align: middle; padding-top: 4px; padding-left: 0.125cm; padding-right: 0.125cm; border: 1px solid black;">
                                 TTD
                             </th>
-                            <th style="width: 0%; vertical-align: middle; padding-left: 0.125cm; padding-right: 0.125cm; border: 1px solid black;">
+                            <th style="width: 0%; vertical-align: middle; padding-top: 4px; padding-left: 0.125cm; padding-right: 0.125cm; border: 1px solid black;">
                                 Nama
                             </th>
-                            <th style="width: 0%; vertical-align: middle; padding-left: 0.125cm; padding-right: 0.125cm; border: 1px solid black;">
+                            <th style="width: 0%; vertical-align: middle; padding-top: 4px; padding-left: 0.125cm; padding-right: 0.125cm; border: 1px solid black;">
                                 TTD
                             </th>
                         </tr>
@@ -271,32 +268,32 @@ $usia = $registrasi->diff($tanggal_lahir);
                     <tbody>
                         <?php foreach ($edukasi_evaluasi as $evaluasi) : ?>
                             <tr>
-                                <td style="width: 0%; vertical-align: middle; padding-left: 0.125cm; padding-right: 0.125cm; border: 1px solid black; white-space: nowrap;">
+                                <td style="width: 0%; vertical-align: middle; padding-top: 4px; padding-left: 0.125cm; padding-right: 0.125cm; border: 1px solid black; white-space: nowrap;">
                                     <?= date('Y-m-d', strtotime($evaluasi['waktu_dibuat'])) ?>
                                 </td>
-                                <td style="width: 0%; vertical-align: middle; padding-left: 0.125cm; padding-right: 0.125cm; border: 1px solid black;">
+                                <td style="width: 0%; vertical-align: middle; padding-top: 4px; padding-left: 0.125cm; padding-right: 0.125cm; border: 1px solid black;">
                                     <?= $evaluasi['unit'] ?>
                                 </td>
-                                <td style="width: 50%; vertical-align: middle; padding-left: 0.125cm; padding-right: 0.125cm; border: 1px solid black;">
+                                <td style="width: 50%; vertical-align: middle; padding-top: 4px; padding-left: 0.125cm; padding-right: 0.125cm; border: 1px solid black;">
                                     <?= $evaluasi['informasi_edukasi'] ?>
                                 </td>
-                                <td style="width: 0%; vertical-align: middle; padding-left: 0.125cm; padding-right: 0.125cm; border: 1px solid black;">
+                                <td style="width: 0%; vertical-align: middle; padding-top: 4px; padding-left: 0.125cm; padding-right: 0.125cm; border: 1px solid black;">
                                     <?= $evaluasi['nama_edukator'] ?> (<?= $evaluasi['profesi_edukator'] ?>)
                                 </td>
-                                <td style="width: 0%; vertical-align: middle; padding-left: 0.125cm; padding-right: 0.125cm; border: 1px solid black;">
+                                <td style="width: 0%; vertical-align: middle; padding-top: 4px; padding-left: 0.125cm; padding-right: 0.125cm; border: 1px solid black;">
                                     <?php if ($evaluasi['tanda_tangan_edukator'] != NULL) : ?>
                                         <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'uploads/ttd_edukator_evaluasi/' . $evaluasi['tanda_tangan_edukator'])) ?>" width="36px" alt="">
                                     <?php endif; ?>
                                 </td>
-                                <td style="width: 0%; vertical-align: middle; padding-left: 0.125cm; padding-right: 0.125cm; border: 1px solid black;">
+                                <td style="width: 0%; vertical-align: middle; padding-top: 4px; padding-left: 0.125cm; padding-right: 0.125cm; border: 1px solid black;">
                                     <?= $evaluasi['nama_pasien_keluarga'] ?>
                                 </td>
-                                <td style="width: 0%; vertical-align: middle; padding-left: 0.125cm; padding-right: 0.125cm; border: 1px solid black;">
+                                <td style="width: 0%; vertical-align: middle; padding-top: 4px; padding-left: 0.125cm; padding-right: 0.125cm; border: 1px solid black;">
                                     <?php if ($evaluasi['tanda_tangan_edukator'] != NULL) : ?>
                                         <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'uploads/ttd_pasien_evaluasi/' . $evaluasi['tanda_tangan_pasien'])) ?>" width="36px" alt="">
                                     <?php endif; ?>
                                 </td>
-                                <td style="width: 50%; vertical-align: middle; padding-left: 0.125cm; padding-right: 0.125cm; border: 1px solid black;">
+                                <td style="width: 50%; vertical-align: middle; padding-top: 4px; padding-left: 0.125cm; padding-right: 0.125cm; border: 1px solid black;">
                                     <?= $evaluasi['evaluasi'] ?>
                                 </td>
                             </tr>

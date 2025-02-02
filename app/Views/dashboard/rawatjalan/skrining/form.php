@@ -23,16 +23,13 @@ if ($skrining['jatuh_sempoyongan'] === 'YA' && $skrining['jatuh_penopang'] === '
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="<?= base_url(); ?>assets_public/fonts/helvetica/stylesheet.css" rel="stylesheet">
     <title><?= $title; ?></title>
     <style>
-        @page {
-            size: 21cm 29.7cm;
-            margin: 1cm;
-        }
-
         body {
             font-family: Helvetica, Arial, sans-serif;
             font-size: 9pt;
+            line-height: 1.2;
         }
 
         .prescription {
