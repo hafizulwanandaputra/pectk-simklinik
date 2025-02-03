@@ -321,7 +321,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                     </div>
                 <?php endif; ?>
                 <div id="empty-placeholder" class="my-3 text-center" style="display: none;">
-                    <h1><i class="fa-solid fa-eye"></i></h1>
+                    <h1 style="font-size: 7rem;"><i class="fa-solid fa-eye"></i></h1>
                     <h3>Pemeriksaan Fisik</h3>
                     <?php if (session()->get('role') != 'Perawat') : ?>
                         <div class="text-muted">Klik "Tambah Pemeriksaan Fisik" untuk menambahkan pemeriksaan fisik</div>
