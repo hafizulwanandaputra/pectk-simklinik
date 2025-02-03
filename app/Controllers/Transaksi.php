@@ -432,8 +432,8 @@ class Transaksi extends BaseController
             // Menyimpan data transaksi
             $data = [
                 'id_resep' => $id_resep, // ID resep
-                'nomor_registrasi' => $resepData['nomor_registrasi'], // Nomor registrasi
-                'no_rm' => $resepData['no_rm'], // Nomor rekam medis
+                'nomor_registrasi' => NULL, // Nomor registrasi
+                'no_rm' => NULL, // Nomor rekam medis
                 'nama_pasien' => $resepData['nama_pasien'], // Nama pasien
                 'alamat' => $resepData['alamat'], // Alamat pasien
                 'telpon' => $resepData['telpon'], // Nomor telepon pasien
