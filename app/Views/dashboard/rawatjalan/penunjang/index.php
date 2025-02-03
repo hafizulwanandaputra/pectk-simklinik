@@ -257,7 +257,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                     </button>
                 </div>
                 <div id="empty-placeholder" class="my-3 text-center" style="display: none;">
-                    <h1><i class="fa-solid fa-stethoscope"></i></h1>
+                    <h1 style="font-size: 7rem;"><i class="fa-solid fa-stethoscope"></i></h1>
                     <h3>Pemindaian Pemeriksaan Penunjang</h3>
                     <div class="text-muted">Klik "Tambah Pemindaian" untuk menambahkan pemindaian pemeriksaan penunjang</div>
                 </div>
