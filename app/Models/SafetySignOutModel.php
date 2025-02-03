@@ -23,6 +23,7 @@ class SafetySignOutModel extends Model
         'keterangan_instruksi',
         'nama_dokter_operator',
         'tanda_tangan_dokter_operator',
+        'jam',
         'waktu_dibuat',
     ];
 }

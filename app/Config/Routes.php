@@ -145,20 +145,20 @@ $routes->get('/(?i)operasi/(?i)praoperasi/(?i)export/(:any)', 'PraOperasi::expor
 $routes->post('/(?i)operasi/(?i)praoperasi/(?i)update/(:any)', 'PraOperasi::update/$1');
 
 // KESELAMATAN
-$routes->get('/(?i)operasi/(?i)safety/(:num)', 'SignIn::index/$1');
-$routes->get('/(?i)operasi/(?i)safety/(?i)export/(:any)', 'TimeOut::export/$1');
+$routes->get('/(?i)operasi/(?i)safety/(:num)', 'SafetyOperasi::index/$1');
+$routes->get('/(?i)operasi/(?i)safety/(?i)export/(:any)', 'SafetyOperasi::export/$1');
 
 // SIGN IN
-$routes->get('/(?i)operasi/(?i)signin/(?i)view/(:any)', 'SignIn::view/$1');
-$routes->post('/(?i)operasi/(?i)signin/(?i)update/(:any)', 'SignIn::update/$1');
+$routes->get('/(?i)operasi/(?i)signin/(?i)view/(:any)', 'SafetyOperasi::view_signin/$1');
+$routes->post('/(?i)operasi/(?i)signin/(?i)update/(:any)', 'SafetyOperasi::update_signin/$1');
 
 // SIGN OUT
-$routes->get('/(?i)operasi/(?i)signout/(?i)view/(:any)', 'SignOut::view/$1');
-$routes->post('/(?i)operasi/(?i)signout/(?i)update/(:any)', 'SignOut::update/$1');
+$routes->get('/(?i)operasi/(?i)signout/(?i)view/(:any)', 'SafetyOperasi::view_signout/$1');
+$routes->post('/(?i)operasi/(?i)signout/(?i)update/(:any)', 'SafetyOperasi::update_signout/$1');
 
 // TIME OUT
-$routes->get('/(?i)operasi/(?i)timeout/(?i)view/(:any)', 'TimeOut::view/$1');
-$routes->post('/(?i)operasi/(?i)timeout/(?i)update/(:any)', 'TimeOut::update/$1');
+$routes->get('/(?i)operasi/(?i)timeout/(?i)view/(:any)', 'SafetyOperasi::view_timeout$1');
+$routes->post('/(?i)operasi/(?i)timeout/(?i)update/(:any)', 'SafetyOperasi::update_timeout$1');
 
 // LAPORAN OPERASI
 $routes->get('/(?i)lpoperasi', 'LpOperasi::index');

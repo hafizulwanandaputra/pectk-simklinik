@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class SafetySignOutModel extends Model
+class SafetyTimeOutModel extends Model
 {
     protected $table = 'medrec_operasi_safety_timeout';
     protected $primaryKey = 'id_timeout';
@@ -29,6 +29,7 @@ class SafetySignOutModel extends Model
         'perlu_antibiotik_dan_guladarah',
         'nama_perawat',
         'tanda_tangan_perawat',
+        'jam',
         'waktu_dibuat',
     ];
 }
