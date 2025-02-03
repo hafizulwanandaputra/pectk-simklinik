@@ -62,27 +62,6 @@ class SafetyOperasi extends BaseController
                     ->getRowArray();
             }
 
-            $operasi_safety_signout = $db->table('medrec_operasi_safety_signout')
-                ->where('nomor_booking', $sp_operasi['nomor_booking'])
-                ->get()
-                ->getRowArray();
-
-            if (!$operasi_safety_signout) {
-                // Jika asesmen tidak ditemukan, buat asesmen baru dengan query builder
-                $db->table('medrec_operasi_safety_signout')->insert([
-                    'nomor_booking' => $sp_operasi['nomor_booking'],
-                    'nomor_registrasi' => $sp_operasi['nomor_registrasi'],
-                    'no_rm' => $sp_operasi['no_rm'],
-                    'waktu_dibuat' => date('Y-m-d H:i:s')
-                ]);
-
-                // Setelah asesmen dibuat, ambil kembali data asesmen menggunakan query builder
-                $operasi_safety_signout = $db->table('medrec_operasi_safety_signin')
-                    ->where('nomor_booking', $sp_operasi['nomor_booking'])
-                    ->get()
-                    ->getRowArray();
-            }
-
             $operasi_safety_timeout = $db->table('medrec_operasi_safety_timeout')
                 ->where('nomor_booking', $sp_operasi['nomor_booking'])
                 ->get()
@@ -99,6 +78,27 @@ class SafetyOperasi extends BaseController
 
                 // Setelah asesmen dibuat, ambil kembali data asesmen menggunakan query builder
                 $operasi_safety_timeout = $db->table('medrec_operasi_safety_signin')
+                    ->where('nomor_booking', $sp_operasi['nomor_booking'])
+                    ->get()
+                    ->getRowArray();
+            }
+
+            $operasi_safety_signout = $db->table('medrec_operasi_safety_signout')
+                ->where('nomor_booking', $sp_operasi['nomor_booking'])
+                ->get()
+                ->getRowArray();
+
+            if (!$operasi_safety_signout) {
+                // Jika asesmen tidak ditemukan, buat asesmen baru dengan query builder
+                $db->table('medrec_operasi_safety_signout')->insert([
+                    'nomor_booking' => $sp_operasi['nomor_booking'],
+                    'nomor_registrasi' => $sp_operasi['nomor_registrasi'],
+                    'no_rm' => $sp_operasi['no_rm'],
+                    'waktu_dibuat' => date('Y-m-d H:i:s')
+                ]);
+
+                // Setelah asesmen dibuat, ambil kembali data asesmen menggunakan query builder
+                $operasi_safety_signout = $db->table('medrec_operasi_safety_signin')
                     ->where('nomor_booking', $sp_operasi['nomor_booking'])
                     ->get()
                     ->getRowArray();
@@ -149,19 +149,19 @@ class SafetyOperasi extends BaseController
             $data = [
                 'operasi' => $sp_operasi,
                 'operasi_safety_signin' => $operasi_safety_signin,
-                'operasi_safety_signout' => $operasi_safety_signout,
                 'operasi_safety_timeout' => $operasi_safety_timeout,
+                'operasi_safety_signout' => $operasi_safety_signout,
                 'perawat' => $perawat,
                 'dokter' => $dokter,
-                'title' => 'Pemeriksaan Pra Operasi ' . $sp_operasi['nama_pasien'] . ' (' . $sp_operasi['no_rm'] . ') - ' . $sp_operasi['nomor_registrasi'] . ' - ' . $sp_operasi['nomor_booking'] . ' - ' . $this->systemName,
-                'headertitle' => 'Pemeriksaan Pra Operasi',
+                'title' => 'Pemeriksaan Keselamatan ' . $sp_operasi['nama_pasien'] . ' (' . $sp_operasi['no_rm'] . ') - ' . $sp_operasi['nomor_registrasi'] . ' - ' . $sp_operasi['nomor_booking'] . ' - ' . $this->systemName,
+                'headertitle' => 'Pemeriksaan Keselamatan',
                 'agent' => $this->request->getUserAgent(), // Mengambil informasi user agent
                 'previous' => $previous,
                 'next' => $next,
                 'listRawatJalan' => $listRawatJalan
             ];
             // Menampilkan tampilan untuk halaman pra operasi
-            return view('dashboard/operasi/praoperasi/index', $data);
+            return view('dashboard/operasi/safety/index', $data);
         } else {
             // Jika peran tidak dikenali, lemparkan pengecualian 404
             throw PageNotFoundException::forPageNotFound();
@@ -185,8 +185,8 @@ class SafetyOperasi extends BaseController
 
     public function view_signout($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' dan 'Dokter' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
+        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Perawat' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
             // Mengambil data safety sign out berdasarkan ID
             $data = $this->SafetySignOutModel->find($id); // Mengambil safety sign out
             return $this->response->setJSON($data); // Mengembalikan data safety sign out dalam format JSON
@@ -200,8 +200,8 @@ class SafetyOperasi extends BaseController
 
     public function view_timeout($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' dan 'Perawat' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat') {
+        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Perawat' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
             // Mengambil data safety time out berdasarkan ID
             $data = $this->SafetyTimeOutModel->find($id); // Mengambil safety time out
             return $this->response->setJSON($data); // Mengembalikan data safety time out dalam format JSON
@@ -257,8 +257,8 @@ class SafetyOperasi extends BaseController
                     'operasi_safety_signout' => $operasi_safety_signout,
                     'operasi_safety_timeout' => $operasi_safety_timeout,
                     'bcNoReg' => $bcNoReg,
-                    'title' => 'Pemeriksaan Pra Operasi ' . $sp_operasi['nama_pasien'] . ' (' . $sp_operasi['no_rm'] . ') - ' . $sp_operasi['nomor_registrasi'] . ' - ' . $sp_operasi['nomor_booking'] . ' - ' . $this->systemName,
-                    'headertitle' => 'Pemeriksaan Pra Operasi',
+                    'title' => 'Pemeriksaan Keselamatan ' . $sp_operasi['nama_pasien'] . ' (' . $sp_operasi['no_rm'] . ') - ' . $sp_operasi['nomor_registrasi'] . ' - ' . $sp_operasi['nomor_booking'] . ' - ' . $this->systemName,
+                    'headertitle' => 'Pemeriksaan Keselamatan',
                     'agent' => $this->request->getUserAgent(), // Mengambil informasi user agent
                 ];
                 // return view('dashboard/operasi/safety/form', $data);
@@ -298,33 +298,70 @@ class SafetyOperasi extends BaseController
     {
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
             $db = db_connect();
-            // $validation = \Config\Services::validation();
+            $validation = \Config\Services::validation();
 
             $operasi_safety_signin = $db->table('medrec_operasi_safety_signin')
                 ->where('id_signin', $id)
                 ->get()
                 ->getRowArray();
 
-            // $validation->setRules([
-            //     'perawat_praoperasi' => 'required',
-            //     'jenis_operasi' => 'required',
-            //     'ctt_vital_suhu' => 'required',
-            //     'ctt_vital_nadi' => 'required',
-            //     'ctt_vital_rr' => 'required',
-            //     'ctt_vital_td' => 'required',
-            //     'ctt_vital_nyeri' => 'required',
-            //     'ctt_vital_tb' => 'required',
-            //     'ctt_vital_bb' => 'required',
-            //     'ctt_mental' => 'required',
-            //     'ctt_alergi' => 'required',
-            //     'ctt_alergi_jelaskan' => $ctt_alergi === 'YA' ? 'required' : 'permit_empty',
-            //     'ctt_haid' => $sp_operasi['jenis_kelamin'] === 'P' ? 'required' : 'permit_empty',
-            //     'ctt_kepercayaan' => 'required',
-            // ]);
+            $rules = [
+                'ns_marker_operasi' => [
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => 'Wajib dipilih'
+                    ]
+                ],
+                'dr_marker_operasi' => [
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => 'Wajib dipilih'
+                    ]
+                ],
+                'ns_identifikasi_alergi' => [
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => 'Wajib dipilih'
+                    ]
+                ],
+                'dr_identifikasi_alergi' => [
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => 'Wajib dipilih'
+                    ]
+                ],
+                'ns_puasa' => [
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => 'Wajib dipilih'
+                    ]
+                ],
+                'dr_puasa' => [
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => 'Wajib dipilih'
+                    ]
+                ],
+                'ns_cek_lensa_intrakuler' => [
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => 'Wajib dipilih'
+                    ]
+                ],
+                'dr_cek_anestesi_khusus' => [
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => 'Wajib dipilih'
+                    ]
+                ],
+                'nama_dokter_anastesi' => [
+                    'rules' => 'required'
+                ]
+            ];
 
-            // if (!$this->validate($validation->getRules())) {
-            //     return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
-            // }
+            if (!$this->validate($rules)) {
+                return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
+            }
 
             if (session()->get('role') == 'Perawat') {
                 $data = [
@@ -333,7 +370,7 @@ class SafetyOperasi extends BaseController
                     'nomor_registrasi' => $operasi_safety_signin['nomor_registrasi'],
                     'no_rm' => $operasi_safety_signin['no_rm'],
                     'ns_konfirmasi_identitas' => $this->request->getPost('ns_konfirmasi_identitas') ?: NULL,
-                    'ns_masker_operasi' => $this->request->getPost('ns_masker_operasi') ?: NULL,
+                    'ns_marker_operasi' => $this->request->getPost('ns_marker_operasi') ?: NULL,
                     'ns_inform_consent_sesuai' => $this->request->getPost('ns_inform_consent_sesuai') ?: NULL,
                     'ns_identifikasi_alergi' => $this->request->getPost('ns_identifikasi_alergi') ?: NULL,
                     'ns_puasa' => $this->request->getPost('ns_puasa') ?: NULL,
@@ -349,12 +386,12 @@ class SafetyOperasi extends BaseController
                     'nomor_registrasi' => $operasi_safety_signin['nomor_registrasi'],
                     'no_rm' => $operasi_safety_signin['no_rm'],
                     'dr_konfirmasi_identitas' => $this->request->getPost('dr_konfirmasi_identitas') ?: NULL,
-                    'dr_masker_operasi' => $this->request->getPost('dr_masker_operasi') ?: NULL,
+                    'dr_marker_operasi' => $this->request->getPost('dr_marker_operasi') ?: NULL,
                     'dr_inform_consent_sesuai' => $this->request->getPost('dr_inform_consent_sesuai') ?: NULL,
                     'dr_identifikasi_alergi' => $this->request->getPost('dr_identifikasi_alergi') ?: NULL,
                     'dr_puasa' => $this->request->getPost('dr_puasa') ?: NULL,
                     'dr_cek_anestesi_khusus' => $this->request->getPost('dr_cek_anestesi_khusus') ?: NULL,
-                    'dr_cek_konfirmasi_anestersi' => $this->request->getPost('dr_cek_konfirmasi_anestersi') ?: NULL,
+                    'dr_konfirmasi_anastersi' => $this->request->getPost('dr_konfirmasi_anastersi') ?: NULL,
                     'nama_dokter_anastesi' => $this->request->getPost('nama_dokter_anastesi') ?: NULL,
                     'waktu_dibuat' => $operasi_safety_signin['waktu_dibuat'],
                 ];
@@ -365,26 +402,176 @@ class SafetyOperasi extends BaseController
                     'nomor_registrasi' => $operasi_safety_signin['nomor_registrasi'],
                     'no_rm' => $operasi_safety_signin['no_rm'],
                     'ns_konfirmasi_identitas' => $this->request->getPost('ns_konfirmasi_identitas') ?: NULL,
-                    'ns_masker_operasi' => $this->request->getPost('ns_masker_operasi') ?: NULL,
+                    'ns_marker_operasi' => $this->request->getPost('ns_marker_operasi') ?: NULL,
                     'ns_inform_consent_sesuai' => $this->request->getPost('ns_inform_consent_sesuai') ?: NULL,
                     'ns_identifikasi_alergi' => $this->request->getPost('ns_identifikasi_alergi') ?: NULL,
                     'ns_puasa' => $this->request->getPost('ns_puasa') ?: NULL,
                     'ns_cek_lensa_intrakuler' => $this->request->getPost('ns_cek_lensa_intrakuler') ?: NULL,
                     'ns_konfirmasi_lensa' => $this->request->getPost('ns_konfirmasi_lensa') ?: NULL,
                     'dr_konfirmasi_identitas' => $this->request->getPost('dr_konfirmasi_identitas') ?: NULL,
-                    'dr_masker_operasi' => $this->request->getPost('dr_masker_operasi') ?: NULL,
+                    'dr_marker_operasi' => $this->request->getPost('dr_marker_operasi') ?: NULL,
                     'dr_inform_consent_sesuai' => $this->request->getPost('dr_inform_consent_sesuai') ?: NULL,
                     'dr_identifikasi_alergi' => $this->request->getPost('dr_identifikasi_alergi') ?: NULL,
                     'dr_puasa' => $this->request->getPost('dr_puasa') ?: NULL,
                     'dr_cek_anestesi_khusus' => $this->request->getPost('dr_cek_anestesi_khusus') ?: NULL,
-                    'dr_cek_konfirmasi_anestersi' => $this->request->getPost('dr_cek_konfirmasi_anestersi') ?: NULL,
+                    'dr_konfirmasi_anastersi' => $this->request->getPost('dr_konfirmasi_anastersi') ?: NULL,
                     'nama_dokter_anastesi' => $this->request->getPost('nama_dokter_anastesi') ?: NULL,
                     'waktu_dibuat' => $operasi_safety_signin['waktu_dibuat'],
                 ];
             }
 
             $db->table('medrec_operasi_safety_signin')->where('id_signin', $id)->update($data);
-            return $this->response->setJSON(['success' => true, 'message' => 'Pemeriksaan pra operasi berhasil diperbarui']);
+            return $this->response->setJSON(['success' => true, 'message' => 'Pemeriksaan keselamatan <em>sign in</em> berhasil diperbarui']);
+        } else {
+            return $this->response->setStatusCode(404)->setJSON(['error' => 'Halaman tidak ditemukan']);
+        }
+    }
+
+    public function update_signout($id)
+    {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
+            $db = db_connect();
+            $validation = \Config\Services::validation();
+
+            $operasi_safety_signout = $db->table('medrec_operasi_safety_signout')
+                ->where('id_signout', $id)
+                ->get()
+                ->getRowArray();
+
+            $masalah_instrumen = $this->request->getPost('masalah_instrumen');
+            $instruksi_khusus = $this->request->getPost('instruksi_khusus');
+
+            $rules = [
+                'spesimen_kultur' => [
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => 'Wajib dipilih'
+                    ]
+                ],
+                'masalah_instrumen' => [
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => 'Wajib dipilih'
+                    ]
+                ],
+                'keterangan_masalah' => [
+                    'rules' => $masalah_instrumen === 'YA' ? 'required' : 'permit_empty',
+                    'errors' => [
+                        'required' => 'Wajib diisi'
+                    ]
+                ],
+                'keterangan_instruksi' => [
+                    'rules' => $instruksi_khusus === '1' ? 'required' : 'permit_empty',
+                    'errors' => [
+                        'required' => 'Wajib diisi'
+                    ]
+                ],
+                'nama_dokter_operator' => [
+                    'rules' => 'required'
+                ]
+            ];
+
+            if (!$this->validate($rules)) {
+                return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
+            }
+
+            $data = [
+                'id_signout' => $id,
+                'nomor_booking' => $operasi_safety_signout['nomor_booking'],
+                'nomor_registrasi' => $operasi_safety_signout['nomor_registrasi'],
+                'no_rm' => $operasi_safety_signout['no_rm'],
+                'kelengkapan_instrumen' => $this->request->getPost('kelengkapan_instrumen') ?: NULL,
+                'spesimen_kultur' => $this->request->getPost('spesimen_kultur') ?: NULL,
+                'label_pasien' => $this->request->getPost('label_pasien') ?: NULL,
+                'masalah_instrumen' => $this->request->getPost('masalah_instrumen') ?: NULL,
+                'keterangan_masalah' => $this->request->getPost('keterangan_masalah') ?: NULL,
+                'instruksi_khusus' => $this->request->getPost('instruksi_khusus') ?: NULL,
+                'keterangan_instruksi' => $this->request->getPost('keterangan_instruksi') ?: NULL,
+                'nama_dokter_operator' => $this->request->getPost('nama_dokter_operator') ?: NULL,
+                'waktu_dibuat' => $operasi_safety_signout['waktu_dibuat'],
+            ];
+
+            // Periksa apakah jam sudah ada, jika belum, isi dengan waktu sekarang
+            if (empty($operasi_safety_signout['jam'])) {
+                $data['jam'] = date('H:i:s');
+            }
+
+            $db->table('medrec_operasi_safety_signout')->where('id_signout', $id)->update($data);
+            return $this->response->setJSON(['success' => true, 'message' => 'Pemeriksaan keselamatan <em>sign out</em> berhasil diperbarui']);
+        } else {
+            return $this->response->setStatusCode(404)->setJSON(['error' => 'Halaman tidak ditemukan']);
+        }
+    }
+
+    public function update_timeout($id)
+    {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
+            $db = db_connect();
+            $validation = \Config\Services::validation();
+
+            $operasi_safety_timeout = $db->table('medrec_operasi_safety_timeout')
+                ->where('id_timeout', $id)
+                ->get()
+                ->getRowArray();
+
+            $rules = [
+                'alergi' => [
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => 'Wajib dipilih'
+                    ]
+                ],
+                'proteksi' => [
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => 'Wajib dipilih'
+                    ]
+                ],
+                'perlu_antibiotik_dan_guladarah' => [
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => 'Wajib dipilih'
+                    ]
+                ],
+                'nama_perawat' => [
+                    'rules' => 'required'
+                ]
+            ];
+
+            if (!$this->validate($rules)) {
+                return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
+            }
+
+            $data = [
+                'id_timeout' => $id,
+                'nomor_booking' => $operasi_safety_timeout['nomor_booking'],
+                'nomor_registrasi' => $operasi_safety_timeout['nomor_registrasi'],
+                'no_rm' => $operasi_safety_timeout['no_rm'],
+                'perkenalan_diri' => $this->request->getPost('perkenalan_diri') ?: NULL,
+                'cek_nama_mr' => $this->request->getPost('cek_nama_mr') ?: NULL,
+                'cek_rencana_tindakan' => $this->request->getPost('cek_rencana_tindakan') ?: NULL,
+                'cek_marker' => $this->request->getPost('cek_marker') ?: NULL,
+                'alergi' => $this->request->getPost('alergi') ?: NULL,
+                'lateks' => $this->request->getPost('lateks') ?: NULL,
+                'proteksi' => $this->request->getPost('proteksi') ?: NULL,
+                'proteksi_kasa' => $this->request->getPost('proteksi_kasa') ?: NULL,
+                'proteksi_shield' => $this->request->getPost('proteksi_shield') ?: NULL,
+                'info_instrumen_ok' => $this->request->getPost('info_instrumen_ok') ?: NULL,
+                'info_teknik_ok' => $this->request->getPost('info_teknik_ok') ?: NULL,
+                'info_steril_instrumen' => $this->request->getPost('info_steril_instrumen') ?: NULL,
+                'info_kelengkapan_instrumen' => $this->request->getPost('info_kelengkapan_instrumen') ?: NULL,
+                'perlu_antibiotik_dan_guladarah' => $this->request->getPost('perlu_antibiotik_dan_guladarah') ?: NULL,
+                'nama_perawat' => $this->request->getPost('nama_perawat') ?: NULL,
+                'waktu_dibuat' => $operasi_safety_timeout['waktu_dibuat'],
+            ];
+
+            // Periksa apakah jam sudah ada, jika belum, isi dengan waktu sekarang
+            if (empty($operasi_safety_timeout['jam'])) {
+                $data['jam'] = date('H:i:s');
+            }
+
+            $db->table('medrec_operasi_safety_timeout')->where('id_timeout', $id)->update($data);
+            return $this->response->setJSON(['success' => true, 'message' => 'Pemeriksaan keselamatan <em>time out</em> berhasil diperbarui']);
         } else {
             return $this->response->setStatusCode(404)->setJSON(['error' => 'Halaman tidak ditemukan']);
         }

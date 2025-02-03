@@ -157,8 +157,8 @@ $routes->get('/(?i)operasi/(?i)signout/(?i)view/(:any)', 'SafetyOperasi::view_si
 $routes->post('/(?i)operasi/(?i)signout/(?i)update/(:any)', 'SafetyOperasi::update_signout/$1');
 
 // TIME OUT
-$routes->get('/(?i)operasi/(?i)timeout/(?i)view/(:any)', 'SafetyOperasi::view_timeout$1');
-$routes->post('/(?i)operasi/(?i)timeout/(?i)update/(:any)', 'SafetyOperasi::update_timeout$1');
+$routes->get('/(?i)operasi/(?i)timeout/(?i)view/(:any)', 'SafetyOperasi::view_timeout/$1');
+$routes->post('/(?i)operasi/(?i)timeout/(?i)update/(:any)', 'SafetyOperasi::update_timeout/$1');
 
 // LAPORAN OPERASI
 $routes->get('/(?i)lpoperasi', 'LpOperasi::index');

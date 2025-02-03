@@ -13,7 +13,6 @@ class SafetySignOutModel extends Model
         'no_rm',
         'nomor_registrasi',
         'nomor_booking',
-        'ns_konfirmasi_identitas',
         'kelengkapan_instrumen',
         'spesimen_kultur',
         'label_pasien',
