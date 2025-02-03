@@ -40,12 +40,12 @@ $usia = $registrasi->diff($tanggal_lahir);
         <span class="visually-hidden">Loading...</span>
     </div>
     <?php if ($previous): ?>
-        <a class="fs-6 mx-2 text-success-emphasis" href="<?= site_url('operasi/praoperasi/' . $previous['id_sp_operasi']) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="<?= $previous['nomor_booking']; ?> • <?= $previous['no_rm'] ?> • <?= $previous['nama_pasien']; ?>"><i class="fa-solid fa-circle-arrow-left"></i></a>
+        <a class="fs-6 mx-2 text-success-emphasis" href="<?= site_url('operasi/safety/' . $previous['id_sp_operasi']) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="<?= $previous['nomor_booking']; ?> • <?= $previous['no_rm'] ?> • <?= $previous['nama_pasien']; ?>"><i class="fa-solid fa-circle-arrow-left"></i></a>
     <?php else: ?>
         <span class="fs-6 mx-2 text-success-emphasis" style="cursor: no-drop; opacity: .5;" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Tidak ada pasien operasi sebelumnya"><i class="fa-solid fa-circle-arrow-left"></i></span>
     <?php endif; ?>
     <?php if ($next): ?>
-        <a class="fs-6 mx-2 text-success-emphasis" href="<?= site_url('operasi/praoperasi/' . $next['id_sp_operasi']) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="<?= $next['nomor_booking']; ?> • <?= $next['no_rm'] ?> • <?= $next['nama_pasien']; ?>"><i class="fa-solid fa-circle-arrow-right"></i></a>
+        <a class="fs-6 mx-2 text-success-emphasis" href="<?= site_url('operasi/safety/' . $next['id_sp_operasi']) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="<?= $next['nomor_booking']; ?> • <?= $next['no_rm'] ?> • <?= $next['nama_pasien']; ?>"><i class="fa-solid fa-circle-arrow-right"></i></a>
     <?php else: ?>
         <span class="fs-6 mx-2 text-success-emphasis" style="cursor: no-drop; opacity: .5;" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Tidak ada pasien operasi berikutnya"><i class="fa-solid fa-circle-arrow-right"></i></span>
     <?php endif; ?>
