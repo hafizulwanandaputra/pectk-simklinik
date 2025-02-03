@@ -305,59 +305,121 @@ class SafetyOperasi extends BaseController
                 ->get()
                 ->getRowArray();
 
-            $rules = [
-                'ns_marker_operasi' => [
-                    'rules' => 'required',
-                    'errors' => [
-                        'required' => 'Wajib dipilih'
+            if (session()->get('role') == 'Perawat') {
+                $rules = [
+                    'ns_marker_operasi' => [
+                        'rules' => 'required',
+                        'errors' => [
+                            'required' => 'Wajib dipilih'
+                        ]
+                    ],
+                    'ns_identifikasi_alergi' => [
+                        'rules' => 'required',
+                        'errors' => [
+                            'required' => 'Wajib dipilih'
+                        ]
+                    ],
+                    'ns_puasa' => [
+                        'rules' => 'required',
+                        'errors' => [
+                            'required' => 'Wajib dipilih'
+                        ]
+                    ],
+                    'ns_cek_lensa_intrakuler' => [
+                        'rules' => 'required',
+                        'errors' => [
+                            'required' => 'Wajib dipilih'
+                        ]
+                    ],
+                    'nama_dokter_anastesi' => [
+                        'rules' => 'required'
                     ]
-                ],
-                'dr_marker_operasi' => [
-                    'rules' => 'required',
-                    'errors' => [
-                        'required' => 'Wajib dipilih'
+                ];
+            } else if (session()->get('role') == 'Dokter') {
+                $rules = [
+                    'dr_marker_operasi' => [
+                        'rules' => 'required',
+                        'errors' => [
+                            'required' => 'Wajib dipilih'
+                        ]
+                    ],
+                    'dr_identifikasi_alergi' => [
+                        'rules' => 'required',
+                        'errors' => [
+                            'required' => 'Wajib dipilih'
+                        ]
+                    ],
+                    'dr_puasa' => [
+                        'rules' => 'required',
+                        'errors' => [
+                            'required' => 'Wajib dipilih'
+                        ]
+                    ],
+                    'dr_cek_anestesi_khusus' => [
+                        'rules' => 'required',
+                        'errors' => [
+                            'required' => 'Wajib dipilih'
+                        ]
+                    ],
+                    'nama_dokter_anastesi' => [
+                        'rules' => 'required'
                     ]
-                ],
-                'ns_identifikasi_alergi' => [
-                    'rules' => 'required',
-                    'errors' => [
-                        'required' => 'Wajib dipilih'
+                ];
+            } else if (session()->get('role') == 'Admin') {
+                $rules = [
+                    'ns_marker_operasi' => [
+                        'rules' => 'required',
+                        'errors' => [
+                            'required' => 'Wajib dipilih'
+                        ]
+                    ],
+                    'dr_marker_operasi' => [
+                        'rules' => 'required',
+                        'errors' => [
+                            'required' => 'Wajib dipilih'
+                        ]
+                    ],
+                    'ns_identifikasi_alergi' => [
+                        'rules' => 'required',
+                        'errors' => [
+                            'required' => 'Wajib dipilih'
+                        ]
+                    ],
+                    'dr_identifikasi_alergi' => [
+                        'rules' => 'required',
+                        'errors' => [
+                            'required' => 'Wajib dipilih'
+                        ]
+                    ],
+                    'ns_puasa' => [
+                        'rules' => 'required',
+                        'errors' => [
+                            'required' => 'Wajib dipilih'
+                        ]
+                    ],
+                    'dr_puasa' => [
+                        'rules' => 'required',
+                        'errors' => [
+                            'required' => 'Wajib dipilih'
+                        ]
+                    ],
+                    'ns_cek_lensa_intrakuler' => [
+                        'rules' => 'required',
+                        'errors' => [
+                            'required' => 'Wajib dipilih'
+                        ]
+                    ],
+                    'dr_cek_anestesi_khusus' => [
+                        'rules' => 'required',
+                        'errors' => [
+                            'required' => 'Wajib dipilih'
+                        ]
+                    ],
+                    'nama_dokter_anastesi' => [
+                        'rules' => 'required'
                     ]
-                ],
-                'dr_identifikasi_alergi' => [
-                    'rules' => 'required',
-                    'errors' => [
-                        'required' => 'Wajib dipilih'
-                    ]
-                ],
-                'ns_puasa' => [
-                    'rules' => 'required',
-                    'errors' => [
-                        'required' => 'Wajib dipilih'
-                    ]
-                ],
-                'dr_puasa' => [
-                    'rules' => 'required',
-                    'errors' => [
-                        'required' => 'Wajib dipilih'
-                    ]
-                ],
-                'ns_cek_lensa_intrakuler' => [
-                    'rules' => 'required',
-                    'errors' => [
-                        'required' => 'Wajib dipilih'
-                    ]
-                ],
-                'dr_cek_anestesi_khusus' => [
-                    'rules' => 'required',
-                    'errors' => [
-                        'required' => 'Wajib dipilih'
-                    ]
-                ],
-                'nama_dokter_anastesi' => [
-                    'rules' => 'required'
-                ]
-            ];
+                ];
+            }
 
             if (!$this->validate($rules)) {
                 return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
@@ -505,7 +567,7 @@ class SafetyOperasi extends BaseController
 
     public function update_timeout($id)
     {
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat') {
             $db = db_connect();
             $validation = \Config\Services::validation();
 
