@@ -402,13 +402,9 @@ class Transaksi extends BaseController
             // Mengambil nomor registrasi dari permintaan POST
             $id_resep = $this->request->getPost('id_resep');
 
-            // Mengambil data dari tabel resep berdasarkan nomor registrasi
+            // Mengambil data dari tabel resep
             $ResepModel = new ResepModel();
             $resepData = $ResepModel
-                ->where('nomor_registrasi', null)
-                ->where('no_rm', null)
-                ->where('telpon', null)
-                ->where('tempat_lahir', null)
                 ->where('dokter', 'Resep Luar')
                 ->where('status', 0)
                 ->where('id_resep', $id_resep)
@@ -436,8 +432,8 @@ class Transaksi extends BaseController
             // Menyimpan data transaksi
             $data = [
                 'id_resep' => $id_resep, // ID resep
-                'nomor_registrasi' => $resepData['nomor_registrasi'], // Nomor registrasi
-                'no_rm' => $resepData['no_rm'], // Nomor rekam medis
+                'nomor_registrasi' => NULL, // Nomor registrasi
+                'no_rm' => NULL, // Nomor rekam medis
                 'nama_pasien' => $resepData['nama_pasien'], // Nama pasien
                 'alamat' => $resepData['alamat'], // Alamat pasien
                 'telpon' => $resepData['telpon'], // Nomor telepon pasien
