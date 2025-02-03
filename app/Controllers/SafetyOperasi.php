@@ -77,7 +77,7 @@ class SafetyOperasi extends BaseController
                 ]);
 
                 // Setelah asesmen dibuat, ambil kembali data asesmen menggunakan query builder
-                $operasi_safety_timeout = $db->table('medrec_operasi_safety_signin')
+                $operasi_safety_timeout = $db->table('medrec_operasi_safety_timeout')
                     ->where('nomor_booking', $sp_operasi['nomor_booking'])
                     ->get()
                     ->getRowArray();
@@ -98,7 +98,7 @@ class SafetyOperasi extends BaseController
                 ]);
 
                 // Setelah asesmen dibuat, ambil kembali data asesmen menggunakan query builder
-                $operasi_safety_signout = $db->table('medrec_operasi_safety_signin')
+                $operasi_safety_signout = $db->table('medrec_operasi_safety_signout')
                     ->where('nomor_booking', $sp_operasi['nomor_booking'])
                     ->get()
                     ->getRowArray();
