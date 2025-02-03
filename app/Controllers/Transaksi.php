@@ -362,7 +362,7 @@ class Transaksi extends BaseController
                 'no_rm' => $resepData['no_rm'], // Nomor rekam medis
                 'nama_pasien' => $resepData['nama_pasien'], // Nama pasien
                 'alamat' => $resepData['alamat'], // Alamat pasien
-                'telpon' => $resepData['telpon'], // Nomor telepon pasien
+                'telpon' => NULL, // Nomor telepon pasien
                 'jenis_kelamin' => $resepData['jenis_kelamin'], // Jenis kelamin pasien
                 'tempat_lahir' => $resepData['tempat_lahir'], // Tempat lahir pasien
                 'tanggal_lahir' => $resepData['tanggal_lahir'], // Tanggal lahir pasien
