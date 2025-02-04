@@ -273,7 +273,7 @@ class SafetyOperasi extends BaseController
                 // Jalankan Puppeteer untuk konversi HTML ke PDF
                 // Keterangan: "node " . FCPATH . "puppeteer-pdf.js $htmlFile $pdfFile panjang lebar marginAtas margin Kanan marginBawah marginKiri"
                 // Silakan lihat puppeteer-pdf.js di folder public untuk keterangan lebih lanjut.
-                $command = env('CMD-ENV') . "node " . FCPATH . "puppeteer-pdf.js $htmlFile $pdfFile 210mm 297mm 1cm 1cm 1cm 1cm";
+                $command = env('CMD-ENV') . "node " . FCPATH . "puppeteer-pdf.js $htmlFile $pdfFile 297mm 210mm 1cm 1cm 1cm 1cm";
                 shell_exec($command);
 
                 // Hapus file HTML

@@ -88,7 +88,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             <div class="mb-3">
                 <div class="fw-bold mb-2 border-bottom"><em>Sign In</em><br><small class="text-muted fw-normal">Sebelum tindakan anestesi</small></div>
                 <div class="mb-2 border-top d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-start">
-                    <div>Pasien (penanggung jawab) telah mengonfirmasi identitas pasien, prosedur dan lokasi tindakan (termasuk dalam tindakan anastesi)</div>
+                    <div>Pasien (penanggung jawab) telah mengonfirmasi identitas pasien, prosedur dan lokasi tindakan (termasuk dalam tindakan anestesi)</div>
                     <div class="d-flex align-items-center justify-content-evenly">
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="checkbox" id="ns_konfirmasi_identitas" name="ns_konfirmasi_identitas" value="1">
@@ -276,7 +276,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                     </div>
                 </div>
                 <div class="mb-2 border-top d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-start">
-                    <div>Perhatikan anastesi khusus termasuk <em>veorus trombo emolism</em></div>
+                    <div>Perhatikan anestesi khusus termasuk <em>veorus trombo emolism</em></div>
                     <div class="d-flex align-items-center justify-content-evenly">
                         <div>
                             <div class="text-center text-lg-start">Dokter</div>
@@ -336,13 +336,13 @@ $usia = $registrasi->diff($tanggal_lahir);
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="checkbox" id="perkenalan_diri" name="perkenalan_diri" value="1">
                             <label class="form-check-label" for="perkenalan_diri">
-                                Ya/Telah dilakukan
+                                Telah dilakukan
                             </label>
                         </div>
                     </div>
                 </div>
                 <div class="mb-2 border-top d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-start">
-                    <div>Dokter operator (dokter spesialis mata), dokter anastesi dan perawat melakukan cek identitas pasien dan rencana tindakan (<em>informed consent</em>) yang dilakukan secara verbal</div>
+                    <div>Dokter operator (dokter spesialis mata), dokter anestesi dan perawat melakukan cek identitas pasien dan rencana tindakan (<em>informed consent</em>) yang dilakukan secara verbal</div>
                     <div class="d-flex flex-row flex-lg-column justify-content-center align-items-start">
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="checkbox" id="cek_nama_mr" name="cek_nama_mr" value="1">
@@ -597,7 +597,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                                 <option value="<?= $list['fullname'] ?>"><?= $list['fullname'] ?></option>
                             <?php endforeach; ?>
                         </select>
-                        <label for="nama_dokter_operator">Dokter Operator</label>
+                        <label for="nama_dokter_operator">Dokter Operator (Spesialis Mata)</label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
