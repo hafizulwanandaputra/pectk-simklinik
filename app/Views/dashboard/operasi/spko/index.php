@@ -82,6 +82,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                     <nav class="nav nav-underline nav-fill flex-nowrap overflow-auto">
                         <a class="nav-link py-1 text-nowrap active activeLink" href="<?= base_url('operasi/spko/' . $operasi['id_sp_operasi']); ?>">SPKO</a>
                         <a class="nav-link py-1 text-nowrap" href="<?= base_url('operasi/praoperasi/' . $operasi['id_sp_operasi']); ?>">Pra Operasi</a>
+                        <a class="nav-link py-1 text-nowrap" href="<?= base_url('operasi/safety/' . $operasi['id_sp_operasi']); ?>">Keselamatan</a>
                     </nav>
                 </div>
             </li>
