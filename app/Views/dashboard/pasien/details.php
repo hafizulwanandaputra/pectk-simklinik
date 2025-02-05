@@ -1192,7 +1192,7 @@
                 <hr>
                 <div class="d-grid gap-2 d-flex justify-content-end">
                     <button type="button" class="btn btn-body btn-sm bg-gradient " onclick="window.open('<?= base_url('rawatjalan/struk') ?>/${rajal.id_rawat_jalan}');">
-                        <i class="fa-solid fa-print"></i> Struk
+                        <i class="fa-solid fa-receipt"></i> Struk
                     </button>
                     <button type="button" class="btn btn-danger btn-sm bg-gradient cancel-btn" data-id="${rajal.id_rawat_jalan}" ${transaksi} ${tblbatal}>
                         <i class="fa-solid fa-xmark"></i> Batal
