@@ -160,16 +160,10 @@ $routes->post('/(?i)operasi/(?i)signout/(?i)update/(:any)', 'SafetyOperasi::upda
 $routes->get('/(?i)operasi/(?i)timeout/(?i)view/(:any)', 'SafetyOperasi::view_timeout/$1');
 $routes->post('/(?i)operasi/(?i)timeout/(?i)update/(:any)', 'SafetyOperasi::update_timeout/$1');
 
-// LAPORAN OPERASI
-$routes->get('/(?i)lpoperasi', 'LpOperasi::index');
-$routes->get('/(?i)lpoperasi/(:num)', 'LpOperasi::details/$1');
-$routes->get('/(?i)lpoperasi/(?i)view/(:any)', 'LpOperasi::view/$1');
-$routes->get('/(?i)lpoperasi/(?i)export/(:any)', 'LpOperasi::export/$1');
-$routes->post('/(?i)lpoperasi/(?i)update/(:any)', 'LpOperasi::update/$1');
-
 // LAPORAN OPERASI KATARAK
 $routes->get('/(?i)lpoperasikatarak', 'LpOperasiKatarak::index');
 $routes->get('/(?i)lpoperasikatarak/(:num)', 'LpOperasiKatarak::details/$1');
+$routes->post('/(?i)lpoperasikatarak/(?i)create/(:any)', 'LpOperasiKatarak::create/$1');
 $routes->get('/(?i)lpoperasikatarak/(?i)view/(:any)', 'LpOperasiKatarak::view/$1');
 $routes->get('/(?i)lpoperasikatarak/(?i)export/(:any)', 'LpOperasiKatarak::export/$1');
 $routes->post('/(?i)lpoperasikatarak/(?i)update/(:any)', 'LpOperasiKatarak::update/$1');
@@ -177,9 +171,18 @@ $routes->post('/(?i)lpoperasikatarak/(?i)update/(:any)', 'LpOperasiKatarak::upda
 // LAPORAN OPERASI PTERIGIUM
 $routes->get('/(?i)lpoperasipterigium', 'LpOperasiPterigium::index');
 $routes->get('/(?i)lpoperasipterigium/(:num)', 'LpOperasiPterigium::details/$1');
+$routes->post('/(?i)lpoperasipterigium/(?i)create/(:any)', 'LpOperasiPterigium::create/$1');
 $routes->get('/(?i)lpoperasipterigium/(?i)view/(:any)', 'LpOperasiPterigium::view/$1');
 $routes->get('/(?i)lpoperasipterigium/(?i)export/(:any)', 'LpOperasiPterigium::export/$1');
 $routes->post('/(?i)lpoperasipterigium/(?i)update/(:any)', 'LpOperasiPterigium::update/$1');
+
+// LAPORAN OPERASI LAINNYA
+$routes->get('/(?i)lpoperasi', 'LpOperasi::index');
+$routes->get('/(?i)lpoperasi/(:num)', 'LpOperasi::details/$1');
+$routes->post('/(?i)lpoperasi/(?i)create/(:any)', 'LpOperasi::create/$1');
+$routes->get('/(?i)lpoperasi/(?i)view/(:any)', 'LpOperasi::view/$1');
+$routes->get('/(?i)lpoperasi/(?i)export/(:any)', 'LpOperasi::export/$1');
+$routes->post('/(?i)lpoperasi/(?i)update/(:any)', 'LpOperasi::update/$1');
 
 // SUPPLIER
 $routes->get('/(?i)supplier', 'Supplier::index');
