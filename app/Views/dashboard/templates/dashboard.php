@@ -407,6 +407,33 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                 </a>
                             </li>
                         <?php endif; ?>
+                        <?php if (session()->get('role') == "Dokter" || session()->get('role') == "Admin" || session()->get('role') == "Admisi") : ?>
+                            <li class="nav-item">
+                                <span class="nav-link px-2 py-1 <?= ($activeSegment === 'lpoperasikatarak' || $activeSegment === 'lpoperasipterigium' || $activeSegment === 'lpoperasi') ? 'active bg-success' : '' ?>" role="button" data-bs-toggle="collapse" data-bs-target="#submenu-laporan">
+                                    <div class="d-flex align-items-start <?= ($activeSegment === 'lpoperasikatarak' || $activeSegment === 'lpoperasipterigium' || $activeSegment === 'lpoperasi') ? 'text-white' : 'text-success-emphasis' ?>">
+                                        <div style="min-width: 24px; max-width: 24px; text-align: center;">
+                                            <i class="fa-solid fa-file-medical"></i>
+                                        </div>
+                                        <div class="flex-fill ms-2">
+                                            Laporan Operasi
+                                        </div>
+                                    </div>
+                                </span>
+                            </li>
+                            <div id="submenu-laporan" class="collapse <?= ($activeSegment === 'lpoperasikatarak' || $activeSegment === 'lpoperasipterigium' || $activeSegment === 'lpoperasi') ? 'show' : '' ?>">
+                                <ul class="nav nav-pills flex-column mt-1">
+                                    <li class="nav-item" style="margin-left: calc(24px + 0.5rem);">
+                                        <a class="nav-link px-2 py-1 <?= ($activeSegment === 'lpoperasikatarak') ? 'active bg-success' : '' ?>" href=" <?= base_url('/lpoperasikatarak'); ?>">
+                                            <div class="d-flex align-items-start <?= ($activeSegment === 'lpoperasikatarak') ? 'text-white' : 'text-success-emphasis' ?>">
+                                                <div class="flex-fill fw-normal" style="font-size: 0.75em;">
+                                                    Katarak
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        <?php endif; ?>
                         <?php if (session()->get('role') == "Apoteker" || session()->get('role') == "Admin") : ?>
                             <li class="nav-item">
                                 <a class="nav-link px-2 py-1 <?= ($activeSegment === 'supplier') ? 'active bg-success' : '' ?>" href=" <?= base_url('/supplier'); ?>">
