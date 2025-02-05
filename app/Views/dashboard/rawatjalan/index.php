@@ -255,7 +255,7 @@
                                                         <i class="fa-solid fa-glasses"></i> Resep Kacamata
                                                     </button>
                                                     <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/laporanrajal') ?>/${rawatjalan.id_rawat_jalan}';">
-                                                        <i class="fa-solid fa-file-invoice"></i> Tindakan Rajal
+                                                        <i class="fa-solid fa-file-medical"> Tindakan Rajal
                                                     </button>
                                                 <?php endif; ?>
                                             <?php endif; ?>
@@ -588,7 +588,7 @@
                                                         <i class="fa-solid fa-glasses"></i> Resep Kacamata
                                                     </button>
                                                     <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/laporanrajal') ?>/${rawatjalan.id_rawat_jalan}';">
-                                                        <i class="fa-solid fa-file-invoice"></i> Tindakan Rajal
+                                                        <i class="fa-solid fa-file-medical"> Tindakan Rajal
                                                     </button>
                                                 <?php endif; ?>
                                             <?php endif; ?>
