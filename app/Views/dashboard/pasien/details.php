@@ -297,7 +297,8 @@
                                         <option value="" selected>-- Pilih Status Perkawinan --</option>
                                         <option value="1">BELUM MENIKAH</option>
                                         <option value="2">MENIKAH</option>
-                                        <option value="3">CERAI</option>
+                                        <option value="3">CERAI HIDUP</option>
+                                        <option value="4">CERAI MATI</option>
                                     </select>
                                     <label for="status_nikah">Status Perkawinan</label>
                                     <div class="invalid-feedback"></div>
