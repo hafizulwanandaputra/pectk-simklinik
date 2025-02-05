@@ -209,7 +209,7 @@
                                         <div class="d-flex flex-wrap justify-content-end gap-2 mt-2">
                                             <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') : ?>
                                                 <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/struk') ?>/${rawatjalan.id_rawat_jalan}');">
-                                                    <i class="fa-solid fa-print"></i> Struk
+                                                    <i class="fa-solid fa-receipt"></i> Struk
                                                 </button>
                                                 <?php if (session()->get('role') != 'Admin') : ?>
                                                 <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/asesmen/export') ?>/${rawatjalan.id_rawat_jalan}');">
@@ -266,7 +266,7 @@
                                         <div class="d-flex flex-wrap justify-content-end gap-2 mt-2">
                                             <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') : ?>
                                                 <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/struk') ?>/${rawatjalan.id_rawat_jalan}');">
-                                                    <i class="fa-solid fa-print"></i> Struk
+                                                    <i class="fa-solid fa-receipt"></i> Struk
                                                 </button>
                                             <?php endif; ?>
                                         </div>
@@ -542,7 +542,7 @@
                                         <div class="d-flex flex-wrap justify-content-end gap-2 mt-2">
                                             <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') : ?>
                                                 <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/struk') ?>/${rawatjalan.id_rawat_jalan}');">
-                                                    <i class="fa-solid fa-print"></i> Struk
+                                                    <i class="fa-solid fa-receipt"></i> Struk
                                                 </button>
                                                 <?php if (session()->get('role') != 'Admin') : ?>
                                                 <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/asesmen/export') ?>/${rawatjalan.id_rawat_jalan}');">
@@ -599,7 +599,7 @@
                                         <div class="d-flex flex-wrap justify-content-end gap-2 mt-2">
                                             <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') : ?>
                                                 <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/struk') ?>/${rawatjalan.id_rawat_jalan}');">
-                                                    <i class="fa-solid fa-print"></i> Struk
+                                                    <i class="fa-solid fa-receipt"></i> Struk
                                                 </button>
                                             <?php endif; ?>
                                         </div>
