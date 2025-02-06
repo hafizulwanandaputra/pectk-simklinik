@@ -51,6 +51,13 @@ class RawatJalan extends BaseController
             $limit = $this->request->getGet('limit');
             $offset = $this->request->getGet('offset');
 
+            // Memeriksa apakah ada parameter yang dikirimkan dalam URL
+            if (empty($tanggal) && empty($limit) && empty($offset)) {
+                return $this->response->setStatusCode(400)->setJSON([
+                    'error' => 'Parameter tidak lengkap',
+                ]);
+            }
+
             $limit = $limit ? intval($limit) : 0;
             $offset = $offset ? intval($offset) : 0;
 
@@ -108,6 +115,13 @@ class RawatJalan extends BaseController
             $limit = $this->request->getGet('limit');
             $offset = $this->request->getGet('offset');
 
+            // Memeriksa apakah ada parameter yang dikirimkan dalam URL
+            if (empty($no_rm) && empty($limit) && empty($offset)) {
+                return $this->response->setStatusCode(400)->setJSON([
+                    'error' => 'Parameter tidak lengkap',
+                ]);
+            }
+
             $limit = $limit ? intval($limit) : 0;
             $offset = $offset ? intval($offset) : 0;
 
@@ -164,6 +178,13 @@ class RawatJalan extends BaseController
             $nama = $this->request->getGet('nama');
             $limit = $this->request->getGet('limit');
             $offset = $this->request->getGet('offset');
+
+            // Memeriksa apakah ada parameter yang dikirimkan dalam URL
+            if (empty($nama) && empty($limit) && empty($offset)) {
+                return $this->response->setStatusCode(400)->setJSON([
+                    'error' => 'Parameter tidak lengkap',
+                ]);
+            }
 
             $limit = $limit ? intval($limit) : 0;
             $offset = $offset ? intval($offset) : 0;
