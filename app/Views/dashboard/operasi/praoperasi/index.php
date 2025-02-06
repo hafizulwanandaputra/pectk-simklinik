@@ -32,7 +32,7 @@ $usia = $registrasi->diff($tanggal_lahir);
     <a class="fs-5 me-3 text-success-emphasis" href="<?= base_url('/operasi'); ?>"><i class="fa-solid fa-arrow-left"></i></a>
     <div class="flex-fill text-truncate">
         <div class="d-flex flex-column">
-            <div class="fw-medium fs-6 lh-sm"><?= $headertitle; ?> (Dalam Pengembangan)</div>
+            <div class="fw-medium fs-6 lh-sm"><?= $headertitle; ?></div>
             <div class="fw-medium lh-sm" style="font-size: 0.75em;"><?= $operasi['nama_pasien']; ?> • <?= $usia->y . " tahun " . $usia->m . " bulan" ?> • <?= $operasi['no_rm'] ?></div>
         </div>
     </div>
@@ -407,7 +407,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             </td>
                             <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <label for="cek_biometri">
+                                    <label class="w-100" for="cek_biometri">
                                         <div>Hasil biometri</div>
                                     </label>
                                     <div>
@@ -425,7 +425,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             </td>
                             <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <label for="cek_retinometri">
+                                    <label class="w-100" for="cek_retinometri">
                                         <div>Hasil retinometri</div>
                                     </label>
                                     <div>
@@ -443,7 +443,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             </td>
                             <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <label for="cek_labor">
+                                    <label class="w-100" for="cek_labor">
                                         <div>Hasil laboratorium (labor lengkap/GDS)</div>
                                     </label>
                                     <div>
@@ -461,7 +461,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             </td>
                             <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <label for="cek_radiologi">
+                                    <label class="w-100" for="cek_radiologi">
                                         <div>Hasil radiologi</div>
                                     </label>
                                     <div>
@@ -479,7 +479,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             </td>
                             <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <label for="cek_puasa">
+                                    <label class="w-100" for="cek_puasa">
                                         <div>Puasa</div>
                                     </label>
                                     <div>
@@ -497,7 +497,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             </td>
                             <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <label for="cek_instruksi">
+                                    <label class="w-100" for="cek_instruksi">
                                         <div>Instruksi khusus dari dokter</div>
                                     </label>
                                     <div>
@@ -515,7 +515,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             </td>
                             <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <label for="cek_lensa">
+                                    <label class="w-100" for="cek_lensa">
                                         <div>Lensa</div>
                                     </label>
                                     <div>
@@ -533,7 +533,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             </td>
                             <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <label for="cek_rotgen">
+                                    <label class="w-100" for="cek_rotgen">
                                         <div>Rontgen</div>
                                     </label>
                                     <div>
@@ -550,7 +550,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             </td>
                             <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <label for="cek_rotgen_usia">
+                                    <label class="w-100" for="cek_rotgen_usia">
                                         <div>ECG, usia > 40 tahun</div>
                                     </label>
                                     <div>
@@ -567,7 +567,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             </td>
                             <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <label for="cek_rotgen_konsul">
+                                    <label class="w-100" for="cek_rotgen_konsul">
                                         <div>Hasil konsul dokter anak/<em>internist</em>/retina</div>
                                     </label>
                                     <div>
@@ -585,7 +585,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             </td>
                             <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <label for="cek_penyakit">
+                                    <label class="w-100" for="cek_penyakit">
                                         <div>Cek file: Hepatitis, DM</div>
                                     </label>
                                     <div>
@@ -602,7 +602,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             </td>
                             <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <label for="cek_hepatitis_akhir">
+                                    <label class="w-100" for="cek_hepatitis_akhir">
                                         <div>Jika Hepatitis(+), jadwal paling akhir</div>
                                     </label>
                                     <div>
@@ -619,7 +619,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             </td>
                             <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
                                 <div class="d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-center">
-                                    <label for="cek_penyakit_lainnya">
+                                    <label class="w-100" for="cek_penyakit_lainnya">
                                         <div>Penyakit lainnya</div>
                                     </label>
                                     <div>
@@ -634,7 +634,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             </td>
                             <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
                                 <div class="d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-center">
-                                    <label for="cek_tekanan_darah">
+                                    <label class="w-100" for="cek_tekanan_darah">
                                         <div>Tekanan darah (mmHg)</div>
                                     </label>
                                     <div>
@@ -649,7 +649,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             </td>
                             <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
                                 <div class="d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-center">
-                                    <label for="cek_berat_badan">
+                                    <label class="w-100" for="cek_berat_badan">
                                         <div>Berat badan (kg)</div>
                                     </label>
                                     <div>
@@ -665,7 +665,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             </td>
                             <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <label for="cek_foto_fundus">
+                                    <label class="w-100" for="cek_foto_fundus">
                                         <div>Hasil Foto Fundus</div>
                                     </label>
                                     <div>
@@ -683,7 +683,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             </td>
                             <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <label for="cek_usg">
+                                    <label class="w-100" for="cek_usg">
                                         <div>Hasil USG</div>
                                     </label>
                                     <div>
@@ -701,7 +701,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             </td>
                             <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <label for="cek_perhiasan">
+                                    <label class="w-100" for="cek_perhiasan">
                                         <div>Melepas perhiasan</div>
                                     </label>
                                     <div>
@@ -719,7 +719,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             </td>
                             <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <label for="cek_ttd">
+                                    <label class="w-100" for="cek_ttd">
                                         <div>Tanda tangan <em>informed consent</em></div>
                                     </label>
                                     <div>
@@ -737,7 +737,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             </td>
                             <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <label for="cek_cuci">
+                                    <label class="w-100" for="cek_cuci">
                                         <div>Cuci muka + ganti pakaian</div>
                                     </label>
                                     <div>
@@ -755,7 +755,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             </td>
                             <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <label for="cek_mark">
+                                    <label class="w-100" for="cek_mark">
                                         <div><em>Sign mark</em> + gelang pasien</div>
                                     </label>
                                     <div>
@@ -773,7 +773,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             </td>
                             <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
                                 <div class="d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-center">
-                                    <label for="cek_tetes_pantocain">
+                                    <label class="w-100" for="cek_tetes_pantocain">
                                         <div>Tetes Pantocain 2%</div>
                                     </label>
                                     <div>
@@ -789,7 +789,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             </td>
                             <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
                                 <div class="d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-center">
-                                    <label for="cek_tetes_efrisel1">
+                                    <label class="w-100" for="cek_tetes_efrisel1">
                                         <div>Tetes Efrisel I</div>
                                     </label>
                                     <div>
@@ -805,7 +805,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             </td>
                             <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
                                 <div class="d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-center">
-                                    <label for="cek_tetes_efrisel2">
+                                    <label class="w-100" for="cek_tetes_efrisel2">
                                         <div>Tetes Efrisel II</div>
                                     </label>
                                     <div>
@@ -821,7 +821,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             </td>
                             <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
                                 <div class="d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-center">
-                                    <label for="cek_tetes_midriatil1">
+                                    <label class="w-100" for="cek_tetes_midriatil1">
                                         <div>Tetes Midriatil I</div>
                                     </label>
                                     <div>
@@ -837,7 +837,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             </td>
                             <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
                                 <div class="d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-center">
-                                    <label for="cek_tetes_midriatil2">
+                                    <label class="w-100" for="cek_tetes_midriatil2">
                                         <div>Tetes Midriatil II</div>
                                     </label>
                                     <div>
@@ -853,7 +853,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             </td>
                             <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
                                 <div class="d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-center">
-                                    <label for="cek_tetes_midriatil3">
+                                    <label class="w-100" for="cek_tetes_midriatil3">
                                         <div>Tetes Midriatil III</div>
                                     </label>
                                     <div>
@@ -869,7 +869,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             </td>
                             <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <label for="cek_makan">
+                                    <label class="w-100" for="cek_makan">
                                         <div>Makan pagi/siang</div>
                                     </label>
                                     <div>
@@ -887,7 +887,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             </td>
                             <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
                                 <div class="d-flex justify-content-between align-items-center">
-                                    <label for="cek_obat">
+                                    <label class="w-100" for="cek_obat">
                                         <div>Obat-obatan sebelumnya</div>
                                     </label>
                                     <div>
@@ -904,7 +904,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             </td>
                             <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
                                 <div class="d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-center">
-                                    <label for="cek_jenis_obat">
+                                    <label class="w-100" for="cek_jenis_obat">
                                         <div>Jenis obat-obatan</div>
                                     </label>
                                     <div>
