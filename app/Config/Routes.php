@@ -161,40 +161,40 @@ $routes->get('/(?i)operasi/(?i)timeout/(?i)view/(:any)', 'SafetyOperasi::view_ti
 $routes->post('/(?i)operasi/(?i)timeout/(?i)update/(:any)', 'SafetyOperasi::update_timeout/$1');
 
 // LAPORAN OPERASI KATARAK
-$routes->get('/(?i)lpoperasikatarak', 'LpOperasiKatarak::index');
-$routes->get('/(?i)lpoperasikatarak/lpoperasikataraklist', 'LpOperasiKatarak::lpoperasikataraklist');
-$routes->get('/(?i)lpoperasikatarak/pasienlist', 'LpOperasiKatarak::pasienlist');
-$routes->get('/(?i)lpoperasikatarak/(:num)', 'LpOperasiKatarak::details/$1');
-$routes->post('/(?i)lpoperasikatarak/(?i)create', 'LpOperasiKatarak::create');
-$routes->get('/(?i)lpoperasikatarak/(?i)details/(:any)', 'LpOperasiKatarak::details/$1');
-$routes->get('/(?i)lpoperasikatarak/(?i)view/(:any)', 'LpOperasiKatarak::view/$1');
-$routes->get('/(?i)lpoperasikatarak/(?i)export/(:any)', 'LpOperasiKatarak::export/$1');
-$routes->post('/(?i)lpoperasikatarak/(?i)update/(:any)', 'LpOperasiKatarak::update/$1');
-$routes->delete('/(?i)lpoperasikatarak/(?i)delete/(:any)', 'LpOperasiKatarak::delete/$1');
+$routes->get('/(?i)lpoperasikatarak', 'LPOperasiKatarak::index');
+$routes->get('/(?i)lpoperasikatarak/lpoperasikataraklist', 'LPOperasiKatarak::lpoperasikataraklist');
+$routes->get('/(?i)lpoperasikatarak/pasienlist', 'LPOperasiKatarak::pasienlist');
+$routes->get('/(?i)lpoperasikatarak/(:num)', 'LPOperasiKatarak::details/$1');
+$routes->post('/(?i)lpoperasikatarak/(?i)create', 'LPOperasiKatarak::create');
+$routes->get('/(?i)lpoperasikatarak/(?i)details/(:any)', 'LPOperasiKatarak::details/$1');
+$routes->get('/(?i)lpoperasikatarak/(?i)view/(:any)', 'LPOperasiKatarak::view/$1');
+$routes->get('/(?i)lpoperasikatarak/(?i)export/(:any)', 'LPOperasiKatarak::export/$1');
+$routes->post('/(?i)lpoperasikatarak/(?i)update/(:any)', 'LPOperasiKatarak::update/$1');
+$routes->delete('/(?i)lpoperasikatarak/(?i)delete/(:any)', 'LPOperasiKatarak::delete/$1');
 
 // LAPORAN OPERASI PTERIGIUM
-$routes->get('/(?i)lpoperasipterigium', 'LpOperasiPterigium::index');
-$routes->get('/(?i)lpoperasipterigium/lpoperasipterigiumlist', 'LpOperasiPterigium::lpoperasipterigiumlist');
-$routes->get('/(?i)lpoperasipterigium/pasienlist', 'LpOperasiPterigium::pasienlist');
-$routes->get('/(?i)lpoperasipterigium/(:num)', 'LpOperasiPterigium::details/$1');
-$routes->post('/(?i)lpoperasipterigium/(?i)create', 'LpOperasiPterigium::create');
-$routes->get('/(?i)lpoperasipterigium/(?i)details/(:any)', 'LpOperasiPterigium::details/$1');
-$routes->get('/(?i)lpoperasipterigium/(?i)view/(:any)', 'LpOperasiPterigium::view/$1');
-$routes->get('/(?i)lpoperasipterigium/(?i)export/(:any)', 'LpOperasiPterigium::export/$1');
-$routes->post('/(?i)lpoperasipterigium/(?i)update/(:any)', 'LpOperasiPterigium::update/$1');
-$routes->delete('/(?i)lpoperasipterigium/(?i)delete/(:any)', 'LpOperasiPterigium::delete/$1');
+$routes->get('/(?i)lpoperasipterigium', 'LPOperasiPterigium::index');
+$routes->get('/(?i)lpoperasipterigium/lpoperasipterigiumlist', 'LPOperasiPterigium::lpoperasipterigiumlist');
+$routes->get('/(?i)lpoperasipterigium/pasienlist', 'LPOperasiPterigium::pasienlist');
+$routes->get('/(?i)lpoperasipterigium/(:num)', 'LPOperasiPterigium::details/$1');
+$routes->post('/(?i)lpoperasipterigium/(?i)create', 'LPOperasiPterigium::create');
+$routes->get('/(?i)lpoperasipterigium/(?i)details/(:any)', 'LPOperasiPterigium::details/$1');
+$routes->get('/(?i)lpoperasipterigium/(?i)view/(:any)', 'LPOperasiPterigium::view/$1');
+$routes->get('/(?i)lpoperasipterigium/(?i)export/(:any)', 'LPOperasiPterigium::export/$1');
+$routes->post('/(?i)lpoperasipterigium/(?i)update/(:any)', 'LPOperasiPterigium::update/$1');
+$routes->delete('/(?i)lpoperasipterigium/(?i)delete/(:any)', 'LPOperasiPterigium::delete/$1');
 
 // LAPORAN OPERASI LAINNYA
-$routes->get('/(?i)lpoperasi', 'LpOperasi::index');
-$routes->get('/(?i)lpoperasi/lpoperasilist', 'LpOperasi::lpoperasilist');
-$routes->get('/(?i)lpoperasi/pasienlist', 'LpOperasi::pasienlist');
-$routes->get('/(?i)lpoperasi/(:num)', 'LpOperasi::details/$1');
-$routes->post('/(?i)lpoperasi/(?i)create', 'LpOperasi::create');
-$routes->get('/(?i)lpoperasi/(?i)details/(:any)', 'LpOperasi::details/$1');
-$routes->get('/(?i)lpoperasi/(?i)view/(:any)', 'LpOperasi::view/$1');
-$routes->get('/(?i)lpoperasi/(?i)export/(:any)', 'LpOperasi::export/$1');
-$routes->post('/(?i)lpoperasi/(?i)update/(:any)', 'LpOperasi::update/$1');
-$routes->delete('/(?i)lpoperasi/(?i)delete/(:any)', 'LpOperasi::delete/$1');
+$routes->get('/(?i)lpoperasi', 'LPOperasi::index');
+$routes->get('/(?i)lpoperasi/lpoperasilist', 'LPOperasi::lpoperasilist');
+$routes->get('/(?i)lpoperasi/pasienlist', 'LPOperasi::pasienlist');
+$routes->get('/(?i)lpoperasi/(:num)', 'LPOperasi::details/$1');
+$routes->post('/(?i)lpoperasi/(?i)create', 'LPOperasi::create');
+$routes->get('/(?i)lpoperasi/(?i)details/(:any)', 'LPOperasi::details/$1');
+$routes->get('/(?i)lpoperasi/(?i)view/(:any)', 'LPOperasi::view/$1');
+$routes->get('/(?i)lpoperasi/(?i)export/(:any)', 'LPOperasi::export/$1');
+$routes->post('/(?i)lpoperasi/(?i)update/(:any)', 'LPOperasi::update/$1');
+$routes->delete('/(?i)lpoperasi/(?i)delete/(:any)', 'LPOperasi::delete/$1');
 
 // SUPPLIER
 $routes->get('/(?i)supplier', 'Supplier::index');
