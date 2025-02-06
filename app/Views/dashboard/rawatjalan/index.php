@@ -543,9 +543,6 @@
             $('#paginationNav-tanggal ul').empty();
             $('#rawatjalan-tanggal').empty(); // Kosongkan tabel pasien
             $('#rawatjalan-tanggal').append(errorRow); // Menambahkan baris error ke tabel
-        } finally {
-            // Sembunyikan spinner loading setelah selesai
-            $('#loadingSpinner').hide();
         }
     }
 
@@ -957,9 +954,6 @@
             $('#paginationNav-no_rm ul').empty();
             $('#rawatjalan-no_rm').empty(); // Kosongkan tabel pasien
             $('#rawatjalan-no_rm').append(errorRow); // Menambahkan baris error ke tabel
-        } finally {
-            // Sembunyikan spinner loading setelah selesai
-            $('#loadingSpinner').hide();
         }
     }
 
@@ -1363,130 +1357,148 @@
             $('#paginationNav-nama ul').empty();
             $('#rawatjalan-nama').empty(); // Kosongkan tabel pasien
             $('#rawatjalan-nama').append(errorRow); // Menambahkan baris error ke tabel
-        } finally {
-            // Sembunyikan spinner loading setelah selesai
-            $('#loadingSpinner').hide();
         }
     }
 
-    $('#tanggal-container-tab').on('click', function() {
+    $('#tanggal-container-tab').on('click', async function() {
         $('#tanggal_form').show();
         $('#no-rm_form').hide();
         $('#nama_form').hide();
-        fetchRajalTanggal();
+        await fetchRajalTanggal();
+        $('#loadingSpinner').hide();
     });
 
-    $('#no_rm-container-tab').on('click', function() {
+    $('#no_rm-container-tab').on('click', async function() {
         $('#tanggal_form').hide();
         $('#no-rm_form').show();
         $('#nama_form').hide();
-        fetchRajalNoRM();
+        await fetchRajalNoRM();
+        $('#loadingSpinner').hide();
     });
 
-    $('#nama-container-tab').on('click', function() {
+    $('#nama-container-tab').on('click', async function() {
         $('#tanggal_form').hide();
         $('#no-rm_form').hide();
         $('#nama_form').show();
-        fetchRajalNama();
+        await fetchRajalNama();
+        $('#loadingSpinner').hide();
     });
 
-    $(document).on('click', '#paginationNav-tanggal a', function(event) {
+    $(document).on('click', '#paginationNav-tanggal a', async function(event) {
         event.preventDefault(); // Prevents default behavior (scrolling)
         const page = $(this).data('page');
         if (page) {
             currentPage = page;
-            fetchRajalTanggal();
+            await fetchRajalTanggal();
+            $('#loadingSpinner').hide();
         }
     });
 
-    $(document).on('click', '#paginationNav-no_rm a', function(event) {
+    $(document).on('click', '#paginationNav-no_rm a', async function(event) {
         event.preventDefault(); // Prevents default behavior (scrolling)
         const page = $(this).data('page');
         if (page) {
             currentPage = page;
-            fetchRajalNoRM();
+            await fetchRajalNoRM();
+            $('#loadingSpinner').hide();
         }
     });
 
-    $(document).on('click', '#paginationNav-nama a', function(event) {
+    $(document).on('click', '#paginationNav-nama a', async function(event) {
         event.preventDefault(); // Prevents default behavior (scrolling)
         const page = $(this).data('page');
         if (page) {
             currentPage = page;
-            fetchRajalNama();
+            await fetchRajalNama();
+            $('#loadingSpinner').hide();
         }
     });
 
     // Event listener ketika tanggal diubah
-    $('#tanggal').on('change', function() {
+    $('#tanggal').on('change', async function() {
         $('#rawatjalan-tanggal').empty(); // Kosongkan tabel pasien
         $('#rawatjalan-tanggal').append(loading); // Menampilkan loading indicator
-        fetchRajalTanggal(); // Memanggil fungsi untuk mengambil data pasien
+        await fetchRajalTanggal(); // Memanggil fungsi untuk mengambil data pasien
+        $('#loadingSpinner').hide();
     });
 
-    $('#no_rm').on('input', function() {
+    $('#no_rm').on('input', async function() {
         if ($(this).val() === '') {
             $('#rawatjalan-no_rm').empty(); // Kosongkan tabel pasien
             $('#rawatjalan-no_rm').append(loading); // Menampilkan loading indicator
-            fetchRajalNoRM();
+            await fetchRajalNoRM();
+            $('#loadingSpinner').hide();
         }
     });
 
-    $('#no-rm_form_content').submit(function(ə) {
+    $('#no-rm_form_content').submit(async function(ə) {
         ə.preventDefault();
         $('#rawatjalan-no_rm').empty(); // Kosongkan tabel pasien
         $('#rawatjalan-no_rm').append(loading); // Menampilkan loading indicator
-        fetchRajalNoRM();
+        await fetchRajalNoRM();
+        $('#loadingSpinner').hide();
     });
 
-    $('#nama').on('input', function() {
+    $('#nama').on('input', async function() {
         if ($(this).val() === '') {
             $('#rawatjalan-nama').empty(); // Kosongkan tabel pasien
             $('#rawatjalan-nama').append(loading); // Menampilkan loading indicator
-            fetchRajalNama(); // Memanggil fungsi untuk mengambil data pasien
+            await fetchRajalNama(); // Memanggil fungsi untuk mengambil data pasien
+            $('#loadingSpinner').hide();
         }
     });
 
-    $('#nama_form_content').submit(function(ə) {
+    $('#nama_form_content').submit(async function(ə) {
         ə.preventDefault();
         $('#rawatjalan-nama').empty(); // Kosongkan tabel pasien
         $('#rawatjalan-nama').append(loading); // Menampilkan loading indicator
-        fetchRajalNama();
+        await fetchRajalNama();
+        $('#loadingSpinner').hide();
     });
 
-    $(document).ready(function() {
+    $(document).ready(async function() {
         // Menangani event klik pada tombol bersihkan
-        $('#setTodayTglButton').on('click', function() {
+        $('#setTodayTglButton').on('click', async function() {
             // Mendapatkan tanggal hari ini dalam format YYYY-MM-DD
             const today = new Date();
             const formattedDate = today.toISOString().split('T')[0];
             $('#tanggal').val(formattedDate); // Setel tanggal ke hari ini
             $('#rawatjalan-tanggal').empty(); // Kosongkan tabel pasien
             $('#rawatjalan-tanggal').append(loading); // Menampilkan loading indicator
-            fetchRajalTanggal(); // Memanggil fungsi untuk mengambil data pasien
+            await fetchRajalTanggal(); // Memanggil fungsi untuk mengambil data pasien
+            $('#loadingSpinner').hide();
         });
-        $(document).on('visibilitychange', function() {
+        $(document).on('visibilitychange', async function() {
             if (document.visibilityState === "visible") {
-                fetchRajalTanggal();
-                fetchRajalNoRM();
-                fetchRajalNama();
+                await Promise.all([
+                    fetchRajalTanggal(),
+                    fetchRajalNoRM(),
+                    fetchRajalNama()
+                ]);
+                $('#loadingSpinner').hide();
             }
         });
         // Menangani event klik pada tombol refresh
-        $('#refreshTglButton').on('click', function() {
-            fetchRajalTanggal(); // Panggil fungsi untuk mengambil data pasien
+        $('#refreshTglButton').on('click', async function() {
+            await fetchRajalTanggal(); // Panggil fungsi untuk mengambil data pasien
+            $('#loadingSpinner').hide();
         });
-        $('#refreshNoRMButton').on('click', function() {
-            fetchRajalNoRM(); // Panggil fungsi untuk mengambil data pasien
+        $('#refreshNoRMButton').on('click', async function() {
+            await fetchRajalNoRM(); // Panggil fungsi untuk mengambil data pasien
+            $('#loadingSpinner').hide();
         });
-        $('#refreshNamaButton').on('click', function() {
-            fetchRajalNama(); // Panggil fungsi untuk mengambil data pasien
+        $('#refreshNamaButton').on('click', async function() {
+            await fetchRajalNama(); // Panggil fungsi untuk mengambil data pasien
+            $('#loadingSpinner').hide();
         });
 
         // Panggil fungsi untuk mengambil data pasien saat dokumen siap
-        fetchRajalTanggal();
-        fetchRajalNoRM();
-        fetchRajalNama();
+        await Promise.all([
+            fetchRajalTanggal(),
+            fetchRajalNoRM(),
+            fetchRajalNama()
+        ]);
+        $('#loadingSpinner').hide();
     });
 
     <?= $this->include('toast/index') ?>
