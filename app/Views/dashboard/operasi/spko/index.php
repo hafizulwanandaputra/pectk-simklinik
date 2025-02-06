@@ -53,7 +53,7 @@ $usia = $registrasi->diff($tanggal_lahir);
     <a class="fs-5 me-3 text-success-emphasis" href="<?= base_url('/operasi'); ?>"><i class="fa-solid fa-arrow-left"></i></a>
     <div class="flex-fill text-truncate">
         <div class="d-flex flex-column">
-            <div class="fw-medium fs-6 lh-sm"><?= $headertitle; ?> (Dalam Pengembangan)</div>
+            <div class="fw-medium fs-6 lh-sm"><?= $headertitle; ?></div>
             <div class="fw-medium lh-sm" style="font-size: 0.75em;"><?= $operasi['nama_pasien']; ?> • <?= $usia->y . " tahun " . $usia->m . " bulan" ?> • <?= $operasi['no_rm'] ?></div>
         </div>
     </div>

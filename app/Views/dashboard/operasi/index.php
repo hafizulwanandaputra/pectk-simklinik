@@ -13,7 +13,7 @@
 <div class="d-flex justify-content-start align-items-center">
     <div class="flex-fill text-truncate">
         <div class="d-flex flex-column">
-            <div class="fw-medium fs-6 lh-sm"><?= $headertitle; ?> (Dalam Pengembangan)</div>
+            <div class="fw-medium fs-6 lh-sm"><?= $headertitle; ?></div>
             <div class="fw-medium lh-sm" style="font-size: 0.75em;"><span id="totalRecords">0</span> pasien operasi</div>
         </div>
     </div>
