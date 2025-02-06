@@ -478,7 +478,7 @@
                                         <i class="fa-solid fa-user-check"></i> Pra Operasi
                                     </button>
                                     <button type="button" class="btn btn-body btn-sm bg-gradient " onclick="window.location.href = '<?= base_url('operasi/safety') ?>/${sp_operasi.id_sp_operasi}';">
-                                        <i class="fa-solid fa-user-shield"></i> Safety
+                                        <i class="fa-solid fa-user-shield"></i> Keselamatan
                                     </button>
                                 <?php endif; ?>
                             </div>
