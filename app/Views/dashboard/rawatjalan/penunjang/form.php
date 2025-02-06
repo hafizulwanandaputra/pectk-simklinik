@@ -128,17 +128,6 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <tbody>
                     <tr>
                         <td style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            Diagnosis
-                        </td>
-                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            :
-                        </td>
-                        <td style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            <?= $penunjang['diagnosa'] ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
                             Dokter Pengirim
                         </td>
                         <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">

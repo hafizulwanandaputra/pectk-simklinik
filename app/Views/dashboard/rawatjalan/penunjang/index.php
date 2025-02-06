@@ -97,13 +97,6 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <div class="fw-bold mb-2 border-bottom">Pemeriksaan Penunjang</div>
                 <div class="mb-2">
                     <div class="form-floating">
-                        <input type="text" class="form-control" id="diagnosa" name="diagnosa" value="" autocomplete="off" dir="auto" placeholder="diagnosa">
-                        <label for="diagnosa">Diagnosis</label>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                </div>
-                <div class="mb-2">
-                    <div class="form-floating">
                         <select class="form-select" id="dokter_pengirim" name="dokter_pengirim" aria-label="dokter_pengirim">
                             <option value="" disabled selected>-- Pilih Dokter --</option>
                         </select>
