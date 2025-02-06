@@ -584,7 +584,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 </table>
             </div>
             <div class="mb-3 table-responsive">
-                <div class="fw-bold mb-2 border-bottom">Kapsulotomi anterior</div>
+                <div class="fw-bold mb-2 border-bottom">Kapsulotomi Anterior</div>
                 <table class="table table-borderless mb-0">
                     <tbody>
                         <tr>
@@ -1186,14 +1186,14 @@ $usia = $registrasi->diff($tanggal_lahir);
                     <div class="col">
                         <div class="form-floating">
                             <input type="number" class="form-control" id="prabedah_od" name="prabedah_od" value="" autocomplete="off" dir="auto" placeholder="prabedah_od">
-                            <label for="prabedah_od">Tio Prabedah OD (mmHg)</label>
+                            <label for="prabedah_od">Tio Pra Bedah OD (mmHg)</label>
                             <div class="invalid-feedback"></div>
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-floating">
                             <input type="number" class="form-control" id="prabedah_os" name="prabedah_os" value="" autocomplete="off" dir="auto" placeholder="prabedah_os">
-                            <label for="prabedah_os">Tio Prabedah OS (mmHg)</label>
+                            <label for="prabedah_os">Tio Pra Bedah OS (mmHg)</label>
                             <div class="invalid-feedback"></div>
                         </div>
                     </div>

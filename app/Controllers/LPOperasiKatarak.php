@@ -6,6 +6,7 @@ use App\Controllers\BaseController;
 use App\Models\RawatJalanModel;
 use App\Models\LPOperasiKatarakModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
+use Picqer\Barcode\BarcodeGeneratorPNG;
 
 class LPOperasiKatarak extends BaseController
 {
@@ -207,11 +208,16 @@ class LPOperasiKatarak extends BaseController
                 ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
                 ->find($id);
 
+            // === Generate Barcode ===
+            $barcodeGenerator = new BarcodeGeneratorPNG();
+            $bcNoReg = base64_encode($barcodeGenerator->getBarcode($lp_operasi_katarak['nomor_registrasi'], $barcodeGenerator::TYPE_CODE_128));
+
             // Memeriksa apakah pasien tidak kosong
             if ($lp_operasi_katarak) {
                 // Menyiapkan data untuk tampilan
                 $data = [
-                    'operasi' => $lp_operasi_katarak,
+                    'lp_operasi_katarak' => $lp_operasi_katarak,
+                    'bcNoReg' => $bcNoReg,
                     'title' => 'Laporan Operasi Katarak ' . $lp_operasi_katarak['nama_pasien'] . ' (' . $lp_operasi_katarak['no_rm'] . ') - ' . $lp_operasi_katarak['nomor_registrasi'] . ' - ' . $this->systemName,
                     'headertitle' => 'Laporan Operasi Katarak',
                     'agent' => $this->request->getUserAgent(), // Mengambil informasi user agent
@@ -237,7 +243,7 @@ class LPOperasiKatarak extends BaseController
                 // Kirim PDF ke browser
                 return $this->response
                     ->setHeader('Content-Type', 'application/pdf')
-                    ->setHeader('Content-Disposition', 'inline; filename="LPOperasiKatarak_' . $lp_operasi_katarak['nomor_booking'] . '_' . str_replace('-', '', $lp_operasi_katarak['no_rm']) . '.pdf')
+                    ->setHeader('Content-Disposition', 'inline; filename="LPOperasiKatarak_' . $lp_operasi_katarak['nomor_registrasi'] . '_' . str_replace('-', '', $lp_operasi_katarak['no_rm']) . '.pdf')
                     ->setBody(file_get_contents($pdfFile));
             } else {
                 // Menampilkan halaman tidak ditemukan jika pasien tidak ditemukan
