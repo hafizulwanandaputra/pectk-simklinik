@@ -316,10 +316,10 @@
                 const rawatJalanElement = `
                 <div class="accordion-item shadow-sm">
                     <div class="accordion-header">
-                        <button class="accordion-button px-3 py-2 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-${index + 1}" aria-expanded="false" aria-controls="collapse-${index + 1}">
+                        <button class="accordion-button px-3 py-2 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-${rawatjalan.number}" aria-expanded="false" aria-controls="collapse-${rawatjalan.number}">
                             <div class="me-3 text-truncate">
                                 <h5 class="d-flex date justify-content-start mb-0 text-truncate">
-                                    <span class="badge bg-body text-body border px-2 align-self-start" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">${index + 1}</span>
+                                    <span class="badge bg-body text-body border px-2 align-self-start" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">${rawatjalan.number}</span>
                                     <span class="ms-1 align-self-center text-truncate">${rawatjalan.nama_pasien}</span>
                                 </h5>
                                 <h6 class="card-subtitle text-truncate">${rawatjalan.dokter}</h6>
@@ -330,7 +330,7 @@
                             </div>
                         </button>
                     </div>
-                    <div id="collapse-${index + 1}" class="accordion-collapse collapse" data-bs-parent="#rawatjalan-tanggal">
+                    <div id="collapse-${rawatjalan.number}" class="accordion-collapse collapse" data-bs-parent="#rawatjalan-tanggal">
                         <div class="accordion-body px-3 py-2">
                             <div class="row g-3">
                                 <div class="col-lg-6 d-flex flex-column justify-content-between">
@@ -730,10 +730,10 @@
                 const rawatJalanElement = `
                 <div class="accordion-item shadow-sm">
                     <div class="accordion-header">
-                        <button class="accordion-button px-3 py-2 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-${index + 1}" aria-expanded="false" aria-controls="collapse-${index + 1}">
+                        <button class="accordion-button px-3 py-2 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-${rawatjalan.number}" aria-expanded="false" aria-controls="collapse-${rawatjalan.number}">
                             <div class="me-3 text-truncate">
                                 <h5 class="d-flex date justify-content-start mb-0 text-truncate">
-                                    <span class="badge bg-body text-body border px-2 align-self-start" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">${index + 1}</span>
+                                    <span class="badge bg-body text-body border px-2 align-self-start" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">${rawatjalan.number}</span>
                                     <span class="ms-1 align-self-center text-truncate">${rawatjalan.nama_pasien}</span>
                                 </h5>
                                 <h6 class="card-subtitle text-truncate">${rawatjalan.dokter}</h6>
@@ -744,7 +744,7 @@
                             </div>
                         </button>
                     </div>
-                    <div id="collapse-${index + 1}" class="accordion-collapse collapse" data-bs-parent="#rawatjalan-no_rm">
+                    <div id="collapse-${rawatjalan.number}" class="accordion-collapse collapse" data-bs-parent="#rawatjalan-no_rm">
                         <div class="accordion-body px-3 py-2">
                             <div class="row g-3">
                                 <div class="col-lg-6 d-flex flex-column justify-content-between">
@@ -1136,10 +1136,10 @@
                 const rawatJalanElement = `
                 <div class="accordion-item shadow-sm">
                     <div class="accordion-header">
-                        <button class="accordion-button px-3 py-2 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-${index + 1}" aria-expanded="false" aria-controls="collapse-${index + 1}">
+                        <button class="accordion-button px-3 py-2 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-${rawatjalan.number}" aria-expanded="false" aria-controls="collapse-${rawatjalan.number}">
                             <div class="me-3 text-truncate">
                                 <h5 class="d-flex date justify-content-start mb-0 text-truncate">
-                                    <span class="badge bg-body text-body border px-2 align-self-start" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">${index + 1}</span>
+                                    <span class="badge bg-body text-body border px-2 align-self-start" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">${rawatjalan.number}</span>
                                     <span class="ms-1 align-self-center text-truncate">${rawatjalan.nama_pasien}</span>
                                 </h5>
                                 <h6 class="card-subtitle text-truncate">${rawatjalan.dokter}</h6>
@@ -1150,7 +1150,7 @@
                             </div>
                         </button>
                     </div>
-                    <div id="collapse-${index + 1}" class="accordion-collapse collapse" data-bs-parent="#rawatjalan-tanggal">
+                    <div id="collapse-${rawatjalan.number}" class="accordion-collapse collapse" data-bs-parent="#rawatjalan-tanggal">
                         <div class="accordion-body px-3 py-2">
                             <div class="row g-3">
                                 <div class="col-lg-6 d-flex flex-column justify-content-between">
