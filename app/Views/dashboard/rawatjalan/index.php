@@ -21,9 +21,9 @@
                 <div class="no-fluid-content">
                     <nav>
                         <div class="nav nav-underline nav-justified flex-nowrap overflow-auto" id="nav-tab" role="tablist">
-                            <button class="nav-link py-1 active" id="tanggal-container-tab" data-bs-toggle="tab" data-bs-target="#tanggal-container" type="button" role="tab" aria-controls="tanggal-container" aria-selected="true">Tanggal</button>
-                            <button class="nav-link py-1" id="no_rm-container-tab" data-bs-toggle="tab" data-bs-target="#no_rm-container" type="button" role="tab" aria-controls="no_rm-container" aria-selected="false">Nomor Rekam Medis</button>
-                            <button class="nav-link py-1" id="nama-container-tab" data-bs-toggle="tab" data-bs-target="#nama-container" type="button" role="tab" aria-controls="nama-container" aria-selected="false">Nama</button>
+                            <button class="nav-link py-1 text-nowrap active" id="tanggal-container-tab" data-bs-toggle="tab" data-bs-target="#tanggal-container" type="button" role="tab" aria-controls="tanggal-container" aria-selected="true">Tanggal</button>
+                            <button class="nav-link py-1 text-nowrap" id="no_rm-container-tab" data-bs-toggle="tab" data-bs-target="#no_rm-container" type="button" role="tab" aria-controls="no_rm-container" aria-selected="false">Nomor Rekam Medis</button>
+                            <button class="nav-link py-1 text-nowrap" id="nama-container-tab" data-bs-toggle="tab" data-bs-target="#nama-container" type="button" role="tab" aria-controls="nama-container" aria-selected="false">Nama</button>
                         </div>
                     </nav>
                 </div>
