@@ -8,7 +8,7 @@ use App\Models\LPOperasiKatarakModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use Picqer\Barcode\BarcodeGeneratorPNG;
 
-class LPOperasiKatarak extends BaseController
+class LpOperasiKatarak extends BaseController
 {
     protected $RawatJalanModel;
     protected $LPOperasiKatarakModel;
