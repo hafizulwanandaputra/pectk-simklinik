@@ -144,8 +144,8 @@ class LPOperasiKatarak extends BaseController
 
     public function create()
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Admisi' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Admisi') {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Dokter' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
             $db = db_connect();
             // Melakukan validasi
             $validation = \Config\Services::validation();
@@ -257,8 +257,8 @@ class LPOperasiKatarak extends BaseController
 
     public function delete($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Admisi' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Admisi') {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Dokter' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
             $transaksi = $this->LPOperasiKatarakModel->find($id);
             if ($transaksi) {
                 $db = db_connect();

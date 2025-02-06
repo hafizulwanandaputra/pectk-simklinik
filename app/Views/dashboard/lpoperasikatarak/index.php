@@ -47,33 +47,35 @@
     <div class="px-3 mt-3">
         <div class="no-fluid-content">
             <div class="shadow-sm rounded">
-                <div class="d-grid gap-2">
-                    <button id="collapseList" class="btn btn-primary btn-sm bg-gradient  rounded-bottom-0" type="button" data-bs-toggle="collapse" data-bs-target="#lPOperasiKatarakFormContainer" aria-expanded="false" aria-controls="lPOperasiKatarakFormContainer">
-                        <i class="fa-solid fa-plus"></i> Tambah Laporan
-                    </button>
-                </div>
-                <ul id="lPOperasiKatarakFormContainer" class="list-group rounded-0 collapse">
-                    <li class="list-group-item border-top-0 bg-body-tertiary">
-                        <div class="row g-3">
-                            <form id="lPOperasiKatarakForm" enctype="multipart/form-data" class="d-flex flex-column gap-2">
-                                <div class="flex-fill">
-                                    <select class="form-select form-select-sm" id="nomor_registrasi" name="nomor_registrasi" aria-label="nomor_registrasi">
-                                        <option value="" disabled selected>-- Pilih Pasien Operasi --</option>
-                                    </select>
-                                    <div class="invalid-feedback"></div>
-                                </div>
-                                <div class="d-grid gap-2 d-lg-flex justify-content-lg-end">
-                                    <button type="submit" id="submitButton" class="btn btn-primary bg-gradient btn-sm" disabled>
-                                        <i class="fa-solid fa-plus"></i> Tambah
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </li>
-                </ul>
-                <ul id="lPOperasiKatarakContainer" class="list-group rounded-top-0 ">
+                <?php if (session()->get('role') != 'Admisi') : ?>
+                    <div class="d-grid gap-2">
+                        <button id="collapseList" class="btn btn-primary btn-sm bg-gradient  rounded-bottom-0" type="button" data-bs-toggle="collapse" data-bs-target="#lPOperasiKatarakFormContainer" aria-expanded="false" aria-controls="lPOperasiKatarakFormContainer">
+                            <i class="fa-solid fa-plus"></i> Tambah Laporan
+                        </button>
+                    </div>
+                    <ul id="lPOperasiKatarakFormContainer" class="list-group rounded-0 collapse">
+                        <li class="list-group-item border-top-0 bg-body-tertiary">
+                            <div class="row g-3">
+                                <form id="lPOperasiKatarakForm" enctype="multipart/form-data" class="d-flex flex-column gap-2">
+                                    <div class="flex-fill">
+                                        <select class="form-select form-select-sm" id="nomor_registrasi" name="nomor_registrasi" aria-label="nomor_registrasi">
+                                            <option value="" disabled selected>-- Pilih Pasien Operasi --</option>
+                                        </select>
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                    <div class="d-grid gap-2 d-lg-flex justify-content-lg-end">
+                                        <button type="submit" id="submitButton" class="btn btn-primary bg-gradient btn-sm" disabled>
+                                            <i class="fa-solid fa-plus"></i> Tambah
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+                    </ul>
+                <?php endif; ?>
+                <ul id="lPOperasiKatarakContainer" class="list-group <?= (session()->get('role') != 'Admisi') ? 'rounded-top-0' : ''; ?>">
                     <?php for ($i = 0; $i < 12; $i++) : ?>
-                        <li class="list-group-item border-top-0 pb-3 pt-3" style="cursor: wait;">
+                        <li class="list-group-item <?= (session()->get('role') != 'Admisi') ? 'border-top-0' : ''; ?> pb-3 pt-3" style="cursor: wait;">
                             <div class="d-flex">
                                 <div class="align-self-center w-100">
                                     <h5 class="card-title d-flex placeholder-glow">
@@ -123,9 +125,15 @@
                             </div>
                             <hr>
                             <div class="d-grid gap-2 d-flex justify-content-end">
-                                <a class="btn btn-body bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
-                                <a class="btn btn-body bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
-                                <a class="btn btn-danger bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                                <?php if (session()->get('role') != 'Admisi') : ?>
+                                    <a class="btn btn-body bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                                <?php endif; ?>
+                                <?php if (session()->get('role') == 'Admisi') : ?>
+                                    <a class="btn btn-body bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                                <?php endif; ?>
+                                <?php if (session()->get('role') != 'Admisi') : ?>
+                                    <a class="btn btn-danger bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                                <?php endif; ?>
                             </div>
                         </li>
                     <?php endfor; ?>
@@ -136,20 +144,22 @@
             </nav>
         </div>
     </div>
-    <div class="modal modal-sheet p-4 py-md-5 fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" role="dialog">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content bg-body-tertiary rounded-4 shadow-lg transparent-blur">
-                <div class="modal-body p-4 text-center">
-                    <h5 id="deleteMessage"></h5>
-                    <h6 class="mb-0" id="deleteSubmessage"></h6>
-                </div>
-                <div class="modal-footer flex-nowrap p-0" style="border-top: 1px solid var(--bs-border-color-translucent);">
-                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end" style="border-right: 1px solid var(--bs-border-color-translucent)!important;" data-bs-dismiss="modal">Tidak</button>
-                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0" id="confirmDeleteBtn">Ya</button>
+    <?php if (session()->get('role') != 'Admisi') : ?>
+        <div class="modal modal-sheet p-4 py-md-5 fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" role="dialog">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content bg-body-tertiary rounded-4 shadow-lg transparent-blur">
+                    <div class="modal-body p-4 text-center">
+                        <h5 id="deleteMessage"></h5>
+                        <h6 class="mb-0" id="deleteSubmessage"></h6>
+                    </div>
+                    <div class="modal-footer flex-nowrap p-0" style="border-top: 1px solid var(--bs-border-color-translucent);">
+                        <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end" style="border-right: 1px solid var(--bs-border-color-translucent)!important;" data-bs-dismiss="modal">Tidak</button>
+                        <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0" id="confirmDeleteBtn">Ya</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    <?php endif; ?>
 </main>
 <?= $this->endSection(); ?>
 <?= $this->section('javascript'); ?>
@@ -158,7 +168,7 @@
     let currentPage = 1;
     let transaksiId = null;
     var placeholder = `
-            <li class="list-group-item border-top-0 pb-3 pt-3" style="cursor: wait;">
+            <li class="list-group-item <?= (session()->get('role') != 'Admisi') ? 'border-top-0' : ''; ?> pb-3 pt-3" style="cursor: wait;">
                 <div class="d-flex">
                     <div class="align-self-center w-100">
                         <h5 class="card-title d-flex placeholder-glow">
@@ -208,32 +218,40 @@
                 </div>
                 <hr>
                 <div class="d-grid gap-2 d-flex justify-content-end">
-                    <a class="btn btn-body bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
-                    <a class="btn btn-body bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
-                    <a class="btn btn-danger bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                        <?php if (session()->get('role') != 'Admisi') : ?>
+                            <a class="btn btn-body bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                        <?php endif; ?>
+                        <?php if (session()->get('role') == 'Admisi') : ?>
+                            <a class="btn btn-body bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                        <?php endif; ?>
+                        <?php if (session()->get('role') != 'Admisi') : ?>
+                            <a class="btn btn-danger bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                        <?php endif; ?>
                 </div>
             </li>
     `;
-    async function fetchPasienOptions() {
-        try {
-            const response = await axios.get('<?= base_url('lpoperasikatarak/pasienlist') ?>');
+    <?php if (session()->get('role') != 'Admisi') : ?>
+        async function fetchPasienOptions() {
+            try {
+                const response = await axios.get('<?= base_url('lpoperasikatarak/pasienlist') ?>');
 
-            if (response.data.success) {
-                const options = response.data.data;
-                const select = $('#nomor_registrasi');
+                if (response.data.success) {
+                    const options = response.data.data;
+                    const select = $('#nomor_registrasi');
 
-                // Clear existing options except the first one
-                select.find('option:not(:first)').remove();
+                    // Clear existing options except the first one
+                    select.find('option:not(:first)').remove();
 
-                // Loop through the options and append them to the select element
-                options.forEach(option => {
-                    select.append(`<option value="${option.value}">${option.text}</option>`);
-                });
+                    // Loop through the options and append them to the select element
+                    options.forEach(option => {
+                        select.append(`<option value="${option.value}">${option.text}</option>`);
+                    });
+                }
+            } catch (error) {
+                showFailedToast(`${error.response.data.error}<br>${error.response.data.details.message}`);
             }
-        } catch (error) {
-            showFailedToast(`${error.response.data.error}<br>${error.response.data.details.message}`);
         }
-    }
+    <?php endif; ?>
 
     async function fetchLaporan() {
         const search = $('#searchInput').val();
@@ -285,7 +303,7 @@
                         lp_operasi_katarak.asisten :
                         `<em>Belum ada</em>`;
                     const lPOperasiKatarakElement = `
-                    <li class="list-group-item border-top-0 pb-3 pt-3">
+                    <li class="list-group-item <?= (session()->get('role') != 'Admisi') ? 'border-top-0' : ''; ?> pb-3 pt-3">
                         <div class="d-flex">
                             <div class="align-self-center w-100">
                                 <h5 class="card-title d-flex date justify-content-start">
@@ -328,15 +346,21 @@
                         </div>
                         <hr>
                         <div class="d-grid gap-2 d-flex justify-content-end">
+                        <?php if (session()->get('role') != 'Admisi') : ?>
                             <button type="button" class="btn btn-body btn-sm bg-gradient " onclick="window.location.href = '<?= base_url('lpoperasikatarak/details') ?>/${lp_operasi_katarak.id_lp_operasi_katarak}';">
                                 <i class="fa-solid fa-circle-info"></i> Detail
                             </button>
-                            <button type="button" class="btn btn-body btn-sm bg-gradient " onclick="window.location.href = '<?= base_url('lpoperasikatarak/export') ?>/${lp_operasi_katarak.id_lp_operasi_katarak}';">
+                        <?php endif; ?>
+                        <?php if (session()->get('role') == 'Admisi') : ?>
+                            <button type="button" class="btn btn-body btn-sm bg-gradient " onclick="window.open('<?= base_url('lpoperasikatarak/export') ?>/${lp_operasi_katarak.id_lp_operasi_katarak}');">
                                 <i class="fa-solid fa-print"></i> Cetak
                             </button>
+                        <?php endif; ?>
+                        <?php if (session()->get('role') != 'Admisi') : ?>
                             <button type="button" class="btn btn-danger btn-sm bg-gradient  delete-btn" data-id="${lp_operasi_katarak.id_lp_operasi_katarak}" data-name="${lp_operasi_katarak.nama_pasien}" data-date="${lp_operasi_katarak.nomor_registrasi}">
                                 <i class="fa-solid fa-trash"></i> Hapus
                             </button>
+                        <?php endif; ?>
                         </div>
                     </li>
                 `;
@@ -422,8 +446,7 @@
         const page = $(this).data('page');
         if (page) {
             currentPage = page;
-            fetchPasienOptions()
-
+            <?= (session()->get('role') != 'Admisi') ? 'fetchPasienOptions();' : ''; ?>
             fetchLaporan();
         }
     });
@@ -433,8 +456,7 @@
         for (let i = 0; i < limit; i++) {
             $('#lPOperasiKatarakContainer').append(placeholder);
         }
-        fetchPasienOptions()
-
+        <?= (session()->get('role') != 'Admisi') ? 'fetchPasienOptions();' : ''; ?>
         fetchLaporan();
     });
 
@@ -444,21 +466,24 @@
         for (let i = 0; i < limit; i++) {
             $('#lPOperasiKatarakContainer').append(placeholder);
         }
-        fetchPasienOptions();
+        <?= (session()->get('role') != 'Admisi') ? 'fetchPasienOptions();' : ''; ?>
         fetchLaporan();
     });
 
-    function toggleSubmitButton() {
-        var selectedValue = $('#nomor_registrasi').val();
-        if (selectedValue === null || selectedValue === "") {
-            $('#submitButton').prop('disabled', true);
-        } else {
-            $('#submitButton').prop('disabled', false);
+    <?php if (session()->get('role') != 'Admisi') : ?>
+
+        function toggleSubmitButton() {
+            var selectedValue = $('#nomor_registrasi').val();
+            if (selectedValue === null || selectedValue === "") {
+                $('#submitButton').prop('disabled', true);
+            } else {
+                $('#submitButton').prop('disabled', false);
+            }
         }
-    }
-    $('#nomor_registrasi').on('change.select2', function() {
-        toggleSubmitButton();
-    });
+        $('#nomor_registrasi').on('change.select2', function() {
+            toggleSubmitButton();
+        });
+    <?php endif; ?>
 
     $(document).ready(async function() {
         $('[data-bs-toggle="popover"]').popover({
@@ -470,12 +495,15 @@
                 '</div>'
         });
 
-        $('#nomor_registrasi').select2({
-            dropdownParent: $('#lPOperasiKatarakForm'),
-            theme: "bootstrap-5",
-            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
-            placeholder: $(this).data('placeholder'),
-        });
+        <?php if (session()->get('role') != 'Admisi') : ?>
+            $('#nomor_registrasi').select2({
+                dropdownParent: $('#lPOperasiKatarakForm'),
+                theme: "bootstrap-5",
+                width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+                placeholder: $(this).data('placeholder'),
+            });
+        <?php endif; ?>
+
         $('#searchInput').on('input', function() {
             currentPage = 1;
             fetchLaporan();
@@ -511,48 +539,50 @@
             saveToggleState(!isVisible);
         });
 
-        // Store the ID of the user to be deleted
-        var lPOperasiKatarakId;
-        var lPOperasiKatarakName;
-        var lPOperasiKatarakDate;
+        <?php if (session()->get('role') != 'Admisi') : ?>
+            // Store the ID of the user to be deleted
+            var lPOperasiKatarakId;
+            var lPOperasiKatarakName;
+            var lPOperasiKatarakDate;
 
-        // Show delete confirmation modal
-        $(document).on('click', '.delete-btn', function() {
-            lPOperasiKatarakId = $(this).data('id');
-            lPOperasiKatarakName = $(this).data('name');
-            lPOperasiKatarakDate = $(this).data('date');
-            // Check if lPOperasiKatarakName is null or undefined
-            const nama_pasien = (lPOperasiKatarakName === null || lPOperasiKatarakName === undefined || lPOperasiKatarakName === 'null') ?
-                'yang anonim ini' :
-                `dari "${lPOperasiKatarakName}"`;
-            $('[data-bs-toggle="tooltip"]').tooltip('hide');
-            $('#deleteMessage').html(`Hapus Laporan untuk ${nama_pasien}?`);
-            $('#deleteSubmessage').html(`Nomor Registrasi: ` + lPOperasiKatarakDate);
-            $('#deleteModal').modal('show');
-        });
+            // Show delete confirmation modal
+            $(document).on('click', '.delete-btn', function() {
+                lPOperasiKatarakId = $(this).data('id');
+                lPOperasiKatarakName = $(this).data('name');
+                lPOperasiKatarakDate = $(this).data('date');
+                // Check if lPOperasiKatarakName is null or undefined
+                const nama_pasien = (lPOperasiKatarakName === null || lPOperasiKatarakName === undefined || lPOperasiKatarakName === 'null') ?
+                    'yang anonim ini' :
+                    `dari "${lPOperasiKatarakName}"`;
+                $('[data-bs-toggle="tooltip"]').tooltip('hide');
+                $('#deleteMessage').html(`Hapus Laporan untuk ${nama_pasien}?`);
+                $('#deleteSubmessage').html(`Nomor Registrasi: ` + lPOperasiKatarakDate);
+                $('#deleteModal').modal('show');
+            });
 
-        $('#confirmDeleteBtn').click(async function() {
-            $('#deleteModal button').prop('disabled', true);
-            $('#deleteMessage').addClass('mb-0').html('Mengapus, silakan tunggu...');
-            $('#deleteSubmessage').hide();
+            $('#confirmDeleteBtn').click(async function() {
+                $('#deleteModal button').prop('disabled', true);
+                $('#deleteMessage').addClass('mb-0').html('Mengapus, silakan tunggu...');
+                $('#deleteSubmessage').hide();
 
-            try {
-                await axios.delete(`<?= base_url('/lpoperasikatarak/delete') ?>/${lPOperasiKatarakId}`);
-                fetchPasienOptions();
-                fetchLaporan();
-            } catch (error) {
-                if (error.response.request.status === 404) {
-                    showFailedToast(error.response.data.message);
-                } else {
-                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                try {
+                    await axios.delete(`<?= base_url('/lpoperasikatarak/delete') ?>/${lPOperasiKatarakId}`);
+                    fetchPasienOptions();
+                    fetchLaporan();
+                } catch (error) {
+                    if (error.response.request.status === 404) {
+                        showFailedToast(error.response.data.message);
+                    } else {
+                        showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                    }
+                } finally {
+                    $('#deleteModal').modal('hide');
+                    $('#deleteMessage').removeClass('mb-0');
+                    $('#deleteSubmessage').show();
+                    $('#deleteModal button').prop('disabled', false);
                 }
-            } finally {
-                $('#deleteModal').modal('hide');
-                $('#deleteMessage').removeClass('mb-0');
-                $('#deleteSubmessage').show();
-                $('#deleteModal button').prop('disabled', false);
-            }
-        }); // Simpan nilai pilihan apoteker saat ini
+            }); // Simpan nilai pilihan apoteker saat ini
+        <?php endif; ?>
 
         $('#lPOperasiKatarakForm').submit(async function(e) {
             e.preventDefault();
@@ -583,7 +613,7 @@
                     $('#lPOperasiKatarakForm .is-invalid').removeClass('is-invalid');
                     $('#lPOperasiKatarakForm .invalid-feedback').text('').hide();
                     $('#submitButton').prop('disabled', true);
-                    fetchPasienOptions();
+                    <?= (session()->get('role') != 'Admisi') ? 'fetchPasienOptions();' : ''; ?>
                     fetchLaporan();
                 } else {
                     console.log("Validation Errors:", response.data.errors);
@@ -636,16 +666,16 @@
 
         $(document).on('visibilitychange', async function() {
             if (document.visibilityState === "visible") {
-                fetchPasienOptions();;
+                <?= (session()->get('role') != 'Admisi') ? 'fetchPasienOptions();' : ''; ?>;
                 fetchLaporan(); // Refresh articles on button click
             }
         });
         $('#refreshButton').on('click', async function(e) {
             e.preventDefault();
-            fetchPasienOptions();;
+            <?= (session()->get('role') != 'Admisi') ? 'fetchPasienOptions();' : ''; ?>;
             fetchLaporan(); // Refresh articles on button click
         });
-        fetchPasienOptions();
+        <?= (session()->get('role') != 'Admisi') ? 'fetchPasienOptions();' : ''; ?>
         fetchLaporan();
         toggleSubmitButton();
     });
