@@ -41,42 +41,54 @@ class RawatJalan extends BaseController
         }
     }
 
-    public function rawatjalanlisttanggal($tanggal)
+    public function rawatjalanlisttanggal()
     {
         // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', 'Perawat', atau 'Admisi' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat'  || session()->get('role') == 'Admisi') {
-            $rawatjalan = $this->RawatJalanModel
-                ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
-                ->like('tanggal_registrasi', $tanggal)
-                ->orderBy('rawat_jalan.id_rawat_jalan', 'DESC')
-                ->findAll();
-
             $db = db_connect();
 
-            // Ambil semua data dari master_jaminan untuk di-cache
+            $tanggal = $this->request->getGet('tanggal');
+            $limit = $this->request->getGet('limit');
+            $offset = $this->request->getGet('offset');
+
+            $limit = $limit ? intval($limit) : 0;
+            $offset = $offset ? intval($offset) : 0;
+
+            $RawatJalanModel = $this->RawatJalanModel->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner');
+
+            if ($tanggal) {
+                $RawatJalanModel->groupStart()
+                    ->like('tanggal_registrasi', $tanggal)
+                    ->groupEnd();
+            }
+
+            $total = $RawatJalanModel->countAllResults(false);
+            $Pasien = $RawatJalanModel->orderBy('id_rawat_jalan', 'DESC')->findAll($limit, $offset);
+
+            $startNumber = $offset + 1;
+
             $jaminanList = $db->table('master_jaminan')
                 ->select('jaminanKode, jaminanNama')
                 ->get()
                 ->getResultArray();
 
-            // Ubah data menjadi array dengan key sebagai jaminanKode untuk akses cepat
             $jaminanMap = [];
             foreach ($jaminanList as $jaminan) {
                 $jaminanMap[$jaminan['jaminanKode']] = $jaminan['jaminanNama'];
             }
 
-            // Loop untuk mengganti nilai 'jaminan' di $rawatjalan
-            foreach ($rawatjalan as &$rajal) {
-                if (isset($jaminanMap[$rajal['jaminan']])) {
-                    $rajal['jaminan'] = $jaminanMap[$rajal['jaminan']];
-                } else {
-                    $rajal['jaminan'] = 'Tidak Diketahui'; // Default jika kode jaminan tidak ditemukan
-                }
+            foreach ($Pasien as &$rajal) {
+                $rajal['jaminan'] = isset($jaminanMap[$rajal['jaminan']]) ? $jaminanMap[$rajal['jaminan']] : 'Tidak Diketahui';
             }
 
-            // Mengembalikan respons JSON dengan data pasien
+            $dataRawatJalan = array_map(function ($data, $index) use ($startNumber) {
+                $data['number'] = $startNumber + $index;
+                return $data;
+            }, $Pasien, array_keys($Pasien));
+
             return $this->response->setJSON([
-                'data' => $rawatjalan,
+                'data' => $dataRawatJalan,
+                'total' => (int) $total
             ]);
         } else {
             // Jika peran tidak dikenali, kembalikan status 404
@@ -86,42 +98,111 @@ class RawatJalan extends BaseController
         }
     }
 
-    public function rawatjalanlistrm($no_rm)
+    public function rawatjalanlistrm()
     {
         // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', 'Perawat', atau 'Admisi' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat'  || session()->get('role') == 'Admisi') {
-            $rawatjalan = $this->RawatJalanModel
-                ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
-                ->where('pasien.no_rm', $no_rm)
-                ->orderBy('rawat_jalan.id_rawat_jalan', 'DESC')
-                ->findAll();
-
             $db = db_connect();
 
-            // Ambil semua data dari master_jaminan untuk di-cache
+            $no_rm = $this->request->getGet('no_rm');
+            $limit = $this->request->getGet('limit');
+            $offset = $this->request->getGet('offset');
+
+            $limit = $limit ? intval($limit) : 0;
+            $offset = $offset ? intval($offset) : 0;
+
+            $RawatJalanModel = $this->RawatJalanModel->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner');
+
+            if ($no_rm) {
+                $RawatJalanModel->groupStart()
+                    ->like('pasien.no_rm', $no_rm)
+                    ->groupEnd();
+            }
+
+            $total = $RawatJalanModel->countAllResults(false);
+            $Pasien = $RawatJalanModel->orderBy('id_rawat_jalan', 'DESC')->findAll($limit, $offset);
+
+            $startNumber = $offset + 1;
+
             $jaminanList = $db->table('master_jaminan')
                 ->select('jaminanKode, jaminanNama')
                 ->get()
                 ->getResultArray();
 
-            // Ubah data menjadi array dengan key sebagai jaminanKode untuk akses cepat
             $jaminanMap = [];
             foreach ($jaminanList as $jaminan) {
                 $jaminanMap[$jaminan['jaminanKode']] = $jaminan['jaminanNama'];
             }
 
-            // Loop untuk mengganti nilai 'jaminan' di $rawatjalan
-            foreach ($rawatjalan as &$rajal) {
-                if (isset($jaminanMap[$rajal['jaminan']])) {
-                    $rajal['jaminan'] = $jaminanMap[$rajal['jaminan']];
-                } else {
-                    $rajal['jaminan'] = 'Tidak Diketahui'; // Default jika kode jaminan tidak ditemukan
-                }
+            foreach ($Pasien as &$rajal) {
+                $rajal['jaminan'] = isset($jaminanMap[$rajal['jaminan']]) ? $jaminanMap[$rajal['jaminan']] : 'Tidak Diketahui';
             }
 
-            // Mengembalikan respons JSON dengan data pasien
+            $dataRawatJalan = array_map(function ($data, $index) use ($startNumber) {
+                $data['number'] = $startNumber + $index;
+                return $data;
+            }, $Pasien, array_keys($Pasien));
+
             return $this->response->setJSON([
-                'data' => $rawatjalan,
+                'data' => $dataRawatJalan,
+                'total' => (int) $total
+            ]);
+        } else {
+            // Jika peran tidak dikenali, kembalikan status 404
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
+        }
+    }
+
+    public function rawatjalanlistnama()
+    {
+        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', 'Perawat', atau 'Admisi' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat'  || session()->get('role') == 'Admisi') {
+            $db = db_connect();
+
+            $nama = $this->request->getGet('nama');
+            $limit = $this->request->getGet('limit');
+            $offset = $this->request->getGet('offset');
+
+            $limit = $limit ? intval($limit) : 0;
+            $offset = $offset ? intval($offset) : 0;
+
+            $RawatJalanModel = $this->RawatJalanModel->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner');
+
+            if ($nama) {
+                $RawatJalanModel->groupStart()
+                    ->like('nama_pasien', $nama)
+                    ->groupEnd();
+            }
+
+            $total = $RawatJalanModel->countAllResults(false);
+            $Pasien = $RawatJalanModel->orderBy('id_rawat_jalan', 'DESC')->findAll($limit, $offset);
+
+            $startNumber = $offset + 1;
+
+            $jaminanList = $db->table('master_jaminan')
+                ->select('jaminanKode, jaminanNama')
+                ->get()
+                ->getResultArray();
+
+            $jaminanMap = [];
+            foreach ($jaminanList as $jaminan) {
+                $jaminanMap[$jaminan['jaminanKode']] = $jaminan['jaminanNama'];
+            }
+
+            foreach ($Pasien as &$rajal) {
+                $rajal['jaminan'] = isset($jaminanMap[$rajal['jaminan']]) ? $jaminanMap[$rajal['jaminan']] : 'Tidak Diketahui';
+            }
+
+            $dataRawatJalan = array_map(function ($data, $index) use ($startNumber) {
+                $data['number'] = $startNumber + $index;
+                return $data;
+            }, $Pasien, array_keys($Pasien));
+
+            return $this->response->setJSON([
+                'data' => $dataRawatJalan,
+                'total' => (int) $total
             ]);
         } else {
             // Jika peran tidak dikenali, kembalikan status 404

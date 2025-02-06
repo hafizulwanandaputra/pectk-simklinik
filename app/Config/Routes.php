@@ -38,8 +38,9 @@ $routes->post('/(?i)pasien/(?i)update/(:any)', 'Pasien::update/$1');
 
 // RAWAT JALAN
 $routes->get('/(?i)rawatjalan', 'RawatJalan::index');
-$routes->get('/(?i)rawatjalan/(?i)rawatjalanlisttanggal/(:any)', 'RawatJalan::rawatjalanlisttanggal/$1');
-$routes->get('/(?i)rawatjalan/(?i)rawatjalanlistrm/(:any)', 'RawatJalan::rawatjalanlistrm/$1');
+$routes->get('/(?i)rawatjalan/(?i)rawatjalanlisttanggal', 'RawatJalan::rawatjalanlisttanggal');
+$routes->get('/(?i)rawatjalan/(?i)rawatjalanlistrm', 'RawatJalan::rawatjalanlistrm');
+$routes->get('/(?i)rawatjalan/(?i)rawatjalanlistnama', 'RawatJalan::rawatjalanlistnama');
 $routes->get('/(?i)rawatjalan/(?i)kunjunganoptions', 'Pasien::kunjunganoptions');
 $routes->get('/(?i)rawatjalan/(?i)jaminanoptions', 'Pasien::jaminanoptions');
 $routes->get('/(?i)rawatjalan/(?i)ruanganoptions', 'Pasien::ruanganoptions');
