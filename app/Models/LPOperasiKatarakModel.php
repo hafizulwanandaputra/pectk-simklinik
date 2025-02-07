@@ -87,6 +87,7 @@ class LPOperasiKatarakModel extends Model
         'komplikasi_prolaps',
         'komplikasi_pendarahan',
         'komplikasi_lainnya',
+        'tindakan_operasi',
         'terapi_pascabedah',
         'waktu_dibuat',
     ];
