@@ -431,6 +431,15 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                             </div>
                                         </a>
                                     </li>
+                                    <li class="nav-item" style="margin-left: calc(24px + 0.5rem);">
+                                        <a class="nav-link px-2 py-1 <?= ($activeSegment === 'lpoperasipterigium') ? 'active bg-success' : '' ?>" href=" <?= base_url('/lpoperasipterigium'); ?>">
+                                            <div class="d-flex align-items-start <?= ($activeSegment === 'lpoperasipterigium') ? 'text-white' : 'text-success-emphasis' ?>">
+                                                <div class="flex-fill fw-normal" style="font-size: 0.75em;">
+                                                    Pterigium
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                         <?php endif; ?>

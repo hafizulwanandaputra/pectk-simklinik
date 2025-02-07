@@ -1642,7 +1642,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             const fieldElement = $('#' + field);
 
                             // Handle radio button group separately
-                            if (['mata'].includes(field)) {
+                            if (['mata', 'jenis_anastesi'].includes(field)) {
                                 const radioGroup = $(`input[name='${field}']`); // Ambil grup radio berdasarkan nama
                                 const feedbackElement = radioGroup.closest('.radio-group').find('.invalid-feedback'); // Gunakan pembungkus dengan class tertentu
 
