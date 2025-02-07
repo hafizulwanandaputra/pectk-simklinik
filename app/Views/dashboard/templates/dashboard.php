@@ -312,8 +312,8 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                                 <div style="min-width: 24px; max-width: 24px; text-align: center;">
                                                     <i class="fa-solid fa-calendar-days"></i>
                                                 </div>
-                                                <div class="flex-fill ms-2">
-                                                    Tanggal Otomatis
+                                                <div class="ms-2">
+                                                    Tanggal Hari Ini
                                                 </div>
                                             </label>
                                             <div style="text-align: center;">
@@ -330,7 +330,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                             <div style="min-width: 24px; max-width: 24px; text-align: center;">
                                                 <i class="fa-solid fa-gear"></i>
                                             </div>
-                                            <div class="flex-fill ms-2">
+                                            <div class="ms-2">
                                                 Pengaturan
                                             </div>
                                         </div>
@@ -342,7 +342,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                             <div style="min-width: 24px; max-width: 24px; text-align: center;">
                                                 <i class="fa-solid fa-right-from-bracket"></i>
                                             </div>
-                                            <div class="flex-fill ms-2">
+                                            <div class="ms-2">
                                                 Keluar
                                             </div>
                                         </div>
