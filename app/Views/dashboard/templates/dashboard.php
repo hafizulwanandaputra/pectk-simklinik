@@ -726,6 +726,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                 }
             });
             $('#auto_date').on('change', async function() {
+                $(this).prop('disabled', true);
                 let isChecked = $(this).is(':checked');
                 let url = isChecked ? `<?= base_url('settings/autodate-on/' . session()->get('id_user')); ?>` : `<?= base_url('settings/autodate-off/' . session()->get('id_user')); ?>`;
 
@@ -734,6 +735,8 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                     $(this).val(isChecked ? 1 : 0);
                 } catch (error) {
                     showFailedToast('Gagal mengatur status tanggal otomatis.<br>' + error);
+                } finally {
+                    $(this).prop('disabled', false);
                 }
             });
             $('#logoutButton').on('click', function(e) {
