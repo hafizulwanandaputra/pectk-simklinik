@@ -1583,6 +1583,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             }
             $('#komplikasi_lainnya').val(data.komplikasi_lainnya);
 
+            $('#tindakan_operasi').val(data.tindakan_operasi);
             $('#terapi_pascabedah').val(data.terapi_pascabedah);
         } catch (error) {
             showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
