@@ -58,7 +58,7 @@ class Operasi extends BaseController
             // Menerapkan filter pencarian pada nama supplier atau tanggal pembelian
             if ($tanggal) {
                 $SPOperasiModel
-                    ->like('tanggal', $tanggal);
+                    ->like('rawat_jalan.tanggal_registrasi', $tanggal);
             }
 
             // Menerapkan filter pencarian pada nama supplier atau tanggal pembelian

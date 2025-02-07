@@ -361,6 +361,10 @@ $routes->post('/(?i)admin/(?i)activate/(:any)', 'Admin::activate/$1');
 $routes->post('/(?i)admin/(?i)deactivate/(:any)', 'Admin::deactivate/$1');
 $routes->delete('/(?i)admin/(?i)delete/(:any)', 'Admin::delete/$1');
 
+// ATUR TANGGAL OTOMATIS
+$routes->post('/(?i)settings/(?i)autodate-on/(:any)', 'Settings::autodate_on/$1');
+$routes->post('/(?i)settings/(?i)autodate-off/(:any)', 'Settings::autodate_off/$1');
+
 // SETTINGS
 $routes->get('/(?i)settings', 'Settings::index');
 

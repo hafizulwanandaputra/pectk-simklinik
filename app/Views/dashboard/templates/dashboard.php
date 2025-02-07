@@ -306,6 +306,23 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                             <hr class="my-1 border-success-subtle opacity-100">
                             <ul class="nav nav-pills flex-column">
                                 <li class="nav-item">
+                                    <span class="nav-link px-2 py-1">
+                                        <div class="d-flex align-items-start text-success-emphasis">
+                                            <div style="min-width: 24px; max-width: 24px; text-align: center;">
+                                                <i class="fa-solid fa-calendar-days"></i>
+                                            </div>
+                                            <div class="flex-fill ms-2 w-100">
+                                                <label for="auto_date">Tanggal Otomatis</label>
+                                            </div>
+                                            <div style="text-align: center;">
+                                                <div class="form-check form-switch ps-4">
+                                                    <input class="form-check-input" value="<?= (session()->get('auto_date') == 1) ? '1' : '0'; ?>" type="checkbox" role="switch" id="auto_date" name="auto_date" <?= (session()->get('auto_date') == 1) ? 'checked' : ''; ?>>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </span>
+                                </li>
+                                <li class="nav-item">
                                     <a class="nav-link nav-link-offcanvas px-2 py-1" href="<?= base_url('/settings'); ?>">
                                         <div class="d-flex align-items-start text-success-emphasis">
                                             <div style="min-width: 24px; max-width: 24px; text-align: center;">
@@ -704,6 +721,17 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                     $('#userOffcanvas').one('hidden.bs.offcanvas', function() {
                         window.location.href = targetUrl;
                     });
+                }
+            });
+            $('#auto_date').on('change', async function() {
+                let isChecked = $(this).is(':checked');
+                let url = isChecked ? `<?= base_url('settings/autodate-on/' . session()->get('id_user')); ?>` : `<?= base_url('settings/autodate-off/' . session()->get('id_user')); ?>`;
+
+                try {
+                    let response = await axios.post(url);
+                    $(this).val(isChecked ? 1 : 0);
+                } catch (error) {
+                    showFailedToast('Gagal mengatur status tanggal otomatis.<br>' + error);
                 }
             });
             $('#logoutButton').on('click', function(e) {

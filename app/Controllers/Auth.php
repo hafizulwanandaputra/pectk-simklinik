@@ -92,6 +92,7 @@ class Auth extends BaseController
                     session()->set('profilephoto', $check['profilephoto']);
                     session()->set('role', $check['role']);
                     session()->set('kode_antrian', $check['kode_antrian']);
+                    session()->set('auto_date', $check['auto_date']);
                     session()->set('session_token', $session_token);
                     session()->set('created_at', date('Y-m-d H:i:s'));
                     session()->set('expires_at', $expires_at);
@@ -133,6 +134,7 @@ class Auth extends BaseController
         session()->remove('profilephoto');
         session()->remove('role');
         session()->remove('kode_antrian');
+        session()->remove('auto_date');
         session()->remove('session_token');
         session()->remove('created_at');
         session()->remove('expires_at');

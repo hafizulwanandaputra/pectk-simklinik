@@ -26,7 +26,7 @@
                 <div class="no-fluid-content">
                     <div class="d-flex flex-column flex-lg-row gap-2 mb-2">
                         <div class="input-group input-group-sm w-auto">
-                            <input type="date" id="tanggalFilter" class="form-control ">
+                            <input type="date" id="tanggalFilter" class="form-control" <?= (session()->get('auto_date') == 1) ? 'value="' . date('Y-m-d') . '"' : ''; ?>>
                             <button class="btn btn-danger btn-sm bg-gradient " type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
                         </div>
                         <div class="input-group input-group-sm flex-grow-1">

@@ -57,7 +57,7 @@ class LPOperasiPterigium extends BaseController
             // Menerapkan filter pencarian pada nama supplier atau tanggal pembelian
             if ($tanggal) {
                 $LPOperasiPterigiumModel
-                    ->like('tanggal', $tanggal);
+                    ->like('rawat_jalan.tanggal_registrasi', $tanggal);
             }
 
             // Menerapkan filter pencarian berdasarkan nama pasien atau tanggal resep

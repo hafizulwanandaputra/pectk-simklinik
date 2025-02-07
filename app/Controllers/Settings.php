@@ -176,4 +176,38 @@ class Settings extends BaseController
 
         return view('dashboard/settings/about', $data); // Mengembalikan tampilan halaman tentang
     }
+
+    public function autodate_on($id)
+    {
+        $db = db_connect(); // Menghubungkan ke database
+        $builder = $db->table('user');
+
+        // Update nilai auto_date menjadi 1
+        $builder->set('auto_date', '1')->where('id_user', $id)->update();
+
+        // Pastikan perubahan berhasil
+        if ($db->affectedRows() > 0) {
+            session()->set('auto_date', '1'); // Set session jika berhasil
+            return $this->response->setJSON(['success' => true, 'message' => 'Tanggal otomatis berhasil diaktifkan']);
+        }
+
+        return $this->response->setJSON(['success' => false, 'message' => 'Gagal mengaktifkan tanggal otomatis']);
+    }
+
+    public function autodate_off($id)
+    {
+        $db = db_connect(); // Menghubungkan ke database
+        $builder = $db->table('user');
+
+        // Update nilai auto_date menjadi 0
+        $builder->set('auto_date', '0')->where('id_user', $id)->update();
+
+        // Pastikan perubahan berhasil
+        if ($db->affectedRows() > 0) {
+            session()->set('auto_date', '0'); // Set session jika berhasil
+            return $this->response->setJSON(['success' => true, 'message' => 'Tanggal otomatis berhasil dinonaktifkan']);
+        }
+
+        return $this->response->setJSON(['success' => false, 'message' => 'Gagal menonaktifkan tanggal otomatis']);
+    }
 }
