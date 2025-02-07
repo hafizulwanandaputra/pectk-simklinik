@@ -306,17 +306,19 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                             <hr class="my-1 border-success-subtle opacity-100">
                             <ul class="nav nav-pills flex-column">
                                 <li class="nav-item">
-                                    <span class="nav-link px-2 py-1">
-                                        <div class="d-flex align-items-start text-success-emphasis">
-                                            <div style="min-width: 24px; max-width: 24px; text-align: center;">
-                                                <i class="fa-solid fa-calendar-days"></i>
-                                            </div>
-                                            <div class="flex-fill ms-2 w-100">
-                                                <label for="auto_date">Tanggal Otomatis</label>
-                                            </div>
+                                    <span class="nav-link px-2 py-1" role="button">
+                                        <div class="d-flex align-items-between text-success-emphasis">
+                                            <label for="auto_date" class="d-flex align-items-start w-100" role="button">
+                                                <div style="min-width: 24px; max-width: 24px; text-align: center;">
+                                                    <i class="fa-solid fa-calendar-days"></i>
+                                                </div>
+                                                <div class="flex-fill ms-2">
+                                                    Tanggal Otomatis
+                                                </div>
+                                            </label>
                                             <div style="text-align: center;">
                                                 <div class="form-check form-switch ps-4">
-                                                    <input class="form-check-input" value="<?= (session()->get('auto_date') == 1) ? '1' : '0'; ?>" type="checkbox" role="switch" id="auto_date" name="auto_date" <?= (session()->get('auto_date') == 1) ? 'checked' : ''; ?>>
+                                                    <input class="form-check-input" role="button" value="<?= (session()->get('auto_date') == 1) ? '1' : '0'; ?>" type="checkbox" role="switch" id="auto_date" name="auto_date" <?= (session()->get('auto_date') == 1) ? 'checked' : ''; ?>>
                                                 </div>
                                             </div>
                                         </div>
