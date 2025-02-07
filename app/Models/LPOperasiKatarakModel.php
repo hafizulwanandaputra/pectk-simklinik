@@ -16,7 +16,6 @@ class LPOperasiKatarakModel extends Model
         'mata',
         'operator',
         'jam_operasi',
-        'dr_marker_operasi',
         'lama_operasi',
         'diagnosis',
         'asisten',
