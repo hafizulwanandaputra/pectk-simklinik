@@ -155,6 +155,7 @@ class Admin extends BaseController
                 'password' => password_hash($this->request->getPost('username'), PASSWORD_DEFAULT),
                 'role' => $this->request->getPost('role'),
                 'kode_antrian' => $kode_antrian,
+                'auto_date' => 0,
                 'active' => 0, // Status aktif pengguna awalnya diset ke 0
                 'registered' => date('Y-m-d H:i:s') // Tanggal pendaftaran saat ini
             ];
