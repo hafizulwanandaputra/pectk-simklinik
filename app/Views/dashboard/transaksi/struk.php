@@ -10,7 +10,6 @@ $tanggal = Time::parse($transaksi['tgl_transaksi']);
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="<?= base_url(); ?>assets_public/fonts/helvetica/stylesheet.css" rel="stylesheet">
     <title><?= $title; ?></title>
     <style>
         body {
