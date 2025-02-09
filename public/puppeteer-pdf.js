@@ -38,6 +38,7 @@ const fs = require('fs');
         width: width,            // Lebar dinamis dari argumen
         height: height,          // Tinggi dinamis dari argumen
         printBackground: true,   // Mencetak latar belakang
+        embedFonts: true,
         margin: {                // Margin dinamis dari argumen
             top: topMargin,      // Margin atas
             right: rightMargin,  // Margin kanan
