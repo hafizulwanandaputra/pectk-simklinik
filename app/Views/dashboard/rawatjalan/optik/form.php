@@ -320,7 +320,7 @@ $tanggalFormatted = $tanggalFormatter->format($dateTime);
                             <div style="white-space: nowrap;"><?= $rawatjalan['nama_pasien']; ?></div>
                             <div><?= $rawatjalan['no_rm']; ?></div>
                             <div><?= $rawatjalan['tanggal_lahir']; ?> (<?= $usia->y . " tahun " . $usia->m . " bulan" ?>)</div>
-                            <img src="data:image/png;base64,<?= $bcNoReg ?>" width="240mm" alt="Barcode" style="padding-top: 2px;">
+                            <img src="data:image/png;base64,<?= $bcNoReg ?>" width="240mm" alt="Barcode" style="padding-top: 4px;">
                             <div><?= $rawatjalan['nomor_registrasi']; ?></div>
                         </center>
                     </td>
