@@ -23,11 +23,11 @@ $tanggalFormat = $formatter->format($tanggal_isi_resep);
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="<?= base_url(); ?>assets_public/fonts/helvetica/stylesheet.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.typekit.net/dew1xab.css">
     <title><?= $title; ?></title>
     <style>
         body {
-            font-family: Helvetica, Arial, sans-serif;
+            font-family: neue-haas-unica, Helvetica, Arial, sans-serif;
             font-size: 10pt;
             line-height: 1.2;
         }
