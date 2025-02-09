@@ -137,7 +137,7 @@ $waktuFormatted = $dateTime->format('H.i.s');
                             <div style="white-space: nowrap;"><?= $operasi['nama_pasien']; ?></div>
                             <div><?= $operasi['no_rm']; ?></div>
                             <div><?= $operasi['tanggal_lahir']; ?> (<?= $usia->y . " tahun " . $usia->m . " bulan" ?>)</div>
-                            <img src="data:image/png;base64,<?= $bcNoReg ?>" width="240mm" alt="Barcode">
+                            <img src="data:image/png;base64,<?= $bcNoReg ?>" width="240mm" alt="Barcode" style="padding-top: 2px;">
                             <div><?= $operasi['nomor_registrasi']; ?></div>
                         </div>
                     </td>
