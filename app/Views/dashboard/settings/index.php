@@ -12,6 +12,22 @@
 <main class="main-content-inside px-3 pt-3">
     <div class="no-fluid-content">
         <?php if (session()->get('role') == "Admin") : ?>
+            <h5>Rekam Medis</h5>
+            <ul class="list-group shadow-sm  mb-3">
+                <li class="list-group-item p-1 list-group-item-action">
+                    <div class="d-flex align-items-start">
+                        <a id="deleteEmptyMRData" href="#" class="link-danger stretched-link" style="min-width: 3rem; max-width: 3rem; text-align: center;">
+                            <p class="mb-0" style="font-size: 1.75rem!important;"><i class="fa-solid fa-trash"></i></p>
+                        </a>
+                        <div class="align-self-stretch flex-fill ps-1 text-wrap overflow-hidden d-flex align-items-center" style="text-overflow: ellipsis;">
+                            <h5 class="card-title text-danger">Hapus Data Rekam Medis yang Kosong</h5>
+                        </div>
+                        <div class="align-self-center" style="min-width: 3rem; max-width: 3rem; text-align: center;">
+                            <span class="text-body-tertiary"><i class="fa-solid fa-angle-right"></i></span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
             <h5>Transaksi</h5>
             <ul class="list-group shadow-sm  mb-3">
                 <li class="list-group-item p-1 list-group-item-action">
@@ -90,6 +106,20 @@
             </li>
         </ul>
     </div>
+    <div class="modal modal-sheet p-4 py-md-5 fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content bg-body-tertiary rounded-4 shadow-lg transparent-blur">
+                <div class="modal-body p-4 text-center">
+                    <h5 id="deleteMessage"></h5>
+                    <h6 class="mb-0" id="deleteSubmessage"></h6>
+                </div>
+                <div class="modal-footer flex-nowrap p-0" style="border-top: 1px solid var(--bs-border-color-translucent);">
+                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end" style="border-right: 1px solid var(--bs-border-color-translucent)!important;" data-bs-dismiss="modal">Tidak</button>
+                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0" id="confirmDeleteBtn">Ya</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
 <?= $this->endSection(); ?>
 <?= $this->section('javascript'); ?>
@@ -104,6 +134,33 @@
     $(document).ready(function() {
         // Menyembunyikan spinner loading saat dokumen sudah siap
         $('#loadingSpinner').hide(); // Menyembunyikan elemen spinner loading
+        // Show delete confirmation modal
+        $('#deleteEmptyMRData').click(function() {
+            $('[data-bs-toggle="tooltip"]').tooltip('hide');
+            $('#deleteMessage').html(`Hapus data rekam medis yang kosong?`);
+            $('#deleteSubmessage').html(`Tindakan ini tidak dapat dikembalikan`);
+            $('#deleteModal').modal('show');
+        });
+
+        $('#confirmDeleteBtn').click(async function() {
+            $('#deleteModal button').prop('disabled', true);
+            $('#deleteMessage').addClass('mb-0').html('Mengapus, silakan tunggu...');
+            $('#deleteSubmessage').hide();
+
+            try {
+                const response = await axios.delete(`<?= base_url('/settings/deleteempty') ?>`);
+                showSuccessToast(response.data.message);
+            } catch (error) {
+                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+            } finally {
+                $('#deleteModal').modal('hide');
+                $('#deleteMessage').removeClass('mb-0');
+                $('#deleteSubmessage').show();
+                $('#deleteModal button').prop('disabled', false);
+            }
+        });
     });
+    // Show toast notification
+    <?= $this->include('toast/index') ?>
 </script>
 <?= $this->endSection(); ?>

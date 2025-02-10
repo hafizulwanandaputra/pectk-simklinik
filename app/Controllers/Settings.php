@@ -210,4 +210,131 @@ class Settings extends BaseController
 
         return $this->response->setJSON(['success' => false, 'message' => 'Gagal menonaktifkan tanggal otomatis']);
     }
+
+    public function deleteempty()
+    {
+        // Memeriksa apakah peran pengguna dalam sesi adalah "Admin"
+        if (session()->get('role') == 'Admin') {
+            $db = db_connect();
+            $tables = [
+                'medrec_assesment' => [
+                    'keluhan_utama',
+                    'riwayat_penyakit_sekarang',
+                    'riwayat_penyakit_dahulu',
+                    'riwayat_penyakit_keluarga',
+                    'riwayat_pengobatan',
+                    'riwayat_sosial_pekerjaan',
+                    'kesadaran',
+                    'tekanan_darah',
+                    'nadi',
+                    'suhu',
+                    'pernapasan',
+                    'keadaan_umum',
+                    'alergi',
+                    'alergi_keterangan',
+                    'sakit_lainnya',
+                    'tono_od',
+                    'tono_os',
+                    'visus_od1',
+                    'visus_od2',
+                    'visus_os1',
+                    'visus_os2',
+                    'od_ucva',
+                    'od_bcva',
+                    'os_ucva',
+                    'os_bcva',
+                    'indirect_fundus_img',
+                    'fundus_vitreus_od',
+                    'fundus_koroid_od',
+                    'fundus_retina_od',
+                    'fundus_vitreus_os',
+                    'fundus_koroid_os',
+                    'fundus_retina_os',
+                    'diagnosa_medis_1',
+                    'icdx_kode_1',
+                    'icdx_nama_1',
+                    'diagnosa_medis_2',
+                    'icdx_kode_2',
+                    'icdx_nama_2',
+                    'diagnosa_medis_3',
+                    'icdx_kode_3',
+                    'icdx_nama_3',
+                    'diagnosa_medis_4',
+                    'icdx_kode_4',
+                    'icdx_nama_4',
+                    'diagnosa_medis_5',
+                    'icdx_kode_5',
+                    'icdx_nama_5',
+                    'terapi_1',
+                    'icd9_kode_1',
+                    'icd9_nama_1',
+                    'terapi_2',
+                    'icd9_kode_2',
+                    'icd9_nama_2',
+                    'terapi_3',
+                    'icd9_kode_3',
+                    'icd9_nama_3',
+                    'terapi_4',
+                    'icd9_kode_4',
+                    'icd9_nama_4',
+                    'terapi_5'
+                ],
+                'medrec_edukasi' => [
+                    'bahasa',
+                    'bahasa_lainnya',
+                    'penterjemah',
+                    'pendidikan',
+                    'baca_tulis',
+                    'cara_belajar',
+                    'budaya',
+                    'hambatan',
+                    'keyakinan',
+                    'keyakinan_khusus',
+                    'topik_pembelajaran',
+                    'topik_lainnya',
+                    'kesediaan_pasien',
+                    'nama_pasien_keluarga',
+                    'ttd_pasien_keluarga'
+                ],
+                'medrec_skrining' => [
+                    'jatuh_sempoyongan',
+                    'jatuh_penopang',
+                    'jatuh_info_dokter',
+                    'jatuh_info_pukul',
+                    'status_fungsional',
+                    'status_info_pukul',
+                    'nyeri_kategori',
+                    'nyeri_lokasi',
+                    'nyeri_karakteristik',
+                    'nyeri_durasi',
+                    'nyeri_frekuensi',
+                    'nyeri_hilang_bila',
+                    'nyeri_hilang_lainnya',
+                    'nyeri_info_dokter',
+                    'nyeri_info_pukul'
+                ],
+                'medrec_permintaan_penunjang' => ['dokter_pengirim', 'rujukan_dari', 'pemeriksaan', 'pemeriksaan_lainnya', 'lokasi_pemeriksaan'],
+                'medrec_lp_tindakan_rajal' => ['nama_dokter_dpjp', 'nama_perawat', 'diagnosa', 'kode_icd_x', 'lokasi_mata', 'isi_laporan'],
+                'medrec_operasi_pra' => ['perawat_praoperasi', 'jenis_operasi', 'ctt_vital_suhu', 'ctt_vital_nadi', 'ctt_vital_rr', 'ctt_vital_td'],
+                'medrec_operasi_safety_signin' => ['ns_konfirmasi_identitas', 'dr_konfirmasi_identitas', 'ns_marker_operasi', 'dr_marker_operasi'],
+                'medrec_operasi_safety_signout' => ['kelengkapan_instrumen', 'spesimen_kultur', 'label_pasien', 'masalah_instrumen'],
+                'medrec_operasi_safety_timeout' => ['perkenalan_diri', 'cek_nama_mr', 'cek_rencana_tindakan', 'cek_marker', 'alergi']
+            ];
+
+            foreach ($tables as $table => $columns) {
+                $conditions = [];
+                foreach ($columns as $column) {
+                    $conditions[] = "$column IS NULL";
+                }
+
+                $query = "DELETE FROM $table WHERE " . implode(' AND ', $conditions);
+                $db->query($query);
+            }
+
+            return $this->response->setJSON(['success' => true, 'message' => 'Data rekam medis yang kosong berhasil dihapus']);
+        } else {
+            // Jika bukan admin, mengembalikan status 404 dengan pesan error
+            throw PageNotFoundException::forPageNotFound();
+        }
+    }
 }
