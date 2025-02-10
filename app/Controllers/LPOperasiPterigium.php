@@ -259,14 +259,14 @@ class LPOperasiPterigium extends BaseController
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Dokter' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
-            $transaksi = $this->LPOperasiPterigiumModel->find($id);
-            if ($transaksi) {
+            $lp_operasi_pterigium = $this->LPOperasiPterigiumModel->find($id);
+            if ($lp_operasi_pterigium) {
                 $db = db_connect();
 
-                // Menghapus transaksi
+                // Menghapus lp_operasi_pterigium
                 $this->LPOperasiPterigiumModel->delete($id);
 
-                // Reset auto increment untuk tabel transaksi dan detail_transaksi
+                // Reset auto increment
                 $db->query('ALTER TABLE `medrec_lp_operasi_pterigium` auto_increment = 1');
 
                 return $this->response->setJSON(['message' => 'Laporan operasi pterigium berhasil dihapus']); // Mengembalikan respon sukses

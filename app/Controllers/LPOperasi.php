@@ -4,18 +4,18 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\RawatJalanModel;
-use App\Models\LPOperasiKatarakModel;
+use App\Models\LPOperasiModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use Picqer\Barcode\BarcodeGeneratorPNG;
 
-class LPOperasiKatarak extends BaseController
+class LPOperasi extends BaseController
 {
     protected $RawatJalanModel;
-    protected $LPOperasiKatarakModel;
+    protected $LPOperasiModel;
     public function __construct()
     {
         $this->RawatJalanModel = new RawatJalanModel();
-        $this->LPOperasiKatarakModel = new LPOperasiKatarakModel();
+        $this->LPOperasiModel = new LPOperasiModel();
     }
     public function index()
     {
@@ -23,19 +23,19 @@ class LPOperasiKatarak extends BaseController
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Admisi') {
             // Menyiapkan data untuk tampilan
             $data = [
-                'title' => 'Laporan Operasi Katarak - ' . $this->systemName,
-                'headertitle' => 'Laporan Operasi Katarak',
+                'title' => 'Laporan Operasi - ' . $this->systemName,
+                'headertitle' => 'Laporan Operasi',
                 'agent' => $this->request->getUserAgent() // Mengambil informasi user agent
             ];
             // Menampilkan tampilan untuk halaman pasien
-            return view('dashboard/lpoperasikatarak/index', $data);
+            return view('dashboard/lpoperasi/index', $data);
         } else {
             // Jika peran tidak dikenali, lemparkan pengecualian 404
             throw PageNotFoundException::forPageNotFound();
         }
     }
 
-    public function lpoperasikataraklist()
+    public function lpoperasilist()
     {
         // Memeriksa peran pengguna, hanya 'Admin', atau 'Admisi' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Admisi') {
@@ -50,44 +50,44 @@ class LPOperasiKatarak extends BaseController
             $offset = $offset ? intval($offset) : 0;
 
             // Memuat model PembelianObat
-            $LPOperasiKatarakModel = $this->LPOperasiKatarakModel
-                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_lp_operasi_katarak.nomor_registrasi', 'inner')
+            $LPOperasiModel = $this->LPOperasiModel
+                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_lp_operasi.nomor_registrasi', 'inner')
                 ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner');
 
             // Menerapkan filter pencarian pada nama supplier atau tanggal pembelian
             if ($tanggal) {
-                $LPOperasiKatarakModel
+                $LPOperasiModel
                     ->like('rawat_jalan.tanggal_registrasi', $tanggal);
             }
 
             // Menerapkan filter pencarian berdasarkan nama pasien atau tanggal resep
             if ($search) {
-                $LPOperasiKatarakModel->groupStart()
+                $LPOperasiModel->groupStart()
                     ->like('pasien.no_rm', $search)
                     ->orLike('pasien.nama_pasien', $search)
                     ->groupEnd();
             }
 
             // Menghitung total hasil
-            $total = $LPOperasiKatarakModel->countAllResults(false);
+            $total = $LPOperasiModel->countAllResults(false);
 
             // Mendapatkan hasil yang dipaginasikan
-            $LpOperasiKatarak = $LPOperasiKatarakModel
-                ->orderBy('id_lp_operasi_katarak', 'DESC')
+            $LpOperasiPterigium = $LPOperasiModel
+                ->orderBy('id_lp_operasi', 'DESC')
                 ->findAll($limit, $offset);
 
             // Menghitung nomor awal untuk halaman saat ini
             $startNumber = $offset + 1;
 
             // Menambahkan nomor urut ke data pembelian obat
-            $dataLpOperasiKatarak = array_map(function ($data, $index) use ($startNumber) {
+            $dataLpOperasiPterigium = array_map(function ($data, $index) use ($startNumber) {
                 $data['number'] = $startNumber + $index;
                 return $data;
-            }, $LpOperasiKatarak, array_keys($LpOperasiKatarak));
+            }, $LpOperasiPterigium, array_keys($LpOperasiPterigium));
 
             // Mengembalikan respons JSON dengan data pembelian obat dan total
             return $this->response->setJSON([
-                'lp_operasi_katarak' => $dataLpOperasiKatarak,
+                'lp_operasi' => $dataLpOperasiPterigium,
                 'total' => $total
             ]);
         } else {
@@ -170,27 +170,27 @@ class LPOperasiKatarak extends BaseController
                 ->findAll();
 
             // Memeriksa apakah data mengandung nomor registrasi yang diminta
-            $LPOperasiKatarakData = null;
+            $LPOperasiData = null;
             foreach ($data as $patient) {
                 if ($patient['nomor_registrasi'] == $nomorRegistrasi) {
-                    $LPOperasiKatarakData = $patient; // Menyimpan data pasien jika ditemukan
+                    $LPOperasiData = $patient; // Menyimpan data pasien jika ditemukan
                     break;
                 }
             }
 
             // Jika data pasien tidak ditemukan
-            if (!$LPOperasiKatarakData) {
+            if (!$LPOperasiData) {
                 return $this->response->setJSON(['success' => false, 'message' => 'Data rawat jalan tidak ditemukan', 'errors' => NULL]);
             }
 
             // Menyimpan data transaksi
             $data = [
                 'nomor_registrasi' => $nomorRegistrasi, // Nomor registrasi
-                'no_rm' => $LPOperasiKatarakData['no_rm'], // Nomor rekam medis
+                'no_rm' => $LPOperasiData['no_rm'], // Nomor rekam medis
                 'waktu_dibuat' => date('Y-m-d H:i:s'),
             ];
-            $db->table('medrec_lp_operasi_katarak')->insert($data);
-            return $this->response->setJSON(['success' => true, 'message' => 'Laporan operasi katarak berhasil ditambahkan']); // Mengembalikan respon sukses
+            $db->table('medrec_lp_operasi')->insert($data);
+            return $this->response->setJSON(['success' => true, 'message' => 'Laporan operasi berhasil ditambahkan']); // Mengembalikan respon sukses
         } else {
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan', // Pesan jika peran tidak valid
@@ -203,33 +203,33 @@ class LPOperasiKatarak extends BaseController
         // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Admisi' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Admisi') {
             // Inisialisasi rawat jalan
-            $lp_operasi_katarak = $this->LPOperasiKatarakModel
-                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_lp_operasi_katarak.nomor_registrasi', 'inner')
+            $lp_operasi = $this->LPOperasiModel
+                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_lp_operasi.nomor_registrasi', 'inner')
                 ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
                 ->find($id);
 
             // === Generate Barcode ===
             $barcodeGenerator = new BarcodeGeneratorPNG();
-            $bcNoReg = base64_encode($barcodeGenerator->getBarcode($lp_operasi_katarak['nomor_registrasi'], $barcodeGenerator::TYPE_CODE_128));
+            $bcNoReg = base64_encode($barcodeGenerator->getBarcode($lp_operasi['nomor_registrasi'], $barcodeGenerator::TYPE_CODE_128));
 
             // Memeriksa apakah pasien tidak kosong
-            if ($lp_operasi_katarak) {
+            if ($lp_operasi) {
                 // Menyiapkan data untuk tampilan
                 $data = [
-                    'lp_operasi_katarak' => $lp_operasi_katarak,
+                    'lp_operasi' => $lp_operasi,
                     'bcNoReg' => $bcNoReg,
-                    'title' => 'Laporan Operasi Katarak ' . $lp_operasi_katarak['nama_pasien'] . ' (' . $lp_operasi_katarak['no_rm'] . ') - ' . $lp_operasi_katarak['nomor_registrasi'] . ' - ' . $this->systemName,
-                    'headertitle' => 'Laporan Operasi Katarak',
+                    'title' => 'Laporan Operasi ' . $lp_operasi['nama_pasien'] . ' (' . $lp_operasi['no_rm'] . ') - ' . $lp_operasi['nomor_registrasi'] . ' - ' . $this->systemName,
+                    'headertitle' => 'Laporan Operasi',
                     'agent' => $this->request->getUserAgent(), // Mengambil informasi user agent
                 ];
-                // return view('dashboard/lpoperasikatarak/form', $data);
+                // return view('dashboard/lpoperasi/form', $data);
                 // die;
                 // Simpan HTML ke file sementara
-                $htmlFile = WRITEPATH . 'temp/output-lp-operasi-katarak.html';
-                file_put_contents($htmlFile, view('dashboard/lpoperasikatarak/form', $data));
+                $htmlFile = WRITEPATH . 'temp/output-lp-operasi.html';
+                file_put_contents($htmlFile, view('dashboard/lpoperasi/form', $data));
 
                 // Tentukan path output PDF
-                $pdfFile = WRITEPATH . 'temp/output-lp-operasi-katarak.pdf';
+                $pdfFile = WRITEPATH . 'temp/output-lp-operasi.pdf';
 
                 // Jalankan Puppeteer untuk konversi HTML ke PDF
                 // Keterangan: "node " . FCPATH . "puppeteer-pdf.js $htmlFile $pdfFile panjang lebar marginAtas margin Kanan marginBawah marginKiri"
@@ -243,7 +243,7 @@ class LPOperasiKatarak extends BaseController
                 // Kirim PDF ke browser
                 return $this->response
                     ->setHeader('Content-Type', 'application/pdf')
-                    ->setHeader('Content-Disposition', 'inline; filename="LPOperasiKatarak_' . $lp_operasi_katarak['nomor_registrasi'] . '_' . str_replace('-', '', $lp_operasi_katarak['no_rm']) . '.pdf')
+                    ->setHeader('Content-Disposition', 'inline; filename="LPOperasi_' . $lp_operasi['nomor_registrasi'] . '_' . str_replace('-', '', $lp_operasi['no_rm']) . '.pdf')
                     ->setBody(file_get_contents($pdfFile));
             } else {
                 // Menampilkan halaman tidak ditemukan jika pasien tidak ditemukan
@@ -259,20 +259,20 @@ class LPOperasiKatarak extends BaseController
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Dokter' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
-            $lp_operasi_katarak = $this->LPOperasiKatarakModel->find($id);
-            if ($lp_operasi_katarak) {
+            $lp_operasi = $this->LPOperasiModel->find($id);
+            if ($lp_operasi) {
                 $db = db_connect();
 
-                // Menghapus lp_operasi_katarak
-                $this->LPOperasiKatarakModel->delete($id);
+                // Menghapus lp_operasi
+                $this->LPOperasiModel->delete($id);
 
                 // Reset auto increment
-                $db->query('ALTER TABLE `medrec_lp_operasi_katarak` auto_increment = 1');
+                $db->query('ALTER TABLE `medrec_lp_operasi` auto_increment = 1');
 
-                return $this->response->setJSON(['message' => 'Laporan operasi katarak berhasil dihapus']); // Mengembalikan respon sukses
+                return $this->response->setJSON(['message' => 'Laporan operasi berhasil dihapus']); // Mengembalikan respon sukses
             } else {
                 return $this->response->setStatusCode(404)->setJSON([
-                    'error' => 'Laporan operasi katarak tidak ditemukan', // Pesan jika peran tidak valid
+                    'error' => 'Laporan operasi tidak ditemukan', // Pesan jika peran tidak valid
                 ]);
             }
         } else {
@@ -288,8 +288,8 @@ class LPOperasiKatarak extends BaseController
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
             $db = db_connect();
 
-            $lp_operasi_katarak = $this->LPOperasiKatarakModel
-                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_lp_operasi_katarak.nomor_registrasi', 'inner')
+            $lp_operasi = $this->LPOperasiModel
+                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_lp_operasi.nomor_registrasi', 'inner')
                 ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
                 ->find($id);
 
@@ -307,48 +307,48 @@ class LPOperasiKatarak extends BaseController
                 ->get()->getResultArray();
 
             // Query untuk item sebelumnya
-            $previous = $db->table('medrec_lp_operasi_katarak')
-                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_lp_operasi_katarak.nomor_registrasi', 'inner')
+            $previous = $db->table('medrec_lp_operasi')
+                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_lp_operasi.nomor_registrasi', 'inner')
                 ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
-                ->where('medrec_lp_operasi_katarak.id_lp_operasi_katarak <', $id)
-                ->orderBy('medrec_lp_operasi_katarak.id_lp_operasi_katarak', 'DESC') // Urutan descending
+                ->where('medrec_lp_operasi.id_lp_operasi <', $id)
+                ->orderBy('medrec_lp_operasi.id_lp_operasi', 'DESC') // Urutan descending
                 ->limit(1) // Batas 1 hasil
                 ->get()
                 ->getRowArray();
 
             // Query untuk item berikutnya
-            $next = $db->table('medrec_lp_operasi_katarak')
-                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_lp_operasi_katarak.nomor_registrasi', 'inner')
+            $next = $db->table('medrec_lp_operasi')
+                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_lp_operasi.nomor_registrasi', 'inner')
                 ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
-                ->where('medrec_lp_operasi_katarak.id_lp_operasi_katarak >', $id)
-                ->orderBy('medrec_lp_operasi_katarak.id_lp_operasi_katarak', 'ASC') // Urutan ascending
+                ->where('medrec_lp_operasi.id_lp_operasi >', $id)
+                ->orderBy('medrec_lp_operasi.id_lp_operasi', 'ASC') // Urutan ascending
                 ->limit(1) // Batas 1 hasil
                 ->get()
                 ->getRowArray();
 
             // Query untuk daftar rawat jalan berdasarkan no_rm
-            $listRawatJalan = $db->table('medrec_lp_operasi_katarak')
-                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_lp_operasi_katarak.nomor_registrasi', 'inner')
+            $listRawatJalan = $db->table('medrec_lp_operasi')
+                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_lp_operasi.nomor_registrasi', 'inner')
                 ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
-                ->where('rawat_jalan.no_rm', $lp_operasi_katarak['no_rm'])
-                ->orderBy('id_lp_operasi_katarak', 'DESC')
+                ->where('rawat_jalan.no_rm', $lp_operasi['no_rm'])
+                ->orderBy('id_lp_operasi', 'DESC')
                 ->get()
                 ->getResultArray();
 
             // Menyiapkan data untuk tampilan
             $data = [
-                'lp_operasi_katarak' => $lp_operasi_katarak,
+                'lp_operasi' => $lp_operasi,
                 'dokter' => $dokter,
                 'asisten' => $asisten,
-                'title' => 'Laporan Operasi Katarak ' . $lp_operasi_katarak['nama_pasien'] . ' (' . $lp_operasi_katarak['no_rm'] . ') - ' . $lp_operasi_katarak['nomor_registrasi'] . ' - ' . $this->systemName,
-                'headertitle' => 'Laporan Operasi Katarak',
+                'title' => 'Laporan Operasi ' . $lp_operasi['nama_pasien'] . ' (' . $lp_operasi['no_rm'] . ') - ' . $lp_operasi['nomor_registrasi'] . ' - ' . $this->systemName,
+                'headertitle' => 'Laporan Operasi',
                 'agent' => $this->request->getUserAgent(), // Mengambil informasi user agent
                 'previous' => $previous,
                 'next' => $next,
                 'listRawatJalan' => $listRawatJalan
             ];
             // Menampilkan tampilan untuk halaman pasien
-            return view('dashboard/lpoperasikatarak/details', $data);
+            return view('dashboard/lpoperasi/details', $data);
         } else {
             // Jika peran tidak dikenali, lemparkan pengecualian 404
             throw PageNotFoundException::forPageNotFound();
@@ -360,8 +360,8 @@ class LPOperasiKatarak extends BaseController
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Dokter' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
             // Mengambil data skrining berdasarkan ID
-            $data = $this->LPOperasiKatarakModel
-                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_lp_operasi_katarak.nomor_registrasi', 'inner')
+            $data = $this->LPOperasiModel
+                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_lp_operasi.nomor_registrasi', 'inner')
                 ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
                 ->find($id);
             return $this->response->setJSON($data); // Mengembalikan data skrining dalam format JSON
@@ -383,10 +383,22 @@ class LPOperasiKatarak extends BaseController
 
             // Menetapkan aturan validasi dasar
             $rules = [
-                'mata' => [
+                'dokter_bedah' => [
                     'rules' => 'required',
                 ],
-                'operator' => [
+                'asisten_dokter_bedah' => [
+                    'rules' => 'required',
+                ],
+                'dokter_anastesi' => [
+                    'rules' => 'required',
+                ],
+                'jenis_anastesi' => [
+                    'rules' => 'required',
+                ],
+                'jenis_operasi' => [
+                    'rules' => 'required',
+                ],
+                'pemeriksaan_pa' => [
                     'rules' => 'required',
                 ],
                 'tanggal_operasi' => [
@@ -395,22 +407,10 @@ class LPOperasiKatarak extends BaseController
                 'jam_operasi' => [
                     'rules' => 'required',
                 ],
-                'lama_operasi' => [
+                'lama_selesai' => [
                     'rules' => 'required',
                 ],
-                'diagnosis' => [
-                    'rules' => 'required',
-                ],
-                'asisten' => [
-                    'rules' => 'required',
-                ],
-                'jenis_operasi' => [
-                    'rules' => 'required',
-                ],
-                'jenis_anastesi' => [
-                    'rules' => 'required',
-                ],
-                'dokter_anastesi' => [
+                'laporan_operasi' => [
                     'rules' => 'required',
                 ],
             ];
@@ -421,105 +421,24 @@ class LPOperasiKatarak extends BaseController
 
             // Menyimpan data transaksi
             $data = [
-                'mata' => $this->request->getPost('mata') ?: null,
-                'operator' => $this->request->getPost('operator') ?: null,
+                'dokter_bedah' => $this->request->getPost('dokter_bedah') ?: null,
+                'asisten_dokter_bedah' => $this->request->getPost('asisten_dokter_bedah') ?: null,
+                'dokter_anastesi' => $this->request->getPost('dokter_anastesi') ?: null,
+                'jenis_anastesi' => $this->request->getPost('jenis_anastesi') ?: null,
+                'jenis_operasi' => $this->request->getPost('jenis_operasi') ?: null,
+                'diagnosis_pra_bedah' => $this->request->getPost('diagnosis_pra_bedah') ?: null,
+                'diagnosis_pasca_bedah' => $this->request->getPost('diagnosis_pasca_bedah') ?: null,
+                'indikasi_operasi' => $this->request->getPost('indikasi_operasi') ?: null,
+                'nama_operasi' => $this->request->getPost('nama_operasi') ?: null,
+                'jaringan_eksisi' => $this->request->getPost('jaringan_eksisi') ?: null,
+                'pemeriksaan_pa' => $this->request->getPost('pemeriksaan_pa') ?: null,
                 'tanggal_operasi' => $this->request->getPost('tanggal_operasi') ?: null,
                 'jam_operasi' => $this->request->getPost('jam_operasi') ?: null,
-                'lama_operasi' => $this->request->getPost('lama_operasi') ?: null,
-                'diagnosis' => $this->request->getPost('diagnosis') ?: null,
-                'asisten' => $this->request->getPost('asisten') ?: null,
-                'jenis_operasi' => $this->request->getPost('jenis_operasi') ?: null,
-                'jenis_anastesi' => $this->request->getPost('jenis_anastesi') ?: null,
-                'dokter_anastesi' => $this->request->getPost('dokter_anastesi') ?: null,
-
-                'anastesi_retrobulbar' => $this->request->getPost('anastesi_retrobulbar') ?: null,
-                'anastesi_peribulber' => $this->request->getPost('anastesi_peribulber') ?: null,
-                'anastesi_topikal' => $this->request->getPost('anastesi_topikal') ?: null,
-                'anastesi_subtenom' => $this->request->getPost('anastesi_subtenom') ?: null,
-                'anastesi_lidocain_2' => $this->request->getPost('anastesi_lidocain_2') ?: null,
-                'anastesi_marcain_05' => $this->request->getPost('anastesi_marcain_05') ?: null,
-                'anastesi_lainnya' => $this->request->getPost('anastesi_lainnya') ?: null,
-
-                'peritomi_basis_forniks' => $this->request->getPost('peritomi_basis_forniks') ?: null,
-                'peritomi_basis_limbus' => $this->request->getPost('peritomi_basis_limbus') ?: null,
-
-                'lokasi_superonasal' => $this->request->getPost('lokasi_superonasal') ?: null,
-                'lokasi_superior' => $this->request->getPost('lokasi_superior') ?: null,
-                'lokasi_supertemporal' => $this->request->getPost('lokasi_supertemporal') ?: null,
-                'lokasi_lainnya' => $this->request->getPost('lokasi_lainnya') ?: null,
-
-                'lokasi_insisi_kornea' => $this->request->getPost('lokasi_insisi_kornea') ?: null,
-                'lokasi_insisi_limbus' => $this->request->getPost('lokasi_insisi_limbus') ?: null,
-                'lokasi_insisi_skelera' => $this->request->getPost('lokasi_insisi_skelera') ?: null,
-                'lokasi_insisi_skeleratunnel' => $this->request->getPost('lokasi_insisi_skeleratunnel') ?: null,
-                'lokasi_insisi_sideport' => $this->request->getPost('lokasi_insisi_sideport') ?: null,
-
-                'ukuran_inisiasi' => $this->request->getPost('ukuran_inisiasi') ?: null,
-
-                'alat_insisi_jarum' => $this->request->getPost('alat_insisi_jarum') ?: null,
-                'alat_insisi_crescent' => $this->request->getPost('alat_insisi_crescent') ?: null,
-                'alat_insisi_diamond' => $this->request->getPost('alat_insisi_diamond') ?: null,
-
-                'capsulectomy_canopener' => $this->request->getPost('capsulectomy_canopener') ?: null,
-                'capsulectomy_envelope' => $this->request->getPost('capsulectomy_envelope') ?: null,
-                'capsulectomy_ccc' => $this->request->getPost('capsulectomy_ccc') ?: null,
-
-                'ekstraksi_lenca_icce' => $this->request->getPost('ekstraksi_lenca_icce') ?: null,
-                'ekstraksi_lenca_ecce' => $this->request->getPost('ekstraksi_lenca_ecce') ?: null,
-                'ekstraksi_lenca_sucea' => $this->request->getPost('ekstraksi_lenca_sucea') ?: null,
-                'ekstraksi_lenca_phaco' => $this->request->getPost('ekstraksi_lenca_phaco') ?: null,
-                'ekstraksi_lenca_cle' => $this->request->getPost('ekstraksi_lenca_cle') ?: null,
-                'ekstraksi_lenca_ai' => $this->request->getPost('ekstraksi_lenca_ai') ?: null,
-
-                'tindakan_sphincter' => $this->request->getPost('tindakan_sphincter') ?: null,
-                'tindakan_jahitan_iris' => $this->request->getPost('tindakan_jahitan_iris') ?: null,
-                'tindakan_virektomi' => $this->request->getPost('tindakan_virektomi') ?: null,
-                'tindakan_kapsulotomi_post' => $this->request->getPost('tindakan_kapsulotomi_post') ?: null,
-                'tindakan_sinechiolyssis' => $this->request->getPost('tindakan_sinechiolyssis') ?: null,
-
-                'cairan_irigasi_ri' => $this->request->getPost('cairan_irigasi_ri') ?: null,
-                'cairan_irigasi_bss' => $this->request->getPost('cairan_irigasi_bss') ?: null,
-                'cairan_irigasi_lainnya' => $this->request->getPost('cairan_irigasi_lainnya') ?: null,
-
-                'fiksasi_bmb' => $this->request->getPost('fiksasi_bmb') ?: null,
-                'fiksasi_bmd' => $this->request->getPost('fiksasi_bmd') ?: null,
-                'fiksasi_sulkus_siliaris' => $this->request->getPost('fiksasi_sulkus_siliaris') ?: null,
-                'fiksasi_sklera' => $this->request->getPost('fiksasi_sklera') ?: null,
-
-                'penanaman_diputar' => $this->request->getPost('penanaman_diputar') ?: null,
-                'penanaman_tidak_diputar' => $this->request->getPost('penanaman_tidak_diputar') ?: null,
-
-                'jenis_dilipat' => $this->request->getPost('jenis_dilipat') ?: null,
-                'jenis_tidak_dilipat' => $this->request->getPost('jenis_tidak_dilipat') ?: null,
-
-                'posisi_vertikal' => $this->request->getPost('posisi_vertikal') ?: null,
-                'posisi_horizontal' => $this->request->getPost('posisi_horizontal') ?: null,
-                'posisi_miring' => $this->request->getPost('posisi_miring') ?: null,
-
-                'cairan_viscoelastik_healon' => $this->request->getPost('cairan_viscoelastik_healon') ?: null,
-                'cairan_viscoelastik_viscoat' => $this->request->getPost('cairan_viscoelastik_viscoat') ?: null,
-                'cairan_viscoelastik_amvisca' => $this->request->getPost('cairan_viscoelastik_amvisca') ?: null,
-                'cairan_viscoelastik_healon_5' => $this->request->getPost('cairan_viscoelastik_healon_5') ?: null,
-                'cairan_viscoelastik_rohtovisc' => $this->request->getPost('cairan_viscoelastik_rohtovisc') ?: null,
-
-                'benang_vicryl_8_0' => $this->request->getPost('benang_vicryl_8_0') ?: null,
-                'benang_ethylon_10_0' => $this->request->getPost('benang_ethylon_10_0') ?: null,
-
-                'jumlah_jahitan' => $this->request->getPost('jumlah_jahitan') ?: null,
-                'prabedah_od' => $this->request->getPost('prabedah_od') ?: null,
-                'prabedah_os' => $this->request->getPost('prabedah_os') ?: null,
-
-                'komplikasi_tidak_ada' => $this->request->getPost('komplikasi_tidak_ada') ?: null,
-                'komplikasi_ada' => $this->request->getPost('komplikasi_ada') ?: null,
-                'komplikasi_prolaps' => $this->request->getPost('komplikasi_prolaps') ?: null,
-                'komplikasi_pendarahan' => $this->request->getPost('komplikasi_pendarahan') ?: null,
-                'komplikasi_lainnya' => $this->request->getPost('komplikasi_lainnya') ?: null,
-
-                'tindakan_operasi' => $this->request->getPost('tindakan_operasi') ?: null,
-                'terapi_pascabedah' => $this->request->getPost('terapi_pascabedah') ?: null,
+                'lama_selesai' => $this->request->getPost('lama_selesai') ?: null,
+                'laporan_operasi' => $this->request->getPost('laporan_operasi') ?: null,
             ];
-            $db->table('medrec_lp_operasi_katarak')->where('id_lp_operasi_katarak', $id)->update($data);
-            return $this->response->setJSON(['success' => true, 'message' => 'Laporan operasi katarak berhasil diperbarui']); // Mengembalikan respon sukses
+            $db->table('medrec_lp_operasi')->where('id_lp_operasi', $id)->update($data);
+            return $this->response->setJSON(['success' => true, 'message' => 'Laporan operasi berhasil diperbarui']); // Mengembalikan respon sukses
         } else {
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan', // Pesan jika peran tidak valid
