@@ -407,7 +407,7 @@ class LPOperasi extends BaseController
                 'jam_operasi' => [
                     'rules' => 'required',
                 ],
-                'lama_selesai' => [
+                'lama_operasi' => [
                     'rules' => 'required',
                 ],
                 'laporan_operasi' => [
@@ -434,7 +434,7 @@ class LPOperasi extends BaseController
                 'pemeriksaan_pa' => $this->request->getPost('pemeriksaan_pa') ?: null,
                 'tanggal_operasi' => $this->request->getPost('tanggal_operasi') ?: null,
                 'jam_operasi' => $this->request->getPost('jam_operasi') ?: null,
-                'lama_selesai' => $this->request->getPost('lama_selesai') ?: null,
+                'lama_operasi' => $this->request->getPost('lama_operasi') ?: null,
                 'laporan_operasi' => $this->request->getPost('laporan_operasi') ?: null,
             ];
             $db->table('medrec_lp_operasi')->where('id_lp_operasi', $id)->update($data);

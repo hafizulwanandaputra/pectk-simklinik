@@ -261,8 +261,8 @@ $usia = $registrasi->diff($tanggal_lahir);
                     </div>
                     <div class="col">
                         <div class="form-floating">
-                            <input type="number" class="form-control" id="lama_selesai" name="lama_selesai" value="" autocomplete="off" dir="auto" placeholder="lama_selesai">
-                            <label for="lama_selesai">Lama Operasi (menit)</label>
+                            <input type="number" class="form-control" id="lama_operasi" name="lama_operasi" value="" autocomplete="off" dir="auto" placeholder="lama_operasi">
+                            <label for="lama_operasi">Lama Operasi (menit)</label>
                             <div class="invalid-feedback"></div>
                         </div>
                     </div>
@@ -319,7 +319,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             }
             $('#tanggal_operasi').val(data.tanggal_operasi);
             $('#jam_operasi').val(data.jam_operasi);
-            $('#lama_selesai').val(data.lama_selesai);
+            $('#lama_operasi').val(data.lama_operasi);
             $('#laporan_operasi').val(data.laporan_operasi);
         } catch (error) {
             showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);

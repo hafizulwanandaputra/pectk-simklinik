@@ -275,7 +275,7 @@ $waktuFormatted = $dateTime->format('H.i.s');
                                 :
                             </td>
                             <td style="width: 60%; vertical-align: top;">
-                                <?= $lp_operasi['lama_selesai'] ?> menit
+                                <?= $lp_operasi['lama_operasi'] ?> menit
                             </td>
                         </tr>
                     </tbody>

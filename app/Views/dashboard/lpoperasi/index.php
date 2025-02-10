@@ -290,8 +290,8 @@
                     } else if (jenis_kelamin === 'P') {
                         jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap" style="background-color: Pink"><i class="fa-solid fa-venus"></i> PEREMPUAN</span>`;
                     }
-                    const lama_selesai = lp_operasi.lama_selesai ?
-                        lp_operasi.lama_selesai + ' menit' :
+                    const lama_operasi = lp_operasi.lama_operasi ?
+                        lp_operasi.lama_operasi + ' menit' :
                         `<em>Belum ada</em>`;
                     const tanggal_operasi = lp_operasi.tanggal_operasi ?
                         lp_operasi.tanggal_operasi + ' ' + lp_operasi.jam_operasi :
@@ -324,7 +324,7 @@
                                                     <div class="mb-0 row g-1">
                                                         <div class="col-5 fw-medium text-truncate">Lama Operasi</div>
                                                         <div class="col date">
-                                                            ${lama_selesai}
+                                                            ${lama_operasi}
                                                         </div>
                                                     </div>
                                                     <div class="mb-0 row g-1">

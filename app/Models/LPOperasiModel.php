@@ -25,7 +25,7 @@ class LPOperasiModel extends Model
         'pemeriksaan_pa',
         'tanggal_operasi',
         'jam_operasi',
-        'lama_selesai',
+        'lama_operasi',
         'laporan_operasi',
         'waktu_dibuat',
     ];
