@@ -128,7 +128,7 @@ $waktuFormatted = $dateTime->format('H.i.s');
                         </div>
                     </td>
                     <td style="width: 0%;">
-                        <div style="white-space: nowrap;"><strong>FRM: 5e<br>Rev: 001</strong></div>
+                        <div style="white-space: nowrap;"><strong>FRM: 5e<br>Rev: 000</strong></div>
                     </td>
                 </tr>
             </thead>
