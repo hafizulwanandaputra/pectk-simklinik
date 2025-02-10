@@ -138,7 +138,7 @@
         $('#deleteEmptyMRData').click(function() {
             $('[data-bs-toggle="tooltip"]').tooltip('hide');
             $('#deleteMessage').html(`Hapus data rekam medis yang kosong?`);
-            $('#deleteSubmessage').html(`Tindakan ini tidak dapat dikembalikan`);
+            $('#deleteSubmessage').html(`Tindakan ini tidak dapat dikembalikan. Pastikan tidak ada aktivitas rekam medis saat menghapus.`);
             $('#deleteModal').modal('show');
         });
 
