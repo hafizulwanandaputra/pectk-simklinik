@@ -75,6 +75,7 @@ $waktuFormatted = $dateTime->format('H.i.s');
 
         .box {
             border-top: 1px solid black;
+            border-bottom: 1px solid black;
             height: calc(100vh - 5.25cm);
             overflow: hidden;
             padding: 0cm;
