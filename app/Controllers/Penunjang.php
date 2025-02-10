@@ -296,7 +296,6 @@ class Penunjang extends BaseController
                 'pemeriksaan' => $pemeriksaan_csv,
                 'pemeriksaan_lainnya' => $this->request->getPost('pemeriksaan_lainnya') ?: NULL,
                 'lokasi_pemeriksaan' => $this->request->getPost('lokasi_pemeriksaan') ?: NULL,
-                'hasil_pemeriksaan' => $this->request->getPost('hasil_pemeriksaan') ?: NULL,
                 'waktu_dibuat' => $penunjang['waktu_dibuat'],
             ];
             $this->PenunjangModel->save($data);

@@ -226,13 +226,6 @@ $usia = $registrasi->diff($tanggal_lahir);
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
-                <div class="mb-2">
-                    <div class="form-floating">
-                        <input type="text" class="form-control" id="hasil_pemeriksaan" name="hasil_pemeriksaan" value="" autocomplete="off" dir="auto" placeholder="hasil_pemeriksaan">
-                        <label for="hasil_pemeriksaan">Hasil Pemeriksaan</label>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                </div>
                 <div>
                     <hr>
                     <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-3">

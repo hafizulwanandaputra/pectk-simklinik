@@ -182,19 +182,11 @@ $usia = $registrasi->diff($tanggal_lahir);
                             <?= $penunjang['lokasi_pemeriksaan'] ?>
                         </td>
                     </tr>
-                    <tr>
-                        <td style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            Hasil Pemeriksaan
-                        </td>
-                        <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            :
-                        </td>
-                        <td style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            <?= $penunjang['hasil_pemeriksaan'] ?>
-                        </td>
-                    </tr>
                 </tbody>
             </table>
+            <div>
+                <strong>Tempel hasil pemeriksaan pada ruang kosong di bawah ini:</strong>
+            </div>
         </div>
         <p style="font-size: 9pt;">Dicetak: <?= date("Y-m-d H:i:s") ?></p>
     </div>
