@@ -74,16 +74,9 @@ $waktuFormatted = $dateTime->format('H.i.s');
         }
 
         .box {
-            border: 1px solid black;
-            height: 23.4cm;
-            overflow: hidden;
-            padding: 0cm;
-            font-size: 10pt;
-        }
-
-        .box-long {
-            border: 1px solid black;
-            height: 26.9cm;
+            border-top: 1px solid black;
+            border-bottom: 1px solid black;
+            height: 50.25cm;
             overflow: hidden;
             padding: 0cm;
             font-size: 10pt;
@@ -775,8 +768,6 @@ $waktuFormatted = $dateTime->format('H.i.s');
                     </td>
                 </table>
             </div>
-        </div>
-        <div class="box-long">
             <div style="padding-right: 0.25cm; padding-left: 0.25cm; padding-top: 0.25cm;">
                 <table class="full-border" style="width: 100%; margin-bottom: 4px;">
                     <thead>
