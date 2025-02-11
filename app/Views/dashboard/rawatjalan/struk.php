@@ -203,9 +203,9 @@ $usia = $sekarang->diff($tanggal_lahir);
             <table class="tindakan">
                 <tr>
                     <td style="width: 0%; min-width: 0.2cm; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;"></td>
-                    <td style="width: 50%; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;">Redresing</td>
+                    <td style="width: 50%; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;"><em>Redressing</em></td>
                     <td style="width: 0%; min-width: 0.2cm; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;"> </td>
-                    <td style="width: 50%; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;">Indirect Fundus Copy</td>
+                    <td style="width: 50%; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;"><em>Indirect Fundus Copy</em></td>
                 </tr>
                 <tr>
                     <td style="width: 0%; min-width: 0.2cm; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;"> </td>
@@ -217,7 +217,7 @@ $usia = $sekarang->diff($tanggal_lahir);
                     <td style="width: 0%; min-width: 0.2cm; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;"> </td>
                     <td style="width: 50%; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;">Tonometri</td>
                     <td style="width: 0%; min-width: 0.2cm; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;"> </td>
-                    <td style="width: 50%; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;">Spooling</td>
+                    <td style="width: 50%; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;"><em>Spooling</em></td>
                 </tr>
                 <tr>
                     <td style="width: 0%; min-width: 0.2cm; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;"> </td>
@@ -227,7 +227,7 @@ $usia = $sekarang->diff($tanggal_lahir);
                 </tr>
                 <tr>
                     <td style="width: 0%; min-width: 0.2cm; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;"> </td>
-                    <td style="width: 50%; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;">Heacting All</td>
+                    <td style="width: 50%; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;"><em>Heacting All</em></td>
                     <td style="width: 0%; min-width: 0.2cm; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;"> </td>
                     <td style="width: 50%; vertical-align: top; padding-top: 0.025cm; padding-bottom: 0.025cm; padding-left: 0.1cm; padding-right: 0.1cm; white-space: nowrap;">d.l.l.: ...........................</td>
                 </tr>
