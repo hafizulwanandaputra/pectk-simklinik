@@ -110,10 +110,10 @@ class LPOperasiKatarak extends BaseController
                 ->orderBy('rawat_jalan.id_rawat_jalan', 'DESC')
                 ->findAll();
 
-            // Mengambil nomor_registrasi yang sudah terpakai di medrec_sp_operasi
+            // Mengambil nomor_registrasi yang sudah terpakai di rawat_jalan
             $db = \Config\Database::connect();
-            $usedNoReg = $db->table('medrec_sp_operasi')->select('nomor_registrasi')->get()->getResultArray();
-            $usedNoReg = array_column($usedNoReg, 'nomor_registrasi');
+            $usedNoRegInit = $db->table('rawat_jalan')->select('nomor_registrasi')->get()->getResultArray();
+            $usedNoReg = array_column($usedNoRegInit, 'nomor_registrasi');
 
             $options = [];
             // Menyusun opsi dari data rawat jalan yang diterima

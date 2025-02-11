@@ -197,6 +197,18 @@ $routes->get('/(?i)lpoperasi/(?i)export/(:any)', 'LPOperasi::export/$1');
 $routes->post('/(?i)lpoperasi/(?i)update/(:any)', 'LPOperasi::update/$1');
 $routes->delete('/(?i)lpoperasi/(?i)delete/(:any)', 'LPOperasi::delete/$1');
 
+// FORM PERSETUJUAN
+$routes->get('/(?i)frmsetuju', 'FRMSetuju::index');
+$routes->get('/(?i)frmsetuju/frmsetujulist', 'FRMSetuju::frmsetujulist');
+$routes->get('/(?i)frmsetuju/pasienlist', 'FRMSetuju::pasienlist');
+$routes->get('/(?i)frmsetuju/(:num)', 'FRMSetuju::details/$1');
+$routes->post('/(?i)frmsetuju/(?i)create', 'FRMSetuju::create');
+$routes->get('/(?i)frmsetuju/(?i)details/(:any)', 'FRMSetuju::details/$1');
+$routes->get('/(?i)frmsetuju/(?i)view/(:any)', 'FRMSetuju::view/$1');
+$routes->get('/(?i)frmsetuju/(?i)export/(:any)', 'FRMSetuju::export/$1');
+$routes->post('/(?i)frmsetuju/(?i)update/(:any)', 'FRMSetuju::update/$1');
+$routes->delete('/(?i)frmsetuju/(?i)delete/(:any)', 'FRMSetuju::delete/$1');
+
 // SUPPLIER
 $routes->get('/(?i)supplier', 'Supplier::index');
 $routes->post('/(?i)supplier/(?i)supplierlist', 'Supplier::supplierlist');

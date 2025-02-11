@@ -4,18 +4,18 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\RawatJalanModel;
-use App\Models\LPOperasiPterigiumModel;
+use App\Models\FrmSetujuModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use Picqer\Barcode\BarcodeGeneratorPNG;
 
-class LPOperasiPterigium extends BaseController
+class FRMSetuju extends BaseController
 {
     protected $RawatJalanModel;
-    protected $LPOperasiPterigiumModel;
+    protected $FrmSetujuModel;
     public function __construct()
     {
         $this->RawatJalanModel = new RawatJalanModel();
-        $this->LPOperasiPterigiumModel = new LPOperasiPterigiumModel();
+        $this->FrmSetujuModel = new FrmSetujuModel();
     }
     public function index()
     {
@@ -23,19 +23,19 @@ class LPOperasiPterigium extends BaseController
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Admisi') {
             // Menyiapkan data untuk tampilan
             $data = [
-                'title' => 'Laporan Operasi Pterigium - ' . $this->systemName,
-                'headertitle' => 'Laporan Operasi Pterigium',
+                'title' => 'Formulir Persetujuan Tindakan - ' . $this->systemName,
+                'headertitle' => 'Formulir Persetujuan Tindakan',
                 'agent' => $this->request->getUserAgent() // Mengambil informasi user agent
             ];
             // Menampilkan tampilan untuk halaman pasien
-            return view('dashboard/lpoperasipterigium/index', $data);
+            return view('dashboard/frmsetuju/index', $data);
         } else {
             // Jika peran tidak dikenali, lemparkan pengecualian 404
             throw PageNotFoundException::forPageNotFound();
         }
     }
 
-    public function lpoperasipterigiumlist()
+    public function frmsetujulist()
     {
         // Memeriksa peran pengguna, hanya 'Admin', atau 'Admisi' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Admisi') {
@@ -50,44 +50,44 @@ class LPOperasiPterigium extends BaseController
             $offset = $offset ? intval($offset) : 0;
 
             // Memuat model PembelianObat
-            $LPOperasiPterigiumModel = $this->LPOperasiPterigiumModel
-                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_lp_operasi_pterigium.nomor_registrasi', 'inner')
+            $FrmSetujuModel = $this->FrmSetujuModel
+                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_form_persetujuan_tindakan.nomor_registrasi', 'inner')
                 ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner');
 
             // Menerapkan filter pencarian pada nama supplier atau tanggal pembelian
             if ($tanggal) {
-                $LPOperasiPterigiumModel
+                $FrmSetujuModel
                     ->like('rawat_jalan.tanggal_registrasi', $tanggal);
             }
 
             // Menerapkan filter pencarian berdasarkan nama pasien atau tanggal resep
             if ($search) {
-                $LPOperasiPterigiumModel->groupStart()
+                $FrmSetujuModel->groupStart()
                     ->like('pasien.no_rm', $search)
                     ->orLike('pasien.nama_pasien', $search)
                     ->groupEnd();
             }
 
             // Menghitung total hasil
-            $total = $LPOperasiPterigiumModel->countAllResults(false);
+            $total = $FrmSetujuModel->countAllResults(false);
 
             // Mendapatkan hasil yang dipaginasikan
-            $LpOperasiPterigium = $LPOperasiPterigiumModel
-                ->orderBy('id_lp_operasi_pterigium', 'DESC')
+            $FrmSetuju = $FrmSetujuModel
+                ->orderBy('id_form_persetujuan_tindakan', 'DESC')
                 ->findAll($limit, $offset);
 
             // Menghitung nomor awal untuk halaman saat ini
             $startNumber = $offset + 1;
 
             // Menambahkan nomor urut ke data pembelian obat
-            $dataLpOperasiPterigium = array_map(function ($data, $index) use ($startNumber) {
+            $dataFrmSetuju = array_map(function ($data, $index) use ($startNumber) {
                 $data['number'] = $startNumber + $index;
                 return $data;
-            }, $LpOperasiPterigium, array_keys($LpOperasiPterigium));
+            }, $FrmSetuju, array_keys($FrmSetuju));
 
             // Mengembalikan respons JSON dengan data pembelian obat dan total
             return $this->response->setJSON([
-                'lp_operasi_pterigium' => $dataLpOperasiPterigium,
+                'form_persetujuan_tindakan' => $dataFrmSetuju,
                 'total' => $total
             ]);
         } else {
@@ -106,7 +106,6 @@ class LPOperasiPterigium extends BaseController
                 ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
                 ->like('tanggal_registrasi', date('Y-m-d'))
                 ->where('status', 'DAFTAR')
-                ->where('ruangan', 'Kamar Operasi')
                 ->orderBy('rawat_jalan.id_rawat_jalan', 'DESC')
                 ->findAll();
 
@@ -166,31 +165,30 @@ class LPOperasiPterigium extends BaseController
                 ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
                 ->like('tanggal_registrasi', date('Y-m-d'))
                 ->where('status', 'DAFTAR')
-                ->where('ruangan', 'Kamar Operasi')
                 ->findAll();
 
             // Memeriksa apakah data mengandung nomor registrasi yang diminta
-            $LPOperasiPterigiumData = null;
+            $LPOperasiData = null;
             foreach ($data as $patient) {
                 if ($patient['nomor_registrasi'] == $nomorRegistrasi) {
-                    $LPOperasiPterigiumData = $patient; // Menyimpan data pasien jika ditemukan
+                    $LPOperasiData = $patient; // Menyimpan data pasien jika ditemukan
                     break;
                 }
             }
 
             // Jika data pasien tidak ditemukan
-            if (!$LPOperasiPterigiumData) {
+            if (!$LPOperasiData) {
                 return $this->response->setJSON(['success' => false, 'message' => 'Data rawat jalan tidak ditemukan', 'errors' => NULL]);
             }
 
             // Menyimpan data transaksi
             $data = [
                 'nomor_registrasi' => $nomorRegistrasi, // Nomor registrasi
-                'no_rm' => $LPOperasiPterigiumData['no_rm'], // Nomor rekam medis
+                'no_rm' => $LPOperasiData['no_rm'], // Nomor rekam medis
                 'waktu_dibuat' => date('Y-m-d H:i:s'),
             ];
-            $db->table('medrec_lp_operasi_pterigium')->insert($data);
-            return $this->response->setJSON(['success' => true, 'message' => 'Laporan operasi pterigium berhasil ditambahkan']); // Mengembalikan respon sukses
+            $db->table('medrec_form_persetujuan_tindakan')->insert($data);
+            return $this->response->setJSON(['success' => true, 'message' => 'Formulir persetujuan tindakan berhasil ditambahkan']); // Mengembalikan respon sukses
         } else {
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan', // Pesan jika peran tidak valid
@@ -203,33 +201,33 @@ class LPOperasiPterigium extends BaseController
         // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Admisi' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Admisi') {
             // Inisialisasi rawat jalan
-            $lp_operasi_pterigium = $this->LPOperasiPterigiumModel
-                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_lp_operasi_pterigium.nomor_registrasi', 'inner')
+            $form_persetujuan_tindakan = $this->FrmSetujuModel
+                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_form_persetujuan_tindakan.nomor_registrasi', 'inner')
                 ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
                 ->find($id);
 
             // === Generate Barcode ===
             $barcodeGenerator = new BarcodeGeneratorPNG();
-            $bcNoReg = base64_encode($barcodeGenerator->getBarcode($lp_operasi_pterigium['nomor_registrasi'], $barcodeGenerator::TYPE_CODE_128));
+            $bcNoReg = base64_encode($barcodeGenerator->getBarcode($form_persetujuan_tindakan['nomor_registrasi'], $barcodeGenerator::TYPE_CODE_128));
 
             // Memeriksa apakah pasien tidak kosong
-            if ($lp_operasi_pterigium) {
+            if ($form_persetujuan_tindakan) {
                 // Menyiapkan data untuk tampilan
                 $data = [
-                    'lp_operasi_pterigium' => $lp_operasi_pterigium,
+                    'form_persetujuan_tindakan' => $form_persetujuan_tindakan,
                     'bcNoReg' => $bcNoReg,
-                    'title' => 'Laporan Operasi Pterigium ' . $lp_operasi_pterigium['nama_pasien'] . ' (' . $lp_operasi_pterigium['no_rm'] . ') - ' . $lp_operasi_pterigium['nomor_registrasi'] . ' - ' . $this->systemName,
-                    'headertitle' => 'Laporan Operasi Pterigium',
+                    'title' => 'Formulir Persetujuan Tindakan ' . $form_persetujuan_tindakan['nama_pasien'] . ' (' . $form_persetujuan_tindakan['no_rm'] . ') - ' . $form_persetujuan_tindakan['nomor_registrasi'] . ' - ' . $this->systemName,
+                    'headertitle' => 'Formulir Persetujuan Tindakan',
                     'agent' => $this->request->getUserAgent(), // Mengambil informasi user agent
                 ];
-                // return view('dashboard/lpoperasipterigium/form', $data);
+                // return view('dashboard/frmsetuju/form', $data);
                 // die;
                 // Simpan HTML ke file sementara
-                $htmlFile = WRITEPATH . 'temp/output-lp-operasi-pterigium.html';
-                file_put_contents($htmlFile, view('dashboard/lpoperasipterigium/form', $data));
+                $htmlFile = WRITEPATH . 'temp/output-form-persetujuan-tindakan.html';
+                file_put_contents($htmlFile, view('dashboard/frmsetuju/form', $data));
 
                 // Tentukan path output PDF
-                $pdfFile = WRITEPATH . 'temp/output-lp-operasi-pterigium.pdf';
+                $pdfFile = WRITEPATH . 'temp/output-form-persetujuan-tindakan.pdf';
 
                 // Jalankan Puppeteer untuk konversi HTML ke PDF
                 // Keterangan: "node " . FCPATH . "puppeteer-pdf.js $htmlFile $pdfFile panjang lebar marginAtas margin Kanan marginBawah marginKiri"
@@ -243,7 +241,7 @@ class LPOperasiPterigium extends BaseController
                 // Kirim PDF ke browser
                 return $this->response
                     ->setHeader('Content-Type', 'application/pdf')
-                    ->setHeader('Content-Disposition', 'inline; filename="LPOperasiPterigium_' . $lp_operasi_pterigium['nomor_registrasi'] . '_' . str_replace('-', '', $lp_operasi_pterigium['no_rm']) . '.pdf')
+                    ->setHeader('Content-Disposition', 'inline; filename="FRMSetuju_' . $form_persetujuan_tindakan['nomor_registrasi'] . '_' . str_replace('-', '', $form_persetujuan_tindakan['no_rm']) . '.pdf')
                     ->setBody(file_get_contents($pdfFile));
             } else {
                 // Menampilkan halaman tidak ditemukan jika pasien tidak ditemukan
@@ -259,20 +257,20 @@ class LPOperasiPterigium extends BaseController
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Dokter' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
-            $lp_operasi_pterigium = $this->LPOperasiPterigiumModel->find($id);
-            if ($lp_operasi_pterigium) {
+            $form_persetujuan_tindakan = $this->FrmSetujuModel->find($id);
+            if ($form_persetujuan_tindakan) {
                 $db = db_connect();
 
-                // Menghapus lp_operasi_pterigium
-                $this->LPOperasiPterigiumModel->delete($id);
+                // Menghapus form_persetujuan_tindakan
+                $this->FrmSetujuModel->delete($id);
 
                 // Reset auto increment
-                $db->query('ALTER TABLE `medrec_lp_operasi_pterigium` auto_increment = 1');
+                $db->query('ALTER TABLE `medrec_form_persetujuan_tindakan` auto_increment = 1');
 
-                return $this->response->setJSON(['message' => 'Laporan operasi pterigium berhasil dihapus']); // Mengembalikan respon sukses
+                return $this->response->setJSON(['message' => 'Formulir persetujuan tindakan berhasil dihapus']); // Mengembalikan respon sukses
             } else {
                 return $this->response->setStatusCode(404)->setJSON([
-                    'error' => 'Laporan operasi pterigium tidak ditemukan', // Pesan jika peran tidak valid
+                    'error' => 'Formulir persetujuan tindakan tidak ditemukan', // Pesan jika peran tidak valid
                 ]);
             }
         } else {
@@ -288,8 +286,8 @@ class LPOperasiPterigium extends BaseController
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
             $db = db_connect();
 
-            $lp_operasi_pterigium = $this->LPOperasiPterigiumModel
-                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_lp_operasi_pterigium.nomor_registrasi', 'inner')
+            $form_persetujuan_tindakan = $this->FrmSetujuModel
+                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_form_persetujuan_tindakan.nomor_registrasi', 'inner')
                 ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
                 ->find($id);
 
@@ -298,57 +296,48 @@ class LPOperasiPterigium extends BaseController
                 ->where('active', 1)
                 ->get()->getResultArray();
 
-            $asisten = $db->table('user')
-                ->groupStart()
-                ->where('role', 'Dokter')
-                ->orWhere('role', 'Perawat')
-                ->groupEnd()
-                ->where('active', 1)
-                ->get()->getResultArray();
-
             // Query untuk item sebelumnya
-            $previous = $db->table('medrec_lp_operasi_pterigium')
-                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_lp_operasi_pterigium.nomor_registrasi', 'inner')
+            $previous = $db->table('medrec_form_persetujuan_tindakan')
+                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_form_persetujuan_tindakan.nomor_registrasi', 'inner')
                 ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
-                ->where('medrec_lp_operasi_pterigium.id_lp_operasi_pterigium <', $id)
-                ->orderBy('medrec_lp_operasi_pterigium.id_lp_operasi_pterigium', 'DESC') // Urutan descending
+                ->where('medrec_form_persetujuan_tindakan.id_form_persetujuan_tindakan <', $id)
+                ->orderBy('medrec_form_persetujuan_tindakan.id_form_persetujuan_tindakan', 'DESC') // Urutan descending
                 ->limit(1) // Batas 1 hasil
                 ->get()
                 ->getRowArray();
 
             // Query untuk item berikutnya
-            $next = $db->table('medrec_lp_operasi_pterigium')
-                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_lp_operasi_pterigium.nomor_registrasi', 'inner')
+            $next = $db->table('medrec_form_persetujuan_tindakan')
+                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_form_persetujuan_tindakan.nomor_registrasi', 'inner')
                 ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
-                ->where('medrec_lp_operasi_pterigium.id_lp_operasi_pterigium >', $id)
-                ->orderBy('medrec_lp_operasi_pterigium.id_lp_operasi_pterigium', 'ASC') // Urutan ascending
+                ->where('medrec_form_persetujuan_tindakan.id_form_persetujuan_tindakan >', $id)
+                ->orderBy('medrec_form_persetujuan_tindakan.id_form_persetujuan_tindakan', 'ASC') // Urutan ascending
                 ->limit(1) // Batas 1 hasil
                 ->get()
                 ->getRowArray();
 
             // Query untuk daftar rawat jalan berdasarkan no_rm
-            $listRawatJalan = $db->table('medrec_lp_operasi_pterigium')
-                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_lp_operasi_pterigium.nomor_registrasi', 'inner')
+            $listRawatJalan = $db->table('medrec_form_persetujuan_tindakan')
+                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_form_persetujuan_tindakan.nomor_registrasi', 'inner')
                 ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
-                ->where('rawat_jalan.no_rm', $lp_operasi_pterigium['no_rm'])
-                ->orderBy('id_lp_operasi_pterigium', 'DESC')
+                ->where('rawat_jalan.no_rm', $form_persetujuan_tindakan['no_rm'])
+                ->orderBy('id_form_persetujuan_tindakan', 'DESC')
                 ->get()
                 ->getResultArray();
 
             // Menyiapkan data untuk tampilan
             $data = [
-                'lp_operasi_pterigium' => $lp_operasi_pterigium,
+                'form_persetujuan_tindakan' => $form_persetujuan_tindakan,
                 'dokter' => $dokter,
-                'asisten' => $asisten,
-                'title' => 'Laporan Operasi Pterigium ' . $lp_operasi_pterigium['nama_pasien'] . ' (' . $lp_operasi_pterigium['no_rm'] . ') - ' . $lp_operasi_pterigium['nomor_registrasi'] . ' - ' . $this->systemName,
-                'headertitle' => 'Laporan Operasi Pterigium',
+                'title' => 'Formulir Persetujuan Tindakan ' . $form_persetujuan_tindakan['nama_pasien'] . ' (' . $form_persetujuan_tindakan['no_rm'] . ') - ' . $form_persetujuan_tindakan['nomor_registrasi'] . ' - ' . $this->systemName,
+                'headertitle' => 'Formulir Persetujuan Tindakan',
                 'agent' => $this->request->getUserAgent(), // Mengambil informasi user agent
                 'previous' => $previous,
                 'next' => $next,
                 'listRawatJalan' => $listRawatJalan
             ];
             // Menampilkan tampilan untuk halaman pasien
-            return view('dashboard/lpoperasipterigium/details', $data);
+            return view('dashboard/frmsetuju/details', $data);
         } else {
             // Jika peran tidak dikenali, lemparkan pengecualian 404
             throw PageNotFoundException::forPageNotFound();
@@ -360,8 +349,8 @@ class LPOperasiPterigium extends BaseController
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Dokter' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
             // Mengambil data skrining berdasarkan ID
-            $data = $this->LPOperasiPterigiumModel
-                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_lp_operasi_pterigium.nomor_registrasi', 'inner')
+            $data = $this->FrmSetujuModel
+                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_form_persetujuan_tindakan.nomor_registrasi', 'inner')
                 ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
                 ->find($id);
             return $this->response->setJSON($data); // Mengembalikan data skrining dalam format JSON
@@ -383,70 +372,34 @@ class LPOperasiPterigium extends BaseController
 
             // Menetapkan aturan validasi dasar
             $rules = [
-                'mata' => [
+                'dokter_pelaksana' => [
                     'rules' => 'required',
                 ],
-                'operator' => [
+                'pemberi_informasi' => [
                     'rules' => 'required',
                 ],
-                'tanggal_operasi' => [
+                'penerima_informasi' => [
                     'rules' => 'required',
                 ],
-                'jam_operasi' => [
+                'pererima_tanggal_lahir' => [
                     'rules' => 'required',
                 ],
-                'lama_operasi' => [
+                'penerima_jenis_kelamin' => [
                     'rules' => 'required',
                 ],
-                'diagnosis' => [
+                'penerima_alamat' => [
                     'rules' => 'required',
                 ],
-                'asisten' => [
+                'penerima_hubungan' => [
                     'rules' => 'required',
                 ],
-                'jenis_operasi' => [
+                'keterangan_hubungan' => [
+                    'rules' => $this->request->getPost('penerima_hubungan') === 'KELUARGA' ? 'required' : 'permit_empty',
+                ],
+                'tindakan_kedoteran' => [
                     'rules' => 'required',
                 ],
-                'jenis_anastesi' => [
-                    'rules' => 'required',
-                ],
-                'dokter_anastesi' => [
-                    'rules' => 'required',
-                ],
-                'antiseptic' => [
-                    'rules' => 'required',
-                ],
-                'antiseptic_lainnya' => [
-                    'rules' => $this->request->getPost('antiseptic') === 'LAINNYA' ? 'required' : 'permit_empty',
-                ],
-                'spekulum' => [
-                    'rules' => 'required',
-                ],
-                'spekulum_lainnya' => [
-                    'rules' => $this->request->getPost('spekulum') === 'LAINNYA' ? 'required' : 'permit_empty',
-                ],
-                'kendala_rektus_superior' => [
-                    'rules' => 'required',
-                ],
-                'cangkok_konjungtiva' => [
-                    'rules' => 'required',
-                ],
-                'ukuran_cangkok' => [
-                    'rules' => $this->request->getPost('cangkok_konjungtiva') === 'YA' ? 'required' : 'permit_empty',
-                ],
-                'cangkang_membrane_amnio' => [
-                    'rules' => 'required',
-                ],
-                'ukuran_cangkang' => [
-                    'rules' => $this->request->getPost('cangkang_membrane_amnio') === 'YA' ? 'required' : 'permit_empty',
-                ],
-                'bare_sclera' => [
-                    'rules' => 'required',
-                ],
-                'mytomicyn_c' => [
-                    'rules' => 'required',
-                ],
-                'penjahitan' => [
+                'tanggal_tindakan' => [
                     'rules' => 'required',
                 ],
             ];
@@ -457,35 +410,35 @@ class LPOperasiPterigium extends BaseController
 
             // Menyimpan data transaksi
             $data = [
-                'mata' => $this->request->getPost('mata') ?: null,
-                'operator' => $this->request->getPost('operator') ?: null,
-                'tanggal_operasi' => $this->request->getPost('tanggal_operasi') ?: null,
-                'jam_operasi' => $this->request->getPost('jam_operasi') ?: null,
-                'lama_operasi' => $this->request->getPost('lama_operasi') ?: null,
-                'diagnosis' => $this->request->getPost('diagnosis') ?: null,
-                'asisten' => $this->request->getPost('asisten') ?: null,
-                'jenis_operasi' => $this->request->getPost('jenis_operasi') ?: null,
-                'jenis_anastesi' => $this->request->getPost('jenis_anastesi') ?: null,
-                'dokter_anastesi' => $this->request->getPost('dokter_anastesi') ?: null,
+                'dokter_pelaksana' => $this->request->getPost('dokter_pelaksana') ?: null,
+                'pemberi_informasi' => $this->request->getPost('pemberi_informasi') ?: null,
 
-                'antiseptic' => $this->request->getPost('antiseptic') ?: null,
-                'antiseptic_lainnya' => $this->request->getPost('antiseptic_lainnya') ?: null,
-                'spekulum' => $this->request->getPost('spekulum') ?: null,
-                'spekulum_lainnya' => $this->request->getPost('spekulum_lainnya') ?: null,
-                'kendala_rektus_superior' => $this->request->getPost('kendala_rektus_superior') ?: null,
-                'cangkok_konjungtiva' => $this->request->getPost('cangkok_konjungtiva') ?: null,
-                'ukuran_cangkok' => $this->request->getPost('ukuran_cangkok') ?: null,
-                'cangkang_membrane_amnio' => $this->request->getPost('cangkang_membrane_amnio') ?: null,
-                'ukuran_cangkang' => $this->request->getPost('ukuran_cangkang') ?: null,
-                'bare_sclera' => $this->request->getPost('bare_sclera') ?: null,
-                'mytomicyn_c' => $this->request->getPost('mytomicyn_c') ?: null,
-                'penjahitan' => $this->request->getPost('penjahitan') ?: null,
+                'info_diagnosa' => $this->request->getPost('info_diagnosa') ?: null,
+                'info_dasar_diagnosis' => $this->request->getPost('info_dasar_diagnosis') ?: null,
+                'info_tindakan' => $this->request->getPost('info_tindakan') ?: null,
+                'info_indikasi' => $this->request->getPost('info_indikasi') ?: null,
+                'info_tatacara' => $this->request->getPost('info_tatacara') ?: null,
+                'info_tujuan' => $this->request->getPost('info_tujuan') ?: null,
+                'info_resiko' => $this->request->getPost('info_resiko') ?: null,
+                'info_komplikasi' => $this->request->getPost('info_komplikasi') ?: null,
+                'info_prognosis' => $this->request->getPost('info_prognosis') ?: null,
+                'info_alternatif' => $this->request->getPost('info_alternatif') ?: null,
+                'info_lainnya' => $this->request->getPost('info_lainnya') ?: null,
 
-                'keterangan_tambahan' => $this->request->getPost('keterangan_tambahan') ?: null,
-                'terapi_pasca_bedah' => $this->request->getPost('terapi_pasca_bedah') ?: null,
+                'penerima_informasi' => $this->request->getPost('penerima_informasi') ?: null,
+                'pererima_tanggal_lahir' => $this->request->getPost('pererima_tanggal_lahir') ?: null,
+                'penerima_jenis_kelamin' => $this->request->getPost('penerima_jenis_kelamin') ?: null,
+                'penerima_alamat' => $this->request->getPost('penerima_alamat') ?: null,
+                'penerima_hubungan' => $this->request->getPost('penerima_hubungan') ?: null,
+                'keterangan_hubungan' => $this->request->getPost('keterangan_hubungan') ?: null,
+
+                'tindakan_kedoteran' => $this->request->getPost('tindakan_kedoteran') ?: null,
+                'tanggal_tindakan' => $this->request->getPost('tanggal_tindakan') ?: null,
+                'nama_saksi_1' => $this->request->getPost('nama_saksi_1') ?: null,
+                'nama_saksi_2' => $this->request->getPost('nama_saksi_2') ?: null,
             ];
-            $db->table('medrec_lp_operasi_pterigium')->where('id_lp_operasi_pterigium', $id)->update($data);
-            return $this->response->setJSON(['success' => true, 'message' => 'Laporan operasi pterigium berhasil diperbarui']); // Mengembalikan respon sukses
+            $db->table('medrec_form_persetujuan_tindakan')->where('id_form_persetujuan_tindakan', $id)->update($data);
+            return $this->response->setJSON(['success' => true, 'message' => 'Formulir persetujuan tindakan berhasil diperbarui']); // Mengembalikan respon sukses
         } else {
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan', // Pesan jika peran tidak valid

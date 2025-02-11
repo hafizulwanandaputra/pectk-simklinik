@@ -66,6 +66,8 @@ class Filters extends BaseConfig
                 '/lpoperasikatarak/*',
                 '/lpoperasipterigium',
                 '/lpoperasipterigium/*',
+                '/frmsetuju',
+                '/frmsetuju/*',
                 '/supplier',
                 '/supplier/*',
                 '/obat',

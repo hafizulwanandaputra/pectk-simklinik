@@ -206,8 +206,8 @@ class Transaksi extends BaseController
 
             // Mengambil nomor_registrasi yang sudah terpakai di transaksi
             $db = \Config\Database::connect();
-            $usedNoReg = $db->table('transaksi')->select('nomor_registrasi')->get()->getResultArray();
-            $usedNoReg = array_column($usedNoReg, 'nomor_registrasi');
+            $usedNoRegInit = $db->table('transaksi')->select('nomor_registrasi')->get()->getResultArray();
+            $usedNoReg = array_column($usedNoRegInit, 'nomor_registrasi');
 
             $options = [];
             // Menyusun opsi dari data rawat jalan yang diterima

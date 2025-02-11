@@ -14,7 +14,7 @@
     <div class="flex-fill text-truncate">
         <div class="d-flex flex-column">
             <div class="fw-medium fs-6 lh-sm"><?= $headertitle; ?></div>
-            <div class="fw-medium lh-sm" style="font-size: 0.75em;"><span id="totalRecords">0</span> laporan</div>
+            <div class="fw-medium lh-sm" style="font-size: 0.75em;"><span id="totalRecords">0</span> formulir</div>
         </div>
     </div>
     <div id="loadingSpinner" class="spinner-border spinner-border-sm mx-2" role="status" style="min-width: 1rem;">
@@ -49,17 +49,17 @@
             <div class="shadow-sm rounded">
                 <?php if (session()->get('role') != 'Admisi') : ?>
                     <div class="d-grid gap-2">
-                        <button id="collapseList" class="btn btn-primary btn-sm bg-gradient  rounded-bottom-0" type="button" data-bs-toggle="collapse" data-bs-target="#lPOperasiPterigiumFormContainer" aria-expanded="false" aria-controls="lPOperasiPterigiumFormContainer">
-                            <i class="fa-solid fa-plus"></i> Tambah Laporan
+                        <button id="collapseList" class="btn btn-primary btn-sm bg-gradient  rounded-bottom-0" type="button" data-bs-toggle="collapse" data-bs-target="#FRMSetujuFormContainer" aria-expanded="false" aria-controls="FRMSetujuFormContainer">
+                            <i class="fa-solid fa-plus"></i> Tambah Formulir
                         </button>
                     </div>
-                    <ul id="lPOperasiPterigiumFormContainer" class="list-group rounded-0 collapse">
+                    <ul id="FRMSetujuFormContainer" class="list-group rounded-0 collapse">
                         <li class="list-group-item border-top-0 bg-body-tertiary">
                             <div class="row g-3">
-                                <form id="lPOperasiPterigiumForm" enctype="multipart/form-data" class="d-flex flex-column gap-2">
+                                <form id="FRMSetujuForm" enctype="multipart/form-data" class="d-flex flex-column gap-2">
                                     <div class="flex-fill">
                                         <select class="form-select form-select-sm" id="nomor_registrasi" name="nomor_registrasi" aria-label="nomor_registrasi">
-                                            <option value="" disabled selected>-- Pilih Pasien Operasi --</option>
+                                            <option value="" disabled selected>-- Pilih Pasien Rawat Jalan --</option>
                                         </select>
                                         <div class="invalid-feedback"></div>
                                     </div>
@@ -73,7 +73,7 @@
                         </li>
                     </ul>
                 <?php endif; ?>
-                <ul id="lPOperasiPterigiumContainer" class="list-group <?= (session()->get('role') != 'Admisi') ? 'rounded-top-0' : ''; ?>">
+                <ul id="FRMSetujuContainer" class="list-group <?= (session()->get('role') != 'Admisi') ? 'rounded-top-0' : ''; ?>">
                     <?php for ($i = 0; $i < 12; $i++) : ?>
                         <li class="list-group-item <?= (session()->get('role') != 'Admisi') ? 'border-top-0' : ''; ?> pb-3 pt-3" style="cursor: wait;">
                             <div class="d-flex">
@@ -87,14 +87,6 @@
                                     </h6>
                                     <div class="card-text placeholder-glow">
                                         <div style="font-size: 0.75em;">
-                                            <div class="mb-0 row g-1 placeholder-glow">
-                                                <div class="col-5 fw-medium text-truncate">
-                                                    <span class="placeholder w-100"></span>
-                                                </div>
-                                                <div class="col placeholder-glow">
-                                                    <span class="placeholder w-100"></span>
-                                                </div>
-                                            </div>
                                             <div class="mb-0 row g-1 placeholder-glow">
                                                 <div class="col-5 fw-medium text-truncate">
                                                     <span class="placeholder w-100"></span>
@@ -204,14 +196,6 @@
                                                 <span class="placeholder w-100"></span>
                                             </div>
                                         </div>
-                                        <div class="mb-0 row g-1 placeholder-glow">
-                                            <div class="col-5 fw-medium text-truncate">
-                                                <span class="placeholder w-100"></span>
-                                            </div>
-                                            <div class="col placeholder-glow">
-                                                <span class="placeholder w-100"></span>
-                                            </div>
-                                        </div>
                             </div>
                         </div>
                     </div>
@@ -233,7 +217,7 @@
     <?php if (session()->get('role') != 'Admisi') : ?>
         async function fetchPasienOptions() {
             try {
-                const response = await axios.get('<?= base_url('lpoperasipterigium/pasienlist') ?>');
+                const response = await axios.get('<?= base_url('frmsetuju/pasienlist') ?>');
 
                 if (response.data.success) {
                     const options = response.data.data;
@@ -253,7 +237,7 @@
         }
     <?php endif; ?>
 
-    async function fetchLaporan() {
+    async function fetchFormulir() {
         const search = $('#searchInput').val();
         const offset = (currentPage - 1) * limit;
         const tanggal = $('#tanggalFilter').val();
@@ -262,7 +246,7 @@
         $('#loadingSpinner').show();
 
         try {
-            const response = await axios.get('<?= base_url('lpoperasipterigium/lpoperasipterigiumlist') ?>', {
+            const response = await axios.get('<?= base_url('frmsetuju/frmsetujulist') ?>', {
                 params: {
                     search: search,
                     limit: limit,
@@ -272,71 +256,59 @@
             });
 
             const data = response.data;
-            $('#lPOperasiPterigiumContainer').empty();
+            $('#FRMSetujuContainer').empty();
             $('#totalRecords').text(data.total.toLocaleString('id-ID'));
 
             if (data.total === 0) {
                 $('#paginationNav ul').empty();
-                $('#lPOperasiPterigiumContainer').append(
+                $('#FRMSetujuContainer').append(
                     '<li class="list-group-item border-top-0 pb-3 pt-3">' +
                     '    <h1 class="display-4 text-center text-muted" style="font-weight: 200;">Data Kosong</h1>' +
                     '</li>'
                 );
             } else {
-                data.lp_operasi_pterigium.forEach(function(lp_operasi_pterigium) {
-                    let jenis_kelamin = lp_operasi_pterigium.jenis_kelamin;
+                data.form_persetujuan_tindakan.forEach(function(form_persetujuan_tindakan) {
+                    let jenis_kelamin = form_persetujuan_tindakan.jenis_kelamin;
                     if (jenis_kelamin === 'L') {
                         jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap" style="background-color: SkyBlue"><i class="fa-solid fa-mars"></i> LAKI-LAKI</span>`;
                     } else if (jenis_kelamin === 'P') {
                         jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap" style="background-color: Pink"><i class="fa-solid fa-venus"></i> PEREMPUAN</span>`;
                     }
-                    const lama_operasi = lp_operasi_pterigium.lama_operasi ?
-                        lp_operasi_pterigium.lama_operasi + ' menit' :
+                    const pemberi_informasi = form_persetujuan_tindakan.pemberi_informasi ?
+                        form_persetujuan_tindakan.pemberi_informasi :
                         `<em>Belum ada</em>`;
-                    const tanggal_operasi = lp_operasi_pterigium.tanggal_operasi ?
-                        lp_operasi_pterigium.tanggal_operasi + ' ' + lp_operasi_pterigium.jam_operasi :
+                    const penerima_informasi = form_persetujuan_tindakan.penerima_informasi ?
+                        form_persetujuan_tindakan.penerima_informasi :
                         `<em>Belum ada</em>`;
-                    const operator = lp_operasi_pterigium.operator ?
-                        lp_operasi_pterigium.operator :
-                        `<em>Belum ada</em>`;
-                    const asisten = lp_operasi_pterigium.asisten ?
-                        lp_operasi_pterigium.asisten :
-                        `<em>Belum ada</em>`;
-                    const lPOperasiPterigiumElement = `
+                    const FRMSetujuElement = `
                     <li class="list-group-item <?= (session()->get('role') != 'Admisi') ? 'border-top-0' : ''; ?> pb-3 pt-3">
                         <div class="d-flex">
                             <div class="align-self-center w-100">
                                 <h5 class="card-title d-flex date justify-content-start">
-                                    <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">${lp_operasi_pterigium.number}</span>
-                                    <span class="ms-1 align-self-center">${lp_operasi_pterigium.nama_pasien}</span>
+                                    <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">${form_persetujuan_tindakan.number}</span>
+                                    <span class="ms-1 align-self-center">${form_persetujuan_tindakan.nama_pasien}</span>
                                 </h5>
                                     <h6 class="card-subtitle mb-2">
-                                        ${lp_operasi_pterigium.nomor_registrasi} • ${lp_operasi_pterigium.no_rm}<br>${jenis_kelamin}
+                                        ${form_persetujuan_tindakan.nomor_registrasi} • ${form_persetujuan_tindakan.no_rm}<br>${jenis_kelamin}
                                     </h6>
                                     <div class="card-text">
                                         <div style="font-size: 0.75em;">
                                                     <div class="mb-0 row g-1">
-                                                        <div class="col-5 fw-medium text-truncate">Tanggal Operasi</div>
+                                                        <div class="col-5 fw-medium text-truncate">Tanggal Persetujuan</div>
                                                         <div class="col date">
-                                                            ${tanggal_operasi}
+                                                            ${form_persetujuan_tindakan.waktu_dibuat}
                                                         </div>
                                                     </div>
                                                     <div class="mb-0 row g-1">
-                                                        <div class="col-5 fw-medium text-truncate">Lama Operasi</div>
+                                                        <div class="col-5 fw-medium text-truncate">Pemberi Informasi</div>
                                                         <div class="col date">
-                                                            ${lama_operasi}
+                                                            ${pemberi_informasi}
                                                         </div>
                                                     </div>
                                                     <div class="mb-0 row g-1">
-                                                        <div class="col-5 fw-medium text-truncate">Dokter</div>
+                                                        <div class="col-5 fw-medium text-truncate">Penerima Informasi</div>
                                                         <div class="col">
-                                                            ${operator}
-                                                        </div>
-                                                    </div>
-                                                    <div class="mb-0 row g-1">
-                                                        <div class="col-5 fw-medium text-truncate">Asisten</div>
-                                                        <div class="col">
-                                                            ${asisten}
+                                                            ${penerima_informasi}
                                                         </div>
                                                     </div>
                                         </div>
@@ -347,24 +319,24 @@
                         <hr>
                         <div class="d-grid gap-2 d-flex justify-content-end">
                         <?php if (session()->get('role') != 'Admisi') : ?>
-                            <button type="button" class="btn btn-body btn-sm bg-gradient " onclick="window.location.href = '<?= base_url('lpoperasipterigium/details') ?>/${lp_operasi_pterigium.id_lp_operasi_pterigium}';">
+                            <button type="button" class="btn btn-body btn-sm bg-gradient " onclick="window.location.href = '<?= base_url('frmsetuju/details') ?>/${form_persetujuan_tindakan.id_form_persetujuan_tindakan}';">
                                 <i class="fa-solid fa-circle-info"></i> Detail
                             </button>
                         <?php endif; ?>
                         <?php if (session()->get('role') == 'Admisi') : ?>
-                            <button type="button" class="btn btn-body btn-sm bg-gradient " onclick="window.open('<?= base_url('lpoperasipterigium/export') ?>/${lp_operasi_pterigium.id_lp_operasi_pterigium}');">
+                            <button type="button" class="btn btn-body btn-sm bg-gradient " onclick="window.open('<?= base_url('frmsetuju/export') ?>/${form_persetujuan_tindakan.id_form_persetujuan_tindakan}');">
                                 <i class="fa-solid fa-print"></i> Cetak
                             </button>
                         <?php endif; ?>
                         <?php if (session()->get('role') != 'Admisi') : ?>
-                            <button type="button" class="btn btn-danger btn-sm bg-gradient  delete-btn" data-id="${lp_operasi_pterigium.id_lp_operasi_pterigium}" data-name="${lp_operasi_pterigium.nama_pasien}" data-date="${lp_operasi_pterigium.nomor_registrasi}">
+                            <button type="button" class="btn btn-danger btn-sm bg-gradient  delete-btn" data-id="${form_persetujuan_tindakan.id_form_persetujuan_tindakan}" data-name="${form_persetujuan_tindakan.nama_pasien}" data-date="${form_persetujuan_tindakan.nomor_registrasi}">
                                 <i class="fa-solid fa-trash"></i> Hapus
                             </button>
                         <?php endif; ?>
                         </div>
                     </li>
                 `;
-                    $('#lPOperasiPterigiumContainer').append(lPOperasiPterigiumElement);
+                    $('#FRMSetujuContainer').append(FRMSetujuElement);
                 });
 
                 // Pagination logic with ellipsis for more than 3 pages
@@ -432,7 +404,7 @@
             }
         } catch (error) {
             showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
-            $('#lPOperasiPterigiumContainer').empty();
+            $('#FRMSetujuContainer').empty();
             $('#paginationNav ul').empty();
         } finally {
             // Hide the spinner when done
@@ -447,27 +419,27 @@
         if (page) {
             currentPage = page;
             <?= (session()->get('role') != 'Admisi') ? 'fetchPasienOptions();' : ''; ?>
-            fetchLaporan();
+            fetchFormulir();
         }
     });
 
     $('#tanggalFilter').on('change', function() {
-        $('#lPOperasiPterigiumContainer').empty();
+        $('#FRMSetujuContainer').empty();
         for (let i = 0; i < limit; i++) {
-            $('#lPOperasiPterigiumContainer').append(placeholder);
+            $('#FRMSetujuContainer').append(placeholder);
         }
         <?= (session()->get('role') != 'Admisi') ? 'fetchPasienOptions();' : ''; ?>
-        fetchLaporan();
+        fetchFormulir();
     });
 
     $('#clearTglButton').on('click', function() {
         $('#tanggalFilter').val('');
-        $('#lPOperasiPterigiumContainer').empty();
+        $('#FRMSetujuContainer').empty();
         for (let i = 0; i < limit; i++) {
-            $('#lPOperasiPterigiumContainer').append(placeholder);
+            $('#FRMSetujuContainer').append(placeholder);
         }
         <?= (session()->get('role') != 'Admisi') ? 'fetchPasienOptions();' : ''; ?>
-        fetchLaporan();
+        fetchFormulir();
     });
 
     <?php if (session()->get('role') != 'Admisi') : ?>
@@ -497,7 +469,7 @@
 
         <?php if (session()->get('role') != 'Admisi') : ?>
             $('#nomor_registrasi').select2({
-                dropdownParent: $('#lPOperasiPterigiumForm'),
+                dropdownParent: $('#FRMSetujuForm'),
                 theme: "bootstrap-5",
                 width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
                 placeholder: $(this).data('placeholder'),
@@ -506,7 +478,7 @@
 
         $('#searchInput').on('input', function() {
             currentPage = 1;
-            fetchLaporan();
+            fetchFormulir();
         });
 
         const toggleFilter = $('#toggleFilter');
@@ -541,22 +513,22 @@
 
         <?php if (session()->get('role') != 'Admisi') : ?>
             // Store the ID of the user to be deleted
-            var lPOperasiPterigiumId;
-            var lPOperasiPterigiumName;
-            var lPOperasiPterigiumDate;
+            var FRMSetujuId;
+            var FRMSetujuName;
+            var FRMSetujuDate;
 
             // Show delete confirmation modal
             $(document).on('click', '.delete-btn', function() {
-                lPOperasiPterigiumId = $(this).data('id');
-                lPOperasiPterigiumName = $(this).data('name');
-                lPOperasiPterigiumDate = $(this).data('date');
-                // Check if lPOperasiPterigiumName is null or undefined
-                const nama_pasien = (lPOperasiPterigiumName === null || lPOperasiPterigiumName === undefined || lPOperasiPterigiumName === 'null') ?
+                FRMSetujuId = $(this).data('id');
+                FRMSetujuName = $(this).data('name');
+                FRMSetujuDate = $(this).data('date');
+                // Check if FRMSetujuName is null or undefined
+                const nama_pasien = (FRMSetujuName === null || FRMSetujuName === undefined || FRMSetujuName === 'null') ?
                     'yang anonim ini' :
-                    `dari "${lPOperasiPterigiumName}"`;
+                    `dari "${FRMSetujuName}"`;
                 $('[data-bs-toggle="tooltip"]').tooltip('hide');
                 $('#deleteMessage').html(`Hapus Laporan untuk ${nama_pasien}?`);
-                $('#deleteSubmessage').html(`Nomor Registrasi: ` + lPOperasiPterigiumDate);
+                $('#deleteSubmessage').html(`Nomor Registrasi: ` + FRMSetujuDate);
                 $('#deleteModal').modal('show');
             });
 
@@ -566,9 +538,9 @@
                 $('#deleteSubmessage').hide();
 
                 try {
-                    await axios.delete(`<?= base_url('/lpoperasipterigium/delete') ?>/${lPOperasiPterigiumId}`);
+                    await axios.delete(`<?= base_url('/frmsetuju/delete') ?>/${FRMSetujuId}`);
                     fetchPasienOptions();
-                    fetchLaporan();
+                    fetchFormulir();
                 } catch (error) {
                     if (error.response.request.status === 404) {
                         showFailedToast(error.response.data.message);
@@ -584,43 +556,43 @@
             }); // Simpan nilai pilihan apoteker saat ini
         <?php endif; ?>
 
-        $('#lPOperasiPterigiumForm').submit(async function(e) {
+        $('#FRMSetujuForm').submit(async function(e) {
             e.preventDefault();
 
             const formData = new FormData(this);
             console.log("Form Data:", $(this).serialize());
 
             // Clear previous validation states
-            $('#lPOperasiPterigiumForm .is-invalid').removeClass('is-invalid');
-            $('#lPOperasiPterigiumForm .invalid-feedback').text('').hide();
+            $('#FRMSetujuForm .is-invalid').removeClass('is-invalid');
+            $('#FRMSetujuForm .invalid-feedback').text('').hide();
             $('#submitButton').prop('disabled', true).html(`
                 <span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span> Tambah
             `);
 
             // Disable form inputs
-            $('#lPOperasiPterigiumForm select').prop('disabled', true);
+            $('#FRMSetujuForm select').prop('disabled', true);
 
             try {
-                const response = await axios.post(`<?= base_url('lpoperasipterigium/create') ?>`, formData, {
+                const response = await axios.post(`<?= base_url('frmsetuju/create') ?>`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }
                 });
 
                 if (response.data.success) {
-                    $('#lPOperasiPterigiumForm')[0].reset();
+                    $('#FRMSetujuForm')[0].reset();
                     $('#nomor_registrasi').val(null).trigger('change');
-                    $('#lPOperasiPterigiumForm .is-invalid').removeClass('is-invalid');
-                    $('#lPOperasiPterigiumForm .invalid-feedback').text('').hide();
+                    $('#FRMSetujuForm .is-invalid').removeClass('is-invalid');
+                    $('#FRMSetujuForm .invalid-feedback').text('').hide();
                     $('#submitButton').prop('disabled', true);
                     <?= (session()->get('role') != 'Admisi') ? 'fetchPasienOptions();' : ''; ?>
-                    fetchLaporan();
+                    fetchFormulir();
                 } else {
                     console.log("Validation Errors:", response.data.errors);
 
                     // Clear previous validation states
-                    $('#lPOperasiPterigiumForm .is-invalid').removeClass('is-invalid');
-                    $('#lPOperasiPterigiumForm .invalid-feedback').text('').hide();
+                    $('#FRMSetujuForm .is-invalid').removeClass('is-invalid');
+                    $('#FRMSetujuForm .invalid-feedback').text('').hide();
 
                     // Display new validation errors
                     for (const field in response.data.errors) {
@@ -660,23 +632,23 @@
                 $('#submitButton').html(`
                     <i class="fa-solid fa-plus"></i> Tambah
                 `);
-                $('#lPOperasiPterigiumForm select').prop('disabled', false);
+                $('#FRMSetujuForm select').prop('disabled', false);
             }
         });
 
         $(document).on('visibilitychange', async function() {
             if (document.visibilityState === "visible") {
                 <?= (session()->get('role') != 'Admisi') ? 'fetchPasienOptions();' : ''; ?>;
-                fetchLaporan(); // Refresh articles on button click
+                fetchFormulir(); // Refresh articles on button click
             }
         });
         $('#refreshButton').on('click', async function(e) {
             e.preventDefault();
             <?= (session()->get('role') != 'Admisi') ? 'fetchPasienOptions();' : ''; ?>;
-            fetchLaporan(); // Refresh articles on button click
+            fetchFormulir(); // Refresh articles on button click
         });
         <?= (session()->get('role') != 'Admisi') ? 'fetchPasienOptions();' : ''; ?>
-        fetchLaporan();
+        fetchFormulir();
         toggleSubmitButton();
     });
     // Show toast notification

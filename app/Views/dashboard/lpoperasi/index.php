@@ -593,7 +593,7 @@
             // Clear previous validation states
             $('#lPOperasiForm .is-invalid').removeClass('is-invalid');
             $('#lPOperasiForm .invalid-feedback').text('').hide();
-            $('#submitButton1').prop('disabled', true).html(`
+            $('#submitButton').prop('disabled', true).html(`
                 <span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span> Tambah
             `);
 

@@ -306,7 +306,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                             <hr class="my-1 border-success-subtle opacity-100">
                             <ul class="nav nav-pills flex-column">
                                 <li class="nav-item">
-                                    <span class="nav-link px-2 py-1" role="button">
+                                    <span style="font-size: 0.9em;" class="nav-link px-2 py-1" role="button">
                                         <div class="d-flex align-items-between text-success-emphasis">
                                             <label for="auto_date" class="d-flex align-items-start w-100" role="button">
                                                 <div style="min-width: 24px; max-width: 24px; text-align: center;">
@@ -317,7 +317,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                                 </div>
                                             </label>
                                             <div style="text-align: center;">
-                                                <div class="form-check form-switch ps-4">
+                                                <div class="form-check form-switch ps-4 mb-0">
                                                     <input class="form-check-input" role="button" value="<?= (session()->get('auto_date') == 1) ? '1' : '0'; ?>" type="checkbox" role="switch" id="auto_date" name="auto_date" <?= (session()->get('auto_date') == 1) ? 'checked' : ''; ?>>
                                                 </div>
                                             </div>
@@ -325,7 +325,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                     </span>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link nav-link-offcanvas px-2 py-1" href="<?= base_url('/settings'); ?>">
+                                    <a style="font-size: 0.9em;" class="nav-link nav-link-offcanvas px-2 py-1" href="<?= base_url('/settings'); ?>">
                                         <div class="d-flex align-items-start text-success-emphasis">
                                             <div style="min-width: 24px; max-width: 24px; text-align: center;">
                                                 <i class="fa-solid fa-gear"></i>
@@ -337,7 +337,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a id="logoutButton" class="nav-link px-2 py-1" href="#">
+                                    <a style="font-size: 0.9em;" id="logoutButton" class="nav-link px-2 py-1" href="#">
                                         <div class="d-flex align-items-start text-danger">
                                             <div style="min-width: 24px; max-width: 24px; text-align: center;">
                                                 <i class="fa-solid fa-right-from-bracket"></i>
@@ -375,12 +375,12 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                 <div id="sidebarMenu2" class="position-sticky sidebar-sticky p-1">
                     <ul class="nav nav-pills flex-column">
                         <li class="nav-item">
-                            <a class="nav-link px-2 py-1 <?= ($activeSegment === 'home') ? 'active bg-success' : '' ?>" href=" <?= base_url('/home'); ?>">
+                            <a style="font-size: 0.9em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'home') ? 'active bg-success' : '' ?>" href=" <?= base_url('/home'); ?>">
                                 <div class="d-flex align-items-start <?= ($activeSegment === 'home') ? 'text-white' : 'text-success-emphasis' ?>">
                                     <div style="min-width: 24px; max-width: 24px; text-align: center;">
                                         <i class="fa-solid fa-house"></i>
                                     </div>
-                                    <div class="flex-fill ms-2">
+                                    <div class="flex-fill mx-2">
                                         Beranda
                                     </div>
                                 </div>
@@ -388,12 +388,12 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                         </li>
                         <?php if (session()->get('role') == "Admin" || session()->get('role') == "Admisi") : ?>
                             <li class="nav-item">
-                                <a class="nav-link px-2 py-1 <?= ($activeSegment === 'pasien') ? 'active bg-success' : '' ?>" href=" <?= base_url('/pasien'); ?>">
+                                <a style="font-size: 0.9em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'pasien') ? 'active bg-success' : '' ?>" href=" <?= base_url('/pasien'); ?>">
                                     <div class="d-flex align-items-start <?= ($activeSegment === 'pasien') ? 'text-white' : 'text-success-emphasis' ?>">
                                         <div style="min-width: 24px; max-width: 24px; text-align: center;">
                                             <i class="fa-solid fa-user-injured"></i>
                                         </div>
-                                        <div class="flex-fill ms-2">
+                                        <div class="flex-fill mx-2">
                                             Pasien
                                         </div>
                                     </div>
@@ -402,24 +402,24 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                         <?php endif; ?>
                         <?php if (session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admin" || session()->get('role') == "Admisi") : ?>
                             <li class="nav-item">
-                                <a class="nav-link px-2 py-1 <?= ($activeSegment === 'rawatjalan') ? 'active bg-success' : '' ?>" href=" <?= base_url('/rawatjalan'); ?>">
+                                <a style="font-size: 0.9em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'rawatjalan') ? 'active bg-success' : '' ?>" href=" <?= base_url('/rawatjalan'); ?>">
                                     <div class="d-flex align-items-start <?= ($activeSegment === 'rawatjalan') ? 'text-white' : 'text-success-emphasis' ?>">
                                         <div style="min-width: 24px; max-width: 24px; text-align: center;">
                                             <i class="fa-solid fa-hospital-user"></i>
                                         </div>
-                                        <div class="flex-fill ms-2">
+                                        <div class="flex-fill mx-2">
                                             Rawat Jalan
                                         </div>
                                     </div>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link px-2 py-1 <?= ($activeSegment === 'operasi') ? 'active bg-success' : '' ?>" href=" <?= base_url('/operasi'); ?>">
+                                <a style="font-size: 0.9em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'operasi') ? 'active bg-success' : '' ?>" href=" <?= base_url('/operasi'); ?>">
                                     <div class="d-flex align-items-start <?= ($activeSegment === 'operasi') ? 'text-white' : 'text-success-emphasis' ?>">
                                         <div style="min-width: 24px; max-width: 24px; text-align: center;">
                                             <i class="fa-solid fa-stethoscope"></i>
                                         </div>
-                                        <div class="flex-fill ms-2">
+                                        <div class="flex-fill mx-2">
                                             Pasien Operasi
                                         </div>
                                     </div>
@@ -428,21 +428,21 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                         <?php endif; ?>
                         <?php if (session()->get('role') == "Dokter" || session()->get('role') == "Admin" || session()->get('role') == "Admisi") : ?>
                             <li class="nav-item">
-                                <span class="nav-link px-2 py-1 <?= ($activeSegment === 'lpoperasikatarak' || $activeSegment === 'lpoperasipterigium' || $activeSegment === 'lpoperasi') ? 'active bg-success' : '' ?>" role="button" data-bs-toggle="collapse" data-bs-target="#submenu-laporan">
+                                <span style="font-size: 0.9em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'lpoperasikatarak' || $activeSegment === 'lpoperasipterigium' || $activeSegment === 'lpoperasi') ? 'active bg-success' : '' ?>" role="button" data-bs-toggle="collapse" data-bs-target="#submenu-laporan-operasi">
                                     <div class="d-flex align-items-start <?= ($activeSegment === 'lpoperasikatarak' || $activeSegment === 'lpoperasipterigium' || $activeSegment === 'lpoperasi') ? 'text-white' : 'text-success-emphasis' ?>">
                                         <div style="min-width: 24px; max-width: 24px; text-align: center;">
                                             <i class="fa-solid fa-file-medical"></i>
                                         </div>
-                                        <div class="flex-fill ms-2">
+                                        <div class="flex-fill mx-2">
                                             Laporan Operasi
                                         </div>
                                     </div>
                                 </span>
                             </li>
-                            <div id="submenu-laporan" class="collapse <?= ($activeSegment === 'lpoperasikatarak' || $activeSegment === 'lpoperasipterigium' || $activeSegment === 'lpoperasi') ? 'show' : '' ?>">
+                            <div id="submenu-laporan-operasi" class="collapse <?= ($activeSegment === 'lpoperasikatarak' || $activeSegment === 'lpoperasipterigium' || $activeSegment === 'lpoperasi') ? 'show' : '' ?>">
                                 <ul class="nav nav-pills flex-column mt-1">
                                     <li class="nav-item" style="margin-left: calc(24px + 0.5rem);">
-                                        <a class="nav-link px-2 py-1 <?= ($activeSegment === 'lpoperasikatarak') ? 'active bg-success' : '' ?>" href=" <?= base_url('/lpoperasikatarak'); ?>">
+                                        <a style="font-size: 0.9em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'lpoperasikatarak') ? 'active bg-success' : '' ?>" href="<?= base_url('/lpoperasikatarak'); ?>">
                                             <div class="d-flex align-items-start <?= ($activeSegment === 'lpoperasikatarak') ? 'text-white' : 'text-success-emphasis' ?>">
                                                 <div class="flex-fill fw-normal" style="font-size: 0.75em;">
                                                     Katarak
@@ -451,7 +451,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                         </a>
                                     </li>
                                     <li class="nav-item" style="margin-left: calc(24px + 0.5rem);">
-                                        <a class="nav-link px-2 py-1 <?= ($activeSegment === 'lpoperasipterigium') ? 'active bg-success' : '' ?>" href=" <?= base_url('/lpoperasipterigium'); ?>">
+                                        <a style="font-size: 0.9em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'lpoperasipterigium') ? 'active bg-success' : '' ?>" href="<?= base_url('/lpoperasipterigium'); ?>">
                                             <div class="d-flex align-items-start <?= ($activeSegment === 'lpoperasipterigium') ? 'text-white' : 'text-success-emphasis' ?>">
                                                 <div class="flex-fill fw-normal" style="font-size: 0.75em;">
                                                     Pterigium
@@ -460,7 +460,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                         </a>
                                     </li>
                                     <li class="nav-item" style="margin-left: calc(24px + 0.5rem);">
-                                        <a class="nav-link px-2 py-1 <?= ($activeSegment === 'lpoperasi') ? 'active bg-success' : '' ?>" href=" <?= base_url('/lpoperasi'); ?>">
+                                        <a style="font-size: 0.9em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'lpoperasi') ? 'active bg-success' : '' ?>" href="<?= base_url('/lpoperasi'); ?>">
                                             <div class="d-flex align-items-start <?= ($activeSegment === 'lpoperasi') ? 'text-white' : 'text-success-emphasis' ?>">
                                                 <div class="flex-fill fw-normal" style="font-size: 0.75em;">
                                                     Lainnya
@@ -470,63 +470,75 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                     </li>
                                 </ul>
                             </div>
+                            <li class="nav-item">
+                                <a style="font-size: 0.9em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'frmsetuju') ? 'active bg-success' : '' ?>" href=" <?= base_url('/frmsetuju'); ?>">
+                                    <div class="d-flex align-items-start <?= ($activeSegment === 'frmsetuju') ? 'text-white' : 'text-success-emphasis' ?>">
+                                        <div style="min-width: 24px; max-width: 24px; text-align: center;">
+                                            <i class="fa-solid fa-file-contract"></i>
+                                        </div>
+                                        <div class="flex-fill mx-2">
+                                            Formulir Persetujuan Tindakan
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
                         <?php endif; ?>
                         <?php if (session()->get('role') == "Apoteker" || session()->get('role') == "Admin") : ?>
                             <li class="nav-item">
-                                <a class="nav-link px-2 py-1 <?= ($activeSegment === 'supplier') ? 'active bg-success' : '' ?>" href=" <?= base_url('/supplier'); ?>">
+                                <a style="font-size: 0.9em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'supplier') ? 'active bg-success' : '' ?>" href=" <?= base_url('/supplier'); ?>">
                                     <div class="d-flex align-items-start <?= ($activeSegment === 'supplier') ? 'text-white' : 'text-success-emphasis' ?>">
                                         <div style="min-width: 24px; max-width: 24px; text-align: center;">
                                             <i class="fa-solid fa-truck-field"></i>
                                         </div>
-                                        <div class="flex-fill ms-2">
+                                        <div class="flex-fill mx-2">
                                             Supplier
                                         </div>
                                     </div>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link px-2 py-1 <?= ($activeSegment === 'obat') ? 'active bg-success' : '' ?>" href=" <?= base_url('/obat'); ?>">
+                                <a style="font-size: 0.9em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'obat') ? 'active bg-success' : '' ?>" href=" <?= base_url('/obat'); ?>">
                                     <div class="d-flex align-items-start <?= ($activeSegment === 'obat') ? 'text-white' : 'text-success-emphasis' ?>">
                                         <div style="min-width: 24px; max-width: 24px; text-align: center;">
                                             <i class="fa-solid fa-prescription-bottle-medical"></i>
                                         </div>
-                                        <div class="flex-fill ms-2">
+                                        <div class="flex-fill mx-2">
                                             Obat
                                         </div>
                                     </div>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link px-2 py-1 <?= ($activeSegment === 'pembelianobat') ? 'active bg-success' : '' ?>" href=" <?= base_url('/pembelianobat'); ?>">
+                                <a style="font-size: 0.9em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'pembelianobat') ? 'active bg-success' : '' ?>" href=" <?= base_url('/pembelianobat'); ?>">
                                     <div class="d-flex align-items-start <?= ($activeSegment === 'pembelianobat') ? 'text-white' : 'text-success-emphasis' ?>">
                                         <div style="min-width: 24px; max-width: 24px; text-align: center;">
                                             <i class="fa-solid fa-cart-shopping"></i>
                                         </div>
-                                        <div class="flex-fill ms-2">
+                                        <div class="flex-fill mx-2">
                                             Obat Masuk
                                         </div>
                                     </div>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link px-2 py-1 <?= ($activeSegment === 'opnameobat') ? 'active bg-success' : '' ?>" href=" <?= base_url('/opnameobat'); ?>">
+                                <a style="font-size: 0.9em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'opnameobat') ? 'active bg-success' : '' ?>" href=" <?= base_url('/opnameobat'); ?>">
                                     <div class="d-flex align-items-start <?= ($activeSegment === 'opnameobat') ? 'text-white' : 'text-success-emphasis' ?>">
                                         <div style="min-width: 24px; max-width: 24px; text-align: center;">
                                             <i class="fa-solid fa-file-invoice"></i>
                                         </div>
-                                        <div class="flex-fill ms-2">
+                                        <div class="flex-fill mx-2">
                                             Laporan Stok Obat
                                         </div>
                                     </div>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link px-2 py-1 <?= ($activeSegment === 'resepluar') ? 'active bg-success' : '' ?>" href=" <?= base_url('/resepluar'); ?>">
+                                <a style="font-size: 0.9em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'resepluar') ? 'active bg-success' : '' ?>" href=" <?= base_url('/resepluar'); ?>">
                                     <div class="d-flex align-items-start <?= ($activeSegment === 'resepluar') ? 'text-white' : 'text-success-emphasis' ?>">
                                         <div style="min-width: 24px; max-width: 24px; text-align: center;">
                                             <i class="fa-solid fa-prescription"></i>
                                         </div>
-                                        <div class="flex-fill ms-2">
+                                        <div class="flex-fill mx-2">
                                             Resep Luar
                                         </div>
                                     </div>
@@ -535,12 +547,12 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                         <?php endif; ?>
                         <?php if (session()->get('role') == "Apoteker" || session()->get('role') == "Admin") : ?>
                             <li class="nav-item">
-                                <a class="nav-link px-2 py-1 <?= ($activeSegment === 'resep') ? 'active bg-success' : '' ?>" href=" <?= base_url('/resep'); ?>">
+                                <a style="font-size: 0.9em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'resep') ? 'active bg-success' : '' ?>" href=" <?= base_url('/resep'); ?>">
                                     <div class="d-flex align-items-start <?= ($activeSegment === 'resep') ? 'text-white' : 'text-success-emphasis' ?>">
                                         <div style="min-width: 24px; max-width: 24px; text-align: center;">
                                             <i class="fa-solid fa-prescription"></i>
                                         </div>
-                                        <div class="flex-fill ms-2">
+                                        <div class="flex-fill mx-2">
                                             Resep Dokter
                                         </div>
                                     </div>
@@ -549,12 +561,12 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                         <?php endif; ?>
                         <?php if (session()->get('role') == "Apoteker" || session()->get('role') == "Admin") : ?>
                             <li class="nav-item">
-                                <a class="nav-link px-2 py-1 <?= ($activeSegment === 'laporanresep') ? 'active bg-success' : '' ?>" href=" <?= base_url('/laporanresep'); ?>">
+                                <a style="font-size: 0.9em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'laporanresep') ? 'active bg-success' : '' ?>" href=" <?= base_url('/laporanresep'); ?>">
                                     <div class="d-flex align-items-start <?= ($activeSegment === 'laporanresep') ? 'text-white' : 'text-success-emphasis' ?>">
                                         <div style="min-width: 24px; max-width: 24px; text-align: center;">
                                             <i class="fa-solid fa-file-prescription"></i>
                                         </div>
-                                        <div class="flex-fill ms-2">
+                                        <div class="flex-fill mx-2">
                                             Laporan Resep
                                         </div>
                                     </div>
@@ -563,24 +575,24 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                         <?php endif; ?>
                         <?php if (session()->get('role') == "Kasir" || session()->get('role') == "Admin") : ?>
                             <li class="nav-item">
-                                <a class="nav-link px-2 py-1 <?= ($activeSegment === 'layanan') ? 'active bg-success' : '' ?>" href=" <?= base_url('/layanan'); ?>">
+                                <a style="font-size: 0.9em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'layanan') ? 'active bg-success' : '' ?>" href=" <?= base_url('/layanan'); ?>">
                                     <div class="d-flex align-items-start <?= ($activeSegment === 'layanan') ? 'text-white' : 'text-success-emphasis' ?>">
                                         <div style="min-width: 24px; max-width: 24px; text-align: center;">
                                             <i class="fa-solid fa-user-nurse"></i>
                                         </div>
-                                        <div class="flex-fill ms-2">
+                                        <div class="flex-fill mx-2">
                                             Tindakan
                                         </div>
                                     </div>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link px-2 py-1 <?= ($activeSegment === 'transaksi') ? 'active bg-success' : '' ?>" href=" <?= base_url('/transaksi'); ?>">
+                                <a style="font-size: 0.9em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'transaksi') ? 'active bg-success' : '' ?>" href=" <?= base_url('/transaksi'); ?>">
                                     <div class="d-flex align-items-start <?= ($activeSegment === 'transaksi') ? 'text-white' : 'text-success-emphasis' ?>">
                                         <div style="min-width: 24px; max-width: 24px; text-align: center;">
                                             <i class="fa-solid fa-cash-register"></i>
                                         </div>
-                                        <div class="flex-fill ms-2">
+                                        <div class="flex-fill mx-2">
                                             Kasir
                                         </div>
                                     </div>
@@ -589,24 +601,24 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                         <?php endif; ?>
                         <?php if (session()->get('role') == "Admin") : ?>
                             <li class="nav-item">
-                                <a class="nav-link px-2 py-1 <?= ($activeSegment === 'poliklinik') ? 'active bg-success' : '' ?>" href=" <?= base_url('/poliklinik'); ?>">
+                                <a style="font-size: 0.9em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'poliklinik') ? 'active bg-success' : '' ?>" href=" <?= base_url('/poliklinik'); ?>">
                                     <div class="d-flex align-items-start <?= ($activeSegment === 'poliklinik') ? 'text-white' : 'text-success-emphasis' ?>">
                                         <div style="min-width: 24px; max-width: 24px; text-align: center;">
                                             <i class="fa-solid fa-hospital"></i>
                                         </div>
-                                        <div class="flex-fill ms-2">
+                                        <div class="flex-fill mx-2">
                                             Ruangan Poliklinik
                                         </div>
                                     </div>
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link px-2 py-1 <?= ($activeSegment === 'admin') ? 'active bg-success' : '' ?>" href=" <?= base_url('/admin'); ?>">
+                                <a style="font-size: 0.9em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'admin') ? 'active bg-success' : '' ?>" href=" <?= base_url('/admin'); ?>">
                                     <div class="d-flex align-items-start <?= ($activeSegment === 'admin') ? 'text-white' : 'text-success-emphasis' ?>">
                                         <div style="min-width: 24px; max-width: 24px; text-align: center;">
                                             <i class="fa-solid fa-users"></i>
                                         </div>
-                                        <div class="flex-fill ms-2">
+                                        <div class="flex-fill mx-2">
                                             Pengguna
                                         </div>
                                     </div>
