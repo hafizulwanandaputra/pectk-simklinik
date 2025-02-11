@@ -4,18 +4,18 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\RawatJalanModel;
-use App\Models\FrmSetujuModel;
+use App\Models\FRMSetujuModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use Picqer\Barcode\BarcodeGeneratorPNG;
 
 class FRMSetuju extends BaseController
 {
     protected $RawatJalanModel;
-    protected $FrmSetujuModel;
+    protected $FRMSetujuModel;
     public function __construct()
     {
         $this->RawatJalanModel = new RawatJalanModel();
-        $this->FrmSetujuModel = new FrmSetujuModel();
+        $this->FRMSetujuModel = new FRMSetujuModel();
     }
     public function index()
     {
@@ -50,29 +50,29 @@ class FRMSetuju extends BaseController
             $offset = $offset ? intval($offset) : 0;
 
             // Memuat model PembelianObat
-            $FrmSetujuModel = $this->FrmSetujuModel
+            $FRMSetujuModel = $this->FRMSetujuModel
                 ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_form_persetujuan_tindakan.nomor_registrasi', 'inner')
                 ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner');
 
             // Menerapkan filter pencarian pada nama supplier atau tanggal pembelian
             if ($tanggal) {
-                $FrmSetujuModel
+                $FRMSetujuModel
                     ->like('rawat_jalan.tanggal_registrasi', $tanggal);
             }
 
             // Menerapkan filter pencarian berdasarkan nama pasien atau tanggal resep
             if ($search) {
-                $FrmSetujuModel->groupStart()
+                $FRMSetujuModel->groupStart()
                     ->like('pasien.no_rm', $search)
                     ->orLike('pasien.nama_pasien', $search)
                     ->groupEnd();
             }
 
             // Menghitung total hasil
-            $total = $FrmSetujuModel->countAllResults(false);
+            $total = $FRMSetujuModel->countAllResults(false);
 
             // Mendapatkan hasil yang dipaginasikan
-            $FrmSetuju = $FrmSetujuModel
+            $FRMSetuju = $FRMSetujuModel
                 ->orderBy('id_form_persetujuan_tindakan', 'DESC')
                 ->findAll($limit, $offset);
 
@@ -80,14 +80,14 @@ class FRMSetuju extends BaseController
             $startNumber = $offset + 1;
 
             // Menambahkan nomor urut ke data pembelian obat
-            $dataFrmSetuju = array_map(function ($data, $index) use ($startNumber) {
+            $dataFRMSetuju = array_map(function ($data, $index) use ($startNumber) {
                 $data['number'] = $startNumber + $index;
                 return $data;
-            }, $FrmSetuju, array_keys($FrmSetuju));
+            }, $FRMSetuju, array_keys($FRMSetuju));
 
             // Mengembalikan respons JSON dengan data pembelian obat dan total
             return $this->response->setJSON([
-                'form_persetujuan_tindakan' => $dataFrmSetuju,
+                'form_persetujuan_tindakan' => $dataFRMSetuju,
                 'total' => $total
             ]);
         } else {
@@ -201,7 +201,7 @@ class FRMSetuju extends BaseController
         // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Admisi' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Admisi') {
             // Inisialisasi rawat jalan
-            $form_persetujuan_tindakan = $this->FrmSetujuModel
+            $form_persetujuan_tindakan = $this->FRMSetujuModel
                 ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_form_persetujuan_tindakan.nomor_registrasi', 'inner')
                 ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
                 ->find($id);
@@ -257,12 +257,12 @@ class FRMSetuju extends BaseController
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Dokter' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
-            $form_persetujuan_tindakan = $this->FrmSetujuModel->find($id);
+            $form_persetujuan_tindakan = $this->FRMSetujuModel->find($id);
             if ($form_persetujuan_tindakan) {
                 $db = db_connect();
 
                 // Menghapus form_persetujuan_tindakan
-                $this->FrmSetujuModel->delete($id);
+                $this->FRMSetujuModel->delete($id);
 
                 // Reset auto increment
                 $db->query('ALTER TABLE `medrec_form_persetujuan_tindakan` auto_increment = 1');
@@ -286,7 +286,7 @@ class FRMSetuju extends BaseController
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
             $db = db_connect();
 
-            $form_persetujuan_tindakan = $this->FrmSetujuModel
+            $form_persetujuan_tindakan = $this->FRMSetujuModel
                 ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_form_persetujuan_tindakan.nomor_registrasi', 'inner')
                 ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
                 ->find($id);
@@ -349,7 +349,7 @@ class FRMSetuju extends BaseController
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Dokter' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
             // Mengambil data skrining berdasarkan ID
-            $data = $this->FrmSetujuModel
+            $data = $this->FRMSetujuModel
                 ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_form_persetujuan_tindakan.nomor_registrasi', 'inner')
                 ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
                 ->find($id);
