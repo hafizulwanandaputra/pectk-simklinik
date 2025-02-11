@@ -111,7 +111,7 @@ class FRMSetuju extends BaseController
 
             // Mengambil nomor_registrasi yang sudah terpakai di rawat_jalan
             $db = \Config\Database::connect();
-            $usedNoRegInit = $db->table('rawat_jalan')->select('nomor_registrasi')->get()->getResultArray();
+            $usedNoRegInit = $db->table('medrec_form_persetujuan_tindakan')->select('nomor_registrasi')->get()->getResultArray();
             $usedNoReg = array_column($usedNoRegInit, 'nomor_registrasi');
 
             $options = [];
