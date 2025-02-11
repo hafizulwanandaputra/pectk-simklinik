@@ -34,7 +34,11 @@
                     <div class="d-flex flex-column flex-lg-row gap-2 mb-2">
                         <div class="input-group input-group-sm w-auto">
                             <input type="date" id="tanggalFilter" class="form-control" <?= (session()->get('auto_date') == 1) ? 'value="' . date('Y-m-d') . '"' : ''; ?>>
-                            <button class="btn btn-danger btn-sm bg-gradient " type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
+                            <?php if (session()->get('auto_date') == 1) : ?>
+                                <button class="btn btn-primary btn-sm bg-gradient" type="button" id="setTodayTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Kembali ke Hari Ini"><i class="fa-solid fa-calendar-day"></i></button>
+                            <?php else : ?>
+                                <button class="btn btn-danger btn-sm bg-gradient " type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
+                            <?php endif; ?>
                         </div>
                         <div class="input-group input-group-sm flex-grow-1">
                             <input type="search" id="searchInput" class="form-control " placeholder="Cari pasien">
@@ -526,6 +530,16 @@
 
     $('#clearTglButton').on('click', function() {
         $('#tanggalFilter').val('');
+        $('#resepContainer').empty();
+        for (let i = 0; i < limit; i++) {
+            $('#resepContainer').append(placeholder);
+        }
+        fetchResep();
+    });
+    $('#setTodayTglButton').on('click', async function() {
+        const today = new Date();
+        const formattedDate = today.toISOString().split('T')[0];
+        $('#tanggalFilter').val(formattedDate);
         $('#resepContainer').empty();
         for (let i = 0; i < limit; i++) {
             $('#resepContainer').append(placeholder);
