@@ -281,8 +281,7 @@
                                         <option value="" selected>-- Pilih Agama --</option>
                                         <option value="1">Islam</option>
                                         <option value="2">Kristen</option>
-                                        <option value="3">Kristen Protestan</option>
-                                        <option value="4">Kristen Katolik</option>
+                                        <option value="4">Katolik</option>
                                         <option value="5">Hindu</option>
                                         <option value="6">Buddha</option>
                                         <option value="7">Konghucu</option>
