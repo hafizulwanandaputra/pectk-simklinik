@@ -85,6 +85,10 @@ class Home extends BaseController
         $total_pasien = $pasien->countAllResults(); // Total pasien
         $total_rawatjalan = $rawatjalan->like('tanggal_registrasi', date('Y-m-d'))->where('status', 'DAFTAR')->countAllResults(); // Total rawat jalan hari ini
         $total_rawatjalan_batal = $rawatjalan->like('tanggal_registrasi', date('Y-m-d'))->where('status', 'BATAL')->countAllResults(); // Total rawat jalan yang batal hari ini
+        $agamagraph = $pasien->select('agama, COUNT(*) AS total_agama')
+            ->orderBy('agama', 'ASC')
+            ->groupBy('agama')
+            ->get();
         $jeniskelamingraph = $pasien->select('jenis_kelamin, COUNT(*) AS total_jeniskelamin')
             ->orderBy('jenis_kelamin', 'ASC')
             ->groupBy('jenis_kelamin')
@@ -276,6 +280,7 @@ class Home extends BaseController
             'total_pasien' => $total_pasien,
             'total_rawatjalan' => $total_rawatjalan,
             'total_rawatjalan_batal' => $total_rawatjalan_batal,
+            'agamagraph' => $agamagraph,
             'jeniskelamingraph' => $jeniskelamingraph,
             'persebaranprovinsigraph' => $persebaranprovinsigraph,
             'persebarankabupatengraph' => $persebarankabupatengraph,

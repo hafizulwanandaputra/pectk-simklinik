@@ -118,17 +118,27 @@ $db = db_connect();
                         </div>
                     </div>
                 </div>
-                <div class="mb-2">
-                    <div class="card bg-body-tertiary w-100  shadow-sm">
-                        <div class="card-header w-100 text-truncate">Jenis Kelamin Pasien</div>
-                        <div class="card-body">
-                            <div class="ratio ratio-onecol w-100">
-                                <canvas id="jeniskelamingraph"></canvas>
+                <div class="row row-cols-1 row-cols-lg-2 g-2 mb-2">
+                    <div class="col">
+                        <div class="card bg-body-tertiary w-100  shadow-sm">
+                            <div class="card-header w-100 text-truncate">Agama Pasien</div>
+                            <div class="card-body">
+                                <div class="ratio ratio-4x3 w-100">
+                                    <canvas id="agamagraph"></canvas>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="row row-cols-1 row-cols-lg-2 g-2 mb-2">
+                    <div class="col">
+                        <div class="card bg-body-tertiary w-100  shadow-sm">
+                            <div class="card-header w-100 text-truncate">Jenis Kelamin Pasien</div>
+                            <div class="card-body">
+                                <div class="ratio ratio-4x3 w-100">
+                                    <canvas id="jeniskelamingraph"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="col">
                         <div class="card bg-body-tertiary w-100  shadow-sm">
                             <div class="card-header w-100 text-truncate">Persebaran Provinsi Pasien</div>
@@ -418,9 +428,11 @@ $db = db_connect();
             chart.update();
         });
     }
-    Chart.defaults.font.family = '"Helvetica Neue", Helvetica, Arial, "Liberation Sans", sans-serif';
+    Chart.defaults.font.family = '"Helvetica Neue", Helvetica, Arial, Arimo, "Liberation Sans", sans-serif';
 
     <?php if (session()->get('role') == "Admin" || session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admisi") : ?>
+        const data_agamagraph = [];
+        const label_agamagraph = [];
         const data_jeniskelamingraph = [];
         const label_jeniskelamingraph = [];
         const data_persebaranprovinsigraph = [];
@@ -450,6 +462,27 @@ $db = db_connect();
     <?php endif; ?>
 
     <?php if (session()->get('role') == "Admin" || session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admisi") : ?>
+        <?php foreach ($agamagraph->getResult() as $key => $agamagraph) :
+            // Query untuk mencocokkan ID agama dengan nama agama
+            $agamaId = $agamagraph->agama;
+            $query = $db->table('master_agama')
+                ->select('agamaNama')
+                ->where('agamaId', $agamaId)
+                ->get();
+
+            // Ambil nama agama
+            $agamaNama = $query->getRow();
+
+            if ($agamaNama) {
+                // Ambil nama kelurahan jika ditemukan
+                $agamaNama = $agamaNama->agamaNama;
+            } else {
+                // Jika tidak ditemukan, beri nilai default
+                $agamaNama = 'Tidak Ada';
+            } ?>
+            data_agamagraph.push(<?= $agamagraph->total_agama; ?>);
+            label_agamagraph.push('<?= htmlspecialchars($agamaNama, ENT_QUOTES, 'UTF-8'); ?>');
+        <?php endforeach; ?>
         <?php foreach ($jeniskelamingraph->getResult() as $key => $jeniskelamingraph) : ?>
             data_jeniskelamingraph.push(<?= $jeniskelamingraph->total_jeniskelamin; ?>);
             <?php
@@ -579,10 +612,20 @@ $db = db_connect();
     <?php endif; ?>
 
     <?php if (session()->get('role') == "Admin" || session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admisi") : ?>
+        var data_content_agamagraph = {
+            labels: label_agamagraph,
+            datasets: [{
+                label: 'Total Pasien',
+                borderWidth: 2,
+                borderRadius: 10,
+                fill: true,
+                data: data_agamagraph
+            }]
+        }
         var data_content_jeniskelamingraph = {
             labels: label_jeniskelamingraph,
             datasets: [{
-                label: 'Jenis Kelamin',
+                label: 'Total Pasien',
                 borderWidth: 2,
                 borderRadius: 10,
                 fill: true,
@@ -592,7 +635,7 @@ $db = db_connect();
         var data_content_persebaranprovinsigraph = {
             labels: label_persebaranprovinsigraph,
             datasets: [{
-                label: 'Persebaran Provinsi',
+                label: 'Total Pasien',
                 pointStyle: 'circle',
                 pointRadius: 6,
                 pointHoverRadius: 12,
@@ -604,7 +647,7 @@ $db = db_connect();
         var data_content_persebarankabupatengraph = {
             labels: label_persebarankabupatengraph,
             datasets: [{
-                label: 'Persebaran Provinsi',
+                label: 'Total Pasien',
                 pointStyle: 'circle',
                 pointRadius: 6,
                 pointHoverRadius: 12,
@@ -616,7 +659,7 @@ $db = db_connect();
         var data_content_persebarankecamatangraph = {
             labels: label_persebarankecamatangraph,
             datasets: [{
-                label: 'Persebaran Provinsi',
+                label: 'Total Pasien',
                 pointStyle: 'circle',
                 pointRadius: 6,
                 pointHoverRadius: 12,
@@ -628,7 +671,7 @@ $db = db_connect();
         var data_content_persebarankelurahangraph = {
             labels: label_persebarankelurahangraph,
             datasets: [{
-                label: 'Persebaran Provinsi',
+                label: 'Total Pasien',
                 pointStyle: 'circle',
                 pointRadius: 6,
                 pointHoverRadius: 12,
@@ -640,7 +683,7 @@ $db = db_connect();
         var data_content_rawatjalangraph = {
             labels: label_rawatjalangraph,
             datasets: [{
-                label: 'Rawat Jalan Per Bulan',
+                label: 'Total Rawat Jalan',
                 pointRadius: 6,
                 pointHoverRadius: 12,
                 fill: false,
@@ -653,7 +696,7 @@ $db = db_connect();
         var data_content_resepbydoktergraph = {
             labels: label_resepbydoktergraph,
             datasets: [{
-                label: 'Resep Menurut Dokter',
+                label: 'Total Resep',
                 pointStyle: 'circle',
                 pointRadius: 6,
                 pointHoverRadius: 12,
@@ -669,7 +712,7 @@ $db = db_connect();
         var data_content_resepallgraph = {
             labels: label_resepallgraph,
             datasets: [{
-                label: 'Resep Per Bulan',
+                label: 'Total Resep',
                 pointRadius: 6,
                 pointHoverRadius: 12,
                 fill: false,
@@ -681,7 +724,7 @@ $db = db_connect();
         var data_content_transaksibykasirgraph = {
             labels: label_transaksibykasirgraph,
             datasets: [{
-                label: 'Transaksi Menurut Petugas Kasir',
+                label: 'Total Transaksi',
                 pointStyle: 'circle',
                 pointRadius: 6,
                 pointHoverRadius: 12,
@@ -693,7 +736,7 @@ $db = db_connect();
         var data_content_transaksiperbulanallgraph = {
             labels: label_transaksiperbulanallgraph,
             datasets: [{
-                label: 'Transaksi Per Bulan',
+                label: 'Total Transaksi',
                 pointRadius: 6,
                 pointHoverRadius: 12,
                 fill: false,
@@ -707,7 +750,7 @@ $db = db_connect();
         var data_content_pemasukanperbulangraph = {
             labels: label_pemasukanperbulangraph,
             datasets: [{
-                label: 'Pemasukan Per Bulan',
+                label: 'Total Pemasukan (Rp)',
                 pointRadius: 6,
                 pointHoverRadius: 12,
                 fill: false,
@@ -717,6 +760,44 @@ $db = db_connect();
     <?php endif; ?>
 
     <?php if (session()->get('role') == "Admin" || session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admisi") : ?>
+        var chart_agamagraph = createChart(document.getElementById('agamagraph').getContext('2d'), {
+            type: 'bar',
+            data: data_content_agamagraph,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                locale: 'id-ID',
+                interaction: {
+                    intersect: false,
+                    mode: 'index',
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Agama'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Total Pasien'
+                        }
+                    }
+                },
+                scale: {
+                    ticks: {
+                        precision: 0
+                    }
+                }
+            }
+        })
         var chart_jeniskelamingraph = createChart(document.getElementById('jeniskelamingraph').getContext('2d'), {
             type: 'bar',
             data: data_content_jeniskelamingraph,
