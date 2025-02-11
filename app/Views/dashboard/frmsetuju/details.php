@@ -200,7 +200,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <div class="mb-2">
                     <div class="row gx-1 radio-group">
                         <label for="penerima_jenis_kelamin" class="col col-form-label">Jenis Kelamin</label>
-                        <div class="col col-form-label">
+                        <div class="col-lg col-form-label">
                             <div class="d-flex align-items-center justify-content-evenly">
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input" type="radio" name="penerima_jenis_kelamin" id="penerima_jenis_kelamin1" value="L">

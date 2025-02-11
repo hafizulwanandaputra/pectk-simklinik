@@ -178,25 +178,25 @@
                             </div>
                         </div>
                         <div class="mb-2">
-                            <label for="status">
-                                Jenis Kelamin
-                            </label>
-                            <div class="col col-form-label">
-                                <div class="d-flex align-items-center justify-content-evenly">
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="jenis_kelamin" id="jenis_kelamin1" value="L">
-                                        <label class="form-check-label" for="jenis_kelamin1">
-                                            Laki-Laki
-                                        </label>
+                            <div class="row gx-1 radio-group">
+                                <label for="jenis_kelamin" class="col col-form-label">Jenis Kelamin</label>
+                                <div class="col-lg col-form-label">
+                                    <div class="d-flex align-items-center justify-content-evenly">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="jenis_kelamin" id="jenis_kelamin1" value="L">
+                                            <label class="form-check-label" for="jenis_kelamin1">
+                                                Laki-Laki
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="jenis_kelamin" id="jenis_kelamin2" value="P">
+                                            <label class="form-check-label" for="jenis_kelamin2">
+                                                Perempuan
+                                            </label>
+                                        </div>
                                     </div>
-                                    <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="jenis_kelamin" id="jenis_kelamin2" value="P">
-                                        <label class="form-check-label" for="jenis_kelamin2">
-                                            Perempuan
-                                        </label>
-                                    </div>
+                                    <div class="invalid-feedback"></div>
                                 </div>
-                                <div class="invalid-feedback"></div>
                             </div>
                         </div>
                         <div class="mb-2">
@@ -1381,9 +1381,9 @@
                             const fieldElement = $('#' + field);
 
                             // Handle radio button group separately
-                            if (field === 'jenis_kelamin') {
-                                const radioGroup = $("input[name='jenis_kelamin']");
-                                const feedbackElement = radioGroup.closest('.col-form-label').find('.invalid-feedback');
+                            if (['jenis_kelamin'].includes(field)) {
+                                const radioGroup = $(`input[name='${field}']`); // Ambil grup radio berdasarkan nama
+                                const feedbackElement = radioGroup.closest('.radio-group').find('.invalid-feedback'); // Gunakan pembungkus dengan class tertentu
 
                                 if (radioGroup.length > 0 && feedbackElement.length > 0) {
                                     radioGroup.addClass('is-invalid');
@@ -1391,9 +1391,11 @@
 
                                     // Remove error message when the user selects any radio button in the group
                                     radioGroup.on('change', function() {
-                                        $("input[name='jenis_kelamin']").removeClass('is-invalid');
-                                        feedbackElement.removeAttr('style').hide();
+                                        radioGroup.removeClass('is-invalid');
+                                        feedbackElement.text('').hide();
                                     });
+                                } else {
+                                    console.warn("Radio group tidak ditemukan untuk field:", field);
                                 }
                             } else {
                                 const feedbackElement = fieldElement.siblings('.invalid-feedback');
