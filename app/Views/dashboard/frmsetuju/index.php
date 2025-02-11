@@ -527,7 +527,7 @@
                     'yang anonim ini' :
                     `dari "${FRMSetujuName}"`;
                 $('[data-bs-toggle="tooltip"]').tooltip('hide');
-                $('#deleteMessage').html(`Hapus Laporan untuk ${nama_pasien}?`);
+                $('#deleteMessage').html(`Hapus Formulir untuk ${nama_pasien}?`);
                 $('#deleteSubmessage').html(`Nomor Registrasi: ` + FRMSetujuDate);
                 $('#deleteModal').modal('show');
             });
