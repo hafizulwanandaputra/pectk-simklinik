@@ -442,7 +442,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                             <div id="submenu-laporan-operasi" class="collapse <?= ($activeSegment === 'lpoperasikatarak' || $activeSegment === 'lpoperasipterigium' || $activeSegment === 'lpoperasi') ? 'show' : '' ?>">
                                 <ul class="nav nav-pills flex-column mt-1">
                                     <li class="nav-item" style="margin-left: calc(24px + 0.5rem);">
-                                        <a style="font-size: 0.9em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'lpoperasikatarak') ? 'active bg-success' : '' ?>" href="<?= base_url('/lpoperasikatarak'); ?>">
+                                        <a class="nav-link px-2 py-1 <?= ($activeSegment === 'lpoperasikatarak') ? 'active bg-success' : '' ?>" href="<?= base_url('/lpoperasikatarak'); ?>">
                                             <div class="d-flex align-items-start <?= ($activeSegment === 'lpoperasikatarak') ? 'text-white' : 'text-success-emphasis' ?>">
                                                 <div class="flex-fill fw-normal" style="font-size: 0.75em;">
                                                     Katarak
@@ -451,7 +451,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                         </a>
                                     </li>
                                     <li class="nav-item" style="margin-left: calc(24px + 0.5rem);">
-                                        <a style="font-size: 0.9em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'lpoperasipterigium') ? 'active bg-success' : '' ?>" href="<?= base_url('/lpoperasipterigium'); ?>">
+                                        <a class="nav-link px-2 py-1 <?= ($activeSegment === 'lpoperasipterigium') ? 'active bg-success' : '' ?>" href="<?= base_url('/lpoperasipterigium'); ?>">
                                             <div class="d-flex align-items-start <?= ($activeSegment === 'lpoperasipterigium') ? 'text-white' : 'text-success-emphasis' ?>">
                                                 <div class="flex-fill fw-normal" style="font-size: 0.75em;">
                                                     Pterigium
@@ -460,7 +460,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                         </a>
                                     </li>
                                     <li class="nav-item" style="margin-left: calc(24px + 0.5rem);">
-                                        <a style="font-size: 0.9em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'lpoperasi') ? 'active bg-success' : '' ?>" href="<?= base_url('/lpoperasi'); ?>">
+                                        <a class="nav-link px-2 py-1 <?= ($activeSegment === 'lpoperasi') ? 'active bg-success' : '' ?>" href="<?= base_url('/lpoperasi'); ?>">
                                             <div class="d-flex align-items-start <?= ($activeSegment === 'lpoperasi') ? 'text-white' : 'text-success-emphasis' ?>">
                                                 <div class="flex-fill fw-normal" style="font-size: 0.75em;">
                                                     Lainnya
