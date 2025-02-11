@@ -35,15 +35,15 @@ $db = db_connect();
         <?php if (session()->get('role') == "Admin") : ?>
             <div class="mb-3">
                 <div class="fw-bold mb-2 border-bottom">Admin</div>
-                <div class="mb-2">
-                    <div class="card bg-body-tertiary w-100  shadow-sm">
-                        <div class="card-header w-100 text-truncate">Pengguna Keseluruhan</div>
-                        <div class="card-body">
-                            <h5 class="display-5 fw-medium date mb-0"><?= number_format($total_user, 0, ',', '.') ?></h5>
+                <div class="row row-cols-1 row-cols-lg-3 g-2 mb-2">
+                    <div class="col">
+                        <div class="card bg-body-tertiary w-100  shadow-sm">
+                            <div class="card-header w-100 text-truncate">Pengguna Keseluruhan</div>
+                            <div class="card-body">
+                                <h5 class="display-5 fw-medium date mb-0"><?= number_format($total_user, 0, ',', '.') ?></h5>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="row row-cols-1 row-cols-lg-2 g-2 mb-2">
                     <div class="col">
                         <div class="card bg-danger-subtle border-danger-subtle text-danger-emphasis w-100  shadow-sm">
                             <div class="card-header border-danger-subtle w-100 text-truncate">Pengguna Nonaktif</div>
@@ -61,15 +61,15 @@ $db = db_connect();
                         </div>
                     </div>
                 </div>
-                <div class="mb-2">
-                    <div class="card bg-body-tertiary w-100  shadow-sm">
-                        <div class="card-header w-100 text-truncate">Sesi Keseluruhan Selain Anda</div>
-                        <div class="card-body">
-                            <h5 class="display-5 fw-medium date mb-0"><?= number_format($total_sessions, 0, ',', '.') ?></h5>
+                <div class="row row-cols-1 row-cols-lg-3 g-2 mb-2">
+                    <div class="col">
+                        <div class="card bg-body-tertiary w-100  shadow-sm">
+                            <div class="card-header w-100 text-truncate">Sesi Keseluruhan Selain Anda</div>
+                            <div class="card-body">
+                                <h5 class="display-5 fw-medium date mb-0"><?= number_format($total_sessions, 0, ',', '.') ?></h5>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="row row-cols-1 row-cols-lg-2 g-2 mb-2">
                     <div class="col">
                         <div class="card bg-danger-subtle border-danger-subtle text-danger-emphasis w-100  shadow-sm">
                             <div class="card-header border-danger-subtle w-100 text-truncate">Sesi Kedaluwarsa Selain Anda</div>
@@ -92,15 +92,15 @@ $db = db_connect();
         <?php if (session()->get('role') == "Admin" || session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admisi") : ?>
             <div class="mb-3">
                 <div class="fw-bold mb-2 border-bottom">Pasien dan Rawat Jalan</div>
-                <div class="mb-2">
-                    <div class="card bg-body-tertiary w-100  shadow-sm">
-                        <div class="card-header w-100 text-truncate">Total Pasien</div>
-                        <div class="card-body">
-                            <h5 class="display-5 fw-medium date mb-0"><?= number_format($total_pasien, 0, ',', '.') ?></h5>
+                <div class="row row-cols-1 row-cols-lg-3 g-2 mb-2">
+                    <div class="col">
+                        <div class="card bg-body-tertiary w-100  shadow-sm">
+                            <div class="card-header w-100 text-truncate">Total Pasien</div>
+                            <div class="card-body">
+                                <h5 class="display-5 fw-medium date mb-0"><?= number_format($total_pasien, 0, ',', '.') ?></h5>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="row row-cols-1 row-cols-lg-2 g-2 mb-2">
                     <div class="col">
                         <div class="card bg-danger-subtle border-danger-subtle text-danger-emphasis w-100  shadow-sm">
                             <div class="card-header border-danger-subtle w-100 text-truncate">Pasien yang Batal Berobat Hari Ini</div>
