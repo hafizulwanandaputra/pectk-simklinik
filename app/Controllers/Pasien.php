@@ -209,7 +209,7 @@ class Pasien extends BaseController
 
             // Ambil tabel master_provinsi
             $provinsi = $db->table('master_provinsi');
-            $provinsi->select('provinsiNama');
+            $provinsi->select('UPPER(provinsiNama) AS provinsiNama');
             $provinsi->where('provinsiId', $pasien['provinsi']);
 
             // Query untuk mendapatkan nama provinsi
@@ -222,7 +222,7 @@ class Pasien extends BaseController
 
             // Ambil tabel master_kabupaten
             $kabupaten = $db->table('master_kabupaten');
-            $kabupaten->select('kabupatenNama');
+            $kabupaten->select('UPPER(kabupatenNama) AS kabupatenNama');
             $kabupaten->where('kabupatenId', $pasien['kabupaten']);
 
             // Query untuk mendapatkan nama kabupaten
@@ -235,7 +235,7 @@ class Pasien extends BaseController
 
             // Ambil tabel master_kecamatan
             $kecamatan = $db->table('master_kecamatan');
-            $kecamatan->select('kecamatanNama');
+            $kecamatan->select('UPPER(kecamatanNama) AS kecamatanNama');
             $kecamatan->where('kecamatanId', $pasien['kecamatan']);
 
             // Query untuk mendapatkan nama kecamatan
@@ -248,7 +248,7 @@ class Pasien extends BaseController
 
             // Ambil tabel master_kelurahan
             $kelurahan = $db->table('master_kelurahan');
-            $kelurahan->select('kelurahanNama');
+            $kelurahan->select('UPPER(kelurahanNama) AS kelurahanNama');
             $kelurahan->where('kelurahanId', $pasien['kelurahan']);
 
             // Query untuk mendapatkan nama kelurahan
@@ -422,7 +422,7 @@ class Pasien extends BaseController
 
             // Menggunakan Query Builder untuk mengambil data provinsi
             $builder = $db->table('master_provinsi');
-            $result = $builder->select('provinsiId, provinsiNama')->get()->getResultArray();
+            $result = $builder->select('provinsiId, UPPER(provinsiNama) AS provinsiNama')->get()->getResultArray();
 
             // Mengembalikan data dalam format JSON
             return $this->response->setJSON([
@@ -446,7 +446,7 @@ class Pasien extends BaseController
 
             // Menggunakan Query Builder untuk mengambil data kabupaten
             $builder = $db->table('master_kabupaten');
-            $result = $builder->select('kabupatenId, kabupatenNama')->where('provinsiId', $id)->get()->getResultArray();
+            $result = $builder->select('kabupatenId, UPPER(kabupatenNama) AS kabupatenNama')->where('provinsiId', $id)->get()->getResultArray();
 
             // Mengembalikan data dalam format JSON
             return $this->response->setJSON([
@@ -470,7 +470,7 @@ class Pasien extends BaseController
 
             // Menggunakan Query Builder untuk mengambil data kecamatan
             $builder = $db->table('master_kecamatan');
-            $result = $builder->select('kecamatanId, kecamatanNama')->where('kabupatenId', $id)->get()->getResultArray();
+            $result = $builder->select('kecamatanId, UPPER(kecamatanNama) AS kecamatanNama')->where('kabupatenId', $id)->get()->getResultArray();
 
             // Mengembalikan data dalam format JSON
             return $this->response->setJSON([
@@ -494,7 +494,7 @@ class Pasien extends BaseController
 
             // Menggunakan Query Builder untuk mengambil data kelurahan
             $builder = $db->table('master_kelurahan');
-            $result = $builder->select('kelurahanId, kelurahanNama')->where('kecamatanId', $id)->get()->getResultArray();
+            $result = $builder->select('kelurahanId, UPPER(kelurahanNama) AS kelurahanNama')->where('kecamatanId', $id)->get()->getResultArray();
 
             // Mengembalikan data dalam format JSON
             return $this->response->setJSON([
