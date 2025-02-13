@@ -81,7 +81,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <div class="no-fluid-content">
                     <nav class="nav nav-underline flex-nowrap overflow-auto">
                         <?php foreach ($listRawatJalan as $list) : ?>
-                            <a class="nav-link py-1 <?= ($activeSegment === $list['id_lp_operasi_katarak']) ? 'active activeLink' : '' ?>" href="<?= base_url('lpoperasikatarak/details/' . $list['id_lp_operasi_katarak']); ?>">
+                            <a class="<?= (date('Y-m-d', strtotime($list['tanggal_registrasi'])) != date('Y-m-d')) ? 'text-danger' : ''; ?> nav-link py-1 <?= ($activeSegment === $list['id_lp_operasi_katarak']) ? 'active activeLink' : '' ?>" href="<?= base_url('lpoperasikatarak/details/' . $list['id_lp_operasi_katarak']); ?>">
                                 <div class="text-center">
                                     <div class="text-nowrap lh-sm"><?= $list['nomor_registrasi']; ?></div>
                                     <div class="text-nowrap lh-sm" style="font-size: 0.75em;"><?= $list['tanggal_registrasi'] ?></div>
@@ -97,6 +97,19 @@ $usia = $registrasi->diff($tanggal_lahir);
         <div class="no-fluid-content">
             <?= form_open_multipart('lpoperasikatarak/update/' . $lp_operasi_katarak['id_lp_operasi_katarak'], 'id="LaporanForm"'); ?>
             <?= csrf_field(); ?>
+            <?php if (date('Y-m-d', strtotime($lp_operasi_katarak['tanggal_registrasi'])) != date('Y-m-d')) : ?>
+                <div id="alert-date" class="alert alert-warning alert-dismissible" role="alert">
+                    <div class="d-flex align-items-start">
+                        <div style="width: 12px; text-align: center;">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </div>
+                        <div class="w-100 ms-3">
+                            Saat ini Anda melihat data kunjungan pasien pada <?= date('Y-m-d', strtotime($lp_operasi_katarak['tanggal_registrasi'])) ?>. Pastikan Anda mengisi data sesuai dengan tanggal kunjungan pasien.
+                        </div>
+                        <button type="button" id="close-alert" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </div>
+            <?php endif; ?>
             <div class="mb-3">
                 <div class="mb-2">
                     <div class="row gx-1 radio-group">

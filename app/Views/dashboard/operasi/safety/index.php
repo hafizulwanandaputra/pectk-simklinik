@@ -69,7 +69,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <div class="no-fluid-content">
                     <nav class="nav nav-underline flex-nowrap overflow-auto">
                         <?php foreach ($listRawatJalan as $list) : ?>
-                            <a class="nav-link py-1 <?= ($activeSegment === $list['id_sp_operasi']) ? 'active activeLink' : '' ?>" href="<?= base_url('operasi/safety/' . $list['id_sp_operasi']); ?>">
+                            <a class="<?= (date('Y-m-d', strtotime($list['tanggal_registrasi'])) != date('Y-m-d')) ? 'text-danger' : ''; ?> nav-link py-1 <?= ($activeSegment === $list['id_sp_operasi']) ? 'active activeLink' : '' ?>" href="<?= base_url('operasi/safety/' . $list['id_sp_operasi']); ?>">
                                 <div class="text-center">
                                     <div class="text-nowrap lh-sm"><?= $list['nomor_registrasi']; ?></div>
                                     <div class="text-nowrap lh-sm" style="font-size: 0.75em;"><?= $list['nomor_booking'] ?></div>
@@ -85,6 +85,19 @@ $usia = $registrasi->diff($tanggal_lahir);
         <div class="no-fluid-content">
             <?= form_open_multipart('/operasi/signin/update/' . $operasi_safety_signin['id_signin'], 'id="SafetySignInForm"'); ?>
             <?= csrf_field(); ?>
+            <?php if (date('Y-m-d', strtotime($operasi['tanggal_registrasi'])) != date('Y-m-d')) : ?>
+                <div id="alert-date" class="alert alert-warning alert-dismissible" role="alert">
+                    <div class="d-flex align-items-start">
+                        <div style="width: 12px; text-align: center;">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </div>
+                        <div class="w-100 ms-3">
+                            Saat ini Anda melihat data kunjungan pasien pada <?= date('Y-m-d', strtotime($operasi['tanggal_registrasi'])) ?>. Pastikan Anda mengisi data sesuai dengan tanggal kunjungan pasien.
+                        </div>
+                        <button type="button" id="close-alert" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </div>
+            <?php endif; ?>
             <div class="mb-3">
                 <div class="fw-bold mb-2 border-bottom"><em>Sign In</em><br><small class="text-muted fw-normal">Sebelum tindakan anestesi</small></div>
                 <div class="mb-2 border-top d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-start">

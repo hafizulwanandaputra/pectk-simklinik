@@ -78,7 +78,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <div class="no-fluid-content">
                     <nav class="nav nav-underline flex-nowrap overflow-auto">
                         <?php foreach ($listRawatJalan as $list) : ?>
-                            <a class="nav-link py-1 <?= ($activeSegment === $list['id_rawat_jalan']) ? 'active activeLink' : '' ?>" href="<?= base_url('rawatjalan/resepobat/' . $list['id_rawat_jalan']); ?>">
+                            <a class="<?= (date('Y-m-d', strtotime($list['tanggal_registrasi'])) != date('Y-m-d')) ? 'text-danger' : ''; ?> nav-link py-1 <?= ($activeSegment === $list['id_rawat_jalan']) ? 'active activeLink' : '' ?>" href="<?= base_url('rawatjalan/resepobat/' . $list['id_rawat_jalan']); ?>">
                                 <div class="text-center">
                                     <div class="text-nowrap lh-sm"><?= $list['nomor_registrasi']; ?></div>
                                     <div class="text-nowrap lh-sm date" style="font-size: 0.75em;"><?= $list['tanggal_registrasi'] ?></div>

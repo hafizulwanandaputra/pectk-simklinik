@@ -77,7 +77,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <div class="no-fluid-content">
                     <nav class="nav nav-underline flex-nowrap overflow-auto">
                         <?php foreach ($listRawatJalan as $list) : ?>
-                            <a class="nav-link py-1 <?= ($activeSegment === $list['id_rawat_jalan']) ? 'active activeLink' : '' ?>" href="<?= base_url('rawatjalan/skrining/' . $list['id_rawat_jalan']); ?>">
+                            <a class="<?= (date('Y-m-d', strtotime($list['tanggal_registrasi'])) != date('Y-m-d')) ? 'text-danger' : ''; ?> nav-link py-1 <?= ($activeSegment === $list['id_rawat_jalan']) ? 'active activeLink' : '' ?>" href="<?= base_url('rawatjalan/skrining/' . $list['id_rawat_jalan']); ?>">
                                 <div class="text-center">
                                     <div class="text-nowrap lh-sm"><?= $list['nomor_registrasi']; ?></div>
                                     <div class="text-nowrap lh-sm date" style="font-size: 0.75em;"><?= $list['tanggal_registrasi'] ?></div>
@@ -93,6 +93,19 @@ $usia = $registrasi->diff($tanggal_lahir);
         <div class="no-fluid-content">
             <?= form_open_multipart('/rawatjalan/skrining/update/' . $skrining['id_skrining'], 'id="skriningForm"'); ?>
             <?= csrf_field(); ?>
+            <?php if (date('Y-m-d', strtotime($rawatjalan['tanggal_registrasi'])) != date('Y-m-d')) : ?>
+                <div id="alert-date" class="alert alert-warning alert-dismissible" role="alert">
+                    <div class="d-flex align-items-start">
+                        <div style="width: 12px; text-align: center;">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </div>
+                        <div class="w-100 ms-3">
+                            Saat ini Anda melihat data kunjungan pasien pada <?= date('Y-m-d', strtotime($rawatjalan['tanggal_registrasi'])) ?>. Pastikan Anda mengisi data sesuai dengan tanggal kunjungan pasien.
+                        </div>
+                        <button type="button" id="close-alert" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                </div>
+            <?php endif; ?>
             <div class="mb-3">
                 <div class="fw-bold mb-2 border-bottom"><span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">I</span> Skrining Risiko Cedera/Jatuh (<em>Get Up and Go Score</em>)</div>
                 <div class="mb-2">
