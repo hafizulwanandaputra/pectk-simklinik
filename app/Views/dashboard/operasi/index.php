@@ -680,7 +680,9 @@
                 let response = await axios.get(`<?= base_url('/operasi/spko/view') ?>/` + id);
                 let data = response.data;
                 console.log(data);
-
+                if (new Date(data.tanggal_registrasi).toISOString().split('T')[0] !== new Date().toISOString().split('T')[0]) {
+                    $('#status_operasi5').prop('disabled', true);
+                }
                 $('#statusModalLabel').text('Atur Status Pasien Operasi');
                 $('#id_sp_operasi').val(data.id_sp_operasi);;
                 const status_operasi = data.status_operasi;
@@ -777,10 +779,8 @@
                     console.error('Perbaiki kesalahan pada formulir.');
                 }
             } catch (error) {
-                if (error.response.request.status === 404) {
+                if (error.response.request.status === 404 || error.response.request.status === 422) {
                     showFailedToast(error.response.data.message);
-                } else if (error.response.request.status === 422) {
-                    showFailedToast(`${error.response.data.error}<br>${error.response.data.details.message}`);
                 } else {
                     showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
                 }

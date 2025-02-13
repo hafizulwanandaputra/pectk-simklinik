@@ -293,15 +293,24 @@ class Operasi extends BaseController
 
             if ($this->request->getPost('status_operasi') == 'HAPUS') {
                 $sp_operasi = $db->table('medrec_sp_operasi')
+                    ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_sp_operasi.nomor_registrasi', 'inner')
+                    ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
                     ->where('id_sp_operasi', $this->request->getPost('id_sp_operasi'))
                     ->get()->getRowArray();
+                if (date('Y-m-d', strtotime($sp_operasi['tanggal_registrasi'])) != date('Y-m-d')) {
+                    return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Pasien operasi yang bukan hari ini tidak dapat dihapus']);
+                }
                 if ($sp_operasi['site_marking']) {
                     @unlink(FCPATH . 'uploads/site_marking/' . $sp_operasi['site_marking']);
                 }
                 $db->table('medrec_sp_operasi')
                     ->where('id_sp_operasi', $this->request->getPost('id_sp_operasi'))
                     ->delete();
-                $db->query('ALTER TABLE rawat_jalan AUTO_INCREMENT = 1');
+                $db->query('ALTER TABLE medrec_sp_operasi AUTO_INCREMENT = 1');
+                $db->query('ALTER TABLE medrec_operasi_pra AUTO_INCREMENT = 1');
+                $db->query('ALTER TABLE medrec_operasi_safety_signin AUTO_INCREMENT = 1');
+                $db->query('ALTER TABLE medrec_operasi_safety_signout AUTO_INCREMENT = 1');
+                $db->query('ALTER TABLE medrec_operasi_safety_timeout AUTO_INCREMENT = 1');
                 return $this->response->setJSON(['success' => true, 'message' => 'Pasien operasi berhasil dihapus']);
             } else {
                 $db->table('medrec_sp_operasi')

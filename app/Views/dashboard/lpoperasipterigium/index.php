@@ -306,6 +306,9 @@
                     const asisten = lp_operasi_pterigium.asisten ?
                         lp_operasi_pterigium.asisten :
                         `<em>Belum ada</em>`;
+                    const delete_today = new Date(lp_operasi_pterigium.tanggal_registrasi).toISOString().split('T')[0] !== new Date().toISOString().split('T')[0] ?
+                        `disabled` :
+                        ``;
                     const lPOperasiPterigiumElement = `
                     <li class="list-group-item <?= (session()->get('role') != 'Admisi') ? 'border-top-0' : ''; ?> pb-3 pt-3">
                         <div class="d-flex">
@@ -361,7 +364,7 @@
                             </button>
                         <?php endif; ?>
                         <?php if (session()->get('role') != 'Admisi') : ?>
-                            <button type="button" class="btn btn-danger btn-sm bg-gradient  delete-btn" data-id="${lp_operasi_pterigium.id_lp_operasi_pterigium}" data-name="${lp_operasi_pterigium.nama_pasien}" data-date="${lp_operasi_pterigium.nomor_registrasi}">
+                            <button type="button" class="btn btn-danger btn-sm bg-gradient  delete-btn" data-id="${lp_operasi_pterigium.id_lp_operasi_pterigium}" data-name="${lp_operasi_pterigium.nama_pasien}" data-date="${lp_operasi_pterigium.nomor_registrasi}" ${delete_today}>
                                 <i class="fa-solid fa-trash"></i> Hapus
                             </button>
                         <?php endif; ?>
@@ -585,7 +588,7 @@
                     fetchPasienOptions();
                     fetchLaporan();
                 } catch (error) {
-                    if (error.response.request.status === 404) {
+                    if (error.response.request.status === 404 || error.response.request.status === 422) {
                         showFailedToast(error.response.data.message);
                     } else {
                         showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);

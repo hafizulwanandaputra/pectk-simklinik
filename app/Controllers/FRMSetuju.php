@@ -257,7 +257,13 @@ class FRMSetuju extends BaseController
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Dokter' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
-            $form_persetujuan_tindakan = $this->FRMSetujuModel->find($id);
+            $form_persetujuan_tindakan = $this->FRMSetujuModel
+                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_form_persetujuan_tindakan.nomor_registrasi', 'inner')
+                ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
+                ->find($id);
+            if (date('Y-m-d', strtotime($form_persetujuan_tindakan['tanggal_registrasi'])) != date('Y-m-d')) {
+                return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Form persetujuan tindakan yang bukan hari ini tidak dapat dihapus']);
+            }
             if ($form_persetujuan_tindakan) {
                 $db = db_connect();
 

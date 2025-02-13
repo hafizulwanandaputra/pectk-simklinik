@@ -259,7 +259,13 @@ class LPOperasiKatarak extends BaseController
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Dokter' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
-            $lp_operasi_katarak = $this->LPOperasiKatarakModel->find($id);
+            $lp_operasi_katarak = $this->LPOperasiKatarakModel
+                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_lp_operasi_katarak.nomor_registrasi', 'inner')
+                ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
+                ->find($id);
+            if (date('Y-m-d', strtotime($lp_operasi_katarak['tanggal_registrasi'])) != date('Y-m-d')) {
+                return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Pasien operasi katarak yang bukan hari ini tidak dapat dihapus']);
+            }
             if ($lp_operasi_katarak) {
                 $db = db_connect();
 
