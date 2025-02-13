@@ -474,6 +474,16 @@ class RawatJalan extends BaseController
                             @unlink(FCPATH . 'uploads/scan_penunjang/' . $scan['gambar']);
                         }
                     }
+
+                    $sp_operasi = $db->table('medrec_sp_operasi')
+                        ->where('nomor_registrasi', $nomorRegistrasi)
+                        ->get()
+                        ->getResultArray();
+                    foreach ($sp_operasi as $scan) {
+                        if (!empty($scan['site_marking']) && file_exists(FCPATH . 'uploads/site_marking/' . $scan['site_marking'])) {
+                            @unlink(FCPATH . 'uploads/site_marking/' . $scan['site_marking']);
+                        }
+                    }
                 }
 
                 // Hapus data rawat jalan
@@ -481,6 +491,23 @@ class RawatJalan extends BaseController
 
                 // Reset auto_increment menjadi 1
                 $db->query('ALTER TABLE rawat_jalan AUTO_INCREMENT = 1');
+                $db->query('ALTER TABLE medrec_assesment AUTO_INCREMENT = 1');
+                $db->query('ALTER TABLE medrec_assesment_mata AUTO_INCREMENT = 1');
+                $db->query('ALTER TABLE medrec_edukasi AUTO_INCREMENT = 1');
+                $db->query('ALTER TABLE medrec_edukasi_evaluasi AUTO_INCREMENT = 1');
+                $db->query('ALTER TABLE medrec_form_persetujuan_tindakan AUTO_INCREMENT = 1');
+                $db->query('ALTER TABLE medrec_lp_operasi AUTO_INCREMENT = 1');
+                $db->query('ALTER TABLE medrec_lp_operasi_katarak AUTO_INCREMENT = 1');
+                $db->query('ALTER TABLE medrec_lp_operasi_pterigium AUTO_INCREMENT = 1');
+                $db->query('ALTER TABLE medrec_operasi_pra AUTO_INCREMENT = 1');
+                $db->query('ALTER TABLE medrec_operasi_safety_signin AUTO_INCREMENT = 1');
+                $db->query('ALTER TABLE medrec_operasi_safety_signout AUTO_INCREMENT = 1');
+                $db->query('ALTER TABLE medrec_operasi_safety_timeout AUTO_INCREMENT = 1');
+                $db->query('ALTER TABLE medrec_optik AUTO_INCREMENT = 1');
+                $db->query('ALTER TABLE medrec_permintaan_penunjang AUTO_INCREMENT = 1');
+                $db->query('ALTER TABLE medrec_permintaan_penunjang_scan AUTO_INCREMENT = 1');
+                $db->query('ALTER TABLE medrec_skrining AUTO_INCREMENT = 1');
+                $db->query('ALTER TABLE medrec_sp_operasi AUTO_INCREMENT = 1');
                 return $this->response->setJSON(['success' => true, 'message' => 'Rawat jalan berhasil dihapus karena kesalahan data']);
             }
 
