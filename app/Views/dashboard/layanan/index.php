@@ -94,9 +94,12 @@
                         <label for="jenis_layanan">Jenis</label>
                         <div class="invalid-feedback"></div>
                     </div>
-                    <div class="form-floating mb-1 mt-1">
-                        <input type="number" class="form-control " autocomplete="off" dir="auto" placeholder="tarif" id="tarif" name="tarif">
-                        <label for="tarif">Tarif (Rp)</label>
+                    <div class="input-group has-validation mb-1 mt-1">
+                        <span class="input-group-text">Rp</span>
+                        <div class="form-floating">
+                            <input type="number" class="form-control " autocomplete="off" dir="auto" placeholder="tarif" id="tarif" name="tarif">
+                            <label for="tarif">Tarif</label>
+                        </div>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
@@ -437,7 +440,12 @@
                     // Tampilkan pesan validasi baru
                     for (const field in response.data.errors) {
                         const fieldElement = $('#' + field);
-                        const feedbackElement = fieldElement.siblings('.invalid-feedback');
+                        let feedbackElement = fieldElement.siblings('.invalid-feedback');
+
+                        // Handle input-group cases
+                        if (fieldElement.closest('.input-group').length) {
+                            feedbackElement = fieldElement.closest('.input-group').find('.invalid-feedback');
+                        }
 
                         if (fieldElement.length > 0 && feedbackElement.length > 0) {
                             fieldElement.addClass('is-invalid');

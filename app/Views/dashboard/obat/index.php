@@ -155,31 +155,43 @@
                         <label for="bentuk_obat">Bentuk</label>
                         <div class="invalid-feedback"></div>
                     </div>
-                    <div class="form-floating mb-1 mt-1">
-                        <input type="number" class="form-control " autocomplete="off" dir="auto" placeholder="harga_obat" id="harga_obat" name="harga_obat">
-                        <label for="harga_obat">Harga Obat (Rp)</label>
+                    <div class="input-group has-validation mb-1 mt-1">
+                        <span class="input-group-text">Rp</span>
+                        <div class="form-floating">
+                            <input type="number" class="form-control " autocomplete="off" dir="auto" placeholder="harga_obat" id="harga_obat" name="harga_obat">
+                            <label for="harga_obat">Harga Obat</label>
+                        </div>
                         <div class="invalid-feedback"></div>
                     </div>
-                    <div class="form-floating mb-1 mt-1">
-                        <input type="number" class="form-control " autocomplete="off" dir="auto" placeholder="ppn" id="ppn" name="ppn">
-                        <label for="ppn">PPN (%)</label>
+                    <div class="input-group has-validation mb-1 mt-1">
+                        <div class="form-floating">
+                            <input type="number" class="form-control " autocomplete="off" dir="auto" placeholder="ppn" id="ppn" name="ppn">
+                            <label for="ppn">PPN</label>
+                        </div>
+                        <span class="input-group-text">%</span>
                         <div class="invalid-feedback"></div>
                     </div>
-                    <div class="form-floating mb-1 mt-1">
-                        <input type="number" class="form-control " autocomplete="off" dir="auto" placeholder="mark_up" id="mark_up" name="mark_up">
-                        <label for="mark_up">Mark Up (%)</label>
+                    <div class="input-group has-validation mb-1 mt-1">
+                        <div class="form-floating">
+                            <input type="number" class="form-control " autocomplete="off" dir="auto" placeholder="mark_up" id="mark_up" name="mark_up">
+                            <label for="mark_up">Mark Up</label>
+                        </div>
+                        <span class="input-group-text">%</span>
                         <div class="invalid-feedback"></div>
                     </div>
-                    <div class="form-floating mb-1 mt-1">
-                        <input type="number" class="form-control " autocomplete="off" dir="auto" placeholder="penyesuaian_harga" id="penyesuaian_harga" name="penyesuaian_harga">
-                        <label for="penyesuaian_harga">Penyesuaian Harga (Rp)</label>
+                    <div class="input-group has-validation mb-1 mt-1">
+                        <span class="input-group-text">Rp</span>
+                        <div class="form-floating">
+                            <input type="number" class="form-control " autocomplete="off" dir="auto" placeholder="penyesuaian_harga" id="penyesuaian_harga" name="penyesuaian_harga">
+                            <label for="penyesuaian_harga">Penyesuaian Harga</label>
+                        </div>
                         <div class="invalid-feedback"></div>
                     </div>
-                    <div class="form-floating mb-1 mt-1">
+                    <div class="form-floating">
                         <input type="number" class="form-control " autocomplete="off" dir="auto" placeholder="jumlah_masuk" id="jumlah_masuk" name="jumlah_masuk">
                         <label for="jumlah_masuk" id="stok_label"></label>
-                        <div class="invalid-feedback"></div>
                     </div>
+                    <div class="invalid-feedback"></div>
                 </div>
                 <div class="modal-footer justify-content-between pt-2 pb-2" style="border-top: 1px solid var(--bs-border-color-translucent);">
                     <div>
@@ -675,7 +687,12 @@
                     console.log("Validation Errors:", response.data.errors);
                     for (const field in response.data.errors) {
                         const fieldElement = $('#' + field);
-                        const feedbackElement = fieldElement.siblings('.invalid-feedback');
+                        let feedbackElement = fieldElement.siblings('.invalid-feedback');
+
+                        // Handle input-group cases
+                        if (fieldElement.closest('.input-group').length) {
+                            feedbackElement = fieldElement.closest('.input-group').find('.invalid-feedback');
+                        }
 
                         if (fieldElement.length && feedbackElement.length) {
                             fieldElement.addClass('is-invalid');

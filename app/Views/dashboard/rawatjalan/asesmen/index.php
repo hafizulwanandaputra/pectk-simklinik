@@ -177,30 +177,42 @@ $usia = $registrasi->diff($tanggal_lahir);
                             </div>
                         </div>
                         <div class="mb-2">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" id="tekanan_darah" name="tekanan_darah" value="" autocomplete="off" dir="auto" placeholder="tekanan_darah">
-                                <label for="tekanan_darah">Tekanan Darah (mmHg)</label>
+                            <div class="input-group has-validation">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="tekanan_darah" name="tekanan_darah" value="" autocomplete="off" dir="auto" placeholder="tekanan_darah">
+                                    <label for="tekanan_darah">Tekanan Darah</label>
+                                </div>
+                                <span class="input-group-text">mmHg</span>
                                 <div class="invalid-feedback"></div>
                             </div>
                         </div>
                         <div class="mb-2">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" id="nadi" name="nadi" value="" autocomplete="off" dir="auto" placeholder="nadi">
-                                <label for="nadi">Nadi (×/menit)</label>
+                            <div class="input-group has-validation">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="nadi" name="nadi" value="" autocomplete="off" dir="auto" placeholder="nadi">
+                                    <label for="nadi">Nadi</label>
+                                </div>
+                                <span class="input-group-text">×/menit</span>
                                 <div class="invalid-feedback"></div>
                             </div>
                         </div>
                         <div class="mb-2">
-                            <div class="form-floating">
-                                <input type="text" class="form-control" id="suhu" name="suhu" value="" autocomplete="off" dir="auto" placeholder="suhu">
-                                <label for="suhu">Suhu (°C)</label>
+                            <div class="input-group has-validation">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="suhu" name="suhu" value="" autocomplete="off" dir="auto" placeholder="suhu">
+                                    <label for="suhu">Suhu</label>
+                                </div>
+                                <span class="input-group-text">°C</span>
                                 <div class="invalid-feedback"></div>
                             </div>
                         </div>
                         <div>
-                            <div class="form-floating">
-                                <input type="text" class="form-control" id="pernapasan" name="pernapasan" value="" autocomplete="off" dir="auto" placeholder="pernapasan">
-                                <label for="pernapasan">Pernapasan (×/menit)</label>
+                            <div class="input-group has-validation">
+                                <div class="form-floating">
+                                    <input type="text" class="form-control" id="pernapasan" name="pernapasan" value="" autocomplete="off" dir="auto" placeholder="pernapasan">
+                                    <label for="pernapasan">Pernapasan</label>
+                                </div>
+                                <span class="input-group-text">×/menit</span>
                                 <div class="invalid-feedback"></div>
                             </div>
                         </div>
@@ -1318,7 +1330,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             const fieldElement = $('#' + field);
 
                             // Handle radio button group separately
-                            if (['alergi', 'keadaan_umum'].includes(field)) {
+                            if (["alergi", "keadaan_umum"].includes(field)) {
                                 const radioGroup = $(`input[name='${field}']`); // Ambil grup radio berdasarkan nama
                                 const feedbackElement = radioGroup.closest('.radio-group').find('.invalid-feedback'); // Gunakan pembungkus dengan class tertentu
 
@@ -1335,7 +1347,12 @@ $usia = $registrasi->diff($tanggal_lahir);
                                     console.warn("Radio group tidak ditemukan untuk field:", field);
                                 }
                             } else {
-                                const feedbackElement = fieldElement.siblings('.invalid-feedback');
+                                let feedbackElement = fieldElement.siblings('.invalid-feedback');
+
+                                // Handle input-group cases
+                                if (fieldElement.closest('.input-group').length) {
+                                    feedbackElement = fieldElement.closest('.input-group').find('.invalid-feedback');
+                                }
 
                                 if (fieldElement.length > 0 && feedbackElement.length > 0) {
                                     fieldElement.addClass('is-invalid');
@@ -1344,7 +1361,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                                     // Remove error message when the user corrects the input
                                     fieldElement.on('input change', function() {
                                         $(this).removeClass('is-invalid');
-                                        $(this).siblings('.invalid-feedback').text('').hide();
+                                        feedbackElement.text('').hide();
                                     });
                                 } else {
                                     console.warn("Elemen tidak ditemukan pada field:", field);

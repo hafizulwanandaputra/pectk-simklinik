@@ -915,7 +915,12 @@ $usia = $registrasi->diff($tanggal_lahir);
                                     console.warn("Radio group tidak ditemukan untuk field:", field);
                                 }
                             } else {
-                                const feedbackElement = fieldElement.siblings('.invalid-feedback');
+                                let feedbackElement = fieldElement.siblings('.invalid-feedback');
+
+                                // Handle input-group cases
+                                if (fieldElement.closest('.input-group').length) {
+                                    feedbackElement = fieldElement.closest('.input-group').find('.invalid-feedback');
+                                }
 
                                 if (fieldElement.length > 0 && feedbackElement.length > 0) {
                                     fieldElement.addClass('is-invalid');
@@ -1004,7 +1009,12 @@ $usia = $registrasi->diff($tanggal_lahir);
                                     console.warn("Radio group tidak ditemukan untuk field:", field);
                                 }
                             } else {
-                                const feedbackElement = fieldElement.siblings('.invalid-feedback');
+                                let feedbackElement = fieldElement.siblings('.invalid-feedback');
+
+                                // Handle input-group cases
+                                if (fieldElement.closest('.input-group').length) {
+                                    feedbackElement = fieldElement.closest('.input-group').find('.invalid-feedback');
+                                }
 
                                 if (fieldElement.length > 0 && feedbackElement.length > 0) {
                                     fieldElement.addClass('is-invalid');
@@ -1092,7 +1102,12 @@ $usia = $registrasi->diff($tanggal_lahir);
                                     console.warn("Radio group tidak ditemukan untuk field:", field);
                                 }
                             } else {
-                                const feedbackElement = fieldElement.siblings('.invalid-feedback');
+                                let feedbackElement = fieldElement.siblings('.invalid-feedback');
+
+                                // Handle input-group cases
+                                if (fieldElement.closest('.input-group').length) {
+                                    feedbackElement = fieldElement.closest('.input-group').find('.invalid-feedback');
+                                }
 
                                 if (fieldElement.length > 0 && feedbackElement.length > 0) {
                                     fieldElement.addClass('is-invalid');

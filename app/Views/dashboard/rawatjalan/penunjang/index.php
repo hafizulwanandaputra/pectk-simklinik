@@ -126,7 +126,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
-                <div class="mb-2">
+                <div class="mb-2 checkbox-group">
                     <label for="pemeriksaan" class="form-label">
                         Pemeriksaan
                     </label>
@@ -803,19 +803,44 @@ $usia = $registrasi->diff($tanggal_lahir);
                     for (const field in response.data.errors) {
                         if (response.data.errors.hasOwnProperty(field)) {
                             const fieldElement = $('#' + field);
-                            const feedbackElement = fieldElement.siblings('.invalid-feedback');
 
-                            if (fieldElement.length > 0 && feedbackElement.length > 0) {
-                                fieldElement.addClass('is-invalid');
-                                feedbackElement.text(response.data.errors[field]).show();
+                            if (['pemeriksaan'].includes(field)) {
+                                // Handle checkbox group
+                                const checkboxGroup = $(`input[name='${field}[]']`); // Ambil grup checkbox berdasarkan nama
+                                const feedbackElement = checkboxGroup.closest('.checkbox-group').find('.invalid-feedback'); // Gunakan pembungkus dengan class tertentu
 
-                                // Remove error message when the user corrects the input
-                                fieldElement.on('input change', function() {
-                                    $(this).removeClass('is-invalid');
-                                    $(this).siblings('.invalid-feedback').text('').hide();
-                                });
+                                if (checkboxGroup.length > 0 && feedbackElement.length > 0) {
+                                    checkboxGroup.addClass('is-invalid');
+                                    feedbackElement.text(response.data.errors[field]).show();
+
+                                    // Remove error message when the user checks any checkbox in the group
+                                    checkboxGroup.on('change', function() {
+                                        checkboxGroup.removeClass('is-invalid');
+                                        feedbackElement.text('').hide();
+                                    });
+                                } else {
+                                    console.warn("Checkbox group tidak ditemukan untuk field:", field);
+                                }
                             } else {
-                                console.warn("Elemen tidak ditemukan pada field:", field);
+                                let feedbackElement = fieldElement.siblings('.invalid-feedback');
+
+                                // Handle input-group cases
+                                if (fieldElement.closest('.input-group').length) {
+                                    feedbackElement = fieldElement.closest('.input-group').find('.invalid-feedback');
+                                }
+
+                                if (fieldElement.length > 0 && feedbackElement.length > 0) {
+                                    fieldElement.addClass('is-invalid');
+                                    feedbackElement.text(response.data.errors[field]).show();
+
+                                    // Remove error message when the user corrects the input
+                                    fieldElement.on('input change', function() {
+                                        $(this).removeClass('is-invalid');
+                                        $(this).siblings('.invalid-feedback').text('').hide();
+                                    });
+                                } else {
+                                    console.warn("Elemen tidak ditemukan pada field:", field);
+                                }
                             }
                         }
                     }

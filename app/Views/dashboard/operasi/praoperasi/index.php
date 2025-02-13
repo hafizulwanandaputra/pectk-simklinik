@@ -635,7 +635,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                                     <label class="w-100" for="cek_penyakit_lainnya">
                                         <div>Penyakit lainnya</div>
                                     </label>
-                                    <div>
+                                    <div class="w-100">
                                         <input type="text" class="form-control form-control-sm" id="cek_penyakit_lainnya" name="cek_penyakit_lainnya" value="" autocomplete="off" dir="auto">
                                         <div class="invalid-feedback"></div>
                                     </div>
@@ -648,10 +648,11 @@ $usia = $registrasi->diff($tanggal_lahir);
                             <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
                                 <div class="d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-center">
                                     <label class="w-100" for="cek_tekanan_darah">
-                                        <div>Tekanan darah (mmHg)</div>
+                                        <div>Tekanan darah</div>
                                     </label>
-                                    <div>
+                                    <div class="input-group input-group-sm has-validation">
                                         <input type="text" class="form-control form-control-sm" id="cek_tekanan_darah" name="cek_tekanan_darah" value="" autocomplete="off" dir="auto">
+                                        <span class="input-group-text">mmHg</span>
                                         <div class="invalid-feedback"></div>
                                     </div>
                                 </div>
@@ -663,10 +664,11 @@ $usia = $registrasi->diff($tanggal_lahir);
                             <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
                                 <div class="d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-center">
                                     <label class="w-100" for="cek_berat_badan">
-                                        <div>Berat badan (kg)</div>
+                                        <div>Berat badan</div>
                                     </label>
-                                    <div>
+                                    <div class="input-group input-group-sm has-validation">
                                         <input type="text" class="form-control form-control-sm" id="cek_berat_badan" name="cek_berat_badan" value="" autocomplete="off" dir="auto">
+                                        <span class="input-group-text">kg</span>
                                         <div class="invalid-feedback"></div>
                                     </div>
                                 </div>
@@ -920,7 +922,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                                     <label class="w-100" for="cek_jenis_obat">
                                         <div>Jenis obat-obatan</div>
                                     </label>
-                                    <div>
+                                    <div class="w-100">
                                         <input type="text" class="form-control form-control-sm" id="cek_jenis_obat" name="cek_jenis_obat" value="" autocomplete="off" dir="auto">
                                         <div class="invalid-feedback"></div>
                                     </div>
@@ -1180,7 +1182,12 @@ $usia = $registrasi->diff($tanggal_lahir);
                                     console.warn("Radio group tidak ditemukan untuk field:", field);
                                 }
                             } else {
-                                const feedbackElement = fieldElement.siblings('.invalid-feedback');
+                                let feedbackElement = fieldElement.siblings('.invalid-feedback');
+
+                                // Handle input-group cases
+                                if (fieldElement.closest('.input-group').length) {
+                                    feedbackElement = fieldElement.closest('.input-group').find('.invalid-feedback');
+                                }
 
                                 if (fieldElement.length > 0 && feedbackElement.length > 0) {
                                     fieldElement.addClass('is-invalid');
