@@ -248,7 +248,7 @@ class Optik extends BaseController
                 'id_optik' => $id,
                 'no_rm' => $optik['no_rm'],
                 'nomor_registrasi' => $optik['nomor_registrasi'],
-                'tipe_lensa' => $this->request->getPost('tipe_lensa') ?: NULL,
+                'tipe_lensa' => $this->request->getPost('tipe_lensa'),
 
                 'od_login_spher' => $this->request->getPost('od_login_spher'),
                 'od_login_cyldr' => $this->request->getPost('od_login_cyldr'),

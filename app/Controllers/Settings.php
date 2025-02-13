@@ -463,6 +463,7 @@ class Settings extends BaseController
                     'jam'
                 ],
                 'medrec_optik' => [
+                    'tipe_lensa',
                     'od_login_spher',
                     'od_login_cyldr',
                     'od_login_axis',
