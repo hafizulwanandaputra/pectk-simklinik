@@ -279,10 +279,10 @@
                         jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap" style="background-color: Pink"><i class="fa-solid fa-venus"></i> PEREMPUAN</span>`;
                     }
                     const tanggal_mulai = istirahat.tanggal_mulai ?
-                        rujukan.tanggal_mulai :
+                        istirahat.tanggal_mulai :
                         `<em>Belum ada</em>`;
                     const tanggal_selesai = istirahat.tanggal_selesai ?
-                        rujukan.tanggal_selesai :
+                        istirahat.tanggal_selesai :
                         `<em>Belum ada</em>`;
                     const delete_today = new Date(istirahat.tanggal_registrasi).toISOString().split('T')[0] !== new Date().toISOString().split('T')[0] ?
                         `disabled` :
