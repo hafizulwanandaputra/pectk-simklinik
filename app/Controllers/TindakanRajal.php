@@ -292,7 +292,6 @@ class TindakanRajal extends BaseController
                 'id_lp_tindakan_rajal' => $id,
                 'no_rm' => $laporanrajal['no_rm'],
                 'nomor_registrasi' => $laporanrajal['nomor_registrasi'],
-                'nama_dokter_dpjp' => $laporanrajal['nama_dokter_dpjp'],
                 'nama_perawat' => $perawat_csv,
                 'diagnosa' => $this->request->getPost('diagnosa') ?: NULL,
                 'kode_icd_x' => $this->request->getPost('kode_icd_x') ?: NULL,

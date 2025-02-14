@@ -46,7 +46,6 @@ class Asesmen extends BaseController
                 $db->table('medrec_assesment')->insert([
                     'nomor_registrasi' => $rawatjalan['nomor_registrasi'],
                     'no_rm' => $rawatjalan['no_rm'],
-                    'nama_dokter' => $rawatjalan['dokter'],
                     'waktu_dibuat' => date('Y-m-d H:i:s')
                 ]);
 
@@ -382,8 +381,6 @@ class Asesmen extends BaseController
                     'od_bcva' => $this->request->getPost('od_bcva'),
                     'os_ucva' => $this->request->getPost('os_ucva'),
                     'os_bcva' => $this->request->getPost('os_bcva'),
-                    'persetujuan_dokter' => $asesmen['persetujuan_dokter'],
-                    'nama_dokter' => $asesmen['nama_dokter'],
                     'waktu_dibuat' => $asesmen['waktu_dibuat'],
                 ];
             } else {
@@ -432,8 +429,6 @@ class Asesmen extends BaseController
                     'icd9_kode_4' => $this->request->getPost('icd9_kode_4') ?: NULL,
                     'terapi_5' => $this->request->getPost('terapi_5') ?: NULL,
                     'icd9_kode_5' => $this->request->getPost('icd9_kode_5') ?: NULL,
-                    'persetujuan_dokter' => $asesmen['persetujuan_dokter'],
-                    'nama_dokter' => $asesmen['nama_dokter'],
                     'waktu_dibuat' => $asesmen['waktu_dibuat'],
                 ];
             }

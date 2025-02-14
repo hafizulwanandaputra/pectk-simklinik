@@ -9,5 +9,14 @@ class PenunjangModel extends Model
     protected $table = 'medrec_permintaan_penunjang';
     protected $primaryKey = 'id_penunjang';
     protected $useTimestamps = false;
-    protected $allowedFields = ['nomor_registrasi', 'no_rm', 'dokter_pengirim', 'rujukan_dari', 'pemeriksaan', 'pemeriksaan_lainnya', 'lokasi_pemeriksaan', 'waktu_dibuat'];
+    protected $allowedFields = [
+        'nomor_registrasi',
+        'no_rm',
+        'dokter_pengirim',
+        'rujukan_dari',
+        'pemeriksaan',
+        'pemeriksaan_lainnya',
+        'lokasi_pemeriksaan',
+        'waktu_dibuat'
+    ];
 }

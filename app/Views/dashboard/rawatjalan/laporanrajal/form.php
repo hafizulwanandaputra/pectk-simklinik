@@ -153,7 +153,7 @@ $waktuFormatted = $dateTime->format('H.i.s');
                             :
                         </td>
                         <td style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            <?= $laporanrajal['nama_dokter_dpjp'] ?>
+                            <?= $rawatjalan['dokter'] ?>
                         </td>
                     </tr>
                     <tr>
@@ -225,7 +225,7 @@ $waktuFormatted = $dateTime->format('H.i.s');
                     <tr>
                         <td style="width: 50%; text-align: center; vertical-align: top;"></td>
                         <td style="width: 50%; text-align: center; vertical-align: top;">
-                            <div><?= $laporanrajal['nama_dokter_dpjp'] ?></div>
+                            <div><?= $rawatjalan['dokter'] ?></div>
                         </td>
                     </tr>
                 </tbody>

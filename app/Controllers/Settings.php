@@ -348,7 +348,6 @@ class Settings extends BaseController
                     'lokasi_pemeriksaan'
                 ],
                 'medrec_lp_tindakan_rajal' => [
-                    'nama_dokter_dpjp',
                     'nama_perawat',
                     'diagnosa',
                     'kode_icd_x',

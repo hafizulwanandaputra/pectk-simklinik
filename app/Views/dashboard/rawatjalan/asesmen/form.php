@@ -499,7 +499,7 @@ $waktuFormatted = $dateTime->format('H.i.s');
                     <tr>
                         <td style="width: 50%; text-align: center; vertical-align: top;"></td>
                         <td style="width: 50%; text-align: center; vertical-align: top;">
-                            <div><?= $asesmen['nama_dokter'] ?></div>
+                            <div><?= $rawatjalan['dokter'] ?></div>
                         </td>
                     </tr>
                 </tbody>

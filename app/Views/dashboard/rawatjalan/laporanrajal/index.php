@@ -108,7 +108,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             <?php endif; ?>
             <div class="mb-3">
                 <div class="fw-bold mb-2 border-bottom">Dokter Penanggung Jawab Pelayanan</div>
-                <div><?= $laporanrajal['nama_dokter_dpjp'] ?></div>
+                <div><?= $rawatjalan['dokter'] ?></div>
             </div>
             <div class="mb-3">
                 <div class="fw-bold mb-2 border-bottom">Laporan Tindakan Rawat Jalan</div>

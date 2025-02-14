@@ -12,7 +12,6 @@ class TindakanRajalModel extends Model
     protected $allowedFields = [
         'nomor_registrasi',
         'no_rm',
-        'nama_dokter_dpjp',
         'nama_perawat',
         'diagnosa',
         'kode_icd_x',
