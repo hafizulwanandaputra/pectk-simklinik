@@ -60,13 +60,6 @@ class TindakanRajal extends BaseController
                     ->getRowArray();
             }
 
-            // Periksa apakah nomor_registrasi ada
-            $db->table('medrec_lp_tindakan_rajal')
-                ->where('nomor_registrasi', $rawatjalan['nomor_registrasi'])
-                ->update([
-                    'nama_dokter_dpjp' => $rawatjalan['dokter'],
-                ]);
-
             // Inisialisasi rawat jalan
             $nama_perawat = $this->AuthModel
                 ->where('role', 'Perawat')
