@@ -82,7 +82,7 @@ $waktuFormatted = $dateTime->format('H.i');
             overflow: hidden;
             padding: 0cm;
             font-size: 10pt;
-            line-height: 1.1;
+            line-height: 1;
         }
 
         .border-bottom-right {
@@ -185,181 +185,181 @@ $waktuFormatted = $dateTime->format('H.i');
                 <table class="full-border" style="width: 100%; margin-bottom: 4px; font-size: 9pt;">
                     <thead>
                         <tr>
-                            <th style="width: 0%; padding-top: 2px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">No</th>
-                            <th style="width: 0%; padding-top: 2px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">Jenis Informasi</th>
-                            <th style="width: 100%; padding-top: 2px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">Isi Informasi</th>
-                            <th style="width: 0%; padding-top: 2px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">Centang</th>
+                            <th style="width: 0%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">No</th>
+                            <th style="width: 0%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">Jenis Informasi</th>
+                            <th style="width: 100%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">Isi Informasi</th>
+                            <th style="width: 0%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">Centang</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <th style="width: 0%; padding-top: 2px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
+                            <th style="width: 0%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
                                 1
                             </th>
-                            <td style="width: 0%; padding-top: 2px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; white-space: nowrap;">
+                            <td style="width: 0%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; white-space: nowrap;">
                                 <strong>Diagnosa (WD dan atau DD)</strong>
                             </td>
-                            <td style="width: 100%; padding-top: 2px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
+                            <td style="width: 100%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
                                 <?= (!empty($form_persetujuan_tindakan['info_diagnosa'])) ? $form_persetujuan_tindakan['info_diagnosa'] : '<em>Tidak ada</em>'; ?>
                             </td>
-                            <td style="width: 0%; padding-top: 2px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; text-align: center; white-space: nowrap; width: 0.5cm; min-width: 0.5cm;">
+                            <td style="width: 0%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; text-align: center; white-space: nowrap; width: 0.5cm; min-width: 0.5cm;">
                                 <?php if (!empty($form_persetujuan_tindakan['info_diagnosa'])): ?>
                                     <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
                                 <?php endif; ?>
                             </td>
                         </tr>
                         <tr>
-                            <th style="width: 0%; padding-top: 2px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
+                            <th style="width: 0%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
                                 2
                             </th>
-                            <td style="width: 0%; padding-top: 2px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; white-space: nowrap;">
+                            <td style="width: 0%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; white-space: nowrap;">
                                 <strong>Dasar Diagnosis</strong>
                             </td>
-                            <td style="width: 100%; padding-top: 2px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
+                            <td style="width: 100%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
                                 <?= (!empty($form_persetujuan_tindakan['info_dasar_diagnosis'])) ? $form_persetujuan_tindakan['info_dasar_diagnosis'] : '<em>Tidak ada</em>'; ?>
                             </td>
-                            <td style="width: 0%; padding-top: 2px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; text-align: center; white-space: nowrap; width: 0.5cm; min-width: 0.5cm;">
+                            <td style="width: 0%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; text-align: center; white-space: nowrap; width: 0.5cm; min-width: 0.5cm;">
                                 <?php if (!empty($form_persetujuan_tindakan['info_dasar_diagnosis'])): ?>
                                     <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
                                 <?php endif; ?>
                             </td>
                         </tr>
                         <tr>
-                            <th style="width: 0%; padding-top: 2px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
+                            <th style="width: 0%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
                                 3
                             </th>
-                            <td style="width: 0%; padding-top: 2px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; white-space: nowrap;">
+                            <td style="width: 0%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; white-space: nowrap;">
                                 <strong>Tindakan Kedokteran</strong>
                             </td>
-                            <td style="width: 100%; padding-top: 2px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
+                            <td style="width: 100%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
                                 <?= (!empty($form_persetujuan_tindakan['info_tindakan'])) ? $form_persetujuan_tindakan['info_tindakan'] : '<em>Tidak ada</em>'; ?>
                             </td>
-                            <td style="width: 0%; padding-top: 2px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; text-align: center; white-space: nowrap; width: 0.5cm; min-width: 0.5cm;">
+                            <td style="width: 0%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; text-align: center; white-space: nowrap; width: 0.5cm; min-width: 0.5cm;">
                                 <?php if (!empty($form_persetujuan_tindakan['info_tindakan'])): ?>
                                     <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
                                 <?php endif; ?>
                             </td>
                         </tr>
                         <tr>
-                            <th style="width: 0%; padding-top: 2px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
+                            <th style="width: 0%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
                                 4
                             </th>
-                            <td style="width: 0%; padding-top: 2px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; white-space: nowrap;">
+                            <td style="width: 0%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; white-space: nowrap;">
                                 <strong>Indikasi Tindakan</strong>
                             </td>
-                            <td style="width: 100%; padding-top: 2px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
+                            <td style="width: 100%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
                                 <?= (!empty($form_persetujuan_tindakan['info_indikasi'])) ? $form_persetujuan_tindakan['info_indikasi'] : '<em>Tidak ada</em>'; ?>
                             </td>
-                            <td style="width: 0%; padding-top: 2px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; text-align: center; white-space: nowrap; width: 0.5cm; min-width: 0.5cm;">
+                            <td style="width: 0%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; text-align: center; white-space: nowrap; width: 0.5cm; min-width: 0.5cm;">
                                 <?php if (!empty($form_persetujuan_tindakan['info_indikasi'])): ?>
                                     <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
                                 <?php endif; ?>
                             </td>
                         </tr>
                         <tr>
-                            <th style="width: 0%; padding-top: 2px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
+                            <th style="width: 0%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
                                 5
                             </th>
-                            <td style="width: 0%; padding-top: 2px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; white-space: nowrap;">
+                            <td style="width: 0%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; white-space: nowrap;">
                                 <strong>Tata Cara</strong>
                             </td>
-                            <td style="width: 100%; padding-top: 2px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
+                            <td style="width: 100%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
                                 <?= (!empty($form_persetujuan_tindakan['info_tatacara'])) ? $form_persetujuan_tindakan['info_tatacara'] : '<em>Tidak ada</em>'; ?>
                             </td>
-                            <td style="width: 0%; padding-top: 2px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; text-align: center; white-space: nowrap; width: 0.5cm; min-width: 0.5cm;">
+                            <td style="width: 0%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; text-align: center; white-space: nowrap; width: 0.5cm; min-width: 0.5cm;">
                                 <?php if (!empty($form_persetujuan_tindakan['info_tatacara'])): ?>
                                     <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
                                 <?php endif; ?>
                             </td>
                         </tr>
                         <tr>
-                            <th style="width: 0%; padding-top: 2px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
+                            <th style="width: 0%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
                                 6
                             </th>
-                            <td style="width: 0%; padding-top: 2px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; white-space: nowrap;">
+                            <td style="width: 0%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; white-space: nowrap;">
                                 <strong>Tata Cara</strong>
                             </td>
-                            <td style="width: 100%; padding-top: 2px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
+                            <td style="width: 100%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
                                 <?= (!empty($form_persetujuan_tindakan['info_tujuan'])) ? $form_persetujuan_tindakan['info_tujuan'] : '<em>Tidak ada</em>'; ?>
                             </td>
-                            <td style="width: 0%; padding-top: 2px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; text-align: center; white-space: nowrap; width: 0.5cm; min-width: 0.5cm;">
+                            <td style="width: 0%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; text-align: center; white-space: nowrap; width: 0.5cm; min-width: 0.5cm;">
                                 <?php if (!empty($form_persetujuan_tindakan['info_tujuan'])): ?>
                                     <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
                                 <?php endif; ?>
                             </td>
                         </tr>
                         <tr>
-                            <th style="width: 0%; padding-top: 2px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
+                            <th style="width: 0%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
                                 7
                             </th>
-                            <td style="width: 0%; padding-top: 2px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; white-space: nowrap;">
+                            <td style="width: 0%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; white-space: nowrap;">
                                 <strong>Risiko</strong>
                             </td>
-                            <td style="width: 100%; padding-top: 2px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
+                            <td style="width: 100%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
                                 <?= (!empty($form_persetujuan_tindakan['info_resiko'])) ? $form_persetujuan_tindakan['info_resiko'] : '<em>Tidak ada</em>'; ?>
                             </td>
-                            <td style="width: 0%; padding-top: 2px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; text-align: center; white-space: nowrap; width: 0.5cm; min-width: 0.5cm;">
+                            <td style="width: 0%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; text-align: center; white-space: nowrap; width: 0.5cm; min-width: 0.5cm;">
                                 <?php if (!empty($form_persetujuan_tindakan['info_resiko'])): ?>
                                     <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
                                 <?php endif; ?>
                             </td>
                         </tr>
                         <tr>
-                            <th style="width: 0%; padding-top: 2px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
+                            <th style="width: 0%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
                                 8
                             </th>
-                            <td style="width: 0%; padding-top: 2px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; white-space: nowrap;">
+                            <td style="width: 0%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; white-space: nowrap;">
                                 <strong>Komplikasi</strong>
                             </td>
-                            <td style="width: 100%; padding-top: 2px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
+                            <td style="width: 100%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
                                 <?= (!empty($form_persetujuan_tindakan['info_komplikasi'])) ? $form_persetujuan_tindakan['info_komplikasi'] : '<em>Tidak ada</em>'; ?>
                             </td>
-                            <td style="width: 0%; padding-top: 2px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; text-align: center; white-space: nowrap; width: 0.5cm; min-width: 0.5cm;">
+                            <td style="width: 0%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; text-align: center; white-space: nowrap; width: 0.5cm; min-width: 0.5cm;">
                                 <?php if (!empty($form_persetujuan_tindakan['info_komplikasi'])): ?>
                                     <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
                                 <?php endif; ?>
                             </td>
                         </tr>
                         <tr>
-                            <th style="width: 0%; padding-top: 2px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
+                            <th style="width: 0%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
                                 9
                             </th>
-                            <td style="width: 0%; padding-top: 2px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; white-space: nowrap;">
+                            <td style="width: 0%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; white-space: nowrap;">
                                 <strong>Prognosis</strong>
                             </td>
-                            <td style="width: 100%; padding-top: 2px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
+                            <td style="width: 100%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
                                 <?= (!empty($form_persetujuan_tindakan['info_prognosis'])) ? $form_persetujuan_tindakan['info_prognosis'] : '<em>Tidak ada</em>'; ?>
                             </td>
-                            <td style="width: 0%; padding-top: 2px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; text-align: center; white-space: nowrap; width: 0.5cm; min-width: 0.5cm;">
+                            <td style="width: 0%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; text-align: center; white-space: nowrap; width: 0.5cm; min-width: 0.5cm;">
                                 <?php if (!empty($form_persetujuan_tindakan['info_prognosis'])): ?>
                                     <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
                                 <?php endif; ?>
                             </td>
                         </tr>
                         <tr>
-                            <th style="width: 0%; padding-top: 2px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
+                            <th style="width: 0%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
                                 10
                             </th>
-                            <td style="width: 0%; padding-top: 2px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; white-space: nowrap;">
+                            <td style="width: 0%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; white-space: nowrap;">
                                 <strong>Alternatif dan Risiko</strong>
                             </td>
-                            <td style="width: 100%; padding-top: 2px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
+                            <td style="width: 100%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
                                 <?= (!empty($form_persetujuan_tindakan['info_alternatif'])) ? $form_persetujuan_tindakan['info_alternatif'] : '<em>Tidak ada</em>'; ?>
                             </td>
-                            <td style="width: 0%; padding-top: 2px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; text-align: center; white-space: nowrap; width: 0.5cm; min-width: 0.5cm;">
+                            <td style="width: 0%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; text-align: center; white-space: nowrap; width: 0.5cm; min-width: 0.5cm;">
                                 <?php if (!empty($form_persetujuan_tindakan['info_alternatif'])): ?>
                                     <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
                                 <?php endif; ?>
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="2" style="width: 0%; padding-top: 2px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; white-space: nowrap;">
+                            <td colspan="2" style="width: 0%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; white-space: nowrap;">
                                 <strong>Lain-lain</strong>
                             </td>
-                            <td style="width: 100%; padding-top: 2px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
+                            <td style="width: 100%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
                                 <?= (!empty($form_persetujuan_tindakan['info_lainnya'])) ? $form_persetujuan_tindakan['info_lainnya'] : '<em>Tidak ada</em>'; ?>
                             </td>
-                            <td style="width: 0%; padding-top: 2px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; text-align: center; white-space: nowrap; width: 0.5cm; min-width: 0.5cm;">
+                            <td style="width: 0%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; text-align: center; white-space: nowrap; width: 0.5cm; min-width: 0.5cm;">
                                 <?php if (!empty($form_persetujuan_tindakan['info_lainnya'])): ?>
                                     <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
                                 <?php endif; ?>
