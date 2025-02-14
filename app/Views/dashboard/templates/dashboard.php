@@ -550,7 +550,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                             </div>
                                         </a>
                                     </li>
-                                    <!-- <li class="nav-item" style="margin-left: calc(24px + 0.5rem);">
+                                    <li class="nav-item" style="margin-left: calc(24px + 0.5rem);">
                                         <a class="nav-link px-2 py-1 <?= ($activeSegment === 'sakitmata') ? 'active bg-success' : '' ?>" href="<?= base_url('/sakitmata'); ?>">
                                             <div class="d-flex align-items-start <?= ($activeSegment === 'sakitmata') ? 'text-white' : 'text-success-emphasis' ?>">
                                                 <div class="flex-fill fw-normal" style="font-size: 0.75em;">
@@ -567,7 +567,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                                 </div>
                                             </div>
                                         </a>
-                                    </li> -->
+                                    </li>
                                 </ul>
                             </div>
                         <?php endif; ?>
