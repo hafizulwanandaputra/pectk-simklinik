@@ -531,24 +531,24 @@ $waktuFormatted = $dateTime->format('H.i');
                     <table class="table" style="width: 100%; margin-bottom: 4px;">
                         <tbody>
                             <tr>
-                                <td style="width: 33.33%; text-align: center; vertical-align: top; padding-bottom: 1.5cm;">
+                                <td style="width: 40%; text-align: center; vertical-align: top; padding-bottom: 1.5cm;">
                                     <div>Teluk Kuantan, <?= $tanggalFormatted ?> pukul <?= $waktuFormatted ?><br>Yang menyatakan</div>
                                 </td>
-                                <td style="width: 33.33%; text-align: center; vertical-align: top; padding-bottom: 1.5cm;">
+                                <td style="width: 30%; text-align: center; vertical-align: top; padding-bottom: 1.5cm;">
                                     <div>Saksi I</div>
                                 </td>
-                                <td style="width: 33.33%; text-align: center; vertical-align: top; padding-bottom: 1.5cm;">
+                                <td style="width: 30%; text-align: center; vertical-align: top; padding-bottom: 1.5cm;">
                                     <div>Saksi II</div>
                                 </td>
                             </tr>
                             <tr>
-                                <td style="width: 33.33%; text-align: center; vertical-align: top;">
+                                <td style="width: 40%; text-align: center; vertical-align: top;">
                                     <div><?= $form_persetujuan_tindakan['penerima_informasi'] ?></div>
                                 </td>
-                                <td style="width: 33.33%; text-align: center; vertical-align: top;">
+                                <td style="width: 30%; text-align: center; vertical-align: top;">
                                     <div><?= $form_persetujuan_tindakan['nama_saksi_1'] ?></div>
                                 </td>
-                                <td style="width: 33.33%; text-align: center; vertical-align: top;">
+                                <td style="width: 30%; text-align: center; vertical-align: top;">
                                     <div><?= $form_persetujuan_tindakan['nama_saksi_2'] ?></div>
                                 </td>
                             </tr>
