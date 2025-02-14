@@ -399,6 +399,21 @@ $waktuFormatted = $dateTime->format('H.i');
                             </tr>
                             <tr>
                                 <td style="width: 40%; vertical-align: top;">
+                                    Jenis Kelamin
+                                </td>
+                                <td style="width: 0%; vertical-align: top;">
+                                    :
+                                </td>
+                                <td style="width: 60%; vertical-align: top;">
+                                    <?php if ($form_persetujuan_tindakan['jenis_kelamin'] == 'L') : ?>
+                                        Laki-Laki
+                                    <?php elseif ($form_persetujuan_tindakan['jenis_kelamin'] == 'P') : ?>
+                                        Perempuan
+                                    <?php endif; ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 40%; vertical-align: top;">
                                     Tanggal lahir
                                 </td>
                                 <td style="width: 0%; vertical-align: top;">

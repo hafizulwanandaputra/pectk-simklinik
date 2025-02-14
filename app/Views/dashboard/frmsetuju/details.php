@@ -294,6 +294,18 @@ $usia = $registrasi->diff($tanggal_lahir);
                         </div>
                     </div>
                     <div class="mb-0 row g-1">
+                        <div class="col-5 fw-medium text-truncate">Jenis Kelamin</div>
+                        <div class="col">
+                            <div class="date">
+                                <?php if ($form_persetujuan_tindakan['jenis_kelamin'] == 'L') : ?>
+                                    Laki-Laki
+                                <?php elseif ($form_persetujuan_tindakan['jenis_kelamin'] == 'P') : ?>
+                                    Perempuan
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mb-0 row g-1">
                         <div class="col-5 fw-medium text-truncate">Tanggal Lahir</div>
                         <div class="col">
                             <div class="date">
