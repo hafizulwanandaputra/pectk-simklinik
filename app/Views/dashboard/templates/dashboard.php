@@ -527,6 +527,49 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                     </li>
                                 </ul>
                             </div>
+                            <li class="nav-item">
+                                <span style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'rujukan' || $activeSegment === 'sakitmata' || $activeSegment === 'istirahat') ? 'active bg-success' : '' ?>" role="button" data-bs-toggle="collapse" data-bs-target="#submenu-surat">
+                                    <div class="d-flex align-items-start <?= ($activeSegment === 'rujukan' || $activeSegment === 'sakitmata' || $activeSegment === 'istirahat') ? 'text-white' : 'text-success-emphasis' ?>">
+                                        <div style="min-width: 24px; max-width: 24px; text-align: center;">
+                                            <i class="fa-solid fa-envelope"></i>
+                                        </div>
+                                        <div class="flex-fill mx-2">
+                                            Surat
+                                        </div>
+                                    </div>
+                                </span>
+                            </li>
+                            <div id="submenu-surat" class="collapse <?= ($activeSegment === 'rujukan' || $activeSegment === 'sakitmata' || $activeSegment === 'istirahat') ? 'show' : '' ?>">
+                                <ul class="nav nav-pills flex-column mt-1">
+                                    <li class="nav-item" style="margin-left: calc(24px + 0.5rem);">
+                                        <a class="nav-link px-2 py-1 <?= ($activeSegment === 'rujukan') ? 'active bg-success' : '' ?>" href="<?= base_url('/rujukan'); ?>">
+                                            <div class="d-flex align-items-start <?= ($activeSegment === 'rujukan') ? 'text-white' : 'text-success-emphasis' ?>">
+                                                <div class="flex-fill fw-normal" style="font-size: 0.75em;">
+                                                    Rujukan
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <!-- <li class="nav-item" style="margin-left: calc(24px + 0.5rem);">
+                                        <a class="nav-link px-2 py-1 <?= ($activeSegment === 'sakitmata') ? 'active bg-success' : '' ?>" href="<?= base_url('/sakitmata'); ?>">
+                                            <div class="d-flex align-items-start <?= ($activeSegment === 'sakitmata') ? 'text-white' : 'text-success-emphasis' ?>">
+                                                <div class="flex-fill fw-normal" style="font-size: 0.75em;">
+                                                    Keterangan Sakit Mata
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item" style="margin-left: calc(24px + 0.5rem);">
+                                        <a class="nav-link px-2 py-1 <?= ($activeSegment === 'istirahat') ? 'active bg-success' : '' ?>" href="<?= base_url('/istirahat'); ?>">
+                                            <div class="d-flex align-items-start <?= ($activeSegment === 'istirahat') ? 'text-white' : 'text-success-emphasis' ?>">
+                                                <div class="flex-fill fw-normal" style="font-size: 0.75em;">
+                                                    Keterangan Istirahat
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li> -->
+                                </ul>
+                            </div>
                         <?php endif; ?>
                         <?php if (session()->get('role') == "Apoteker" || session()->get('role') == "Admin") : ?>
                             <li class="nav-item">
