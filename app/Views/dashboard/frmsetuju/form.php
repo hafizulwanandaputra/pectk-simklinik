@@ -387,7 +387,7 @@ $waktuFormatted = $dateTime->format('H.i');
                     <table class="table" style="width: 100%; margin-bottom: 4px;">
                         <tbody>
                             <tr>
-                                <td style="width: 40%; vertical-align: top;">
+                                <td style="width: 20%; vertical-align: top;">
                                     Nama
                                 </td>
                                 <td style="width: 0%; vertical-align: top;">
@@ -398,7 +398,7 @@ $waktuFormatted = $dateTime->format('H.i');
                                 </td>
                             </tr>
                             <tr>
-                                <td style="width: 40%; vertical-align: top;">
+                                <td style="width: 20%; vertical-align: top;">
                                     Jenis Kelamin
                                 </td>
                                 <td style="width: 0%; vertical-align: top;">
@@ -413,24 +413,24 @@ $waktuFormatted = $dateTime->format('H.i');
                                 </td>
                             </tr>
                             <tr>
-                                <td style="width: 40%; vertical-align: top;">
+                                <td style="width: 20%; vertical-align: top;">
                                     Tanggal lahir
                                 </td>
                                 <td style="width: 0%; vertical-align: top;">
                                     :
                                 </td>
-                                <td style="width: 60%; vertical-align: top;">
+                                <td style="width: 80%; vertical-align: top;">
                                     <?= $form_persetujuan_tindakan['pererima_tanggal_lahir'] ?>
                                 </td>
                             </tr>
                             <tr>
-                                <td style="width: 40%; vertical-align: top;">
+                                <td style="width: 20%; vertical-align: top;">
                                     Jenis Kelamin
                                 </td>
                                 <td style="width: 0%; vertical-align: top;">
                                     :
                                 </td>
-                                <td style="width: 60%; vertical-align: top;">
+                                <td style="width: 80%; vertical-align: top;">
                                     <?php if ($form_persetujuan_tindakan['penerima_jenis_kelamin'] == 'L') : ?>
                                         Laki-Laki
                                     <?php elseif ($form_persetujuan_tindakan['penerima_jenis_kelamin'] == 'P') : ?>
@@ -439,24 +439,24 @@ $waktuFormatted = $dateTime->format('H.i');
                                 </td>
                             </tr>
                             <tr>
-                                <td style="width: 40%; vertical-align: top;">
+                                <td style="width: 20%; vertical-align: top;">
                                     Alamat
                                 </td>
                                 <td style="width: 0%; vertical-align: top;">
                                     :
                                 </td>
-                                <td style="width: 60%; vertical-align: top;">
+                                <td style="width: 80%; vertical-align: top;">
                                     <?= $form_persetujuan_tindakan['penerima_alamat'] ?>
                                 </td>
                             </tr>
                             <tr>
-                                <td style="width: 40%; vertical-align: top;">
+                                <td style="width: 20%; vertical-align: top;">
                                     Hubungan dengan pasien
                                 </td>
                                 <td style="width: 0%; vertical-align: top;">
                                     :
                                 </td>
-                                <td style="width: 60%; vertical-align: top;">
+                                <td style="width: 80%; vertical-align: top;">
                                     <?= ($form_persetujuan_tindakan['penerima_hubungan'] == 'KELUARGA') ? $form_persetujuan_tindakan['keterangan_hubungan'] : $form_persetujuan_tindakan['penerima_hubungan']; ?>
                                 </td>
                             </tr>
@@ -466,35 +466,35 @@ $waktuFormatted = $dateTime->format('H.i');
                     <table class="table" style="width: 100%; margin-bottom: 4px;">
                         <tbody>
                             <tr>
-                                <td style="width: 40%; vertical-align: top;">
+                                <td style="width: 20%; vertical-align: top;">
                                     Nama
                                 </td>
                                 <td style="width: 0%; vertical-align: top;">
                                     :
                                 </td>
-                                <td style="width: 60%; vertical-align: top;">
+                                <td style="width: 80%; vertical-align: top;">
                                     <?= $form_persetujuan_tindakan['nama_pasien'] ?>
                                 </td>
                             </tr>
                             <tr>
-                                <td style="width: 40%; vertical-align: top;">
+                                <td style="width: 20%; vertical-align: top;">
                                     Tanggal lahir
                                 </td>
                                 <td style="width: 0%; vertical-align: top;">
                                     :
                                 </td>
-                                <td style="width: 60%; vertical-align: top;">
+                                <td style="width: 80%; vertical-align: top;">
                                     <?= $form_persetujuan_tindakan['tanggal_lahir'] ?>
                                 </td>
                             </tr>
                             <tr>
-                                <td style="width: 40%; vertical-align: top;">
+                                <td style="width: 20%; vertical-align: top;">
                                     Jenis Kelamin
                                 </td>
                                 <td style="width: 0%; vertical-align: top;">
                                     :
                                 </td>
-                                <td style="width: 60%; vertical-align: top;">
+                                <td style="width: 80%; vertical-align: top;">
                                     <?php if ($form_persetujuan_tindakan['jenis_kelamin'] == 'L') : ?>
                                         Laki-Laki
                                     <?php elseif ($form_persetujuan_tindakan['jenis_kelamin'] == 'P') : ?>
@@ -503,13 +503,13 @@ $waktuFormatted = $dateTime->format('H.i');
                                 </td>
                             </tr>
                             <tr>
-                                <td style="width: 40%; vertical-align: top;">
+                                <td style="width: 20%; vertical-align: top;">
                                     Alamat
                                 </td>
                                 <td style="width: 0%; vertical-align: top;">
                                     :
                                 </td>
-                                <td style="width: 60%; vertical-align: top;">
+                                <td style="width: 80%; vertical-align: top;">
                                     <?= $form_persetujuan_tindakan['alamat'] ?>
                                 </td>
                             </tr>
@@ -530,13 +530,13 @@ $waktuFormatted = $dateTime->format('H.i');
                     <table class="table" style="width: 100%; margin-bottom: 4px;">
                         <tbody>
                             <tr>
-                                <td style="width: 33.33%; text-align: center; vertical-align: top; padding-bottom: 1.3cm;">
+                                <td style="width: 33.33%; text-align: center; vertical-align: top; padding-bottom: 1cm;">
                                     <div>Teluk Kuantan, <?= $tanggalFormatted ?> pukul <?= $waktuFormatted ?><br>Yang menyatakan</div>
                                 </td>
-                                <td style="width: 33.33%; text-align: center; vertical-align: top; padding-bottom: 1.3cm;">
+                                <td style="width: 33.33%; text-align: center; vertical-align: top; padding-bottom: 1cm;">
                                     <div>Saksi I</div>
                                 </td>
-                                <td style="width: 33.33%; text-align: center; vertical-align: top; padding-bottom: 1.3cm;">
+                                <td style="width: 33.33%; text-align: center; vertical-align: top; padding-bottom: 1cm;">
                                     <div>Saksi II</div>
                                 </td>
                             </tr>
