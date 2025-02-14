@@ -365,7 +365,7 @@
                         <hr>
                         <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-3">
                             <button class="btn btn-body  bg-gradient" type="button" onclick="window.open(`<?= base_url('/pasien/kiup/' . $pasien['id_pasien']) ?>`)"><i class="fa-solid fa-print"></i> Cetak KIUP</button>
-                            <button class="btn btn-body  bg-gradient" type="button" onclick="window.open(`<?= base_url('/pasien/barcode/' . $pasien['id_pasien']) ?>`)"><i class="fa-solid fa-print"></i> Cetak <em>Barcode</em></button>
+                            <button class="btn btn-body  bg-gradient" type="button" onclick="window.open(`<?= base_url('/pasien/barcode/' . $pasien['id_pasien']) ?>`)"><i class="fa-solid fa-barcode"></i> Cetak <em>Barcode</em></button>
                             <button class="btn btn-primary  bg-gradient" type="submit" id="submitBtn"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
                         </div>
                     </div>

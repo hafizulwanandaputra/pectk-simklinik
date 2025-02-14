@@ -384,6 +384,12 @@
                                     <div>
                                         <div class="d-flex flex-wrap justify-content-end gap-2 mt-2">
                                             <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') : ?>
+                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('pasien/kiup') ?>/${rawatjalan.id_pasien}'">
+                                                    <i class="fa-solid fa-print"></i> KIUP
+                                                </button>
+                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('pasien/barcode') ?>/${rawatjalan.id_pasien}'">
+                                                    <i class="fa-solid fa-barcode"></i> Barcode
+                                                </button>
                                                 <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('pasien/detailpasien') ?>/${rawatjalan.id_pasien}'">
                                                     <i class="fa-solid fa-circle-info"></i> Detail Pasien
                                                 </button>
@@ -795,6 +801,12 @@
                                     <div>
                                         <div class="d-flex flex-wrap justify-content-end gap-2 mt-2">
                                             <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') : ?>
+                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('pasien/kiup') ?>/${rawatjalan.id_pasien}'">
+                                                    <i class="fa-solid fa-print"></i> KIUP
+                                                </button>
+                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('pasien/barcode') ?>/${rawatjalan.id_pasien}'">
+                                                    <i class="fa-solid fa-barcode"></i> Barcode
+                                                </button>
                                                 <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('pasien/detailpasien') ?>/${rawatjalan.id_pasien}'">
                                                     <i class="fa-solid fa-user-injured"></i> Lihat Pasien
                                                 </button>
@@ -1198,6 +1210,12 @@
                                     <div>
                                         <div class="d-flex flex-wrap justify-content-end gap-2 mt-2">
                                             <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') : ?>
+                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('pasien/kiup') ?>/${rawatjalan.id_pasien}'">
+                                                    <i class="fa-solid fa-print"></i> KIUP
+                                                </button>
+                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('pasien/barcode') ?>/${rawatjalan.id_pasien}'">
+                                                    <i class="fa-solid fa-barcode"></i> Barcode
+                                                </button>
                                                 <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('pasien/detailpasien') ?>/${rawatjalan.id_pasien}'">
                                                     <i class="fa-solid fa-user-injured"></i> Lihat Pasien
                                                 </button>
