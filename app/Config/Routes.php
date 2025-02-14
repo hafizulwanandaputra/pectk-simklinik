@@ -209,6 +209,42 @@ $routes->get('/(?i)frmsetuju/(?i)export/(:any)', 'FRMSetuju::export/$1');
 $routes->post('/(?i)frmsetuju/(?i)update/(:any)', 'FRMSetuju::update/$1');
 $routes->delete('/(?i)frmsetuju/(?i)delete/(:any)', 'FRMSetuju::delete/$1');
 
+// SURAT RUJUKAN
+$routes->get('/(?i)rujukan', 'Rujukan::index');
+$routes->get('/(?i)rujukan/rujukanlist', 'Rujukan::rujukanlist');
+$routes->get('/(?i)rujukan/pasienlist', 'Rujukan::pasienlist');
+$routes->get('/(?i)rujukan/(:num)', 'Rujukan::details/$1');
+$routes->post('/(?i)rujukan/(?i)create', 'Rujukan::create');
+$routes->get('/(?i)rujukan/(?i)details/(:any)', 'Rujukan::details/$1');
+$routes->get('/(?i)rujukan/(?i)view/(:any)', 'Rujukan::view/$1');
+$routes->get('/(?i)rujukan/(?i)export/(:any)', 'Rujukan::export/$1');
+$routes->post('/(?i)rujukan/(?i)update/(:any)', 'Rujukan::update/$1');
+$routes->delete('/(?i)rujukan/(?i)delete/(:any)', 'Rujukan::delete/$1');
+
+// SURAT KETERANGAN SAKIT MATA
+$routes->get('/(?i)sakitmata', 'SakitMata::index');
+$routes->get('/(?i)sakitmata/sakitmatalist', 'SakitMata::sakitmatalist');
+$routes->get('/(?i)sakitmata/pasienlist', 'SakitMata::pasienlist');
+$routes->get('/(?i)sakitmata/(:num)', 'SakitMata::details/$1');
+$routes->post('/(?i)sakitmata/(?i)create', 'SakitMata::create');
+$routes->get('/(?i)sakitmata/(?i)details/(:any)', 'SakitMata::details/$1');
+$routes->get('/(?i)sakitmata/(?i)view/(:any)', 'SakitMata::view/$1');
+$routes->get('/(?i)sakitmata/(?i)export/(:any)', 'SakitMata::export/$1');
+$routes->post('/(?i)sakitmata/(?i)update/(:any)', 'SakitMata::update/$1');
+$routes->delete('/(?i)sakitmata/(?i)delete/(:any)', 'SakitMata::delete/$1');
+
+// SURAT KETERANGAN ISTIRAHAT
+$routes->get('/(?i)istirahat', 'Istirahat::index');
+$routes->get('/(?i)istirahat/istirahatlist', 'Istirahat::istirahatlist');
+$routes->get('/(?i)istirahat/pasienlist', 'Istirahat::pasienlist');
+$routes->get('/(?i)istirahat/(:num)', 'Istirahat::details/$1');
+$routes->post('/(?i)istirahat/(?i)create', 'Istirahat::create');
+$routes->get('/(?i)istirahat/(?i)details/(:any)', 'Istirahat::details/$1');
+$routes->get('/(?i)istirahat/(?i)view/(:any)', 'Istirahat::view/$1');
+$routes->get('/(?i)istirahat/(?i)export/(:any)', 'Istirahat::export/$1');
+$routes->post('/(?i)istirahat/(?i)update/(:any)', 'Istirahat::update/$1');
+$routes->delete('/(?i)istirahat/(?i)delete/(:any)', 'Istirahat::delete/$1');
+
 // SUPPLIER
 $routes->get('/(?i)supplier', 'Supplier::index');
 $routes->post('/(?i)supplier/(?i)supplierlist', 'Supplier::supplierlist');
