@@ -16,6 +16,7 @@
         "firebase/php-jwt": "^6.10",
         "guzzlehttp/guzzle": "^7.9",
         "kint-php/kint": "^5.1",
+        "kwn/number-to-words": "^2.11",
         "phpoffice/phpspreadsheet": "^3.3",
         "picqer/php-barcode-generator": "^3.2",
         "simplesoftwareio/simple-qrcode": "^4.2"

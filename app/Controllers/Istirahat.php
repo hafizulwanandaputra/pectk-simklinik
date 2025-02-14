@@ -4,18 +4,20 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\RawatJalanModel;
-use App\Models\SakitMataModel;
+use App\Models\IstirahatModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
+use DateTime;
 use Picqer\Barcode\BarcodeGeneratorPNG;
+use NumberToWords\NumberToWords;
 
-class SakitMata extends BaseController
+class Istirahat extends BaseController
 {
     protected $RawatJalanModel;
-    protected $SakitMataModel;
+    protected $IstirahatModel;
     public function __construct()
     {
         $this->RawatJalanModel = new RawatJalanModel();
-        $this->SakitMataModel = new SakitMataModel();
+        $this->IstirahatModel = new IstirahatModel();
     }
     public function index()
     {
@@ -23,19 +25,19 @@ class SakitMata extends BaseController
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Admisi') {
             // Menyiapkan data untuk tampilan
             $data = [
-                'title' => 'Surat Keterangan Sakit Mata - ' . $this->systemName,
-                'headertitle' => 'Surat Keterangan Sakit Mata',
+                'title' => 'Surat Keterangan Istirahat - ' . $this->systemName,
+                'headertitle' => 'Surat Keterangan Istirahat',
                 'agent' => $this->request->getUserAgent() // Mengambil informasi user agent
             ];
             // Menampilkan tampilan untuk halaman pasien
-            return view('dashboard/sakitmata/index', $data);
+            return view('dashboard/istirahat/index', $data);
         } else {
             // Jika peran tidak dikenali, lemparkan pengecualian 404
             throw PageNotFoundException::forPageNotFound();
         }
     }
 
-    public function sakitmatalist()
+    public function istirahatlist()
     {
         // Memeriksa peran pengguna, hanya 'Admin', atau 'Admisi' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Admisi') {
@@ -50,44 +52,44 @@ class SakitMata extends BaseController
             $offset = $offset ? intval($offset) : 0;
 
             // Memuat model PembelianObat
-            $SakitMataModel = $this->SakitMataModel
-                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_keterangan_sakit_mata.nomor_registrasi', 'inner')
+            $IstirahatModel = $this->IstirahatModel
+                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_keterangan_istirahat.nomor_registrasi', 'inner')
                 ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner');
 
             // Menerapkan filter pencarian pada nama supplier atau tanggal pembelian
             if ($tanggal) {
-                $SakitMataModel
+                $IstirahatModel
                     ->like('rawat_jalan.tanggal_registrasi', $tanggal);
             }
 
             // Menerapkan filter pencarian berdasarkan nama pasien atau tanggal resep
             if ($search) {
-                $SakitMataModel->groupStart()
+                $IstirahatModel->groupStart()
                     ->like('pasien.no_rm', $search)
                     ->orLike('pasien.nama_pasien', $search)
                     ->groupEnd();
             }
 
             // Menghitung total hasil
-            $total = $SakitMataModel->countAllResults(false);
+            $total = $IstirahatModel->countAllResults(false);
 
             // Mendapatkan hasil yang dipaginasikan
-            $SakitMata = $SakitMataModel
-                ->orderBy('id_keterangan_sakit_mata', 'DESC')
+            $Istirahat = $IstirahatModel
+                ->orderBy('id_keterangan_istirahat', 'DESC')
                 ->findAll($limit, $offset);
 
             // Menghitung nomor awal untuk halaman saat ini
             $startNumber = $offset + 1;
 
             // Menambahkan nomor urut ke data pembelian obat
-            $dataSakitMata = array_map(function ($data, $index) use ($startNumber) {
+            $dataIstirahat = array_map(function ($data, $index) use ($startNumber) {
                 $data['number'] = $startNumber + $index;
                 return $data;
-            }, $SakitMata, array_keys($SakitMata));
+            }, $Istirahat, array_keys($Istirahat));
 
             // Mengembalikan respons JSON dengan data pembelian obat dan total
             return $this->response->setJSON([
-                'sakitmata' => $dataSakitMata,
+                'istirahat' => $dataIstirahat,
                 'total' => $total
             ]);
         } else {
@@ -111,7 +113,7 @@ class SakitMata extends BaseController
 
             // Mengambil nomor_registrasi yang sudah terpakai di rawat_jalan
             $db = \Config\Database::connect();
-            $usedNoRegInit = $db->table('medrec_keterangan_sakit_mata')->select('nomor_registrasi')->get()->getResultArray();
+            $usedNoRegInit = $db->table('medrec_keterangan_istirahat')->select('nomor_registrasi')->get()->getResultArray();
             $usedNoReg = array_column($usedNoRegInit, 'nomor_registrasi');
 
             $options = [];
@@ -168,27 +170,27 @@ class SakitMata extends BaseController
                 ->findAll();
 
             // Memeriksa apakah data mengandung nomor registrasi yang diminta
-            $SakitMataData = null;
+            $IstirahatData = null;
             foreach ($data as $patient) {
                 if ($patient['nomor_registrasi'] == $nomorRegistrasi) {
-                    $SakitMataData = $patient; // Menyimpan data pasien jika ditemukan
+                    $IstirahatData = $patient; // Menyimpan data pasien jika ditemukan
                     break;
                 }
             }
 
             // Jika data pasien tidak ditemukan
-            if (!$SakitMataData) {
+            if (!$IstirahatData) {
                 return $this->response->setJSON(['success' => false, 'message' => 'Data rawat jalan tidak ditemukan', 'errors' => NULL]);
             }
 
             // Menyimpan data transaksi
             $data = [
                 'nomor_registrasi' => $nomorRegistrasi, // Nomor registrasi
-                'no_rm' => $SakitMataData['no_rm'], // Nomor rekam medis
+                'no_rm' => $IstirahatData['no_rm'], // Nomor rekam medis
                 'waktu_dibuat' => date('Y-m-d H:i:s'),
             ];
-            $db->table('medrec_keterangan_sakit_mata')->insert($data);
-            return $this->response->setJSON(['success' => true, 'message' => 'Surat keterangan sakit mata berhasil ditambahkan']); // Mengembalikan respon sukses
+            $db->table('medrec_keterangan_istirahat')->insert($data);
+            return $this->response->setJSON(['success' => true, 'message' => 'Surat keterangan istirahat berhasil ditambahkan']); // Mengembalikan respon sukses
         } else {
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan', // Pesan jika peran tidak valid
@@ -201,33 +203,42 @@ class SakitMata extends BaseController
         // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', 'Perawat', atau 'Admisi' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Admisi') {
             // Inisialisasi rawat jalan
-            $sakitmata = $this->SakitMataModel
-                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_keterangan_sakit_mata.nomor_registrasi', 'inner')
+            $istirahat = $this->IstirahatModel
+                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_keterangan_istirahat.nomor_registrasi', 'inner')
                 ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
                 ->find($id);
 
             // === Generate Barcode ===
             $barcodeGenerator = new BarcodeGeneratorPNG();
-            $bcNoReg = base64_encode($barcodeGenerator->getBarcode($sakitmata['nomor_registrasi'], $barcodeGenerator::TYPE_CODE_128));
+            $bcNoReg = base64_encode($barcodeGenerator->getBarcode($istirahat['nomor_registrasi'], $barcodeGenerator::TYPE_CODE_128));
 
             // Memeriksa apakah pasien tidak kosong
-            if ($sakitmata) {
+            if ($istirahat) {
+                $dateTime2 = new DateTime($istirahat['tanggal_mulai']);
+                $dateTime3 = new DateTime($istirahat['tanggal_selesai']);
+                $durasi_istirahat = $dateTime3->diff($dateTime2);
+
+                $numberToWords = new NumberToWords();
+                $converter = $numberToWords->getNumberTransformer('id'); // 'id' untuk Bahasa Indonesia
+
+                // Konversi durasi istirahat ke teks
+                $istirahat['durasi_teks'] = $converter->toWords($durasi_istirahat->d);
                 // Menyiapkan data untuk tampilan
                 $data = [
-                    'sakitmata' => $sakitmata,
+                    'istirahat' => $istirahat,
                     'bcNoReg' => $bcNoReg,
-                    'title' => 'Surat Keterangan Sakit Mata ' . $sakitmata['nama_pasien'] . ' (' . $sakitmata['no_rm'] . ') - ' . $sakitmata['nomor_registrasi'] . ' - ' . $this->systemName,
-                    'headertitle' => 'Surat Keterangan Sakit Mata',
+                    'title' => 'Surat Keterangan Istirahat ' . $istirahat['nama_pasien'] . ' (' . $istirahat['no_rm'] . ') - ' . $istirahat['nomor_registrasi'] . ' - ' . $this->systemName,
+                    'headertitle' => 'Surat Keterangan Istirahat',
                     'agent' => $this->request->getUserAgent(), // Mengambil informasi user agent
                 ];
-                // return view('dashboard/sakitmata/form', $data);
+                // return view('dashboard/istirahat/form', $data);
                 // die;
                 // Simpan HTML ke file sementara
-                $htmlFile = WRITEPATH . 'temp/output-sakitmata.html';
-                file_put_contents($htmlFile, view('dashboard/sakitmata/form', $data));
+                $htmlFile = WRITEPATH . 'temp/output-istirahat.html';
+                file_put_contents($htmlFile, view('dashboard/istirahat/form', $data));
 
                 // Tentukan path output PDF
-                $pdfFile = WRITEPATH . 'temp/output-sakitmata.pdf';
+                $pdfFile = WRITEPATH . 'temp/output-istirahat.pdf';
 
                 // Jalankan Puppeteer untuk konversi HTML ke PDF
                 // Keterangan: "node " . FCPATH . "puppeteer-pdf.js $htmlFile $pdfFile panjang lebar marginAtas margin Kanan marginBawah marginKiri"
@@ -241,7 +252,7 @@ class SakitMata extends BaseController
                 // Kirim PDF ke browser
                 return $this->response
                     ->setHeader('Content-Type', 'application/pdf')
-                    ->setHeader('Content-Disposition', 'inline; filename="SakitMata_' . $sakitmata['nomor_registrasi'] . '_' . str_replace('-', '', $sakitmata['no_rm']) . '.pdf')
+                    ->setHeader('Content-Disposition', 'inline; filename="Istirahat_' . $istirahat['nomor_registrasi'] . '_' . str_replace('-', '', $istirahat['no_rm']) . '.pdf')
                     ->setBody(file_get_contents($pdfFile));
             } else {
                 // Menampilkan halaman tidak ditemukan jika pasien tidak ditemukan
@@ -257,26 +268,26 @@ class SakitMata extends BaseController
     {
         // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Perawat' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
-            $sakitmata = $this->SakitMataModel
-                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_keterangan_sakit_mata.nomor_registrasi', 'inner')
+            $istirahat = $this->IstirahatModel
+                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_keterangan_istirahat.nomor_registrasi', 'inner')
                 ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
                 ->find($id);
-            if (date('Y-m-d', strtotime($sakitmata['tanggal_registrasi'])) != date('Y-m-d')) {
-                return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Surat keterangan sakit mata yang bukan hari ini tidak dapat dihapus']);
+            if (date('Y-m-d', strtotime($istirahat['tanggal_registrasi'])) != date('Y-m-d')) {
+                return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Surat keterangan istirahat yang bukan hari ini tidak dapat dihapus']);
             }
-            if ($sakitmata) {
+            if ($istirahat) {
                 $db = db_connect();
 
-                // Menghapus sakitmata
-                $this->SakitMataModel->delete($id);
+                // Menghapus istirahat
+                $this->IstirahatModel->delete($id);
 
                 // Reset auto increment
-                $db->query('ALTER TABLE `medrec_keterangan_sakit_mata` auto_increment = 1');
+                $db->query('ALTER TABLE `medrec_keterangan_istirahat` auto_increment = 1');
 
-                return $this->response->setJSON(['message' => 'Surat keterangan sakit mata berhasil dihapus']); // Mengembalikan respon sukses
+                return $this->response->setJSON(['message' => 'Surat keterangan istirahat berhasil dihapus']); // Mengembalikan respon sukses
             } else {
                 return $this->response->setStatusCode(404)->setJSON([
-                    'error' => 'Surat keterangan sakit mata tidak ditemukan', // Pesan jika peran tidak valid
+                    'error' => 'Surat keterangan istirahat tidak ditemukan', // Pesan jika peran tidak valid
                 ]);
             }
         } else {
@@ -292,52 +303,52 @@ class SakitMata extends BaseController
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
             $db = db_connect();
 
-            $sakitmata = $this->SakitMataModel
-                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_keterangan_sakit_mata.nomor_registrasi', 'inner')
+            $istirahat = $this->IstirahatModel
+                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_keterangan_istirahat.nomor_registrasi', 'inner')
                 ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
                 ->find($id);
 
             // Query untuk item sebelumnya
-            $previous = $db->table('medrec_keterangan_sakit_mata')
-                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_keterangan_sakit_mata.nomor_registrasi', 'inner')
+            $previous = $db->table('medrec_keterangan_istirahat')
+                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_keterangan_istirahat.nomor_registrasi', 'inner')
                 ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
-                ->where('medrec_keterangan_sakit_mata.id_keterangan_sakit_mata <', $id)
-                ->orderBy('medrec_keterangan_sakit_mata.id_keterangan_sakit_mata', 'DESC') // Urutan descending
+                ->where('medrec_keterangan_istirahat.id_keterangan_istirahat <', $id)
+                ->orderBy('medrec_keterangan_istirahat.id_keterangan_istirahat', 'DESC') // Urutan descending
                 ->limit(1) // Batas 1 hasil
                 ->get()
                 ->getRowArray();
 
             // Query untuk item berikutnya
-            $next = $db->table('medrec_keterangan_sakit_mata')
-                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_keterangan_sakit_mata.nomor_registrasi', 'inner')
+            $next = $db->table('medrec_keterangan_istirahat')
+                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_keterangan_istirahat.nomor_registrasi', 'inner')
                 ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
-                ->where('medrec_keterangan_sakit_mata.id_keterangan_sakit_mata >', $id)
-                ->orderBy('medrec_keterangan_sakit_mata.id_keterangan_sakit_mata', 'ASC') // Urutan ascending
+                ->where('medrec_keterangan_istirahat.id_keterangan_istirahat >', $id)
+                ->orderBy('medrec_keterangan_istirahat.id_keterangan_istirahat', 'ASC') // Urutan ascending
                 ->limit(1) // Batas 1 hasil
                 ->get()
                 ->getRowArray();
 
             // Query untuk daftar rawat jalan berdasarkan no_rm
-            $listRawatJalan = $db->table('medrec_keterangan_sakit_mata')
-                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_keterangan_sakit_mata.nomor_registrasi', 'inner')
+            $listRawatJalan = $db->table('medrec_keterangan_istirahat')
+                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_keterangan_istirahat.nomor_registrasi', 'inner')
                 ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
-                ->where('rawat_jalan.no_rm', $sakitmata['no_rm'])
-                ->orderBy('id_keterangan_sakit_mata', 'DESC')
+                ->where('rawat_jalan.no_rm', $istirahat['no_rm'])
+                ->orderBy('id_keterangan_istirahat', 'DESC')
                 ->get()
                 ->getResultArray();
 
             // Menyiapkan data untuk tampilan
             $data = [
-                'sakitmata' => $sakitmata,
-                'title' => 'Surat Keterangan Sakit Mata ' . $sakitmata['nama_pasien'] . ' (' . $sakitmata['no_rm'] . ') - ' . $sakitmata['nomor_registrasi'] . ' - ' . $this->systemName,
-                'headertitle' => 'Surat Keterangan Sakit Mata',
+                'istirahat' => $istirahat,
+                'title' => 'Surat Keterangan Istirahat ' . $istirahat['nama_pasien'] . ' (' . $istirahat['no_rm'] . ') - ' . $istirahat['nomor_registrasi'] . ' - ' . $this->systemName,
+                'headertitle' => 'Surat Keterangan Istirahat',
                 'agent' => $this->request->getUserAgent(), // Mengambil informasi user agent
                 'previous' => $previous,
                 'next' => $next,
                 'listRawatJalan' => $listRawatJalan
             ];
             // Menampilkan tampilan untuk halaman pasien
-            return view('dashboard/sakitmata/details', $data);
+            return view('dashboard/istirahat/details', $data);
         } else {
             // Jika peran tidak dikenali, lemparkan pengecualian 404
             throw PageNotFoundException::forPageNotFound();
@@ -349,8 +360,8 @@ class SakitMata extends BaseController
         // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Perawat' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
             // Mengambil data skrining berdasarkan ID
-            $data = $this->SakitMataModel
-                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_keterangan_sakit_mata.nomor_registrasi', 'inner')
+            $data = $this->IstirahatModel
+                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_keterangan_istirahat.nomor_registrasi', 'inner')
                 ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
                 ->find($id);
             return $this->response->setJSON($data); // Mengembalikan data skrining dalam format JSON
@@ -372,7 +383,10 @@ class SakitMata extends BaseController
 
             // Menetapkan aturan validasi dasar
             $rules = [
-                'keterangan' => [
+                'tanggal_mulai' => [
+                    'rules' => 'required',
+                ],
+                'tanggal_selesai' => [
                     'rules' => 'required',
                 ]
             ];
@@ -383,10 +397,11 @@ class SakitMata extends BaseController
 
             // Menyimpan data transaksi
             $data = [
-                'keterangan' => $this->request->getPost('keterangan') ?: null
+                'tanggal_mulai' => $this->request->getPost('tanggal_mulai') ?: null,
+                'tanggal_selesai' => $this->request->getPost('tanggal_selesai') ?: null
             ];
-            $db->table('medrec_keterangan_sakit_mata')->where('id_keterangan_sakit_mata', $id)->update($data);
-            return $this->response->setJSON(['success' => true, 'message' => 'Surat keterangan sakit mata berhasil diperbarui']); // Mengembalikan respon sukses
+            $db->table('medrec_keterangan_istirahat')->where('id_keterangan_istirahat', $id)->update($data);
+            return $this->response->setJSON(['success' => true, 'message' => 'Surat keterangan istirahat berhasil diperbarui']); // Mengembalikan respon sukses
         } else {
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan', // Pesan jika peran tidak valid

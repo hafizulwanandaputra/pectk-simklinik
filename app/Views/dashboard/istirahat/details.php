@@ -2,10 +2,10 @@
 $uri = service('uri'); // Load the URI service
 $activeSegment = $uri->getSegment(3); // Get the first segment
 // Tanggal lahir pasien
-$tanggal_lahir = new DateTime($sakitmata['tanggal_lahir']);
+$tanggal_lahir = new DateTime($istirahat['tanggal_lahir']);
 
 // Tanggal registrasi
-$registrasi = new DateTime(date('Y-m-d', strtotime($sakitmata['tanggal_registrasi'])));
+$registrasi = new DateTime(date('Y-m-d', strtotime($istirahat['tanggal_registrasi'])));
 
 // Hitung selisih antara tanggal sekarang dan tanggal lahir
 $usia = $registrasi->diff($tanggal_lahir);
@@ -50,23 +50,23 @@ $usia = $registrasi->diff($tanggal_lahir);
 <?= $this->endSection(); ?>
 <?= $this->section('title'); ?>
 <div class="d-flex justify-content-start align-items-center">
-    <a class="fs-5 me-3 text-success-emphasis" href="<?= base_url('/sakitmata'); ?>"><i class="fa-solid fa-arrow-left"></i></a>
+    <a class="fs-5 me-3 text-success-emphasis" href="<?= base_url('/istirahat'); ?>"><i class="fa-solid fa-arrow-left"></i></a>
     <div class="flex-fill text-truncate">
         <div class="d-flex flex-column">
             <div class="fw-medium fs-6 lh-sm"><?= $headertitle; ?></div>
-            <div class="fw-medium lh-sm" style="font-size: 0.75em;"><?= $sakitmata['nama_pasien']; ?> • <?= $usia->y . " tahun " . $usia->m . " bulan" ?> • <?= $sakitmata['no_rm'] ?></div>
+            <div class="fw-medium lh-sm" style="font-size: 0.75em;"><?= $istirahat['nama_pasien']; ?> • <?= $usia->y . " tahun " . $usia->m . " bulan" ?> • <?= $istirahat['no_rm'] ?></div>
         </div>
     </div>
     <div id="loadingSpinner" class="spinner-border spinner-border-sm mx-2" role="status" style="min-width: 1rem;">
         <span class="visually-hidden">Loading...</span>
     </div>
     <?php if ($previous): ?>
-        <a class="fs-6 mx-2 text-success-emphasis" href="<?= site_url('sakitmata/details/' . $previous['id_keterangan_sakit_mata']) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="<?= $previous['nomor_registrasi']; ?> • <?= $previous['no_rm'] ?> • <?= $previous['nama_pasien']; ?>"><i class="fa-solid fa-circle-arrow-left"></i></a>
+        <a class="fs-6 mx-2 text-success-emphasis" href="<?= site_url('istirahat/details/' . $previous['id_keterangan_istirahat']) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="<?= $previous['nomor_registrasi']; ?> • <?= $previous['no_rm'] ?> • <?= $previous['nama_pasien']; ?>"><i class="fa-solid fa-circle-arrow-left"></i></a>
     <?php else: ?>
         <span class="fs-6 mx-2 text-success-emphasis" style="cursor: no-drop; opacity: .5;" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Tidak ada surat sebelumnya"><i class="fa-solid fa-circle-arrow-left"></i></span>
     <?php endif; ?>
     <?php if ($next): ?>
-        <a class="fs-6 mx-2 text-success-emphasis" href="<?= site_url('sakitmata/details/' . $next['id_keterangan_sakit_mata']) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="<?= $next['nomor_registrasi']; ?> • <?= $next['no_rm'] ?> • <?= $next['nama_pasien']; ?>"><i class="fa-solid fa-circle-arrow-right"></i></a>
+        <a class="fs-6 mx-2 text-success-emphasis" href="<?= site_url('istirahat/details/' . $next['id_keterangan_istirahat']) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="<?= $next['nomor_registrasi']; ?> • <?= $next['no_rm'] ?> • <?= $next['nama_pasien']; ?>"><i class="fa-solid fa-circle-arrow-right"></i></a>
     <?php else: ?>
         <span class="fs-6 mx-2 text-success-emphasis" style="cursor: no-drop; opacity: .5;" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Tidak ada surat berikutnya"><i class="fa-solid fa-circle-arrow-right"></i></span>
     <?php endif; ?>
@@ -81,7 +81,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <div class="no-fluid-content">
                     <nav class="nav nav-underline flex-nowrap overflow-auto">
                         <?php foreach ($listRawatJalan as $list) : ?>
-                            <a class="<?= (date('Y-m-d', strtotime($list['tanggal_registrasi'])) != date('Y-m-d')) ? 'text-danger' : ''; ?> nav-link py-1 <?= ($activeSegment === $list['id_keterangan_sakit_mata']) ? 'active activeLink' : '' ?>" href="<?= base_url('sakitmata/details/' . $list['id_keterangan_sakit_mata']); ?>">
+                            <a class="<?= (date('Y-m-d', strtotime($list['tanggal_registrasi'])) != date('Y-m-d')) ? 'text-danger' : ''; ?> nav-link py-1 <?= ($activeSegment === $list['id_keterangan_istirahat']) ? 'active activeLink' : '' ?>" href="<?= base_url('istirahat/details/' . $list['id_keterangan_istirahat']); ?>">
                                 <div class="text-center">
                                     <div class="text-nowrap lh-sm"><?= $list['nomor_registrasi']; ?></div>
                                     <div class="text-nowrap lh-sm" style="font-size: 0.75em;"><?= $list['tanggal_registrasi'] ?></div>
@@ -95,32 +95,43 @@ $usia = $registrasi->diff($tanggal_lahir);
     </div>
     <div class="px-3 mt-3">
         <div class="no-fluid-content">
-            <?= form_open_multipart('sakitmata/update/' . $sakitmata['id_keterangan_sakit_mata'], 'id="SuratForm"'); ?>
+            <?= form_open_multipart('istirahat/update/' . $istirahat['id_keterangan_istirahat'], 'id="SuratForm"'); ?>
             <?= csrf_field(); ?>
-            <?php if (date('Y-m-d', strtotime($sakitmata['tanggal_registrasi'])) != date('Y-m-d')) : ?>
+            <?php if (date('Y-m-d', strtotime($istirahat['tanggal_registrasi'])) != date('Y-m-d')) : ?>
                 <div id="alert-date" class="alert alert-warning alert-dismissible" role="alert">
                     <div class="d-flex align-items-start">
                         <div style="width: 12px; text-align: center;">
                             <i class="fa-solid fa-triangle-exclamation"></i>
                         </div>
                         <div class="w-100 ms-3">
-                            Saat ini Anda melihat data kunjungan pasien pada <?= date('Y-m-d', strtotime($sakitmata['tanggal_registrasi'])) ?>. Pastikan Anda mengisi data sesuai dengan tanggal kunjungan pasien.
+                            Saat ini Anda melihat data kunjungan pasien pada <?= date('Y-m-d', strtotime($istirahat['tanggal_registrasi'])) ?>. Pastikan Anda mengisi data sesuai dengan tanggal kunjungan pasien.
                         </div>
                         <button type="button" id="close-alert" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 </div>
             <?php endif; ?>
             <div class="mb-3">
-                <div class="mb-2">
-                    <label for="keterangan">Pada pemeriksaan saat ini, pasien menderita sakit mata:</label>
-                    <textarea class="form-control" id="keterangan" name="keterangan" rows="8" style="resize: none;"></textarea>
-                    <div class="invalid-feedback"></div>
+                <div class="mb-2 row row-cols-1 row-cols-lg-2 g-2">
+                    <div class="col">
+                        <div class="form-floating">
+                            <input type="date" class="form-control" id="tanggal_mulai" name="tanggal_mulai" value="" autocomplete="off" dir="auto" placeholder="tanggal_mulai" list="tanggal_mulai_list">
+                            <label for="tanggal_mulai">Tanggal Mulai</label>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-floating">
+                            <input type="date" class="form-control" id="tanggal_selesai" name="tanggal_selesai" value="" autocomplete="off" dir="auto" placeholder="tanggal_selesai">
+                            <label for="tanggal_selesai">Tanggal Selesai</label>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div>
                 <hr>
                 <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-3">
-                    <button class="btn btn-body  bg-gradient" type="button" onclick="window.open(`<?= base_url('sakitmata/export/' . $sakitmata['id_keterangan_sakit_mata']) ?>`)"><i class="fa-solid fa-print"></i> Cetak Form</button>
+                    <button class="btn btn-body  bg-gradient" type="button" onclick="window.open(`<?= base_url('istirahat/export/' . $istirahat['id_keterangan_istirahat']) ?>`)"><i class="fa-solid fa-print"></i> Cetak Form</button>
                     <button class="btn btn-primary bg-gradient" type="submit" id="submitBtn"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
                 </div>
             </div>
@@ -135,10 +146,11 @@ $usia = $registrasi->diff($tanggal_lahir);
         $('#loadingSpinner').show();
 
         try {
-            const response = await axios.get('<?= base_url('sakitmata/view/') . $sakitmata['id_keterangan_sakit_mata'] ?>');
+            const response = await axios.get('<?= base_url('istirahat/view/') . $istirahat['id_keterangan_istirahat'] ?>');
             const data = response.data;
 
-            $('#keterangan').val(data.keterangan);
+            $('#tanggal_mulai').val(data.tanggal_mulai);
+            $('#tanggal_selesai').val(data.tanggal_selesai);
         } catch (error) {
             showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
         } finally {
@@ -174,7 +186,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             $('#cancel_changes').hide();
 
             try {
-                const response = await axios.post(`<?= base_url('sakitmata/update/' . $sakitmata['id_keterangan_sakit_mata']) ?>`, formData, {
+                const response = await axios.post(`<?= base_url('istirahat/update/' . $istirahat['id_keterangan_istirahat']) ?>`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }

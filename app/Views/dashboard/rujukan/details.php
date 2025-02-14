@@ -63,12 +63,12 @@ $usia = $registrasi->diff($tanggal_lahir);
     <?php if ($previous): ?>
         <a class="fs-6 mx-2 text-success-emphasis" href="<?= site_url('rujukan/details/' . $previous['id_rujukan']) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="<?= $previous['nomor_registrasi']; ?> • <?= $previous['no_rm'] ?> • <?= $previous['nama_pasien']; ?>"><i class="fa-solid fa-circle-arrow-left"></i></a>
     <?php else: ?>
-        <span class="fs-6 mx-2 text-success-emphasis" style="cursor: no-drop; opacity: .5;" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Tidak ada laporan operasi sebelumnya"><i class="fa-solid fa-circle-arrow-left"></i></span>
+        <span class="fs-6 mx-2 text-success-emphasis" style="cursor: no-drop; opacity: .5;" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Tidak ada surat sebelumnya"><i class="fa-solid fa-circle-arrow-left"></i></span>
     <?php endif; ?>
     <?php if ($next): ?>
         <a class="fs-6 mx-2 text-success-emphasis" href="<?= site_url('rujukan/details/' . $next['id_rujukan']) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="<?= $next['nomor_registrasi']; ?> • <?= $next['no_rm'] ?> • <?= $next['nama_pasien']; ?>"><i class="fa-solid fa-circle-arrow-right"></i></a>
     <?php else: ?>
-        <span class="fs-6 mx-2 text-success-emphasis" style="cursor: no-drop; opacity: .5;" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Tidak ada laporan operasi berikutnya"><i class="fa-solid fa-circle-arrow-right"></i></span>
+        <span class="fs-6 mx-2 text-success-emphasis" style="cursor: no-drop; opacity: .5;" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Tidak ada surat berikutnya"><i class="fa-solid fa-circle-arrow-right"></i></span>
     <?php endif; ?>
 </div>
 <div style="min-width: 1px; max-width: 1px;"></div>
