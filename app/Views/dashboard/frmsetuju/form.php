@@ -531,13 +531,13 @@ $waktuFormatted = $dateTime->format('H.i');
                     <table class="table" style="width: 100%; margin-bottom: 4px;">
                         <tbody>
                             <tr>
-                                <td style="width: 33.33%; text-align: center; vertical-align: top; padding-bottom: 1cm;">
+                                <td style="width: 33.33%; text-align: center; vertical-align: top; padding-bottom: 1.5cm;">
                                     <div>Teluk Kuantan, <?= $tanggalFormatted ?> pukul <?= $waktuFormatted ?><br>Yang menyatakan</div>
                                 </td>
-                                <td style="width: 33.33%; text-align: center; vertical-align: top; padding-bottom: 1cm;">
+                                <td style="width: 33.33%; text-align: center; vertical-align: top; padding-bottom: 1.5cm;">
                                     <div>Saksi I</div>
                                 </td>
-                                <td style="width: 33.33%; text-align: center; vertical-align: top; padding-bottom: 1cm;">
+                                <td style="width: 33.33%; text-align: center; vertical-align: top; padding-bottom: 1.5cm;">
                                     <div>Saksi II</div>
                                 </td>
                             </tr>
