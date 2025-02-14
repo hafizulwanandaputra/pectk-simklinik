@@ -82,6 +82,7 @@ $waktuFormatted = $dateTime->format('H.i');
             overflow: hidden;
             padding: 0cm;
             font-size: 10pt;
+            line-height: 1.1;
         }
 
         .border-bottom-right {
