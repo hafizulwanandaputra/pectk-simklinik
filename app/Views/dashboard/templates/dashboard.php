@@ -471,17 +471,30 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                 </ul>
                             </div>
                             <li class="nav-item">
-                                <a style="font-size: 1em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'frmsetuju') ? 'active bg-success' : '' ?>" href=" <?= base_url('/frmsetuju'); ?>">
+                                <span style="font-size: 1em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'frmsetuju') ? 'active bg-success' : '' ?>" role="button" data-bs-toggle="collapse" data-bs-target="#submenu-formulir">
                                     <div class="d-flex align-items-start <?= ($activeSegment === 'frmsetuju') ? 'text-white' : 'text-success-emphasis' ?>">
                                         <div style="min-width: 24px; max-width: 24px; text-align: center;">
                                             <i class="fa-solid fa-file-contract"></i>
                                         </div>
                                         <div class="flex-fill mx-2">
-                                            Formulir Persetujuan Tindakan
+                                            Formulir
                                         </div>
                                     </div>
-                                </a>
+                                </span>
                             </li>
+                            <div id="submenu-formulir" class="collapse <?= ($activeSegment === 'frmsetuju') ? 'show' : '' ?>">
+                                <ul class="nav nav-pills flex-column mt-1">
+                                    <li class="nav-item" style="margin-left: calc(24px + 0.5rem);">
+                                        <a class="nav-link px-2 py-1 <?= ($activeSegment === 'frmsetuju') ? 'active bg-success' : '' ?>" href="<?= base_url('/frmsetuju'); ?>">
+                                            <div class="d-flex align-items-start <?= ($activeSegment === 'frmsetuju') ? 'text-white' : 'text-success-emphasis' ?>">
+                                                <div class="flex-fill fw-normal" style="font-size: 0.75em;">
+                                                    Persetujuan Tindakan
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
                         <?php endif; ?>
                         <?php if (session()->get('role') == "Apoteker" || session()->get('role') == "Admin") : ?>
                             <li class="nav-item">
