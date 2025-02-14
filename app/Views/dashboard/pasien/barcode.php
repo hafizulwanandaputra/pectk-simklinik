@@ -14,11 +14,10 @@ $usia = $sekarang->diff($tanggal_lahir);
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="<?= base_url('assets_public/fonts/texgyre-heros/stylesheet.css') ?>">
     <title><?= $title; ?></title>
     <style>
         body {
-            font-family: TeXGyreHeros, Helvetica, Arial, sans-serif;
+            font-family: Helvetica, Arial, sans-serif;
             font-size: 7pt;
             line-height: 1.2;
         }
