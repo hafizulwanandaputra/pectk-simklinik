@@ -328,6 +328,7 @@ class Asesmen extends BaseController
             // Set base validation rules
             $validation->setRules([
                 'keluhan_utama' => 'required',
+                'kesadaran' => 'required',
                 'keadaan_umum' => 'required',
                 'alergi' => 'required',
                 'alergi_keterangan' => $alergi === 'YA' ? 'required' : 'permit_empty',
