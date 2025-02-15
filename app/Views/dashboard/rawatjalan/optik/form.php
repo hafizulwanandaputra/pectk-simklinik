@@ -95,6 +95,39 @@ $tanggalFormatted = $tanggalFormatter->format($dateTime);
             border-top: 2px solid black;
             border-left: 2px solid black;
         }
+
+        .container-kacamata {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .garis {
+            position: absolute;
+            width: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            justify-content: center;
+        }
+
+        .isi-garis {
+            height: 2px;
+            width: 70%;
+            background-image: linear-gradient(to right, rgba(0, 0, 0, 0) 50%, black 50%);
+        }
+
+        .start {
+            left: 0;
+            transform: translateY(calc(-50% - 1.25px)) rotate(-<?= $optik['od_login_axis']; ?>deg);
+        }
+
+        .end {
+            right: 0;
+            transform: translateY(calc(-50% - 1.25px)) rotate(-<?= $optik['os_login_axis']; ?>deg);
+        }
     </style>
 </head>
 
@@ -118,9 +151,19 @@ $tanggalFormatted = $tanggalFormatter->format($dateTime);
         <table class="table" style="width: 100%; margin-bottom: 4px;">
             <thead>
                 <tr>
-                    <th style="width: 100%;">
-                        <div style="text-align: center;">
-                            <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/kacamata.png')) ?>" width="360px" alt="">
+                    <th style="display: flex; justify-content: center;">
+                        <div style="position: relative; width: 340px;">
+                            <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/kacamata.png')) ?>" width="340px" alt="">
+                            <!-- OD -->
+                            <div class="container-kacamata">
+                                <div class="garis start">
+                                    <div class="isi-garis"></div>
+                                </div>
+                                <!-- OS -->
+                                <div class="garis end">
+                                    <div class="isi-garis"></div>
+                                </div>
+                            </div>
                         </div>
                     </th>
                     <td style="width: 0%;">

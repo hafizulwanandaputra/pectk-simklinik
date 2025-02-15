@@ -26,7 +26,35 @@ $usia = $registrasi->diff($tanggal_lahir);
         z-index: 1050;
     }
 
+    .garis {
+        width: 50%;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        display: flex;
+        justify-content: center;
+    }
+
+    .isi-garis {
+        height: 2px;
+        /* Bisa diubah tanpa mengganggu posisi */
+        width: 70%;
+        background-image: linear-gradient(to right, rgba(0, 0, 0, 0) 50%, black 50%);
+    }
+
+    .garis.start-0 {
+        transform: translateY(-50%) rotate(0deg);
+    }
+
+    .garis.end-0 {
+        transform: translateY(-50%) rotate(0deg);
+    }
+
     @media (prefers-color-scheme: dark) {
+        .isi-garis {
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0) 50%, white 50%);
+        }
+
         #kacamata {
             filter: invert(1);
         }
@@ -105,8 +133,19 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <?php endif; ?>
                 <div class="d-flex flex-column flex-lg-row justify-content-lg-center mb-2">
                     <center>
-                        <figure class="figure mb-0 mx-3">
+                        <figure class="figure mb-0 mx-3 position-relative">
                             <img src="<?= base_url('assets/images/kacamata.png') ?>" width="512px" id="kacamata" class="figure-img img-fluid mb-0 pb-0" alt="Kacamata">
+                            <!-- Garisan Axis -->
+                            <div class="position-absolute top-50 start-0 translate-middle-y w-100">
+                                <!-- OD -->
+                                <div class="garis position-absolute start-0">
+                                    <div class="isi-garis"></div>
+                                </div>
+                                <!-- OS -->
+                                <div class="garis position-absolute end-0">
+                                    <div class="isi-garis"></div>
+                                </div>
+                            </div>
                         </figure>
                     </center>
                     <div class="row g-1 radio-group">
@@ -174,7 +213,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                                         <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="od_login_cyldr" name="od_login_cyldr">
                                     </th>
                                     <th>
-                                        <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="od_login_axis" name="od_login_axis">
+                                        <input type="number" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="od_login_axis" name="od_login_axis">
                                     </th>
                                     <th>
                                         <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="od_login_prisma" name="od_login_prisma">
@@ -189,7 +228,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                                         <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="os_login_cyldr" name="os_login_cyldr">
                                     </th>
                                     <th>
-                                        <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="os_login_axis" name="os_login_axis">
+                                        <input type="number" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="os_login_axis" name="os_login_axis">
                                     </th>
                                     <th>
                                         <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="os_login_prisma" name="os_login_prisma">
@@ -212,7 +251,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                                         <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="od_domo_cyldr" name="od_domo_cyldr">
                                     </th>
                                     <th>
-                                        <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="od_domo_axis" name="od_domo_axis">
+                                        <input type="number" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="od_domo_axis" name="od_domo_axis">
                                     </th>
                                     <th>
                                         <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="od_domo_prisma" name="od_domo_prisma">
@@ -227,7 +266,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                                         <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="os_domo_cyldr" name="os_domo_cyldr">
                                     </th>
                                     <th>
-                                        <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="os_domo_axis" name="os_domo_axis">
+                                        <input type="number" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="os_domo_axis" name="os_domo_axis">
                                     </th>
                                     <th>
                                         <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="os_domo_prisma" name="os_domo_prisma">
@@ -250,7 +289,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                                         <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="od_quitat_cyldr" name="od_quitat_cyldr">
                                     </th>
                                     <th>
-                                        <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="od_quitat_axis" name="od_quitat_axis">
+                                        <input type="number" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="od_quitat_axis" name="od_quitat_axis">
                                     </th>
                                     <th>
                                         <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="od_quitat_prisma" name="od_quitat_prisma">
@@ -265,7 +304,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                                         <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="os_quitat_cyldr" name="os_quitat_cyldr">
                                     </th>
                                     <th>
-                                        <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="os_quitat_axis" name="os_quitat_axis">
+                                        <input type="number" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="os_quitat_axis" name="os_quitat_axis">
                                     </th>
                                     <th>
                                         <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="os_quitat_prisma" name="os_quitat_prisma">
@@ -312,7 +351,6 @@ $usia = $registrasi->diff($tanggal_lahir);
             const response = await axios.get('<?= base_url('rawatjalan/optik/view/') . $optik['id_optik'] ?>');
             const data = response.data;
 
-            // Skrining Risiko Cedera/Jatuh (Get Up and Go Score)
             const tipe_lensa = data.tipe_lensa;
             if (tipe_lensa) {
                 $("input[name='tipe_lensa'][value='" + tipe_lensa + "']").prop('checked', true);
@@ -359,6 +397,15 @@ $usia = $registrasi->diff($tanggal_lahir);
             $('#os_quitat_basis').val(data.os_quitat_basis);
             $('#os_quitat_vitror').val(data.os_quitat_vitror);
             $('#os_quitat_pupil').val(data.os_quitat_pupil);
+
+            const od_login_axis = data.od_login_axis;
+            if (od_login_axis) {
+                $(".garis.start-0").css("transform", `translateY(-50%) rotate(-${od_login_axis}deg)`);
+            }
+            const os_login_axis = data.os_login_axis;
+            if (os_login_axis) {
+                $(".garis.end-0").css("transform", `translateY(-50%) rotate(-${os_login_axis}deg)`);
+            }
         } catch (error) {
             showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
         } finally {
@@ -373,6 +420,22 @@ $usia = $registrasi->diff($tanggal_lahir);
                 block: "nearest", // Fokus pada elemen aktif
                 inline: "center" // Elemen di-scroll ke tengah horizontal
             });
+        });
+        $('#od_login_axis').on('input', function() {
+            let value = $(this).val();
+            if (value === '') {
+                $(".garis.start-0").css("transform", `translateY(-50%) rotate(-0deg)`);
+            } else {
+                $(".garis.start-0").css("transform", `translateY(-50%) rotate(-${value}deg)`);
+            }
+        });
+        $('#os_login_axis').on('input', function() {
+            let value = $(this).val();
+            if (value === '') {
+                $(".garis.end-0").css("transform", `translateY(-50%) rotate(-0deg)`);
+            } else {
+                $(".garis.end-0").css("transform", `translateY(-50%) rotate(-${value}deg)`);
+            }
         });
         <?php if ($rawatjalan['transaksi'] == 0) : ?>
             $('#optikForm').submit(async function(ə) {
