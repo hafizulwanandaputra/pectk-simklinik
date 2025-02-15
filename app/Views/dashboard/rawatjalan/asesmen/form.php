@@ -304,24 +304,24 @@ $waktuFormatted = $dateTime->format('H.i.s');
             <div style="margin-left: 0.25cm; margin-right: 0.25cm;">
                 <table class="table" style="width: 100%; margin-bottom: 4px; border-collapse: collapse; border: 1px solid black;">
                     <tr>
-                        <th style="width: 0%; padding-top: 3px; text-align: center; vertical-align: middle; border: 1px solid black;"></th>
-                        <th style="width: 50%; padding-top: 3px; text-align: center; vertical-align: middle; border: 1px solid black;">OD</th>
-                        <th style="width: 50%; padding-top: 3px; text-align: center; vertical-align: middle; border: 1px solid black;">OS</th>
+                        <th style="width: 0%; padding-top: 3px; padding-bottom: 0; text-align: center; vertical-align: middle; border: 1px solid black;"></th>
+                        <th style="width: 50%; padding-top: 3px; padding-bottom: 0; text-align: center; vertical-align: middle; border: 1px solid black;">OD</th>
+                        <th style="width: 50%; padding-top: 3px; padding-bottom: 0; text-align: center; vertical-align: middle; border: 1px solid black;">OS</th>
                     </tr>
                     <tr>
-                        <th style="width: 0%; padding-top: 3px; text-align: center; vertical-align: middle; border: 1px solid black; white-space: nowrap;">Visus UCVA</th>
-                        <td style="width: 50%; padding-top: 3px; text-align: center; vertical-align: middle; border: 1px solid black;"><?= $asesmen['od_ucva'] ?></td>
-                        <td style="width: 50%; padding-top: 3px; text-align: center; vertical-align: middle; border: 1px solid black;"><?= $asesmen['os_ucva'] ?></td>
+                        <th style="width: 0%; padding-top: 3px; padding-bottom: 0; text-align: center; vertical-align: middle; border: 1px solid black; white-space: nowrap;">Visus UCVA</th>
+                        <td style="width: 50%; padding-top: 3px; padding-bottom: 0; text-align: center; vertical-align: middle; border: 1px solid black;"><?= $asesmen['od_ucva'] ?></td>
+                        <td style="width: 50%; padding-top: 3px; padding-bottom: 0; text-align: center; vertical-align: middle; border: 1px solid black;"><?= $asesmen['os_ucva'] ?></td>
                     </tr>
                     <tr>
-                        <th style="width: 0%; padding-top: 3px; text-align: center; vertical-align: middle; border: 1px solid black; white-space: nowrap;">Visus BCVA</th>
-                        <td style="width: 50%; padding-top: 3px; text-align: center; vertical-align: middle; border: 1px solid black;"><?= $asesmen['od_bcva'] ?></td>
-                        <td style="width: 50%; padding-top: 3px; text-align: center; vertical-align: middle; border: 1px solid black;"><?= $asesmen['os_bcva'] ?></td>
+                        <th style="width: 0%; padding-top: 3px; padding-bottom: 0; text-align: center; vertical-align: middle; border: 1px solid black; white-space: nowrap;">Visus BCVA</th>
+                        <td style="width: 50%; padding-top: 3px; padding-bottom: 0; text-align: center; vertical-align: middle; border: 1px solid black;"><?= $asesmen['od_bcva'] ?></td>
+                        <td style="width: 50%; padding-top: 3px; padding-bottom: 0; text-align: center; vertical-align: middle; border: 1px solid black;"><?= $asesmen['os_bcva'] ?></td>
                     </tr>
                     <tr>
-                        <th style="width: 0%; padding-top: 3px; text-align: center; vertical-align: middle; border: 1px solid black; white-space: nowrap;">Tono</th>
-                        <td style="width: 50%; padding-top: 3px; text-align: center; vertical-align: middle; border: 1px solid black;"><?= $asesmen['tono_od'] ?></td>
-                        <td style="width: 50%; padding-top: 3px; text-align: center; vertical-align: middle; border: 1px solid black;"><?= $asesmen['tono_os'] ?></td>
+                        <th style="width: 0%; padding-top: 3px; padding-bottom: 0; text-align: center; vertical-align: middle; border: 1px solid black; white-space: nowrap;">Tono</th>
+                        <td style="width: 50%; padding-top: 3px; padding-bottom: 0; text-align: center; vertical-align: middle; border: 1px solid black;"><?= $asesmen['tono_od'] ?></td>
+                        <td style="width: 50%; padding-top: 3px; padding-bottom: 0; text-align: center; vertical-align: middle; border: 1px solid black;"><?= $asesmen['tono_os'] ?></td>
                     </tr>
                 </table>
             </div>
