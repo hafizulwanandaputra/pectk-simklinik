@@ -245,6 +245,19 @@ $routes->get('/(?i)istirahat/(?i)export/(:any)', 'Istirahat::export/$1');
 $routes->post('/(?i)istirahat/(?i)update/(:any)', 'Istirahat::update/$1');
 $routes->delete('/(?i)istirahat/(?i)delete/(:any)', 'Istirahat::delete/$1');
 
+// SURAT KETERANGAN BUTA WARNA
+$routes->get('/(?i)butawarna', 'ButaWarna::index');
+$routes->get('/(?i)butawarna/butawarnalist', 'ButaWarna::butawarnalist');
+$routes->get('/(?i)butawarna/pasienlist', 'ButaWarna::pasienlist');
+$routes->get('/(?i)butawarna/(:num)', 'ButaWarna::details/$1');
+$routes->post('/(?i)butawarna/(?i)create', 'ButaWarna::create');
+$routes->get('/(?i)butawarna/(?i)details/(:any)', 'ButaWarna::details/$1');
+$routes->get('/(?i)butawarna/(?i)view/(:any)', 'ButaWarna::view/$1');
+$routes->get('/(?i)butawarna/(?i)listvisus', 'ButaWarna::listvisus');
+$routes->get('/(?i)butawarna/(?i)export/(:any)', 'ButaWarna::export/$1');
+$routes->post('/(?i)butawarna/(?i)update/(:any)', 'ButaWarna::update/$1');
+$routes->delete('/(?i)butawarna/(?i)delete/(:any)', 'ButaWarna::delete/$1');
+
 // SUPPLIER
 $routes->get('/(?i)supplier', 'Supplier::index');
 $routes->post('/(?i)supplier/(?i)supplierlist', 'Supplier::supplierlist');

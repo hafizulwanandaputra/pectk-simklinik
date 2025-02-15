@@ -530,8 +530,8 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                         <?php endif; ?>
                         <?php if (session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admin" || session()->get('role') == "Admisi") : ?>
                             <li class="nav-item">
-                                <span style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'rujukan' || $activeSegment === 'sakitmata' || $activeSegment === 'istirahat') ? 'active bg-success' : '' ?>" role="button" data-bs-toggle="collapse" data-bs-target="#submenu-surat">
-                                    <div class="d-flex align-items-start <?= ($activeSegment === 'rujukan' || $activeSegment === 'sakitmata' || $activeSegment === 'istirahat') ? 'text-white' : 'text-success-emphasis' ?>">
+                                <span style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'rujukan' || $activeSegment === 'sakitmata' || $activeSegment === 'istirahat' || $activeSegment === 'butawarna') ? 'active bg-success' : '' ?>" role="button" data-bs-toggle="collapse" data-bs-target="#submenu-surat">
+                                    <div class="d-flex align-items-start <?= ($activeSegment === 'rujukan' || $activeSegment === 'sakitmata' || $activeSegment === 'istirahat' || $activeSegment === 'butawarna') ? 'text-white' : 'text-success-emphasis' ?>">
                                         <div style="min-width: 24px; max-width: 24px; text-align: center;">
                                             <i class="fa-solid fa-envelope"></i>
                                         </div>
@@ -541,7 +541,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                     </div>
                                 </span>
                             </li>
-                            <div id="submenu-surat" class="collapse <?= ($activeSegment === 'rujukan' || $activeSegment === 'sakitmata' || $activeSegment === 'istirahat') ? 'show' : '' ?>">
+                            <div id="submenu-surat" class="collapse <?= ($activeSegment === 'rujukan' || $activeSegment === 'sakitmata' || $activeSegment === 'istirahat' || $activeSegment === 'butawarna') ? 'show' : '' ?>">
                                 <ul class="nav nav-pills flex-column mt-1">
                                     <?php if (session()->get('role') != "Perawat") : ?>
                                         <li class="nav-item" style="margin-left: calc(24px + 0.5rem);">
@@ -568,6 +568,15 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                             <div class="d-flex align-items-start <?= ($activeSegment === 'istirahat') ? 'text-white' : 'text-success-emphasis' ?>">
                                                 <div class="flex-fill fw-normal" style="font-size: 0.75em;">
                                                     Keterangan Istirahat
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item" style="margin-left: calc(24px + 0.5rem);">
+                                        <a class="nav-link px-2 py-1 <?= ($activeSegment === 'butawarna') ? 'active bg-success activeLinkSideBar' : '' ?>" href="<?= base_url('/butawarna'); ?>">
+                                            <div class="d-flex align-items-start <?= ($activeSegment === 'butawarna') ? 'text-white' : 'text-success-emphasis' ?>">
+                                                <div class="flex-fill fw-normal" style="font-size: 0.75em;">
+                                                    Keterangan Buta Warna
                                                 </div>
                                             </div>
                                         </a>

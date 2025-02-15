@@ -74,6 +74,8 @@ class Filters extends BaseConfig
                 '/sakitmata/*',
                 '/istirahat',
                 '/istirahat/*',
+                '/butawarna',
+                '/butawarna/*',
                 '/supplier',
                 '/supplier/*',
                 '/obat',
