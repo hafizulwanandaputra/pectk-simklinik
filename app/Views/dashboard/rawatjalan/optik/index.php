@@ -33,6 +33,7 @@ $usia = $registrasi->diff($tanggal_lahir);
         transform: translateY(-50%);
         display: flex;
         justify-content: center;
+        transition: transform 1s ease-in-out;
     }
 
     .isi-garis {
