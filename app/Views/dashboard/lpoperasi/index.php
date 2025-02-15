@@ -282,7 +282,7 @@
             if (data.total === 0) {
                 $('#paginationNav ul').empty();
                 $('#lPOperasiContainer').append(
-                    '<li class="list-group-item border-top-0 pb-3 pt-3">' +
+                    '<li class="list-group-item <?= (session()->get('role') != 'Admisi') ? 'border-top-0' : ''; ?> pb-3 pt-3">' +
                     '    <h1 class="display-4 text-center text-muted" style="font-weight: 200;">Data Kosong</h1>' +
                     '</li>'
                 );
