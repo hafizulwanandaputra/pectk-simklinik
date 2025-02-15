@@ -39,7 +39,7 @@ $usia = $registrasi->diff($tanggal_lahir);
         height: 2px;
         /* Bisa diubah tanpa mengganggu posisi */
         width: 70%;
-        background-image: linear-gradient(to right, rgba(0, 0, 0, 0) 50%, black 50%);
+        background-color: black;
     }
 
     .garis.start-0 {
@@ -52,7 +52,7 @@ $usia = $registrasi->diff($tanggal_lahir);
 
     @media (prefers-color-scheme: dark) {
         .isi-garis {
-            background-image: linear-gradient(to right, rgba(255, 255, 255, 0) 50%, white 50%);
+            background-color: white;
         }
 
         #kacamata {

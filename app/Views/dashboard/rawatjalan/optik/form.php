@@ -116,7 +116,7 @@ $tanggalFormatted = $tanggalFormatter->format($dateTime);
         .isi-garis {
             height: 2px;
             width: 70%;
-            background-image: linear-gradient(to right, rgba(0, 0, 0, 0) 50%, black 50%);
+            background-color: black;
         }
 
         .start {
