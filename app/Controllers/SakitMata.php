@@ -232,17 +232,25 @@ class SakitMata extends BaseController
                 // Jalankan Puppeteer untuk konversi HTML ke PDF
                 // Keterangan: "node " . FCPATH . "puppeteer-pdf.js $htmlFile $pdfFile panjang lebar marginAtas margin Kanan marginBawah marginKiri"
                 // Silakan lihat puppeteer-pdf.js di folder public untuk keterangan lebih lanjut.
-                $command = env('CMD-ENV') . "node " . FCPATH . "puppeteer-pdf.js $htmlFile $pdfFile 297mm 210mm 0cm 0cm 0cm 0cm";
-                shell_exec($command);
+                $command = env('CMD-ENV') . "node " . FCPATH . "puppeteer-pdf.js $htmlFile $pdfFile 297mm 210mm 0cm 0cm 0cm 0cm 2>&1";
+                $output = shell_exec($command);
 
-                // Hapus file HTML
+                // Hapus file HTML setelah eksekusi
                 @unlink($htmlFile);
 
-                // Kirim PDF ke browser
+                // Jika tidak ada output, langsung stream PDF
+                if (!$output) {
+                    return $this->response
+                        ->setHeader('Content-Type', 'application/pdf')
+                        ->setHeader('Content-Disposition', 'inline; filename="SakitMata_' . $sakitmata['nomor_registrasi'] . '_' . str_replace('-', '', $sakitmata['no_rm']) . '.pdf')
+                        ->setBody(file_get_contents($pdfFile));
+                }
+
+                // Jika ada output (kemungkinan error), kembalikan HTTP 500 dengan <pre>
                 return $this->response
-                    ->setHeader('Content-Type', 'application/pdf')
-                    ->setHeader('Content-Disposition', 'inline; filename="SakitMata_' . $sakitmata['nomor_registrasi'] . '_' . str_replace('-', '', $sakitmata['no_rm']) . '.pdf')
-                    ->setBody(file_get_contents($pdfFile));
+                    ->setStatusCode(500)
+                    ->setHeader('Content-Type', 'text/html')
+                    ->setBody('<pre>' . htmlspecialchars($output) . '</pre>');
             } else {
                 // Menampilkan halaman tidak ditemukan jika pasien tidak ditemukan
                 throw PageNotFoundException::forPageNotFound();
