@@ -108,7 +108,7 @@ $tanggalFormatted = $tanggalFormatter->format($dateTime);
         .garis {
             position: absolute;
             width: 50%;
-            transform: translateY(-50%);
+            transform: translateY(calc(-50% - 2.25px));
             display: flex;
             justify-content: center;
         }
