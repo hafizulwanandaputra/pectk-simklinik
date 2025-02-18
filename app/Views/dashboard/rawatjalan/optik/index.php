@@ -194,12 +194,12 @@ $usia = $registrasi->diff($tanggal_lahir);
                                     <th class="border-bottom border-end"></th>
                                     <th style="min-width: 60px;" class="text-center border-bottom border-start">Vitrum Spher</th>
                                     <th style="min-width: 60px;" class="text-center border-bottom">Vitrum Cyldr</th>
-                                    <th style="min-width: 60px;" class="text-center border-bottom">Axis</th>
+                                    <th style="min-width: 60px;" class="text-center border-bottom"><span data-bs-toggle="tooltip" data-bs-title="Jika nilai ini tidak ada, garis axis tidak digambarkan di lembar resep kacamata.">Axis</span></th>
                                     <th style="min-width: 60px;" class="text-center border-bottom">Prisma</th>
                                     <th style="min-width: 60px;" class="text-center border-bottom border-end">Basis</th>
                                     <th style="min-width: 60px;" class="text-center border-bottom border-start">Vitrum Spher</th>
                                     <th style="min-width: 60px;" class="text-center border-bottom">Vitrum Cyldr</th>
-                                    <th style="min-width: 60px;" class="text-center border-bottom">Axis</th>
+                                    <th style="min-width: 60px;" class="text-center border-bottom"><span data-bs-toggle="tooltip" data-bs-title="Jika nilai ini tidak ada, garis axis tidak digambarkan di lembar resep kacamata.">Axis</span></th>
                                     <th style="min-width: 60px;" class="text-center border-bottom">Prisma</th>
                                     <th style="min-width: 60px;" class="text-center border-bottom border-end">Basis</th>
                                     <th style="min-width: 60px;" class="text-center border-bottom border-start">Golor Vitror</th>
