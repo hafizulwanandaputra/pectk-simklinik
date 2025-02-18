@@ -57,11 +57,13 @@
                             <div id="collapseFilter" class="accordion-collapse collapse" data-bs-parent="#accordionFilter">
                                 <div class="accordion-body px-2 py-1">
                                     <div class="d-flex flex-column flex-lg-row mb-1 gap-1 my-1">
-                                        <select id="statusFilter" class="form-select form-select-sm w-auto  flex-fill">
-                                            <option value="">Semua Transaksi</option>
-                                            <option value="1">Diproses</option>
-                                            <option value="0">Belum Diproses</option>
-                                        </select>
+                                        <?php if (session()->get('role') != 'Admisi') : ?>
+                                            <select id="statusFilter" class="form-select form-select-sm w-auto  flex-fill">
+                                                <option value="">Semua Transaksi</option>
+                                                <option value="1">Diproses</option>
+                                                <option value="0">Belum Diproses</option>
+                                            </select>
+                                        <?php endif; ?>
                                         <select id="jenisFilter" class="form-select form-select-sm w-auto  flex-fill">
                                             <option value="">Semua Jenis</option>
                                             <option value="Rawat Jalan">Rawat Jalan</option>
@@ -381,7 +383,7 @@
     async function fetchTransaksi() {
         const search = $('#searchInput').val();
         const offset = (currentPage - 1) * limit;
-        const status = $('#statusFilter').val();
+        const status = <?= (session()->get('role') == 'Admisi') ? "'1'" : "$('#statusFilter').val()"; ?>;
         const jenis = $('#jenisFilter').val();
         const names = $('#namesFilter').val();
         const kasir = $('#kasirFilter').val();

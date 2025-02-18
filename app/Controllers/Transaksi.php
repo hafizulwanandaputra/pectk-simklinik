@@ -9,9 +9,6 @@ use App\Models\ResepModel;
 use App\Models\RawatJalanModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use DateTime;
-
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\RequestException;
 use IntlDateFormatter;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
