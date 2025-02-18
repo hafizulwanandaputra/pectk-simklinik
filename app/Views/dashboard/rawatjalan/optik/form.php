@@ -122,11 +122,13 @@ $tanggalFormatted = $tanggalFormatter->format($dateTime);
         .start {
             left: 0;
             transform: translateY(calc(-50% - 2.25px)) rotate(-<?= $optik['od_login_axis']; ?>deg);
+            <?= (empty($optik['od_login_axis'])) ? 'display: none;' : ''; ?>
         }
 
         .end {
             right: 0;
             transform: translateY(calc(-50% - 2.25px)) rotate(-<?= $optik['os_login_axis']; ?>deg);
+            <?= (empty($optik['os_login_axis'])) ? 'display: none;' : ''; ?>
         }
     </style>
 </head>
