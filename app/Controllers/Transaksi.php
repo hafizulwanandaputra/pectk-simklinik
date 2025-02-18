@@ -31,8 +31,8 @@ class Transaksi extends BaseController
 
     public function index()
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+        // Memeriksa peran pengguna, hanya 'Admin', 'Admisi', atau 'Kasir' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi' || session()->get('role') == 'Kasir') {
             // Menyiapkan data untuk tampilan halaman kasir
             $data = [
                 'title' => 'Kasir - ' . $this->systemName, // Judul halaman
@@ -47,8 +47,8 @@ class Transaksi extends BaseController
 
     public function listtransaksi()
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+        // Memeriksa peran pengguna, hanya 'Admin', 'Admisi', atau 'Kasir' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi' || session()->get('role') == 'Kasir') {
             // Mengambil parameter dari permintaan GET
             $search = $this->request->getGet('search'); // Nilai pencarian
             $limit = $this->request->getGet('limit'); // Batas jumlah hasil
@@ -161,8 +161,8 @@ class Transaksi extends BaseController
 
     public function kasirlist()
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+        // Memeriksa peran pengguna, hanya 'Admin', 'Admisi', atau 'Kasir' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi' || session()->get('role') == 'Kasir') {
             $db = db_connect();
             // Mengambil kasir dari tabel user
             $transaksiData = $this->TransaksiModel
@@ -290,8 +290,8 @@ class Transaksi extends BaseController
 
     public function transaksi($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+        // Memeriksa peran pengguna, hanya 'Admin', 'Admisi', atau 'Kasir' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi' || session()->get('role') == 'Kasir') {
             // Mengambil data transaksi berdasarkan id
             $data = $this->TransaksiModel->find($id);
             return $this->response->setJSON($data); // Mengembalikan data dalam format JSON
@@ -1383,8 +1383,8 @@ class Transaksi extends BaseController
 
     public function struk($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+        // Memeriksa peran pengguna, hanya 'Admin', 'Admisi', atau 'Kasir' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi' || session()->get('role') == 'Kasir') {
             // Mengambil data transaksi berdasarkan ID
             $transaksi = $this->TransaksiModel->find($id);
             // Mengambil detail layanan dari transaksi

@@ -20,7 +20,9 @@
     <div id="loadingSpinner" class="spinner-border spinner-border-sm mx-2" role="status" style="min-width: 1rem;">
         <span class="visually-hidden">Loading...</span>
     </div>
-    <a class="fs-6 mx-2 text-success-emphasis" href="<?= base_url('transaksi/report') ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Laporan Transaksi Harian"><i class="fa-solid fa-file-invoice-dollar"></i></a>
+    <?php if (session()->get('role') != 'Admisi') : ?>
+        <a class="fs-6 mx-2 text-success-emphasis" href="<?= base_url('transaksi/report') ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Laporan Transaksi Harian"><i class="fa-solid fa-file-invoice-dollar"></i></a>
+    <?php endif; ?>
     <a id="toggleFilter" class="fs-6 mx-2 text-success-emphasis" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Pencarian"><i class="fa-solid fa-magnifying-glass"></i></a>
     <a id="refreshButton" class="fs-6 mx-2 text-success-emphasis" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan"><i class="fa-solid fa-sync"></i></a>
 </div>
@@ -86,56 +88,58 @@
     <div class="px-3 mt-3">
         <div class="no-fluid-content">
             <div class="shadow-sm rounded">
-                <div class="d-grid gap-2">
-                    <button id="collapseList" class="btn btn-primary btn-sm bg-gradient  rounded-bottom-0" type="button" data-bs-toggle="collapse" data-bs-target="#transaksiFormContainer" aria-expanded="false" aria-controls="transaksiFormContainer">
-                        <i class="fa-solid fa-plus"></i> Tambah Transaksi
-                    </button>
-                </div>
-                <ul id="transaksiFormContainer" class="list-group rounded-0 collapse">
-                    <li class="list-group-item border-top-0 bg-body-tertiary">
-                        <div class="row g-3">
-                            <div class="col-lg-6">
-                                <div>
-                                    <div class="fw-bold mb-2 border-bottom">Tambah Pasien Rawat Jalan</div>
-                                    <form id="transaksiForm1" enctype="multipart/form-data" class="d-flex flex-column gap-2">
-                                        <div class="flex-fill">
-                                            <select class="form-select form-select-sm" id="nomor_registrasi" name="nomor_registrasi" aria-label="nomor_registrasi">
-                                                <option value="" disabled selected>-- Pilih Pasien Rawat Jalan --</option>
-                                            </select>
-                                            <div class="invalid-feedback"></div>
-                                        </div>
-                                        <div class="d-grid gap-2 d-lg-flex justify-content-lg-end">
-                                            <button type="submit" id="submitButton1" class="btn btn-primary bg-gradient btn-sm" disabled>
-                                                <i class="fa-solid fa-plus"></i> Tambah
-                                            </button>
-                                        </div>
-                                    </form>
+                <?php if (session()->get('role') != 'Admisi') : ?>
+                    <div class="d-grid gap-2">
+                        <button id="collapseList" class="btn btn-primary btn-sm bg-gradient  rounded-bottom-0" type="button" data-bs-toggle="collapse" data-bs-target="#transaksiFormContainer" aria-expanded="false" aria-controls="transaksiFormContainer">
+                            <i class="fa-solid fa-plus"></i> Tambah Transaksi
+                        </button>
+                    </div>
+                    <ul id="transaksiFormContainer" class="list-group rounded-0 collapse">
+                        <li class="list-group-item border-top-0 bg-body-tertiary">
+                            <div class="row g-3">
+                                <div class="col-lg-6">
+                                    <div>
+                                        <div class="fw-bold mb-2 border-bottom">Tambah Pasien Rawat Jalan</div>
+                                        <form id="transaksiForm1" enctype="multipart/form-data" class="d-flex flex-column gap-2">
+                                            <div class="flex-fill">
+                                                <select class="form-select form-select-sm" id="nomor_registrasi" name="nomor_registrasi" aria-label="nomor_registrasi">
+                                                    <option value="" disabled selected>-- Pilih Pasien Rawat Jalan --</option>
+                                                </select>
+                                                <div class="invalid-feedback"></div>
+                                            </div>
+                                            <div class="d-grid gap-2 d-lg-flex justify-content-lg-end">
+                                                <button type="submit" id="submitButton1" class="btn btn-primary bg-gradient btn-sm" disabled>
+                                                    <i class="fa-solid fa-plus"></i> Tambah
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div>
+                                        <div class="fw-bold mb-2 border-bottom">Tambah Pasien dari Resep Luar</div>
+                                        <form id="transaksiForm2" enctype="multipart/form-data" class="d-flex flex-column gap-2">
+                                            <div class="flex-fill">
+                                                <select class="form-select form-select-sm" id="id_resep" name="id_resep" aria-label="id_resep">
+                                                    <option value="" disabled selected>-- Pilih Pasien dari Resep Luar --</option>
+                                                </select>
+                                                <div class="invalid-feedback"></div>
+                                            </div>
+                                            <div class="d-grid gap-2 d-lg-flex justify-content-lg-end">
+                                                <button type="submit" id="submitButton2" class="btn btn-primary bg-gradient btn-sm" disabled>
+                                                    <i class="fa-solid fa-plus"></i> Tambah
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
-                                <div>
-                                    <div class="fw-bold mb-2 border-bottom">Tambah Pasien dari Resep Luar</div>
-                                    <form id="transaksiForm2" enctype="multipart/form-data" class="d-flex flex-column gap-2">
-                                        <div class="flex-fill">
-                                            <select class="form-select form-select-sm" id="id_resep" name="id_resep" aria-label="id_resep">
-                                                <option value="" disabled selected>-- Pilih Pasien dari Resep Luar --</option>
-                                            </select>
-                                            <div class="invalid-feedback"></div>
-                                        </div>
-                                        <div class="d-grid gap-2 d-lg-flex justify-content-lg-end">
-                                            <button type="submit" id="submitButton2" class="btn btn-primary bg-gradient btn-sm" disabled>
-                                                <i class="fa-solid fa-plus"></i> Tambah
-                                            </button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-                <ul id="transaksiContainer" class="list-group rounded-top-0 ">
+                        </li>
+                    </ul>
+                <?php endif; ?>
+                <ul id="transaksiContainer" class="list-group <?= (session()->get('role') != 'Admisi') ? 'rounded-top-0' : ''; ?>">
                     <?php for ($i = 0; $i < 12; $i++) : ?>
-                        <li class="list-group-item border-top-0 pb-3 pt-3" style="cursor: wait;">
+                        <li class="list-group-item <?= (session()->get('role') != 'Admisi') ? 'border-top-0' : ''; ?> pb-3 pt-3" style="cursor: wait;">
                             <div class="d-flex">
                                 <div class="align-self-center w-100">
                                     <h5 class="card-title d-flex placeholder-glow">
@@ -193,7 +197,9 @@
                             <hr>
                             <div class="d-grid gap-2 d-flex justify-content-end">
                                 <a class="btn btn-body bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
-                                <a class="btn btn-danger bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                                <?php if (session()->get('role') != 'Admisi') : ?>
+                                    <a class="btn btn-danger bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                                <?php endif; ?>
                             </div>
                         </li>
                     <?php endfor; ?>
@@ -204,20 +210,22 @@
             </nav>
         </div>
     </div>
-    <div class="modal modal-sheet p-4 py-md-5 fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" role="dialog">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content bg-body-tertiary rounded-4 shadow-lg transparent-blur">
-                <div class="modal-body p-4 text-center">
-                    <h5 id="deleteMessage"></h5>
-                    <h6 class="mb-0" id="deleteSubmessage"></h6>
-                </div>
-                <div class="modal-footer flex-nowrap p-0" style="border-top: 1px solid var(--bs-border-color-translucent);">
-                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end" style="border-right: 1px solid var(--bs-border-color-translucent)!important;" data-bs-dismiss="modal">Tidak</button>
-                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0" id="confirmDeleteBtn">Ya</button>
+    <?php if (session()->get('role') != 'Admisi') : ?>
+        <div class="modal modal-sheet p-4 py-md-5 fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" role="dialog">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content bg-body-tertiary rounded-4 shadow-lg transparent-blur">
+                    <div class="modal-body p-4 text-center">
+                        <h5 id="deleteMessage"></h5>
+                        <h6 class="mb-0" id="deleteSubmessage"></h6>
+                    </div>
+                    <div class="modal-footer flex-nowrap p-0" style="border-top: 1px solid var(--bs-border-color-translucent);">
+                        <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end" style="border-right: 1px solid var(--bs-border-color-translucent)!important;" data-bs-dismiss="modal">Tidak</button>
+                        <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0" id="confirmDeleteBtn">Ya</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    <?php endif; ?>
 </main>
 <?= $this->endSection(); ?>
 <?= $this->section('javascript'); ?>
@@ -226,7 +234,7 @@
     let currentPage = 1;
     let transaksiId = null;
     var placeholder = `
-            <li class="list-group-item border-top-0 pb-3 pt-3" style="cursor: wait;">
+            <li class="list-group-item <?= (session()->get('role') != 'Admisi') ? 'border-top-0' : ''; ?> pb-3 pt-3" style="cursor: wait;">
                 <div class="d-flex">
                     <div class="align-self-center w-100">
                         <h5 class="card-title d-flex placeholder-glow">
@@ -284,50 +292,54 @@
                 <hr>
                 <div class="d-grid gap-2 d-flex justify-content-end">
                     <a class="btn btn-body bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
-                    <a class="btn btn-danger bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                    <?php if (session()->get('role') != 'Admisi') : ?>
+                        <a class="btn btn-danger bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                    <?php endif; ?>
                 </div>
             </li>
     `;
-    async function fetchPasienOptions1() {
-        try {
-            const response = await axios.get('<?= base_url('transaksi/pasienlist') ?>');
+    <?php if (session()->get('role') != 'Admisi') : ?>
+        async function fetchPasienOptions1() {
+            try {
+                const response = await axios.get('<?= base_url('transaksi/pasienlist') ?>');
 
-            if (response.data.success) {
-                const options = response.data.data;
-                const select = $('#nomor_registrasi');
+                if (response.data.success) {
+                    const options = response.data.data;
+                    const select = $('#nomor_registrasi');
 
-                // Clear existing options except the first one
-                select.find('option:not(:first)').remove();
+                    // Clear existing options except the first one
+                    select.find('option:not(:first)').remove();
 
-                // Loop through the options and append them to the select element
-                options.forEach(option => {
-                    select.append(`<option value="${option.value}">${option.text}</option>`);
-                });
+                    // Loop through the options and append them to the select element
+                    options.forEach(option => {
+                        select.append(`<option value="${option.value}">${option.text}</option>`);
+                    });
+                }
+            } catch (error) {
+                showFailedToast(`${error.response.data.error}<br>${error.response.data.details.message}`);
             }
-        } catch (error) {
-            showFailedToast(`${error.response.data.error}<br>${error.response.data.details.message}`);
         }
-    }
-    async function fetchPasienOptions2() {
-        try {
-            const response = await axios.get('<?= base_url('transaksi/pasienlistexternal') ?>');
+        async function fetchPasienOptions2() {
+            try {
+                const response = await axios.get('<?= base_url('transaksi/pasienlistexternal') ?>');
 
-            if (response.data.success) {
-                const options = response.data.data;
-                const select = $('#id_resep');
+                if (response.data.success) {
+                    const options = response.data.data;
+                    const select = $('#id_resep');
 
-                // Clear existing options except the first one
-                select.find('option:not(:first)').remove();
+                    // Clear existing options except the first one
+                    select.find('option:not(:first)').remove();
 
-                // Loop through the options and append them to the select element
-                options.forEach(option => {
-                    select.append(`<option value="${option.value}">${option.text}</option>`);
-                });
+                    // Loop through the options and append them to the select element
+                    options.forEach(option => {
+                        select.append(`<option value="${option.value}">${option.text}</option>`);
+                    });
+                }
+            } catch (error) {
+                showFailedToast('Gagal mendapatkan pasien.<br>' + error);
             }
-        } catch (error) {
-            showFailedToast('Gagal mendapatkan pasien.<br>' + error);
         }
-    }
+    <?php endif; ?>
 
     async function fetchKasirOptions(selectedKasir = null) {
         // Show the spinner
@@ -431,7 +443,7 @@
                     const jenisResep = transaksi.id_resep ? `<span class="badge bg-secondary bg-gradient text-nowrap"><i class="fa-solid fa-prescription-bottle-medical"></i> RESEP LUAR</span>` : nomor_registrasi;
                     const statusButtons = transaksi.lunas == '1' ? `disabled` : ``;
                     const transaksiElement = `
-                    <li class="list-group-item border-top-0 pb-3 pt-3">
+                    <li class="list-group-item <?= (session()->get('role') != 'Admisi') ? 'border-top-0' : ''; ?> pb-3 pt-3">
                         <div class="d-flex">
                             <div class="align-self-center w-100">
                                 <h5 class="card-title d-flex date justify-content-start">
@@ -480,12 +492,18 @@
                         </div>
                         <hr>
                         <div class="d-grid gap-2 d-flex justify-content-end">
-                            <button type="button" class="btn btn-body btn-sm bg-gradient " onclick="window.location.href = '<?= base_url('transaksi/detailtransaksi') ?>/${transaksi.id_transaksi}';">
-                                <i class="fa-solid fa-circle-info"></i> Detail
-                            </button>
-                            <button type="button" class="btn btn-danger btn-sm bg-gradient  delete-btn" data-id="${transaksi.id_transaksi}" data-name="${transaksi.nama_pasien}" data-date="${transaksi.tgl_transaksi}" ${statusButtons}>
-                                <i class="fa-solid fa-trash"></i> Hapus
-                            </button>
+                            <?php if (session()->get('role') == 'Admisi') : ?>
+                                <button type="button" class="btn btn-body btn-sm bg-gradient " onclick="window.open('<?= base_url('transaksi/struk') ?>/${transaksi.id_transaksi}');">
+                                    <i class="fa-solid fa-print"></i> Kuitansi
+                                </button>
+                            <?php else : ?>
+                                <button type="button" class="btn btn-body btn-sm bg-gradient " onclick="window.location.href = '<?= base_url('transaksi/detailtransaksi') ?>/${transaksi.id_transaksi}';">
+                                    <i class="fa-solid fa-circle-info"></i> Detail
+                                </button>
+                                <button type="button" class="btn btn-danger btn-sm bg-gradient  delete-btn" data-id="${transaksi.id_transaksi}" data-name="${transaksi.nama_pasien}" data-date="${transaksi.tgl_transaksi}" ${statusButtons}>
+                                    <i class="fa-solid fa-trash"></i> Hapus
+                                </button>
+                            <?php endif; ?>
                         </div>
                     </li>
                 `;
@@ -571,8 +589,10 @@
         const page = $(this).data('page');
         if (page) {
             currentPage = page;
-            fetchPasienOptions1()
-            fetchPasienOptions2()
+            <?php if (session()->get('role') != 'Admisi') : ?>
+                fetchPasienOptions1()
+                fetchPasienOptions2()
+            <?php endif; ?>
             fetchTransaksi();
         }
     });
@@ -582,8 +602,10 @@
         for (let i = 0; i < limit; i++) {
             $('#transaksiContainer').append(placeholder);
         }
-        fetchPasienOptions1()
-        fetchPasienOptions2()
+        <?php if (session()->get('role') != 'Admisi') : ?>
+            fetchPasienOptions1()
+            fetchPasienOptions2()
+        <?php endif; ?>
         fetchTransaksi();
     });
 
@@ -593,8 +615,10 @@
         for (let i = 0; i < limit; i++) {
             $('#transaksiContainer').append(placeholder);
         }
-        fetchPasienOptions1();
-        fetchPasienOptions2();
+        <?php if (session()->get('role') != 'Admisi') : ?>
+            fetchPasienOptions1()
+            fetchPasienOptions2()
+        <?php endif; ?>
         fetchTransaksi();
     });
     $('#setTodayTglButton').on('click', async function() {
@@ -605,34 +629,39 @@
         for (let i = 0; i < limit; i++) {
             $('#transaksiContainer').append(placeholder);
         }
-        fetchPasienOptions1();
-        fetchPasienOptions2();
+        <?php if (session()->get('role') != 'Admisi') : ?>
+            fetchPasienOptions1()
+            fetchPasienOptions2()
+        <?php endif; ?>
         fetchTransaksi();
     });
 
-    function toggleSubmitButton1() {
-        var selectedValue = $('#nomor_registrasi').val();
-        if (selectedValue === null || selectedValue === "") {
-            $('#submitButton1').prop('disabled', true);
-        } else {
-            $('#submitButton1').prop('disabled', false);
-        }
-    }
-    $('#nomor_registrasi').on('change.select2', function() {
-        toggleSubmitButton1();
-    });
+    <?php if (session()->get('role') != 'Admisi') : ?>
 
-    function toggleSubmitButton2() {
-        var selectedValue = $('#id_resep').val();
-        if (selectedValue === null || selectedValue === "") {
-            $('#submitButton2').prop('disabled', true);
-        } else {
-            $('#submitButton2').prop('disabled', false);
+        function toggleSubmitButton1() {
+            var selectedValue = $('#nomor_registrasi').val();
+            if (selectedValue === null || selectedValue === "") {
+                $('#submitButton1').prop('disabled', true);
+            } else {
+                $('#submitButton1').prop('disabled', false);
+            }
         }
-    }
-    $('#id_resep').on('change.select2', function() {
-        toggleSubmitButton2();
-    });
+        $('#nomor_registrasi').on('change.select2', function() {
+            toggleSubmitButton1();
+        });
+
+        function toggleSubmitButton2() {
+            var selectedValue = $('#id_resep').val();
+            if (selectedValue === null || selectedValue === "") {
+                $('#submitButton2').prop('disabled', true);
+            } else {
+                $('#submitButton2').prop('disabled', false);
+            }
+        }
+        $('#id_resep').on('change.select2', function() {
+            toggleSubmitButton2();
+        });
+    <?php endif; ?>
 
     $(document).ready(async function() {
         $('[data-bs-toggle="popover"]').popover({
@@ -649,18 +678,20 @@
             $('#APIInfoPopover').popover('hide');
         });
 
-        $('#nomor_registrasi').select2({
-            dropdownParent: $('#transaksiForm1'),
-            theme: "bootstrap-5",
-            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
-            placeholder: $(this).data('placeholder'),
-        });
-        $('#id_resep').select2({
-            dropdownParent: $('#transaksiForm2'),
-            theme: "bootstrap-5",
-            width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
-            placeholder: $(this).data('placeholder'),
-        });
+        <?php if (session()->get('role') != 'Admisi') : ?>
+            $('#nomor_registrasi').select2({
+                dropdownParent: $('#transaksiForm1'),
+                theme: "bootstrap-5",
+                width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+                placeholder: $(this).data('placeholder'),
+            });
+            $('#id_resep').select2({
+                dropdownParent: $('#transaksiForm2'),
+                theme: "bootstrap-5",
+                width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+                placeholder: $(this).data('placeholder'),
+            });
+        <?php endif; ?>
         $('#searchInput').on('input', function() {
             currentPage = 1;
             fetchTransaksi();
@@ -696,228 +727,232 @@
             saveToggleState(!isVisible);
         });
 
-        // Store the ID of the user to be deleted
-        var transaksiId;
-        var transaksiName;
-        var transaksiDate;
+        <?php if (session()->get('role') != 'Admisi') : ?>
+            // Store the ID of the user to be deleted
+            var transaksiId;
+            var transaksiName;
+            var transaksiDate;
 
-        // Show delete confirmation modal
-        $(document).on('click', '.delete-btn', function() {
-            transaksiId = $(this).data('id');
-            transaksiName = $(this).data('name');
-            transaksiDate = $(this).data('date');
-            // Check if transaksiName is null or undefined
-            const nama_pasien = (transaksiName === null || transaksiName === undefined || transaksiName === 'null') ?
-                'yang anonim ini' :
-                `dari "${transaksiName}"`;
-            $('[data-bs-toggle="tooltip"]').tooltip('hide');
-            $('#deleteMessage').html(`Hapus transaksi ${nama_pasien}?`);
-            $('#deleteSubmessage').html(`Tanggal Transaksi: ` + transaksiDate);
-            $('#deleteModal').modal('show');
-        });
+            // Show delete confirmation modal
+            $(document).on('click', '.delete-btn', function() {
+                transaksiId = $(this).data('id');
+                transaksiName = $(this).data('name');
+                transaksiDate = $(this).data('date');
+                // Check if transaksiName is null or undefined
+                const nama_pasien = (transaksiName === null || transaksiName === undefined || transaksiName === 'null') ?
+                    'yang anonim ini' :
+                    `dari "${transaksiName}"`;
+                $('[data-bs-toggle="tooltip"]').tooltip('hide');
+                $('#deleteMessage').html(`Hapus transaksi ${nama_pasien}?`);
+                $('#deleteSubmessage').html(`Tanggal Transaksi: ` + transaksiDate);
+                $('#deleteModal').modal('show');
+            });
 
-        $('#confirmDeleteBtn').click(async function() {
-            $('#deleteModal button').prop('disabled', true);
-            $('#deleteMessage').addClass('mb-0').html('Mengapus, silakan tunggu...');
-            $('#deleteSubmessage').hide();
+            $('#confirmDeleteBtn').click(async function() {
+                $('#deleteModal button').prop('disabled', true);
+                $('#deleteMessage').addClass('mb-0').html('Mengapus, silakan tunggu...');
+                $('#deleteSubmessage').hide();
 
-            try {
-                await axios.delete(`<?= base_url('/transaksi/delete') ?>/${transaksiId}`);
-                // Simpan nilai pilihan kasir saat ini
-                const selectedKasir = $('#kasirFilter').val();
-                // Panggil fungsi untuk memperbarui opsi kasir
-                await fetchKasirOptions(selectedKasir);
-                fetchPasienOptions1();
-                fetchPasienOptions2();
-                fetchTransaksi();
-            } catch (error) {
-                if (error.response.request.status === 401) {
-                    showFailedToast(error.response.data.message);
-                } else {
-                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
-                }
-            } finally {
-                $('#deleteModal').modal('hide');
-                $('#deleteMessage').removeClass('mb-0');
-                $('#deleteSubmessage').show();
-                $('#deleteModal button').prop('disabled', false);
-            }
-        }); // Simpan nilai pilihan apoteker saat ini
-        const selectedApoteker = $('apotekerFilter').val();
-
-        $('#transaksiForm1').submit(async function(e) {
-            e.preventDefault();
-
-            const formData = new FormData(this);
-            console.log("Form Data:", $(this).serialize());
-
-            // Clear previous validation states
-            $('#transaksiForm1 .is-invalid').removeClass('is-invalid');
-            $('#transaksiForm1 .invalid-feedback').text('').hide();
-            $('#submitButton1').prop('disabled', true).html(`
-                <span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span> Tambah
-            `);
-
-            // Disable form inputs
-            $('#transaksiForm1 select').prop('disabled', true);
-
-            try {
-                const response = await axios.post(`<?= base_url('transaksi/create') ?>`, formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                });
-
-                if (response.data.success) {
-                    $('#transaksiForm1')[0].reset();
-                    $('#nomor_registrasi').val(null).trigger('change');
-                    $('#transaksiForm1 .is-invalid').removeClass('is-invalid');
-                    $('#transaksiForm1 .invalid-feedback').text('').hide();
-                    $('#submitButton1').prop('disabled', true);
+                try {
+                    await axios.delete(`<?= base_url('/transaksi/delete') ?>/${transaksiId}`);
                     // Simpan nilai pilihan kasir saat ini
                     const selectedKasir = $('#kasirFilter').val();
                     // Panggil fungsi untuk memperbarui opsi kasir
                     await fetchKasirOptions(selectedKasir);
                     fetchPasienOptions1();
+                    fetchPasienOptions2();
                     fetchTransaksi();
-                } else {
-                    console.log("Validation Errors:", response.data.errors);
-
-                    // Clear previous validation states
-                    $('#transaksiForm1 .is-invalid').removeClass('is-invalid');
-                    $('#transaksiForm1 .invalid-feedback').text('').hide();
-
-                    // Display new validation errors
-                    for (const field in response.data.errors) {
-                        if (response.data.errors.hasOwnProperty(field)) {
-                            const fieldElement = $('#' + field);
-                            const feedbackElement = fieldElement.siblings('.invalid-feedback');
-
-                            console.log("Target Field:", fieldElement);
-                            console.log("Target Feedback:", feedbackElement);
-
-                            if (fieldElement.length > 0 && feedbackElement.length > 0) {
-                                fieldElement.addClass('is-invalid');
-                                feedbackElement.text(response.data.errors[field]).show();
-
-                                // Remove error message when the user corrects the input
-                                fieldElement.on('input change', function() {
-                                    $(this).removeClass('is-invalid');
-                                    $(this).siblings('.invalid-feedback').text('').hide();
-                                });
-                            } else {
-                                console.warn("Elemen tidak ditemukan pada field:", field);
-                            }
-                        }
+                } catch (error) {
+                    if (error.response.request.status === 401) {
+                        showFailedToast(error.response.data.message);
+                    } else {
+                        showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
                     }
-                    console.error('Perbaiki kesalahan pada formulir.');
+                } finally {
+                    $('#deleteModal').modal('hide');
+                    $('#deleteMessage').removeClass('mb-0');
+                    $('#deleteSubmessage').show();
+                    $('#deleteModal button').prop('disabled', false);
                 }
-            } catch (error) {
-                if (error.response.request.status === 404) {
-                    showFailedToast(error.response.data.message);
-                } else if (error.response.request.status === 422) {
-                    showFailedToast(`${error.response.data.error}<br>${error.response.data.details.message}`);
-                } else {
-                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
-                }
-                $('#submitButton1').prop('disabled', false);
-            } finally {
-                $('#submitButton1').html(`
-                    <i class="fa-solid fa-plus"></i> Tambah
-                `);
-                $('#transaksiForm1 select').prop('disabled', false);
-            }
-        });
+            }); // Simpan nilai pilihan apoteker saat ini
+            const selectedApoteker = $('apotekerFilter').val();
 
-        $('#transaksiForm2').submit(async function(e) {
-            e.preventDefault();
+            $('#transaksiForm1').submit(async function(e) {
+                e.preventDefault();
 
-            const formData = new FormData(this);
-            console.log("Form Data:", $(this).serialize());
+                const formData = new FormData(this);
+                console.log("Form Data:", $(this).serialize());
 
-            // Clear previous validation states
-            $('#transaksiForm2 .is-invalid').removeClass('is-invalid');
-            $('#transaksiForm2 .invalid-feedback').text('').hide();
-            $('#submitButton2').prop('disabled', true).html(`
+                // Clear previous validation states
+                $('#transaksiForm1 .is-invalid').removeClass('is-invalid');
+                $('#transaksiForm1 .invalid-feedback').text('').hide();
+                $('#submitButton1').prop('disabled', true).html(`
                 <span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span> Tambah
             `);
 
-            // Disable form inputs
-            $('#transaksiForm2 select').prop('disabled', true);
+                // Disable form inputs
+                $('#transaksiForm1 select').prop('disabled', true);
 
-            try {
-                const response = await axios.post(`<?= base_url('transaksi/createexternal') ?>`, formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                });
+                try {
+                    const response = await axios.post(`<?= base_url('transaksi/create') ?>`, formData, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    });
 
-                if (response.data.success) {
-                    $('#transaksiForm2')[0].reset();
-                    $('#id_resep').val(null).trigger('change');
-                    $('#transaksiForm2 .is-invalid').removeClass('is-invalid');
-                    $('#transaksiForm2 .invalid-feedback').text('').hide();
-                    $('#submitButton2').prop('disabled', true);
-                    // Simpan nilai pilihan kasir saat ini
-                    const selectedKasir = $('#kasirFilter').val();
-                    // Panggil fungsi untuk memperbarui opsi kasir
-                    await fetchKasirOptions(selectedKasir);
-                    fetchPasienOptions2();
-                    fetchTransaksi();
-                } else {
-                    console.log("Validation Errors:", response.data.errors);
+                    if (response.data.success) {
+                        $('#transaksiForm1')[0].reset();
+                        $('#nomor_registrasi').val(null).trigger('change');
+                        $('#transaksiForm1 .is-invalid').removeClass('is-invalid');
+                        $('#transaksiForm1 .invalid-feedback').text('').hide();
+                        $('#submitButton1').prop('disabled', true);
+                        // Simpan nilai pilihan kasir saat ini
+                        const selectedKasir = $('#kasirFilter').val();
+                        // Panggil fungsi untuk memperbarui opsi kasir
+                        await fetchKasirOptions(selectedKasir);
+                        fetchPasienOptions1();
+                        fetchTransaksi();
+                    } else {
+                        console.log("Validation Errors:", response.data.errors);
 
-                    // Clear previous validation states
-                    $('#transaksiForm2 .is-invalid').removeClass('is-invalid');
-                    $('#transaksiForm2 .invalid-feedback').text('').hide();
+                        // Clear previous validation states
+                        $('#transaksiForm1 .is-invalid').removeClass('is-invalid');
+                        $('#transaksiForm1 .invalid-feedback').text('').hide();
 
-                    // Display new validation errors
-                    for (const field in response.data.errors) {
-                        if (response.data.errors.hasOwnProperty(field)) {
-                            const fieldElement = $('#' + field);
-                            const feedbackElement = fieldElement.siblings('.invalid-feedback');
+                        // Display new validation errors
+                        for (const field in response.data.errors) {
+                            if (response.data.errors.hasOwnProperty(field)) {
+                                const fieldElement = $('#' + field);
+                                const feedbackElement = fieldElement.siblings('.invalid-feedback');
 
-                            console.log("Target Field:", fieldElement);
-                            console.log("Target Feedback:", feedbackElement);
+                                console.log("Target Field:", fieldElement);
+                                console.log("Target Feedback:", feedbackElement);
 
-                            if (fieldElement.length > 0 && feedbackElement.length > 0) {
-                                fieldElement.addClass('is-invalid');
-                                feedbackElement.text(response.data.errors[field]).show();
+                                if (fieldElement.length > 0 && feedbackElement.length > 0) {
+                                    fieldElement.addClass('is-invalid');
+                                    feedbackElement.text(response.data.errors[field]).show();
 
-                                // Remove error message when the user corrects the input
-                                fieldElement.on('input change', function() {
-                                    $(this).removeClass('is-invalid');
-                                    $(this).siblings('.invalid-feedback').text('').hide();
-                                });
-                            } else {
-                                console.warn("Elemen tidak ditemukan pada field:", field);
+                                    // Remove error message when the user corrects the input
+                                    fieldElement.on('input change', function() {
+                                        $(this).removeClass('is-invalid');
+                                        $(this).siblings('.invalid-feedback').text('').hide();
+                                    });
+                                } else {
+                                    console.warn("Elemen tidak ditemukan pada field:", field);
+                                }
                             }
                         }
+                        console.error('Perbaiki kesalahan pada formulir.');
                     }
-                    console.error('Perbaiki kesalahan pada formulir.');
-                }
-            } catch (error) {
-                if (error.response.request.status === 404) {
-                    showFailedToast(error.response.data.message);
-                } else {
-                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
-                }
-                $('#submitButton2').prop('disabled', false);
-            } finally {
-                $('#submitButton2').html(`
+                } catch (error) {
+                    if (error.response.request.status === 404) {
+                        showFailedToast(error.response.data.message);
+                    } else if (error.response.request.status === 422) {
+                        showFailedToast(`${error.response.data.error}<br>${error.response.data.details.message}`);
+                    } else {
+                        showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                    }
+                    $('#submitButton1').prop('disabled', false);
+                } finally {
+                    $('#submitButton1').html(`
                     <i class="fa-solid fa-plus"></i> Tambah
                 `);
-                $('#transaksiForm2 select').prop('disabled', false);
-            }
-        });
+                    $('#transaksiForm1 select').prop('disabled', false);
+                }
+            });
+
+            $('#transaksiForm2').submit(async function(e) {
+                e.preventDefault();
+
+                const formData = new FormData(this);
+                console.log("Form Data:", $(this).serialize());
+
+                // Clear previous validation states
+                $('#transaksiForm2 .is-invalid').removeClass('is-invalid');
+                $('#transaksiForm2 .invalid-feedback').text('').hide();
+                $('#submitButton2').prop('disabled', true).html(`
+                <span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span> Tambah
+            `);
+
+                // Disable form inputs
+                $('#transaksiForm2 select').prop('disabled', true);
+
+                try {
+                    const response = await axios.post(`<?= base_url('transaksi/createexternal') ?>`, formData, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    });
+
+                    if (response.data.success) {
+                        $('#transaksiForm2')[0].reset();
+                        $('#id_resep').val(null).trigger('change');
+                        $('#transaksiForm2 .is-invalid').removeClass('is-invalid');
+                        $('#transaksiForm2 .invalid-feedback').text('').hide();
+                        $('#submitButton2').prop('disabled', true);
+                        // Simpan nilai pilihan kasir saat ini
+                        const selectedKasir = $('#kasirFilter').val();
+                        // Panggil fungsi untuk memperbarui opsi kasir
+                        await fetchKasirOptions(selectedKasir);
+                        fetchPasienOptions2();
+                        fetchTransaksi();
+                    } else {
+                        console.log("Validation Errors:", response.data.errors);
+
+                        // Clear previous validation states
+                        $('#transaksiForm2 .is-invalid').removeClass('is-invalid');
+                        $('#transaksiForm2 .invalid-feedback').text('').hide();
+
+                        // Display new validation errors
+                        for (const field in response.data.errors) {
+                            if (response.data.errors.hasOwnProperty(field)) {
+                                const fieldElement = $('#' + field);
+                                const feedbackElement = fieldElement.siblings('.invalid-feedback');
+
+                                console.log("Target Field:", fieldElement);
+                                console.log("Target Feedback:", feedbackElement);
+
+                                if (fieldElement.length > 0 && feedbackElement.length > 0) {
+                                    fieldElement.addClass('is-invalid');
+                                    feedbackElement.text(response.data.errors[field]).show();
+
+                                    // Remove error message when the user corrects the input
+                                    fieldElement.on('input change', function() {
+                                        $(this).removeClass('is-invalid');
+                                        $(this).siblings('.invalid-feedback').text('').hide();
+                                    });
+                                } else {
+                                    console.warn("Elemen tidak ditemukan pada field:", field);
+                                }
+                            }
+                        }
+                        console.error('Perbaiki kesalahan pada formulir.');
+                    }
+                } catch (error) {
+                    if (error.response.request.status === 404) {
+                        showFailedToast(error.response.data.message);
+                    } else {
+                        showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                    }
+                    $('#submitButton2').prop('disabled', false);
+                } finally {
+                    $('#submitButton2').html(`
+                    <i class="fa-solid fa-plus"></i> Tambah
+                `);
+                    $('#transaksiForm2 select').prop('disabled', false);
+                }
+            });
+        <?php endif; ?>
         $(document).on('visibilitychange', async function() {
             if (document.visibilityState === "visible") {
                 // Simpan nilai pilihan kasir saat ini
                 const selectedKasir = $('#kasirFilter').val();
                 // Panggil fungsi untuk memperbarui opsi kasir
                 await fetchKasirOptions(selectedKasir);
-                fetchPasienOptions1();
-                fetchPasienOptions2();
+                <?php if (session()->get('role') != 'Admisi') : ?>
+                    fetchPasienOptions1()
+                    fetchPasienOptions2()
+                <?php endif; ?>
                 fetchTransaksi(); // Refresh articles on button click
             }
         });
@@ -927,16 +962,20 @@
             const selectedKasir = $('#kasirFilter').val();
             // Panggil fungsi untuk memperbarui opsi kasir
             await fetchKasirOptions(selectedKasir);
-            fetchPasienOptions1();
-            fetchPasienOptions2();
+            <?php if (session()->get('role') != 'Admisi') : ?>
+                fetchPasienOptions1()
+                fetchPasienOptions2()
+            <?php endif; ?>
             fetchTransaksi(); // Refresh articles on button click
         });
         await fetchKasirOptions();
         fetchTransaksi();
-        fetchPasienOptions1();
-        fetchPasienOptions2();
-        toggleSubmitButton1();
-        toggleSubmitButton2();
+        <?php if (session()->get('role') != 'Admisi') : ?>
+            fetchPasienOptions1()
+            fetchPasienOptions2()
+            toggleSubmitButton1();
+            toggleSubmitButton2();
+        <?php endif; ?>
     });
     // Show toast notification
     <?= $this->include('toast/index') ?>
