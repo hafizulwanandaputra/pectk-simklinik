@@ -82,7 +82,7 @@ if (stripos($browser, 'Chrome') !== false) {
                     </a>
                     <div class="align-self-stretch flex-fill ps-1 text-wrap overflow-hidden d-flex align-items-center" style="text-overflow: ellipsis;">
                         <div>
-                            <h5 class="card-title">Web Browser</h5>
+                            <h5 class="card-title">Peramban Web</h5>
                             <span><?= $agent->getBrowser() . ' ' . $agent->getVersion(); ?></span>
                         </div>
                     </div>
