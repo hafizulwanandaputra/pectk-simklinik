@@ -129,7 +129,7 @@ if (stripos($browser, 'Chrome') !== false) {
                 </div>
             </li>
         </ul>
-        <h5>Informasi Backend</h5>
+        <h5>Informasi <em>Backend</em></h5>
         <ul class="list-group shadow-sm  mb-3">
             <li class="list-group-item p-1 list-group-item-action disabled" aria-disabled="true">
                 <div class="d-flex align-items-start">
@@ -210,7 +210,7 @@ if (stripos($browser, 'Chrome') !== false) {
                 </div>
             </li>
         </ul>
-        <h5>Informasi Frontend</h5>
+        <h5>Informasi <em>Frontend</em></h5>
         <ul class="list-group shadow-sm  mb-3">
             <li class="list-group-item p-1 list-group-item-action disabled" aria-disabled="true">
                 <div class="d-flex align-items-start">
