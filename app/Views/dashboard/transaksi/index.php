@@ -192,7 +192,9 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <span class="placeholder w-100" style="max-width: 100px;"></span>
+                                        <?php if (session()->get('role') != 'Admisi') : ?>
+                                            <span class="placeholder w-100" style="max-width: 100px;"></span>
+                                        <?php endif; ?>
                                     </div>
                                 </div>
                             </div>
@@ -287,7 +289,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <span class="placeholder w-100" style="max-width: 100px;"></span>
+                            <?php if (session()->get('role') != 'Admisi') : ?>
+                                <span class="placeholder w-100" style="max-width: 100px;"></span>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -488,7 +492,9 @@
                                             </div>
                                         </div>
                                     </div>
-                                    ${statusBadge}
+                                    <?php if (session()->get('role') != 'Admisi') : ?>
+                                        ${statusBadge}
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>
