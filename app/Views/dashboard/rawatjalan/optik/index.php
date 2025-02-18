@@ -33,7 +33,7 @@ $usia = $registrasi->diff($tanggal_lahir);
         transform: translateY(-50%);
         display: flex;
         justify-content: center;
-        transition: transform 1s ease-in-out;
+        transition: transform 1s ease-in-out, opacity 1s ease-in-out;
     }
 
     .isi-garis {
@@ -45,10 +45,12 @@ $usia = $registrasi->diff($tanggal_lahir);
 
     .garis.start-0 {
         transform: translateY(-50%) rotate(0deg);
+        opacity: 0;
     }
 
     .garis.end-0 {
         transform: translateY(-50%) rotate(0deg);
+        opacity: 0;
     }
 
     @media (prefers-color-scheme: dark) {
@@ -401,11 +403,11 @@ $usia = $registrasi->diff($tanggal_lahir);
 
             const od_login_axis = data.od_login_axis;
             if (od_login_axis) {
-                $(".garis.start-0").css("transform", `translateY(-50%) rotate(-${od_login_axis}deg)`);
+                $(".garis.start-0").css("transform", `translateY(-50%) rotate(-${od_login_axis}deg)`).css("opacity", "1");
             }
             const os_login_axis = data.os_login_axis;
             if (os_login_axis) {
-                $(".garis.end-0").css("transform", `translateY(-50%) rotate(-${os_login_axis}deg)`);
+                $(".garis.end-0").css("transform", `translateY(-50%) rotate(-${os_login_axis}deg)`).css("opacity", "1");
             }
         } catch (error) {
             showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
@@ -425,17 +427,17 @@ $usia = $registrasi->diff($tanggal_lahir);
         $('#od_login_axis').on('input', function() {
             let value = $(this).val();
             if (value === '') {
-                $(".garis.start-0").css("transform", `translateY(-50%) rotate(-0deg)`);
+                $(".garis.start-0").css("transform", `translateY(-50%) rotate(-0deg)`).css("opacity", "0");
             } else {
-                $(".garis.start-0").css("transform", `translateY(-50%) rotate(-${value}deg)`);
+                $(".garis.start-0").css("transform", `translateY(-50%) rotate(-${value}deg)`).css("opacity", "1");
             }
         });
         $('#os_login_axis').on('input', function() {
             let value = $(this).val();
             if (value === '') {
-                $(".garis.end-0").css("transform", `translateY(-50%) rotate(-0deg)`);
+                $(".garis.end-0").css("transform", `translateY(-50%) rotate(-0deg)`).css("opacity", "0");
             } else {
-                $(".garis.end-0").css("transform", `translateY(-50%) rotate(-${value}deg)`);
+                $(".garis.end-0").css("transform", `translateY(-50%) rotate(-${value}deg)`).css("opacity", "1");
             }
         });
         <?php if ($rawatjalan['transaksi'] == 0) : ?>
