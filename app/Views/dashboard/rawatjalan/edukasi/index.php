@@ -117,7 +117,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             <option value="DAERAH">DAERAH</option>
                             <option value="LAINNYA">LAINNYA</option>
                         </select>
-                        <label for="bahasa">Bahasa</label>
+                        <label for="bahasa">Bahasa<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
@@ -131,7 +131,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <div class="mb-2">
                     <div class="row g-1 align-items-center radio-group">
                         <label for="penterjemah" class="col col-form-label">
-                            Kebutuhan Penerjemah
+                            Kebutuhan Penerjemah<span class="text-danger">*</span>
                         </label>
                         <div class="col col-form-label">
                             <div class="d-flex align-items-center justify-content-evenly">
@@ -167,7 +167,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <div class="mb-2">
                     <div class="row g-1 align-items-center radio-group">
                         <label for="baca_tulis" class="col col-form-label">
-                            Baca dan Tulis
+                            Baca dan Tulis<span class="text-danger">*</span>
                         </label>
                         <div class="col col-form-label">
                             <div class="d-flex align-items-center justify-content-evenly">
@@ -191,7 +191,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <div class="mb-2">
                     <div class="row g-1 align-items-center radio-group">
                         <label for="cara_belajar" class="col col-form-label">
-                            Pilihan Cara Belajar
+                            Pilihan Cara Belajar<span class="text-danger">*</span>
                         </label>
                         <div class="col col-form-label">
                             <div class="d-flex align-items-center justify-content-evenly">
@@ -278,7 +278,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             <option value="KONGHUCU">KONGHUCU</option>
                             <option value="KHUSUS">KHUSUS</option>
                         </select>
-                        <label for="status_fungsional">Keyakinan</label>
+                        <label for="status_fungsional">Keyakinan<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
@@ -299,7 +299,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             <option value="Hasil pelayanan termasuk terjadinya kejadian yang diharapkan dan tidak diharapkan">Hasil pelayanan termasuk terjadinya kejadian yang diharapkan dan tidak diharapkan</option>
                             <option value="Lainnya">Lainnya</option>
                         </select>
-                        <label for="status_fungsional">Topik Pembelajaran</label>
+                        <label for="status_fungsional">Topik Pembelajaran<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
@@ -313,7 +313,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <div class="mb-2">
                     <div class="row g-1 align-items-center radio-group">
                         <label for="kesediaan_pasien" class="col col-form-label">
-                            Kesediaan pasien dan keluarga untuk menerima informasi dan edukasi
+                            Kesediaan pasien dan keluarga untuk menerima informasi dan edukasi<span class="text-danger">*</span>
                         </label>
                         <div class="col col-form-label">
                             <div class="d-flex align-items-center justify-content-evenly">

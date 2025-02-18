@@ -111,7 +111,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <div class="mb-2">
                     <div class="row g-1 align-items-center radio-group">
                         <label for="jatuh_sempoyongan" class="col col-form-label">
-                            <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">a</span> Perhatikan cara berjalan pasien saat duduk di kursi. Apakah pasien tampak tidak seimbang (sempoyongan/limbung)?
+                            <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">a</span> Perhatikan cara berjalan pasien saat duduk di kursi. Apakah pasien tampak tidak seimbang (sempoyongan/limbung)?<span class="text-danger">*</span>
                         </label>
                         <div class="col col-form-label">
                             <div class="d-flex align-items-center justify-content-evenly">
@@ -135,7 +135,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <div class="mb-2">
                     <div class="row g-1 align-items-center radio-group">
                         <label for="jatuh_penopang" class="col col-form-label">
-                            <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">b</span> Apakah pasien memegang pinggiran kursi atau meja atau benda lain sebagai penopang saat akan duduk?
+                            <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">b</span> Apakah pasien memegang pinggiran kursi atau meja atau benda lain sebagai penopang saat akan duduk?<span class="text-danger">*</span>
                         </label>
                         <div class="col col-form-label">
                             <div class="d-flex align-items-center justify-content-evenly">
@@ -159,7 +159,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <div class="mb-2">
                     <div class="row g-1 align-items-center radio-group">
                         <label for="jatuh_info_dokter" class="col col-form-label">
-                            Diberitahukan ke dokter?
+                            Diberitahukan ke dokter?<span class="text-danger">*</span>
                         </label>
                         <div class="col col-form-label">
                             <div class="d-flex align-items-center justify-content-evenly">
@@ -202,7 +202,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             <option value="PERLU BANTUAN">PERLU BANTUAN</option>
                             <option value="KETERGANTUNGAN TOTAL">KETERGANTUNGAN TOTAL</option>
                         </select>
-                        <label for="status_fungsional">Status Fungsional</label>
+                        <label for="status_fungsional">Status Fungsional<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
@@ -231,7 +231,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             <option value="KRONIS">KRONIS</option>
                             <option value="AKUT">AKUT</option>
                         </select>
-                        <label for="nyeri_kategori">Kategori Nyeri</label>
+                        <label for="nyeri_kategori">Kategori Nyeri<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
@@ -297,7 +297,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             <option value="BERUBAH POSISI / TIDUR">BERUBAH POSISI / TIDUR</option>
                             <option value="LAIN-LAIN">LAIN-LAIN</option>
                         </select>
-                        <label for="nyeri_hilang_bila">Nyeri Hilang Bila</label>
+                        <label for="nyeri_hilang_bila">Nyeri Hilang Bila<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
@@ -311,7 +311,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <div class="mb-2">
                     <div class="row g-1 align-items-center radio-group">
                         <label for="nyeri_info_dokter" class="col col-form-label">
-                            Diberitahukan ke dokter?
+                            Diberitahukan ke dokter?<span class="text-danger">*</span>
                         </label>
                         <div class="col col-form-label">
                             <div class="d-flex align-items-center justify-content-evenly">

@@ -114,7 +114,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <div class="fw-bold mb-2 border-bottom">Laporan Tindakan Rawat Jalan</div>
                 <div class="mb-2 checkbox-group">
                     <label for="nama_perawat" class="form-label">
-                        Perawat
+                        Perawat<span class="text-danger">*</span>
                     </label>
                     <div id="nama_perawat">
                         <?php
@@ -146,7 +146,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <div class="mb-2">
                     <div class="row g-1 align-items-center radio-group">
                         <label for="lokasi_mata" class="col col-form-label">
-                            Lokasi mata
+                            Lokasi mata<span class="text-danger">*</span>
                         </label>
                         <div class="col col-form-label">
                             <div class="d-flex align-items-center justify-content-evenly">
@@ -174,7 +174,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                     </div>
                 </div>
                 <div class="mb-2">
-                    <label for="isi_laporan">Isi Laporan</label>
+                    <label for="isi_laporan">Isi Laporan<span class="text-danger">*</span></label>
                     <textarea class="form-control" id="isi_laporan" name="isi_laporan" rows="8" style="resize: none;"></textarea>
                     <div class="invalid-feedback"></div>
                 </div>

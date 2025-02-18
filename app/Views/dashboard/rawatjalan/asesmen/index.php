@@ -115,7 +115,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <div class="mb-2">
                     <div class="form-floating">
                         <input type="text" class="form-control" id="keluhan_utama" name="keluhan_utama" value="" autocomplete="off" dir="auto" placeholder="keluhan_utama">
-                        <label for="keluhan_utama">Keluhan Utama</label>
+                        <label for="keluhan_utama">Keluhan Utama<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
@@ -172,7 +172,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                                     <option value="Stupor (Suporos Comma) (GCS 4-6)">Stupor (Suporos Comma) (GCS 4-6)</option>
                                     <option value="Koma (GCS 3)">Koma (GCS 3)</option>
                                 </select>
-                                <label for="kesadaran">Kesadaran</label>
+                                <label for="kesadaran">Kesadaran<span class="text-danger">*</span></label>
                                 <div class="invalid-feedback"></div>
                             </div>
                         </div>
@@ -220,7 +220,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                     <div class="col-sm">
                         <div class="mb-2">
                             <div class="row gx-1 radio-group">
-                                <label for="keadaan_umum" class="col col-form-label">Keadaan Umum</label>
+                                <label for="keadaan_umum" class="col col-form-label">Keadaan Umum<span class="text-danger">*</span></label>
                                 <div class="col col-form-label">
                                     <div class="d-flex align-items-center justify-content-between">
                                         <div class="form-check form-check-inline">
@@ -248,7 +248,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                         </div>
                         <div class="mb-2">
                             <div class="row gx-1 radio-group">
-                                <label for="alergi" class="col col-form-label">Alergi</label>
+                                <label for="alergi" class="col col-form-label">Alergi<span class="text-danger">*</span></label>
                                 <div class="col col-form-label">
                                     <div class="d-flex align-items-center justify-content-evenly">
                                         <div class="form-check form-check-inline">
@@ -271,7 +271,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                         <div>
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="alergi_keterangan" name="alergi_keterangan" value="" autocomplete="off" dir="auto" placeholder="alergi_keterangan">
-                                <label for="alergi_keterangan">Keterangan Alergi</label>
+                                <label for="alergi_keterangan">Keterangan Alergi (Jika Ya)</label>
                                 <div class="invalid-feedback"></div>
                             </div>
                         </div>

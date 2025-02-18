@@ -128,7 +128,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 </div>
                 <div class="mb-2 checkbox-group">
                     <label for="pemeriksaan" class="form-label">
-                        Pemeriksaan
+                        Pemeriksaan<span class="text-danger">*</span>
                     </label>
                     <div class="row">
                         <!-- Kolom Kiri -->
@@ -235,7 +235,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             <option value="OS">OS</option>
                             <option value="ODS">ODS</option>
                         </select>
-                        <label for="lokasi_pemeriksaan">Lokasi Pemeriksaan</label>
+                        <label for="lokasi_pemeriksaan">Lokasi Pemeriksaan<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
