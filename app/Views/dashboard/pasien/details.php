@@ -528,28 +528,28 @@
                             <option value="RUJUKAN">
                                 RUJUKAN</option>
                         </select>
-                        <label for="id_dokter">Jenis Kunjungan</label>
+                        <label for="jenis_kunjungan">Jenis Kunjungan</label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mt-1 mb-1">
                         <select class="form-select" id="jaminan" name="jaminan" aria-label="jaminan">
                             <option value="" disabled selected>-- Pilih Jaminan --</option>
                         </select>
-                        <label for="id_dokter">Jaminan</label>
+                        <label for="jaminan">Jaminan</label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mt-1 mb-1">
                         <select class="form-select" id="ruangan" name="ruangan" aria-label="ruangan">
                             <option value="" disabled selected>-- Pilih Ruangan --</option>
                         </select>
-                        <label for="id_dokter">Ruangan</label>
+                        <label for="ruangan">Ruangan</label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mt-1 mb-1">
                         <select class="form-select" id="dokter" name="dokter" aria-label="dokter">
                             <option value="" disabled selected>-- Pilih Dokter --</option>
                         </select>
-                        <label for="id_dokter">Dokter</label>
+                        <label for="dokter">Dokter</label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
