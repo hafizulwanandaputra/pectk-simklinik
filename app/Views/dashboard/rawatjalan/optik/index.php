@@ -53,14 +53,12 @@ $usia = $registrasi->diff($tanggal_lahir);
         opacity: 0;
     }
 
-    @media (prefers-color-scheme: dark) {
-        .isi-garis {
-            background-color: white;
-        }
+    [data-bs-theme=dark] .isi-garis {
+        background-color: white;
+    }
 
-        #kacamata {
-            filter: invert(1);
-        }
+    [data-bs-theme=dark] #kacamata {
+        filter: invert(1);
     }
 </style>
 <?= $this->endSection(); ?>

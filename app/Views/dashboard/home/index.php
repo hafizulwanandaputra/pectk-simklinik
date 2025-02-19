@@ -375,10 +375,12 @@ $db = db_connect();
 
     // Function to update chart configurations based on the color scheme
     function updateChartOptions() {
-        const isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        // Cek apakah data-bs-theme ada dan bernilai "dark"
+        const themeAttribute = document.documentElement.getAttribute("data-bs-theme");
+        const isDarkMode = themeAttribute === "dark";
 
         const colorSettings = {
-            color: isDarkMode ? "#ADBABD" : "#000000",
+            color: isDarkMode ? "#FFFFFF" : "#000000",
             borderColor: isDarkMode ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)",
             backgroundColor: isDarkMode ? "rgba(255,255,0,0.1)" : "rgba(0,255,0,0.1)",
             lineBorderColor: isDarkMode ? "rgba(255,255,0,0.4)" : "rgba(0,255,0,0.4)",
@@ -419,8 +421,8 @@ $db = db_connect();
                 chart.options.elements.line.borderColor = colorSettings.lineBorderColor;
             }
 
-            // Update doughnut chart legend
-            if (chart.config.type === 'doughnut' && chart.options.plugins && chart.options.plugins.legend) {
+            // Update doughnut and pie chart legend
+            if ((chart.config.type === 'doughnut' || chart.config.type === 'pie') && chart.options.plugins && chart.options.plugins.legend) {
                 chart.options.plugins.legend.labels.color = colorSettings.color;
             }
 
