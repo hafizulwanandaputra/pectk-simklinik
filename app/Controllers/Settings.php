@@ -822,8 +822,10 @@ class Settings extends BaseController
                     $conditions[] = "$column IS NULL";
                 }
 
-                $query = "DELETE FROM $table WHERE " . implode(' AND ', $conditions);
-                $db->query($query);
+                $query1 = "DELETE FROM $table WHERE " . implode(' AND ', $conditions);
+                $query2 = "ALTER TABLE $table AUTO_INCREMENT = 1";
+                $db->query($query1);
+                $db->query($query2);
             }
 
             return $this->response->setJSON(['success' => true, 'message' => 'Data rekam medis yang kosong berhasil dihapus']);
