@@ -252,7 +252,7 @@
                         </div>
                     </div>
                     <div class="dropdown d-grid mt-3">
-                        <button class="btn btn-success bg-gradient btn-sm dropdown-toggle" id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static" aria-label="Toggle theme (auto)">
+                        <button class="btn btn-outline-success bg-gradient btn-sm dropdown-toggle" id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static" aria-label="Toggle theme (auto)">
                             <i class="fa-solid fa-palette"></i> Atur Tema
                         </button>
                         <ul class="dropdown-menu shadow-sm w-100" aria-labelledby="bd-theme-text">
