@@ -101,6 +101,26 @@
             })
         })()
     </script>
+    <script>
+        function updateThemeColor() {
+            const theme = document.documentElement.getAttribute("data-bs-theme") || "light";
+            const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+
+            if (metaThemeColor) {
+                metaThemeColor.setAttribute("content", theme === "dark" ? "#051b11" : "#d1e7dd");
+            }
+        }
+
+        // Jalankan saat halaman dimuat
+        updateThemeColor();
+
+        // Pantau perubahan atribut data-bs-theme
+        const observer = new MutationObserver(updateThemeColor);
+        observer.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ["data-bs-theme"]
+        });
+    </script>
     <style>
         :root {
             --bs-font-sans-serif: "Noto Sans", "Noto Sans Arabic", system-ui, -apple-system, "Helvetica Neue", Arial, "Liberation Sans", sans-serif;
