@@ -98,14 +98,21 @@
             <ul class="list-group shadow-sm  mb-3">
                 <li class="list-group-item p-1 list-group-item-action">
                     <div class="d-flex align-items-start">
+                        <a id="refreshEmptyMRData" href="#" class="stretched-link" style="min-width: 3rem; max-width: 3rem; text-align: center;">
+                            <p class="mb-0" style="font-size: 1.75rem!important;"><i class="fa-solid fa-arrows-rotate"></i></p>
+                        </a>
+                        <div class="align-self-stretch flex-fill ps-1 text-wrap overflow-hidden d-flex align-items-center" style="text-overflow: ellipsis;">
+                            <h5 class="card-title">Segarkan Data Rekam Medis yang Kosong</h5>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-group-item p-1 list-group-item-action">
+                    <div class="d-flex align-items-start">
                         <a id="deleteEmptyMRData" href="#" class="link-danger stretched-link" style="min-width: 3rem; max-width: 3rem; text-align: center;">
                             <p class="mb-0" style="font-size: 1.75rem!important;"><i class="fa-solid fa-trash"></i></p>
                         </a>
                         <div class="align-self-stretch flex-fill ps-1 text-wrap overflow-hidden d-flex align-items-center" style="text-overflow: ellipsis;">
                             <h5 class="card-title text-danger">Hapus Data Rekam Medis yang Kosong</h5>
-                        </div>
-                        <div class="align-self-center" style="min-width: 3rem; max-width: 3rem; text-align: center;">
-                            <span class="text-body-tertiary"><i class="fa-solid fa-angle-right"></i></span>
                         </div>
                     </div>
                 </li>
@@ -249,7 +256,10 @@
     <?php endif; ?>
     $(document).ready(function() {
         <?php if (session()->get('role') == "Admin") : ?>
-            // Show delete confirmation modal
+            $('#refreshEmptyMRData').click(function() {
+                LoadEmptyRecords();
+            });
+
             $('#deleteEmptyMRData').click(function() {
                 $('[data-bs-toggle="tooltip"]').tooltip('hide');
                 $('#deleteMessage').html(`Hapus data rekam medis yang kosong?`);
