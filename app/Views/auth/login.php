@@ -20,106 +20,122 @@
     <link href="<?= base_url(); ?>assets_public/fonts/noto-sans-arabic/stylesheet.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script>
-        /*!
-         * Color mode toggler for Bootstrap's docs (https://getbootstrap.com/)
-         * Copyright 2011-2023 The Bootstrap Authors
-         * Licensed under the Creative Commons Attribution 3.0 Unported License.
-         */
-
         (() => {
             'use strict'
 
-            const getStoredTheme = () => localStorage.getItem('theme')
-            const setStoredTheme = theme => localStorage.setItem('theme', theme)
+            const getStoredTheme = () => localStorage.getItem('theme');
+            const setStoredTheme = theme => localStorage.setItem('theme', theme);
 
             const getPreferredTheme = () => {
-                const storedTheme = getStoredTheme()
+                const storedTheme = getStoredTheme();
                 if (storedTheme) {
-                    return storedTheme
+                    return storedTheme;
                 }
 
-                return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-            }
+                return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            };
 
             const setTheme = theme => {
-                if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                    document.documentElement.setAttribute('data-bs-theme', 'dark')
-                } else {
-                    document.documentElement.setAttribute('data-bs-theme', theme)
-                }
-            }
+                let themeColor = '';
+                let isDarkMode = theme === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : theme === 'dark';
 
-            setTheme(getPreferredTheme())
+                if (isDarkMode) {
+                    $('html').attr('data-bs-theme', 'dark');
+                    themeColor = '#051b11';
+                } else {
+                    $('html').attr('data-bs-theme', theme);
+                    themeColor = '#d1e7dd';
+                }
+                $('meta[name="theme-color"]').attr('content', themeColor);
+
+                const colorSettings = {
+                    color: isDarkMode ? "#FFFFFF" : "#000000",
+                    borderColor: isDarkMode ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)",
+                    backgroundColor: isDarkMode ? "rgba(255,255,0,0.1)" : "rgba(0,255,0,0.1)",
+                    lineBorderColor: isDarkMode ? "rgba(255,255,0,0.4)" : "rgba(0,255,0,0.4)",
+                    gridColor: isDarkMode ? "rgba(255,255,255,0.2)" : "rgba(0,0,0,0.2)"
+                };
+
+                if (typeof chartInstances !== 'undefined') {
+                    chartInstances.forEach(chart => {
+                        if (chart.options.scales) {
+                            if (chart.options.scales.x) {
+                                if (chart.options.scales.x.ticks) {
+                                    chart.options.scales.x.ticks.color = colorSettings.color;
+                                }
+                                if (chart.options.scales.x.title) {
+                                    chart.options.scales.x.title.color = colorSettings.color;
+                                }
+                                if (chart.options.scales.x.grid) {
+                                    chart.options.scales.x.grid.color = colorSettings.gridColor;
+                                }
+                            }
+
+                            if (chart.options.scales.y) {
+                                if (chart.options.scales.y.ticks) {
+                                    chart.options.scales.y.ticks.color = colorSettings.color;
+                                }
+                                if (chart.options.scales.y.title) {
+                                    chart.options.scales.y.title.color = colorSettings.color;
+                                }
+                                if (chart.options.scales.y.grid) {
+                                    chart.options.scales.y.grid.color = colorSettings.gridColor;
+                                }
+                            }
+                        }
+
+                        if (chart.options.elements && chart.options.elements.line) {
+                            chart.options.elements.line.borderColor = colorSettings.lineBorderColor;
+                        }
+
+                        if ((chart.config.type === 'doughnut' || chart.config.type === 'pie') && chart.options.plugins && chart.options.plugins.legend) {
+                            chart.options.plugins.legend.labels.color = colorSettings.color;
+                        }
+
+                        chart.update();
+                    });
+                }
+            };
+
+            setTheme(getPreferredTheme());
 
             const showActiveTheme = (theme, focus = false) => {
-                const themeSwitcher = document.querySelector('#bd-theme')
+                const themeSwitcher = $('#bd-theme');
 
-                if (!themeSwitcher) {
-                    return
+                if (!themeSwitcher.length) {
+                    return;
                 }
 
-                const themeSwitcherText = document.querySelector('#bd-theme-text')
-                const activeThemeIcon = document.querySelector('.theme-icon-active use')
-                const btnToActive = document.querySelector(`[data-bs-theme-value="${theme}"]`)
-                const svgOfActiveBtn = btnToActive.querySelector('svg use').getAttribute('href')
+                const themeSwitcherText = $('#bd-theme-text');
+                const activeThemeIcon = $('.theme-icon-active use');
+                const btnToActive = $(`[data-bs-theme-value="${theme}"]`);
 
-                document.querySelectorAll('[data-bs-theme-value]').forEach(element => {
-                    element.classList.remove('active')
-                    element.setAttribute('aria-pressed', 'false')
-                })
-
-                btnToActive.classList.add('active')
-                btnToActive.setAttribute('aria-pressed', 'true')
-                activeThemeIcon.setAttribute('href', svgOfActiveBtn)
-                const themeSwitcherLabel = `${themeSwitcherText.textContent} (${btnToActive.dataset.bsThemeValue})`
-                themeSwitcher.setAttribute('aria-label', themeSwitcherLabel)
+                $('[data-bs-theme-value]').removeClass('active').attr('aria-pressed', 'false');
+                btnToActive.addClass('active').attr('aria-pressed', 'true');
 
                 if (focus) {
-                    themeSwitcher.focus()
+                    themeSwitcher.focus();
                 }
-            }
+            };
 
             window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-                const storedTheme = getStoredTheme()
+                const storedTheme = getStoredTheme();
                 if (storedTheme !== 'light' && storedTheme !== 'dark') {
-                    setTheme(getPreferredTheme())
+                    setTheme(getPreferredTheme());
                 }
-            })
+            });
 
-            window.addEventListener('DOMContentLoaded', () => {
-                showActiveTheme(getPreferredTheme())
+            $(document).ready(() => {
+                showActiveTheme(getPreferredTheme());
 
-                document.querySelectorAll('[data-bs-theme-value]')
-                    .forEach(toggle => {
-                        toggle.addEventListener('click', () => {
-                            const theme = toggle.getAttribute('data-bs-theme-value')
-                            setStoredTheme(theme)
-                            setTheme(theme)
-                            showActiveTheme(theme, true)
-                        })
-                    })
-            })
-        })()
-    </script>
-    <script>
-        function updateThemeColor() {
-            const theme = document.documentElement.getAttribute("data-bs-theme") || "light";
-            const metaThemeColor = document.querySelector('meta[name="theme-color"]');
-
-            if (metaThemeColor) {
-                metaThemeColor.setAttribute("content", theme === "dark" ? "#051b11" : "#d1e7dd");
-            }
-        }
-
-        // Jalankan saat halaman dimuat
-        updateThemeColor();
-
-        // Pantau perubahan atribut data-bs-theme
-        const observer = new MutationObserver(updateThemeColor);
-        observer.observe(document.documentElement, {
-            attributes: true,
-            attributeFilter: ["data-bs-theme"]
-        });
+                $('[data-bs-theme-value]').on('click', function() {
+                    const theme = $(this).attr('data-bs-theme-value');
+                    setStoredTheme(theme);
+                    setTheme(theme);
+                    showActiveTheme(theme, true);
+                });
+            });
+        })();
     </script>
     <style>
         :root {

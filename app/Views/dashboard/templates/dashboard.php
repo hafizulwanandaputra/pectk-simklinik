@@ -10,8 +10,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= $title; ?></title>
     <link rel="manifest" href="<?= base_url(); ?>/manifest.json">
-    <meta name="theme-color" content="#d1e7dd" media="(prefers-color-scheme: light)">
-    <meta name="theme-color" content="#051b11" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#d1e7dd">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
@@ -34,106 +33,122 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
-        /*!
-         * Color mode toggler for Bootstrap's docs (https://getbootstrap.com/)
-         * Copyright 2011-2023 The Bootstrap Authors
-         * Licensed under the Creative Commons Attribution 3.0 Unported License.
-         */
-
         (() => {
             'use strict'
 
-            const getStoredTheme = () => localStorage.getItem('theme')
-            const setStoredTheme = theme => localStorage.setItem('theme', theme)
+            const getStoredTheme = () => localStorage.getItem('theme');
+            const setStoredTheme = theme => localStorage.setItem('theme', theme);
 
             const getPreferredTheme = () => {
-                const storedTheme = getStoredTheme()
+                const storedTheme = getStoredTheme();
                 if (storedTheme) {
-                    return storedTheme
+                    return storedTheme;
                 }
 
-                return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-            }
+                return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            };
 
             const setTheme = theme => {
-                if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                    document.documentElement.setAttribute('data-bs-theme', 'dark')
-                } else {
-                    document.documentElement.setAttribute('data-bs-theme', theme)
-                }
-            }
+                let themeColor = '';
+                let isDarkMode = theme === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : theme === 'dark';
 
-            setTheme(getPreferredTheme())
+                if (isDarkMode) {
+                    $('html').attr('data-bs-theme', 'dark');
+                    themeColor = '#051b11';
+                } else {
+                    $('html').attr('data-bs-theme', theme);
+                    themeColor = '#d1e7dd';
+                }
+                $('meta[name="theme-color"]').attr('content', themeColor);
+
+                const colorSettings = {
+                    color: isDarkMode ? "#FFFFFF" : "#000000",
+                    borderColor: isDarkMode ? "rgba(255,255,255,0.1)" : "rgba(0,0,0,0.1)",
+                    backgroundColor: isDarkMode ? "rgba(255,255,0,0.1)" : "rgba(0,255,0,0.1)",
+                    lineBorderColor: isDarkMode ? "rgba(255,255,0,0.4)" : "rgba(0,255,0,0.4)",
+                    gridColor: isDarkMode ? "rgba(255,255,255,0.2)" : "rgba(0,0,0,0.2)"
+                };
+
+                if (typeof chartInstances !== 'undefined') {
+                    chartInstances.forEach(chart => {
+                        if (chart.options.scales) {
+                            if (chart.options.scales.x) {
+                                if (chart.options.scales.x.ticks) {
+                                    chart.options.scales.x.ticks.color = colorSettings.color;
+                                }
+                                if (chart.options.scales.x.title) {
+                                    chart.options.scales.x.title.color = colorSettings.color;
+                                }
+                                if (chart.options.scales.x.grid) {
+                                    chart.options.scales.x.grid.color = colorSettings.gridColor;
+                                }
+                            }
+
+                            if (chart.options.scales.y) {
+                                if (chart.options.scales.y.ticks) {
+                                    chart.options.scales.y.ticks.color = colorSettings.color;
+                                }
+                                if (chart.options.scales.y.title) {
+                                    chart.options.scales.y.title.color = colorSettings.color;
+                                }
+                                if (chart.options.scales.y.grid) {
+                                    chart.options.scales.y.grid.color = colorSettings.gridColor;
+                                }
+                            }
+                        }
+
+                        if (chart.options.elements && chart.options.elements.line) {
+                            chart.options.elements.line.borderColor = colorSettings.lineBorderColor;
+                        }
+
+                        if ((chart.config.type === 'doughnut' || chart.config.type === 'pie') && chart.options.plugins && chart.options.plugins.legend) {
+                            chart.options.plugins.legend.labels.color = colorSettings.color;
+                        }
+
+                        chart.update();
+                    });
+                }
+            };
+
+            setTheme(getPreferredTheme());
 
             const showActiveTheme = (theme, focus = false) => {
-                const themeSwitcher = document.querySelector('#bd-theme')
+                const themeSwitcher = $('#bd-theme');
 
-                if (!themeSwitcher) {
-                    return
+                if (!themeSwitcher.length) {
+                    return;
                 }
 
-                const themeSwitcherText = document.querySelector('#bd-theme-text')
-                const activeThemeIcon = document.querySelector('.theme-icon-active use')
-                const btnToActive = document.querySelector(`[data-bs-theme-value="${theme}"]`)
-                const svgOfActiveBtn = btnToActive.querySelector('svg use').getAttribute('href')
+                const themeSwitcherText = $('#bd-theme-text');
+                const activeThemeIcon = $('.theme-icon-active use');
+                const btnToActive = $(`[data-bs-theme-value="${theme}"]`);
 
-                document.querySelectorAll('[data-bs-theme-value]').forEach(element => {
-                    element.classList.remove('active')
-                    element.setAttribute('aria-pressed', 'false')
-                })
-
-                btnToActive.classList.add('active')
-                btnToActive.setAttribute('aria-pressed', 'true')
-                activeThemeIcon.setAttribute('href', svgOfActiveBtn)
-                const themeSwitcherLabel = `${themeSwitcherText.textContent} (${btnToActive.dataset.bsThemeValue})`
-                themeSwitcher.setAttribute('aria-label', themeSwitcherLabel)
+                $('[data-bs-theme-value]').removeClass('active').attr('aria-pressed', 'false');
+                btnToActive.addClass('active').attr('aria-pressed', 'true');
 
                 if (focus) {
-                    themeSwitcher.focus()
+                    themeSwitcher.focus();
                 }
-            }
+            };
 
             window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-                const storedTheme = getStoredTheme()
+                const storedTheme = getStoredTheme();
                 if (storedTheme !== 'light' && storedTheme !== 'dark') {
-                    setTheme(getPreferredTheme())
+                    setTheme(getPreferredTheme());
                 }
-            })
+            });
 
-            window.addEventListener('DOMContentLoaded', () => {
-                showActiveTheme(getPreferredTheme())
+            $(document).ready(() => {
+                showActiveTheme(getPreferredTheme());
 
-                document.querySelectorAll('[data-bs-theme-value]')
-                    .forEach(toggle => {
-                        toggle.addEventListener('click', () => {
-                            const theme = toggle.getAttribute('data-bs-theme-value')
-                            setStoredTheme(theme)
-                            setTheme(theme)
-                            showActiveTheme(theme, true)
-                        })
-                    })
-            })
-        })()
-    </script>
-    <script>
-        function updateThemeColor() {
-            const theme = document.documentElement.getAttribute("data-bs-theme") || "light";
-            const metaThemeColor = document.querySelector('meta[name="theme-color"]');
-
-            if (metaThemeColor) {
-                metaThemeColor.setAttribute("content", theme === "dark" ? "#051b11" : "#d1e7dd");
-            }
-        }
-
-        // Jalankan saat halaman dimuat
-        updateThemeColor();
-
-        // Pantau perubahan atribut data-bs-theme
-        const observer = new MutationObserver(updateThemeColor);
-        observer.observe(document.documentElement, {
-            attributes: true,
-            attributeFilter: ["data-bs-theme"]
-        });
+                $('[data-bs-theme-value]').on('click', function() {
+                    const theme = $(this).attr('data-bs-theme-value');
+                    setStoredTheme(theme);
+                    setTheme(theme);
+                    showActiveTheme(theme, true);
+                });
+            });
+        })();
     </script>
     <style>
         :root {
@@ -417,7 +432,31 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                     <div class="ps-2 text-start text-success-emphasis">SIM KLINIK<br><span class="fw-bold">PEC</span> TELUK KUANTAN</div>
                                 </span>
                             </div>
-                            <button id="closeOffcanvasBtn" type="button" class="btn btn-success bg-gradient" data-bs-dismiss="offcanvas" aria-label="Close"><i class="fa-solid fa-angles-right"></i></button>
+                            <div class="d-flex flex-row">
+                                <div class="dropdown">
+                                    <button class="btn btn-secondary bg-gradient dropdown-toggle me-2" id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static" aria-label="Toggle theme (auto)">
+                                        <i class="fa-solid fa-palette"></i>
+                                    </button>
+                                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="bd-theme-text">
+                                        <li>
+                                            <button type="button" class="dropdown-item" data-bs-theme-value="light" aria-pressed="false">
+                                                Terang
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button type="button" class="dropdown-item" data-bs-theme-value="dark" aria-pressed="false">
+                                                Gelap
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button type="button" class="dropdown-item active" data-bs-theme-value="auto" aria-pressed="true">
+                                                Otomatis
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <button id="closeOffcanvasBtn" type="button" class="btn btn-success bg-gradient" data-bs-dismiss="offcanvas" aria-label="Close"><i class="fa-solid fa-angles-right"></i></button>
+                            </div>
                         </div>
                         <div class="offcanvas-body p-1">
                             <div class="d-flex justify-content-center">
