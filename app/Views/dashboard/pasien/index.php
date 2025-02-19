@@ -306,36 +306,6 @@
         }
     });
 
-    const toggleFilter = $('#toggleFilter');
-    const filterFields = $('#filterFields');
-    const toggleStateKey = 'filterFieldsToggleState';
-
-    // Fungsi untuk menyimpan status toggle di local storage
-    function saveToggleState(state) {
-        localStorage.setItem(toggleStateKey, state ? 'visible' : 'hidden');
-    }
-
-    // Fungsi untuk memuat status toggle dari local storage
-    function loadToggleState() {
-        return localStorage.getItem(toggleStateKey);
-    }
-
-    // Atur status awal berdasarkan local storage
-    const initialState = loadToggleState();
-    if (initialState === 'visible') {
-        filterFields.show();
-    } else {
-        filterFields.hide(); // Sembunyikan jika 'hidden' atau belum ada data
-    }
-
-    // Event klik untuk toggle
-    toggleFilter.on('click', function(ə) {
-        ə.preventDefault();
-        const isVisible = filterFields.is(':visible');
-        filterFields.toggle(!isVisible);
-        saveToggleState(!isVisible);
-    });
-
     $(document).ready(function() {
         $('[data-bs-toggle="popover"]').popover({
             html: true,

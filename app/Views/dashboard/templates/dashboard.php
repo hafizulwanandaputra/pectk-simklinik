@@ -150,6 +150,37 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
             });
         })();
     </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggleFilter = document.getElementById('toggleFilter');
+            const filterFields = document.getElementById('filterFields');
+            const toggleStateKey = 'filterFieldsToggleState';
+
+            // Fungsi untuk menyimpan status toggle di local storage
+            function saveToggleState(state) {
+                localStorage.setItem(toggleStateKey, state ? 'visible' : 'hidden');
+            }
+
+            // Fungsi untuk memuat status toggle dari local storage
+            function loadToggleState() {
+                return localStorage.getItem(toggleStateKey);
+            }
+
+            // Atur status awal berdasarkan local storage
+            const initialState = loadToggleState();
+            if (initialState === 'visible') {
+                filterFields.style.display = 'block';
+            }
+
+            // Event klik untuk toggle
+            toggleFilter.addEventListener('click', function(event) {
+                event.preventDefault();
+                const isVisible = filterFields.style.display === 'block';
+                filterFields.style.display = isVisible ? 'none' : 'block';
+                saveToggleState(!isVisible);
+            });
+        });
+    </script>
     <style>
         :root {
             --bs-font-sans-serif: "Noto Sans", "Noto Sans Arabic", system-ui, -apple-system, "Helvetica Neue", Arial, "Liberation Sans", sans-serif;

@@ -348,36 +348,6 @@
             table.ajax.reload(null, false);
         });
 
-        const toggleFilter = $('#toggleFilter');
-        const filterFields = $('#filterFields');
-        const toggleStateKey = 'filterFieldsToggleState';
-
-        // Fungsi untuk menyimpan status toggle di local storage
-        function saveToggleState(state) {
-            localStorage.setItem(toggleStateKey, state ? 'visible' : 'hidden');
-        }
-
-        // Fungsi untuk memuat status toggle dari local storage
-        function loadToggleState() {
-            return localStorage.getItem(toggleStateKey);
-        }
-
-        // Atur status awal berdasarkan local storage
-        const initialState = loadToggleState();
-        if (initialState === 'visible') {
-            filterFields.show();
-        } else {
-            filterFields.hide(); // Sembunyikan jika 'hidden' atau belum ada data
-        }
-
-        // Event klik untuk toggle
-        toggleFilter.on('click', function(e) {
-            e.preventDefault();
-            const isVisible = filterFields.is(':visible');
-            filterFields.toggle(!isVisible);
-            saveToggleState(!isVisible);
-        });
-
         // Ketika tombol "Tambah Pengguna" diklik
         $('#addUserBtn').click(function() {
             $('#userModalLabel').text('Tambah Pengguna'); // Mengubah label modal
