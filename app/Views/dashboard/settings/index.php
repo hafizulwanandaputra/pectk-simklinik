@@ -76,7 +76,7 @@
                 </div>
                 <div class="col">
                     <div class="card bg-body-tertiary w-100  shadow-sm">
-                        <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Keselamatan <em>Sign In</em></div>
+                        <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Keselamatan Operasi</div>
                         <div class="card-body py-2 px-3">
                             <h5 class="display-6 fw-medium date mb-0 placeholder-glow" id="medrec_operasi_safety">
                                 <span class="placeholder w-100"></span>
