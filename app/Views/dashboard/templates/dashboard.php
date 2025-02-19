@@ -465,7 +465,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                             </div>
                             <div class="d-flex flex-row">
                                 <div class="dropdown">
-                                    <button class="btn btn-secondary bg-gradient dropdown-toggle me-2" id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static" aria-label="Toggle theme (auto)">
+                                    <button class="btn btn-secondary bg-gradient dropdown-toggle" id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static" aria-label="Toggle theme (auto)">
                                         <i class="fa-solid fa-palette"></i>
                                     </button>
                                     <ul class="dropdown-menu shadow-sm dropdown-menu-end" aria-labelledby="bd-theme-text">
@@ -486,7 +486,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                         </li>
                                     </ul>
                                 </div>
-                                <button id="closeOffcanvasBtn" type="button" class="btn btn-success bg-gradient" data-bs-dismiss="offcanvas" aria-label="Close"><i class="fa-solid fa-angles-right"></i></button>
+                                <button id="closeOffcanvasBtn" type="button" class="btn btn-success bg-gradient ms-2" data-bs-dismiss="offcanvas" aria-label="Close"><i class="fa-solid fa-angles-right"></i></button>
                             </div>
                         </div>
                         <div class="offcanvas-body p-1">
