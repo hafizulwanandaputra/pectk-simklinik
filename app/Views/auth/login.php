@@ -251,34 +251,32 @@
                             </button>
                         </div>
                     </div>
+                    <div class="dropdown d-grid mt-3">
+                        <button class="btn btn-success bg-gradient btn-sm dropdown-toggle" id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static" aria-label="Toggle theme (auto)">
+                            <i class="fa-solid fa-palette"></i> Atur Tema
+                        </button>
+                        <ul class="dropdown-menu shadow-sm w-100" aria-labelledby="bd-theme-text">
+                            <li>
+                                <button type="button" class="dropdown-item" data-bs-theme-value="light" aria-pressed="false">
+                                    Terang
+                                </button>
+                            </li>
+                            <li>
+                                <button type="button" class="dropdown-item" data-bs-theme-value="dark" aria-pressed="false">
+                                    Gelap
+                                </button>
+                            </li>
+                            <li>
+                                <button type="button" class="dropdown-item active" data-bs-theme-value="auto" aria-pressed="true">
+                                    Otomatis
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
                     <input type="hidden" name="url" value="<?= (isset($_GET['redirect'])) ? base_url('/' . urldecode($_GET['redirect'])) : base_url('/home'); ?>">
                     <hr class="border-success-subtle opacity-100">
                     <div class="text-center text-success-emphasis" style="font-size: 0.75em;">
                         <span class="">&copy; 2025 <?= (date('Y') !== "2025") ? "- " . date('Y') : ''; ?> <?= $companyName ?></span>
-                    </div>
-                    <div class="d-flex justify-content-center">
-                        <div class="dropdown">
-                            <button class="btn btn-link text-decoration-none btn-sm link-success dropdown-toggle me-2" id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static" aria-label="Toggle theme (auto)">
-                                <i class="fa-solid fa-palette"></i> Atur Tema
-                            </button>
-                            <ul class="dropdown-menu" aria-labelledby="bd-theme-text">
-                                <li>
-                                    <button type="button" class="dropdown-item" data-bs-theme-value="light" aria-pressed="false">
-                                        Terang
-                                    </button>
-                                </li>
-                                <li>
-                                    <button type="button" class="dropdown-item" data-bs-theme-value="dark" aria-pressed="false">
-                                        Gelap
-                                    </button>
-                                </li>
-                                <li>
-                                    <button type="button" class="dropdown-item active" data-bs-theme-value="auto" aria-pressed="true">
-                                        Otomatis
-                                    </button>
-                                </li>
-                            </ul>
-                        </div>
                     </div>
                     <?= form_close(); ?>
                 </div>
@@ -443,7 +441,8 @@
                 e.preventDefault(); // Mencegah aksi default tombol
                 $('#loginForm').submit(); // Mengirimkan form login
                 $('input').prop('disabled', true).removeClass('is-invalid'); // Menonaktifkan semua input dan menghapus kelas 'is-invalid'
-                $('#loginBtn').prop('disabled', true).html(`
+                $('#loginForm button').prop('disabled', true)
+                $('#loginBtn').html(`
             <span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span>  <span class="d-md-none">SILAKAN TUNGGU</span>
         `); // Menampilkan spinner dan teks 'SILAKAN TUNGGU...' pada tombol login
             });
