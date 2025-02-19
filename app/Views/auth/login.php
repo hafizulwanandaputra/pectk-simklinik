@@ -256,6 +256,30 @@
                     <div class="text-center text-success-emphasis" style="font-size: 0.75em;">
                         <span class="">&copy; 2025 <?= (date('Y') !== "2025") ? "- " . date('Y') : ''; ?> <?= $companyName ?></span>
                     </div>
+                    <div class="d-flex justify-content-center">
+                        <div class="dropdown">
+                            <button class="btn btn-link text-decoration-none btn-sm link-success dropdown-toggle me-2" id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static" aria-label="Toggle theme (auto)">
+                                <i class="fa-solid fa-palette"></i> Atur Tema
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="bd-theme-text">
+                                <li>
+                                    <button type="button" class="dropdown-item" data-bs-theme-value="light" aria-pressed="false">
+                                        Terang
+                                    </button>
+                                </li>
+                                <li>
+                                    <button type="button" class="dropdown-item" data-bs-theme-value="dark" aria-pressed="false">
+                                        Gelap
+                                    </button>
+                                </li>
+                                <li>
+                                    <button type="button" class="dropdown-item active" data-bs-theme-value="auto" aria-pressed="true">
+                                        Otomatis
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                     <?= form_close(); ?>
                 </div>
             </div>
@@ -317,10 +341,8 @@
         <?php endif; ?>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="<?= base_url(); ?>assets_public/fontawesome/js/all.js"></script>
     <script>
         $(document).ready(function() {
             // Menangani semua input password dengan jQuery
