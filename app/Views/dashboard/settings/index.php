@@ -206,80 +206,79 @@
 <?= $this->endSection(); ?>
 <?= $this->section('javascript'); ?>
 <script>
-    async function LoadEmptyRecords() {
-        $('#loadingSpinner').show();
-        const spinner = `<span class="placeholder w-100"></span>`;
-        $('#medrec_assesment').html(spinner);
-        $('#medrec_edukasi').html(spinner);
-        $('#medrec_skrining').html(spinner);
-        $('#medrec_permintaan_penunjang').html(spinner);
-        $('#medrec_lp_tindakan_rajal').html(spinner);
-        $('#medrec_operasi_pra').html(spinner);
-        $('#medrec_operasi_safety').html(spinner);
-        $('#medrec_optik').html(spinner);
-
-        try {
-            const response = await axios.get(`<?= base_url('/settings/emptyrecords') ?>`);
-            $('#medrec_assesment').text(response.data.medrec_assesment);
-            $('#medrec_edukasi').text(response.data.medrec_edukasi);
-            $('#medrec_skrining').text(response.data.medrec_skrining);
-            $('#medrec_permintaan_penunjang').text(response.data.medrec_permintaan_penunjang);
-            $('#medrec_lp_tindakan_rajal').text(response.data.medrec_lp_tindakan_rajal);
-            $('#medrec_operasi_pra').text(response.data.medrec_operasi_pra);
-            $('#medrec_operasi_safety').text(response.data.medrec_operasi_safety);
-            $('#medrec_optik').text(response.data.medrec_optik);
-        } catch (error) {
-            const falied = `
-                <span class="text-danger"><i class="fa-solid fa-xmark"></i></span>
-            `;
-            $('#medrec_assesment').html(falied);
-            $('#medrec_edukasi').html(falied);
-            $('#medrec_skrining').html(falied);
-            $('#medrec_permintaan_penunjang').html(falied);
-            $('#medrec_lp_tindakan_rajal').html(falied);
-            $('#medrec_operasi_pra').html(falied);
-            $('#medrec_operasi_safety').html(falied);
-            $('#medrec_optik').html(falied);
-            showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
-        } finally {
-            $('#loadingSpinner').hide();
-        }
-    };
-    // Event listener untuk menangani klik pada tombol konfirmasi flush
-    $(document).on('click', '#confirmFlush', function(e) {
-        e.preventDefault(); // Mencegah aksi default tombol
-        $('#flushForm').submit(); // Mengirimkan form flush
-        $('#flushModal button').prop('disabled', true); // Nonaktifkan tombol flush
-        $('#flushMessage').html(`Silakan tunggu...`); // Tampilkan pesan menunggu saat flush
-    });
-    $(document).ready(function() {
-        // Show delete confirmation modal
-        $('#deleteEmptyMRData').click(function() {
-            $('[data-bs-toggle="tooltip"]').tooltip('hide');
-            $('#deleteMessage').html(`Hapus data rekam medis yang kosong?`);
-            $('#deleteSubmessage').html(`Tindakan ini tidak dapat dikembalikan. Pastikan tidak ada aktivitas rekam medis saat menghapus.`);
-            $('#deleteModal').modal('show');
-        });
-
-        $('#confirmDeleteBtn').click(async function() {
-            $('#deleteModal button').prop('disabled', true);
-            $('#deleteMessage').addClass('mb-0').html('Mengapus, silakan tunggu...');
-            $('#deleteSubmessage').hide();
+    <?php if (session()->get('role') == "Admin") : ?>
+        async function LoadEmptyRecords() {
+            $('#loadingSpinner').show();
+            const spinner = `<span class="placeholder w-100"></span>`;
+            $('#medrec_assesment').html(spinner);
+            $('#medrec_edukasi').html(spinner);
+            $('#medrec_skrining').html(spinner);
+            $('#medrec_permintaan_penunjang').html(spinner);
+            $('#medrec_lp_tindakan_rajal').html(spinner);
+            $('#medrec_operasi_pra').html(spinner);
+            $('#medrec_operasi_safety').html(spinner);
+            $('#medrec_optik').html(spinner);
 
             try {
-                const response = await axios.delete(`<?= base_url('/settings/deleteempty') ?>`);
-                showSuccessToast(response.data.message);
-                LoadEmptyRecords();
+                const response = await axios.get(`<?= base_url('/settings/emptyrecords') ?>`);
+                $('#medrec_assesment').text(response.data.medrec_assesment);
+                $('#medrec_edukasi').text(response.data.medrec_edukasi);
+                $('#medrec_skrining').text(response.data.medrec_skrining);
+                $('#medrec_permintaan_penunjang').text(response.data.medrec_permintaan_penunjang);
+                $('#medrec_lp_tindakan_rajal').text(response.data.medrec_lp_tindakan_rajal);
+                $('#medrec_operasi_pra').text(response.data.medrec_operasi_pra);
+                $('#medrec_operasi_safety').text(response.data.medrec_operasi_safety);
+                $('#medrec_optik').text(response.data.medrec_optik);
             } catch (error) {
+                const falied = `
+                <span class="text-danger"><i class="fa-solid fa-xmark"></i></span>
+            `;
+                $('#medrec_assesment').html(falied);
+                $('#medrec_edukasi').html(falied);
+                $('#medrec_skrining').html(falied);
+                $('#medrec_permintaan_penunjang').html(falied);
+                $('#medrec_lp_tindakan_rajal').html(falied);
+                $('#medrec_operasi_pra').html(falied);
+                $('#medrec_operasi_safety').html(falied);
+                $('#medrec_optik').html(falied);
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
             } finally {
-                $('#deleteModal').modal('hide');
-                $('#deleteMessage').removeClass('mb-0');
-                $('#deleteSubmessage').show();
-                $('#deleteModal button').prop('disabled', false);
+                $('#loadingSpinner').hide();
             }
-        });
-        LoadEmptyRecords();
+        };
+    <?php endif; ?>
+    $(document).ready(function() {
+        <?php if (session()->get('role') == "Admin") : ?>
+            // Show delete confirmation modal
+            $('#deleteEmptyMRData').click(function() {
+                $('[data-bs-toggle="tooltip"]').tooltip('hide');
+                $('#deleteMessage').html(`Hapus data rekam medis yang kosong?`);
+                $('#deleteSubmessage').html(`Tindakan ini tidak dapat dikembalikan. Pastikan tidak ada aktivitas rekam medis saat menghapus.`);
+                $('#deleteModal').modal('show');
+            });
+
+            $('#confirmDeleteBtn').click(async function() {
+                $('#deleteModal button').prop('disabled', true);
+                $('#deleteMessage').addClass('mb-0').html('Mengapus, silakan tunggu...');
+                $('#deleteSubmessage').hide();
+
+                try {
+                    const response = await axios.delete(`<?= base_url('/settings/deleteempty') ?>`);
+                    showSuccessToast(response.data.message);
+                    LoadEmptyRecords();
+                } catch (error) {
+                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                } finally {
+                    $('#deleteModal').modal('hide');
+                    $('#deleteMessage').removeClass('mb-0');
+                    $('#deleteSubmessage').show();
+                    $('#deleteModal button').prop('disabled', false);
+                }
+            });
+            LoadEmptyRecords();
+        <?php else : ?>
+            $('#loadingSpinner').hide();
+        <?php endif; ?>
     });
     // Show toast notification
     <?= $this->include('toast/index') ?>
