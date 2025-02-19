@@ -156,6 +156,10 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
             const filterFields = document.getElementById('filterFields');
             const toggleStateKey = 'filterFieldsToggleState';
 
+            if (!toggleFilter || !filterFields) {
+                return; // Keluar jika elemen tidak ditemukan untuk mencegah error
+            }
+
             // Fungsi untuk menyimpan status toggle di local storage
             function saveToggleState(state) {
                 localStorage.setItem(toggleStateKey, state ? 'visible' : 'hidden');
@@ -170,6 +174,8 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
             const initialState = loadToggleState();
             if (initialState === 'visible') {
                 filterFields.style.display = 'block';
+            } else {
+                filterFields.style.display = 'none'; // Pastikan ada nilai default
             }
 
             // Event klik untuk toggle
