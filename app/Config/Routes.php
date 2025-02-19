@@ -430,6 +430,7 @@ $routes->post('/(?i)settings/(?i)autodate-off/(:any)', 'Settings::autodate_off/$
 $routes->get('/(?i)settings', 'Settings::index');
 
 // HAPUS DATA REKAM MEDIS YANG KOSONG
+$routes->get('/(?i)settings/(?i)emptyrecords', 'Settings::emptyrecords');
 $routes->delete('/(?i)settings/(?i)deleteempty', 'Settings::deleteempty');
 
 // CHANGE CASHIER PASSWORD

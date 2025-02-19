@@ -12,7 +12,89 @@
 <main class="main-content-inside px-3 pt-3">
     <div class="no-fluid-content">
         <?php if (session()->get('role') == "Admin") : ?>
-            <h5>Rekam Medis</h5>
+            <h5>Rekam Medis yang Kosong</h5>
+            <div class="row row-cols-2 row-cols-lg-4 g-2 mb-2">
+                <div class="col">
+                    <div class="card bg-body-tertiary w-100  shadow-sm">
+                        <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Asesmen</div>
+                        <div class="card-body py-2 px-3">
+                            <h5 class="display-6 fw-medium date mb-0 placeholder-glow" id="medrec_assesment">
+                                <span class="placeholder w-100"></span>
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card bg-body-tertiary w-100  shadow-sm">
+                        <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Skrining</div>
+                        <div class="card-body py-2 px-3">
+                            <h5 class="display-6 fw-medium date mb-0 placeholder-glow" id="medrec_skrining">
+                                <span class="placeholder w-100"></span>
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card bg-body-tertiary w-100  shadow-sm">
+                        <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Edukasi</div>
+                        <div class="card-body py-2 px-3">
+                            <h5 class="display-6 fw-medium date mb-0 placeholder-glow" id="medrec_edukasi">
+                                <span class="placeholder w-100"></span>
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card bg-body-tertiary w-100  shadow-sm">
+                        <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Pemeriksaan Penunjang</div>
+                        <div class="card-body py-2 px-3">
+                            <h5 class="display-6 fw-medium date mb-0 placeholder-glow" id="medrec_permintaan_penunjang">
+                                <span class="placeholder w-100"></span>
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card bg-body-tertiary w-100  shadow-sm">
+                        <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Tindakan Rawat Jalan</div>
+                        <div class="card-body py-2 px-3">
+                            <h5 class="display-6 fw-medium date mb-0 placeholder-glow" id="medrec_lp_tindakan_rajal">
+                                <span class="placeholder w-100"></span>
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card bg-body-tertiary w-100  shadow-sm">
+                        <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Pra Operasi</div>
+                        <div class="card-body py-2 px-3">
+                            <h5 class="display-6 fw-medium date mb-0 placeholder-glow" id="medrec_operasi_pra">
+                                <span class="placeholder w-100"></span>
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card bg-body-tertiary w-100  shadow-sm">
+                        <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Keselamatan <em>Sign In</em></div>
+                        <div class="card-body py-2 px-3">
+                            <h5 class="display-6 fw-medium date mb-0 placeholder-glow" id="medrec_operasi_safety">
+                                <span class="placeholder w-100"></span>
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card bg-body-tertiary w-100  shadow-sm">
+                        <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Resep Kacamata</div>
+                        <div class="card-body py-2 px-3">
+                            <h5 class="display-6 fw-medium date mb-0 placeholder-glow" id="medrec_optik">
+                                <span class="placeholder w-100"></span>
+                            </h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <ul class="list-group shadow-sm  mb-3">
                 <li class="list-group-item p-1 list-group-item-action">
                     <div class="d-flex align-items-start">
@@ -124,6 +206,45 @@
 <?= $this->endSection(); ?>
 <?= $this->section('javascript'); ?>
 <script>
+    async function LoadEmptyRecords() {
+        $('#loadingSpinner').show();
+        const spinner = `<span class="placeholder w-100"></span>`;
+        $('#medrec_assesment').html(spinner);
+        $('#medrec_edukasi').html(spinner);
+        $('#medrec_skrining').html(spinner);
+        $('#medrec_permintaan_penunjang').html(spinner);
+        $('#medrec_lp_tindakan_rajal').html(spinner);
+        $('#medrec_operasi_pra').html(spinner);
+        $('#medrec_operasi_safety').html(spinner);
+        $('#medrec_optik').html(spinner);
+
+        try {
+            const response = await axios.get(`<?= base_url('/settings/emptyrecords') ?>`);
+            $('#medrec_assesment').text(response.data.medrec_assesment);
+            $('#medrec_edukasi').text(response.data.medrec_edukasi);
+            $('#medrec_skrining').text(response.data.medrec_skrining);
+            $('#medrec_permintaan_penunjang').text(response.data.medrec_permintaan_penunjang);
+            $('#medrec_lp_tindakan_rajal').text(response.data.medrec_lp_tindakan_rajal);
+            $('#medrec_operasi_pra').text(response.data.medrec_operasi_pra);
+            $('#medrec_operasi_safety').text(response.data.medrec_operasi_safety);
+            $('#medrec_optik').text(response.data.medrec_optik);
+        } catch (error) {
+            const falied = `
+                <span class="text-danger"><i class="fa-solid fa-xmark"></i></span>
+            `;
+            $('#medrec_assesment').html(falied);
+            $('#medrec_edukasi').html(falied);
+            $('#medrec_skrining').html(falied);
+            $('#medrec_permintaan_penunjang').html(falied);
+            $('#medrec_lp_tindakan_rajal').html(falied);
+            $('#medrec_operasi_pra').html(falied);
+            $('#medrec_operasi_safety').html(falied);
+            $('#medrec_optik').html(falied);
+            showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+        } finally {
+            $('#loadingSpinner').hide();
+        }
+    };
     // Event listener untuk menangani klik pada tombol konfirmasi flush
     $(document).on('click', '#confirmFlush', function(e) {
         e.preventDefault(); // Mencegah aksi default tombol
@@ -132,8 +253,6 @@
         $('#flushMessage').html(`Silakan tunggu...`); // Tampilkan pesan menunggu saat flush
     });
     $(document).ready(function() {
-        // Menyembunyikan spinner loading saat dokumen sudah siap
-        $('#loadingSpinner').hide(); // Menyembunyikan elemen spinner loading
         // Show delete confirmation modal
         $('#deleteEmptyMRData').click(function() {
             $('[data-bs-toggle="tooltip"]').tooltip('hide');
@@ -150,6 +269,7 @@
             try {
                 const response = await axios.delete(`<?= base_url('/settings/deleteempty') ?>`);
                 showSuccessToast(response.data.message);
+                LoadEmptyRecords();
             } catch (error) {
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
             } finally {
@@ -159,6 +279,7 @@
                 $('#deleteModal button').prop('disabled', false);
             }
         });
+        LoadEmptyRecords();
     });
     // Show toast notification
     <?= $this->include('toast/index') ?>

@@ -517,6 +517,7 @@ class RawatJalan extends BaseController
                 $db->query('ALTER TABLE medrec_skrining AUTO_INCREMENT = 1');
                 $db->query('ALTER TABLE medrec_sp_operasi AUTO_INCREMENT = 1');
                 $db->query('ALTER TABLE medrec_rujukan AUTO_INCREMENT = 1');
+                $db->query('ALTER TABLE medrec_keterangan_buta_warna AUTO_INCREMENT = 1');
                 $db->query('ALTER TABLE medrec_keterangan_sakit_mata AUTO_INCREMENT = 1');
                 $db->query('ALTER TABLE medrec_keterangan_istirahat AUTO_INCREMENT = 1');
                 return $this->response->setJSON(['success' => true, 'message' => 'Rawat jalan berhasil dihapus karena kesalahan data']);
