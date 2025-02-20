@@ -487,7 +487,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                         </li>
                                         <li>
                                             <button type="button" class="dropdown-item active" data-bs-theme-value="auto" aria-pressed="true">
-                                                Otomatis
+                                                Sistem
                                             </button>
                                         </li>
                                     </ul>

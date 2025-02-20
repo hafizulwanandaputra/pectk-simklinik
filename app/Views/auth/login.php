@@ -268,7 +268,7 @@
                             </li>
                             <li>
                                 <button type="button" class="dropdown-item active" data-bs-theme-value="auto" aria-pressed="true">
-                                    Otomatis
+                                    Sistem
                                 </button>
                             </li>
                         </ul>
