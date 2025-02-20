@@ -575,7 +575,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <form id="mataForm" enctype="multipart/form-data" class="modal-content bg-body-tertiary shadow-lg transparent-blur">
                     <div class="modal-header justify-content-between pt-2 pb-2" style="border-bottom: 1px solid var(--bs-border-color-translucent);">
                         <h6 class="pe-2 modal-title fs-6 text-truncate" id="mataModalLabel" style="font-weight: bold;"></h6>
-                        <button id="closeBtn" type="button" class="btn btn-danger bg-gradient" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+                        <button id="closeBtn" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body py-2">
                         <input type="hidden" id="id_asesmen_mata" name="id_asesmen_mata" value="">
@@ -622,7 +622,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             <form id="mataPreviewForm" enctype="multipart/form-data" class="modal-content bg-body-tertiary shadow-lg transparent-blur">
                 <div class="modal-header justify-content-between pt-2 pb-2" style="border-bottom: 1px solid var(--bs-border-color-translucent);">
                     <h6 class="pe-2 modal-title fs-6 text-truncate" id="mataPreviewModalLabel" style="font-weight: bold;"></h6>
-                    <button id="closeBtn" type="button" class="btn btn-danger bg-gradient" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+                    <button id="closeBtn" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body py-2">
                     <div id="gambar_preview_2_div" style="display: none;" class="mb-1 mt-1">
