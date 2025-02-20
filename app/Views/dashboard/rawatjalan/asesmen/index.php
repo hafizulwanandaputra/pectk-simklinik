@@ -331,6 +331,10 @@ $usia = $registrasi->diff($tanggal_lahir);
                                 <input class="form-check-input" type="checkbox" id="sakit_lainnya_vertigo" name="sakit_lainnya[]" value="VERTIGO">
                                 <label class="form-check-label" for="sakit_lainnya_vertigo">VERTIGO</label>
                             </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="sakit_lainnya_ginjal" name="sakit_lainnya[]" value="GINJAL">
+                                <label class="form-check-label" for="sakit_lainnya_ginjal">GINJAL</label>
+                            </div>
                         </div>
                     </div>
                     <div class="invalid-feedback"></div>
