@@ -512,12 +512,6 @@ class SafetyOperasi extends BaseController
             $instruksi_khusus = $this->request->getPost('instruksi_khusus');
 
             $rules = [
-                'spesimen_kultur' => [
-                    'rules' => 'required',
-                    'errors' => [
-                        'required' => 'Wajib dipilih'
-                    ]
-                ],
                 'masalah_instrumen' => [
                     'rules' => 'required',
                     'errors' => [
