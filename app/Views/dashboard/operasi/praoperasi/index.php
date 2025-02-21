@@ -131,7 +131,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <div class="mb-2">
                     <div class="input-group has-validation">
                         <div class="form-floating">
-                            <input type="text" class="form-control" id="ctt_vital_suhu" name="ctt_vital_suhu" value="" autocomplete="off" dir="auto" placeholder="ctt_vital_suhu">
+                            <input type="number" class="form-control" id="ctt_vital_suhu" name="ctt_vital_suhu" value="" autocomplete="off" dir="auto" placeholder="ctt_vital_suhu">
                             <label for="ctt_vital_suhu">Suhu</label>
                         </div>
                         <span class="input-group-text">°C</span>
@@ -141,7 +141,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <div class="mb-2">
                     <div class="input-group has-validation">
                         <div class="form-floating">
-                            <input type="text" class="form-control" id="ctt_vital_nadi" name="ctt_vital_nadi" value="" autocomplete="off" dir="auto" placeholder="ctt_vital_nadi">
+                            <input type="number" class="form-control" id="ctt_vital_nadi" name="ctt_vital_nadi" value="" autocomplete="off" dir="auto" placeholder="ctt_vital_nadi">
                             <label for="ctt_vital_nadi">Nadi</label>
                         </div>
                         <span class="input-group-text">×/menit</span>
@@ -151,7 +151,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <div class="mb-2">
                     <div class="input-group has-validation">
                         <div class="form-floating">
-                            <input type="text" class="form-control" id="ctt_vital_rr" name="ctt_vital_rr" value="" autocomplete="off" dir="auto" placeholder="ctt_vital_rr">
+                            <input type="number" class="form-control" id="ctt_vital_rr" name="ctt_vital_rr" value="" autocomplete="off" dir="auto" placeholder="ctt_vital_rr">
                             <label for="ctt_vital_rr">Pernapasan</label>
                         </div>
                         <span class="input-group-text">×/menit</span>
@@ -170,7 +170,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 </div>
                 <div class="mb-2">
                     <div class="form-floating">
-                        <input type="text" class="form-control" id="ctt_vital_nyeri" name="ctt_vital_nyeri" value="" autocomplete="off" dir="auto" placeholder="ctt_vital_nyeri">
+                        <input type="number" class="form-control" id="ctt_vital_nyeri" name="ctt_vital_nyeri" value="" autocomplete="off" dir="auto" placeholder="ctt_vital_nyeri">
                         <label for="ctt_vital_nyeri">Skor Nyeri</label>
                         <div class="invalid-feedback"></div>
                     </div>
@@ -178,7 +178,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <div class="mb-2">
                     <div class="input-group has-validation">
                         <div class="form-floating">
-                            <input type="text" class="form-control" id="ctt_vital_tb" name="ctt_vital_tb" value="" autocomplete="off" dir="auto" placeholder="ctt_vital_tb">
+                            <input type="number" class="form-control" id="ctt_vital_tb" name="ctt_vital_tb" value="" autocomplete="off" dir="auto" placeholder="ctt_vital_tb">
                             <label for="ctt_vital_tb">Tinggi Badan</label>
                         </div>
                         <span class="input-group-text">cm</span>
@@ -188,7 +188,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <div class="mb-2">
                     <div class="input-group has-validation">
                         <div class="form-floating">
-                            <input type="text" class="form-control" id="ctt_vital_bb" name="ctt_vital_bb" value="" autocomplete="off" dir="auto" placeholder="ctt_vital_bb">
+                            <input type="number" class="form-control" id="ctt_vital_bb" name="ctt_vital_bb" value="" autocomplete="off" dir="auto" placeholder="ctt_vital_bb">
                             <label for="ctt_vital_bb">Berat Badan (kg)</label>
                         </div>
                         <span class="input-group-text">kg</span>
