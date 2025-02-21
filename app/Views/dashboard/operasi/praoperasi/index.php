@@ -129,30 +129,42 @@ $usia = $registrasi->diff($tanggal_lahir);
                     <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">1</span> Tanda-tanda Vital
                 </div>
                 <div class="mb-2">
-                    <div class="form-floating">
-                        <input type="text" class="form-control" id="ctt_vital_suhu" name="ctt_vital_suhu" value="" autocomplete="off" dir="auto" placeholder="ctt_vital_suhu">
-                        <label for="ctt_vital_suhu">Suhu (°C)</label>
+                    <div class="input-group has-validation">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" id="ctt_vital_suhu" name="ctt_vital_suhu" value="" autocomplete="off" dir="auto" placeholder="ctt_vital_suhu">
+                            <label for="ctt_vital_suhu">Suhu</label>
+                        </div>
+                        <span class="input-group-text">°C</span>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
                 <div class="mb-2">
-                    <div class="form-floating">
-                        <input type="text" class="form-control" id="ctt_vital_nadi" name="ctt_vital_nadi" value="" autocomplete="off" dir="auto" placeholder="ctt_vital_nadi">
-                        <label for="ctt_vital_nadi">Nadi (×/menit)</label>
+                    <div class="input-group has-validation">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" id="ctt_vital_nadi" name="ctt_vital_nadi" value="" autocomplete="off" dir="auto" placeholder="ctt_vital_nadi">
+                            <label for="ctt_vital_nadi">Nadi</label>
+                        </div>
+                        <span class="input-group-text">×/menit</span>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
                 <div class="mb-2">
-                    <div class="form-floating">
-                        <input type="text" class="form-control" id="ctt_vital_rr" name="ctt_vital_rr" value="" autocomplete="off" dir="auto" placeholder="ctt_vital_rr">
-                        <label for="ctt_vital_rr">Pernapasan (×/menit)</label>
+                    <div class="input-group has-validation">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" id="ctt_vital_rr" name="ctt_vital_rr" value="" autocomplete="off" dir="auto" placeholder="ctt_vital_rr">
+                            <label for="ctt_vital_rr">Pernapasan</label>
+                        </div>
+                        <span class="input-group-text">×/menit</span>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
                 <div class="mb-2">
-                    <div class="form-floating">
-                        <input type="text" class="form-control" id="ctt_vital_td" name="ctt_vital_td" value="" autocomplete="off" dir="auto" placeholder="ctt_vital_td">
-                        <label for="ctt_vital_td">Tekanan Darah (mmHg)</label>
+                    <div class="input-group has-validation">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" id="ctt_vital_td" name="ctt_vital_td" value="" autocomplete="off" dir="auto" placeholder="ctt_vital_td">
+                            <label for="ctt_vital_td">Tekanan Darah</label>
+                        </div>
+                        <span class="input-group-text">mmHg</span>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
@@ -164,16 +176,22 @@ $usia = $registrasi->diff($tanggal_lahir);
                     </div>
                 </div>
                 <div class="mb-2">
-                    <div class="form-floating">
-                        <input type="text" class="form-control" id="ctt_vital_tb" name="ctt_vital_tb" value="" autocomplete="off" dir="auto" placeholder="ctt_vital_tb">
-                        <label for="ctt_vital_tb">Tinggi Badan (cm)</label>
+                    <div class="input-group has-validation">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" id="ctt_vital_tb" name="ctt_vital_tb" value="" autocomplete="off" dir="auto" placeholder="ctt_vital_tb">
+                            <label for="ctt_vital_tb">Tinggi Badan</label>
+                        </div>
+                        <span class="input-group-text">cm</span>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
                 <div class="mb-2">
-                    <div class="form-floating">
-                        <input type="text" class="form-control" id="ctt_vital_bb" name="ctt_vital_bb" value="" autocomplete="off" dir="auto" placeholder="ctt_vital_bb">
-                        <label for="ctt_vital_bb">Berat Badan (kg)</label>
+                    <div class="input-group has-validation">
+                        <div class="form-floating">
+                            <input type="text" class="form-control" id="ctt_vital_bb" name="ctt_vital_bb" value="" autocomplete="off" dir="auto" placeholder="ctt_vital_bb">
+                            <label for="ctt_vital_bb">Berat Badan (kg)</label>
+                        </div>
+                        <span class="input-group-text">kg</span>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
