@@ -131,7 +131,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <div class="mb-2">
                     <div class="input-group has-validation">
                         <div class="form-floating">
-                            <input type="number" class="form-control" id="ctt_vital_suhu" name="ctt_vital_suhu" value="" autocomplete="off" dir="auto" placeholder="ctt_vital_suhu">
+                            <input type="number" class="form-control" id="ctt_vital_suhu" name="ctt_vital_suhu" value="" autocomplete="off" dir="auto" placeholder="ctt_vital_suhu" step="0.1">
                             <label for="ctt_vital_suhu">Suhu</label>
                         </div>
                         <span class="input-group-text">°C</span>
