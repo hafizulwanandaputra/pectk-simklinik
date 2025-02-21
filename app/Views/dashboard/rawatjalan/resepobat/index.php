@@ -92,6 +92,21 @@ $usia = $registrasi->diff($tanggal_lahir);
     </div>
     <div class="px-3 mt-3">
         <div class="no-fluid-content">
+            <?php if (session()->get('role') == 'Dokter') : ?>
+                <?php if ($rawatjalan['dokter'] != session()->get('fullname')) : ?>
+                    <div id="alert-date" class="alert alert-warning alert-dismissible" role="alert">
+                        <div class="d-flex align-items-start">
+                            <div style="width: 12px; text-align: center;">
+                                <i class="fa-solid fa-triangle-exclamation"></i>
+                            </div>
+                            <div class="w-100 ms-3">
+                                Saat ini Anda melihat resep obat yang diberikan oleh <?= $rawatjalan['dokter'] ?>. Pastikan Anda mengisi resep obat sesuai dengan DPJP yang masuk pada sistem ini.
+                            </div>
+                            <button type="button" id="close-alert" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                <?php endif; ?>
+            <?php endif; ?>
             <div class="card shadow-sm  overflow-auto">
                 <div class="card-header bg-body-tertiary" id="tambahDetailContainer" style="display: none;">
                     <form id="tambahDetail" enctype="multipart/form-data">

@@ -132,6 +132,21 @@ $usia = $registrasi->diff($tanggal_lahir);
             <?php else : ?>
                 <div>
                 <?php endif; ?>
+                <?php if (session()->get('role') == 'Dokter') : ?>
+                    <?php if ($rawatjalan['dokter'] != session()->get('fullname')) : ?>
+                        <div id="alert-date" class="alert alert-warning alert-dismissible" role="alert">
+                            <div class="d-flex align-items-start">
+                                <div style="width: 12px; text-align: center;">
+                                    <i class="fa-solid fa-triangle-exclamation"></i>
+                                </div>
+                                <div class="w-100 ms-3">
+                                    Saat ini Anda melihat resep kacamata yang diberikan oleh <?= $rawatjalan['dokter'] ?>. Pastikan Anda mengisi resep kacamata sesuai dengan DPJP yang masuk pada sistem ini.
+                                </div>
+                                <button type="button" id="close-alert" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        </div>
+                    <?php endif; ?>
+                <?php endif; ?>
                 <div class="d-flex flex-column flex-lg-row justify-content-lg-center mb-2">
                     <div class="d-flex justify-content-center">
                         <figure class="figure mb-0 mx-3 position-relative">
