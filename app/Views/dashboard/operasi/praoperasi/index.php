@@ -158,6 +158,13 @@ $usia = $registrasi->diff($tanggal_lahir);
                 </div>
                 <div class="mb-2">
                     <div class="form-floating">
+                        <input type="text" class="form-control" id="ctt_vital_nyeri" name="ctt_vital_nyeri" value="" autocomplete="off" dir="auto" placeholder="ctt_vital_nyeri">
+                        <label for="ctt_vital_nyeri">Skor Nyeri</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <div class="form-floating">
                         <input type="text" class="form-control" id="ctt_vital_tb" name="ctt_vital_tb" value="" autocomplete="off" dir="auto" placeholder="ctt_vital_tb">
                         <label for="ctt_vital_tb">Tinggi Badan (cm)</label>
                         <div class="invalid-feedback"></div>
