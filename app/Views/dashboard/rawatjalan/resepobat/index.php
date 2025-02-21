@@ -435,7 +435,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 fetchObatOptions();
                 fetchStatusResep();
             } catch (error) {
-                if (error.response.request.status === 401) {
+                if (error.response.request.status === 400) {
                     showFailedToast(error.response.data.message);
                 } else {
                     showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
@@ -462,7 +462,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 fetchObatOptions();
                 fetchStatusResep();
             } catch (error) {
-                if (error.response.request.status === 401) {
+                if (error.response.request.status === 400) {
                     showFailedToast(error.response.data.message);
                 } else {
                     showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
@@ -489,7 +489,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 fetchObatOptions();
                 fetchStatusResep();
             } catch (error) {
-                if (error.response.request.status === 401) {
+                if (error.response.request.status === 400) {
                     showFailedToast(error.response.data.message);
                 } else {
                     showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
@@ -645,7 +645,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             console.error('Perbaiki kesalahan pada formulir.');
                         }
                     } catch (error) {
-                        if (error.response.request.status === 422 || error.response.request.status === 401 || error.response.request.status === 404) {
+                        if (error.response.request.status === 422 || error.response.request.status === 400 || error.response.request.status === 404) {
                             showFailedToast(error.response.data.message);
                         } else {
                             showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
@@ -735,7 +735,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                     console.error('Perbaiki kesalahan pada formulir.');
                 }
             } catch (error) {
-                if (error.response.request.status === 422 || error.response.request.status === 401) {
+                if (error.response.request.status === 422 || error.response.request.status === 400) {
                     showFailedToast(error.response.data.message);
                 } else {
                     showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);

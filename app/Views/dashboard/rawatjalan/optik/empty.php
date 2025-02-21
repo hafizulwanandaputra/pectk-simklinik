@@ -99,12 +99,27 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <?php if ($rawatjalan['transaksi'] == 1) : ?>
                     <div class="text-muted">Tidak ada resep kacamata pada rawat jalan ini</div>
                 <?php else : ?>
-                    <div class="text-muted">Klik "Tambah Resep Kacamata" di bawah ini untuk menambahkan resep kacamata</div>
-                    <div class="d-grid gap-2 mt-3">
-                        <button class="btn btn-primary bg-gradient" type="button" id="addOptikBtn">
-                            <i class="fa-solid fa-plus"></i> Tambah Resep Kacamata
-                        </button>
-                    </div>
+                    <?php if (session()->get('role') == 'Dokter') : ?>
+                        <?php if ($rawatjalan['dokter'] != session()->get('fullname')) : ?>
+                            <div class="text-muted">Resep kacamata hanya bisa ditambahkan sesuai dengan dokter yang diberikan saat pendaftaran.</div>
+                            <div class="text-muted"><small>Dokter saat ini: <?= session()->get('fullname') ?></small></div>
+                            <div class="text-muted"><small>DPJP: <?= $rawatjalan['dokter'] ?></small></div>
+                        <?php else : ?>
+                            <div class="text-muted">Klik "Tambah Resep Kacamata" di bawah ini untuk menambahkan resep kacamata</div>
+                            <div class="d-grid gap-2 mt-3">
+                                <button class="btn btn-primary bg-gradient" type="button" id="addOptikBtn">
+                                    <i class="fa-solid fa-plus"></i> Tambah Resep Kacamata
+                                </button>
+                            </div>
+                        <?php endif; ?>
+                    <?php else : ?>
+                        <div class="text-muted">Klik "Tambah Resep Kacamata" di bawah ini untuk menambahkan resep kacamata</div>
+                        <div class="d-grid gap-2 mt-3">
+                            <button class="btn btn-primary bg-gradient" type="button" id="addOptikBtn">
+                                <i class="fa-solid fa-plus"></i> Tambah Resep Kacamata
+                            </button>
+                        </div>
+                    <?php endif; ?>
                 <?php endif; ?>
             </div>
             <?= form_close(); ?>

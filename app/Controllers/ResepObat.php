@@ -119,6 +119,13 @@ class ResepObat extends BaseController
                 return redirect()->back();
             }
 
+            if (session()->get('role') == 'Dokter') {
+                if ($rawatjalan['dokter'] != session()->get('fullname')) {
+                    session()->setFlashdata('error', 'Resep obat ini hanya bisa ditambahkan oleh ' . $rawatjalan['dokter']);
+                    return redirect()->back();
+                }
+            }
+
             // Menyiapkan data untuk disimpan
             $data = [
                 'nomor_registrasi' => $rawatjalan['nomor_registrasi'],
@@ -129,7 +136,7 @@ class ResepObat extends BaseController
                 'jenis_kelamin' => $rawatjalan['jenis_kelamin'],
                 'tempat_lahir' => $rawatjalan['tempat_lahir'],
                 'tanggal_lahir' => $rawatjalan['tanggal_lahir'],
-                'dokter' => session()->get('fullname'), // Menyimpan nama dokter yang sedang login
+                'dokter' => $rawatjalan['dokter'], // Menyimpan nama dokter yang sedang login
                 'apoteker' => NULL,
                 'tanggal_resep' => date('Y-m-d H:i:s'), // Menyimpan tanggal resep saat ini
                 'jumlah_resep' => 0,
@@ -158,18 +165,24 @@ class ResepObat extends BaseController
 
             if ($prescription->status == 1) {
                 // Jika resep ini sudah ditransaksikan
-                return $this->response->setStatusCode(401)->setJSON([
+                return $this->response->setStatusCode(400)->setJSON([
                     'success' => false,
                     'message' => 'Gagal mengonfirmasi resep, resep ini sudah ditransaksikan.'
                 ]);
             }
 
-            if (session()->get('role') != 'Admin') {
-                if (!$prescription || $prescription->dokter !== session()->get('fullname')) {
+            if (session()->get('role') == 'Dokter') {
+                if (!$prescription) {
                     // Jika dokter tidak sesuai atau resep tidak ditemukan
-                    return $this->response->setStatusCode(401)->setJSON([
+                    return $this->response->setStatusCode(400)->setJSON([
                         'success' => false,
-                        'message' => 'Gagal mengonfirmasi resep, dokter tidak sesuai atau resep tidak ditemukan.'
+                        'message' => 'Gagal mengonfirmasi resep, resep tidak ditemukan.'
+                    ]);
+                } else if ($prescription->dokter !== session()->get('fullname')) {
+                    // Jika dokter tidak sesuai atau resep tidak ditemukan
+                    return $this->response->setStatusCode(400)->setJSON([
+                        'success' => false,
+                        'message' => 'Gagal mengonfirmasi resep, dokter tidak sesuai (DPJP: ' . $prescription->dokter . ').'
                     ]);
                 }
             }
@@ -198,18 +211,24 @@ class ResepObat extends BaseController
 
             if ($prescription->status == 1) {
                 // Jika resep ini sudah ditransaksikan
-                return $this->response->setStatusCode(401)->setJSON([
+                return $this->response->setStatusCode(400)->setJSON([
                     'success' => false,
                     'message' => 'Gagal membatalkan konfirmasi resep, resep ini sudah ditransaksikan.'
                 ]);
             }
 
-            if (session()->get('role') != 'Admin') {
-                if (!$prescription || $prescription->dokter !== session()->get('fullname')) {
+            if (session()->get('role') == 'Dokter') {
+                if (!$prescription) {
                     // Jika dokter tidak sesuai atau resep tidak ditemukan
-                    return $this->response->setStatusCode(401)->setJSON([
+                    return $this->response->setStatusCode(400)->setJSON([
                         'success' => false,
-                        'message' => 'Gagal membatalkan konfirmasi resep, dokter tidak sesuai atau resep tidak ditemukan.'
+                        'message' => 'Gagal membatalkan konfirmasi resep, resep tidak ditemukan.'
+                    ]);
+                } else if ($prescription->dokter !== session()->get('fullname')) {
+                    // Jika dokter tidak sesuai atau resep tidak ditemukan
+                    return $this->response->setStatusCode(400)->setJSON([
+                        'success' => false,
+                        'message' => 'Gagal membatalkan konfirmasi resep, dokter tidak sesuai (DPJP: ' . $prescription->dokter . ').'
                     ]);
                 }
             }

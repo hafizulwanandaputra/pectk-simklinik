@@ -136,6 +136,13 @@ class Optik extends BaseController
                 return redirect()->back();
             }
 
+            if (session()->get('role') == 'Dokter') {
+                if ($rawatjalan['dokter'] != session()->get('fullname')) {
+                    session()->setFlashdata('error', 'Resep kacamata ini hanya bisa ditambahkan oleh ' . $rawatjalan['dokter']);
+                    return redirect()->back();
+                }
+            }
+
             // Buat resep kacamata baru dengan query builder
             $db->table('medrec_optik')->insert([
                 'nomor_registrasi' => $rawatjalan['nomor_registrasi'],
@@ -248,7 +255,13 @@ class Optik extends BaseController
                 ->find($id);
 
             if ($optik['transaksi'] == 1) {
-                return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Resep kacamata tidak dapat diperbarui karena transaksi pada rawat jalan ini sudah diproses']);
+                return $this->response->setStatusCode(400)->setJSON(['success' => false, 'message' => 'Tidak bisa dilakukan karena transaksi yang menggunakan resep kacamata ini sudah diproses']);
+            }
+
+            if (session()->get('role') == 'Dokter') {
+                if ($optik['dokter'] != session()->get('fullname')) {
+                    return $this->response->setStatusCode(400)->setJSON(['success' => false, 'message' => 'Resep kacamata ini hanya bisa diisi oleh ' . $optik['dokter']]);
+                }
             }
 
             // Simpan data optik

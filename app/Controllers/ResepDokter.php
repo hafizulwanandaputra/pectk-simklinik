@@ -567,19 +567,19 @@ class ResepDokter extends BaseController
             // Jika status resep adalah transaksi sudah diproses, gagalkan operasi
             if ($resep['status'] == 1) {
                 $db->transRollback();
-                return $this->response->setStatusCode(401)->setJSON(['success' => false, 'message' => 'Tidak bisa dilakukan karena transaksi yang menggunakan resep ini sudah diproses', 'errors' => NULL]);
+                return $this->response->setStatusCode(400)->setJSON(['success' => false, 'message' => 'Tidak bisa dilakukan karena transaksi yang menggunakan resep obat ini sudah diproses', 'errors' => NULL]);
             }
 
             if ($resep['confirmed'] == 1) {
                 $db->transRollback();
-                return $this->response->setStatusCode(401)->setJSON(['success' => false, 'message' => 'Tidak bisa dilakukan karena resep ini sudah diproses oleh apoteker', 'errors' => NULL]);
+                return $this->response->setStatusCode(400)->setJSON(['success' => false, 'message' => 'Tidak bisa dilakukan karena resep obat ini sudah diproses oleh apoteker', 'errors' => NULL]);
             }
 
             // Jika resep dilakukan oleh dokter lain, gagalkan operasi
             if (session()->get('role') != 'Admin') {
                 if ($resep['dokter'] != session()->get('fullname')) {
                     $db->transRollback();
-                    return $this->response->setStatusCode(401)->setJSON(['success' => false, 'message' => 'Resep ini hanya bisa ditambahkan oleh ' . $resep['dokter'], 'errors' => NULL]);
+                    return $this->response->setStatusCode(400)->setJSON(['success' => false, 'message' => 'Resep obat ini hanya bisa ditambahkan oleh ' . $resep['dokter'], 'errors' => NULL]);
                 }
             }
 
@@ -692,19 +692,19 @@ class ResepDokter extends BaseController
             // Jika status resep adalah transaksi sudah diproses, gagalkan operasi
             if ($resep['status'] == 1) {
                 $db->transRollback();
-                return $this->response->setStatusCode(401)->setJSON(['success' => false, 'message' => 'Tidak bisa dilakukan karena transaksi yang menggunakan resep ini sudah diproses', 'errors' => NULL]);
+                return $this->response->setStatusCode(400)->setJSON(['success' => false, 'message' => 'Tidak bisa dilakukan karena transaksi yang menggunakan resep ini sudah diproses', 'errors' => NULL]);
             }
 
             if ($resep['confirmed'] == 1) {
                 $db->transRollback();
-                return $this->response->setStatusCode(401)->setJSON(['success' => false, 'message' => 'Tidak bisa dilakukan karena resep ini sudah diproses oleh apoteker', 'errors' => NULL]);
+                return $this->response->setStatusCode(400)->setJSON(['success' => false, 'message' => 'Tidak bisa dilakukan karena resep ini sudah diproses oleh apoteker', 'errors' => NULL]);
             }
 
             // Jika resep dilakukan oleh dokter lain, gagalkan operasi
             if (session()->get('role') != 'Admin') {
                 if ($resep['dokter'] != session()->get('fullname')) {
                     $db->transRollback();
-                    return $this->response->setStatusCode(401)->setJSON(['success' => false, 'message' => 'Resep ini hanya bisa diedit oleh ' . $resep['dokter'], 'errors' => NULL]);
+                    return $this->response->setStatusCode(400)->setJSON(['success' => false, 'message' => 'Resep ini hanya bisa diedit oleh ' . $resep['dokter'], 'errors' => NULL]);
                 }
             }
 
@@ -792,19 +792,19 @@ class ResepDokter extends BaseController
 
                 // Jika status resep adalah transaksi sudah diproses, gagalkan operasi
                 if ($resep['status'] == 1) {
-                    return $this->response->setStatusCode(401)->setJSON(['success' => false, 'message' => 'Tidak bisa dilakukan karena transaksi yang menggunakan resep ini sudah diproses', 'errors' => NULL]);
+                    return $this->response->setStatusCode(400)->setJSON(['success' => false, 'message' => 'Tidak bisa dilakukan karena transaksi yang menggunakan resep ini sudah diproses', 'errors' => NULL]);
                 }
 
                 if ($resep['confirmed'] == 1) {
                     $db->transRollback();
-                    return $this->response->setStatusCode(401)->setJSON(['success' => false, 'message' => 'Tidak bisa dilakukan karena resep ini sudah diproses oleh apoteker', 'errors' => NULL]);
+                    return $this->response->setStatusCode(400)->setJSON(['success' => false, 'message' => 'Tidak bisa dilakukan karena resep ini sudah diproses oleh apoteker', 'errors' => NULL]);
                 }
 
                 // Jika resep dilakukan oleh dokter lain, gagalkan operasi
                 if (session()->get('role') != 'Admin') {
                     if ($resep['dokter'] != session()->get('fullname')) {
                         $db->transRollback();
-                        return $this->response->setStatusCode(401)->setJSON(['success' => false, 'message' => 'Resep ini hanya bisa dihapus oleh ' . $resep['dokter'], 'errors' => NULL]);
+                        return $this->response->setStatusCode(400)->setJSON(['success' => false, 'message' => 'Resep ini hanya bisa dihapus oleh ' . $resep['dokter'], 'errors' => NULL]);
                     }
                 }
 
@@ -874,7 +874,7 @@ class ResepDokter extends BaseController
 
             if ($prescription->status == 1) {
                 // Jika resep ini sudah ditransaksikan
-                return $this->response->setStatusCode(401)->setJSON([
+                return $this->response->setStatusCode(400)->setJSON([
                     'success' => false,
                     'message' => 'Gagal mengonfirmasi resep, resep ini sudah ditransaksikan.'
                 ]);
@@ -883,7 +883,7 @@ class ResepDokter extends BaseController
             if (session()->get('role') != 'Admin') {
                 if (!$prescription || $prescription->dokter !== session()->get('fullname')) {
                     // Jika dokter tidak sesuai atau resep tidak ditemukan
-                    return $this->response->setStatusCode(401)->setJSON([
+                    return $this->response->setStatusCode(400)->setJSON([
                         'success' => false,
                         'message' => 'Gagal mengonfirmasi resep, dokter tidak sesuai atau resep tidak ditemukan.'
                     ]);
@@ -914,7 +914,7 @@ class ResepDokter extends BaseController
 
             if ($prescription->status == 1) {
                 // Jika resep ini sudah ditransaksikan
-                return $this->response->setStatusCode(401)->setJSON([
+                return $this->response->setStatusCode(400)->setJSON([
                     'success' => false,
                     'message' => 'Gagal membatalkan konfirmasi resep, resep ini sudah ditransaksikan.'
                 ]);
@@ -923,7 +923,7 @@ class ResepDokter extends BaseController
             if (session()->get('role') != 'Admin') {
                 if (!$prescription || $prescription->dokter !== session()->get('fullname')) {
                     // Jika dokter tidak sesuai atau resep tidak ditemukan
-                    return $this->response->setStatusCode(401)->setJSON([
+                    return $this->response->setStatusCode(400)->setJSON([
                         'success' => false,
                         'message' => 'Gagal membatalkan konfirmasi resep, dokter tidak sesuai atau resep tidak ditemukan.'
                     ]);

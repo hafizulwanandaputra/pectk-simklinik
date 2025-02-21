@@ -133,7 +133,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <div>
                 <?php endif; ?>
                 <div class="d-flex flex-column flex-lg-row justify-content-lg-center mb-2">
-                    <center>
+                    <div class="d-flex justify-content-center">
                         <figure class="figure mb-0 mx-3 position-relative">
                             <img src="<?= base_url('assets/images/kacamata.png') ?>" width="512px" id="kacamata" class="figure-img img-fluid mb-0 pb-0" alt="Kacamata">
                             <!-- Garisan Axis -->
@@ -148,7 +148,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                                 </div>
                             </div>
                         </figure>
-                    </center>
+                    </div>
                     <div class="row g-1 radio-group">
                         <div class="col col-form-label">
                             <div class="d-flex flex-row flex-lg-column justify-content-between">
@@ -520,7 +520,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                         console.error('Perbaiki kesalahan pada formulir.');
                     }
                 } catch (error) {
-                    if (error.response.request.status === 422 || error.response.request.status === 401) {
+                    if (error.response.request.status === 422 || error.response.request.status === 400) {
                         showFailedToast(error.response.data.message);
                     } else {
                         showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
