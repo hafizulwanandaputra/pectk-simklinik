@@ -189,7 +189,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                         <div class="mb-2">
                             <div class="input-group has-validation">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control" id="nadi" name="nadi" value="" autocomplete="off" dir="auto" placeholder="nadi">
+                                    <input type="number" class="form-control" id="nadi" name="nadi" value="" autocomplete="off" dir="auto" placeholder="nadi">
                                     <label for="nadi">Nadi</label>
                                 </div>
                                 <span class="input-group-text">×/menit</span>
@@ -199,7 +199,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                         <div class="mb-2">
                             <div class="input-group has-validation">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control" id="suhu" name="suhu" value="" autocomplete="off" dir="auto" placeholder="suhu">
+                                    <input type="number" class="form-control" id="suhu" name="suhu" value="" autocomplete="off" dir="auto" placeholder="suhu" step="0.1">
                                     <label for="suhu">Suhu</label>
                                 </div>
                                 <span class="input-group-text">°C</span>
@@ -209,7 +209,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                         <div>
                             <div class="input-group has-validation">
                                 <div class="form-floating">
-                                    <input type="text" class="form-control" id="pernapasan" name="pernapasan" value="" autocomplete="off" dir="auto" placeholder="pernapasan">
+                                    <input type="number" class="form-control" id="pernapasan" name="pernapasan" value="" autocomplete="off" dir="auto" placeholder="pernapasan">
                                     <label for="pernapasan">Pernapasan</label>
                                 </div>
                                 <span class="input-group-text">×/menit</span>
