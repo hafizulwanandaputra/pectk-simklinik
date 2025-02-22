@@ -780,15 +780,6 @@ $usia = $registrasi->diff($tanggal_lahir);
             $('#waktu_dibuat_preview').text('');
         });
 
-        $('#scanModal').on('shown.bs.modal', function() {
-            $('#scanForm')[0].reset();
-            $('#uploadProgressBar').removeClass('bg-danger').css('width', '0%');
-            $('#gambar_preview').attr('src', '#');
-            $('#gambar_preview_div').hide();
-            $('#scanForm .is-invalid').removeClass('is-invalid');
-            $('#scanForm .invalid-feedback').text('').hide();
-        });
-
         // Reset form saat modal ditutup
         $('#scanModal').on('hidden.bs.modal', function() {
             $('#scanForm')[0].reset();
