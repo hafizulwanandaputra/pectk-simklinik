@@ -86,8 +86,7 @@
                     </button>
                 </div>
                 <ul id="spOperasiFormContainer" class="list-group rounded-0 collapse">
-                    <li class="list-group-item border-top-0 bg-body-tertiary">
-                        <div class="fw-bold mb-2 border-bottom">Tambah Pasien Operasi</div>
+                    <li class="list-group-item border-top-0 bg-body-tertiary">\
                         <form id="spOperasiForm" enctype="multipart/form-data" class="d-flex flex-column gap-2">
                             <div class="flex-fill">
                                 <select class="form-select form-select-sm" id="nomor_registrasi" name="nomor_registrasi" aria-label="nomor_registrasi">
