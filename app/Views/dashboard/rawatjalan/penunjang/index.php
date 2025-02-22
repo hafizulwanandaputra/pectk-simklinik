@@ -248,10 +248,10 @@ $usia = $registrasi->diff($tanggal_lahir);
                 </div>
             </div>
             <?= form_close(); ?>
-            <div class="mb-3" id="scanPenunjangContainer" style="display: none;">
+            <div class="mb-3">
                 <div class="fw-bold mb-2 border-bottom">Pemindaian Pemeriksaan Penunjang</div>
                 <div class="d-grid gap-2">
-                    <button class="btn btn-primary btn-sm bg-gradient mb-2" type="button" id="addScanButton">
+                    <button class="btn btn-primary btn-sm bg-gradient mb-2" type="button" id="addScanButton" disabled>
                         <i class="fa-solid fa-plus"></i> Tambah Pemindaian
                     </button>
                 </div>
@@ -405,9 +405,9 @@ $usia = $registrasi->diff($tanggal_lahir);
 
             // Jika salah satu memiliki nilai, tampilkan #scanPenunjangContainer
             if (isValidPemeriksaan || isValidPemeriksaanLainnya || isValidLokasiPemeriksaan) {
-                $('#scanPenunjangContainer').show();
+                $('#addScanButton').prop('disabled', false);
             } else {
-                $('#scanPenunjangContainer').hide();
+                $('#addScanButton').prop('disabled', true);
             }
         } catch (error) {
             showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
