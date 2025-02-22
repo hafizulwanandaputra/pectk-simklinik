@@ -128,7 +128,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 </div>
                 <div class="mb-2 checkbox-group">
                     <label for="pemeriksaan" class="form-label">
-                        Pemeriksaan<span class="text-danger">*</span>
+                        Pemeriksaan<br><small class="text-muted">Abaikan jika pemeriksaan lainnya diisi</small>
                     </label>
                     <div class="row">
                         <!-- Kolom Kiri -->
@@ -248,7 +248,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 </div>
             </div>
             <?= form_close(); ?>
-            <div class="mb-3">
+            <div class="mb-3" id="scanPenunjangContainer" style="display: none;">
                 <div class="fw-bold mb-2 border-bottom">Pemindaian Pemeriksaan Penunjang</div>
                 <div class="d-grid gap-2">
                     <button class="btn btn-primary btn-sm bg-gradient mb-2" type="button" id="addScanButton">
@@ -299,26 +299,6 @@ $usia = $registrasi->diff($tanggal_lahir);
                     <div class="form-floating mb-1 mt-1">
                         <select class="form-select" id="pemeriksaan_scan" name="pemeriksaan_scan" aria-label="pemeriksaan_scan">
                             <option value="" disabled selected>-- Pilih Pemeriksaan --</option>
-                            <option value="AUTOREF">AUTOREF</option>
-                            <option value="TONO">TONO</option>
-                            <option value="OCT">OCT</option>
-                            <option value="FOTO FUNDUS">FOTO FUNDUS</option>
-                            <option value="USG">USG</option>
-                            <option value="YAG LASER">YAG LASER</option>
-                            <option value="PERIMETRI">PERIMETRI</option>
-                            <option value="BIOMETRI">BIOMETRI</option>
-                            <option value="LABOR">LABOR</option>
-                            <option value="KERATOMETRI">KERATOMETRI</option>
-                            <option value="EKG">EKG</option>
-                            <option value="CT SCAN">CT SCAN</option>
-                            <option value="FFA">FFA</option>
-                            <option value="ANTERIOR MATA">ANTERIOR MATA</option>
-                            <option value="PALPEBRA">PALPEBRA</option>
-                            <option value="KONJUNGTIVA">KONJUNGTIVA</option>
-                            <option value="KETERANGAN">KETERANGAN</option>
-                            <option value="SURAT KETERANGAN">SURAT KETERANGAN</option>
-                            <option value="SURAT RUJUKAN">SURAT RUJUKAN</option>
-                            <option value="UKURAN KACAMATA">UKURAN KACAMATA</option>
                         </select>
                         <label for="status_fungsional">Pemeriksaan</label>
                         <div class="invalid-feedback"></div>
@@ -405,7 +385,6 @@ $usia = $registrasi->diff($tanggal_lahir);
             const response = await axios.get('<?= base_url('rawatjalan/penunjang/view/') . $penunjang['id_penunjang'] ?>');
             const data = response.data;
 
-            $('#diagnosa').val(data.diagnosa);
             $('#dokter_pengirim').val(data.dokter_pengirim);
             $('#rujukan_dari').val(data.rujukan_dari);
             const pemeriksaan = data.pemeriksaan;
@@ -418,7 +397,18 @@ $usia = $registrasi->diff($tanggal_lahir);
             });
             $('#pemeriksaan_lainnya').val(data.pemeriksaan_lainnya);
             $('#lokasi_pemeriksaan').val(data.lokasi_pemeriksaan);
-            $('#hasil_pemeriksaan').val(data.hasil_pemeriksaan);
+
+            // Cek validitas data
+            const isValidPemeriksaan = Array.isArray(pemeriksaan) && pemeriksaan.some(item => item && item.trim() !== "");
+            const isValidPemeriksaanLainnya = data.pemeriksaan_lainnya !== null && data.pemeriksaan_lainnya.trim() !== "";
+            const isValidLokasiPemeriksaan = data.lokasi_pemeriksaan !== null && data.lokasi_pemeriksaan.trim() !== "";
+
+            // Jika salah satu memiliki nilai, tampilkan #scanPenunjangContainer
+            if (isValidPemeriksaan || isValidPemeriksaanLainnya || isValidLokasiPemeriksaan) {
+                $('#scanPenunjangContainer').show();
+            } else {
+                $('#scanPenunjangContainer').hide();
+            }
         } catch (error) {
             showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
         } finally {
@@ -473,6 +463,38 @@ $usia = $registrasi->diff($tanggal_lahir);
         } catch (error) {
             console.error(error);
             showFailedToast(`${error}`);
+        }
+    }
+
+    async function fetchPemeriksaan() {
+        $('#loadingSpinner').show();
+        try {
+            const response = await axios.get('<?= base_url('rawatjalan/penunjang/view/') . $penunjang['id_penunjang'] ?>');
+            const data = response.data;
+
+            const pemeriksaan = data.pemeriksaan; // Array string dari JSON
+            const pemeriksaanLainnya = data.pemeriksaan_lainnya; // String dari JSON
+            const $select = $('#pemeriksaan_scan');
+
+            // Hapus opsi yang ada, kecuali opsi pertama (default)
+            $select.find('option:not(:first)').remove();
+
+            // Tambahkan opsi baru dari array pemeriksaan
+            pemeriksaan.forEach(item => {
+                if (item.trim() !== "") { // Pastikan tidak menambahkan string kosong
+                    $select.append(`<option value="${item}">${item}</option>`);
+                }
+            });
+
+            // Tambahkan pemeriksaan_lainnya jika tidak null atau kosong
+            if (pemeriksaanLainnya && pemeriksaanLainnya.trim() !== "") {
+                $select.append(`<option value="${pemeriksaanLainnya}">Lainnya: ${pemeriksaanLainnya}</option>`);
+            }
+        } catch (error) {
+            console.error(error);
+            showFailedToast(`Terjadi kesalahan: ${error}`);
+        } finally {
+            $('#loadingSpinner').hide();
         }
     }
 
@@ -539,9 +561,10 @@ $usia = $registrasi->diff($tanggal_lahir);
             });
         });
         // Tampilkan modal tambah scan penunjang
-        $('#addScanButton').click(function() {
+        $('#addScanButton').click(async function() {
             $('#scanModalLabel').text('Tambah Pemindaian Pemeriksaan Penunjang'); // Ubah judul modal menjadi 'Tambah Pemindaian Pemeriksaan Penunjang'
             $('#id_penunjang_scan').val('');
+            await fetchPemeriksaan();
             $('#scanModal').modal('show'); // Tampilkan modal resep luar
         });
 
@@ -593,6 +616,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 let response = await axios.get(`<?= base_url('/rawatjalan/penunjang/scan/view') ?>/` + id);
                 let data = response.data;
                 console.log(data);
+                await fetchPemeriksaan();
 
                 $('#scanModalLabel').text('Edit Pemeriksaan Penunjang');
                 $('#id_penunjang_scan').val(data.id_penunjang_scan);
@@ -754,6 +778,15 @@ $usia = $registrasi->diff($tanggal_lahir);
             $('#pemeriksaan_scan_preview').text('');
             $('#keterangan_preview').html('');
             $('#waktu_dibuat_preview').text('');
+        });
+
+        $('#scanModal').on('shown.bs.modal', function() {
+            $('#scanForm')[0].reset();
+            $('#uploadProgressBar').removeClass('bg-danger').css('width', '0%');
+            $('#gambar_preview').attr('src', '#');
+            $('#gambar_preview_div').hide();
+            $('#scanForm .is-invalid').removeClass('is-invalid');
+            $('#scanForm .invalid-feedback').text('').hide();
         });
 
         // Reset form saat modal ditutup

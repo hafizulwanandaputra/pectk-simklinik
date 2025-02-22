@@ -279,7 +279,7 @@ class Penunjang extends BaseController
             $validation = \Config\Services::validation();
             // Set base validation rules
             $validation->setRules([
-                'pemeriksaan' => 'required',
+                'pemeriksaan' => $this->request->getPost('pemeriksaan_lainnya') === '' ? 'required' : 'permit_empty',
                 'lokasi_pemeriksaan' => 'required',
             ]);
 

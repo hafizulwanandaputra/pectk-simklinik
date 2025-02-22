@@ -143,7 +143,7 @@
                         <div class="mb-2">
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="nama_pasien" name="nama_pasien" value="" autocomplete="off" dir="auto" placeholder="nama_pasien">
-                                <label for="nama_pasien">Nama</label>
+                                <label for="nama_pasien">Nama<span class="text-danger">*</span></label>
                                 <div class="invalid-feedback"></div>
                             </div>
                         </div>
@@ -151,35 +151,35 @@
                             <div class="col">
                                 <div class="form-floating">
                                     <input type="number" class="form-control" id="nik" name="nik" value="" autocomplete="off" dir="auto" placeholder="nik">
-                                    <label for="nik">Nomor Induk Kependudukan (Opsional)</label>
+                                    <label for="nik">Nomor Induk Kependudukan</label>
                                     <div class="invalid-feedback"></div>
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="form-floating">
                                     <input type="number" class="form-control" id="no_bpjs" name="no_bpjs" value="" autocomplete="off" dir="auto" placeholder="no_bpjs">
-                                    <label for="no_bpjs">Nomor BPJS (Opsional)</label>
+                                    <label for="no_bpjs">Nomor BPJS</label>
                                     <div class="invalid-feedback"></div>
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="form-floating">
                                     <input type="text" class="form-control" id="tempat_lahir" name="tempat_lahir" value="" autocomplete="off" dir="auto" placeholder="tempat_lahir">
-                                    <label for="tempat_lahir">Tempat Lahir</label>
+                                    <label for="tempat_lahir">Tempat Lahir<span class="text-danger">*</span></label>
                                     <div class="invalid-feedback"></div>
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="form-floating">
                                     <input type="date" class="form-control" id="tanggal_lahir" name="tanggal_lahir" value="" autocomplete="off" dir="auto" placeholder="tanggal_lahir">
-                                    <label for="tanggal_lahir">Tanggal Lahir (dd-mm-yyyy)</label>
+                                    <label for="tanggal_lahir">Tanggal Lahir (dd-mm-yyyy)<span class="text-danger">*</span></label>
                                     <div class="invalid-feedback"></div>
                                 </div>
                             </div>
                         </div>
                         <div class="mb-2">
                             <div class="row gx-1 radio-group">
-                                <label for="jenis_kelamin" class="col col-form-label">Jenis Kelamin</label>
+                                <label for="jenis_kelamin" class="col col-form-label">Jenis Kelamin<span class="text-danger">*</span></label>
                                 <div class="col-lg col-form-label">
                                     <div class="d-flex align-items-center justify-content-evenly">
                                         <div class="form-check form-check-inline">
@@ -202,7 +202,7 @@
                         <div class="mb-2">
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="alamat" name="alamat" value="" autocomplete="off" dir="auto" placeholder="alamat">
-                                <label for="alamat">Alamat</label>
+                                <label for="alamat">Alamat<span class="text-danger">*</span></label>
                                 <div class="invalid-feedback"></div>
                             </div>
                         </div>
@@ -212,7 +212,7 @@
                                     <select class="form-select" id="provinsi" name="provinsi" aria-label="provinsi">
                                         <option value="" selected>-- Pilih Provinsi --</option>
                                     </select>
-                                    <label for="provinsi">Provinsi</label>
+                                    <label for="provinsi">Provinsi<span class="text-danger">*</span></label>
                                     <div class="invalid-feedback"></div>
                                 </div>
                             </div>
@@ -221,7 +221,7 @@
                                     <select class="form-select" id="kabupaten" name="kabupaten" aria-label="kabupaten">
                                         <option value="" selected>-- Pilih Kabupaten/Kota --</option>
                                     </select>
-                                    <label for="kabupaten">Kabupaten/Kota</label>
+                                    <label for="kabupaten">Kabupaten/Kota<span class="text-danger">*</span></label>
                                     <div class="invalid-feedback"></div>
                                 </div>
                             </div>
@@ -230,7 +230,7 @@
                                     <select class="form-select" id="kecamatan" name="kecamatan" aria-label="kecamatan">
                                         <option value="" selected>-- Pilih Kecamatan --</option>
                                     </select>
-                                    <label for="kecamatan">Kecamatan</label>
+                                    <label for="kecamatan">Kecamatan<span class="text-danger">*</span></label>
                                     <div class="invalid-feedback"></div>
                                 </div>
                             </div>
@@ -239,28 +239,28 @@
                                     <select class="form-select" id="kelurahan" name="kelurahan" aria-label="kelurahan">
                                         <option value="" selected>-- Pilih Desa/Kelurahan --</option>
                                     </select>
-                                    <label for="kelurahan">Desa/Kelurahan</label>
+                                    <label for="kelurahan">Desa/Kelurahan<span class="text-danger">*</span></label>
                                     <div class="invalid-feedback"></div>
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="form-floating">
                                     <input type="number" class="form-control" id="rt" name="rt" value="" autocomplete="off" dir="auto" placeholder="rt">
-                                    <label for="rt">RT (Opsional)</label>
+                                    <label for="rt">RT</label>
                                     <div class="invalid-feedback"></div>
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="form-floating">
                                     <input type="number" class="form-control" id="rw" name="rw" value="" autocomplete="off" dir="auto" placeholder="rw">
-                                    <label for="rw">RW (Opsional)</label>
+                                    <label for="rw">RW</label>
                                     <div class="invalid-feedback"></div>
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="form-floating">
                                     <input type="number" class="form-control" id="telpon" name="telpon" value="" autocomplete="off" dir="auto" placeholder="telpon">
-                                    <label for="telpon">Nomor HP (Opsional)</label>
+                                    <label for="telpon">Nomor HP</label>
                                     <div class="invalid-feedback"></div>
                                 </div>
                             </div>
@@ -271,7 +271,7 @@
                                         <option value="WNI">INDONESIA</option>
                                         <option value="WNA">WARGA NEGARA ASING</option>
                                     </select>
-                                    <label for="kewarganegaraan">Kewarganegaraan</label>
+                                    <label for="kewarganegaraan">Kewarganegaraan<span class="text-danger">*</span></label>
                                     <div class="invalid-feedback"></div>
                                 </div>
                             </div>
@@ -286,7 +286,7 @@
                                         <option value="6">Buddha</option>
                                         <option value="7">Konghucu</option>
                                     </select>
-                                    <label for="agama">Agama</label>
+                                    <label for="agama">Agama<span class="text-danger">*</span></label>
                                     <div class="invalid-feedback"></div>
                                 </div>
                             </div>
@@ -294,12 +294,12 @@
                                 <div class="form-floating">
                                     <select class="form-select" id="status_nikah" name="status_nikah" aria-label="status_nikah">
                                         <option value="" selected>-- Pilih Status Perkawinan --</option>
-                                        <option value="1">BELUM MENIKAH</option>
-                                        <option value="2">MENIKAH</option>
+                                        <option value="1">BELUM KAWIN</option>
+                                        <option value="2">KAWIN</option>
                                         <option value="3">CERAI HIDUP</option>
                                         <option value="4">CERAI MATI</option>
                                     </select>
-                                    <label for="status_nikah">Status Perkawinan</label>
+                                    <label for="status_nikah">Status Perkawinan<span class="text-danger">*</span></label>
                                     <div class="invalid-feedback"></div>
                                 </div>
                             </div>
@@ -355,7 +355,7 @@
                                     <option value="23">
                                         POLRI</option>
                                 </select>
-                                <label for="pekerjaan">Pekerjaan</label>
+                                <label for="pekerjaan">Pekerjaan<span class="text-danger">*</span></label>
                                 <div class="invalid-feedback"></div>
                             </div>
                         </div>
@@ -496,7 +496,7 @@
                             <option value="Ganti Jadwal Dokter">Ganti Jadwal Dokter</option>
                             <option value="Tidak Datang">Tidak Datang</option>
                         </select>
-                        <label for="alasan_batal">Alasan Pembatalan</label>
+                        <label for="alasan_batal">Alasan Pembatalan<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
@@ -528,33 +528,33 @@
                             <option value="RUJUKAN">
                                 RUJUKAN</option>
                         </select>
-                        <label for="jenis_kunjungan">Jenis Kunjungan</label>
+                        <label for="jenis_kunjungan">Jenis Kunjungan<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mt-1 mb-1">
                         <select class="form-select" id="jaminan" name="jaminan" aria-label="jaminan">
                             <option value="" disabled selected>-- Pilih Jaminan --</option>
                         </select>
-                        <label for="jaminan">Jaminan</label>
+                        <label for="jaminan">Jaminan<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mt-1 mb-1">
                         <select class="form-select" id="ruangan" name="ruangan" aria-label="ruangan">
                             <option value="" disabled selected>-- Pilih Ruangan --</option>
                         </select>
-                        <label for="ruangan">Ruangan</label>
+                        <label for="ruangan">Ruangan<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mt-1 mb-1">
                         <select class="form-select" id="dokter" name="dokter" aria-label="dokter">
                             <option value="" disabled selected>-- Pilih Dokter --</option>
                         </select>
-                        <label for="dokter">Dokter</label>
+                        <label for="dokter">Dokter<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
                         <input type="text" class="form-control " autocomplete="off" dir="auto" placeholder="keluhan" id="keluhan" name="keluhan">
-                        <label for="keluhan">Keluhan</label>
+                        <label for="keluhan">Keluhan<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
