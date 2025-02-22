@@ -189,7 +189,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                     <div class="input-group has-validation">
                         <div class="form-floating">
                             <input type="number" class="form-control" id="ctt_vital_bb" name="ctt_vital_bb" value="" autocomplete="off" dir="auto" placeholder="ctt_vital_bb">
-                            <label for="ctt_vital_bb">Berat Badan (kg)</label>
+                            <label for="ctt_vital_bb">Berat Badan</label>
                         </div>
                         <span class="input-group-text">kg</span>
                         <div class="invalid-feedback"></div>
@@ -692,7 +692,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                                         <div>Berat badan</div>
                                     </label>
                                     <div class="input-group input-group-sm has-validation">
-                                        <input type="text" class="form-control form-control-sm" id="cek_berat_badan" name="cek_berat_badan" value="" autocomplete="off" dir="auto">
+                                        <input type="number" class="form-control form-control-sm" id="cek_berat_badan" name="cek_berat_badan" value="" autocomplete="off" dir="auto">
                                         <span class="input-group-text">kg</span>
                                         <div class="invalid-feedback"></div>
                                     </div>
