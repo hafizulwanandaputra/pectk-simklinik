@@ -1,7 +1,7 @@
 const WebSocket = require("ws");
 
 const PORT = 8088;
-const server = new WebSocket.Server({ port: PORT });
+const server = new WebSocket.Server({ host: "127.0.0.1", port: PORT });
 const clients = new Set(); // Menyimpan daftar client yang terhubung
 
 server.on("listening", () => {
