@@ -1475,7 +1475,7 @@
     });
 
     $(document).ready(async function() {
-        const socket = new WebSocket('ws://<?= env('WS-URL-JS') ?>'); // Ganti dengan domain VPS
+        const socket = new WebSocket('<?= env('WS-URL-JS') ?>'); // Ganti dengan domain VPS
 
         socket.onopen = () => {
             console.log("Connected to WebSocket server");

@@ -546,7 +546,7 @@ class RawatJalan extends BaseController
     public function notify_clients()
     {
         $client = \Config\Services::curlrequest();
-        $response = $client->post('http://' . env('WS-URL-PHP') . '/notify', [
+        $response = $client->post(env('WS-URL-PHP'), [
             'json' => []
         ]);
 
