@@ -672,6 +672,32 @@
     <?php endif; ?>
 
     $(document).ready(async function() {
+        const socket = new WebSocket('<?= env('WS-URL-JS') ?>'); // Ganti dengan domain VPS
+
+        socket.onopen = () => {
+            console.log("Connected to WebSocket server");
+        };
+
+        socket.onmessage = async function(event) {
+            const data = JSON.parse(event.data);
+            if (data.update) {
+                console.log("Received update from WebSocket");
+                // Simpan nilai pilihan kasir saat ini
+                const selectedKasir = $('#kasirFilter').val();
+                // Panggil fungsi untuk memperbarui opsi kasir
+                await fetchKasirOptions(selectedKasir);
+                <?php if (session()->get('role') != 'Admisi') : ?>
+                    fetchPasienOptions1()
+                    fetchPasienOptions2()
+                <?php endif; ?>
+                fetchTransaksi();
+            }
+        };
+
+        socket.onclose = () => {
+            console.log("Disconnected from WebSocket server");
+        };
+
         $('[data-bs-toggle="popover"]').popover({
             html: true,
             template: '<div class="popover shadow-lg" role="tooltip">' +

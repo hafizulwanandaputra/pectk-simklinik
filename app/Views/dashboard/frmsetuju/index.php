@@ -476,6 +476,25 @@
     <?php endif; ?>
 
     $(document).ready(async function() {
+        const socket = new WebSocket('<?= env('WS-URL-JS') ?>'); // Ganti dengan domain VPS
+
+        socket.onopen = () => {
+            console.log("Connected to WebSocket server");
+        };
+
+        socket.onmessage = async function(event) {
+            const data = JSON.parse(event.data);
+            if (data.update) {
+                console.log("Received update from WebSocket");
+                <?= (session()->get('role') != 'Admisi') ? 'fetchPasienOptions();' : ''; ?>;
+                fetchFormulir();
+            }
+        };
+
+        socket.onclose = () => {
+            console.log("Disconnected from WebSocket server");
+        };
+
         $('[data-bs-toggle="popover"]').popover({
             html: true,
             template: '<div class="popover shadow-lg" role="tooltip">' +

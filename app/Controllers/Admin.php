@@ -161,6 +161,8 @@ class Admin extends BaseController
             ];
             // Menyimpan data ke dalam model
             $this->AuthModel->save($data);
+            // Panggil WebSocket untuk update client
+            $this->notify_clients();
             // Mengembalikan respons JSON sukses
             return $this->response->setJSON(['success' => true, 'message' => 'Pengguna berhasil ditambahkan']);
         } else {
@@ -265,6 +267,8 @@ class Admin extends BaseController
                     ->delete();
                 $db->query('ALTER TABLE `user_sessions` auto_increment = 1');
             }
+            // Panggil WebSocket untuk update client
+            $this->notify_clients();
             // Mengembalikan respons JSON sukses
             return $this->response->setJSON(['success' => true, 'message' => 'Pengguna berhasil diedit']);
         } else {
@@ -295,6 +299,8 @@ class Admin extends BaseController
                 ->where('id_user', $id)
                 ->delete();
             $db->query('ALTER TABLE `user_sessions` auto_increment = 1');
+            // Panggil WebSocket untuk update client
+            $this->notify_clients();
             // Mengembalikan respons JSON sukses
             return $this->response->setJSON(['success' => true, 'message' => 'Kata sandi pengguna berhasil diatur ulang']);
         } else {
@@ -312,6 +318,8 @@ class Admin extends BaseController
             $db = db_connect(); // Menghubungkan ke database
             // Mengubah status pengguna menjadi aktif
             $db->table('user')->set('active', 1)->where('id_user', $id)->update();
+            // Panggil WebSocket untuk update client
+            $this->notify_clients();
             // Mengembalikan respons JSON sukses
             return $this->response->setJSON(['success' => true, 'message' => 'Pengguna berhasil diaktifkan']);
         } else {
@@ -334,6 +342,8 @@ class Admin extends BaseController
                 ->where('id_user', $id)
                 ->delete();
             $db->query('ALTER TABLE `user_sessions` auto_increment = 1');
+            // Panggil WebSocket untuk update client
+            $this->notify_clients();
             // Mengembalikan respons JSON sukses
             return $this->response->setJSON(['success' => true, 'message' => 'Pengguna berhasil dinonaktifkan']);
         } else {
@@ -354,6 +364,8 @@ class Admin extends BaseController
                 $db = db_connect(); // Menghubungkan ke database
                 // Mengatur ulang nilai Auto Increment
                 $db->query('ALTER TABLE `user` auto_increment = 1');
+                // Panggil WebSocket untuk update client
+                $this->notify_clients();
                 // Mengembalikan respons JSON sukses
                 return $this->response->setJSON(['message' => 'Pengguna berhasil dihapus']);
             } catch (DatabaseException $e) {
@@ -371,5 +383,18 @@ class Admin extends BaseController
                 'error' => 'Halaman tidak ditemukan',
             ]);
         }
+    }
+
+    public function notify_clients()
+    {
+        $client = \Config\Services::curlrequest();
+        $response = $client->post(env('WS-URL-PHP'), [
+            'json' => []
+        ]);
+
+        return $this->response->setJSON([
+            'status' => 'Notification sent',
+            'response' => json_decode($response->getBody(), true)
+        ]);
     }
 }

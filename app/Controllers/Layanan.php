@@ -148,6 +148,8 @@ class Layanan extends BaseController
                 'keterangan' => $this->request->getPost('keterangan')
             ];
             $this->LayananModel->save($data);
+            // Panggil WebSocket untuk update client
+            $this->notify_clients();
             return $this->response->setJSON(['success' => true, 'message' => 'Layanan berhasil ditambahkan']);
         } else {
             // Jika peran tidak dikenali, kembalikan status 404
@@ -183,6 +185,8 @@ class Layanan extends BaseController
                 'keterangan' => $this->request->getPost('keterangan')
             ];
             $this->LayananModel->save($data);
+            // Panggil WebSocket untuk update client
+            $this->notify_clients();
             return $this->response->setJSON(['success' => true, 'message' => 'Layanan berhasil diedit']);
         } else {
             // Jika peran tidak dikenali, kembalikan status 404
@@ -203,6 +207,8 @@ class Layanan extends BaseController
                 $this->LayananModel->delete($id);
                 // Mengatur auto increment
                 $db->query('ALTER TABLE `layanan` auto_increment = 1');
+                // Panggil WebSocket untuk update client
+                $this->notify_clients();
                 return $this->response->setJSON(['message' => 'Layanan berhasil dihapus']);
             } catch (DatabaseException $e) {
                 // Mencatat pesan kesalahan
@@ -219,5 +225,18 @@ class Layanan extends BaseController
                 'error' => 'Halaman tidak ditemukan',
             ]);
         }
+    }
+
+    public function notify_clients()
+    {
+        $client = \Config\Services::curlrequest();
+        $response = $client->post(env('WS-URL-PHP'), [
+            'json' => []
+        ]);
+
+        return $this->response->setJSON([
+            'status' => 'Notification sent',
+            'response' => json_decode($response->getBody(), true)
+        ]);
     }
 }

@@ -266,6 +266,8 @@ class Operasi extends BaseController
                 'waktu_dibuat' => date('Y-m-d H:i:s'),
             ];
             $this->SPOperasiModel->save($data); // Menyimpan data transaksi ke database
+            // Panggil WebSocket untuk update client
+            $this->notify_clients();
             return $this->response->setJSON(['success' => true, 'message' => 'Pasien operasi berhasil ditambahkan']); // Mengembalikan respon sukses
         } else {
             return $this->response->setStatusCode(404)->setJSON([
@@ -311,6 +313,8 @@ class Operasi extends BaseController
                 $db->query('ALTER TABLE medrec_operasi_safety_signin AUTO_INCREMENT = 1');
                 $db->query('ALTER TABLE medrec_operasi_safety_signout AUTO_INCREMENT = 1');
                 $db->query('ALTER TABLE medrec_operasi_safety_timeout AUTO_INCREMENT = 1');
+                // Panggil WebSocket untuk update client
+                $this->notify_clients();
                 return $this->response->setJSON(['success' => true, 'message' => 'Pasien operasi berhasil dihapus']);
             } else {
                 $db->table('medrec_sp_operasi')
@@ -318,6 +322,8 @@ class Operasi extends BaseController
                     ->update([
                         'status_operasi' => $this->request->getPost('status_operasi'),
                     ]);
+                // Panggil WebSocket untuk update client
+                $this->notify_clients();
                 return $this->response->setJSON(['success' => true, 'message' => 'Status pasien operasi berhasil diperbarui']);
             }
         } else {
@@ -326,5 +332,18 @@ class Operasi extends BaseController
                 'error' => 'Halaman tidak ditemukan',
             ]);
         }
+    }
+
+    public function notify_clients()
+    {
+        $client = \Config\Services::curlrequest();
+        $response = $client->post(env('WS-URL-PHP'), [
+            'json' => []
+        ]);
+
+        return $this->response->setJSON([
+            'status' => 'Notification sent',
+            'response' => json_decode($response->getBody(), true)
+        ]);
     }
 }

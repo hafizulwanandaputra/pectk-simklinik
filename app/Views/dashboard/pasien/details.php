@@ -1333,6 +1333,37 @@
     });
 
     $(document).ready(async function() {
+        const socket = new WebSocket('<?= env('WS-URL-JS') ?>'); // Ganti dengan domain VPS
+
+        socket.onopen = () => {
+            console.log("Connected to WebSocket server");
+        };
+
+        socket.onmessage = async function(event) {
+            const data = JSON.parse(event.data);
+            if (data.update) {
+                console.log("Received update from WebSocket");
+                const selectedJenisKunjungan = $('#kunjunganFilter, #jenis_kunjungan').val();
+                const selectedJaminan = $('#jaminanFilter, #jaminan').val();
+                const selectedRuangan = $('#ruanganFilter, #ruangan').val();
+                const selectedDokter = $('#dokterFilter, #dokter').val();
+                const selectedPendaftar = $('#pendaftarFilter').val();
+                await fetchPasien();
+                await Promise.all([
+                    fetchJenisKunjunganOptions(selectedJenisKunjungan),
+                    fetchJaminanOptions(selectedJaminan),
+                    fetchRuanganOptions(selectedRuangan),
+                    fetchDokterOptions(selectedDokter),
+                    fetchPendaftarOptions(selectedPendaftar)
+                ]);
+                fetchRajal();
+            }
+        };
+
+        socket.onclose = () => {
+            console.log("Disconnected from WebSocket server");
+        };
+
         $('[data-bs-toggle="tooltip"]').tooltip();
         $('#id_obat').select2({
             dropdownParent: $(document.body),

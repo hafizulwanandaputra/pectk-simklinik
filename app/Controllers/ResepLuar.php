@@ -217,6 +217,8 @@ class ResepLuar extends BaseController
 
             // Menyimpan data resep ke dalam model
             $this->ResepModel->save($data);
+            // Panggil WebSocket untuk update client
+            $this->notify_clients();
             return $this->response->setJSON(['success' => true, 'message' => 'Resep berhasil ditambahkan']);
         } else {
             // Mengembalikan status 404 jika peran tidak diizinkan
@@ -274,6 +276,8 @@ class ResepLuar extends BaseController
 
                 // Menyimpan data resep ke dalam model
                 $this->ResepModel->save($data);
+                // Panggil WebSocket untuk update client
+                $this->notify_clients();
                 return $this->response->setJSON(['success' => true, 'message' => 'Resep berhasil diperbarui']);
             } else {
                 // Mengembalikan status 401 jika status adalah sudah ditransaksikan
@@ -357,7 +361,8 @@ class ResepLuar extends BaseController
                 SET total_pembayaran = ? 
                 WHERE id_transaksi = ?", [$total_pembayaran, $id_transaksi]);
                 }
-
+                // Panggil WebSocket untuk update client
+                $this->notify_clients();
                 return $this->response->setJSON(['message' => 'Resep berhasil dihapus']); // Mengembalikan pesan sukses
             } else {
                 return $this->response->setStatusCode(422)->setJSON(['message' => 'Resep ini tidak bisa dihapus karena sudah ditransaksikan']);
@@ -662,6 +667,8 @@ class ResepLuar extends BaseController
                 return $this->response->setJSON(['success' => false, 'message' => 'Gagal memproses pemberian resep', 'errors' => NULL]);
             } else {
                 $db->transCommit();
+                // Panggil WebSocket untuk update client
+                $this->notify_clients();
                 return $this->response->setJSON(['success' => true, 'message' => 'Item resep berhasil ditambahkan']);
             }
         } else {
@@ -783,6 +790,8 @@ class ResepLuar extends BaseController
                 return $this->response->setJSON(['success' => false, 'message' => 'Gagal memproses pemberian resep', 'errors' => NULL]);
             } else {
                 $db->transCommit();
+                // Panggil WebSocket untuk update client
+                $this->notify_clients();
                 return $this->response->setJSON(['success' => true, 'message' => 'Item resep berhasil diperbarui']);
             }
         } else {
@@ -867,7 +876,8 @@ class ResepLuar extends BaseController
                 // Menghapus catatan detail_transaksi yang terkait
                 $builderTransaksiDetail = $db->table('detail_transaksi');
                 $builderTransaksiDetail->where('id_resep', $id_resep)->delete();
-
+                // Panggil WebSocket untuk update client
+                $this->notify_clients();
                 return $this->response->setJSON(['message' => 'Item resep berhasil dihapus']);
             }
 
@@ -1030,5 +1040,18 @@ class ResepLuar extends BaseController
                 'error' => 'Halaman tidak ditemukan',
             ]);
         }
+    }
+
+    public function notify_clients()
+    {
+        $client = \Config\Services::curlrequest();
+        $response = $client->post(env('WS-URL-PHP'), [
+            'json' => []
+        ]);
+
+        return $this->response->setJSON([
+            'status' => 'Notification sent',
+            'response' => json_decode($response->getBody(), true)
+        ]);
     }
 }

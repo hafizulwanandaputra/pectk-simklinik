@@ -188,6 +188,8 @@ class FRMSetuju extends BaseController
                 'waktu_dibuat' => date('Y-m-d H:i:s'),
             ];
             $db->table('medrec_form_persetujuan_tindakan')->insert($data);
+            // Panggil WebSocket untuk update client
+            $this->notify_clients();
             return $this->response->setJSON(['success' => true, 'message' => 'Formulir persetujuan tindakan berhasil ditambahkan']); // Mengembalikan respon sukses
         } else {
             return $this->response->setStatusCode(404)->setJSON([
@@ -280,7 +282,8 @@ class FRMSetuju extends BaseController
 
                 // Reset auto increment
                 $db->query('ALTER TABLE `medrec_form_persetujuan_tindakan` auto_increment = 1');
-
+                // Panggil WebSocket untuk update client
+                $this->notify_clients();
                 return $this->response->setJSON(['message' => 'Formulir persetujuan tindakan berhasil dihapus']); // Mengembalikan respon sukses
             } else {
                 return $this->response->setStatusCode(404)->setJSON([
@@ -452,11 +455,26 @@ class FRMSetuju extends BaseController
                 'nama_saksi_2' => $this->request->getPost('nama_saksi_2') ?: null,
             ];
             $db->table('medrec_form_persetujuan_tindakan')->where('id_form_persetujuan_tindakan', $id)->update($data);
+            // Panggil WebSocket untuk update client
+            $this->notify_clients();
             return $this->response->setJSON(['success' => true, 'message' => 'Formulir persetujuan tindakan berhasil diperbarui']); // Mengembalikan respon sukses
         } else {
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan', // Pesan jika peran tidak valid
             ]);
         }
+    }
+
+    public function notify_clients()
+    {
+        $client = \Config\Services::curlrequest();
+        $response = $client->post(env('WS-URL-PHP'), [
+            'json' => []
+        ]);
+
+        return $this->response->setJSON([
+            'status' => 'Notification sent',
+            'response' => json_decode($response->getBody(), true)
+        ]);
     }
 }

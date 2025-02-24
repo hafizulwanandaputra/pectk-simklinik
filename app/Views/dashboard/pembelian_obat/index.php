@@ -489,6 +489,29 @@
     });
 
     $(document).ready(async function() {
+        const socket = new WebSocket('<?= env('WS-URL-JS') ?>'); // Ganti dengan domain VPS
+
+        socket.onopen = () => {
+            console.log("Connected to WebSocket server");
+        };
+
+        socket.onmessage = async function(event) {
+            const data = JSON.parse(event.data);
+            if (data.update) {
+                console.log("Received update from WebSocket");
+                // Simpan nilai pilihan apoteker saat ini
+                const selectedApoteker = $('#apotekerFilter').val();
+                // Panggil fungsi untuk memperbarui opsi apoteker
+                await fetchApotekerOptions(selectedApoteker);
+                fetchPembelianObat();
+                fetchSupplierOptions();
+            }
+        };
+
+        socket.onclose = () => {
+            console.log("Disconnected from WebSocket server");
+        };
+
         $('#id_supplier').select2({
             dropdownParent: $('#pembelianObatForm'),
             theme: "bootstrap-5",

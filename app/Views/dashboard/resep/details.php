@@ -311,6 +311,25 @@
     }
 
     $(document).ready(function() {
+        const socket = new WebSocket('<?= env('WS-URL-JS') ?>'); // Ganti dengan domain VPS
+
+        socket.onopen = () => {
+            console.log("Connected to WebSocket server");
+        };
+
+        socket.onmessage = async function(event) {
+            const data = JSON.parse(event.data);
+            if (data.update) {
+                console.log("Received update from WebSocket");
+                fetchStatusKonfirmasi();
+                fetchDetailResep();
+            }
+        };
+
+        socket.onclose = () => {
+            console.log("Disconnected from WebSocket server");
+        };
+
         $('[data-bs-toggle="tooltip"]').tooltip();
 
         $(document).on('visibilitychange', function() {

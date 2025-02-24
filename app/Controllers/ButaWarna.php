@@ -190,6 +190,8 @@ class ButaWarna extends BaseController
                 'waktu_dibuat' => date('Y-m-d H:i:s'),
             ];
             $db->table('medrec_keterangan_buta_warna')->insert($data);
+            // Panggil WebSocket untuk update client
+            $this->notify_clients();
             return $this->response->setJSON(['success' => true, 'message' => 'Surat keterangan buta warna berhasil ditambahkan']); // Mengembalikan respon sukses
         } else {
             return $this->response->setStatusCode(404)->setJSON([
@@ -282,7 +284,8 @@ class ButaWarna extends BaseController
 
                 // Reset auto increment
                 $db->query('ALTER TABLE `medrec_keterangan_buta_warna` auto_increment = 1');
-
+                // Panggil WebSocket untuk update client
+                $this->notify_clients();
                 return $this->response->setJSON(['message' => 'Surat keterangan buta warna berhasil dihapus']); // Mengembalikan respon sukses
             } else {
                 return $this->response->setStatusCode(404)->setJSON([
@@ -437,11 +440,26 @@ class ButaWarna extends BaseController
                 'status_buta_warna' => $this->request->getPost('status_buta_warna') ?: null
             ];
             $db->table('medrec_keterangan_buta_warna')->where('id_keterangan_buta_warna', $id)->update($data);
+            // Panggil WebSocket untuk update client
+            $this->notify_clients();
             return $this->response->setJSON(['success' => true, 'message' => 'Surat keterangan buta warna berhasil diperbarui']); // Mengembalikan respon sukses
         } else {
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan', // Pesan jika peran tidak valid
             ]);
         }
+    }
+
+    public function notify_clients()
+    {
+        $client = \Config\Services::curlrequest();
+        $response = $client->post(env('WS-URL-PHP'), [
+            'json' => []
+        ]);
+
+        return $this->response->setJSON([
+            'status' => 'Notification sent',
+            'response' => json_decode($response->getBody(), true)
+        ]);
     }
 }

@@ -140,6 +140,8 @@ class Poliklinik extends BaseController
             ];
             // Menyimpan data ke dalam model
             $this->PoliklinikModel->save($data);
+            // Panggil WebSocket untuk update client
+            $this->notify_clients();
             // Mengembalikan respons JSON sukses
             return $this->response->setJSON(['success' => true, 'message' => 'Ruangan poliklinik berhasil ditambahkan']);
         } else {
@@ -177,6 +179,8 @@ class Poliklinik extends BaseController
             ];
             // Menyimpan data ke dalam model
             $this->PoliklinikModel->save($data);
+            // Panggil WebSocket untuk update client
+            $this->notify_clients();
             // Mengembalikan respons JSON sukses
             return $this->response->setJSON(['success' => true, 'message' => 'Ruangan poliklinik berhasil diedit']);
         } else {
@@ -197,6 +201,8 @@ class Poliklinik extends BaseController
                 $db = db_connect(); // Menghubungkan ke database
                 // Mengatur ulang nilai Auto Increment
                 $db->query('ALTER TABLE `poliklinik` auto_increment = 1');
+                // Panggil WebSocket untuk update client
+                $this->notify_clients();
                 // Mengembalikan respons JSON sukses
                 return $this->response->setJSON(['message' => 'Ruangan poliklinik berhasil dihapus']);
             } catch (DatabaseException $e) {
@@ -214,5 +220,18 @@ class Poliklinik extends BaseController
                 'error' => 'Halaman tidak ditemukan',
             ]);
         }
+    }
+
+    public function notify_clients()
+    {
+        $client = \Config\Services::curlrequest();
+        $response = $client->post(env('WS-URL-PHP'), [
+            'json' => []
+        ]);
+
+        return $this->response->setJSON([
+            'status' => 'Notification sent',
+            'response' => json_decode($response->getBody(), true)
+        ]);
     }
 }

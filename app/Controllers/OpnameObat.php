@@ -176,6 +176,8 @@ class OpnameObat extends BaseController
             }
 
             if ($db->transComplete()) {
+                // Panggil WebSocket untuk update client
+                $this->notify_clients();
                 return $this->response->setJSON(['success' => true, 'message' => 'Opname obat berhasil ditambahkan']);
             } else {
                 return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Gagal menyimpan opname obat']);
@@ -202,7 +204,8 @@ class OpnameObat extends BaseController
             // Reset auto increment untuk tabel opname_obat dan detail_opname_obat
             $db->query('ALTER TABLE `opname_obat` auto_increment = 1');
             $db->query('ALTER TABLE `detail_opname_obat` auto_increment = 1');
-
+            // Panggil WebSocket untuk update client
+            $this->notify_clients();
             return $this->response->setJSON(['success' => true, 'message' => 'Opname obat berhasil dihapus']);
         } else {
             // Jika peran tidak dikenali, kembalikan status 404
@@ -447,5 +450,18 @@ class OpnameObat extends BaseController
             // Menghasilkan exception jika peran tidak diizinkan
             throw PageNotFoundException::forPageNotFound();
         }
+    }
+
+    public function notify_clients()
+    {
+        $client = \Config\Services::curlrequest();
+        $response = $client->post(env('WS-URL-PHP'), [
+            'json' => []
+        ]);
+
+        return $this->response->setJSON([
+            'status' => 'Notification sent',
+            'response' => json_decode($response->getBody(), true)
+        ]);
     }
 }

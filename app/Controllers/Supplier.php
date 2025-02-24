@@ -147,6 +147,8 @@ class Supplier extends BaseController
                 'kontak_supplier' => $this->request->getPost('kontak_supplier') // Mengambil kontak supplier dari input
             ];
             $this->SupplierModel->save($data); // Menyimpan data ke database
+            // Panggil WebSocket untuk update client
+            $this->notify_clients();
             return $this->response->setJSON(['success' => true, 'message' => 'Supplier berhasil ditambahkan']); // Mengembalikan pesan sukses
         } else {
             return $this->response->setStatusCode(404)->setJSON([
@@ -181,6 +183,8 @@ class Supplier extends BaseController
                 'kontak_supplier' => $this->request->getPost('kontak_supplier') // Mengambil kontak supplier dari input
             ];
             $this->SupplierModel->save($data); // Menyimpan data ke database
+            // Panggil WebSocket untuk update client
+            $this->notify_clients();
             return $this->response->setJSON(['success' => true, 'message' => 'Supplier berhasil diedit']); // Mengembalikan pesan sukses
         } else {
             return $this->response->setStatusCode(404)->setJSON([
@@ -197,6 +201,8 @@ class Supplier extends BaseController
 
             try {
                 $this->SupplierModel->delete($id); // Menghapus supplier berdasarkan id
+                // Panggil WebSocket untuk update client
+                $this->notify_clients();
                 $db->query('ALTER TABLE `supplier` auto_increment = 1'); // Mengatur auto increment
                 return $this->response->setJSON(['message' => 'Supplier berhasil dihapus']); // Mengembalikan pesan sukses
             } catch (DatabaseException $e) {
@@ -213,5 +219,18 @@ class Supplier extends BaseController
                 'error' => 'Halaman tidak ditemukan', // Pesan jika peran tidak valid
             ]);
         }
+    }
+
+    public function notify_clients()
+    {
+        $client = \Config\Services::curlrequest();
+        $response = $client->post(env('WS-URL-PHP'), [
+            'json' => []
+        ]);
+
+        return $this->response->setJSON([
+            'status' => 'Notification sent',
+            'response' => json_decode($response->getBody(), true)
+        ]);
     }
 }

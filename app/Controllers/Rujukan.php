@@ -188,6 +188,8 @@ class Rujukan extends BaseController
                 'waktu_dibuat' => date('Y-m-d H:i:s'),
             ];
             $db->table('medrec_rujukan')->insert($data);
+            // Panggil WebSocket untuk update client
+            $this->notify_clients();
             return $this->response->setJSON(['success' => true, 'message' => 'Surat rujukan berhasil ditambahkan']); // Mengembalikan respon sukses
         } else {
             return $this->response->setStatusCode(404)->setJSON([
@@ -280,7 +282,8 @@ class Rujukan extends BaseController
 
                 // Reset auto increment
                 $db->query('ALTER TABLE `medrec_rujukan` auto_increment = 1');
-
+                // Panggil WebSocket untuk update client
+                $this->notify_clients();
                 return $this->response->setJSON(['message' => 'Surat rujukan berhasil dihapus']); // Mengembalikan respon sukses
             } else {
                 return $this->response->setStatusCode(404)->setJSON([
@@ -407,11 +410,26 @@ class Rujukan extends BaseController
                 'alamat_dokter_rujukan' => $this->request->getPost('alamat_dokter_rujukan') ?: null,
             ];
             $db->table('medrec_rujukan')->where('id_rujukan', $id)->update($data);
+            // Panggil WebSocket untuk update client
+            $this->notify_clients();
             return $this->response->setJSON(['success' => true, 'message' => 'Surat rujukan berhasil diperbarui']); // Mengembalikan respon sukses
         } else {
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan', // Pesan jika peran tidak valid
             ]);
         }
+    }
+
+    public function notify_clients()
+    {
+        $client = \Config\Services::curlrequest();
+        $response = $client->post(env('WS-URL-PHP'), [
+            'json' => []
+        ]);
+
+        return $this->response->setJSON([
+            'status' => 'Notification sent',
+            'response' => json_decode($response->getBody(), true)
+        ]);
     }
 }

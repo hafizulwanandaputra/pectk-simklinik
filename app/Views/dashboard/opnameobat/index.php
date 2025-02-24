@@ -309,6 +309,27 @@
     });
 
     $(document).ready(async function() {
+        const socket = new WebSocket('<?= env('WS-URL-JS') ?>'); // Ganti dengan domain VPS
+
+        socket.onopen = () => {
+            console.log("Connected to WebSocket server");
+        };
+
+        socket.onmessage = async function(event) {
+            const data = JSON.parse(event.data);
+            if (data.update) {
+                console.log("Received update from WebSocket");
+                // Simpan nilai pilihan apoteker saat ini
+                const selectedApoteker = $('apotekerFilter').val();
+                await fetchApotekerOptions(selectedApoteker);
+                fetchOpnameObat();
+            }
+        };
+
+        socket.onclose = () => {
+            console.log("Disconnected from WebSocket server");
+        };
+
         $('#tanggalFilter, #apotekerFilter').on('change', function() {
             // Simpan nilai pilihan apoteker saat ini
             const selectedApoteker = $('apotekerFilter').val();

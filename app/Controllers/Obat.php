@@ -256,6 +256,8 @@ class Obat extends BaseController
             ];
             // Menyimpan data obat ke dalam database
             $this->ObatModel->save($data);
+            // Panggil WebSocket untuk update client
+            $this->notify_clients();
             // Mengembalikan respons sukses
             return $this->response->setJSON(['success' => true, 'message' => 'Obat berhasil ditambahkan']);
         } else {
@@ -329,6 +331,8 @@ class Obat extends BaseController
                 return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Gagal memproses pembelian', 'errors' => NULL]);
             } else {
                 $db->transCommit();
+                // Panggil WebSocket untuk update client
+                $this->notify_clients();
                 // Mengembalikan respons sukses
                 return $this->response->setJSON(['success' => true, 'message' => 'Obat berhasil diedit']);
             }
@@ -350,6 +354,8 @@ class Obat extends BaseController
             try {
                 // Menghapus data obat berdasarkan ID
                 $this->ObatModel->delete($id);
+                // Panggil WebSocket untuk update client
+                $this->notify_clients();
                 // Mengembalikan respons sukses
                 return $this->response->setJSON(['message' => 'Obat berhasil dihapus']);
             } catch (DatabaseException $e) {
@@ -367,5 +373,18 @@ class Obat extends BaseController
                 'error' => 'Halaman tidak ditemukan',
             ]);
         }
+    }
+
+    public function notify_clients()
+    {
+        $client = \Config\Services::curlrequest();
+        $response = $client->post(env('WS-URL-PHP'), [
+            'json' => []
+        ]);
+
+        return $this->response->setJSON([
+            'status' => 'Notification sent',
+            'response' => json_decode($response->getBody(), true)
+        ]);
     }
 }

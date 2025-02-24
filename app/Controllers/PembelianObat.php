@@ -236,6 +236,8 @@ class PembelianObat extends BaseController
                 'diterima' => 0, // Menandai bahwa obat belum diterima
             ];
             $this->PembelianObatModel->save($data); // Menyimpan data ke database
+            // Panggil WebSocket untuk update client
+            $this->notify_clients();
             return $this->response->setJSON(['success' => true, 'message' => 'Pembelian berhasil ditambahkan']);
         } else {
             // Jika peran tidak dikenali, kembalikan status 404
@@ -298,6 +300,8 @@ class PembelianObat extends BaseController
 
             // // Menyelesaikan transaksi
             // if ($db->transCommit()) {
+            // Panggil WebSocket untuk update client
+            $this->notify_clients();
             return $this->response->setJSON(['success' => true, 'message' => 'Pembelian obat berhasil dihapus']);
             // } else {
             //     return $this->response->setJSON(['success' => false, 'message' => 'Gagal menghapus pembelian obat']);
@@ -422,6 +426,8 @@ class PembelianObat extends BaseController
                 return $this->response->setJSON(['success' => false, 'message' => 'Gagal memproses pembelian', 'errors' => NULL]);
             } else {
                 $db->transCommit(); // Menyelesaikan transaksi
+                // Panggil WebSocket untuk update client
+                $this->notify_clients();
                 if ($totalJumlah == $totalObatMasuk) {
                     // Semua obat diterima
                     return $this->response->setJSON(['success' => true, 'message' => 'Obat sudah diterima.']);
@@ -649,7 +655,8 @@ class PembelianObat extends BaseController
                 'total_masuk' => $total_masuk,
                 'total_biaya' => $total_biaya,
             ]);
-
+            // Panggil WebSocket untuk update client
+            $this->notify_clients();
             // Mengembalikan respons sukses
             return $this->response->setJSON(['success' => true, 'message' => 'Item pembelian berhasil ditambahkan']);
         } else {
@@ -727,7 +734,8 @@ class PembelianObat extends BaseController
                 'total_masuk' => $total_masuk,
                 'total_biaya' => $total_biaya,
             ]);
-
+            // Panggil WebSocket untuk update client
+            $this->notify_clients();
             // Mengembalikan respons sukses
             return $this->response->setJSON(['success' => true, 'message' => 'Item pembelian berhasil diperbarui']);
         } else {
@@ -831,6 +839,8 @@ class PembelianObat extends BaseController
                 return $this->response->setJSON(['success' => false, 'message' => 'Gagal memproses pembelian', 'errors' => NULL]);
             } else {
                 $db->transCommit();  // Mengonfirmasi transaksi jika semua baik-baik saja
+                // Panggil WebSocket untuk update client
+                $this->notify_clients();
                 return $this->response->setJSON(['success' => true, 'message' => 'Item obat berhasil ditambahkan']);
             }
         } else {
@@ -915,6 +925,8 @@ class PembelianObat extends BaseController
                 return $this->response->setJSON(['success' => false, 'message' => 'Gagal memproses pembelian', 'errors' => NULL]);
             } else {
                 $db->transCommit();  // Mengonfirmasi transaksi jika semua baik-baik saja
+                // Panggil WebSocket untuk update client
+                $this->notify_clients();
                 return $this->response->setJSON(['success' => true, 'message' => 'Item obat berhasil diedit']);
             }
         } else {
@@ -965,7 +977,8 @@ class PembelianObat extends BaseController
             $detailBuilder2 = $db->table('detail_pembelian_obat');
             $detailBuilder2->where('id_detail_pembelian_obat', $id_detail_pembelian_obat);
             $detailBuilder2->update(['obat_masuk_baru' => $itemSum['total_jumlah_item']]);
-
+            // Panggil WebSocket untuk update client
+            $this->notify_clients();
             // Mengembalikan respon sukses
             return $this->response->setJSON(['success' => true, 'message' => 'Item obat berhasil dihapus']);
         } else {
@@ -1029,7 +1042,8 @@ class PembelianObat extends BaseController
                 'total_masuk' => $total_masuk,
                 'total_biaya' => $total_biaya,
             ]);
-
+            // Panggil WebSocket untuk update client
+            $this->notify_clients();
             // Mengembalikan respon sukses
             return $this->response->setJSON(['message' => 'Item pembelian berhasil dihapus']);
         } else {
@@ -1221,5 +1235,18 @@ class PembelianObat extends BaseController
             // Menghasilkan exception jika peran tidak diizinkan
             throw PageNotFoundException::forPageNotFound();
         }
+    }
+
+    public function notify_clients()
+    {
+        $client = \Config\Services::curlrequest();
+        $response = $client->post(env('WS-URL-PHP'), [
+            'json' => []
+        ]);
+
+        return $this->response->setJSON([
+            'status' => 'Notification sent',
+            'response' => json_decode($response->getBody(), true)
+        ]);
     }
 }

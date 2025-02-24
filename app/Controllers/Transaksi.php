@@ -372,6 +372,8 @@ class Transaksi extends BaseController
                 'lunas' => 0, // Status lunas (0 berarti belum lunas)
             ];
             $this->TransaksiModel->save($data); // Menyimpan data transaksi ke database
+            // Panggil WebSocket untuk update client
+            $this->notify_clients();
             return $this->response->setJSON(['success' => true, 'message' => 'Transaksi berhasil ditambahkan']); // Mengembalikan respon sukses
         } else {
             return $this->response->setStatusCode(404)->setJSON([
@@ -446,6 +448,8 @@ class Transaksi extends BaseController
                 'lunas' => 0, // Status lunas (0 berarti belum lunas)
             ];
             $this->TransaksiModel->save($data); // Menyimpan data transaksi ke database
+            // Panggil WebSocket untuk update client
+            $this->notify_clients();
             return $this->response->setJSON(['success' => true, 'message' => 'Transaksi berhasil ditambahkan']); // Mengembalikan respon sukses
         } else {
             return $this->response->setStatusCode(404)->setJSON([
@@ -478,7 +482,8 @@ class Transaksi extends BaseController
                 // Reset auto increment untuk tabel transaksi dan detail_transaksi
                 $db->query('ALTER TABLE `transaksi` auto_increment = 1');
                 $db->query('ALTER TABLE `detail_transaksi` auto_increment = 1');
-
+                // Panggil WebSocket untuk update client
+                $this->notify_clients();
                 return $this->response->setJSON(['message' => 'Transaksi berhasil dihapus']); // Mengembalikan respon sukses
             } else {
                 return $this->response->setStatusCode(401)->setJSON(['message' => 'Transaksi yang sudah lunas tidak bisa dihapus. Batalkan transaksi terlebih dahulu sebelum menghapus transaksi ini.']);
@@ -883,7 +888,8 @@ class Transaksi extends BaseController
             $transaksiBuilder->update([
                 'total_pembayaran' => $total_pembayaran, // Memperbarui total pembayaran di tabel transaksi
             ]);
-
+            // Panggil WebSocket untuk update client
+            $this->notify_clients();
             // Mengembalikan respons sukses
             return $this->response->setJSON(['success' => true, 'message' => 'Item transaksi berhasil ditambahkan']);
         } else {
@@ -955,7 +961,8 @@ class Transaksi extends BaseController
             $transaksiBuilder->update([
                 'total_pembayaran' => $total_pembayaran, // Memperbarui total pembayaran di tabel transaksi
             ]);
-
+            // Panggil WebSocket untuk update client
+            $this->notify_clients();
             // Mengembalikan respons sukses
             return $this->response->setJSON(['success' => true, 'message' => 'Item transaksi berhasil ditambahkan']);
         } else {
@@ -1032,7 +1039,8 @@ class Transaksi extends BaseController
             $transaksiBuilder->update([
                 'total_pembayaran' => $total_pembayaran, // Memperbarui total pembayaran di tabel transaksi
             ]);
-
+            // Panggil WebSocket untuk update client
+            $this->notify_clients();
             // Mengembalikan respons sukses
             return $this->response->setJSON(['success' => true, 'message' => 'Item transaksi berhasil diperbarui']);
         } else {
@@ -1103,7 +1111,8 @@ class Transaksi extends BaseController
             $transaksiBuilder->update([
                 'total_pembayaran' => $total_pembayaran, // Memperbarui total pembayaran di tabel transaksi
             ]);
-
+            // Panggil WebSocket untuk update client
+            $this->notify_clients();
             // Mengembalikan respons sukses
             return $this->response->setJSON(['success' => true, 'message' => 'Item transaksi berhasil diperbarui']);
         } else {
@@ -1154,7 +1163,8 @@ class Transaksi extends BaseController
             $transaksiBuilder->update([
                 'total_pembayaran' => $total_pembayaran, // Memperbarui total pembayaran di tabel transaksi
             ]);
-
+            // Panggil WebSocket untuk update client
+            $this->notify_clients();
             // Mengembalikan respons sukses
             return $this->response->setJSON(['message' => 'Item transaksi berhasil dihapus']);
         } else {
@@ -1281,6 +1291,7 @@ class Transaksi extends BaseController
                 return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Gagal memproses transaksi', 'errors' => NULL]);
             } else {
                 $db->transCommit();  // Commit transaksi jika semuanya baik-baik saja
+                // Panggil WebSocket untuk update client
                 $this->notify_clients();
                 return $this->response->setJSON(['success' => true, 'message' => 'Transaksi berhasil diproses. Silakan cetak struk transaksi.']);
             }
@@ -1365,6 +1376,7 @@ class Transaksi extends BaseController
                     ]);
                 }
 
+                // Panggil WebSocket untuk update client
                 $this->notify_clients();
                 // Kirim pesan pembatalan berhasil jika kata sandi yang dimasukkan benar
                 return $this->response->setJSON(['success' => true, 'message' => 'Transaksi berhasil dibatalkan.']);

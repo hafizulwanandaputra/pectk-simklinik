@@ -138,6 +138,9 @@ class Pasien extends BaseController
             // Dapatkan ID dari data yang baru disimpan
             $newId = $this->PasienModel->insertID();
 
+            // Panggil WebSocket untuk update client
+            $this->notify_clients();
+
             // Redirect ke halaman detail pasien
             return redirect()->to(base_url('pasien/detailpasien/' . $newId));
         } else {
@@ -1166,10 +1169,25 @@ class Pasien extends BaseController
                 'tanggal_daftar' => $pasien['tanggal_daftar'],
             ];
             $this->PasienModel->save($data);
+            // Panggil WebSocket untuk update client
+            $this->notify_clients();
             return $this->response->setJSON(['success' => true, 'message' => 'Data pasien berhasil diperbarui']);
         } else {
             // Jika peran tidak dikenali, lemparkan pengecualian 404
             throw PageNotFoundException::forPageNotFound();
         }
+    }
+
+    public function notify_clients()
+    {
+        $client = \Config\Services::curlrequest();
+        $response = $client->post(env('WS-URL-PHP'), [
+            'json' => []
+        ]);
+
+        return $this->response->setJSON([
+            'status' => 'Notification sent',
+            'response' => json_decode($response->getBody(), true)
+        ]);
     }
 }

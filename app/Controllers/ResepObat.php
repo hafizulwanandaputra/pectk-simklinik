@@ -147,6 +147,8 @@ class ResepObat extends BaseController
 
             // Menyimpan data resep ke dalam model
             $this->ResepModel->save($data);
+            // Panggil WebSocket untuk update client
+            $this->notify_clients();
             return redirect()->back();
         } else {
             // Menghasilkan exception jika peran tidak diizinkan
@@ -191,6 +193,8 @@ class ResepObat extends BaseController
             $resep->update([
                 'confirmed' => 1, // Atur sebagai dikonfirmasi
             ]);
+            // Panggil WebSocket untuk update client
+            $this->notify_clients();
             return $this->response->setJSON(['success' => true, 'message' => 'Resep berhasil dikonfirmasi dan sudah dapat diproses oleh apoteker']);
         } else {
             // Jika peran tidak valid, kembalikan status 404
@@ -237,6 +241,8 @@ class ResepObat extends BaseController
             $resep->update([
                 'confirmed' => 0, // Atur sebagai tidak dikonfirmasi
             ]);
+            // Panggil WebSocket untuk update client
+            $this->notify_clients();
             return $this->response->setJSON(['success' => true, 'message' => 'Resep berhasil dibatalkan konfirmasinya']);
         } else {
             // Jika peran tidak valid, kembalikan status 404
@@ -244,5 +250,18 @@ class ResepObat extends BaseController
                 'error' => 'Halaman tidak ditemukan',
             ]);
         }
+    }
+
+    public function notify_clients()
+    {
+        $client = \Config\Services::curlrequest();
+        $response = $client->post(env('WS-URL-PHP'), [
+            'json' => []
+        ]);
+
+        return $this->response->setJSON([
+            'status' => 'Notification sent',
+            'response' => json_decode($response->getBody(), true)
+        ]);
     }
 }

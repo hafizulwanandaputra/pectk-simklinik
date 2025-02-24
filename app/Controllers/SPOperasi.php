@@ -245,10 +245,24 @@ class SPOperasi extends BaseController
             }
 
             $this->SPOperasiModel->save($data);
-
+            // Panggil WebSocket untuk update client
+            $this->notify_clients();
             return $this->response->setJSON(['success' => true, 'message' => 'SPKO berhasil diperbarui']);
         } else {
             return $this->response->setStatusCode(404)->setJSON(['error' => 'Halaman tidak ditemukan']);
         }
+    }
+
+    public function notify_clients()
+    {
+        $client = \Config\Services::curlrequest();
+        $response = $client->post(env('WS-URL-PHP'), [
+            'json' => []
+        ]);
+
+        return $this->response->setJSON([
+            'status' => 'Notification sent',
+            'response' => json_decode($response->getBody(), true)
+        ]);
     }
 }
