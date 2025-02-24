@@ -128,7 +128,7 @@ Diperlukan PHP versi 8.1 atau yang lebih tinggi, dengan ekstensi berikut terpasa
 - json
 - [intl](http://php.net/manual/en/intl.requirements.php)
 - [mbstring](http://php.net/manual/en/mbstring.installation.php)
-- [fileinfo](https://php.net/manual/en/fileinfo.installation.php) untuk mengekspor file excel dengan gambar yang dihasilkan dari [PHPSpreadsheet](https://github.com/PHPOffice/PhpSpreadsheet)
+- [fileinfo](https://php.net/manual/en/fileinfo.installation.php) dan [zip](https://php.net/manual/en/zip.installation.php) untuk mengekspor file excel dengan gambar yang dihasilkan dari [PHPSpreadsheet](https://github.com/PHPOffice/PhpSpreadsheet)
 - [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) untuk menghubungkan basis data MySQL.
 
 > [!WARNING]
@@ -292,7 +292,7 @@ PHP version 8.1 or higher is required, with the following extensions installed:
 - json
 - [intl](http://php.net/manual/en/intl.requirements.php)
 - [mbstring](http://php.net/manual/en/mbstring.installation.php)
-- [fileinfo](https://php.net/manual/en/fileinfo.installation.php) for exportng excel files with images generated from [PHPSpreadsheet](https://github.com/PHPOffice/PhpSpreadsheet)
+- [fileinfo](https://php.net/manual/en/fileinfo.installation.php) and [zip](https://php.net/manual/en/zip.installation.php) for exportng excel files with images generated from [PHPSpreadsheet](https://github.com/PHPOffice/PhpSpreadsheet)
 - [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) for connecting MySQL database.
 
 > [!WARNING]
