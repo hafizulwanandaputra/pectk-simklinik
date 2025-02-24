@@ -1475,6 +1475,28 @@
     });
 
     $(document).ready(async function() {
+        const socket = new WebSocket('ws://<?= env('WS-URL-JS') ?>'); // Ganti dengan domain VPS
+
+        socket.onopen = () => {
+            console.log("Connected to WebSocket server");
+        };
+
+        socket.onmessage = async function(event) {
+            const data = JSON.parse(event.data);
+            if (data.update) {
+                console.log("Received update from WebSocket");
+                await Promise.all([
+                    fetchRajalTanggal(),
+                    fetchRajalNoRM(),
+                    fetchRajalNama()
+                ]);
+                $('#loadingSpinner').hide();
+            }
+        };
+
+        socket.onclose = () => {
+            console.log("Disconnected from WebSocket server");
+        };
         // Menangani event klik pada tombol bersihkan
         $('#setTodayTglButton').on('click', async function() {
             // Mendapatkan tanggal hari ini dalam format YYYY-MM-DD

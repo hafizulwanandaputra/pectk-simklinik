@@ -17,7 +17,18 @@
 5. Untuk digunakan dengan server pengembangan PHP, jalankan `php spark serve` untuk memulai server. Biasanya [http://localhost:8080](http://localhost:8080). Anda dapat menggunakan port yang berbeda dengan menggunakan `php spark serve --port 8081`. Ganti `8081` dengan nomor port yang diinginkan. Anda perlu mengubah `requestURL` di `.env` agar sesuai dengan nomor port yang diinginkan.
 6. Untuk penggunaan tanpa server pengembangan PHP seperti Apache atau Nginx, cukup buka dari URL seperti [http://localhost/pectk-farmasi](http://localhost/pectk-farmasi) atau yang lain berdasarkan konfigurasi server web Anda. Anda perlu mengubah `requestURL` di `.env` agar sesuai dengan alamat URL yang diinginkan.
    > URL dasar (_base URL_) didasarkan pada nilai `$_SERVER['SERVER_NAME']` PHP. Anda hanya perlu mengubah `requestURL` yang terdiri dari port dan subfolder (jika aplikasi disimpan dalam subfolder).
-7. Masuk menggunakan nama pengguna `admin` dan kata sandi `12345`. Anda perlu mengubah kata sandi dari `{base_url_anda}/settings/changepassword` dan kami sarankan untuk menggunakan kata sandi yang kuat demi keamanan yang lebih baik.
+7. Untuk menjalankan websocket, jalankan `pm2 start websocket.js --name websocket`, lalu `pm2 save`. Jika ingin memulainya lagi saat server dimulai ulang, jalankan `pm2 startup`.
+8. Masuk menggunakan nama pengguna `admin` dan kata sandi `12345`. Anda perlu mengubah kata sandi dari `{base_url_anda}/settings/changepassword` dan kami sarankan untuk menggunakan kata sandi yang kuat demi keamanan yang lebih baik.
+
+### Websocket
+
+Konfigurasi URL websocket terletak pada `.env` dengan nilai `WS-URL-JS` untuk _frontend_ dan `WS-URL-PHP` untuk _backend_ dengan format berupa domain atau alamat IP dan port.
+
+Agar websocket berjalan dengan baik:
+
+1. Izinkan port agar bisa menggunakan websocket dengan perintah sebagai berikut (Linux):
+   > sudo ufw allow 8088/tcp
+   > sudo ufw allow 3000/tcp
 
 ### Puppeteer untuk ekspor PDF
 
@@ -116,7 +127,18 @@ Kode sumber aplikasi ini dilisensikan di bawah Lisensi MIT
 5. For use with PHP development server, run `php spark serve` to start the server. Usually [http://localhost:8080](http://localhost:8080). You can use different port by using `php spark serve --port 8081`. Replace `8081` with the desired port number. You need to modify `requestURL` in `.env` to match with the desired port number.
 6. For use without PHP development server such as Apache or Nginx, just open it from URL like [http://localhost/pectk-farmasi](http://localhost/pectk-farmasi) or others based on your web server's configuration. You need to modify `requestURL` in `.env` to match with the desired URL address.
    > The base URL is based on PHP's `$_SERVER['SERVER_NAME']` value. You just need to change the `requestURL` which consists of the port and the subfolder (if the app is stored in a subfolder).
-7. Sign in using username `admin` and password `12345`. You need to change the password from `{your_base_url}/settings/changepassword` and we recommend using a strong password for better security.
+7. To start websocket, run `pm2 start websocket.js --name websocket`, then `pm2 save`. If you want to start it again when the server restarts, run `pm2 startup`.
+8. Sign in using username `admin` and password `12345`. You need to change the password from `{your_base_url}/settings/changepassword` and we recommend using a strong password for better security.
+
+### Websocket
+
+The websocket URL configuration is located in `.env` with the values ​​`WS-URL-JS` for the frontend and `WS-URL-PHP` for the backend in the format of a domain or IP address and port.
+
+To make websocket work properly:
+
+1. Allow the port to use websocket with the following command (Linux):
+   > sudo ufw allow 8088/tcp
+   > sudo ufw allow 3000/tcp
 
 ### Puppeteer for PDF export
 

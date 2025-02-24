@@ -342,7 +342,8 @@ class RawatJalan extends BaseController
                 'transaksi' => 0,
             ];
             $this->RawatJalanModel->insert($data);
-
+            // Panggil WebSocket untuk update client
+            $this->notify_clients();
             return $this->response->setJSON(['success' => true, 'message' => 'Rawat jalan berhasil diregistrasi']);
         } else {
             // Jika peran tidak dikenali, lemparkan pengecualian 404
@@ -520,6 +521,8 @@ class RawatJalan extends BaseController
                 $db->query('ALTER TABLE medrec_keterangan_buta_warna AUTO_INCREMENT = 1');
                 $db->query('ALTER TABLE medrec_keterangan_sakit_mata AUTO_INCREMENT = 1');
                 $db->query('ALTER TABLE medrec_keterangan_istirahat AUTO_INCREMENT = 1');
+
+                $this->notify_clients();
                 return $this->response->setJSON(['success' => true, 'message' => 'Rawat jalan berhasil dihapus karena kesalahan data']);
             }
 
@@ -531,10 +534,25 @@ class RawatJalan extends BaseController
                     'alasan_batal' => $this->request->getPost('alasan_batal'),
                     'pembatal' => session()->get('fullname')
                 ]);
+            // Panggil WebSocket untuk update client
+            $this->notify_clients();
             return $this->response->setJSON(['success' => true, 'message' => 'Rawat jalan berhasil dibatalkan']);
         } else {
             // Jika peran tidak dikenali, lemparkan pengecualian 404
             throw PageNotFoundException::forPageNotFound();
         }
+    }
+
+    public function notify_clients()
+    {
+        $client = \Config\Services::curlrequest();
+        $response = $client->post('http://' . env('WS-URL-PHP') . '/notify', [
+            'json' => []
+        ]);
+
+        return $this->response->setJSON([
+            'status' => 'Notification sent',
+            'response' => json_decode($response->getBody(), true)
+        ]);
     }
 }
