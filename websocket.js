@@ -1,7 +1,7 @@
 const WebSocket = require("ws");
 const express = require("express");
 
-const WS_PORT = 8088; // WebSocket di port 8088
+const WS_PORT = 8090; // WebSocket di port 8090
 const HTTP_PORT = 3000; // HTTP untuk menerima perintah refresh
 
 // --------------------------
