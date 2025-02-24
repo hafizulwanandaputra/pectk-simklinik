@@ -1281,6 +1281,7 @@ class Transaksi extends BaseController
                 return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Gagal memproses transaksi', 'errors' => NULL]);
             } else {
                 $db->transCommit();  // Commit transaksi jika semuanya baik-baik saja
+                $this->notify_clients();
                 return $this->response->setJSON(['success' => true, 'message' => 'Transaksi berhasil diproses. Silakan cetak struk transaksi.']);
             }
         } else {
@@ -1364,6 +1365,7 @@ class Transaksi extends BaseController
                     ]);
                 }
 
+                $this->notify_clients();
                 // Kirim pesan pembatalan berhasil jika kata sandi yang dimasukkan benar
                 return $this->response->setJSON(['success' => true, 'message' => 'Transaksi berhasil dibatalkan.']);
             } else {
@@ -1997,5 +1999,18 @@ class Transaksi extends BaseController
             // Menghasilkan exception jika peran tidak diizinkan
             throw PageNotFoundException::forPageNotFound();
         }
+    }
+
+    public function notify_clients()
+    {
+        $client = \Config\Services::curlrequest();
+        $response = $client->post(env('WS-URL-PHP'), [
+            'json' => []
+        ]);
+
+        return $this->response->setJSON([
+            'status' => 'Notification sent',
+            'response' => json_decode($response->getBody(), true)
+        ]);
     }
 }
