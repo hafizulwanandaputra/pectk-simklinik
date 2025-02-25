@@ -438,54 +438,55 @@ $db = db_connect();
     let limit = 20;
     let currentPage = 1;
 
-    async function fetchICD10() {
-        const bulan = $('#ICD10bulanFilter').val();
-        const offset = (currentPage - 1) * limit;
+    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admisi") : ?>
+        async function fetchICD10() {
+            const bulan = $('#ICD10bulanFilter').val();
+            const offset = (currentPage - 1) * limit;
 
-        // Show the spinner
-        $('#loadingSpinner').show();
+            // Show the spinner
+            $('#loadingSpinner').show();
 
-        try {
-            const response = await axios.get('<?= base_url('home/icd_x') ?>', {
-                params: {
-                    bulan: bulan,
-                    limit: limit,
-                    offset: offset,
-                }
-            });
+            try {
+                const response = await axios.get('<?= base_url('home/icd_x') ?>', {
+                    params: {
+                        bulan: bulan,
+                        limit: limit,
+                        offset: offset,
+                    }
+                });
 
-            const data = response.data;
-            $('#view_icd_x').empty();
-            $('#total_icd_x').text(data.total.toLocaleString('id-ID'));
+                const data = response.data;
+                $('#view_icd_x').empty();
+                $('#total_icd_x').text(data.total.toLocaleString('id-ID'));
 
-            if (data.total === "0") {
-                $('#paginationNav_icd_x ul').empty();
-                $('#view_icd_x').append(`
+                if (data.total === "0") {
+                    $('#paginationNav_icd_x ul').empty();
+                    $('#view_icd_x').append(`
                     <tr>
                         <td colspan="3" class="text-center">Tidak ada ICD-10</td>
                     </tr>
                 `);
-            } else {
-                data.data.forEach(function(data) {
-                    const total_icdx = parseInt(data.total_icdx);
-                    // Tentukan kelas berdasarkan data.number
-                    let rowClass = "";
-                    if (data.number == 1) {
-                        rowClass = "bg-gold";
-                    } else if (data.number == 2) {
-                        rowClass = "bg-silver";
-                    } else if (data.number == 3) {
-                        rowClass = "bg-bronze";
-                    } else {
-                        rowClass = "";
-                    }
-                    let rowBold = "";
-                    if (data.number == 1 || data.number == 2 || data.number == 3) {
-                        rowBold = "fw-bold";
-                    } else {
-                        rowBold = "";
-                    }
-                    const ICD10Element = `
+                } else {
+                    data.data.forEach(function(data) {
+                        const total_icdx = parseInt(data.total_icdx);
+                        // Tentukan kelas berdasarkan data.number
+                        let rowClass = "";
+                        if (data.number == 1) {
+                            rowClass = "bg-gold";
+                        } else if (data.number == 2) {
+                            rowClass = "bg-silver";
+                        } else if (data.number == 3) {
+                            rowClass = "bg-bronze";
+                        } else {
+                            rowClass = "";
+                        }
+                        let rowBold = "";
+                        if (data.number == 1 || data.number == 2 || data.number == 3) {
+                            rowBold = "fw-bold";
+                        } else {
+                            rowBold = "";
+                        }
+                        const ICD10Element = `
                     <tr>
                         <td class="date text-nowrap text-center ${rowClass} ${rowBold}">${data.number}</td>
                         <td class="${rowClass} ${rowBold}">${data.icdx_kode}<br><small>${data.icdx_nama}</small></td>
@@ -493,153 +494,153 @@ $db = db_connect();
                     </tr>
                 `;
 
-                    $('#view_icd_x').append(ICD10Element);
-                });
+                        $('#view_icd_x').append(ICD10Element);
+                    });
 
-                // Pagination logic with ellipsis for more than 3 pages
-                const totalPages = Math.ceil(data.total / limit);
-                $('#paginationNav_icd_x ul').empty();
+                    // Pagination logic with ellipsis for more than 3 pages
+                    const totalPages = Math.ceil(data.total / limit);
+                    $('#paginationNav_icd_x ul').empty();
 
-                if (currentPage > 1) {
-                    $('#paginationNav_icd_x ul').append(`
+                    if (currentPage > 1) {
+                        $('#paginationNav_icd_x ul').append(`
                     <li class="page-item">
                         <a class="page-link bg-gradient date" href="#" data-page="${currentPage - 1}">
                             <i class="fa-solid fa-angle-left"></i>
                         </a>
                     </li>
                 `);
-                }
+                    }
 
-                if (totalPages > 5) {
-                    $('#paginationNav_icd_x ul').append(`
+                    if (totalPages > 5) {
+                        $('#paginationNav_icd_x ul').append(`
                     <li class="page-item ${currentPage === 1 ? 'active' : ''}">
                         <a class="page-link bg-gradient date" href="#" data-page="1">1</a>
                     </li>
                 `);
 
-                    if (currentPage > 3) {
-                        $('#paginationNav_icd_x ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">…</span></li>');
-                    }
+                        if (currentPage > 3) {
+                            $('#paginationNav_icd_x ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">…</span></li>');
+                        }
 
-                    for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
-                        $('#paginationNav_icd_x ul').append(`
+                        for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
+                            $('#paginationNav_icd_x ul').append(`
                         <li class="page-item ${i === currentPage ? 'active' : ''}">
                             <a class="page-link bg-gradient date" href="#" data-page="${i}">${i}</a>
                         </li>
                     `);
-                    }
+                        }
 
-                    if (currentPage < totalPages - 2) {
-                        $('#paginationNav_icd_x ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">…</span></li>');
-                    }
+                        if (currentPage < totalPages - 2) {
+                            $('#paginationNav_icd_x ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">…</span></li>');
+                        }
 
-                    $('#paginationNav_icd_x ul').append(`
+                        $('#paginationNav_icd_x ul').append(`
                     <li class="page-item ${currentPage === totalPages ? 'active' : ''}">
                         <a class="page-link bg-gradient date" href="#" data-page="${totalPages}">${totalPages}</a>
                     </li>
                 `);
-                } else {
-                    // Show all pages if total pages are 3 or fewer
-                    for (let i = 1; i <= totalPages; i++) {
-                        $('#paginationNav_icd_x ul').append(`
+                    } else {
+                        // Show all pages if total pages are 3 or fewer
+                        for (let i = 1; i <= totalPages; i++) {
+                            $('#paginationNav_icd_x ul').append(`
                         <li class="page-item ${i === currentPage ? 'active' : ''}">
                             <a class="page-link bg-gradient date" href="#" data-page="${i}">${i}</a>
                         </li>
                     `);
+                        }
                     }
-                }
 
-                if (currentPage < totalPages) {
-                    $('#paginationNav_icd_x ul').append(`
+                    if (currentPage < totalPages) {
+                        $('#paginationNav_icd_x ul').append(`
                     <li class="page-item">
                         <a class="page-link bg-gradient date" href="#" data-page="${currentPage + 1}">
                             <i class="fa-solid fa-angle-right"></i>
                         </a>
                     </li>
                 `);
+                    }
                 }
-            }
-        } catch (error) {
-            $('#view_icd_x').empty();
-            if (error.response.request.status === 400) {
-                $('#view_icd_x').append(`
+            } catch (error) {
+                $('#view_icd_x').empty();
+                if (error.response.request.status === 400) {
+                    $('#view_icd_x').append(`
                     <tr>
                         <td colspan="3" class="text-center text-danger">${error.response.data.error}</td>
                     </tr>
                 `);
-                showFailedToast(error.response.data.error);
-            } else {
-                $('#view_icd_x').append(`
+                    showFailedToast(error.response.data.error);
+                } else {
+                    $('#view_icd_x').append(`
                     <tr>
                         <td colspan="3" class="text-center text-danger">${error}</td>
                     </tr>
                 `);
-                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
-            }
-            $('#paginationNav_icd_x ul').empty();
-        } finally {
-            // Hide the spinner when done
-            $('#loadingSpinner').hide();
-        }
-    }
-
-    $(document).on('click', '#paginationNav_icd_x a', function(event) {
-        event.preventDefault(); // Prevents default behavior (scrolling)
-        const page = $(this).data('page');
-        if (page) {
-            currentPage = page;
-            fetchICD10();
-        }
-    });
-
-    async function fetchICD9() {
-        const bulan = $('#ICD9bulanFilter').val();
-        const offset = (currentPage - 1) * limit;
-
-        // Show the spinner
-        $('#loadingSpinner').show();
-
-        try {
-            const response = await axios.get('<?= base_url('home/icd_9') ?>', {
-                params: {
-                    bulan: bulan,
-                    limit: limit,
-                    offset: offset,
+                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
                 }
-            });
+                $('#paginationNav_icd_x ul').empty();
+            } finally {
+                // Hide the spinner when done
+                $('#loadingSpinner').hide();
+            }
+        }
 
-            const data = response.data;
-            $('#view_icd_9').empty();
-            $('#total_icd_9').text(data.total.toLocaleString('id-ID'));
+        $(document).on('click', '#paginationNav_icd_x a', function(event) {
+            event.preventDefault(); // Prevents default behavior (scrolling)
+            const page = $(this).data('page');
+            if (page) {
+                currentPage = page;
+                fetchICD10();
+            }
+        });
 
-            if (data.total === "0") {
-                $('#paginationNav_icd_9 ul').empty();
-                $('#view_icd_9').append(`
+        async function fetchICD9() {
+            const bulan = $('#ICD9bulanFilter').val();
+            const offset = (currentPage - 1) * limit;
+
+            // Show the spinner
+            $('#loadingSpinner').show();
+
+            try {
+                const response = await axios.get('<?= base_url('home/icd_9') ?>', {
+                    params: {
+                        bulan: bulan,
+                        limit: limit,
+                        offset: offset,
+                    }
+                });
+
+                const data = response.data;
+                $('#view_icd_9').empty();
+                $('#total_icd_9').text(data.total.toLocaleString('id-ID'));
+
+                if (data.total === "0") {
+                    $('#paginationNav_icd_9 ul').empty();
+                    $('#view_icd_9').append(`
                     <tr>
                         <td colspan="3" class="text-center">Tidak ada ICD-10</td>
                     </tr>
                 `);
-            } else {
-                data.data.forEach(function(data) {
-                    const total_icd9 = parseInt(data.total_icd9);
-                    // Tentukan kelas berdasarkan data.number
-                    let rowClass = "";
-                    if (data.number == 1) {
-                        rowClass = "bg-gold";
-                    } else if (data.number == 2) {
-                        rowClass = "bg-silver";
-                    } else if (data.number == 3) {
-                        rowClass = "bg-bronze";
-                    } else {
-                        rowClass = ""; // Default class jika bukan 1, 2, atau 3
-                    }
-                    let rowBold = "";
-                    if (data.number == 1 || data.number == 2 || data.number == 3) {
-                        rowBold = "fw-bold";
-                    } else {
-                        rowBold = "";
-                    }
-                    const ICD9Element = `
+                } else {
+                    data.data.forEach(function(data) {
+                        const total_icd9 = parseInt(data.total_icd9);
+                        // Tentukan kelas berdasarkan data.number
+                        let rowClass = "";
+                        if (data.number == 1) {
+                            rowClass = "bg-gold";
+                        } else if (data.number == 2) {
+                            rowClass = "bg-silver";
+                        } else if (data.number == 3) {
+                            rowClass = "bg-bronze";
+                        } else {
+                            rowClass = ""; // Default class jika bukan 1, 2, atau 3
+                        }
+                        let rowBold = "";
+                        if (data.number == 1 || data.number == 2 || data.number == 3) {
+                            rowBold = "fw-bold";
+                        } else {
+                            rowBold = "";
+                        }
+                        const ICD9Element = `
                     <tr>
                         <td class="date text-nowrap text-center ${rowClass} ${rowBold}">${data.number}</td>
                         <td class="${rowClass} ${rowBold}">${data.icd9_kode}<br><small>${data.icd9_nama}</small></td>
@@ -647,115 +648,119 @@ $db = db_connect();
                     </tr>
                 `;
 
-                    $('#view_icd_9').append(ICD9Element);
-                });
+                        $('#view_icd_9').append(ICD9Element);
+                    });
 
-                // Pagination logic with ellipsis for more than 3 pages
-                const totalPages = Math.ceil(data.total / limit);
-                $('#paginationNav_icd_9 ul').empty();
+                    // Pagination logic with ellipsis for more than 3 pages
+                    const totalPages = Math.ceil(data.total / limit);
+                    $('#paginationNav_icd_9 ul').empty();
 
-                if (currentPage > 1) {
-                    $('#paginationNav_icd_9 ul').append(`
+                    if (currentPage > 1) {
+                        $('#paginationNav_icd_9 ul').append(`
                     <li class="page-item">
                         <a class="page-link bg-gradient date" href="#" data-page="${currentPage - 1}">
                             <i class="fa-solid fa-angle-left"></i>
                         </a>
                     </li>
                 `);
-                }
+                    }
 
-                if (totalPages > 5) {
-                    $('#paginationNav_icd_9 ul').append(`
+                    if (totalPages > 5) {
+                        $('#paginationNav_icd_9 ul').append(`
                     <li class="page-item ${currentPage === 1 ? 'active' : ''}">
                         <a class="page-link bg-gradient date" href="#" data-page="1">1</a>
                     </li>
                 `);
 
-                    if (currentPage > 3) {
-                        $('#paginationNav_icd_9 ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">…</span></li>');
-                    }
+                        if (currentPage > 3) {
+                            $('#paginationNav_icd_9 ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">…</span></li>');
+                        }
 
-                    for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
-                        $('#paginationNav_icd_9 ul').append(`
+                        for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
+                            $('#paginationNav_icd_9 ul').append(`
                         <li class="page-item ${i === currentPage ? 'active' : ''}">
                             <a class="page-link bg-gradient date" href="#" data-page="${i}">${i}</a>
                         </li>
                     `);
-                    }
+                        }
 
-                    if (currentPage < totalPages - 2) {
-                        $('#paginationNav_icd_9 ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">…</span></li>');
-                    }
+                        if (currentPage < totalPages - 2) {
+                            $('#paginationNav_icd_9 ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">…</span></li>');
+                        }
 
-                    $('#paginationNav_icd_9 ul').append(`
+                        $('#paginationNav_icd_9 ul').append(`
                     <li class="page-item ${currentPage === totalPages ? 'active' : ''}">
                         <a class="page-link bg-gradient date" href="#" data-page="${totalPages}">${totalPages}</a>
                     </li>
                 `);
-                } else {
-                    // Show all pages if total pages are 3 or fewer
-                    for (let i = 1; i <= totalPages; i++) {
-                        $('#paginationNav_icd_9 ul').append(`
+                    } else {
+                        // Show all pages if total pages are 3 or fewer
+                        for (let i = 1; i <= totalPages; i++) {
+                            $('#paginationNav_icd_9 ul').append(`
                         <li class="page-item ${i === currentPage ? 'active' : ''}">
                             <a class="page-link bg-gradient date" href="#" data-page="${i}">${i}</a>
                         </li>
                     `);
+                        }
                     }
-                }
 
-                if (currentPage < totalPages) {
-                    $('#paginationNav_icd_9 ul').append(`
+                    if (currentPage < totalPages) {
+                        $('#paginationNav_icd_9 ul').append(`
                     <li class="page-item">
                         <a class="page-link bg-gradient date" href="#" data-page="${currentPage + 1}">
                             <i class="fa-solid fa-angle-right"></i>
                         </a>
                     </li>
                 `);
+                    }
                 }
-            }
-        } catch (error) {
-            $('#view_icd_9').empty();
-            if (error.response.request.status === 400) {
-                $('#view_icd_9').append(`
+            } catch (error) {
+                $('#view_icd_9').empty();
+                if (error.response.request.status === 400) {
+                    $('#view_icd_9').append(`
                     <tr>
                         <td colspan="3" class="text-center text-danger">${error.response.data.error}</td>
                     </tr>
                 `);
-                showFailedToast(error.response.data.error);
-            } else {
-                $('#view_icd_9').append(`
+                    showFailedToast(error.response.data.error);
+                } else {
+                    $('#view_icd_9').append(`
                     <tr>
                         <td colspan="3" class="text-center text-danger">${error}</td>
                     </tr>
                 `);
-                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                }
+                $('#paginationNav_icd_9 ul').empty();
+            } finally {
+                // Hide the spinner when done
+                $('#loadingSpinner').hide();
             }
-            $('#paginationNav_icd_9 ul').empty();
-        } finally {
-            // Hide the spinner when done
-            $('#loadingSpinner').hide();
         }
-    }
 
-    $(document).on('click', '#paginationNav_icd_9 a', function(event) {
-        event.preventDefault(); // Prevents default behavior (scrolling)
-        const page = $(this).data('page');
-        if (page) {
-            currentPage = page;
-            fetchICD9();
-        }
-    });
+        $(document).on('click', '#paginationNav_icd_9 a', function(event) {
+            event.preventDefault(); // Prevents default behavior (scrolling)
+            const page = $(this).data('page');
+            if (page) {
+                currentPage = page;
+                fetchICD9();
+            }
+        });
+    <?php endif; ?>
 
     $(document).ready(function() {
-        $('#ICD10bulanFilter').on('change', function() {
+        <?php if (session()->get('role') == "Admin" || session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admisi") : ?>
+            $('#ICD10bulanFilter').on('change', function() {
+                fetchICD10();
+            });
+            $('#ICD9bulanFilter').on('change', function() {
+                fetchICD9();
+            });
             fetchICD10();
-        });
-        $('#ICD9bulanFilter').on('change', function() {
             fetchICD9();
-        });
-        // $('#loadingSpinner').hide();
-        fetchICD10();
-        fetchICD9();
+        <?php else: ?>
+            $('#loadingSpinner').hide();
+        <?php endif; ?>
     });
 </script>
 <?= $this->endSection(); ?>
