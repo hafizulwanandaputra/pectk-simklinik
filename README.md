@@ -29,46 +29,47 @@ Jika Anda menjalankannya di peladen pribadi virtual (VPS) dengan SSL, gunakan `w
 Contoh untuk nginx:
 
 ```
-   location /ws/ {
-      proxy_pass http://127.0.0.1:8090;
-      proxy_http_version 1.1;
-      proxy_set_header Upgrade $http_upgrade;
-      proxy_set_header Connection "upgrade";
-      proxy_set_header Host $host;
-      proxy_set_header X-Real-IP $remote_addr;
-      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-      proxy_cache_bypass $http_upgrade;
-      proxy_redirect off;
-      proxy_read_timeout 3600;
-   }
+location /ws/ {
+   proxy_pass http://127.0.0.1:8090;
+   proxy_http_version 1.1;
+   proxy_set_header Upgrade $http_upgrade;
+   proxy_set_header Connection "upgrade";
+   proxy_set_header Host $host;
+   proxy_set_header X-Real-IP $remote_addr;
+   proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+   proxy_cache_bypass $http_upgrade;
+   proxy_redirect off;
+   proxy_read_timeout 3600;
+}
 
-   location /notify/ {
-      proxy_pass http://127.0.0.1:3000/notify;
-      proxy_http_version 1.1;
-      proxy_set_header Connection "";
-      proxy_set_header Host $host;
-      proxy_set_header X-Real-IP $remote_addr;
-      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-   }
+location /notify/ {
+   proxy_pass http://127.0.0.1:3000/notify;
+   proxy_http_version 1.1;
+   proxy_set_header Connection "";
+   proxy_set_header Host $host;
+   proxy_set_header X-Real-IP $remote_addr;
+   proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+}
 ```
 
-Agar websocket berjalan dengan baik:
+Agar websocket berjalan dengan baik (Linux):
 
-1. Izinkan port agar bisa menggunakan websocket dengan perintah sebagai berikut (Linux):
+1. Izinkan port agar bisa menggunakan websocket dengan perintah sebagai berikut:
    ```
    sudo ufw allow 8090/tcp
    sudo ufw allow 3000/tcp
    ```
-2. Instal `pm2` dengan perintah sebagai berikut:
+2. Instal `pm2` dengan perintah sebagai berikut (gunakan `sudo` atau masuk sebagai root):
    ```
-   sudo npm insall -g pm2
+   npm insall -g pm2
    ```
-3. Lalu, jalankan websocket dengan perintah sebagai berikut:
+3. Lalu, jalankan websocket dan aktifkan pemulaian otomatis saat memulai ulang peladan dengan perintah sebagai berikut:
    ```
-   sudo pm2 start websocket.js --name websocket
-   sudo pm2 save
-   sudo pm2 startup
+   pm2 start /path/to/websocket.js --name websocket
+   pm2 save
+   pm2 startup
    ```
+   Setelah menjalankan `pm2 startup`, ikuti instruksi yang ada pada keluaran.
 
 ### Puppeteer untuk ekspor PDF
 
@@ -193,46 +194,47 @@ If you are running on a virtual private server (VPS) with SSL, use `wss://domain
 Example for nginx:
 
 ```
-   location /ws/ {
-      proxy_pass http://127.0.0.1:8090;
-      proxy_http_version 1.1;
-      proxy_set_header Upgrade $http_upgrade;
-      proxy_set_header Connection "upgrade";
-      proxy_set_header Host $host;
-      proxy_set_header X-Real-IP $remote_addr;
-      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-      proxy_cache_bypass $http_upgrade;
-      proxy_redirect off;
-      proxy_read_timeout 3600;
-   }
+location /ws/ {
+   proxy_pass http://127.0.0.1:8090;
+   proxy_http_version 1.1;
+   proxy_set_header Upgrade $http_upgrade;
+   proxy_set_header Connection "upgrade";
+   proxy_set_header Host $host;
+   proxy_set_header X-Real-IP $remote_addr;
+   proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+   proxy_cache_bypass $http_upgrade;
+   proxy_redirect off;
+   proxy_read_timeout 3600;
+}
 
-   location /notify/ {
-      proxy_pass http://127.0.0.1:3000/notify;
-      proxy_http_version 1.1;
-      proxy_set_header Connection "";
-      proxy_set_header Host $host;
-      proxy_set_header X-Real-IP $remote_addr;
-      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-   }
+location /notify/ {
+   proxy_pass http://127.0.0.1:3000/notify;
+   proxy_http_version 1.1;
+   proxy_set_header Connection "";
+   proxy_set_header Host $host;
+   proxy_set_header X-Real-IP $remote_addr;
+   proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+}
 ```
 
-To make websocket work properly:
+To make websocket work properly (Linux):
 
-1. Allow the port to use websocket with the following command (Linux):
+1. Allow the port to use websocket with the following command:
    ```
    sudo ufw allow 8090/tcp
    sudo ufw allow 3000/tcp
    ```
-2. Install `pm2` with the following command:
+2. Install `pm2` with the following command (use `sudo` or log in as root):
    ```
-   sudo npm insall -g pm2
+   npm insall -g pm2
    ```
-3. Then, run the websocket with the following command:
+3. Then, run websocket and enable automatic startup when restarting the server with the following command:
    ```
-   sudo pm2 start websocket.js --name websocket
-   sudo pm2 save
-   sudo pm2 startup
+   pm2 start /path/to/websocket.js --name websocket
+   pm2 save
+   pm2 startup
    ```
+   After running `pm2 startup`, follow the instructions in the output.
 
 ### Puppeteer for PDF export
 
