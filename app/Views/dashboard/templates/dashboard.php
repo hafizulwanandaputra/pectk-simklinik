@@ -192,6 +192,38 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
             --bs-font-sans-serif: "Noto Sans", "Noto Sans Arabic", system-ui, -apple-system, "Helvetica Neue", Arial, "Liberation Sans", sans-serif;
             --bs-font-monospace: "Noto Sans Mono", Menlo, Monaco, Consolas, "Courier New", "Liberation Mono", monospace;
             font-feature-settings: "ss04";
+            --gold: #ffe680;
+            /* Emas lebih terang */
+            --silver: #bfbfbf;
+            /* Perak lebih terang */
+            --bronze: #e7bd98;
+            /* Perunggu lebih terang */
+        }
+
+        /* Warna untuk tema gelap */
+        [data-bs-theme="dark"] {
+            --gold: #806600;
+            /* Emas lebih gelap */
+            --silver: #404040;
+            /* Perak lebih gelap */
+            --bronze: #673e18;
+            /* Perunggu lebih gelap */
+        }
+
+        /* Terapkan ke elemen */
+        .bg-gold {
+            background-color: var(--gold) !important;
+            color: var(--bs-body-color);
+        }
+
+        .bg-silver {
+            background-color: var(--silver) !important;
+            color: var(--bs-body-color);
+        }
+
+        .bg-bronze {
+            background-color: var(--bronze) !important;
+            color: var(--bs-body-color);
         }
 
         html,

@@ -13,6 +13,8 @@ $routes->get('/(?i)logout', 'Auth::logout');
 
 // HOME
 $routes->get('/(?i)home', 'Home::index');
+$routes->get('/(?i)home/(?i)icd_x', 'Home::icd_x');
+$routes->get('/(?i)home/(?i)icd_9', 'Home::icd_9');
 
 // PASIEN
 $routes->get('/(?i)pasien', 'Pasien::index');

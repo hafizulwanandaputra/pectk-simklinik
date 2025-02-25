@@ -190,6 +190,86 @@ $db = db_connect();
                         </div>
                     </div>
                 </div>
+                <div class="row row-cols-1 row-cols-lg-2 g-2 mb-2">
+                    <div class="col">
+                        <div class="card bg-body-tertiary w-100  shadow-sm">
+                            <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">ICD-10 (Diagnosis)</div>
+                            <div class="card-body py-2 px-3">
+                                <input type="month" id="ICD10bulanFilter" class="form-control form-control-sm mb-2" value="<?= date('Y-m'); ?>">
+                                <div class="card shadow-sm ratio ratio-4x3 w-100 overflow-auto">
+                                    <div class="table-responsive">
+                                        <table class="table table-sm mb-0" style="width:100%; font-size: 0.75rem;">
+                                            <thead>
+                                                <tr class="align-middle">
+                                                    <th scope="col" class="bg-body-secondary border-secondary text-nowrap tindakan" style="border-bottom-width: 2px; width: 0%;">No</th>
+                                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">ICD-10</th>
+                                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Jumlah Kasus</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="align-top" id="view_icd_x">
+                                                <tr>
+                                                    <td colspan="3" class="text-center">Memuat ICD-10...</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <nav id="paginationNav_icd_x" class="d-flex justify-content-end mt-2 overflow-auto w-100">
+                                    <ul class="pagination pagination-sm mb-0"></ul>
+                                </nav>
+                            </div>
+                            <div class="card-footer bg-body-tertiary">
+                                <div class="row overflow-hidden d-flex align-items-end">
+                                    <div class="col fw-medium text-nowrap">Total</div>
+                                    <div class="col text-end">
+                                        <div class="date text-truncate placeholder-glow fw-bold" id="total_icd_x">
+                                            <span class="placeholder w-100"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card bg-body-tertiary w-100  shadow-sm">
+                            <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">ICD-9 CM (Tindakan)</div>
+                            <div class="card-body py-2 px-3">
+                                <input type="month" id="ICD9bulanFilter" class="form-control form-control-sm mb-2" value="<?= date('Y-m'); ?>">
+                                <div class="card shadow-sm ratio ratio-4x3 w-100 overflow-auto">
+                                    <div class="table-responsive">
+                                        <table class="table table-sm mb-0" style="width:100%; font-size: 0.75rem;">
+                                            <thead>
+                                                <tr class="align-middle">
+                                                    <th scope="col" class="bg-body-secondary border-secondary text-nowrap tindakan" style="border-bottom-width: 2px; width: 0%;">No</th>
+                                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">ICD-10</th>
+                                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Jumlah Tindakan</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="align-top" id="view_icd_9">
+                                                <tr>
+                                                    <td colspan="3" class="text-center">Memuat ICD-9 CM...</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <nav id="paginationNav_icd_9" class="d-flex justify-content-end mt-2 overflow-auto w-100">
+                                    <ul class="pagination pagination-sm mb-0"></ul>
+                                </nav>
+                            </div>
+                            <div class="card-footer bg-body-tertiary">
+                                <div class="row overflow-hidden d-flex align-items-end">
+                                    <div class="col fw-medium text-nowrap">Total</div>
+                                    <div class="col text-end">
+                                        <div class="date text-truncate placeholder-glow fw-bold" id="total_icd_9">
+                                            <span class="placeholder w-100"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         <?php endif; ?>
         <?php if (session()->get('role') == "Admin" || session()->get('role') == "Apoteker" || session()->get('role') == "Dokter") : ?>
@@ -355,9 +435,327 @@ $db = db_connect();
 <?= $this->endSection(); ?>
 <?= $this->section('javascript'); ?>
 <script>
+    let limit = 20;
+    let currentPage = 1;
+
+    async function fetchICD10() {
+        const bulan = $('#ICD10bulanFilter').val();
+        const offset = (currentPage - 1) * limit;
+
+        // Show the spinner
+        $('#loadingSpinner').show();
+
+        try {
+            const response = await axios.get('<?= base_url('home/icd_x') ?>', {
+                params: {
+                    bulan: bulan,
+                    limit: limit,
+                    offset: offset,
+                }
+            });
+
+            const data = response.data;
+            $('#view_icd_x').empty();
+            $('#total_icd_x').text(data.total.toLocaleString('id-ID'));
+
+            if (data.total === "0") {
+                $('#paginationNav_icd_x ul').empty();
+                $('#view_icd_x').append(`
+                    <tr>
+                        <td colspan="3" class="text-center">Tidak ada ICD-10</td>
+                    </tr>
+                `);
+            } else {
+                data.data.forEach(function(data) {
+                    const total_icdx = parseInt(data.total_icdx);
+                    // Tentukan kelas berdasarkan data.number
+                    let rowClass = "";
+                    if (data.number == 1) {
+                        rowClass = "bg-gold";
+                    } else if (data.number == 2) {
+                        rowClass = "bg-silver";
+                    } else if (data.number == 3) {
+                        rowClass = "bg-bronze";
+                    } else {
+                        rowClass = "";
+                    }
+                    let rowBold = "";
+                    if (data.number == 1 || data.number == 2 || data.number == 3) {
+                        rowBold = "fw-bold";
+                    } else {
+                        rowBold = "";
+                    }
+                    const ICD10Element = `
+                    <tr>
+                        <td class="date text-nowrap text-center ${rowClass} ${rowBold}">${data.number}</td>
+                        <td class="${rowClass} ${rowBold}">${data.icdx_kode}<br><small>${data.icdx_nama}</small></td>
+                        <td class="date text-end ${rowClass} ${rowBold}">${total_icdx.toLocaleString('id-ID')}</td>
+                    </tr>
+                `;
+
+                    $('#view_icd_x').append(ICD10Element);
+                });
+
+                // Pagination logic with ellipsis for more than 3 pages
+                const totalPages = Math.ceil(data.total / limit);
+                $('#paginationNav_icd_x ul').empty();
+
+                if (currentPage > 1) {
+                    $('#paginationNav_icd_x ul').append(`
+                    <li class="page-item">
+                        <a class="page-link bg-gradient date" href="#" data-page="${currentPage - 1}">
+                            <i class="fa-solid fa-angle-left"></i>
+                        </a>
+                    </li>
+                `);
+                }
+
+                if (totalPages > 5) {
+                    $('#paginationNav_icd_x ul').append(`
+                    <li class="page-item ${currentPage === 1 ? 'active' : ''}">
+                        <a class="page-link bg-gradient date" href="#" data-page="1">1</a>
+                    </li>
+                `);
+
+                    if (currentPage > 3) {
+                        $('#paginationNav_icd_x ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">…</span></li>');
+                    }
+
+                    for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
+                        $('#paginationNav_icd_x ul').append(`
+                        <li class="page-item ${i === currentPage ? 'active' : ''}">
+                            <a class="page-link bg-gradient date" href="#" data-page="${i}">${i}</a>
+                        </li>
+                    `);
+                    }
+
+                    if (currentPage < totalPages - 2) {
+                        $('#paginationNav_icd_x ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">…</span></li>');
+                    }
+
+                    $('#paginationNav_icd_x ul').append(`
+                    <li class="page-item ${currentPage === totalPages ? 'active' : ''}">
+                        <a class="page-link bg-gradient date" href="#" data-page="${totalPages}">${totalPages}</a>
+                    </li>
+                `);
+                } else {
+                    // Show all pages if total pages are 3 or fewer
+                    for (let i = 1; i <= totalPages; i++) {
+                        $('#paginationNav_icd_x ul').append(`
+                        <li class="page-item ${i === currentPage ? 'active' : ''}">
+                            <a class="page-link bg-gradient date" href="#" data-page="${i}">${i}</a>
+                        </li>
+                    `);
+                    }
+                }
+
+                if (currentPage < totalPages) {
+                    $('#paginationNav_icd_x ul').append(`
+                    <li class="page-item">
+                        <a class="page-link bg-gradient date" href="#" data-page="${currentPage + 1}">
+                            <i class="fa-solid fa-angle-right"></i>
+                        </a>
+                    </li>
+                `);
+                }
+            }
+        } catch (error) {
+            $('#view_icd_x').empty();
+            if (error.response.request.status === 400) {
+                $('#view_icd_x').append(`
+                    <tr>
+                        <td colspan="3" class="text-center text-danger">${error.response.data.error}</td>
+                    </tr>
+                `);
+                showFailedToast(error.response.data.error);
+            } else {
+                $('#view_icd_x').append(`
+                    <tr>
+                        <td colspan="3" class="text-center text-danger">${error}</td>
+                    </tr>
+                `);
+                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+            }
+            $('#paginationNav_icd_x ul').empty();
+        } finally {
+            // Hide the spinner when done
+            $('#loadingSpinner').hide();
+        }
+    }
+
+    $(document).on('click', '#paginationNav_icd_x a', function(event) {
+        event.preventDefault(); // Prevents default behavior (scrolling)
+        const page = $(this).data('page');
+        if (page) {
+            currentPage = page;
+            fetchICD10();
+        }
+    });
+
+    async function fetchICD9() {
+        const bulan = $('#ICD9bulanFilter').val();
+        const offset = (currentPage - 1) * limit;
+
+        // Show the spinner
+        $('#loadingSpinner').show();
+
+        try {
+            const response = await axios.get('<?= base_url('home/icd_9') ?>', {
+                params: {
+                    bulan: bulan,
+                    limit: limit,
+                    offset: offset,
+                }
+            });
+
+            const data = response.data;
+            $('#view_icd_9').empty();
+            $('#total_icd_9').text(data.total.toLocaleString('id-ID'));
+
+            if (data.total === "0") {
+                $('#paginationNav_icd_9 ul').empty();
+                $('#view_icd_9').append(`
+                    <tr>
+                        <td colspan="3" class="text-center">Tidak ada ICD-10</td>
+                    </tr>
+                `);
+            } else {
+                data.data.forEach(function(data) {
+                    const total_icd9 = parseInt(data.total_icd9);
+                    // Tentukan kelas berdasarkan data.number
+                    let rowClass = "";
+                    if (data.number == 1) {
+                        rowClass = "bg-gold";
+                    } else if (data.number == 2) {
+                        rowClass = "bg-silver";
+                    } else if (data.number == 3) {
+                        rowClass = "bg-bronze";
+                    } else {
+                        rowClass = ""; // Default class jika bukan 1, 2, atau 3
+                    }
+                    let rowBold = "";
+                    if (data.number == 1 || data.number == 2 || data.number == 3) {
+                        rowBold = "fw-bold";
+                    } else {
+                        rowBold = "";
+                    }
+                    const ICD9Element = `
+                    <tr>
+                        <td class="date text-nowrap text-center ${rowClass} ${rowBold}">${data.number}</td>
+                        <td class="${rowClass} ${rowBold}">${data.icd9_kode}<br><small>${data.icd9_nama}</small></td>
+                        <td class="date text-end ${rowClass} ${rowBold}">${total_icd9.toLocaleString('id-ID')}</td>
+                    </tr>
+                `;
+
+                    $('#view_icd_9').append(ICD9Element);
+                });
+
+                // Pagination logic with ellipsis for more than 3 pages
+                const totalPages = Math.ceil(data.total / limit);
+                $('#paginationNav_icd_9 ul').empty();
+
+                if (currentPage > 1) {
+                    $('#paginationNav_icd_9 ul').append(`
+                    <li class="page-item">
+                        <a class="page-link bg-gradient date" href="#" data-page="${currentPage - 1}">
+                            <i class="fa-solid fa-angle-left"></i>
+                        </a>
+                    </li>
+                `);
+                }
+
+                if (totalPages > 5) {
+                    $('#paginationNav_icd_9 ul').append(`
+                    <li class="page-item ${currentPage === 1 ? 'active' : ''}">
+                        <a class="page-link bg-gradient date" href="#" data-page="1">1</a>
+                    </li>
+                `);
+
+                    if (currentPage > 3) {
+                        $('#paginationNav_icd_9 ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">…</span></li>');
+                    }
+
+                    for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
+                        $('#paginationNav_icd_9 ul').append(`
+                        <li class="page-item ${i === currentPage ? 'active' : ''}">
+                            <a class="page-link bg-gradient date" href="#" data-page="${i}">${i}</a>
+                        </li>
+                    `);
+                    }
+
+                    if (currentPage < totalPages - 2) {
+                        $('#paginationNav_icd_9 ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">…</span></li>');
+                    }
+
+                    $('#paginationNav_icd_9 ul').append(`
+                    <li class="page-item ${currentPage === totalPages ? 'active' : ''}">
+                        <a class="page-link bg-gradient date" href="#" data-page="${totalPages}">${totalPages}</a>
+                    </li>
+                `);
+                } else {
+                    // Show all pages if total pages are 3 or fewer
+                    for (let i = 1; i <= totalPages; i++) {
+                        $('#paginationNav_icd_9 ul').append(`
+                        <li class="page-item ${i === currentPage ? 'active' : ''}">
+                            <a class="page-link bg-gradient date" href="#" data-page="${i}">${i}</a>
+                        </li>
+                    `);
+                    }
+                }
+
+                if (currentPage < totalPages) {
+                    $('#paginationNav_icd_9 ul').append(`
+                    <li class="page-item">
+                        <a class="page-link bg-gradient date" href="#" data-page="${currentPage + 1}">
+                            <i class="fa-solid fa-angle-right"></i>
+                        </a>
+                    </li>
+                `);
+                }
+            }
+        } catch (error) {
+            $('#view_icd_9').empty();
+            if (error.response.request.status === 400) {
+                $('#view_icd_9').append(`
+                    <tr>
+                        <td colspan="3" class="text-center text-danger">${error.response.data.error}</td>
+                    </tr>
+                `);
+                showFailedToast(error.response.data.error);
+            } else {
+                $('#view_icd_9').append(`
+                    <tr>
+                        <td colspan="3" class="text-center text-danger">${error}</td>
+                    </tr>
+                `);
+                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+            }
+            $('#paginationNav_icd_9 ul').empty();
+        } finally {
+            // Hide the spinner when done
+            $('#loadingSpinner').hide();
+        }
+    }
+
+    $(document).on('click', '#paginationNav_icd_9 a', function(event) {
+        event.preventDefault(); // Prevents default behavior (scrolling)
+        const page = $(this).data('page');
+        if (page) {
+            currentPage = page;
+            fetchICD9();
+        }
+    });
+
     $(document).ready(function() {
-        // Menyembunyikan spinner loading saat dokumen sudah siap
-        $('#loadingSpinner').hide(); // Menyembunyikan elemen spinner loading
+        $('#ICD10bulanFilter').on('change', function() {
+            fetchICD10();
+        });
+        $('#ICD9bulanFilter').on('change', function() {
+            fetchICD9();
+        });
+        // $('#loadingSpinner').hide();
+        fetchICD10();
+        fetchICD9();
     });
 </script>
 <?= $this->endSection(); ?>
