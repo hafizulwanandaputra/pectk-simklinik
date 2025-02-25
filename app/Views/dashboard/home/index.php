@@ -192,7 +192,7 @@ $db = db_connect();
                 </div>
                 <div class="row row-cols-1 row-cols-lg-2 g-2 mb-2">
                     <div class="col">
-                        <div class="card bg-body-tertiary w-100  shadow-sm">
+                        <div class="card bg-body-tertiary w-100 h-100 shadow-sm">
                             <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">ICD-10 (Diagnosis)</div>
                             <div class="card-body py-2 px-3">
                                 <input type="month" id="ICD10bulanFilter" class="form-control form-control-sm mb-2" value="<?= date('Y-m'); ?>">
@@ -231,7 +231,7 @@ $db = db_connect();
                         </div>
                     </div>
                     <div class="col">
-                        <div class="card bg-body-tertiary w-100  shadow-sm">
+                        <div class="card bg-body-tertiary w-100 h-100 shadow-sm">
                             <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">ICD-9 CM (Tindakan)</div>
                             <div class="card-body py-2 px-3">
                                 <input type="month" id="ICD9bulanFilter" class="form-control form-control-sm mb-2" value="<?= date('Y-m'); ?>">
