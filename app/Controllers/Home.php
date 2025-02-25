@@ -325,20 +325,21 @@ class Home extends BaseController
 
     public function icd_x()
     {
-        $db = db_connect();
-        $bulan = $this->request->getGet('bulan');
+        if (session()->get('role') == "Admin" || session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admisi") {
+            $db = db_connect();
+            $bulan = $this->request->getGet('bulan');
 
-        if (!$bulan) {
-            return $this->response->setStatusCode(400)->setJSON([
-                'error' => 'Silakan masukkan bulan.'
-            ]);
-        }
+            if (!$bulan) {
+                return $this->response->setStatusCode(400)->setJSON([
+                    'error' => 'Silakan masukkan bulan.'
+                ]);
+            }
 
-        $limit = $this->request->getGet('limit');
-        $offset = $this->request->getGet('offset');
-        $startNumber = $offset + 1;
+            $limit = $this->request->getGet('limit');
+            $offset = $this->request->getGet('offset');
+            $startNumber = $offset + 1;
 
-        $icdx_bulanan_subquery = "
+            $icdx_bulanan_subquery = "
         SELECT DATE_FORMAT(waktu_dibuat, '%Y-%m') AS bulan, icdx_kode_1 AS icdx_kode FROM medrec_assesment WHERE icdx_kode_1 IS NOT NULL
         UNION ALL
         SELECT DATE_FORMAT(waktu_dibuat, '%Y-%m') AS bulan, icdx_kode_2 AS icdx_kode FROM medrec_assesment WHERE icdx_kode_2 IS NOT NULL
@@ -350,7 +351,7 @@ class Home extends BaseController
         SELECT DATE_FORMAT(waktu_dibuat, '%Y-%m') AS bulan, icdx_kode_5 AS icdx_kode FROM medrec_assesment WHERE icdx_kode_5 IS NOT NULL
     ";
 
-        $query = "
+            $query = "
         SELECT 
             icdx_data.bulan, 
             icdx_data.icdx_kode, 
@@ -361,51 +362,58 @@ class Home extends BaseController
         WHERE icdx_data.bulan LIKE '" . $db->escapeLikeString($bulan) . "%' 
     ";
 
-        $query .= " GROUP BY icdx_data.bulan, icdx_data.icdx_kode, icd_x.icdNamaInggris ";
-        $query .= " ORDER BY icdx_data.bulan DESC, total_icdx DESC ";
-        $query .= " LIMIT {$limit} OFFSET {$offset} ";
+            $query .= " GROUP BY icdx_data.bulan, icdx_data.icdx_kode, icd_x.icdNamaInggris ";
+            $query .= " ORDER BY icdx_data.bulan DESC, total_icdx DESC ";
+            $query .= " LIMIT {$limit} OFFSET {$offset} ";
 
-        $icdx_bulanan = $db->query($query)->getResultArray();
+            $icdx_bulanan = $db->query($query)->getResultArray();
 
-        foreach ($icdx_bulanan as $index => &$data) {
-            $data['number'] = $startNumber + $index;
-        }
+            foreach ($icdx_bulanan as $index => &$data) {
+                $data['number'] = $startNumber + $index;
+            }
 
-        $totalQuery = "
+            $totalQuery = "
         SELECT COUNT(*) as total FROM (
             SELECT icdx_data.bulan FROM ({$icdx_bulanan_subquery}) AS icdx_data 
             JOIN icd_x ON icdx_data.icdx_kode = icd_x.icdKode
             WHERE icdx_data.bulan LIKE '" . $db->escapeLikeString($bulan) . "%' 
     ";
-        $totalQuery .= " GROUP BY icdx_data.bulan, icdx_data.icdx_kode, icd_x.icdNamaInggris 
+            $totalQuery .= " GROUP BY icdx_data.bulan, icdx_data.icdx_kode, icd_x.icdNamaInggris 
         ) AS count_table ";
 
-        $total = $db->query($totalQuery)->getRowArray()['total'] ?? 0;
+            $total = $db->query($totalQuery)->getRowArray()['total'] ?? 0;
 
-        return $this->response->setJSON([
-            'data' => $icdx_bulanan,
-            'total' => $total,
-            'limit' => $limit,
-            'offset' => $offset
-        ]);
+            return $this->response->setJSON([
+                'data' => $icdx_bulanan,
+                'total' => $total,
+                'limit' => $limit,
+                'offset' => $offset
+            ]);
+        } else {
+            // Jika peran tidak dikenali, kembalikan status 404
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
+        }
     }
 
     public function icd_9()
     {
-        $db = db_connect();
-        $bulan = $this->request->getGet('bulan');
+        if (session()->get('role') == "Admin" || session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admisi") {
+            $db = db_connect();
+            $bulan = $this->request->getGet('bulan');
 
-        if (!$bulan) {
-            return $this->response->setStatusCode(400)->setJSON([
-                'error' => 'Silakan masukkan bulan.'
-            ]);
-        }
+            if (!$bulan) {
+                return $this->response->setStatusCode(400)->setJSON([
+                    'error' => 'Silakan masukkan bulan.'
+                ]);
+            }
 
-        $limit = $this->request->getGet('limit');
-        $offset = $this->request->getGet('offset');
-        $startNumber = $offset + 1;
+            $limit = $this->request->getGet('limit');
+            $offset = $this->request->getGet('offset');
+            $startNumber = $offset + 1;
 
-        $icd9_bulanan_subquery = "
+            $icd9_bulanan_subquery = "
         SELECT DATE_FORMAT(waktu_dibuat, '%Y-%m') AS bulan, icd9_kode_1 AS icd9_kode FROM medrec_assesment WHERE icd9_kode_1 IS NOT NULL
         UNION ALL
         SELECT DATE_FORMAT(waktu_dibuat, '%Y-%m') AS bulan, icd9_kode_2 AS icd9_kode FROM medrec_assesment WHERE icd9_kode_2 IS NOT NULL
@@ -417,7 +425,7 @@ class Home extends BaseController
         SELECT DATE_FORMAT(waktu_dibuat, '%Y-%m') AS bulan, icd9_kode_5 AS icd9_kode FROM medrec_assesment WHERE icd9_kode_5 IS NOT NULL
     ";
 
-        $query = "
+            $query = "
         SELECT 
             icd9_data.bulan, 
             icd9_data.icd9_kode, 
@@ -428,32 +436,38 @@ class Home extends BaseController
         WHERE icd9_data.bulan LIKE '" . $db->escapeLikeString($bulan) . "%' 
     ";
 
-        $query .= " GROUP BY icd9_data.bulan, icd9_data.icd9_kode, icd_9.icdNamaInggris ";
-        $query .= " ORDER BY icd9_data.bulan DESC, total_icd9 DESC ";
-        $query .= " LIMIT {$limit} OFFSET {$offset} ";
+            $query .= " GROUP BY icd9_data.bulan, icd9_data.icd9_kode, icd_9.icdNamaInggris ";
+            $query .= " ORDER BY icd9_data.bulan DESC, total_icd9 DESC ";
+            $query .= " LIMIT {$limit} OFFSET {$offset} ";
 
-        $icd9_bulanan = $db->query($query)->getResultArray();
+            $icd9_bulanan = $db->query($query)->getResultArray();
 
-        foreach ($icd9_bulanan as $index => &$data) {
-            $data['number'] = $startNumber + $index;
-        }
+            foreach ($icd9_bulanan as $index => &$data) {
+                $data['number'] = $startNumber + $index;
+            }
 
-        $totalQuery = "
+            $totalQuery = "
         SELECT COUNT(*) as total FROM (
             SELECT icd9_data.bulan FROM ({$icd9_bulanan_subquery}) AS icd9_data 
             JOIN icd_9 ON icd9_data.icd9_kode = icd_9.icdKode
             WHERE icd9_data.bulan LIKE '" . $db->escapeLikeString($bulan) . "%' 
     ";
-        $totalQuery .= " GROUP BY icd9_data.bulan, icd9_data.icd9_kode, icd_9.icdNamaInggris 
+            $totalQuery .= " GROUP BY icd9_data.bulan, icd9_data.icd9_kode, icd_9.icdNamaInggris 
         ) AS count_table ";
 
-        $total = $db->query($totalQuery)->getRowArray()['total'] ?? 0;
+            $total = $db->query($totalQuery)->getRowArray()['total'] ?? 0;
 
-        return $this->response->setJSON([
-            'data' => $icd9_bulanan,
-            'total' => $total,
-            'limit' => $limit,
-            'offset' => $offset
-        ]);
+            return $this->response->setJSON([
+                'data' => $icd9_bulanan,
+                'total' => $total,
+                'limit' => $limit,
+                'offset' => $offset
+            ]);
+        } else {
+            // Jika peran tidak dikenali, kembalikan status 404
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
+        }
     }
 }
