@@ -149,7 +149,8 @@ class Optik extends BaseController
                 'no_rm' => $rawatjalan['no_rm'],
                 'waktu_dibuat' => date('Y-m-d H:i:s')
             ]);
-
+            // Panggil WebSocket untuk update client
+            $this->notify_clients();
             return redirect()->back();
         } else {
             // Menghasilkan exception jika peran tidak diizinkan
@@ -316,10 +317,25 @@ class Optik extends BaseController
                 'waktu_dibuat' => $optik['waktu_dibuat'],
             ];
             $this->OptikModel->save($data);
+            // Panggil WebSocket untuk update client
+            $this->notify_clients();
             return $this->response->setJSON(['success' => true, 'message' => 'Resep kacamata berhasil diperbarui']);
         } else {
             // Jika peran tidak dikenali, lemparkan pengecualian 404
             throw PageNotFoundException::forPageNotFound();
         }
+    }
+
+    public function notify_clients()
+    {
+        $client = \Config\Services::curlrequest();
+        $response = $client->post(env('WS-URL-PHP'), [
+            'json' => []
+        ]);
+
+        return $this->response->setJSON([
+            'status' => 'Notification sent',
+            'response' => json_decode($response->getBody(), true)
+        ]);
     }
 }
