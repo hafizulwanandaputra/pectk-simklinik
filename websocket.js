@@ -3,6 +3,7 @@ const express = require("express");
 
 const WS_PORT = 8090; // WebSocket di port 8090
 const HTTP_PORT = 3000; // HTTP untuk menerima perintah refresh
+const PING_INTERVAL = 30000; // Kirim ping setiap 30 detik
 
 // --------------------------
 // Buat server WebSocket
@@ -55,6 +56,17 @@ function broadcast(message) {
     }
   }
 }
+
+// --------------------------
+// Ping otomatis untuk menjaga koneksi tetap hidup
+// --------------------------
+setInterval(() => {
+  for (let client of clients) {
+    if (client.readyState === WebSocket.OPEN) {
+      client.ping(); // Kirim ping ke klien
+    }
+  }
+}, PING_INTERVAL);
 
 // --------------------------
 // Server HTTP untuk mengirim notifikasi
