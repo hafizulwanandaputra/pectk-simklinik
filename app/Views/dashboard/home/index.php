@@ -220,7 +220,7 @@ $db = db_connect();
                             </div>
                             <div class="card-footer bg-body-tertiary">
                                 <div class="row overflow-hidden d-flex align-items-end">
-                                    <div class="col fw-medium text-nowrap">Total</div>
+                                    <div class="col fw-medium text-nowrap">Total Keseluruhan</div>
                                     <div class="col text-end">
                                         <div class="date text-truncate placeholder-glow fw-bold" id="total_icd_x">
                                             <span class="placeholder w-100"></span>
@@ -259,7 +259,7 @@ $db = db_connect();
                             </div>
                             <div class="card-footer bg-body-tertiary">
                                 <div class="row overflow-hidden d-flex align-items-end">
-                                    <div class="col fw-medium text-nowrap">Total</div>
+                                    <div class="col fw-medium text-nowrap">Total Keseluruhan</div>
                                     <div class="col text-end">
                                         <div class="date text-truncate placeholder-glow fw-bold" id="total_icd_9">
                                             <span class="placeholder w-100"></span>
