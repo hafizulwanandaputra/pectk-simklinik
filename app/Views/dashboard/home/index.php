@@ -203,7 +203,7 @@ $db = db_connect();
                                                 <tr class="align-middle">
                                                     <th scope="col" class="bg-body-secondary border-secondary text-nowrap tindakan" style="border-bottom-width: 2px; width: 0%;">No</th>
                                                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">ICD-10</th>
-                                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Jumlah Kasus</th>
+                                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Kasus</th>
                                                 </tr>
                                             </thead>
                                             <tbody class="align-top" id="view_icd_x">
@@ -242,7 +242,7 @@ $db = db_connect();
                                                 <tr class="align-middle">
                                                     <th scope="col" class="bg-body-secondary border-secondary text-nowrap tindakan" style="border-bottom-width: 2px; width: 0%;">No</th>
                                                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">ICD-10</th>
-                                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Jumlah Tindakan</th>
+                                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Tindakan</th>
                                                 </tr>
                                             </thead>
                                             <tbody class="align-top" id="view_icd_9">
@@ -412,7 +412,7 @@ $db = db_connect();
                 </div>
                 <div class="mb-2">
                     <div class="card bg-primary-subtle border-primary-subtle text-primary-emphasis w-100  shadow-sm">
-                        <div style="font-size: 0.9em;" class="card-header py-1 px-3 border-primary-subtle w-100 text-truncate">Jumlah Pemasukan Keseluruhan</div>
+                        <div style="font-size: 0.9em;" class="card-header py-1 px-3 border-primary-subtle w-100 text-truncate">Total Pemasukan Keseluruhan</div>
                         <div class="card-body py-2 px-3">
                             <h5 class="display-6 fw-medium date mb-0"><?= 'Rp' . number_format($total_pemasukan, 0, ',', '.') ?></h5>
                         </div>
