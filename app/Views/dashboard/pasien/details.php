@@ -1348,7 +1348,6 @@
                 const selectedRuangan = $('#ruanganFilter, #ruangan').val();
                 const selectedDokter = $('#dokterFilter, #dokter').val();
                 const selectedPendaftar = $('#pendaftarFilter').val();
-                await fetchPasien();
                 await Promise.all([
                     fetchJenisKunjunganOptions(selectedJenisKunjungan),
                     fetchJaminanOptions(selectedJaminan),
