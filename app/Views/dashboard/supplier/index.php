@@ -124,7 +124,7 @@
         var table = $('#tabel').DataTable({
             "oLanguage": {
                 "sDecimal": ",",
-                "sEmptyTable": 'Tidak ada supplier. Klik "Tambah Supplier" untuk menambahkan supplier.',
+                "sEmptyTable": 'Tidak ada supplier. Klik "Tambah Pemasok" untuk menambahkan supplier.',
                 "sInfo": "Menampilkan _START_ hingga _END_ dari _TOTAL_ supplier",
                 "sInfoEmpty": "Menampilkan 0 hingga 0 dari 0 supplier",
                 "sInfoFiltered": "(di-filter dari _MAX_ supplier)",
@@ -166,8 +166,8 @@
                 $('#total_datatables').html(infoText);
             },
             'buttons': [{
-                // Tombol Tambah Supplier
-                text: '<i class="fa-solid fa-plus"></i> Tambah Supplier',
+                // Tombol Tambah Pemasok
+                text: '<i class="fa-solid fa-plus"></i> Tambah Pemasok',
                 className: 'btn-primary btn-sm bg-gradient ',
                 attr: {
                     id: 'addSupplierBtn'
