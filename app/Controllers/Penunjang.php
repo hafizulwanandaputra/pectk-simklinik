@@ -309,6 +309,7 @@ class Penunjang extends BaseController
                 'waktu_dibuat' => $penunjang['waktu_dibuat'],
             ];
             $this->PenunjangModel->save($data);
+            $this->notify_clients_submit('update');
             return $this->response->setJSON(['success' => true, 'message' => 'Pemeriksaan penunjang berhasil diperbarui']);
         } else {
             // Jika peran tidak dikenali, lemparkan pengecualian 404
@@ -328,6 +329,26 @@ class Penunjang extends BaseController
         $client = \Config\Services::curlrequest();
         $response = $client->post(env('WS-URL-PHP'), [
             'json' => ['action' => $action]
+        ]);
+    }
+
+    public function notify_clients_submit($action)
+    {
+        if (!in_array($action, ['update', 'delete'])) {
+            return $this->response->setJSON([
+                'status' => 'Invalid action',
+                'error' => 'Action must be either "update" or "delete"'
+            ])->setStatusCode(400);
+        }
+
+        $client = \Config\Services::curlrequest();
+        $response = $client->post(env('WS-URL-PHP'), [
+            'json' => ['action' => $action]
+        ]);
+
+        return $this->response->setJSON([
+            'status' => ucfirst($action) . ' notification sent',
+            'response' => json_decode($response->getBody(), true)
         ]);
     }
 }
