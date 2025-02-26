@@ -106,9 +106,9 @@
                     <input type="hidden" id="id_obat" name="id_obat">
                     <div class="form-floating mt-1 mb-1">
                         <select class="form-select " id="id_supplier" name="id_supplier" aria-label="id_supplier">
-                            <option value="" disabled selected>-- Pilih Merek dan Supplier --</option>
+                            <option value="" disabled selected>-- Pilih Merek dan Pemasok --</option>
                         </select>
-                        <label for="id_dokter">Merek dan Supplier</label>
+                        <label for="id_dokter">Merek dan Pemasok</label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
