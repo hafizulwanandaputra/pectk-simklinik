@@ -191,7 +191,6 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
         :root {
             --bs-font-sans-serif: "Noto Sans", "Noto Sans Arabic", system-ui, -apple-system, "Helvetica Neue", Arial, "Liberation Sans", sans-serif;
             --bs-font-monospace: "Noto Sans Mono", Menlo, Monaco, Consolas, "Courier New", "Liberation Mono", monospace;
-            font-feature-settings: "ss04";
             --gold: #ffe680;
             /* Emas lebih terang */
             --silver: #bfbfbf;
@@ -250,7 +249,6 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
 
         .date {
             font-variant-numeric: tabular-nums;
-            font-feature-settings: "ss04";
         }
 
         html,

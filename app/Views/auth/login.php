@@ -141,7 +141,6 @@
         :root {
             --bs-font-sans-serif: "Noto Sans", "Noto Sans Arabic", system-ui, -apple-system, "Helvetica Neue", Arial, "Liberation Sans", sans-serif;
             --bs-font-monospace: "Noto Sans Mono", Menlo, Monaco, Consolas, "Courier New", "Liberation Mono", monospace;
-            font-feature-settings: "ss04";
         }
 
         html,
@@ -168,7 +167,6 @@
 
         .date {
             font-variant-numeric: tabular-nums;
-            font-feature-settings: "ss04";
         }
 
         html,
