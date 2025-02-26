@@ -4,7 +4,7 @@
     <div class="flex-fill text-truncate">
         <div class="d-flex flex-column">
             <div class="fw-medium fs-6 lh-sm"><?= $headertitle; ?></div>
-            <div class="fw-medium lh-sm" style="font-size: 0.75em;"><span id="total_datatables">0</span> supplier</div>
+            <div class="fw-medium lh-sm" style="font-size: 0.75em;"><span id="total_datatables">0</span> pemasok</div>
         </div>
     </div>
     <div id="loadingSpinner" class="spinner-border spinner-border-sm mx-2" role="status" style="min-width: 1rem;">
@@ -322,7 +322,7 @@
 
         // Tampilkan modal tambah supplier
         $('#addSupplierBtn').click(function() {
-            $('#supplierModalLabel').text('Tambah Supplier');
+            $('#supplierModalLabel').text('Tambah Pemasok');
             $('#supplierModal').modal('show');
         });
 
@@ -340,7 +340,7 @@
 
             try {
                 const response = await axios.get(`<?= base_url('/supplier/supplier') ?>/${id}`);
-                $('#supplierModalLabel').text('Edit Supplier');
+                $('#supplierModalLabel').text('Edit Pemasok');
                 $('#id_supplier').val(response.data.id_supplier);
                 $('#nama_supplier').val(response.data.nama_supplier);
                 $('#merek').val(response.data.merek);
@@ -364,7 +364,7 @@
             supplierName = $(this).data('name');
             $('[data-bs-toggle="tooltip"]').tooltip('hide');
             $('#deleteMessage').html(`Hapus "` + supplierName + `"?`);
-            $('#deleteSubmessage').html(`Supplier tidak dapat dihapus jika ada obat yang berasal dari supplier ini!`);
+            $('#deleteSubmessage').html(`Pemasok tidak dapat dihapus jika ada obat yang berasal dari supplier ini!`);
             $('#deleteModal').modal('show');
         });
 

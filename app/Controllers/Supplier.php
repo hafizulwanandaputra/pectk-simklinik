@@ -20,8 +20,8 @@ class Supplier extends BaseController
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
             // Menyiapkan data untuk tampilan halaman supplier
             $data = [
-                'title' => 'Supplier - ' . $this->systemName, // Judul halaman
-                'headertitle' => 'Supplier', // Judul header
+                'title' => 'Pemasok - ' . $this->systemName, // Judul halaman
+                'headertitle' => 'Pemasok', // Judul header
                 'agent' => $this->request->getUserAgent() // Mengambil informasi user agent
             ];
             return view('dashboard/supplier/index', $data); // Mengembalikan tampilan halaman supplier
@@ -149,7 +149,7 @@ class Supplier extends BaseController
             $this->SupplierModel->save($data); // Menyimpan data ke database
             // Panggil WebSocket untuk update client
             $this->notify_clients();
-            return $this->response->setJSON(['success' => true, 'message' => 'Supplier berhasil ditambahkan']); // Mengembalikan pesan sukses
+            return $this->response->setJSON(['success' => true, 'message' => 'Pemasok berhasil ditambahkan']); // Mengembalikan pesan sukses
         } else {
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan', // Pesan jika peran tidak valid
@@ -185,7 +185,7 @@ class Supplier extends BaseController
             $this->SupplierModel->save($data); // Menyimpan data ke database
             // Panggil WebSocket untuk update client
             $this->notify_clients();
-            return $this->response->setJSON(['success' => true, 'message' => 'Supplier berhasil diedit']); // Mengembalikan pesan sukses
+            return $this->response->setJSON(['success' => true, 'message' => 'Pemasok berhasil diedit']); // Mengembalikan pesan sukses
         } else {
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan', // Pesan jika peran tidak valid
@@ -204,7 +204,7 @@ class Supplier extends BaseController
                 // Panggil WebSocket untuk update client
                 $this->notify_clients();
                 $db->query('ALTER TABLE `supplier` auto_increment = 1'); // Mengatur auto increment
-                return $this->response->setJSON(['message' => 'Supplier berhasil dihapus']); // Mengembalikan pesan sukses
+                return $this->response->setJSON(['message' => 'Pemasok berhasil dihapus']); // Mengembalikan pesan sukses
             } catch (DatabaseException $e) {
                 // Mencatat pesan kesalahan
                 log_message('error', $e->getMessage());
