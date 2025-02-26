@@ -343,7 +343,7 @@ class RawatJalan extends BaseController
             ];
             $this->RawatJalanModel->insert($data);
             // Panggil WebSocket untuk update client
-            $this->notify_clients();
+            $this->notify_clients('update');
             return $this->response->setJSON(['success' => true, 'message' => 'Rawat jalan berhasil diregistrasi']);
         } else {
             // Jika peran tidak dikenali, lemparkan pengecualian 404
@@ -522,7 +522,7 @@ class RawatJalan extends BaseController
                 $db->query('ALTER TABLE medrec_keterangan_sakit_mata AUTO_INCREMENT = 1');
                 $db->query('ALTER TABLE medrec_keterangan_istirahat AUTO_INCREMENT = 1');
 
-                $this->notify_clients();
+                $this->notify_clients('delete');
                 return $this->response->setJSON(['success' => true, 'message' => 'Rawat jalan berhasil dihapus karena kesalahan data']);
             }
 
@@ -535,7 +535,7 @@ class RawatJalan extends BaseController
                     'pembatal' => session()->get('fullname')
                 ]);
             // Panggil WebSocket untuk update client
-            $this->notify_clients();
+            $this->notify_clients('update');
             return $this->response->setJSON(['success' => true, 'message' => 'Rawat jalan berhasil dibatalkan']);
         } else {
             // Jika peran tidak dikenali, lemparkan pengecualian 404
@@ -543,15 +543,22 @@ class RawatJalan extends BaseController
         }
     }
 
-    public function notify_clients()
+    public function notify_clients($action)
     {
+        if (!in_array($action, ['update', 'delete'])) {
+            return $this->response->setJSON([
+                'status' => 'Invalid action',
+                'error' => 'Action must be either "update" or "delete"'
+            ])->setStatusCode(400);
+        }
+
         $client = \Config\Services::curlrequest();
         $response = $client->post(env('WS-URL-PHP'), [
-            'json' => []
+            'json' => ['action' => $action]
         ]);
 
         return $this->response->setJSON([
-            'status' => 'Notification sent',
+            'status' => ucfirst($action) . ' notification sent',
             'response' => json_decode($response->getBody(), true)
         ]);
     }

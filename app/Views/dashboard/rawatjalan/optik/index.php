@@ -441,6 +441,11 @@ $usia = $registrasi->diff($tanggal_lahir);
                 console.log("Received update from WebSocket");
                 fetchOptik();
             }
+
+            if (data.delete) {
+                console.log("Received delete from WebSocket, refreshing...");
+                location.reload();
+            }
         };
 
         socket.onclose = () => {

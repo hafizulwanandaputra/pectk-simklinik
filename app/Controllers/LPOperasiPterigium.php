@@ -191,7 +191,7 @@ class LPOperasiPterigium extends BaseController
             ];
             $db->table('medrec_lp_operasi_pterigium')->insert($data);
             // Panggil WebSocket untuk update client
-            $this->notify_clients();
+            $this->notify_clients('update');
             return $this->response->setJSON(['success' => true, 'message' => 'Laporan operasi pterigium berhasil ditambahkan']); // Mengembalikan respon sukses
         } else {
             return $this->response->setStatusCode(404)->setJSON([
@@ -285,7 +285,7 @@ class LPOperasiPterigium extends BaseController
                 // Reset auto increment
                 $db->query('ALTER TABLE `medrec_lp_operasi_pterigium` auto_increment = 1');
                 // Panggil WebSocket untuk update client
-                $this->notify_clients();
+                $this->notify_clients('delete');
                 return $this->response->setJSON(['message' => 'Laporan operasi pterigium berhasil dihapus']); // Mengembalikan respon sukses
             } else {
                 return $this->response->setStatusCode(404)->setJSON([
@@ -503,7 +503,7 @@ class LPOperasiPterigium extends BaseController
             ];
             $db->table('medrec_lp_operasi_pterigium')->where('id_lp_operasi_pterigium', $id)->update($data);
             // Panggil WebSocket untuk update client
-            $this->notify_clients();
+            $this->notify_clients('update');
             return $this->response->setJSON(['success' => true, 'message' => 'Laporan operasi pterigium berhasil diperbarui']); // Mengembalikan respon sukses
         } else {
             return $this->response->setStatusCode(404)->setJSON([
@@ -512,15 +512,22 @@ class LPOperasiPterigium extends BaseController
         }
     }
 
-    public function notify_clients()
+    public function notify_clients($action)
     {
+        if (!in_array($action, ['update', 'delete'])) {
+            return $this->response->setJSON([
+                'status' => 'Invalid action',
+                'error' => 'Action must be either "update" or "delete"'
+            ])->setStatusCode(400);
+        }
+
         $client = \Config\Services::curlrequest();
         $response = $client->post(env('WS-URL-PHP'), [
-            'json' => []
+            'json' => ['action' => $action]
         ]);
 
         return $this->response->setJSON([
-            'status' => 'Notification sent',
+            'status' => ucfirst($action) . ' notification sent',
             'response' => json_decode($response->getBody(), true)
         ]);
     }

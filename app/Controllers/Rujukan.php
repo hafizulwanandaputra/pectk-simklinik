@@ -189,7 +189,7 @@ class Rujukan extends BaseController
             ];
             $db->table('medrec_rujukan')->insert($data);
             // Panggil WebSocket untuk update client
-            $this->notify_clients();
+            $this->notify_clients('update');
             return $this->response->setJSON(['success' => true, 'message' => 'Surat rujukan berhasil ditambahkan']); // Mengembalikan respon sukses
         } else {
             return $this->response->setStatusCode(404)->setJSON([
@@ -283,7 +283,7 @@ class Rujukan extends BaseController
                 // Reset auto increment
                 $db->query('ALTER TABLE `medrec_rujukan` auto_increment = 1');
                 // Panggil WebSocket untuk update client
-                $this->notify_clients();
+                $this->notify_clients('delete');
                 return $this->response->setJSON(['message' => 'Surat rujukan berhasil dihapus']); // Mengembalikan respon sukses
             } else {
                 return $this->response->setStatusCode(404)->setJSON([
@@ -411,7 +411,7 @@ class Rujukan extends BaseController
             ];
             $db->table('medrec_rujukan')->where('id_rujukan', $id)->update($data);
             // Panggil WebSocket untuk update client
-            $this->notify_clients();
+            $this->notify_clients('update');
             return $this->response->setJSON(['success' => true, 'message' => 'Surat rujukan berhasil diperbarui']); // Mengembalikan respon sukses
         } else {
             return $this->response->setStatusCode(404)->setJSON([
@@ -420,15 +420,22 @@ class Rujukan extends BaseController
         }
     }
 
-    public function notify_clients()
+    public function notify_clients($action)
     {
+        if (!in_array($action, ['update', 'delete'])) {
+            return $this->response->setJSON([
+                'status' => 'Invalid action',
+                'error' => 'Action must be either "update" or "delete"'
+            ])->setStatusCode(400);
+        }
+
         $client = \Config\Services::curlrequest();
         $response = $client->post(env('WS-URL-PHP'), [
-            'json' => []
+            'json' => ['action' => $action]
         ]);
 
         return $this->response->setJSON([
-            'status' => 'Notification sent',
+            'status' => ucfirst($action) . ' notification sent',
             'response' => json_decode($response->getBody(), true)
         ]);
     }

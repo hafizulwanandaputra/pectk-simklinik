@@ -780,6 +780,11 @@
                 fetchStatusTransaksi();
                 transactionProcessBtn();
             }
+
+            if (data.delete) {
+                console.log("Received delete from WebSocket, going back...");
+                location.href = `<?= base_url('/transaksi'); ?>`;
+            }
         };
 
         socket.onclose = () => {

@@ -376,6 +376,25 @@ $usia = $registrasi->diff($tanggal_lahir);
     }
 
     $(document).ready(async function() {
+        const socket = new WebSocket('<?= env('WS-URL-JS') ?>'); // Ganti dengan domain VPS
+
+        socket.onopen = () => {
+            console.log("Connected to WebSocket server");
+        };
+
+        socket.onmessage = async function(event) {
+            const data = JSON.parse(event.data);
+
+            if (data.delete) {
+                console.log("Received delete from WebSocket, going back...");
+                location.href = `<?= base_url('/operasi'); ?>`;
+            }
+        };
+
+        socket.onclose = () => {
+            console.log("Disconnected from WebSocket server");
+        };
+
         $('#jenis_tindakan').select2({
             theme: "bootstrap-5",
             width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',

@@ -52,6 +52,8 @@ class Edukasi extends BaseController
                     'waktu_dibuat' => date('Y-m-d H:i:s')
                 ]);
 
+                $this->notify_clients('update');
+
                 // Setelah edukasi dibuat, ambil kembali data edukasi menggunakan query builder
                 $edukasi = $db->table('medrec_edukasi')
                     ->where('nomor_registrasi', $rawatjalan['nomor_registrasi'])
@@ -288,5 +290,20 @@ class Edukasi extends BaseController
             // Jika peran tidak dikenali, lemparkan pengecualian 404
             throw PageNotFoundException::forPageNotFound();
         }
+    }
+
+    public function notify_clients($action)
+    {
+        if (!in_array($action, ['update', 'delete'])) {
+            return $this->response->setJSON([
+                'status' => 'Invalid action',
+                'error' => 'Action must be either "update" or "delete"'
+            ])->setStatusCode(400);
+        }
+
+        $client = \Config\Services::curlrequest();
+        $response = $client->post(env('WS-URL-PHP'), [
+            'json' => ['action' => $action]
+        ]);
     }
 }

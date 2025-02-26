@@ -251,7 +251,7 @@ class ResepDokter extends BaseController
             // Menyimpan data resep ke dalam model
             $this->ResepModel->save($data);
             // Panggil WebSocket untuk update client
-            $this->notify_clients();
+            $this->notify_clients('update');
             return $this->response->setJSON(['success' => true, 'message' => 'Resep berhasil ditambahkan']);
         } else {
             // Mengembalikan status 404 jika peran tidak diizinkan
@@ -326,7 +326,7 @@ class ResepDokter extends BaseController
             WHERE id_transaksi = ?", [$total_pembayaran, $id_transaksi]);
             }
             // Panggil WebSocket untuk update client
-            $this->notify_clients();
+            $this->notify_clients('delete');
             return $this->response->setJSON(['message' => 'Resep berhasil dihapus']); // Mengembalikan pesan sukses
         } else {
             // Mengembalikan status 404 jika peran tidak diizinkan
@@ -623,7 +623,7 @@ class ResepDokter extends BaseController
             } else {
                 $db->transCommit();
                 // Panggil WebSocket untuk update client
-                $this->notify_clients();
+                $this->notify_clients('update');
                 return $this->response->setJSON(['success' => true, 'message' => 'Item resep berhasil ditambahkan']);
             }
         } else {
@@ -759,7 +759,7 @@ class ResepDokter extends BaseController
             } else {
                 $db->transCommit();
                 // Panggil WebSocket untuk update client
-                $this->notify_clients();
+                $this->notify_clients('update');
                 return $this->response->setJSON(['success' => true, 'message' => 'Item resep berhasil diperbarui']);
             }
         } else {
@@ -858,7 +858,7 @@ class ResepDokter extends BaseController
                 $builderTransaksiDetail = $db->table('detail_transaksi');
                 $builderTransaksiDetail->where('id_resep', $id_resep)->delete();
                 // Panggil WebSocket untuk update client
-                $this->notify_clients();
+                $this->notify_clients('update');
                 return $this->response->setJSON(['message' => 'Item resep berhasil dihapus']);
             }
 
@@ -903,7 +903,7 @@ class ResepDokter extends BaseController
                 'confirmed' => 1, // Atur sebagai dikonfirmasi
             ]);
             // Panggil WebSocket untuk update client
-            $this->notify_clients();
+            $this->notify_clients('update');
             return $this->response->setJSON(['success' => true, 'message' => 'Resep berhasil dikonfirmasi dan sudah dapat diproses oleh apoteker']);
         } else {
             // Jika peran tidak valid, kembalikan status 404
@@ -945,7 +945,7 @@ class ResepDokter extends BaseController
                 'confirmed' => 0, // Atur sebagai tidak dikonfirmasi
             ]);
             // Panggil WebSocket untuk update client
-            $this->notify_clients();
+            $this->notify_clients('update');
             return $this->response->setJSON(['success' => true, 'message' => 'Resep berhasil dibatalkan konfirmasinya']);
         } else {
             // Jika peran tidak valid, kembalikan status 404
@@ -1178,15 +1178,22 @@ class ResepDokter extends BaseController
         }
     }
 
-    public function notify_clients()
+    public function notify_clients($action)
     {
+        if (!in_array($action, ['update', 'delete'])) {
+            return $this->response->setJSON([
+                'status' => 'Invalid action',
+                'error' => 'Action must be either "update" or "delete"'
+            ])->setStatusCode(400);
+        }
+
         $client = \Config\Services::curlrequest();
         $response = $client->post(env('WS-URL-PHP'), [
-            'json' => []
+            'json' => ['action' => $action]
         ]);
 
         return $this->response->setJSON([
-            'status' => 'Notification sent',
+            'status' => ucfirst($action) . ' notification sent',
             'response' => json_decode($response->getBody(), true)
         ]);
     }

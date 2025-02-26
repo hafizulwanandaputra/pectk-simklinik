@@ -419,11 +419,17 @@ $usia = $registrasi->diff($tanggal_lahir);
 
         socket.onmessage = async function(event) {
             const data = JSON.parse(event.data);
+
             if (data.update) {
                 console.log("Received update from WebSocket");
                 fetchDetailResep();
                 fetchObatOptions();
                 fetchStatusResep();
+            }
+
+            if (data.delete) {
+                console.log("Received delete from WebSocket, refreshing...");
+                location.reload();
             }
         };
 

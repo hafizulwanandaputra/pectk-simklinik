@@ -828,10 +828,32 @@ class Settings extends BaseController
                 $db->query($query2);
             }
 
+            // Panggil WebSocket untuk update client
+            $this->notify_clients('delete');
             return $this->response->setJSON(['success' => true, 'message' => 'Data rekam medis yang kosong berhasil dihapus']);
         } else {
             // Jika bukan admin, mengembalikan status 404 dengan pesan error
             throw PageNotFoundException::forPageNotFound();
         }
+    }
+
+    public function notify_clients($action)
+    {
+        if (!in_array($action, ['update', 'delete'])) {
+            return $this->response->setJSON([
+                'status' => 'Invalid action',
+                'error' => 'Action must be either "update" or "delete"'
+            ])->setStatusCode(400);
+        }
+
+        $client = \Config\Services::curlrequest();
+        $response = $client->post(env('WS-URL-PHP'), [
+            'json' => ['action' => $action]
+        ]);
+
+        return $this->response->setJSON([
+            'status' => ucfirst($action) . ' notification sent',
+            'response' => json_decode($response->getBody(), true)
+        ]);
     }
 }

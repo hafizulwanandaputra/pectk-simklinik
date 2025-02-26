@@ -484,7 +484,7 @@
 
         socket.onmessage = async function(event) {
             const data = JSON.parse(event.data);
-            if (data.update) {
+            if (data.update || data.delete) {
                 console.log("Received update from WebSocket");
                 <?= (session()->get('role') != 'Admisi') ? 'fetchPasienOptions();' : ''; ?>;
                 fetchSurat();

@@ -74,14 +74,21 @@ setInterval(() => {
 const app = express();
 app.use(express.json());
 
-// Endpoint untuk memicu update data di klien
+// Endpoint untuk memicu update atau hapus data di klien
 app.post("/notify", (req, res) => {
-  console.log("📢 Received update request");
+  const { action = "update" } = req.body; // Default ke "update" jika action tidak diberikan
 
-  // Kirim perintah `update: true` ke semua klien
-  broadcast({ update: true });
+  console.log(`📢 Received ${action} request`);
 
-  res.json({ status: "Update triggered" });
+  if (action === "update") {
+    broadcast({ update: true });
+  } else if (action === "delete") {
+    broadcast({ delete: true });
+  } else {
+    return res.status(400).json({ status: "Invalid action" });
+  }
+
+  res.json({ status: `${action} triggered` });
 });
 
 // Jalankan server HTTP

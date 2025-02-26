@@ -256,6 +256,24 @@
     <?php endif; ?>
     $(document).ready(function() {
         <?php if (session()->get('role') == "Admin") : ?>
+            const socket = new WebSocket('<?= env('WS-URL-JS') ?>'); // Ganti dengan domain VPS
+
+            socket.onopen = () => {
+                console.log("Connected to WebSocket server");
+            };
+
+            socket.onmessage = async function(event) {
+                const data = JSON.parse(event.data);
+                if (data.update || data.delete) {
+                    console.log("Received update from WebSocket");
+                    LoadEmptyRecords();
+                }
+            };
+
+            socket.onclose = () => {
+                console.log("Disconnected from WebSocket server");
+            };
+
             $('#refreshEmptyMRData').click(function() {
                 LoadEmptyRecords();
             });

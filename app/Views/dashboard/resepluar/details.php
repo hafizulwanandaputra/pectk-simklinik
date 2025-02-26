@@ -386,6 +386,11 @@
                 fetchObatOptions();
                 fetchStatusResep();
             }
+
+            if (data.delete) {
+                console.log("Received delete from WebSocket, going back...");
+                location.href = `<?= base_url('/resepluar'); ?>`;
+            }
         };
 
         socket.onclose = () => {

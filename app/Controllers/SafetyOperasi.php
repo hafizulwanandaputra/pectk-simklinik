@@ -76,6 +76,8 @@ class SafetyOperasi extends BaseController
                     'waktu_dibuat' => date('Y-m-d H:i:s')
                 ]);
 
+                $this->notify_clients('update');
+
                 // Setelah asesmen dibuat, ambil kembali data asesmen menggunakan query builder
                 $operasi_safety_timeout = $db->table('medrec_operasi_safety_timeout')
                     ->where('nomor_booking', $sp_operasi['nomor_booking'])
@@ -639,5 +641,20 @@ class SafetyOperasi extends BaseController
         } else {
             return $this->response->setStatusCode(404)->setJSON(['error' => 'Halaman tidak ditemukan']);
         }
+    }
+
+    public function notify_clients($action)
+    {
+        if (!in_array($action, ['update', 'delete'])) {
+            return $this->response->setJSON([
+                'status' => 'Invalid action',
+                'error' => 'Action must be either "update" or "delete"'
+            ])->setStatusCode(400);
+        }
+
+        $client = \Config\Services::curlrequest();
+        $response = $client->post(env('WS-URL-PHP'), [
+            'json' => ['action' => $action]
+        ]);
     }
 }

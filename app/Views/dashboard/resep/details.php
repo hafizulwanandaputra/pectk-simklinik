@@ -324,6 +324,11 @@
                 fetchStatusKonfirmasi();
                 fetchDetailResep();
             }
+
+            if (data.delete) {
+                console.log("Received delete from WebSocket, going back...");
+                location.href = `<?= base_url('/resep'); ?>`;
+            }
         };
 
         socket.onclose = () => {

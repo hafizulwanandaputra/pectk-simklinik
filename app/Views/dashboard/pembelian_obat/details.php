@@ -428,6 +428,11 @@
                 fetchObatOptions();
                 fetchStatusPembelian();
             }
+
+            if (data.delete) {
+                console.log("Received delete from WebSocket, going back...");
+                location.href = `<?= base_url('/pembelianobat'); ?>`;
+            }
         };
 
         socket.onclose = () => {
