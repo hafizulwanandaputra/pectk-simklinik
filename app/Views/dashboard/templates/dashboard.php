@@ -230,7 +230,6 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
         input,
         select,
         button {
-            font-feature-settings: "ss04";
             font-variant-numeric: proportional-nums;
         }
 

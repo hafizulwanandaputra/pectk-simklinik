@@ -148,7 +148,6 @@
         input,
         select,
         button {
-            font-feature-settings: "ss04";
             font-variant-numeric: proportional-nums;
         }
 
