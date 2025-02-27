@@ -279,7 +279,7 @@ $db = db_connect();
                     <?php if (session()->get('role') != "Dokter") : ?>
                         <div class="col">
                             <div class="card bg-body-tertiary w-100  shadow-sm">
-                                <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Supplier</div>
+                                <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Pemasok</div>
                                 <div class="card-body py-2 px-3">
                                     <h5 class="display-6 fw-medium date mb-0"><?= number_format($total_supplier, 0, ',', '.') ?></h5>
                                 </div>
