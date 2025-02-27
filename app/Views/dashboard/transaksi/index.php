@@ -49,11 +49,11 @@
                     </div>
                     <div class="accordion" id="accordionFilter">
                         <div class="accordion-item">
-                            <h2 class="accordion-header">
+                            <div class="accordion-header lh-1">
                                 <button class="accordion-button p-2 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFilter" aria-expanded="false" aria-controls="collapseFilter">
                                     Pencarian Tambahan
                                 </button>
-                            </h2>
+                            </div>
                             <div id="collapseFilter" class="accordion-collapse collapse" data-bs-parent="#accordionFilter">
                                 <div class="accordion-body px-2 py-1">
                                     <div class="d-flex flex-column flex-lg-row mb-1 gap-1 my-1">
