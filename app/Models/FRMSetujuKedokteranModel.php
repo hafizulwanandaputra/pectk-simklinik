@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class FRMSetujuModel extends Model
+class FRMSetujuKedokteranModel extends Model
 {
     protected $table = 'medrec_form_persetujuan_tindakan';
     protected $primaryKey = 'id_form_persetujuan_tindakan';

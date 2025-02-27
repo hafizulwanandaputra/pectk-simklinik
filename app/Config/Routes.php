@@ -199,17 +199,17 @@ $routes->get('/(?i)lpoperasi/(?i)export/(:any)', 'LPOperasi::export/$1');
 $routes->post('/(?i)lpoperasi/(?i)update/(:any)', 'LPOperasi::update/$1');
 $routes->delete('/(?i)lpoperasi/(?i)delete/(:any)', 'LPOperasi::delete/$1');
 
-// FORM PERSETUJUAN
-$routes->get('/(?i)frmsetuju', 'FRMSetuju::index');
-$routes->get('/(?i)frmsetuju/frmsetujulist', 'FRMSetuju::frmsetujulist');
-$routes->get('/(?i)frmsetuju/pasienlist', 'FRMSetuju::pasienlist');
-$routes->get('/(?i)frmsetuju/(:num)', 'FRMSetuju::details/$1');
-$routes->post('/(?i)frmsetuju/(?i)create', 'FRMSetuju::create');
-$routes->get('/(?i)frmsetuju/(?i)details/(:any)', 'FRMSetuju::details/$1');
-$routes->get('/(?i)frmsetuju/(?i)view/(:any)', 'FRMSetuju::view/$1');
-$routes->get('/(?i)frmsetuju/(?i)export/(:any)', 'FRMSetuju::export/$1');
-$routes->post('/(?i)frmsetuju/(?i)update/(:any)', 'FRMSetuju::update/$1');
-$routes->delete('/(?i)frmsetuju/(?i)delete/(:any)', 'FRMSetuju::delete/$1');
+// FORM PERSETUJUAN TINDAKAN KEDOKTERAN
+$routes->get('/(?i)frmsetujukedokteran', 'FRMSetujuKedokteran::index');
+$routes->get('/(?i)frmsetujukedokteran/frmsetujukedokteranlist', 'FRMSetujuKedokteran::frmsetujukedokteranlist');
+$routes->get('/(?i)frmsetujukedokteran/pasienlist', 'FRMSetujuKedokteran::pasienlist');
+$routes->get('/(?i)frmsetujukedokteran/(:num)', 'FRMSetujuKedokteran::details/$1');
+$routes->post('/(?i)frmsetujukedokteran/(?i)create', 'FRMSetujuKedokteran::create');
+$routes->get('/(?i)frmsetujukedokteran/(?i)details/(:any)', 'FRMSetujuKedokteran::details/$1');
+$routes->get('/(?i)frmsetujukedokteran/(?i)view/(:any)', 'FRMSetujuKedokteran::view/$1');
+$routes->get('/(?i)frmsetujukedokteran/(?i)export/(:any)', 'FRMSetujuKedokteran::export/$1');
+$routes->post('/(?i)frmsetujukedokteran/(?i)update/(:any)', 'FRMSetujuKedokteran::update/$1');
+$routes->delete('/(?i)frmsetujukedokteran/(?i)delete/(:any)', 'FRMSetujuKedokteran::delete/$1');
 
 // SURAT RUJUKAN
 $routes->get('/(?i)rujukan', 'Rujukan::index');

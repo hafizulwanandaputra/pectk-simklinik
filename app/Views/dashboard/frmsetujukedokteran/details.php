@@ -50,7 +50,7 @@ $usia = $registrasi->diff($tanggal_lahir);
 <?= $this->endSection(); ?>
 <?= $this->section('title'); ?>
 <div class="d-flex justify-content-start align-items-center">
-    <a class="fs-5 me-3 text-success-emphasis" href="<?= base_url('/frmsetuju'); ?>"><i class="fa-solid fa-arrow-left"></i></a>
+    <a class="fs-5 me-3 text-success-emphasis" href="<?= base_url('/frmsetujukedokteran'); ?>"><i class="fa-solid fa-arrow-left"></i></a>
     <div class="flex-fill text-truncate">
         <div class="d-flex flex-column">
             <div class="fw-medium fs-6 lh-sm"><?= $headertitle; ?></div>
@@ -61,12 +61,12 @@ $usia = $registrasi->diff($tanggal_lahir);
         <span class="visually-hidden">Loading...</span>
     </div>
     <?php if ($previous): ?>
-        <a class="fs-6 mx-2 text-success-emphasis" href="<?= site_url('frmsetuju/details/' . $previous['id_form_persetujuan_tindakan']) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="<?= $previous['nomor_registrasi']; ?> • <?= $previous['no_rm'] ?> • <?= $previous['nama_pasien']; ?>"><i class="fa-solid fa-circle-arrow-left"></i></a>
+        <a class="fs-6 mx-2 text-success-emphasis" href="<?= site_url('frmsetujukedokteran/details/' . $previous['id_form_persetujuan_tindakan']) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="<?= $previous['nomor_registrasi']; ?> • <?= $previous['no_rm'] ?> • <?= $previous['nama_pasien']; ?>"><i class="fa-solid fa-circle-arrow-left"></i></a>
     <?php else: ?>
         <span class="fs-6 mx-2 text-success-emphasis" style="cursor: no-drop; opacity: .5;" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Tidak ada laporan operasi sebelumnya"><i class="fa-solid fa-circle-arrow-left"></i></span>
     <?php endif; ?>
     <?php if ($next): ?>
-        <a class="fs-6 mx-2 text-success-emphasis" href="<?= site_url('frmsetuju/details/' . $next['id_form_persetujuan_tindakan']) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="<?= $next['nomor_registrasi']; ?> • <?= $next['no_rm'] ?> • <?= $next['nama_pasien']; ?>"><i class="fa-solid fa-circle-arrow-right"></i></a>
+        <a class="fs-6 mx-2 text-success-emphasis" href="<?= site_url('frmsetujukedokteran/details/' . $next['id_form_persetujuan_tindakan']) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="<?= $next['nomor_registrasi']; ?> • <?= $next['no_rm'] ?> • <?= $next['nama_pasien']; ?>"><i class="fa-solid fa-circle-arrow-right"></i></a>
     <?php else: ?>
         <span class="fs-6 mx-2 text-success-emphasis" style="cursor: no-drop; opacity: .5;" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Tidak ada laporan operasi berikutnya"><i class="fa-solid fa-circle-arrow-right"></i></span>
     <?php endif; ?>
@@ -81,7 +81,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <div class="no-fluid-content">
                     <nav class="nav nav-underline flex-nowrap overflow-auto">
                         <?php foreach ($listRawatJalan as $list) : ?>
-                            <a class="<?= (date('Y-m-d', strtotime($list['tanggal_registrasi'])) != date('Y-m-d')) ? 'text-danger' : ''; ?> nav-link py-1 <?= ($activeSegment === $list['id_form_persetujuan_tindakan']) ? 'active activeLink' : '' ?>" href="<?= base_url('frmsetuju/details/' . $list['id_form_persetujuan_tindakan']); ?>">
+                            <a class="<?= (date('Y-m-d', strtotime($list['tanggal_registrasi'])) != date('Y-m-d')) ? 'text-danger' : ''; ?> nav-link py-1 <?= ($activeSegment === $list['id_form_persetujuan_tindakan']) ? 'active activeLink' : '' ?>" href="<?= base_url('frmsetujukedokteran/details/' . $list['id_form_persetujuan_tindakan']); ?>">
                                 <div class="text-center">
                                     <div class="text-nowrap lh-sm"><?= $list['nomor_registrasi']; ?></div>
                                     <div class="text-nowrap lh-sm" style="font-size: 0.75em;"><?= $list['tanggal_registrasi'] ?></div>
@@ -95,7 +95,7 @@ $usia = $registrasi->diff($tanggal_lahir);
     </div>
     <div class="px-3 mt-3">
         <div class="no-fluid-content">
-            <?= form_open_multipart('frmsetuju/update/' . $form_persetujuan_tindakan['id_form_persetujuan_tindakan'], 'id="FormulirForm"'); ?>
+            <?= form_open_multipart('frmsetujukedokteran/update/' . $form_persetujuan_tindakan['id_form_persetujuan_tindakan'], 'id="FormulirForm"'); ?>
             <?= csrf_field(); ?>
             <?php if (date('Y-m-d', strtotime($form_persetujuan_tindakan['tanggal_registrasi'])) != date('Y-m-d')) : ?>
                 <div id="alert-date" class="alert alert-warning alert-dismissible" role="alert">
@@ -343,7 +343,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             <div>
                 <hr>
                 <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-3">
-                    <button class="btn btn-body  bg-gradient" type="button" onclick="window.open(`<?= base_url('frmsetuju/export/' . $form_persetujuan_tindakan['id_form_persetujuan_tindakan']) ?>`)"><i class="fa-solid fa-print"></i> Cetak Form</button>
+                    <button class="btn btn-body  bg-gradient" type="button" onclick="window.open(`<?= base_url('frmsetujukedokteran/export/' . $form_persetujuan_tindakan['id_form_persetujuan_tindakan']) ?>`)"><i class="fa-solid fa-print"></i> Cetak Form</button>
                     <button class="btn btn-primary bg-gradient" type="submit" id="submitBtn"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
                 </div>
             </div>
@@ -358,7 +358,7 @@ $usia = $registrasi->diff($tanggal_lahir);
         $('#loadingSpinner').show();
 
         try {
-            const response = await axios.get('<?= base_url('frmsetuju/view/') . $form_persetujuan_tindakan['id_form_persetujuan_tindakan'] ?>');
+            const response = await axios.get('<?= base_url('frmsetujukedokteran/view/') . $form_persetujuan_tindakan['id_form_persetujuan_tindakan'] ?>');
             const data = response.data;
 
             $('#dokter_pelaksana').val(data.dokter_pelaksana);
@@ -409,7 +409,7 @@ $usia = $registrasi->diff($tanggal_lahir);
 
             if (data.delete) {
                 console.log("Received delete from WebSocket, going back...");
-                location.href = `<?= base_url('/frmsetuju'); ?>`;
+                location.href = `<?= base_url('/frmsetujukedokteran'); ?>`;
             }
         };
 
@@ -444,7 +444,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             $('#cancel_changes').hide();
 
             try {
-                const response = await axios.post(`<?= base_url('frmsetuju/update/' . $form_persetujuan_tindakan['id_form_persetujuan_tindakan']) ?>`, formData, {
+                const response = await axios.post(`<?= base_url('frmsetujukedokteran/update/' . $form_persetujuan_tindakan['id_form_persetujuan_tindakan']) ?>`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }

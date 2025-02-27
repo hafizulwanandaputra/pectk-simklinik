@@ -221,7 +221,7 @@
     <?php if (session()->get('role') != 'Admisi') : ?>
         async function fetchPasienOptions() {
             try {
-                const response = await axios.get('<?= base_url('frmsetuju/pasienlist') ?>');
+                const response = await axios.get('<?= base_url('frmsetujukedokteran/pasienlist') ?>');
 
                 if (response.data.success) {
                     const options = response.data.data;
@@ -250,7 +250,7 @@
         $('#loadingSpinner').show();
 
         try {
-            const response = await axios.get('<?= base_url('frmsetuju/frmsetujulist') ?>', {
+            const response = await axios.get('<?= base_url('frmsetujukedokteran/frmsetujukedokteranlist') ?>', {
                 params: {
                     search: search,
                     limit: limit,
@@ -326,12 +326,12 @@
                         <hr>
                         <div class="d-grid gap-2 d-flex justify-content-end">
                         <?php if (session()->get('role') != 'Admisi') : ?>
-                            <button type="button" class="btn btn-body btn-sm bg-gradient " onclick="window.location.href = '<?= base_url('frmsetuju/details') ?>/${form_persetujuan_tindakan.id_form_persetujuan_tindakan}';">
+                            <button type="button" class="btn btn-body btn-sm bg-gradient " onclick="window.location.href = '<?= base_url('frmsetujukedokteran/details') ?>/${form_persetujuan_tindakan.id_form_persetujuan_tindakan}';">
                                 <i class="fa-solid fa-circle-info"></i> Detail
                             </button>
                         <?php endif; ?>
                         <?php if (session()->get('role') == 'Admisi') : ?>
-                            <button type="button" class="btn btn-body btn-sm bg-gradient " onclick="window.open('<?= base_url('frmsetuju/export') ?>/${form_persetujuan_tindakan.id_form_persetujuan_tindakan}');">
+                            <button type="button" class="btn btn-body btn-sm bg-gradient " onclick="window.open('<?= base_url('frmsetujukedokteran/export') ?>/${form_persetujuan_tindakan.id_form_persetujuan_tindakan}');">
                                 <i class="fa-solid fa-print"></i> Cetak
                             </button>
                         <?php endif; ?>
@@ -545,7 +545,7 @@
                 $('#deleteSubmessage').hide();
 
                 try {
-                    await axios.delete(`<?= base_url('/frmsetuju/delete') ?>/${FRMSetujuId}`);
+                    await axios.delete(`<?= base_url('/frmsetujukedokteran/delete') ?>/${FRMSetujuId}`);
                     fetchPasienOptions();
                     fetchFormulir();
                 } catch (error) {
@@ -580,7 +580,7 @@
             $('#FRMSetujuForm select').prop('disabled', true);
 
             try {
-                const response = await axios.post(`<?= base_url('frmsetuju/create') ?>`, formData, {
+                const response = await axios.post(`<?= base_url('frmsetujukedokteran/create') ?>`, formData, {
                     headers: {
                         'Content-Type': 'multipart/form-data'
                     }
