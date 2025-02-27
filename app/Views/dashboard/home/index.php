@@ -241,7 +241,7 @@ $db = db_connect();
                                             <thead>
                                                 <tr class="align-middle">
                                                     <th scope="col" class="bg-body-secondary border-secondary text-nowrap tindakan" style="border-bottom-width: 2px; width: 0%;">No</th>
-                                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">ICD-10</th>
+                                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">ICD-9 CM</th>
                                                     <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Tindakan</th>
                                                 </tr>
                                             </thead>
