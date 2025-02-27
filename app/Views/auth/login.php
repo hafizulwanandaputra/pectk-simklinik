@@ -15,6 +15,8 @@
     <link href="<?= base_url(); ?>assets_public/fontawesome/css/all.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/css/main.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/css/JawiDubai.css" rel="stylesheet">
+    <link href="<?= base_url(); ?>assets_public/fonts/inter/stylesheet.css" rel="stylesheet">
+    <link href="<?= base_url(); ?>assets_public/fonts/roboto/stylesheet.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/fonts/noto-sans-lgc/stylesheet.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/fonts/noto-sans-lgc-mono/stylesheet.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/fonts/noto-sans-arabic/stylesheet.css" rel="stylesheet">
@@ -139,8 +141,9 @@
     </script>
     <style>
         :root {
-            --bs-font-sans-serif: "Noto Sans", "Noto Sans Arabic", system-ui, -apple-system, "Helvetica Neue", Arial, "Liberation Sans", sans-serif;
+            --bs-font-sans-serif: Inter, Roboto, "Noto Sans", "Noto Sans Arabic", system-ui, -apple-system, "Helvetica Neue", Arial, "Liberation Sans", sans-serif;
             --bs-font-monospace: "Noto Sans Mono", Menlo, Monaco, Consolas, "Courier New", "Liberation Mono", monospace;
+            font-feature-settings: "calt" 0, "ss07" 1, "ss08" 1, "cv01" 1, "cv05" 1, "cv10" 1;
         }
 
         html,

@@ -24,6 +24,8 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
     <link href="<?= base_url(); ?>assets_public/css/JawiDubai.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.bootstrap5.min.css" rel="stylesheet">
+    <link href="<?= base_url(); ?>assets_public/fonts/inter/stylesheet.css" rel="stylesheet">
+    <link href="<?= base_url(); ?>assets_public/fonts/roboto/stylesheet.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/fonts/noto-sans-lgc/stylesheet.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/fonts/noto-sans-lgc-mono/stylesheet.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/fonts/noto-sans-arabic/stylesheet.css" rel="stylesheet">
@@ -189,8 +191,9 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
     </script>
     <style>
         :root {
-            --bs-font-sans-serif: "Noto Sans", "Noto Sans Arabic", system-ui, -apple-system, "Helvetica Neue", Arial, "Liberation Sans", sans-serif;
+            --bs-font-sans-serif: Inter, Roboto, "Noto Sans", "Noto Sans Arabic", system-ui, -apple-system, "Helvetica Neue", Arial, "Liberation Sans", sans-serif;
             --bs-font-monospace: "Noto Sans Mono", Menlo, Monaco, Consolas, "Courier New", "Liberation Mono", monospace;
+            font-feature-settings: "calt" 0, "ss07" 1, "ss08" 1, "cv01" 1, "cv05" 1, "cv10" 1;
             --gold: #ffe680;
             /* Emas lebih terang */
             --silver: #bfbfbf;
@@ -230,6 +233,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
         input,
         select,
         button {
+            font-feature-settings: "calt" 0, "ss07" 1, "ss08" 1, "cv01" 1, "cv05" 1, "cv10" 1;
             font-variant-numeric: proportional-nums;
         }
 
@@ -239,6 +243,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
         input[type="time"],
         input[type="month"],
         input[type="week"] {
+            font-feature-settings: "calt" 0, "ss07" 1, "ss08" 1, "cv01" 1, "cv05" 1, "cv10" 1;
             font-variant-numeric: tabular-nums;
         }
 
@@ -247,6 +252,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
         }
 
         .date {
+            font-feature-settings: "calt" 0, "ss07" 1, "ss08" 1, "cv01" 1, "cv05" 1, "cv10" 1;
             font-variant-numeric: tabular-nums;
         }
 
