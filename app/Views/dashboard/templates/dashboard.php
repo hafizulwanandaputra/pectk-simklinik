@@ -237,6 +237,21 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
             font-variant-numeric: proportional-nums;
         }
 
+        .display-6,
+        .display-5,
+        .display-4,
+        .display-3,
+        .display-2,
+        .display-1,
+        h3,
+        .h3,
+        h2,
+        .h2,
+        h1,
+        .h1 {
+            font-family: InterDisplay, Roboto, "Noto Sans", "Noto Sans Arabic", system-ui, -apple-system, "Helvetica Neue", Arial, "Liberation Sans", sans-serif;
+        }
+
         input[type="number"],
         input[type="date"],
         input[type="datetime-local"],
