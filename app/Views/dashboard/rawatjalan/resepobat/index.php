@@ -264,7 +264,7 @@ $usia = $registrasi->diff($tanggal_lahir);
 <?= $this->endSection(); ?>
 <?= $this->section('javascript'); ?>
 <script>
-    async function fetchObatOptions() {
+    async function fetchObatOptions(selectedObat = null) {
         try {
             const response = await axios.get('<?= base_url('resep/obatlist/' . $resep['id_resep']) ?>');
 
@@ -272,13 +272,23 @@ $usia = $registrasi->diff($tanggal_lahir);
                 const options = response.data.data;
                 const select = $('#id_obat');
 
-                // Clear existing options except the first one
+                // Reset pilihan terlebih dahulu sebelum memuat ulang
+                select.val('').trigger('change'); // Kosongkan pilihan
+
+                // Hapus semua opsi kecuali yang pertama
                 select.find('option:not(:first)').remove();
 
-                // Loop through the options and append them to the select element
+                // Tambahkan opsi baru dari data yang diterima
                 options.forEach(option => {
                     select.append(`<option value="${option.value}">${option.text}</option>`);
                 });
+
+                // Pastikan pilihan kembali ke default setelah submit
+                if (selectedObat) {
+                    select.val(selectedObat).trigger('change');
+                }
+            } else {
+                showFailedToast('Gagal mendapatkan dokter.');
             }
         } catch (error) {
             showFailedToast('Gagal mendapatkan obat.<br>' + error);
@@ -422,8 +432,9 @@ $usia = $registrasi->diff($tanggal_lahir);
 
             if (data.update) {
                 console.log("Received update from WebSocket");
+                const selectedObat = $('#id_obat').val();
+                await fetchObatOptions(selectedObat);
                 fetchDetailResep();
-                fetchObatOptions();
                 fetchStatusResep();
             }
 
@@ -472,8 +483,9 @@ $usia = $registrasi->diff($tanggal_lahir);
 
             try {
                 await axios.delete(`<?= base_url('/resep/hapusdetailresep') ?>/${detailResepId}`);
+                const selectedObat = $('#id_obat').val();
+                await fetchObatOptions(selectedObat);
                 fetchDetailResep();
-                fetchObatOptions();
                 fetchStatusResep();
             } catch (error) {
                 if (error.response.request.status === 400) {
@@ -789,18 +801,20 @@ $usia = $registrasi->diff($tanggal_lahir);
             }
         });
 
-        $(document).on('visibilitychange', function() {
+        $(document).on('visibilitychange', async function() {
             if (document.visibilityState === "visible") {
+                const selectedObat = $('#id_obat').val();
+                await fetchObatOptions(selectedObat);
                 fetchDetailResep();
-                fetchObatOptions();
                 fetchStatusResep();
             }
         });
 
-        $('#refreshButton').on('click', function(e) {
+        $('#refreshButton').on('click', async function(e) {
             e.preventDefault();
+            const selectedObat = $('#id_obat').val();
+            await fetchObatOptions(selectedObat);
             fetchDetailResep();
-            fetchObatOptions();
             fetchStatusResep();
         });
 
