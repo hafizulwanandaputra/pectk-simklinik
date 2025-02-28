@@ -233,6 +233,7 @@ class PraOperasi extends BaseController
                 'ctt_alergi' => 'required',
                 'ctt_alergi_jelaskan' => $ctt_alergi === 'YA' ? 'required' : 'permit_empty',
                 'ctt_haid' => $sp_operasi['jenis_kelamin'] === 'P' ? 'required' : 'permit_empty',
+                'ctt_kepercayaan' => 'required',
             ]);
 
             if (!$this->validate($validation->getRules())) {

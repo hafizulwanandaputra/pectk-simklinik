@@ -389,7 +389,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <div class="mb-2">
                     <div class="row g-1 align-items-center radio-group">
                         <label for="ctt_haid" class="col col-form-label">
-                            <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">9</span> Jika pasien perempuan, apakah sedang haid/menstruasi?<?= ($operasi['jenis_kelamin'] == 'L') ? '<br><small class="text-muted fw-normal">Dinonaktifkan untuk pasien laki-laki</small>' : ''; ?>
+                            <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">9</span> Jika pasien perempuan, apakah sedang haid/menstruasi?<?= ($operasi['jenis_kelamin'] == 'L') ? '<br><small class="text-muted fw-normal">Dinonaktifkan untuk pasien laki-laki</small>' : '<span class="text-danger">*</span>'; ?>
                         </label>
                         <div class="col col-form-label">
                             <div class="d-flex align-items-center justify-content-evenly">
@@ -413,7 +413,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <div class="mb-2">
                     <div class="row g-1 align-items-center radio-group">
                         <label for="ctt_kepercayaan" class="col col-form-label">
-                            <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">10</span> Perhatian khusus terkait budaya dan kepercayaan?
+                            <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">10</span> Perhatian khusus terkait budaya dan kepercayaan?<span class="text-danger">*</span>
                         </label>
                         <div class="col col-form-label">
                             <div class="d-flex align-items-center justify-content-evenly">
