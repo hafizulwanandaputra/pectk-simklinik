@@ -345,7 +345,7 @@
                 $('#paginationNav ul').empty();
                 $('#resepContainer').append(
                     '<li class="list-group-item pb-3 pt-3">' +
-                    '    <h1 class="display-4 text-center text-muted" style="font-weight: 200;">Data Kosong</h1>' +
+                    '    <h1 class="display-4 text-center text-muted mb-0" style="font-weight: 200;">Data Kosong</h1>' +
                     '</li>'
                 );
             } else {
