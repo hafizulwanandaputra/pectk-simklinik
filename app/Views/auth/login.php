@@ -15,7 +15,7 @@
     <link href="<?= base_url(); ?>assets_public/fontawesome/css/all.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/css/main.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/css/JawiDubai.css" rel="stylesheet">
-    <link href="<?= base_url(); ?>assets_public/fonts/inter/stylesheet.css" rel="stylesheet">
+    <link href="<?= base_url(); ?>assets_public/fonts/inter/inter.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/fonts/roboto/stylesheet.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/fonts/noto-sans-lgc/stylesheet.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/fonts/noto-sans-lgc-mono/stylesheet.css" rel="stylesheet">
