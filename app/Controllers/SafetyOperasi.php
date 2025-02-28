@@ -340,9 +340,6 @@ class SafetyOperasi extends BaseController
                         'errors' => [
                             'required' => 'Wajib dipilih'
                         ]
-                    ],
-                    'nama_dokter_anastesi' => [
-                        'rules' => 'required'
                     ]
                 ];
             } else if (session()->get('role') == 'Dokter') {
@@ -370,9 +367,6 @@ class SafetyOperasi extends BaseController
                         'errors' => [
                             'required' => 'Wajib dipilih'
                         ]
-                    ],
-                    'nama_dokter_anastesi' => [
-                        'rules' => 'required'
                     ]
                 ];
             } else if (session()->get('role') == 'Admin') {
@@ -424,9 +418,6 @@ class SafetyOperasi extends BaseController
                         'errors' => [
                             'required' => 'Wajib dipilih'
                         ]
-                    ],
-                    'nama_dokter_anastesi' => [
-                        'rules' => 'required'
                     ]
                 ];
             }
@@ -502,7 +493,7 @@ class SafetyOperasi extends BaseController
 
     public function update_signout($id)
     {
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
             $db = db_connect();
             $validation = \Config\Services::validation();
 
@@ -555,13 +546,9 @@ class SafetyOperasi extends BaseController
                 'instruksi_khusus' => $this->request->getPost('instruksi_khusus') ?: NULL,
                 'keterangan_instruksi' => $this->request->getPost('keterangan_instruksi') ?: NULL,
                 'nama_dokter_operator' => $this->request->getPost('nama_dokter_operator') ?: NULL,
+                'jam_signout' => $this->request->getPost('jam_signout') ?: NULL,
                 'waktu_dibuat' => $operasi_safety_signout['waktu_dibuat'],
             ];
-
-            // Periksa apakah jam sudah ada, jika belum, isi dengan waktu sekarang
-            if (empty($operasi_safety_signout['jam'])) {
-                $data['jam'] = date('H:i:s');
-            }
 
             $db->table('medrec_operasi_safety_signout')->where('id_signout', $id)->update($data);
             $this->notify_clients_submit('update');
@@ -630,13 +617,9 @@ class SafetyOperasi extends BaseController
                 'info_kelengkapan_instrumen' => $this->request->getPost('info_kelengkapan_instrumen') ?: NULL,
                 'perlu_antibiotik_dan_guladarah' => $this->request->getPost('perlu_antibiotik_dan_guladarah') ?: NULL,
                 'nama_perawat' => $this->request->getPost('nama_perawat') ?: NULL,
+                'jam_timeout' => $this->request->getPost('jam_timeout') ?: NULL,
                 'waktu_dibuat' => $operasi_safety_timeout['waktu_dibuat'],
             ];
-
-            // Periksa apakah jam sudah ada, jika belum, isi dengan waktu sekarang
-            if (empty($operasi_safety_timeout['jam'])) {
-                $data['jam'] = date('H:i:s');
-            }
 
             $db->table('medrec_operasi_safety_timeout')->where('id_timeout', $id)->update($data);
             $this->notify_clients_submit('update');

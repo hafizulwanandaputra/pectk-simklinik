@@ -115,7 +115,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                     <div class="col">
                         <div class="form-floating">
                             <input type="text" class="form-control" id="dokter_rujukan" name="dokter_rujukan" value="" autocomplete="off" dir="auto" placeholder="dokter_rujukan" list="dokter_rujukan_list">
-                            <label for="dokter_rujukan">Dokter Rujukan</label>
+                            <label for="dokter_rujukan">Dokter Rujukan<span class="text-danger">*</span></label>
                             <datalist id="dokter_rujukan_list">
                                 <?php foreach ($dokter as $list) : ?>
                                     <option value="<?= $list['fullname'] ?>"></option>
@@ -127,7 +127,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                     <div class="col">
                         <div class="form-floating">
                             <input type="text" class="form-control" id="alamat_dokter_rujukan" name="alamat_dokter_rujukan" value="" autocomplete="off" dir="auto" placeholder="alamat_dokter_rujukan">
-                            <label for="alamat_dokter_rujukan">Alamat Dokter Rujukan</label>
+                            <label for="alamat_dokter_rujukan">Alamat Dokter Rujukan<span class="text-danger">*</span></label>
                             <div class="invalid-feedback"></div>
                         </div>
                     </div>

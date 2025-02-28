@@ -29,7 +29,7 @@ class SafetyTimeOutModel extends Model
         'perlu_antibiotik_dan_guladarah',
         'nama_perawat',
         'tanda_tangan_perawat',
-        'jam',
+        'jam_timeout',
         'waktu_dibuat',
     ];
 }

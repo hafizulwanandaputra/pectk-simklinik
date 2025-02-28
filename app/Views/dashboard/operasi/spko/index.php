@@ -124,14 +124,14 @@ $usia = $registrasi->diff($tanggal_lahir);
                     <div class="col">
                         <div class="form-floating">
                             <input type="date" class="form-control" id="tanggal_operasi" name="tanggal_operasi" value="" autocomplete="off" dir="auto" placeholder="tanggal_operasi">
-                            <label for="tanggal_operasi">Tanggal Operasi</label>
+                            <label for="tanggal_operasi">Tanggal Operasi<span class="text-danger">*</span></label>
                             <div class="invalid-feedback"></div>
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-floating">
                             <input type="time" class="form-control" id="jam_operasi" name="jam_operasi" value="" autocomplete="off" dir="auto" placeholder="jam_operasi">
-                            <label for="jam_operasi">Jam Operasi</label>
+                            <label for="jam_operasi">Jam Operasi<span class="text-danger">*</span></label>
                             <div class="invalid-feedback"></div>
                         </div>
                     </div>
@@ -145,7 +145,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 </div>
                 <div class="mb-2">
                     <label for="jenis_tindakan" class="form-label mb-0">
-                        Jenis Tindakan
+                        Jenis Tindakan<span class="text-danger">*</span>
                     </label>
                     <select class="form-select" id="jenis_tindakan" name="jenis_tindakan[]" multiple>
                         <?php foreach ($master_tindakan_operasi as $list) : ?>
@@ -163,7 +163,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 </div>
                 <div class="mb-2">
                     <div class="row gx-1 radio-group">
-                        <label for="jenis_bius" class="col col-form-label">Jenis Bius</label>
+                        <label for="jenis_bius" class="col col-form-label">Jenis Bius<span class="text-danger">*</span></label>
                         <div class="col col-form-label">
                             <div class="d-flex align-items-center justify-content-evenly">
                                 <div class="form-check form-check-inline">
@@ -198,7 +198,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 </div>
                 <div class="mb-2">
                     <div class="row gx-1 radio-group">
-                        <label for="rajal_ranap" class="col col-form-label">Jenis Rawat</label>
+                        <label for="rajal_ranap" class="col col-form-label">Jenis Rawat<span class="text-danger">*</span></label>
                         <div class="col col-form-label">
                             <div class="d-flex align-items-center justify-content-evenly">
                                 <div class="form-check form-check-inline">
@@ -224,7 +224,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             <option value="" disabled selected>-- Pilih Ruangan --</option>
                             <option value="OK1">OK1</option>
                         </select>
-                        <label for="ruang_operasi">Ruangan</label>
+                        <label for="ruang_operasi">Ruangan<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
@@ -236,7 +236,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                                 <option value="<?= $list['fullname'] ?>"><?= $list['fullname'] ?></option>
                             <?php endforeach; ?>
                         </select>
-                        <label for="dokter_operator">Dokter Operator</label>
+                        <label for="dokter_operator">Dokter Operator<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>

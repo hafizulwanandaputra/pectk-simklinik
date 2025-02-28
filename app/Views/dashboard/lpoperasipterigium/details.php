@@ -113,7 +113,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             <div class="mb-3">
                 <div class="mb-2">
                     <div class="row gx-1 radio-group">
-                        <label for="mata" class="col col-form-label">Mata</label>
+                        <label for="mata" class="col col-form-label">Mata<span class="text-danger">*</span></label>
                         <div class="col col-form-label">
                             <div class="d-flex align-items-center justify-content-evenly">
                                 <div class="form-check form-check-inline">
@@ -141,7 +141,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                                 <option value="<?= $list['fullname'] ?>"><?= $list['fullname'] ?></option>
                             <?php endforeach; ?>
                         </select>
-                        <label for="operator">Dokter Operator</label>
+                        <label for="operator">Dokter Operator<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
@@ -149,21 +149,21 @@ $usia = $registrasi->diff($tanggal_lahir);
                     <div class="col">
                         <div class="form-floating">
                             <input type="date" class="form-control" id="tanggal_operasi" name="tanggal_operasi" value="" autocomplete="off" dir="auto" placeholder="tanggal_operasi">
-                            <label for="tanggal_operasi">Tanggal Operasi</label>
+                            <label for="tanggal_operasi">Tanggal Operasi<span class="text-danger">*</span></label>
                             <div class="invalid-feedback"></div>
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-floating">
                             <input type="time" class="form-control" id="jam_operasi" name="jam_operasi" value="" autocomplete="off" dir="auto" placeholder="jam_operasi">
-                            <label for="jam_operasi">Jam Operasi</label>
+                            <label for="jam_operasi">Jam Operasi<span class="text-danger">*</span></label>
                             <div class="invalid-feedback"></div>
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-floating">
                             <input type="number" class="form-control" id="lama_operasi" name="lama_operasi" value="" autocomplete="off" dir="auto" placeholder="lama_operasi">
-                            <label for="lama_operasi">Lama Operasi (menit)</label>
+                            <label for="lama_operasi">Lama Operasi (menit)<span class="text-danger">*</span></label>
                             <div class="invalid-feedback"></div>
                         </div>
                     </div>
@@ -171,7 +171,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <div class="mb-2">
                     <div class="form-floating">
                         <input type="text" class="form-control" id="diagnosis" name="diagnosis" value="" autocomplete="off" dir="auto" placeholder="diagnosis">
-                        <label for="diagnosis">Diagnosis</label>
+                        <label for="diagnosis">Diagnosis<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
@@ -183,20 +183,20 @@ $usia = $registrasi->diff($tanggal_lahir);
                                 <option value="<?= $list['fullname'] ?>"><?= $list['fullname'] ?></option>
                             <?php endforeach; ?>
                         </select>
-                        <label for="asisten">Asisten</label>
+                        <label for="asisten">Asisten<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
                 <div class="mb-2">
                     <div class="form-floating">
                         <input type="text" class="form-control" id="jenis_operasi" name="jenis_operasi" value="" autocomplete="off" dir="auto" placeholder="jenis_operasi">
-                        <label for="jenis_operasi">Jenis Operasi</label>
+                        <label for="jenis_operasi">Jenis Operasi<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
                 <div class="mb-2">
                     <div class="row gx-1 radio-group">
-                        <label for="jenis_anastesi" class="col col-form-label">Jenis Anestesi</label>
+                        <label for="jenis_anastesi" class="col col-form-label">Jenis Anestesi<span class="text-danger">*</span></label>
                         <div class="col col-form-label">
                             <div class="d-flex align-items-center justify-content-between">
                                 <div class="form-check form-check-inline">
@@ -236,13 +236,13 @@ $usia = $registrasi->diff($tanggal_lahir);
                                 <option value="<?= $list['fullname'] ?>"><?= $list['fullname'] ?></option>
                             <?php endforeach; ?>
                         </select>
-                        <label for="dokter_anastesi">Anestesiologis</label>
+                        <label for="dokter_anastesi">Anestesiologis<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
                 <div class="mb-2">
                     <div class="row gx-1 radio-group">
-                        <label for="antiseptic" class="col col-form-label">Antiseptik</label>
+                        <label for="antiseptic" class="col col-form-label">Antiseptik<span class="text-danger">*</span></label>
                         <div class="col col-form-label">
                             <div class="d-flex align-items-center justify-content-evenly">
                                 <div class="form-check form-check-inline">
@@ -271,7 +271,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 </div>
                 <div class="mb-2">
                     <div class="row gx-1 radio-group">
-                        <label for="spekulum" class="col col-form-label">Spekulum</label>
+                        <label for="spekulum" class="col col-form-label">Spekulum<span class="text-danger">*</span></label>
                         <div class="col col-form-label">
                             <div class="d-flex align-items-center justify-content-evenly">
                                 <div class="form-check form-check-inline">
@@ -300,7 +300,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 </div>
                 <div class="mb-2">
                     <div class="row gx-1 radio-group">
-                        <label for="kendala_rektus_superior" class="col col-form-label">Kendala Rektus Superior</label>
+                        <label for="kendala_rektus_superior" class="col col-form-label">Kendala Rektus Superior<span class="text-danger">*</span></label>
                         <div class="col col-form-label">
                             <div class="d-flex align-items-center justify-content-between">
                                 <div class="form-check form-check-inline">
@@ -328,7 +328,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 </div>
                 <div class="mb-2">
                     <div class="row gx-1 radio-group">
-                        <label for="cangkok_konjungtiva" class="col col-form-label">Cangkok Konjungtiva</label>
+                        <label for="cangkok_konjungtiva" class="col col-form-label">Cangkok Konjungtiva<span class="text-danger">*</span></label>
                         <div class="col col-form-label">
                             <div class="d-flex align-items-center justify-content-evenly">
                                 <div class="form-check form-check-inline">
@@ -351,13 +351,13 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <div class="mb-2">
                     <div class="form-floating">
                         <input type="text" class="form-control" id="ukuran_cangkok" name="ukuran_cangkok" value="" autocomplete="off" dir="auto" placeholder="ukuran_cangkok">
-                        <label for="ukuran_cangkok">Ukuran Cangkok</label>
+                        <label for="ukuran_cangkok">Ukuran Cangkok (jika ya)</label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
                 <div class="mb-2">
                     <div class="row gx-1 radio-group">
-                        <label for="cangkang_membrane_amnio" class="col col-form-label">Cangkang Membran Amnio</label>
+                        <label for="cangkang_membrane_amnio" class="col col-form-label">Cangkang Membran Amnio<span class="text-danger">*</span></label>
                         <div class="col col-form-label">
                             <div class="d-flex align-items-center justify-content-evenly">
                                 <div class="form-check form-check-inline">
@@ -380,13 +380,13 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <div class="mb-2">
                     <div class="form-floating">
                         <input type="text" class="form-control" id="ukuran_cangkang" name="ukuran_cangkang" value="" autocomplete="off" dir="auto" placeholder="ukuran_cangkang">
-                        <label for="ukuran_cangkang">Ukuran Cangkang</label>
+                        <label for="ukuran_cangkang">Ukuran Cangkang (jika ya)</label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
                 <div class="mb-2">
                     <div class="row gx-1 radio-group">
-                        <label for="bare_sclera" class="col col-form-label"><em>Bare Sclera</em></label>
+                        <label for="bare_sclera" class="col col-form-label"><em>Bare Sclera</em><span class="text-danger">*</span></label>
                         <div class="col col-form-label">
                             <div class="d-flex align-items-center justify-content-evenly">
                                 <div class="form-check form-check-inline">
@@ -408,7 +408,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 </div>
                 <div class="mb-2">
                     <div class="row gx-1 radio-group">
-                        <label for="mytomicyn_c" class="col col-form-label">Mitomisin C</label>
+                        <label for="mytomicyn_c" class="col col-form-label">Mitomisin C<span class="text-danger">*</span></label>
                         <div class="col col-form-label">
                             <div class="d-flex align-items-center justify-content-evenly">
                                 <div class="form-check form-check-inline">
@@ -430,7 +430,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 </div>
                 <div class="mb-2">
                     <div class="row gx-1 radio-group">
-                        <label for="penjahitan" class="col col-form-label">Penjahitan</label>
+                        <label for="penjahitan" class="col col-form-label">Penjahitan<span class="text-danger">*</span></label>
                         <div class="col col-form-label">
                             <div class="d-flex align-items-center justify-content-evenly">
                                 <div class="form-check form-check-inline">

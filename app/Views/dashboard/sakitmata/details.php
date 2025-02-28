@@ -112,7 +112,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             <?php endif; ?>
             <div class="mb-3">
                 <div class="mb-2">
-                    <label for="keterangan">Pada pemeriksaan saat ini, pasien menderita sakit mata:</label>
+                    <label for="keterangan">Pada pemeriksaan saat ini, pasien menderita sakit mata:<span class="text-danger">*</span></label>
                     <textarea class="form-control" id="keterangan" name="keterangan" rows="8" style="resize: none;"></textarea>
                     <div class="invalid-feedback"></div>
                 </div>

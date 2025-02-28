@@ -114,7 +114,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <div class="mb-2">
                     <div class="form-floating">
                         <input type="text" class="form-control" id="keperluan" name="keperluan" value="" autocomplete="off" dir="auto" placeholder="keperluan">
-                        <label for="keperluan">Keperluan</label>
+                        <label for="keperluan">Keperluan<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
@@ -160,7 +160,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 </div>
                 <div class="mb-2">
                     <div class="row gx-1 radio-group">
-                        <label for="status_buta_warna" class="col col-form-label">Status Buta Warna</label>
+                        <label for="status_buta_warna" class="col col-form-label">Status Buta Warna<span class="text-danger">*</span></label>
                         <div class="col-lg col-form-label">
                             <div class="d-flex flex-column align-items-start">
                                 <div class="form-check form-check-inline">

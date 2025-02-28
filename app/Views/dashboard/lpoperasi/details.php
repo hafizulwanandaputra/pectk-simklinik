@@ -119,7 +119,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                                 <option value="<?= $list['fullname'] ?>"><?= $list['fullname'] ?></option>
                             <?php endforeach; ?>
                         </select>
-                        <label for="dokter_bedah">Dokter Bedah</label>
+                        <label for="dokter_bedah">Dokter Bedah<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
@@ -131,7 +131,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                                 <option value="<?= $list['fullname'] ?>"><?= $list['fullname'] ?></option>
                             <?php endforeach; ?>
                         </select>
-                        <label for="asisten_dokter_bedah">Asisten Dokter</label>
+                        <label for="asisten_dokter_bedah">Asisten Dokter<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
@@ -143,13 +143,13 @@ $usia = $registrasi->diff($tanggal_lahir);
                                 <option value="<?= $list['fullname'] ?>"><?= $list['fullname'] ?></option>
                             <?php endforeach; ?>
                         </select>
-                        <label for="dokter_anastesi">Dokter Anestesi</label>
+                        <label for="dokter_anastesi">Dokter Anestesi<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
                 <div class="mb-2">
                     <div class="row gx-1 radio-group">
-                        <label for="jenis_anastesi" class="col col-form-label">Jenis Anestesi</label>
+                        <label for="jenis_anastesi" class="col col-form-label">Jenis Anestesi<span class="text-danger">*</span></label>
                         <div class="col col-form-label">
                             <div class="d-flex align-items-center justify-content-between">
                                 <div class="form-check form-check-inline">
@@ -192,7 +192,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             <option value="EMERGENCY">Emergency</option>
                             <option value="EHOTTIVE">Ehottive</option>
                         </select>
-                        <label for="jenis_operasi">Jenis Operasi</label>
+                        <label for="jenis_operasi">Jenis Operasi<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
@@ -237,7 +237,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 </div>
                 <div class="mb-2">
                     <div class="row gx-1 radio-group">
-                        <label for="pemeriksaan_pa" class="col col-form-label">Pemeriksaan PA</label>
+                        <label for="pemeriksaan_pa" class="col col-form-label">Pemeriksaan PA<span class="text-danger">*</span></label>
                         <div class="col col-form-label">
                             <div class="d-flex align-items-center justify-content-evenly">
                                 <div class="form-check form-check-inline">
@@ -261,28 +261,28 @@ $usia = $registrasi->diff($tanggal_lahir);
                     <div class="col">
                         <div class="form-floating">
                             <input type="date" class="form-control" id="tanggal_operasi" name="tanggal_operasi" value="" autocomplete="off" dir="auto" placeholder="tanggal_operasi">
-                            <label for="tanggal_operasi">Tanggal Operasi</label>
+                            <label for="tanggal_operasi">Tanggal Operasi<span class="text-danger">*</span></label>
                             <div class="invalid-feedback"></div>
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-floating">
                             <input type="time" class="form-control" id="jam_operasi" name="jam_operasi" value="" autocomplete="off" dir="auto" placeholder="jam_operasi">
-                            <label for="jam_operasi">Jam Operasi</label>
+                            <label for="jam_operasi">Jam Operasi<span class="text-danger">*</span></label>
                             <div class="invalid-feedback"></div>
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-floating">
                             <input type="number" class="form-control" id="lama_operasi" name="lama_operasi" value="" autocomplete="off" dir="auto" placeholder="lama_operasi">
-                            <label for="lama_operasi">Lama Operasi (menit)</label>
+                            <label for="lama_operasi">Lama Operasi (menit)<span class="text-danger">*</span></label>
                             <div class="invalid-feedback"></div>
                         </div>
                     </div>
                 </div>
                 <div class="mb-3">
                     <div class="mb-2">
-                        <label for="laporan_operasi">Laporan Operasi</label>
+                        <label for="laporan_operasi">Laporan Operasi<span class="text-danger">*</span></label>
                         <textarea class="form-control" id="laporan_operasi" name="laporan_operasi" rows="8" style="resize: none;"></textarea>
                         <div class="invalid-feedback"></div>
                     </div>

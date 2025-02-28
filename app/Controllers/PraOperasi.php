@@ -229,10 +229,6 @@ class PraOperasi extends BaseController
             $validation->setRules([
                 'perawat_praoperasi' => 'required',
                 'jenis_operasi' => 'required',
-                'ctt_vital_suhu' => 'required',
-                'ctt_vital_nadi' => 'required',
-                'ctt_vital_rr' => 'required',
-                'ctt_vital_td' => 'required',
                 'ctt_mental' => 'required',
                 'ctt_alergi' => 'required',
                 'ctt_alergi_jelaskan' => $ctt_alergi === 'YA' ? 'required' : 'permit_empty',

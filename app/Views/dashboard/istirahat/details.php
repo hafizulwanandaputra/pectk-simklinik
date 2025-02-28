@@ -115,14 +115,14 @@ $usia = $registrasi->diff($tanggal_lahir);
                     <div class="col">
                         <div class="form-floating">
                             <input type="date" class="form-control" id="tanggal_mulai" name="tanggal_mulai" value="" autocomplete="off" dir="auto" placeholder="tanggal_mulai" list="tanggal_mulai_list">
-                            <label for="tanggal_mulai">Tanggal Mulai</label>
+                            <label for="tanggal_mulai">Tanggal Mulai<span class="text-danger">*</span></label>
                             <div class="invalid-feedback"></div>
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-floating">
                             <input type="date" class="form-control" id="tanggal_selesai" name="tanggal_selesai" value="" autocomplete="off" dir="auto" placeholder="tanggal_selesai">
-                            <label for="tanggal_selesai">Tanggal Selesai</label>
+                            <label for="tanggal_selesai">Tanggal Selesai<span class="text-danger">*</span></label>
                             <div class="invalid-feedback"></div>
                         </div>
                     </div>

@@ -119,7 +119,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                                 <option value="<?= $list['fullname'] ?>"><?= $list['fullname'] ?></option>
                             <?php endforeach; ?>
                         </select>
-                        <label for="dokter_pelaksana">Dokter Pelaksana Tindakan</label>
+                        <label for="dokter_pelaksana">Dokter Pelaksana Tindakan<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
@@ -131,7 +131,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                                 <option value="<?= $list['fullname'] ?>"><?= $list['fullname'] ?></option>
                             <?php endforeach; ?>
                         </select>
-                        <label for="pemberi_informasi">Pemberi Informasi</label>
+                        <label for="pemberi_informasi">Pemberi Informasi<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
@@ -199,20 +199,20 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <div class="mb-2">
                     <div class="form-floating">
                         <input type="text" class="form-control" id="penerima_informasi" name="penerima_informasi" value="" autocomplete="off" dir="auto" placeholder="penerima_informasi">
-                        <label for="penerima_informasi">Nama</label>
+                        <label for="penerima_informasi">Nama<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
                 <div class="mb-2">
                     <div class="form-floating">
                         <input type="date" class="form-control" id="pererima_tanggal_lahir" name="pererima_tanggal_lahir" value="" autocomplete="off" dir="auto" placeholder="pererima_tanggal_lahir">
-                        <label for="pererima_tanggal_lahir">Tanggal Lahir</label>
+                        <label for="pererima_tanggal_lahir">Tanggal Lahir<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
                 <div class="mb-2">
                     <div class="row gx-1 radio-group">
-                        <label for="penerima_jenis_kelamin" class="col col-form-label">Jenis Kelamin</label>
+                        <label for="penerima_jenis_kelamin" class="col col-form-label">Jenis Kelamin<span class="text-danger">*</span></label>
                         <div class="col-lg col-form-label">
                             <div class="d-flex align-items-center justify-content-evenly">
                                 <div class="form-check form-check-inline">
@@ -254,14 +254,14 @@ $usia = $registrasi->diff($tanggal_lahir);
                                 <option value="ORANGTUA">Orang Tua</option>
                                 <option value="KELUARGA">Keluarga</option>
                             </select>
-                            <label for="penerima_hubungan">Hubungan</label>
+                            <label for="penerima_hubungan">Hubungan<span class="text-danger">*</span></label>
                             <div class="invalid-feedback"></div>
                         </div>
                     </div>
                     <div class="col">
                         <div class="form-floating">
                             <input type="text" class="form-control" id="keterangan_hubungan" name="keterangan_hubungan" value="" autocomplete="off" dir="auto" placeholder="keterangan_hubungan">
-                            <label for="keterangan_hubungan">Keterangan Hubungan</label>
+                            <label for="keterangan_hubungan">Keterangan Hubungan (jika Keluarga)</label>
                             <div class="invalid-feedback"></div>
                         </div>
                     </div>
@@ -272,14 +272,14 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <div class="mb-2">
                     <div class="form-floating">
                         <input type="text" class="form-control" id="tindakan_kedoteran" name="tindakan_kedoteran" value="" autocomplete="off" dir="auto" placeholder="tindakan_kedoteran">
-                        <label for="tindakan_kedoteran">Tindakan</label>
+                        <label for="tindakan_kedoteran">Tindakan<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
                 <div class="mb-2">
                     <div class="form-floating">
                         <input type="date" class="form-control" id="tanggal_tindakan" name="tanggal_tindakan" value="" autocomplete="off" dir="auto" placeholder="tanggal_tindakan">
-                        <label for="tanggal_tindakan">Tanggal Tindakan</label>
+                        <label for="tanggal_tindakan">Tanggal Tindakan<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>

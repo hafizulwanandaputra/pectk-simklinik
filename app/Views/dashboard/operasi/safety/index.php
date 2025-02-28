@@ -99,222 +99,250 @@ $usia = $registrasi->diff($tanggal_lahir);
                 </div>
             <?php endif; ?>
             <div class="mb-3">
-                <div class="fw-bold mb-2 border-bottom"><em>Sign In</em><br><small class="text-muted fw-normal">Sebelum tindakan anestesi</small></div>
-                <div class="mb-2 border-top d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-start">
-                    <div>Pasien (penanggung jawab) telah mengonfirmasi identitas pasien, prosedur dan lokasi tindakan (termasuk dalam tindakan anestesi)</div>
-                    <div class="d-flex align-items-center justify-content-evenly">
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="ns_konfirmasi_identitas" name="ns_konfirmasi_identitas" value="1">
-                            <label class="form-check-label" for="ns_konfirmasi_identitas">
-                                Perawat
-                            </label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="dr_konfirmasi_identitas" name="dr_konfirmasi_identitas" value="1">
-                            <label class="form-check-label" for="dr_konfirmasi_identitas">
-                                Dokter
-                            </label>
+                <div class="fw-bold mb-2"><em>Sign In</em><br><small class="text-muted fw-normal">Sebelum tindakan anestesi</small></div>
+                <div class="mb-2 border-top align-items-lg-start row row-cols-1 row-cols-lg-2 g-2">
+                    <div class="col mb-0 mb-lg-2">
+                        <div>Pasien (penanggung jawab) telah mengonfirmasi identitas pasien, prosedur dan lokasi tindakan (termasuk dalam tindakan anestesi)</div>
+                    </div>
+                    <div class="col mb-2">
+                        <div class="d-flex align-items-center justify-content-evenly">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="ns_konfirmasi_identitas" name="ns_konfirmasi_identitas" value="1">
+                                <label class="form-check-label" for="ns_konfirmasi_identitas">
+                                    Perawat
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="dr_konfirmasi_identitas" name="dr_konfirmasi_identitas" value="1">
+                                <label class="form-check-label" for="dr_konfirmasi_identitas">
+                                    Dokter
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="mb-2 border-top d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-start">
-                    <div><em>Marker</em> pada daerah operasi</div>
-                    <div class="d-flex align-items-center justify-content-evenly">
-                        <div class="radio-group">
-                            <div class="text-start text-sm-center text-lg-start">Perawat</div>
-                            <div class="d-flex flex-column flex-sm-row flex-lg-column">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="ns_marker_operasi" id="ns_marker_operasi1" value="YA">
-                                    <label class="form-check-label" for="ns_marker_operasi1">
-                                        Ya
-                                    </label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="ns_marker_operasi" id="ns_marker_operasi2" value="TIDAK">
-                                    <label class="form-check-label" for="ns_marker_operasi2">
-                                        Tidak
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="invalid-feedback"></div>
-                        </div>
-                        <div class="radio-group">
-                            <div class="text-start text-sm-center text-lg-start">Dokter</div>
-                            <div class="d-flex flex-column flex-sm-row flex-lg-column">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="dr_marker_operasi" id="dr_marker_operasi1" value="YA">
-                                    <label class="form-check-label" for="dr_marker_operasi1">
-                                        Ya
-                                    </label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="dr_marker_operasi" id="dr_marker_operasi2" value="TIDAK">
-                                    <label class="form-check-label" for="dr_marker_operasi2">
-                                        Tidak
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="invalid-feedback"></div>
-                        </div>
+                <div class="mb-2 border-top align-items-lg-start row row-cols-1 row-cols-lg-2 g-2">
+                    <div class="col mb-0 mb-lg-2">
+                        <div><em>Marker</em> pada daerah operasi<span class="text-danger">*</span></div>
                     </div>
-                </div>
-                <div class="mb-2 border-top d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-start">
-                    <div>Formulir <em>informed consent</em> ditandatangani dan sesuai dengan identitas pada gelang pasien</div>
-                    <div class="d-flex align-items-center justify-content-evenly">
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="ns_inform_consent_sesuai" name="ns_inform_consent_sesuai" value="1">
-                            <label class="form-check-label" for="ns_inform_consent_sesuai">
-                                Perawat
-                            </label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="dr_inform_consent_sesuai" name="dr_inform_consent_sesuai" value="1">
-                            <label class="form-check-label" for="dr_inform_consent_sesuai">
-                                Dokter
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="mb-2 border-top d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-start">
-                    <div>Jenis alergi pada pasien telah diidentifikasi (termasuk lateks)</div>
-                    <div class="d-flex align-items-center justify-content-evenly">
-                        <div class="radio-group">
-                            <div class="text-start text-sm-center text-lg-start">Perawat</div>
-                            <div class="d-flex flex-column flex-sm-row flex-lg-column">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="ns_identifikasi_alergi" id="ns_identifikasi_alergi1" value="YA">
-                                    <label class="form-check-label" for="ns_identifikasi_alergi1">
-                                        Ya
-                                    </label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="ns_identifikasi_alergi" id="ns_identifikasi_alergi2" value="TIDAK">
-                                    <label class="form-check-label" for="ns_identifikasi_alergi2">
-                                        Tidak
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="invalid-feedback"></div>
-                        </div>
-                        <div class="radio-group">
-                            <div class="text-start text-sm-center text-lg-start">Dokter</div>
-                            <div class="d-flex flex-column flex-sm-row flex-lg-column">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="dr_identifikasi_alergi" id="dr_identifikasi_alergi1" value="YA">
-                                    <label class="form-check-label" for="dr_identifikasi_alergi1">
-                                        Ya
-                                    </label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="dr_identifikasi_alergi" id="dr_identifikasi_alergi2" value="TIDAK">
-                                    <label class="form-check-label" for="dr_identifikasi_alergi2">
-                                        Tidak
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="invalid-feedback"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="mb-2 border-top d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-start">
-                    <div>Puasa</div>
-                    <div class="d-flex align-items-center justify-content-evenly">
-                        <div class="radio-group">
-                            <div class="text-start text-sm-center text-lg-start">Perawat</div>
-                            <div class="d-flex flex-column flex-sm-row flex-lg-column">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="ns_puasa" id="ns_puasa1" value="YA">
-                                    <label class="form-check-label" for="ns_puasa1">
-                                        Ya
-                                    </label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="ns_puasa" id="ns_puasa2" value="TIDAK">
-                                    <label class="form-check-label" for="ns_puasa2">
-                                        Tidak
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="invalid-feedback"></div>
-                        </div>
-                        <div class="radio-group">
-                            <div class="text-start text-sm-center text-lg-start">Dokter</div>
-                            <div class="d-flex flex-column flex-sm-row flex-lg-column">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="dr_puasa" id="dr_puasa1" value="YA">
-                                    <label class="form-check-label" for="dr_puasa1">
-                                        Ya
-                                    </label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="dr_puasa" id="dr_puasa2" value="TIDAK">
-                                    <label class="form-check-label" for="dr_puasa2">
-                                        Tidak
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="invalid-feedback"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="mb-2 border-top d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-start">
-                    <div>Lensa intrakuer jenis dan ukuran telah tercatat dalam rekam medis, Jika ya, perawat mengkonfimasi ketersediaan lensa tersebut</div>
-                    <div class="d-flex align-items-center justify-content-evenly">
-                        <div>
-                            <div class="text-center text-lg-start">Perawat</div>
+                    <div class="col mb-2">
+                        <div class="d-flex align-items-center justify-content-evenly">
                             <div class="radio-group">
-                                <div class="d-flex flex-row">
+                                <div class="text-start text-sm-center text-lg-start">Perawat</div>
+                                <div class="d-flex flex-column flex-sm-row flex-lg-column">
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="ns_cek_lensa_intrakuler" id="ns_cek_lensa_intrakuler1" value="YA">
-                                        <label class="form-check-label" for="ns_cek_lensa_intrakuler1">
+                                        <input class="form-check-input" type="radio" name="ns_marker_operasi" id="ns_marker_operasi1" value="YA">
+                                        <label class="form-check-label" for="ns_marker_operasi1">
                                             Ya
                                         </label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="ns_cek_lensa_intrakuler" id="ns_cek_lensa_intrakuler2" value="TIDAK">
-                                        <label class="form-check-label" for="ns_cek_lensa_intrakuler2">
+                                        <input class="form-check-input" type="radio" name="ns_marker_operasi" id="ns_marker_operasi2" value="TIDAK">
+                                        <label class="form-check-label" for="ns_marker_operasi2">
                                             Tidak
                                         </label>
                                     </div>
                                 </div>
                                 <div class="invalid-feedback"></div>
                             </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="ns_konfirmasi_lensa" name="ns_konfirmasi_lensa" value="1">
-                                <label class="form-check-label" for="ns_konfirmasi_lensa">
-                                    Konfirmasi
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="mb-2 border-top d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-start">
-                    <div>Perhatikan anestesi khusus termasuk <em>veorus trombo emolism</em></div>
-                    <div class="d-flex align-items-center justify-content-evenly">
-                        <div>
-                            <div class="text-center text-lg-start">Dokter</div>
                             <div class="radio-group">
-                                <div class="d-flex flex-row">
+                                <div class="text-start text-sm-center text-lg-start">Dokter</div>
+                                <div class="d-flex flex-column flex-sm-row flex-lg-column">
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="dr_cek_anestesi_khusus" id="dr_cek_anestesi_khusus1" value="YA">
-                                        <label class="form-check-label" for="dr_cek_anestesi_khusus1">
+                                        <input class="form-check-input" type="radio" name="dr_marker_operasi" id="dr_marker_operasi1" value="YA">
+                                        <label class="form-check-label" for="dr_marker_operasi1">
                                             Ya
                                         </label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="dr_cek_anestesi_khusus" id="dr_cek_anestesi_khusus2" value="TIDAK">
-                                        <label class="form-check-label" for="dr_cek_anestesi_khusus2">
+                                        <input class="form-check-input" type="radio" name="dr_marker_operasi" id="dr_marker_operasi2" value="TIDAK">
+                                        <label class="form-check-label" for="dr_marker_operasi2">
                                             Tidak
                                         </label>
                                     </div>
                                 </div>
                                 <div class="invalid-feedback"></div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-2 border-top align-items-lg-start row row-cols-1 row-cols-lg-2 g-2">
+                    <div class="col mb-0 mb-lg-2">
+                        <div>Formulir <em>informed consent</em> ditandatangani dan sesuai dengan identitas pada gelang pasien</div>
+                    </div>
+                    <div class="col mb-2">
+                        <div class="d-flex align-items-center justify-content-evenly">
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="dr_konfirmasi_anastersi" name="dr_konfirmasi_anastersi" value="1">
-                                <label class="form-check-label" for="dr_konfirmasi_anastersi">
-                                    Konfirmasi
+                                <input class="form-check-input" type="checkbox" id="ns_inform_consent_sesuai" name="ns_inform_consent_sesuai" value="1">
+                                <label class="form-check-label" for="ns_inform_consent_sesuai">
+                                    Perawat
                                 </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="dr_inform_consent_sesuai" name="dr_inform_consent_sesuai" value="1">
+                                <label class="form-check-label" for="dr_inform_consent_sesuai">
+                                    Dokter
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-2 border-top align-items-lg-start row row-cols-1 row-cols-lg-2 g-2">
+                    <div class="col mb-0 mb-lg-2">
+                        <div>Jenis alergi pada pasien telah diidentifikasi (termasuk lateks)<span class="text-danger">*</span></div>
+                    </div>
+                    <div class="col mb-2">
+                        <div class="d-flex align-items-center justify-content-evenly">
+                            <div class="radio-group">
+                                <div class="text-start text-sm-center text-lg-start">Perawat</div>
+                                <div class="d-flex flex-column flex-sm-row flex-lg-column">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="ns_identifikasi_alergi" id="ns_identifikasi_alergi1" value="YA">
+                                        <label class="form-check-label" for="ns_identifikasi_alergi1">
+                                            Ya
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="ns_identifikasi_alergi" id="ns_identifikasi_alergi2" value="TIDAK">
+                                        <label class="form-check-label" for="ns_identifikasi_alergi2">
+                                            Tidak
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="radio-group">
+                                <div class="text-start text-sm-center text-lg-start">Dokter</div>
+                                <div class="d-flex flex-column flex-sm-row flex-lg-column">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="dr_identifikasi_alergi" id="dr_identifikasi_alergi1" value="YA">
+                                        <label class="form-check-label" for="dr_identifikasi_alergi1">
+                                            Ya
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="dr_identifikasi_alergi" id="dr_identifikasi_alergi2" value="TIDAK">
+                                        <label class="form-check-label" for="dr_identifikasi_alergi2">
+                                            Tidak
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-2 border-top align-items-lg-start row row-cols-1 row-cols-lg-2 g-2">
+                    <div class="col mb-0 mb-lg-2">
+                        <div>Puasa<span class="text-danger">*</span></div>
+                    </div>
+                    <div class="col mb-2">
+                        <div class="d-flex align-items-center justify-content-evenly">
+                            <div class="radio-group">
+                                <div class="text-start text-sm-center text-lg-start">Perawat</div>
+                                <div class="d-flex flex-column flex-sm-row flex-lg-column">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="ns_puasa" id="ns_puasa1" value="YA">
+                                        <label class="form-check-label" for="ns_puasa1">
+                                            Ya
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="ns_puasa" id="ns_puasa2" value="TIDAK">
+                                        <label class="form-check-label" for="ns_puasa2">
+                                            Tidak
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="radio-group">
+                                <div class="text-start text-sm-center text-lg-start">Dokter</div>
+                                <div class="d-flex flex-column flex-sm-row flex-lg-column">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="dr_puasa" id="dr_puasa1" value="YA">
+                                        <label class="form-check-label" for="dr_puasa1">
+                                            Ya
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="dr_puasa" id="dr_puasa2" value="TIDAK">
+                                        <label class="form-check-label" for="dr_puasa2">
+                                            Tidak
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-2 border-top align-items-lg-start row row-cols-1 row-cols-lg-2 g-2">
+                    <div class="col mb-0 mb-lg-2">
+                        <div>Lensa intrakuer jenis dan ukuran telah tercatat dalam rekam medis, Jika ya, perawat mengkonfimasi ketersediaan lensa tersebut<span class="text-danger">*</span></div>
+                    </div>
+                    <div class="col mb-2">
+                        <div class="d-flex align-items-center justify-content-evenly">
+                            <div>
+                                <div class="text-center text-lg-start">Perawat</div>
+                                <div class="radio-group">
+                                    <div class="d-flex flex-row">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="ns_cek_lensa_intrakuler" id="ns_cek_lensa_intrakuler1" value="YA">
+                                            <label class="form-check-label" for="ns_cek_lensa_intrakuler1">
+                                                Ya
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="ns_cek_lensa_intrakuler" id="ns_cek_lensa_intrakuler2" value="TIDAK">
+                                            <label class="form-check-label" for="ns_cek_lensa_intrakuler2">
+                                                Tidak
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="ns_konfirmasi_lensa" name="ns_konfirmasi_lensa" value="1">
+                                    <label class="form-check-label" for="ns_konfirmasi_lensa">
+                                        Konfirmasi
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-2 border-top align-items-lg-start row row-cols-1 row-cols-lg-2 g-2">
+                    <div class="col mb-0 mb-lg-2">
+                        <div>Perhatikan anestesi khusus termasuk <em>veorus trombo emolism</em><span class="text-danger">*</span></div>
+                    </div>
+                    <div class="col mb-2">
+                        <div class="d-flex align-items-center justify-content-evenly">
+                            <div>
+                                <div class="text-center text-lg-start">Dokter</div>
+                                <div class="radio-group">
+                                    <div class="d-flex flex-row">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="dr_cek_anestesi_khusus" id="dr_cek_anestesi_khusus1" value="YA">
+                                            <label class="form-check-label" for="dr_cek_anestesi_khusus1">
+                                                Ya
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="dr_cek_anestesi_khusus" id="dr_cek_anestesi_khusus2" value="TIDAK">
+                                            <label class="form-check-label" for="dr_cek_anestesi_khusus2">
+                                                Tidak
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" id="dr_konfirmasi_anastersi" name="dr_konfirmasi_anastersi" value="1">
+                                    <label class="form-check-label" for="dr_konfirmasi_anastersi">
+                                        Konfirmasi
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -322,7 +350,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <div class="mb-2">
                     <div class="form-floating">
                         <select class="form-select" id="nama_dokter_anastesi" name="nama_dokter_anastesi" aria-label="nama_dokter_anastesi">
-                            <option value="" disabled selected>-- Pilih Dokter Anestesi --</option>
+                            <option value="" selected>Tidak ada dokter anestesi</option>
                             <?php foreach ($dokter as $list) : ?>
                                 <option value="<?= $list['fullname'] ?>"><?= $list['fullname'] ?></option>
                             <?php endforeach; ?>
@@ -342,177 +370,218 @@ $usia = $registrasi->diff($tanggal_lahir);
             <?= form_open_multipart('/operasi/timeout/update/' . $operasi_safety_timeout['id_timeout'], 'id="SafetyTimeOutForm"'); ?>
             <?= csrf_field(); ?>
             <div class="mb-3">
-                <div class="fw-bold mb-2 border-bottom"><em>Time Out</em><br><small class="text-muted fw-normal">Sebelum tindakan bedah</small></div>
-                <div class="mb-2 border-top d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-start">
-                    <div>Apakah setiap anggota tim telah memperkenalkan diri baik nama maupun posisinya?</div>
-                    <div class="d-flex flex-row flex-lg-column justify-content-center align-items-start">
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="perkenalan_diri" name="perkenalan_diri" value="1">
-                            <label class="form-check-label" for="perkenalan_diri">
-                                Telah dilakukan
-                            </label>
-                        </div>
+                <div class="fw-bold mb-2"><em>Time Out</em><br><small class="text-muted fw-normal">Sebelum tindakan bedah</small></div>
+                <div class="mb-2 border-top align-items-lg-start row row-cols-1 row-cols-lg-2 g-2">
+                    <div class="col mb-0 mb-lg-2">
+                        <div>Apakah setiap anggota tim telah memperkenalkan diri baik nama maupun posisinya?</div>
                     </div>
-                </div>
-                <div class="mb-2 border-top d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-start">
-                    <div>Dokter operator (dokter spesialis mata), dokter anestesi dan perawat melakukan cek identitas pasien dan rencana tindakan (<em>informed consent</em>) yang dilakukan secara verbal</div>
-                    <div class="d-flex flex-row flex-lg-column justify-content-center align-items-start">
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="cek_nama_mr" name="cek_nama_mr" value="1">
-                            <label class="form-check-label" for="cek_nama_mr">
-                                Nama, nomor RM
-                            </label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="cek_rencana_tindakan" name="cek_rencana_tindakan" value="1">
-                            <label class="form-check-label" for="cek_rencana_tindakan">
-                                Rencana tindakan
-                            </label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="cek_marker" name="cek_marker" value="1">
-                            <label class="form-check-label" for="cek_marker">
-                                Penanda (<em>marker</em>) operasi
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="mb-2 border-top d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-start">
-                    <div>Alergi</div>
-                    <div class="d-flex flex-row flex-lg-column justify-content-center align-items-start">
-                        <div class="radio-group">
-                            <div class="d-flex flex-row">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="alergi" id="alergi1" value="YA">
-                                    <label class="form-check-label" for="alergi1">
-                                        Ya
-                                    </label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="alergi" id="alergi2" value="TIDAK">
-                                    <label class="form-check-label" for="alergi2">
-                                        Tidak
-                                    </label>
-                                </div>
+                    <div class="col mb-2">
+                        <div class="d-flex flex-column justify-content-start align-items-start">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="perkenalan_diri" name="perkenalan_diri" value="1">
+                                <label class="form-check-label" for="perkenalan_diri">
+                                    Telah dilakukan
+                                </label>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-2 border-top align-items-lg-start row row-cols-1 row-cols-lg-2 g-2">
+                    <div class="col mb-0 mb-lg-2">
+                        <div>Dokter operator (dokter spesialis mata), dokter anestesi dan perawat melakukan cek identitas pasien dan rencana tindakan (<em>informed consent</em>) yang dilakukan secara verbal</div>
+                    </div>
+                    <div class="col mb-2">
+                        <div class="d-flex flex-column justify-content-start align-items-start">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="cek_nama_mr" name="cek_nama_mr" value="1">
+                                <label class="form-check-label" for="cek_nama_mr">
+                                    Nama, nomor RM
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="cek_rencana_tindakan" name="cek_rencana_tindakan" value="1">
+                                <label class="form-check-label" for="cek_rencana_tindakan">
+                                    Rencana tindakan
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="cek_marker" name="cek_marker" value="1">
+                                <label class="form-check-label" for="cek_marker">
+                                    Penanda (<em>marker</em>) operasi
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-2 border-top align-items-lg-start row row-cols-1 row-cols-lg-2 g-2">
+                    <div class="col mb-0 mb-lg-2">
+                        <div>Alergi<span class="text-danger">*</span></div>
+                    </div>
+                    <div class="col mb-2">
+                        <div class="d-flex flex-row flex-lg-column justify-content-center align-items-start">
+                            <div class="radio-group">
+                                <div class="d-flex flex-row">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="alergi" id="alergi1" value="YA">
+                                        <label class="form-check-label" for="alergi1">
+                                            Ya
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="alergi" id="alergi2" value="TIDAK">
+                                        <label class="form-check-label" for="alergi2">
+                                            Tidak
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="lateks" name="lateks" value="1">
+                                <label class="form-check-label" for="lateks">
+                                    Lateks
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-2 border-top align-items-lg-start row row-cols-1 row-cols-lg-2 g-2">
+                    <div class="col mb-0 mb-lg-2">
+                        <div>Maka yang tidak dilakukan tindakan diberikan proteksi/perlindungan<span class="text-danger">*</span></div>
+                    </div>
+                    <div class="col mb-2">
+                        <div class="d-flex flex-row flex-lg-column justify-content-center align-items-start">
+                            <div class="radio-group">
+                                <div class="d-flex flex-row">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="proteksi" id="proteksi1" value="YA">
+                                        <label class="form-check-label" for="proteksi1">
+                                            Ya
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="proteksi" id="proteksi2" value="TIDAK">
+                                        <label class="form-check-label" for="proteksi2">
+                                            Tidak
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-2 border-top align-items-lg-start row row-cols-1 row-cols-lg-2 g-2">
+                    <div class="col mb-0 mb-lg-2">
+                        <div>Jika ya,</div>
+                    </div>
+                    <div class="col mb-2">
+                        <div class="d-flex flex-column justify-content-start align-items-start">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="proteksi_kasa" name="proteksi_kasa" value="1">
+                                <label class="form-check-label" for="proteksi_kasa">
+                                    Kasa dengan plester
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="proteksi_shield" name="proteksi_shield" value="1">
+                                <label class="form-check-label" for="proteksi_shield">
+                                    <em>Shield drop</em>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-2 border-top align-items-lg-start row row-cols-1 row-cols-lg-2 g-2">
+                    <div class="col mb-0 mb-lg-2">
+                        <div>Dokter operator (dokter spesialis mata) menginformasikan</div>
+                    </div>
+                    <div class="col mb-2">
+                        <div class="d-flex flex-column justify-content-start align-items-start">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="info_instrumen_ok" name="info_instrumen_ok" value="1">
+                                <label class="form-check-label" for="info_instrumen_ok">
+                                    Instrumen spesifik yang dibutuhkan
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="info_teknik_ok" name="info_teknik_ok" value="1">
+                                <label class="form-check-label" for="info_teknik_ok">
+                                    Langkah/teknik tidak rutin dilakukan yang harus diketahui tim operasi
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-2 border-top align-items-lg-start row row-cols-1 row-cols-lg-2 g-2">
+                    <div class="col mb-0 mb-lg-2">
+                        <div>Perawat menginformasikan</div>
+                    </div>
+                    <div class="col mb-2">
+                        <div class="d-flex flex-column justify-content-start align-items-start">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="info_steril_instrumen" name="info_steril_instrumen" value="1">
+                                <label class="form-check-label" for="info_steril_instrumen">
+                                    Sterilisasi dan instrumen operasi
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="info_kelengkapan_instrumen" name="info_kelengkapan_instrumen" value="1">
+                                <label class="form-check-label" for="info_kelengkapan_instrumen">
+                                    Kelengkapan instrumen operasi
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-2 border-top align-items-lg-start row row-cols-1 row-cols-lg-2 g-2">
+                    <div class="col mb-0 mb-lg-2">
+                        <div>Apakah hal tersebut di bawah ini diperlukan untuk mengurangi resiko infeksi operasi?<span class="text-danger">*</span>
+                            <br><small class="fw-normal">Antibiotik profilaksis</small>
+                            <br><small class="fw-normal">Kontrol gula darah</small>
+                        </div>
+                    </div>
+                    <div class="col mb-2">
+                        <div class="d-flex flex-row flex-lg-column justify-content-center align-items-start">
+                            <div class="radio-group">
+                                <div class="d-flex flex-row">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="perlu_antibiotik_dan_guladarah" id="perlu_antibiotik_dan_guladarah1" value="YA">
+                                        <label class="form-check-label" for="perlu_antibiotik_dan_guladarah1">
+                                            Ya
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="perlu_antibiotik_dan_guladarah" id="perlu_antibiotik_dan_guladarah2" value="TIDAK">
+                                        <label class="form-check-label" for="perlu_antibiotik_dan_guladarah2">
+                                            Tidak
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-2 border-top row row-cols-1 row-cols-lg-2 g-2">
+                    <div class="col">
+                        <div class="form-floating">
+                            <select class="form-select" id="nama_perawat" name="nama_perawat" aria-label="nama_perawat">
+                                <option value="" disabled selected>-- Pilih Perawat Sirkuler --</option>
+                                <?php foreach ($perawat as $list) : ?>
+                                    <option value="<?= $list['fullname'] ?>"><?= $list['fullname'] ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                            <label for="nama_perawat">Perawat Sirkuler<span class="text-danger">*</span></label>
                             <div class="invalid-feedback"></div>
                         </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="lateks" name="lateks" value="1">
-                            <label class="form-check-label" for="lateks">
-                                Lateks
-                            </label>
-                        </div>
                     </div>
-                </div>
-                <div class="mb-2 border-top d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-start">
-                    <div>Maka yang tidak dilakukan tindakan diberikan proteksi/perlindungan</div>
-                    <div class="d-flex flex-row flex-lg-column justify-content-center align-items-start">
-                        <div class="radio-group">
-                            <div class="d-flex flex-row">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="proteksi" id="proteksi1" value="YA">
-                                    <label class="form-check-label" for="proteksi1">
-                                        Ya
-                                    </label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="proteksi" id="proteksi2" value="TIDAK">
-                                    <label class="form-check-label" for="proteksi2">
-                                        Tidak
-                                    </label>
-                                </div>
-                            </div>
+                    <div class="col">
+                        <div class="form-floating">
+                            <input type="time" class="form-control" id="jam_timeout" name="jam_timeout" value="" autocomplete="off" dir="auto" placeholder="jam_timeout">
+                            <label for="jam_timeout">Jam</label>
                             <div class="invalid-feedback"></div>
                         </div>
-                    </div>
-                </div>
-                <div class="mb-2 border-top d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-start">
-                    <div>Jika ya,</div>
-                    <div class="d-flex flex-row flex-lg-column justify-content-center align-items-start">
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="proteksi_kasa" name="proteksi_kasa" value="1">
-                            <label class="form-check-label" for="proteksi_kasa">
-                                Kasa dengan plester
-                            </label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="proteksi_shield" name="proteksi_shield" value="1">
-                            <label class="form-check-label" for="proteksi_shield">
-                                <em>Shield drop</em>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="mb-2 border-top d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-start">
-                    <div>Dokter operator (dokter spesialis mata) menginformasikan</div>
-                    <div class="d-flex flex-row flex-lg-column justify-content-center align-items-start">
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="info_instrumen_ok" name="info_instrumen_ok" value="1">
-                            <label class="form-check-label" for="info_instrumen_ok">
-                                Instrumen spesifik yang dibutuhkan
-                            </label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="info_teknik_ok" name="info_teknik_ok" value="1">
-                            <label class="form-check-label" for="info_teknik_ok">
-                                Langkah/teknik tidak rutin dilakukan yang harus diketahui tim operasi
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="mb-2 border-top d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-start">
-                    <div>Perawat menginformasikan</div>
-                    <div class="d-flex flex-row flex-lg-column justify-content-center align-items-start">
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="info_steril_instrumen" name="info_steril_instrumen" value="1">
-                            <label class="form-check-label" for="info_steril_instrumen">
-                                Sterilisasi dan instrumen operasi
-                            </label>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="info_kelengkapan_instrumen" name="info_kelengkapan_instrumen" value="1">
-                            <label class="form-check-label" for="info_kelengkapan_instrumen">
-                                Kelengkapan instrumen operasi
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="mb-2 border-top d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-start">
-                    <div>Apakah hal tersebut di bawah ini diperlukan untuk mengurangi resiko infeksi operasi?
-                        <br><small class="fw-normal">Antibiotik profilaksis</small>
-                        <br><small class="fw-normal">Kontrol gula darah</small>
-                    </div>
-                    <div class="d-flex flex-row flex-lg-column justify-content-center align-items-start">
-                        <div class="radio-group">
-                            <div class="d-flex flex-row">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="perlu_antibiotik_dan_guladarah" id="perlu_antibiotik_dan_guladarah1" value="YA">
-                                    <label class="form-check-label" for="perlu_antibiotik_dan_guladarah1">
-                                        Ya
-                                    </label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="perlu_antibiotik_dan_guladarah" id="perlu_antibiotik_dan_guladarah2" value="TIDAK">
-                                    <label class="form-check-label" for="perlu_antibiotik_dan_guladarah2">
-                                        Tidak
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="invalid-feedback"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="mb-2">
-                    <div class="form-floating">
-                        <select class="form-select" id="nama_perawat" name="nama_perawat" aria-label="nama_perawat">
-                            <option value="" disabled selected>-- Pilih Perawat Sirkuler --</option>
-                            <?php foreach ($perawat as $list) : ?>
-                                <option value="<?= $list['fullname'] ?>"><?= $list['fullname'] ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                        <label for="nama_perawat">Perawat Sirkuler</label>
-                        <div class="invalid-feedback"></div>
                     </div>
                 </div>
             </div>
@@ -526,92 +595,115 @@ $usia = $registrasi->diff($tanggal_lahir);
             <?= form_open_multipart('/operasi/signout/update/' . $operasi_safety_signout['id_signout'], 'id="SafetySignOutForm"'); ?>
             <?= csrf_field(); ?>
             <div class="mb-3">
-                <div class="fw-bold mb-2 border-bottom"><em>Sign Out</em><br><small class="text-muted fw-normal">Prosedur akhir</small></div>
-                <div class="mb-2 border-top d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-start">
-                    <div>Dokter operator dokter spesialis mata/perawat melakukan konfirmasi dengan tim</div>
-                    <div class="d-flex flex-row flex-lg-column justify-content-center align-items-start">
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="kelengkapan_instrumen" name="kelengkapan_instrumen" value="1">
-                            <label class="form-check-label" for="kelengkapan_instrumen">
-                                Perhitungan jumlah instrumen sudah lengkap
-                            </label>
-                        </div>
-                        <div class="radio-group">
-                            <div class="d-flex flex-row">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="spesimen_kultur" id="spesimen_kultur1" value="SPESIMEN">
-                                    <label class="form-check-label" for="spesimen_kultur1">
-                                        Spesimen
-                                    </label>
+                <div class="fw-bold mb-2"><em>Sign Out</em><br><small class="text-muted fw-normal">Prosedur akhir</small></div>
+                <div class="mb-2 border-top align-items-lg-start row row-cols-1 row-cols-lg-2 g-2">
+                    <div class="col mb-0 mb-lg-2">
+                        <div>Dokter operator dokter spesialis mata/perawat melakukan konfirmasi dengan tim</div>
+                    </div>
+                    <div class="col mb-2">
+                        <div class="d-flex flex-column justify-content-start align-items-start">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="kelengkapan_instrumen" name="kelengkapan_instrumen" value="1">
+                                <label class="form-check-label" for="kelengkapan_instrumen">
+                                    Perhitungan jumlah instrumen sudah lengkap
+                                </label>
+                            </div>
+                            <div class="radio-group">
+                                <div class="d-flex flex-row">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="spesimen_kultur" id="spesimen_kultur1" value="SPESIMEN">
+                                        <label class="form-check-label" for="spesimen_kultur1">
+                                            Spesimen
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="spesimen_kultur" id="spesimen_kultur2" value="KULTUR">
+                                        <label class="form-check-label" for="spesimen_kultur2">
+                                            Kultur
+                                        </label>
+                                    </div>
                                 </div>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" id="label_pasien" name="label_pasien" value="1">
+                                <label class="form-check-label" for="label_pasien">
+                                    Label pasien
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-2 border-top align-items-lg-start row row-cols-1 row-cols-lg-2 g-2">
+                    <div class="col mb-0 mb-lg-2">
+                        <div>Adakah masalah pada instrumen?<span class="text-danger">*</span></div>
+                    </div>
+                    <div class="col mb-2">
+                        <div class="d-flex flex-column justify-content-center align-items-start">
+                            <div class="radio-group w-100">
+                                <div class="d-flex flex-row justify-content-center justify-content-lg-start">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="masalah_instrumen" id="masalah_instrumen1" value="YA">
+                                        <label class="form-check-label" for="masalah_instrumen1">
+                                            Ya
+                                        </label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="masalah_instrumen" id="masalah_instrumen2" value="TIDAK">
+                                        <label class="form-check-label" for="masalah_instrumen2">
+                                            Tidak
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                            <div class="w-100">
+                                <input type="text" class="form-control form-control-sm" id="keterangan_masalah" name="keterangan_masalah" value="" autocomplete="off" dir="auto" placeholder="Keterangan jika ya">
+                                <div class="invalid-feedback"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-2 border-top align-items-lg-start row row-cols-1 row-cols-lg-2 g-2">
+                    <div class="col mb-0 mb-lg-2">
+                        <div>Instruksi khusus untuk menunjang pemulihan pasca operasi</div>
+                    </div>
+                    <div class="col mb-2">
+                        <div class="d-flex flex-column justify-content-start align-items-start">
+                            <div class="d-flex flex-row justify-content-center justify-content-lg-start w-100">
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="spesimen_kultur" id="spesimen_kultur2" value="KULTUR">
-                                    <label class="form-check-label" for="spesimen_kultur2">
-                                        Kultur
+                                    <input class="form-check-input" type="checkbox" id="instruksi_khusus" name="instruksi_khusus" value="1">
+                                    <label class="form-check-label" for="instruksi_khusus">
+                                        Ada
                                     </label>
                                 </div>
                             </div>
-                            <div class="invalid-feedback"></div>
-                        </div>
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="label_pasien" name="label_pasien" value="1">
-                            <label class="form-check-label" for="label_pasien">
-                                Label pasien
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="mb-2 border-top d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-start">
-                    <div>Adakah masalah pada instrumen?</div>
-                    <div class="d-flex flex-row flex-lg-column justify-content-center align-items-start">
-                        <div class="radio-group">
-                            <div class="d-flex flex-row">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="masalah_instrumen" id="masalah_instrumen1" value="YA">
-                                    <label class="form-check-label" for="masalah_instrumen1">
-                                        Ya
-                                    </label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="masalah_instrumen" id="masalah_instrumen2" value="TIDAK">
-                                    <label class="form-check-label" for="masalah_instrumen2">
-                                        Tidak
-                                    </label>
-                                </div>
+                            <div class="w-100">
+                                <input type="text" class="form-control form-control-sm" id="keterangan_instruksi" name="keterangan_instruksi" value="" autocomplete="off" dir="auto" placeholder="Keterangan jika ada">
+                                <div class="invalid-feedback"></div>
                             </div>
-                            <div class="invalid-feedback"></div>
-                        </div>
-                        <div>
-                            <input type="text" class="form-control form-control-sm" id="keterangan_masalah" name="keterangan_masalah" value="" autocomplete="off" dir="auto" placeholder="Keterangan jika ya">
-                            <div class="invalid-feedback"></div>
                         </div>
                     </div>
                 </div>
-                <div class="mb-2 border-top d-flex flex-column flex-lg-row justify-content-lg-between align-items-lg-start">
-                    <div>Instruksi khusus untuk menunjang pemulihan pasca operasi</div>
-                    <div class="d-flex flex-row flex-lg-column justify-content-center align-items-start">
-                        <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" id="instruksi_khusus" name="instruksi_khusus" value="1">
-                            <label class="form-check-label" for="instruksi_khusus">
-                                Ada
-                            </label>
-                        </div>
-                        <div>
-                            <input type="text" class="form-control form-control-sm" id="keterangan_instruksi" name="keterangan_instruksi" value="" autocomplete="off" dir="auto" placeholder="Keterangan jika ada">
+                <div class="mb-2 border-top row row-cols-1 row-cols-lg-2 g-2">
+                    <div class="col">
+                        <div class="form-floating">
+                            <select class="form-select" id="nama_dokter_operator" name="nama_dokter_operator" aria-label="nama_dokter_operator">
+                                <option value="" disabled selected>-- Pilih Dokter Operator --</option>
+                                <?php foreach ($dokter as $list) : ?>
+                                    <option value="<?= $list['fullname'] ?>"><?= $list['fullname'] ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                            <label for="nama_dokter_operator">Dokter Operator (Spesialis Mata)<span class="text-danger">*</span></label>
                             <div class="invalid-feedback"></div>
                         </div>
                     </div>
-                </div>
-                <div class="mb-2">
-                    <div class="form-floating">
-                        <select class="form-select" id="nama_dokter_operator" name="nama_dokter_operator" aria-label="nama_dokter_operator">
-                            <option value="" disabled selected>-- Pilih Dokter Operator --</option>
-                            <?php foreach ($dokter as $list) : ?>
-                                <option value="<?= $list['fullname'] ?>"><?= $list['fullname'] ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                        <label for="nama_dokter_operator">Dokter Operator (Spesialis Mata)</label>
-                        <div class="invalid-feedback"></div>
+                    <div class="col">
+                        <div class="form-floating">
+                            <input type="time" class="form-control" id="jam_signout" name="jam_signout" value="" autocomplete="off" dir="auto" placeholder="jam_signout">
+                            <label for="jam_signout">Jam</label>
+                            <div class="invalid-feedback"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -655,8 +747,6 @@ $usia = $registrasi->diff($tanggal_lahir);
             $("input[name='dr_puasa']").prop('disabled', true);
             $("input[name='dr_cek_anestesi_khusus']").prop('disabled', true);
             $("input[name='dr_konfirmasi_anastersi']").prop('disabled', true);
-            // SIGN OUT
-            $('#SafetySignOutForm input, #SafetySignOutForm select, #SafetySignOutForm button').prop('disabled', true);
         <?php endif; ?>
     }
 
@@ -795,6 +885,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 $("input[name='perlu_antibiotik_dan_guladarah'][value='" + perlu_antibiotik_dan_guladarah + "']").prop('checked', true);
             }
             $('#nama_perawat').val(data.nama_perawat);
+            $('#jam_timeout').val(data.jam_timeout);
         } catch (error) {
             showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
         } finally {
@@ -832,6 +923,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             }
             $('#keterangan_instruksi').val(data.keterangan_instruksi);
             $('#nama_dokter_operator').val(data.nama_dokter_operator);
+            $('#jam_signout').val(data.jam_signout);
         } catch (error) {
             showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
         } finally {

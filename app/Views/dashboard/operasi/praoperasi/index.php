@@ -111,14 +111,14 @@ $usia = $registrasi->diff($tanggal_lahir);
                                 <option value="<?= $list['fullname'] ?>"><?= $list['fullname'] ?></option>
                             <?php endforeach; ?>
                         </select>
-                        <label for="perawat_praoperasi">Perawat Pra Operasi</label>
+                        <label for="perawat_praoperasi">Perawat Pra Operasi<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
                 <div class="mb-2">
                     <div class="form-floating">
                         <input type="text" class="form-control" id="jenis_operasi" name="jenis_operasi" value="" autocomplete="off" dir="auto" placeholder="jenis_operasi">
-                        <label for="jenis_operasi">Jenis Operasi</label>
+                        <label for="jenis_operasi">Jenis Operasi<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
@@ -209,7 +209,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             <option value="Stupor (Suporos Comma) (GCS 4-6)">Stupor (Suporos Comma) (GCS 4-6)</option>
                             <option value="Koma (GCS 3)">Koma (GCS 3)</option>
                         </select>
-                        <label for="ctt_mental">Kesadaran</label>
+                        <label for="ctt_mental">Kesadaran<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
@@ -318,7 +318,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <div class="mb-2">
                     <div class="row g-1 align-items-center radio-group">
                         <label for="ctt_alergi" class="col col-form-label">
-                            Apakah pasien memiliki riwayat alergi?
+                            Apakah pasien memiliki riwayat alergi?<span class="text-danger">*</span>
                         </label>
                         <div class="col col-form-label">
                             <div class="d-flex align-items-center justify-content-evenly">
