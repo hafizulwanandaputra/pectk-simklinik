@@ -78,12 +78,12 @@
                     <input type="hidden" id="id_poli" name="id_poli">
                     <div class="form-floating mb-1 mt-1">
                         <input type="text" class="form-control " autocomplete="off" dir="auto" placeholder="nama_poli" id="nama_poli" name="nama_poli">
-                        <label for="nama_poli">Nama Ruangan</label>
+                        <label for="nama_poli">Nama Ruangan<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="mb-1 mt-1 radio-group">
                         <label for="status">
-                            Status
+                            Status<span class="text-danger">*</span>
                         </label>
                         <div class="d-flex align-items-center justify-content-evenly">
                             <div class="form-check form-check-inline">

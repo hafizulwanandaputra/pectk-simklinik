@@ -82,22 +82,22 @@
                     <input type="hidden" id="id_supplier" name="id_supplier">
                     <div class="form-floating mb-1 mt-1">
                         <input type="text" class="form-control " autocomplete="off" dir="auto" placeholder="nama_supplier" id="nama_supplier" name="nama_supplier">
-                        <label for="nama_supplier">Nama</label>
+                        <label for="nama_supplier">Nama<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
                         <input type="text" class="form-control " autocomplete="off" dir="auto" placeholder="merek" id="merek" name="merek">
-                        <label for="merek">Merek (Opsional)</label>
+                        <label for="merek">Merek</label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
                         <input type="text" class="form-control " autocomplete="off" dir="auto" placeholder="alamat_supplier" id="alamat_supplier" name="alamat_supplier">
-                        <label for="alamat_pasien">Alamat</label>
+                        <label for="alamat_pasien">Alamat<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
                         <input type="number" class="form-control " autocomplete="off" dir="auto" placeholder="kontak_supplier" id="kontak_supplier" name="kontak_supplier">
-                        <label for="kontak_supplier">Nomor Telepon (Opsional)</label>
+                        <label for="kontak_supplier">Nomor Telepon</label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>

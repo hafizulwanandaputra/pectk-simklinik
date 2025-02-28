@@ -187,11 +187,11 @@
                     <input type="hidden" id="id_resep" name="id_resep">
                     <div class="form-floating mb-1 mt-1">
                         <input type="text" class="form-control " autocomplete="off" dir="auto" placeholder="nama_pasien" id="nama_pasien" name="nama_pasien">
-                        <label for="nama_pasien">Nama Pasien (Opsional)</label>
+                        <label for="nama_pasien">Nama Pasien</label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="mt-1 mb-0 row g-1">
-                        <label for="jenis_kelamin" class="col-3 col-form-label">Jenis Kelamin</label>
+                        <label for="jenis_kelamin" class="col-3 col-form-label">Jenis Kelamin<span class="text-danger">*</span></label>
                         <div class="col col-form-label">
                             <div class="d-flex align-items-center justify-content-evenly">
                                 <div class="form-check form-check-inline">
@@ -212,12 +212,12 @@
                     </div>
                     <div class="form-floating mb-1 mt-1">
                         <input type="date" class="form-control " autocomplete="off" dir="auto" placeholder="tanggal_lahir" id="tanggal_lahir" name="tanggal_lahir">
-                        <label for="tanggal_lahir">Tanggal Lahir (Opsional)</label>
+                        <label for="tanggal_lahir">Tanggal Lahir</label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
                         <input type="text" class="form-control " autocomplete="off" dir="auto" placeholder="alamat" id="alamat" name="alamat">
-                        <label for="alamat_pasien">Alamat (Opsional)</label>
+                        <label for="alamat_pasien">Alamat</label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>

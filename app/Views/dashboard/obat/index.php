@@ -108,22 +108,22 @@
                         <select class="form-select " id="id_supplier" name="id_supplier" aria-label="id_supplier">
                             <option value="" disabled selected>-- Pilih Merek dan Pemasok --</option>
                         </select>
-                        <label for="id_dokter">Merek dan Pemasok</label>
+                        <label for="id_dokter">Merek dan Pemasok<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
                         <input type="text" class="form-control " autocomplete="off" dir="auto" placeholder="nama_obat" id="nama_obat" name="nama_obat">
-                        <label for="nama_obat">Nama</label>
+                        <label for="nama_obat">Nama<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
                         <input type="text" class="form-control " autocomplete="off" dir="auto" placeholder="isi_obat" id="isi_obat" name="isi_obat">
-                        <label for="isi_obat">Isi (Opsional)</label>
+                        <label for="isi_obat">Isi</label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mt-1 mb-1">
                         <input type="text" class="form-control " autocomplete="off" dir="auto" placeholder="kategori_obat" id="kategori_obat" name="kategori_obat" list="list_kategori_obat">
-                        <label for="kategori_obat">Kategori Obat (Opsional)</label>
+                        <label for="kategori_obat">Kategori Obat</label>
                         <div class="invalid-feedback"></div>
                         <datalist id="list_kategori_obat">
                             <option value="Antibiotik">
@@ -152,21 +152,21 @@
                                 <option value="Alat Kesehatan">Alat Kesehatan</option>
                             </optgroup>
                         </select>
-                        <label for="bentuk_obat">Bentuk</label>
+                        <label for="bentuk_obat">Bentuk<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="input-group has-validation mb-1 mt-1">
                         <span class="input-group-text">Rp</span>
                         <div class="form-floating">
                             <input type="number" class="form-control " autocomplete="off" dir="auto" placeholder="harga_obat" id="harga_obat" name="harga_obat">
-                            <label for="harga_obat">Harga Obat</label>
+                            <label for="harga_obat">Harga Obat<span class="text-danger">*</span></label>
                         </div>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="input-group has-validation mb-1 mt-1">
                         <div class="form-floating">
                             <input type="number" class="form-control " autocomplete="off" dir="auto" placeholder="ppn" id="ppn" name="ppn">
-                            <label for="ppn">PPN</label>
+                            <label for="ppn">PPN<span class="text-danger">*</span></label>
                         </div>
                         <span class="input-group-text">%</span>
                         <div class="invalid-feedback"></div>
@@ -174,7 +174,7 @@
                     <div class="input-group has-validation mb-1 mt-1">
                         <div class="form-floating">
                             <input type="number" class="form-control " autocomplete="off" dir="auto" placeholder="mark_up" id="mark_up" name="mark_up">
-                            <label for="mark_up">Mark Up</label>
+                            <label for="mark_up">Mark Up<span class="text-danger">*</span></label>
                         </div>
                         <span class="input-group-text">%</span>
                         <div class="invalid-feedback"></div>
@@ -183,15 +183,38 @@
                         <span class="input-group-text">Rp</span>
                         <div class="form-floating">
                             <input type="number" class="form-control " autocomplete="off" dir="auto" placeholder="penyesuaian_harga" id="penyesuaian_harga" name="penyesuaian_harga">
-                            <label for="penyesuaian_harga">Penyesuaian Harga</label>
+                            <label for="penyesuaian_harga">Penyesuaian Harga<span class="text-danger">*</span></label>
                         </div>
                         <div class="invalid-feedback"></div>
                     </div>
-                    <div class="form-floating">
-                        <input type="number" class="form-control " autocomplete="off" dir="auto" placeholder="jumlah_masuk" id="jumlah_masuk" name="jumlah_masuk">
+                    <div class="form-floating mb-1 mt-1">
+                        <input type="number" class="form-control" autocomplete="off" dir="auto" placeholder="jumlah_masuk" id="jumlah_masuk" name="jumlah_masuk">
                         <label for="jumlah_masuk" id="stok_label"></label>
+                        <div class="invalid-feedback"></div>
                     </div>
-                    <div class="invalid-feedback"></div>
+                    <div id="stok_jumlah" class="mb-1 mt-1">
+                        <div class="mb-0 row g-1 overflow-hidden d-flex align-items-end">
+                            <div class="col fw-medium text-nowrap">Obat masuk</div>
+                            <div class="col text-end">
+                                <div class="date text-truncate" id="stok_obat_masuk">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-0 row g-1 overflow-hidden d-flex  align-items-end">
+                            <div class="col fw-medium text-nowrap">Obat Keluar</div>
+                            <div class="col text-end">
+                                <div class="date text-truncate" id="stok_obat_keluar">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-0 row g-1 overflow-hidden d-flex  align-items-end">
+                            <div class="col fw-medium text-nowrap">Sisa Stok</div>
+                            <div class="col text-end">
+                                <div class="date text-truncate" id="stok_sisa">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer justify-content-between pt-2 pb-2" style="border-top: 1px solid var(--bs-border-color-translucent);">
                     <div>
@@ -563,7 +586,11 @@
         // Event handler untuk menampilkan modal tambah obat
         $('#addObatBtn').click(function() {
             $('#obatModalLabel').text('Tambah Obat');
-            $('#stok_label').text('Jumlah Stok Awal');
+            $('#stok_label').html(`Jumlah Stok Awal<span class="text-danger">*</span>`);
+            $('#stok_obat_masuk').text(``);
+            $('#stok_obat_keluar').text(``);
+            $('#stok_sisa').text(``);
+            $('#stok_jumlah').hide();
             $('#obatModal').modal('show');
         });
 
@@ -589,6 +616,9 @@
 
             try {
                 const response = await axios.get(`<?= base_url('/obat/obat') ?>/${id}`);
+                const stok_obat_masuk = parseInt(response.data.jumlah_masuk).toLocaleString('id-ID');
+                const stok_obat_keluar = parseInt(response.data.jumlah_keluar).toLocaleString('id-ID');
+                const stok_sisa = parseInt(response.data.jumlah_masuk) - parseInt(response.data.jumlah_keluar);
                 $('#obatModalLabel').text('Edit Obat');
                 $('#id_obat').val(response.data.id_obat);
                 $('#id_supplier').val(response.data.id_supplier);
@@ -601,7 +631,11 @@
                 $('#mark_up').val(response.data.mark_up);
                 $('#penyesuaian_harga').val(response.data.penyesuaian_harga);
                 $('#jumlah_masuk').val('0');
-                $('#stok_label').text(`Tambah/Kurangi Stok (masuk: ${response.data.jumlah_masuk}; keluar: ${response.data.jumlah_keluar}; stok: ${response.data.jumlah_masuk - response.data.jumlah_keluar})`);
+                $('#stok_label').html(`Tambah/Kurangi Stok<span class="text-danger">*</span>`);
+                $('#stok_obat_masuk').text(stok_obat_masuk);
+                $('#stok_obat_keluar').text(stok_obat_keluar);
+                $('#stok_sisa').text(stok_sisa.toLocaleString('id-ID'));
+                $('#stok_jumlah').show();
                 hitungHargaJual();
                 $('#obatModal').modal('show');
             } catch (error) {

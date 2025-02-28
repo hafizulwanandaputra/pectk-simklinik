@@ -122,12 +122,12 @@
                     <input type="hidden" id="original_username" name="original_username">
                     <div class="form-floating mb-1 mt-1">
                         <input type="text" class="form-control " autocomplete="off" dir="auto" placeholder="fullname" id="fullname" name="fullname">
-                        <label for="fullname">Nama Lengkap</label>
+                        <label for="fullname">Nama Lengkap<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
                         <input type="text" class="form-control " autocomplete="off" dir="auto" placeholder="username" id="username" name="username">
-                        <label for="username">Nama Pengguna</label>
+                        <label for="username">Nama Pengguna<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
@@ -140,7 +140,7 @@
                             <option value="Dokter">Dokter</option>
                             <option value="Kasir">Kasir</option>
                         </select>
-                        <label for="role">Jenis Pengguna</label>
+                        <label for="role">Jenis Pengguna<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>

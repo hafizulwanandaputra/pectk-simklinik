@@ -81,7 +81,7 @@
                     <input type="hidden" id="id_layanan" name="id_layanan">
                     <div class="form-floating mb-1 mt-1">
                         <input type="text" class="form-control " autocomplete="off" dir="auto" placeholder="nama_layanan" id="nama_layanan" name="nama_layanan">
-                        <label for="nama_layanan">Nama</label>
+                        <label for="nama_layanan">Nama<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mt-1 mb-1">
@@ -91,20 +91,20 @@
                             <option value="Pemeriksaan Penunjang">Pemeriksaan Penunjang</option>
                             <option value="Operasi">Operasi</option>
                         </select>
-                        <label for="jenis_layanan">Jenis</label>
+                        <label for="jenis_layanan">Jenis<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="input-group has-validation mb-1 mt-1">
                         <span class="input-group-text">Rp</span>
                         <div class="form-floating">
                             <input type="number" class="form-control " autocomplete="off" dir="auto" placeholder="tarif" id="tarif" name="tarif">
-                            <label for="tarif">Tarif</label>
+                            <label for="tarif">Tarif<span class="text-danger">*</span></label>
                         </div>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
                         <input type="text" class="form-control " autocomplete="off" dir="auto" placeholder="keterangan" id="keterangan" name="keterangan">
-                        <label for="keterangan">Keterangan (Opsional)</label>
+                        <label for="keterangan">Keterangan</label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
