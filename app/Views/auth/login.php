@@ -186,6 +186,27 @@
             font-variant-numeric: tabular-nums;
         }
 
+        @supports (font-variation-settings: normal) {
+            :root {
+                --bs-font-sans-serif: InterVariable, Roboto, "Noto Sans", "Noto Sans Arabic", system-ui, -apple-system, "Helvetica Neue", Arial, "Liberation Sans", sans-serif;
+            }
+
+            .display-6,
+            .display-5,
+            .display-4,
+            .display-3,
+            .display-2,
+            .display-1,
+            h3,
+            .h3,
+            h2,
+            .h2,
+            h1,
+            .h1 {
+                font-family: var(--bs-font-sans-serif);
+            }
+        }
+
         html,
         body {
             height: 100%;
