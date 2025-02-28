@@ -194,7 +194,7 @@
                     </div>
                     <div id="stok_jumlah" class="mb-1 mt-1">
                         <div class="mb-0 row g-1 overflow-hidden d-flex align-items-end">
-                            <div class="col fw-medium text-nowrap">Obat masuk</div>
+                            <div class="col fw-medium text-nowrap">Obat Masuk</div>
                             <div class="col text-end">
                                 <div class="date text-truncate" id="stok_obat_masuk">
                                 </div>
