@@ -447,7 +447,7 @@ class Settings extends BaseController
                 ->where('keterangan_instruksi', null)
                 ->where('nama_dokter_operator', null)
                 ->where('tanda_tangan_dokter_operator', null)
-                ->where('jam', null)
+                ->where('jam_signout', null)
                 ->countAllResults();
 
             $medrec_operasi_safety_timeout = $db->table('medrec_operasi_safety_timeout')
@@ -467,7 +467,7 @@ class Settings extends BaseController
                 ->where('perlu_antibiotik_dan_guladarah', null)
                 ->where('nama_perawat', null)
                 ->where('tanda_tangan_perawat', null)
-                ->where('jam', null)
+                ->where('jam_timeout', null)
                 ->countAllResults();
 
             $medrec_optik = $db->table('medrec_optik')
@@ -754,7 +754,7 @@ class Settings extends BaseController
                     'keterangan_instruksi',
                     'nama_dokter_operator',
                     'tanda_tangan_dokter_operator',
-                    'jam'
+                    'jam_signout'
                 ],
                 'medrec_operasi_safety_timeout' => [
                     'perkenalan_diri',
@@ -773,7 +773,7 @@ class Settings extends BaseController
                     'perlu_antibiotik_dan_guladarah',
                     'nama_perawat',
                     'tanda_tangan_perawat',
-                    'jam'
+                    'jam_timeout'
                 ],
                 'medrec_optik' => [
                     'tipe_lensa',
