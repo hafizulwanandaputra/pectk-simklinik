@@ -15,10 +15,10 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/dark.css" media="(prefers-color-scheme: dark)">
-    <!-- Favicons -->
+    <!-- Favicon -->
     <link href="<?= base_url(); ?>favicon.png" rel="icon" />
     <link href="<?= base_url(); ?>favicon.png" rel="apple-touch-icon" />
+    <!-- Akhir dari Favicon -->
     <link href="<?= base_url(); ?>assets/css/dashboard/dashboard.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/css/main.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/css/JawiDubai.css" rel="stylesheet">
@@ -53,14 +53,25 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
             const setTheme = theme => {
                 let themeColor = '';
                 let isDarkMode = theme === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : theme === 'dark';
+                let $darkThemeLink = $('<link>', {
+                    rel: 'stylesheet',
+                    type: 'text/css',
+                    href: 'https://npmcdn.com/flatpickr/dist/themes/dark.css',
+                    id: 'dark-theme-style' // ID untuk memudahkan penghapusan
+                });
 
                 if (isDarkMode) {
                     $('html').attr('data-bs-theme', 'dark');
                     themeColor = '#051b11';
+                    if (!$('#dark-theme-style').length) {
+                        $('head').append($darkThemeLink);
+                    }
                 } else {
                     $('html').attr('data-bs-theme', theme);
                     themeColor = '#d1e7dd';
+                    $('#dark-theme-style').remove();
                 }
+
                 $('meta[name="theme-color"]').attr('content', themeColor);
 
                 const colorSettings = {
