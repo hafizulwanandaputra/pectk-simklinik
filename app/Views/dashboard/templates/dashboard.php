@@ -34,6 +34,10 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/id.js"></script>
+    <script>
+        flatpickr.localize(flatpickr.l10ns.id);
+    </script>
     <script>
         (() => {
             'use strict'
