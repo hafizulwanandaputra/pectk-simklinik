@@ -617,7 +617,7 @@ $db = db_connect();
                     $('#paginationNav_icd_9 ul').empty();
                     $('#view_icd_9').append(`
                     <tr>
-                        <td colspan="3" class="text-center">Tidak ada ICD-10</td>
+                        <td colspan="3" class="text-center">Tidak ada ICD-9 CM</td>
                     </tr>
                 `);
                 } else {
