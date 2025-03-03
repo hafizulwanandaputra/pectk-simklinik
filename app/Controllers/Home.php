@@ -83,7 +83,8 @@ class Home extends BaseController
 
         // Menghitung total data dari setiap tabel
         $total_pasien = $pasien->countAllResults(); // Total pasien
-        $total_rajal = $rawatjalan->countAllResults(); // Total pasien
+        $total_rajal_all = $rawatjalan->where('status', 'DAFTAR')->countAllResults();
+        $total_rajal_all_batal = $rawatjalan->where('status', 'BATAL')->countAllResults();
         $total_rawatjalan = $rawatjalan->like('tanggal_registrasi', date('Y-m-d'))->where('status', 'DAFTAR')->countAllResults(); // Total rawat jalan hari ini
         $total_rawatjalan_batal = $rawatjalan->like('tanggal_registrasi', date('Y-m-d'))->where('status', 'BATAL')->countAllResults(); // Total rawat jalan yang batal hari ini
         $agamagraph = $pasien->select('agama, COUNT(*) AS total_agama')
@@ -329,7 +330,8 @@ class Home extends BaseController
         // Menyusun data untuk ditampilkan di view
         $data = [
             'total_pasien' => $total_pasien,
-            'total_rajal' => $total_rajal,
+            'total_rajal_all' => $total_rajal_all,
+            'total_rajal_all_batal' => $total_rajal_all_batal,
             'total_rawatjalan' => $total_rawatjalan,
             'total_rawatjalan_batal' => $total_rawatjalan_batal,
             'agamagraph' => $agamagraph,
