@@ -211,6 +211,18 @@ $routes->get('/(?i)frmsetujukedokteran/(?i)export/(:any)', 'FRMSetujuKedokteran:
 $routes->post('/(?i)frmsetujukedokteran/(?i)update/(:any)', 'FRMSetujuKedokteran::update/$1');
 $routes->delete('/(?i)frmsetujukedokteran/(?i)delete/(:any)', 'FRMSetujuKedokteran::delete/$1');
 
+// FORM PERSETUJUAN TINDAKAN ANESTESI
+$routes->get('/(?i)frmsetujuanestesi', 'FRMSetujuAnestesi::index');
+$routes->get('/(?i)frmsetujuanestesi/frmsetujuanestesilist', 'FRMSetujuAnestesi::frmsetujuanestesilist');
+$routes->get('/(?i)frmsetujuanestesi/pasienlist', 'FRMSetujuAnestesi::pasienlist');
+$routes->get('/(?i)frmsetujuanestesi/(:num)', 'FRMSetujuAnestesi::details/$1');
+$routes->post('/(?i)frmsetujuanestesi/(?i)create', 'FRMSetujuAnestesi::create');
+$routes->get('/(?i)frmsetujuanestesi/(?i)details/(:any)', 'FRMSetujuAnestesi::details/$1');
+$routes->get('/(?i)frmsetujuanestesi/(?i)view/(:any)', 'FRMSetujuAnestesi::view/$1');
+$routes->get('/(?i)frmsetujuanestesi/(?i)export/(:any)', 'FRMSetujuAnestesi::export/$1');
+$routes->post('/(?i)frmsetujuanestesi/(?i)update/(:any)', 'FRMSetujuAnestesi::update/$1');
+$routes->delete('/(?i)frmsetujuanestesi/(?i)delete/(:any)', 'FRMSetujuAnestesi::delete/$1');
+
 // SURAT RUJUKAN
 $routes->get('/(?i)rujukan', 'Rujukan::index');
 $routes->get('/(?i)rujukan/rujukanlist', 'Rujukan::rujukanlist');

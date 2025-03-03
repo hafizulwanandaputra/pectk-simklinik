@@ -68,6 +68,8 @@ class Filters extends BaseConfig
                 '/lpoperasipterigium/*',
                 '/frmsetujukedokteran',
                 '/frmsetujukedokteran/*',
+                '/frmsetujuanestesi',
+                '/frmsetujuanestesi/*',
                 '/rujukan',
                 '/rujukan/*',
                 '/sakitmata',
