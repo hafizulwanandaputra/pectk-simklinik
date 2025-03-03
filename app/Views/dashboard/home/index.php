@@ -113,7 +113,7 @@ $db = db_connect();
                     </div>
                     <div class="col">
                         <div class="card bg-success-subtle border-success-subtle text-success-emphasis w-100  shadow-sm">
-                            <div style="font-size: 0.9em;" class="" card-header py-1 px-3 border-success-subtle w-100 text-truncate">Total Rawat Jalan yang Didaftarkan</div>
+                            <div style="font-size: 0.9em;" class="card-header py-1 px-3 border-success-subtle w-100 text-truncate">Total Rawat Jalan yang Didaftarkan</div>
                             <div class="card-body py-2 px-3">
                                 <h5 class="display-6 fw-medium date mb-0"><?= number_format($total_rajal_all, 0, ',', '.') ?></h5>
                             </div>
