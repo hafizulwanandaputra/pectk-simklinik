@@ -702,7 +702,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                 </span>
                             </li>
                             <div id="submenu-laporan-operasi" class="collapse <?= ($activeSegment === 'lpoperasikatarak' || $activeSegment === 'lpoperasipterigium' || $activeSegment === 'lpoperasi') ? 'show' : '' ?>">
-                                <ul class="nav nav-pills flex-column mt-1">
+                                <ul class="nav nav-pills flex-column my-1">
                                     <li class="nav-item" style="margin-left: calc(24px + 0.5rem);">
                                         <a class="nav-link px-2 py-1 <?= ($activeSegment === 'lpoperasikatarak') ? 'active bg-success activeLinkSideBar' : '' ?>" href="<?= base_url('/lpoperasikatarak'); ?>">
                                             <div class="d-flex align-items-start <?= ($activeSegment === 'lpoperasikatarak') ? 'text-white' : 'text-success-emphasis' ?>">
@@ -745,7 +745,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                 </span>
                             </li>
                             <div id="submenu-formulir" class="collapse <?= ($activeSegment === 'frmsetujukedokteran' || $activeSegment === 'frmsetujuanestesi') ? 'show' : '' ?>">
-                                <ul class="nav nav-pills flex-column mt-1">
+                                <ul class="nav nav-pills flex-column my-1">
                                     <li class="nav-item" style="margin-left: calc(24px + 0.5rem);">
                                         <a class="nav-link px-2 py-1 <?= ($activeSegment === 'frmsetujukedokteran') ? 'active bg-success activeLinkSideBar' : '' ?>" href="<?= base_url('/frmsetujukedokteran'); ?>">
                                             <div class="d-flex align-items-start <?= ($activeSegment === 'frmsetujukedokteran') ? 'text-white' : 'text-success-emphasis' ?>">
@@ -781,7 +781,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                 </span>
                             </li>
                             <div id="submenu-surat" class="collapse <?= ($activeSegment === 'rujukan' || $activeSegment === 'sakitmata' || $activeSegment === 'istirahat' || $activeSegment === 'butawarna') ? 'show' : '' ?>">
-                                <ul class="nav nav-pills flex-column mt-1">
+                                <ul class="nav nav-pills flex-column my-1">
                                     <?php if (session()->get('role') != "Perawat") : ?>
                                         <li class="nav-item" style="margin-left: calc(24px + 0.5rem);">
                                             <a class="nav-link px-2 py-1 <?= ($activeSegment === 'rujukan') ? 'active bg-success activeLinkSideBar' : '' ?>" href="<?= base_url('/rujukan'); ?>">
