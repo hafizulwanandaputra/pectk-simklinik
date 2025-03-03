@@ -365,23 +365,37 @@ $waktuFormatted = $dateTime->format('H.i');
                                 <?php endif; ?>
                             </td>
                         </tr>
+                        <tr>
+                            <td colspan="3" rowspan="2" style="vertical-align: top; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
+                                Dengan ini saya menyatakan bahwa saya telah menerangkan hal-hal diatas secara benar dan jelas serta memberikan kesempatan bertanya dan/atau berdiskusi.
+                            </td>
+                            <th style="vertical-align: top; white-space: nowrap;">
+                                Tanda Tangan
+                            </th>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top; height: 0.75cm;">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" rowspan="2" style="vertical-align: top; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
+                                Dengan ini saya menyatakan bahwa saya telah menerima informasi sebagaimana diatas yang saya beri tanda tangan atau paraf di kolom kananya dan telah memahaminya.
+                            </td>
+                            <th style="vertical-align: top; white-space: nowrap;">
+                                Tanda Tangan
+                            </th>
+                        </tr>
+                        <tr>
+                            <td style="vertical-align: top; height: 0.75cm;">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" style="vertical-align: top; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
+                                Bila pasien tidak kompeten atau tidak mau menerima informasi, maka penerima informasi adalah wali atau keluarga terdekat.
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
-                <p>
-                    <small>
-                        Dengan ini saya menyatakan bahwa saya telah menerangkan hal-hal diatas secara benar dan jelas serta memberikan kesempatan bertanya dan/atau berdiskusi.
-                    </small>
-                </p>
-                <p>
-                    <small>
-                        Dengan ini saya menyatakan bahwa saya telah menerima informasi sebagaimana diatas yang saya beri tanda tangan atau paraf di kolom kananya dan telah memahaminya.
-                    </small>
-                </p>
-                <p>
-                    <small>
-                        Bila pasien tidak kompeten atau tidak mau menerima informasi, maka penerima informasi adalah wali atau keluarga terdekat.
-                    </small>
-                </p>
                 <h4 class="margin: 0;">PERSETUJUAN TINDAKAN KEDOKTERAN</h4>
                 <small>
                     <div>Yang bertanda tangan di bawah ini, saya:</div>
@@ -531,14 +545,22 @@ $waktuFormatted = $dateTime->format('H.i');
                     <table class="table" style="width: 100%; margin-bottom: 4px;">
                         <tbody>
                             <tr>
-                                <td style="width: 40%; text-align: center; vertical-align: top; padding-bottom: 1.5cm;">
+                                <td style="width: 40%; text-align: center; vertical-align: top;">
                                     <div>Teluk Kuantan, <?= $tanggalFormatted ?> pukul <?= $waktuFormatted ?><br>Yang menyatakan</div>
                                 </td>
-                                <td style="width: 30%; text-align: center; vertical-align: top; padding-bottom: 1.5cm;">
+                                <td style="width: 30%; text-align: center; vertical-align: top;">
                                     <div>Saksi I</div>
                                 </td>
-                                <td style="width: 30%; text-align: center; vertical-align: top; padding-bottom: 1.5cm;">
+                                <td style="width: 30%; text-align: center; vertical-align: top;">
                                     <div>Saksi II</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="width: 40%; text-align: center; vertical-align: top; height: 1.5cm;">
+                                </td>
+                                <td style="width: 30%; text-align: center; vertical-align: top; height: 1.5cm;">
+                                </td>
+                                <td style="width: 30%; text-align: center; vertical-align: top; height: 1.5cm;">
                                 </td>
                             </tr>
                             <tr>
