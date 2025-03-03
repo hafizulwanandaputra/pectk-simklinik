@@ -182,7 +182,17 @@ $db = db_connect();
                 </div>
                 <div class="mb-2">
                     <div class="card bg-body-tertiary w-100  shadow-sm">
-                        <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Rawat Jalan Per Bulan</div>
+                        <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Rawat Jalan Per Bulan Menurut Dokter</div>
+                        <div class="card-body py-2 px-3">
+                            <div class="ratio ratio-onecol w-100">
+                                <canvas id="rawatjalandoktergraph"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-2">
+                    <div class="card bg-body-tertiary w-100  shadow-sm">
+                        <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Rawat Jalan Per Bulan Keseluruhan</div>
                         <div class="card-body py-2 px-3">
                             <div class="ratio ratio-onecol w-100">
                                 <canvas id="rawatjalangraph"></canvas>
@@ -848,6 +858,8 @@ $db = db_connect();
         const label_persebarankecamatangraph = [];
         const data_persebarankelurahangraph = [];
         const label_persebarankelurahangraph = [];
+        const data_rawatjalandoktergraph = [];
+        const label_rawatjalandoktergraph = [];
         const data_rawatjalangraph = [];
         const label_rawatjalangraph = [];
     <?php endif; ?>
@@ -1085,6 +1097,10 @@ $db = db_connect();
                 data: data_persebarankelurahangraph
             }]
         }
+        var data_content_rawatjalandoktergraph = {
+            labels: <?= $labels_rawatjalandokter ?>,
+            datasets: <?= $datasets_rawatjalandokter ?>
+        }
         var data_content_rawatjalangraph = {
             labels: label_rawatjalangraph,
             datasets: [{
@@ -1320,6 +1336,44 @@ $db = db_connect();
                     },
                     filler: {
                         drawTime: 'beforeDraw'
+                    }
+                },
+                scale: {
+                    ticks: {
+                        precision: 0
+                    }
+                }
+            }
+        })
+        var chart_rawatjalandoktergraph = createChart(document.getElementById('rawatjalandoktergraph').getContext('2d'), {
+            type: 'line',
+            data: data_content_rawatjalandoktergraph,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                locale: 'id-ID',
+                interaction: {
+                    intersect: false,
+                    mode: 'index',
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Bulan'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Total Rawat Jalan'
+                        }
                     }
                 },
                 scale: {

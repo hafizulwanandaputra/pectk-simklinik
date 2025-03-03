@@ -117,6 +117,51 @@ class Home extends BaseController
             ->where('status', 'DAFTAR')
             ->groupBy('DATE_FORMAT(tanggal_registrasi, "%Y-%m")')
             ->get();
+        $rawatjalandoktergraph = $rawatjalan->select('DATE_FORMAT(tanggal_registrasi, "%Y-%m") AS bulan, dokter, COUNT(*) AS total_rajal')
+            ->where('status', 'DAFTAR')
+            ->orderBy('dokter', 'ASC')
+            ->groupBy('DATE_FORMAT(tanggal_registrasi, "%Y-%m"), dokter')
+            ->get()
+            ->getResultArray();
+
+        // Inisialisasi array untuk labels (bulan unik) dan datasets
+        $labels_rawatjalandokter = [];
+        $data_per_dokter_rajal = [];
+
+        // Proses data hasil query
+        foreach ($rawatjalandoktergraph as $row) {
+            // Tambahkan bulan ke array labels jika belum ada
+            if (!in_array($row['bulan'], $labels_rawatjalandokter)) {
+                $labels_rawatjalandokter[] = $row['bulan'];
+            }
+
+            // Atur data rawat jalan per dokter
+            $data_per_dokter_rajal[$row['dokter']][$row['bulan']] = $row['total_rajal'];
+        }
+
+        // Urutkan labels secara kronologis
+        sort($labels_rawatjalandokter);
+
+        // Siapkan struktur data untuk Chart.js
+        $datasets_rawatjalandokter = [];
+        foreach ($data_per_dokter_rajal as $dokter => $data_bulan) {
+            $dataset = [
+                'label' => $dokter,
+                'pointStyle' => 'circle',
+                'pointRadius' => 6,
+                'pointHoverRadius' => 12,
+                'fill' => false,
+                'data' => []
+            ];
+
+            // Isi data sesuai urutan bulan di labels
+            foreach ($labels_rawatjalandokter as $bulan) {
+                // Gunakan nilai rawat jalan jika ada, atau 0 jika tidak ada data untuk bulan tersebut
+                $dataset['data'][] = $data_bulan[$bulan] ?? 0;
+            }
+
+            $datasets_rawatjalandokter[] = $dataset;
+        }
 
         $total_supplier = $supplier->countAllResults(); // Total supplier
         $total_obat = $obat->countAllResults(); // Total obat
@@ -286,6 +331,8 @@ class Home extends BaseController
             'persebarankabupatengraph' => $persebarankabupatengraph,
             'persebarankecamatangraph' => $persebarankecamatangraph,
             'persebarankelurahangraph' => $persebarankelurahangraph,
+            'labels_rawatjalandokter' => json_encode($labels_rawatjalandokter),
+            'datasets_rawatjalandokter' => json_encode($datasets_rawatjalandokter),
             'rawatjalangraph' => $rawatjalangraph,
             'dokter' => $dokter,
             'kasir' => $kasir,
