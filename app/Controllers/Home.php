@@ -83,6 +83,7 @@ class Home extends BaseController
 
         // Menghitung total data dari setiap tabel
         $total_pasien = $pasien->countAllResults(); // Total pasien
+        $total_rajal = $rawatjalan->countAllResults(); // Total pasien
         $total_rawatjalan = $rawatjalan->like('tanggal_registrasi', date('Y-m-d'))->where('status', 'DAFTAR')->countAllResults(); // Total rawat jalan hari ini
         $total_rawatjalan_batal = $rawatjalan->like('tanggal_registrasi', date('Y-m-d'))->where('status', 'BATAL')->countAllResults(); // Total rawat jalan yang batal hari ini
         $agamagraph = $pasien->select('agama, COUNT(*) AS total_agama')
@@ -112,6 +113,11 @@ class Home extends BaseController
             ->orderBy('total_kelurahan', 'DESC')
             ->orderBy('kelurahan', 'ASC')
             ->groupBy('kelurahan')
+            ->get();
+        $rawatjalanpiegraph = $rawatjalan->select('dokter, COUNT(*) AS total_rajal')
+            ->where('status', 'DAFTAR')
+            ->orderBy('dokter', 'ASC')
+            ->groupBy('dokter')
             ->get();
         $rawatjalangraph = $rawatjalan->select('DATE_FORMAT(tanggal_registrasi, "%Y-%m") AS bulan, COUNT(*) AS total_rajal')
             ->where('status', 'DAFTAR')
@@ -323,6 +329,7 @@ class Home extends BaseController
         // Menyusun data untuk ditampilkan di view
         $data = [
             'total_pasien' => $total_pasien,
+            'total_rajal' => $total_rajal,
             'total_rawatjalan' => $total_rawatjalan,
             'total_rawatjalan_batal' => $total_rawatjalan_batal,
             'agamagraph' => $agamagraph,
@@ -331,6 +338,7 @@ class Home extends BaseController
             'persebarankabupatengraph' => $persebarankabupatengraph,
             'persebarankecamatangraph' => $persebarankecamatangraph,
             'persebarankelurahangraph' => $persebarankelurahangraph,
+            'rawatjalanpiegraph' => $rawatjalanpiegraph,
             'labels_rawatjalandokter' => json_encode($labels_rawatjalandokter),
             'datasets_rawatjalandokter' => json_encode($datasets_rawatjalandokter),
             'rawatjalangraph' => $rawatjalangraph,

@@ -92,12 +92,22 @@ $db = db_connect();
         <?php if (session()->get('role') == "Admin" || session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admisi") : ?>
             <div class="mb-3">
                 <div class="fw-bold mb-2 border-bottom">Pasien dan Rawat Jalan</div>
-                <div class="row row-cols-1 row-cols-lg-3 g-2 mb-2">
+                <div class="mb-2">
                     <div class="col">
                         <div class="card bg-body-tertiary w-100  shadow-sm">
                             <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Total Pasien</div>
                             <div class="card-body py-2 px-3">
                                 <h5 class="display-6 fw-medium date mb-0"><?= number_format($total_pasien, 0, ',', '.') ?></h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row row-cols-1 row-cols-lg-3 g-2 mb-2">
+                    <div class="col">
+                        <div class="card bg-body-tertiary w-100  shadow-sm">
+                            <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Total Rawat Jalan Terdaftar</div>
+                            <div class="card-body py-2 px-3">
+                                <h5 class="display-6 fw-medium date mb-0"><?= number_format($total_rajal, 0, ',', '.') ?></h5>
                             </div>
                         </div>
                     </div>
@@ -179,13 +189,23 @@ $db = db_connect();
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="mb-2">
-                    <div class="card bg-body-tertiary w-100  shadow-sm">
-                        <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Rawat Jalan Per Bulan Menurut Dokter</div>
-                        <div class="card-body py-2 px-3">
-                            <div class="ratio ratio-onecol w-100">
-                                <canvas id="rawatjalandoktergraph"></canvas>
+                    <div class="col">
+                        <div class="card bg-body-tertiary w-100  shadow-sm">
+                            <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Rawat Jalan Menurut Dokter</div>
+                            <div class="card-body py-2 px-3">
+                                <div class="ratio ratio-4x3 w-100">
+                                    <canvas id="rawatjalanpiegraph"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card bg-body-tertiary w-100  shadow-sm">
+                            <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Rawat Jalan Per Bulan Menurut Dokter</div>
+                            <div class="card-body py-2 px-3">
+                                <div class="ratio ratio-4x3 w-100">
+                                    <canvas id="rawatjalandoktergraph"></canvas>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -858,6 +878,8 @@ $db = db_connect();
         const label_persebarankecamatangraph = [];
         const data_persebarankelurahangraph = [];
         const label_persebarankelurahangraph = [];
+        const data_rawatjalanpiegraph = [];
+        const label_rawatjalanpiegraph = [];
         const data_rawatjalandoktergraph = [];
         const label_rawatjalandoktergraph = [];
         const data_rawatjalangraph = [];
@@ -998,6 +1020,10 @@ $db = db_connect();
             data_persebarankelurahangraph.push(<?= $persebarankelurahangraph->total_kelurahan; ?>);
             label_persebarankelurahangraph.push('<?= htmlspecialchars($kelurahanNama, ENT_QUOTES, 'UTF-8'); ?>');
         <?php endforeach; ?>
+        <?php foreach ($rawatjalanpiegraph->getResult() as $key => $rawatjalanpiegraph) : ?>
+            data_rawatjalanpiegraph.push(<?= $rawatjalanpiegraph->total_rajal; ?>);
+            label_rawatjalanpiegraph.push('<?= $rawatjalanpiegraph->dokter; ?>');
+        <?php endforeach; ?>
         <?php foreach ($rawatjalangraph->getResult() as $key => $rawatjalangraph) : ?>
             data_rawatjalangraph.push(<?= $rawatjalangraph->total_rajal; ?>);
             label_rawatjalangraph.push('<?= $rawatjalangraph->bulan; ?>');
@@ -1095,6 +1121,18 @@ $db = db_connect();
                 borderWidth: 0,
                 fill: true,
                 data: data_persebarankelurahangraph
+            }]
+        }
+        var data_content_rawatjalanpiegraph = {
+            labels: label_rawatjalanpiegraph,
+            datasets: [{
+                label: 'Total Rawat Jalan',
+                pointStyle: 'circle',
+                pointRadius: 6,
+                pointHoverRadius: 12,
+                borderWidth: 0,
+                fill: true,
+                data: data_rawatjalanpiegraph
             }]
         }
         var data_content_rawatjalandoktergraph = {
@@ -1333,6 +1371,29 @@ $db = db_connect();
                 plugins: {
                     legend: {
                         display: false
+                    },
+                    filler: {
+                        drawTime: 'beforeDraw'
+                    }
+                },
+                scale: {
+                    ticks: {
+                        precision: 0
+                    }
+                }
+            }
+        })
+        var chart_rawatjalanpiegraph = createChart(document.getElementById('rawatjalanpiegraph').getContext('2d'), {
+            type: 'pie',
+            data: data_content_rawatjalanpiegraph,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                locale: 'id-ID',
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'bottom'
                     },
                     filler: {
                         drawTime: 'beforeDraw'
