@@ -437,11 +437,6 @@ $usia = $registrasi->diff($tanggal_lahir);
                 fetchDetailResep();
                 fetchStatusResep();
             }
-
-            if (data.delete) {
-                console.log("Received delete from WebSocket, refreshing...");
-                location.reload();
-            }
         };
 
         socket.onclose = () => {

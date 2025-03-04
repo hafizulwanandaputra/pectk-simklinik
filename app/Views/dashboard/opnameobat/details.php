@@ -232,25 +232,6 @@
     }
 
     $(document).ready(function() {
-        const socket = new WebSocket('<?= env('WS-URL-JS') ?>'); // Ganti dengan domain VPS
-
-        socket.onopen = () => {
-            console.log("Connected to WebSocket server");
-        };
-
-        socket.onmessage = async function(event) {
-            const data = JSON.parse(event.data);
-
-            if (data.delete) {
-                console.log("Received delete from WebSocket, going back...");
-                location.href = `<?= base_url('/opnameobat'); ?>`;
-            }
-        };
-
-        socket.onclose = () => {
-            console.log("Disconnected from WebSocket server");
-        };
-
         $(document).on('visibilitychange', function() {
             if (document.visibilityState === "visible") {
                 fetchDetailOpnameObat();
