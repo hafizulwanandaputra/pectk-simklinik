@@ -505,6 +505,7 @@ class RawatJalan extends BaseController
                 $db->query('ALTER TABLE medrec_edukasi AUTO_INCREMENT = 1');
                 $db->query('ALTER TABLE medrec_edukasi_evaluasi AUTO_INCREMENT = 1');
                 $db->query('ALTER TABLE medrec_form_persetujuan_tindakan AUTO_INCREMENT = 1');
+                $db->query('ALTER TABLE medrec_form_persetujuan_tindakan_anestesi AUTO_INCREMENT = 1');
                 $db->query('ALTER TABLE medrec_lp_operasi AUTO_INCREMENT = 1');
                 $db->query('ALTER TABLE medrec_lp_operasi_katarak AUTO_INCREMENT = 1');
                 $db->query('ALTER TABLE medrec_lp_operasi_pterigium AUTO_INCREMENT = 1');
