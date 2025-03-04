@@ -266,14 +266,18 @@
                     data: null,
                     render: function(data, type, row) {
                         let statusBtn = row.active == 1 ?
-                            `<button class="btn btn-outline-danger text-nowrap bg-gradient  deactivate-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${row.id_user}" data-username="${row.username}"data-bs-toggle="tooltip" data-bs-title="Nonaktifkan"><i class="fa-solid fa-user-slash"></i></button>` :
-                            `<button class="btn btn-outline-success text-nowrap bg-gradient  activate-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${row.id_user}" data-username="${row.username}"data-bs-toggle="tooltip" data-bs-title="Aktifkan"><i class="fa-solid fa-user-check"></i></i></button>`;
+                            `<button class="btn btn-outline-danger text-nowrap bg-gradient rounded-bottom-0 deactivate-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${row.id_user}" data-username="${row.username}"data-bs-toggle="tooltip" data-bs-title="Nonaktifkan"><i class="fa-solid fa-user-slash"></i></button>` :
+                            `<button class="btn btn-outline-success text-nowrap bg-gradient rounded-bottom-0 activate-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${row.id_user}" data-username="${row.username}"data-bs-toggle="tooltip" data-bs-title="Aktifkan"><i class="fa-solid fa-user-check"></i></i></button>`;
 
-                        return `<div class="btn-group" role="group">
+                        return `<div class="d-grid">
+                                <div class="btn-group" role="group">
                                     ${statusBtn}
-                                    <button class="btn btn-outline-body text-nowrap bg-gradient  resetpwd-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${row.id_user}" data-username="${row.username}"data-bs-toggle="tooltip" data-bs-title="Atur ulang kata sandi"><i class="fa-solid fa-key"></i></button>
-                                    <button class="btn btn-outline-body text-nowrap bg-gradient edit-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${row.id_user}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
-                                    <button class="btn btn-outline-danger text-nowrap bg-gradient  delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${row.id_user}" data-username="${row.username}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
+                                    <button class="btn btn-outline-body text-nowrap bg-gradient rounded-bottom-0 resetpwd-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${row.id_user}" data-username="${row.username}"data-bs-toggle="tooltip" data-bs-title="Atur ulang kata sandi"><i class="fa-solid fa-key"></i></button>
+                                </div>
+                                <div class="btn-group" role="group">
+                                    <button class="btn btn-outline-body text-nowrap bg-gradient rounded-top-0 edit-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${row.id_user}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
+                                    <button class="btn btn-outline-danger text-nowrap bg-gradient rounded-top-0 delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${row.id_user}" data-username="${row.username}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
+                                </div>
                                 </div>`;
                     }
                 },
