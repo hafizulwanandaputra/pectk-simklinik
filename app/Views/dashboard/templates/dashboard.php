@@ -768,7 +768,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                         <a class="nav-link px-2 py-1 <?= ($activeSegment === 'frmsetujuphaco') ? 'active bg-success activeLinkSideBar' : '' ?>" href="<?= base_url('/frmsetujuphaco'); ?>">
                                             <div class="d-flex align-items-start <?= ($activeSegment === 'frmsetujuphaco') ? 'text-white' : 'text-success-emphasis' ?>">
                                                 <div class="flex-fill fw-normal" style="font-size: 0.75em;">
-                                                    Persetujuan Tindakan Phacoemulisifikasi
+                                                    Persetujuan Tindakan Phacoemulsifikasi
                                                 </div>
                                             </div>
                                         </a>
