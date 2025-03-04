@@ -177,7 +177,7 @@ $waktuFormatted = $dateTime->format('H.i.s');
                             </tr>
                         </tbody>
                     </table>
-                    <p>Pada pemeriksaan saat ini, saya menderita sakit mata:</p>
+                    <p>Pada pemeriksaan saat ini, pasien tersebut menderita sakit mata:</p>
                     <p style="padding-left: 0.5cm; padding-right: 0.5cm;"><?= $sakitmata['keterangan'] ?></p>
                     <p>Demikian surat keterangan ini dibuat untuk dipergunakan seperlunya. Atas perhatiannya, saya ucapkan terima kasih.</p>
                     <table class="table" style="width: 100%; margin-bottom: 4px;">

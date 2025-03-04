@@ -203,7 +203,7 @@ $waktuFormatted = $dateTime->format('H.i.s');
                 </tbody>
             </table>
             <?php if (!empty($butawarna['od_ukuran_kacamata']) && !empty($butawarna['od_visus']) && !empty($butawarna['os_ukuran_kacamata']) && !empty($butawarna['os_visus'])) : ?>
-                <p>Pada pemeriksaan mata didapatkan:</p>
+                <p>Pada pemeriksaan mata ini didapatkan:</p>
                 <table class="table" style="width: 100%; margin-bottom: 4px;">
                     <tbody>
                         <tr>

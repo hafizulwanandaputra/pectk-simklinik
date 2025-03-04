@@ -181,7 +181,7 @@ $waktuFormatted = $dateTime->format('H.i.s');
                             </tr>
                         </tbody>
                     </table>
-                    <p>Pada pemeriksaan saat ini, saya menderita sakit mata. Oleh karena itu, saya perlu diberikan istirahat selama <?= $durasi_istirahat->d ?> (<?= $istirahat['durasi_teks'] ?>) hari mulai tanggal <?= $tanggal_mulai ?> s.d. <?= $tanggal_selesai ?>.</p>
+                    <p>Pada pemeriksaan saat ini, pasien tersebut menderita sakit mata. Oleh karena itu, pasien tersebut perlu diberikan istirahat selama <?= $durasi_istirahat->d ?> (<?= $istirahat['durasi_teks'] ?>) hari mulai tanggal <?= $tanggal_mulai ?> s.d. <?= $tanggal_selesai ?>.</p>
                     <p>Demikian surat keterangan ini dibuat untuk dipergunakan seperlunya. Atas perhatiannya, saya ucapkan terima kasih.</p>
                     <table class="table" style="width: 100%; margin-bottom: 4px;">
                         <tbody>
