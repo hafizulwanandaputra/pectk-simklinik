@@ -131,7 +131,7 @@ $waktuFormatted = $dateTime->format('H.i');
                         </div>
                     </td>
                     <td style="width: 0%;">
-                        <div style="white-space: nowrap;"><strong>FRM: 4a<br>Rev: 003</strong></div>
+                        <div style="white-space: nowrap;"><strong>FRM: 4d<br>Rev: 000</strong></div>
                     </td>
                 </tr>
             </thead>
@@ -140,7 +140,7 @@ $waktuFormatted = $dateTime->format('H.i');
             <tbody>
                 <tr>
                     <td style="width: 60%; vertical-align: top; padding: 0;">
-                        <h2 style="padding: 0;">FORMULIR PERSETUJUAN TINDAKAN KEDOKTERAN</h2>
+                        <h2 style="padding: 0;">FORMULIR PERSETUJUAN TINDAKAN PHACOEMULSIFIKASI</h2>
                     </td>
                     <td style="width: 40%; max-width: 5cm; vertical-align: middle; padding: 0.1cm; border: 1px solid black; font-size: 8pt; overflow: hidden;">
                         <div style="text-align: center;">
@@ -216,12 +216,10 @@ $waktuFormatted = $dateTime->format('H.i');
                                 <strong>Dasar Diagnosis</strong>
                             </td>
                             <td style="width: 100%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
-                                <?= (!empty($form_persetujuan_tindakan['info_dasar_diagnosis'])) ? $form_persetujuan_tindakan['info_dasar_diagnosis'] : '<em>Tidak ada</em>'; ?>
+                                Kekeruhan Lensa
                             </td>
                             <td style="width: 0%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; text-align: center; white-space: nowrap; width: 0.5cm; min-width: 0.5cm;">
-                                <?php if (!empty($form_persetujuan_tindakan['info_dasar_diagnosis'])): ?>
-                                    <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
-                                <?php endif; ?>
+                                <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
                             </td>
                         </tr>
                         <tr>
@@ -232,12 +230,10 @@ $waktuFormatted = $dateTime->format('H.i');
                                 <strong>Tindakan Kedokteran</strong>
                             </td>
                             <td style="width: 100%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
-                                <?= (!empty($form_persetujuan_tindakan['info_tindakan'])) ? $form_persetujuan_tindakan['info_tindakan'] : '<em>Tidak ada</em>'; ?>
+                                Phacoemulsifikasi + IOL
                             </td>
                             <td style="width: 0%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; text-align: center; white-space: nowrap; width: 0.5cm; min-width: 0.5cm;">
-                                <?php if (!empty($form_persetujuan_tindakan['info_tindakan'])): ?>
-                                    <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
-                                <?php endif; ?>
+                                <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
                             </td>
                         </tr>
                         <tr>
@@ -248,12 +244,10 @@ $waktuFormatted = $dateTime->format('H.i');
                                 <strong>Indikasi Tindakan</strong>
                             </td>
                             <td style="width: 100%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
-                                <?= (!empty($form_persetujuan_tindakan['info_indikasi'])) ? $form_persetujuan_tindakan['info_indikasi'] : '<em>Tidak ada</em>'; ?>
+                                Visus &lt; 0,3 (&lt; 6/18)
                             </td>
                             <td style="width: 0%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; text-align: center; white-space: nowrap; width: 0.5cm; min-width: 0.5cm;">
-                                <?php if (!empty($form_persetujuan_tindakan['info_indikasi'])): ?>
-                                    <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
-                                <?php endif; ?>
+                                <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
                             </td>
                         </tr>
                         <tr>
@@ -264,12 +258,10 @@ $waktuFormatted = $dateTime->format('H.i');
                                 <strong>Tata Cara</strong>
                             </td>
                             <td style="width: 100%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
-                                <?= (!empty($form_persetujuan_tindakan['info_tatacara'])) ? $form_persetujuan_tindakan['info_tatacara'] : '<em>Tidak ada</em>'; ?>
+                                Membuang lensa mata pasien yang keruh dengan teknik phacoemulsifikasi, dengan sayatan yang sangat kecil, lalu memasang dengan lensa tanam yang baru.
                             </td>
                             <td style="width: 0%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; text-align: center; white-space: nowrap; width: 0.5cm; min-width: 0.5cm;">
-                                <?php if (!empty($form_persetujuan_tindakan['info_tatacara'])): ?>
-                                    <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
-                                <?php endif; ?>
+                                <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
                             </td>
                         </tr>
                         <tr>
@@ -277,13 +269,13 @@ $waktuFormatted = $dateTime->format('H.i');
                                 6
                             </th>
                             <td style="width: 0%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; white-space: nowrap;">
-                                <strong>Tata Cara</strong>
+                                <strong>Tujuan</strong>
                             </td>
                             <td style="width: 100%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
-                                <?= (!empty($form_persetujuan_tindakan['info_tujuan'])) ? $form_persetujuan_tindakan['info_tujuan'] : '<em>Tidak ada</em>'; ?>
+                                <?= (!empty($form_persetujuan_tindakan['info_tujuan'])) ? $form_persetujuan_tindakan['info_tujuan'] . ((!empty($form_persetujuan_tindakan['info_tujuan_lainnya'])) ? ', ' . $form_persetujuan_tindakan['info_tujuan_lainnya'] : '') : '<em>Tidak ada</em>'; ?>
                             </td>
                             <td style="width: 0%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; text-align: center; white-space: nowrap; width: 0.5cm; min-width: 0.5cm;">
-                                <?php if (!empty($form_persetujuan_tindakan['info_tujuan'])): ?>
+                                <?php if (!empty($form_persetujuan_tindakan['info_tujuan']) || !empty($form_persetujuan_tindakan['info_tujuan_lainnya'])): ?>
                                     <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
                                 <?php endif; ?>
                             </td>
@@ -296,10 +288,10 @@ $waktuFormatted = $dateTime->format('H.i');
                                 <strong>Risiko</strong>
                             </td>
                             <td style="width: 100%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
-                                <?= (!empty($form_persetujuan_tindakan['info_resiko'])) ? $form_persetujuan_tindakan['info_resiko'] : '<em>Tidak ada</em>'; ?>
+                                <?= (!empty($form_persetujuan_tindakan['info_risiko'])) ? $form_persetujuan_tindakan['info_risiko'] . ((!empty($form_persetujuan_tindakan['info_risiko_lainnya'])) ? ', ' . $form_persetujuan_tindakan['info_risiko_lainnya'] : '') : '<em>Tidak ada</em>'; ?>
                             </td>
                             <td style="width: 0%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; text-align: center; white-space: nowrap; width: 0.5cm; min-width: 0.5cm;">
-                                <?php if (!empty($form_persetujuan_tindakan['info_resiko'])): ?>
+                                <?php if (!empty($form_persetujuan_tindakan['info_risiko']) || !empty($form_persetujuan_tindakan['info_risiko_lainnya'])): ?>
                                     <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
                                 <?php endif; ?>
                             </td>
@@ -312,10 +304,10 @@ $waktuFormatted = $dateTime->format('H.i');
                                 <strong>Komplikasi</strong>
                             </td>
                             <td style="width: 100%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
-                                <?= (!empty($form_persetujuan_tindakan['info_komplikasi'])) ? $form_persetujuan_tindakan['info_komplikasi'] : '<em>Tidak ada</em>'; ?>
+                                <?= (!empty($form_persetujuan_tindakan['info_komplikasi'])) ? $form_persetujuan_tindakan['info_komplikasi'] . ((!empty($form_persetujuan_tindakan['info_komplikasi_lainnya'])) ? ', ' . $form_persetujuan_tindakan['info_komplikasi_lainnya'] : '') : '<em>Tidak ada</em>'; ?>
                             </td>
                             <td style="width: 0%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; text-align: center; white-space: nowrap; width: 0.5cm; min-width: 0.5cm;">
-                                <?php if (!empty($form_persetujuan_tindakan['info_komplikasi'])): ?>
+                                <?php if (!empty($form_persetujuan_tindakan['info_komplikasi']) || !empty($form_persetujuan_tindakan['info_komplikasi_lainnya'])): ?>
                                     <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
                                 <?php endif; ?>
                             </td>
@@ -328,12 +320,10 @@ $waktuFormatted = $dateTime->format('H.i');
                                 <strong>Prognosis</strong>
                             </td>
                             <td style="width: 100%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
-                                <?= (!empty($form_persetujuan_tindakan['info_prognosis'])) ? $form_persetujuan_tindakan['info_prognosis'] : '<em>Tidak ada</em>'; ?>
+                                Dubia
                             </td>
                             <td style="width: 0%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; text-align: center; white-space: nowrap; width: 0.5cm; min-width: 0.5cm;">
-                                <?php if (!empty($form_persetujuan_tindakan['info_prognosis'])): ?>
-                                    <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
-                                <?php endif; ?>
+                                <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
                             </td>
                         </tr>
                         <tr>
@@ -344,23 +334,24 @@ $waktuFormatted = $dateTime->format('H.i');
                                 <strong>Alternatif dan Risiko</strong>
                             </td>
                             <td style="width: 100%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
-                                <?= (!empty($form_persetujuan_tindakan['info_alternatif'])) ? $form_persetujuan_tindakan['info_alternatif'] : '<em>Tidak ada</em>'; ?>
+                                SICS
                             </td>
                             <td style="width: 0%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; text-align: center; white-space: nowrap; width: 0.5cm; min-width: 0.5cm;">
-                                <?php if (!empty($form_persetujuan_tindakan['info_alternatif'])): ?>
-                                    <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
-                                <?php endif; ?>
+                                <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="2" style="width: 0%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; white-space: nowrap;">
+                            <th style="width: 0%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
+                                11
+                            </th>
+                            <td style="width: 0%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; white-space: nowrap;">
                                 <strong>Lain-lain</strong>
                             </td>
                             <td style="width: 100%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
-                                <?= (!empty($form_persetujuan_tindakan['info_lainnya'])) ? $form_persetujuan_tindakan['info_lainnya'] : '<em>Tidak ada</em>'; ?>
+                                <?= (!empty($form_persetujuan_tindakan['info_lain_lainn'])) ? $form_persetujuan_tindakan['info_lain_lainn'] : '<em>Tidak ada</em>'; ?>
                             </td>
                             <td style="width: 0%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; text-align: center; white-space: nowrap; width: 0.5cm; min-width: 0.5cm;">
-                                <?php if (!empty($form_persetujuan_tindakan['info_lainnya'])): ?>
+                                <?php if (!empty($form_persetujuan_tindakan['info_lain_lainn'])): ?>
                                     <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/check-solid.png')) ?>" width="10px" alt="">
                                 <?php endif; ?>
                             </td>
@@ -389,14 +380,9 @@ $waktuFormatted = $dateTime->format('H.i');
                             <td style="vertical-align: top; height: 0.75cm;">
                             </td>
                         </tr>
-                        <tr>
-                            <td colspan="4" style="vertical-align: top; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
-                                Bila pasien tidak kompeten atau tidak mau menerima informasi, maka penerima informasi adalah wali atau keluarga terdekat.
-                            </td>
-                        </tr>
                     </tbody>
                 </table>
-                <h4 class="margin: 0;">PERSETUJUAN TINDAKAN KEDOKTERAN</h4>
+                <h4 class="margin: 0;">PERSETUJUAN TINDAKAN PHACOEMULSIFIKASI</h4>
                 <small>
                     <div>Yang bertanda tangan di bawah ini, saya:</div>
                     <table class="table" style="width: 100%; margin-bottom: 4px;">

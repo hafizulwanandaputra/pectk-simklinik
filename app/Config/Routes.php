@@ -223,6 +223,18 @@ $routes->get('/(?i)frmsetujuanestesi/(?i)export/(:any)', 'FRMSetujuAnestesi::exp
 $routes->post('/(?i)frmsetujuanestesi/(?i)update/(:any)', 'FRMSetujuAnestesi::update/$1');
 $routes->delete('/(?i)frmsetujuanestesi/(?i)delete/(:any)', 'FRMSetujuAnestesi::delete/$1');
 
+// FORM PERSETUJUAN TINDAKAN PHACOEMULSIFIKASI
+$routes->get('/(?i)frmsetujuphaco', 'FRMSetujuPhaco::index');
+$routes->get('/(?i)frmsetujuphaco/frmsetujuphacolist', 'FRMSetujuPhaco::frmsetujuphacolist');
+$routes->get('/(?i)frmsetujuphaco/pasienlist', 'FRMSetujuPhaco::pasienlist');
+$routes->get('/(?i)frmsetujuphaco/(:num)', 'FRMSetujuPhaco::details/$1');
+$routes->post('/(?i)frmsetujuphaco/(?i)create', 'FRMSetujuPhaco::create');
+$routes->get('/(?i)frmsetujuphaco/(?i)details/(:any)', 'FRMSetujuPhaco::details/$1');
+$routes->get('/(?i)frmsetujuphaco/(?i)view/(:any)', 'FRMSetujuPhaco::view/$1');
+$routes->get('/(?i)frmsetujuphaco/(?i)export/(:any)', 'FRMSetujuPhaco::export/$1');
+$routes->post('/(?i)frmsetujuphaco/(?i)update/(:any)', 'FRMSetujuPhaco::update/$1');
+$routes->delete('/(?i)frmsetujuphaco/(?i)delete/(:any)', 'FRMSetujuPhaco::delete/$1');
+
 // SURAT RUJUKAN
 $routes->get('/(?i)rujukan', 'Rujukan::index');
 $routes->get('/(?i)rujukan/rujukanlist', 'Rujukan::rujukanlist');

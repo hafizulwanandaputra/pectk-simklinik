@@ -4,18 +4,18 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\RawatJalanModel;
-use App\Models\FRMSetujuAnestesiModel;
+use App\Models\FRMSetujuPhacoModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use Picqer\Barcode\BarcodeGeneratorPNG;
 
-class FRMSetujuAnestesi extends BaseController
+class FRMSetujuPhaco extends BaseController
 {
     protected $RawatJalanModel;
-    protected $FRMSetujuAnestesiModel;
+    protected $FRMSetujuPhacoModel;
     public function __construct()
     {
         $this->RawatJalanModel = new RawatJalanModel();
-        $this->FRMSetujuAnestesiModel = new FRMSetujuAnestesiModel();
+        $this->FRMSetujuPhacoModel = new FRMSetujuPhacoModel();
     }
     public function index()
     {
@@ -23,19 +23,19 @@ class FRMSetujuAnestesi extends BaseController
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Admisi') {
             // Menyiapkan data untuk tampilan
             $data = [
-                'title' => 'Formulir Persetujuan Tindakan Anestesi - ' . $this->systemName,
-                'headertitle' => 'Formulir Persetujuan Tindakan Anestesi',
+                'title' => 'Formulir Persetujuan Tindakan Phacoemulsifikasi - ' . $this->systemName,
+                'headertitle' => 'Formulir Persetujuan Tindakan Phacoemulsifikasi',
                 'agent' => $this->request->getUserAgent() // Mengambil informasi user agent
             ];
             // Menampilkan tampilan untuk halaman pasien
-            return view('dashboard/frmsetujuanestesi/index', $data);
+            return view('dashboard/frmsetujuphaco/index', $data);
         } else {
             // Jika peran tidak dikenali, lemparkan pengecualian 404
             throw PageNotFoundException::forPageNotFound();
         }
     }
 
-    public function frmsetujuanestesilist()
+    public function frmsetujuphacolist()
     {
         // Memeriksa peran pengguna, hanya 'Admin', atau 'Admisi' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Admisi') {
@@ -50,30 +50,30 @@ class FRMSetujuAnestesi extends BaseController
             $offset = $offset ? intval($offset) : 0;
 
             // Memuat model PembelianObat
-            $FRMSetujuAnestesiModel = $this->FRMSetujuAnestesiModel
-                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_form_persetujuan_tindakan_anestesi.nomor_registrasi', 'inner')
+            $FRMSetujuPhacoModel = $this->FRMSetujuPhacoModel
+                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_form_persetujuan_tindakan_phaco.nomor_registrasi', 'inner')
                 ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner');
 
             // Menerapkan filter pencarian pada nama supplier atau tanggal pembelian
             if ($tanggal) {
-                $FRMSetujuAnestesiModel
+                $FRMSetujuPhacoModel
                     ->like('rawat_jalan.tanggal_registrasi', $tanggal);
             }
 
             // Menerapkan filter pencarian berdasarkan nama pasien atau tanggal resep
             if ($search) {
-                $FRMSetujuAnestesiModel->groupStart()
+                $FRMSetujuPhacoModel->groupStart()
                     ->like('pasien.no_rm', $search)
                     ->orLike('pasien.nama_pasien', $search)
                     ->groupEnd();
             }
 
             // Menghitung total hasil
-            $total = $FRMSetujuAnestesiModel->countAllResults(false);
+            $total = $FRMSetujuPhacoModel->countAllResults(false);
 
             // Mendapatkan hasil yang dipaginasikan
-            $FRMSetuju = $FRMSetujuAnestesiModel
-                ->orderBy('id_form_persetujuan_tindakan_anestesi', 'DESC')
+            $FRMSetuju = $FRMSetujuPhacoModel
+                ->orderBy('id_form_persetujuan_tindakan_phaco', 'DESC')
                 ->findAll($limit, $offset);
 
             // Menghitung nomor awal untuk halaman saat ini
@@ -111,7 +111,7 @@ class FRMSetujuAnestesi extends BaseController
 
             // Mengambil nomor_registrasi yang sudah terpakai di rawat_jalan
             $db = \Config\Database::connect();
-            $usedNoRegInit = $db->table('medrec_form_persetujuan_tindakan_anestesi')->select('nomor_registrasi')->get()->getResultArray();
+            $usedNoRegInit = $db->table('medrec_form_persetujuan_tindakan_phaco')->select('nomor_registrasi')->get()->getResultArray();
             $usedNoReg = array_column($usedNoRegInit, 'nomor_registrasi');
 
             $options = [];
@@ -187,10 +187,10 @@ class FRMSetujuAnestesi extends BaseController
                 'no_rm' => $LPOperasiData['no_rm'], // Nomor rekam medis
                 'waktu_dibuat' => date('Y-m-d H:i:s'),
             ];
-            $db->table('medrec_form_persetujuan_tindakan_anestesi')->insert($data);
+            $db->table('medrec_form_persetujuan_tindakan_phaco')->insert($data);
             // Panggil WebSocket untuk update client
             $this->notify_clients('update');
-            return $this->response->setJSON(['success' => true, 'message' => 'Formulir persetujuan tindakan anestesi berhasil ditambahkan']); // Mengembalikan respon sukses
+            return $this->response->setJSON(['success' => true, 'message' => 'Formulir persetujuan tindakan phacoemulsifikasi berhasil ditambahkan']); // Mengembalikan respon sukses
         } else {
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan', // Pesan jika peran tidak valid
@@ -203,15 +203,14 @@ class FRMSetujuAnestesi extends BaseController
         // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Admisi' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Admisi') {
             // Inisialisasi rawat jalan
-            $form_persetujuan_tindakan = $this->FRMSetujuAnestesiModel
-                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_form_persetujuan_tindakan_anestesi.nomor_registrasi', 'inner')
+            $form_persetujuan_tindakan = $this->FRMSetujuPhacoModel
+                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_form_persetujuan_tindakan_phaco.nomor_registrasi', 'inner')
                 ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
                 ->find($id);
 
-            $form_persetujuan_tindakan['info_tata_cara_teknis_anestesi'] = str_replace(',', ', ', $form_persetujuan_tindakan['info_tata_cara_teknis_anestesi']);
-            $form_persetujuan_tindakan['info_status_fisik'] = str_replace(',', ', ', $form_persetujuan_tindakan['info_status_fisik']);
-            $form_persetujuan_tindakan['info_komplikasi_anestesi'] = str_replace(',', ', ', $form_persetujuan_tindakan['info_komplikasi_anestesi']);
-            $form_persetujuan_tindakan['info_alternatif_risiko'] = str_replace(',', ', ', $form_persetujuan_tindakan['info_alternatif_risiko']);
+            $form_persetujuan_tindakan['info_tujuan'] = str_replace(',', ', ', $form_persetujuan_tindakan['info_tujuan']);
+            $form_persetujuan_tindakan['info_risiko'] = str_replace(',', ', ', $form_persetujuan_tindakan['info_risiko']);
+            $form_persetujuan_tindakan['info_komplikasi'] = str_replace(',', ', ', $form_persetujuan_tindakan['info_komplikasi']);
 
             // === Generate Barcode ===
             $barcodeGenerator = new BarcodeGeneratorPNG();
@@ -223,18 +222,18 @@ class FRMSetujuAnestesi extends BaseController
                 $data = [
                     'form_persetujuan_tindakan' => $form_persetujuan_tindakan,
                     'bcNoReg' => $bcNoReg,
-                    'title' => 'Formulir Persetujuan Tindakan Anestesi ' . $form_persetujuan_tindakan['nama_pasien'] . ' (' . $form_persetujuan_tindakan['no_rm'] . ') - ' . $form_persetujuan_tindakan['nomor_registrasi'] . ' - ' . $this->systemName,
-                    'headertitle' => 'Formulir Persetujuan Tindakan Anestesi',
+                    'title' => 'Formulir Persetujuan Tindakan Phacoemulsifikasi ' . $form_persetujuan_tindakan['nama_pasien'] . ' (' . $form_persetujuan_tindakan['no_rm'] . ') - ' . $form_persetujuan_tindakan['nomor_registrasi'] . ' - ' . $this->systemName,
+                    'headertitle' => 'Formulir Persetujuan Tindakan Phacoemulsifikasi',
                     'agent' => $this->request->getUserAgent(), // Mengambil informasi user agent
                 ];
-                // return view('dashboard/frmsetujuanestesi/form', $data);
+                // return view('dashboard/frmsetujuphaco/form', $data);
                 // die;
                 // Simpan HTML ke file sementara
-                $htmlFile = WRITEPATH . 'temp/output-form-persetujuan-tindakan-anestesi.html';
-                file_put_contents($htmlFile, view('dashboard/frmsetujuanestesi/form', $data));
+                $htmlFile = WRITEPATH . 'temp/output-form-persetujuan-tindakan-phaco.html';
+                file_put_contents($htmlFile, view('dashboard/frmsetujuphaco/form', $data));
 
                 // Tentukan path output PDF
-                $pdfFile = WRITEPATH . 'temp/output-form-persetujuan-tindakan-anestesi.pdf';
+                $pdfFile = WRITEPATH . 'temp/output-form-persetujuan-tindakan-phaco.pdf';
 
                 // Jalankan Puppeteer untuk konversi HTML ke PDF
                 // Keterangan: "node " . FCPATH . "puppeteer-pdf.js $htmlFile $pdfFile panjang lebar marginAtas margin Kanan marginBawah marginKiri"
@@ -272,27 +271,27 @@ class FRMSetujuAnestesi extends BaseController
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Dokter' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
-            $form_persetujuan_tindakan = $this->FRMSetujuAnestesiModel
-                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_form_persetujuan_tindakan_anestesi.nomor_registrasi', 'inner')
+            $form_persetujuan_tindakan = $this->FRMSetujuPhacoModel
+                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_form_persetujuan_tindakan_phaco.nomor_registrasi', 'inner')
                 ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
                 ->find($id);
             if (date('Y-m-d', strtotime($form_persetujuan_tindakan['tanggal_registrasi'])) != date('Y-m-d')) {
-                return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Form persetujuan tindakan anestesi yang bukan hari ini tidak dapat dihapus']);
+                return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Form persetujuan tindakan phacoemulsifikasi yang bukan hari ini tidak dapat dihapus']);
             }
             if ($form_persetujuan_tindakan) {
                 $db = db_connect();
 
                 // Menghapus form_persetujuan_tindakan
-                $this->FRMSetujuAnestesiModel->delete($id);
+                $this->FRMSetujuPhacoModel->delete($id);
 
                 // Reset auto increment
-                $db->query('ALTER TABLE `medrec_form_persetujuan_tindakan_anestesi` auto_increment = 1');
+                $db->query('ALTER TABLE `medrec_form_persetujuan_tindakan_phaco` auto_increment = 1');
                 // Panggil WebSocket untuk update client
                 $this->notify_clients('delete');
-                return $this->response->setJSON(['message' => 'Formulir persetujuan tindakan anestesi berhasil dihapus']); // Mengembalikan respon sukses
+                return $this->response->setJSON(['message' => 'Formulir persetujuan tindakan phacoemulsifikasi berhasil dihapus']); // Mengembalikan respon sukses
             } else {
                 return $this->response->setStatusCode(404)->setJSON([
-                    'error' => 'Formulir persetujuan tindakan anestesi tidak ditemukan', // Pesan jika peran tidak valid
+                    'error' => 'Formulir persetujuan tindakan phacoemulsifikasi tidak ditemukan', // Pesan jika peran tidak valid
                 ]);
             }
         } else {
@@ -308,8 +307,8 @@ class FRMSetujuAnestesi extends BaseController
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
             $db = db_connect();
 
-            $form_persetujuan_tindakan = $this->FRMSetujuAnestesiModel
-                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_form_persetujuan_tindakan_anestesi.nomor_registrasi', 'inner')
+            $form_persetujuan_tindakan = $this->FRMSetujuPhacoModel
+                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_form_persetujuan_tindakan_phaco.nomor_registrasi', 'inner')
                 ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
                 ->find($id);
 
@@ -319,31 +318,31 @@ class FRMSetujuAnestesi extends BaseController
                 ->get()->getResultArray();
 
             // Query untuk item sebelumnya
-            $previous = $db->table('medrec_form_persetujuan_tindakan_anestesi')
-                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_form_persetujuan_tindakan_anestesi.nomor_registrasi', 'inner')
+            $previous = $db->table('medrec_form_persetujuan_tindakan_phaco')
+                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_form_persetujuan_tindakan_phaco.nomor_registrasi', 'inner')
                 ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
-                ->where('medrec_form_persetujuan_tindakan_anestesi.id_form_persetujuan_tindakan_anestesi <', $id)
-                ->orderBy('medrec_form_persetujuan_tindakan_anestesi.id_form_persetujuan_tindakan_anestesi', 'DESC') // Urutan descending
+                ->where('medrec_form_persetujuan_tindakan_phaco.id_form_persetujuan_tindakan_phaco <', $id)
+                ->orderBy('medrec_form_persetujuan_tindakan_phaco.id_form_persetujuan_tindakan_phaco', 'DESC') // Urutan descending
                 ->limit(1) // Batas 1 hasil
                 ->get()
                 ->getRowArray();
 
             // Query untuk item berikutnya
-            $next = $db->table('medrec_form_persetujuan_tindakan_anestesi')
-                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_form_persetujuan_tindakan_anestesi.nomor_registrasi', 'inner')
+            $next = $db->table('medrec_form_persetujuan_tindakan_phaco')
+                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_form_persetujuan_tindakan_phaco.nomor_registrasi', 'inner')
                 ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
-                ->where('medrec_form_persetujuan_tindakan_anestesi.id_form_persetujuan_tindakan_anestesi >', $id)
-                ->orderBy('medrec_form_persetujuan_tindakan_anestesi.id_form_persetujuan_tindakan_anestesi', 'ASC') // Urutan ascending
+                ->where('medrec_form_persetujuan_tindakan_phaco.id_form_persetujuan_tindakan_phaco >', $id)
+                ->orderBy('medrec_form_persetujuan_tindakan_phaco.id_form_persetujuan_tindakan_phaco', 'ASC') // Urutan ascending
                 ->limit(1) // Batas 1 hasil
                 ->get()
                 ->getRowArray();
 
             // Query untuk daftar rawat jalan berdasarkan no_rm
-            $listRawatJalan = $db->table('medrec_form_persetujuan_tindakan_anestesi')
-                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_form_persetujuan_tindakan_anestesi.nomor_registrasi', 'inner')
+            $listRawatJalan = $db->table('medrec_form_persetujuan_tindakan_phaco')
+                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_form_persetujuan_tindakan_phaco.nomor_registrasi', 'inner')
                 ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
                 ->where('rawat_jalan.no_rm', $form_persetujuan_tindakan['no_rm'])
-                ->orderBy('id_form_persetujuan_tindakan_anestesi', 'DESC')
+                ->orderBy('id_form_persetujuan_tindakan_phaco', 'DESC')
                 ->get()
                 ->getResultArray();
 
@@ -351,15 +350,15 @@ class FRMSetujuAnestesi extends BaseController
             $data = [
                 'form_persetujuan_tindakan' => $form_persetujuan_tindakan,
                 'dokter' => $dokter,
-                'title' => 'Formulir Persetujuan Tindakan Anestesi ' . $form_persetujuan_tindakan['nama_pasien'] . ' (' . $form_persetujuan_tindakan['no_rm'] . ') - ' . $form_persetujuan_tindakan['nomor_registrasi'] . ' - ' . $this->systemName,
-                'headertitle' => 'Formulir Persetujuan Tindakan Anestesi',
+                'title' => 'Formulir Persetujuan Tindakan Phacoemulsifikasi ' . $form_persetujuan_tindakan['nama_pasien'] . ' (' . $form_persetujuan_tindakan['no_rm'] . ') - ' . $form_persetujuan_tindakan['nomor_registrasi'] . ' - ' . $this->systemName,
+                'headertitle' => 'Formulir Persetujuan Tindakan Phacoemulsifikasi',
                 'agent' => $this->request->getUserAgent(), // Mengambil informasi user agent
                 'previous' => $previous,
                 'next' => $next,
                 'listRawatJalan' => $listRawatJalan
             ];
             // Menampilkan tampilan untuk halaman pasien
-            return view('dashboard/frmsetujuanestesi/details', $data);
+            return view('dashboard/frmsetujuphaco/details', $data);
         } else {
             // Jika peran tidak dikenali, lemparkan pengecualian 404
             throw PageNotFoundException::forPageNotFound();
@@ -371,14 +370,13 @@ class FRMSetujuAnestesi extends BaseController
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Dokter' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
             // Mengambil data skrining berdasarkan ID
-            $data = $this->FRMSetujuAnestesiModel
-                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_form_persetujuan_tindakan_anestesi.nomor_registrasi', 'inner')
+            $data = $this->FRMSetujuPhacoModel
+                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_form_persetujuan_tindakan_phaco.nomor_registrasi', 'inner')
                 ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
                 ->find($id);
-            $data['info_tata_cara_teknis_anestesi'] = explode(',', $data['info_tata_cara_teknis_anestesi']);
-            $data['info_status_fisik'] = explode(',', $data['info_status_fisik']);
-            $data['info_komplikasi_anestesi'] = explode(',', $data['info_komplikasi_anestesi']);
-            $data['info_alternatif_risiko'] = explode(',', $data['info_alternatif_risiko']);
+            $data['info_tujuan'] = explode(';', $data['info_tujuan']);
+            $data['info_risiko'] = explode(';', $data['info_risiko']);
+            $data['info_komplikasi'] = explode(';', $data['info_komplikasi']);
             return $this->response->setJSON($data); // Mengembalikan data skrining dalam format JSON
         } else {
             // Mengembalikan status 404 jika peran tidak diizinkan
@@ -434,14 +432,12 @@ class FRMSetujuAnestesi extends BaseController
                 return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
             }
 
-            $info_tata_cara_teknis_anestesi = $this->request->getPost('info_tata_cara_teknis_anestesi');
-            $info_tata_cara_teknis_anestesi_csv = is_array($info_tata_cara_teknis_anestesi) ? implode(',', $info_tata_cara_teknis_anestesi) : NULL;
-            $info_status_fisik = $this->request->getPost('info_status_fisik');
-            $info_status_fisik_csv = is_array($info_status_fisik) ? implode(',', $info_status_fisik) : NULL;
-            $info_komplikasi_anestesi = $this->request->getPost('info_komplikasi_anestesi');
-            $info_komplikasi_anestesi_csv = is_array($info_komplikasi_anestesi) ? implode(',', $info_komplikasi_anestesi) : NULL;
-            $info_alternatif_risiko = $this->request->getPost('info_alternatif_risiko');
-            $info_alternatif_risiko_csv = is_array($info_alternatif_risiko) ? implode(',', $info_alternatif_risiko) : NULL;
+            $info_tujuan = $this->request->getPost('info_tujuan');
+            $info_tujuan_csv = is_array($info_tujuan) ? implode(';', $info_tujuan) : NULL;
+            $info_risiko = $this->request->getPost('info_risiko');
+            $info_risiko_csv = is_array($info_risiko) ? implode(';', $info_risiko) : NULL;
+            $info_komplikasi = $this->request->getPost('info_komplikasi');
+            $info_komplikasi_csv = is_array($info_komplikasi) ? implode(';', $info_komplikasi) : NULL;
 
             // Menyimpan data transaksi
             $data = [
@@ -449,18 +445,13 @@ class FRMSetujuAnestesi extends BaseController
                 'pemberi_informasi' => $this->request->getPost('pemberi_informasi') ?: null,
 
                 'info_diagnosa' => $this->request->getPost('info_diagnosa') ?: null,
-                'info_tindakan_pembedahan' => $this->request->getPost('info_tindakan_pembedahan') ?: null,
-                'info_tindakan_anestesi' => $this->request->getPost('info_tindakan_anestesi') ?: null,
-                'info_indikasi_tindakan_anestesi' => $this->request->getPost('info_indikasi_tindakan_anestesi') ?: null,
-                'info_tujuan_tindakan_anestesi' => $this->request->getPost('info_tujuan_tindakan_anestesi') ?: null,
-                'info_tata_cara_teknis_anestesi' => $info_tata_cara_teknis_anestesi_csv,
-                'info_status_fisik' => $info_status_fisik_csv,
-                'info_status_fisik_lainnya' => $this->request->getPost('info_status_fisik_lainnya') ?: null,
-                'info_komplikasi_anestesi' => $info_komplikasi_anestesi_csv,
-                'info_komplikasi_anestesi_lainnya' => $this->request->getPost('info_komplikasi_anestesi_lainnya') ?: null,
-                'info_alternatif_risiko' => $info_alternatif_risiko_csv,
-                'info_alternatif_risiko_lainnya' => $this->request->getPost('info_alternatif_risiko_lainnya') ?: null,
-                'info_prognosis' => $this->request->getPost('info_prognosis') ?: null,
+                'info_tujuan' => $info_tujuan_csv,
+                'info_tujuan_lainnya' => $this->request->getPost('info_tujuan_lainnya') ?: null,
+                'info_risiko' => $info_risiko_csv,
+                'info_risiko_lainnya' => $this->request->getPost('info_risiko_lainnya') ?: null,
+                'info_komplikasi' => $info_komplikasi_csv,
+                'info_komplikasi_lainnya' => $this->request->getPost('info_komplikasi_lainnya') ?: null,
+                'info_lain_lain' => $this->request->getPost('info_lain_lain') ?: null,
 
                 'penerima_informasi' => $this->request->getPost('penerima_informasi') ?: null,
                 'pererima_tanggal_lahir' => $this->request->getPost('pererima_tanggal_lahir') ?: null,
@@ -474,10 +465,10 @@ class FRMSetujuAnestesi extends BaseController
                 'nama_saksi_1' => $this->request->getPost('nama_saksi_1') ?: null,
                 'nama_saksi_2' => $this->request->getPost('nama_saksi_2') ?: null,
             ];
-            $db->table('medrec_form_persetujuan_tindakan_anestesi')->where('id_form_persetujuan_tindakan_anestesi', $id)->update($data);
+            $db->table('medrec_form_persetujuan_tindakan_phaco')->where('id_form_persetujuan_tindakan_phaco', $id)->update($data);
             // Panggil WebSocket untuk update client
             $this->notify_clients('update');
-            return $this->response->setJSON(['success' => true, 'message' => 'Formulir persetujuan tindakan anestesi berhasil diperbarui']); // Mengembalikan respon sukses
+            return $this->response->setJSON(['success' => true, 'message' => 'Formulir persetujuan tindakan phacoemulsifikasi berhasil diperbarui']); // Mengembalikan respon sukses
         } else {
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan', // Pesan jika peran tidak valid

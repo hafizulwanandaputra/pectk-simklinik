@@ -197,7 +197,7 @@ $waktuFormatted = $dateTime->format('H.i');
                                 1
                             </th>
                             <td style="width: 0%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm; white-space: nowrap;">
-                                <strong>Diagnosa (WD dan atau DD)</strong>
+                                <strong>Diagnosis (WD dan atau DD)</strong>
                             </td>
                             <td style="width: 100%; padding-top: 4px; padding-bottom: 2px; line-height: 1.0; padding-right: 0.1cm; padding-left: 0.1cm;">
                                 <?= (!empty($form_persetujuan_tindakan['info_diagnosa'])) ? $form_persetujuan_tindakan['info_diagnosa'] : '<em>Tidak ada</em>'; ?>
