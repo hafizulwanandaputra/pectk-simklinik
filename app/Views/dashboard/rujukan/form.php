@@ -147,7 +147,7 @@ $waktuFormatted = $dateTime->format('H.i.s');
                                     Kepada<br>
                                     Yth. TS <?= $rujukan['dokter_rujukan'] ?><br>
                                     Di<br>
-                                    <span style="margin-left: 0.5cm;"><?= $rujukan['alamat_dokter_rujukan'] ?></span>
+                                    <span style="padding-left: 0.5cm;"><?= $rujukan['alamat_dokter_rujukan'] ?></span>
                                 </td>
                             </tr>
                         </tbody>
