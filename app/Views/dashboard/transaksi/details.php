@@ -1363,7 +1363,6 @@
             e.preventDefault();
 
             const formData = new FormData(this);
-            console.log("Form Data:", $(this).serialize());
 
             // Clear previous validation states
             $('#batalTransaksiForm .is-invalid').removeClass('is-invalid');
