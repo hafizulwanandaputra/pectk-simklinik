@@ -1000,9 +1000,9 @@ class ResepDokter extends BaseController
                 $pdfFile = WRITEPATH . 'temp/output-obat-dalam.pdf';
 
                 // Jalankan Puppeteer untuk konversi HTML ke PDF
-                // Keterangan: "node " . FCPATH . "puppeteer-pdf.js $htmlFile $pdfFile panjang lebar marginAtas margin Kanan marginBawah marginKiri"
+                // Keterangan: "node " . ROOTPATH . "puppeteer-pdf.js $htmlFile $pdfFile panjang lebar marginAtas margin Kanan marginBawah marginKiri"
                 // Silakan lihat puppeteer-pdf.js di folder public untuk keterangan lebih lanjut.
-                $command = env('CMD-ENV') . "node " . FCPATH . "puppeteer-pdf.js $htmlFile $pdfFile 5.5cm 3.75cm 0.15cm 0.65cm 0.5cm 0.65cm 2>&1";
+                $command = env('CMD-ENV') . "node " . ROOTPATH . "puppeteer-pdf.js $htmlFile $pdfFile 5.5cm 3.75cm 0.15cm 0.65cm 0.5cm 0.65cm 2>&1";
                 $output = shell_exec($command);
 
                 // Hapus file HTML setelah eksekusi
@@ -1073,9 +1073,9 @@ class ResepDokter extends BaseController
                 $pdfFile = WRITEPATH . 'temp/output-obat-luar.pdf';
 
                 // Jalankan Puppeteer untuk konversi HTML ke PDF
-                // Keterangan: "node " . FCPATH . "puppeteer-pdf.js $htmlFile $pdfFile panjang lebar marginAtas margin Kanan marginBawah marginKiri"
+                // Keterangan: "node " . ROOTPATH . "puppeteer-pdf.js $htmlFile $pdfFile panjang lebar marginAtas margin Kanan marginBawah marginKiri"
                 // Silakan lihat puppeteer-pdf.js di folder public untuk keterangan lebih lanjut.
-                $command = env('CMD-ENV') . "node " . FCPATH . "puppeteer-pdf.js $htmlFile $pdfFile 5.5cm 3.75cm 0.15cm 0.65cm 0.5cm 0.65cm 2>&1";
+                $command = env('CMD-ENV') . "node " . ROOTPATH . "puppeteer-pdf.js $htmlFile $pdfFile 5.5cm 3.75cm 0.15cm 0.65cm 0.5cm 0.65cm 2>&1";
                 $output = shell_exec($command);
 
                 // Hapus file HTML setelah eksekusi
@@ -1147,9 +1147,9 @@ class ResepDokter extends BaseController
                 $pdfFile = WRITEPATH . 'temp/output-obat-struk.pdf';
 
                 // Jalankan Puppeteer untuk konversi HTML ke PDF
-                // Keterangan: "node " . FCPATH . "puppeteer-pdf.js $htmlFile $pdfFile panjang lebar marginAtas margin Kanan marginBawah marginKiri"
+                // Keterangan: "node " . ROOTPATH . "puppeteer-pdf.js $htmlFile $pdfFile panjang lebar marginAtas margin Kanan marginBawah marginKiri"
                 // Silakan lihat puppeteer-pdf.js di folder public untuk keterangan lebih lanjut.
-                $command = env('CMD-ENV') . "node " . FCPATH . "puppeteer-pdf.js $htmlFile $pdfFile 210mm 297mm 1cm 1cm 1cm 1cm 2>&1";
+                $command = env('CMD-ENV') . "node " . ROOTPATH . "puppeteer-pdf.js $htmlFile $pdfFile 210mm 297mm 1cm 1cm 1cm 1cm 2>&1";
                 $output = shell_exec($command);
 
                 // Hapus file HTML setelah eksekusi
