@@ -356,6 +356,43 @@ class Asesmen extends BaseController
                 throw PageNotFoundException::forPageNotFound();
             }
 
+            // Jika tanda minus (-) dimasukkan, atur menjadi null
+            if ($this->request->getPost('riwayat_penyakit_sekarang') == '-') {
+                $riwayat_penyakit_sekarang = null;
+            } else {
+                $riwayat_penyakit_sekarang = $this->request->getPost('riwayat_penyakit_sekarang');
+            }
+
+            if ($this->request->getPost('riwayat_penyakit_dahulu') == '-') {
+                $riwayat_penyakit_dahulu = null;
+            } else {
+                $riwayat_penyakit_dahulu = $this->request->getPost('riwayat_penyakit_dahulu');
+            }
+
+            if ($this->request->getPost('riwayat_penyakit_keluarga') == '-') {
+                $riwayat_penyakit_keluarga = null;
+            } else {
+                $riwayat_penyakit_keluarga = $this->request->getPost('riwayat_penyakit_keluarga');
+            }
+
+            if ($this->request->getPost('riwayat_pengobatan') == '-') {
+                $riwayat_pengobatan = null;
+            } else {
+                $riwayat_pengobatan = $this->request->getPost('riwayat_pengobatan');
+            }
+
+            if ($this->request->getPost('riwayat_sosial_pekerjaan') == '-') {
+                $riwayat_sosial_pekerjaan = null;
+            } else {
+                $riwayat_sosial_pekerjaan = $this->request->getPost('riwayat_sosial_pekerjaan');
+            }
+
+            if ($this->request->getPost('tekanan_darah') == '-') {
+                $tekanan_darah = null;
+            } else {
+                $tekanan_darah = $this->request->getPost('tekanan_darah');
+            }
+
             // Proses data sakit_lainnya dari select multiple
             $sakit_lainnya = $this->request->getPost('sakit_lainnya');
             $sakit_lainnya_csv = is_array($sakit_lainnya) ? implode(',', $sakit_lainnya) : NULL;
@@ -367,13 +404,13 @@ class Asesmen extends BaseController
                     'no_rm' => $asesmen['no_rm'],
                     'nomor_registrasi' => $asesmen['nomor_registrasi'],
                     'keluhan_utama' => $this->request->getPost('keluhan_utama') ?: NULL,
-                    'riwayat_penyakit_sekarang' => $this->request->getPost('riwayat_penyakit_sekarang') ?: NULL,
-                    'riwayat_penyakit_dahulu' => $this->request->getPost('riwayat_penyakit_dahulu') ?: NULL,
-                    'riwayat_penyakit_keluarga' => $this->request->getPost('riwayat_penyakit_keluarga') ?: NULL,
-                    'riwayat_pengobatan' => $this->request->getPost('riwayat_pengobatan') ?: NULL,
-                    'riwayat_sosial_pekerjaan' => $this->request->getPost('riwayat_sosial_pekerjaan') ?: NULL,
+                    'riwayat_penyakit_sekarang' => $riwayat_penyakit_sekarang ?: NULL,
+                    'riwayat_penyakit_dahulu' => $riwayat_penyakit_dahulu ?: NULL,
+                    'riwayat_penyakit_keluarga' => $riwayat_penyakit_keluarga ?: NULL,
+                    'riwayat_pengobatan' => $riwayat_pengobatan ?: NULL,
+                    'riwayat_sosial_pekerjaan' => $riwayat_sosial_pekerjaan ?: NULL,
                     'kesadaran' => $this->request->getPost('kesadaran') ?: NULL,
-                    'tekanan_darah' => $this->request->getPost('tekanan_darah') ?? 0,
+                    'tekanan_darah' => $tekanan_darah ?: NULL,
                     'nadi' => $this->request->getPost('nadi') ?? 0,
                     'suhu' => $this->request->getPost('suhu') ?? 0,
                     'pernapasan' => $this->request->getPost('pernapasan') ?? 0,
@@ -395,13 +432,13 @@ class Asesmen extends BaseController
                     'no_rm' => $asesmen['no_rm'],
                     'nomor_registrasi' => $asesmen['nomor_registrasi'],
                     'keluhan_utama' => $this->request->getPost('keluhan_utama') ?: NULL,
-                    'riwayat_penyakit_sekarang' => $this->request->getPost('riwayat_penyakit_sekarang') ?: NULL,
-                    'riwayat_penyakit_dahulu' => $this->request->getPost('riwayat_penyakit_dahulu') ?: NULL,
-                    'riwayat_penyakit_keluarga' => $this->request->getPost('riwayat_penyakit_keluarga') ?: NULL,
-                    'riwayat_pengobatan' => $this->request->getPost('riwayat_pengobatan') ?: NULL,
-                    'riwayat_sosial_pekerjaan' => $this->request->getPost('riwayat_sosial_pekerjaan') ?: NULL,
+                    'riwayat_penyakit_sekarang' => $riwayat_penyakit_sekarang ?: NULL,
+                    'riwayat_penyakit_dahulu' => $riwayat_penyakit_dahulu ?: NULL,
+                    'riwayat_penyakit_keluarga' => $riwayat_penyakit_keluarga ?: NULL,
+                    'riwayat_pengobatan' => $riwayat_pengobatan ?: NULL,
+                    'riwayat_sosial_pekerjaan' => $riwayat_sosial_pekerjaan ?: NULL,
                     'kesadaran' => $this->request->getPost('kesadaran') ?: NULL,
-                    'tekanan_darah' => $this->request->getPost('tekanan_darah') ?: NULL,
+                    'tekanan_darah' => $tekanan_darah ?: NULL,
                     'nadi' => $this->request->getPost('nadi') ?: NULL,
                     'suhu' => $this->request->getPost('suhu') ?: NULL,
                     'pernapasan' => $this->request->getPost('pernapasan') ?: NULL,
