@@ -315,6 +315,7 @@ class Settings extends BaseController
                 ->where('baca_tulis', null)
                 ->where('cara_belajar', null)
                 ->where('budaya', null)
+                ->where('hambatan', null)
                 ->where('keyakinan', null)
                 ->where('keyakinan_khusus', null)
                 ->where('topik_pembelajaran', null)
@@ -629,6 +630,7 @@ class Settings extends BaseController
                     'baca_tulis',
                     'cara_belajar',
                     'budaya',
+                    'hambatan',
                     'keyakinan',
                     'keyakinan_khusus',
                     'topik_pembelajaran',
