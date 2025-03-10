@@ -237,35 +237,37 @@ $usia = $registrasi->diff($tanggal_lahir);
                 </div>
             </div>
 
-            <div class="mb-0 row g-1 overflow-hidden d-flex align-items-end">
-                <div class="col fw-medium text-nowrap">Grand Total</div>
-                <div class="col text-end">
-                    <div class="fs-4 date text-truncate placeholder-glow" style="font-weight: 900;" id="total_pembayaran">
-                        <span class="placeholder w-100"></span>
+            <div class="mb-3">
+                <div class="mb-0 row g-1 overflow-hidden d-flex align-items-end">
+                    <div class="col fw-medium text-nowrap">Grand Total</div>
+                    <div class="col text-end">
+                        <div class="fs-4 date text-truncate placeholder-glow" style="font-weight: 900;" id="total_pembayaran">
+                            <span class="placeholder w-100"></span>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="mb-0 row g-1 overflow-hidden d-flex align-items-end">
-                <div class="col fw-medium text-nowrap">Terima Uang</div>
-                <div class="col text-end">
-                    <div class="date text-truncate placeholder-glow" id="terima_uang_table">
-                        <span class="placeholder w-100"></span>
+                <div class="mb-0 row g-1 overflow-hidden d-flex align-items-end">
+                    <div class="col fw-medium text-nowrap">Terima Uang</div>
+                    <div class="col text-end">
+                        <div class="date text-truncate placeholder-glow" id="terima_uang_table">
+                            <span class="placeholder w-100"></span>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="mb-0 row g-1 overflow-hidden d-flex align-items-end">
-                <div class="col fw-medium text-nowrap">Uang Kembali</div>
-                <div class="col text-end">
-                    <div class="date text-truncate placeholder-glow" id="uang_kembali_table">
-                        <span class="placeholder w-100"></span>
+                <div class="mb-0 row g-1 overflow-hidden d-flex align-items-end">
+                    <div class="col fw-medium text-nowrap">Uang Kembali</div>
+                    <div class="col text-end">
+                        <div class="date text-truncate placeholder-glow" id="uang_kembali_table">
+                            <span class="placeholder w-100"></span>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="mb-0 row g-1 overflow-hidden d-flex align-items-end">
-                <div class="col fw-medium text-nowrap">Metode Bayar</div>
-                <div class="col text-end">
-                    <div class="date text-truncate placeholder-glow" id="metode_pembayaran_table">
-                        <span class="placeholder w-100"></span>
+                <div class="mb-0 row g-1 overflow-hidden d-flex align-items-end">
+                    <div class="col fw-medium text-nowrap">Metode Bayar</div>
+                    <div class="col text-end">
+                        <div class="date text-truncate placeholder-glow" id="metode_pembayaran_table">
+                            <span class="placeholder w-100"></span>
+                        </div>
                     </div>
                 </div>
             </div>
