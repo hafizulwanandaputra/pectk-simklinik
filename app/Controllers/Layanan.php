@@ -16,8 +16,8 @@ class Layanan extends BaseController
 
     public function index()
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Kasir' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Kasir') {
             // Mengatur data untuk tampilan
             $data = [
                 'title' => 'Layanan - ' . $this->systemName,
@@ -34,8 +34,8 @@ class Layanan extends BaseController
 
     public function layananlist()
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Kasir' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Kasir') {
             $request = $this->request->getPost();
             $search = $request['search']['value']; // Nilai pencarian
             $start = $request['start']; // Indeks mulai untuk paginasi
@@ -109,8 +109,8 @@ class Layanan extends BaseController
 
     public function layanan($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Kasir' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Kasir') {
             // Mengambil data layanan berdasarkan ID
             $data = $this->LayananModel->find($id);
             return $this->response->setJSON($data);
@@ -124,8 +124,8 @@ class Layanan extends BaseController
 
     public function create()
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Kasir' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Kasir') {
             // Validasi
             $validation = \Config\Services::validation();
             // Mengatur aturan validasi dasar
@@ -161,8 +161,8 @@ class Layanan extends BaseController
 
     public function update()
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Kasir' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Kasir') {
             // Validasi
             $validation = \Config\Services::validation();
             // Mengatur aturan validasi dasar
@@ -198,8 +198,8 @@ class Layanan extends BaseController
 
     public function delete($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Kasir' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Kasir') {
             $db = db_connect();
 
             try {

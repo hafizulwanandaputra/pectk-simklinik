@@ -287,8 +287,8 @@ class Transaksi extends BaseController
 
     public function transaksi($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Admisi', atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi' || session()->get('role') == 'Kasir') {
+        // Memeriksa peran pengguna, hanya 'Admin', 'Admisi', 'Dokter', atau 'Kasir' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi' || session()->get('role') == 'Dokter' || session()->get('role') == 'Kasir') {
             // Mengambil data transaksi berdasarkan id
             $data = $this->TransaksiModel->find($id);
             return $this->response->setJSON($data); // Mengembalikan data dalam format JSON
@@ -373,7 +373,7 @@ class Transaksi extends BaseController
             ];
             $this->TransaksiModel->save($data); // Menyimpan data transaksi ke database
             // Panggil WebSocket untuk update client
-            $this->notify_clients('update');
+            $this->notify_clients_submit('update');
             return $this->response->setJSON(['success' => true, 'message' => 'Transaksi berhasil ditambahkan']); // Mengembalikan respon sukses
         } else {
             return $this->response->setStatusCode(404)->setJSON([
@@ -449,7 +449,7 @@ class Transaksi extends BaseController
             ];
             $this->TransaksiModel->save($data); // Menyimpan data transaksi ke database
             // Panggil WebSocket untuk update client
-            $this->notify_clients('update');
+            $this->notify_clients_submit('update');
             return $this->response->setJSON(['success' => true, 'message' => 'Transaksi berhasil ditambahkan']); // Mengembalikan respon sukses
         } else {
             return $this->response->setStatusCode(404)->setJSON([
@@ -483,10 +483,10 @@ class Transaksi extends BaseController
                 $db->query('ALTER TABLE `transaksi` auto_increment = 1');
                 $db->query('ALTER TABLE `detail_transaksi` auto_increment = 1');
                 // Panggil WebSocket untuk update client
-                $this->notify_clients('delete');
+                $this->notify_clients_submit('delete');
                 return $this->response->setJSON(['message' => 'Transaksi berhasil dihapus']); // Mengembalikan respon sukses
             } else {
-                return $this->response->setStatusCode(401)->setJSON(['message' => 'Transaksi yang sudah lunas tidak bisa dihapus. Batalkan transaksi terlebih dahulu sebelum menghapus transaksi ini.']);
+                return $this->response->setStatusCode(400)->setJSON(['message' => 'Transaksi yang sudah lunas tidak bisa dihapus. Batalkan transaksi terlebih dahulu sebelum menghapus transaksi ini.']);
             }
         } else {
             return $this->response->setStatusCode(404)->setJSON([
@@ -527,6 +527,20 @@ class Transaksi extends BaseController
 
             // Memeriksa apakah transaksi ditemukan
             if (!empty($transaksi)) {
+                // Jika 'kasir' bernilai NULL, masukkan session()->get('fullname')
+                if (empty($transaksi['kasir']) || $transaksi['kasir'] == 'Ditambahkan Dokter') {
+                    $kasirBaru = session()->get('fullname');
+
+                    $db->table('transaksi')
+                        ->where('id_transaksi', $id)
+                        ->update(['kasir' => $kasirBaru]);
+
+                    // Perbarui data transaksi untuk memastikan tampilan menampilkan kasir yang baru ditambahkan
+                    $transaksi['kasir'] = $kasirBaru;
+
+                    // Panggil WebSocket untuk update client
+                    $this->notify_clients('update');
+                }
                 // Menyiapkan data untuk tampilan
                 $data = [
                     'transaksi' => $transaksi,
@@ -551,8 +565,8 @@ class Transaksi extends BaseController
 
     public function detaillayananlist($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Kasir' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Kasir') {
             // Mengambil daftar layanan berdasarkan ID transaksi
             $layanan = $this->DetailTransaksiModel
                 ->where('detail_transaksi.id_transaksi', $id)
@@ -593,8 +607,8 @@ class Transaksi extends BaseController
 
     public function detailobatalkeslist($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Kasir' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Kasir') {
             // Mengambil daftar obat dan alkes berdasarkan ID transaksi
             $obatalkes = $this->DetailTransaksiModel
                 ->where('detail_transaksi.id_transaksi', $id)
@@ -660,8 +674,8 @@ class Transaksi extends BaseController
 
     public function detailtransaksiitem($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Kasir' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Kasir') {
             // Mengambil data detail transaksi berdasarkan ID
             $data = $this->DetailTransaksiModel
                 ->where('id_detail_transaksi', $id)
@@ -680,8 +694,8 @@ class Transaksi extends BaseController
 
     public function layananlist($id_transaksi, $jenis_layanan = null)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Kasir' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Kasir') {
             $LayananModel = new LayananModel();
             $DetailTransaksiModel = new DetailTransaksiModel();
 
@@ -727,8 +741,8 @@ class Transaksi extends BaseController
 
     public function reseplist($id_transaksi, $nomor_registrasi)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Kasir' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Kasir') {
             $ResepModel = new ResepModel();
             $DetailTransaksiModel = new DetailTransaksiModel();
 
@@ -823,8 +837,8 @@ class Transaksi extends BaseController
 
     public function tambahlayanan($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Kasir' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Kasir') {
             // Validasi input
             $validation = \Config\Services::validation();
             // Menetapkan aturan validasi dasar
@@ -848,12 +862,19 @@ class Transaksi extends BaseController
 
             if ($transaksi['lunas'] == 1) {
                 // Gagalkan jika transaksi lunas
-                return $this->response->setStatusCode(401)->setJSON(['success' => false, 'message' => 'Tidak bisa dilakukan. Batalkan transaksi terlebih dahulu.']);
+                return $this->response->setStatusCode(400)->setJSON(['success' => false, 'message' => 'Tidak bisa dilakukan. Batalkan transaksi terlebih dahulu.']);
             }
 
             if ($transaksi['dokter'] == 'Resep Luar') {
                 // Gagalkan jika resep luar
-                return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Tidak bisa menambahkan layanan pada resep luar.']);
+                return $this->response->setStatusCode(400)->setJSON(['success' => false, 'message' => 'Tidak bisa menambahkan layanan pada resep luar.']);
+            }
+
+            if (session()->get('role') == 'Dokter') {
+                if ($transaksi['dokter'] != session()->get('fullname')) {
+                    // Gagalkan jika resep luar
+                    return $this->response->setStatusCode(400)->setJSON(['success' => false, 'message' => 'Hanya bisa ditambahkan oleh ' . $transaksi['dokter']]);
+                }
             }
 
             $LayananModel = new LayananModel();
@@ -889,7 +910,7 @@ class Transaksi extends BaseController
                 'total_pembayaran' => $total_pembayaran, // Memperbarui total pembayaran di tabel transaksi
             ]);
             // Panggil WebSocket untuk update client
-            $this->notify_clients('update');
+            $this->notify_clients_submit('update');
             // Mengembalikan respons sukses
             return $this->response->setJSON(['success' => true, 'message' => 'Item transaksi berhasil ditambahkan']);
         } else {
@@ -902,8 +923,8 @@ class Transaksi extends BaseController
 
     public function tambahobatalkes($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Kasir' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Kasir') {
             // Validasi input
             $validation = \Config\Services::validation();
             // Menetapkan aturan validasi dasar
@@ -926,7 +947,14 @@ class Transaksi extends BaseController
 
             if ($transaksi['lunas'] == 1) {
                 // Gagalkan jika transaksi lunas
-                return $this->response->setStatusCode(401)->setJSON(['success' => false, 'message' => 'Tidak bisa dilakukan. Batalkan transaksi terlebih dahulu.']);
+                return $this->response->setStatusCode(400)->setJSON(['success' => false, 'message' => 'Tidak bisa dilakukan. Batalkan transaksi terlebih dahulu.']);
+            }
+
+            if (session()->get('role') == 'Dokter') {
+                if ($transaksi['dokter'] != session()->get('fullname')) {
+                    // Gagalkan jika resep luar
+                    return $this->response->setStatusCode(400)->setJSON(['success' => false, 'message' => 'Hanya bisa ditambahkan oleh ' . $transaksi['dokter']]);
+                }
             }
 
             $ResepModel = new ResepModel();
@@ -962,7 +990,7 @@ class Transaksi extends BaseController
                 'total_pembayaran' => $total_pembayaran, // Memperbarui total pembayaran di tabel transaksi
             ]);
             // Panggil WebSocket untuk update client
-            $this->notify_clients('update');
+            $this->notify_clients_submit('update');
             // Mengembalikan respons sukses
             return $this->response->setJSON(['success' => true, 'message' => 'Item transaksi berhasil ditambahkan']);
         } else {
@@ -975,8 +1003,8 @@ class Transaksi extends BaseController
 
     public function perbaruilayanan($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Kasir' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Kasir') {
             // Validasi input
             $validation = \Config\Services::validation();
             // Menetapkan aturan validasi dasar
@@ -999,12 +1027,19 @@ class Transaksi extends BaseController
 
             if ($transaksi['lunas'] == 1) {
                 // Gagalkan jika transaksi lunas
-                return $this->response->setStatusCode(401)->setJSON(['success' => false, 'message' => 'Tidak bisa dilakukan. Batalkan transaksi terlebih dahulu.']);
+                return $this->response->setStatusCode(400)->setJSON(['success' => false, 'message' => 'Tidak bisa dilakukan. Batalkan transaksi terlebih dahulu.']);
             }
 
             if ($transaksi['dokter'] == 'Resep Luar') {
                 // Gagalkan jika resep luar
-                return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Tidak bisa mengedit layanan pada resep luar.']);
+                return $this->response->setStatusCode(400)->setJSON(['success' => false, 'message' => 'Tidak bisa mengedit layanan pada resep luar.']);
+            }
+
+            if (session()->get('role') == 'Dokter') {
+                if ($transaksi['dokter'] != session()->get('fullname')) {
+                    // Gagalkan jika resep luar
+                    return $this->response->setStatusCode(400)->setJSON(['success' => false, 'message' => 'Hanya bisa diperbarui oleh ' . $transaksi['dokter']]);
+                }
             }
 
             // Mengambil detail transaksi berdasarkan ID yang diberikan
@@ -1040,7 +1075,7 @@ class Transaksi extends BaseController
                 'total_pembayaran' => $total_pembayaran, // Memperbarui total pembayaran di tabel transaksi
             ]);
             // Panggil WebSocket untuk update client
-            $this->notify_clients('update');
+            $this->notify_clients_submit('update');
             // Mengembalikan respons sukses
             return $this->response->setJSON(['success' => true, 'message' => 'Item transaksi berhasil diperbarui']);
         } else {
@@ -1053,8 +1088,8 @@ class Transaksi extends BaseController
 
     public function perbaruiobatalkes($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Kasir' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Kasir') {
             // Validasi input
             $validation = \Config\Services::validation();
             // Menetapkan aturan validasi dasar
@@ -1076,7 +1111,14 @@ class Transaksi extends BaseController
 
             if ($transaksi['lunas'] == 1) {
                 // Gagalkan jika transaksi lunas
-                return $this->response->setStatusCode(401)->setJSON(['success' => false, 'message' => 'Tidak bisa dilakukan. Batalkan transaksi terlebih dahulu.']);
+                return $this->response->setStatusCode(400)->setJSON(['success' => false, 'message' => 'Tidak bisa dilakukan. Batalkan transaksi terlebih dahulu.']);
+            }
+
+            if (session()->get('role') == 'Dokter') {
+                if ($transaksi['dokter'] != session()->get('fullname')) {
+                    // Gagalkan jika resep luar
+                    return $this->response->setStatusCode(400)->setJSON(['success' => false, 'message' => 'Hanya bisa diperbarui oleh ' . $transaksi['dokter']]);
+                }
             }
 
             // Mengambil detail transaksi berdasarkan ID yang diberikan
@@ -1112,7 +1154,7 @@ class Transaksi extends BaseController
                 'total_pembayaran' => $total_pembayaran, // Memperbarui total pembayaran di tabel transaksi
             ]);
             // Panggil WebSocket untuk update client
-            $this->notify_clients('update');
+            $this->notify_clients_submit('update');
             // Mengembalikan respons sukses
             return $this->response->setJSON(['success' => true, 'message' => 'Item transaksi berhasil diperbarui']);
         } else {
@@ -1125,8 +1167,8 @@ class Transaksi extends BaseController
 
     public function hapusdetailtransaksi($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Kasir' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Kasir') {
             $db = db_connect();
 
             // Mencari detail pembelian obat sebelum penghapusan untuk mendapatkan id_transaksi
@@ -1140,7 +1182,14 @@ class Transaksi extends BaseController
 
             if ($transaksi['lunas'] == 1) {
                 // Gagalkan jika transaksi lunas
-                return $this->response->setStatusCode(401)->setJSON(['message' => 'Tidak bisa dilakukan. Batalkan transaksi terlebih dahulu.']);
+                return $this->response->setStatusCode(400)->setJSON(['message' => 'Tidak bisa dilakukan. Batalkan transaksi terlebih dahulu.']);
+            }
+
+            if (session()->get('role') == 'Dokter') {
+                if ($transaksi['dokter'] != session()->get('fullname')) {
+                    // Gagalkan jika resep luar
+                    return $this->response->setStatusCode(400)->setJSON(['success' => false, 'message' => 'Hanya bisa dihapus oleh ' . $transaksi['dokter']]);
+                }
             }
 
             // Menghapus detail pembelian obat
@@ -1164,7 +1213,7 @@ class Transaksi extends BaseController
                 'total_pembayaran' => $total_pembayaran, // Memperbarui total pembayaran di tabel transaksi
             ]);
             // Panggil WebSocket untuk update client
-            $this->notify_clients('update');
+            $this->notify_clients_submit('update');
             // Mengembalikan respons sukses
             return $this->response->setJSON(['message' => 'Item transaksi berhasil dihapus']);
         } else {
@@ -1288,11 +1337,11 @@ class Transaksi extends BaseController
             // Memeriksa status transaksi
             if ($db->transStatus() === false) {
                 $db->transRollback();  // Rollback jika ada masalah
-                return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Gagal memproses transaksi', 'errors' => NULL]);
+                return $this->response->setStatusCode(400)->setJSON(['success' => false, 'message' => 'Gagal memproses transaksi', 'errors' => NULL]);
             } else {
                 $db->transCommit();  // Commit transaksi jika semuanya baik-baik saja
                 // Panggil WebSocket untuk update client
-                $this->notify_clients('update');
+                $this->notify_clients_submit('update');
                 return $this->response->setJSON(['success' => true, 'message' => 'Transaksi berhasil diproses. Silakan cetak struk transaksi.']);
             }
         } else {
@@ -1377,12 +1426,12 @@ class Transaksi extends BaseController
                 }
 
                 // Panggil WebSocket untuk update client
-                $this->notify_clients('update');
+                $this->notify_clients_submit('update');
                 // Kirim pesan pembatalan berhasil jika kata sandi yang dimasukkan benar
                 return $this->response->setJSON(['success' => true, 'message' => 'Transaksi berhasil dibatalkan.']);
             } else {
-                // Kirim pesan kesalahan HTTP 401 jika kata sandi yang dimasukkan salah
-                return $this->response->setStatusCode(401)->setJSON(['success' => false, 'message' => 'Kata sandi transaksi salah', 'errors' => NULL]);
+                // Kirim pesan kesalahan HTTP 400 jika kata sandi yang dimasukkan salah
+                return $this->response->setStatusCode(400)->setJSON(['success' => false, 'message' => 'Kata sandi transaksi salah', 'errors' => NULL]);
             }
         } else {
             // Jika peran tidak valid, kembalikan status 404
@@ -2014,6 +2063,21 @@ class Transaksi extends BaseController
     }
 
     public function notify_clients($action)
+    {
+        if (!in_array($action, ['update', 'delete'])) {
+            return $this->response->setJSON([
+                'status' => 'Invalid action',
+                'error' => 'Action must be either "update" or "delete"'
+            ])->setStatusCode(400);
+        }
+
+        $client = \Config\Services::curlrequest();
+        $response = $client->post(env('WS-URL-PHP'), [
+            'json' => ['action' => $action]
+        ]);
+    }
+
+    public function notify_clients_submit($action)
     {
         if (!in_array($action, ['update', 'delete'])) {
             return $this->response->setJSON([

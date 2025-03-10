@@ -129,7 +129,7 @@ class Admin extends BaseController
             $validation = \Config\Services::validation();
             // Menetapkan aturan validasi dasar
             $validation->setRules([
-                'fullname' => 'required|min_length[3]', // Fullname wajib diisi dan minimal 3 karakter
+                'fullname' => 'required|min_length[3]|not_in_list[Ditambahkan Dokter, Resep Luar]', // Fullname wajib diisi dan minimal 3 karakter
                 'username' => 'required|is_unique[user.username]|min_length[3]|alpha_dash', // Username wajib diisi, unik, dan memenuhi syarat
                 'role' => 'required' // Role wajib diisi
             ]);

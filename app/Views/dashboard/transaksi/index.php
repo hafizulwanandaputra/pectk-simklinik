@@ -432,6 +432,7 @@
                     } else if (jenis_kelamin === 'P') {
                         jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap" style="background-color: Pink"><i class="fa-solid fa-venus"></i> PEREMPUAN</span>`;
                     }
+                    const kasir = transaksi.kasir == 'Ditambahkan Dokter' ? `<em>${transaksi.kasir}</em>` : `${transaksi.kasir}`;
                     const total_pembayaran = parseInt(transaksi.total_pembayaran);
                     const statusBadge = transaksi.lunas == '1' ?
                         `<span class="badge bg-success bg-gradient">Transaksi Diproses</span>` :
@@ -457,7 +458,7 @@
                                     <span class="ms-1 align-self-center">${nama_pasien}</span>
                                 </h5>
                                 <h6 class="card-subtitle mb-2">
-                                    ${transaksi.kasir}<br>${jenis_kelamin} ${jenisResep}
+                                    ${kasir}<br>${jenis_kelamin} ${jenisResep}
                                 </h6>
                                 <div class="card-text">
                                     <div style="font-size: 0.75em;">

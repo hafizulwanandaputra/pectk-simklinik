@@ -105,6 +105,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             <a class="nav-link py-1 text-nowrap" href="<?= base_url('rawatjalan/resepobat/' . $rawatjalan['id_rawat_jalan']); ?>">Resep Obat</a>
                             <a class="nav-link py-1 text-nowrap active activeLink" href="<?= base_url('rawatjalan/optik/' . $rawatjalan['id_rawat_jalan']); ?>">Resep Kacamata</a>
                             <a class="nav-link py-1 text-nowrap" href="<?= base_url('rawatjalan/laporanrajal/' . $rawatjalan['id_rawat_jalan']); ?>">Tindakan Rajal</a>
+                            <a class="nav-link py-1 text-nowrap" href="<?= base_url('rawatjalan/transaksi/' . $rawatjalan['id_rawat_jalan']); ?>">Transaksi</a>
                         <?php endif; ?>
                     </nav>
                 </div>

@@ -40,12 +40,12 @@ $usia = $registrasi->diff($tanggal_lahir);
         <span class="visually-hidden">Loading...</span>
     </div>
     <?php if ($previous): ?>
-        <a class="fs-6 mx-2 text-success-emphasis" href="<?= site_url('rawatjalan/resepobat/' . $previous['id_rawat_jalan']) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="<?= $previous['nomor_registrasi']; ?> • <?= $previous['no_rm'] ?> • <?= $previous['nama_pasien']; ?>"><i class="fa-solid fa-circle-arrow-left"></i></a>
+        <a class="fs-6 mx-2 text-success-emphasis" href="<?= site_url('rawatjalan/transaksi/' . $previous['id_rawat_jalan']) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="<?= $previous['nomor_registrasi']; ?> • <?= $previous['no_rm'] ?> • <?= $previous['nama_pasien']; ?>"><i class="fa-solid fa-circle-arrow-left"></i></a>
     <?php else: ?>
         <span class="fs-6 mx-2 text-success-emphasis" style="cursor: no-drop; opacity: .5;" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Tidak ada rawat jalan sebelumnya"><i class="fa-solid fa-circle-arrow-left"></i></span>
     <?php endif; ?>
     <?php if ($next): ?>
-        <a class="fs-6 mx-2 text-success-emphasis" href="<?= site_url('rawatjalan/resepobat/' . $next['id_rawat_jalan']) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="<?= $next['nomor_registrasi']; ?> • <?= $next['no_rm'] ?> • <?= $next['nama_pasien']; ?>"><i class="fa-solid fa-circle-arrow-right"></i></a>
+        <a class="fs-6 mx-2 text-success-emphasis" href="<?= site_url('rawatjalan/transaksi/' . $next['id_rawat_jalan']) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="<?= $next['nomor_registrasi']; ?> • <?= $next['no_rm'] ?> • <?= $next['nama_pasien']; ?>"><i class="fa-solid fa-circle-arrow-right"></i></a>
     <?php else: ?>
         <span class="fs-6 mx-2 text-success-emphasis" style="cursor: no-drop; opacity: .5;" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Tidak ada rawat jalan berikutnya"><i class="fa-solid fa-circle-arrow-right"></i></span>
     <?php endif; ?>
@@ -66,10 +66,10 @@ $usia = $registrasi->diff($tanggal_lahir);
                             <a class="nav-link py-1 text-nowrap" href="<?= base_url('rawatjalan/penunjang/' . $rawatjalan['id_rawat_jalan']); ?>">Penunjang</a>
                         <?php endif; ?>
                         <?php if (session()->get('role') != 'Perawat') : ?>
-                            <a class="nav-link py-1 text-nowrap active activeLink" href="<?= base_url('rawatjalan/resepobat/' . $rawatjalan['id_rawat_jalan']); ?>">Resep Obat</a>
+                            <a class="nav-link py-1 text-nowrap" href="<?= base_url('rawatjalan/resepobat/' . $rawatjalan['id_rawat_jalan']); ?>">Resep Obat</a>
                             <a class="nav-link py-1 text-nowrap" href="<?= base_url('rawatjalan/optik/' . $rawatjalan['id_rawat_jalan']); ?>">Resep Kacamata</a>
                             <a class="nav-link py-1 text-nowrap" href="<?= base_url('rawatjalan/laporanrajal/' . $rawatjalan['id_rawat_jalan']); ?>">Tindakan Rajal</a>
-                            <a class="nav-link py-1 text-nowrap" href="<?= base_url('rawatjalan/transaksi/' . $rawatjalan['id_rawat_jalan']); ?>">Transaksi</a>
+                            <a class="nav-link py-1 text-nowrap active activeLink" href="<?= base_url('rawatjalan/transaksi/' . $rawatjalan['id_rawat_jalan']); ?>">Transaksi</a>
                         <?php endif; ?>
                     </nav>
                 </div>
@@ -78,7 +78,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <div class="no-fluid-content">
                     <nav class="nav nav-underline flex-nowrap overflow-auto">
                         <?php foreach ($listRawatJalan as $list) : ?>
-                            <a class="<?= (date('Y-m-d', strtotime($list['tanggal_registrasi'])) != date('Y-m-d')) ? 'text-danger' : ''; ?> nav-link py-1 <?= ($activeSegment === $list['id_rawat_jalan']) ? 'active activeLink' : '' ?>" href="<?= base_url('rawatjalan/resepobat/' . $list['id_rawat_jalan']); ?>">
+                            <a class="<?= (date('Y-m-d', strtotime($list['tanggal_registrasi'])) != date('Y-m-d')) ? 'text-danger' : ''; ?> nav-link py-1 <?= ($activeSegment === $list['id_rawat_jalan']) ? 'active activeLink' : '' ?>" href="<?= base_url('rawatjalan/transaksi/' . $list['id_rawat_jalan']); ?>">
                                 <div class="text-center">
                                     <div class="text-nowrap lh-sm"><?= $list['nomor_registrasi']; ?></div>
                                     <div class="text-nowrap lh-sm date" style="font-size: 0.75em;"><?= $list['tanggal_registrasi'] ?></div>
@@ -92,32 +92,32 @@ $usia = $registrasi->diff($tanggal_lahir);
     </div>
     <div class="px-3 mt-3">
         <div class="no-fluid-content">
-            <?= form_open_multipart('/rawatjalan/resepobat/create/' . $rawatjalan['id_rawat_jalan'], 'id="addResepForm"'); ?>
+            <?= form_open_multipart('/rawatjalan/transaksi/create/' . $rawatjalan['id_rawat_jalan'], 'id="addTransaksiForm"'); ?>
             <?= csrf_field(); ?>
             <div id="empty-placeholder" class="my-3 text-center">
-                <h1 style="font-size: 7rem;"><i class="fa-solid fa-prescription"></i></h1>
-                <h3>Resep Obat</h3>
+                <h1 style="font-size: 7rem;"><i class="fa-solid fa-cash-register"></i></h1>
+                <h3>Transaksi</h3>
                 <?php if ($rawatjalan['transaksi'] == 1) : ?>
-                    <div class="text-muted">Tidak ada resep obat pada rawat jalan ini</div>
+                    <div class="text-muted">Tidak ada transaksi pada rawat jalan ini</div>
                 <?php else : ?>
                     <?php if (session()->get('role') == 'Dokter') : ?>
                         <?php if ($rawatjalan['dokter'] != session()->get('fullname')) : ?>
-                            <div class="text-muted">Resep obat hanya bisa ditambahkan sesuai dengan dokter yang diberikan saat pendaftaran.</div>
+                            <div class="text-muted">Transaksi hanya bisa ditambahkan sesuai dengan dokter yang diberikan saat pendaftaran atau petugas kasir.</div>
                             <div class="text-muted"><small>Dokter saat ini: <?= session()->get('fullname') ?></small></div>
                             <div class="text-muted"><small>DPJP: <?= $rawatjalan['dokter'] ?></small></div>
                         <?php else : ?>
-                            <div class="text-muted">Klik "Tambah Resep Obat" di bawah ini untuk menambahkan resep obat</div>
+                            <div class="text-muted">Klik "Tambah Transaksi" di bawah ini untuk menambahkan transaksi</div>
                             <div class="d-grid gap-2 mt-3">
-                                <button class="btn btn-primary bg-gradient" type="button" id="addResepBtn">
-                                    <i class="fa-solid fa-plus"></i> Tambah Resep Obat
+                                <button class="btn btn-primary bg-gradient" type="button" id="addTransaksiBtn">
+                                    <i class="fa-solid fa-plus"></i> Tambah Transaksi
                                 </button>
                             </div>
                         <?php endif; ?>
                     <?php else : ?>
-                        <div class="text-muted">Klik "Tambah Resep Obat" di bawah ini untuk menambahkan resep obat</div>
+                        <div class="text-muted">Klik "Tambah Transaksi" di bawah ini untuk menambahkan transaksi</div>
                         <div class="d-grid gap-2 mt-3">
-                            <button class="btn btn-primary bg-gradient" type="button" id="addResepBtn">
-                                <i class="fa-solid fa-plus"></i> Tambah Resep Obat
+                            <button class="btn btn-primary bg-gradient" type="button" id="addTransaksiBtn">
+                                <i class="fa-solid fa-plus"></i> Tambah Transaksi
                             </button>
                         </div>
                     <?php endif; ?>
@@ -159,11 +159,11 @@ $usia = $registrasi->diff($tanggal_lahir);
         });
         $('#loadingSpinner').hide();
         <?php if ($rawatjalan['transaksi'] == 0) : ?>
-            $(document).on('click', '#addResepBtn', function(ə) {
+            $(document).on('click', '#addTransaksiBtn', function(ə) {
                 ə.preventDefault();
-                $('#addResepForm').submit();
+                $('#addTransaksiForm').submit();
                 $('#loadingSpinner').show();
-                $('#addResepBtn').prop('disabled', true).html(`
+                $('#addTransaksiBtn').prop('disabled', true).html(`
                 <span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span> Silakan Tunggu..</span>
             `);
             });

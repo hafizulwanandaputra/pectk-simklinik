@@ -922,7 +922,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                 </a>
                             </li>
                         <?php endif; ?>
-                        <?php if (session()->get('role') == "Kasir" || session()->get('role') == "Admin") : ?>
+                        <?php if (session()->get('role') == "Kasir" || session()->get('role') == "Dokter" || session()->get('role') == "Admin") : ?>
                             <li class="nav-item">
                                 <a style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'layanan') ? 'active bg-success activeLinkSideBar' : '' ?>" href=" <?= base_url('/layanan'); ?>">
                                     <div class="d-flex align-items-start <?= ($activeSegment === 'layanan') ? 'text-white' : 'text-success-emphasis' ?>">

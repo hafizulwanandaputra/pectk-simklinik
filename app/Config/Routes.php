@@ -127,6 +127,10 @@ $routes->get('/(?i)rawatjalan/(?i)laporanrajal/(?i)icdx', 'TindakanRajal::icdx')
 $routes->get('/(?i)rawatjalan/(?i)laporanrajal/(?i)export/(:any)', 'TindakanRajal::export/$1');
 $routes->post('/(?i)rawatjalan/(?i)laporanrajal/(?i)update/(:any)', 'TindakanRajal::update/$1');
 
+// TRANSAKSI (DOKTER)
+$routes->get('/(?i)rawatjalan/(?i)transaksi/(:num)', 'TransaksiDokter::index/$1');
+$routes->post('/(?i)rawatjalan/(?i)transaksi/(?i)create/(:any)', 'TransaksiDokter::create/$1');
+
 // OPERASI
 $routes->get('/(?i)operasi', 'Operasi::index');
 $routes->get('/(?i)operasi/(?i)operasilist', 'Operasi::operasilist');

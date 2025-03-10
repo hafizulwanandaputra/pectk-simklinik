@@ -1,3 +1,15 @@
+<?php
+$uri = service('uri'); // Load the URI service
+$activeSegment = $uri->getSegment(3); // Get the first segment
+// Tanggal lahir pasien
+$tanggal_lahir = new DateTime($rawatjalan['tanggal_lahir']);
+
+// Tanggal registrasi
+$registrasi = new DateTime(date('Y-m-d', strtotime($rawatjalan['tanggal_registrasi'])));
+
+// Hitung selisih antara tanggal sekarang dan tanggal lahir
+$usia = $registrasi->diff($tanggal_lahir);
+?>
 <?= $this->extend('dashboard/templates/dashboard'); ?>
 <?= $this->section('css'); ?>
 <?= $this->include('select2/normal'); ?>
@@ -32,11 +44,11 @@
 <?= $this->endSection(); ?>
 <?= $this->section('title'); ?>
 <div class="d-flex justify-content-start align-items-center">
-    <a class="fs-5 me-3 text-success-emphasis" href="<?= base_url('/transaksi'); ?>"><i class="fa-solid fa-arrow-left"></i></a>
+    <a class="fs-5 me-3 text-success-emphasis" href="<?= base_url('/rawatjalan'); ?>"><i class="fa-solid fa-arrow-left"></i></a>
     <div class="flex-fill text-truncate">
         <div class="d-flex flex-column">
             <div class="fw-medium fs-6 lh-sm"><?= $headertitle; ?></div>
-            <div class="fw-medium lh-sm" style="font-size: 0.75em;"><?= $transaksi['no_kwitansi'] ?> • <?= ($transaksi['nama_pasien'] == NULL) ? '<em>Anonim</em>' : $transaksi['nama_pasien']; ?> • <?= $transaksi['tgl_transaksi'] ?></div>
+            <div class="fw-medium lh-sm" style="font-size: 0.75em;"><?= $rawatjalan['nama_pasien']; ?> • <?= $usia->y . " tahun " . $usia->m . " bulan" ?> • <?= $rawatjalan['no_rm'] ?></div>
         </div>
     </div>
     <div id="loadingSpinner" class="spinner-border spinner-border-sm mx-2" role="status" style="min-width: 1rem;">
@@ -44,97 +56,74 @@
     </div>
     <a id="refreshButton" class="fs-6 mx-2 text-success-emphasis" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan"><i class="fa-solid fa-sync"></i></a>
     <?php if ($previous): ?>
-        <a class="fs-6 mx-2 text-success-emphasis" href="<?= site_url('transaksi/detailtransaksi/' . $previous['id_transaksi']) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="<?= $previous['no_kwitansi'] ?> • <?= ($previous['nama_pasien'] == NULL) ? '<em>Anonim</em>' : $previous['nama_pasien']; ?> • <?= $previous['tgl_transaksi'] ?>"><i class="fa-solid fa-circle-arrow-left"></i></a>
+        <a class="fs-6 mx-2 text-success-emphasis" href="<?= site_url('rawatjalan/transaksi/' . $previous['id_rawat_jalan']) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="<?= $previous['nomor_registrasi']; ?> • <?= $previous['no_rm'] ?> • <?= $previous['nama_pasien']; ?>"><i class="fa-solid fa-circle-arrow-left"></i></a>
     <?php else: ?>
-        <span class="fs-6 mx-2 text-success-emphasis" style="cursor: no-drop; opacity: .5;" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Tidak ada transaksi sebelumnya"><i class="fa-solid fa-circle-arrow-left"></i></span>
+        <span class="fs-6 mx-2 text-success-emphasis" style="cursor: no-drop; opacity: .5;" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Tidak ada rawat jalan sebelumnya"><i class="fa-solid fa-circle-arrow-left"></i></span>
     <?php endif; ?>
     <?php if ($next): ?>
-        <a class="fs-6 mx-2 text-success-emphasis" href="<?= site_url('transaksi/detailtransaksi/' . $next['id_transaksi']) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="<?= $next['no_kwitansi'] ?> • <?= ($next['nama_pasien'] == NULL) ? '<em>Anonim</em>' : $next['nama_pasien']; ?> • <?= $next['tgl_transaksi'] ?>"><i class="fa-solid fa-circle-arrow-right"></i></a>
+        <a class="fs-6 mx-2 text-success-emphasis" href="<?= site_url('rawatjalan/transaksi/' . $next['id_rawat_jalan']) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="<?= $next['nomor_registrasi']; ?> • <?= $next['no_rm'] ?> • <?= $next['nama_pasien']; ?>"><i class="fa-solid fa-circle-arrow-right"></i></a>
     <?php else: ?>
-        <span class="fs-6 mx-2 text-success-emphasis" style="cursor: no-drop; opacity: .5;" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Tidak ada transaksi berikutnya"><i class="fa-solid fa-circle-arrow-right"></i></span>
+        <span class="fs-6 mx-2 text-success-emphasis" style="cursor: no-drop; opacity: .5;" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Tidak ada rawat jalan berikutnya"><i class="fa-solid fa-circle-arrow-right"></i></span>
     <?php endif; ?>
 </div>
 <div style="min-width: 1px; max-width: 1px;"></div>
 <?= $this->endSection(); ?>
 <?= $this->section('content'); ?>
-<main class="main-content-inside px-3 pt-3">
-    <div class="no-fluid-content">
-        <div class="mb-3">
-            <div class="fw-bold mb-2 border-bottom">Informasi Transaksi</div>
-            <div class="row gx-3">
-                <div class="col-lg-6" style="font-size: 0.75em;">
-                    <div class="mb-0 row g-1">
-                        <div class="col-5 fw-medium text-truncate">Nomor Rekam Medis</div>
-                        <div class="col">
-                            <div class="date">
-                                <?= ($transaksi['no_rm'] == NULL) ? '<em>Tidak ada</em>' : $transaksi['no_rm']; ?>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mb-0 row g-1">
-                        <div class="col-5 fw-medium text-truncate">Nama Pasien</div>
-                        <div class="col">
-                            <div>
-                                <?= ($transaksi['nama_pasien'] == NULL) ? '<em>Anonim</em>' : $transaksi['nama_pasien']; ?>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mb-0 row g-1">
-                        <div class="col-5 fw-medium text-truncate">Nomor HP</div>
-                        <div class="col">
-                            <div class="date">
-                                <?= ($transaksi['telpon'] == NULL) ? '<em>Tidak ada</em>' : $transaksi['telpon']; ?>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mb-0 row g-1">
-                        <div class="col-5 fw-medium text-truncate">Alamat</div>
-                        <div class="col">
-                            <div>
-                                <?= ($transaksi['alamat'] == NULL) ? '<em>Tidak ada</em>' : $transaksi['alamat']; ?>
-                            </div>
-                        </div>
-                    </div>
+<main class="main-content-inside">
+    <div class="sticky-top" style="z-index: 99;">
+        <ul class="list-group shadow-sm rounded-0">
+            <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-tertiary transparent-blur">
+                <div class="no-fluid-content">
+                    <nav class="nav nav-underline nav-fill flex-nowrap overflow-auto">
+                        <a class="nav-link py-1 text-nowrap" href="<?= base_url('rawatjalan/asesmen/' . $rawatjalan['id_rawat_jalan']); ?>">Asesmen</a>
+                        <?php if (session()->get('role') != 'Dokter') : ?>
+                            <a class="nav-link py-1 text-nowrap" href="<?= base_url('rawatjalan/skrining/' . $rawatjalan['id_rawat_jalan']); ?>">Skrining</a>
+                            <a class="nav-link py-1 text-nowrap" href="<?= base_url('rawatjalan/edukasi/' . $rawatjalan['id_rawat_jalan']); ?>">Edukasi</a>
+                            <a class="nav-link py-1 text-nowrap" href="<?= base_url('rawatjalan/penunjang/' . $rawatjalan['id_rawat_jalan']); ?>">Penunjang</a>
+                        <?php endif; ?>
+                        <?php if (session()->get('role') != 'Perawat') : ?>
+                            <a class="nav-link py-1 text-nowrap" href="<?= base_url('rawatjalan/resepobat/' . $rawatjalan['id_rawat_jalan']); ?>">Resep Obat</a>
+                            <a class="nav-link py-1 text-nowrap" href="<?= base_url('rawatjalan/optik/' . $rawatjalan['id_rawat_jalan']); ?>">Resep Kacamata</a>
+                            <a class="nav-link py-1 text-nowrap" href="<?= base_url('rawatjalan/laporanrajal/' . $rawatjalan['id_rawat_jalan']); ?>">Tindakan Rajal</a>
+                            <a class="nav-link py-1 text-nowrap active activeLink" href="<?= base_url('rawatjalan/transaksi/' . $rawatjalan['id_rawat_jalan']); ?>">Transaksi</a>
+                        <?php endif; ?>
+                    </nav>
                 </div>
-                <div class="col-lg-6" style="font-size: 0.75em;">
-                    <div class="mb-0 row g-1">
-                        <div class="col-5 fw-medium text-truncate">Nomor Kuitansi</div>
-                        <div class="col">
-                            <div class="date">
-                                <?= $transaksi['no_kwitansi'] ?>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mb-0 row g-1">
-                        <div class="col-5 fw-medium text-truncate">Tanggal dan Waktu</div>
-                        <div class="col">
-                            <div class="date">
-                                <?= $transaksi['tgl_transaksi'] ?>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mb-0 row g-1">
-                        <div class="col-5 fw-medium text-truncate">Dokter</div>
-                        <div class="col">
-                            <div>
-                                <?= $transaksi['dokter'] ?>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mb-0 row g-1">
-                        <div class="col-5 fw-medium text-truncate">Kasir</div>
-                        <div class="col">
-                            <div>
-                                <?= $transaksi['kasir'] ?>
-                            </div>
-                        </div>
-                    </div>
+            </li>
+            <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-tertiary transparent-blur">
+                <div class="no-fluid-content">
+                    <nav class="nav nav-underline flex-nowrap overflow-auto">
+                        <?php foreach ($listRawatJalan as $list) : ?>
+                            <a class="<?= (date('Y-m-d', strtotime($list['tanggal_registrasi'])) != date('Y-m-d')) ? 'text-danger' : ''; ?> nav-link py-1 <?= ($activeSegment === $list['id_rawat_jalan']) ? 'active activeLink' : '' ?>" href="<?= base_url('rawatjalan/transaksi/' . $list['id_rawat_jalan']); ?>">
+                                <div class="text-center">
+                                    <div class="text-nowrap lh-sm"><?= $list['nomor_registrasi']; ?></div>
+                                    <div class="text-nowrap lh-sm date" style="font-size: 0.75em;"><?= $list['tanggal_registrasi'] ?></div>
+                                </div>
+                            </a>
+                        <?php endforeach; ?>
+                    </nav>
                 </div>
-            </div>
-        </div>
-
-        <div class="row g-3 mb-2">
-            <?php if ($transaksi['dokter'] != 'Resep Luar') : ?>
+            </li>
+        </ul>
+    </div>
+    <div class="px-3 mt-3">
+        <div class="no-fluid-content">
+            <?php if (session()->get('role') == 'Dokter') : ?>
+                <?php if ($rawatjalan['dokter'] != session()->get('fullname')) : ?>
+                    <div id="alert-date" class="alert alert-warning alert-dismissible" role="alert">
+                        <div class="d-flex align-items-start">
+                            <div style="width: 12px; text-align: center;">
+                                <i class="fa-solid fa-triangle-exclamation"></i>
+                            </div>
+                            <div class="w-100 ms-3">
+                                Saat ini Anda melihat transaksi yang dimasukkan oleh <?= $rawatjalan['dokter'] ?>. Pastikan Anda mengisi transaksi sesuai dengan DPJP yang masuk pada sistem ini.
+                            </div>
+                            <button type="button" id="close-alert" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
+                <?php endif; ?>
+            <?php endif; ?>
+            <div class="row g-3 mb-2">
                 <div class="col-lg-6">
                     <div class="card h-100 shadow-sm  overflow-auto">
                         <div class="card-header bg-body-tertiary" id="tambahLayananContainer" style="display: none;">
@@ -193,101 +182,92 @@
                         </div>
                     </div>
                 </div>
-            <?php endif; ?>
-            <div class="<?= ($transaksi['dokter'] == 'Resep Luar') ? 'col' : 'col-lg-6'; ?>">
-                <div class="card h-100 shadow-sm  overflow-auto">
-                    <div class="card-header bg-body-tertiary" id="tambahObatAlkesContainer" style="display: none;">
-                        <form id="tambahObatAlkes" enctype="multipart/form-data">
-                            <div class="mb-2">
-                                <select class="form-select form-select-sm" id="id_resep" name="id_resep" aria-label="id_resep">
-                                    <option value="" disabled selected>-- Pilih Resep --</option>
-                                </select>
-                                <div class="invalid-feedback"></div>
-                            </div>
-                            <div class="d-flex flex-column flex-lg-row gap-2">
-                                <div class="flex-fill">
-                                    <input type="number" id="diskon_obatalkes" name="diskon_obatalkes" class="form-control form-control-sm" placeholder="Diskon (%)" autocomplete="off">
+                <div class="col-lg-6">
+                    <div class="card h-100 shadow-sm  overflow-auto">
+                        <div class="card-header bg-body-tertiary" id="tambahObatAlkesContainer" style="display: none;">
+                            <form id="tambahObatAlkes" enctype="multipart/form-data">
+                                <div class="mb-2">
+                                    <select class="form-select form-select-sm" id="id_resep" name="id_resep" aria-label="id_resep">
+                                        <option value="" disabled selected>-- Pilih Resep --</option>
+                                    </select>
                                     <div class="invalid-feedback"></div>
                                 </div>
-                                <div class="d-grid d-lg-block w-auto">
-                                    <button type="submit" id="addObatAlkesButton" class="btn btn-primary bg-gradient btn-sm text-nowrap">
-                                        <i class="fa-solid fa-plus"></i> Tambah
-                                    </button>
+                                <div class="d-flex flex-column flex-lg-row gap-2">
+                                    <div class="flex-fill">
+                                        <input type="number" id="diskon_obatalkes" name="diskon_obatalkes" class="form-control form-control-sm" placeholder="Diskon (%)" autocomplete="off">
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                    <div class="d-grid d-lg-block w-auto">
+                                        <button type="submit" id="addObatAlkesButton" class="btn btn-primary bg-gradient btn-sm text-nowrap">
+                                            <i class="fa-solid fa-plus"></i> Tambah
+                                        </button>
+                                    </div>
                                 </div>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="card-body p-0 m-0 table-responsive">
-                        <table class="table table-sm mb-0" style="width:100%; font-size: 0.75em;">
-                            <thead>
-                                <tr class="align-middle">
-                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Tindakan</th>
-                                    <th scope="col" class="bg-body-secondary border-secondary col-resize" style="border-bottom-width: 2px; width: 100%;">Nama Obat dan Alkes</th>
-                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Harga</th>
-                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Diskon</th>
-                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total</th>
-                                </tr>
-                            </thead>
-                            <tbody class="align-top" id="list_obat_alkes">
-                                <tr>
-                                    <td colspan="5" class="text-center">Memuat detail transaksi...</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="card-footer bg-body-tertiary">
-                        <div class="row overflow-hidden d-flex align-items-end">
-                            <div class="col fw-medium text-nowrap">Sub Total</div>
-                            <div class="col text-end">
-                                <div class="date text-truncate placeholder-glow fw-bold" id="subtotal_obat_alkes">
-                                    <span class="placeholder w-100"></span>
+                            </form>
+                        </div>
+                        <div class="card-body p-0 m-0 table-responsive">
+                            <table class="table table-sm mb-0" style="width:100%; font-size: 0.75em;">
+                                <thead>
+                                    <tr class="align-middle">
+                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Tindakan</th>
+                                        <th scope="col" class="bg-body-secondary border-secondary col-resize" style="border-bottom-width: 2px; width: 100%;">Nama Obat dan Alkes</th>
+                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Harga</th>
+                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Diskon</th>
+                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="align-top" id="list_obat_alkes">
+                                    <tr>
+                                        <td colspan="5" class="text-center">Memuat detail transaksi...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="card-footer bg-body-tertiary">
+                            <div class="row overflow-hidden d-flex align-items-end">
+                                <div class="col fw-medium text-nowrap">Sub Total</div>
+                                <div class="col text-end">
+                                    <div class="date text-truncate placeholder-glow fw-bold" id="subtotal_obat_alkes">
+                                        <span class="placeholder w-100"></span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="mb-0 row g-1 overflow-hidden d-flex align-items-end">
-            <div class="col fw-medium text-nowrap">Grand Total</div>
-            <div class="col text-end">
-                <div class="fs-4 date text-truncate placeholder-glow" style="font-weight: 900;" id="total_pembayaran">
-                    <span class="placeholder w-100"></span>
+            <div class="mb-0 row g-1 overflow-hidden d-flex align-items-end">
+                <div class="col fw-medium text-nowrap">Grand Total</div>
+                <div class="col text-end">
+                    <div class="fs-4 date text-truncate placeholder-glow" style="font-weight: 900;" id="total_pembayaran">
+                        <span class="placeholder w-100"></span>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="mb-0 row g-1 overflow-hidden d-flex align-items-end">
-            <div class="col fw-medium text-nowrap">Terima Uang</div>
-            <div class="col text-end">
-                <div class="date text-truncate placeholder-glow" id="terima_uang_table">
-                    <span class="placeholder w-100"></span>
+            <div class="mb-0 row g-1 overflow-hidden d-flex align-items-end">
+                <div class="col fw-medium text-nowrap">Terima Uang</div>
+                <div class="col text-end">
+                    <div class="date text-truncate placeholder-glow" id="terima_uang_table">
+                        <span class="placeholder w-100"></span>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="mb-0 row g-1 overflow-hidden d-flex align-items-end">
-            <div class="col fw-medium text-nowrap">Uang Kembali</div>
-            <div class="col text-end">
-                <div class="date text-truncate placeholder-glow" id="uang_kembali_table">
-                    <span class="placeholder w-100"></span>
+            <div class="mb-0 row g-1 overflow-hidden d-flex align-items-end">
+                <div class="col fw-medium text-nowrap">Uang Kembali</div>
+                <div class="col text-end">
+                    <div class="date text-truncate placeholder-glow" id="uang_kembali_table">
+                        <span class="placeholder w-100"></span>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="mb-0 row g-1 overflow-hidden d-flex align-items-end">
-            <div class="col fw-medium text-nowrap">Metode Bayar</div>
-            <div class="col text-end">
-                <div class="date text-truncate placeholder-glow" id="metode_pembayaran_table">
-                    <span class="placeholder w-100"></span>
+            <div class="mb-0 row g-1 overflow-hidden d-flex align-items-end">
+                <div class="col fw-medium text-nowrap">Metode Bayar</div>
+                <div class="col text-end">
+                    <div class="date text-truncate placeholder-glow" id="metode_pembayaran_table">
+                        <span class="placeholder w-100"></span>
+                    </div>
                 </div>
-            </div>
-        </div>
-
-        <div id="prosesTransaksi">
-            <hr>
-            <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-3">
-                <button class="btn btn-body  bg-gradient" type="button" id="printBtn" onclick="window.open(`<?= base_url('/transaksi/struk/' . $transaksi['id_transaksi']) ?>`)" disabled><i class="fa-solid fa-print"></i> Cetak Struk/Kuitansi</button>
-                <button class="btn btn-danger  bg-gradient" type="button" id="cancelBtn" data-id="<?= $transaksi['id_transaksi'] ?>" disabled><i class="fa-solid fa-xmark"></i> Batalkan Transaksi</button>
-                <button class="btn btn-success  bg-gradient" type="button" id="processBtn" data-id="<?= $transaksi['id_transaksi'] ?>" disabled><i class="fa-solid fa-money-bills"></i> Proses Transaksi</button>
             </div>
         </div>
     </div>
@@ -305,158 +285,10 @@
             </div>
         </div>
     </div>
-
-    <div class="modal fade" id="transaksiModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="transaksiModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable ">
-            <form id="transaksiForm" enctype="multipart/form-data" class="modal-content bg-body-tertiary shadow-lg transparent-blur">
-                <div class="modal-header justify-content-between pt-2 pb-2" style="border-bottom: 1px solid var(--bs-border-color-translucent);">
-                    <h6 class="pe-2 modal-title fs-6 text-truncate" id="transaksiModalLabel" style="font-weight: bold;"></h6>
-                    <button id="transaksiCloseBtn" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body py-2">
-                    <div id="mediaAlert" class="alert alert-info  mb-1 mt-1" role="alert">
-                        <div class="d-flex align-items-start">
-                            <div style="width: 12px; text-align: center;">
-                                <i class="fa-solid fa-circle-info"></i>
-                            </div>
-                            <div class="w-100 ms-3">
-                                <p>Pastikan Anda telah memasukkan nominal transaksi sesuai dengan grand total yang diminta dan telah menyelesaikan proses pembayaran.</p>
-                                <p>Grand Total:<br><span id="total_pembayaran_modal" class="date fs-4" style="font-weight: 900;"></span></p>
-                                <p class="mb-0">Jika uang yang diterima melebihi grand total, maka akan ada uang kembali.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="input-group has-validation mb-1 mt-1">
-                        <span class="input-group-text">Rp</span>
-                        <div class="form-floating">
-                            <input type="number" class="form-control " autocomplete="off" dir="auto" placeholder="terima_uang" id="terima_uang" name="terima_uang">
-                            <label for="terima_uang">Terima Uang</label>
-                        </div>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                    <div class="form-floating mt-1 mb-1">
-                        <select class="form-select " id="metode_pembayaran" name="metode_pembayaran" aria-label="metode_pembayaran">
-                            <option value="" disabled selected>-- Pilih Metode Pembayaran --</option>
-                            <option value="Tunai">Tunai</option>
-                            <option value="QRIS/Transfer Bank">QRIS/Transfer Bank</option>
-                        </select>
-                        <label for="metode_pembayaran">Metode Pembayaran</label>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                    <div class="form-floating mb-1 mt-1" id="bank_field" style="display: none;">
-                        <input type="text" class="form-control " autocomplete="off" dir="auto" placeholder="bank" id="bank" name="bank" list="bank_list">
-                        <label for="bank">Bank/E-wallet*</label>
-                        <div class="invalid-feedback"></div>
-                        <datalist id="bank_list">
-                            <option value="BNI">
-                            <option value="BRI">
-                            <option value="BTN">
-                            <option value="Mandiri">
-                            <option value="BSI">
-                            <option value="BCA">
-                            <option value="CIMB Niaga">
-                            <option value="Permata">
-                            <option value="Danamon">
-                            <option value="OCBC NISP">
-                            <option value="Maybank Indonesia">
-                            <option value="BRK Syariah">
-                            <option value="OVO">
-                            <option value="GoPay">
-                            <option value="DANA">
-                            <option value="LinkAja">
-                        </datalist>
-                    </div>
-                </div>
-                <div class="modal-footer justify-content-end pt-2 pb-2" style="border-top: 1px solid var(--bs-border-color-translucent);">
-                    <button type="submit" id="submitButton" class="btn btn-primary bg-gradient ">
-                        <i class="fa-solid fa-money-bill-transfer"></i> Proses
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <div class="modal fade" id="batalTransaksiModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="batalTransaksiModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable ">
-            <form id="batalTransaksiForm" enctype="multipart/form-data" class="modal-content bg-body-tertiary shadow-lg transparent-blur">
-                <div class="modal-header justify-content-between pt-2 pb-2" style="border-bottom: 1px solid var(--bs-border-color-translucent);">
-                    <h6 class="pe-2 modal-title fs-6 text-truncate" id="batalTransaksiModalLabel" style="font-weight: bold;"></h6>
-                    <button id="batalTransaksiCloseBtn" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body py-2">
-                    <div class="alert alert-warning  mb-1 mt-1" role="alert">
-                        <div class="d-flex align-items-start">
-                            <div style="width: 12px; text-align: center;">
-                                <i class="fa-solid fa-triangle-exclamation"></i>
-                            </div>
-                            <div class="w-100 ms-3">
-                                <h4 style="font-weight: 900;">PERINGATAN!</h4>
-                                <p>Pastikan Anda telah mendapatkan persetujuan dari pimpinan atau manajer klinik untuk membatalkan transaksi ini. Pembatalan transaksi <strong>HANYA DILAKUKAN</strong> apabila terjadi kesalahan dalam memasukkan item transaksi.</p>
-                                <p class="mb-0">Segala penyalahgunaan dalam pembatalan transaksi ini akan diproses secara hukum.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-floating mb-1 mt-1">
-                        <input type="password" class="form-control " autocomplete="off" dir="auto" placeholder="password" id="password" name="password" data-bs-toggle="popover"
-                            data-bs-placement="top"
-                            data-bs-trigger="manual"
-                            data-bs-title="<em>CAPS LOCK</em> AKTIF"
-                            data-bs-content="Harap periksa status <span class='badge text-bg-dark bg-gradient kbd'>Caps Lock</span> pada papan tombol (<em>keyboard</em>) Anda.">
-                        <label for="password">Masukkan Kata Sandi Transaksi</label>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                </div>
-                <div class="modal-footer justify-content-end pt-2 pb-2" style="border-top: 1px solid var(--bs-border-color-translucent);">
-                    <button type="submit" id="cancelSubmitButton" class="btn btn-danger bg-gradient ">
-                        <i class="fa-solid fa-xmark"></i> Batalkan
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
 </main>
 <?= $this->endSection(); ?>
 <?= $this->section('javascript'); ?>
 <script>
-    // Menangani semua input password dengan jQuery
-    $('input[type="password"]').each(function() {
-        const passwordInput = $(this); // Menggunakan jQuery untuk elemen input
-        const popover = new bootstrap.Popover(passwordInput[0], {
-            html: true,
-            template: '<div class="popover shadow-lg" role="tooltip">' +
-                '<div class="popover-arrow"></div>' +
-                '<h3 class="popover-header"></h3>' +
-                '<div class="popover-body">Caps Lock aktif!</div>' +
-                '</div>'
-        });
-
-        let capsLockActive = false; // Status Caps Lock sebelumnya
-
-        // Menambahkan event listener untuk 'focus' pada setiap input password
-        passwordInput.on('focus', function() {
-            passwordInput[0].addEventListener('keyup', function(event) {
-                const currentCapsLock = event.getModifierState('CapsLock'); // Memeriksa status Caps Lock
-
-                // Jika status Caps Lock berubah
-                if (currentCapsLock !== capsLockActive) {
-                    capsLockActive = currentCapsLock; // Perbarui status
-                    if (capsLockActive) {
-                        popover.show(); // Tampilkan popover jika Caps Lock aktif
-                    } else {
-                        popover.hide(); // Sembunyikan popover jika Caps Lock tidak aktif
-                    }
-                }
-            });
-        });
-
-        // Menambahkan event listener untuk 'blur' pada setiap input password
-        passwordInput.on('blur', function() {
-            popover.hide(); // Sembunyikan popover saat kehilangan fokus
-            passwordInput[0].removeEventListener('keyup', function() {}); // Hapus listener keyup saat blur
-            capsLockActive = false; // Reset status Caps Lock
-        });
-    });
-
     async function fetchLayananOptions(selectedLayanan = null) {
         try {
             const [rawatJalanList, pemeriksaanPenunjangList, OperasiList] = await Promise.all([
@@ -513,11 +345,7 @@
 
     async function fetchResepOptions(selectedResep = null) {
         try {
-            <?php if ($transaksi['nomor_registrasi'] == NULL || $transaksi['no_rm'] == NULL) : ?>
-                const url = `<?= base_url('transaksi/reseplistexternal/') . $transaksi['id_transaksi'] . '/' . $transaksi['id_resep'] ?>`;
-            <?php else : ?>
-                const url = `<?= base_url('transaksi/reseplist/') . $transaksi['id_transaksi'] . '/' . $transaksi['nomor_registrasi'] ?>`;
-            <?php endif; ?>
+            const url = `<?= base_url('transaksi/reseplist/') . $transaksi['id_transaksi'] . '/' . $transaksi['nomor_registrasi'] ?>`;
             const response = await axios.get(url);
 
             if (response.data.success) {
@@ -573,48 +401,15 @@
             if (data.lunas === "1") {
                 $('#tambahLayananContainer').hide();
                 $('#tambahObatAlkesContainer').hide();
-                $('#printBtn').prop('disabled', false);
-                $('#cancelBtn').prop('disabled', false);
             } else if (data.lunas === "0") {
                 $('#tambahLayananContainer').show();
                 $('#tambahObatAlkesContainer').show();
-                $('#printBtn').prop('disabled', true);
-                $('#cancelBtn').prop('disabled', true);
             }
         } catch (error) {
             showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
         } finally {
             // Hide the spinner when done
             $('#loadingSpinner').hide();
-        }
-    }
-
-    async function transactionProcessBtn() {
-        try {
-            const [layananResponse, obatalkesResponse] = await Promise.all([
-                axios.get('<?= base_url('transaksi/detaillayananlist/') . $transaksi['id_transaksi'] ?>'),
-                axios.get('<?= base_url('transaksi/detailobatalkeslist/') . $transaksi['id_transaksi'] ?>')
-            ]);
-            const layanan = layananResponse.data;
-            const obatalkes = obatalkesResponse.data;
-            layanan.forEach(function(layanan) {
-                const layananLunas = layanan.lunas;
-                if (layananLunas === "1") {
-                    $('#processBtn').prop('disabled', true);
-                } else if (layananLunas === "0") {
-                    $('#processBtn').prop('disabled', false);
-                }
-            });
-            obatalkes.forEach(function(obatalkes) {
-                const obatalkesLunas = obatalkes.lunas;
-                if (obatalkesLunas === "1") {
-                    $('#processBtn').prop('disabled', true);
-                } else if (obatalkesLunas === "0") {
-                    $('#processBtn').prop('disabled', false);
-                }
-            });
-        } catch (error) {
-            showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
         }
     }
 
@@ -786,18 +581,26 @@
             if (data.update) {
                 console.log("Received update from WebSocket");
                 const selectedLayanan = $('#id_layanan').val();
-                <?= ($transaksi['dokter'] != 'Resep Luar') ? 'await fetchLayananOptions(selectedLayanan);' : ''; ?>
-                <?= ($transaksi['dokter'] != 'Resep Luar') ? 'await fetchLayanan();' : ''; ?>
+                await fetchLayananOptions(selectedLayanan);
+                await fetchLayanan();
                 await fetchResepOptions();
                 await fetchObatAlkes();
                 fetchStatusTransaksi();
-                transactionProcessBtn();
             }
         };
 
         socket.onclose = () => {
             console.log("Disconnected from WebSocket server");
         };
+
+        // Cari semua elemen dengan kelas 'activeLink' di kedua navigasi
+        $(".nav .activeLink").each(function() {
+            // Scroll ke elemen yang aktif
+            this.scrollIntoView({
+                block: "nearest", // Fokus pada elemen aktif
+                inline: "center" // Elemen di-scroll ke tengah horizontal
+            });
+        });
 
         $('[data-bs-toggle="tooltip"]').tooltip();
         $('#id_layanan').select2({
@@ -830,12 +633,12 @@
             try {
                 await axios.delete(`<?= base_url('/transaksi/hapusdetailtransaksi') ?>/${detailTransaksiId}`);
                 const selectedLayanan = $('#id_layanan').val();
-                <?= ($transaksi['dokter'] != 'Resep Luar') ? 'await fetchLayananOptions(selectedLayanan);' : ''; ?>
-                <?= ($transaksi['dokter'] != 'Resep Luar') ? 'fetchLayanan();' : ''; ?>
+                await fetchLayananOptions(selectedLayanan);
+                await fetchLayanan();
                 await fetchResepOptions();
                 await fetchObatAlkes();
                 fetchStatusTransaksi();
-                transactionProcessBtn();
+
             } catch (error) {
                 if (error.response.request.status === 400) {
                     showFailedToast(error.response.data.message);
@@ -919,10 +722,10 @@
                             $('#editLayanan .invalid-feedback').text('').hide();
                             $('#editLayananTransaksi').remove();
                             const selectedLayanan = $('#id_layanan').val();
-                            <?= ($transaksi['dokter'] != 'Resep Luar') ? 'await fetchLayananOptions(selectedLayanan);' : ''; ?>
-                            <?= ($transaksi['dokter'] != 'Resep Luar') ? 'await fetchLayanan();' : ''; ?>
+                            await fetchLayananOptions(selectedLayanan);
+                            await fetchLayanan();
                             fetchStatusTransaksi();
-                            transactionProcessBtn();
+
                         } else {
                             console.log("Validation Errors:", response.data.errors);
 
@@ -1050,7 +853,7 @@
                             await fetchResepOptions();
                             await fetchObatAlkes();
                             fetchStatusTransaksi();
-                            transactionProcessBtn();
+
                         } else {
                             console.log("Validation Errors:", response.data.errors);
 
@@ -1140,10 +943,10 @@
                     $('#tambahLayanan .is-invalid').removeClass('is-invalid');
                     $('#tambahLayanan .invalid-feedback').text('').hide();
                     const selectedLayanan = $('#id_layanan').val();
-                    <?= ($transaksi['dokter'] != 'Resep Luar') ? 'await fetchLayananOptions(selectedLayanan);' : ''; ?>
-                    <?= ($transaksi['dokter'] != 'Resep Luar') ? 'await fetchLayanan();' : ''; ?>
+                    await fetchLayananOptions(selectedLayanan);
+                    await fetchLayanan();
                     fetchStatusTransaksi();
-                    transactionProcessBtn();
+
                 } else {
                     console.log("Validation Errors:", response.data.errors);
 
@@ -1222,7 +1025,7 @@
                     await fetchResepOptions();
                     await fetchObatAlkes();
                     fetchStatusTransaksi();
-                    transactionProcessBtn();
+
                 } else {
                     console.log("Validation Errors:", response.data.errors);
 
@@ -1269,259 +1072,35 @@
             }
         });
 
-        $('#processBtn').click(function() {
-            $('#transaksiModalLabel').text('Proses Transaksi');
-            $('#transaksiModal').modal('show');
-        });
-
-        $('#cancelBtn').click(function() {
-            $('#batalTransaksiModalLabel').text('Batalkan Transaksi');
-            $('#batalTransaksiModal').modal('show');
-        });
-
-        $('#transaksiModal').on('shown.bs.modal', function() {
-            $('#terima_uang').trigger('focus');
-        });
-
-        $('#batalTransaksiModal').on('shown.bs.modal', function() {
-            $('#password').trigger('focus');
-        });
-
-        $('#transaksiForm').submit(async function(e) {
-            e.preventDefault();
-
-            const formData = new FormData(this);
-            console.log("Form Data:", $(this).serialize());
-
-            // Clear previous validation states
-            $('#transaksiForm .is-invalid').removeClass('is-invalid');
-            $('#transaksiForm .invalid-feedback').text('').hide();
-            $('#submitButton').prop('disabled', true).html(`
-                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
-                <span role="status">Memproses...</span>
-            `);
-
-            // Disable form inputs
-            $('#transaksiForm input, #transaksiForm select, #closeBtn').prop('disabled', true);
-
-            try {
-                const response = await axios.post(`<?= base_url('/transaksi/process/' . $transaksi['id_transaksi']) ?>`, formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                });
-
-                if (response.data.success) {
-                    showSuccessToast(response.data.message, 'success');
-                    $('#transaksiModal').modal('hide');
-                    <?= ($transaksi['dokter'] != 'Resep Luar') ? 'await fetchLayananOptions();' : ''; ?>
-                    <?= ($transaksi['dokter'] != 'Resep Luar') ? 'fetchLayanan();' : ''; ?>
-                    await fetchResepOptions();
-                    await fetchObatAlkes();
-                    fetchStatusTransaksi();
-                    transactionProcessBtn();
-                } else {
-                    console.log("Validation Errors:", response.data.errors);
-
-                    // Clear previous validation states
-                    $('#transaksiForm .is-invalid').removeClass('is-invalid');
-                    $('#transaksiForm .invalid-feedback').text('').hide();
-
-                    // Display new validation errors
-                    for (const field in response.data.errors) {
-                        if (response.data.errors.hasOwnProperty(field)) {
-                            const fieldElement = $('#' + field);
-                            let feedbackElement = fieldElement.siblings('.invalid-feedback');
-
-                            // Handle input-group cases
-                            if (fieldElement.closest('.input-group').length) {
-                                feedbackElement = fieldElement.closest('.input-group').find('.invalid-feedback');
-                            }
-
-                            console.log("Target Field:", fieldElement);
-                            console.log("Target Feedback:", feedbackElement);
-
-                            if (fieldElement.length > 0 && feedbackElement.length > 0) {
-                                fieldElement.addClass('is-invalid');
-                                feedbackElement.text(response.data.errors[field]).show();
-
-                                // Remove error message when the user corrects the input
-                                fieldElement.on('input change', function() {
-                                    $(this).removeClass('is-invalid');
-                                    $(this).siblings('.invalid-feedback').text('').hide();
-                                });
-                            } else {
-                                console.warn("Elemen tidak ditemukan pada field:", field);
-                            }
-                        }
-                    }
-                    console.error('Perbaiki kesalahan pada formulir.');
-                }
-            } catch (error) {
-                if (error.response.request.status === 422 || error.response.request.status === 402) {
-                    showFailedToast(error.response.data.message);
-                } else {
-                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
-                }
-            } finally {
-                $('#submitButton').prop('disabled', false).html(`
-                    <i class="fa-solid fa-floppy-disk"></i> Simpan
-                `);
-                $('#transaksiForm input, #transaksiForm select, #closeBtn').prop('disabled', false);
-            }
-        });
-
-        $('#batalTransaksiForm').submit(async function(e) {
-            e.preventDefault();
-
-            const formData = new FormData(this);
-
-            // Clear previous validation states
-            $('#batalTransaksiForm .is-invalid').removeClass('is-invalid');
-            $('#batalTransaksiForm .invalid-feedback').text('').hide();
-            $('#cancelSubmitButton').prop('disabled', true).html(`
-                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
-                <span role="status">Membatalkan...</span>
-            `);
-
-            // Disable form inputs
-            $('#batalTransaksiForm input, #batalTransaksiCloseBtn').prop('disabled', true);
-
-            try {
-                const response = await axios.post(`<?= base_url('/transaksi/cancel/' . $transaksi['id_transaksi']) ?>`, formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                });
-
-                if (response.data.success) {
-                    showSuccessToast(response.data.message, 'success');
-                    $('#batalTransaksiModal').modal('hide');
-                    <?= ($transaksi['dokter'] != 'Resep Luar') ? 'await fetchLayananOptions();' : ''; ?>
-                    <?= ($transaksi['dokter'] != 'Resep Luar') ? 'fetchLayanan();' : ''; ?>
-                    await fetchResepOptions();
-                    await fetchObatAlkes();
-                    fetchStatusTransaksi();
-                    transactionProcessBtn();
-                } else {
-                    console.log("Validation Errors:", response.data.errors);
-
-                    // Clear previous validation states
-                    $('#batalTransaksiForm .is-invalid').removeClass('is-invalid');
-                    $('#batalTransaksiForm .invalid-feedback').text('').hide();
-
-                    // Display new validation errors
-                    for (const field in response.data.errors) {
-                        if (response.data.errors.hasOwnProperty(field)) {
-                            const fieldElement = $('#' + field);
-                            const feedbackElement = fieldElement.siblings('.invalid-feedback');
-
-                            console.log("Target Field:", fieldElement);
-                            console.log("Target Feedback:", feedbackElement);
-
-                            if (fieldElement.length > 0 && feedbackElement.length > 0) {
-                                fieldElement.addClass('is-invalid');
-                                feedbackElement.text(response.data.errors[field]).show();
-
-                                // Remove error message when the user corrects the input
-                                fieldElement.on('input change', function() {
-                                    $(this).removeClass('is-invalid');
-                                    $(this).siblings('.invalid-feedback').text('').hide();
-                                });
-                            } else {
-                                console.warn("Elemen tidak ditemukan pada field:", field);
-                            }
-                        }
-                    }
-                    console.error('Perbaiki kesalahan pada formulir.');
-                }
-            } catch (error) {
-                if (error.response.request.status === 400) {
-                    showFailedToast(error.response.data.message);
-                } else {
-                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
-                }
-            } finally {
-                $('#cancelSubmitButton').prop('disabled', false).html(`
-                    <i class="fa-solid fa-xmark"></i> Batalkan
-                `);
-                $('#batalTransaksiForm input, #batalTransaksiCloseBtn').prop('disabled', false);
-            }
-        });
-
-        // Fungsi untuk memunculkan/menghilangkan field Bank berdasarkan metode pembayaran
-        function toggleBankField() {
-            let metode = $('#metode_pembayaran').val();
-            if (metode === 'Tunai') {
-                $('#bank').val(''); // Kosongkan field bank
-                $('#bank_field').hide(); // Hilangkan field bank
-                // Hilangkan form validation
-                $('#bank').removeClass('is-invalid');
-                $('#bank').siblings('.invalid-feedback').text('').hide();
-            } else if (metode === 'QRIS/Transfer Bank') {
-                $('#bank_field').show(); // Munculkan field bank
-            } else {
-                $('#bank').val(''); // Kosongkan field bank
-                $('#bank_field').hide(); // Hilangkan field bank
-                // Hilangkan form validation
-                $('#bank').removeClass('is-invalid');
-                $('#bank').siblings('.invalid-feedback').text('').hide();
-            }
-        }
-
-        // Event listener ketika dropdown metode pembayaran berubah
-        $('#metode_pembayaran').on('change', function() {
-            toggleBankField();
-        });
-
-        $('#transaksiModal').on('hidden.bs.modal', function() {
-            $('#transaksiForm')[0].reset();
-            $('#terima_uang').val('');
-            $('#metode_pembayaran').val('').change(); // Trigger change agar toggleBankField dipanggil
-            $('#bank').val(''); // Kosongkan field bank
-            $('#bank_field').hide(); // Reset bank dan hilangkan
-            $('#transaksiForm .is-invalid').removeClass('is-invalid');
-            $('#transaksiForm .invalid-feedback').text('').hide();
-        });
-
-        $('#batalTransaksiModal').on('hidden.bs.modal', function() {
-            $('#batalTransaksiForm')[0].reset();
-            $('#batalTransaksiForm .is-invalid').removeClass('is-invalid');
-            $('#batalTransaksiForm .invalid-feedback').text('').hide();
-        });
-
         $(document).on('visibilitychange', async function() {
             if (document.visibilityState === "visible") {
                 const selectedLayanan = $('#id_layanan').val();
-                const selectedResep = $('#id_resep').val();
-                <?= ($transaksi['dokter'] != 'Resep Luar') ? 'await fetchLayananOptions(selectedLayanan);' : ''; ?>
-                <?= ($transaksi['dokter'] != 'Resep Luar') ? 'await fetchLayanan();' : ''; ?>
+                await fetchLayananOptions(selectedLayanan);
+                await fetchLayanan();
                 await fetchResepOptions();
                 await fetchObatAlkes();
                 fetchStatusTransaksi();
-                transactionProcessBtn();
+
             }
         });
 
         $('#refreshButton').on('click', async function(e) {
             e.preventDefault();
             const selectedLayanan = $('#id_layanan').val();
-            const selectedResep = $('#id_resep').val();
-            <?= ($transaksi['dokter'] != 'Resep Luar') ? 'await fetchLayananOptions(selectedLayanan);' : ''; ?>
-            <?= ($transaksi['dokter'] != 'Resep Luar') ? 'await fetchLayanan();' : ''; ?>
+            await fetchLayananOptions(selectedLayanan);
+            await fetchLayanan();
             await fetchResepOptions();
             await fetchObatAlkes();
             fetchStatusTransaksi();
-            transactionProcessBtn();
+
         });
         const selectedLayanan = $('#id_layanan').val();
-        const selectedResep = $('#id_resep').val();
-        <?= ($transaksi['dokter'] != 'Resep Luar') ? 'await fetchLayananOptions(selectedLayanan);' : ''; ?>
-        <?= ($transaksi['dokter'] != 'Resep Luar') ? 'await fetchLayanan();' : ''; ?>
+        await fetchLayananOptions(selectedLayanan);
+        await fetchLayanan();
         await fetchResepOptions();
         await fetchObatAlkes();
         fetchStatusTransaksi();
-        transactionProcessBtn();
+
     });
     // Show toast notification
     <?= $this->include('toast/index') ?>
