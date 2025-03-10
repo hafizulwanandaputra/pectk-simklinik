@@ -43,7 +43,7 @@
                     <thead>
                         <tr class="align-middle">
                             <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">No</th>
-                            <th scope="col" class="bg-body-secondary border-secondary text-nowrap" style="border-bottom-width: 2px;">Tindakan</th>
+                            <th scope="col" class="bg-body-secondary border-secondary text-nowrap" style="border-bottom-width: 2px;">Layanan</th>
                             <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Nama</th>
                             <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Jenis</th>
                             <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Tarif</th>
@@ -60,8 +60,7 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content bg-body-tertiary rounded-4 shadow-lg transparent-blur">
                 <div class="modal-body p-4 text-center">
-                    <h5 id="deleteMessage"></h5>
-                    <h6 class="mb-0" id="deleteSubmessage"></h6>
+                    <h5 class="mb-0" id="deleteMessage"></h5>
                 </div>
                 <div class="modal-footer flex-nowrap p-0" style="border-top: 1px solid var(--bs-border-color-translucent);">
                     <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end" style="border-right: 1px solid var(--bs-border-color-translucent)!important;" data-bs-dismiss="modal">Tidak</button>
@@ -131,7 +130,7 @@
         var table = $('#tabel').DataTable({
             "oLanguage": {
                 "sDecimal": ",",
-                "sEmptyTable": 'Tidak ada layanan. Klik "Tambah Tindakan" untuk menambahkan layanan.',
+                "sEmptyTable": 'Tidak ada layanan. Klik "Tambah Layanan" untuk menambahkan layanan.',
                 "sInfo": "Menampilkan _START_ hingga _END_ dari _TOTAL_ layanan",
                 "sInfoEmpty": "Menampilkan 0 hingga 0 dari 0 layanan",
                 "sInfoFiltered": "(di-filter dari _MAX_ layanan)",
@@ -141,7 +140,7 @@
                 "sLoadingRecords": "Memuat...",
                 "sProcessing": "",
                 "sSearch": "Cari:",
-                "sZeroRecords": "Tindakan yang Anda cari tidak ditemukan",
+                "sZeroRecords": "Layanan yang Anda cari tidak ditemukan",
                 "oAria": {
                     "sOrderable": "Urutkan menurut kolom ini",
                     "sOrderableReverse": "Urutkan terbalik kolom ini"
@@ -173,8 +172,8 @@
                 $('#total_datatables').html(infoText);
             },
             'buttons': [{
-                // Tombol Tambah Tindakan
-                text: '<i class="fa-solid fa-plus"></i> Tambah Tindakan',
+                // Tombol Tambah Layanan
+                text: '<i class="fa-solid fa-plus"></i> Tambah Layanan',
                 className: 'btn-primary btn-sm bg-gradient ',
                 attr: {
                     id: 'addLayananBtn'
@@ -322,7 +321,7 @@
 
         // Tampilkan modal tambah layanan
         $('#addLayananBtn').click(function() {
-            $('#layananModalLabel').text('Tambah Tindakan'); // Ubah judul modal menjadi 'Tambah Tindakan'
+            $('#layananModalLabel').text('Tambah Layanan'); // Ubah judul modal menjadi 'Tambah Layanan'
             $('#layananModal').modal('show'); // Tampilkan modal layanan
         });
 
@@ -342,7 +341,7 @@
 
             try {
                 const response = await axios.get(`<?= base_url('/layanan/layanan') ?>/${id}`); // Ambil data layanan berdasarkan ID
-                $('#layananModalLabel').text('Edit Tindakan'); // Ubah judul modal menjadi 'Edit Tindakan'
+                $('#layananModalLabel').text('Edit Layanan'); // Ubah judul modal menjadi 'Edit Layanan'
                 $('#id_layanan').val(response.data.id_layanan);
                 $('#nama_layanan').val(response.data.nama_layanan);
                 $('#jenis_layanan').val(response.data.jenis_layanan);
@@ -365,16 +364,14 @@
             layananId = $(this).data('id'); // Dapatkan ID layanan
             layananName = $(this).data('name'); // Dapatkan nama layanan
             $('[data-bs-toggle="tooltip"]').tooltip('hide'); // Sembunyikan tooltip
-            $('#deleteMessage').html(`Hapus "` + layananName + `"?`); // Pesan konfirmasi
-            $('#deleteSubmessage').html(`Layanan tidak dapat dihapus jika ada transaksi yang menggunakan layanan ini!`);
+            $('#deleteMessage').html(`Hapus "` + layananName + `"?`);
             $('#deleteModal').modal('show'); // Tampilkan modal konfirmasi
         });
 
         // Proses konfirmasi hapus layanan
         $('#confirmDeleteBtn').click(async function() {
             $('#deleteModal button').prop('disabled', true); // Nonaktifkan tombol saat proses berlangsung
-            $('#deleteMessage').addClass('mb-0').html('Mengapus, silakan tunggu...'); // Ubah pesan menjadi indikator proses
-            $('#deleteSubmessage').hide(); // Sembunyikan pesan tambahan
+            $('#deleteMessage').html('Mengapus, silakan tunggu...'); // Ubah pesan menjadi indikator proses
 
             try {
                 await axios.delete(`<?= base_url('/layanan/delete') ?>/${layananId}`); // Hapus layanan berdasarkan ID
