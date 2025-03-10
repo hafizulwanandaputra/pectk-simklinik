@@ -786,10 +786,19 @@
             if (data.update) {
                 console.log("Received update from WebSocket");
                 const selectedLayanan = $('#id_layanan').val();
-                <?= ($transaksi['dokter'] != 'Resep Luar') ? 'await fetchLayananOptions(selectedLayanan);' : ''; ?>
-                <?= ($transaksi['dokter'] != 'Resep Luar') ? 'await fetchLayanan();' : ''; ?>
-                await fetchResepOptions();
-                await fetchObatAlkes();
+                <?php if ($transaksi['dokter'] != 'Resep Luar') : ?>
+                    await Promise.all([
+                        fetchLayananOptions(selectedLayanan),
+                        fetchResepOptions(),
+                    ]);
+                    await Promise.all([
+                        fetchLayanan(),
+                        fetchObatAlkes()
+                    ]);
+                <?php else : ?>
+                    await fetchResepOptions();
+                    await fetchObatAlkes();
+                <?php endif; ?>
                 fetchStatusTransaksi();
                 transactionProcessBtn();
             }
@@ -830,10 +839,19 @@
             try {
                 await axios.delete(`<?= base_url('/transaksi/hapusdetailtransaksi') ?>/${detailTransaksiId}`);
                 const selectedLayanan = $('#id_layanan').val();
-                <?= ($transaksi['dokter'] != 'Resep Luar') ? 'await fetchLayananOptions(selectedLayanan);' : ''; ?>
-                <?= ($transaksi['dokter'] != 'Resep Luar') ? 'fetchLayanan();' : ''; ?>
-                await fetchResepOptions();
-                await fetchObatAlkes();
+                <?php if ($transaksi['dokter'] != 'Resep Luar') : ?>
+                    await Promise.all([
+                        fetchLayananOptions(selectedLayanan),
+                        fetchResepOptions(),
+                    ]);
+                    await Promise.all([
+                        fetchLayanan(),
+                        fetchObatAlkes()
+                    ]);
+                <?php else : ?>
+                    await fetchResepOptions();
+                    await fetchObatAlkes();
+                <?php endif; ?>
                 fetchStatusTransaksi();
                 transactionProcessBtn();
             } catch (error) {
@@ -1314,10 +1332,19 @@
                 if (response.data.success) {
                     showSuccessToast(response.data.message, 'success');
                     $('#transaksiModal').modal('hide');
-                    <?= ($transaksi['dokter'] != 'Resep Luar') ? 'await fetchLayananOptions();' : ''; ?>
-                    <?= ($transaksi['dokter'] != 'Resep Luar') ? 'fetchLayanan();' : ''; ?>
-                    await fetchResepOptions();
-                    await fetchObatAlkes();
+                    <?php if ($transaksi['dokter'] != 'Resep Luar') : ?>
+                        await Promise.all([
+                            fetchLayananOptions(),
+                            fetchResepOptions(),
+                        ]);
+                        await Promise.all([
+                            fetchLayanan(),
+                            fetchObatAlkes()
+                        ]);
+                    <?php else : ?>
+                        await fetchResepOptions();
+                        await fetchObatAlkes();
+                    <?php endif; ?>
                     fetchStatusTransaksi();
                     transactionProcessBtn();
                 } else {
@@ -1397,10 +1424,19 @@
                 if (response.data.success) {
                     showSuccessToast(response.data.message, 'success');
                     $('#batalTransaksiModal').modal('hide');
-                    <?= ($transaksi['dokter'] != 'Resep Luar') ? 'await fetchLayananOptions();' : ''; ?>
-                    <?= ($transaksi['dokter'] != 'Resep Luar') ? 'fetchLayanan();' : ''; ?>
-                    await fetchResepOptions();
-                    await fetchObatAlkes();
+                    <?php if ($transaksi['dokter'] != 'Resep Luar') : ?>
+                        await Promise.all([
+                            fetchLayananOptions(),
+                            fetchResepOptions(),
+                        ]);
+                        await Promise.all([
+                            fetchLayanan(),
+                            fetchObatAlkes()
+                        ]);
+                    <?php else : ?>
+                        await fetchResepOptions();
+                        await fetchObatAlkes();
+                    <?php endif; ?>
                     fetchStatusTransaksi();
                     transactionProcessBtn();
                 } else {
@@ -1493,11 +1529,19 @@
         $(document).on('visibilitychange', async function() {
             if (document.visibilityState === "visible") {
                 const selectedLayanan = $('#id_layanan').val();
-                const selectedResep = $('#id_resep').val();
-                <?= ($transaksi['dokter'] != 'Resep Luar') ? 'await fetchLayananOptions(selectedLayanan);' : ''; ?>
-                <?= ($transaksi['dokter'] != 'Resep Luar') ? 'await fetchLayanan();' : ''; ?>
-                await fetchResepOptions();
-                await fetchObatAlkes();
+                <?php if ($transaksi['dokter'] != 'Resep Luar') : ?>
+                    await Promise.all([
+                        fetchLayananOptions(selectedLayanan),
+                        fetchResepOptions(),
+                    ]);
+                    await Promise.all([
+                        fetchLayanan(),
+                        fetchObatAlkes()
+                    ]);
+                <?php else : ?>
+                    await fetchResepOptions();
+                    await fetchObatAlkes();
+                <?php endif; ?>
                 fetchStatusTransaksi();
                 transactionProcessBtn();
             }
@@ -1506,20 +1550,36 @@
         $('#refreshButton').on('click', async function(e) {
             e.preventDefault();
             const selectedLayanan = $('#id_layanan').val();
-            const selectedResep = $('#id_resep').val();
-            <?= ($transaksi['dokter'] != 'Resep Luar') ? 'await fetchLayananOptions(selectedLayanan);' : ''; ?>
-            <?= ($transaksi['dokter'] != 'Resep Luar') ? 'await fetchLayanan();' : ''; ?>
-            await fetchResepOptions();
-            await fetchObatAlkes();
+            <?php if ($transaksi['dokter'] != 'Resep Luar') : ?>
+                await Promise.all([
+                    fetchLayananOptions(selectedLayanan),
+                    fetchResepOptions(),
+                ]);
+                await Promise.all([
+                    fetchLayanan(),
+                    fetchObatAlkes()
+                ]);
+            <?php else : ?>
+                await fetchResepOptions();
+                await fetchObatAlkes();
+            <?php endif; ?>
             fetchStatusTransaksi();
             transactionProcessBtn();
         });
         const selectedLayanan = $('#id_layanan').val();
-        const selectedResep = $('#id_resep').val();
-        <?= ($transaksi['dokter'] != 'Resep Luar') ? 'await fetchLayananOptions(selectedLayanan);' : ''; ?>
-        <?= ($transaksi['dokter'] != 'Resep Luar') ? 'await fetchLayanan();' : ''; ?>
-        await fetchResepOptions();
-        await fetchObatAlkes();
+        <?php if ($transaksi['dokter'] != 'Resep Luar') : ?>
+            await Promise.all([
+                fetchLayananOptions(selectedLayanan),
+                fetchResepOptions(),
+            ]);
+            await Promise.all([
+                fetchLayanan(),
+                fetchObatAlkes()
+            ]);
+        <?php else : ?>
+            await fetchResepOptions();
+            await fetchObatAlkes();
+        <?php endif; ?>
         fetchStatusTransaksi();
         transactionProcessBtn();
     });

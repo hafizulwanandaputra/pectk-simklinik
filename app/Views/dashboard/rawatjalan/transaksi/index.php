@@ -581,10 +581,14 @@ $usia = $registrasi->diff($tanggal_lahir);
             if (data.update) {
                 console.log("Received update from WebSocket");
                 const selectedLayanan = $('#id_layanan').val();
-                await fetchLayananOptions(selectedLayanan);
-                await fetchLayanan();
-                await fetchResepOptions();
-                await fetchObatAlkes();
+                await Promise.all([
+                    fetchLayananOptions(selectedLayanan),
+                    fetchResepOptions(),
+                ]);
+                await Promise.all([
+                    fetchLayanan(),
+                    fetchObatAlkes()
+                ]);
                 fetchStatusTransaksi();
             }
         };
@@ -633,10 +637,14 @@ $usia = $registrasi->diff($tanggal_lahir);
             try {
                 await axios.delete(`<?= base_url('/transaksi/hapusdetailtransaksi') ?>/${detailTransaksiId}`);
                 const selectedLayanan = $('#id_layanan').val();
-                await fetchLayananOptions(selectedLayanan);
-                await fetchLayanan();
-                await fetchResepOptions();
-                await fetchObatAlkes();
+                await Promise.all([
+                    fetchLayananOptions(selectedLayanan),
+                    fetchResepOptions(),
+                ]);
+                await Promise.all([
+                    fetchLayanan(),
+                    fetchObatAlkes()
+                ]);
                 fetchStatusTransaksi();
 
             } catch (error) {
@@ -1075,10 +1083,14 @@ $usia = $registrasi->diff($tanggal_lahir);
         $(document).on('visibilitychange', async function() {
             if (document.visibilityState === "visible") {
                 const selectedLayanan = $('#id_layanan').val();
-                await fetchLayananOptions(selectedLayanan);
-                await fetchLayanan();
-                await fetchResepOptions();
-                await fetchObatAlkes();
+                await Promise.all([
+                    fetchLayananOptions(selectedLayanan),
+                    fetchResepOptions(),
+                ]);
+                await Promise.all([
+                    fetchLayanan(),
+                    fetchObatAlkes()
+                ]);
                 fetchStatusTransaksi();
 
             }
@@ -1087,18 +1099,26 @@ $usia = $registrasi->diff($tanggal_lahir);
         $('#refreshButton').on('click', async function(e) {
             e.preventDefault();
             const selectedLayanan = $('#id_layanan').val();
-            await fetchLayananOptions(selectedLayanan);
-            await fetchLayanan();
-            await fetchResepOptions();
-            await fetchObatAlkes();
+            await Promise.all([
+                fetchLayananOptions(selectedLayanan),
+                fetchResepOptions(),
+            ]);
+            await Promise.all([
+                fetchLayanan(),
+                fetchObatAlkes()
+            ]);
             fetchStatusTransaksi();
 
         });
         const selectedLayanan = $('#id_layanan').val();
-        await fetchLayananOptions(selectedLayanan);
-        await fetchLayanan();
-        await fetchResepOptions();
-        await fetchObatAlkes();
+        await Promise.all([
+            fetchLayananOptions(selectedLayanan),
+            fetchResepOptions(),
+        ]);
+        await Promise.all([
+            fetchLayanan(),
+            fetchObatAlkes()
+        ]);
         fetchStatusTransaksi();
 
     });
