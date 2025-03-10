@@ -20,8 +20,8 @@ class Layanan extends BaseController
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
             // Mengatur data untuk tampilan
             $data = [
-                'title' => 'Tindakan - ' . $this->systemName,
-                'headertitle' => 'Tindakan',
+                'title' => 'Layanan - ' . $this->systemName,
+                'headertitle' => 'Layanan',
                 'agent' => $this->request->getUserAgent()
             ];
             // Mengembalikan tampilan layanan

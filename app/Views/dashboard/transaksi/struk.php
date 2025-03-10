@@ -154,7 +154,7 @@ $tanggal = Time::parse($transaksi['tgl_transaksi']);
             <tbody>
                 <?php if ($transaksi['dokter'] != 'Resep Luar') : ?>
                     <tr class="outline-border">
-                        <th colspan="8" style="vertical-align: top; padding-top: 3px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: left;">Tindakan</th>
+                        <th colspan="8" style="vertical-align: top; padding-top: 3px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: left;">Layanan</th>
                     </tr>
                     <tr class="outline-border">
                         <th class="outline-border" style="width: 0%; vertical-align: top; padding-top: 3px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: left;">

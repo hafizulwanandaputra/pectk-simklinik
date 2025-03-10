@@ -141,7 +141,7 @@
                             <form id="tambahLayanan" enctype="multipart/form-data">
                                 <div class="mb-2">
                                     <select class="form-select form-select-sm form-tindakan" id="id_layanan" name="id_layanan" aria-label="id_layanan">
-                                        <option value="" disabled selected>-- Pilih Tindakan --</option>
+                                        <option value="" disabled selected>-- Pilih Layanan --</option>
                                     </select>
                                     <div class="invalid-feedback"></div>
                                 </div>
@@ -167,7 +167,7 @@
                                 <thead>
                                     <tr class="align-middle">
                                         <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Tindakan</th>
-                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">Nama Tindakan</th>
+                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">Nama Layanan</th>
                                         <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Qty</th>
                                         <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Harga</th>
                                         <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Diskon</th>
@@ -457,7 +457,7 @@
         });
     });
 
-    async function fetchTindakanOptions() {
+    async function fetchLaynananOptions() {
         try {
             const [rawatJalanList, pemeriksaanPenunjangList, OperasiList] = await Promise.all([
                 axios.get('<?= base_url('transaksi/layananlist/') . $transaksi['id_transaksi'] . '/Rawat%20Jalan' ?>'),
@@ -473,7 +473,7 @@
             const select = $('#id_layanan');
 
             // Clear existing options except the first one (the placeholder)
-            select.empty().append('<option value="" disabled selected>-- Pilih Tindakan --</option>');
+            select.empty().append('<option value="" disabled selected>-- Pilih Layanan --</option>');
 
             // Create optgroup for Rawat Jalan
             const rawatJalanGroup = $('<optgroup label="Rawat Jalan"></optgroup>');
@@ -775,7 +775,7 @@
                 toggleBankField();
                 <?= ($transaksi['dokter'] != 'Resep Luar') ? 'fetchLayanan();' : ''; ?>
                 fetchObatAlkes();
-                <?= ($transaksi['dokter'] != 'Resep Luar') ? 'fetchTindakanOptions();' : ''; ?>
+                <?= ($transaksi['dokter'] != 'Resep Luar') ? 'fetchLaynananOptions();' : ''; ?>
                 fetchResepOptions();
                 fetchStatusTransaksi();
                 transactionProcessBtn();
@@ -818,7 +818,7 @@
                 await axios.delete(`<?= base_url('/transaksi/hapusdetailtransaksi') ?>/${detailTransaksiId}`);
                 <?= ($transaksi['dokter'] != 'Resep Luar') ? 'fetchLayanan();' : ''; ?>
                 fetchObatAlkes();
-                <?= ($transaksi['dokter'] != 'Resep Luar') ? 'fetchTindakanOptions();' : ''; ?>
+                <?= ($transaksi['dokter'] != 'Resep Luar') ? 'fetchLaynananOptions();' : ''; ?>
                 fetchResepOptions();
                 fetchStatusTransaksi();
                 transactionProcessBtn();
@@ -849,7 +849,7 @@
                     <td colspan="6">
                         <form id="editLayanan" enctype="multipart/form-data">
                             <div class="d-flex justify-content-between align-items-center mb-1">
-                                <div class="fw-bold">Edit Tindakan</div>
+                                <div class="fw-bold">Edit Layanan</div>
                                 <button id="editLayananCloseBtn" type="button" class="text-end btn-close ms-auto"></button>
                             </div>
                             <div class="d-flex flex-column flex-lg-row gap-1">
@@ -906,7 +906,7 @@
                             $('#editLayananTransaksi').remove();
                             <?= ($transaksi['dokter'] != 'Resep Luar') ? 'fetchLayanan();' : ''; ?>
                             fetchObatAlkes();
-                            <?= ($transaksi['dokter'] != 'Resep Luar') ? 'fetchTindakanOptions();' : ''; ?>
+                            <?= ($transaksi['dokter'] != 'Resep Luar') ? 'fetchLaynananOptions();' : ''; ?>
                             fetchResepOptions();
                             fetchStatusTransaksi();
                             transactionProcessBtn();
@@ -1036,7 +1036,7 @@
                             $('#editObatAlkesTransaksi').remove();
                             <?= ($transaksi['dokter'] != 'Resep Luar') ? 'fetchLayanan();' : ''; ?>
                             fetchObatAlkes();
-                            <?= ($transaksi['dokter'] != 'Resep Luar') ? 'fetchTindakanOptions();' : ''; ?>
+                            <?= ($transaksi['dokter'] != 'Resep Luar') ? 'fetchLaynananOptions();' : ''; ?>
                             fetchResepOptions();
                             fetchStatusTransaksi();
                             transactionProcessBtn();
@@ -1130,7 +1130,7 @@
                     $('#tambahLayanan .invalid-feedback').text('').hide();
                     <?= ($transaksi['dokter'] != 'Resep Luar') ? 'fetchLayanan();' : ''; ?>
                     fetchObatAlkes();
-                    <?= ($transaksi['dokter'] != 'Resep Luar') ? 'fetchTindakanOptions();' : ''; ?>
+                    <?= ($transaksi['dokter'] != 'Resep Luar') ? 'fetchLaynananOptions();' : ''; ?>
                     fetchStatusTransaksi();
                     transactionProcessBtn();
                 } else {
@@ -1481,7 +1481,7 @@
                 toggleBankField();
                 <?= ($transaksi['dokter'] != 'Resep Luar') ? 'fetchLayanan();' : ''; ?>
                 fetchObatAlkes();
-                <?= ($transaksi['dokter'] != 'Resep Luar') ? 'fetchTindakanOptions();' : ''; ?>
+                <?= ($transaksi['dokter'] != 'Resep Luar') ? 'fetchLaynananOptions();' : ''; ?>
                 fetchResepOptions();
                 fetchStatusTransaksi();
                 transactionProcessBtn();
@@ -1493,7 +1493,7 @@
             toggleBankField();
             <?= ($transaksi['dokter'] != 'Resep Luar') ? 'fetchLayanan();' : ''; ?>
             fetchObatAlkes();
-            <?= ($transaksi['dokter'] != 'Resep Luar') ? 'fetchTindakanOptions();' : ''; ?>
+            <?= ($transaksi['dokter'] != 'Resep Luar') ? 'fetchLaynananOptions();' : ''; ?>
             fetchResepOptions();
             fetchStatusTransaksi();
             transactionProcessBtn();
@@ -1501,7 +1501,7 @@
         toggleBankField();
         <?= ($transaksi['dokter'] != 'Resep Luar') ? 'fetchLayanan();' : ''; ?>
         fetchObatAlkes();
-        <?= ($transaksi['dokter'] != 'Resep Luar') ? 'fetchTindakanOptions();' : ''; ?>
+        <?= ($transaksi['dokter'] != 'Resep Luar') ? 'fetchLaynananOptions();' : ''; ?>
         fetchResepOptions();
         fetchStatusTransaksi();
         transactionProcessBtn();

@@ -930,7 +930,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                             <i class="fa-solid fa-user-nurse"></i>
                                         </div>
                                         <div class="flex-fill mx-2">
-                                            Tindakan
+                                            Layanan
                                         </div>
                                     </div>
                                 </a>

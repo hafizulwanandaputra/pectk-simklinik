@@ -853,7 +853,7 @@ class Transaksi extends BaseController
 
             if ($transaksi['dokter'] == 'Resep Luar') {
                 // Gagalkan jika resep luar
-                return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Tidak bisa menambahkan tindakan pada resep luar.']);
+                return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Tidak bisa menambahkan layanan pada resep luar.']);
             }
 
             $LayananModel = new LayananModel();
@@ -1004,7 +1004,7 @@ class Transaksi extends BaseController
 
             if ($transaksi['dokter'] == 'Resep Luar') {
                 // Gagalkan jika resep luar
-                return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Tidak bisa mengedit tindakan pada resep luar.']);
+                return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Tidak bisa mengedit layanan pada resep luar.']);
             }
 
             // Mengambil detail transaksi berdasarkan ID yang diberikan

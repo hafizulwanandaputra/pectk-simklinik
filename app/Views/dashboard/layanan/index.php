@@ -4,7 +4,7 @@
     <div class="flex-fill text-truncate">
         <div class="d-flex flex-column">
             <div class="fw-medium fs-6 lh-sm"><?= $headertitle; ?></div>
-            <div class="fw-medium lh-sm" style="font-size: 0.75em;"><span id="total_datatables">0</span> tindakan</div>
+            <div class="fw-medium lh-sm" style="font-size: 0.75em;"><span id="total_datatables">0</span> layanan</div>
         </div>
     </div>
     <div id="loadingSpinner" class="spinner-border spinner-border-sm mx-2" role="status" style="min-width: 1rem;">
@@ -29,7 +29,7 @@
                             <option value="100">100</option>
                         </select>
                         <div class="input-group input-group-sm flex-grow-1">
-                            <input type="search" class="form-control form-control-sm " id="externalSearch" placeholder="Cari nama tindakan">
+                            <input type="search" class="form-control form-control-sm " id="externalSearch" placeholder="Cari nama layanan">
                         </div>
                     </div>
                 </div>
@@ -131,13 +131,13 @@
         var table = $('#tabel').DataTable({
             "oLanguage": {
                 "sDecimal": ",",
-                "sEmptyTable": 'Tidak ada tindakan. Klik "Tambah Tindakan" untuk menambahkan tindakan.',
-                "sInfo": "Menampilkan _START_ hingga _END_ dari _TOTAL_ tindakan",
-                "sInfoEmpty": "Menampilkan 0 hingga 0 dari 0 tindakan",
-                "sInfoFiltered": "(di-filter dari _MAX_ tindakan)",
+                "sEmptyTable": 'Tidak ada layanan. Klik "Tambah Tindakan" untuk menambahkan layanan.',
+                "sInfo": "Menampilkan _START_ hingga _END_ dari _TOTAL_ layanan",
+                "sInfoEmpty": "Menampilkan 0 hingga 0 dari 0 layanan",
+                "sInfoFiltered": "(di-filter dari _MAX_ layanan)",
                 "sInfoPostFix": "",
                 "sThousands": ".",
-                "sLengthMenu": "Tampilkan _MENU_ tindakan",
+                "sLengthMenu": "Tampilkan _MENU_ layanan",
                 "sLoadingRecords": "Memuat...",
                 "sProcessing": "",
                 "sSearch": "Cari:",
