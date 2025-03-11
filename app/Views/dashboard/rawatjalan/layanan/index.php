@@ -185,7 +185,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                                         <i class="fa-solid fa-circle-info"></i>
                                     </div>
                                     <div class="w-100 ms-3">
-                                        Layanan ini akan diteruskan ke kasir untuk diproses transaksinya.
+                                        Layanan-layanan ini akan diteruskan ke kasir untuk diproses transaksinya.
                                     </div>
                                 </div>
                             </div>
