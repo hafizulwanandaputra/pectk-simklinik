@@ -7,7 +7,7 @@ use App\Models\DetailTransaksiModel;
 use App\Models\RawatJalanModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
 
-class TransaksiDokter extends BaseController
+class LayananDokter extends BaseController
 {
     protected $TransaksiModel;
     protected $DetailTransaksiModel;
@@ -83,7 +83,7 @@ class TransaksiDokter extends BaseController
                     'next' => $next,
                     'listRawatJalan' => $listRawatJalan
                 ];
-                return view('dashboard/rawatjalan/transaksi/empty', $data);
+                return view('dashboard/rawatjalan/layanan/empty', $data);
             }
 
             // Menyusun data yang akan dikirim ke tampilan
@@ -97,7 +97,7 @@ class TransaksiDokter extends BaseController
                 'next' => $next,
                 'listRawatJalan' => $listRawatJalan
             ];
-            return view('dashboard/rawatjalan/transaksi/index', $data); // Mengembalikan tampilan resep
+            return view('dashboard/rawatjalan/layanan/index', $data); // Mengembalikan tampilan resep
         } else {
             // Menghasilkan exception jika peran tidak diizinkan
             throw PageNotFoundException::forPageNotFound();
@@ -115,13 +115,13 @@ class TransaksiDokter extends BaseController
                 ->find($id);
 
             if ($rawatjalan['transaksi'] == 1) {
-                session()->setFlashdata('error', 'Transaksi tidak dapat ditambahkan pada rawat jalan yang transaksisnya sudah diproses');
+                session()->setFlashdata('error', 'Layanan tidak dapat ditambahkan pada rawat jalan yang transaksisnya sudah diproses');
                 return redirect()->back();
             }
 
             if (session()->get('role') == 'Dokter') {
                 if ($rawatjalan['dokter'] != session()->get('fullname')) {
-                    session()->setFlashdata('error', 'Transaksi ini hanya bisa ditambahkan oleh ' . $rawatjalan['dokter']);
+                    session()->setFlashdata('error', 'Layanan ini hanya bisa ditambahkan oleh ' . $rawatjalan['dokter']);
                     return redirect()->back();
                 }
             }

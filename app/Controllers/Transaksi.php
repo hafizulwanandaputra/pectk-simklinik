@@ -533,7 +533,10 @@ class Transaksi extends BaseController
 
                     $db->table('transaksi')
                         ->where('id_transaksi', $id)
-                        ->update(['kasir' => $kasirBaru]);
+                        ->update([
+                            'kasir' => $kasirBaru,
+                            'tgl_transaksi' => date('Y-m-d H:i:s')
+                        ]);
 
                     // Perbarui data transaksi untuk memastikan tampilan menampilkan kasir yang baru ditambahkan
                     $transaksi['kasir'] = $kasirBaru;

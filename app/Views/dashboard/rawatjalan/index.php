@@ -296,8 +296,8 @@
                                                     <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/laporanrajal') ?>/${rawatjalan.id_rawat_jalan}';">
                                                         <i class="fa-solid fa-file-medical"></i> Tindakan Rajal
                                                     </button>
-                                                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/transaksi') ?>/${rawatjalan.id_rawat_jalan}';">
-                                                        <i class="fa-solid fa-cash-register"></i> Transaksi
+                                                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/layanan') ?>/${rawatjalan.id_rawat_jalan}';">
+                                                        <i class="fa-solid fa-user-nurse"></i> Layanan
                                                     </button>
                                                 <?php endif; ?>
                                             <?php endif; ?>
@@ -716,8 +716,8 @@
                                                     <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/laporanrajal') ?>/${rawatjalan.id_rawat_jalan}';">
                                                         <i class="fa-solid fa-file-medical"></i> Tindakan Rajal
                                                     </button>
-                                                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/transaksi') ?>/${rawatjalan.id_rawat_jalan}';">
-                                                        <i class="fa-solid fa-cash-register"></i> Transaksi
+                                                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/layanan') ?>/${rawatjalan.id_rawat_jalan}';">
+                                                        <i class="fa-solid fa-user-nurse"></i> Layanan
                                                     </button>
                                                 <?php endif; ?>
                                             <?php endif; ?>
@@ -1128,8 +1128,8 @@
                                                     <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/laporanrajal') ?>/${rawatjalan.id_rawat_jalan}';">
                                                         <i class="fa-solid fa-file-medical"></i> Tindakan Rajal
                                                     </button>
-                                                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/transaksi') ?>/${rawatjalan.id_rawat_jalan}';">
-                                                        <i class="fa-solid fa-cash-register"></i> Transaksi
+                                                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/layanan') ?>/${rawatjalan.id_rawat_jalan}';">
+                                                        <i class="fa-solid fa-user-nurse"></i> Layanan
                                                     </button>
                                                 <?php endif; ?>
                                             <?php endif; ?>
