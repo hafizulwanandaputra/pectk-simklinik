@@ -16,6 +16,7 @@ class DetailResepModel extends Model
         'nama_obat',
         'kategori_obat',
         'bentuk_obat',
+        'nama_batch',
         'signa',
         'catatan',
         'cara_pakai',

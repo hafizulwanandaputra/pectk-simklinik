@@ -559,6 +559,7 @@ class ResepDokter extends BaseController
                 'nama_obat' => $obat['nama_obat'],
                 'kategori_obat' => $obat['kategori_obat'],
                 'bentuk_obat' => $obat['bentuk_obat'],
+                'nama_batch' => $obat['nama_batch'],
                 'signa' => $this->request->getPost('signa'),
                 'catatan' => $this->request->getPost('catatan'),
                 'cara_pakai' => $this->request->getPost('cara_pakai'),

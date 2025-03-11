@@ -364,6 +364,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                     }
 
                     const kategori_obat = detail_resep.kategori_obat ? `${detail_resep.kategori_obat}, ` : ``;
+                    const nama_batch = detail_resep.nama_batch ? `${detail_resep.nama_batch}` : `<em>Tidak ada batch</em>`;
 
                     const detail_resepElement = `
                     <tr>
@@ -377,6 +378,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                         <small>
                             <ul class="ps-3 mb-0">
                                 <li>${kategori_obat}${detail_resep.bentuk_obat}</li>
+                                <li>${nama_batch}</li>
                                 <li>${detail_resep.signa}, ${detail_resep.cara_pakai}, ${detail_resep.catatan}</li>
                             </ul>
                         </small></td>
