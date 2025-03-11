@@ -179,6 +179,16 @@ $usia = $registrasi->diff($tanggal_lahir);
                                     </div>
                                 </div>
                             </div>
+                            <div id="alert-date" class="alert alert-info mb-0" role="alert">
+                                <div class="d-flex align-items-start">
+                                    <div style="width: 12px; text-align: center;">
+                                        <i class="fa-solid fa-circle-info"></i>
+                                    </div>
+                                    <div class="w-100 ms-3">
+                                        Layanan ini akan diteruskan ke kasir untuk diproses transaksinya.
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
