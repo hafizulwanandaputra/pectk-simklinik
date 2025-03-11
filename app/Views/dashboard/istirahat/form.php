@@ -115,92 +115,94 @@ $waktuFormatted = $dateTime->format('H.i.s');
 </head>
 
 <body>
-    <div style="width: 50%;">
-        <div style="padding: 1cm;">
-            <table class="table" style="width: 100%; margin-bottom: 4px; border-bottom: 2px solid black; font-size: 8pt;">
-                <thead>
-                    <tr>
-                        <th style="width: 0%;">
-                            <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/logo_pec.png')) ?>" width="64px" alt="">
-                        </th>
-                        <td style="width: 100%;">
-                            <h3 style="margin: 0; padding: 0;">KLINIK UTAMA MATA PADANG EYE CENTER TELUK KUANTAN</h3>
-                            <div>
-                                <div>Jl. Rusdi S. Abrus No. 35, LK III Sinambek, Kelurahan Sungai Jering, Kecamatan Kuantan Tengah, Kabupaten Kuantan Singingi, Riau.</div>
-                            </div>
-                        </td>
-                    </tr>
-                </thead>
-            </table>
-            <table class="table" style="width: 100%; margin-bottom: 4px;">
-                <tbody>
-                    <tr>
-                        <td style="width: 60%; vertical-align: top; padding: 0; text-align: center;">
-                            <h2 style="padding: 0; text-decoration: underline;">SURAT KETERANGAN ISTIRAHAT</h2>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <div class="box">
-                <div style="padding-right: 0.25cm; padding-left: 0.25cm;">
-                    <p>Saya yang bertanda tangan di bawah ini menyatakan bahwa:</p>
-                    <table class="table" style="width: 100%; margin-bottom: 4px;">
-                        <tbody>
-                            <tr>
-                                <td style="width: 20%; vertical-align: top;">
-                                    Nama
-                                </td>
-                                <td style="width: 0%; vertical-align: top;">
-                                    :
-                                </td>
-                                <td style="width: 80%; vertical-align: top;">
-                                    <?= $istirahat['nama_pasien'] ?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="width: 20%; vertical-align: top;">
-                                    Umur
-                                </td>
-                                <td style="width: 0%; vertical-align: top;">
-                                    :
-                                </td>
-                                <td style="width: 80%; vertical-align: top;">
-                                    <?= $usia->y . " tahun " . $usia->m . " bulan" ?>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="width: 20%; vertical-align: top;">
-                                    Alamat
-                                </td>
-                                <td style="width: 0%; vertical-align: top;">
-                                    :
-                                </td>
-                                <td style="width: 80%; vertical-align: top;">
-                                    <?= $istirahat['alamat'] ?>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <p>Pada pemeriksaan saat ini, pasien tersebut menderita sakit mata. Oleh karena itu, pasien tersebut perlu diberikan istirahat selama <?= $durasi_istirahat->d ?> (<?= $istirahat['durasi_teks'] ?>) hari mulai tanggal <?= $tanggal_mulai ?> s.d. <?= $tanggal_selesai ?>.</p>
-                    <p>Demikian surat keterangan ini dibuat untuk dipergunakan seperlunya. Atas perhatiannya, saya ucapkan terima kasih.</p>
-                    <table class="table" style="width: 100%; margin-bottom: 4px;">
-                        <tbody>
-                            <tr>
-                                <td style="width: 50%; text-align: center; vertical-align: top; padding-bottom: 2cm;"></td>
-                                <td style="width: 50%; text-align: center; vertical-align: top; padding-bottom: 2cm;">
-                                    <div>Teluk Kuantan, <?= $tanggalFormatted ?></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="width: 50%; text-align: center; vertical-align: top;"></td>
-                                <td style="width: 50%; text-align: center; vertical-align: top;"></td>
-                            </tr>
-                        </tbody>
-                    </table>
+    <div style="display: flex; justify-content: flex-end;">
+        <div style="width: 50%;">
+            <div style="padding: 1cm;">
+                <table class="table" style="width: 100%; margin-bottom: 4px; border-bottom: 2px solid black; font-size: 8pt;">
+                    <thead>
+                        <tr>
+                            <th style="width: 0%;">
+                                <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'assets/images/logo_pec.png')) ?>" width="64px" alt="">
+                            </th>
+                            <td style="width: 100%;">
+                                <h3 style="margin: 0; padding: 0;">KLINIK UTAMA MATA PADANG EYE CENTER TELUK KUANTAN</h3>
+                                <div>
+                                    <div>Jl. Rusdi S. Abrus No. 35, LK III Sinambek, Kelurahan Sungai Jering, Kecamatan Kuantan Tengah, Kabupaten Kuantan Singingi, Riau.</div>
+                                </div>
+                            </td>
+                        </tr>
+                    </thead>
+                </table>
+                <table class="table" style="width: 100%; margin-bottom: 4px;">
+                    <tbody>
+                        <tr>
+                            <td style="width: 60%; vertical-align: top; padding: 0; text-align: center;">
+                                <h2 style="padding: 0; text-decoration: underline;">SURAT KETERANGAN ISTIRAHAT</h2>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="box">
+                    <div style="padding-right: 0.25cm; padding-left: 0.25cm;">
+                        <p>Saya yang bertanda tangan di bawah ini menyatakan bahwa:</p>
+                        <table class="table" style="width: 100%; margin-bottom: 4px;">
+                            <tbody>
+                                <tr>
+                                    <td style="width: 20%; vertical-align: top;">
+                                        Nama
+                                    </td>
+                                    <td style="width: 0%; vertical-align: top;">
+                                        :
+                                    </td>
+                                    <td style="width: 80%; vertical-align: top;">
+                                        <?= $istirahat['nama_pasien'] ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 20%; vertical-align: top;">
+                                        Umur
+                                    </td>
+                                    <td style="width: 0%; vertical-align: top;">
+                                        :
+                                    </td>
+                                    <td style="width: 80%; vertical-align: top;">
+                                        <?= $usia->y . " tahun " . $usia->m . " bulan" ?>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 20%; vertical-align: top;">
+                                        Alamat
+                                    </td>
+                                    <td style="width: 0%; vertical-align: top;">
+                                        :
+                                    </td>
+                                    <td style="width: 80%; vertical-align: top;">
+                                        <?= $istirahat['alamat'] ?>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p>Pada pemeriksaan saat ini, pasien tersebut menderita sakit mata. Oleh karena itu, pasien tersebut perlu diberikan istirahat selama <?= $durasi_istirahat->d ?> (<?= $istirahat['durasi_teks'] ?>) hari mulai tanggal <?= $tanggal_mulai ?> s.d. <?= $tanggal_selesai ?>.</p>
+                        <p>Demikian surat keterangan ini dibuat untuk dipergunakan seperlunya. Atas perhatiannya, saya ucapkan terima kasih.</p>
+                        <table class="table" style="width: 100%; margin-bottom: 4px;">
+                            <tbody>
+                                <tr>
+                                    <td style="width: 50%; text-align: center; vertical-align: top; padding-bottom: 2cm;"></td>
+                                    <td style="width: 50%; text-align: center; vertical-align: top; padding-bottom: 2cm;">
+                                        <div>Teluk Kuantan, <?= $tanggalFormatted ?></div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width: 50%; text-align: center; vertical-align: top;"></td>
+                                    <td style="width: 50%; text-align: center; vertical-align: top;"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
+                <p style="font-size: 9pt;">Dicetak: <?= date("Y-m-d H:i:s") ?></p>
+                </td>
             </div>
-            <p style="font-size: 9pt;">Dicetak: <?= date("Y-m-d H:i:s") ?></p>
-            </td>
         </div>
     </div>
 
