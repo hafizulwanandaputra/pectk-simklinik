@@ -84,6 +84,8 @@ class Filters extends BaseConfig
                 '/supplier/*',
                 '/obat',
                 '/obat/*',
+                '/batchobat',
+                '/batchobat/*',
                 '/pembelianobat',
                 '/pembelianobat/*',
                 '/opnameobat',

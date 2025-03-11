@@ -2,17 +2,17 @@
 
 namespace App\Controllers;
 
+use App\Models\BatchObatModel;
 use App\Models\ObatModel;
-use App\Models\SupplierModel;
 use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Exceptions\PageNotFoundException;
 
-class Obat extends BaseController
+class BatchObat extends BaseController
 {
-    protected $ObatModel;
+    protected $BatchObatModel;
     public function __construct()
     {
-        $this->ObatModel = new ObatModel();
+        $this->BatchObatModel = new BatchObatModel();
     }
 
     public function index()
@@ -21,19 +21,19 @@ class Obat extends BaseController
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
             // Menyiapkan data untuk tampilan
             $data = [
-                'title' => 'Obat - ' . $this->systemName,
-                'headertitle' => 'Obat',
+                'title' => 'Batch Obat - ' . $this->systemName,
+                'headertitle' => '<em>Batch</em> Obat',
                 'agent' => $this->request->getUserAgent()
             ];
-            // Mengembalikan tampilan daftar obat
-            return view('dashboard/obat/index', $data);
+            // Mengembalikan tampilan daftar batch obat
+            return view('dashboard/batchobat/index', $data);
         } else {
             // Jika peran tidak dikenali, lempar pengecualian untuk halaman tidak ditemukan
             throw PageNotFoundException::forPageNotFound();
         }
     }
 
-    public function obatlist()
+    public function batchobatlist()
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
@@ -52,97 +52,65 @@ class Obat extends BaseController
             $columnMapping = [
                 0 => 'id_obat',
                 1 => 'id_obat',
-                2 => 'merek',
-                3 => 'nama_obat',
-                4 => 'isi_obat',
-                5 => 'kategori_obat',
-                6 => 'bentuk_obat',
-                7 => 'harga_obat',
-                8 => 'ppn',
-                9 => 'mark_up',
-                10 => 'selisih_harga',
-                11 => 'penyesuaian_harga',
-                12 => 'harga_jual'
+                2 => 'obat',
+                3 => 'nama_batch',
+                4 => 'tgl_kedaluwarsa',
+                5 => 'jumlah_masuk',
+                6 => 'jumlah_keluar',
+                7 => 'sisa_stok',
+                8 => 'diperbarui',
             ];
 
             // Mengambil kolom untuk diurutkan
             $sortColumn = $columnMapping[$sortColumnIndex] ?? 'id_obat';
 
             // Menghitung total record
-            $totalRecords = $this->ObatModel->countAllResults(true);
+            $totalRecords = $this->BatchObatModel->countAllResults(true);
 
             // Modifikasi logika pengurutan untuk menangani merek
-            if ($sortColumn === 'merek') {
+            if ($sortColumn === 'obat') {
                 // Mengurutkan berdasarkan merek, kemudian berdasarkan nama_obat
-                $this->ObatModel
-                    ->orderBy('merek', $sortDirection)
-                    ->orderBy('nama_supplier', 'ASC')
-                    ->orderBy('nama_obat', 'ASC')
-                    ->orderBy('isi_obat', 'ASC');
-            } else if ($sortColumn === 'nama_obat') {
-                // Mengurutkan berdasarkan nama_obat, kemudian berdasarkan isi_obat
-                $this->ObatModel
+                $this->BatchObatModel
                     ->orderBy('nama_obat', $sortDirection)
-                    ->orderBy('isi_obat', 'ASC');
+                    ->orderBy('nama_batch', 'ASC')
+                    ->orderBy('tgl_kedaluwarsa', 'ASC');
+            } else if ($sortColumn === 'nama_batch') {
+                // Mengurutkan berdasarkan nama_obat, kemudian berdasarkan isi_obat
+                $this->BatchObatModel
+                    ->orderBy('nama_obat', $sortDirection)
+                    ->orderBy('tgl_kedaluwarsa', 'ASC');
             } else {
                 // Perilaku pengurutan default
-                $this->ObatModel->orderBy($sortColumn, $sortDirection);
+                $this->BatchObatModel->orderBy($sortColumn, $sortDirection);
             }
 
             // Menerapkan kueri pencarian
             if ($search) {
-                $this->ObatModel
-                    ->join('supplier as s1', 's1.id_supplier = obat.id_supplier', 'inner')
+                $this->BatchObatModel
+                    ->join('obat as s1', 's1.id_obat = batch_obat.id_obat', 'inner')
                     ->groupStart()
-                    ->like('s1.merek', $search)
-                    ->orLike('obat.nama_obat', $search)
-                    ->orLike('obat.isi_obat', $search)
+                    ->like('s1.nama_obat', $search)
+                    ->orLike('batch_obat.nama_batch', $search)
+                    ->orLike('batch_obat.tgl_kedaluwarsa', $search)
                     ->groupEnd();
             }
 
             // Menghitung jumlah record yang difilter
-            $filteredRecords = $this->ObatModel
-                ->join('supplier AS s2', 's2.id_supplier = obat.id_supplier', 'inner')->countAllResults(false);
+            $filteredRecords = $this->BatchObatModel
+                ->join('obat AS s2', 's2.id_obat = batch_obat.id_obat', 'inner')->countAllResults(false);
 
-            $obat = $this->ObatModel
+            $batch_obat = $this->BatchObatModel
                 ->select('
+                batch_obat.*, 
                 obat.*, 
-        supplier.*, 
-
-        -- Hitung PPN terlebih dahulu
-        (obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) as harga_setelah_ppn,
-
-        -- Hitung harga jual sebelum pembulatan
-        ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) 
-        + ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) * obat.mark_up / 100)) as harga_jual_sebelum_bulat,
-
-        -- Bulatkan harga_jual ke ratusan terdekat ke atas
-        CEIL(
-            ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) 
-            + ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) * obat.mark_up / 100)) / 100
-        ) * 100 as harga_jual_bulat,
-
-        obat.penyesuaian_harga as penyesuaian_harga,
-
-        -- Tambahkan penyesuaian_harga ke harga_jual_bulat
-        (CEIL(
-            ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) 
-            + ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) * obat.mark_up / 100)) / 100
-        ) * 100 + obat.penyesuaian_harga) as harga_jual,
-
-        -- Hitung selisih antara harga_jual dan harga_jual_sebelum_bulat
-        ((CEIL(
-            ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) 
-            + ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) * obat.mark_up / 100)) / 100
-        ) * 100 + obat.penyesuaian_harga) 
-        - ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) 
-        + ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) * obat.mark_up / 100))) as selisih_harga
-            ')
-                ->join('supplier', 'supplier.id_supplier = obat.id_supplier', 'inner')
+                -- Hitung sisa stok
+                (batch_obat.jumlah_masuk - batch_obat.jumlah_keluar) as sisa_stok
+                ')
+                ->join('obat', 'obat.id_obat = batch_obat.id_obat', 'inner')
                 ->findAll($length, $start);
 
-            // Menambahkan penomoran langsung ke $obat
-            foreach ($obat as $index => &$item) {
+            // Menambahkan penomoran langsung ke $batch_obat
+            foreach ($batch_obat as $index => &$item) {
                 $item['no'] = $start + $index + 1; // Menambahkan kolom 'no'
             }
 
@@ -151,7 +119,7 @@ class Obat extends BaseController
                 'draw' => $draw,
                 'recordsTotal' => $totalRecords,
                 'recordsFiltered' => $filteredRecords,
-                'data' => $obat
+                'data' => $batch_obat
             ]);
         } else {
             // Jika peran tidak dikenali, kembalikan status 404
@@ -161,23 +129,44 @@ class Obat extends BaseController
         }
     }
 
-    public function supplierlist()
+    public function obatlist()
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
-            $SupplierModel = new SupplierModel();
+            $ObatModel = new ObatModel();
 
-            // Mengambil daftar supplier dan mengurutkannya
-            $results = $SupplierModel->orderBy('merek', 'DESC')->findAll();
+            // Mengambil daftar obat dan mengurutkannya
+            $results = $ObatModel->orderBy('nama_obat', 'ASC')->findAll();
 
             $options = [];
             // Menyiapkan opsi untuk ditampilkan
             foreach ($results as $row) {
-                // Mengkondisikan Merek
-                $merek = ($row['merek'] == '') ? 'Tanpa merek' : $row['merek'];
+                $ppn = (float) $row['ppn']; // Mengambil nilai PPN
+                $mark_up = (float) $row['mark_up']; // Mengambil nilai mark-up
+                $harga_obat = (float) $row['harga_obat']; // Mengambil harga obat
+                $penyesuaian_harga = (float) $row['penyesuaian_harga']; // Mengambil penyesuaian harga
+
+                // 1. Hitung PPN
+                $jumlah_ppn = ($harga_obat * $ppn) / 100;
+                $total_harga_ppn = $harga_obat + $jumlah_ppn;
+
+                // 2. Terapkan mark-up
+                $jumlah_mark_up = ($total_harga_ppn * $mark_up) / 100;
+                $total_harga = $total_harga_ppn + $jumlah_mark_up;
+
+                // 3. Bulatkan harga ke ratusan terdekat ke atas dan tambahkan penyesuaian
+                $harga_bulat = ceil($total_harga / 100) * 100 + $penyesuaian_harga;
+
+                // 4. Format harga dengan pemisah ribuan
+                $harga_obat_terformat = number_format($harga_bulat, 0, ',', '.');
+
                 $options[] = [
-                    'value' => $row['id_supplier'],
-                    'text' => $merek . ' • ' . $row['nama_supplier']
+                    'value' => $row['id_obat'], // Menyimpan id_obat
+                    'text' => $row['nama_obat'] .
+                        ' (' . $row['isi_obat'] .
+                        ' • ' . $row['kategori_obat'] .
+                        ' • ' . $row['bentuk_obat'] .
+                        ' • Rp' . $harga_obat_terformat . ')' // Menyimpan informasi obat
                 ];
             }
 
@@ -194,12 +183,12 @@ class Obat extends BaseController
         }
     }
 
-    public function obat($id)
+    public function batchobat($id)
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
             // Mengambil data obat berdasarkan ID
-            $data = $this->ObatModel->find($id);
+            $data = $this->BatchObatModel->find($id);
             return $this->response->setJSON($data);
         } else {
             // Jika peran tidak dikenali, kembalikan status 404
@@ -217,13 +206,9 @@ class Obat extends BaseController
             $validation = \Config\Services::validation();
             // Menetapkan aturan validasi dasar
             $validation->setRules([
-                'id_supplier' => 'required',
-                'nama_obat' => 'required',
-                'bentuk_obat' => 'required',
-                'harga_obat' => 'required|numeric|greater_than_equal_to[0]',
-                'ppn' => 'required|numeric|greater_than_equal_to[0]',
-                'mark_up' => 'required|numeric|greater_than_equal_to[0]',
-                'penyesuaian_harga' => 'required|numeric'
+                'id_obat' => 'required',
+                'tgl_kedaluwarsa' => 'required',
+                'jumlah_masuk' => 'required|numeric|greater_than_equal_to[0]',
             ]);
 
             // Memeriksa apakah validasi berhasil
@@ -234,22 +219,18 @@ class Obat extends BaseController
 
             // Menyimpan Data
             $data = [
-                'id_supplier' => $this->request->getPost('id_supplier'),
-                'nama_obat' => $this->request->getPost('nama_obat'),
-                'isi_obat' => $this->request->getPost('isi_obat'),
-                'kategori_obat' => $this->request->getPost('kategori_obat'),
-                'bentuk_obat' => $this->request->getPost('bentuk_obat'),
-                'harga_obat' => $this->request->getPost('harga_obat'),
-                'ppn' => $this->request->getPost('ppn'),
-                'mark_up' => $this->request->getPost('mark_up'),
-                'penyesuaian_harga' => $this->request->getPost('penyesuaian_harga')
+                'id_obat' => $this->request->getPost('id_obat'),
+                'nama_batch' => $this->request->getPost('nama_batch') ?: null,
+                'tgl_kedaluwarsa' => $this->request->getPost('tgl_kedaluwarsa'),
+                'jumlah_masuk' => $this->request->getPost('jumlah_masuk'),
+                'diperbarui' => date('Y-m-d H:i:s'), // Waktu pembaruan
             ];
             // Menyimpan data obat ke dalam database
-            $this->ObatModel->save($data);
+            $this->BatchObatModel->save($data);
             // Panggil WebSocket untuk update client
             $this->notify_clients();
             // Mengembalikan respons sukses
-            return $this->response->setJSON(['success' => true, 'message' => 'Obat berhasil ditambahkan']);
+            return $this->response->setJSON(['success' => true, 'message' => '<em>Batch</em> obat berhasil ditambahkan']);
         } else {
             // Jika peran tidak dikenali, kembalikan status 404
             return $this->response->setStatusCode(404)->setJSON([
@@ -266,13 +247,9 @@ class Obat extends BaseController
             $validation = \Config\Services::validation();
             // Menetapkan aturan validasi dasar
             $validation->setRules([
-                'id_supplier' => 'required',
-                'nama_obat' => 'required',
-                'bentuk_obat' => 'required',
-                'harga_obat' => 'required|numeric|greater_than_equal_to[0]',
-                'ppn' => 'required|numeric|greater_than_equal_to[0]',
-                'mark_up' => 'required|numeric|greater_than_equal_to[0]',
-                'penyesuaian_harga' => 'required|numeric',
+                'id_obat' => 'required',
+                'tgl_kedaluwarsa' => 'required',
+                'jumlah_masuk' => 'required|numeric',
             ]);
 
             // Memeriksa apakah validasi berhasil
@@ -282,40 +259,42 @@ class Obat extends BaseController
             }
 
             // Mengambil data obat berdasarkan ID obat yang akan diupdate
-            $obat = $this->ObatModel->find($this->request->getPost('id_obat'));
+            $batch_obat = $this->BatchObatModel->find($this->request->getPost('id_batch_obat'));
 
             $db = db_connect(); // Koneksi ke database
             $db->transBegin();
 
             // Menyimpan Data
             $data = [
-                'id_supplier' => $this->request->getPost('id_supplier'),
-                'id_obat' => $obat['id_obat'],
-                'nama_obat' => $this->request->getPost('nama_obat'),
-                'isi_obat' => $this->request->getPost('isi_obat'),
-                'kategori_obat' => $this->request->getPost('kategori_obat'),
-                'bentuk_obat' => $this->request->getPost('bentuk_obat'),
-                'harga_obat' => $this->request->getPost('harga_obat'),
-                'ppn' => $this->request->getPost('ppn'),
-                'mark_up' => $this->request->getPost('mark_up'),
-                'penyesuaian_harga' => $this->request->getPost('penyesuaian_harga'),
+                'id_batch_obat' => $batch_obat['id_batch_obat'],
+                'id_obat' => $this->request->getPost('id_obat'),
+                'nama_batch' => $this->request->getPost('nama_batch') ?: null,
+                'tgl_kedaluwarsa' => $this->request->getPost('tgl_kedaluwarsa'),
+                'jumlah_masuk' => $batch_obat['jumlah_masuk'] + $this->request->getPost('jumlah_masuk'),
+                'diperbarui' => $batch_obat['diperbarui'], // Mengambil waktu pembaruan dari data sebelumnya
             ];
 
             // Memperbarui data obat
-            $itemBuilder1 = $db->table('obat');
-            $itemBuilder1->where('id_obat', $obat['id_obat']);
+            $itemBuilder1 = $db->table('batch_obat');
+            $itemBuilder1->where('id_batch_obat', $batch_obat['id_batch_obat']);
             $itemBuilder1->update($data);
+
+            if ($data['jumlah_masuk'] < $batch_obat['jumlah_keluar']) {
+                // Gagalkan jika pembelian obat sudah diterima
+                $db->transRollback();
+                return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Jumlah masuk tidak bisa kurang dari jumlah keluar.']);
+            }
 
             // Memeriksa status stok obat
             if ($db->transStatus() === false) {
                 $db->transRollback();  // Mengembalikan jika ada masalah
-                return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Gagal memproses obat', 'errors' => NULL]);
+                return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Gagal memproses batch obat', 'errors' => NULL]);
             } else {
                 $db->transCommit();
                 // Panggil WebSocket untuk update client
                 $this->notify_clients();
                 // Mengembalikan respons sukses
-                return $this->response->setJSON(['success' => true, 'message' => 'Obat berhasil diedit']);
+                return $this->response->setJSON(['success' => true, 'message' => '<em>Batch</em> obat berhasil diedit']);
             }
         } else {
             // Jika peran tidak dikenali, kembalikan status 404
@@ -334,11 +313,11 @@ class Obat extends BaseController
 
             try {
                 // Menghapus data obat berdasarkan ID
-                $this->ObatModel->delete($id);
+                $this->BatchObatModel->delete($id);
                 // Panggil WebSocket untuk update client
                 $this->notify_clients();
                 // Mengembalikan respons sukses
-                return $this->response->setJSON(['message' => 'Obat berhasil dihapus']);
+                return $this->response->setJSON(['message' => '<em>Batch</em> obat berhasil dihapus']);
             } catch (DatabaseException $e) {
                 // Mencatat pesan kesalahan
                 log_message('error', $e->getMessage());

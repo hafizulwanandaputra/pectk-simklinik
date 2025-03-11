@@ -1,25 +1,13 @@
 <?= $this->extend('dashboard/templates/dashboard'); ?>
 <?= $this->section('css'); ?>
 <?= $this->include('select2/floating'); ?>
-<style>
-    .no-fluid-content {
-        --bs-gutter-x: 0;
-        --bs-gutter-y: 0;
-        width: 100%;
-        padding-right: calc(var(--bs-gutter-x) * 0.5);
-        padding-left: calc(var(--bs-gutter-x) * 0.5);
-        margin-right: auto;
-        margin-left: auto;
-        max-width: 1320px;
-    }
-</style>
 <?= $this->endSection(); ?>
 <?= $this->section('title'); ?>
 <div class="d-flex justify-content-start align-items-center">
     <div class="flex-fill text-truncate">
         <div class="d-flex flex-column">
             <div class="fw-medium fs-6 lh-sm"><?= $headertitle; ?></div>
-            <div class="fw-medium lh-sm" style="font-size: 0.75em;"><span id="total_datatables">0</span> obat</div>
+            <div class="fw-medium lh-sm" style="font-size: 0.75em;"><span id="total_datatables">0</span> <em>batch</em></div>
         </div>
     </div>
     <div id="loadingSpinner" class="spinner-border spinner-border-sm mx-2" role="status" style="min-width: 1rem;">
@@ -44,7 +32,7 @@
                             <option value="100">100</option>
                         </select>
                         <div class="input-group input-group-sm flex-grow-1">
-                            <input type="search" class="form-control form-control-sm " id="externalSearch" placeholder="Cari merek, nama obat, dan isi obat">
+                            <input type="search" class="form-control form-control-sm " id="externalSearch" placeholder="Cari obat, nama batch">
                         </div>
                     </div>
                 </div>
@@ -59,17 +47,13 @@
                         <tr class="align-middle">
                             <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">No</th>
                             <th scope="col" class="bg-body-secondary border-secondary text-nowrap" style="border-bottom-width: 2px;">Tindakan</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Merek</th>
+                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Obat</th>
                             <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Nama</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Isi</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Kategori</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Bentuk</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Harga Obat</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">PPN</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Mark Up</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Pembulatan Harga</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Penyesuaian Harga</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Harga Jual</th>
+                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Kedaluwarsa</th>
+                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Jumlah Masuk</th>
+                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Jumlah Keluar</th>
+                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Sisa Stok</th>
+                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Terakhir Diperbarui</th>
                         </tr>
                     </thead>
                     <tbody class="align-top">
@@ -91,103 +75,62 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="obatModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="obatModalLabel" aria-hidden="true">
+    <div class="modal fade" id="bacthObatModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="batchObatModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable ">
-            <form id="obatForm" enctype="multipart/form-data" class="modal-content bg-body-tertiary shadow-lg transparent-blur">
+            <form id="batchObatForm" enctype="multipart/form-data" class="modal-content bg-body-tertiary shadow-lg transparent-blur">
                 <div class="modal-header justify-content-between pt-2 pb-2" style="border-bottom: 1px solid var(--bs-border-color-translucent);">
-                    <h6 class="pe-2 modal-title fs-6 text-truncate" id="obatModalLabel" style="font-weight: bold;"></h6>
+                    <h6 class="pe-2 modal-title fs-6 text-truncate" id="batchObatModalLabel" style="font-weight: bold;"></h6>
                     <button id="closeBtn" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body py-2">
-                    <input type="hidden" id="id_obat" name="id_obat">
+                    <input type="hidden" id="id_batch_obat" name="id_batch_obat">
                     <div class="form-floating mt-1 mb-1">
-                        <select class="form-select " id="id_supplier" name="id_supplier" aria-label="id_supplier">
-                            <option value="" disabled selected>-- Pilih Merek dan Pemasok --</option>
+                        <select class="form-select " id="id_obat" name="id_obat" aria-label="id_obat">
+                            <option value="" disabled selected>-- Pilih Obat --</option>
                         </select>
-                        <label for="id_dokter">Merek dan Pemasok<span class="text-danger">*</span></label>
+                        <label for="id_dokter">Obat<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
-                        <input type="text" class="form-control " autocomplete="off" dir="auto" placeholder="nama_obat" id="nama_obat" name="nama_obat">
-                        <label for="nama_obat">Nama<span class="text-danger">*</span></label>
+                        <input type="text" class="form-control " autocomplete="off" dir="auto" placeholder="nama_batch" id="nama_batch" name="nama_batch">
+                        <label for="nama_batch">Nama<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
-                        <input type="text" class="form-control " autocomplete="off" dir="auto" placeholder="isi_obat" id="isi_obat" name="isi_obat">
-                        <label for="isi_obat">Isi</label>
+                        <input type="date" class="form-control " autocomplete="off" dir="auto" placeholder="tgl_kedaluwarsa" id="tgl_kedaluwarsa" name="tgl_kedaluwarsa">
+                        <label for="tgl_kedaluwarsa">Kedaluwarsa</label>
                         <div class="invalid-feedback"></div>
                     </div>
-                    <div class="form-floating mt-1 mb-1">
-                        <input type="text" class="form-control " autocomplete="off" dir="auto" placeholder="kategori_obat" id="kategori_obat" name="kategori_obat" list="list_kategori_obat">
-                        <label for="kategori_obat">Kategori Obat</label>
-                        <div class="invalid-feedback"></div>
-                        <datalist id="list_kategori_obat">
-                            <option value="Antibiotik">
-                            <option value="Antiinflamasi">
-                            <option value="Antihistamin">
-                            <option value="Dekongestan">
-                            <option value="Pelumas">
-                            <option value="Antiglaukoma">
-                            <option value="Antivirus">
-                            <option value="Antijamur">
-                            <option value="Suplemen">
-                        </datalist>
-                    </div>
-                    <div class="form-floating mt-1 mb-1">
-                        <select class="form-select " id="bentuk_obat" name="bentuk_obat" aria-label="bentuk_obat">
-                            <option value="" disabled selected>-- Pilih Bentuk --</option>
-                            <optgroup label="Obat Luar">
-                                <option value="Tetes">Tetes</option>
-                                <option value="Salep">Salep</option>
-                            </optgroup>
-                            <optgroup label="Obat Dalam">
-                                <option value="Tablet/Kapsul">Tablet/Kapsul</option>
-                                <option value="Sirup">Sirup</option>
-                            </optgroup>
-                            <optgroup label="Lainnya">
-                                <option value="Alat Kesehatan">Alat Kesehatan</option>
-                            </optgroup>
-                        </select>
-                        <label for="bentuk_obat">Bentuk<span class="text-danger">*</span></label>
+                    <div class="form-floating mb-1 mt-1">
+                        <input type="number" class="form-control" autocomplete="off" dir="auto" placeholder="jumlah_masuk" id="jumlah_masuk" name="jumlah_masuk">
+                        <label for="jumlah_masuk" id="stok_label"></label>
                         <div class="invalid-feedback"></div>
                     </div>
-                    <div class="input-group has-validation mb-1 mt-1">
-                        <span class="input-group-text">Rp</span>
-                        <div class="form-floating">
-                            <input type="number" class="form-control " autocomplete="off" dir="auto" placeholder="harga_obat" id="harga_obat" name="harga_obat">
-                            <label for="harga_obat">Harga Obat<span class="text-danger">*</span></label>
+                    <div id="stok_jumlah" class="mb-1 mt-1">
+                        <div class="mb-0 row g-1 overflow-hidden d-flex align-items-end">
+                            <div class="col fw-medium text-nowrap">Obat Masuk</div>
+                            <div class="col text-end">
+                                <div class="date text-truncate" id="stok_obat_masuk">
+                                </div>
+                            </div>
                         </div>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                    <div class="input-group has-validation mb-1 mt-1">
-                        <div class="form-floating">
-                            <input type="number" class="form-control " autocomplete="off" dir="auto" placeholder="ppn" id="ppn" name="ppn">
-                            <label for="ppn">PPN<span class="text-danger">*</span></label>
+                        <div class="mb-0 row g-1 overflow-hidden d-flex  align-items-end">
+                            <div class="col fw-medium text-nowrap">Obat Keluar</div>
+                            <div class="col text-end">
+                                <div class="date text-truncate" id="stok_obat_keluar">
+                                </div>
+                            </div>
                         </div>
-                        <span class="input-group-text">%</span>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                    <div class="input-group has-validation mb-1 mt-1">
-                        <div class="form-floating">
-                            <input type="number" class="form-control " autocomplete="off" dir="auto" placeholder="mark_up" id="mark_up" name="mark_up">
-                            <label for="mark_up">Mark Up<span class="text-danger">*</span></label>
+                        <div class="mb-0 row g-1 overflow-hidden d-flex  align-items-end">
+                            <div class="col fw-medium text-nowrap">Sisa Stok</div>
+                            <div class="col text-end">
+                                <div class="date text-truncate" id="stok_sisa">
+                                </div>
+                            </div>
                         </div>
-                        <span class="input-group-text">%</span>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                    <div class="input-group has-validation mb-1 mt-1">
-                        <span class="input-group-text">Rp</span>
-                        <div class="form-floating">
-                            <input type="number" class="form-control " autocomplete="off" dir="auto" placeholder="penyesuaian_harga" id="penyesuaian_harga" name="penyesuaian_harga">
-                            <label for="penyesuaian_harga">Penyesuaian Harga<span class="text-danger">*</span></label>
-                        </div>
-                        <div class="invalid-feedback"></div>
                     </div>
                 </div>
-                <div class="modal-footer justify-content-between pt-2 pb-2" style="border-top: 1px solid var(--bs-border-color-translucent);">
-                    <div>
-                        Harga Jual: <span class="fw-bold date" id="hasil_harga_jual">Rp0</span>
-                    </div>
+                <div class="modal-footer justify-content-end pt-2 pb-2" style="border-top: 1px solid var(--bs-border-color-translucent);">
                     <button type="submit" id="submitButton" class="btn btn-primary bg-gradient ">
                         <i class="fa-solid fa-floppy-disk"></i> Simpan
                     </button>
@@ -210,17 +153,17 @@
         var table = $('#tabel').DataTable({
             "oLanguage": {
                 "sDecimal": ",",
-                "sEmptyTable": 'Tidak ada obat. Klik "Tambah Obat" untuk menambahkan obat.',
-                "sInfo": "Menampilkan _START_ hingga _END_ dari _TOTAL_ obat",
-                "sInfoEmpty": "Menampilkan 0 hingga 0 dari 0 obat",
-                "sInfoFiltered": "(di-filter dari _MAX_ obat)",
+                "sEmptyTable": 'Tidak ada batch obat. Klik "Tambah Batch Obat" untuk menambahkan batch obat.',
+                "sInfo": "Menampilkan _START_ hingga _END_ dari _TOTAL_ batch obat",
+                "sInfoEmpty": "Menampilkan 0 hingga 0 dari 0 batch obat",
+                "sInfoFiltered": "(di-filter dari _MAX_ batch obat)",
                 "sInfoPostFix": "",
                 "sThousands": ".",
-                "sLengthMenu": "Tampilkan _MENU_ obat",
+                "sLengthMenu": "Tampilkan _MENU_ batch obat",
                 "sLoadingRecords": "Memuat...",
                 "sProcessing": "",
                 "sSearch": "Cari:",
-                "sZeroRecords": "Obat yang Anda cari tidak ditemukan",
+                "sZeroRecords": "Batch obat yang Anda cari tidak ditemukan",
                 "oAria": {
                     "sOrderable": "Urutkan menurut kolom ini",
                     "sOrderableReverse": "Urutkan terbalik kolom ini"
@@ -253,10 +196,10 @@
             },
             'buttons': [{
                 // Tombol Tambah Obat
-                text: '<i class="fa-solid fa-plus"></i> Tambah Obat',
+                text: '<i class="fa-solid fa-plus"></i> Tambah <em>Batch</em> Obat',
                 className: 'btn-primary btn-sm bg-gradient ',
                 attr: {
-                    id: 'addObatBtn'
+                    id: 'addBatchObatBtn'
                 },
                 init: function(api, node, config) {
                     $(node).removeClass('btn-secondary')
@@ -273,7 +216,7 @@
             "serverSide": true,
             "ajax": {
                 // URL endpoint untuk melakukan permintaan AJAX
-                "url": "<?= base_url('/obat/obatlist') ?>",
+                "url": "<?= base_url('/batchobat/batchobatlist') ?>",
                 "type": "POST", // Metode HTTP yang digunakan untuk permintaan (POST)
                 "data": function(d) {
                     // Menambahkan parameter tambahan pada data yang dikirim
@@ -306,90 +249,81 @@
                     data: null,
                     render: function(data, type, row) {
                         return `<div class="btn-group" role="group">
-                                    <button class="btn btn-outline-body text-nowrap bg-gradient  edit-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${row.id_obat}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
-                                    <button class="btn btn-outline-danger text-nowrap bg-gradient  delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${row.id_obat}" data-name="${row.nama_obat}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
+                                    <button class="btn btn-outline-body text-nowrap bg-gradient  edit-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${row.id_batch_obat}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
+                                    <button class="btn btn-outline-danger text-nowrap bg-gradient  delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${row.id_batch_obat}" data-name="${row.nama_batch}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
                                 </div>`;
                     }
                 },
                 {
-                    data: 'merek',
+                    data: 'obat',
                     render: function(data, type, row) {
-                        const merek = data ? data : '<em>Tanpa merek</em>';
-                        return `<span>${merek}<br><small>${row.nama_supplier}</small></span>`;
+                        const kategori_obat = row.kategori_obat ? `${row.kategori_obat}, ` : ``;
+                        return `<div>${row.nama_obat}
+                        <small>
+                            <ul class="ps-3 mb-0">
+                                <li>${kategori_obat}${row.bentuk_obat}</li>
+                            </ul>
+                        </small></div>`;
                     }
                 },
                 {
-                    data: 'nama_obat'
+                    data: 'nama_batch',
+                    render: function(data, type, row) {
+                        const nama_batch = data ? data : '<em>Tanpa nama</em>';
+                        return nama_batch;
+                    }
                 },
                 {
-                    data: 'isi_obat'
+                    data: 'tgl_kedaluwarsa',
+                    render: function(data, type, row) {
+                        let now = new Date();
+                        let expiryDate = new Date(data);
+                        let badgeClass = expiryDate < now ? 'bg-danger' : 'bg-success';
+                        let statusText = expiryDate < now ? 'Kedaluwarsa' : 'Aktif';
+
+                        return `<span class="date text-nowrap">${data}<br><span class="badge ${badgeClass} bg-gradient">${statusText}</span></span>`;
+                    }
                 },
                 {
-                    data: 'kategori_obat'
-                },
-                {
-                    data: 'bentuk_obat'
-                },
-                {
-                    data: 'harga_obat',
+                    data: 'jumlah_masuk',
                     render: function(data, type, row) {
                         // Format harga_obat using number_format equivalent in JavaScript
-                        let formattedHarga = new Intl.NumberFormat('id-ID', {
+                        let formattedData = new Intl.NumberFormat('id-ID', {
                             style: 'decimal',
                             minimumFractionDigits: 0
                         }).format(data);
-
-                        return `<span class="date text-nowrap" style="display: block; text-align: right;">Rp${formattedHarga}</span>`;
+                        return `<span class="date text-nowrap" style="display: block; text-align: right;">${formattedData}</span>`;
                     }
                 },
                 {
-                    data: 'ppn',
-                    render: function(data, type, row) {
-                        return `<span class="date text-nowrap" style="display: block; text-align: right;">${data}%</span>`;
-                    }
-                },
-                {
-                    data: 'mark_up',
-                    render: function(data, type, row) {
-                        return `<span class="date text-nowrap" style="display: block; text-align: right;">${data}%</span>`;
-                    }
-                },
-                {
-                    data: 'selisih_harga',
+                    data: 'jumlah_keluar',
                     render: function(data, type, row) {
                         // Format harga_obat using number_format equivalent in JavaScript
-                        let formattedHarga = new Intl.NumberFormat('id-ID', {
+                        let formattedData = new Intl.NumberFormat('id-ID', {
                             style: 'decimal',
                             minimumFractionDigits: 0
                         }).format(data);
-
-                        return `<span class="date text-nowrap" style="display: block; text-align: right;">Rp${formattedHarga}</span>`;
+                        return `<span class="date text-nowrap" style="display: block; text-align: right;">${formattedData}</span>`;
                     }
                 },
                 {
-                    data: 'penyesuaian_harga',
+                    data: 'sisa_stok',
                     render: function(data, type, row) {
                         // Format harga_obat using number_format equivalent in JavaScript
-                        let formattedHarga = new Intl.NumberFormat('id-ID', {
+                        let formattedData = new Intl.NumberFormat('id-ID', {
                             style: 'decimal',
                             minimumFractionDigits: 0
                         }).format(data);
-
-                        return `<span class="date text-nowrap" style="display: block; text-align: right;">Rp${formattedHarga}</span>`;
+                        return `<span class="date text-nowrap" style="display: block; text-align: right;">${formattedData}</span>`;
                     }
                 },
                 {
-                    data: 'harga_jual',
+                    data: 'diperbarui',
                     render: function(data, type, row) {
-                        // Format harga_obat using number_format equivalent in JavaScript
-                        let formattedHarga = new Intl.NumberFormat('id-ID', {
-                            style: 'decimal',
-                            minimumFractionDigits: 0
-                        }).format(data);
-
-                        return `<span class="date text-nowrap" style="display: block; text-align: right;">Rp${formattedHarga}</span>`;
+                        return `<span class="date text-nowrap">${data}</span>`;
                     }
                 },
+
             ],
             "order": [
                 [2, 'asc']
@@ -398,7 +332,7 @@
                 "target": [1],
                 "orderable": false
             }, {
-                "target": [0, 1, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+                "target": [0, 1, 4, 5, 6, 7, 8],
                 "width": "0%"
             }, {
                 "target": [2, 3],
@@ -454,77 +388,51 @@
             table.ajax.reload(null, false);
         });
 
-        // Fungsi untuk mengambil opsi supplier dari server
-        async function fetchSupplierOptions() {
+        // Fungsi untuk mengambil opsi obat dari server
+        async function fetchObatOptions() {
             try {
-                // Mengirim permintaan GET untuk mendapatkan daftar supplier
-                const response = await axios.get('<?= base_url('obat/supplierlist') ?>');
+                // Mengirim permintaan GET untuk mendapatkan daftar obat
+                const response = await axios.get('<?= base_url('batchobat/obatlist') ?>');
 
                 if (response.data.success) {
                     const options = response.data.data;
-                    const select = $('#id_supplier');
+                    const select = $('#id_obat');
 
                     // Hapus opsi yang sudah ada, kecuali yang pertama (placeholder)
                     select.find('option:not(:first)').remove();
 
-                    // Tambahkan opsi supplier ke dalam elemen select
+                    // Tambahkan opsi obat ke dalam elemen select
                     options.forEach(option => {
                         select.append(`<option value="${option.value}">${option.text}</option>`);
                     });
                 }
             } catch (error) {
                 // Tampilkan pesan error jika terjadi kegagalan
-                showFailedToast('Gagal mendapatkan dokter.<br>' + error);
+                showFailedToast('Gagal mendapatkan obat.<br>' + error);
             }
         }
 
         // Panggil fungsi untuk mengisi opsi supplier saat halaman dimuat
-        fetchSupplierOptions();
-
-        // Fungsi untuk menghitung harga jual
-        function hitungHargaJual() {
-            let hargaObat = parseFloat($('#harga_obat').val()) || 0;
-            let ppn = parseFloat($('#ppn').val()) || 0;
-            let markUp = parseFloat($('#mark_up').val()) || 0;
-            let penyesuaianHarga = parseFloat($('#penyesuaian_harga').val()) || 0;
-
-            // 1. Hitung PPN
-            let jumlahPpn = (hargaObat * ppn) / 100;
-            let totalHargaPpn = hargaObat + jumlahPpn;
-
-            // 2. Hitung Mark Up
-            let jumlahMarkUp = (totalHargaPpn * markUp) / 100;
-            let totalHarga = totalHargaPpn + jumlahMarkUp;
-
-            // 3. Bulatkan ke ratusan terdekat ke atas
-            let hargaBulat = Math.ceil(totalHarga / 100) * 100;
-
-            // 4. Tambahkan penyesuaian harga
-            let hargaJual = hargaBulat + penyesuaianHarga;
-
-            // 5. Tampilkan hasil dengan format Rupiah
-            $('#hasil_harga_jual').text('Rp' + new Intl.NumberFormat('id-ID').format(hargaJual));
-        }
-
-        // Event listener untuk setiap input
-        $('#harga_obat, #ppn, #mark_up, #penyesuaian_harga').on('input', function() {
-            hitungHargaJual(); // Panggil fungsi saat ada perubahan nilai
-        });
+        fetchObatOptions();
 
         // Event handler untuk menampilkan modal tambah obat
-        $('#addObatBtn').click(function() {
-            $('#obatModalLabel').text('Tambah Obat');
+        $('#addBatchObatBtn').click(function() {
+            $('#batchObatModalLabel').html('Tambah <em>Batch</em> Obat');
             $('#stok_label').html(`Jumlah Stok Awal<span class="text-danger">*</span>`);
-            $('#obatModal').modal('show');
+            $('#stok_obat_masuk').text(``);
+            $('#stok_obat_keluar').text(``);
+            $('#stok_sisa').text(``);
+            $('#stok_jumlah').hide();
+            $('#bacthObatModal').modal('show');
         });
 
-        // Inisialisasi select2 untuk elemen #id_supplier
-        $('#id_supplier').select2({});
+        // Inisialisasi select2 untuk elemen #id_obat
+        $('#id_obat').select2({});
 
         // Konfigurasi tambahan select2 dengan parent dropdown dari modal
-        $('#obatModal').on('shown.bs.modal', function() {
-            $('#id_supplier').select2({
-                dropdownParent: $('#obatModal'),
+        $('#bacthObatModal').on('shown.bs.modal', function() {
+            $('#id_obat').select2({
+                dropdownParent: $('#bacthObatModal'),
                 theme: "bootstrap-5",
                 width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
                 placeholder: $(this).data('placeholder'),
@@ -539,23 +447,22 @@
             $this.prop('disabled', true).html(`<span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span>`);
 
             try {
-                const response = await axios.get(`<?= base_url('/obat/obat') ?>/${id}`);
+                const response = await axios.get(`<?= base_url('/batchobat/batchobat') ?>/${id}`);
                 const stok_obat_masuk = parseInt(response.data.jumlah_masuk).toLocaleString('id-ID');
                 const stok_obat_keluar = parseInt(response.data.jumlah_keluar).toLocaleString('id-ID');
                 const stok_sisa = parseInt(response.data.jumlah_masuk) - parseInt(response.data.jumlah_keluar);
-                $('#obatModalLabel').text('Edit Obat');
+                $('#batchObatModalLabel').html('Edit <em>Batch</em> Obat');
+                $('#id_batch_obat').val(response.data.id_batch_obat);
                 $('#id_obat').val(response.data.id_obat);
-                $('#id_supplier').val(response.data.id_supplier);
-                $('#nama_obat').val(response.data.nama_obat);
-                $('#isi_obat').val(response.data.isi_obat);
-                $('#kategori_obat').val(response.data.kategori_obat);
-                $('#bentuk_obat').val(response.data.bentuk_obat);
-                $('#harga_obat').val(response.data.harga_obat);
-                $('#ppn').val(response.data.ppn);
-                $('#mark_up').val(response.data.mark_up);
-                $('#penyesuaian_harga').val(response.data.penyesuaian_harga);
-                hitungHargaJual();
-                $('#obatModal').modal('show');
+                $('#nama_batch').val(response.data.nama_batch);
+                $('#tgl_kedaluwarsa').val(response.data.tgl_kedaluwarsa);
+                $('#jumlah_masuk').val('0');
+                $('#stok_label').html(`Tambah/Kurangi Stok<span class="text-danger">*</span>`);
+                $('#stok_obat_masuk').text(stok_obat_masuk);
+                $('#stok_obat_keluar').text(stok_obat_keluar);
+                $('#stok_sisa').text(stok_sisa.toLocaleString('id-ID'));
+                $('#stok_jumlah').show();
+                $('#bacthObatModal').modal('show');
             } catch (error) {
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
             } finally {
@@ -564,15 +471,15 @@
         });
 
         // Variabel untuk menyimpan ID dan nama obat yang akan dihapus
-        var obatId;
-        var obatName;
+        var batchObatId;
+        var batchObatName;
 
         // Event handler untuk menampilkan modal konfirmasi hapus
         $(document).on('click', '.delete-btn', function() {
-            obatId = $(this).data('id');
-            obatName = $(this).data('name');
+            batchObatId = $(this).data('id');
+            batchObatName = $(this).data('name');
             $('[data-bs-toggle="tooltip"]').tooltip('hide');
-            $('#deleteMessage').html(`Hapus "` + obatName + `"?`);
+            $('#deleteMessage').html(`Hapus "` + batchObatName + `"?`);
             $('#deleteModal').modal('show');
         });
 
@@ -582,7 +489,7 @@
             $('#deleteMessage').html('Mengapus, silakan tunggu...');
 
             try {
-                await axios.delete(`<?= base_url('/obat/delete') ?>/${obatId}`);
+                await axios.delete(`<?= base_url('/batchobat/delete') ?>/${batchObatId}`);
                 table.ajax.reload(null, false);
             } catch (error) {
                 let errorMessage = 'Terjadi kesalahan. Silakan coba lagi.<br>' + error;
@@ -597,21 +504,21 @@
         });
 
         // Event handler untuk submit form obat
-        $('#obatForm').submit(async function(e) {
+        $('#batchObatForm').submit(async function(e) {
             e.preventDefault();
 
-            const url = $('#id_obat').val() ? '<?= base_url('/obat/update') ?>' : '<?= base_url('/obat/create') ?>';
+            const url = $('#id_batch_obat').val() ? '<?= base_url('/batchobat/update') ?>' : '<?= base_url('/batchobat/create') ?>';
             const formData = new FormData(this);
             console.log("Form URL:", url);
             console.log("Form Data:", $(this).serialize());
 
-            $('#obatForm .is-invalid').removeClass('is-invalid');
-            $('#obatForm .invalid-feedback').text('').hide();
+            $('#batchObatForm .is-invalid').removeClass('is-invalid');
+            $('#batchObatForm .invalid-feedback').text('').hide();
             $('#submitButton').prop('disabled', true).html(`
                 <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
                 <span role="status">Memproses...</span>
             `);
-            $('#obatForm input, #obatForm select, #closeBtn').prop('disabled', true);
+            $('#batchObatForm input, #batchObatForm select, #closeBtn').prop('disabled', true);
 
             try {
                 const response = await axios.post(url, formData, {
@@ -621,7 +528,7 @@
                 });
 
                 if (response.data.success) {
-                    $('#obatModal').modal('hide');
+                    $('#bacthObatModal').modal('hide');
                     table.ajax.reload(null, false);
                 } else {
                     console.log("Validation Errors:", response.data.errors);
@@ -655,18 +562,17 @@
                 $('#submitButton').prop('disabled', false).html(`
                     <i class="fa-solid fa-floppy-disk"></i> Simpan
                 `);
-                $('#obatForm input, #obatForm select, #closeBtn').prop('disabled', false);
+                $('#batchObatForm input, #batchObatForm select, #closeBtn').prop('disabled', false);
             }
         });
 
         // Reset form dan status validasi saat modal obat ditutup
-        $('#obatModal').on('hidden.bs.modal', function() {
-            $('#obatForm')[0].reset();
-            $('#id_obat').val('');
-            $('#id_supplier').val(null).trigger('change');
-            $('#hasil_harga_jual').text('Rp0');
-            $('#obatForm .is-invalid').removeClass('is-invalid');
-            $('#obatForm .invalid-feedback').text('').hide();
+        $('#bacthObatModal').on('hidden.bs.modal', function() {
+            $('#batchObatForm')[0].reset();
+            $('#id_batch_obat').val('');
+            $('#id_obat').val(null).trigger('change');
+            $('#batchObatForm .is-invalid').removeClass('is-invalid');
+            $('#batchObatForm .invalid-feedback').text('').hide();
         });
 
         <?= $this->include('toast/index') ?>

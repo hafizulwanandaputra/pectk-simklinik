@@ -111,7 +111,7 @@
                 <form id="tambahDetail" enctype="multipart/form-data">
                     <div class="row g-2">
                         <div class="col-12">
-                            <select class="form-select form-select-sm" id="id_obat" name="id_obat" aria-label="id_obat" autocomplete="off">
+                            <select class="form-select form-select-sm" id="id_batch_obat" name="id_batch_obat" aria-label="id_batch_obat" autocomplete="off">
                                 <option value="" disabled selected>-- Pilih Obat --</option>
                             </select>
                             <div class="invalid-feedback"></div>
@@ -240,7 +240,7 @@
 
             if (response.data.success) {
                 const options = response.data.data;
-                const select = $('#id_obat');
+                const select = $('#id_batch_obat');
 
                 // Clear existing options except the first one
                 select.find('option:not(:first)').remove();
@@ -299,6 +299,8 @@
                         <td colspan="5" class="text-center">Tidak ada obat yang akan dijadikan resep</td>
                     </tr>
                 `;
+                $('#printBtn1').prop('disabled', true);
+                $('#printBtn2').prop('disabled', true);
                 $('#detail_resep').append(emptyRow);
             } else {
                 data.forEach(function(detail_resep) {
@@ -393,7 +395,7 @@
         };
 
         $('[data-bs-toggle="tooltip"]').tooltip();
-        $('#id_obat').select2({
+        $('#id_batch_obat').select2({
             dropdownParent: $(document.body),
             theme: "bootstrap-5",
             width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
@@ -538,7 +540,7 @@
 
                         if (response.data.success) {
                             $('#editDetail')[0].reset();
-                            $('#id_obat').val(null).trigger('change');
+                            $('#id_batch_obat').val(null).trigger('change');
                             $('#editDetail .is-invalid').removeClass('is-invalid');
                             $('#editDetail .invalid-feedback').text('').hide();
                             $('#editDetailResep').remove();
@@ -628,7 +630,7 @@
 
                 if (response.data.success) {
                     $('#tambahDetail')[0].reset();
-                    $('#id_obat').val('');
+                    $('#id_batch_obat').val('');
                     $('#jumlah').val('');
                     $('#tambahDetail .is-invalid').removeClass('is-invalid');
                     $('#tambahDetail .invalid-feedback').text('').hide();

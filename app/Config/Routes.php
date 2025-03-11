@@ -301,11 +301,18 @@ $routes->get('/(?i)obat', 'Obat::index');
 $routes->post('/(?i)obat/(?i)obatlist', 'Obat::obatlist');
 $routes->get('/(?i)obat/(?i)supplierlist', 'Obat::supplierlist');
 $routes->get('/(?i)obat/(?i)obat/(:any)', 'Obat::obat/$1');
-$routes->get('/(?i)obat/(?i)stokobat/(:any)', 'Obat::stokobat/$1');
 $routes->post('/(?i)obat/(?i)create', 'Obat::create');
 $routes->post('/(?i)obat/(?i)update', 'Obat::update');
-$routes->post('/(?i)obat/(?i)updatestokobat', 'Obat::updatestokobat');
 $routes->delete('/(?i)obat/(?i)delete/(:any)', 'Obat::delete/$1');
+
+// BATCH OBAT
+$routes->get('/(?i)batchobat', 'BatchObat::index');
+$routes->post('/(?i)batchobat/(?i)batchobatlist', 'BatchObat::batchobatlist');
+$routes->get('/(?i)batchobat/(?i)obatlist', 'BatchObat::obatlist');
+$routes->get('/(?i)batchobat/(?i)batchobat/(:any)', 'BatchObat::batchobat/$1');
+$routes->post('/(?i)batchobat/(?i)create', 'BatchObat::create');
+$routes->post('/(?i)batchobat/(?i)update', 'BatchObat::update');
+$routes->delete('/(?i)batchobat/(?i)delete/(:any)', 'BatchObat::delete/$1');
 
 // PEMBELIAN OBAT
 $routes->get('/(?i)pembelianobat', 'PembelianObat::index');
