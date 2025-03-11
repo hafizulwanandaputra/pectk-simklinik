@@ -123,7 +123,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                     </div>
                 <?php endif; ?>
             <?php endif; ?>
-            <div class="row g-3 mb-2">
+            <div class="row g-3 mb-3">
                 <div class="col">
                     <div class="card h-100 shadow-sm  overflow-auto">
                         <div class="card-header bg-body-tertiary" id="tambahLayananContainer" style="display: none;">
