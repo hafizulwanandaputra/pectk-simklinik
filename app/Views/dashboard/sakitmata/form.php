@@ -133,7 +133,7 @@ $waktuFormatted = $dateTime->format('H.i.s');
                     <tbody>
                         <tr>
                             <td style="width: 60%; vertical-align: top; padding: 0; text-align: center;">
-                                <h2 style="padding: 0; text-decoration: underline;">SURAT KETERANGAN SAKIT MATA</h2>
+                                <h2 style="padding: 0; text-decoration: underline;">SURAT KETERANGAN SAKIT</h2>
                             </td>
                         </tr>
                     </tbody>
