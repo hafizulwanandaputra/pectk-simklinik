@@ -311,15 +311,15 @@ class ResepLuar extends BaseController
 
             if ($resep['status'] == 0) {
                 // Mengambil semua id_obat dan jumlah dari detail_resep yang terkait dengan resep yang dihapus
-                $detailResep = $db->query("SELECT id_obat, jumlah FROM detail_resep WHERE id_resep = ?", [$id])->getResultArray();
+                $detailResep = $db->query("SELECT id_batch_obat, jumlah FROM detail_resep WHERE id_resep = ?", [$id])->getResultArray();
 
                 // Mengurangi jumlah_keluar pada tabel obat
                 foreach ($detailResep as $detail) {
-                    $id_obat = $detail['id_obat'];
+                    $id_batch_obat = $detail['id_batch_obat'];
                     $jumlah = $detail['jumlah'];
 
                     // Mengambil jumlah_keluar dari tabel obat
-                    $obat = $db->query("SELECT jumlah_keluar FROM obat WHERE id_obat = ?", [$id_obat])->getRowArray();
+                    $obat = $db->query("SELECT jumlah_keluar FROM batch_obat WHERE id_batch_obat = ?", [$id_batch_obat])->getRowArray();
 
                     if ($obat) {
                         // Mengurangi jumlah_keluar
@@ -331,7 +331,7 @@ class ResepLuar extends BaseController
                         }
 
                         // Memperbarui jumlah_keluar di tabel obat
-                        $db->query("UPDATE obat SET jumlah_keluar = ? WHERE id_obat = ?", [$new_jumlah_keluar, $id_obat]);
+                        $db->query("UPDATE batch_obat SET jumlah_keluar = ? WHERE id_batch_obat = ?", [$new_jumlah_keluar, $id_batch_obat]);
                     }
                 }
 
