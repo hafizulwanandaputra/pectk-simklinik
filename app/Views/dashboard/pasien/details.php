@@ -532,21 +532,21 @@
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mt-1 mb-1">
-                        <select class="form-select" id="jaminan" name="jaminan" aria-label="jaminan" disabled>
+                        <select class="form-select" id="jaminan" name="jaminan" aria-label="jaminan">
                             <option value="" disabled selected>-- Pilih Jaminan --</option>
                         </select>
                         <label for="jaminan">Jaminan<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mt-1 mb-1">
-                        <select class="form-select" id="ruangan" name="ruangan" aria-label="ruangan" disabled>
+                        <select class="form-select" id="ruangan" name="ruangan" aria-label="ruangan">
                             <option value="" disabled selected>-- Pilih Ruangan --</option>
                         </select>
                         <label for="ruangan">Ruangan<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mt-1 mb-1">
-                        <select class="form-select" id="dokter" name="dokter" aria-label="dokter" disabled>
+                        <select class="form-select" id="dokter" name="dokter" aria-label="dokter">
                             <option value="" disabled selected>-- Pilih Dokter --</option>
                         </select>
                         <label for="dokter">Dokter<span class="text-danger">*</span></label>
@@ -559,7 +559,7 @@
                     </div>
                 </div>
                 <div class="modal-footer justify-content-end pt-2 pb-2" style="border-top: 1px solid var(--bs-border-color-translucent);">
-                    <button type="submit" id="submitButton" class="btn btn-primary bg-gradient " disabled>
+                    <button type="submit" id="submitButton" class="btn btn-primary bg-gradient ">
                         <i class="fa-solid fa-floppy-disk"></i> Simpan
                     </button>
                 </div>
@@ -1519,9 +1519,16 @@
         var rajalId;
 
         // Tampilkan modal registrasi rawat jalan
-        $('#addRajalButton').click(function() {
+        $('#addRajalButton').click(async function() {
+            $('#loadingSpinner').show();
+            await Promise.all([
+                fetchJaminanOptionsModal(),
+                fetchRuanganOptionsModal(),
+                fetchDokterOptionsModal()
+            ]);
             $('#rajalModalLabel').text('Registrasi Rawat Jalan'); // Ubah judul modal menjadi 'Registrasi Rawat Jalan'
             $('#rajalModal').modal('show'); // Tampilkan modal resep luar
+            $('#loadingSpinner').hide();
         });
 
         // Tampilkan modal batalkan rawat halan
@@ -1728,20 +1735,11 @@
             }
         });
 
-        $('#rajalModal').on('shown.bs.modal', async function() {
-            await Promise.all([
-                fetchJaminanOptionsModal(),
-                fetchRuanganOptionsModal(),
-                fetchDokterOptionsModal()
-            ]);
-            $('#submitButton').prop('disabled', false);
-        });
         $('#rajalModal').on('hidden.bs.modal', function() {
             $('#rajalForm')[0].reset();
-            $('#jaminan').prop('disabled', true).find('option:not(:first)').remove();
-            $('#ruangan').prop('disabled', true).find('option:not(:first)').remove();
-            $('#dokter').prop('disabled', true).find('option:not(:first)').remove();
-            $('#submitButton').prop('disabled', true);
+            $('#jaminan').find('option:not(:first)').remove();
+            $('#ruangan').find('option:not(:first)').remove();
+            $('#dokter').find('option:not(:first)').remove();
             $('#rajalForm .is-invalid').removeClass('is-invalid');
             $('#rajalForm .invalid-feedback').text('').hide();
         });
