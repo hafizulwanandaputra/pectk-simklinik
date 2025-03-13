@@ -78,10 +78,11 @@ class Obat extends BaseController
                 obat.*, 
                 supplier.*, 
 
-                -- Hitung total stok dari batch_obat
+                -- Hitung total stok dari batch_obat sebelum tgl_kedaluwarsa
                 (SELECT SUM(jumlah_masuk - jumlah_keluar) 
-                 FROM batch_obat 
-                 WHERE batch_obat.id_obat = obat.id_obat) AS total_stok,
+                FROM batch_obat 
+                WHERE batch_obat.id_obat = obat.id_obat 
+                AND batch_obat.tgl_kedaluwarsa > ' . date('Y-m-d') . ') AS total_stok,
 
                 -- Hitung PPN terlebih dahulu
                 (obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) as harga_setelah_ppn,

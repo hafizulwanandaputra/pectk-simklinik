@@ -155,6 +155,7 @@ class OpnameObat extends BaseController
             if ($opnameId) {
                 $obatData = $this->BatchObatModel
                     ->join('obat', 'obat.id_obat = batch_obat.id_obat', 'inner')
+                    ->where('batch_obat.tgl_kedaluwarsa >', date('Y-m-d'))
                     ->findAll();
 
                 $groupedData = [];

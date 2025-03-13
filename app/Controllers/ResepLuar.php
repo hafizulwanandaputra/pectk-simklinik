@@ -497,7 +497,7 @@ class ResepLuar extends BaseController
             // Mengambil semua obat dari tabel obat dan mengurutkannya
             $results = $BatchObatModel
                 ->join('obat', 'obat.id_obat = batch_obat.id_obat', 'inner')
-                ->where('batch_obat.tgl_kedaluwarsa >=', date('Y-m-d'))
+                ->where('batch_obat.tgl_kedaluwarsa >', date('Y-m-d'))
                 ->orderBy('nama_obat', 'ASC')
                 ->findAll();
 
@@ -588,7 +588,7 @@ class ResepLuar extends BaseController
             $obat = $builderObat
                 ->join('obat', 'obat.id_obat = batch_obat.id_obat', 'inner')
                 ->where('batch_obat.id_batch_obat', $this->request->getPost('id_batch_obat'))
-                ->where('batch_obat.tgl_kedaluwarsa >=', date('Y-m-d'))
+                ->where('batch_obat.tgl_kedaluwarsa >', date('Y-m-d'))
                 ->get()->getRowArray();
 
             $ppn = (float) $obat['ppn']; // Mengambil nilai PPN
