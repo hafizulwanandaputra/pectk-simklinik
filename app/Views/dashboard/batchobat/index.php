@@ -32,7 +32,7 @@
                             <option value="100">100</option>
                         </select>
                         <div class="input-group input-group-sm flex-grow-1">
-                            <input type="search" class="form-control form-control-sm " id="externalSearch" placeholder="Cari obat, nama batch">
+                            <input type="search" class="form-control form-control-sm " id="externalSearch" placeholder="Cari obat, nomor faktur, nama batch, atau tanggal kedaluwarsa">
                         </div>
                     </div>
                 </div>
@@ -48,7 +48,8 @@
                             <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">No</th>
                             <th scope="col" class="bg-body-secondary border-secondary text-nowrap" style="border-bottom-width: 2px;">Tindakan</th>
                             <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Obat</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Nama</th>
+                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Nomor Faktur</th>
+                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Nama <em>Batch</em></th>
                             <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Kedaluwarsa</th>
                             <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Jumlah Masuk</th>
                             <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Jumlah Keluar</th>
@@ -92,13 +93,20 @@
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
+                        <input type="text" class="form-control " autocomplete="off" dir="auto" placeholder="no_faktur" id="no_faktur" name="no_faktur" list="no_faktur_list">
+                        <label for="no_faktur">Nomor Faktur</label>
+                        <datalist id="no_faktur_list">
+                        </datalist>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="form-floating mb-1 mt-1">
                         <input type="text" class="form-control " autocomplete="off" dir="auto" placeholder="nama_batch" id="nama_batch" name="nama_batch">
-                        <label for="nama_batch">Nama<span class="text-danger">*</span></label>
+                        <label for="nama_batch">Nama</label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
                         <input type="date" class="form-control " autocomplete="off" dir="auto" placeholder="tgl_kedaluwarsa" id="tgl_kedaluwarsa" name="tgl_kedaluwarsa">
-                        <label for="tgl_kedaluwarsa">Kedaluwarsa</label>
+                        <label for="tgl_kedaluwarsa">Kedaluwarsa<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
@@ -153,17 +161,17 @@
         var table = $('#tabel').DataTable({
             "oLanguage": {
                 "sDecimal": ",",
-                "sEmptyTable": 'Tidak ada batch obat. Klik "Tambah Batch Obat" untuk menambahkan batch obat.',
-                "sInfo": "Menampilkan _START_ hingga _END_ dari _TOTAL_ batch obat",
-                "sInfoEmpty": "Menampilkan 0 hingga 0 dari 0 batch obat",
-                "sInfoFiltered": "(di-filter dari _MAX_ batch obat)",
+                "sEmptyTable": 'Tidak ada faktur obat. Klik "Tambah Faktur Obat" untuk menambahkan faktur obat.',
+                "sInfo": "Menampilkan _START_ hingga _END_ dari _TOTAL_ faktur obat",
+                "sInfoEmpty": "Menampilkan 0 hingga 0 dari 0 faktur obat",
+                "sInfoFiltered": "(di-filter dari _MAX_ faktur obat)",
                 "sInfoPostFix": "",
                 "sThousands": ".",
-                "sLengthMenu": "Tampilkan _MENU_ batch obat",
+                "sLengthMenu": "Tampilkan _MENU_ faktur obat",
                 "sLoadingRecords": "Memuat...",
                 "sProcessing": "",
                 "sSearch": "Cari:",
-                "sZeroRecords": "Batch obat yang Anda cari tidak ditemukan",
+                "sZeroRecords": "Faktur obat yang Anda cari tidak ditemukan",
                 "oAria": {
                     "sOrderable": "Urutkan menurut kolom ini",
                     "sOrderableReverse": "Urutkan terbalik kolom ini"
@@ -196,7 +204,7 @@
             },
             'buttons': [{
                 // Tombol Tambah Obat
-                text: '<i class="fa-solid fa-plus"></i> Tambah <em>Batch</em> Obat',
+                text: '<i class="fa-solid fa-plus"></i> Tambah Faktur Obat',
                 className: 'btn-primary btn-sm bg-gradient ',
                 attr: {
                     id: 'addBatchObatBtn'
@@ -250,7 +258,7 @@
                     render: function(data, type, row) {
                         return `<div class="btn-group" role="group">
                                     <button class="btn btn-outline-body text-nowrap bg-gradient  edit-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${row.id_batch_obat}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
-                                    <button class="btn btn-outline-danger text-nowrap bg-gradient  delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${row.id_batch_obat}" data-name="${row.nama_batch}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
+                                    <button class="btn btn-outline-danger text-nowrap bg-gradient  delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${row.id_batch_obat}" data-name1="${row.no_faktur}" data-name2="${row.nama_batch}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
                                 </div>`;
                     }
                 },
@@ -264,6 +272,13 @@
                                 <li>${kategori_obat}${row.bentuk_obat}</li>
                             </ul>
                         </small></div>`;
+                    }
+                },
+                {
+                    data: 'no_faktur',
+                    render: function(data, type, row) {
+                        const no_faktur = data ? data : '<em>Tidak ada nomor faktur</em>';
+                        return no_faktur;
                     }
                 },
                 {
@@ -332,13 +347,60 @@
                 "target": [1],
                 "orderable": false
             }, {
-                "target": [0, 1, 4, 5, 6, 7, 8],
+                "target": [0, 1, 5, 6, 7, 8, 9],
                 "width": "0%"
             }, {
-                "target": [2, 3],
-                "width": "50%"
+                "target": [2, 3, 4],
+                "width": "25%"
             }]
         });
+
+        // Fungsi untuk mengambil opsi obat dari server
+        async function fetchObatOptions() {
+            try {
+                // Mengirim permintaan GET untuk mendapatkan daftar obat
+                const response = await axios.get('<?= base_url('batchobat/obatlist') ?>');
+
+                if (response.data.success) {
+                    const options = response.data.data;
+                    const select = $('#id_obat');
+
+                    // Hapus opsi yang sudah ada, kecuali yang pertama (placeholder)
+                    select.find('option:not(:first)').remove();
+
+                    // Tambahkan opsi obat ke dalam elemen select
+                    options.forEach(option => {
+                        select.append(`<option value="${option.value}">${option.text}</option>`);
+                    });
+                }
+            } catch (error) {
+                // Tampilkan pesan error jika terjadi kegagalan
+                showFailedToast('Gagal mendapatkan obat.<br>' + error);
+            }
+        }
+
+        async function fetchNoFakturOptions() {
+            try {
+                // Mengirim permintaan GET untuk mendapatkan daftar nomor faktur
+                const response = await axios.get('<?= base_url('batchobat/fakturlist') ?>');
+
+                if (response.data.success) {
+                    const options = response.data.data;
+                    const datalist = $('#no_faktur_list');
+
+                    // Hapus opsi yang sudah ada, kecuali yang pertama (placeholder)
+                    datalist.find('option').remove();
+
+                    // Tambahkan opsi obat ke dalam elemen datalist
+                    options.forEach(option => {
+                        datalist.append(`<option value="${option.value}">`);
+                    });
+                }
+            } catch (error) {
+                // Tampilkan pesan error jika terjadi kegagalan
+                showFailedToast('Gagal mendapatkan nomor faktur.<br>' + error);
+            }
+        }
 
         const socket = new WebSocket('<?= env('WS-URL-JS') ?>'); // Ganti dengan domain VPS
 
@@ -388,36 +450,12 @@
             table.ajax.reload(null, false);
         });
 
-        // Fungsi untuk mengambil opsi obat dari server
-        async function fetchObatOptions() {
-            try {
-                // Mengirim permintaan GET untuk mendapatkan daftar obat
-                const response = await axios.get('<?= base_url('batchobat/obatlist') ?>');
-
-                if (response.data.success) {
-                    const options = response.data.data;
-                    const select = $('#id_obat');
-
-                    // Hapus opsi yang sudah ada, kecuali yang pertama (placeholder)
-                    select.find('option:not(:first)').remove();
-
-                    // Tambahkan opsi obat ke dalam elemen select
-                    options.forEach(option => {
-                        select.append(`<option value="${option.value}">${option.text}</option>`);
-                    });
-                }
-            } catch (error) {
-                // Tampilkan pesan error jika terjadi kegagalan
-                showFailedToast('Gagal mendapatkan obat.<br>' + error);
-            }
-        }
-
         // Panggil fungsi untuk mengisi opsi supplier saat halaman dimuat
         fetchObatOptions();
 
         // Event handler untuk menampilkan modal tambah obat
         $('#addBatchObatBtn').click(function() {
-            $('#batchObatModalLabel').html('Tambah <em>Batch</em> Obat');
+            $('#batchObatModalLabel').html('Tambah Faktur Obat');
             $('#stok_label').html(`Jumlah Stok Awal<span class="text-danger">*</span>`);
             $('#stok_obat_masuk').text(``);
             $('#stok_obat_keluar').text(``);
@@ -451,9 +489,10 @@
                 const stok_obat_masuk = parseInt(response.data.jumlah_masuk).toLocaleString('id-ID');
                 const stok_obat_keluar = parseInt(response.data.jumlah_keluar).toLocaleString('id-ID');
                 const stok_sisa = parseInt(response.data.jumlah_masuk) - parseInt(response.data.jumlah_keluar);
-                $('#batchObatModalLabel').html('Edit <em>Batch</em> Obat');
+                $('#batchObatModalLabel').html('Edit Faktur Obat');
                 $('#id_batch_obat').val(response.data.id_batch_obat);
                 $('#id_obat').val(response.data.id_obat);
+                $('#no_faktur').val(response.data.no_faktur);
                 $('#nama_batch').val(response.data.nama_batch);
                 $('#tgl_kedaluwarsa').val(response.data.tgl_kedaluwarsa);
                 $('#jumlah_masuk').val('0');
@@ -472,14 +511,16 @@
 
         // Variabel untuk menyimpan ID dan nama obat yang akan dihapus
         var batchObatId;
+        var fakturObatName;
         var batchObatName;
 
         // Event handler untuk menampilkan modal konfirmasi hapus
         $(document).on('click', '.delete-btn', function() {
             batchObatId = $(this).data('id');
-            batchObatName = $(this).data('name');
+            fakturObatName = $(this).data('name1');
+            batchObatName = $(this).data('name2');
             $('[data-bs-toggle="tooltip"]').tooltip('hide');
-            $('#deleteMessage').html(`Hapus "` + batchObatName + `"?`);
+            $('#deleteMessage').html(`Hapus "${batchObatName}" dari ${fakturObatName}?`);
             $('#deleteModal').modal('show');
         });
 
@@ -571,8 +612,13 @@
             $('#batchObatForm')[0].reset();
             $('#id_batch_obat').val('');
             $('#id_obat').val(null).trigger('change');
+            $('#no_faktur_list').find('option').remove();
             $('#batchObatForm .is-invalid').removeClass('is-invalid');
             $('#batchObatForm .invalid-feedback').text('').hide();
+        });
+
+        $('#bacthObatModal').on('shown.bs.modal', function() {
+            fetchNoFakturOptions();
         });
 
         <?= $this->include('toast/index') ?>

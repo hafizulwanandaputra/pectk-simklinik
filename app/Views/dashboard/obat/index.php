@@ -44,7 +44,7 @@
                             <option value="100">100</option>
                         </select>
                         <div class="input-group input-group-sm flex-grow-1">
-                            <input type="search" class="form-control form-control-sm " id="externalSearch" placeholder="Cari merek, nama obat, dan isi obat">
+                            <input type="search" class="form-control form-control-sm " id="externalSearch" placeholder="Cari merek, nama obat, atau isi obat">
                         </div>
                     </div>
                 </div>
@@ -70,6 +70,7 @@
                             <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Pembulatan Harga</th>
                             <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Penyesuaian Harga</th>
                             <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Harga Jual</th>
+                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Total Stok</th>
                         </tr>
                     </thead>
                     <tbody class="align-top">
@@ -388,6 +389,18 @@
                         }).format(data);
 
                         return `<span class="date text-nowrap" style="display: block; text-align: right;">Rp${formattedHarga}</span>`;
+                    }
+                },
+                {
+                    data: 'total_stok',
+                    render: function(data, type, row) {
+                        // Format harga_obat using number_format equivalent in JavaScript
+                        let formattedTotalStok = new Intl.NumberFormat('id-ID', {
+                            style: 'decimal',
+                            minimumFractionDigits: 0
+                        }).format(data);
+
+                        return `<span class="date text-nowrap" style="display: block; text-align: right;">${formattedTotalStok}</span>`;
                     }
                 },
             ],

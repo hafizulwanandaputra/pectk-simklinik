@@ -21,8 +21,8 @@ class BatchObat extends BaseController
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
             // Menyiapkan data untuk tampilan
             $data = [
-                'title' => 'Batch Obat - ' . $this->systemName,
-                'headertitle' => '<em>Batch</em> Obat',
+                'title' => 'Faktur Obat - ' . $this->systemName,
+                'headertitle' => 'Faktur Obat',
                 'agent' => $this->request->getUserAgent()
             ];
             // Mengembalikan tampilan daftar batch obat
@@ -37,6 +37,7 @@ class BatchObat extends BaseController
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+            $db = db_connect();
             $request = $this->request->getPost();
             $search = $request['search']['value']; // Nilai pencarian
             $start = $request['start']; // Indeks mulai untuk paginasi
@@ -50,35 +51,38 @@ class BatchObat extends BaseController
 
             // Memetakan indeks kolom ke nama kolom di database
             $columnMapping = [
-                0 => 'id_obat',
-                1 => 'id_obat',
+                0 => 'id_batch_obat',
+                1 => 'id_batch_obat',
                 2 => 'obat',
-                3 => 'nama_batch',
-                4 => 'tgl_kedaluwarsa',
-                5 => 'jumlah_masuk',
-                6 => 'jumlah_keluar',
-                7 => 'sisa_stok',
-                8 => 'diperbarui',
+                3 => 'no_faktur',
+                4 => 'nama_batch',
+                5 => 'tgl_kedaluwarsa',
+                6 => 'jumlah_masuk',
+                7 => 'jumlah_keluar',
+                8 => 'sisa_stok',
+                9 => 'diperbarui',
             ];
 
             // Mengambil kolom untuk diurutkan
-            $sortColumn = $columnMapping[$sortColumnIndex] ?? 'id_obat';
+            $sortColumn = $columnMapping[$sortColumnIndex] ?? 'id_batch_obat';
 
             // Menghitung total record
             $totalRecords = $this->BatchObatModel->countAllResults(true);
 
-            // Modifikasi logika pengurutan untuk menangani merek
             if ($sortColumn === 'obat') {
-                // Mengurutkan berdasarkan merek, kemudian berdasarkan nama_obat
+                // Mengurutkan berdasarkan nama_obat, kemudian no_faktur, lalu nama_batch
                 $this->BatchObatModel
                     ->orderBy('nama_obat', $sortDirection)
-                    ->orderBy('nama_batch', 'ASC')
-                    ->orderBy('tgl_kedaluwarsa', 'ASC');
-            } else if ($sortColumn === 'nama_batch') {
-                // Mengurutkan berdasarkan nama_obat, kemudian berdasarkan isi_obat
+                    ->orderBy('no_faktur', 'ASC')
+                    ->orderBy('nama_batch', 'ASC');
+            } elseif ($sortColumn === 'no_faktur') {
+                // Mengurutkan berdasarkan no_faktur, lalu nama_batch
                 $this->BatchObatModel
-                    ->orderBy('nama_obat', $sortDirection)
-                    ->orderBy('tgl_kedaluwarsa', 'ASC');
+                    ->orderBy('no_faktur', $sortDirection)
+                    ->orderBy('nama_batch', 'ASC');
+            } elseif ($sortColumn === 'nama_batch') {
+                // Hanya mengurutkan berdasarkan nama_batch
+                $this->BatchObatModel->orderBy('nama_batch', $sortDirection);
             } else {
                 // Perilaku pengurutan default
                 $this->BatchObatModel->orderBy($sortColumn, $sortDirection);
@@ -90,6 +94,7 @@ class BatchObat extends BaseController
                     ->join('obat as s1', 's1.id_obat = batch_obat.id_obat', 'inner')
                     ->groupStart()
                     ->like('s1.nama_obat', $search)
+                    ->orLike('batch_obat.no_faktur', $search)
                     ->orLike('batch_obat.nama_batch', $search)
                     ->orLike('batch_obat.tgl_kedaluwarsa', $search)
                     ->groupEnd();
@@ -183,6 +188,40 @@ class BatchObat extends BaseController
         }
     }
 
+    public function fakturlist()
+    {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+            $db = db_connect();
+
+            // Mengambil daftar obat dan mengurutkannya
+            $results = $db->table('batch_obat')
+                ->select('no_faktur')
+                ->orderBy('no_faktur', 'ASC')
+                ->groupBy('no_faktur')
+                ->get()->getResultArray();
+
+            $options = [];
+            // Menyiapkan opsi untuk ditampilkan
+            foreach ($results as $row) {
+                $options[] = [
+                    'value' => $row['no_faktur']
+                ];
+            }
+
+            // Mengembalikan respons JSON dengan data supplier
+            return $this->response->setJSON([
+                'success' => true,
+                'data' => $options,
+            ]);
+        } else {
+            // Jika peran tidak dikenali, kembalikan status 404
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
+        }
+    }
+
     public function batchobat($id)
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
@@ -220,6 +259,7 @@ class BatchObat extends BaseController
             // Menyimpan Data
             $data = [
                 'id_obat' => $this->request->getPost('id_obat'),
+                'no_faktur' => $this->request->getPost('no_faktur') ?: null,
                 'nama_batch' => $this->request->getPost('nama_batch') ?: null,
                 'tgl_kedaluwarsa' => $this->request->getPost('tgl_kedaluwarsa'),
                 'jumlah_masuk' => $this->request->getPost('jumlah_masuk'),
@@ -230,7 +270,7 @@ class BatchObat extends BaseController
             // Panggil WebSocket untuk update client
             $this->notify_clients();
             // Mengembalikan respons sukses
-            return $this->response->setJSON(['success' => true, 'message' => '<em>Batch</em> obat berhasil ditambahkan']);
+            return $this->response->setJSON(['success' => true, 'message' => 'Faktur obat berhasil ditambahkan']);
         } else {
             // Jika peran tidak dikenali, kembalikan status 404
             return $this->response->setStatusCode(404)->setJSON([
@@ -268,6 +308,7 @@ class BatchObat extends BaseController
             $data = [
                 'id_batch_obat' => $batch_obat['id_batch_obat'],
                 'id_obat' => $this->request->getPost('id_obat'),
+                'no_faktur' => $this->request->getPost('no_faktur') ?: null,
                 'nama_batch' => $this->request->getPost('nama_batch') ?: null,
                 'tgl_kedaluwarsa' => $this->request->getPost('tgl_kedaluwarsa'),
                 'jumlah_masuk' => $batch_obat['jumlah_masuk'] + $this->request->getPost('jumlah_masuk'),
@@ -288,13 +329,13 @@ class BatchObat extends BaseController
             // Memeriksa status stok obat
             if ($db->transStatus() === false) {
                 $db->transRollback();  // Mengembalikan jika ada masalah
-                return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Gagal memproses batch obat', 'errors' => NULL]);
+                return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Gagal memproses faktur obat', 'errors' => NULL]);
             } else {
                 $db->transCommit();
                 // Panggil WebSocket untuk update client
                 $this->notify_clients();
                 // Mengembalikan respons sukses
-                return $this->response->setJSON(['success' => true, 'message' => '<em>Batch</em> obat berhasil diedit']);
+                return $this->response->setJSON(['success' => true, 'message' => 'Faktur obat berhasil diedit']);
             }
         } else {
             // Jika peran tidak dikenali, kembalikan status 404
@@ -317,7 +358,7 @@ class BatchObat extends BaseController
                 // Panggil WebSocket untuk update client
                 $this->notify_clients();
                 // Mengembalikan respons sukses
-                return $this->response->setJSON(['message' => '<em>Batch</em> obat berhasil dihapus']);
+                return $this->response->setJSON(['message' => 'Faktur obat berhasil dihapus']);
             } catch (DatabaseException $e) {
                 // Mencatat pesan kesalahan
                 log_message('error', $e->getMessage());

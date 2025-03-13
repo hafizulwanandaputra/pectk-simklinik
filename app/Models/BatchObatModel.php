@@ -11,6 +11,7 @@ class BatchObatModel extends Model
     protected $useTimestamps = false;
     protected $allowedFields = [
         'id_obat',
+        'no_faktur',
         'nama_batch',
         'tgl_kedaluwarsa',
         'jumlah_masuk',

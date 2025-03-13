@@ -864,7 +864,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                             <i class="fa-solid fa-prescription-bottle-medical"></i>
                                         </div>
                                         <div class="flex-fill mx-2">
-                                            <em>Batch</em> Obat
+                                            Faktur Obat
                                         </div>
                                     </div>
                                 </a>

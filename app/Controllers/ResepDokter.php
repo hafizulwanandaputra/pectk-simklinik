@@ -479,11 +479,11 @@ class ResepDokter extends BaseController
                     $options[] = [
                         'value' => $row['id_batch_obat'], // Menyimpan id_obat
                         'text' => $row['nama_obat'] .
-                            ' (' . $row['isi_obat'] .
+                            ' (' . (!empty($row['isi_obat']) ? $row['isi_obat'] : 'Tanpa isi obat') .
                             ' • ' . $row['kategori_obat'] .
                             ' • ' . $row['bentuk_obat'] .
                             ' • Rp' . $harga_obat_terformat .
-                            ' • ' . $row['nama_batch'] .
+                            ' • ' . (!empty($row['nama_batch']) ? $row['nama_batch'] : 'Tanpa nama batch') .
                             ' • ' . $row['tgl_kedaluwarsa'] .
                             ' • ' . $stok_tersisa . ')' // Menyimpan informasi obat
                     ];

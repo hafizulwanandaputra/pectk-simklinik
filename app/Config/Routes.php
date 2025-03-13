@@ -309,6 +309,7 @@ $routes->delete('/(?i)obat/(?i)delete/(:any)', 'Obat::delete/$1');
 $routes->get('/(?i)batchobat', 'BatchObat::index');
 $routes->post('/(?i)batchobat/(?i)batchobatlist', 'BatchObat::batchobatlist');
 $routes->get('/(?i)batchobat/(?i)obatlist', 'BatchObat::obatlist');
+$routes->get('/(?i)batchobat/(?i)fakturlist', 'BatchObat::fakturlist');
 $routes->get('/(?i)batchobat/(?i)batchobat/(:any)', 'BatchObat::batchobat/$1');
 $routes->post('/(?i)batchobat/(?i)create', 'BatchObat::create');
 $routes->post('/(?i)batchobat/(?i)update', 'BatchObat::update');

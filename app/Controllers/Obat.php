@@ -62,7 +62,8 @@ class Obat extends BaseController
                 9 => 'mark_up',
                 10 => 'selisih_harga',
                 11 => 'penyesuaian_harga',
-                12 => 'harga_jual'
+                12 => 'harga_jual',
+                13 => 'total_stok'
             ];
 
             // Mengambil kolom untuk diurutkan
@@ -71,80 +72,85 @@ class Obat extends BaseController
             // Menghitung total record
             $totalRecords = $this->ObatModel->countAllResults(true);
 
-            // Modifikasi logika pengurutan untuk menangani merek
-            if ($sortColumn === 'merek') {
-                // Mengurutkan berdasarkan merek, kemudian berdasarkan nama_obat
-                $this->ObatModel
-                    ->orderBy('merek', $sortDirection)
-                    ->orderBy('nama_supplier', 'ASC')
-                    ->orderBy('nama_obat', 'ASC')
-                    ->orderBy('isi_obat', 'ASC');
-            } else if ($sortColumn === 'nama_obat') {
-                // Mengurutkan berdasarkan nama_obat, kemudian berdasarkan isi_obat
-                $this->ObatModel
-                    ->orderBy('nama_obat', $sortDirection)
-                    ->orderBy('isi_obat', 'ASC');
-            } else {
-                // Perilaku pengurutan default
-                $this->ObatModel->orderBy($sortColumn, $sortDirection);
-            }
+            // Query utama
+            $this->ObatModel
+                ->select('
+                obat.*, 
+                supplier.*, 
+
+                -- Hitung total stok dari batch_obat
+                (SELECT SUM(jumlah_masuk - jumlah_keluar) 
+                 FROM batch_obat 
+                 WHERE batch_obat.id_obat = obat.id_obat) AS total_stok,
+
+                -- Hitung PPN terlebih dahulu
+                (obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) as harga_setelah_ppn,
+
+                -- Hitung harga jual sebelum pembulatan
+                ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) 
+                + ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) * obat.mark_up / 100)) as harga_jual_sebelum_bulat,
+
+                -- Bulatkan harga_jual ke ratusan terdekat ke atas
+                CEIL(
+                    ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) 
+                    + ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) * obat.mark_up / 100)) / 100
+                ) * 100 as harga_jual_bulat,
+
+                obat.penyesuaian_harga as penyesuaian_harga,
+
+                -- Tambahkan penyesuaian_harga ke harga_jual_bulat
+                (CEIL(
+                    ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) 
+                    + ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) * obat.mark_up / 100)) / 100
+                ) * 100 + obat.penyesuaian_harga) as harga_jual,
+
+                -- Hitung selisih antara harga_jual dan harga_jual_sebelum_bulat
+                ((CEIL(
+                    ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) 
+                    + ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) * obat.mark_up / 100)) / 100
+                ) * 100 + obat.penyesuaian_harga) 
+                - ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) 
+                + ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) * obat.mark_up / 100))) as selisih_harga
+            ')
+                ->join('supplier', 'supplier.id_supplier = obat.id_supplier', 'inner');
 
             // Menerapkan kueri pencarian
             if ($search) {
                 $this->ObatModel
-                    ->join('supplier as s1', 's1.id_supplier = obat.id_supplier', 'inner')
                     ->groupStart()
-                    ->like('s1.merek', $search)
+                    ->like('supplier.merek', $search)
                     ->orLike('obat.nama_obat', $search)
                     ->orLike('obat.isi_obat', $search)
                     ->groupEnd();
             }
 
             // Menghitung jumlah record yang difilter
-            $filteredRecords = $this->ObatModel
-                ->join('supplier AS s2', 's2.id_supplier = obat.id_supplier', 'inner')->countAllResults(false);
+            $filteredRecords = $this->ObatModel->countAllResults(false);
 
-            $obat = $this->ObatModel
-                ->select('
-                obat.*, 
-        supplier.*, 
+            // Mengurutkan data
+            if ($sortColumn === 'merek') {
+                $this->ObatModel
+                    ->orderBy('merek', $sortDirection)
+                    ->orderBy('nama_supplier', 'ASC')
+                    ->orderBy('nama_obat', 'ASC')
+                    ->orderBy('isi_obat', 'ASC');
+            } else if ($sortColumn === 'nama_obat') {
+                $this->ObatModel
+                    ->orderBy('nama_obat', $sortDirection)
+                    ->orderBy('isi_obat', 'ASC');
+            } else {
+                $this->ObatModel->orderBy($sortColumn, $sortDirection);
+            }
 
-        -- Hitung PPN terlebih dahulu
-        (obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) as harga_setelah_ppn,
-
-        -- Hitung harga jual sebelum pembulatan
-        ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) 
-        + ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) * obat.mark_up / 100)) as harga_jual_sebelum_bulat,
-
-        -- Bulatkan harga_jual ke ratusan terdekat ke atas
-        CEIL(
-            ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) 
-            + ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) * obat.mark_up / 100)) / 100
-        ) * 100 as harga_jual_bulat,
-
-        obat.penyesuaian_harga as penyesuaian_harga,
-
-        -- Tambahkan penyesuaian_harga ke harga_jual_bulat
-        (CEIL(
-            ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) 
-            + ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) * obat.mark_up / 100)) / 100
-        ) * 100 + obat.penyesuaian_harga) as harga_jual,
-
-        -- Hitung selisih antara harga_jual dan harga_jual_sebelum_bulat
-        ((CEIL(
-            ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) 
-            + ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) * obat.mark_up / 100)) / 100
-        ) * 100 + obat.penyesuaian_harga) 
-        - ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) 
-        + ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) * obat.mark_up / 100))) as selisih_harga
-            ')
-                ->join('supplier', 'supplier.id_supplier = obat.id_supplier', 'inner')
-                ->findAll($length, $start);
+            // Mengambil data dengan paginasi
+            $obat = $this->ObatModel->findAll($length, $start);
 
             // Menambahkan penomoran langsung ke $obat
             foreach ($obat as $index => &$item) {
                 $item['no'] = $start + $index + 1; // Menambahkan kolom 'no'
+                $item['total_stok'] = (int) ($item['total_stok'] ?? 0); // Pastikan nilai integer
             }
+            unset($item); // Menghindari efek referensi
 
             // Mengembalikan respons JSON
             return $this->response->setJSON([
