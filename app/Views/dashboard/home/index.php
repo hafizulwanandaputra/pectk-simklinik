@@ -331,22 +331,6 @@ $db = db_connect();
                                 </div>
                             </div>
                         </div>
-                        <div class="col">
-                            <div class="card bg-danger-subtle border-danger-subtle text-danger-emphasis w-100  shadow-sm">
-                                <div style="font-size: 0.9em;" class="card-header py-1 px-3 border-danger-subtle w-100 text-truncate">Obat Masuk yang Belum Diterima</div>
-                                <div class="card-body py-2 px-3">
-                                    <h5 class="display-6 fw-medium date mb-0"><?= number_format($total_pembelian_obat_blm_diterima, 0, ',', '.') ?></h5>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card bg-success-subtle border-success-subtle text-success-emphasis w-100  shadow-sm">
-                                <div style="font-size: 0.9em;" class="card-header py-1 px-3 border-success-subtle w-100 text-truncate">Obat Masuk yang Sudah Diterima</div>
-                                <div class="card-body py-2 px-3">
-                                    <h5 class="display-6 fw-medium date mb-0"><?= number_format($total_pembelian_obat_sdh_diterima, 0, ',', '.') ?></h5>
-                                </div>
-                            </div>
-                        </div>
                     <?php endif; ?>
                     <div class="col">
                         <div class="card bg-danger-subtle border-danger-subtle text-danger-emphasis w-100  shadow-sm">

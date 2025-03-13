@@ -171,9 +171,7 @@ class Home extends BaseController
         }
 
         $total_supplier = $supplier->countAllResults(); // Total supplier
-        $total_obat = $obat->countAllResults(); // Total obat
-        $total_pembelian_obat_blm_diterima = $pembelian_obat->where('diterima', 0)->countAllResults(); // Total pembelian obat belum diterima
-        $total_pembelian_obat_sdh_diterima = $pembelian_obat->where('diterima', 1)->countAllResults(); // Total pembelian obat sudah diterima
+        $total_obat = $obat->countAllResults();
 
         // Memeriksa peran pengguna untuk menghitung resep
         if (session()->get('role') == 'Dokter') {
@@ -348,8 +346,6 @@ class Home extends BaseController
             'kasir' => $kasir,
             'total_supplier' => $total_supplier,
             'total_obat' => $total_obat,
-            'total_pembelian_obat_blm_diterima' => $total_pembelian_obat_blm_diterima,
-            'total_pembelian_obat_sdh_diterima' => $total_pembelian_obat_sdh_diterima,
             'total_resep_blm_status' => $total_resep_blm_status,
             'total_resep_sdh_status' => $total_resep_sdh_status,
             'resepbydoktergraph' => $resepbydoktergraph,
