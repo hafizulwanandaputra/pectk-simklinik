@@ -532,21 +532,21 @@
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mt-1 mb-1">
-                        <select class="form-select" id="jaminan" name="jaminan" aria-label="jaminan">
+                        <select class="form-select" id="jaminan" name="jaminan" aria-label="jaminan" disabled>
                             <option value="" disabled selected>-- Pilih Jaminan --</option>
                         </select>
                         <label for="jaminan">Jaminan<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mt-1 mb-1">
-                        <select class="form-select" id="ruangan" name="ruangan" aria-label="ruangan">
+                        <select class="form-select" id="ruangan" name="ruangan" aria-label="ruangan" disabled>
                             <option value="" disabled selected>-- Pilih Ruangan --</option>
                         </select>
                         <label for="ruangan">Ruangan<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mt-1 mb-1">
-                        <select class="form-select" id="dokter" name="dokter" aria-label="dokter">
+                        <select class="form-select" id="dokter" name="dokter" aria-label="dokter" disabled>
                             <option value="" disabled selected>-- Pilih Dokter --</option>
                         </select>
                         <label for="dokter">Dokter<span class="text-danger">*</span></label>
@@ -875,23 +875,43 @@
 
                 // Simpan nilai yang saat ini dipilih untuk masing-masing elemen
                 const currentSelectionFilter = selectedJaminan || $('#jaminanFilter').val();
-                const currentSelectionJaminan = selectedJaminan || $('#jaminan').val();
 
                 // Hapus opsi yang ada, kecuali opsi pertama (default)
-                $('#jaminanFilter, #jaminan').find('option:not(:first)').remove();
+                $('#jaminanFilter').find('option:not(:first)').remove();
 
                 // Tambahkan opsi ke elemen select
                 options.forEach(option => {
-                    $('#jaminanFilter, #jaminan').append(`<option value="${option.value}">${option.text}</option>`);
+                    $('#jaminanFilter').append(`<option value="${option.value}">${option.text}</option>`);
                 });
 
                 // Mengatur ulang pilihan sebelumnya
                 if (currentSelectionFilter) {
                     $('#jaminanFilter').val(currentSelectionFilter);
                 }
-                if (currentSelectionJaminan) {
-                    $('#jaminan').val(currentSelectionJaminan);
-                }
+            } else {
+                showFailedToast('Gagal mendapatkan jaminan.');
+            }
+        } catch (error) {
+            console.error(error);
+            showFailedToast(`${error}`);
+        }
+    }
+
+    async function fetchJaminanOptionsModal() {
+        try {
+            // Panggil API dengan query string tanggal
+            const response = await axios.get(`<?= base_url('pasien/jaminanoptions') ?>`);
+
+            if (response.data.success) {
+                const options = response.data.data;
+
+                // Hapus opsi yang ada, kecuali opsi pertama (default)
+                $('#jaminan').prop('disabled', false).find('option:not(:first)').remove();
+
+                // Tambahkan opsi ke elemen select
+                options.forEach(option => {
+                    $('#jaminan').append(`<option value="${option.value}">${option.text}</option>`);
+                });
             } else {
                 showFailedToast('Gagal mendapatkan jaminan.');
             }
@@ -912,23 +932,43 @@
 
                 // Simpan nilai yang saat ini dipilih untuk masing-masing elemen
                 const currentSelectionFilter = selectedRuangan || $('#ruanganFilter').val();
-                const currentSelectionRuangan = selectedRuangan || $('#ruangan').val();
 
                 // Hapus opsi yang ada, kecuali opsi pertama (default)
-                $('#ruanganFilter, #ruangan').find('option:not(:first)').remove();
+                $('#ruanganFilter').find('option:not(:first)').remove();
 
                 // Tambahkan opsi ke elemen select
                 options.forEach(option => {
-                    $('#ruanganFilter, #ruangan').append(`<option value="${option.value}">${option.text}</option>`);
+                    $('#ruanganFilter').append(`<option value="${option.value}">${option.text}</option>`);
                 });
 
                 // Mengatur ulang pilihan sebelumnya
                 if (currentSelectionFilter) {
                     $('#ruanganFilter').val(currentSelectionFilter);
                 }
-                if (currentSelectionRuangan) {
-                    $('#ruangan').val(currentSelectionRuangan);
-                }
+            } else {
+                showFailedToast('Gagal mendapatkan ruangan.');
+            }
+        } catch (error) {
+            console.error(error);
+            showFailedToast(`${error}`);
+        }
+    }
+
+    async function fetchRuanganOptionsModal() {
+        try {
+            // Panggil API dengan query string tanggal
+            const response = await axios.get(`<?= base_url('pasien/ruanganoptions') ?>`);
+
+            if (response.data.success) {
+                const options = response.data.data;
+
+                // Hapus opsi yang ada, kecuali opsi pertama (default)
+                $('#ruangan').prop('disabled', false).find('option:not(:first)').remove();
+
+                // Tambahkan opsi ke elemen select
+                options.forEach(option => {
+                    $('#ruangan').append(`<option value="${option.value}">${option.text}</option>`);
+                });
             } else {
                 showFailedToast('Gagal mendapatkan ruangan.');
             }
@@ -948,24 +988,44 @@
                 const options = response.data.data;
 
                 // Simpan nilai yang saat ini dipilih untuk masing-masing elemen
-                const currentSelectionFilter = selectedDokter || $('#dokterFilter').val();
-                const currentSelectionDokter = selectedDokter || $('#dokter').val();
+                const currentSelectionFilter = selectedDokter || $('#dokter').val();
 
                 // Hapus opsi yang ada, kecuali opsi pertama (default)
-                $('#dokterFilter, #dokter').find('option:not(:first)').remove();
+                $('#dokterFilter').find('option:not(:first)').remove();
 
                 // Tambahkan opsi ke elemen select
                 options.forEach(option => {
-                    $('#dokterFilter, #dokter').append(`<option value="${option.value}">${option.text}</option>`);
+                    $('#dokterFilter').append(`<option value="${option.value}">${option.text}</option>`);
                 });
 
                 // Mengatur ulang pilihan sebelumnya
                 if (currentSelectionFilter) {
                     $('#dokterFilter').val(currentSelectionFilter);
                 }
-                if (currentSelectionDokter) {
-                    $('#dokter').val(currentSelectionDokter);
-                }
+            } else {
+                showFailedToast('Gagal mendapatkan dokter.');
+            }
+        } catch (error) {
+            console.error(error);
+            showFailedToast(`${error}`);
+        }
+    }
+
+    async function fetchDokterOptionsModal() {
+        try {
+            // Panggil API dengan query string tanggal
+            const response = await axios.get(`<?= base_url('pasien/dokteroptions') ?>`);
+
+            if (response.data.success) {
+                const options = response.data.data;
+
+                // Hapus opsi yang ada, kecuali opsi pertama (default)
+                $('#dokter').prop('disabled', false).find('option:not(:first)').remove();
+
+                // Tambahkan opsi ke elemen select
+                options.forEach(option => {
+                    $('#dokter').append(`<option value="${option.value}">${option.text}</option>`);
+                });
             } else {
                 showFailedToast('Gagal mendapatkan dokter.');
             }
@@ -986,22 +1046,18 @@
 
                 // Simpan nilai yang saat ini dipilih untuk masing-masing elemen
                 const currentSelectionFilter = selectedPendaftar || $('#pendaftarFilter').val();
-                const currentSelectionPendaftar = selectedPendaftar || $('#pendaftar').val();
 
                 // Hapus opsi yang ada, kecuali opsi pertama (default)
-                $('#pendaftarFilter, #pendaftar').find('option:not(:first)').remove();
+                $('#pendaftarFilter').find('option:not(:first)').remove();
 
                 // Tambahkan opsi ke elemen select
                 options.forEach(option => {
-                    $('#pendaftarFilter, #pendaftar').append(`<option value="${option.value}">${option.text}</option>`);
+                    $('#pendaftarFilter').append(`<option value="${option.value}">${option.text}</option>`);
                 });
 
                 // Mengatur ulang pilihan sebelumnya
                 if (currentSelectionFilter) {
                     $('#pendaftarFilter').val(currentSelectionFilter);
-                }
-                if (currentSelectionPendaftar) {
-                    $('#pendaftar').val(currentSelectionPendaftar);
                 }
             } else {
                 showFailedToast('Gagal mendapatkan pendaftar.');
@@ -1304,10 +1360,10 @@
 
     $('#refreshButton').on('click', async function(e) {
         e.preventDefault();
-        const selectedJenisKunjungan = $('#kunjunganFilter, #jenis_kunjungan').val();
-        const selectedJaminan = $('#jaminanFilter, #jaminan').val();
-        const selectedRuangan = $('#ruanganFilter, #ruangan').val();
-        const selectedDokter = $('#dokterFilter, #dokter').val();
+        const selectedJenisKunjungan = $('#kunjunganFilter').val();
+        const selectedJaminan = $('#jaminanFilter').val();
+        const selectedRuangan = $('#ruanganFilter').val();
+        const selectedDokter = $('#dokterFilter').val();
         const selectedPendaftar = $('#pendaftarFilter').val();
         await Promise.all([
             fetchJenisKunjunganOptions(selectedJenisKunjungan),
@@ -1343,10 +1399,10 @@
             const data = JSON.parse(event.data);
             if (data.update || data.delete) {
                 console.log("Received update from WebSocket");
-                const selectedJenisKunjungan = $('#kunjunganFilter, #jenis_kunjungan').val();
-                const selectedJaminan = $('#jaminanFilter, #jaminan').val();
-                const selectedRuangan = $('#ruanganFilter, #ruangan').val();
-                const selectedDokter = $('#dokterFilter, #dokter').val();
+                const selectedJenisKunjungan = $('#kunjunganFilter').val();
+                const selectedJaminan = $('#jaminanFilter').val();
+                const selectedRuangan = $('#ruanganFilter').val();
+                const selectedDokter = $('#dokterFilter').val();
                 const selectedPendaftar = $('#pendaftarFilter').val();
                 await Promise.all([
                     fetchJenisKunjunganOptions(selectedJenisKunjungan),
@@ -1500,7 +1556,7 @@
 
                 if (response.data.success) {
                     $('#rajalModal').modal('hide');
-                    const selectedJenisKunjungan = $('#kunjunganFilter, #jenis_kunjungan').val();
+                    const selectedJenisKunjungan = $('#kunjunganFilter').val();
                     const selectedJaminan = $('#jaminanFilter, #jaminan').val();
                     const selectedRuangan = $('#ruanganFilter, #ruangan').val();
                     const selectedDokter = $('#dokterFilter, #dokter').val();
@@ -1672,9 +1728,17 @@
             }
         });
 
-        // Reset form saat modal ditutup
+        $('#rajalModal').on('shown.bs.modal', function() {
+            fetchJaminanOptionsModal();
+            fetchRuanganOptionsModal();
+            fetchDokterOptionsModal();
+            fetchPendaftarOptionsModal();
+        });
         $('#rajalModal').on('hidden.bs.modal', function() {
             $('#rajalForm')[0].reset();
+            $('#jaminan').prop('disabled', true).find('option:not(:first)').remove();
+            $('#ruangan').prop('disabled', true).find('option:not(:first)').remove();
+            $('#dokter').prop('disabled', true).find('option:not(:first)').remove();
             $('#rajalForm .is-invalid').removeClass('is-invalid');
             $('#rajalForm .invalid-feedback').text('').hide();
         });
@@ -1686,10 +1750,10 @@
 
         $(document).on('visibilitychange', async function() {
             if (document.visibilityState === "visible") {
-                const selectedJenisKunjungan = $('#kunjunganFilter, #jenis_kunjungan').val();
-                const selectedJaminan = $('#jaminanFilter, #jaminan').val();
-                const selectedRuangan = $('#ruanganFilter, #ruangan').val();
-                const selectedDokter = $('#dokterFilter, #dokter').val();
+                const selectedJenisKunjungan = $('#kunjunganFilter').val();
+                const selectedJaminan = $('#jaminanFilter').val();
+                const selectedRuangan = $('#ruanganFilter').val();
+                const selectedDokter = $('#dokterFilter').val();
                 const selectedPendaftar = $('#pendaftarFilter').val();
                 await Promise.all([
                     fetchJenisKunjunganOptions(selectedJenisKunjungan),
