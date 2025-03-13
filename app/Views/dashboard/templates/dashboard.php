@@ -870,18 +870,6 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'pembelianobat') ? 'active bg-success activeLinkSideBar' : '' ?>" href=" <?= base_url('/pembelianobat'); ?>">
-                                    <div class="d-flex align-items-start <?= ($activeSegment === 'pembelianobat') ? 'text-white' : 'text-success-emphasis' ?>">
-                                        <div style="min-width: 24px; max-width: 24px; text-align: center;">
-                                            <i class="fa-solid fa-cart-shopping"></i>
-                                        </div>
-                                        <div class="flex-fill mx-2">
-                                            Obat Masuk
-                                        </div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="nav-item">
                                 <a style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'opnameobat') ? 'active bg-success activeLinkSideBar' : '' ?>" href=" <?= base_url('/opnameobat'); ?>">
                                     <div class="d-flex align-items-start <?= ($activeSegment === 'opnameobat') ? 'text-white' : 'text-success-emphasis' ?>">
                                         <div style="min-width: 24px; max-width: 24px; text-align: center;">

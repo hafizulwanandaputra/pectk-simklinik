@@ -315,29 +315,6 @@ $routes->post('/(?i)batchobat/(?i)create', 'BatchObat::create');
 $routes->post('/(?i)batchobat/(?i)update', 'BatchObat::update');
 $routes->delete('/(?i)batchobat/(?i)delete/(:any)', 'BatchObat::delete/$1');
 
-// PEMBELIAN OBAT
-$routes->get('/(?i)pembelianobat', 'PembelianObat::index');
-$routes->get('/(?i)pembelianobat/(?i)apotekerlist', 'PembelianObat::apotekerlist');
-$routes->get('/(?i)pembelianobat/(?i)pembelianobat/(:any)', 'PembelianObat::pembelianobat/$1');
-$routes->get('/(?i)pembelianobat/(?i)pembelianobatlist', 'PembelianObat::pembelianobatlist');
-$routes->post('/(?i)pembelianobat/(?i)create', 'PembelianObat::create');
-$routes->delete('/(?i)pembelianobat/(?i)delete/(:any)', 'PembelianObat::delete/$1');
-$routes->post('/(?i)pembelianobat/(?i)complete/(:any)', 'PembelianObat::complete/$1');
-
-// DETAIL PEMBELIAN OBAT
-$routes->get('/(?i)pembelianobat/(?i)detailpembelianobat/(:any)', 'PembelianObat::detailpembelianobat/$1');
-$routes->get('/(?i)pembelianobat/(?i)detailpembelianobatlist/(:any)', 'PembelianObat::detailpembelianobatlist/$1');
-$routes->get('/(?i)pembelianobat/(?i)detailpembelianobatitem/(:any)', 'PembelianObat::detailpembelianobatitem/$1');
-$routes->get('/(?i)pembelianobat/(?i)obatlist/(:any)/(:any)', 'PembelianObat::obatlist/$1/$2');
-$routes->post('/(?i)pembelianobat/(?i)tambahdetailpembelianobat/(:any)', 'PembelianObat::tambahdetailpembelianobat/$1');
-$routes->post('/(?i)pembelianobat/(?i)perbaruidetailpembelianobat/(:any)', 'PembelianObat::perbaruidetailpembelianobat/$1');
-$routes->delete('/(?i)pembelianobat/(?i)hapusdetailpembelianobat/(:any)', 'PembelianObat::hapusdetailpembelianobat/$1');
-$routes->get('/(?i)pembelianobat/(?i)itemobat/(:any)', 'PembelianObat::itemobat/$1');
-$routes->post('/(?i)pembelianobat/(?i)tambahitemobat/(:any)/(:any)', 'PembelianObat::tambahitemobat/$1/$2');
-$routes->post('/(?i)pembelianobat/(?i)perbaruiitemobat/(:any)/(:any)', 'PembelianObat::perbaruiitemobat/$1/$2');
-$routes->delete('/(?i)pembelianobat/(?i)hapusitemobat/(:any)/(:any)', 'PembelianObat::hapusitemobat/$1/$2');
-$routes->get('/(?i)pembelianobat/(?i)fakturpembelianobat/(:any)', 'PembelianObat::fakturpembelianobat/$1');
-
 // OPNAME OBAT
 $routes->get('/(?i)opnameobat', 'OpnameObat::index');
 $routes->get('/(?i)opnameobat/(?i)opnameobatlist', 'OpnameObat::opnameobatlist');
