@@ -89,7 +89,7 @@
                         <select class="form-select " id="id_obat" name="id_obat" aria-label="id_obat">
                             <option value="" disabled selected>-- Pilih Obat --</option>
                         </select>
-                        <label for="id_dokter">Obat<span class="text-danger">*</span></label>
+                        <label for="id_obat">Obat<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
@@ -450,11 +450,9 @@
             table.ajax.reload(null, false);
         });
 
-        // Panggil fungsi untuk mengisi opsi supplier saat halaman dimuat
-        fetchObatOptions();
-
         // Event handler untuk menampilkan modal tambah obat
-        $('#addBatchObatBtn').click(function() {
+        $('#addBatchObatBtn').click(async function() {
+            await fetchObatOptions();
             $('#batchObatModalLabel').html('Tambah Faktur Obat');
             $('#stok_label').html(`Jumlah Stok Awal<span class="text-danger">*</span>`);
             $('#stok_obat_masuk').text(``);
@@ -486,6 +484,7 @@
 
             try {
                 const response = await axios.get(`<?= base_url('/batchobat/batchobat') ?>/${id}`);
+                await fetchObatOptions();
                 const stok_obat_masuk = parseInt(response.data.jumlah_masuk).toLocaleString('id-ID');
                 const stok_obat_keluar = parseInt(response.data.jumlah_keluar).toLocaleString('id-ID');
                 const stok_sisa = parseInt(response.data.jumlah_masuk) - parseInt(response.data.jumlah_keluar);
@@ -612,6 +611,7 @@
             $('#batchObatForm')[0].reset();
             $('#id_batch_obat').val('');
             $('#id_obat').val(null).trigger('change');
+            $('#id_obat').find('option:not(:first)').remove();
             $('#no_faktur_list').find('option').remove();
             $('#batchObatForm .is-invalid').removeClass('is-invalid');
             $('#batchObatForm .invalid-feedback').text('').hide();

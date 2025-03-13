@@ -105,7 +105,7 @@
                         <select class="form-select " id="id_supplier" name="id_supplier" aria-label="id_supplier">
                             <option value="" disabled selected>-- Pilih Merek dan Pemasok --</option>
                         </select>
-                        <label for="id_dokter">Merek dan Pemasok<span class="text-danger">*</span></label>
+                        <label for="id_supplier">Merek dan Pemasok<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
@@ -491,9 +491,6 @@
             }
         }
 
-        // Panggil fungsi untuk mengisi opsi supplier saat halaman dimuat
-        fetchSupplierOptions();
-
         // Fungsi untuk menghitung harga jual
         function hitungHargaJual() {
             let hargaObat = parseFloat($('#harga_obat').val()) || 0;
@@ -525,7 +522,8 @@
         });
 
         // Event handler untuk menampilkan modal tambah obat
-        $('#addObatBtn').click(function() {
+        $('#addObatBtn').click(async function() {
+            await fetchSupplierOptions();
             $('#obatModalLabel').text('Tambah Obat');
             $('#stok_label').html(`Jumlah Stok Awal<span class="text-danger">*</span>`);
             $('#obatModal').modal('show');
@@ -553,6 +551,7 @@
 
             try {
                 const response = await axios.get(`<?= base_url('/obat/obat') ?>/${id}`);
+                await fetchSupplierOptions();
                 const stok_obat_masuk = parseInt(response.data.jumlah_masuk).toLocaleString('id-ID');
                 const stok_obat_keluar = parseInt(response.data.jumlah_keluar).toLocaleString('id-ID');
                 const stok_sisa = parseInt(response.data.jumlah_masuk) - parseInt(response.data.jumlah_keluar);
@@ -677,6 +676,7 @@
             $('#obatForm')[0].reset();
             $('#id_obat').val('');
             $('#id_supplier').val(null).trigger('change');
+            $('#id_supplier').find('option:not(:first)').remove();
             $('#hasil_harga_jual').text('Rp0');
             $('#obatForm .is-invalid').removeClass('is-invalid');
             $('#obatForm .invalid-feedback').text('').hide();
