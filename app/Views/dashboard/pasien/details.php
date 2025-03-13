@@ -559,7 +559,7 @@
                     </div>
                 </div>
                 <div class="modal-footer justify-content-end pt-2 pb-2" style="border-top: 1px solid var(--bs-border-color-translucent);">
-                    <button type="submit" id="submitButton" class="btn btn-primary bg-gradient ">
+                    <button type="submit" id="submitButton" class="btn btn-primary bg-gradient " disabled>
                         <i class="fa-solid fa-floppy-disk"></i> Simpan
                     </button>
                 </div>
@@ -1728,17 +1728,21 @@
             }
         });
 
-        $('#rajalModal').on('shown.bs.modal', function() {
-            fetchJaminanOptionsModal();
-            fetchRuanganOptionsModal();
-            fetchDokterOptionsModal();
-            fetchPendaftarOptionsModal();
+        $('#rajalModal').on('shown.bs.modal', async function() {
+            await Promise.all([
+                fetchJaminanOptionsModal(),
+                fetchRuanganOptionsModal(),
+                fetchDokterOptionsModal(),
+                fetchPendaftarOptionsModal()
+            ]);
+            $('#submitButton').prop('disabled', false);
         });
         $('#rajalModal').on('hidden.bs.modal', function() {
             $('#rajalForm')[0].reset();
             $('#jaminan').prop('disabled', true).find('option:not(:first)').remove();
             $('#ruangan').prop('disabled', true).find('option:not(:first)').remove();
             $('#dokter').prop('disabled', true).find('option:not(:first)').remove();
+            $('#submitButton').prop('disabled', true);
             $('#rajalForm .is-invalid').removeClass('is-invalid');
             $('#rajalForm .invalid-feedback').text('').hide();
         });
