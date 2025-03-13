@@ -44,7 +44,7 @@
                             <option value="100">100</option>
                         </select>
                         <div class="input-group input-group-sm flex-grow-1">
-                            <input type="search" class="form-control form-control-sm " id="externalSearch" placeholder="Cari merek, nama obat, dan isi obat">
+                            <input type="search" class="form-control form-control-sm " id="externalSearch" placeholder="Cari merek, nama obat, atau isi obat">
                         </div>
                     </div>
                 </div>
@@ -70,10 +70,7 @@
                             <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Pembulatan Harga</th>
                             <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Penyesuaian Harga</th>
                             <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Harga Jual</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Jumlah Masuk</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Jumlah Keluar</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Sisa Stok</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Terakhir Diperbarui</th>
+                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Total Stok</th>
                         </tr>
                     </thead>
                     <tbody class="align-top">
@@ -186,34 +183,6 @@
                             <label for="penyesuaian_harga">Penyesuaian Harga<span class="text-danger">*</span></label>
                         </div>
                         <div class="invalid-feedback"></div>
-                    </div>
-                    <div class="form-floating mb-1 mt-1">
-                        <input type="number" class="form-control" autocomplete="off" dir="auto" placeholder="jumlah_masuk" id="jumlah_masuk" name="jumlah_masuk">
-                        <label for="jumlah_masuk" id="stok_label"></label>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                    <div id="stok_jumlah" class="mb-1 mt-1">
-                        <div class="mb-0 row g-1 overflow-hidden d-flex align-items-end">
-                            <div class="col fw-medium text-nowrap">Obat Masuk</div>
-                            <div class="col text-end">
-                                <div class="date text-truncate" id="stok_obat_masuk">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-0 row g-1 overflow-hidden d-flex  align-items-end">
-                            <div class="col fw-medium text-nowrap">Obat Keluar</div>
-                            <div class="col text-end">
-                                <div class="date text-truncate" id="stok_obat_keluar">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-0 row g-1 overflow-hidden d-flex  align-items-end">
-                            <div class="col fw-medium text-nowrap">Sisa Stok</div>
-                            <div class="col text-end">
-                                <div class="date text-truncate" id="stok_sisa">
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="modal-footer justify-content-between pt-2 pb-2" style="border-top: 1px solid var(--bs-border-color-translucent);">
@@ -423,45 +392,17 @@
                     }
                 },
                 {
-                    data: 'jumlah_masuk',
+                    data: 'total_stok',
                     render: function(data, type, row) {
                         // Format harga_obat using number_format equivalent in JavaScript
-                        let formattedData = new Intl.NumberFormat('id-ID', {
+                        let formattedTotalStok = new Intl.NumberFormat('id-ID', {
                             style: 'decimal',
                             minimumFractionDigits: 0
                         }).format(data);
-                        return `<span class="date text-nowrap" style="display: block; text-align: right;">${formattedData}</span>`;
-                    }
-                },
-                {
-                    data: 'jumlah_keluar',
-                    render: function(data, type, row) {
-                        // Format harga_obat using number_format equivalent in JavaScript
-                        let formattedData = new Intl.NumberFormat('id-ID', {
-                            style: 'decimal',
-                            minimumFractionDigits: 0
-                        }).format(data);
-                        return `<span class="date text-nowrap" style="display: block; text-align: right;">${formattedData}</span>`;
-                    }
-                },
-                {
-                    data: 'sisa_stok',
-                    render: function(data, type, row) {
-                        // Format harga_obat using number_format equivalent in JavaScript
-                        let formattedData = new Intl.NumberFormat('id-ID', {
-                            style: 'decimal',
-                            minimumFractionDigits: 0
-                        }).format(data);
-                        return `<span class="date text-nowrap" style="display: block; text-align: right;">${formattedData}</span>`;
-                    }
-                },
-                {
-                    data: 'updated_at',
-                    render: function(data, type, row) {
-                        return `<span class="date text-nowrap">${data}</span>`;
-                    }
-                },
 
+                        return `<span class="date text-nowrap" style="display: block; text-align: right;">${formattedTotalStok}</span>`;
+                    }
+                },
             ],
             "order": [
                 [2, 'asc']
@@ -470,7 +411,7 @@
                 "target": [1],
                 "orderable": false
             }, {
-                "target": [0, 1, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16],
+                "target": [0, 1, 4, 5, 6, 7, 8, 9, 10, 11, 12],
                 "width": "0%"
             }, {
                 "target": [2, 3],
@@ -587,10 +528,6 @@
         $('#addObatBtn').click(function() {
             $('#obatModalLabel').text('Tambah Obat');
             $('#stok_label').html(`Jumlah Stok Awal<span class="text-danger">*</span>`);
-            $('#stok_obat_masuk').text(``);
-            $('#stok_obat_keluar').text(``);
-            $('#stok_sisa').text(``);
-            $('#stok_jumlah').hide();
             $('#obatModal').modal('show');
         });
 
@@ -630,12 +567,6 @@
                 $('#ppn').val(response.data.ppn);
                 $('#mark_up').val(response.data.mark_up);
                 $('#penyesuaian_harga').val(response.data.penyesuaian_harga);
-                $('#jumlah_masuk').val('0');
-                $('#stok_label').html(`Tambah/Kurangi Stok<span class="text-danger">*</span>`);
-                $('#stok_obat_masuk').text(stok_obat_masuk);
-                $('#stok_obat_keluar').text(stok_obat_keluar);
-                $('#stok_sisa').text(stok_sisa.toLocaleString('id-ID'));
-                $('#stok_jumlah').show();
                 hitungHargaJual();
                 $('#obatModal').modal('show');
             } catch (error) {

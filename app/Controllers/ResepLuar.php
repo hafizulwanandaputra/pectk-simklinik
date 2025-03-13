@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use App\Models\ResepModel;
 use App\Models\DetailResepModel;
-use App\Models\ObatModel;
+use App\Models\BatchObatModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
 
 
@@ -311,15 +311,15 @@ class ResepLuar extends BaseController
 
             if ($resep['status'] == 0) {
                 // Mengambil semua id_obat dan jumlah dari detail_resep yang terkait dengan resep yang dihapus
-                $detailResep = $db->query("SELECT id_obat, jumlah FROM detail_resep WHERE id_resep = ?", [$id])->getResultArray();
+                $detailResep = $db->query("SELECT id_batch_obat, jumlah FROM detail_resep WHERE id_resep = ?", [$id])->getResultArray();
 
                 // Mengurangi jumlah_keluar pada tabel obat
                 foreach ($detailResep as $detail) {
-                    $id_obat = $detail['id_obat'];
+                    $id_batch_obat = $detail['id_batch_obat'];
                     $jumlah = $detail['jumlah'];
 
                     // Mengambil jumlah_keluar dari tabel obat
-                    $obat = $db->query("SELECT jumlah_keluar FROM obat WHERE id_obat = ?", [$id_obat])->getRowArray();
+                    $obat = $db->query("SELECT jumlah_keluar FROM batch_obat WHERE id_batch_obat = ?", [$id_batch_obat])->getRowArray();
 
                     if ($obat) {
                         // Mengurangi jumlah_keluar
@@ -331,7 +331,7 @@ class ResepLuar extends BaseController
                         }
 
                         // Memperbarui jumlah_keluar di tabel obat
-                        $db->query("UPDATE obat SET jumlah_keluar = ? WHERE id_obat = ?", [$new_jumlah_keluar, $id_obat]);
+                        $db->query("UPDATE batch_obat SET jumlah_keluar = ? WHERE id_batch_obat = ?", [$new_jumlah_keluar, $id_batch_obat]);
                     }
                 }
 
@@ -491,11 +491,15 @@ class ResepLuar extends BaseController
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
-            $ObatModel = new ObatModel(); // Membuat instance model Obat
+            $BatchObatModel = new BatchObatModel(); // Membuat instance model Obat
             $DetailResepModel = new DetailResepModel(); // Membuat instance model DetailResep
 
             // Mengambil semua obat dari tabel obat dan mengurutkannya
-            $results = $ObatModel->orderBy('nama_obat', 'ASC')->findAll();
+            $results = $BatchObatModel
+                ->join('obat', 'obat.id_obat = batch_obat.id_obat', 'inner')
+                ->where('batch_obat.tgl_kedaluwarsa >=', date('Y-m-d'))
+                ->orderBy('nama_obat', 'ASC')
+                ->findAll();
 
             $options = []; // Menyiapkan array untuk opsi obat
             foreach ($results as $row) {
@@ -526,13 +530,17 @@ class ResepLuar extends BaseController
 
                 // 6. Jika stok tersedia dan obat belum digunakan, tambahkan ke options
                 $stok_tersisa = $row['jumlah_masuk'] - $row['jumlah_keluar'];
+
                 if ($stok_tersisa > 0 && !$isUsed) {
                     $options[] = [
-                        'value' => $row['id_obat'], // Menyimpan id_obat
+                        'value' => $row['id_batch_obat'], // Menyimpan id_obat
                         'text' => $row['nama_obat'] .
-                            ' (' . $row['kategori_obat'] .
+                            ' (' . (!empty($row['isi_obat']) ? $row['isi_obat'] : 'Tanpa isi obat') .
+                            ' • ' . $row['kategori_obat'] .
                             ' • ' . $row['bentuk_obat'] .
                             ' • Rp' . $harga_obat_terformat .
+                            ' • ' . (!empty($row['nama_batch']) ? $row['nama_batch'] : 'Tanpa nama batch') .
+                            ' • ' . $row['tgl_kedaluwarsa'] .
                             ' • ' . $stok_tersisa . ')' // Menyimpan informasi obat
                     ];
                 }
@@ -559,7 +567,7 @@ class ResepLuar extends BaseController
             $validation = \Config\Services::validation();
             // Menetapkan aturan validasi dasar
             $validation->setRules([
-                'id_obat' => 'required', // id_obat harus diisi
+                'id_batch_obat' => 'required', // id_batch_obat harus diisi
                 'signa' => 'required', // signa harus diisi
                 'catatan' => 'required', // catatan harus diisi
                 'cara_pakai' => 'required', // cara pakai harus diisi
@@ -576,12 +584,12 @@ class ResepLuar extends BaseController
             $db->transBegin();
 
             // Mengambil data obat berdasarkan id_obat yang diberikan
-            $builderObat = $db->table('obat');
-            $obat = $builderObat->where('id_obat', $this->request->getPost('id_obat'))->get()->getRowArray();
-
-            // Mengambil data obat berdasarkan id_obat yang diberikan
-            $builderObat = $db->table('obat');
-            $obat = $builderObat->where('id_obat', $this->request->getPost('id_obat'))->get()->getRowArray();
+            $builderObat = $db->table('batch_obat');
+            $obat = $builderObat
+                ->join('obat', 'obat.id_obat = batch_obat.id_obat', 'inner')
+                ->where('batch_obat.id_batch_obat', $this->request->getPost('id_batch_obat'))
+                ->where('batch_obat.tgl_kedaluwarsa >=', date('Y-m-d'))
+                ->get()->getRowArray();
 
             $ppn = (float) $obat['ppn']; // Mengambil nilai PPN
             $mark_up = (float) $obat['mark_up']; // Mengambil nilai mark-up
@@ -602,10 +610,12 @@ class ResepLuar extends BaseController
             // Simpan data detail resep
             $data = [
                 'id_resep' => $id,
-                'id_obat' => $this->request->getPost('id_obat'),
+                'id_obat' => $obat['id_obat'],
+                'id_batch_obat' => $this->request->getPost('id_batch_obat'),
                 'nama_obat' => $obat['nama_obat'],
                 'kategori_obat' => $obat['kategori_obat'],
                 'bentuk_obat' => $obat['bentuk_obat'],
+                'nama_batch' => $obat['nama_batch'],
                 'signa' => $this->request->getPost('signa'),
                 'catatan' => $this->request->getPost('catatan'),
                 'cara_pakai' => $this->request->getPost('cara_pakai'),
@@ -618,10 +628,6 @@ class ResepLuar extends BaseController
             $resepb = $db->table('resep');
             $resepb
                 ->where('id_resep', $id)
-                ->where('nomor_registrasi', null)
-                ->where('no_rm', null)
-                ->where('telpon', null)
-                ->where('tempat_lahir', null)
                 ->where('dokter', 'Resep Luar');
             $resep = $resepb->get()->getRowArray();
 
@@ -633,9 +639,9 @@ class ResepLuar extends BaseController
 
             // Mengupdate jumlah keluar obat
             $new_jumlah_keluar = $obat['jumlah_keluar'] + $this->request->getPost('jumlah');
-            $builderObat->where('id_obat', $this->request->getPost('id_obat'))->update([
+            $builderObat->where('id_batch_obat', $this->request->getPost('id_batch_obat'))->update([
                 'jumlah_keluar' => $new_jumlah_keluar,
-                'updated_at' => date('Y-m-d H:i:s')
+                'diperbarui' => date('Y-m-d H:i:s')
             ]);
 
             // Memeriksa apakah jumlah keluar melebihi stok
@@ -704,8 +710,10 @@ class ResepLuar extends BaseController
 
             // Mengambil detail resep berdasarkan id_detail_resep yang diberikan
             $detail_resep = $this->DetailResepModel->find($this->request->getPost('id_detail_resep'));
-            $builderObat = $db->table('obat');
-            $obat = $builderObat->where('id_obat', $detail_resep['id_obat'])->get()->getRowArray();
+            $builderObat = $db->table('batch_obat');
+            $obat = $builderObat
+                ->join('obat', 'obat.id_obat = batch_obat.id_obat', 'inner')
+                ->get()->getRowArray();
 
             // Memeriksa apakah id_obat ditemukan
             if (!$obat) {
@@ -732,10 +740,6 @@ class ResepLuar extends BaseController
             $resepb = $db->table('resep');
             $resepb
                 ->where('id_resep', $id)
-                ->where('nomor_registrasi', null)
-                ->where('no_rm', null)
-                ->where('telpon', null)
-                ->where('tempat_lahir', null)
                 ->where('dokter', 'Resep Luar');
             $resep = $resepb->get()->getRowArray();
 
@@ -747,9 +751,9 @@ class ResepLuar extends BaseController
 
             // Mengupdate jumlah keluar obat
             $new_jumlah_keluar = $obat['jumlah_keluar'] - $detail_resep['jumlah'] + $this->request->getPost('jumlah_edit');
-            $builderObat->where('id_obat', $detail_resep['id_obat'])->update([
+            $builderObat->where('id_batch_obat', $detail_resep['id_batch_obat'])->update([
                 'jumlah_keluar' => $new_jumlah_keluar,
-                'updated_at' => date('Y-m-d H:i:s')
+                'diperbarui' => date('Y-m-d H:i:s')
             ]);
 
             // Memeriksa apakah jumlah keluar melebihi stok
@@ -835,8 +839,10 @@ class ResepLuar extends BaseController
                 }
 
                 // Mengambil jumlah_keluar saat ini dari tabel obat
-                $builderObat = $db->table('obat');
-                $obat = $builderObat->where('id_obat', $id_obat)->get()->getRowArray();
+                $builderObat = $db->table('batch_obat');
+                $obat = $builderObat
+                    ->join('obat', 'obat.id_obat = batch_obat.id_obat', 'inner')
+                    ->get()->getRowArray();
 
                 if ($obat) {
                     // Memperbarui jumlah_keluar di tabel obat (mengurangi stok berdasarkan detail yang dihapus)
@@ -846,7 +852,7 @@ class ResepLuar extends BaseController
                     }
                     $builderObat->where('id_obat', $id_obat)->update([
                         'jumlah_keluar' => $new_jumlah_keluar,
-                        'updated_at' => date('Y-m-d H:i:s')
+                        'diperbarui' => date('Y-m-d H:i:s')
                     ]);
                 }
 

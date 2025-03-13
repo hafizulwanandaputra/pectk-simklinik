@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
-use App\Models\ObatModel;
+use App\Models\BatchObatModel;
 use App\Models\OpnameObatModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use DateTime;
@@ -14,11 +14,11 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class OpnameObat extends BaseController
 {
-    protected $ObatModel;
+    protected $BatchObatModel;
     protected $OpnameObatModel;
     public function __construct()
     {
-        $this->ObatModel = new ObatModel();
+        $this->BatchObatModel = new BatchObatModel();
         $this->OpnameObatModel = new OpnameObatModel();
     }
     public function index()
@@ -153,14 +153,36 @@ class OpnameObat extends BaseController
             $opnameId = $this->OpnameObatModel->insert($data);
 
             if ($opnameId) {
-                $obatData = $this->ObatModel->findAll();
-                $detailData = [];
+                $obatData = $this->BatchObatModel
+                    ->join('obat', 'obat.id_obat = batch_obat.id_obat', 'inner')
+                    ->findAll();
+
+                $groupedData = [];
 
                 foreach ($obatData as $obat) {
-                    $sisa_stok = $obat['jumlah_masuk'] - $obat['jumlah_keluar'];
+                    $id_obat = $obat['id_obat'];
+
+                    if (!isset($groupedData[$id_obat])) {
+                        $groupedData[$id_obat] = [
+                            'nama_obat' => $obat['nama_obat'],
+                            'jumlah_masuk' => 0,
+                            'jumlah_keluar' => 0
+                        ];
+                    }
+
+                    // Menjumlahkan jumlah masuk dan jumlah keluar berdasarkan id_obat
+                    $groupedData[$id_obat]['jumlah_masuk'] += $obat['jumlah_masuk'];
+                    $groupedData[$id_obat]['jumlah_keluar'] += $obat['jumlah_keluar'];
+                }
+
+                $detailData = [];
+
+                foreach ($groupedData as $id_obat => $data) {
+                    $sisa_stok = $data['jumlah_masuk'] - $data['jumlah_keluar'];
+
                     $detailData[] = [
                         'id_opname_obat' => $opnameId,
-                        'nama_obat' => $obat['nama_obat'],
+                        'nama_obat' => $data['nama_obat'],
                         'sisa_stok' => $sisa_stok,
                     ];
                 }

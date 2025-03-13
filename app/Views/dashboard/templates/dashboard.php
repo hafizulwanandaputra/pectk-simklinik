@@ -858,6 +858,18 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'batchobat') ? 'active bg-success activeLinkSideBar' : '' ?>" href=" <?= base_url('/batchobat'); ?>">
+                                    <div class="d-flex align-items-start <?= ($activeSegment === 'batchobat') ? 'text-white' : 'text-success-emphasis' ?>">
+                                        <div style="min-width: 24px; max-width: 24px; text-align: center;">
+                                            <i class="fa-solid fa-prescription-bottle-medical"></i>
+                                        </div>
+                                        <div class="flex-fill mx-2">
+                                            Faktur Obat
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'pembelianobat') ? 'active bg-success activeLinkSideBar' : '' ?>" href=" <?= base_url('/pembelianobat'); ?>">
                                     <div class="d-flex align-items-start <?= ($activeSegment === 'pembelianobat') ? 'text-white' : 'text-success-emphasis' ?>">
                                         <div style="min-width: 24px; max-width: 24px; text-align: center;">

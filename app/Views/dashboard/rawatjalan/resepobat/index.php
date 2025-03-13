@@ -113,7 +113,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                     <form id="tambahDetail" enctype="multipart/form-data">
                         <div class="row g-2">
                             <div class="col-12">
-                                <select class="form-select form-select-sm" id="id_obat" name="id_obat" aria-label="id_obat" autocomplete="off">
+                                <select class="form-select form-select-sm" id="id_batch_obat" name="id_batch_obat" aria-label="id_batch_obat" autocomplete="off">
                                     <option value="" disabled selected>-- Pilih Obat --</option>
                                 </select>
                                 <div class="invalid-feedback"></div>
@@ -271,7 +271,7 @@ $usia = $registrasi->diff($tanggal_lahir);
 
             if (response.data.success) {
                 const options = response.data.data;
-                const select = $('#id_obat');
+                const select = $('#id_batch_obat');
 
                 // Reset pilihan terlebih dahulu sebelum memuat ulang
                 select.val('').trigger('change'); // Kosongkan pilihan
@@ -364,6 +364,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                     }
 
                     const kategori_obat = detail_resep.kategori_obat ? `${detail_resep.kategori_obat}, ` : ``;
+                    const nama_batch = detail_resep.nama_batch ? `${detail_resep.nama_batch}` : `<em>Tidak ada batch</em>`;
 
                     const detail_resepElement = `
                     <tr>
@@ -377,6 +378,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                         <small>
                             <ul class="ps-3 mb-0">
                                 <li>${kategori_obat}${detail_resep.bentuk_obat}</li>
+                                <li>${nama_batch}</li>
                                 <li>${detail_resep.signa}, ${detail_resep.cara_pakai}, ${detail_resep.catatan}</li>
                             </ul>
                         </small></td>
@@ -433,7 +435,7 @@ $usia = $registrasi->diff($tanggal_lahir);
 
             if (data.update) {
                 console.log("Received update from WebSocket");
-                const selectedObat = $('#id_obat').val();
+                const selectedObat = $('#id_batch_obat').val();
                 await fetchObatOptions(selectedObat);
                 fetchDetailResep();
                 fetchStatusResep();
@@ -445,7 +447,7 @@ $usia = $registrasi->diff($tanggal_lahir);
         };
 
         $('[data-bs-toggle="tooltip"]').tooltip();
-        $('#id_obat').select2({
+        $('#id_batch_obat').select2({
             dropdownParent: $(document.body),
             theme: "bootstrap-5",
             width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
@@ -479,7 +481,7 @@ $usia = $registrasi->diff($tanggal_lahir);
 
             try {
                 await axios.delete(`<?= base_url('/resep/hapusdetailresep') ?>/${detailResepId}`);
-                const selectedObat = $('#id_obat').val();
+                const selectedObat = $('#id_batch_obat').val();
                 await fetchObatOptions(selectedObat);
                 fetchDetailResep();
                 fetchStatusResep();
@@ -654,7 +656,7 @@ $usia = $registrasi->diff($tanggal_lahir);
 
                         if (response.data.success) {
                             $('#editDetail')[0].reset();
-                            $('#id_obat').val(null).trigger('change');
+                            $('#id_batch_obat').val(null).trigger('change');
                             $('#editDetail .is-invalid').removeClass('is-invalid');
                             $('#editDetail .invalid-feedback').text('').hide();
                             $('#editDetailResep').remove();
@@ -744,7 +746,7 @@ $usia = $registrasi->diff($tanggal_lahir);
 
                 if (response.data.success) {
                     $('#tambahDetail')[0].reset();
-                    $('#id_obat').val('');
+                    $('#id_batch_obat').val('');
                     $('#jumlah').val('');
                     $('#tambahDetail .is-invalid').removeClass('is-invalid');
                     $('#tambahDetail .invalid-feedback').text('').hide();
@@ -799,7 +801,7 @@ $usia = $registrasi->diff($tanggal_lahir);
 
         $(document).on('visibilitychange', async function() {
             if (document.visibilityState === "visible") {
-                const selectedObat = $('#id_obat').val();
+                const selectedObat = $('#id_batch_obat').val();
                 await fetchObatOptions(selectedObat);
                 fetchDetailResep();
                 fetchStatusResep();
@@ -808,7 +810,7 @@ $usia = $registrasi->diff($tanggal_lahir);
 
         $('#refreshButton').on('click', async function(e) {
             e.preventDefault();
-            const selectedObat = $('#id_obat').val();
+            const selectedObat = $('#id_batch_obat').val();
             await fetchObatOptions(selectedObat);
             fetchDetailResep();
             fetchStatusResep();
