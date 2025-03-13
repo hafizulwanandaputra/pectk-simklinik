@@ -523,10 +523,12 @@
 
         // Event handler untuk menampilkan modal tambah obat
         $('#addObatBtn').click(async function() {
+            $('#loadingSpinner').show();
             await fetchSupplierOptions();
             $('#obatModalLabel').text('Tambah Obat');
             $('#stok_label').html(`Jumlah Stok Awal<span class="text-danger">*</span>`);
             $('#obatModal').modal('show');
+            $('#loadingSpinner').hide();
         });
 
         // Inisialisasi select2 untuk elemen #id_supplier

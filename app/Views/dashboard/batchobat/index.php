@@ -452,6 +452,7 @@
 
         // Event handler untuk menampilkan modal tambah obat
         $('#addBatchObatBtn').click(async function() {
+            $('#loadingSpinner').hide();
             await fetchObatOptions();
             $('#batchObatModalLabel').html('Tambah Faktur Obat');
             $('#stok_label').html(`Jumlah Stok Awal<span class="text-danger">*</span>`);
@@ -460,6 +461,7 @@
             $('#stok_sisa').text(``);
             $('#stok_jumlah').hide();
             $('#bacthObatModal').modal('show');
+            $('#loadingSpinner').show();
         });
 
         // Inisialisasi select2 untuk elemen #id_obat
