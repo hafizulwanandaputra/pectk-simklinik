@@ -559,7 +559,7 @@
                     </div>
                 </div>
                 <div class="modal-footer justify-content-end pt-2 pb-2" style="border-top: 1px solid var(--bs-border-color-translucent);">
-                    <button type="submit" id="submitButton" class="btn btn-primary bg-gradient " disabled>
+                    <button type="submit" id="submitButton" class="btn btn-primary bg-gradient ">
                         <i class="fa-solid fa-floppy-disk"></i> Simpan
                     </button>
                 </div>
