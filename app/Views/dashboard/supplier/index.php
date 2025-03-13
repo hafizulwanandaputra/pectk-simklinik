@@ -29,7 +29,7 @@
                             <option value="100">100</option>
                         </select>
                         <div class="input-group input-group-sm flex-grow-1">
-                            <input type="search" class="form-control form-control-sm " id="externalSearch" placeholder="Cari nama pemasok dan merek">
+                            <input type="search" class="form-control form-control-sm " id="externalSearch" placeholder="Cari nama pemasok atau merek">
                         </div>
                     </div>
                 </div>
