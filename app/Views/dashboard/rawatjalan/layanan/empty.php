@@ -106,7 +106,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             <div class="text-muted"><small>Dokter saat ini: <?= session()->get('fullname') ?></small></div>
                             <div class="text-muted"><small>DPJP: <?= $rawatjalan['dokter'] ?></small></div>
                         <?php else : ?>
-                            <div class="text-muted">Klik "Tambah Layanan" di bawah ini untuk menambahkan transaksi</div>
+                            <div class="text-muted">Klik "Tambah Layanan" di bawah ini untuk menambahkan layanan</div>
                             <div class="d-grid gap-2 mt-3">
                                 <button class="btn btn-primary bg-gradient" type="button" id="addLayananBtn">
                                     <i class="fa-solid fa-plus"></i> Tambah Layanan
@@ -114,7 +114,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             </div>
                         <?php endif; ?>
                     <?php else : ?>
-                        <div class="text-muted">Klik "Tambah Layanan" di bawah ini untuk menambahkan transaksi</div>
+                        <div class="text-muted">Klik "Tambah Layanan" di bawah ini untuk menambahkan layanan</div>
                         <div class="d-grid gap-2 mt-3">
                             <button class="btn btn-primary bg-gradient" type="button" id="addLayananBtn">
                                 <i class="fa-solid fa-plus"></i> Tambah Layanan
