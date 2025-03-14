@@ -1521,15 +1521,21 @@
         // Tampilkan modal registrasi rawat jalan
         $('#addRajalButton').click(async function() {
             $('#loadingSpinner').show();
-            await Promise.all([
-                fetchJaminanOptionsModal(),
-                fetchRuanganOptionsModal(),
-                fetchDokterOptionsModal()
-            ]);
-            $('#rajalModalLabel').text('Registrasi Rawat Jalan'); // Ubah judul modal menjadi 'Registrasi Rawat Jalan'
-            $('#rajalModal').modal('show'); // Tampilkan modal resep luar
-            $('#loadingSpinner').hide();
+            try {
+                await Promise.all([
+                    fetchJaminanOptionsModal(),
+                    fetchRuanganOptionsModal(),
+                    fetchDokterOptionsModal()
+                ]);
+                $('#rajalModalLabel').text('Registrasi Rawat Jalan'); // Ubah judul modal menjadi 'Registrasi Rawat Jalan'
+                $('#rajalModal').modal('show'); // Tampilkan modal
+            } catch (error) {
+                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+            } finally {
+                $('#loadingSpinner').hide();
+            }
         });
+
 
         // Tampilkan modal batalkan rawat halan
         $(document).on('click', '.cancel-btn', function() {
