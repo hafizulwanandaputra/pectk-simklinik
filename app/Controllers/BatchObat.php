@@ -203,9 +203,9 @@ class BatchObat extends BaseController
 
             $options = [];
 
-            // Jika hasil tidak kosong, tambahkan ke opsi
-            if (!empty($results)) {
-                foreach ($results as $row) {
+            // Jika hasil tidak kosong dan no_faktur tidak null, tambahkan ke opsi
+            foreach ($results as $row) {
+                if (!empty($row['no_faktur'])) { // Cek apakah no_faktur tidak null atau kosong
                     $options[] = [
                         'value' => $row['no_faktur']
                     ];
