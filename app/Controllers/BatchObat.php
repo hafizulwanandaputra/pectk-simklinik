@@ -202,11 +202,14 @@ class BatchObat extends BaseController
                 ->get()->getResultArray();
 
             $options = [];
-            // Menyiapkan opsi untuk ditampilkan
-            foreach ($results as $row) {
-                $options[] = [
-                    'value' => $row['no_faktur']
-                ];
+
+            // Jika hasil tidak kosong, tambahkan ke opsi
+            if (!empty($results)) {
+                foreach ($results as $row) {
+                    $options[] = [
+                        'value' => $row['no_faktur']
+                    ];
+                }
             }
 
             // Mengembalikan respons JSON dengan data supplier
