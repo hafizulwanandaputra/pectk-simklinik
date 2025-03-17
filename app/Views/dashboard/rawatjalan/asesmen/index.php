@@ -114,47 +114,35 @@ $usia = $registrasi->diff($tanggal_lahir);
             <div class="mb-3">
                 <div class="fw-bold mb-2 border-bottom">Anamnesis (S)</div>
                 <div class="mb-2">
-                    <div class="form-floating">
-                        <input type="text" class="form-control" id="keluhan_utama" name="keluhan_utama" value="" autocomplete="off" dir="auto" placeholder="keluhan_utama">
-                        <label for="keluhan_utama">Keluhan Utama<span class="text-danger">*</span></label>
-                        <div class="invalid-feedback"></div>
-                    </div>
+                    <label for="keluhan_utama">Keluhan Utama<span class="text-danger">*</span></label>
+                    <textarea class="form-control" id="keluhan_utama" name="keluhan_utama" rows="2" style="resize: none;"></textarea>
+                    <div class="invalid-feedback"></div>
                 </div>
                 <div class="mb-2">
-                    <div class="form-floating">
-                        <input type="text" class="form-control" id="riwayat_penyakit_sekarang" name="riwayat_penyakit_sekarang" value="" autocomplete="off" dir="auto" placeholder="riwayat_penyakit_sekarang">
-                        <label for="riwayat_penyakit_sekarang">Riwayat Penyakit Sekarang</label>
-                        <div class="invalid-feedback"></div>
-                    </div>
+                    <label for="riwayat_penyakit_sekarang">Riwayat Penyakit Sekarang</label>
+                    <textarea class="form-control" id="riwayat_penyakit_sekarang" name="riwayat_penyakit_sekarang" rows="2" style="resize: none;"></textarea>
+                    <div class="invalid-feedback"></div>
                 </div>
                 <div class="mb-2">
-                    <div class="form-floating">
-                        <input type="text" class="form-control" id="riwayat_penyakit_dahulu" name="riwayat_penyakit_dahulu" value="" autocomplete="off" dir="auto" placeholder="riwayat_penyakit_dahulu">
-                        <label for="riwayat_penyakit_dahulu">Riwayat Penyakit Dahulu</label>
-                        <div class="invalid-feedback"></div>
-                    </div>
+                    <label for="riwayat_penyakit_dahulu">Riwayat Penyakit Dahulu</label>
+                    <textarea class="form-control" id="riwayat_penyakit_dahulu" name="riwayat_penyakit_dahulu" rows="2" style="resize: none;"></textarea>
+                    <div class="invalid-feedback"></div>
                 </div>
                 <div class="mb-2">
-                    <div class="form-floating">
-                        <input type="text" class="form-control" id="riwayat_penyakit_keluarga" name="riwayat_penyakit_keluarga" value="" autocomplete="off" dir="auto" placeholder="riwayat_penyakit_keluarga">
-                        <label for="riwayat_penyakit_keluarga">Riwayat Penyakit Keluarga</label>
-                        <div class="invalid-feedback"></div>
-                    </div>
+                    <label for="riwayat_penyakit_keluarga">Riwayat Penyakit Keluarga</label>
+                    <textarea class="form-control" id="riwayat_penyakit_keluarga" name="riwayat_penyakit_keluarga" rows="2" style="resize: none;"></textarea>
+                    <div class="invalid-feedback"></div>
                 </div>
                 <div class="mb-2 row row-cols-1 row-cols-lg-2 g-2">
                     <div class="col">
-                        <div class="form-floating">
-                            <input type="text" class="form-control" id="riwayat_pengobatan" name="riwayat_pengobatan" value="" autocomplete="off" dir="auto" placeholder="riwayat_pengobatan">
-                            <label for="riwayat_pengobatan">Riwayat Pengobatan</label>
-                            <div class="invalid-feedback"></div>
-                        </div>
+                        <label for="riwayat_pengobatan">Riwayat Pengobatan</label>
+                        <textarea class="form-control" id="riwayat_pengobatan" name="riwayat_pengobatan" rows="2" style="resize: none;"></textarea>
+                        <div class="invalid-feedback"></div>
                     </div>
                     <div class="col">
-                        <div class="form-floating">
-                            <input type="text" class="form-control" id="riwayat_sosial_pekerjaan" name="riwayat_sosial_pekerjaan" value="" autocomplete="off" dir="auto" placeholder="riwayat_sosial_pekerjaan">
-                            <label for="riwayat_sosial_pekerjaan">Riwayat Pekerjaan</label>
-                            <div class="invalid-feedback"></div>
-                        </div>
+                        <label for="riwayat_sosial_pekerjaan">Riwayat Pekerjaan</label>
+                        <textarea class="form-control" id="riwayat_sosial_pekerjaan" name="riwayat_sosial_pekerjaan" rows="2" style="resize: none;"></textarea>
+                        <div class="invalid-feedback"></div>
                     </div>
                 </div>
             </div>
