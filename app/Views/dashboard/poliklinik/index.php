@@ -307,7 +307,7 @@
 
         // Ketika tombol "Tambah Ruangan" diklik
         $('#addPoliBtn').click(function() {
-            $('#poliModalLabel').text('Tambah Ruangan'); // Mengubah label modal
+            $('#poliModalLabel').text('Tambah Ruangan Poliklinik'); // Mengubah label modal
             $('#poliForm')[0].reset(); // Mengatur ulang form
             $('#id_poli').val(''); // Mengosongkan ID poli
             $('#poliModal').modal('show'); // Menampilkan modal
@@ -330,7 +330,7 @@
                 const response = await axios.get(`<?= base_url('/poliklinik/poliklinik') ?>/${id}`);
 
                 // Memperbarui field modal dengan data pengguna yang diterima
-                $('#poliModalLabel').text('Edit Ruangan');
+                $('#poliModalLabel').text('Edit Ruangan Poliklinik');
                 $('#id_poli').val(response.data.id_poli);
                 $('#nama_poli').val(response.data.nama_poli);
                 const status = response.data.status;
