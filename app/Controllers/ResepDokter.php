@@ -551,6 +551,18 @@ class ResepDokter extends BaseController
             // 3. Bulatkan harga ke ratusan terdekat ke atas dan tambahkan penyesuaian
             $harga_bulat = ceil($total_harga / 100) * 100 + $penyesuaian_harga;
 
+            if ($this->request->getPost('signa') == '-' || $this->request->getPost('signa') == '0') {
+                $signa = NULL;
+            } else {
+                $signa = $this->request->getPost('signa');
+            }
+
+            if ($this->request->getPost('catatan') == '-') {
+                $catatan = NULL;
+            } else {
+                $catatan = $this->request->getPost('catatan');
+            }
+
             // Simpan data detail resep
             $data = [
                 'id_resep' => $id,
@@ -560,8 +572,8 @@ class ResepDokter extends BaseController
                 'kategori_obat' => $obat['kategori_obat'],
                 'bentuk_obat' => $obat['bentuk_obat'],
                 'nama_batch' => $obat['nama_batch'],
-                'signa' => $this->request->getPost('signa'),
-                'catatan' => $this->request->getPost('catatan'),
+                'signa' => $signa,
+                'catatan' => $catatan,
                 'cara_pakai' => $this->request->getPost('cara_pakai'),
                 'jumlah' => $this->request->getPost('jumlah'),
                 'harga_satuan' => $harga_bulat,
@@ -682,10 +694,22 @@ class ResepDokter extends BaseController
                 return $this->response->setStatusCode(404)->setJSON(['success' => false, 'message' => 'Obat tidak ditemukan atau sudah dihapus', 'errors' => NULL]);
             }
 
+            if ($this->request->getPost('signa_edit') == '-' || $this->request->getPost('signa_edit') == '0') {
+                $signa_edit = NULL;
+            } else {
+                $signa_edit = $this->request->getPost('signa_edit');
+            }
+
+            if ($this->request->getPost('catatan_edit') == '-') {
+                $catatan_edit = NULL;
+            } else {
+                $catatan_edit = $this->request->getPost('catatan_edit');
+            }
+
             // Simpan data detail resep yang diperbarui
             $data = [
-                'signa' => $this->request->getPost('signa_edit'),
-                'catatan' => $this->request->getPost('catatan_edit'),
+                'signa' => $signa_edit,
+                'catatan' => $catatan_edit,
                 'cara_pakai' => $this->request->getPost('cara_pakai_edit'),
                 'jumlah' => $this->request->getPost('jumlah_edit'),
                 'harga_satuan' => $detail_resep['harga_satuan'],

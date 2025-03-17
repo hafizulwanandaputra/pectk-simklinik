@@ -82,7 +82,7 @@ if (!empty($resep['tanggal_lahir']) && $resep['tanggal_lahir'] != '0000-00-00') 
             <div class="box">
                 <?= $detail['nama_obat'] ?>
                 <br>
-                <span style="font-size: 7pt;"><?= $detail['signa'] ?> • <?= $detail['catatan'] ?></span>
+                <span style="font-size: 7pt;"><?= (empty($detail['signa'])) ? '<em>Tidak ada dosis</em>' : $detail['signa'] ?> • <?= (empty($detail['catatan'])) ? '<em>Tidak ada catatan</em>' : $detail['catatan'] ?></span>
                 <br>
                 <?= $detail['cara_pakai'] ?>
                 <?php if ($detail['bentuk_obat'] == 'Tetes' || $detail['bentuk_obat'] == 'Salep') : ?>

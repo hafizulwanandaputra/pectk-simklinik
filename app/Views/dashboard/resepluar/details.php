@@ -155,6 +155,7 @@
                                 <option value="Sesudah Makan">Sesudah Makan</option>
                                 <option value="Sesudah Makan Dihabiskan">Sesudah Makan Dihabiskan</option>
                                 <option value="Sesudah Makan Bila Sakit">Sesudah Makan Bila Sakit</option>
+                                <option value="Alat Kesehatan">Alat Kesehatan</option>
                             </select>
                             <div class="invalid-feedback"></div>
                         </div>
@@ -318,6 +319,8 @@
                     }
 
                     const kategori_obat = detail_resep.kategori_obat ? `${detail_resep.kategori_obat}, ` : ``;
+                    const signa = detail_resep.signa ? `${detail_resep.signa}` : `<em>Tidak ada dosis</em>`;
+                    const catatan = detail_resep.catatan ? `${detail_resep.catatan}` : `<em>Tidak ada catatan</em>`;
                     const nama_batch = detail_resep.nama_batch ? `${detail_resep.nama_batch}` : `<em>Tidak ada batch</em>`;
 
                     const detail_resepElement = `
@@ -333,7 +336,7 @@
                             <ul class="ps-3 mb-0">
                                 <li>${kategori_obat}${detail_resep.bentuk_obat}</li>
                                 <li>${nama_batch}</li>
-                                <li>${detail_resep.signa}, ${detail_resep.cara_pakai}, ${detail_resep.catatan}</li>
+                                <li>${signa}, ${detail_resep.cara_pakai}, ${catatan}</li>
                             </ul>
                         </small></td>
                         <td class="date text-end">${jumlah.toLocaleString('id-ID')}</td>
@@ -495,6 +498,7 @@
                                     <option value="Sesudah Makan">Sesudah Makan</option>
                                     <option value="Sesudah Makan Dihabiskan">Sesudah Makan Dihabiskan</option>
                                     <option value="Sesudah Makan Bila Sakit">Sesudah Makan Bila Sakit</option>
+                                    <option value="Alat Kesehatan">Alat Kesehatan</option>
                                 </select>
                                 <div class="invalid-feedback"></div>
                             </div>
