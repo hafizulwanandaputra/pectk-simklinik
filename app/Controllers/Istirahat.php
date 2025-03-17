@@ -218,13 +218,13 @@ class Istirahat extends BaseController
             if ($istirahat) {
                 $dateTime2 = new DateTime($istirahat['tanggal_mulai']);
                 $dateTime3 = new DateTime($istirahat['tanggal_selesai']);
-                $durasi_istirahat = $dateTime3->diff($dateTime2);
+                $durasi_istirahat = $dateTime3->diff($dateTime2)->d + 1;
 
                 $numberToWords = new NumberToWords();
                 $converter = $numberToWords->getNumberTransformer('id'); // 'id' untuk Bahasa Indonesia
 
                 // Konversi durasi istirahat ke teks
-                $istirahat['durasi_teks'] = $converter->toWords($durasi_istirahat->d);
+                $istirahat['durasi_teks'] = $converter->toWords($durasi_istirahat);
                 // Menyiapkan data untuk tampilan
                 $data = [
                     'istirahat' => $istirahat,
