@@ -228,6 +228,7 @@ class Istirahat extends BaseController
                 // Menyiapkan data untuk tampilan
                 $data = [
                     'istirahat' => $istirahat,
+                    'durasi_istirahat' => $durasi_istirahat,
                     'bcNoReg' => $bcNoReg,
                     'title' => 'Surat Keterangan Istirahat ' . $istirahat['nama_pasien'] . ' (' . $istirahat['no_rm'] . ') - ' . $istirahat['nomor_registrasi'] . ' - ' . $this->systemName,
                     'headertitle' => 'Surat Keterangan Istirahat',
