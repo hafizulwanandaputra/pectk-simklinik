@@ -102,6 +102,8 @@ class Filters extends BaseConfig
                 '/transaksi/*',
                 '/poliklinik',
                 '/poliklinik/*',
+                '/jaminan',
+                '/jaminan/*',
                 '/admin',
                 '/admin/*',
                 '/settings',

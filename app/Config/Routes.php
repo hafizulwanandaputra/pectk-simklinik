@@ -426,6 +426,14 @@ $routes->post('/(?i)poliklinik/(?i)create', 'Poliklinik::create');
 $routes->post('/(?i)poliklinik/(?i)update', 'Poliklinik::update');
 $routes->delete('/(?i)poliklinik/(?i)delete/(:any)', 'Poliklinik::delete/$1');
 
+// RUANGAN JAMINAN
+$routes->get('/(?i)jaminan', 'Jaminan::index');
+$routes->post('/(?i)jaminan/(?i)jaminanlist', 'Jaminan::jaminanlist');
+$routes->get('/(?i)jaminan/(?i)jaminan/(:any)', 'Jaminan::jaminan/$1');
+$routes->post('/(?i)jaminan/(?i)create', 'Jaminan::create');
+$routes->post('/(?i)jaminan/(?i)update', 'Jaminan::update');
+$routes->delete('/(?i)jaminan/(?i)delete/(:any)', 'Jaminan::delete/$1');
+
 // PENGGUNA
 $routes->get('/(?i)admin', 'Admin::index');
 $routes->post('/(?i)admin/(?i)adminlist', 'Admin::adminlist');
