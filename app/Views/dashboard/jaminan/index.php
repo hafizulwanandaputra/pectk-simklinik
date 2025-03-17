@@ -89,25 +89,23 @@
                         <label for="jaminanNama">Nama<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
-                    <div class="mt-1 mb-0 row g-1 radio-group">
+                    <div class="mt-1 mb-1 radio-group">
                         <label for="jaminanStatus" class="col-3 col-form-label">Status<span class="text-danger">*</span></label>
-                        <div class="col col-form-label">
-                            <div class="d-flex align-items-center justify-content-evenly">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="jaminanStatus" id="jaminanStatus1" value="AKTIF">
-                                    <label class="form-check-label" for="jaminanStatus1">
-                                        Aktif
-                                    </label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="jaminanStatus" id="jaminanStatus2" value="TIDAK">
-                                    <label class="form-check-label" for="jaminanStatus2">
-                                        Tidak Aktif
-                                    </label>
-                                </div>
+                        <div class="d-flex align-items-center justify-content-evenly">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="jaminanStatus" id="jaminanStatus1" value="AKTIF">
+                                <label class="form-check-label" for="jaminanStatus1">
+                                    Aktif
+                                </label>
                             </div>
-                            <div class="invalid-feedback"></div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="jaminanStatus" id="jaminanStatus2" value="TIDAK">
+                                <label class="form-check-label" for="jaminanStatus2">
+                                    Tidak Aktif
+                                </label>
+                            </div>
                         </div>
+                        <div class="invalid-feedback"></div>
                     </div>
                 </div>
                 <div class="modal-footer justify-content-end pt-2 pb-2" style="border-top: 1px solid var(--bs-border-color-translucent);">
