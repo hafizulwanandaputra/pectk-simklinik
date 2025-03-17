@@ -12,6 +12,7 @@ class IstirahatModel extends Model
     protected $allowedFields = [
         'nomor_registrasi',
         'no_rm',
+        'diagnosis',
         'tanggal_mulai',
         'tanggal_selesai',
         'waktu_dibuat'

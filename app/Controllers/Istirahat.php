@@ -409,6 +409,7 @@ class Istirahat extends BaseController
 
             // Menyimpan data transaksi
             $data = [
+                'diagnosis' => $this->request->getPost('diagnosis') ?: null,
                 'tanggal_mulai' => $this->request->getPost('tanggal_mulai') ?: null,
                 'tanggal_selesai' => $this->request->getPost('tanggal_selesai') ?: null
             ];

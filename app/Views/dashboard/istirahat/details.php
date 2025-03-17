@@ -111,10 +111,17 @@ $usia = $registrasi->diff($tanggal_lahir);
                 </div>
             <?php endif; ?>
             <div class="mb-3">
+                <div class="mb-2">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="diagnosis" name="diagnosis" value="" autocomplete="off" dir="auto" placeholder="diagnosis">
+                        <label for="diagnosis">Diagnosis</label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
                 <div class="mb-2 row row-cols-1 row-cols-lg-2 g-2">
                     <div class="col">
                         <div class="form-floating">
-                            <input type="date" class="form-control" id="tanggal_mulai" name="tanggal_mulai" value="" autocomplete="off" dir="auto" placeholder="tanggal_mulai" list="tanggal_mulai_list">
+                            <input type="date" class="form-control" id="tanggal_mulai" name="tanggal_mulai" value="" autocomplete="off" dir="auto" placeholder="tanggal_mulai">
                             <label for="tanggal_mulai">Tanggal Mulai<span class="text-danger">*</span></label>
                             <div class="invalid-feedback"></div>
                         </div>
@@ -149,6 +156,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             const response = await axios.get('<?= base_url('istirahat/view/') . $istirahat['id_keterangan_istirahat'] ?>');
             const data = response.data;
 
+            $('#diagnosis').val(data.diagnosis);
             $('#tanggal_mulai').val(data.tanggal_mulai);
             $('#tanggal_selesai').val(data.tanggal_selesai);
         } catch (error) {
