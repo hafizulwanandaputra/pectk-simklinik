@@ -1297,7 +1297,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             `);
 
             // Disable form inputs
-            $('#asesmenForm input, #asesmenForm select, #asesmenForm button').prop('disabled', true);
+            $('#asesmenForm input, #asesmenForm textarea, #asesmenForm select, #asesmenForm button').prop('disabled', true);
 
             try {
                 const response = await axios.post(`<?= base_url('/rawatjalan/asesmen/update/' . $asesmen['id_asesmen']) ?>`, formData, {
@@ -1374,7 +1374,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 $('#submitBtn').prop('disabled', false).html(`
                     <i class="fa-solid fa-floppy-disk"></i> Simpan
                 `);
-                $('#asesmenForm input, #asesmenForm select, #asesmenForm button').prop('disabled', false);
+                $('#asesmenForm input, #asesmenForm textarea, #asesmenForm select, #asesmenForm button').prop('disabled', false);
             }
         });
         await fetchAsesmen();
