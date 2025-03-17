@@ -452,7 +452,9 @@
 
         // Event handler untuk menampilkan modal tambah obat
         $('#addBatchObatBtn').click(async function() {
-            $('#loadingSpinner').show();
+            $(this).prop('disabled', true).html(`
+                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span> Memuat
+            `);
             try {
                 await fetchObatOptions();
                 $('#batchObatModalLabel').html('Tambah Faktur Obat');
@@ -465,7 +467,9 @@
             } catch (error) {
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
             } finally {
-                $('#loadingSpinner').hide();
+                $(this).prop('disabled', false).html(`
+                    <i class="fa-solid fa-plus"></i> Tambah Faktur Obat
+                `);
             }
         });
 

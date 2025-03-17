@@ -523,7 +523,9 @@
 
         // Event handler untuk menampilkan modal tambah obat
         $('#addObatBtn').click(async function() {
-            $('#loadingSpinner').show();
+            $(this).prop('disabled', true).html(`
+                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span> Memuat
+            `);
             try {
                 await fetchSupplierOptions();
                 $('#obatModalLabel').text('Tambah Obat');
@@ -532,7 +534,9 @@
             } catch (error) {
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
             } finally {
-                $('#loadingSpinner').hide();
+                $(this).prop('disabled', false).html(`
+                    <i class="fa-solid fa-plus"></i> Tambah Obat
+                `);
             }
         });
 
