@@ -104,6 +104,8 @@ class Filters extends BaseConfig
                 '/poliklinik/*',
                 '/jaminan',
                 '/jaminan/*',
+                '/tindakanoperasi',
+                '/tindakanoperasi/*',
                 '/admin',
                 '/admin/*',
                 '/settings',

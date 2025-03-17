@@ -426,13 +426,21 @@ $routes->post('/(?i)poliklinik/(?i)create', 'Poliklinik::create');
 $routes->post('/(?i)poliklinik/(?i)update', 'Poliklinik::update');
 $routes->delete('/(?i)poliklinik/(?i)delete/(:any)', 'Poliklinik::delete/$1');
 
-// RUANGAN JAMINAN
+// JAMINAN
 $routes->get('/(?i)jaminan', 'Jaminan::index');
 $routes->post('/(?i)jaminan/(?i)jaminanlist', 'Jaminan::jaminanlist');
 $routes->get('/(?i)jaminan/(?i)jaminan/(:any)', 'Jaminan::jaminan/$1');
 $routes->post('/(?i)jaminan/(?i)create', 'Jaminan::create');
 $routes->post('/(?i)jaminan/(?i)update', 'Jaminan::update');
 $routes->delete('/(?i)jaminan/(?i)delete/(:any)', 'Jaminan::delete/$1');
+
+// TINDAKAN OPERASI
+$routes->get('/(?i)tindakanoperasi', 'TindakanOperasi::index');
+$routes->post('/(?i)tindakanoperasi/(?i)tindakanoperasilist', 'TindakanOperasi::tindakanoperasilist');
+$routes->get('/(?i)tindakanoperasi/(?i)tindakanoperasi/(:any)', 'TindakanOperasi::tindakanoperasi/$1');
+$routes->post('/(?i)tindakanoperasi/(?i)create', 'TindakanOperasi::create');
+$routes->post('/(?i)tindakanoperasi/(?i)update', 'TindakanOperasi::update');
+$routes->delete('/(?i)tindakanoperasi/(?i)delete/(:any)', 'TindakanOperasi::delete/$1');
 
 // PENGGUNA
 $routes->get('/(?i)admin', 'Admin::index');
