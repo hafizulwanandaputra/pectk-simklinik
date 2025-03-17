@@ -90,7 +90,7 @@
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="mt-1 mb-1 radio-group">
-                        <label for="jaminanStatus" class="col-3 col-form-label">Status<span class="text-danger">*</span></label>
+                        <label for="jaminanStatus">Status<span class="text-danger">*</span></label>
                         <div class="d-flex align-items-center justify-content-evenly">
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="jaminanStatus" id="jaminanStatus1" value="AKTIF">
