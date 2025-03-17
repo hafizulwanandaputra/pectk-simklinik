@@ -155,29 +155,29 @@ $waktuFormatted = $dateTime->format('H.i.s');
                     <tr>
                         <td colspan="2" style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
                             <div><strong>RIWAYAT PENYAKIT SEKARANG:</strong></div>
-                            <div style="padding-left: 0.5cm; overflow: hidden; font-size: 8pt;"><?= nl2br($asesmen['riwayat_penyakit_sekarang']) ?></div>
+                            <div style="padding-left: 0.5cm; overflow: hidden; font-size: 8pt;"><?= (empty($asesmen['riwayat_penyakit_sekarang'])) ? '<em>Tidak ada</em>' : nl2br($asesmen['riwayat_penyakit_sekarang']) ?></div>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="2" style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
                             <div><strong>RIWAYAT PENYAKIT DAHULU:</strong></div>
-                            <div style="padding-left: 0.5cm; overflow: hidden; font-size: 8pt;"><?= nl2br($asesmen['riwayat_penyakit_dahulu']) ?></div>
+                            <div style="padding-left: 0.5cm; overflow: hidden; font-size: 8pt;"><?= (empty($asesmen['riwayat_penyakit_dahulu'])) ? '<em>Tidak ada</em>' : nl2br($asesmen['riwayat_penyakit_dahulu']) ?></div>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="2" style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
                             <div><strong>RIWAYAT PENYAKIT DALAM KELUARGA:</strong></div>
-                            <div style="padding-left: 0.5cm; overflow: hidden; font-size: 8pt;"><?= nl2br($asesmen['riwayat_penyakit_keluarga']) ?></div>
+                            <div style="padding-left: 0.5cm; overflow: hidden; font-size: 8pt;"><?= (empty($asesmen['riwayat_penyakit_keluarga'])) ? '<em>Tidak ada</em>' : nl2br($asesmen['riwayat_penyakit_keluarga']) ?></div>
                         </td>
                     </tr>
                     <tr>
                         <td style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
                             <div><strong>RIWAYAT PENGOBATAN:</strong></div>
-                            <div style="padding-left: 0.5cm; overflow: hidden; font-size: 8pt;"><?= nl2br($asesmen['riwayat_pengobatan']) ?></div>
+                            <div style="padding-left: 0.5cm; overflow: hidden; font-size: 8pt;"><?= (empty($asesmen['riwayat_pengobatan'])) ? '<em>Tidak ada</em>' : nl2br($asesmen['riwayat_pengobatan']) ?></div>
                         </td>
                         <td style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
                             <div><strong>RIWAYAT PEKERJAAN, SOSIAL, EKONOMI, KEJIWAAN, DAN KEBIASAAN:</strong></div>
-                            <div style="padding-left: 0.5cm; overflow: hidden; font-size: 8pt;"><?= nl2br($asesmen['riwayat_sosial_pekerjaan']) ?></div>
+                            <div style="padding-left: 0.5cm; overflow: hidden; font-size: 8pt;"><?= (empty($asesmen['riwayat_sosial_pekerjaan'])) ? '<em>Tidak ada</em>' : nl2br($asesmen['riwayat_sosial_pekerjaan']) ?></div>
                         </td>
                     </tr>
                 </tbody>
