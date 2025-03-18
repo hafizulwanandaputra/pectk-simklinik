@@ -225,10 +225,64 @@ $usia = $registrasi->diff($tanggal_lahir);
                                 <tr>
                                     <th class="text-center border-end">Pro Login Quitat</th>
                                     <th class="border-start">
-                                        <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="od_login_spher" name="od_login_spher">
+                                        <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="od_login_spher" name="od_login_spher" list="od_login_spher_list">
+                                        <datalist id="od_login_spher_list">
+                                            <option value="+3.00"></option>
+                                            <option value="+2.75"></option>
+                                            <option value="+2.50"></option>
+                                            <option value="+2.25"></option>
+                                            <option value="+2.00"></option>
+                                            <option value="+1.75"></option>
+                                            <option value="+1.50"></option>
+                                            <option value="+1.25"></option>
+                                            <option value="+1.00"></option>
+                                            <option value="+0.75"></option>
+                                            <option value="+0.50"></option>
+                                            <option value="+0.25"></option>
+                                            <option value="Plano"></option>
+                                            <option value="-0.25"></option>
+                                            <option value="-0.50"></option>
+                                            <option value="-0.75"></option>
+                                            <option value="-1.00"></option>
+                                            <option value="-1.25"></option>
+                                            <option value="-1.50"></option>
+                                            <option value="-1.75"></option>
+                                            <option value="-2.00"></option>
+                                            <option value="-2.25"></option>
+                                            <option value="-2.50"></option>
+                                            <option value="-2.75"></option>
+                                            <option value="-3.00"></option>
+                                        </datalist>
                                     </th>
                                     <th>
-                                        <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="od_login_cyldr" name="od_login_cyldr">
+                                        <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="od_login_cyldr" name="od_login_cyldr" list="od_login_cyldr_list">
+                                        <datalist id="od_login_cyldr_list">
+                                            <option value="+3.00"></option>
+                                            <option value="+2.75"></option>
+                                            <option value="+2.50"></option>
+                                            <option value="+2.25"></option>
+                                            <option value="+2.00"></option>
+                                            <option value="+1.75"></option>
+                                            <option value="+1.50"></option>
+                                            <option value="+1.25"></option>
+                                            <option value="+1.00"></option>
+                                            <option value="+0.75"></option>
+                                            <option value="+0.50"></option>
+                                            <option value="+0.25"></option>
+                                            <option value="Plano"></option>
+                                            <option value="-0.25"></option>
+                                            <option value="-0.50"></option>
+                                            <option value="-0.75"></option>
+                                            <option value="-1.00"></option>
+                                            <option value="-1.25"></option>
+                                            <option value="-1.50"></option>
+                                            <option value="-1.75"></option>
+                                            <option value="-2.00"></option>
+                                            <option value="-2.25"></option>
+                                            <option value="-2.50"></option>
+                                            <option value="-2.75"></option>
+                                            <option value="-3.00"></option>
+                                        </datalist>
                                     </th>
                                     <th>
                                         <input type="number" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="od_login_axis" name="od_login_axis">
@@ -240,10 +294,64 @@ $usia = $registrasi->diff($tanggal_lahir);
                                         <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="od_login_basis" name="od_login_basis">
                                     </th>
                                     <th class="border-start">
-                                        <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="os_login_spher" name="os_login_spher">
+                                        <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="os_login_spher" name="os_login_spher" list="os_login_spher_list">
+                                        <datalist id="os_login_spher_list">
+                                            <option value="+3.00"></option>
+                                            <option value="+2.75"></option>
+                                            <option value="+2.50"></option>
+                                            <option value="+2.25"></option>
+                                            <option value="+2.00"></option>
+                                            <option value="+1.75"></option>
+                                            <option value="+1.50"></option>
+                                            <option value="+1.25"></option>
+                                            <option value="+1.00"></option>
+                                            <option value="+0.75"></option>
+                                            <option value="+0.50"></option>
+                                            <option value="+0.25"></option>
+                                            <option value="Plano"></option>
+                                            <option value="-0.25"></option>
+                                            <option value="-0.50"></option>
+                                            <option value="-0.75"></option>
+                                            <option value="-1.00"></option>
+                                            <option value="-1.25"></option>
+                                            <option value="-1.50"></option>
+                                            <option value="-1.75"></option>
+                                            <option value="-2.00"></option>
+                                            <option value="-2.25"></option>
+                                            <option value="-2.50"></option>
+                                            <option value="-2.75"></option>
+                                            <option value="-3.00"></option>
+                                        </datalist>
                                     </th>
                                     <th>
-                                        <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="os_login_cyldr" name="os_login_cyldr">
+                                        <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="os_login_cyldr" name="os_login_cyldr" list="os_login_cyldr_list">
+                                        <datalist id="os_login_cyldr_list">
+                                            <option value="+3.00"></option>
+                                            <option value="+2.75"></option>
+                                            <option value="+2.50"></option>
+                                            <option value="+2.25"></option>
+                                            <option value="+2.00"></option>
+                                            <option value="+1.75"></option>
+                                            <option value="+1.50"></option>
+                                            <option value="+1.25"></option>
+                                            <option value="+1.00"></option>
+                                            <option value="+0.75"></option>
+                                            <option value="+0.50"></option>
+                                            <option value="+0.25"></option>
+                                            <option value="Plano"></option>
+                                            <option value="-0.25"></option>
+                                            <option value="-0.50"></option>
+                                            <option value="-0.75"></option>
+                                            <option value="-1.00"></option>
+                                            <option value="-1.25"></option>
+                                            <option value="-1.50"></option>
+                                            <option value="-1.75"></option>
+                                            <option value="-2.00"></option>
+                                            <option value="-2.25"></option>
+                                            <option value="-2.50"></option>
+                                            <option value="-2.75"></option>
+                                            <option value="-3.00"></option>
+                                        </datalist>
                                     </th>
                                     <th>
                                         <input type="number" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="os_login_axis" name="os_login_axis">
@@ -301,7 +409,18 @@ $usia = $registrasi->diff($tanggal_lahir);
                                 <tr>
                                     <th class="text-center border-end">Propin Quitat</th>
                                     <th class="border-start">
-                                        <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="od_quitat_spher" name="od_quitat_spher">
+                                        <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="od_quitat_spher" name="od_quitat_spher" list="od_quitat_spher_list">
+                                        <datalist id="od_quitat_spher_list">
+                                            <option value="+1.00"></option>
+                                            <option value="+1.25"></option>
+                                            <option value="+1.50"></option>
+                                            <option value="+1.75"></option>
+                                            <option value="+2.00"></option>
+                                            <option value="+2.25"></option>
+                                            <option value="+2.50"></option>
+                                            <option value="+2.75"></option>
+                                            <option value="+3.00"></option>
+                                        </datalist>
                                     </th>
                                     <th>
                                         <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="od_quitat_cyldr" name="od_quitat_cyldr">
@@ -316,7 +435,18 @@ $usia = $registrasi->diff($tanggal_lahir);
                                         <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="od_quitat_basis" name="od_quitat_basis">
                                     </th>
                                     <th class="border-start">
-                                        <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="os_quitat_spher" name="os_quitat_spher">
+                                        <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="os_quitat_spher" name="os_quitat_spher" list="os_quitat_spher_list">
+                                        <datalist id="os_quitat_spher_list">
+                                            <option value="+1.00"></option>
+                                            <option value="+1.25"></option>
+                                            <option value="+1.50"></option>
+                                            <option value="+1.75"></option>
+                                            <option value="+2.00"></option>
+                                            <option value="+2.25"></option>
+                                            <option value="+2.50"></option>
+                                            <option value="+2.75"></option>
+                                            <option value="+3.00"></option>
+                                        </datalist>
                                     </th>
                                     <th>
                                         <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="os_quitat_cyldr" name="os_quitat_cyldr">
