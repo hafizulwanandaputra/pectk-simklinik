@@ -200,67 +200,72 @@ class Rujukan extends BaseController
 
     public function export($id)
     {
+        // Ambil parameter 'side' dari URL
+        $side = $this->request->getGet('side');
+
         // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Admisi' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Admisi') {
-            // Inisialisasi rawat jalan
-            $rujukan = $this->RujukanModel
-                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_rujukan.nomor_registrasi', 'inner')
-                ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
-                ->find($id);
-
-            // === Generate Barcode ===
-            $barcodeGenerator = new BarcodeGeneratorPNG();
-            $bcNoReg = base64_encode($barcodeGenerator->getBarcode($rujukan['nomor_registrasi'], $barcodeGenerator::TYPE_CODE_128));
-
-            // Memeriksa apakah pasien tidak kosong
-            if ($rujukan) {
-                // Menyiapkan data untuk tampilan
-                $data = [
-                    'rujukan' => $rujukan,
-                    'bcNoReg' => $bcNoReg,
-                    'title' => 'Surat Rujukan ' . $rujukan['nama_pasien'] . ' (' . $rujukan['no_rm'] . ') - ' . $rujukan['nomor_registrasi'] . ' - ' . $this->systemName,
-                    'headertitle' => 'Surat Rujukan',
-                    'agent' => $this->request->getUserAgent(), // Mengambil informasi user agent
-                ];
-                // return view('dashboard/rujukan/form', $data);
-                // die;
-                // Simpan HTML ke file sementara
-                $htmlFile = WRITEPATH . 'temp/output-rujukan.html';
-                file_put_contents($htmlFile, view('dashboard/rujukan/form', $data));
-
-                // Tentukan path output PDF
-                $pdfFile = WRITEPATH . 'temp/output-rujukan.pdf';
-
-                // Jalankan Puppeteer untuk konversi HTML ke PDF
-                // Keterangan: "node " . ROOTPATH . "puppeteer-pdf.js $htmlFile $pdfFile panjang lebar marginAtas margin Kanan marginBawah marginKiri"
-                // Silakan lihat puppeteer-pdf.js di folder public untuk keterangan lebih lanjut.
-                $command = env('CMD-ENV') . "node " . ROOTPATH . "puppeteer-pdf.js $htmlFile $pdfFile 297mm 210mm 0cm 0cm 0cm 0cm 2>&1";
-                $output = shell_exec($command);
-
-                // Hapus file HTML setelah eksekusi
-                @unlink($htmlFile);
-
-                // Jika tidak ada output, langsung stream PDF
-                if (!$output) {
-                    return $this->response
-                        ->setHeader('Content-Type', 'application/pdf')
-                        ->setHeader('Content-Disposition', 'inline; filename="Rujukan_' . $rujukan['nomor_registrasi'] . '_' . str_replace('-', '', $rujukan['no_rm']) . '.pdf')
-                        ->setBody(file_get_contents($pdfFile));
-                }
-
-                // Jika ada output (kemungkinan error), kembalikan HTTP 500 dengan <pre>
-                return $this->response
-                    ->setStatusCode(500)
-                    ->setHeader('Content-Type', 'text/html')
-                    ->setBody('<pre>' . htmlspecialchars($output) . '</pre>');
-            } else {
-                // Menampilkan halaman tidak ditemukan jika pasien tidak ditemukan
-                throw PageNotFoundException::forPageNotFound();
-            }
-        } else {
-            // Jika peran tidak dikenali, lemparkan pengecualian 404
+        if (!in_array(session()->get('role'), ['Admin', 'Dokter', 'Admisi'])) {
             throw PageNotFoundException::forPageNotFound();
         }
+
+        // Memeriksa validitas parameter side
+        if (!in_array($side, ['left', 'right'])) {
+            throw PageNotFoundException::forPageNotFound();
+        }
+
+        // Inisialisasi rawat jalan
+        $rujukan = $this->RujukanModel
+            ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_rujukan.nomor_registrasi', 'inner')
+            ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
+            ->find($id);
+
+        if (!$rujukan) {
+            throw PageNotFoundException::forPageNotFound();
+        }
+
+        // === Generate Barcode ===
+        $barcodeGenerator = new BarcodeGeneratorPNG();
+        $bcNoReg = base64_encode($barcodeGenerator->getBarcode($rujukan['nomor_registrasi'], $barcodeGenerator::TYPE_CODE_128));
+
+        // Menyiapkan data untuk tampilan
+        $data = [
+            'rujukan' => $rujukan,
+            'bcNoReg' => $bcNoReg,
+            'title' => 'Surat Rujukan ' . $rujukan['nama_pasien'] . ' (' . $rujukan['no_rm'] . ') - ' . $rujukan['nomor_registrasi'] . ' - ' . $this->systemName,
+            'headertitle' => 'Surat Rujukan',
+            'agent' => $this->request->getUserAgent(),
+        ];
+
+        // Tentukan tampilan berdasarkan parameter side
+        $viewFile = ($side === 'left') ? 'dashboard/rujukan/form-left' : 'dashboard/rujukan/form-right';
+
+        // Simpan HTML ke file sementara
+        $htmlFile = WRITEPATH . 'temp/output-rujukan.html';
+        file_put_contents($htmlFile, view($viewFile, $data));
+
+        // Tentukan path output PDF
+        $pdfFile = WRITEPATH . 'temp/output-rujukan.pdf';
+
+        // Jalankan Puppeteer untuk konversi HTML ke PDF
+        $command = env('CMD-ENV') . "node " . ROOTPATH . "puppeteer-pdf.js $htmlFile $pdfFile 297mm 210mm 0cm 0cm 0cm 0cm 2>&1";
+        $output = shell_exec($command);
+
+        // Hapus file HTML setelah eksekusi
+        @unlink($htmlFile);
+
+        // Jika tidak ada output, langsung stream PDF
+        if (!$output) {
+            return $this->response
+                ->setHeader('Content-Type', 'application/pdf')
+                ->setHeader('Content-Disposition', 'inline; filename="Rujukan_"' . $rujukan['nomor_registrasi'] . '_' . str_replace('-', '', $rujukan['no_rm']) . '.pdf')
+                ->setBody(file_get_contents($pdfFile));
+        }
+
+        // Jika ada output (kemungkinan error), kembalikan HTTP 500 dengan <pre>
+        return $this->response
+            ->setStatusCode(500)
+            ->setHeader('Content-Type', 'text/html')
+            ->setBody('<pre>' . htmlspecialchars($output) . '</pre>');
     }
 
     public function delete($id)

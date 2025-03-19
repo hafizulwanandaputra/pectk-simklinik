@@ -374,9 +374,13 @@
                             </button>
                         <?php endif; ?>
                         <?php if (session()->get('role') == 'Admisi') : ?>
-                            <button type="button" class="btn btn-body btn-sm bg-gradient " onclick="window.open('<?= base_url('istirahat/export') ?>/${istirahat.id_keterangan_istirahat}');">
-                                <i class="fa-solid fa-print"></i> Cetak
-                            </button>
+                            <div class="btn-group">
+                                <button class="btn btn-body btn-sm dropdown-toggle bg-gradient" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-print"></i> Cetak</button>
+                                <ul class="dropdown-menu dropdown-menu-end shadow-sm w-100">
+                                    <li><a class="dropdown-item" href="<?= base_url('istirahat/export') ?>/${istirahat.id_keterangan_istirahat}?side=left" target="_blank">Sisi kiri</a></li>
+                                    <li><a class="dropdown-item" href="<?= base_url('istirahat/export') ?>/${istirahat.id_keterangan_istirahat}?side=right" target="_blank">Sisi kanan</a></li>
+                                </ul>
+                            </div>
                         <?php endif; ?>
                         <?php if (session()->get('role') != 'Admisi') : ?>
                             <button type="button" class="btn btn-danger btn-sm bg-gradient  delete-btn" data-id="${istirahat.id_keterangan_istirahat}" data-name="${istirahat.nama_pasien}" data-date="${istirahat.nomor_registrasi}" ${delete_today}>

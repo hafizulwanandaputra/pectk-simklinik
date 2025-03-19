@@ -202,77 +202,83 @@ class Istirahat extends BaseController
 
     public function export($id)
     {
+        // Ambil parameter 'side' dari URL
+        $side = $this->request->getGet('side');
+
         // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', 'Perawat', atau 'Admisi' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Admisi') {
-            // Inisialisasi rawat jalan
-            $istirahat = $this->IstirahatModel
-                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_keterangan_istirahat.nomor_registrasi', 'inner')
-                ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
-                ->find($id);
-
-            // === Generate Barcode ===
-            $barcodeGenerator = new BarcodeGeneratorPNG();
-            $bcNoReg = base64_encode($barcodeGenerator->getBarcode($istirahat['nomor_registrasi'], $barcodeGenerator::TYPE_CODE_128));
-
-            // Memeriksa apakah pasien tidak kosong
-            if ($istirahat) {
-                $dateTime2 = new DateTime($istirahat['tanggal_mulai']);
-                $dateTime3 = new DateTime($istirahat['tanggal_selesai']);
-                $durasi_istirahat = $dateTime3->diff($dateTime2)->d + 1;
-
-                $numberToWords = new NumberToWords();
-                $converter = $numberToWords->getNumberTransformer('id'); // 'id' untuk Bahasa Indonesia
-
-                // Konversi durasi istirahat ke teks
-                $istirahat['durasi_teks'] = $converter->toWords($durasi_istirahat);
-                // Menyiapkan data untuk tampilan
-                $data = [
-                    'istirahat' => $istirahat,
-                    'durasi_istirahat' => $durasi_istirahat,
-                    'bcNoReg' => $bcNoReg,
-                    'title' => 'Surat Keterangan Istirahat ' . $istirahat['nama_pasien'] . ' (' . $istirahat['no_rm'] . ') - ' . $istirahat['nomor_registrasi'] . ' - ' . $this->systemName,
-                    'headertitle' => 'Surat Keterangan Istirahat',
-                    'agent' => $this->request->getUserAgent(), // Mengambil informasi user agent
-                ];
-                // return view('dashboard/istirahat/form', $data);
-                // die;
-                // Simpan HTML ke file sementara
-                $htmlFile = WRITEPATH . 'temp/output-istirahat.html';
-                file_put_contents($htmlFile, view('dashboard/istirahat/form', $data));
-
-                // Tentukan path output PDF
-                $pdfFile = WRITEPATH . 'temp/output-istirahat.pdf';
-
-                // Jalankan Puppeteer untuk konversi HTML ke PDF
-                // Keterangan: "node " . ROOTPATH . "puppeteer-pdf.js $htmlFile $pdfFile panjang lebar marginAtas margin Kanan marginBawah marginKiri"
-                // Silakan lihat puppeteer-pdf.js di folder public untuk keterangan lebih lanjut.
-                $command = env('CMD-ENV') . "node " . ROOTPATH . "puppeteer-pdf.js $htmlFile $pdfFile 297mm 210mm 0cm 0cm 0cm 0cm 2>&1";
-                $output = shell_exec($command);
-
-                // Hapus file HTML setelah eksekusi
-                @unlink($htmlFile);
-
-                // Jika tidak ada output, langsung stream PDF
-                if (!$output) {
-                    return $this->response
-                        ->setHeader('Content-Type', 'application/pdf')
-                        ->setHeader('Content-Disposition', 'inline; filename="Istirahat_' . $istirahat['nomor_registrasi'] . '_' . str_replace('-', '', $istirahat['no_rm']) . '.pdf')
-                        ->setBody(file_get_contents($pdfFile));
-                }
-
-                // Jika ada output (kemungkinan error), kembalikan HTTP 500 dengan <pre>
-                return $this->response
-                    ->setStatusCode(500)
-                    ->setHeader('Content-Type', 'text/html')
-                    ->setBody('<pre>' . htmlspecialchars($output) . '</pre>');
-            } else {
-                // Menampilkan halaman tidak ditemukan jika pasien tidak ditemukan
-                throw PageNotFoundException::forPageNotFound();
-            }
-        } else {
-            // Jika peran tidak dikenali, lemparkan pengecualian 404
+        if (!in_array(session()->get('role'), ['Admin', 'Dokter', 'Perawat', 'Admisi'])) {
             throw PageNotFoundException::forPageNotFound();
         }
+
+        // Memeriksa validitas parameter side
+        if (!in_array($side, ['left', 'right'])) {
+            throw PageNotFoundException::forPageNotFound();
+        }
+
+        // Inisialisasi rawat jalan
+        $istirahat = $this->IstirahatModel
+            ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_keterangan_istirahat.nomor_registrasi', 'inner')
+            ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
+            ->find($id);
+
+        if (!$istirahat) {
+            throw PageNotFoundException::forPageNotFound();
+        }
+
+        // === Generate Barcode ===
+        $barcodeGenerator = new BarcodeGeneratorPNG();
+        $bcNoReg = base64_encode($barcodeGenerator->getBarcode($istirahat['nomor_registrasi'], $barcodeGenerator::TYPE_CODE_128));
+
+        $dateTime2 = new DateTime($istirahat['tanggal_mulai']);
+        $dateTime3 = new DateTime($istirahat['tanggal_selesai']);
+        $durasi_istirahat = $dateTime3->diff($dateTime2)->d + 1;
+
+        $numberToWords = new NumberToWords();
+        $converter = $numberToWords->getNumberTransformer('id'); // 'id' untuk Bahasa Indonesia
+
+        // Konversi durasi istirahat ke teks
+        $istirahat['durasi_teks'] = $converter->toWords($durasi_istirahat);
+
+        // Menyiapkan data untuk tampilan
+        $data = [
+            'istirahat' => $istirahat,
+            'durasi_istirahat' => $durasi_istirahat,
+            'bcNoReg' => $bcNoReg,
+            'title' => 'Surat Keterangan Istirahat ' . $istirahat['nama_pasien'] . ' (' . $istirahat['no_rm'] . ') - ' . $istirahat['nomor_registrasi'] . ' - ' . $this->systemName,
+            'headertitle' => 'Surat Keterangan Istirahat',
+            'agent' => $this->request->getUserAgent(),
+        ];
+
+        // Tentukan tampilan berdasarkan parameter side
+        $viewFile = ($side === 'left') ? 'dashboard/istirahat/form-left' : 'dashboard/istirahat/form-right';
+
+        // Simpan HTML ke file sementara
+        $htmlFile = WRITEPATH . 'temp/output-istirahat.html';
+        file_put_contents($htmlFile, view($viewFile, $data));
+
+        // Tentukan path output PDF
+        $pdfFile = WRITEPATH . 'temp/output-istirahat.pdf';
+
+        // Jalankan Puppeteer untuk konversi HTML ke PDF
+        $command = env('CMD-ENV') . "node " . ROOTPATH . "puppeteer-pdf.js $htmlFile $pdfFile 297mm 210mm 0cm 0cm 0cm 0cm 2>&1";
+        $output = shell_exec($command);
+
+        // Hapus file HTML setelah eksekusi
+        @unlink($htmlFile);
+
+        // Jika tidak ada output, langsung stream PDF
+        if (!$output) {
+            return $this->response
+                ->setHeader('Content-Type', 'application/pdf')
+                ->setHeader('Content-Disposition', 'inline; filename=\"Istirahat_"' . $istirahat['nomor_registrasi'] . '_' . str_replace('-', '', $istirahat['no_rm']) . '.pdf')
+                ->setBody(file_get_contents($pdfFile));
+        }
+
+        // Jika ada output (kemungkinan error), kembalikan HTTP 500 dengan <pre>
+        return $this->response
+            ->setStatusCode(500)
+            ->setHeader('Content-Type', 'text/html')
+            ->setBody('<pre>' . htmlspecialchars($output) . '</pre>');
     }
 
     public function delete($id)
