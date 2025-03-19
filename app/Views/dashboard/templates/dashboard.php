@@ -633,7 +633,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
 
         <!-- CONTENTS -->
         <div class="main-content-wrapper">
-            <nav id="sidebarMenu" class="d-md-block sidebar bg-body-secondary shadow-sm collapse">
+            <nav id="sidebarMenu" class="d-md-block sidebar bg-body-tertiary shadow-sm collapse">
                 <div id="sidebarMenu2" class="position-sticky sidebar-sticky p-1">
                     <ul class="nav nav-pills flex-column">
                         <li class="nav-item">
