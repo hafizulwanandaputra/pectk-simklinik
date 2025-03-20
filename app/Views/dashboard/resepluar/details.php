@@ -59,7 +59,7 @@
                     <div class="col-5 fw-medium text-truncate">Nama Pasien</div>
                     <div class="col">
                         <div class="date">
-                            <?= ($resep['nama_pasien'] == NULL) ? '<em>Anonim</em>' : $resep['nama_pasien']; ?>
+                            <?= (empty($resep['nama_pasien'])) ? '<em>Anonim</em>' : $resep['nama_pasien']; ?>
                         </div>
                     </div>
                 </div>
@@ -91,7 +91,7 @@
                     <div class="col-5 fw-medium text-truncate">Alamat</div>
                     <div class="col">
                         <div class="date">
-                            <?= ($resep['alamat'] == NULL) ? '<em>Tidak ada</em>' : $resep['alamat']; ?>
+                            <?= (empty($resep['alamat'])) ? '<em>Tidak ada</em>' : $resep['alamat']; ?>
                         </div>
                     </div>
                 </div>

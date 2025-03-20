@@ -126,7 +126,7 @@
                         <div class="col-5 fw-medium text-truncate">Nomor Telepon</div>
                         <div class="col">
                             <div class="date">
-                                <?= $resep['telpon'] ?>
+                                <?= (empty($resep['telpon'])) ? '<em>Tidak ada</em>' : $resep['telpon']; ?>
                             </div>
                         </div>
                     </div>

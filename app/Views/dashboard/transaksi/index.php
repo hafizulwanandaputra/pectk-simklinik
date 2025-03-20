@@ -423,9 +423,9 @@
                 );
             } else {
                 data.transaksi.forEach(function(transaksi) {
-                    const nama_pasien = transaksi.nama_pasien == null ?
-                        `<em>Anonim</em>` :
-                        transaksi.nama_pasien;
+                    const nama_pasien = transaksi.nama_pasien ?
+                        transaksi.nama_pasien :
+                        `<em>Anonim</em>`;
                     let jenis_kelamin = transaksi.jenis_kelamin;
                     if (jenis_kelamin === 'L') {
                         jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap" style="background-color: SkyBlue"><i class="fa-solid fa-mars"></i> LAKI-LAKI</span>`;
@@ -438,9 +438,9 @@
                         `<span class="badge bg-success bg-gradient">Transaksi Diproses</span>` :
                         `<span class="badge bg-danger bg-gradient">Transaksi Belum Diproses</span>`;
                     const bank = transaksi.bank ? ` (${transaksi.bank})` : ``;
-                    const metode_pembayaran = transaksi.metode_pembayaran == '' ?
-                        `<em>Belum ada</em>` :
-                        transaksi.metode_pembayaran + bank;
+                    const metode_pembayaran = transaksi.metode_pembayaran ?
+                        transaksi.metode_pembayaran + bank :
+                        `<em>Belum ada</em>`;
                     let nomor_registrasi = transaksi.nomor_registrasi || "";
                     if (nomor_registrasi.includes("RJ")) {
                         nomor_registrasi = `<span class="badge bg-success bg-gradient text-nowrap"><i class="fa-solid fa-hospital-user"></i> RAWAT JALAN</span>`;
