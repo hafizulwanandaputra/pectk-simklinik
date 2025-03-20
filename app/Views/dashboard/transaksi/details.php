@@ -67,7 +67,7 @@
                         <div class="col-5 fw-medium text-truncate">Nomor Rekam Medis</div>
                         <div class="col">
                             <div class="date">
-                                <?= ($transaksi['no_rm'] == NULL) ? '<em>Tidak ada</em>' : $transaksi['no_rm']; ?>
+                                <?= (empty($transaksi['no_rm'])) ? '<em>Tidak ada</em>' : $transaksi['no_rm']; ?>
                             </div>
                         </div>
                     </div>
@@ -75,7 +75,7 @@
                         <div class="col-5 fw-medium text-truncate">Nama Pasien</div>
                         <div class="col">
                             <div>
-                                <?= ($transaksi['nama_pasien'] == NULL) ? '<em>Anonim</em>' : $transaksi['nama_pasien']; ?>
+                                <?= (empty($transaksi['nama_pasien'])) ? '<em>Anonim</em>' : $transaksi['nama_pasien']; ?>
                             </div>
                         </div>
                     </div>
@@ -83,7 +83,7 @@
                         <div class="col-5 fw-medium text-truncate">Nomor HP</div>
                         <div class="col">
                             <div class="date">
-                                <?= ($transaksi['telpon'] == NULL) ? '<em>Tidak ada</em>' : $transaksi['telpon']; ?>
+                                <?= (empty($transaksi['telpon'])) ? '<em>Tidak ada</em>' : $transaksi['telpon']; ?>
                             </div>
                         </div>
                     </div>
@@ -91,7 +91,7 @@
                         <div class="col-5 fw-medium text-truncate">Alamat</div>
                         <div class="col">
                             <div>
-                                <?= ($transaksi['alamat'] == NULL) ? '<em>Tidak ada</em>' : $transaksi['alamat']; ?>
+                                <?= (empty($transaksi['alamat'])) ? '<em>Tidak ada</em>' : $transaksi['alamat']; ?>
                             </div>
                         </div>
                     </div>
