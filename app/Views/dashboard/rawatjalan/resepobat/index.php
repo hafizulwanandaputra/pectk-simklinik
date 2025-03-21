@@ -395,6 +395,8 @@ $usia = $registrasi->diff($tanggal_lahir);
                     if (detail_resep.status === "1") {
                         $('.edit-btn').prop('disabled', true);
                         $('.delete-btn').prop('disabled', true);
+                        $('#cancelConfirmBtn').prop('disabled', true);
+                        $('#confirmBtn').prop('disabled', true);
                     } else if (detail_resep.status === "0") {
                         if (detail_resep.confirmed === "1") {
                             $('.edit-btn').prop('disabled', true);

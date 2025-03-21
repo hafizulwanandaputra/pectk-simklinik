@@ -110,7 +110,9 @@ class Optik extends BaseController
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Dokter' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
             // Mengambil data skrining berdasarkan ID
-            $data = $this->OptikModel->find($id); // Mengambil skrining
+            $data = $this->OptikModel
+                ->join('rawat_jalan', 'medrec_optik.nomor_registrasi = rawat_jalan.nomor_registrasi', 'inner')
+                ->find($id); // Mengambil skrining
             return $this->response->setJSON($data); // Mengembalikan data skrining dalam format JSON
         } else {
             // Mengembalikan status 404 jika peran tidak diizinkan

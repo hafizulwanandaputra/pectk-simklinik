@@ -128,364 +128,354 @@ $usia = $registrasi->diff($tanggal_lahir);
     </div>
     <div class="px-3 mt-3">
         <div class="no-fluid-content">
-            <?php if ($rawatjalan['transaksi'] == 0) : ?>
-                <?= form_open_multipart('/rawatjalan/optik/update/' . $optik['id_optik'], 'id="optikForm"'); ?>
-                <?= csrf_field(); ?>
-            <?php else : ?>
-                <div>
+            <?= form_open_multipart('/rawatjalan/optik/update/' . $optik['id_optik'], 'id="optikForm"'); ?>
+            <?= csrf_field(); ?>
+            <?php if (session()->get('role') == 'Dokter') : ?>
+                <?php if ($rawatjalan['dokter'] != session()->get('fullname')) : ?>
+                    <div id="alert-date" class="alert alert-warning alert-dismissible" role="alert">
+                        <div class="d-flex align-items-start">
+                            <div style="width: 12px; text-align: center;">
+                                <i class="fa-solid fa-triangle-exclamation"></i>
+                            </div>
+                            <div class="w-100 ms-3">
+                                Saat ini Anda melihat resep kacamata yang diberikan oleh <?= $rawatjalan['dokter'] ?>. Pastikan Anda mengisi resep kacamata sesuai dengan DPJP yang masuk pada sistem ini.
+                            </div>
+                            <button type="button" id="close-alert" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    </div>
                 <?php endif; ?>
-                <?php if (session()->get('role') == 'Dokter') : ?>
-                    <?php if ($rawatjalan['dokter'] != session()->get('fullname')) : ?>
-                        <div id="alert-date" class="alert alert-warning alert-dismissible" role="alert">
-                            <div class="d-flex align-items-start">
-                                <div style="width: 12px; text-align: center;">
-                                    <i class="fa-solid fa-triangle-exclamation"></i>
-                                </div>
-                                <div class="w-100 ms-3">
-                                    Saat ini Anda melihat resep kacamata yang diberikan oleh <?= $rawatjalan['dokter'] ?>. Pastikan Anda mengisi resep kacamata sesuai dengan DPJP yang masuk pada sistem ini.
-                                </div>
-                                <button type="button" id="close-alert" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div>
-                        </div>
-                    <?php endif; ?>
-                <?php endif; ?>
-                <div class="d-flex flex-column flex-lg-row justify-content-lg-center mb-2">
-                    <div class="d-flex justify-content-center">
-                        <figure class="figure mb-0 mx-3 position-relative">
-                            <img src="<?= base_url('assets/images/kacamata.png') ?>" width="512px" id="kacamata" class="figure-img img-fluid mb-0 pb-0" alt="Kacamata">
-                            <!-- Garisan Axis -->
-                            <div class="position-absolute top-50 start-0 translate-middle-y w-100">
-                                <!-- OD -->
-                                <div class="garis position-absolute start-0">
-                                    <div class="isi-garis"></div>
-                                </div>
-                                <!-- OS -->
-                                <div class="garis position-absolute end-0">
-                                    <div class="isi-garis"></div>
-                                </div>
-                            </div>
-                        </figure>
-                    </div>
-                    <div class="row g-1 radio-group">
-                        <div class="col col-form-label">
-                            <div class="d-flex flex-row flex-lg-column justify-content-between">
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" <?= ($rawatjalan['transaksi'] == 1) ? 'disabled' : ''; ?> name="tipe_lensa" id="tipe_lensa1" value="TRIFOCUS">
-                                    <label class="form-check-label text-nowrap" for="tipe_lensa1">
-                                        Trifocus
-                                    </label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" <?= ($rawatjalan['transaksi'] == 1) ? 'disabled' : ''; ?> name="tipe_lensa" id="tipe_lensa2" value="BIFOCUS">
-                                    <label class="form-check-label text-nowrap" for="tipe_lensa2">
-                                        Bifocus
-                                    </label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" <?= ($rawatjalan['transaksi'] == 1) ? 'disabled' : ''; ?> name="tipe_lensa" id="tipe_lensa3" value="SINGLE FOCUS">
-                                    <label class="form-check-label text-nowrap" for="tipe_lensa3">
-                                        Single Focus
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="invalid-feedback"></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card overflow-auto mt-3 shadow-sm">
-                    <div class="table-responsive">
-                        <table class="table-sm" style="font-size: 0.75em;">
-                            <thead>
-                                <tr>
-                                    <th class="border-end"></th>
-                                    <th colspan="5" class="text-center border-end">
-                                        <h2 class="mb-0 pt-0">O.D</h2>
-                                    </th>
-                                    <th colspan="5" class="text-center border-start border-end">
-                                        <h2 class="mb-0 pt-0">O.S</h2>
-                                    </th>
-                                    <th colspan="2" class="text-center border-start">
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <th class="border-bottom border-end"></th>
-                                    <th style="min-width: 60px;" class="text-center border-bottom border-start">Vitrum Spher</th>
-                                    <th style="min-width: 60px;" class="text-center border-bottom">Vitrum Cyldr</th>
-                                    <th style="min-width: 60px;" class="text-center border-bottom"><span data-bs-toggle="tooltip" data-bs-title="Jika nilai ini tidak ada, garis axis tidak digambarkan di lembar resep kacamata.">Axis</span></th>
-                                    <th style="min-width: 60px;" class="text-center border-bottom">Prisma</th>
-                                    <th style="min-width: 60px;" class="text-center border-bottom border-end">Basis</th>
-                                    <th style="min-width: 60px;" class="text-center border-bottom border-start">Vitrum Spher</th>
-                                    <th style="min-width: 60px;" class="text-center border-bottom">Vitrum Cyldr</th>
-                                    <th style="min-width: 60px;" class="text-center border-bottom"><span data-bs-toggle="tooltip" data-bs-title="Jika nilai ini tidak ada, garis axis tidak digambarkan di lembar resep kacamata.">Axis</span></th>
-                                    <th style="min-width: 60px;" class="text-center border-bottom">Prisma</th>
-                                    <th style="min-width: 60px;" class="text-center border-bottom border-end">Basis</th>
-                                    <th style="min-width: 60px;" class="text-center border-bottom border-start">Golor Vitror</th>
-                                    <th style="min-width: 60px;" class="text-center border-bottom">Distant Pupil</th>
-                                </tr>
-                                <tr>
-                                    <th class="text-center border-end">Pro Login Quitat</th>
-                                    <th class="border-start">
-                                        <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="od_login_spher" name="od_login_spher" list="od_login_spher_list">
-                                        <datalist id="od_login_spher_list">
-                                            <option value="+3.00"></option>
-                                            <option value="+2.75"></option>
-                                            <option value="+2.50"></option>
-                                            <option value="+2.25"></option>
-                                            <option value="+2.00"></option>
-                                            <option value="+1.75"></option>
-                                            <option value="+1.50"></option>
-                                            <option value="+1.25"></option>
-                                            <option value="+1.00"></option>
-                                            <option value="+0.75"></option>
-                                            <option value="+0.50"></option>
-                                            <option value="+0.25"></option>
-                                            <option value="Plano"></option>
-                                            <option value="-0.25"></option>
-                                            <option value="-0.50"></option>
-                                            <option value="-0.75"></option>
-                                            <option value="-1.00"></option>
-                                            <option value="-1.25"></option>
-                                            <option value="-1.50"></option>
-                                            <option value="-1.75"></option>
-                                            <option value="-2.00"></option>
-                                            <option value="-2.25"></option>
-                                            <option value="-2.50"></option>
-                                            <option value="-2.75"></option>
-                                            <option value="-3.00"></option>
-                                        </datalist>
-                                    </th>
-                                    <th>
-                                        <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="od_login_cyldr" name="od_login_cyldr" list="od_login_cyldr_list">
-                                        <datalist id="od_login_cyldr_list">
-                                            <option value="+3.00"></option>
-                                            <option value="+2.75"></option>
-                                            <option value="+2.50"></option>
-                                            <option value="+2.25"></option>
-                                            <option value="+2.00"></option>
-                                            <option value="+1.75"></option>
-                                            <option value="+1.50"></option>
-                                            <option value="+1.25"></option>
-                                            <option value="+1.00"></option>
-                                            <option value="+0.75"></option>
-                                            <option value="+0.50"></option>
-                                            <option value="+0.25"></option>
-                                            <option value="Plano"></option>
-                                            <option value="-0.25"></option>
-                                            <option value="-0.50"></option>
-                                            <option value="-0.75"></option>
-                                            <option value="-1.00"></option>
-                                            <option value="-1.25"></option>
-                                            <option value="-1.50"></option>
-                                            <option value="-1.75"></option>
-                                            <option value="-2.00"></option>
-                                            <option value="-2.25"></option>
-                                            <option value="-2.50"></option>
-                                            <option value="-2.75"></option>
-                                            <option value="-3.00"></option>
-                                        </datalist>
-                                    </th>
-                                    <th>
-                                        <input type="number" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="od_login_axis" name="od_login_axis">
-                                    </th>
-                                    <th>
-                                        <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="od_login_prisma" name="od_login_prisma">
-                                    </th>
-                                    <th class="border-end">
-                                        <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="od_login_basis" name="od_login_basis">
-                                    </th>
-                                    <th class="border-start">
-                                        <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="os_login_spher" name="os_login_spher" list="os_login_spher_list">
-                                        <datalist id="os_login_spher_list">
-                                            <option value="+3.00"></option>
-                                            <option value="+2.75"></option>
-                                            <option value="+2.50"></option>
-                                            <option value="+2.25"></option>
-                                            <option value="+2.00"></option>
-                                            <option value="+1.75"></option>
-                                            <option value="+1.50"></option>
-                                            <option value="+1.25"></option>
-                                            <option value="+1.00"></option>
-                                            <option value="+0.75"></option>
-                                            <option value="+0.50"></option>
-                                            <option value="+0.25"></option>
-                                            <option value="Plano"></option>
-                                            <option value="-0.25"></option>
-                                            <option value="-0.50"></option>
-                                            <option value="-0.75"></option>
-                                            <option value="-1.00"></option>
-                                            <option value="-1.25"></option>
-                                            <option value="-1.50"></option>
-                                            <option value="-1.75"></option>
-                                            <option value="-2.00"></option>
-                                            <option value="-2.25"></option>
-                                            <option value="-2.50"></option>
-                                            <option value="-2.75"></option>
-                                            <option value="-3.00"></option>
-                                        </datalist>
-                                    </th>
-                                    <th>
-                                        <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="os_login_cyldr" name="os_login_cyldr" list="os_login_cyldr_list">
-                                        <datalist id="os_login_cyldr_list">
-                                            <option value="+3.00"></option>
-                                            <option value="+2.75"></option>
-                                            <option value="+2.50"></option>
-                                            <option value="+2.25"></option>
-                                            <option value="+2.00"></option>
-                                            <option value="+1.75"></option>
-                                            <option value="+1.50"></option>
-                                            <option value="+1.25"></option>
-                                            <option value="+1.00"></option>
-                                            <option value="+0.75"></option>
-                                            <option value="+0.50"></option>
-                                            <option value="+0.25"></option>
-                                            <option value="Plano"></option>
-                                            <option value="-0.25"></option>
-                                            <option value="-0.50"></option>
-                                            <option value="-0.75"></option>
-                                            <option value="-1.00"></option>
-                                            <option value="-1.25"></option>
-                                            <option value="-1.50"></option>
-                                            <option value="-1.75"></option>
-                                            <option value="-2.00"></option>
-                                            <option value="-2.25"></option>
-                                            <option value="-2.50"></option>
-                                            <option value="-2.75"></option>
-                                            <option value="-3.00"></option>
-                                        </datalist>
-                                    </th>
-                                    <th>
-                                        <input type="number" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="os_login_axis" name="os_login_axis">
-                                    </th>
-                                    <th>
-                                        <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="os_login_prisma" name="os_login_prisma">
-                                    </th>
-                                    <th class="border-end">
-                                        <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="os_login_basis" name="os_login_basis">
-                                    <th class="border-start">
-                                        <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="os_login_vitror" name="os_login_vitror">
-                                    </th>
-                                    <th>
-                                        <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="os_login_pupil" name="os_login_pupil">
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <th class="text-center border-end">Pro Domo</th>
-                                    <th class="border-start">
-                                        <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="od_domo_spher" name="od_domo_spher">
-                                    </th>
-                                    <th>
-                                        <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="od_domo_cyldr" name="od_domo_cyldr">
-                                    </th>
-                                    <th>
-                                        <input type="number" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="od_domo_axis" name="od_domo_axis">
-                                    </th>
-                                    <th>
-                                        <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="od_domo_prisma" name="od_domo_prisma">
-                                    </th>
-                                    <th class="border-end">
-                                        <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="od_domo_basis" name="od_domo_basis">
-                                    </th>
-                                    <th class="border-start">
-                                        <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="os_domo_spher" name="os_domo_spher">
-                                    </th>
-                                    <th>
-                                        <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="os_domo_cyldr" name="os_domo_cyldr">
-                                    </th>
-                                    <th>
-                                        <input type="number" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="os_domo_axis" name="os_domo_axis">
-                                    </th>
-                                    <th>
-                                        <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="os_domo_prisma" name="os_domo_prisma">
-                                    </th>
-                                    <th class="border-end">
-                                        <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="os_domo_basis" name="os_domo_basis">
-                                    <th class="border-start">
-                                        <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="os_domo_vitror" name="os_domo_vitror">
-                                    </th>
-                                    <th>
-                                        <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="os_domo_pupil" name="os_domo_pupil">
-                                    </th>
-                                </tr>
-                                <tr>
-                                    <th class="text-center border-end">Propin Quitat</th>
-                                    <th class="border-start">
-                                        <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="od_quitat_spher" name="od_quitat_spher" list="od_quitat_spher_list">
-                                        <datalist id="od_quitat_spher_list">
-                                            <option value="+1.00"></option>
-                                            <option value="+1.25"></option>
-                                            <option value="+1.50"></option>
-                                            <option value="+1.75"></option>
-                                            <option value="+2.00"></option>
-                                            <option value="+2.25"></option>
-                                            <option value="+2.50"></option>
-                                            <option value="+2.75"></option>
-                                            <option value="+3.00"></option>
-                                        </datalist>
-                                    </th>
-                                    <th>
-                                        <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="od_quitat_cyldr" name="od_quitat_cyldr">
-                                    </th>
-                                    <th>
-                                        <input type="number" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="od_quitat_axis" name="od_quitat_axis">
-                                    </th>
-                                    <th>
-                                        <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="od_quitat_prisma" name="od_quitat_prisma">
-                                    </th>
-                                    <th class="border-end">
-                                        <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="od_quitat_basis" name="od_quitat_basis">
-                                    </th>
-                                    <th class="border-start">
-                                        <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="os_quitat_spher" name="os_quitat_spher" list="os_quitat_spher_list">
-                                        <datalist id="os_quitat_spher_list">
-                                            <option value="+1.00"></option>
-                                            <option value="+1.25"></option>
-                                            <option value="+1.50"></option>
-                                            <option value="+1.75"></option>
-                                            <option value="+2.00"></option>
-                                            <option value="+2.25"></option>
-                                            <option value="+2.50"></option>
-                                            <option value="+2.75"></option>
-                                            <option value="+3.00"></option>
-                                        </datalist>
-                                    </th>
-                                    <th>
-                                        <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="os_quitat_cyldr" name="os_quitat_cyldr">
-                                    </th>
-                                    <th>
-                                        <input type="number" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="os_quitat_axis" name="os_quitat_axis">
-                                    </th>
-                                    <th>
-                                        <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="os_quitat_prisma" name="os_quitat_prisma">
-                                    </th>
-                                    <th class="border-end">
-                                        <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="os_quitat_basis" name="os_quitat_basis">
-                                    <th class="border-start">
-                                        <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="os_quitat_vitror" name="os_quitat_vitror">
-                                    </th>
-                                    <th>
-                                        <input type="text" <?= ($rawatjalan['transaksi'] == 1) ? 'readonly' : ''; ?> class="form-control form-control-sm m-0" style="height: 60px;" id="os_quitat_pupil" name="os_quitat_pupil">
-                                    </th>
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
-                </div>
-                <div class="mb-3">
-                    <div>
-                        <hr>
-                        <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-3">
-                            <button class="btn btn-body  bg-gradient" type="button" onclick="window.open(`<?= base_url('/rawatjalan/optik/export/' . $rawatjalan['id_rawat_jalan']) ?>`)"><i class="fa-solid fa-print"></i> Cetak Resep</button>
-                            <?php if ($rawatjalan['transaksi'] == 0) : ?>
-                                <button class="btn btn-primary bg-gradient" type="submit" id="submitBtn"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
-                            <?php endif; ?>
-                        </div>
-                    </div>
-                </div>
-                <?php if ($rawatjalan['transaksi'] == 0) : ?>
-                    <?= form_close() ?>
-                <?php else : ?>
-                </div>
             <?php endif; ?>
+            <div class="d-flex flex-column flex-lg-row justify-content-lg-center mb-2">
+                <div class="d-flex justify-content-center">
+                    <figure class="figure mb-0 mx-3 position-relative">
+                        <img src="<?= base_url('assets/images/kacamata.png') ?>" width="512px" id="kacamata" class="figure-img img-fluid mb-0 pb-0" alt="Kacamata">
+                        <!-- Garisan Axis -->
+                        <div class="position-absolute top-50 start-0 translate-middle-y w-100">
+                            <!-- OD -->
+                            <div class="garis position-absolute start-0">
+                                <div class="isi-garis"></div>
+                            </div>
+                            <!-- OS -->
+                            <div class="garis position-absolute end-0">
+                                <div class="isi-garis"></div>
+                            </div>
+                        </div>
+                    </figure>
+                </div>
+                <div class="row g-1 radio-group">
+                    <div class="col col-form-label">
+                        <div class="d-flex flex-row flex-lg-column justify-content-between">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" disabled type="radio" name="tipe_lensa" id="tipe_lensa1" value="TRIFOCUS">
+                                <label class="form-check-label text-nowrap" for="tipe_lensa1">
+                                    Trifocus
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" disabled type="radio" name="tipe_lensa" id="tipe_lensa2" value="BIFOCUS">
+                                <label class="form-check-label text-nowrap" for="tipe_lensa2">
+                                    Bifocus
+                                </label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" disabled type="radio" name="tipe_lensa" id="tipe_lensa3" value="SINGLE FOCUS">
+                                <label class="form-check-label text-nowrap" for="tipe_lensa3">
+                                    Single Focus
+                                </label>
+                            </div>
+                        </div>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="card overflow-auto mt-3 shadow-sm">
+                <div class="table-responsive">
+                    <table class="table-sm" style="font-size: 0.75em;">
+                        <thead>
+                            <tr>
+                                <th class="border-end"></th>
+                                <th colspan="5" class="text-center border-end">
+                                    <h2 class="mb-0 pt-0">O.D</h2>
+                                </th>
+                                <th colspan="5" class="text-center border-start border-end">
+                                    <h2 class="mb-0 pt-0">O.S</h2>
+                                </th>
+                                <th colspan="2" class="text-center border-start">
+                                </th>
+                            </tr>
+                            <tr>
+                                <th class="border-bottom border-end"></th>
+                                <th style="min-width: 60px;" class="text-center border-bottom border-start">Vitrum Spher</th>
+                                <th style="min-width: 60px;" class="text-center border-bottom">Vitrum Cyldr</th>
+                                <th style="min-width: 60px;" class="text-center border-bottom"><span data-bs-toggle="tooltip" data-bs-title="Jika nilai ini tidak ada, garis axis tidak digambarkan di lembar resep kacamata.">Axis</span></th>
+                                <th style="min-width: 60px;" class="text-center border-bottom">Prisma</th>
+                                <th style="min-width: 60px;" class="text-center border-bottom border-end">Basis</th>
+                                <th style="min-width: 60px;" class="text-center border-bottom border-start">Vitrum Spher</th>
+                                <th style="min-width: 60px;" class="text-center border-bottom">Vitrum Cyldr</th>
+                                <th style="min-width: 60px;" class="text-center border-bottom"><span data-bs-toggle="tooltip" data-bs-title="Jika nilai ini tidak ada, garis axis tidak digambarkan di lembar resep kacamata.">Axis</span></th>
+                                <th style="min-width: 60px;" class="text-center border-bottom">Prisma</th>
+                                <th style="min-width: 60px;" class="text-center border-bottom border-end">Basis</th>
+                                <th style="min-width: 60px;" class="text-center border-bottom border-start">Golor Vitror</th>
+                                <th style="min-width: 60px;" class="text-center border-bottom">Distant Pupil</th>
+                            </tr>
+                            <tr>
+                                <th class="text-center border-end">Pro Login Quitat</th>
+                                <th class="border-start">
+                                    <input type="text" readonly class="form-control eyeglass-inputs form-control-sm m-0" style="height: 60px;" id="od_login_spher" name="od_login_spher" list="od_login_spher_list">
+                                    <datalist id="od_login_spher_list">
+                                        <option value="+3.00"></option>
+                                        <option value="+2.75"></option>
+                                        <option value="+2.50"></option>
+                                        <option value="+2.25"></option>
+                                        <option value="+2.00"></option>
+                                        <option value="+1.75"></option>
+                                        <option value="+1.50"></option>
+                                        <option value="+1.25"></option>
+                                        <option value="+1.00"></option>
+                                        <option value="+0.75"></option>
+                                        <option value="+0.50"></option>
+                                        <option value="+0.25"></option>
+                                        <option value="Plano"></option>
+                                        <option value="-0.25"></option>
+                                        <option value="-0.50"></option>
+                                        <option value="-0.75"></option>
+                                        <option value="-1.00"></option>
+                                        <option value="-1.25"></option>
+                                        <option value="-1.50"></option>
+                                        <option value="-1.75"></option>
+                                        <option value="-2.00"></option>
+                                        <option value="-2.25"></option>
+                                        <option value="-2.50"></option>
+                                        <option value="-2.75"></option>
+                                        <option value="-3.00"></option>
+                                    </datalist>
+                                </th>
+                                <th>
+                                    <input type="text" readonly class="form-control eyeglass-inputs form-control-sm m-0" style="height: 60px;" id="od_login_cyldr" name="od_login_cyldr" list="od_login_cyldr_list">
+                                    <datalist id="od_login_cyldr_list">
+                                        <option value="+3.00"></option>
+                                        <option value="+2.75"></option>
+                                        <option value="+2.50"></option>
+                                        <option value="+2.25"></option>
+                                        <option value="+2.00"></option>
+                                        <option value="+1.75"></option>
+                                        <option value="+1.50"></option>
+                                        <option value="+1.25"></option>
+                                        <option value="+1.00"></option>
+                                        <option value="+0.75"></option>
+                                        <option value="+0.50"></option>
+                                        <option value="+0.25"></option>
+                                        <option value="Plano"></option>
+                                        <option value="-0.25"></option>
+                                        <option value="-0.50"></option>
+                                        <option value="-0.75"></option>
+                                        <option value="-1.00"></option>
+                                        <option value="-1.25"></option>
+                                        <option value="-1.50"></option>
+                                        <option value="-1.75"></option>
+                                        <option value="-2.00"></option>
+                                        <option value="-2.25"></option>
+                                        <option value="-2.50"></option>
+                                        <option value="-2.75"></option>
+                                        <option value="-3.00"></option>
+                                    </datalist>
+                                </th>
+                                <th>
+                                    <input type="number" readonly class="form-control eyeglass-inputs form-control-sm m-0" style="height: 60px;" id="od_login_axis" name="od_login_axis">
+                                </th>
+                                <th>
+                                    <input type="text" readonly class="form-control eyeglass-inputs form-control-sm m-0" style="height: 60px;" id="od_login_prisma" name="od_login_prisma">
+                                </th>
+                                <th class="border-end">
+                                    <input type="text" readonly class="form-control eyeglass-inputs form-control-sm m-0" style="height: 60px;" id="od_login_basis" name="od_login_basis">
+                                </th>
+                                <th class="border-start">
+                                    <input type="text" readonly class="form-control eyeglass-inputs form-control-sm m-0" style="height: 60px;" id="os_login_spher" name="os_login_spher" list="os_login_spher_list">
+                                    <datalist id="os_login_spher_list">
+                                        <option value="+3.00"></option>
+                                        <option value="+2.75"></option>
+                                        <option value="+2.50"></option>
+                                        <option value="+2.25"></option>
+                                        <option value="+2.00"></option>
+                                        <option value="+1.75"></option>
+                                        <option value="+1.50"></option>
+                                        <option value="+1.25"></option>
+                                        <option value="+1.00"></option>
+                                        <option value="+0.75"></option>
+                                        <option value="+0.50"></option>
+                                        <option value="+0.25"></option>
+                                        <option value="Plano"></option>
+                                        <option value="-0.25"></option>
+                                        <option value="-0.50"></option>
+                                        <option value="-0.75"></option>
+                                        <option value="-1.00"></option>
+                                        <option value="-1.25"></option>
+                                        <option value="-1.50"></option>
+                                        <option value="-1.75"></option>
+                                        <option value="-2.00"></option>
+                                        <option value="-2.25"></option>
+                                        <option value="-2.50"></option>
+                                        <option value="-2.75"></option>
+                                        <option value="-3.00"></option>
+                                    </datalist>
+                                </th>
+                                <th>
+                                    <input type="text" readonly class="form-control eyeglass-inputs form-control-sm m-0" style="height: 60px;" id="os_login_cyldr" name="os_login_cyldr" list="os_login_cyldr_list">
+                                    <datalist id="os_login_cyldr_list">
+                                        <option value="+3.00"></option>
+                                        <option value="+2.75"></option>
+                                        <option value="+2.50"></option>
+                                        <option value="+2.25"></option>
+                                        <option value="+2.00"></option>
+                                        <option value="+1.75"></option>
+                                        <option value="+1.50"></option>
+                                        <option value="+1.25"></option>
+                                        <option value="+1.00"></option>
+                                        <option value="+0.75"></option>
+                                        <option value="+0.50"></option>
+                                        <option value="+0.25"></option>
+                                        <option value="Plano"></option>
+                                        <option value="-0.25"></option>
+                                        <option value="-0.50"></option>
+                                        <option value="-0.75"></option>
+                                        <option value="-1.00"></option>
+                                        <option value="-1.25"></option>
+                                        <option value="-1.50"></option>
+                                        <option value="-1.75"></option>
+                                        <option value="-2.00"></option>
+                                        <option value="-2.25"></option>
+                                        <option value="-2.50"></option>
+                                        <option value="-2.75"></option>
+                                        <option value="-3.00"></option>
+                                    </datalist>
+                                </th>
+                                <th>
+                                    <input type="number" readonly class="form-control eyeglass-inputs form-control-sm m-0" style="height: 60px;" id="os_login_axis" name="os_login_axis">
+                                </th>
+                                <th>
+                                    <input type="text" readonly class="form-control eyeglass-inputs form-control-sm m-0" style="height: 60px;" id="os_login_prisma" name="os_login_prisma">
+                                </th>
+                                <th class="border-end">
+                                    <input type="text" readonly class="form-control eyeglass-inputs form-control-sm m-0" style="height: 60px;" id="os_login_basis" name="os_login_basis">
+                                <th class="border-start">
+                                    <input type="text" readonly class="form-control eyeglass-inputs form-control-sm m-0" style="height: 60px;" id="os_login_vitror" name="os_login_vitror">
+                                </th>
+                                <th>
+                                    <input type="text" readonly class="form-control eyeglass-inputs form-control-sm m-0" style="height: 60px;" id="os_login_pupil" name="os_login_pupil">
+                                </th>
+                            </tr>
+                            <tr>
+                                <th class="text-center border-end">Pro Domo</th>
+                                <th class="border-start">
+                                    <input type="text" readonly class="form-control eyeglass-inputs form-control-sm m-0" style="height: 60px;" id="od_domo_spher" name="od_domo_spher">
+                                </th>
+                                <th>
+                                    <input type="text" readonly class="form-control eyeglass-inputs form-control-sm m-0" style="height: 60px;" id="od_domo_cyldr" name="od_domo_cyldr">
+                                </th>
+                                <th>
+                                    <input type="number" readonly class="form-control eyeglass-inputs form-control-sm m-0" style="height: 60px;" id="od_domo_axis" name="od_domo_axis">
+                                </th>
+                                <th>
+                                    <input type="text" readonly class="form-control eyeglass-inputs form-control-sm m-0" style="height: 60px;" id="od_domo_prisma" name="od_domo_prisma">
+                                </th>
+                                <th class="border-end">
+                                    <input type="text" readonly class="form-control eyeglass-inputs form-control-sm m-0" style="height: 60px;" id="od_domo_basis" name="od_domo_basis">
+                                </th>
+                                <th class="border-start">
+                                    <input type="text" readonly class="form-control eyeglass-inputs form-control-sm m-0" style="height: 60px;" id="os_domo_spher" name="os_domo_spher">
+                                </th>
+                                <th>
+                                    <input type="text" readonly class="form-control eyeglass-inputs form-control-sm m-0" style="height: 60px;" id="os_domo_cyldr" name="os_domo_cyldr">
+                                </th>
+                                <th>
+                                    <input type="number" readonly class="form-control eyeglass-inputs form-control-sm m-0" style="height: 60px;" id="os_domo_axis" name="os_domo_axis">
+                                </th>
+                                <th>
+                                    <input type="text" readonly class="form-control eyeglass-inputs form-control-sm m-0" style="height: 60px;" id="os_domo_prisma" name="os_domo_prisma">
+                                </th>
+                                <th class="border-end">
+                                    <input type="text" readonly class="form-control eyeglass-inputs form-control-sm m-0" style="height: 60px;" id="os_domo_basis" name="os_domo_basis">
+                                <th class="border-start">
+                                    <input type="text" readonly class="form-control eyeglass-inputs form-control-sm m-0" style="height: 60px;" id="os_domo_vitror" name="os_domo_vitror">
+                                </th>
+                                <th>
+                                    <input type="text" readonly class="form-control eyeglass-inputs form-control-sm m-0" style="height: 60px;" id="os_domo_pupil" name="os_domo_pupil">
+                                </th>
+                            </tr>
+                            <tr>
+                                <th class="text-center border-end">Propin Quitat</th>
+                                <th class="border-start">
+                                    <input type="text" readonly class="form-control eyeglass-inputs form-control-sm m-0" style="height: 60px;" id="od_quitat_spher" name="od_quitat_spher" list="od_quitat_spher_list">
+                                    <datalist id="od_quitat_spher_list">
+                                        <option value="+1.00"></option>
+                                        <option value="+1.25"></option>
+                                        <option value="+1.50"></option>
+                                        <option value="+1.75"></option>
+                                        <option value="+2.00"></option>
+                                        <option value="+2.25"></option>
+                                        <option value="+2.50"></option>
+                                        <option value="+2.75"></option>
+                                        <option value="+3.00"></option>
+                                    </datalist>
+                                </th>
+                                <th>
+                                    <input type="text" readonly class="form-control eyeglass-inputs form-control-sm m-0" style="height: 60px;" id="od_quitat_cyldr" name="od_quitat_cyldr">
+                                </th>
+                                <th>
+                                    <input type="number" readonly class="form-control eyeglass-inputs form-control-sm m-0" style="height: 60px;" id="od_quitat_axis" name="od_quitat_axis">
+                                </th>
+                                <th>
+                                    <input type="text" readonly class="form-control eyeglass-inputs form-control-sm m-0" style="height: 60px;" id="od_quitat_prisma" name="od_quitat_prisma">
+                                </th>
+                                <th class="border-end">
+                                    <input type="text" readonly class="form-control eyeglass-inputs form-control-sm m-0" style="height: 60px;" id="od_quitat_basis" name="od_quitat_basis">
+                                </th>
+                                <th class="border-start">
+                                    <input type="text" readonly class="form-control eyeglass-inputs form-control-sm m-0" style="height: 60px;" id="os_quitat_spher" name="os_quitat_spher" list="os_quitat_spher_list">
+                                    <datalist id="os_quitat_spher_list">
+                                        <option value="+1.00"></option>
+                                        <option value="+1.25"></option>
+                                        <option value="+1.50"></option>
+                                        <option value="+1.75"></option>
+                                        <option value="+2.00"></option>
+                                        <option value="+2.25"></option>
+                                        <option value="+2.50"></option>
+                                        <option value="+2.75"></option>
+                                        <option value="+3.00"></option>
+                                    </datalist>
+                                </th>
+                                <th>
+                                    <input type="text" readonly class="form-control eyeglass-inputs form-control-sm m-0" style="height: 60px;" id="os_quitat_cyldr" name="os_quitat_cyldr">
+                                </th>
+                                <th>
+                                    <input type="number" readonly class="form-control eyeglass-inputs form-control-sm m-0" style="height: 60px;" id="os_quitat_axis" name="os_quitat_axis">
+                                </th>
+                                <th>
+                                    <input type="text" readonly class="form-control eyeglass-inputs form-control-sm m-0" style="height: 60px;" id="os_quitat_prisma" name="os_quitat_prisma">
+                                </th>
+                                <th class="border-end">
+                                    <input type="text" readonly class="form-control eyeglass-inputs form-control-sm m-0" style="height: 60px;" id="os_quitat_basis" name="os_quitat_basis">
+                                <th class="border-start">
+                                    <input type="text" readonly class="form-control eyeglass-inputs form-control-sm m-0" style="height: 60px;" id="os_quitat_vitror" name="os_quitat_vitror">
+                                </th>
+                                <th>
+                                    <input type="text" readonly class="form-control eyeglass-inputs form-control-sm m-0" style="height: 60px;" id="os_quitat_pupil" name="os_quitat_pupil">
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <div class="mb-3">
+                <div>
+                    <hr>
+                    <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-3">
+                        <button class="btn btn-body  bg-gradient" type="button" onclick="window.open(`<?= base_url('/rawatjalan/optik/export/' . $rawatjalan['id_rawat_jalan']) ?>`)"><i class="fa-solid fa-print"></i> Cetak Resep</button>
+                        <button class="btn btn-primary bg-gradient" type="submit" id="submitBtn" disabled><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
+                    </div>
+                </div>
+            </div>
+            <?= form_close() ?>
         </div>
     </div>
 </main>
@@ -498,8 +488,19 @@ $usia = $registrasi->diff($tanggal_lahir);
         try {
             const response = await axios.get('<?= base_url('rawatjalan/optik/view/') . $optik['id_optik'] ?>');
             const data = response.data;
-
+            const transaksi = data.transaksi;
             const tipe_lensa = data.tipe_lensa;
+
+            if (transaksi === '1') {
+                $("input[name='tipe_lensa']").prop('disabled', true);
+                $(".eyeglass-inputs").prop('readonly', true);
+                $("#submitBtn").prop('disabled', true);
+            } else {
+                $("input[name='tipe_lensa']").prop('disabled', false);
+                $(".eyeglass-inputs").prop('readonly', false);
+                $("#submitBtn").prop('disabled', false);
+            }
+
             if (tipe_lensa) {
                 $("input[name='tipe_lensa'][value='" + tipe_lensa + "']").prop('checked', true);
             }
@@ -603,101 +604,99 @@ $usia = $registrasi->diff($tanggal_lahir);
                 $(".garis.end-0").css("transform", `translateY(-50%) rotate(-${value}deg)`).css("opacity", "1");
             }
         });
-        <?php if ($rawatjalan['transaksi'] == 0) : ?>
-            $('#optikForm').submit(async function(ə) {
-                ə.preventDefault();
+        $('#optikForm').submit(async function(ə) {
+            ə.preventDefault();
 
-                const formData = new FormData(this);
-                console.log("Form Data:", $(this).serialize());
+            const formData = new FormData(this);
+            console.log("Form Data:", $(this).serialize());
 
-                // Clear previous validation states
-                $('#optikForm .is-invalid').removeClass('is-invalid');
-                $('#optikForm .invalid-feedback').text('').hide();
-                $('#submitBtn').prop('disabled', true).html(`
+            // Clear previous validation states
+            $('#optikForm .is-invalid').removeClass('is-invalid');
+            $('#optikForm .invalid-feedback').text('').hide();
+            $('#submitBtn').prop('disabled', true).html(`
                 <span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span> Simpan
             `);
 
-                // Disable form inputs
-                $('#optikForm input, #optikForm select, #optikForm button').prop('disabled', true);
+            // Disable form inputs
+            $('#optikForm input, #optikForm select, #optikForm button').prop('disabled', true);
 
-                try {
-                    const response = await axios.post(`<?= base_url('/rawatjalan/optik/update/' . $optik['id_optik']) ?>`, formData, {
-                        headers: {
-                            'Content-Type': 'multipart/form-data'
-                        }
-                    });
+            try {
+                const response = await axios.post(`<?= base_url('/rawatjalan/optik/update/' . $optik['id_optik']) ?>`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
 
-                    if (response.data.success) {
-                        showSuccessToast(response.data.message);
-                        fetchOptik();
-                    } else {
-                        console.log("Validation Errors:", response.data.errors);
+                if (response.data.success) {
+                    showSuccessToast(response.data.message);
+                    fetchOptik();
+                } else {
+                    console.log("Validation Errors:", response.data.errors);
 
-                        // Clear previous validation states
-                        $('#optikForm .is-invalid').removeClass('is-invalid');
-                        $('#optikForm .invalid-feedback').text('').hide();
+                    // Clear previous validation states
+                    $('#optikForm .is-invalid').removeClass('is-invalid');
+                    $('#optikForm .invalid-feedback').text('').hide();
 
-                        // Display new validation errors
-                        for (const field in response.data.errors) {
-                            if (response.data.errors.hasOwnProperty(field)) {
-                                const fieldElement = $('#' + field);
+                    // Display new validation errors
+                    for (const field in response.data.errors) {
+                        if (response.data.errors.hasOwnProperty(field)) {
+                            const fieldElement = $('#' + field);
 
-                                // Handle radio button group separately
-                                if (['tipe_lensa'].includes(field)) {
-                                    const radioGroup = $(`input[name='${field}']`); // Ambil grup radio berdasarkan nama
-                                    const feedbackElement = radioGroup.closest('.radio-group').find('.invalid-feedback'); // Gunakan pembungkus dengan class tertentu
+                            // Handle radio button group separately
+                            if (['tipe_lensa'].includes(field)) {
+                                const radioGroup = $(`input[name='${field}']`); // Ambil grup radio berdasarkan nama
+                                const feedbackElement = radioGroup.closest('.radio-group').find('.invalid-feedback'); // Gunakan pembungkus dengan class tertentu
 
-                                    if (radioGroup.length > 0 && feedbackElement.length > 0) {
-                                        radioGroup.addClass('is-invalid');
-                                        feedbackElement.text(response.data.errors[field]).show();
+                                if (radioGroup.length > 0 && feedbackElement.length > 0) {
+                                    radioGroup.addClass('is-invalid');
+                                    feedbackElement.text(response.data.errors[field]).show();
 
-                                        // Remove error message when the user selects any radio button in the group
-                                        radioGroup.on('change', function() {
-                                            radioGroup.removeClass('is-invalid');
-                                            feedbackElement.text('').hide();
-                                        });
-                                    } else {
-                                        console.warn("Radio group tidak ditemukan untuk field:", field);
-                                    }
+                                    // Remove error message when the user selects any radio button in the group
+                                    radioGroup.on('change', function() {
+                                        radioGroup.removeClass('is-invalid');
+                                        feedbackElement.text('').hide();
+                                    });
                                 } else {
-                                    let feedbackElement = fieldElement.siblings('.invalid-feedback');
+                                    console.warn("Radio group tidak ditemukan untuk field:", field);
+                                }
+                            } else {
+                                let feedbackElement = fieldElement.siblings('.invalid-feedback');
 
-                                    // Handle input-group cases
-                                    if (fieldElement.closest('.input-group').length) {
-                                        feedbackElement = fieldElement.closest('.input-group').find('.invalid-feedback');
-                                    }
+                                // Handle input-group cases
+                                if (fieldElement.closest('.input-group').length) {
+                                    feedbackElement = fieldElement.closest('.input-group').find('.invalid-feedback');
+                                }
 
-                                    if (fieldElement.length > 0 && feedbackElement.length > 0) {
-                                        fieldElement.addClass('is-invalid');
-                                        feedbackElement.text(response.data.errors[field]).show();
+                                if (fieldElement.length > 0 && feedbackElement.length > 0) {
+                                    fieldElement.addClass('is-invalid');
+                                    feedbackElement.text(response.data.errors[field]).show();
 
-                                        // Remove error message when the user corrects the input
-                                        fieldElement.on('input change', function() {
-                                            $(this).removeClass('is-invalid');
-                                            $(this).siblings('.invalid-feedback').text('').hide();
-                                        });
-                                    } else {
-                                        console.warn("Elemen tidak ditemukan pada field:", field);
-                                    }
+                                    // Remove error message when the user corrects the input
+                                    fieldElement.on('input change', function() {
+                                        $(this).removeClass('is-invalid');
+                                        $(this).siblings('.invalid-feedback').text('').hide();
+                                    });
+                                } else {
+                                    console.warn("Elemen tidak ditemukan pada field:", field);
                                 }
                             }
                         }
-                        console.error('Perbaiki kesalahan pada formulir.');
                     }
-                } catch (error) {
-                    if (error.response.request.status === 422 || error.response.request.status === 400) {
-                        showFailedToast(error.response.data.message);
-                    } else {
-                        showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
-                    }
-                } finally {
-                    $('#submitBtn').prop('disabled', false).html(`
+                    console.error('Perbaiki kesalahan pada formulir.');
+                }
+            } catch (error) {
+                if (error.response.request.status === 422 || error.response.request.status === 400) {
+                    showFailedToast(error.response.data.message);
+                } else {
+                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                }
+            } finally {
+                $('#submitBtn').prop('disabled', false).html(`
                     <i class="fa-solid fa-floppy-disk"></i> Simpan
                 `);
-                    $('#optikForm input, #optikForm select, #optikForm button').prop('disabled', false);
-                }
-            });
-        <?php endif; ?>
+                $('#optikForm input, #optikForm select, #optikForm button').prop('disabled', false);
+            }
+        });
         $('#refreshButton').on('click', async function(e) {
             e.preventDefault();
             fetchOptik();
