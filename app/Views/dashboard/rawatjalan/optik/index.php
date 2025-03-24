@@ -407,15 +407,15 @@ $usia = $registrasi->diff($tanggal_lahir);
                                 <th class="border-start">
                                     <input type="text" readonly class="form-control eyeglass-inputs form-control-sm m-0" style="height: 60px;" id="od_quitat_spher" name="od_quitat_spher" list="od_quitat_spher_list">
                                     <datalist id="od_quitat_spher_list">
-                                        <option value="+1.00"></option>
-                                        <option value="+1.25"></option>
-                                        <option value="+1.50"></option>
-                                        <option value="+1.75"></option>
-                                        <option value="+2.00"></option>
-                                        <option value="+2.25"></option>
-                                        <option value="+2.50"></option>
-                                        <option value="+2.75"></option>
-                                        <option value="+3.00"></option>
+                                        <option value="Add +1.00"></option>
+                                        <option value="Add +1.25"></option>
+                                        <option value="Add +1.50"></option>
+                                        <option value="Add +1.75"></option>
+                                        <option value="Add +2.00"></option>
+                                        <option value="Add +2.25"></option>
+                                        <option value="Add +2.50"></option>
+                                        <option value="Add +2.75"></option>
+                                        <option value="Add +3.00"></option>
                                     </datalist>
                                 </th>
                                 <th>
@@ -433,15 +433,15 @@ $usia = $registrasi->diff($tanggal_lahir);
                                 <th class="border-start">
                                     <input type="text" readonly class="form-control eyeglass-inputs form-control-sm m-0" style="height: 60px;" id="os_quitat_spher" name="os_quitat_spher" list="os_quitat_spher_list">
                                     <datalist id="os_quitat_spher_list">
-                                        <option value="+1.00"></option>
-                                        <option value="+1.25"></option>
-                                        <option value="+1.50"></option>
-                                        <option value="+1.75"></option>
-                                        <option value="+2.00"></option>
-                                        <option value="+2.25"></option>
-                                        <option value="+2.50"></option>
-                                        <option value="+2.75"></option>
-                                        <option value="+3.00"></option>
+                                        <option value="Add +1.00"></option>
+                                        <option value="Add +1.25"></option>
+                                        <option value="Add +1.50"></option>
+                                        <option value="Add +1.75"></option>
+                                        <option value="Add +2.00"></option>
+                                        <option value="Add +2.25"></option>
+                                        <option value="Add +2.50"></option>
+                                        <option value="Add +2.75"></option>
+                                        <option value="Add +3.00"></option>
                                     </datalist>
                                 </th>
                                 <th>
