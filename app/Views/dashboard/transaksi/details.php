@@ -1477,6 +1477,10 @@
                 } else {
                     showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
                 }
+                $('#password').val('');
+                setTimeout(() => {
+                    $('#password').trigger('focus');
+                }, 10);
             } finally {
                 $('#cancelSubmitButton').prop('disabled', false).html(`
                     <i class="fa-solid fa-xmark"></i> Batalkan
