@@ -15,6 +15,7 @@
     <link href="<?= base_url(); ?>assets_public/fontawesome/css/all.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/css/main.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/css/JawiDubai.css" rel="stylesheet">
+    <link href="<?= base_url(); ?>assets_public/fonts/iosevka-term-ss06/IosevkaTermSS06.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/fonts/inter-hwp/inter-hwp.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/fonts/roboto/stylesheet.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/fonts/noto-sans-lgc/stylesheet.css" rel="stylesheet">
@@ -142,7 +143,7 @@
     <style>
         :root {
             --bs-font-sans-serif: "Inter HWP", Roboto, "Noto Sans", "Noto Sans Arabic", system-ui, -apple-system, "Helvetica Neue", Arial, "Liberation Sans", sans-serif;
-            --bs-font-monospace: "Noto Sans Mono", Menlo, Monaco, Consolas, "Courier New", "Liberation Mono", monospace;
+            --bs-font-monospace: "Iosevka Term SS06 Web", Menlo, Monaco, Consolas, "Courier New", "Liberation Mono", monospace;
         }
 
         html,
