@@ -313,11 +313,6 @@ class Rujukan extends BaseController
                 ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
                 ->find($id);
 
-            $dokter = $db->table('user')
-                ->where('role', 'Dokter')
-                ->where('active', 1)
-                ->get()->getResultArray();
-
             // Query untuk item sebelumnya
             $previous = $db->table('medrec_rujukan')
                 ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_rujukan.nomor_registrasi', 'inner')
@@ -350,7 +345,6 @@ class Rujukan extends BaseController
             // Menyiapkan data untuk tampilan
             $data = [
                 'rujukan' => $rujukan,
-                'dokter' => $dokter,
                 'title' => 'Surat Rujukan ' . $rujukan['nama_pasien'] . ' (' . $rujukan['no_rm'] . ') - ' . $rujukan['nomor_registrasi'] . ' - ' . $this->systemName,
                 'headertitle' => 'Surat Rujukan',
                 'agent' => $this->request->getUserAgent(), // Mengambil informasi user agent
