@@ -491,10 +491,8 @@
                     <div class="form-floating mb-1 mt-1">
                         <select class="form-select" id="alasan_batal" name="alasan_batal" aria-label="alasan_batal">
                             <option value="" disabled selected>-- Pilih Alasan Pembatalan --</option>
-                            <option value="Kesalahan dalam Memasukkan Data">Kesalahan dalam Memasukkan Data</option>
-                            <option value="Tidak Jadi Berobat">Tidak Jadi Berobat</option>
-                            <option value="Ganti Jadwal Dokter">Ganti Jadwal Dokter</option>
-                            <option value="Tidak Datang">Tidak Datang</option>
+                            <option value="HAPUS">Kesalahan Input, Ganti Jadwal Dokter, atau Pasien Salah Tempat Berobat (Hapus Registrasi)</option>
+                            <option value="Pasien Tidak Jadi Berobat">Pasien Tidak Jadi Berobat (Atur ke Batal)</option>
                         </select>
                         <label for="alasan_batal">Alasan Pembatalan<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
@@ -560,7 +558,7 @@
                 </div>
                 <div class="modal-footer justify-content-end pt-2 pb-2" style="border-top: 1px solid var(--bs-border-color-translucent);">
                     <button type="submit" id="submitButton" class="btn btn-primary bg-gradient ">
-                        <i class="fa-solid fa-floppy-disk"></i> Simpan
+                        <i class="fa-solid fa-plus"></i> Registrasi
                     </button>
                 </div>
             </form>
@@ -1558,7 +1556,7 @@
             $('#rajalForm .is-invalid').removeClass('is-invalid');
             $('#rajalForm .invalid-feedback').text('').hide();
             $('#submitButton').prop('disabled', true).html(`
-                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span> Simpan
+                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span> Registrasi
             `);
 
             // Disable form inputs
@@ -1640,7 +1638,7 @@
                 }
             } finally {
                 $('#submitButton').prop('disabled', false).html(`
-                    <i class="fa-solid fa-floppy-disk"></i> Simpan
+                    <i class="fa-solid fa-plus"></i> Registrasi
                 `);
                 $('#rajalForm input, #rajalForm select').prop('disabled', false);
             }

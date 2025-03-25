@@ -448,7 +448,7 @@ class RawatJalan extends BaseController
             $rawatJalanData = $rajalq->get()->getRow();
             $nomorRegistrasi = $rawatJalanData->nomor_registrasi ?? null;
 
-            if ($this->request->getPost('alasan_batal') == 'Kesalahan dalam Memasukkan Data') {
+            if ($this->request->getPost('alasan_batal') == 'HAPUS') {
                 if ($nomorRegistrasi) {
                     // Hapus file terkait sebelum menghapus data
                     $asesmen_mata = $db->table('medrec_assesment_mata')
