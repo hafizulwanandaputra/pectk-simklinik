@@ -438,7 +438,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                         <input type="text" class="form-control my-auto" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="diagnosa_medis_1" name="diagnosa_medis_1" value="" autocomplete="off" dir="auto">
                         <div class="invalid-feedback"></div>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-5">
                         <select class="form-select " id="icdx_kode_1" name="icdx_kode_1" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?>>
                         </select>
                         <div class="invalid-feedback"></div>
@@ -449,7 +449,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                         <input type="text" class="form-control my-auto" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="diagnosa_medis_2" name="diagnosa_medis_2" value="" autocomplete="off" dir="auto">
                         <div class="invalid-feedback"></div>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-5">
                         <select class="form-select " id="icdx_kode_2" name="icdx_kode_2" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?>>
                         </select>
                         <div class="invalid-feedback"></div>
@@ -460,7 +460,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                         <input type="text" class="form-control my-auto" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="diagnosa_medis_3" name="diagnosa_medis_3" value="" autocomplete="off" dir="auto">
                         <div class="invalid-feedback"></div>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-5">
                         <select class="form-select " id="icdx_kode_3" name="icdx_kode_3" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?>>
                         </select>
                         <div class="invalid-feedback"></div>
@@ -471,7 +471,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                         <input type="text" class="form-control my-auto" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="diagnosa_medis_4" name="diagnosa_medis_4" value="" autocomplete="off" dir="auto">
                         <div class="invalid-feedback"></div>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-5">
                         <select class="form-select " id="icdx_kode_4" name="icdx_kode_4" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?>>
                         </select>
                         <div class="invalid-feedback"></div>
@@ -482,7 +482,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                         <input type="text" class="form-control my-auto" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="diagnosa_medis_5" name="diagnosa_medis_5" value="" autocomplete="off" dir="auto">
                         <div class="invalid-feedback"></div>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-5">
                         <select class="form-select " id="icdx_kode_5" name="icdx_kode_5" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?>>
                         </select>
                         <div class="invalid-feedback"></div>
@@ -496,7 +496,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                         <input type="text" class="form-control my-auto" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="terapi_1" name="terapi_1" value="" autocomplete="off" dir="auto">
                         <div class="invalid-feedback"></div>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-5">
                         <select class="form-select " id="icd9_kode_1" name="icd9_kode_1" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?>>
                         </select>
                         <div class="invalid-feedback"></div>
@@ -507,7 +507,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                         <input type="text" class="form-control my-auto" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="terapi_2" name="terapi_2" value="" autocomplete="off" dir="auto">
                         <div class="invalid-feedback"></div>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-5">
                         <select class="form-select " id="icd9_kode_2" name="icd9_kode_2" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?>>
                         </select>
                         <div class="invalid-feedback"></div>
@@ -518,7 +518,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                         <input type="text" class="form-control my-auto" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="terapi_3" name="terapi_3" value="" autocomplete="off" dir="auto">
                         <div class="invalid-feedback"></div>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-5">
                         <select class="form-select " id="icd9_kode_3" name="icd9_kode_3" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?>>
                         </select>
                         <div class="invalid-feedback"></div>
@@ -529,7 +529,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                         <input type="text" class="form-control my-auto" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="terapi_4" name="terapi_4" value="" autocomplete="off" dir="auto">
                         <div class="invalid-feedback"></div>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-5">
                         <select class="form-select " id="icd9_kode_4" name="icd9_kode_4" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?>>
                         </select>
                         <div class="invalid-feedback"></div>
@@ -540,7 +540,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                         <input type="text" class="form-control my-auto" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?> id="terapi_5" name="terapi_5" value="" autocomplete="off" dir="auto">
                         <div class="invalid-feedback"></div>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-5">
                         <select class="form-select " id="icd9_kode_5" name="icd9_kode_5" <?= (session()->get('role') == 'Perawat') ? 'readonly' : ''; ?>>
                         </select>
                         <div class="invalid-feedback"></div>
