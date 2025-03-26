@@ -140,7 +140,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             <input type="text" class="form-control" id="diagnosa" name="diagnosa" value="" autocomplete="off" dir="auto">
                             <div class="invalid-feedback"></div>
                         </div>
-                        <div class="col-sm-5">
+                        <div class="col-sm-6 col-lg-5">
                             <select class="form-select" id="kode_icd_x" name="kode_icd_x" placeholder="ICD-10">
                             </select>
                             <div class="invalid-feedback"></div>
