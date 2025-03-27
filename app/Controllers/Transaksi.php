@@ -1357,8 +1357,8 @@ class Transaksi extends BaseController
 
     public function cancel($id_transaksi)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+        // Memeriksa peran pengguna, hanya 'Admin' yang diizinkan
+        if (session()->get('role') == 'Admin') {
             // Validasi input
             $validation = \Config\Services::validation();
             // Menetapkan aturan validasi dasar

@@ -378,40 +378,61 @@
 
     <div class="modal fade" id="batalTransaksiModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="batalTransaksiModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable ">
-            <form id="batalTransaksiForm" enctype="multipart/form-data" class="modal-content bg-body-tertiary shadow-lg transparent-blur">
-                <div class="modal-header justify-content-between pt-2 pb-2" style="border-bottom: 1px solid var(--bs-border-color-translucent);">
-                    <h6 class="pe-2 modal-title fs-6 text-truncate" id="batalTransaksiModalLabel" style="font-weight: bold;"></h6>
-                    <button id="batalTransaksiCloseBtn" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body py-2">
-                    <div class="alert alert-warning  mb-1 mt-1" role="alert">
-                        <div class="d-flex align-items-start">
-                            <div style="width: 12px; text-align: center;">
-                                <i class="fa-solid fa-triangle-exclamation"></i>
+            <?php if (session()->get('role') == 'Admin') : ?>
+                <form id="batalTransaksiForm" enctype="multipart/form-data" class="modal-content bg-body-tertiary shadow-lg transparent-blur">
+                    <div class="modal-header justify-content-between pt-2 pb-2" style="border-bottom: 1px solid var(--bs-border-color-translucent);">
+                        <h6 class="pe-2 modal-title fs-6 text-truncate" id="batalTransaksiModalLabel" style="font-weight: bold;"></h6>
+                        <button id="batalTransaksiCloseBtn" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body py-2">
+                        <div class="alert alert-warning  mb-1 mt-1" role="alert">
+                            <div class="d-flex align-items-start">
+                                <div style="width: 12px; text-align: center;">
+                                    <i class="fa-solid fa-triangle-exclamation"></i>
+                                </div>
+                                <div class="w-100 ms-3">
+                                    <h4 style="font-weight: 900;">PERINGATAN!</h4>
+                                    <p class="mb-0">Pastikan Anda telah mendapatkan permintaan dari kasir dan persetujuan dari pimpinan atau manajer klinik untuk membatalkan transaksi ini.</p>
+                                </div>
                             </div>
-                            <div class="w-100 ms-3">
-                                <h4 style="font-weight: 900;">PERINGATAN!</h4>
-                                <p>Pastikan Anda telah mendapatkan persetujuan dari pimpinan atau manajer klinik untuk membatalkan transaksi ini. Pembatalan transaksi <strong>HANYA DILAKUKAN</strong> apabila terjadi kesalahan dalam memasukkan item transaksi.</p>
-                                <p class="mb-0">Segala penyalahgunaan dalam pembatalan transaksi ini akan diproses secara hukum.</p>
+                        </div>
+                        <div class="form-floating mb-1 mt-1">
+                            <input type="password" class="form-control " autocomplete="off" dir="auto" placeholder="password" id="password" name="password" data-bs-toggle="popover"
+                                data-bs-placement="top"
+                                data-bs-trigger="manual"
+                                data-bs-title="<em>CAPS LOCK</em> AKTIF"
+                                data-bs-content="Harap periksa status <span class='badge text-bg-dark bg-gradient kbd'>Caps Lock</span> pada papan tombol (<em>keyboard</em>) Anda.">
+                            <label for="password">Masukkan Kata Sandi Transaksi</label>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                    <div class="modal-footer justify-content-end pt-2 pb-2" style="border-top: 1px solid var(--bs-border-color-translucent);">
+                        <button type="submit" id="cancelSubmitButton" class="btn btn-danger bg-gradient ">
+                            <i class="fa-solid fa-xmark"></i> Batalkan
+                        </button>
+                    </div>
+                </form>
+            <?php else : ?>
+                <div id="batalTransaksiForm" class="modal-content bg-body-tertiary shadow-lg transparent-blur">
+                    <div class="modal-header justify-content-between pt-2 pb-2" style="border-bottom: 1px solid var(--bs-border-color-translucent);">
+                        <h6 class="pe-2 modal-title fs-6 text-truncate" id="batalTransaksiModalLabel" style="font-weight: bold;"></h6>
+                        <button id="batalTransaksiCloseBtn" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body py-2">
+                        <div class="alert alert-danger  mb-1 mt-1" role="alert">
+                            <div class="d-flex align-items-start">
+                                <div style="width: 12px; text-align: center;">
+                                    <i class="fa-solid fa-circle-xmark"></i>
+                                </div>
+                                <div class="w-100 ms-3">
+                                    <h4 style="font-weight: 900;">TIDAK DAPAT MEMBATALKAN TRANSAKSI!</h4>
+                                    <p class="mb-0">Demi keamanan, kasir tidak dapat membatalkan transaksi ini secara langsung. Hubungi admin sistem untuk membatalkan transaksi ini.</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="form-floating mb-1 mt-1">
-                        <input type="password" class="form-control " autocomplete="off" dir="auto" placeholder="password" id="password" name="password" data-bs-toggle="popover"
-                            data-bs-placement="top"
-                            data-bs-trigger="manual"
-                            data-bs-title="<em>CAPS LOCK</em> AKTIF"
-                            data-bs-content="Harap periksa status <span class='badge text-bg-dark bg-gradient kbd'>Caps Lock</span> pada papan tombol (<em>keyboard</em>) Anda.">
-                        <label for="password">Masukkan Kata Sandi Transaksi</label>
-                        <div class="invalid-feedback"></div>
-                    </div>
                 </div>
-                <div class="modal-footer justify-content-end pt-2 pb-2" style="border-top: 1px solid var(--bs-border-color-translucent);">
-                    <button type="submit" id="cancelSubmitButton" class="btn btn-danger bg-gradient ">
-                        <i class="fa-solid fa-xmark"></i> Batalkan
-                    </button>
-                </div>
-            </form>
+            <?php endif; ?>
         </div>
     </div>
 </main>
@@ -1398,96 +1419,112 @@
             }
         });
 
-        $('#batalTransaksiForm').submit(async function(e) {
-            e.preventDefault();
+        <?php if (session()->get('role') == 'Admin') : ?>
+            $('#batalTransaksiForm').submit(async function(e) {
+                e.preventDefault();
 
-            const formData = new FormData(this);
+                const formData = new FormData(this);
 
-            // Clear previous validation states
-            $('#batalTransaksiForm .is-invalid').removeClass('is-invalid');
-            $('#batalTransaksiForm .invalid-feedback').text('').hide();
-            $('#cancelSubmitButton').prop('disabled', true).html(`
+                // Clear previous validation states
+                $('#batalTransaksiForm .is-invalid').removeClass('is-invalid');
+                $('#batalTransaksiForm .invalid-feedback').text('').hide();
+                $('#cancelSubmitButton').prop('disabled', true).html(`
                 <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
                 <span role="status">Membatalkan...</span>
             `);
 
-            // Disable form inputs
-            $('#batalTransaksiForm input, #batalTransaksiCloseBtn').prop('disabled', true);
+                // Disable form inputs
+                $('#batalTransaksiForm input, #batalTransaksiCloseBtn').prop('disabled', true);
 
-            try {
-                const response = await axios.post(`<?= base_url('/transaksi/cancel/' . $transaksi['id_transaksi']) ?>`, formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                });
+                try {
+                    const response = await axios.post(`<?= base_url('/transaksi/cancel/' . $transaksi['id_transaksi']) ?>`, formData, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    });
 
-                if (response.data.success) {
-                    showSuccessToast(response.data.message, 'success');
-                    $('#batalTransaksiModal').modal('hide');
-                    <?php if ($transaksi['dokter'] != 'Resep Luar') : ?>
-                        await Promise.all([
-                            fetchLayananOptions(),
-                            fetchResepOptions(),
-                        ]);
-                        await Promise.all([
-                            fetchLayanan(),
-                            fetchObatAlkes()
-                        ]);
-                    <?php else : ?>
-                        await fetchResepOptions();
-                        await fetchObatAlkes();
-                    <?php endif; ?>
-                    fetchStatusTransaksi();
-                    transactionProcessBtn();
-                } else {
-                    console.log("Validation Errors:", response.data.errors);
+                    if (response.data.success) {
+                        showSuccessToast(response.data.message, 'success');
+                        $('#batalTransaksiModal').modal('hide');
+                        <?php if ($transaksi['dokter'] != 'Resep Luar') : ?>
+                            await Promise.all([
+                                fetchLayananOptions(),
+                                fetchResepOptions(),
+                            ]);
+                            await Promise.all([
+                                fetchLayanan(),
+                                fetchObatAlkes()
+                            ]);
+                        <?php else : ?>
+                            await fetchResepOptions();
+                            await fetchObatAlkes();
+                        <?php endif; ?>
+                        fetchStatusTransaksi();
+                        transactionProcessBtn();
+                    } else {
+                        console.log("Validation Errors:", response.data.errors);
 
-                    // Clear previous validation states
-                    $('#batalTransaksiForm .is-invalid').removeClass('is-invalid');
-                    $('#batalTransaksiForm .invalid-feedback').text('').hide();
+                        // Clear previous validation states
+                        $('#batalTransaksiForm .is-invalid').removeClass('is-invalid');
+                        $('#batalTransaksiForm .invalid-feedback').text('').hide();
 
-                    // Display new validation errors
-                    for (const field in response.data.errors) {
-                        if (response.data.errors.hasOwnProperty(field)) {
-                            const fieldElement = $('#' + field);
-                            const feedbackElement = fieldElement.siblings('.invalid-feedback');
+                        // Display new validation errors
+                        for (const field in response.data.errors) {
+                            if (response.data.errors.hasOwnProperty(field)) {
+                                const fieldElement = $('#' + field);
+                                const feedbackElement = fieldElement.siblings('.invalid-feedback');
 
-                            console.log("Target Field:", fieldElement);
-                            console.log("Target Feedback:", feedbackElement);
+                                console.log("Target Field:", fieldElement);
+                                console.log("Target Feedback:", feedbackElement);
 
-                            if (fieldElement.length > 0 && feedbackElement.length > 0) {
-                                fieldElement.addClass('is-invalid');
-                                feedbackElement.text(response.data.errors[field]).show();
+                                if (fieldElement.length > 0 && feedbackElement.length > 0) {
+                                    fieldElement.addClass('is-invalid');
+                                    feedbackElement.text(response.data.errors[field]).show();
 
-                                // Remove error message when the user corrects the input
-                                fieldElement.on('input change', function() {
-                                    $(this).removeClass('is-invalid');
-                                    $(this).siblings('.invalid-feedback').text('').hide();
-                                });
-                            } else {
-                                console.warn("Elemen tidak ditemukan pada field:", field);
+                                    // Remove error message when the user corrects the input
+                                    fieldElement.on('input change', function() {
+                                        $(this).removeClass('is-invalid');
+                                        $(this).siblings('.invalid-feedback').text('').hide();
+                                    });
+                                } else {
+                                    console.warn("Elemen tidak ditemukan pada field:", field);
+                                }
                             }
                         }
+                        console.error('Perbaiki kesalahan pada formulir.');
                     }
-                    console.error('Perbaiki kesalahan pada formulir.');
-                }
-            } catch (error) {
-                if (error.response.request.status === 400) {
-                    showFailedToast(error.response.data.message);
-                } else {
-                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
-                }
-                $('#password').val('');
-                setTimeout(() => {
-                    $('#password').trigger('focus');
-                }, 10);
-            } finally {
-                $('#cancelSubmitButton').prop('disabled', false).html(`
+                } catch (error) {
+                    if (error.response.request.status === 400) {
+                        // Clear previous validation states
+                        $('#batalTransaksiForm .is-invalid').removeClass('is-invalid');
+                        $('#batalTransaksiForm .invalid-feedback').text('').hide();
+
+                        const fieldElement = $('#password');
+                        const feedbackElement = fieldElement.siblings('.invalid-feedback');
+
+                        fieldElement.addClass('is-invalid');
+                        feedbackElement.text(error.response.data.message).show();
+
+                        // Remove error message when the user corrects the input
+                        fieldElement.on('input change', function() {
+                            $(this).removeClass('is-invalid');
+                            $(this).siblings('.invalid-feedback').text('').hide();
+                        });
+                    } else {
+                        showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                    }
+                    $('#password').val('');
+                    setTimeout(() => {
+                        $('#password').trigger('focus');
+                    }, 10);
+                } finally {
+                    $('#cancelSubmitButton').prop('disabled', false).html(`
                     <i class="fa-solid fa-xmark"></i> Batalkan
                 `);
-                $('#batalTransaksiForm input, #batalTransaksiCloseBtn').prop('disabled', false);
-            }
-        });
+                    $('#batalTransaksiForm input, #batalTransaksiCloseBtn').prop('disabled', false);
+                }
+            });
+        <?php endif; ?>
 
         // Fungsi untuk memunculkan/menghilangkan field Bank berdasarkan metode pembayaran
         function toggleBankField() {
@@ -1524,11 +1561,13 @@
             $('#transaksiForm .invalid-feedback').text('').hide();
         });
 
-        $('#batalTransaksiModal').on('hidden.bs.modal', function() {
-            $('#batalTransaksiForm')[0].reset();
-            $('#batalTransaksiForm .is-invalid').removeClass('is-invalid');
-            $('#batalTransaksiForm .invalid-feedback').text('').hide();
-        });
+        <?php if (session()->get('role') == 'Admin') : ?>
+            $('#batalTransaksiModal').on('hidden.bs.modal', function() {
+                $('#batalTransaksiForm')[0].reset();
+                $('#batalTransaksiForm .is-invalid').removeClass('is-invalid');
+                $('#batalTransaksiForm .invalid-feedback').text('').hide();
+            });
+        <?php endif; ?>
 
         $(document).on('visibilitychange', async function() {
             if (document.visibilityState === "visible") {
