@@ -41,7 +41,12 @@
                             <?php endif; ?>
                         </div>
                         <div class="input-group input-group-sm flex-grow-1">
-                            <input type="search" id="searchInput" class="form-control " placeholder="Cari nomor rekam medis atau nama pasien">
+                            <input type="search" id="searchInput" class="form-control" placeholder="Cari nomor rekam medis atau nama pasien">
+                            <select id="biasaFilter" class="form-select form-select-sm" style="max-width: 140px;">
+                                <option value="">Semua Sifat</option>
+                                <option value="0">Sakit</option>
+                                <option value="1">Biasa</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -87,7 +92,7 @@
                                     </h5>
                                     <h6 class="card-subtitle mb-2 placeholder-glow">
                                         <span class="placeholder" style="width: 100%;"></span><br>
-                                        <span class="placeholder w-100" style="max-width: 100px;"></span>
+                                        <span class="placeholder w-100" style="max-width: 100px;"></span> <span class="placeholder w-100" style="max-width: 60px;"></span>
                                     </h6>
                                     <div class="card-text placeholder-glow">
                                         <div style="font-size: 0.75em;">
@@ -156,7 +161,7 @@
                         </h5>
                         <h6 class="card-subtitle mb-2 placeholder-glow">
                             <span class="placeholder" style="width: 100%;"></span><br>
-                            <span class="placeholder w-100" style="max-width: 100px;"></span>
+                            <span class="placeholder w-100" style="max-width: 100px;"></span> <span class="placeholder w-100" style="max-width: 60px;"></span>
                         </h6>
                         <div class="card-text placeholder-glow">
                             <div style="font-size: 0.75em;">
@@ -213,6 +218,7 @@
         const search = $('#searchInput').val();
         const offset = (currentPage - 1) * limit;
         const tanggal = $('#tanggalFilter').val();
+        const biasa = $('#biasaFilter').val();
 
         // Show the spinner
         $('#loadingSpinner').show();
@@ -223,7 +229,8 @@
                     search: search,
                     limit: limit,
                     offset: offset,
-                    tanggal: tanggal
+                    tanggal: tanggal,
+                    biasa: biasa
                 }
             });
 
@@ -246,6 +253,12 @@
                     } else if (jenis_kelamin === 'P') {
                         jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap" style="background-color: Pink"><i class="fa-solid fa-venus"></i> PEREMPUAN</span>`;
                     }
+                    let biasa = sakitmata.biasa;
+                    if (biasa === '0') {
+                        biasa = `<span class="badge text-bg-danger bg-gradient text-nowrap">SAKIT</span>`;
+                    } else if (biasa === '1') {
+                        biasa = `<span class="badge text-bg-secondary bg-gradient text-nowrap">BIASA</span>`;
+                    }
                     const delete_today = new Date(sakitmata.tanggal_registrasi).toISOString().split('T')[0] !== new Date().toISOString().split('T')[0] ?
                         `disabled` :
                         ``;
@@ -258,7 +271,7 @@
                                     <span class="ms-1 align-self-center">${sakitmata.nama_pasien}</span>
                                 </h5>
                                     <h6 class="card-subtitle mb-2">
-                                        ${sakitmata.nomor_registrasi} • ${sakitmata.no_rm}<br>${jenis_kelamin}
+                                        ${sakitmata.nomor_registrasi} • ${sakitmata.no_rm}<br>${jenis_kelamin} ${biasa}
                                     </h6>
                                     <div class="card-text">
                                         <div style="font-size: 0.75em;">
@@ -384,7 +397,7 @@
         }
     });
 
-    $('#tanggalFilter').on('change', function() {
+    $('#tanggalFilter, #biasaFilter').on('change', function() {
         $('#SakitMataContainer').empty();
         for (let i = 0; i < limit; i++) {
             $('#SakitMataContainer').append(placeholder);

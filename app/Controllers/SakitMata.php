@@ -44,6 +44,7 @@ class SakitMata extends BaseController
             $search = $this->request->getGet('search');
             $limit = $this->request->getGet('limit');
             $offset = $this->request->getGet('offset');
+            $biasa = $this->request->getGet('biasa');
 
             // Menentukan limit dan offset
             $limit = $limit ? intval($limit) : 0;
@@ -53,6 +54,13 @@ class SakitMata extends BaseController
             $SakitMataModel = $this->SakitMataModel
                 ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_keterangan_sakit_mata.nomor_registrasi', 'inner')
                 ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner');
+
+            // Menerapkan filter biasa jika ada
+            if ($biasa === '1') {
+                $SakitMataModel->where('biasa', 1); // Surat Keterangan Biasa
+            } elseif ($biasa === '0') {
+                $SakitMataModel->where('biasa', 0); // Surat Keterangan Sakit
+            }
 
             // Menerapkan filter pencarian pada nama supplier atau tanggal pembelian
             if ($tanggal) {
@@ -399,6 +407,7 @@ class SakitMata extends BaseController
 
             // Menyimpan data transaksi
             $data = [
+                'biasa' => $this->request->getPost('biasa'),
                 'keterangan' => $this->request->getPost('keterangan') ?: null
             ];
             $db->table('medrec_keterangan_sakit_mata')->where('id_keterangan_sakit_mata', $id)->update($data);

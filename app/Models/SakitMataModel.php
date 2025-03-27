@@ -12,6 +12,7 @@ class SakitMataModel extends Model
     protected $allowedFields = [
         'nomor_registrasi',
         'no_rm',
+        'biasa',
         'keterangan',
         'waktu_dibuat'
     ];
