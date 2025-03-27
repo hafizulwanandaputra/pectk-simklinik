@@ -133,15 +133,18 @@ $usia = $registrasi->diff($tanggal_lahir);
                     </div>
                     <div class="invalid-feedback"></div>
                 </div>
-                <div class="row g-2 align-items-start mb-2">
-                    <div class="col-sm">
-                        <input type="text" class="form-control" id="diagnosa" name="diagnosa" value="" autocomplete="off" dir="auto" placeholder="Diagnosis">
-                        <div class="invalid-feedback"></div>
-                    </div>
-                    <div class="col-sm-4">
-                        <select class="form-select" id="kode_icd_x" name="kode_icd_x" placeholder="ICD-10">
-                        </select>
-                        <div class="invalid-feedback"></div>
+                <div class="mb-2">
+                    <label for="diagnosa" class="form-label">Diagnosis</label>
+                    <div class="row g-2 align-items-start">
+                        <div class="col-sm">
+                            <input type="text" class="form-control" id="diagnosa" name="diagnosa" value="" autocomplete="off" dir="auto">
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="col-sm-6 col-lg-5">
+                            <select class="form-select" id="kode_icd_x" name="kode_icd_x" placeholder="ICD-10">
+                            </select>
+                            <div class="invalid-feedback"></div>
+                        </div>
                     </div>
                 </div>
                 <div class="mb-2">
