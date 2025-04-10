@@ -4,7 +4,7 @@
     <div class="flex-fill text-truncate">
         <div class="d-flex flex-column">
             <div class="fw-medium fs-6 lh-sm"><?= $headertitle; ?></div>
-            <div class="fw-medium lh-sm" style="font-size: 0.75em;"><span id="total_rajal">0</span> pasien rawat jalan</div>
+            <div class="fw-medium lh-sm" style="font-size: 0.75em;"><span id="total_rajal">0</span> rawat jalan (<span id="total_didaftarkan">0</span> didaftarkan • <span id="total_dibatalkan">0</span> dibatalkan)</div>
         </div>
     </div>
     <div id="loadingSpinner" class="spinner-border spinner-border-sm mx-2" role="status" style="min-width: 1rem;">
@@ -163,6 +163,8 @@
                 `;
                 $('#rawatjalan-tanggal').append(emptyRow); // Menambahkan baris kosong ke tabel
                 $('#total_rajal').text('0'); // Kosongkan total
+                $('#total_didaftarkan').text('0');
+                $('#total_dibatalkan').text('0');
                 return; // Keluar dari fungsi
             }
 
@@ -176,11 +178,15 @@
             });
             const data = response.data.data; // Mendapatkan data rawat jalan
             const total = response.data.total; // Mendapatkan total rawat jalan
+            const didaftarkan = response.data.didaftarkan; // Mendapatkan total rawat jalan didaftarkan
+            const dibatalkan = response.data.dibatalkan; // Mendapatkan total rawat jalan dibatalkan
             const promises = [];
 
             $('#rawatjalan-tanggal').empty(); // Kosongkan tabel rawat jalan
             $('#refreshTglButton').prop('disabled', false); // Aktifkan tombol refresh
             $('#total_rajal').text(total.toLocaleString('id-ID')); // Jumlah data
+            $('#total_didaftarkan').text(didaftarkan.toLocaleString('id-ID')); // Jumlah didaftarkan
+            $('#total_dibatalkan').text(dibatalkan.toLocaleString('id-ID')); // Jumlah dibatalkan
 
             // Cek apakah data rawat jalan kosong
             if (data.length === 0) {
@@ -577,6 +583,8 @@
                 `;
                 $('#rawatjalan-no_rm').append(emptyRow); // Menambahkan baris kosong ke tabel
                 $('#total_rajal').text('0'); // Kosongkan total
+                $('#total_didaftarkan').text('0');
+                $('#total_dibatalkan').text('0');
                 return; // Keluar dari fungsi
             }
 
@@ -590,11 +598,15 @@
             });
             const data = response.data.data; // Mendapatkan data rawat jalan
             const total = response.data.total; // Mendapatkan total rawat jalan
+            const didaftarkan = response.data.didaftarkan; // Mendapatkan total rawat jalan didaftarkan
+            const dibatalkan = response.data.dibatalkan; // Mendapatkan total rawat jalan dibatalkan
             const promises = [];
 
             $('#rawatjalan-no_rm').empty(); // Kosongkan tabel rawat jalan
             $('#refreshNoRMButton').prop('disabled', false); // Aktifkan tombol refresh
             $('#total_rajal').text(total.toLocaleString('id-ID')); // Jumlah data
+            $('#total_didaftarkan').text(didaftarkan.toLocaleString('id-ID')); // Jumlah didaftarkan
+            $('#total_dibatalkan').text(dibatalkan.toLocaleString('id-ID')); // Jumlah dibatalkan
 
             // Cek apakah data rawat jalan kosong
             if (data.length === 0) {
@@ -995,6 +1007,8 @@
                 `;
                 $('#rawatjalan-nama').append(emptyRow); // Menambahkan baris kosong ke tabel
                 $('#total_rajal').text('0'); // Kosongkan total
+                $('#total_didaftarkan').text('0');
+                $('#total_dibatalkan').text('0');
                 return; // Keluar dari fungsi
             }
 
@@ -1008,11 +1022,15 @@
             });
             const data = response.data.data; // Mendapatkan data rawat jalan
             const total = response.data.total; // Mendapatkan total rawat jalan
+            const didaftarkan = response.data.didaftarkan; // Mendapatkan total rawat jalan didaftarkan
+            const dibatalkan = response.data.dibatalkan; // Mendapatkan total rawat jalan dibatalkan
             const promises = [];
 
             $('#rawatjalan-nama').empty(); // Kosongkan tabel rawat jalan
             $('#refreshNamaButton').prop('disabled', false); // Aktifkan tombol refresh
             $('#total_rajal').text(total.toLocaleString('id-ID')); // Jumlah data
+            $('#total_didaftarkan').text(didaftarkan.toLocaleString('id-ID')); // Jumlah didaftarkan
+            $('#total_dibatalkan').text(dibatalkan.toLocaleString('id-ID')); // Jumlah dibatalkan
 
             // Cek apakah data rawat jalan kosong
             if (data.length === 0) {

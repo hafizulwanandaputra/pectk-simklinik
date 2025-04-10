@@ -48,32 +48,40 @@ class RawatJalan extends BaseController
             $db = db_connect();
 
             $tanggal = $this->request->getGet('tanggal');
-            $limit = $this->request->getGet('limit');
-            $offset = $this->request->getGet('offset');
+            $limit = (int) $this->request->getGet('limit');
+            $offset = (int) $this->request->getGet('offset');
 
-            // Memeriksa apakah ada parameter yang dikirimkan dalam URL
-            if (empty($tanggal) && empty($limit) && empty($offset)) {
+            if (!$tanggal && !$limit && !$offset) {
                 return $this->response->setStatusCode(400)->setJSON([
                     'error' => 'Parameter tidak lengkap',
                 ]);
             }
 
-            $limit = $limit ? intval($limit) : 0;
-            $offset = $offset ? intval($offset) : 0;
-
-            $RawatJalanModel = $this->RawatJalanModel->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner');
+            // Gunakan builder untuk fleksibilitas lebih
+            $builder = $db->table('rawat_jalan')
+                ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner');
 
             if ($tanggal) {
-                $RawatJalanModel->groupStart()
-                    ->like('tanggal_registrasi', $tanggal)
-                    ->groupEnd();
+                $builder->like('rawat_jalan.tanggal_registrasi', $tanggal);
             }
 
-            $total = $RawatJalanModel->countAllResults(false);
-            $Pasien = $RawatJalanModel->orderBy('id_rawat_jalan', 'DESC')->findAll($limit, $offset);
+            // Clone builder untuk total dan status
+            $totalBuilder = clone $builder;
+            $didaftarkanBuilder = clone $builder;
+            $dibatalkanBuilder = clone $builder;
+
+            $total = $totalBuilder->countAllResults(false);
+            $didaftarkan = $didaftarkanBuilder->where('rawat_jalan.status', 'DAFTAR')->countAllResults(false);
+            $dibatalkan = $dibatalkanBuilder->where('rawat_jalan.status', 'BATAL')->countAllResults(false);
+
+            $Pasien = $builder->orderBy('rawat_jalan.id_rawat_jalan', 'DESC')
+                ->limit($limit, $offset)
+                ->get()
+                ->getResultArray();
 
             $startNumber = $offset + 1;
 
+            // Ambil master jaminan
             $jaminanList = $db->table('master_jaminan')
                 ->select('jaminanKode, jaminanNama')
                 ->get()
@@ -84,18 +92,17 @@ class RawatJalan extends BaseController
                 $jaminanMap[$jaminan['jaminanKode']] = $jaminan['jaminanNama'];
             }
 
-            foreach ($Pasien as &$rajal) {
+            // Mapping data pasien
+            foreach ($Pasien as $i => &$rajal) {
+                $rajal['number'] = $startNumber + $i;
                 $rajal['jaminan'] = isset($jaminanMap[$rajal['jaminan']]) ? $jaminanMap[$rajal['jaminan']] : 'Tidak Diketahui';
             }
 
-            $dataRawatJalan = array_map(function ($data, $index) use ($startNumber) {
-                $data['number'] = $startNumber + $index;
-                return $data;
-            }, $Pasien, array_keys($Pasien));
-
             return $this->response->setJSON([
-                'data' => $dataRawatJalan,
-                'total' => (int) $total
+                'data' => $Pasien,
+                'total' => (int) $total,
+                'didaftarkan' => (int) $didaftarkan,
+                'dibatalkan' => (int) $dibatalkan,
             ]);
         } else {
             // Jika peran tidak dikenali, kembalikan status 404
@@ -112,32 +119,40 @@ class RawatJalan extends BaseController
             $db = db_connect();
 
             $no_rm = $this->request->getGet('no_rm');
-            $limit = $this->request->getGet('limit');
-            $offset = $this->request->getGet('offset');
+            $limit = (int) $this->request->getGet('limit');
+            $offset = (int) $this->request->getGet('offset');
 
-            // Memeriksa apakah ada parameter yang dikirimkan dalam URL
-            if (empty($no_rm) && empty($limit) && empty($offset)) {
+            if (!$no_rm && !$limit && !$offset) {
                 return $this->response->setStatusCode(400)->setJSON([
                     'error' => 'Parameter tidak lengkap',
                 ]);
             }
 
-            $limit = $limit ? intval($limit) : 0;
-            $offset = $offset ? intval($offset) : 0;
-
-            $RawatJalanModel = $this->RawatJalanModel->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner');
+            // Gunakan query builder
+            $builder = $db->table('rawat_jalan')
+                ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner');
 
             if ($no_rm) {
-                $RawatJalanModel->groupStart()
-                    ->like('pasien.no_rm', $no_rm)
-                    ->groupEnd();
+                $builder->like('pasien.no_rm', $no_rm);
             }
 
-            $total = $RawatJalanModel->countAllResults(false);
-            $Pasien = $RawatJalanModel->orderBy('id_rawat_jalan', 'DESC')->findAll($limit, $offset);
+            // Duplikat builder untuk menghitung jumlah
+            $totalBuilder = clone $builder;
+            $didaftarkanBuilder = clone $builder;
+            $dibatalkanBuilder = clone $builder;
+
+            $total = $totalBuilder->countAllResults(false);
+            $didaftarkan = $didaftarkanBuilder->where('rawat_jalan.status', 'DAFTAR')->countAllResults(false);
+            $dibatalkan = $dibatalkanBuilder->where('rawat_jalan.status', 'BATAL')->countAllResults(false);
+
+            $Pasien = $builder->orderBy('rawat_jalan.id_rawat_jalan', 'DESC')
+                ->limit($limit, $offset)
+                ->get()
+                ->getResultArray();
 
             $startNumber = $offset + 1;
 
+            // Ambil data jaminan
             $jaminanList = $db->table('master_jaminan')
                 ->select('jaminanKode, jaminanNama')
                 ->get()
@@ -148,18 +163,16 @@ class RawatJalan extends BaseController
                 $jaminanMap[$jaminan['jaminanKode']] = $jaminan['jaminanNama'];
             }
 
-            foreach ($Pasien as &$rajal) {
+            foreach ($Pasien as $i => &$rajal) {
+                $rajal['number'] = $startNumber + $i;
                 $rajal['jaminan'] = isset($jaminanMap[$rajal['jaminan']]) ? $jaminanMap[$rajal['jaminan']] : 'Tidak Diketahui';
             }
 
-            $dataRawatJalan = array_map(function ($data, $index) use ($startNumber) {
-                $data['number'] = $startNumber + $index;
-                return $data;
-            }, $Pasien, array_keys($Pasien));
-
             return $this->response->setJSON([
-                'data' => $dataRawatJalan,
-                'total' => (int) $total
+                'data' => $Pasien,
+                'total' => (int) $total,
+                'didaftarkan' => (int) $didaftarkan,
+                'dibatalkan' => (int) $dibatalkan,
             ]);
         } else {
             // Jika peran tidak dikenali, kembalikan status 404
@@ -176,32 +189,39 @@ class RawatJalan extends BaseController
             $db = db_connect();
 
             $nama = $this->request->getGet('nama');
-            $limit = $this->request->getGet('limit');
-            $offset = $this->request->getGet('offset');
+            $limit = (int) $this->request->getGet('limit');
+            $offset = (int) $this->request->getGet('offset');
 
-            // Memeriksa apakah ada parameter yang dikirimkan dalam URL
-            if (empty($nama) && empty($limit) && empty($offset)) {
+            if (!$nama && !$limit && !$offset) {
                 return $this->response->setStatusCode(400)->setJSON([
                     'error' => 'Parameter tidak lengkap',
                 ]);
             }
 
-            $limit = $limit ? intval($limit) : 0;
-            $offset = $offset ? intval($offset) : 0;
-
-            $RawatJalanModel = $this->RawatJalanModel->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner');
+            $builder = $db->table('rawat_jalan')
+                ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner');
 
             if ($nama) {
-                $RawatJalanModel->groupStart()
-                    ->like('nama_pasien', $nama)
-                    ->groupEnd();
+                $builder->like('pasien.nama_pasien', $nama); // pastikan field-nya sesuai di DB
             }
 
-            $total = $RawatJalanModel->countAllResults(false);
-            $Pasien = $RawatJalanModel->orderBy('id_rawat_jalan', 'DESC')->findAll($limit, $offset);
+            // Clone builder untuk hitung total dan status
+            $totalBuilder = clone $builder;
+            $didaftarkanBuilder = clone $builder;
+            $dibatalkanBuilder = clone $builder;
+
+            $total = $totalBuilder->countAllResults(false);
+            $didaftarkan = $didaftarkanBuilder->where('rawat_jalan.status', 'DAFTAR')->countAllResults(false);
+            $dibatalkan = $dibatalkanBuilder->where('rawat_jalan.status', 'BATAL')->countAllResults(false);
+
+            $Pasien = $builder->orderBy('rawat_jalan.id_rawat_jalan', 'DESC')
+                ->limit($limit, $offset)
+                ->get()
+                ->getResultArray();
 
             $startNumber = $offset + 1;
 
+            // Ambil data jaminan dari master
             $jaminanList = $db->table('master_jaminan')
                 ->select('jaminanKode, jaminanNama')
                 ->get()
@@ -212,18 +232,16 @@ class RawatJalan extends BaseController
                 $jaminanMap[$jaminan['jaminanKode']] = $jaminan['jaminanNama'];
             }
 
-            foreach ($Pasien as &$rajal) {
+            foreach ($Pasien as $i => &$rajal) {
+                $rajal['number'] = $startNumber + $i;
                 $rajal['jaminan'] = isset($jaminanMap[$rajal['jaminan']]) ? $jaminanMap[$rajal['jaminan']] : 'Tidak Diketahui';
             }
 
-            $dataRawatJalan = array_map(function ($data, $index) use ($startNumber) {
-                $data['number'] = $startNumber + $index;
-                return $data;
-            }, $Pasien, array_keys($Pasien));
-
             return $this->response->setJSON([
-                'data' => $dataRawatJalan,
-                'total' => (int) $total
+                'data' => $Pasien,
+                'total' => (int) $total,
+                'didaftarkan' => (int) $didaftarkan,
+                'dibatalkan' => (int) $dibatalkan,
             ]);
         } else {
             // Jika peran tidak dikenali, kembalikan status 404
