@@ -257,10 +257,6 @@ class Optik extends BaseController
                 ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_optik.nomor_registrasi')
                 ->find($id);
 
-            if ($optik['transaksi'] == 1) {
-                return $this->response->setStatusCode(400)->setJSON(['success' => false, 'message' => 'Tidak bisa dilakukan karena transaksi yang menggunakan resep kacamata ini sudah diproses']);
-            }
-
             if (session()->get('role') == 'Dokter') {
                 if ($optik['dokter'] != session()->get('fullname')) {
                     return $this->response->setStatusCode(400)->setJSON(['success' => false, 'message' => 'Resep kacamata ini hanya bisa diisi oleh ' . $optik['dokter']]);

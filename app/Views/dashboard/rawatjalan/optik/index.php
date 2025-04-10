@@ -138,7 +138,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                                 <i class="fa-solid fa-triangle-exclamation"></i>
                             </div>
                             <div class="w-100 ms-3">
-                                Saat ini Anda melihat resep kacamata yang diberikan oleh <?= $rawatjalan['dokter'] ?>. Pastikan Anda mengisi resep kacamata sesuai dengan DPJP yang masuk pada sistem ini.
+                                Saat ini Anda melihat resep kacamata yang diberikan oleh <?= $rawatjalan['dokter'] ?>. Pengisian resep kacamata hanya dapat dilakukan apabila sesuai dengan DPJP yang masuk pada sistem ini.
                             </div>
                             <button type="button" id="close-alert" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
@@ -488,18 +488,24 @@ $usia = $registrasi->diff($tanggal_lahir);
         try {
             const response = await axios.get('<?= base_url('rawatjalan/optik/view/') . $optik['id_optik'] ?>');
             const data = response.data;
-            const transaksi = data.transaksi;
+            const dokter = data.dokter;
             const tipe_lensa = data.tipe_lensa;
 
-            if (transaksi === '1') {
-                $("input[name='tipe_lensa']").prop('disabled', true);
-                $(".eyeglass-inputs").prop('readonly', true);
-                $("#submitBtn").prop('disabled', true);
-            } else {
+            <?php if (session()->get('role') == 'Dokter') : ?>
+                <?php if ($rawatjalan['dokter'] != session()->get('fullname')) : ?>
+                    $("input[name='tipe_lensa']").prop('disabled', true);
+                    $(".eyeglass-inputs").prop('readonly', true);
+                    $("#submitBtn").prop('disabled', true);
+                <?php else : ?>
+                    $("input[name='tipe_lensa']").prop('disabled', false);
+                    $(".eyeglass-inputs").prop('readonly', false);
+                    $("#submitBtn").prop('disabled', false);
+                <?php endif; ?>
+            <?php else : ?>
                 $("input[name='tipe_lensa']").prop('disabled', false);
                 $(".eyeglass-inputs").prop('readonly', false);
                 $("#submitBtn").prop('disabled', false);
-            }
+            <?php endif; ?>
 
             if (tipe_lensa) {
                 $("input[name='tipe_lensa'][value='" + tipe_lensa + "']").prop('checked', true);
