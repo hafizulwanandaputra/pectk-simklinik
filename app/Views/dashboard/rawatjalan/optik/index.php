@@ -74,7 +74,6 @@ $usia = $registrasi->diff($tanggal_lahir);
     <div id="loadingSpinner" class="spinner-border spinner-border-sm mx-2" role="status" style="min-width: 1rem;">
         <span class="visually-hidden">Loading...</span>
     </div>
-    <a id="refreshButton" class="fs-6 mx-2 text-success-emphasis" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan"><i class="fa-solid fa-sync"></i></a>
     <?php if ($previous): ?>
         <a class="fs-6 mx-2 text-success-emphasis" href="<?= site_url('rawatjalan/optik/' . $previous['id_rawat_jalan']) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="<?= $previous['nomor_registrasi']; ?> • <?= $previous['no_rm'] ?> • <?= $previous['nama_pasien']; ?>"><i class="fa-solid fa-circle-arrow-left"></i></a>
     <?php else: ?>
@@ -568,24 +567,6 @@ $usia = $registrasi->diff($tanggal_lahir);
         }
     }
     $(document).ready(function() {
-        const socket = new WebSocket('<?= env('WS-URL-JS') ?>'); // Ganti dengan domain VPS
-
-        socket.onopen = () => {
-            console.log("Connected to WebSocket server");
-        };
-
-        socket.onmessage = async function(event) {
-            const data = JSON.parse(event.data);
-            if (data.update) {
-                console.log("Received update from WebSocket");
-                fetchOptik();
-            }
-        };
-
-        socket.onclose = () => {
-            console.log("Disconnected from WebSocket server");
-        };
-
         // Cari semua elemen dengan kelas 'activeLink' di kedua navigasi
         $(".nav .activeLink").each(function() {
             // Scroll ke elemen yang aktif
@@ -702,10 +683,6 @@ $usia = $registrasi->diff($tanggal_lahir);
                 `);
                 $('#optikForm input, #optikForm select, #optikForm button').prop('disabled', false);
             }
-        });
-        $('#refreshButton').on('click', async function(e) {
-            e.preventDefault();
-            fetchOptik();
         });
         fetchOptik();
     });
