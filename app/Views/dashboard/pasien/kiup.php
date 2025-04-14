@@ -249,7 +249,7 @@
                     </tr>
                     <tr>
                         <td style="width: 25%; vertical-align: top; padding: 0;">
-                            <div>Nomor HP</div>
+                            <div>Nomor Telepon</div>
                         </td>
                         <td style="width: 0%; vertical-align: top; padding: 0;">
                             <div>:</div>

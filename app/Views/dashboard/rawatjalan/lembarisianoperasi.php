@@ -183,7 +183,7 @@ $waktuFormatted = $dateTime->format('H.i.s');
                     </tr>
                     <tr>
                         <td style="width: 30%; vertical-align: top;">
-                            Nomor Ponsel
+                            Nomor Telepon
                         </td>
                         <td style="width: 0%; vertical-align: top;">
                             :

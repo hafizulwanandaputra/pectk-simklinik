@@ -260,7 +260,7 @@
                             <div class="col">
                                 <div class="form-floating">
                                     <input type="number" class="form-control" id="telpon" name="telpon" value="" autocomplete="off" dir="auto" placeholder="telpon">
-                                    <label for="telpon">Nomor HP</label>
+                                    <label for="telpon">Nomor Telepon</label>
                                     <div class="invalid-feedback"></div>
                                 </div>
                             </div>
