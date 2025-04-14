@@ -369,6 +369,131 @@ class RawatJalan extends BaseController
         }
     }
 
+    public function rawatjalan($id)
+    {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Admisi' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') {
+            // Mengambil data pasien berdasarkan ID
+            $data = $this->RawatJalanModel
+                ->find($id); // Mengambil pasien
+            return $this->response->setJSON($data); // Mengembalikan data pasien dalam format JSON
+        } else {
+            // Mengembalikan status 404 jika peran tidak diizinkan
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
+        }
+    }
+
+    public function editlembarisianoperasi($id)
+    {
+        // Memeriksa peran pengguna, hanya 'Admin', 'Admisi' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') {
+            // Validasi input
+            $validation = \Config\Services::validation();
+            // Menetapkan aturan validasi dasar
+            $validation->setRules([
+                'tindakan_operasi_rajal' => 'required',
+                'tanggal_operasi_rajal' => 'required'
+            ]);
+
+            // Memeriksa validasi
+            if (!$this->validate($validation->getRules())) {
+                return $this->response->setJSON(['success' => false, 'message' => NULL, 'errors' => $validation->getErrors()]);
+            }
+
+            $db = db_connect();
+
+            // Ambil rawat jalan
+            $rajal = $db->table('rawat_jalan')
+                ->where('id_rawat_jalan', $id)
+                ->get()->getRowArray();
+
+            if ($rajal['transaksi'] == 1) {
+                return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Lembar isian operasi tidak dapat diedit karena transaksi sudah diproses']);
+            }
+            if ($rajal['status'] == 'BATAL') {
+                return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Lembar isian operasi tidak dapat diedit karena rawat jalan ini sudah dibatalkan']);
+            }
+
+            // Simpan data pasien
+            $data = [
+                'tindakan_operasi_rajal' => $this->request->getPost('tindakan_operasi_rajal'),
+                'tanggal_operasi_rajal' => $this->request->getPost('tanggal_operasi_rajal'),
+                'jam_operasi_rajal' => $this->request->getPost('jam_operasi_rajal') ?: NULL,
+            ];
+            // Update data menggunakan Query Builder
+            $db->table('rawat_jalan')->where('id_rawat_jalan', $id)->update($data);
+            // Panggil WebSocket untuk update client
+            $this->notify_clients('update');
+            return $this->response->setJSON(['success' => true, 'message' => 'Lembar isian operasi berhasil diregistrasi']);
+        } else {
+            // Jika peran tidak dikenali, lemparkan pengecualian 404
+            throw PageNotFoundException::forPageNotFound();
+        }
+    }
+
+    public function lembarisianoperasi($id)
+    {
+        // Memeriksa peran pengguna, hanya 'Admin' dan 'Admisi' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') {
+            $db = db_connect();
+
+            // ambil rajal berdasarkan ID
+            $rajal = $this->RawatJalanModel
+                ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
+                ->where('ruangan', 'Kamar Operasi')
+                ->find($id);
+
+            // Memeriksa apakah pasien tidak kosong
+            if (!empty($rajal)) {
+                // Menyiapkan data untuk tampilan
+                $data = [
+                    'rajal' => $rajal,
+                    'title' => 'Lembar Isian Operasi ' . $rajal['nomor_registrasi'] . ' - ' . $this->systemName,
+                    'agent' => $this->request->getUserAgent()
+                ];
+                // return view('dashboard/rawatjalan/lembarisianoperasi', $data);
+                // die;
+                // Simpan HTML ke file sementara
+                $htmlFile = WRITEPATH . 'temp/output-lembarisianoperasi.html';
+                file_put_contents($htmlFile, view('dashboard/rawatjalan/lembarisianoperasi', $data));
+
+                // Tentukan path output PDF
+                $pdfFile = WRITEPATH . 'temp/output-lembarisianoperasi.pdf';
+
+                // Jalankan Puppeteer untuk konversi HTML ke PDF
+                // Keterangan: "node " . ROOTPATH . "puppeteer-pdf.js $htmlFile $pdfFile panjang lebar marginAtas margin Kanan marginBawah marginKiri"
+                // Silakan lihat puppeteer-pdf.js di root projectt untuk keterangan lebih lanjut.
+                $command = env('CMD-ENV') . "node " . ROOTPATH . "puppeteer-pdf.js $htmlFile $pdfFile 210mm 297mm 0.25cm 0.25cm 0.25cm 0.25cm 2>&1";
+                $output = shell_exec($command);
+
+                // Hapus file HTML setelah eksekusi
+                @unlink($htmlFile);
+
+                // Jika tidak ada output, langsung stream PDF
+                if (!$output) {
+                    return $this->response
+                        ->setHeader('Content-Type', 'application/pdf')
+                        ->setHeader('Content-Disposition', 'inline; filename="' . $rajal['nomor_registrasi'] . '.pdf"')
+                        ->setBody(file_get_contents($pdfFile));
+                }
+
+                // Jika ada output (kemungkinan error), kembalikan HTTP 500 dengan <pre>
+                return $this->response
+                    ->setStatusCode(500)
+                    ->setHeader('Content-Type', 'text/html')
+                    ->setBody('<pre>' . htmlspecialchars($output) . '</pre>');
+            } else {
+                // Menampilkan halaman tidak ditemukan jika pasien tidak ditemukan
+                throw PageNotFoundException::forPageNotFound();
+            }
+        } else {
+            // Jika peran tidak dikenali, lemparkan pengecualian 404
+            throw PageNotFoundException::forPageNotFound();
+        }
+    }
+
     public function struk($id)
     {
         // Memeriksa peran pengguna, hanya 'Admin' dan 'Admisi' yang diizinkan
@@ -399,7 +524,7 @@ class RawatJalan extends BaseController
 
                 // Jalankan Puppeteer untuk konversi HTML ke PDF
                 // Keterangan: "node " . ROOTPATH . "puppeteer-pdf.js $htmlFile $pdfFile panjang lebar marginAtas margin Kanan marginBawah marginKiri"
-                // Silakan lihat puppeteer-pdf.js di folder public untuk keterangan lebih lanjut.
+                // Silakan lihat puppeteer-pdf.js di root projectt untuk keterangan lebih lanjut.
                 $command = env('CMD-ENV') . "node " . ROOTPATH . "puppeteer-pdf.js $htmlFile $pdfFile 80mm 100mm 0.1cm 0.82cm 0.1cm 0.82cm 2>&1";
                 $output = shell_exec($command);
 

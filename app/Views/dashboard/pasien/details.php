@@ -564,6 +564,40 @@
             </form>
         </div>
     </div>
+    <div class="modal fade" id="isianOperasiModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="isianOperasiModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-fullscreen-lg-down modal-dialog-centered modal-dialog-scrollable ">
+            <form id="isianOperasiForm" enctype="multipart/form-data" class="modal-content bg-body-tertiary shadow-lg transparent-blur">
+                <div class="modal-header justify-content-between pt-2 pb-2" style="border-bottom: 1px solid var(--bs-border-color-translucent);">
+                    <h6 class="pe-2 modal-title fs-6 text-truncate" id="isianOperasiModalLabel" style="font-weight: bold;"></h6>
+                    <button id="isianOperasiCloseBtn" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body py-2">
+                    <div class="form-floating mb-1 mt-1">
+                        <input type="text" class="form-control " autocomplete="off" dir="auto" placeholder="tindakan_operasi_rajal" id="tindakan_operasi_rajal" name="tindakan_operasi_rajal">
+                        <label for="tindakan_operasi_rajal">Tindakan yang akan dilakukan<span class="text-danger">*</span></label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="mt-1 mb-1 row row-cols-1 row-cols-sm-2 g-2">
+                        <div class="col form-floating ">
+                            <input type="date" class="form-control " autocomplete="off" dir="auto" placeholder="tanggal_operasi_rajal" id="tanggal_operasi_rajal" name="tanggal_operasi_rajal">
+                            <label for="tanggal_operasi_rajal">Tanggal Tindakan<span class="text-danger">*</span></label>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="col form-floating ">
+                            <input type="time" class="form-control " autocomplete="off" dir="auto" placeholder="jam_operasi_rajal" id="jam_operasi_rajal" name="jam_operasi_rajal">
+                            <label for="jam_operasi_rajal">Jam</label>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-end pt-2 pb-2" style="border-top: 1px solid var(--bs-border-color-translucent);">
+                    <button type="submit" id="submitIsianOKButton" class="btn btn-primary bg-gradient ">
+                        <i class="fa-solid fa-floppy-disk"></i> Simpan
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 </main>
 <?= $this->endSection(); ?>
 <?= $this->section('javascript'); ?>
@@ -1172,6 +1206,49 @@
                     const transaksi = rajal.transaksi == '1' ?
                         `disabled` :
                         ``;
+                    let tombol_isian_ok = rajal.ruangan;
+                    if (tombol_isian_ok === 'Kamar Operasi') {
+                        tombol_isian_ok = `
+                        <button type="button" class="btn btn-body btn-sm bg-gradient " onclick="window.open('<?= base_url('rawatjalan/lembarisianoperasi') ?>/${rajal.id_rawat_jalan}');">
+                            <i class="fa-solid fa-receipt"></i> Cetak Lembar Isian Operasi
+                        </button>
+                        <button type="button" class="btn btn-body btn-sm bg-gradient edit-isian-ok-btn" data-id="${rajal.id_rawat_jalan}" ${transaksi} ${tblbatal}>
+                            <i class="fa-solid fa-file-pen"></i> Edit Lembar Isian Operasi
+                        </button>
+                        `;
+                    } else {
+                        tombol_isian_ok = ``;
+                    }
+                    let isian_ok = rajal.ruangan;
+                    if (isian_ok === 'Kamar Operasi') {
+                        const tindakan_operasi_rajal = rajal.tindakan_operasi_rajal ?
+                            rajal.tindakan_operasi_rajal :
+                            `<em>Belum diisi</em>`;
+                        let waktu_operasi_rajal = `<em>Belum diisi</em>`;
+                        if (rajal.tanggal_operasi_rajal) {
+                            waktu_operasi_rajal = `<span class="date">${rajal.tanggal_operasi_rajal}`;
+                            if (rajal.jam_operasi_rajal) {
+                                waktu_operasi_rajal += ` ${rajal.jam_operasi_rajal}`;
+                            }
+                            waktu_operasi_rajal += `</span>`;
+                        }
+                        isian_ok = `
+                            <div class="mb-0 row g-1">
+                                <div class="col-5 fw-medium text-truncate">Tindakan yang Akan Dilakukan</div>
+                                <div class="col date">
+                                    ${tindakan_operasi_rajal}
+                                </div>
+                            </div>
+                            <div class="mb-0 row g-1">
+                                <div class="col-5 fw-medium text-truncate">Waktu Tindakan</div>
+                                <div class="col date">
+                                    ${waktu_operasi_rajal}
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        isian_ok = ``;
+                    }
                     const rajalElement = `
             <li class="list-group-item border-top-0 pb-3 pt-3">
                 <div class="d-flex">
@@ -1234,6 +1311,7 @@
                                                 ${rajal.keluhan}
                                             </div>
                                         </div>
+                                        ${isian_ok}
                                         ${pembatal}
                                     </div>
                                 </div>
@@ -1243,10 +1321,11 @@
                     </div>
                 </div>
                 <hr>
-                <div class="d-grid gap-2 d-flex justify-content-end">
+                <div class="d-flex flex-wrap justify-content-end gap-2 mt-2">
                     <button type="button" class="btn btn-body btn-sm bg-gradient " onclick="window.open('<?= base_url('rawatjalan/struk') ?>/${rajal.id_rawat_jalan}');">
                         <i class="fa-solid fa-receipt"></i> Struk
                     </button>
+                    ${tombol_isian_ok}
                     <button type="button" class="btn btn-danger btn-sm bg-gradient cancel-btn" data-id="${rajal.id_rawat_jalan}" ${transaksi} ${tblbatal}>
                         <i class="fa-solid fa-xmark"></i> Batal
                     </button>
@@ -1546,6 +1625,39 @@
             $('#batalRajalModal').modal('show'); // Tampilkan modal resep luar
         });
 
+        // Tampilkan modal batalkan rawat halan
+        $(document).on('click', '.edit-isian-ok-btn', function() {
+            rajalId = $(this).data('id');
+            $('#isianOperasiModalLabel').text('Lembar Isian Operasi'); // Ubah judul modal menjadi 'Lembar Isian Operasi'
+            $('#isianOperasiModal').modal('show'); // Tampilkan modal resep luar
+        });
+
+        // Mengedit pengguna saat tombol edit diklik
+        $(document).on('click', '.edit-isian-ok-btn', async function() {
+            const $this = $(this); // Menyimpan referensi ke tombol yang diklik
+            rajalId = $(this).data('id');
+            $('[data-bs-toggle="tooltip"]').tooltip('hide'); // Menyembunyikan tooltip
+            $this.prop('disabled', true).html(`<span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span> Edit Lembar Isian Operasi`); // Menampilkan spinner
+
+            try {
+                // Melakukan permintaan dengan Axios untuk mendapatkan data pengguna
+                const response = await axios.get(`<?= base_url('/rawatjalan/rawatjalan') ?>/${rajalId}`);
+
+                // Memperbarui field modal dengan data pengguna yang diterima
+                $('#isianOperasiModalLabel').text('Lembar Isian Operasi');
+                $('#tindakan_operasi_rajal').val(response.data.tindakan_operasi_rajal);
+                $('#tanggal_operasi_rajal').val(response.data.tanggal_operasi_rajal);
+                $('#jam_operasi_rajal').val(response.data.jam_operasi_rajal);
+                // Menampilkan modal
+                $('#isianOperasiModal').modal('show');
+            } catch (error) {
+                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error); // Menampilkan pesan kesalahan
+            } finally {
+                // Mengatur ulang status tombol
+                $this.prop('disabled', false).html(`<i class="fa-solid fa-file-pen"></i> Edit Lembar Isian Operasi`); // Mengembalikan tampilan tombol
+            }
+        });
+
         $('#rajalForm').submit(async function(e) {
             e.preventDefault();
 
@@ -1743,6 +1855,104 @@
             }
         });
 
+        $('#isianOperasiForm').submit(async function(e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+            console.log("Form Data:", $(this).serialize());
+
+            // Clear previous validation states
+            $('#isianOperasiForm .is-invalid').removeClass('is-invalid');
+            $('#isianOperasiForm .invalid-feedback').text('').hide();
+            $('#submitIsianOKButton').prop('disabled', true).html(`
+                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span> Simpan
+            `);
+
+            // Disable form inputs
+            $('#isianOperasiForm input, #isianOperasiForm select').prop('disabled', true);
+
+            try {
+                const response = await axios.post(`<?= base_url('/rawatjalan/editlembarisianoperasi') ?>/${rajalId}`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
+
+                if (response.data.success) {
+                    $('#isianOperasiModal').modal('hide');
+                    const selectedJenisKunjungan = $('#kunjunganFilter').val();
+                    const selectedJaminan = $('#jaminanFilter, #jaminan').val();
+                    const selectedRuangan = $('#ruanganFilter, #ruangan').val();
+                    const selectedDokter = $('#dokterFilter, #dokter').val();
+                    const selectedPendaftar = $('#pendaftarFilter').val();
+                    await Promise.all([
+                        fetchJenisKunjunganOptions(selectedJenisKunjungan),
+                        fetchJaminanOptions(selectedJaminan),
+                        fetchRuanganOptions(selectedRuangan),
+                        fetchDokterOptions(selectedDokter),
+                        fetchPendaftarOptions(selectedPendaftar)
+                    ]);
+                    fetchRajal();
+                } else {
+                    console.log("Validation Errors:", response.data.errors);
+
+                    // Clear previous validation states
+                    $('#isianOperasiForm .is-invalid').removeClass('is-invalid');
+                    $('#isianOperasiForm .invalid-feedback').text('').hide();
+
+                    // Display new validation errors
+                    for (const field in response.data.errors) {
+                        if (response.data.errors.hasOwnProperty(field)) {
+                            const fieldElement = $('#' + field);
+
+                            // Handle radio button group separately
+                            if (field === 'jenis_kelamin') {
+                                const radioGroup = $("input[name='jenis_kelamin']");
+                                const feedbackElement = radioGroup.closest('.col-form-label').find('.invalid-feedback');
+
+                                if (radioGroup.length > 0 && feedbackElement.length > 0) {
+                                    radioGroup.addClass('is-invalid');
+                                    feedbackElement.text(response.data.errors[field]).show();
+
+                                    // Remove error message when the user selects any radio button in the group
+                                    radioGroup.on('change', function() {
+                                        $("input[name='jenis_kelamin']").removeClass('is-invalid');
+                                        feedbackElement.removeAttr('style').hide();
+                                    });
+                                }
+                            } else {
+                                const feedbackElement = fieldElement.siblings('.invalid-feedback');
+
+                                if (fieldElement.length > 0 && feedbackElement.length > 0) {
+                                    fieldElement.addClass('is-invalid');
+                                    feedbackElement.text(response.data.errors[field]).show();
+
+                                    // Remove error message when the user corrects the input
+                                    fieldElement.on('input change', function() {
+                                        $(this).removeClass('is-invalid');
+                                        $(this).siblings('.invalid-feedback').text('').hide();
+                                    });
+                                } else {
+                                    console.warn("Elemen tidak ditemukan pada field:", field);
+                                }
+                            }
+                        }
+                    }
+                }
+            } catch (error) {
+                if (error.response.request.status === 401) {
+                    showFailedToast(error.response.data.message);
+                } else {
+                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                }
+            } finally {
+                $('#submitIsianOKButton').prop('disabled', false).html(`
+                    <i class="fa-solid fa-floppy-disk"></i> Simpan
+                `);
+                $('#isianOperasiForm input, #isianOperasiForm select').prop('disabled', false);
+            }
+        });
+
         $('#rajalModal').on('hidden.bs.modal', function() {
             $('#rajalForm')[0].reset();
             $('#jaminan').find('option:not(:first)').remove();
@@ -1755,6 +1965,11 @@
             $('#batalRajalForm')[0].reset();
             $('#batalRajalForm .is-invalid').removeClass('is-invalid');
             $('#batalRajalForm .invalid-feedback').text('').hide();
+        });
+        $('#isianOperasiModal').on('hidden.bs.modal', function() {
+            $('#isianOperasiForm')[0].reset();
+            $('#isianOperasiForm .is-invalid').removeClass('is-invalid');
+            $('#isianOperasiForm .invalid-feedback').text('').hide();
         });
 
         $(document).on('visibilitychange', async function() {

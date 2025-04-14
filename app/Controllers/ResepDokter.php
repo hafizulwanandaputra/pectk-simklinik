@@ -1033,7 +1033,7 @@ class ResepDokter extends BaseController
 
                 // Jalankan Puppeteer untuk konversi HTML ke PDF
                 // Keterangan: "node " . ROOTPATH . "puppeteer-pdf.js $htmlFile $pdfFile panjang lebar marginAtas margin Kanan marginBawah marginKiri"
-                // Silakan lihat puppeteer-pdf.js di folder public untuk keterangan lebih lanjut.
+                // Silakan lihat puppeteer-pdf.js di root projectt untuk keterangan lebih lanjut.
                 $command = env('CMD-ENV') . "node " . ROOTPATH . "puppeteer-pdf.js $htmlFile $pdfFile 5.5cm 3.75cm 0.15cm 0.65cm 0.5cm 0.65cm 2>&1";
                 $output = shell_exec($command);
 
@@ -1106,7 +1106,7 @@ class ResepDokter extends BaseController
 
                 // Jalankan Puppeteer untuk konversi HTML ke PDF
                 // Keterangan: "node " . ROOTPATH . "puppeteer-pdf.js $htmlFile $pdfFile panjang lebar marginAtas margin Kanan marginBawah marginKiri"
-                // Silakan lihat puppeteer-pdf.js di folder public untuk keterangan lebih lanjut.
+                // Silakan lihat puppeteer-pdf.js di root projectt untuk keterangan lebih lanjut.
                 $command = env('CMD-ENV') . "node " . ROOTPATH . "puppeteer-pdf.js $htmlFile $pdfFile 5.5cm 3.75cm 0.15cm 0.65cm 0.5cm 0.65cm 2>&1";
                 $output = shell_exec($command);
 
@@ -1180,7 +1180,7 @@ class ResepDokter extends BaseController
 
                 // Jalankan Puppeteer untuk konversi HTML ke PDF
                 // Keterangan: "node " . ROOTPATH . "puppeteer-pdf.js $htmlFile $pdfFile panjang lebar marginAtas margin Kanan marginBawah marginKiri"
-                // Silakan lihat puppeteer-pdf.js di folder public untuk keterangan lebih lanjut.
+                // Silakan lihat puppeteer-pdf.js di root projectt untuk keterangan lebih lanjut.
                 $command = env('CMD-ENV') . "node " . ROOTPATH . "puppeteer-pdf.js $htmlFile $pdfFile 210mm 297mm 1cm 1cm 1cm 1cm 2>&1";
                 $output = shell_exec($command);
 

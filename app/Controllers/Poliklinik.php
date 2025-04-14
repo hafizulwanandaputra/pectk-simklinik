@@ -123,7 +123,7 @@ class Poliklinik extends BaseController
             $validation = \Config\Services::validation();
             // Menetapkan aturan validasi dasar
             $validation->setRules([
-                'nama_poli' => 'required',
+                'nama_poli' => 'required|is_unique[poliklinik.nama_poli]',
                 'status' => 'required'
             ]);
 
@@ -164,7 +164,10 @@ class Poliklinik extends BaseController
                 'nama_poli' => 'required',
                 'status' => 'required'
             ]);
-
+            // Validasi hanya jika nama ruangan poliklinik telah diubah
+            if ($this->request->getPost('nama_poli') != $this->request->getPost('nama_poli_old')) {
+                $validation->setRule('nama_poli', 'nama_poli', 'required|is_unique[poliklinik.nama_poli]'); // Pastikan nama ruangan poliklinik unik
+            }
             // Memeriksa apakah validasi gagal
             if (!$this->validate($validation->getRules())) {
                 // Mengembalikan respons JSON dengan kesalahan validasi

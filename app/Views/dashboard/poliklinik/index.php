@@ -76,6 +76,7 @@
                 </div>
                 <div class="modal-body py-2">
                     <input type="hidden" id="id_poli" name="id_poli">
+                    <input type="hidden" id="nama_poli_old" name="nama_poli_old">
                     <div class="form-floating mb-1 mt-1">
                         <input type="text" class="form-control " autocomplete="off" dir="auto" placeholder="nama_poli" id="nama_poli" name="nama_poli">
                         <label for="nama_poli">Nama Ruangan<span class="text-danger">*</span></label>
@@ -310,6 +311,7 @@
             $('#poliModalLabel').text('Tambah Ruangan Poliklinik'); // Mengubah label modal
             $('#poliForm')[0].reset(); // Mengatur ulang form
             $('#id_poli').val(''); // Mengosongkan ID poli
+            $('#nama_poli_old').val('');
             $('#poliModal').modal('show'); // Menampilkan modal
         });
 
@@ -332,6 +334,7 @@
                 // Memperbarui field modal dengan data pengguna yang diterima
                 $('#poliModalLabel').text('Edit Ruangan Poliklinik');
                 $('#id_poli').val(response.data.id_poli);
+                $('#nama_poli_old').val(response.data.nama_poli);
                 $('#nama_poli').val(response.data.nama_poli);
                 const status = response.data.status;
                 if (status) {

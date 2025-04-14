@@ -248,6 +248,48 @@
                 } else if (pembatal === 'DAFTAR') {
                     pembatal = ``;
                 }
+                let tombol_isian_ok = rawatjalan.ruangan;
+                if (tombol_isian_ok === 'Kamar Operasi') {
+                    tombol_isian_ok = `
+                                            <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') : ?>
+                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/lembarisianoperasi') ?>/${rawatjalan.id_rawat_jalan}');">
+                                                    <i class="fa-solid fa-receipt"></i> Lembar Isian Operasi
+                                                </button>
+                                            <?php endif; ?>
+                    `;
+                } else {
+                    tombol_isian_ok = ``;
+                }
+                let isian_ok = rawatjalan.ruangan;
+                if (isian_ok === 'Kamar Operasi') {
+                    const tindakan_operasi_rajal = rawatjalan.tindakan_operasi_rajal ?
+                        rawatjalan.tindakan_operasi_rajal :
+                        `<em>Belum diisi</em>`;
+                    let waktu_operasi_rajal = `<em>Belum diisi</em>`;
+                    if (rawatjalan.tanggal_operasi_rajal) {
+                        waktu_operasi_rajal = `<span class="date">${rawatjalan.tanggal_operasi_rajal}`;
+                        if (rawatjalan.jam_operasi_rajal) {
+                            waktu_operasi_rajal += ` ${rawatjalan.jam_operasi_rajal}`;
+                        }
+                        waktu_operasi_rajal += `</span>`;
+                    }
+                    isian_ok = `
+                            <div class="mb-0 row g-1">
+                                <div class="col-5 fw-medium text-truncate">Tindakan yang Akan Dilakukan</div>
+                                <div class="col date">
+                                    ${tindakan_operasi_rajal}
+                                </div>
+                            </div>
+                            <div class="mb-0 row g-1">
+                                <div class="col-5 fw-medium text-truncate">Waktu Tindakan</div>
+                                <div class="col date">
+                                    ${waktu_operasi_rajal}
+                                </div>
+                            </div>
+                        `;
+                } else {
+                    isian_ok = ``;
+                }
                 let tombol_rme = rawatjalan.status;
                 if (tombol_rme === 'DAFTAR') {
                     tombol_rme = `
@@ -256,6 +298,7 @@
                                                 <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/struk') ?>/${rawatjalan.id_rawat_jalan}');">
                                                     <i class="fa-solid fa-receipt"></i> Struk
                                                 </button>
+                                                ${tombol_isian_ok}
                                                 <?php if (session()->get('role') != 'Admin') : ?>
                                                 <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/asesmen/export') ?>/${rawatjalan.id_rawat_jalan}');">
                                                     <i class="fa-solid fa-print"></i> Asesmen
@@ -464,6 +507,7 @@
                                                     ${rawatjalan.keluhan}
                                                 </div>
                                             </div>
+                                            ${isian_ok}
                                             ${pembatal}
                                         </div>
                                     </div>
@@ -674,6 +718,48 @@
                 } else if (pembatal === 'DAFTAR') {
                     pembatal = ``;
                 }
+                let tombol_isian_ok = rawatjalan.ruangan;
+                if (tombol_isian_ok === 'Kamar Operasi') {
+                    tombol_isian_ok = `
+                                            <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') : ?>
+                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/lembarisianoperasi') ?>/${rawatjalan.id_rawat_jalan}');">
+                                                    <i class="fa-solid fa-receipt"></i> Lembar Isian Operasi
+                                                </button>
+                                            <?php endif; ?>
+                    `;
+                } else {
+                    tombol_isian_ok = ``;
+                }
+                let isian_ok = rawatjalan.ruangan;
+                if (isian_ok === 'Kamar Operasi') {
+                    const tindakan_operasi_rajal = rawatjalan.tindakan_operasi_rajal ?
+                        rawatjalan.tindakan_operasi_rajal :
+                        `<em>Belum diisi</em>`;
+                    let waktu_operasi_rajal = `<em>Belum diisi</em>`;
+                    if (rawatjalan.tanggal_operasi_rajal) {
+                        waktu_operasi_rajal = `<span class="date">${rawatjalan.tanggal_operasi_rajal}`;
+                        if (rawatjalan.jam_operasi_rajal) {
+                            waktu_operasi_rajal += ` ${rawatjalan.jam_operasi_rajal}`;
+                        }
+                        waktu_operasi_rajal += `</span>`;
+                    }
+                    isian_ok = `
+                            <div class="mb-0 row g-1">
+                                <div class="col-5 fw-medium text-truncate">Tindakan yang Akan Dilakukan</div>
+                                <div class="col date">
+                                    ${tindakan_operasi_rajal}
+                                </div>
+                            </div>
+                            <div class="mb-0 row g-1">
+                                <div class="col-5 fw-medium text-truncate">Waktu Tindakan</div>
+                                <div class="col date">
+                                    ${waktu_operasi_rajal}
+                                </div>
+                            </div>
+                        `;
+                } else {
+                    isian_ok = ``;
+                }
                 let tombol_rme = rawatjalan.status;
                 if (tombol_rme === 'DAFTAR') {
                     tombol_rme = `
@@ -682,6 +768,7 @@
                                                 <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/struk') ?>/${rawatjalan.id_rawat_jalan}');">
                                                     <i class="fa-solid fa-receipt"></i> Struk
                                                 </button>
+                                                ${tombol_isian_ok}
                                                 <?php if (session()->get('role') != 'Admin') : ?>
                                                 <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/asesmen/export') ?>/${rawatjalan.id_rawat_jalan}');">
                                                     <i class="fa-solid fa-print"></i> Asesmen
@@ -890,6 +977,7 @@
                                                     ${rawatjalan.keluhan}
                                                 </div>
                                             </div>
+                                            ${isian_ok}
                                             ${pembatal}
                                         </div>
                                     </div>
@@ -1092,6 +1180,48 @@
                 } else if (pembatal === 'DAFTAR') {
                     pembatal = ``;
                 }
+                let tombol_isian_ok = rawatjalan.ruangan;
+                if (tombol_isian_ok === 'Kamar Operasi') {
+                    tombol_isian_ok = `
+                                            <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') : ?>
+                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/lembarisianoperasi') ?>/${rawatjalan.id_rawat_jalan}');">
+                                                    <i class="fa-solid fa-receipt"></i> Lembar Isian Operasi
+                                                </button>
+                                            <?php endif; ?>
+                    `;
+                } else {
+                    tombol_isian_ok = ``;
+                }
+                let isian_ok = rawatjalan.ruangan;
+                if (isian_ok === 'Kamar Operasi') {
+                    const tindakan_operasi_rajal = rawatjalan.tindakan_operasi_rajal ?
+                        rawatjalan.tindakan_operasi_rajal :
+                        `<em>Belum diisi</em>`;
+                    let waktu_operasi_rajal = `<em>Belum diisi</em>`;
+                    if (rawatjalan.tanggal_operasi_rajal) {
+                        waktu_operasi_rajal = `<span class="date">${rawatjalan.tanggal_operasi_rajal}`;
+                        if (rawatjalan.jam_operasi_rajal) {
+                            waktu_operasi_rajal += ` ${rawatjalan.jam_operasi_rajal}`;
+                        }
+                        waktu_operasi_rajal += `</span>`;
+                    }
+                    isian_ok = `
+                            <div class="mb-0 row g-1">
+                                <div class="col-5 fw-medium text-truncate">Tindakan yang Akan Dilakukan</div>
+                                <div class="col date">
+                                    ${tindakan_operasi_rajal}
+                                </div>
+                            </div>
+                            <div class="mb-0 row g-1">
+                                <div class="col-5 fw-medium text-truncate">Waktu Tindakan</div>
+                                <div class="col date">
+                                    ${waktu_operasi_rajal}
+                                </div>
+                            </div>
+                        `;
+                } else {
+                    isian_ok = ``;
+                }
                 let tombol_rme = rawatjalan.status;
                 if (tombol_rme === 'DAFTAR') {
                     tombol_rme = `
@@ -1100,6 +1230,7 @@
                                                 <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/struk') ?>/${rawatjalan.id_rawat_jalan}');">
                                                     <i class="fa-solid fa-receipt"></i> Struk
                                                 </button>
+                                                ${tombol_isian_ok}
                                                 <?php if (session()->get('role') != 'Admin') : ?>
                                                 <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/asesmen/export') ?>/${rawatjalan.id_rawat_jalan}');">
                                                     <i class="fa-solid fa-print"></i> Asesmen
@@ -1308,6 +1439,7 @@
                                                     ${rawatjalan.keluhan}
                                                 </div>
                                             </div>
+                                            ${isian_ok}
                                             ${pembatal}
                                         </div>
                                     </div>
