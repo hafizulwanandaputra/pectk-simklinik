@@ -290,7 +290,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                     select.val(selectedObat).trigger('change');
                 }
             } else {
-                showFailedToast('Gagal mendapatkan dokter.');
+                showFailedToast('Gagal mendapatkan obat.');
             }
         } catch (error) {
             showFailedToast('Gagal mendapatkan obat.<br>' + error);
@@ -666,8 +666,9 @@ $usia = $registrasi->diff($tanggal_lahir);
                             $('#editDetail .is-invalid').removeClass('is-invalid');
                             $('#editDetail .invalid-feedback').text('').hide();
                             $('#editDetailResep').remove();
+                            const selectedObat = $('#id_batch_obat').val();
+                            await fetchObatOptions(selectedObat);
                             fetchDetailResep();
-                            fetchObatOptions();
                             fetchStatusResep();
                         } else {
                             console.log("Validation Errors:", response.data.errors);
@@ -756,8 +757,9 @@ $usia = $registrasi->diff($tanggal_lahir);
                     $('#jumlah').val('');
                     $('#tambahDetail .is-invalid').removeClass('is-invalid');
                     $('#tambahDetail .invalid-feedback').text('').hide();
+                    const selectedObat = $('#id_batch_obat').val();
+                    await fetchObatOptions(selectedObat);
                     fetchDetailResep();
-                    fetchObatOptions();
                     fetchStatusResep();
                 } else {
                     console.log("Validation Errors:", response.data.errors);
