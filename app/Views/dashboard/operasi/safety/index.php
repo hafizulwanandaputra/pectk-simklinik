@@ -950,7 +950,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             $('#SafetySignInForm .is-invalid').removeClass('is-invalid');
             $('#SafetySignInForm .invalid-feedback').text('').hide();
             $('#submitSignInBtn').prop('disabled', true).html(`
-                <span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span> Simpan <em>Sign In</em>
+                <?= $this->include('spinner/spinner'); ?> Simpan <em>Sign In</em>
             `);
 
             // Disable form inputs
@@ -1051,7 +1051,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             $('#SafetyTimeOutForm .is-invalid').removeClass('is-invalid');
             $('#SafetyTimeOutForm .invalid-feedback').text('').hide();
             $('#submitTimeOutBtn').prop('disabled', true).html(`
-                <span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span> Simpan <em>Time Out</em>
+                <?= $this->include('spinner/spinner'); ?> Simpan <em>Time Out</em>
             `);
 
             // Disable form inputs
@@ -1145,7 +1145,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             $('#SafetySignOutForm .is-invalid').removeClass('is-invalid');
             $('#SafetySignOutForm .invalid-feedback').text('').hide();
             $('#submitSignOutBtn').prop('disabled', true).html(`
-                <span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span> Simpan <em>Sign Out</em>
+                <?= $this->include('spinner/spinner'); ?> Simpan <em>Sign Out</em>
             `);
 
             // Disable form inputs

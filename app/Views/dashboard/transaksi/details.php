@@ -892,7 +892,7 @@
             const id = $(this).data('id');
             const $row = $this.closest('tr');
             $('[data-bs-toggle="tooltip"]').tooltip('hide');
-            $this.prop('disabled', true).html(`<span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span>`);
+            $this.prop('disabled', true).html(`<?= $this->include('spinner/spinner'); ?>`);
             $('#editLayananTransaksi').remove();
             $('#editObatAlkesTransaksi').remove();
             try {
@@ -939,7 +939,7 @@
                     $('#editLayanan .is-invalid').removeClass('is-invalid');
                     $('#editLayanan .invalid-feedback').text('').hide();
                     $('#editLayananButton').prop('disabled', true).html(`
-                        <span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span> Edit
+                        <?= $this->include('spinner/spinner'); ?> Edit
                     `);
 
                     // Disable form inputs
@@ -1025,7 +1025,7 @@
             const id = $(this).data('id');
             const $row = $this.closest('tr');
             $('[data-bs-toggle="tooltip"]').tooltip('hide');
-            $this.prop('disabled', true).html(`<span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span>`);
+            $this.prop('disabled', true).html(`<?= $this->include('spinner/spinner'); ?>`);
             $('#editLayananTransaksi').remove();
             $('#editObatAlkesTransaksi').remove();
             try {
@@ -1068,7 +1068,7 @@
                     $('#editObatAlkes .is-invalid').removeClass('is-invalid');
                     $('#editObatAlkes .invalid-feedback').text('').hide();
                     $('#editObatAlkesButton').prop('disabled', true).html(`
-                        <span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span> Edit
+                        <?= $this->include('spinner/spinner'); ?> Edit
                     `);
 
                     // Disable form inputs
@@ -1158,7 +1158,7 @@
             $('#tambahLayanan .is-invalid').removeClass('is-invalid');
             $('#tambahLayanan .invalid-feedback').text('').hide();
             $('#addLayananButton').prop('disabled', true).html(`
-                <span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span> Tambah
+                <?= $this->include('spinner/spinner'); ?> Tambah
             `);
 
             // Disable form inputs
@@ -1239,7 +1239,7 @@
             $('#tambahObatAlkes .is-invalid').removeClass('is-invalid');
             $('#tambahObatAlkes .invalid-feedback').text('').hide();
             $('#addObatAlkesButton').prop('disabled', true).html(`
-                <span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span> Tambah
+                <?= $this->include('spinner/spinner'); ?> Tambah
             `);
 
             // Disable form inputs
@@ -1336,7 +1336,7 @@
             $('#transaksiForm .is-invalid').removeClass('is-invalid');
             $('#transaksiForm .invalid-feedback').text('').hide();
             $('#submitButton').prop('disabled', true).html(`
-                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                <?= $this->include('spinner/spinner'); ?>
                 <span role="status">Memproses...</span>
             `);
 
@@ -1429,7 +1429,7 @@
                 $('#batalTransaksiForm .is-invalid').removeClass('is-invalid');
                 $('#batalTransaksiForm .invalid-feedback').text('').hide();
                 $('#cancelSubmitButton').prop('disabled', true).html(`
-                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                <?= $this->include('spinner/spinner'); ?>
                 <span role="status">Membatalkan...</span>
             `);
 

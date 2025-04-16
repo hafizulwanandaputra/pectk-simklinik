@@ -482,7 +482,7 @@ $usia = $registrasi->diff($tanggal_lahir);
         // Batalkan perubahan jika tidak jadi
         $('#cancel_drawing').click(async function() {
             $('#loadingSpinner').show();
-            $(this).prop('disabled', true).html(`<span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span> Batalkan Perubahan`);
+            $(this).prop('disabled', true).html(`<?= $this->include('spinner/spinner'); ?> Batalkan Perubahan`);
             try {
                 const response = await axios.get('<?= base_url('operasi/spko/view/') . $operasi['id_sp_operasi'] ?>');
                 const data = response.data;
@@ -521,7 +521,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             $('#SPKOForm .is-invalid').removeClass('is-invalid');
             $('#SPKOForm .invalid-feedback').text('').hide();
             $('#submitBtn').prop('disabled', true).html(`
-                <span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span> Simpan
+                <?= $this->include('spinner/spinner'); ?> Simpan
             `);
 
             // Disable form inputs

@@ -88,7 +88,7 @@
                             <div class="d-flex">
                                 <div class="align-self-center w-100">
                                     <h5 class="card-title d-flex placeholder-glow">
-                                        <span class="badge bg-body text-body border py-1 px-2 date placeholder" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><span class="spinner-border" style="width: 0.9em; height: 0.9em;" aria-hidden="true"></span></span> <span class="placeholder ms-1" style="width: 100%"></span>
+                                        <span class="badge bg-body text-body border py-1 px-2 date placeholder" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><?= $this->include('spinner/spinner'); ?></span> <span class="placeholder ms-1" style="width: 100%"></span>
                                     </h5>
                                     <h6 class="card-subtitle mb-2 placeholder-glow">
                                         <span class="placeholder" style="width: 100%;"></span><br>
@@ -241,7 +241,7 @@
                 <div class="d-flex">
                     <div class="align-self-center w-100">
                         <h5 class="card-title d-flex placeholder-glow">
-                            <span class="badge bg-body text-body border py-1 px-2 date placeholder" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><span class="spinner-border" style="width: 0.9em; height: 0.9em;" aria-hidden="true"></span></span> <span class="placeholder ms-1" style="width: 100%"></span>
+                            <span class="badge bg-body text-body border py-1 px-2 date placeholder" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><?= $this->include('spinner/spinner'); ?></span> <span class="placeholder ms-1" style="width: 100%"></span>
                         </h5>
                         <h6 class="card-subtitle mb-2 placeholder-glow">
                             <span class="placeholder" style="width: 100%;"></span><br>
@@ -643,7 +643,7 @@
             const id = $(this).data('id'); // Dapatkan ID layanan
             $('[data-bs-toggle="tooltip"]').tooltip('hide'); // Sembunyikan tooltip
             $this.prop('disabled', true).html(`
-                <span class="spinner-border" style="width: 15px; height: 15px;" aria-hidden="true"></span> Edit Identitas
+                <?= $this->include('spinner/spinner'); ?> Edit Identitas
             `); // Ubah tombol menjadi indikator loading
             try {
                 const response = await axios.get(`<?= base_url('/resepluar/resep') ?>/${id}`); // Ambil data resep luar berdasarkan ID
@@ -727,7 +727,7 @@
             $('#resepluarForm .is-invalid').removeClass('is-invalid');
             $('#resepluarForm .invalid-feedback').text('').hide();
             $('#submitButton').prop('disabled', true).html(`
-                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span> Menambahkan
+                <?= $this->include('spinner/spinner'); ?> Menambahkan
             `);
 
             // Disable form inputs

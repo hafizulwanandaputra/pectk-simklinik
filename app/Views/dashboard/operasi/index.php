@@ -108,7 +108,7 @@
                             <div class="d-flex">
                                 <div class="align-self-center w-100">
                                     <h5 class="card-title d-flex placeholder-glow">
-                                        <span class="badge bg-body text-body border py-1 px-2 date placeholder" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><span class="spinner-border" style="width: 0.9em; height: 0.9em;" aria-hidden="true"></span></span> <span class="placeholder ms-1" style="width: 100%"></span>
+                                        <span class="badge bg-body text-body border py-1 px-2 date placeholder" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><?= $this->include('spinner/spinner'); ?> <span class="placeholder ms-1" style="width: 100%"></span>
                                     </h5>
                                     <h6 class="card-subtitle mb-2 placeholder-glow">
                                         <span class="placeholder" style="width: 100%;"></span><br>
@@ -246,7 +246,7 @@
                 <div class="d-flex">
                     <div class="align-self-center w-100">
                         <h5 class="card-title d-flex placeholder-glow">
-                            <span class="badge bg-body text-body border py-1 px-2 date placeholder" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><span class="spinner-border" style="width: 0.9em; height: 0.9em;" aria-hidden="true"></span></span> <span class="placeholder ms-1" style="width: 100%"></span>
+                            <span class="badge bg-body text-body border py-1 px-2 date placeholder" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><?= $this->include('spinner/spinner'); ?> <span class="placeholder ms-1" style="width: 100%"></span>
                         </h5>
                         <h6 class="card-subtitle mb-2 placeholder-glow">
                             <span class="placeholder" style="width: 100%;"></span><br>
@@ -666,7 +666,7 @@
         $(document).on('click', '.status-btn', async function() {
             var $this = $(this);
             var id = $this.data('id');
-            $this.prop('disabled', true).html(`<span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span> Atur Status`);
+            $this.prop('disabled', true).html(`<?= $this->include('spinner/spinner'); ?> Atur Status`);
 
             try {
                 let response = await axios.get(`<?= base_url('/operasi/spko/view') ?>/` + id);
@@ -717,7 +717,7 @@
             $('#statusForm .is-invalid').removeClass('is-invalid');
             $('#statusForm .invalid-feedback').text('').hide();
             $('#statusSubmitButton').prop('disabled', true).html(`
-                <span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span> Memproses...
+                <?= $this->include('spinner/spinner'); ?> Memproses...
             `);
 
             // Disable form inputs

@@ -561,7 +561,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             const id = $(this).data('id');
             const $row = $this.closest('tr');
             $('[data-bs-toggle="tooltip"]').tooltip('hide');
-            $this.prop('disabled', true).html(`<span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span>`);
+            $this.prop('disabled', true).html(`<?= $this->include('spinner/spinner'); ?>`);
             $('#editDetailResep').remove();
             try {
                 const response = await axios.get(`<?= base_url('/resep/detailresepitem') ?>/${id}`);
@@ -647,7 +647,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                     $('#editDetail .is-invalid').removeClass('is-invalid');
                     $('#editDetail .invalid-feedback').text('').hide();
                     $('#editButton').prop('disabled', true).html(`
-                        <span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span> Edit
+                        <?= $this->include('spinner/spinner'); ?> Edit
                     `);
 
                     // Disable form inputs
@@ -738,7 +738,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             $('#tambahDetail .is-invalid').removeClass('is-invalid');
             $('#tambahDetail .invalid-feedback').text('').hide();
             $('#addButton').prop('disabled', true).html(`
-                <span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span> Tambah
+                <?= $this->include('spinner/spinner'); ?> Tambah
             `);
 
             // Disable form inputs

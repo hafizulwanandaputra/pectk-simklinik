@@ -446,7 +446,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             const id = $(this).data('id');
             const $row = $this.closest('tr');
             $('[data-bs-toggle="tooltip"]').tooltip('hide');
-            $this.prop('disabled', true).html(`<span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span>`);
+            $this.prop('disabled', true).html(`<?= $this->include('spinner/spinner'); ?>`);
             $('#editLayananTransaksi').remove();
             $('#editObatAlkesTransaksi').remove();
             try {
@@ -493,7 +493,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                     $('#editLayanan .is-invalid').removeClass('is-invalid');
                     $('#editLayanan .invalid-feedback').text('').hide();
                     $('#editLayananButton').prop('disabled', true).html(`
-                        <span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span> Edit
+                        <?= $this->include('spinner/spinner'); ?> Edit
                     `);
 
                     // Disable form inputs

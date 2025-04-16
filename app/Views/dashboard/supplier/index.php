@@ -336,7 +336,7 @@
             const $this = $(this);
             const id = $(this).data('id'); // Ambil ID supplier
             $('[data-bs-toggle="tooltip"]').tooltip('hide'); // Sembunyikan tooltip
-            $this.prop('disabled', true).html(`<span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span>`);
+            $this.prop('disabled', true).html(`<?= $this->include('spinner/spinner'); ?>`);
 
             try {
                 const response = await axios.get(`<?= base_url('/supplier/supplier') ?>/${id}`);
@@ -404,7 +404,7 @@
             $('#supplierForm .is-invalid').removeClass('is-invalid');
             $('#supplierForm .invalid-feedback').text('').hide();
             $('#submitButton').prop('disabled', true).html(`
-                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                <?= $this->include('spinner/spinner'); ?>
                 <span role="status">Memproses, silakan tunggu...</span>
             `);
 

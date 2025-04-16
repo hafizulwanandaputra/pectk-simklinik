@@ -611,7 +611,7 @@ $usia = $registrasi->diff($tanggal_lahir);
         $(document).on('click', '.edit-btn', async function() {
             var $this = $(this);
             var id = $this.data('id');
-            $this.prop('disabled', true).html(`<span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span> Edit`);
+            $this.prop('disabled', true).html(`<?= $this->include('spinner/spinner'); ?> Edit`);
 
             try {
                 let response = await axios.get(`<?= base_url('/rawatjalan/penunjang/scan/view') ?>/` + id);
@@ -690,7 +690,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             $('#uploadProgressBar').removeClass('bg-danger').css('width', '0%');
             $('#cancelButton').prop('disabled', false).show();
             $('#submitButton').prop('disabled', true).html(`
-                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                <?= $this->include('spinner/spinner'); ?>
                 <span role="status">Memproses <span id="uploadPercentage" style="font-variant-numeric: tabular-nums;">0%</span></span>
             `);
 

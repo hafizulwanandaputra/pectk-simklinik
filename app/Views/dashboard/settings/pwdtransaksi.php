@@ -114,7 +114,7 @@
             $('#changePasswordForm').submit(); // Mengirimkan form untuk mengubah kata sandi
             $('input').prop('disabled', true); // Menonaktifkan semua field input
             $('#submitBtn').prop('disabled', true).html(`
-                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                <?= $this->include('spinner/spinner'); ?>
                 <span role="status">Memproses, silakan tunggu...</span>
             `); // Mengubah tampilan tombol submit menjadi loading
         });

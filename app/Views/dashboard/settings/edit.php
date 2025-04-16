@@ -47,7 +47,7 @@
             $('#userInfoForm').submit();
             $('input').prop('disabled', true);
             $('#submitBtn').prop('disabled', true).html(`
-                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                <?= $this->include('spinner/spinner'); ?>
                 <span role="status">Mengubah, silakan tunggu...</span>
             `);
         });

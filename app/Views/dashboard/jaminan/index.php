@@ -339,7 +339,7 @@
             const $this = $(this); // Menyimpan referensi ke tombol yang diklik
             const id = $(this).data('id'); // Mengambil ID pengguna dari atribut data
             $('[data-bs-toggle="tooltip"]').tooltip('hide'); // Menyembunyikan tooltip
-            $this.prop('disabled', true).html(`<span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span>`); // Menampilkan spinner
+            $this.prop('disabled', true).html(`<?= $this->include('spinner/spinner'); ?>`); // Menampilkan spinner
 
             try {
                 // Melakukan permintaan dengan Axios untuk mendapatkan data pengguna
@@ -411,7 +411,7 @@
             $('#jaminanForm .is-invalid').removeClass('is-invalid');
             $('#jaminanForm .invalid-feedback').text('').hide();
             $('#submitButton').prop('disabled', true).html(`
-                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                <?= $this->include('spinner/spinner'); ?>
                 <span role="status">Memproses...</span>
             `); // Mengubah tampilan tombol submit menjadi loading
 

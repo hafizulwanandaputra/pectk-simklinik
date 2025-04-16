@@ -83,7 +83,7 @@
                             <div class="d-flex">
                                 <div class="align-self-center w-100">
                                     <h5 class="card-title d-flex placeholder-glow">
-                                        <span class="badge bg-body text-body border py-1 px-2 date placeholder" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><span class="spinner-border" style="width: 0.9em; height: 0.9em;" aria-hidden="true"></span></span> <span class="placeholder ms-1" style="width: 100%"></span>
+                                        <span class="badge bg-body text-body border py-1 px-2 date placeholder" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><?= $this->include('spinner/spinner'); ?> <span class="placeholder ms-1" style="width: 100%"></span>
                                     </h5>
                                     <h6 class="card-subtitle mb-2 placeholder-glow">
                                         <span class="placeholder" style="width: 100%;"></span><br>
@@ -176,7 +176,7 @@
                 <div class="d-flex">
                     <div class="align-self-center w-100">
                         <h5 class="card-title d-flex placeholder-glow">
-                            <span class="badge bg-body text-body border py-1 px-2 date placeholder" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><span class="spinner-border" style="width: 0.9em; height: 0.9em;" aria-hidden="true"></span></span> <span class="placeholder ms-1" style="width: 100%"></span>
+                            <span class="badge bg-body text-body border py-1 px-2 date placeholder" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><?= $this->include('spinner/spinner'); ?> <span class="placeholder ms-1" style="width: 100%"></span>
                         </h5>
                         <h6 class="card-subtitle mb-2 placeholder-glow">
                             <span class="placeholder" style="width: 100%;"></span><br>
@@ -601,7 +601,7 @@
             $('#lPOperasiKatarakForm .is-invalid').removeClass('is-invalid');
             $('#lPOperasiKatarakForm .invalid-feedback').text('').hide();
             $('#submitButton').prop('disabled', true).html(`
-                <span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span> Tambah
+                <?= $this->include('spinner/spinner'); ?> Tambah
             `);
 
             // Disable form inputs

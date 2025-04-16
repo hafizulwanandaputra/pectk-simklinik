@@ -336,7 +336,7 @@
             const id = $(this).data('id'); // Dapatkan ID layanan
             $('[data-bs-toggle="tooltip"]').tooltip('hide'); // Sembunyikan tooltip
             $this.prop('disabled', true).html(`
-                <span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span>
+                <?= $this->include('spinner/spinner'); ?>
             `); // Ubah tombol menjadi indikator loading
 
             try {
@@ -403,7 +403,7 @@
             $('#layananForm .is-invalid').removeClass('is-invalid');
             $('#layananForm .invalid-feedback').text('').hide();
             $('#submitButton').prop('disabled', true).html(`
-                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                <?= $this->include('spinner/spinner'); ?>
                 <span role="status">Memproses, silakan tunggu...</span>
             `); // Ubah tombol submit menjadi indikator loading
 

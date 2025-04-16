@@ -417,7 +417,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             $('#FormulirForm .is-invalid').removeClass('is-invalid');
             $('#FormulirForm .invalid-feedback').text('').hide();
             $('#submitBtn').prop('disabled', true).html(`
-                <span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span> Simpan
+                <?= $this->include('spinner/spinner'); ?> Simpan
             `);
 
             // Disable form inputs

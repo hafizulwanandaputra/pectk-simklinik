@@ -164,7 +164,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 $('#addOptikForm').submit();
                 $('#loadingSpinner').show();
                 $('#addOptikBtn').prop('disabled', true).html(`
-                <span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span> Silakan Tunggu..</span>
+                <?= $this->include('spinner/spinner'); ?> Silakan Tunggu..</span>
             `);
             });
         <?php endif; ?>
