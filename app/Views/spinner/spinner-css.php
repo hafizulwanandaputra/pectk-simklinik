@@ -20,6 +20,17 @@
         backface-visibility: hidden;
     }
 
+    .number-placeholder .ldio-x2uulkbinbj {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -70%) scale(0.8);
+        /* Pusat + scale */
+        backface-visibility: hidden;
+    }
+
     .ldio-x2uulkbinbj div {
         position: absolute;
         width: 0.125em;
