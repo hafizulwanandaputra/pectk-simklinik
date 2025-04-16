@@ -237,7 +237,7 @@
 <script>
     async function fetchObatOptions(selectedObat = null) {
         try {
-            const response = await axios.get('<?= base_url('resep/obatlist/' . $resep['id_resep']) ?>');
+            const response = await axios.get('<?= base_url('resepluar/obatlist/' . $resep['id_resep']) ?>');
 
             if (response.data.success) {
                 const options = response.data.data;
