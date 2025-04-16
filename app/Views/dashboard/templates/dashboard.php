@@ -483,6 +483,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
             }
         }
     </style>
+    <?= $this->include('spinner/spinner-css'); ?>
     <?= $this->renderSection('css'); ?>
 </head>
 

@@ -206,6 +206,7 @@
             fill: currentcolor;
         }
     </style>
+    <?= $this->include('spinner/spinner-css'); ?>
 </head>
 
 <body class="bg-success-subtle d-flex flex-column h-100">
@@ -453,8 +454,8 @@
                 $('input').prop('disabled', true).removeClass('is-invalid'); // Menonaktifkan semua input dan menghapus kelas 'is-invalid'
                 $('#loginForm button').prop('disabled', true)
                 $('#loginBtn').html(`
-            <?= $this->include('spinner/spinner'); ?> <span class="d-md-none">SILAKAN TUNGGU</span>
-        `); // Menampilkan spinner dan teks 'SILAKAN TUNGGU...' pada tombol login
+                    <?= $this->include('spinner/spinner'); ?> <span class="d-md-none">SILAKAN TUNGGU</span>
+                `); // Menampilkan spinner dan teks 'SILAKAN TUNGGU...' pada tombol login
             });
         });
     </script>
