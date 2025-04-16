@@ -281,6 +281,10 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
             overflow: hidden;
         }
 
+        .loading-spinner {
+            fill: currentcolor;
+        }
+
         .wrapper {
             display: flex;
             flex-direction: column;

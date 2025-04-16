@@ -7,8 +7,8 @@
             <div class="fw-medium lh-sm" style="font-size: 0.75em;"><span id="total_datatables">0</span> pengguna</div>
         </div>
     </div>
-    <div id="loadingSpinner" class="spinner-border spinner-border-sm mx-2" role="status" style="min-width: 1rem;">
-        <span class="visually-hidden">Loading...</span>
+    <div id="loadingSpinner" class="px-2">
+        <?= $this->include('spinner/spinner'); ?>
     </div>
     <a id="toggleFilter" class="fs-6 mx-2 text-success-emphasis" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Pencarian"><i class="fa-solid fa-magnifying-glass"></i></a>
     <a id="refreshButton" class="fs-6 mx-2 text-success-emphasis" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan"><i class="fa-solid fa-sync"></i></a>
@@ -389,7 +389,7 @@
             const $this = $(this); // Menyimpan referensi ke tombol yang diklik
             const id = $(this).data('id'); // Mengambil ID pengguna dari atribut data
             $('[data-bs-toggle="tooltip"]').tooltip('hide'); // Menyembunyikan tooltip
-            $this.prop('disabled', true).html(`<span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span>`); // Menampilkan spinner
+            $this.prop('disabled', true).html(`<?= $this->include('spinner/spinner'); ?>`); // Menampilkan spinner
 
             try {
                 // Melakukan permintaan dengan Axios untuk mendapatkan data pengguna
@@ -539,7 +539,7 @@
             $('#userForm .is-invalid').removeClass('is-invalid');
             $('#userForm .invalid-feedback').text('').hide();
             $('#submitButton').prop('disabled', true).html(`
-                <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                <?= $this->include('spinner/spinner'); ?>
                 <span role="status">Memproses...</span>
             `); // Mengubah tampilan tombol submit menjadi loading
 

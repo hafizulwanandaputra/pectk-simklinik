@@ -10,8 +10,8 @@
             <div class="fw-medium lh-sm" style="font-size: 0.75em;"><span id="totalRecords">0</span> laporan</div>
         </div>
     </div>
-    <div id="loadingSpinner" class="spinner-border spinner-border-sm mx-2" role="status" style="min-width: 1rem;">
-        <span class="visually-hidden">Loading...</span>
+    <div id="loadingSpinner" class="px-2">
+        <?= $this->include('spinner/spinner'); ?>
     </div>
     <a id="toggleFilter" class="fs-6 mx-2 text-success-emphasis" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Pencarian"><i class="fa-solid fa-magnifying-glass"></i></a>
     <a id="refreshButton" class="fs-6 mx-2 text-success-emphasis" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan"><i class="fa-solid fa-sync"></i></a>

@@ -7,8 +7,8 @@
             <div class="fw-medium lh-sm" style="font-size: 0.75em;"><span id="total_rajal">0</span> rawat jalan (<span id="total_didaftarkan">0</span> didaftarkan • <span id="total_dibatalkan">0</span> dibatalkan)</div>
         </div>
     </div>
-    <div id="loadingSpinner" class="spinner-border spinner-border-sm mx-2" role="status" style="min-width: 1rem;">
-        <span class="visually-hidden">Loading...</span>
+    <div id="loadingSpinner" class="px-2">
+        <?= $this->include('spinner/spinner'); ?>
     </div>
 </div>
 <div style="min-width: 1px; max-width: 1px;"></div>

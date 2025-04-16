@@ -201,6 +201,10 @@
             vertical-align: middle;
             transform: translateY(-0.1em);
         }
+
+        .loading-spinner {
+            fill: currentcolor;
+        }
     </style>
 </head>
 
@@ -449,7 +453,7 @@
                 $('input').prop('disabled', true).removeClass('is-invalid'); // Menonaktifkan semua input dan menghapus kelas 'is-invalid'
                 $('#loginForm button').prop('disabled', true)
                 $('#loginBtn').html(`
-            <span class="spinner-border" style="width: 1em; height: 1em;" aria-hidden="true"></span>  <span class="d-md-none">SILAKAN TUNGGU</span>
+            <?= $this->include('spinner/spinner'); ?> <span class="d-md-none">SILAKAN TUNGGU</span>
         `); // Menampilkan spinner dan teks 'SILAKAN TUNGGU...' pada tombol login
             });
         });

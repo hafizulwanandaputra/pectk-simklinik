@@ -71,8 +71,8 @@ $usia = $registrasi->diff($tanggal_lahir);
             <div class="fw-medium lh-sm" style="font-size: 0.75em;"><?= $rawatjalan['nama_pasien']; ?> • <?= $usia->y . " tahun " . $usia->m . " bulan" ?> • <?= $rawatjalan['no_rm'] ?></div>
         </div>
     </div>
-    <div id="loadingSpinner" class="spinner-border spinner-border-sm mx-2" role="status" style="min-width: 1rem;">
-        <span class="visually-hidden">Loading...</span>
+    <div id="loadingSpinner" class="px-2">
+        <?= $this->include('spinner/spinner'); ?>
     </div>
     <?php if ($previous): ?>
         <a class="fs-6 mx-2 text-success-emphasis" href="<?= site_url('rawatjalan/optik/' . $previous['id_rawat_jalan']) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="<?= $previous['nomor_registrasi']; ?> • <?= $previous['no_rm'] ?> • <?= $previous['nama_pasien']; ?>"><i class="fa-solid fa-circle-arrow-left"></i></a>

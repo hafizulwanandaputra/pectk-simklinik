@@ -17,8 +17,8 @@
             <div class="fw-medium lh-sm" style="font-size: 0.75em;"><span id="totalRecords">0</span> transaksi</div>
         </div>
     </div>
-    <div id="loadingSpinner" class="spinner-border spinner-border-sm mx-2" role="status" style="min-width: 1rem;">
-        <span class="visually-hidden">Loading...</span>
+    <div id="loadingSpinner" class="px-2">
+        <?= $this->include('spinner/spinner'); ?>
     </div>
     <?php if (session()->get('role') != 'Admisi') : ?>
         <a class="fs-6 mx-2 text-success-emphasis" href="<?= base_url('transaksi/report') ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Laporan Transaksi Harian"><i class="fa-solid fa-file-invoice-dollar"></i></a>

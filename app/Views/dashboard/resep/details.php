@@ -24,8 +24,8 @@
             <div class="fw-medium lh-sm" style="font-size: 0.75em;"><?= $resep['id_resep'] ?> • <?= $resep['nama_pasien'] ?> • <?= $resep['tanggal_resep'] ?></div>
         </div>
     </div>
-    <div id="loadingSpinner" class="spinner-border spinner-border-sm mx-2" role="status" style="min-width: 1rem;">
-        <span class="visually-hidden">Loading...</span>
+    <div id="loadingSpinner" class="px-2">
+        <?= $this->include('spinner/spinner'); ?>
     </div>
     <a id="refreshButton" class="fs-6 mx-2 text-success-emphasis" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan"><i class="fa-solid fa-sync"></i></a>
     <?php if ($previous): ?>

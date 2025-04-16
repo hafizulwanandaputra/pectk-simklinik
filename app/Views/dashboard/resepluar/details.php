@@ -24,8 +24,8 @@
             <div class="fw-medium lh-sm" style="font-size: 0.75em;"><?= $resep['id_resep'] ?> • <?= ($resep['nama_pasien'] == NULL) ? '<em>Anonim</em>' : $resep['nama_pasien']; ?> • <?= $resep['tanggal_resep'] ?></div>
         </div>
     </div>
-    <div id="loadingSpinner" class="spinner-border spinner-border-sm mx-2" role="status" style="min-width: 1rem;">
-        <span class="visually-hidden">Loading...</span>
+    <div id="loadingSpinner" class="px-2">
+        <?= $this->include('spinner/spinner'); ?>
     </div>
     <a id="refreshButton" class="fs-6 mx-2 text-success-emphasis" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan"><i class="fa-solid fa-sync"></i></a>
     <?php if ($previous): ?>
@@ -235,21 +235,31 @@
 <?= $this->endSection(); ?>
 <?= $this->section('javascript'); ?>
 <script>
-    async function fetchObatOptions() {
+    async function fetchObatOptions(selectedObat = null) {
         try {
-            const response = await axios.get('<?= base_url('resepluar/obatlist/' . $resep['id_resep']) ?>');
+            const response = await axios.get('<?= base_url('resep/obatlist/' . $resep['id_resep']) ?>');
 
             if (response.data.success) {
                 const options = response.data.data;
                 const select = $('#id_batch_obat');
 
-                // Clear existing options except the first one
+                // Reset pilihan terlebih dahulu sebelum memuat ulang
+                select.val('').trigger('change'); // Kosongkan pilihan
+
+                // Hapus semua opsi kecuali yang pertama
                 select.find('option:not(:first)').remove();
 
-                // Loop through the options and append them to the select element
+                // Tambahkan opsi baru dari data yang diterima
                 options.forEach(option => {
                     select.append(`<option value="${option.value}">${option.text}</option>`);
                 });
+
+                // Pastikan pilihan kembali ke default setelah submit
+                if (selectedObat) {
+                    select.val(selectedObat).trigger('change');
+                }
+            } else {
+                showFailedToast('Gagal mendapatkan obat.');
             }
         } catch (error) {
             showFailedToast('Gagal mendapatkan obat.<br>' + error);
@@ -389,8 +399,9 @@
             const data = JSON.parse(event.data);
             if (data.update) {
                 console.log("Received update from WebSocket");
+                const selectedObat = $('#id_batch_obat').val();
+                await fetchObatOptions(selectedObat);
                 fetchDetailResep();
-                fetchObatOptions();
                 fetchStatusResep();
             }
         };
@@ -425,8 +436,9 @@
 
             try {
                 await axios.delete(`<?= base_url('/resepluar/hapusdetailresep') ?>/${detailResepId}`);
+                const selectedObat = $('#id_batch_obat').val();
+                await fetchObatOptions(selectedObat);
                 fetchDetailResep();
-                fetchObatOptions();
                 fetchStatusResep();
             } catch (error) {
                 if (error.response.request.status === 401) {
@@ -550,8 +562,9 @@
                             $('#editDetail .is-invalid').removeClass('is-invalid');
                             $('#editDetail .invalid-feedback').text('').hide();
                             $('#editDetailResep').remove();
+                            const selectedObat = $('#id_batch_obat').val();
+                            await fetchObatOptions(selectedObat);
                             fetchDetailResep();
-                            fetchObatOptions();
                             fetchStatusResep();
                         } else {
                             console.log("Validation Errors:", response.data.errors);
@@ -640,8 +653,9 @@
                     $('#jumlah').val('');
                     $('#tambahDetail .is-invalid').removeClass('is-invalid');
                     $('#tambahDetail .invalid-feedback').text('').hide();
+                    const selectedObat = $('#id_batch_obat').val();
+                    await fetchObatOptions(selectedObat);
                     fetchDetailResep();
-                    fetchObatOptions();
                     fetchStatusResep();
                 } else {
                     console.log("Validation Errors:", response.data.errors);
@@ -689,23 +703,25 @@
             }
         });
 
-        $(document).on('visibilitychange', function() {
+        $(document).on('visibilitychange', async function() {
             if (document.visibilityState === "visible") {
+                const selectedObat = $('#id_batch_obat').val();
+                await fetchObatOptions(selectedObat);
                 fetchDetailResep();
-                fetchObatOptions();
                 fetchStatusResep();
             }
         });
 
-        $('#refreshButton').on('click', function(e) {
+        $('#refreshButton').on('click', async function(e) {
             e.preventDefault();
+            const selectedObat = $('#id_batch_obat').val();
+            await fetchObatOptions(selectedObat);
             fetchDetailResep();
-            fetchObatOptions();
             fetchStatusResep();
         });
 
-        fetchDetailResep();
         fetchObatOptions();
+        fetchDetailResep();
         fetchStatusResep();
     });
     // Show toast notification
