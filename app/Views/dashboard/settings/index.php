@@ -15,7 +15,7 @@
             <h5>Rekam Medis yang Kosong</h5>
             <div class="row row-cols-2 row-cols-lg-4 g-2 mb-2">
                 <div class="col">
-                    <div class="card bg-body-tertiary w-100  shadow-sm">
+                    <div class="card bg-body w-100  shadow-sm">
                         <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Asesmen</div>
                         <div class="card-body py-2 px-3">
                             <h5 class="display-6 fw-medium date mb-0 placeholder-glow" id="medrec_assesment">
@@ -25,7 +25,7 @@
                     </div>
                 </div>
                 <div class="col">
-                    <div class="card bg-body-tertiary w-100  shadow-sm">
+                    <div class="card bg-body w-100  shadow-sm">
                         <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Skrining</div>
                         <div class="card-body py-2 px-3">
                             <h5 class="display-6 fw-medium date mb-0 placeholder-glow" id="medrec_skrining">
@@ -35,7 +35,7 @@
                     </div>
                 </div>
                 <div class="col">
-                    <div class="card bg-body-tertiary w-100  shadow-sm">
+                    <div class="card bg-body w-100  shadow-sm">
                         <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Edukasi</div>
                         <div class="card-body py-2 px-3">
                             <h5 class="display-6 fw-medium date mb-0 placeholder-glow" id="medrec_edukasi">
@@ -45,7 +45,7 @@
                     </div>
                 </div>
                 <div class="col">
-                    <div class="card bg-body-tertiary w-100  shadow-sm">
+                    <div class="card bg-body w-100  shadow-sm">
                         <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Pemeriksaan Penunjang</div>
                         <div class="card-body py-2 px-3">
                             <h5 class="display-6 fw-medium date mb-0 placeholder-glow" id="medrec_permintaan_penunjang">
@@ -55,7 +55,7 @@
                     </div>
                 </div>
                 <div class="col">
-                    <div class="card bg-body-tertiary w-100  shadow-sm">
+                    <div class="card bg-body w-100  shadow-sm">
                         <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Tindakan Rawat Jalan</div>
                         <div class="card-body py-2 px-3">
                             <h5 class="display-6 fw-medium date mb-0 placeholder-glow" id="medrec_lp_tindakan_rajal">
@@ -65,7 +65,7 @@
                     </div>
                 </div>
                 <div class="col">
-                    <div class="card bg-body-tertiary w-100  shadow-sm">
+                    <div class="card bg-body w-100  shadow-sm">
                         <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Pra Operasi</div>
                         <div class="card-body py-2 px-3">
                             <h5 class="display-6 fw-medium date mb-0 placeholder-glow" id="medrec_operasi_pra">
@@ -75,7 +75,7 @@
                     </div>
                 </div>
                 <div class="col">
-                    <div class="card bg-body-tertiary w-100  shadow-sm">
+                    <div class="card bg-body w-100  shadow-sm">
                         <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Keselamatan Operasi</div>
                         <div class="card-body py-2 px-3">
                             <h5 class="display-6 fw-medium date mb-0 placeholder-glow" id="medrec_operasi_safety">
@@ -85,7 +85,7 @@
                     </div>
                 </div>
                 <div class="col">
-                    <div class="card bg-body-tertiary w-100  shadow-sm">
+                    <div class="card bg-body w-100  shadow-sm">
                         <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Resep Kacamata</div>
                         <div class="card-body py-2 px-3">
                             <h5 class="display-6 fw-medium date mb-0 placeholder-glow" id="medrec_optik">

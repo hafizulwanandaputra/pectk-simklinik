@@ -12,7 +12,7 @@
 <main class="main-content-inside">
     <div class="sticky-top" style="z-index: 99;">
         <ul class="list-group shadow-sm rounded-0">
-            <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-tertiary transparent-blur">
+            <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-secondary transparent-blur">
                 <div class="no-fluid-content">
                     <nav>
                         <div class="nav nav-underline nav-justified flex-nowrap overflow-auto" id="nav-tab" role="tablist">
@@ -22,7 +22,7 @@
                     </nav>
                 </div>
             </li>
-            <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-tertiary transparent-blur" id="tanggal_form">
+            <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-secondary transparent-blur" id="tanggal_form">
                 <div class="no-fluid-content">
                     <div class="input-group input-group-sm">
                         <input type="date" id="tanggal" name="tanggal" class="form-control" <?= (session()->get('auto_date') == 1) ? 'value="' . date('Y-m-d') . '"' : ''; ?>>
@@ -31,7 +31,7 @@
                     </div>
                 </div>
             </li>
-            <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-tertiary transparent-blur" id="bulan_form" style="display: none;">
+            <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-secondary transparent-blur" id="bulan_form" style="display: none;">
                 <div class="no-fluid-content">
                     <div class="input-group input-group-sm">
                         <input type="month" id="bulan" name="bulan" class="form-control" <?= (session()->get('auto_date') == 1) ? 'value="' . date('Y-m') . '"' : ''; ?>>

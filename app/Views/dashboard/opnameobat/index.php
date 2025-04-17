@@ -22,7 +22,7 @@
 <main class="main-content-inside">
     <div id="filterFields" class="sticky-top" style="z-index: 99; display: none;">
         <ul class="list-group shadow-sm rounded-0">
-            <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-tertiary transparent-blur">
+            <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-secondary transparent-blur">
                 <div class="no-fluid-content">
                     <div class="input-group input-group-sm mb-2">
                         <input type="date" id="tanggalFilter" class="form-control" <?= (session()->get('auto_date') == 1) ? 'value="' . date('Y-m-d') . '"' : ''; ?>>

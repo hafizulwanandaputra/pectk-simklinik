@@ -77,7 +77,7 @@ $usia = $registrasi->diff($tanggal_lahir);
 <main class="main-content-inside">
     <div class="sticky-top" style="z-index: 99;">
         <ul class="list-group shadow-sm rounded-0">
-            <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-tertiary transparent-blur">
+            <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-secondary transparent-blur">
                 <div class="no-fluid-content">
                     <nav class="nav nav-underline nav-fill flex-nowrap overflow-auto">
                         <a class="nav-link py-1 text-nowrap active activeLink" href="<?= base_url('operasi/spko/' . $operasi['id_sp_operasi']); ?>">SPKO</a>
@@ -86,7 +86,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                     </nav>
                 </div>
             </li>
-            <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-tertiary transparent-blur">
+            <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-secondary transparent-blur">
                 <div class="no-fluid-content">
                     <nav class="nav nav-underline flex-nowrap overflow-auto">
                         <?php foreach ($listRawatJalan as $list) : ?>

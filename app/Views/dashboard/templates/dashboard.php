@@ -315,7 +315,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
 
         .sidebar {
             box-shadow: inset 0px 0 0 rgba(0, 0, 0, 0);
-            border-right: 1px solid var(--bs-border-color-translucent);
+            border-right: 1px solid var(--bs-border-color);
             height: 100%;
             overflow: auto;
         }
@@ -442,7 +442,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                 top: 48px;
                 backdrop-filter: blur(20px);
                 --bs-bg-opacity: 0.6667;
-                border-right: 0px solid var(--bs-border-color-translucent);
+                border-right: 0px solid var(--bs-border-color);
                 width: 100%;
             }
 
@@ -487,7 +487,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
     <?= $this->renderSection('css'); ?>
 </head>
 
-<body>
+<body class="bg-body-tertiary">
     <div class="wrapper">
         <!-- HEADER -->
         <header class="navbar sticky-top flex-md-nowrap p-0 shadow-sm bg-success-subtle text-success-emphasis border-bottom border-success-subtle header">
@@ -639,7 +639,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
 
         <!-- CONTENTS -->
         <div class="main-content-wrapper">
-            <nav id="sidebarMenu" class="d-md-block sidebar bg-body-tertiary shadow-sm collapse">
+            <nav id="sidebarMenu" class="d-md-block sidebar bg-body-secondary shadow-sm collapse">
                 <div id="sidebarMenu2" class="position-sticky sidebar-sticky p-1">
                     <ul class="nav nav-pills flex-column">
                         <li class="nav-item">

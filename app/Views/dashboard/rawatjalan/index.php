@@ -17,7 +17,7 @@
 <main class="main-content-inside">
     <div class="sticky-top" style="z-index: 99;">
         <ul class="list-group shadow-sm rounded-0">
-            <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-tertiary transparent-blur">
+            <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-secondary transparent-blur">
                 <div class="no-fluid-content">
                     <nav>
                         <div class="nav nav-underline nav-justified flex-nowrap overflow-auto" id="nav-tab" role="tablist">
@@ -28,7 +28,7 @@
                     </nav>
                 </div>
             </li>
-            <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-tertiary transparent-blur" id="tanggal_form">
+            <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-secondary transparent-blur" id="tanggal_form">
                 <div class="no-fluid-content">
                     <div class="input-group input-group-sm">
                         <input type="date" id="tanggal" name="tanggal" class="form-control" value="<?= date('Y-m-d') ?>">
@@ -37,7 +37,7 @@
                     </div>
                 </div>
             </li>
-            <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-tertiary transparent-blur" id="no-rm_form" style="display: none;">
+            <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-secondary transparent-blur" id="no-rm_form" style="display: none;">
                 <form class="no-fluid-content" id="no-rm_form_content">
                     <div class="input-group input-group-sm">
                         <input type="search" id="no_rm" name="no_rm" class="form-control" placeholder="xx-xx-xx" autocomplete="off" dir="auto">
@@ -46,7 +46,7 @@
                     </div>
                 </form>
             </li>
-            <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-tertiary transparent-blur" id="nama_form" style="display: none;">
+            <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-secondary transparent-blur" id="nama_form" style="display: none;">
                 <form class="no-fluid-content" id="nama_form_content">
                     <div class="input-group input-group-sm">
                         <input type="search" id="nama" name="nama" class="form-control" placeholder="Nama pasien" autocomplete="off" dir="auto">
