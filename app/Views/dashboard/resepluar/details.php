@@ -107,7 +107,7 @@
         </div>
 
         <div class="card shadow-sm  overflow-auto">
-            <div class="card-header bg-body-tertiary" id="tambahDetailContainer" style="display: none;">
+            <div class="card-header" id="tambahDetailContainer" style="display: none;">
                 <form id="tambahDetail" enctype="multipart/form-data">
                     <div class="row g-2">
                         <div class="col-12">
@@ -189,7 +189,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="card-footer bg-body-tertiary">
+            <div class="card-footer">
                 <div class="row overflow-hidden d-flex align-items-end">
                     <div class="col fw-medium text-nowrap">Total Resep</div>
                     <div class="col text-end">

@@ -137,7 +137,7 @@
             <?php if ($transaksi['dokter'] != 'Resep Luar') : ?>
                 <div class="col-lg-6">
                     <div class="card h-100 shadow-sm  overflow-auto">
-                        <div class="card-header bg-body-tertiary" id="tambahLayananContainer" style="display: none;">
+                        <div class="card-header" id="tambahLayananContainer" style="display: none;">
                             <form id="tambahLayanan" enctype="multipart/form-data">
                                 <div class="mb-2">
                                     <select class="form-select form-select-sm form-tindakan" id="id_layanan" name="id_layanan" aria-label="id_layanan">
@@ -181,7 +181,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="card-footer bg-body-tertiary">
+                        <div class="card-footer">
                             <div class="row overflow-hidden d-flex align-items-end">
                                 <div class="col fw-medium text-nowrap">Sub Total</div>
                                 <div class="col text-end">
@@ -196,7 +196,7 @@
             <?php endif; ?>
             <div class="<?= ($transaksi['dokter'] == 'Resep Luar') ? 'col' : 'col-lg-6'; ?>">
                 <div class="card h-100 shadow-sm  overflow-auto">
-                    <div class="card-header bg-body-tertiary" id="tambahObatAlkesContainer" style="display: none;">
+                    <div class="card-header" id="tambahObatAlkesContainer" style="display: none;">
                         <form id="tambahObatAlkes" enctype="multipart/form-data">
                             <div class="mb-2">
                                 <select class="form-select form-select-sm" id="id_resep" name="id_resep" aria-label="id_resep">
@@ -235,7 +235,7 @@
                             </tbody>
                         </table>
                     </div>
-                    <div class="card-footer bg-body-tertiary">
+                    <div class="card-footer">
                         <div class="row overflow-hidden d-flex align-items-end">
                             <div class="col fw-medium text-nowrap">Sub Total</div>
                             <div class="col text-end">
