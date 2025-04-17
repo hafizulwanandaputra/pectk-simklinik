@@ -14,6 +14,10 @@
   --bs-border-radius-pill: 50rem;
 }
 
+.card {
+  --bs-card-cap-bg: rgba(var(--bs-secondary-bg-rgb), 0.5);
+}
+
 iframe {
   color-scheme: light;
 }

@@ -8,7 +8,7 @@
     <link rel="manifest" href="<?= base_url(); ?>/manifest.json">
     <meta name="theme-color" content="#d1e7dd" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#051b11" media="(prefers-color-scheme: dark)">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
     <link href="<?= base_url(); ?>favicon.png" rel="icon" />
     <link href="<?= base_url(); ?>favicon.png" rel="apple-touch-icon" />
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/heroes/">
@@ -351,114 +351,115 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script>
-        $(document).ready(function() {
-            // Menangani semua input password dengan jQuery
-            $('input[type="password"]').each(function() {
-                const passwordInput = $(this); // Menggunakan jQuery untuk elemen input
-                const popover = new bootstrap.Popover(passwordInput[0], {
-                    html: true,
-                    template: '<div class="popover shadow-lg" role="tooltip">' +
-                        '<div class="popover-arrow"></div>' +
-                        '<h3 class="popover-header"></h3>' +
-                        '<div class="popover-body">Caps Lock aktif!</div>' +
-                        '</div>'
-                });
+    <<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous">
+        </script>
+        <script>
+            $(document).ready(function() {
+                // Menangani semua input password dengan jQuery
+                $('input[type="password"]').each(function() {
+                    const passwordInput = $(this); // Menggunakan jQuery untuk elemen input
+                    const popover = new bootstrap.Popover(passwordInput[0], {
+                        html: true,
+                        template: '<div class="popover shadow-lg" role="tooltip">' +
+                            '<div class="popover-arrow"></div>' +
+                            '<h3 class="popover-header"></h3>' +
+                            '<div class="popover-body">Caps Lock aktif!</div>' +
+                            '</div>'
+                    });
 
-                let capsLockActive = false; // Status Caps Lock sebelumnya
+                    let capsLockActive = false; // Status Caps Lock sebelumnya
 
-                // Menambahkan event listener untuk 'focus' pada setiap input password
-                passwordInput.on('focus', function() {
-                    passwordInput[0].addEventListener('keyup', function(event) {
-                        const currentCapsLock = event.getModifierState('CapsLock'); // Memeriksa status Caps Lock
+                    // Menambahkan event listener untuk 'focus' pada setiap input password
+                    passwordInput.on('focus', function() {
+                        passwordInput[0].addEventListener('keyup', function(event) {
+                            const currentCapsLock = event.getModifierState('CapsLock'); // Memeriksa status Caps Lock
 
-                        // Jika status Caps Lock berubah
-                        if (currentCapsLock !== capsLockActive) {
-                            capsLockActive = currentCapsLock; // Perbarui status
-                            if (capsLockActive) {
-                                popover.show(); // Tampilkan popover jika Caps Lock aktif
-                            } else {
-                                popover.hide(); // Sembunyikan popover jika Caps Lock tidak aktif
+                            // Jika status Caps Lock berubah
+                            if (currentCapsLock !== capsLockActive) {
+                                capsLockActive = currentCapsLock; // Perbarui status
+                                if (capsLockActive) {
+                                    popover.show(); // Tampilkan popover jika Caps Lock aktif
+                                } else {
+                                    popover.hide(); // Sembunyikan popover jika Caps Lock tidak aktif
+                                }
                             }
-                        }
+                        });
+                    });
+
+                    // Menambahkan event listener untuk 'blur' pada setiap input password
+                    passwordInput.on('blur', function() {
+                        popover.hide(); // Sembunyikan popover saat kehilangan fokus
+                        passwordInput[0].removeEventListener('keyup', function() {}); // Hapus listener keyup saat blur
+                        capsLockActive = false; // Reset status Caps Lock
                     });
                 });
 
-                // Menambahkan event listener untuk 'blur' pada setiap input password
-                passwordInput.on('blur', function() {
-                    popover.hide(); // Sembunyikan popover saat kehilangan fokus
-                    passwordInput[0].removeEventListener('keyup', function() {}); // Hapus listener keyup saat blur
-                    capsLockActive = false; // Reset status Caps Lock
-                });
-            });
-
-            // Mengecek apakah elemen dengan id 'redirectToast' ada di dalam dokumen
-            if ($('#redirectToast').length) {
-                var redirectToast = new bootstrap.Toast($('#redirectToast')[0]);
-                redirectToast.show(); // Menampilkan toast redirect
-            }
-
-            // Mengecek apakah elemen dengan id 'msgToast' ada di dalam dokumen
-            if ($('#msgToast').length) {
-                var msgToast = new bootstrap.Toast($('#msgToast')[0]);
-                msgToast.show(); // Menampilkan toast pesan
-            }
-
-            // Mengecek apakah elemen dengan id 'errorToast' ada di dalam dokumen
-            if ($('#errorToast').length) {
-                var errorToast = new bootstrap.Toast($('#errorToast')[0]);
-                errorToast.show(); // Menampilkan toast error
-            }
-
-            // Mengecek apakah elemen dengan id 'validationToast' ada di dalam dokumen
-            if ($('#validationToast').length) {
-                var validationToast = new bootstrap.Toast($('#validationToast')[0]);
-                validationToast.show(); // Menampilkan toast validasi
-            }
-
-            // Mengatur waktu untuk menyembunyikan toast setelah 5 detik
-            setTimeout(function() {
-                // Mengecek kembali untuk menyembunyikan setiap toast jika ada
+                // Mengecek apakah elemen dengan id 'redirectToast' ada di dalam dokumen
                 if ($('#redirectToast').length) {
                     var redirectToast = new bootstrap.Toast($('#redirectToast')[0]);
-                    redirectToast.hide(); // Menyembunyikan toast redirect
+                    redirectToast.show(); // Menampilkan toast redirect
                 }
 
+                // Mengecek apakah elemen dengan id 'msgToast' ada di dalam dokumen
                 if ($('#msgToast').length) {
                     var msgToast = new bootstrap.Toast($('#msgToast')[0]);
-                    msgToast.hide(); // Menyembunyikan toast pesan
+                    msgToast.show(); // Menampilkan toast pesan
                 }
 
+                // Mengecek apakah elemen dengan id 'errorToast' ada di dalam dokumen
                 if ($('#errorToast').length) {
                     var errorToast = new bootstrap.Toast($('#errorToast')[0]);
-                    errorToast.hide(); // Menyembunyikan toast error
+                    errorToast.show(); // Menampilkan toast error
                 }
 
+                // Mengecek apakah elemen dengan id 'validationToast' ada di dalam dokumen
                 if ($('#validationToast').length) {
                     var validationToast = new bootstrap.Toast($('#validationToast')[0]);
-                    validationToast.hide(); // Menyembunyikan toast validasi
+                    validationToast.show(); // Menampilkan toast validasi
                 }
-            }, 5000); // Durasi waktu untuk menyembunyikan toast (5000 ms)
 
-            // Menghapus kelas 'is-invalid' dan menyembunyikan pesan invalid ketika input diubah
-            $('input.form-control').on('input', function() {
-                $(this).removeClass('is-invalid'); // Menghapus kelas 'is-invalid'
-                $(this).siblings('.invalid-feedback').hide(); // Menyembunyikan pesan feedback invalid
-            });
+                // Mengatur waktu untuk menyembunyikan toast setelah 5 detik
+                setTimeout(function() {
+                    // Mengecek kembali untuk menyembunyikan setiap toast jika ada
+                    if ($('#redirectToast').length) {
+                        var redirectToast = new bootstrap.Toast($('#redirectToast')[0]);
+                        redirectToast.hide(); // Menyembunyikan toast redirect
+                    }
 
-            // Menangani event klik pada tombol login
-            $(document).on('click', '#loginBtn', function(e) {
-                e.preventDefault(); // Mencegah aksi default tombol
-                $('#loginForm').submit(); // Mengirimkan form login
-                $('input').prop('disabled', true).removeClass('is-invalid'); // Menonaktifkan semua input dan menghapus kelas 'is-invalid'
-                $('#loginForm button').prop('disabled', true)
-                $('#loginBtn').html(`
+                    if ($('#msgToast').length) {
+                        var msgToast = new bootstrap.Toast($('#msgToast')[0]);
+                        msgToast.hide(); // Menyembunyikan toast pesan
+                    }
+
+                    if ($('#errorToast').length) {
+                        var errorToast = new bootstrap.Toast($('#errorToast')[0]);
+                        errorToast.hide(); // Menyembunyikan toast error
+                    }
+
+                    if ($('#validationToast').length) {
+                        var validationToast = new bootstrap.Toast($('#validationToast')[0]);
+                        validationToast.hide(); // Menyembunyikan toast validasi
+                    }
+                }, 5000); // Durasi waktu untuk menyembunyikan toast (5000 ms)
+
+                // Menghapus kelas 'is-invalid' dan menyembunyikan pesan invalid ketika input diubah
+                $('input.form-control').on('input', function() {
+                    $(this).removeClass('is-invalid'); // Menghapus kelas 'is-invalid'
+                    $(this).siblings('.invalid-feedback').hide(); // Menyembunyikan pesan feedback invalid
+                });
+
+                // Menangani event klik pada tombol login
+                $(document).on('click', '#loginBtn', function(e) {
+                    e.preventDefault(); // Mencegah aksi default tombol
+                    $('#loginForm').submit(); // Mengirimkan form login
+                    $('input').prop('disabled', true).removeClass('is-invalid'); // Menonaktifkan semua input dan menghapus kelas 'is-invalid'
+                    $('#loginForm button').prop('disabled', true)
+                    $('#loginBtn').html(`
                     <?= $this->include('spinner/spinner'); ?> <span class="d-md-none">SILAKAN TUNGGU</span>
                 `); // Menampilkan spinner dan teks 'SILAKAN TUNGGU...' pada tombol login
+                });
             });
-        });
-    </script>
+        </script>
 </body>
 
 </html>
