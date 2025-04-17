@@ -21,14 +21,7 @@
     }
 
     .number-placeholder .ldio-x2uulkbinbj {
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -70%) scale(0.8);
-        /* Pusat + scale */
-        backface-visibility: hidden;
+        transform: translate(-50%, -67.5%) scale(0.7);
     }
 
     .ldio-x2uulkbinbj div {
