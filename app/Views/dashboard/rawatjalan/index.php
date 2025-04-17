@@ -1541,6 +1541,8 @@
         $('#tanggal_form').show();
         $('#no-rm_form').hide();
         $('#nama_form').hide();
+        $('#rawatjalan-tanggal').empty(); // Kosongkan tabel pasien
+        $('#rawatjalan-tanggal').append(loading); // Menampilkan loading indicator
         await fetchRajalTanggal();
         $('#loadingSpinner').hide();
     });
@@ -1549,6 +1551,8 @@
         $('#tanggal_form').hide();
         $('#no-rm_form').show();
         $('#nama_form').hide();
+        $('#rawatjalan-tanggal').empty(); // Kosongkan tabel pasien
+        $('#rawatjalan-tanggal').append(loading); // Menampilkan loading indicator
         await fetchRajalNoRM();
         $('#loadingSpinner').hide();
     });
@@ -1557,6 +1561,8 @@
         $('#tanggal_form').hide();
         $('#no-rm_form').hide();
         $('#nama_form').show();
+        $('#rawatjalan-tanggal').empty(); // Kosongkan tabel pasien
+        $('#rawatjalan-tanggal').append(loading); // Menampilkan loading indicator
         await fetchRajalNama();
         $('#loadingSpinner').hide();
     });
