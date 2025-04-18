@@ -14,8 +14,14 @@
   --bs-border-radius-pill: 50rem;
 }
 
-.card {
-  --bs-card-cap-bg: rgba(var(--bs-secondary-bg-rgb), 0.5);
+.bg-body-hwpweb {
+  --bs-bg-opacity: 1;
+  background-color: rgba(var(--bs-tertiary-bg-rgb), var(--bs-bg-opacity)) !important;
+}
+
+.bg-body-hwpweb-inside {
+  --bs-bg-opacity: 1;
+  background-color: rgba(var(--bs-body-bg-rgb), var(--bs-bg-opacity)) !important;
 }
 
 iframe {
@@ -454,6 +460,34 @@ div.dataTables_wrapper div.dataTables_info {
   --bs-secondary-bg-rgb: 43, 48, 53;
   --bs-tertiary-bg: #212529;
   --bs-tertiary-bg-rgb: 33, 37, 41;
+}
+
+[data-bs-theme=dark] .bg-body-hwpweb {
+  --bs-bg-opacity: 1;
+  background-color: rgba(var(--bs-body-bg-rgb), var(--bs-bg-opacity)) !important;
+}
+
+[data-bs-theme=dark] .card {
+  --bs-card-bg: var(--bs-tertiary-bg);
+}
+
+[data-bs-theme=dark] .accordion {
+  --bs-accordion-bg: var(--bs-tertiary-bg);
+}
+
+[data-bs-theme=dark] .accordion-bg-body {
+  --bs-accordion-bg: var(--bs-body-bg);
+}
+
+[data-bs-theme=dark] .table {
+  --bs-table-bg: var(--bs-tertiary-bg);
+}
+
+[data-bs-theme=dark] .list-group {
+  --bs-list-group-bg: var(--bs-tertiary-bg);
+  --bs-list-group-action-hover-bg: var(--bs-secondary-bg);
+  --bs-list-group-action-active-bg: #343a40;
+  --bs-list-group-disabled-bg: var(--bs-tertiary-bg);
 }
 
 [data-bs-theme=dark] .btn-body {

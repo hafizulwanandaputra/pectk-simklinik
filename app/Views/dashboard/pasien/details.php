@@ -61,7 +61,7 @@
                         <button class="btn btn-danger bg-gradient" type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
                         <button class="btn btn-success bg-gradient " type="button" id="refreshButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan"><i class="fa-solid fa-sync"></i></button>
                     </div>
-                    <div class="accordion mt-2" id="accordionFilter">
+                    <div class="accordion accordion-bg-body mt-2" id="accordionFilter">
                         <div class="accordion-item">
                             <div class="accordion-header lh-1">
                                 <button class="accordion-button p-2 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFilter" aria-expanded="false" aria-controls="collapseFilter">
