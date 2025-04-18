@@ -95,7 +95,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             <?= form_open_multipart('/rawatjalan/optik/create/' . $rawatjalan['id_rawat_jalan'], 'id="addOptikForm"'); ?>
             <?= csrf_field(); ?>
             <div id="empty-placeholder" class="my-3 text-center">
-                <h1 style="font-size: 7rem;"><i class="fa-solid fa-glasses"></i></h1>
+                <img src="<?= base_url('assets/images/glasses-reading-glasses-svgrepo-com.svg') ?>" style="height: 7rem;" class="mb-2">
                 <h3>Resep Kacamata</h3>
                 <?php if ($rawatjalan['transaksi'] == 1) : ?>
                     <div class="text-muted">Tidak ada resep kacamata pada rawat jalan ini</div>

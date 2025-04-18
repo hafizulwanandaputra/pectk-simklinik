@@ -352,7 +352,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                     </button>
                 </div>
                 <div id="empty-placeholder" class="my-3 text-center" style="display: none;">
-                    <h1 style="font-size: 7rem;"><i class="fa-solid fa-user-graduate"></i></h1>
+                    <img src="<?= base_url('assets/images/student-svgrepo-com.svg') ?>" style="height: 7rem;" class="mb-2">
                     <h3>Evaluasi Edukasi Pasien</h3>
                     <div class="text-muted">Klik "Tambah Evaluasi" untuk menambahkan evaluasi edukasi</div>
                 </div>
@@ -398,7 +398,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                     <input type="hidden" id="id_edukasi_evaluasi" name="id_edukasi_evaluasi" value="">
                     <div class="form-floating mb-1 mt-1">
                         <input type="text" class="form-control" dir="auto" placeholder="unit" id="unit" name="unit">
-                        <label for="unit">Unit</label>
+                        <label for="unit">Unit<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
@@ -409,17 +409,17 @@ $usia = $registrasi->diff($tanggal_lahir);
                             <option value="Pengobatan dan prosedur yang diberikan/diperlukan">Pengobatan dan prosedur yang diberikan/diperlukan</option>
                             <option value="Hasil pelayanan, termasuk terjadinya kejadian yang tidak diharapkan">Hasil pelayanan, termasuk terjadinya kejadian yang tidak diharapkan</option>
                         </select>
-                        <label for="status_fungsional">Informasi Edukasi</label>
+                        <label for="status_fungsional">Informasi Edukasi<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
                         <input type="text" class="form-control" autocomplete="off" dir="auto" placeholder="nama_edukator" id="nama_edukator" name="nama_edukator">
-                        <label for="nama_edukator">Nama Edukator</label>
+                        <label for="nama_edukator">Nama Edukator<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
                         <input type="text" class="form-control" autocomplete="off" dir="auto" placeholder="profesi_edukator" id="profesi_edukator" name="profesi_edukator">
-                        <label for="profesi_edukator">Profesi Edukator</label>
+                        <label for="profesi_edukator">Profesi Edukator<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="mb-1 mt-1">
@@ -434,7 +434,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                     </div>
                     <div class="form-floating mb-1 mt-1">
                         <input type="text" class="form-control" autocomplete="off" dir="auto" placeholder="nama_pasien_keluarga" id="nama_pasien_keluarga" name="nama_pasien_keluarga">
-                        <label for="nama_pasien_keluarga">Nama Pasien/Keluarga/Lainnya</label>
+                        <label for="nama_pasien_keluarga">Nama Pasien/Keluarga/Lainnya<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="mb-1 mt-1">
@@ -449,7 +449,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                     </div>
                     <div class="mb-1 mt-1 radio-group">
                         <label for="evaluasi">
-                            Evaluasi
+                            Evaluasi<span class="text-danger">*</span>
                         </label>
                         <div class="d-flex align-items-center justify-content-evenly">
                             <div class="form-check form-check-inline">
@@ -584,7 +584,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                         evaluasi = `<span class="badge text-bg-warning bg-gradient">Re-demonstrasi</span>`;
                     }
                     const evaluasiEdukasiElement = `
-                    <li class="list-group-item bg-body-tertiary">
+                    <li class="list-group-item">
                         <div class="fw-bold fs-5">${evaluasi_edukasi.waktu_dibuat}</div>
                         <div class="date text-nowrap">${evaluasi_edukasi.unit}</div>
                         <div class="date text-nowrap">${evaluasi_edukasi.informasi_edukasi}</div>
@@ -592,8 +592,8 @@ $usia = $registrasi->diff($tanggal_lahir);
                         <div class="date text-nowrap text-muted"><small>Pasien/Keluarga/Lainnya: ${evaluasi_edukasi.nama_pasien_keluarga}</small></div>
                         ${evaluasi}
                         <div class="btn-group float-end" role="group">
-                            <button class="btn btn-outline-body text-nowrap bg-gradient edit-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${evaluasi_edukasi.id_edukasi_evaluasi}"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
-                            <button class="btn btn-outline-danger text-nowrap bg-gradient delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${evaluasi_edukasi.id_edukasi_evaluasi}"><i class="fa-solid fa-trash"></i> Hapus</button>
+                            <button class="btn btn-body text-nowrap bg-gradient edit-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${evaluasi_edukasi.id_edukasi_evaluasi}"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
+                            <button class="btn btn-danger text-nowrap bg-gradient delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${evaluasi_edukasi.id_edukasi_evaluasi}"><i class="fa-solid fa-trash"></i> Hapus</button>
                         </div>
                     </li>
                     `;

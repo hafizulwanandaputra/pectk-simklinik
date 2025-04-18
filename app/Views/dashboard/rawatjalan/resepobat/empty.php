@@ -95,7 +95,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             <?= form_open_multipart('/rawatjalan/resepobat/create/' . $rawatjalan['id_rawat_jalan'], 'id="addResepForm"'); ?>
             <?= csrf_field(); ?>
             <div id="empty-placeholder" class="my-3 text-center">
-                <h1 style="font-size: 7rem;"><i class="fa-solid fa-prescription"></i></h1>
+                <img src="<?= base_url('assets/images/prescription-svgrepo-com.svg') ?>" style="height: 7rem;" class="mb-2">
                 <h3>Resep Obat</h3>
                 <?php if ($rawatjalan['transaksi'] == 1) : ?>
                     <div class="text-muted">Tidak ada resep obat pada rawat jalan ini</div>
