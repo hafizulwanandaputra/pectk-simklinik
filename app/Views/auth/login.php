@@ -216,7 +216,7 @@
                 <div class="col-md-6 col-lg-7 text-center text-md-start align-self-start">
                     <img class="mb-3" src="<?= base_url('/assets/images/logo_pec.png'); ?>" width="128px">
                     <h1 class="display-6 fw-bold lh-1 text-success-emphasis mb-3">SIM Klinik<br>PEC Teluk Kuantan</h1>
-                    <p class="fs-6 text-success-emphasis"><?= $systemName ?><br><small class="fw-bold"><em><?= $systemSubtitleName ?></small></em></p>
+                    <p class="fs-6 text-success-emphasis"><?= $systemName ?><br><small class="fw-bold"><em><?= $systemSubtitleName ?></em></small></p>
                 </div>
                 <div class="col-md">
                     <?= form_open('check-login', 'id="loginForm"'); ?>
@@ -316,7 +316,7 @@
                         <i class="fa-solid fa-circle-xmark"></i>
                     </div>
                     <div class="w-100 mx-2 text-start">
-                        Silakan masuk sebelum mengunjungi "<?= urldecode($_GET['redirect']); ?>"
+                        Silakan masuk sebelum mengunjungi "<?= htmlspecialchars(urldecode($_GET['redirect'])) ?>"
                     </div>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
                 </div>
@@ -351,7 +351,7 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
-    <<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous">
         </script>
         <script>
             $(document).ready(function() {
