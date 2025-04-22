@@ -243,7 +243,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             </div>
             <div class="mb-3 table-responsive">
                 <div class="fw-bold mb-2 border-bottom">Anestesi</div>
-                <table class="table table-borderless bg-body-hwp mb-0">
+                <table class="table table-borderless bg-body-hwpweb mb-0">
                     <tbody>
                         <tr>
                             <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
@@ -353,7 +353,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             </div>
             <div class="mb-3 table-responsive">
                 <div class="fw-bold mb-2 border-bottom">Peritomi</div>
-                <table class="table table-borderless bg-body-hwp mb-0">
+                <table class="table table-borderless bg-body-hwpweb mb-0">
                     <tbody>
                         <tr>
                             <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
@@ -390,7 +390,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             </div>
             <div class="mb-3 table-responsive">
                 <div class="fw-bold mb-2 border-bottom">Lokasi</div>
-                <table class="table table-borderless bg-body-hwp mb-0">
+                <table class="table table-borderless bg-body-hwpweb mb-0">
                     <tbody>
                         <tr>
                             <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
@@ -455,7 +455,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             </div>
             <div class="mb-3 table-responsive">
                 <div class="fw-bold mb-2 border-bottom">Lokasi Insisi</div>
-                <table class="table table-borderless bg-body-hwp mb-0">
+                <table class="table table-borderless bg-body-hwpweb mb-0">
                     <tbody>
                         <tr>
                             <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
@@ -546,7 +546,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             </div>
             <div class="mb-3 table-responsive">
                 <div class="fw-bold mb-2 border-bottom">Alat Insisi</div>
-                <table class="table table-borderless bg-body-hwp mb-0">
+                <table class="table table-borderless bg-body-hwpweb mb-0">
                     <tbody>
                         <tr>
                             <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
@@ -598,7 +598,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             </div>
             <div class="mb-3 table-responsive">
                 <div class="fw-bold mb-2 border-bottom">Kapsulotomi Anterior</div>
-                <table class="table table-borderless bg-body-hwp mb-0">
+                <table class="table table-borderless bg-body-hwpweb mb-0">
                     <tbody>
                         <tr>
                             <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
@@ -650,7 +650,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             </div>
             <div class="mb-3 table-responsive">
                 <div class="fw-bold mb-2 border-bottom">Ekstraksi Lensa</div>
-                <table class="table table-borderless bg-body-hwp mb-0">
+                <table class="table table-borderless bg-body-hwpweb mb-0">
                     <tbody>
                         <tr>
                             <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
@@ -747,7 +747,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             </div>
             <div class="mb-3 table-responsive">
                 <div class="fw-bold mb-2 border-bottom">Tindakan Tambahan</div>
-                <table class="table table-borderless bg-body-hwp mb-0">
+                <table class="table table-borderless bg-body-hwpweb mb-0">
                     <tbody>
                         <tr>
                             <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
@@ -828,7 +828,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             </div>
             <div class="mb-3 table-responsive">
                 <div class="fw-bold mb-2 border-bottom">Cairan Irigasi</div>
-                <table class="table table-borderless bg-body-hwp mb-0">
+                <table class="table table-borderless bg-body-hwpweb mb-0">
                     <tbody>
                         <tr>
                             <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
@@ -878,7 +878,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             </div>
             <div class="mb-3 table-responsive">
                 <div class="fw-bold mb-2 border-bottom">Fiksasi LIO</div>
-                <table class="table table-borderless bg-body-hwp mb-0">
+                <table class="table table-borderless bg-body-hwpweb mb-0">
                     <tbody>
                         <tr>
                             <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
@@ -945,7 +945,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             </div>
             <div class="mb-3 table-responsive">
                 <div class="fw-bold mb-2 border-bottom">Penanaman</div>
-                <table class="table table-borderless bg-body-hwp mb-0">
+                <table class="table table-borderless bg-body-hwpweb mb-0">
                     <tbody>
                         <tr>
                             <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
@@ -982,7 +982,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             </div>
             <div class="mb-3 table-responsive">
                 <div class="fw-bold mb-2 border-bottom">Jenis LIO</div>
-                <table class="table table-borderless bg-body-hwp mb-0">
+                <table class="table table-borderless bg-body-hwpweb mb-0">
                     <tbody>
                         <tr>
                             <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
@@ -1019,7 +1019,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             </div>
             <div class="mb-3 table-responsive">
                 <div class="fw-bold mb-2 border-bottom">Posisi LIO</div>
-                <table class="table table-borderless bg-body-hwp mb-0">
+                <table class="table table-borderless bg-body-hwpweb mb-0">
                     <tbody>
                         <tr>
                             <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
@@ -1071,7 +1071,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             </div>
             <div class="mb-3 table-responsive">
                 <div class="fw-bold mb-2 border-bottom">Cairan Viskoelastis</div>
-                <table class="table table-borderless bg-body-hwp mb-0">
+                <table class="table table-borderless bg-body-hwpweb mb-0">
                     <tbody>
                         <tr>
                             <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
@@ -1153,7 +1153,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             </div>
             <div class="mb-3 table-responsive">
                 <div class="fw-bold mb-2 border-bottom">Benang</div>
-                <table class="table table-borderless bg-body-hwp mb-0">
+                <table class="table table-borderless bg-body-hwpweb mb-0">
                     <tbody>
                         <tr>
                             <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
@@ -1221,7 +1221,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             </div>
             <div class="mb-3 table-responsive">
                 <div class="fw-bold mb-2 border-bottom">Komplikasi</div>
-                <table class="table table-borderless bg-body-hwp mb-0">
+                <table class="table table-borderless bg-body-hwpweb mb-0">
                     <tbody>
                         <tr>
                             <td class="py-1 px-0 m-0 align-middle" style="width: 100%;">
