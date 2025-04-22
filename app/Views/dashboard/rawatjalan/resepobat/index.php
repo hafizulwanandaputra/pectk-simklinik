@@ -565,6 +565,8 @@ $usia = $registrasi->diff($tanggal_lahir);
             $('#editDetailResep').remove();
             try {
                 const response = await axios.get(`<?= base_url('/resep/detailresepitem') ?>/${id}`);
+                const signa = response.data.signa ?? "-";
+                const catatan = response.data.catatan ?? "-";
                 const formHtml = `
                 <tr id="editDetailResep">
                     <td colspan="5">
@@ -576,7 +578,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                         <input type="hidden" id="id_detail_resep" name="id_detail_resep" value="${response.data.id_detail_resep}">
                         <div class="row g-2">
                             <div class="col-6">
-                                <input type="text" id="signa_edit" name="signa_edit" class="form-control form-control-sm" placeholder="Dosis" value="${response.data.signa}" list="list_signa_edit" autocomplete="off">
+                                <input type="text" id="signa_edit" name="signa_edit" class="form-control form-control-sm" placeholder="Dosis" value="${signa}" list="list_signa_edit" autocomplete="off">
                                 <div class="invalid-feedback"></div>
                                 <datalist id="list_signa_edit">
                                     <option value="1×½">
@@ -594,7 +596,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                                 </datalist>
                             </div>
                             <div class="col-6">
-                                <input type="text" id="catatan_edit" name="catatan_edit" class="form-control form-control-sm" placeholder="Catatan" value="${response.data.catatan}" list="list_catatan_edit" autocomplete="off">
+                                <input type="text" id="catatan_edit" name="catatan_edit" class="form-control form-control-sm" placeholder="Catatan" value="${catatan}" list="list_catatan_edit" autocomplete="off">
                                 <div class="invalid-feedback"></div>
                                 <datalist id="list_catatan_edit">
                                     <option value="1 Tetes">
