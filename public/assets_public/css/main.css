@@ -19,9 +19,8 @@
   background-color: rgba(var(--bs-tertiary-bg-rgb), var(--bs-bg-opacity)) !important;
 }
 
-.bg-body-hwpweb-inside {
-  --bs-bg-opacity: 1;
-  background-color: rgba(var(--bs-body-bg-rgb), var(--bs-bg-opacity)) !important;
+.table-body-hwpweb {
+  --bs-table-bg: var(--bs-tertiary-bg);
 }
 
 iframe {
@@ -481,6 +480,10 @@ div.dataTables_wrapper div.dataTables_info {
 
 [data-bs-theme=dark] .table {
   --bs-table-bg: var(--bs-tertiary-bg);
+}
+
+[data-bs-theme=dark] .table-body-hwpweb {
+  --bs-table-bg: var(--bs-body-bg);
 }
 
 [data-bs-theme=dark] .list-group {
