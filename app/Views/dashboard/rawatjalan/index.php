@@ -65,7 +65,7 @@
                         <?php for ($i = 0; $i < 24; $i++) : ?>
                             <a href="#" class="list-group-item p-1 list-group-item-action detail-rajal disabled" aria-disabled="true" style="cursor: wait;">
                                 <div class="px-3 py-2">
-                                    <div class="me-3 text-truncate">
+                                    <div class="text-truncate">
                                         <h5 class="d-flex date justify-content-start mb-0 text-truncate placeholder-glow">
                                             <span class="badge bg-body text-body border py-1 px-2 date placeholder number-placeholder" style="font-weight: 900; font-size: 0.85em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><?= $this->include('spinner/spinner'); ?></span> <span class="placeholder ms-1" style="width: 100%"></span>
                                         </h5>
@@ -94,7 +94,7 @@
                         <?php for ($i = 0; $i < 24; $i++) : ?>
                             <a href="#" class="list-group-item p-1 list-group-item-action detail-rajal disabled" aria-disabled="true" style="cursor: wait;">
                                 <div class="px-3 py-2">
-                                    <div class="me-3 text-truncate">
+                                    <div class="text-truncate">
                                         <h5 class="d-flex date justify-content-start mb-0 text-truncate placeholder-glow">
                                             <span class="badge bg-body text-body border py-1 px-2 date placeholder number-placeholder" style="font-weight: 900; font-size: 0.85em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><?= $this->include('spinner/spinner'); ?></span> <span class="placeholder ms-1" style="width: 100%"></span>
                                         </h5>
@@ -123,7 +123,7 @@
                         <?php for ($i = 0; $i < 24; $i++) : ?>
                             <a href="#" class="list-group-item p-1 list-group-item-action detail-rajal disabled" aria-disabled="true" style="cursor: wait;">
                                 <div class="px-3 py-2">
-                                    <div class="me-3 text-truncate">
+                                    <div class="text-truncate">
                                         <h5 class="d-flex date justify-content-start mb-0 text-truncate placeholder-glow">
                                             <span class="badge bg-body text-body border py-1 px-2 date placeholder number-placeholder" style="font-weight: 900; font-size: 0.85em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><?= $this->include('spinner/spinner'); ?></span> <span class="placeholder ms-1" style="width: 100%"></span>
                                         </h5>
@@ -326,7 +326,7 @@
         loading += `
         <a href="#" class="list-group-item p-1 list-group-item-action detail-rajal disabled" aria-disabled="true" style="cursor: wait;">
             <div class="px-3 py-2">
-                <div class="me-3 text-truncate">
+                <div class="text-truncate">
                     <h5 class="d-flex date justify-content-start mb-0 text-truncate placeholder-glow">
                         <span class="badge bg-body text-body border py-1 px-2 date placeholder number-placeholder" style="font-weight: 900; font-size: 0.85em; padding-top: .1rem !important; padding-bottom: .1rem !important;">
                             <?= $this->include('spinner/spinner'); ?>
@@ -474,7 +474,7 @@
                 const rawatJalanElement = `
                 <a href="#" class="list-group-item p-1 list-group-item-action detail-rajal" data-id="${rawatjalan.id_rawat_jalan}">
                     <div class="px-3 py-2">
-                        <div class="me-3 text-truncate">
+                        <div class="text-truncate">
                             <h5 class="d-flex date justify-content-start mb-0 text-truncate">
                                 <span class="badge bg-body text-body border px-2 align-self-start" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">${rawatjalan.number}</span>
                                 <span class="ms-1 align-self-center text-truncate">${rawatjalan.nama_pasien}</span>
@@ -666,7 +666,7 @@
                 const rawatJalanElement = `
                 <a href="#" class="list-group-item p-1 list-group-item-action detail-rajal" data-id="${rawatjalan.id_rawat_jalan}">
                     <div class="px-3 py-2">
-                        <div class="me-3 text-truncate">
+                        <div class="text-truncate">
                             <h5 class="d-flex date justify-content-start mb-0 text-truncate">
                                 <span class="badge bg-body text-body border px-2 align-self-start" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">${rawatjalan.number}</span>
                                 <span class="ms-1 align-self-center text-truncate">${rawatjalan.nama_pasien}</span>
@@ -850,7 +850,7 @@
                 const rawatJalanElement = `
                 <a href="#" class="list-group-item p-1 list-group-item-action detail-rajal" data-id="${rawatjalan.id_rawat_jalan}">
                     <div class="px-3 py-2">
-                        <div class="me-3 text-truncate">
+                        <div class="text-truncate">
                             <h5 class="d-flex date justify-content-start mb-0 text-truncate">
                                 <span class="badge bg-body text-body border px-2 align-self-start" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">${rawatjalan.number}</span>
                                 <span class="ms-1 align-self-center text-truncate">${rawatjalan.nama_pasien}</span>
