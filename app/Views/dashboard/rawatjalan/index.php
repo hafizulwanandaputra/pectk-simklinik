@@ -63,7 +63,7 @@
                 <div class="tab-pane show active" id="tanggal-container" role="tabpanel" aria-labelledby="tanggal-container-tab" tabindex="0">
                     <div id="rawatjalan-tanggal" class="list-group shadow-sm">
                         <?php for ($i = 0; $i < 24; $i++) : ?>
-                            <a href="#" class="list-group-item p-1 list-group-item-action detail-rajal disabled" aria-disabled="true" style="cursor: wait;">
+                            <button type="button" class="list-group-item p-1 list-group-item-action detail-rajal" disabled style="cursor: wait;">
                                 <div class="px-3 py-2">
                                     <div class="text-truncate">
                                         <h5 class="d-flex date justify-content-start mb-0 text-truncate placeholder-glow">
@@ -82,7 +82,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </a>
+                            </button>
                         <?php endfor; ?>
                     </div>
                     <nav id="paginationNav-tanggal" class="d-flex justify-content-center justify-content-lg-end mt-3 overflow-auto w-100">
@@ -92,7 +92,7 @@
                 <div class="tab-pane" id="no_rm-container" role="tabpanel" aria-labelledby="no_rm-container-tab" tabindex="0">
                     <div id="rawatjalan-no_rm" class="list-group shadow-sm">
                         <?php for ($i = 0; $i < 24; $i++) : ?>
-                            <a href="#" class="list-group-item p-1 list-group-item-action detail-rajal disabled" aria-disabled="true" style="cursor: wait;">
+                            <button type="button" class="list-group-item p-1 list-group-item-action detail-rajal" disabled style="cursor: wait;">
                                 <div class="px-3 py-2">
                                     <div class="text-truncate">
                                         <h5 class="d-flex date justify-content-start mb-0 text-truncate placeholder-glow">
@@ -111,7 +111,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </a>
+                            </button>
                         <?php endfor; ?>
                     </div>
                     <nav id="paginationNav-no_rm" class="d-flex justify-content-center justify-content-lg-end mt-3 overflow-auto w-100">
@@ -121,7 +121,7 @@
                 <div class="tab-pane" id="nama-container" role="tabpanel" aria-labelledby="nama-container-tab" tabindex="0">
                     <div id="rawatjalan-nama" class="list-group shadow-sm">
                         <?php for ($i = 0; $i < 24; $i++) : ?>
-                            <a href="#" class="list-group-item p-1 list-group-item-action detail-rajal disabled" aria-disabled="true" style="cursor: wait;">
+                            <button type="button" class="list-group-item p-1 list-group-item-action detail-rajal" disabled style="cursor: wait;">
                                 <div class="px-3 py-2">
                                     <div class="text-truncate">
                                         <h5 class="d-flex date justify-content-start mb-0 text-truncate placeholder-glow">
@@ -140,7 +140,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </a>
+                            </button>
                         <?php endfor; ?>
                     </div>
                     <nav id="paginationNav-nama" class="d-flex justify-content-center justify-content-lg-end mt-3 overflow-auto w-100">
@@ -324,7 +324,7 @@
     let loading = '';
     for (let i = 0; i < limit; i++) {
         loading += `
-        <a href="#" class="list-group-item p-1 list-group-item-action detail-rajal disabled" aria-disabled="true" style="cursor: wait;">
+        <button type="button" class="list-group-item p-1 list-group-item-action detail-rajal" disabled style="cursor: wait;">
             <div class="px-3 py-2">
                 <div class="text-truncate">
                     <h5 class="d-flex date justify-content-start mb-0 text-truncate placeholder-glow">
@@ -348,7 +348,7 @@
                     </div>
                 </div>
             </div>
-        </a>
+        </button>
     `;
     }
 
@@ -472,7 +472,7 @@
 
                 // Membuat elemen baris untuk setiap rawatjalan
                 const rawatJalanElement = `
-                <a href="#" class="list-group-item p-1 list-group-item-action detail-rajal" data-id="${rawatjalan.id_rawat_jalan}">
+                <button type="button" class="list-group-item p-1 list-group-item-action detail-rajal" data-id="${rawatjalan.id_rawat_jalan}">
                     <div class="px-3 py-2">
                         <div class="text-truncate">
                             <h5 class="d-flex date justify-content-start mb-0 text-truncate">
@@ -486,7 +486,7 @@
                             </div>
                         </div>
                     </div>
-                </a>
+                </button>
                 `;
                 const promise = new Promise((resolve) => {
                     $('#rawatjalan-tanggal').append(rawatJalanElement);
@@ -664,7 +664,7 @@
 
                 // Membuat elemen baris untuk setiap rawatjalan
                 const rawatJalanElement = `
-                <a href="#" class="list-group-item p-1 list-group-item-action detail-rajal" data-id="${rawatjalan.id_rawat_jalan}">
+                <button type="button" class="list-group-item p-1 list-group-item-action detail-rajal" data-id="${rawatjalan.id_rawat_jalan}">
                     <div class="px-3 py-2">
                         <div class="text-truncate">
                             <h5 class="d-flex date justify-content-start mb-0 text-truncate">
@@ -678,7 +678,7 @@
                             </div>
                         </div>
                     </div>
-                </a>
+                </button>
                 `;
                 const promise = new Promise((resolve) => {
                     $('#rawatjalan-no_rm').append(rawatJalanElement);
@@ -848,7 +848,7 @@
 
                 // Membuat elemen baris untuk setiap rawatjalan
                 const rawatJalanElement = `
-                <a href="#" class="list-group-item p-1 list-group-item-action detail-rajal" data-id="${rawatjalan.id_rawat_jalan}">
+                <button type="button" class="list-group-item p-1 list-group-item-action detail-rajal" data-id="${rawatjalan.id_rawat_jalan}">
                     <div class="px-3 py-2">
                         <div class="text-truncate">
                             <h5 class="d-flex date justify-content-start mb-0 text-truncate">
@@ -862,7 +862,7 @@
                             </div>
                         </div>
                     </div>
-                </a>
+                </button>
                 `;
                 const promise = new Promise((resolve) => {
                     $('#rawatjalan-nama').append(rawatJalanElement);
@@ -1079,7 +1079,7 @@
             var $this = $(this);
             var id = $this.data('id');
             $('#loadingSpinner').show();
-            $this.addClass('disabled').prop('aria-disabled', true);
+            $this.prop('disabled', true).css('cursor', 'wait');
 
             try {
                 let response = await axios.get(`<?= base_url('/rawatjalan/rawatjalan') ?>/` + id);
@@ -1235,7 +1235,7 @@
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
             } finally {
                 $('#loadingSpinner').hide();
-                $this.removeClass('disabled').removeProp('aria-disabled');
+                $this.prop('disabled', false).css('cursor', '');
             }
         });
         $('#rajalModal').on('hidden.bs.modal', function() {
