@@ -375,6 +375,7 @@ class RawatJalan extends BaseController
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') {
             // Mengambil data pasien berdasarkan ID
             $data = $this->RawatJalanModel
+                ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
                 ->find($id); // Mengambil pasien
             return $this->response->setJSON($data); // Mengembalikan data pasien dalam format JSON
         } else {

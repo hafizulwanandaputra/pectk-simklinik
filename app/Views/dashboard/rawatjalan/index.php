@@ -61,34 +61,256 @@
         <div class="no-fluid-content">
             <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane show active" id="tanggal-container" role="tabpanel" aria-labelledby="tanggal-container-tab" tabindex="0">
-                    <div class="accordion mb-3" id="rawatjalan-tanggal">
-                        <div class="accordion-item shadow-sm p-3 p-3">
-                            <h2 class="text-center text-muted mb-0" style="font-weight: 300;">Memuat data pasien rawat jalan...</h2>
-                        </div>
+                    <div id="rawatjalan-tanggal" class="list-group shadow-sm">
+                        <?php for ($i = 0; $i < 24; $i++) : ?>
+                            <a href="#" class="list-group-item p-1 list-group-item-action detail-rajal disabled" aria-disabled="true" style="cursor: wait;">
+                                <div class="px-3 py-2">
+                                    <div class="me-3 text-truncate">
+                                        <h5 class="d-flex date justify-content-start mb-0 text-truncate placeholder-glow">
+                                            <span class="badge bg-body text-body border py-1 px-2 date placeholder number-placeholder" style="font-weight: 900; font-size: 0.85em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><?= $this->include('spinner/spinner'); ?></span> <span class="placeholder ms-1" style="width: 100%"></span>
+                                        </h5>
+                                        <h6 class="card-subtitle text-truncate placeholder-glow">
+                                            <span class="placeholder w-100" style="max-width: 100px;"></span> <span class="placeholder w-100" style="max-width: 100px;"></span>
+                                        </h6>
+                                        <div class="card-text overflow-hidden text-nowrap placeholder-glow">
+                                            <small class="date">
+                                                <span class="placeholder w-100" style="max-width: 100px;"></span>
+                                            </small>
+                                        </div>
+                                        <div class="placeholder-glow">
+                                            <span class="placeholder w-100" style="max-width: 100px;"></span> <span class="placeholder w-100" style="max-width: 100px;"></span> <span class="placeholder w-100" style="max-width: 100px;"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        <?php endfor; ?>
                     </div>
                     <nav id="paginationNav-tanggal" class="d-flex justify-content-center justify-content-lg-end mt-3 overflow-auto w-100">
                         <ul class="pagination pagination-sm"></ul>
                     </nav>
                 </div>
                 <div class="tab-pane" id="no_rm-container" role="tabpanel" aria-labelledby="no_rm-container-tab" tabindex="0">
-                    <div class="accordion mb-3" id="rawatjalan-no_rm">
-                        <div class="accordion-item shadow-sm p-3 p-3">
-                            <h2 class="text-center text-muted mb-0" style="font-weight: 300;">Memuat data pasien rawat jalan...</h2>
-                        </div>
+                    <div id="rawatjalan-no_rm" class="list-group shadow-sm">
+                        <?php for ($i = 0; $i < 24; $i++) : ?>
+                            <a href="#" class="list-group-item p-1 list-group-item-action detail-rajal disabled" aria-disabled="true" style="cursor: wait;">
+                                <div class="px-3 py-2">
+                                    <div class="me-3 text-truncate">
+                                        <h5 class="d-flex date justify-content-start mb-0 text-truncate placeholder-glow">
+                                            <span class="badge bg-body text-body border py-1 px-2 date placeholder number-placeholder" style="font-weight: 900; font-size: 0.85em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><?= $this->include('spinner/spinner'); ?></span> <span class="placeholder ms-1" style="width: 100%"></span>
+                                        </h5>
+                                        <h6 class="card-subtitle text-truncate placeholder-glow">
+                                            <span class="placeholder w-100" style="max-width: 100px;"></span> <span class="placeholder w-100" style="max-width: 100px;"></span>
+                                        </h6>
+                                        <div class="card-text overflow-hidden text-nowrap placeholder-glow">
+                                            <small class="date">
+                                                <span class="placeholder w-100" style="max-width: 100px;"></span>
+                                            </small>
+                                        </div>
+                                        <div class="placeholder-glow">
+                                            <span class="placeholder w-100" style="max-width: 100px;"></span> <span class="placeholder w-100" style="max-width: 100px;"></span> <span class="placeholder w-100" style="max-width: 100px;"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        <?php endfor; ?>
                     </div>
                     <nav id="paginationNav-no_rm" class="d-flex justify-content-center justify-content-lg-end mt-3 overflow-auto w-100">
                         <ul class="pagination pagination-sm"></ul>
                     </nav>
                 </div>
                 <div class="tab-pane" id="nama-container" role="tabpanel" aria-labelledby="nama-container-tab" tabindex="0">
-                    <div class="accordion mb-3" id="rawatjalan-nama">
-                        <div class="accordion-item shadow-sm p-3 p-3">
-                            <h2 class="text-center text-muted mb-0" style="font-weight: 300;">Memuat data pasien rawat jalan...</h2>
-                        </div>
+                    <div id="rawatjalan-nama" class="list-group shadow-sm">
+                        <?php for ($i = 0; $i < 24; $i++) : ?>
+                            <a href="#" class="list-group-item p-1 list-group-item-action detail-rajal disabled" aria-disabled="true" style="cursor: wait;">
+                                <div class="px-3 py-2">
+                                    <div class="me-3 text-truncate">
+                                        <h5 class="d-flex date justify-content-start mb-0 text-truncate placeholder-glow">
+                                            <span class="badge bg-body text-body border py-1 px-2 date placeholder number-placeholder" style="font-weight: 900; font-size: 0.85em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><?= $this->include('spinner/spinner'); ?></span> <span class="placeholder ms-1" style="width: 100%"></span>
+                                        </h5>
+                                        <h6 class="card-subtitle text-truncate placeholder-glow">
+                                            <span class="placeholder w-100" style="max-width: 100px;"></span> <span class="placeholder w-100" style="max-width: 100px;"></span>
+                                        </h6>
+                                        <div class="card-text overflow-hidden text-nowrap placeholder-glow">
+                                            <small class="date">
+                                                <span class="placeholder w-100" style="max-width: 100px;"></span>
+                                            </small>
+                                        </div>
+                                        <div class="placeholder-glow">
+                                            <span class="placeholder w-100" style="max-width: 100px;"></span> <span class="placeholder w-100" style="max-width: 100px;"></span> <span class="placeholder w-100" style="max-width: 100px;"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        <?php endfor; ?>
                     </div>
                     <nav id="paginationNav-nama" class="d-flex justify-content-center justify-content-lg-end mt-3 overflow-auto w-100">
                         <ul class="pagination pagination-sm"></ul>
                     </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="rajalModal" tabindex="-1" aria-labelledby="rajalModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-fullscreen-lg-down modal-dialog-centered modal-dialog-scrollable">
+            <div id="rajalModalContent" class="modal-content bg-body-tertiary shadow-lg transparent-blur">
+                <div class="modal-header justify-content-between pt-2 pb-2" style="border-bottom: 1px solid var(--bs-border-color-translucent);">
+                    <h6 class="pe-2 modal-title fs-6 text-truncate" id="rajalModalLabel" style="font-weight: bold;"></h6>
+                    <button id="closeBtn" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body py-2">
+                    <div class="row g-3">
+                        <div class="d-flex flex-column justify-content-between">
+                            <div>
+                                <div class="fw-bold mb-2 border-bottom">Identitas Pasien</div>
+                                <div style="font-size: 0.75em;">
+                                    <div class="mb-0 row g-1">
+                                        <div class="col-5 fw-medium text-truncate">Nama</div>
+                                        <div class="col" id="nama_pasien">
+
+                                        </div>
+                                    </div>
+                                    <div class="mb-0 row g-1">
+                                        <div class="col-5 fw-medium text-truncate">Nomor Rekam Medis</div>
+                                        <div class="col date" id="no_rekam_medis">
+
+                                        </div>
+                                    </div>
+                                    <div class="mb-0 row g-1">
+                                        <div class="col-5 fw-medium text-truncate">Jenis Kelamin</div>
+                                        <div class="col" id="jenis_kelamin">
+
+                                        </div>
+                                    </div>
+                                    <div class="mb-0 row g-1">
+                                        <div class="col-5 fw-medium text-truncate">Tempat/Tanggal Lahir</div>
+                                        <div class="col" id="kelahiran">
+
+                                        </div>
+                                    </div>
+                                    <div class="mb-0 row g-1">
+                                        <div class="col-5 fw-medium text-truncate">Usia</div>
+                                        <div class="col date" id="usia">
+
+                                        </div>
+                                    </div>
+                                    <div class="mb-0 row g-1">
+                                        <div class="col-5 fw-medium text-truncate">Alamat</div>
+                                        <div class="col" id="alamat">
+
+                                        </div>
+                                    </div>
+                                    <div class="mb-0 row g-1">
+                                        <div class="col-5 fw-medium text-truncate">Nomor Telepon</div>
+                                        <div class="col date" id="telpon">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="d-flex flex-wrap justify-content-end gap-2 mt-2">
+                                    <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') : ?>
+                                        <button id="kiup_btn" type="button" class="btn btn-body btn-sm bg-gradient" onclick="">
+                                            <i class="fa-solid fa-print"></i> KIUP
+                                        </button>
+                                        <button id="barcode_btn" type="button" class="btn btn-body btn-sm bg-gradient" onclick="">
+                                            <i class="fa-solid fa-barcode"></i> Barcode
+                                        </button>
+                                        <button id="detail_pasien_btn" type="button" class="btn btn-body btn-sm bg-gradient" onclick="">
+                                            <i class="fa-solid fa-circle-info"></i> Detail Pasien
+                                        </button>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-column justify-content-between">
+                            <div>
+                                <div class="fw-bold mb-2 border-bottom">Rawat Jalan</div>
+                                <div style="font-size: 0.75em;">
+                                    <div class="mb-0 row g-1">
+                                        <div class="col-5 fw-medium text-truncate">Operator</div>
+                                        <div class="col date" id="pendaftar">
+
+                                        </div>
+                                    </div>
+                                    <div class="mb-0 row g-1">
+                                        <div class="col-5 fw-medium text-truncate">Nomor Registrasi</div>
+                                        <div class="col date" id="nomor_registrasi">
+
+                                        </div>
+                                    </div>
+                                    <div class="mb-0 row g-1">
+                                        <div class="col-5 fw-medium text-truncate">Tanggal dan Waktu</div>
+                                        <div class="col date" id="tanggal_registrasi">
+
+                                        </div>
+                                    </div>
+                                    <div class="mb-0 row g-1">
+                                        <div class="col-5 fw-medium text-truncate">Jenis Kunjungan</div>
+                                        <div class="col" id="jenis_kunjungan">
+
+                                        </div>
+                                    </div>
+                                    <div class="mb-0 row g-1">
+                                        <div class="col-5 fw-medium text-truncate">Status Kunjungan</div>
+                                        <div class="col" id="status_kunjungan">
+
+                                        </div>
+                                    </div>
+                                    <div class="mb-0 row g-1">
+                                        <div class="col-5 fw-medium text-truncate">Jaminan</div>
+                                        <div class="col" id="jaminan">
+
+                                        </div>
+                                    </div>
+                                    <div class="mb-0 row g-1">
+                                        <div class="col-5 fw-medium text-truncate">Ruangan</div>
+                                        <div class="col" id="ruangan">
+
+                                        </div>
+                                    </div>
+                                    <div class="mb-0 row g-1">
+                                        <div class="col-5 fw-medium text-truncate">Dokter</div>
+                                        <div class="col" id="dokter">
+
+                                        </div>
+                                    </div>
+                                    <div class="mb-0 row g-1">
+                                        <div class="col-5 fw-medium text-truncate">Keluhan</div>
+                                        <div class="col" id="keluhan">
+
+                                        </div>
+                                    </div>
+                                    <div class="mb-0 row g-1 pasien_operasi">
+                                        <div class="col-5 fw-medium text-truncate">Tindakan yang Akan Dilakukan</div>
+                                        <div class="col date" id="tindakan_operasi_rajal">
+
+                                        </div>
+                                    </div>
+                                    <div class="mb-0 row g-1 pasien_operasi">
+                                        <div class="col-5 fw-medium text-truncate">Waktu Tindakan</div>
+                                        <div class="col date" id="waktu_operasi_rajal">
+
+                                        </div>
+                                    </div>
+                                    <div class="mb-0 row g-1 rajal_batal">
+                                        <div class="col-5 fw-medium text-truncate">Dibatalkan oleh</div>
+                                        <div class="col date" id="pembatal">
+
+                                        </div>
+                                    </div>
+                                    <div class="mb-0 row g-1 rajal_batal">
+                                        <div class="col-5 fw-medium text-truncate">Alasan Pembatalan</div>
+                                        <div class="col date" id="alasan_batal">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="tombol_rme">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -99,12 +321,37 @@
 <script>
     let limit = 24;
     let currentPage = 1;
-    // HTML untuk menunjukkan bahwa data pasien sedang dimuat
-    const loading = `
-        <div class="accordion-item shadow-sm p-3 p-3">
-            <h2 class="text-center text-muted mb-0" style="font-weight: 300;">Memuat data pasien rawat jalan...</h2>
-        </div>
+    let loading = '';
+    for (let i = 0; i < limit; i++) {
+        loading += `
+        <a href="#" class="list-group-item p-1 list-group-item-action detail-rajal disabled" aria-disabled="true" style="cursor: wait;">
+            <div class="px-3 py-2">
+                <div class="me-3 text-truncate">
+                    <h5 class="d-flex date justify-content-start mb-0 text-truncate placeholder-glow">
+                        <span class="badge bg-body text-body border py-1 px-2 date placeholder number-placeholder" style="font-weight: 900; font-size: 0.85em; padding-top: .1rem !important; padding-bottom: .1rem !important;">
+                            <?= $this->include('spinner/spinner'); ?>
+                        </span> 
+                        <span class="placeholder ms-1" style="width: 100%"></span>
+                    </h5>
+                    <h6 class="card-subtitle text-truncate placeholder-glow">
+                        <span class="placeholder w-100" style="max-width: 100px;"></span> 
+                        <span class="placeholder w-100" style="max-width: 100px;"></span>
+                    </h6>
+                    <div class="card-text overflow-hidden text-nowrap placeholder-glow">
+                        <small class="date">
+                            <span class="placeholder w-100" style="max-width: 100px;"></span>
+                        </small>
+                    </div>
+                    <div class="placeholder-glow">
+                        <span class="placeholder w-100" style="max-width: 100px;"></span> 
+                        <span class="placeholder w-100" style="max-width: 100px;"></span> 
+                        <span class="placeholder w-100" style="max-width: 100px;"></span>
+                    </div>
+                </div>
+            </div>
+        </a>
     `;
+    }
 
     // Fungsi untuk menghitung usia dan sisa bulan berdasarkan tanggal lahir
     function hitungUsia(tanggalLahir, tanggalRegistrasi) {
@@ -157,9 +404,9 @@
                 $('#rawatjalan-tanggal').empty(); // Kosongkan tabel rawat jalan
                 $('#refreshTglButton').prop('disabled', true); // Nonaktifkan tombol refresh
                 const emptyRow = `
-                    <div class="accordion-item shadow-sm p-3 p-3">
+                    <span class="list-group-item pb-3 pt-3">
                         <h2 class="text-center text-muted mb-0" style="font-weight: 300;">Silakan masukkan tanggal</h2>
-                    </div>
+                    </span>
                 `;
                 $('#rawatjalan-tanggal').append(emptyRow); // Menambahkan baris kosong ke tabel
                 $('#total_rajal').text('0'); // Kosongkan total
@@ -193,9 +440,9 @@
                 $('#paginationNav-tanggal ul').empty();
                 // Tampilkan pesan jika tidak ada data
                 const emptyRow = `
-                    <div class="accordion-item shadow-sm p-3 p-3">
+                    <span class="list-group-item pb-3 pt-3">
                         <h2 class="text-center text-muted mb-0" style="font-weight: 300;">Tidak ada pasien yang berobat pada ${tanggal}</h2>
-                    </div>
+                    </span>
                 `;
                 $('#rawatjalan-tanggal').append(emptyRow); // Menambahkan baris pesan ke tabel
             }
@@ -208,12 +455,6 @@
                     jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap" style="background-color: SkyBlue"><i class="fa-solid fa-mars"></i> LAKI-LAKI</span>`;
                 } else if (jenis_kelamin === 'P') {
                     jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap" style="background-color: Pink"><i class="fa-solid fa-venus"></i> PEREMPUAN</span>`;
-                }
-                let jenis_kelamin_string = rawatjalan.jenis_kelamin;
-                if (jenis_kelamin_string === 'L') {
-                    jenis_kelamin_string = `Laki-laki`;
-                } else if (jenis_kelamin_string === 'P') {
-                    jenis_kelamin_string = `Perempuan`;
                 }
                 // Gunakan pesan jika tidak ada nomor telepon
                 const telpon = rawatjalan.telpon ? rawatjalan.telpon : "<em>Tidak ada</em>";
@@ -229,296 +470,24 @@
                 } else if (status === 'BATAL') {
                     status = `<span class="badge bg-danger bg-gradient">Dibatalkan</span>`;
                 }
-                let pembatal = rawatjalan.status;
-                if (pembatal === 'BATAL') {
-                    pembatal = `
-                            <div class="mb-0 row g-1">
-                                <div class="col-5 fw-medium text-truncate">Dibatalkan oleh</div>
-                                <div class="col date">
-                                    ${rawatjalan.pembatal}
-                                </div>
-                            </div>
-                            <div class="mb-0 row g-1">
-                                <div class="col-5 fw-medium text-truncate">Alasan Pembatalan</div>
-                                <div class="col date">
-                                    ${rawatjalan.alasan_batal}
-                                </div>
-                            </div>
-                        `;
-                } else if (pembatal === 'DAFTAR') {
-                    pembatal = ``;
-                }
-                let tombol_isian_ok = rawatjalan.ruangan;
-                if (tombol_isian_ok === 'Kamar Operasi') {
-                    tombol_isian_ok = `
-                                            <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') : ?>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/lembarisianoperasi') ?>/${rawatjalan.id_rawat_jalan}');">
-                                                    <i class="fa-solid fa-receipt"></i> Lembar Isian Operasi
-                                                </button>
-                                            <?php endif; ?>
-                    `;
-                } else {
-                    tombol_isian_ok = ``;
-                }
-                let isian_ok = rawatjalan.ruangan;
-                if (isian_ok === 'Kamar Operasi') {
-                    const tindakan_operasi_rajal = rawatjalan.tindakan_operasi_rajal ?
-                        rawatjalan.tindakan_operasi_rajal :
-                        `<em>Belum diisi</em>`;
-                    let waktu_operasi_rajal = `<em>Belum diisi</em>`;
-                    if (rawatjalan.tanggal_operasi_rajal) {
-                        waktu_operasi_rajal = `<span class="date">${rawatjalan.tanggal_operasi_rajal}`;
-                        if (rawatjalan.jam_operasi_rajal) {
-                            waktu_operasi_rajal += ` ${rawatjalan.jam_operasi_rajal}`;
-                        }
-                        waktu_operasi_rajal += `</span>`;
-                    }
-                    isian_ok = `
-                            <div class="mb-0 row g-1">
-                                <div class="col-5 fw-medium text-truncate">Tindakan yang Akan Dilakukan</div>
-                                <div class="col date">
-                                    ${tindakan_operasi_rajal}
-                                </div>
-                            </div>
-                            <div class="mb-0 row g-1">
-                                <div class="col-5 fw-medium text-truncate">Waktu Tindakan</div>
-                                <div class="col date">
-                                    ${waktu_operasi_rajal}
-                                </div>
-                            </div>
-                        `;
-                } else {
-                    isian_ok = ``;
-                }
-                let tombol_rme = rawatjalan.status;
-                if (tombol_rme === 'DAFTAR') {
-                    tombol_rme = `
-                                        <div class="d-flex flex-wrap justify-content-end gap-2 mt-2">
-                                            <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') : ?>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/struk') ?>/${rawatjalan.id_rawat_jalan}');">
-                                                    <i class="fa-solid fa-receipt"></i> Struk
-                                                </button>
-                                                ${tombol_isian_ok}
-                                                <?php if (session()->get('role') != 'Admin') : ?>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/asesmen/export') ?>/${rawatjalan.id_rawat_jalan}');">
-                                                    <i class="fa-solid fa-print"></i> Asesmen
-                                                </button>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/skrining/export') ?>/${rawatjalan.id_rawat_jalan}');">
-                                                    <i class="fa-solid fa-print"></i> Skrining
-                                                </button>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/edukasi/export') ?>/${rawatjalan.id_rawat_jalan}');">
-                                                    <i class="fa-solid fa-print"></i> Edukasi
-                                                </button>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/penunjang/export') ?>/${rawatjalan.id_rawat_jalan}');">
-                                                    <i class="fa-solid fa-print"></i> Penunjang
-                                                </button>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/optik/export') ?>/${rawatjalan.id_rawat_jalan}');">
-                                                    <i class="fa-solid fa-print"></i> Resep Kacamata
-                                                </button>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/laporanrajal/export') ?>/${rawatjalan.id_rawat_jalan}');">
-                                                    <i class="fa-solid fa-print"></i> Tindakan Rajal
-                                                </button>
-                                                <?php endif; ?>
-                                            <?php endif; ?>
-                                            <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') : ?>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/asesmen') ?>/${rawatjalan.id_rawat_jalan}';">
-                                                    <i class="fa-solid fa-user-check"></i> Asesmen
-                                                </button>
-                                                <?php if (session()->get('role') != 'Dokter') : ?>
-                                                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/skrining') ?>/${rawatjalan.id_rawat_jalan}';">
-                                                        <i class="fa-solid fa-user-check"></i> Skrining
-                                                    </button>
-                                                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/edukasi') ?>/${rawatjalan.id_rawat_jalan}';">
-                                                        <i class="fa-solid fa-user-graduate"></i> Edukasi
-                                                    </button>
-                                                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/penunjang') ?>/${rawatjalan.id_rawat_jalan}';">
-                                                        <i class="fa-solid fa-stethoscope"></i> Penunjang
-                                                    </button>
-                                                <?php endif; ?>
-                                                <?php if (session()->get('role') != 'Perawat') : ?>
-                                                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/resepobat') ?>/${rawatjalan.id_rawat_jalan}';">
-                                                        <i class="fa-solid fa-prescription"></i> Resep Obat
-                                                    </button>
-                                                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/optik') ?>/${rawatjalan.id_rawat_jalan}';">
-                                                        <i class="fa-solid fa-glasses"></i> Resep Kacamata
-                                                    </button>
-                                                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/laporanrajal') ?>/${rawatjalan.id_rawat_jalan}';">
-                                                        <i class="fa-solid fa-file-medical"></i> Tindakan Rajal
-                                                    </button>
-                                                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/layanan') ?>/${rawatjalan.id_rawat_jalan}';">
-                                                        <i class="fa-solid fa-user-nurse"></i> Layanan
-                                                    </button>
-                                                <?php endif; ?>
-                                            <?php endif; ?>
-                                        </div>
-                        `;
-                } else if (tombol_rme === 'BATAL') {
-                    tombol_rme = `
-                                        <div class="d-flex flex-wrap justify-content-end gap-2 mt-2">
-                                            <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') : ?>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/struk') ?>/${rawatjalan.id_rawat_jalan}');">
-                                                    <i class="fa-solid fa-receipt"></i> Struk
-                                                </button>
-                                            <?php endif; ?>
-                                        </div>
-                    `;
-                }
 
                 // Membuat elemen baris untuk setiap rawatjalan
                 const rawatJalanElement = `
-                <div class="accordion-item shadow-sm">
-                    <div class="accordion-header">
-                        <button class="accordion-button px-3 py-2 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-${rawatjalan.number}" aria-expanded="false" aria-controls="collapse-${rawatjalan.number}">
-                            <div class="me-3 text-truncate">
-                                <h5 class="d-flex date justify-content-start mb-0 text-truncate">
-                                    <span class="badge bg-body text-body border px-2 align-self-start" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">${rawatjalan.number}</span>
-                                    <span class="ms-1 align-self-center text-truncate">${rawatjalan.nama_pasien}</span>
-                                </h5>
-                                <h6 class="card-subtitle text-truncate">${rawatjalan.dokter}</h6>
-                                <div class="card-text overflow-hidden text-nowrap"><small class="date">${rawatjalan.nomor_registrasi} ${jenis_kelamin}</small></div>
-                                <div>
-                                    <span class="badge bg-body text-body border date" style="font-weight: 900;">${rawatjalan.kode_antrian}${rawatjalan.no_antrian}</span> ${status}
-                                </div>
-                            </div>
-                        </button>
-                    </div>
-                    <div id="collapse-${rawatjalan.number}" class="accordion-collapse collapse" data-bs-parent="#rawatjalan-tanggal">
-                        <div class="accordion-body px-3 py-2">
-                            <div class="row g-3">
-                                <div class="col-lg-6 d-flex flex-column justify-content-between">
-                                    <div>
-                                        <div class="fw-bold mb-2 border-bottom">Identitas Pasien</div>
-                                        <div style="font-size: 0.75em;">
-                                            <div class="mb-0 row g-1">
-                                                <div class="col-5 fw-medium text-truncate">Nama</div>
-                                                <div class="col">
-                                                    ${rawatjalan.nama_pasien}
-                                                </div>
-                                            </div>
-                                            <div class="mb-0 row g-1">
-                                                <div class="col-5 fw-medium text-truncate">Nomor Rekam Medis</div>
-                                                <div class="col date">
-                                                    ${rawatjalan.no_rm}
-                                                </div>
-                                            </div>
-                                            <div class="mb-0 row g-1">
-                                                <div class="col-5 fw-medium text-truncate">Jenis Kelamin</div>
-                                                <div class="col">
-                                                    ${jenis_kelamin_string}
-                                                </div>
-                                            </div>
-                                            <div class="mb-0 row g-1">
-                                                <div class="col-5 fw-medium text-truncate">Tempat/Tanggal Lahir</div>
-                                                <div class="col">
-                                                    ${rawatjalan.tempat_lahir}, <span class="date text-nowrap">${rawatjalan.tanggal_lahir}</span>
-                                                </div>
-                                            </div>
-                                            <div class="mb-0 row g-1">
-                                                <div class="col-5 fw-medium text-truncate">Usia</div>
-                                                <div class="col date">
-                                                    ${usia.usia} tahun ${usia.bulan} bulan
-                                                </div>
-                                            </div>
-                                            <div class="mb-0 row g-1">
-                                                <div class="col-5 fw-medium text-truncate">Alamat</div>
-                                                <div class="col">
-                                                    ${rawatjalan.alamat}
-                                                </div>
-                                            </div>
-                                            <div class="mb-0 row g-1">
-                                                <div class="col-5 fw-medium text-truncate">Nomor Telepon</div>
-                                                <div class="col date">
-                                                    ${telpon}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="d-flex flex-wrap justify-content-end gap-2 mt-2">
-                                            <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') : ?>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('pasien/kiup') ?>/${rawatjalan.id_pasien}')">
-                                                    <i class="fa-solid fa-print"></i> KIUP
-                                                </button>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('pasien/barcode') ?>/${rawatjalan.id_pasien}')">
-                                                    <i class="fa-solid fa-barcode"></i> Barcode
-                                                </button>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('pasien/detailpasien') ?>/${rawatjalan.id_pasien}'">
-                                                    <i class="fa-solid fa-circle-info"></i> Detail Pasien
-                                                </button>
-                                            <?php endif; ?>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 d-flex flex-column justify-content-between">
-                                    <div>
-                                        <div class="fw-bold mb-2 border-bottom">Rawat Jalan</div>
-                                        <div style="font-size: 0.75em;">
-                                            <div class="mb-0 row g-1">
-                                                <div class="col-5 fw-medium text-truncate">Operator</div>
-                                                <div class="col date">
-                                                    ${rawatjalan.pendaftar}
-                                                </div>
-                                            </div>
-                                            <div class="mb-0 row g-1">
-                                                <div class="col-5 fw-medium text-truncate">Nomor Registrasi</div>
-                                                <div class="col date">
-                                                    ${rawatjalan.nomor_registrasi}
-                                                </div>
-                                            </div>
-                                            <div class="mb-0 row g-1">
-                                                <div class="col-5 fw-medium text-truncate">Tanggal dan Waktu</div>
-                                                <div class="col date">
-                                                    ${rawatjalan.tanggal_registrasi}
-                                                </div>
-                                            </div>
-                                            <div class="mb-0 row g-1">
-                                                <div class="col-5 fw-medium text-truncate">Jenis Kunjungan</div>
-                                                <div class="col">
-                                                    ${rawatjalan.jenis_kunjungan}
-                                                </div>
-                                            </div>
-                                            <div class="mb-0 row g-1">
-                                                <div class="col-5 fw-medium text-truncate">Status Kunjungan</div>
-                                                <div class="col">
-                                                    ${rawatjalan.status_kunjungan}
-                                                </div>
-                                            </div>
-                                            <div class="mb-0 row g-1">
-                                                <div class="col-5 fw-medium text-truncate">Jaminan</div>
-                                                <div class="col">
-                                                    ${rawatjalan.jaminan}
-                                                </div>
-                                            </div>
-                                            <div class="mb-0 row g-1">
-                                                <div class="col-5 fw-medium text-truncate">Ruangan</div>
-                                                <div class="col">
-                                                    ${rawatjalan.ruangan}
-                                                </div>
-                                            </div>
-                                            <div class="mb-0 row g-1">
-                                                <div class="col-5 fw-medium text-truncate">Dokter</div>
-                                                <div class="col">
-                                                    ${rawatjalan.dokter}
-                                                </div>
-                                            </div>
-                                            <div class="mb-0 row g-1">
-                                                <div class="col-5 fw-medium text-truncate">Keluhan</div>
-                                                <div class="col">
-                                                    ${rawatjalan.keluhan}
-                                                </div>
-                                            </div>
-                                            ${isian_ok}
-                                            ${pembatal}
-                                        </div>
-                                    </div>
-                                    <div>
-                                        ${tombol_rme}
-                                    </div>
-                                </div>
+                <a href="#" class="list-group-item p-1 list-group-item-action detail-rajal" data-id="${rawatjalan.id_rawat_jalan}">
+                    <div class="px-3 py-2">
+                        <div class="me-3 text-truncate">
+                            <h5 class="d-flex date justify-content-start mb-0 text-truncate">
+                                <span class="badge bg-body text-body border px-2 align-self-start" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">${rawatjalan.number}</span>
+                                <span class="ms-1 align-self-center text-truncate">${rawatjalan.nama_pasien}</span>
+                            </h5>
+                            <h6 class="card-subtitle text-truncate">${rawatjalan.dokter}</h6>
+                            <div class="card-text overflow-hidden text-nowrap"><small class="date">${rawatjalan.nomor_registrasi} ${jenis_kelamin}</small></div>
+                            <div>
+                                <span class="badge bg-body text-body border date" style="font-weight: 900;">${rawatjalan.kode_antrian}${rawatjalan.no_antrian}</span> ${status}
                             </div>
                         </div>
                     </div>
-                </div>
+                </a>
                 `;
                 const promise = new Promise((resolve) => {
                     $('#rawatjalan-tanggal').append(rawatJalanElement);
@@ -621,9 +590,9 @@
                 $('#rawatjalan-no_rm').empty(); // Kosongkan tabel rawat jalan
                 $('#refreshNoRMButton').prop('disabled', true); // Nonaktifkan tombol refresh
                 const emptyRow = `
-                    <div class="accordion-item shadow-sm p-3 p-3">
+                    <span class="list-group-item pb-3 pt-3">
                         <h2 class="text-center text-muted mb-0" style="font-weight: 300;">Silakan masukkan nomor rekam medis</h2>
-                    </div>
+                    </span>
                 `;
                 $('#rawatjalan-no_rm').append(emptyRow); // Menambahkan baris kosong ke tabel
                 $('#total_rajal').text('0'); // Kosongkan total
@@ -658,14 +627,14 @@
                 // Tampilkan pesan jika tidak ada data
                 const emptyRow = !regex.test(no_rm) ?
                     `
-                    <div class="accordion-item shadow-sm p-3 p-3">
+                    <span class="list-group-item pb-3 pt-3">
                         <h2 class="text-center text-muted mb-0" style="font-weight: 300;">Silakan masukkan nomor rekam medis dengan benar</h2>
-                    </div>
+                    </span>
                 ` :
                     `
-                    <div class="accordion-item shadow-sm p-3 p-3">
+                    <span class="list-group-item pb-3 pt-3">
                         <h2 class="text-center text-muted mb-0" style="font-weight: 300;">Pasien dengan nomor rekam medis ${no_rm} belum pernah berobat</h2>
-                    </div>
+                    </span>
                 `;
                 $('#rawatjalan-no_rm').append(emptyRow); // Menambahkan baris pesan ke tabel
             }
@@ -678,12 +647,6 @@
                     jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap" style="background-color: SkyBlue"><i class="fa-solid fa-mars"></i> LAKI-LAKI</span>`;
                 } else if (jenis_kelamin === 'P') {
                     jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap" style="background-color: Pink"><i class="fa-solid fa-venus"></i> PEREMPUAN</span>`;
-                }
-                let jenis_kelamin_string = rawatjalan.jenis_kelamin;
-                if (jenis_kelamin_string === 'L') {
-                    jenis_kelamin_string = `Laki-laki`;
-                } else if (jenis_kelamin_string === 'P') {
-                    jenis_kelamin_string = `Perempuan`;
                 }
                 // Gunakan pesan jika tidak ada nomor telepon
                 const telpon = rawatjalan.telpon ? rawatjalan.telpon : "<em>Tidak ada</em>";
@@ -699,296 +662,24 @@
                 } else if (status === 'BATAL') {
                     status = `<span class="badge bg-danger bg-gradient">Dibatalkan</span>`;
                 }
-                let pembatal = rawatjalan.status;
-                if (pembatal === 'BATAL') {
-                    pembatal = `
-                            <div class="mb-0 row g-1">
-                                <div class="col-5 fw-medium text-truncate">Dibatalkan oleh</div>
-                                <div class="col date">
-                                    ${rawatjalan.pembatal}
-                                </div>
-                            </div>
-                            <div class="mb-0 row g-1">
-                                <div class="col-5 fw-medium text-truncate">Alasan Pembatalan</div>
-                                <div class="col date">
-                                    ${rawatjalan.alasan_batal}
-                                </div>
-                            </div>
-                        `;
-                } else if (pembatal === 'DAFTAR') {
-                    pembatal = ``;
-                }
-                let tombol_isian_ok = rawatjalan.ruangan;
-                if (tombol_isian_ok === 'Kamar Operasi') {
-                    tombol_isian_ok = `
-                                            <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') : ?>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/lembarisianoperasi') ?>/${rawatjalan.id_rawat_jalan}');">
-                                                    <i class="fa-solid fa-receipt"></i> Lembar Isian Operasi
-                                                </button>
-                                            <?php endif; ?>
-                    `;
-                } else {
-                    tombol_isian_ok = ``;
-                }
-                let isian_ok = rawatjalan.ruangan;
-                if (isian_ok === 'Kamar Operasi') {
-                    const tindakan_operasi_rajal = rawatjalan.tindakan_operasi_rajal ?
-                        rawatjalan.tindakan_operasi_rajal :
-                        `<em>Belum diisi</em>`;
-                    let waktu_operasi_rajal = `<em>Belum diisi</em>`;
-                    if (rawatjalan.tanggal_operasi_rajal) {
-                        waktu_operasi_rajal = `<span class="date">${rawatjalan.tanggal_operasi_rajal}`;
-                        if (rawatjalan.jam_operasi_rajal) {
-                            waktu_operasi_rajal += ` ${rawatjalan.jam_operasi_rajal}`;
-                        }
-                        waktu_operasi_rajal += `</span>`;
-                    }
-                    isian_ok = `
-                            <div class="mb-0 row g-1">
-                                <div class="col-5 fw-medium text-truncate">Tindakan yang Akan Dilakukan</div>
-                                <div class="col date">
-                                    ${tindakan_operasi_rajal}
-                                </div>
-                            </div>
-                            <div class="mb-0 row g-1">
-                                <div class="col-5 fw-medium text-truncate">Waktu Tindakan</div>
-                                <div class="col date">
-                                    ${waktu_operasi_rajal}
-                                </div>
-                            </div>
-                        `;
-                } else {
-                    isian_ok = ``;
-                }
-                let tombol_rme = rawatjalan.status;
-                if (tombol_rme === 'DAFTAR') {
-                    tombol_rme = `
-                                        <div class="d-flex flex-wrap justify-content-end gap-2 mt-2">
-                                            <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') : ?>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/struk') ?>/${rawatjalan.id_rawat_jalan}');">
-                                                    <i class="fa-solid fa-receipt"></i> Struk
-                                                </button>
-                                                ${tombol_isian_ok}
-                                                <?php if (session()->get('role') != 'Admin') : ?>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/asesmen/export') ?>/${rawatjalan.id_rawat_jalan}');">
-                                                    <i class="fa-solid fa-print"></i> Asesmen
-                                                </button>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/skrining/export') ?>/${rawatjalan.id_rawat_jalan}');">
-                                                    <i class="fa-solid fa-print"></i> Skrining
-                                                </button>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/edukasi/export') ?>/${rawatjalan.id_rawat_jalan}');">
-                                                    <i class="fa-solid fa-print"></i> Edukasi
-                                                </button>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/penunjang/export') ?>/${rawatjalan.id_rawat_jalan}');">
-                                                    <i class="fa-solid fa-print"></i> Penunjang
-                                                </button>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/optik/export') ?>/${rawatjalan.id_rawat_jalan}');">
-                                                    <i class="fa-solid fa-print"></i> Resep Kacamata
-                                                </button>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/laporanrajal/export') ?>/${rawatjalan.id_rawat_jalan}');">
-                                                    <i class="fa-solid fa-print"></i> Tindakan Rajal
-                                                </button>
-                                                <?php endif; ?>
-                                            <?php endif; ?>
-                                            <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') : ?>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/asesmen') ?>/${rawatjalan.id_rawat_jalan}';">
-                                                    <i class="fa-solid fa-user-check"></i> Asesmen
-                                                </button>
-                                                <?php if (session()->get('role') != 'Dokter') : ?>
-                                                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/skrining') ?>/${rawatjalan.id_rawat_jalan}';">
-                                                        <i class="fa-solid fa-user-check"></i> Skrining
-                                                    </button>
-                                                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/edukasi') ?>/${rawatjalan.id_rawat_jalan}';">
-                                                        <i class="fa-solid fa-user-graduate"></i> Edukasi
-                                                    </button>
-                                                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/penunjang') ?>/${rawatjalan.id_rawat_jalan}';">
-                                                        <i class="fa-solid fa-stethoscope"></i> Penunjang
-                                                    </button>
-                                                <?php endif; ?>
-                                                <?php if (session()->get('role') != 'Perawat') : ?>
-                                                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/resepobat') ?>/${rawatjalan.id_rawat_jalan}';">
-                                                        <i class="fa-solid fa-prescription"></i> Resep Obat
-                                                    </button>
-                                                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/optik') ?>/${rawatjalan.id_rawat_jalan}';">
-                                                        <i class="fa-solid fa-glasses"></i> Resep Kacamata
-                                                    </button>
-                                                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/laporanrajal') ?>/${rawatjalan.id_rawat_jalan}';">
-                                                        <i class="fa-solid fa-file-medical"></i> Tindakan Rajal
-                                                    </button>
-                                                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/layanan') ?>/${rawatjalan.id_rawat_jalan}';">
-                                                        <i class="fa-solid fa-user-nurse"></i> Layanan
-                                                    </button>
-                                                <?php endif; ?>
-                                            <?php endif; ?>
-                                        </div>
-                        `;
-                } else if (tombol_rme === 'BATAL') {
-                    tombol_rme = `
-                                        <div class="d-flex flex-wrap justify-content-end gap-2 mt-2">
-                                            <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') : ?>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/struk') ?>/${rawatjalan.id_rawat_jalan}');">
-                                                    <i class="fa-solid fa-receipt"></i> Struk
-                                                </button>
-                                            <?php endif; ?>
-                                        </div>
-                    `;
-                }
 
                 // Membuat elemen baris untuk setiap rawatjalan
                 const rawatJalanElement = `
-                <div class="accordion-item shadow-sm">
-                    <div class="accordion-header">
-                        <button class="accordion-button px-3 py-2 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-${rawatjalan.number}" aria-expanded="false" aria-controls="collapse-${rawatjalan.number}">
-                            <div class="me-3 text-truncate">
-                                <h5 class="d-flex date justify-content-start mb-0 text-truncate">
-                                    <span class="badge bg-body text-body border px-2 align-self-start" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">${rawatjalan.number}</span>
-                                    <span class="ms-1 align-self-center text-truncate">${rawatjalan.nama_pasien}</span>
-                                </h5>
-                                <h6 class="card-subtitle text-truncate">${rawatjalan.dokter}</h6>
-                                <div class="card-text overflow-hidden text-nowrap"><small class="date">${rawatjalan.nomor_registrasi} ${jenis_kelamin}</small></div>
-                                <div>
-                                    <span class="badge bg-body text-body border date" style="font-weight: 900;">${rawatjalan.kode_antrian}${rawatjalan.no_antrian}</span> ${status}
-                                </div>
-                            </div>
-                        </button>
-                    </div>
-                    <div id="collapse-${rawatjalan.number}" class="accordion-collapse collapse" data-bs-parent="#rawatjalan-no_rm">
-                        <div class="accordion-body px-3 py-2">
-                            <div class="row g-3">
-                                <div class="col-lg-6 d-flex flex-column justify-content-between">
-                                    <div>
-                                        <div class="fw-bold mb-2 border-bottom">Identitas Pasien</div>
-                                        <div style="font-size: 0.75em;">
-                                            <div class="mb-0 row g-1">
-                                                <div class="col-5 fw-medium text-truncate">Nama</div>
-                                                <div class="col">
-                                                    ${rawatjalan.nama_pasien}
-                                                </div>
-                                            </div>
-                                            <div class="mb-0 row g-1">
-                                                <div class="col-5 fw-medium text-truncate">Nomor Rekam Medis</div>
-                                                <div class="col date">
-                                                    ${rawatjalan.no_rm}
-                                                </div>
-                                            </div>
-                                            <div class="mb-0 row g-1">
-                                                <div class="col-5 fw-medium text-truncate">Jenis Kelamin</div>
-                                                <div class="col">
-                                                    ${jenis_kelamin_string}
-                                                </div>
-                                            </div>
-                                            <div class="mb-0 row g-1">
-                                                <div class="col-5 fw-medium text-truncate">Tempat/Tanggal Lahir</div>
-                                                <div class="col">
-                                                    ${rawatjalan.tempat_lahir}, <span class="date text-nowrap">${rawatjalan.tanggal_lahir}</span>
-                                                </div>
-                                            </div>
-                                            <div class="mb-0 row g-1">
-                                                <div class="col-5 fw-medium text-truncate">Usia</div>
-                                                <div class="col date">
-                                                    ${usia.usia} tahun ${usia.bulan} bulan
-                                                </div>
-                                            </div>
-                                            <div class="mb-0 row g-1">
-                                                <div class="col-5 fw-medium text-truncate">Alamat</div>
-                                                <div class="col">
-                                                    ${rawatjalan.alamat}
-                                                </div>
-                                            </div>
-                                            <div class="mb-0 row g-1">
-                                                <div class="col-5 fw-medium text-truncate">Nomor Telepon</div>
-                                                <div class="col date">
-                                                    ${telpon}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="d-flex flex-wrap justify-content-end gap-2 mt-2">
-                                            <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') : ?>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('pasien/kiup') ?>/${rawatjalan.id_pasien}')">
-                                                    <i class="fa-solid fa-print"></i> KIUP
-                                                </button>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('pasien/barcode') ?>/${rawatjalan.id_pasien}')">
-                                                    <i class="fa-solid fa-barcode"></i> Barcode
-                                                </button>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('pasien/detailpasien') ?>/${rawatjalan.id_pasien}'">
-                                                    <i class="fa-solid fa-user-injured"></i> Lihat Pasien
-                                                </button>
-                                            <?php endif; ?>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 d-flex flex-column justify-content-between">
-                                    <div>
-                                        <div class="fw-bold mb-2 border-bottom">Rawat Jalan</div>
-                                        <div style="font-size: 0.75em;">
-                                            <div class="mb-0 row g-1">
-                                                <div class="col-5 fw-medium text-truncate">Operator</div>
-                                                <div class="col date">
-                                                    ${rawatjalan.pendaftar}
-                                                </div>
-                                            </div>
-                                            <div class="mb-0 row g-1">
-                                                <div class="col-5 fw-medium text-truncate">Nomor Registrasi</div>
-                                                <div class="col date">
-                                                    ${rawatjalan.nomor_registrasi}
-                                                </div>
-                                            </div>
-                                            <div class="mb-0 row g-1">
-                                                <div class="col-5 fw-medium text-truncate">Tanggal dan Waktu</div>
-                                                <div class="col date">
-                                                    ${rawatjalan.tanggal_registrasi}
-                                                </div>
-                                            </div>
-                                            <div class="mb-0 row g-1">
-                                                <div class="col-5 fw-medium text-truncate">Jenis Kunjungan</div>
-                                                <div class="col">
-                                                    ${rawatjalan.jenis_kunjungan}
-                                                </div>
-                                            </div>
-                                            <div class="mb-0 row g-1">
-                                                <div class="col-5 fw-medium text-truncate">Status Kunjungan</div>
-                                                <div class="col">
-                                                    ${rawatjalan.status_kunjungan}
-                                                </div>
-                                            </div>
-                                            <div class="mb-0 row g-1">
-                                                <div class="col-5 fw-medium text-truncate">Jaminan</div>
-                                                <div class="col">
-                                                    ${rawatjalan.jaminan}
-                                                </div>
-                                            </div>
-                                            <div class="mb-0 row g-1">
-                                                <div class="col-5 fw-medium text-truncate">Ruangan</div>
-                                                <div class="col">
-                                                    ${rawatjalan.ruangan}
-                                                </div>
-                                            </div>
-                                            <div class="mb-0 row g-1">
-                                                <div class="col-5 fw-medium text-truncate">Dokter</div>
-                                                <div class="col">
-                                                    ${rawatjalan.dokter}
-                                                </div>
-                                            </div>
-                                            <div class="mb-0 row g-1">
-                                                <div class="col-5 fw-medium text-truncate">Keluhan</div>
-                                                <div class="col">
-                                                    ${rawatjalan.keluhan}
-                                                </div>
-                                            </div>
-                                            ${isian_ok}
-                                            ${pembatal}
-                                        </div>
-                                    </div>
-                                    <div>
-                                        ${tombol_rme}
-                                    </div>
-                                </div>
+                <a href="#" class="list-group-item p-1 list-group-item-action detail-rajal" data-id="${rawatjalan.id_rawat_jalan}">
+                    <div class="px-3 py-2">
+                        <div class="me-3 text-truncate">
+                            <h5 class="d-flex date justify-content-start mb-0 text-truncate">
+                                <span class="badge bg-body text-body border px-2 align-self-start" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">${rawatjalan.number}</span>
+                                <span class="ms-1 align-self-center text-truncate">${rawatjalan.nama_pasien}</span>
+                            </h5>
+                            <h6 class="card-subtitle text-truncate">${rawatjalan.dokter}</h6>
+                            <div class="card-text overflow-hidden text-nowrap"><small class="date">${rawatjalan.nomor_registrasi} ${jenis_kelamin}</small></div>
+                            <div>
+                                <span class="badge bg-body text-body border date" style="font-weight: 900;">${rawatjalan.kode_antrian}${rawatjalan.no_antrian}</span> ${status}
                             </div>
                         </div>
                     </div>
-                </div>
+                </a>
                 `;
                 const promise = new Promise((resolve) => {
                     $('#rawatjalan-no_rm').append(rawatJalanElement);
@@ -1089,9 +780,9 @@
                 $('#rawatjalan-nama').empty(); // Kosongkan tabel rawat jalan
                 $('#refreshNamaButton').prop('disabled', true); // Nonaktifkan tombol refresh
                 const emptyRow = `
-                    <div class="accordion-item shadow-sm p-3 p-3">
+                    <span class="list-group-item pb-3 pt-3">
                         <h2 class="text-center text-muted mb-0" style="font-weight: 300;">Silakan masukkan nama pasien</h2>
-                    </div>
+                    </span>
                 `;
                 $('#rawatjalan-nama').append(emptyRow); // Menambahkan baris kosong ke tabel
                 $('#total_rajal').text('0'); // Kosongkan total
@@ -1125,9 +816,9 @@
                 $('#paginationNav-nama ul').empty();
                 // Tampilkan pesan jika tidak ada data
                 const emptyRow = `
-                    <div class="accordion-item shadow-sm p-3 p-3">
+                    <span class="list-group-item pb-3 pt-3">
                         <h2 class="text-center text-muted mb-0" style="font-weight: 300;">Tidak ada pasien dengan nama "${nama}"</h2>
-                    </div>
+                    </span>
                 `;
                 $('#rawatjalan-nama').append(emptyRow); // Menambahkan baris pesan ke tabel
             }
@@ -1140,12 +831,6 @@
                     jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap" style="background-color: SkyBlue"><i class="fa-solid fa-mars"></i> LAKI-LAKI</span>`;
                 } else if (jenis_kelamin === 'P') {
                     jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap" style="background-color: Pink"><i class="fa-solid fa-venus"></i> PEREMPUAN</span>`;
-                }
-                let jenis_kelamin_string = rawatjalan.jenis_kelamin;
-                if (jenis_kelamin_string === 'L') {
-                    jenis_kelamin_string = `Laki-laki`;
-                } else if (jenis_kelamin_string === 'P') {
-                    jenis_kelamin_string = `Perempuan`;
                 }
                 // Gunakan pesan jika tidak ada nomor telepon
                 const telpon = rawatjalan.telpon ? rawatjalan.telpon : "<em>Tidak ada</em>";
@@ -1161,296 +846,24 @@
                 } else if (status === 'BATAL') {
                     status = `<span class="badge bg-danger bg-gradient">Dibatalkan</span>`;
                 }
-                let pembatal = rawatjalan.status;
-                if (pembatal === 'BATAL') {
-                    pembatal = `
-                            <div class="mb-0 row g-1">
-                                <div class="col-5 fw-medium text-truncate">Dibatalkan oleh</div>
-                                <div class="col date">
-                                    ${rawatjalan.pembatal}
-                                </div>
-                            </div>
-                            <div class="mb-0 row g-1">
-                                <div class="col-5 fw-medium text-truncate">Alasan Pembatalan</div>
-                                <div class="col date">
-                                    ${rawatjalan.alasan_batal}
-                                </div>
-                            </div>
-                        `;
-                } else if (pembatal === 'DAFTAR') {
-                    pembatal = ``;
-                }
-                let tombol_isian_ok = rawatjalan.ruangan;
-                if (tombol_isian_ok === 'Kamar Operasi') {
-                    tombol_isian_ok = `
-                                            <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') : ?>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/lembarisianoperasi') ?>/${rawatjalan.id_rawat_jalan}');">
-                                                    <i class="fa-solid fa-receipt"></i> Lembar Isian Operasi
-                                                </button>
-                                            <?php endif; ?>
-                    `;
-                } else {
-                    tombol_isian_ok = ``;
-                }
-                let isian_ok = rawatjalan.ruangan;
-                if (isian_ok === 'Kamar Operasi') {
-                    const tindakan_operasi_rajal = rawatjalan.tindakan_operasi_rajal ?
-                        rawatjalan.tindakan_operasi_rajal :
-                        `<em>Belum diisi</em>`;
-                    let waktu_operasi_rajal = `<em>Belum diisi</em>`;
-                    if (rawatjalan.tanggal_operasi_rajal) {
-                        waktu_operasi_rajal = `<span class="date">${rawatjalan.tanggal_operasi_rajal}`;
-                        if (rawatjalan.jam_operasi_rajal) {
-                            waktu_operasi_rajal += ` ${rawatjalan.jam_operasi_rajal}`;
-                        }
-                        waktu_operasi_rajal += `</span>`;
-                    }
-                    isian_ok = `
-                            <div class="mb-0 row g-1">
-                                <div class="col-5 fw-medium text-truncate">Tindakan yang Akan Dilakukan</div>
-                                <div class="col date">
-                                    ${tindakan_operasi_rajal}
-                                </div>
-                            </div>
-                            <div class="mb-0 row g-1">
-                                <div class="col-5 fw-medium text-truncate">Waktu Tindakan</div>
-                                <div class="col date">
-                                    ${waktu_operasi_rajal}
-                                </div>
-                            </div>
-                        `;
-                } else {
-                    isian_ok = ``;
-                }
-                let tombol_rme = rawatjalan.status;
-                if (tombol_rme === 'DAFTAR') {
-                    tombol_rme = `
-                                        <div class="d-flex flex-wrap justify-content-end gap-2 mt-2">
-                                            <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') : ?>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/struk') ?>/${rawatjalan.id_rawat_jalan}');">
-                                                    <i class="fa-solid fa-receipt"></i> Struk
-                                                </button>
-                                                ${tombol_isian_ok}
-                                                <?php if (session()->get('role') != 'Admin') : ?>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/asesmen/export') ?>/${rawatjalan.id_rawat_jalan}');">
-                                                    <i class="fa-solid fa-print"></i> Asesmen
-                                                </button>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/skrining/export') ?>/${rawatjalan.id_rawat_jalan}');">
-                                                    <i class="fa-solid fa-print"></i> Skrining
-                                                </button>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/edukasi/export') ?>/${rawatjalan.id_rawat_jalan}');">
-                                                    <i class="fa-solid fa-print"></i> Edukasi
-                                                </button>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/penunjang/export') ?>/${rawatjalan.id_rawat_jalan}');">
-                                                    <i class="fa-solid fa-print"></i> Penunjang
-                                                </button>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/optik/export') ?>/${rawatjalan.id_rawat_jalan}');">
-                                                    <i class="fa-solid fa-print"></i> Resep Kacamata
-                                                </button>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/laporanrajal/export') ?>/${rawatjalan.id_rawat_jalan}');">
-                                                    <i class="fa-solid fa-print"></i> Tindakan Rajal
-                                                </button>
-                                                <?php endif; ?>
-                                            <?php endif; ?>
-                                            <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') : ?>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/asesmen') ?>/${rawatjalan.id_rawat_jalan}';">
-                                                    <i class="fa-solid fa-user-check"></i> Asesmen
-                                                </button>
-                                                <?php if (session()->get('role') != 'Dokter') : ?>
-                                                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/skrining') ?>/${rawatjalan.id_rawat_jalan}';">
-                                                        <i class="fa-solid fa-user-check"></i> Skrining
-                                                    </button>
-                                                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/edukasi') ?>/${rawatjalan.id_rawat_jalan}';">
-                                                        <i class="fa-solid fa-user-graduate"></i> Edukasi
-                                                    </button>
-                                                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/penunjang') ?>/${rawatjalan.id_rawat_jalan}';">
-                                                        <i class="fa-solid fa-stethoscope"></i> Penunjang
-                                                    </button>
-                                                <?php endif; ?>
-                                                <?php if (session()->get('role') != 'Perawat') : ?>
-                                                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/resepobat') ?>/${rawatjalan.id_rawat_jalan}';">
-                                                        <i class="fa-solid fa-prescription"></i> Resep Obat
-                                                    </button>
-                                                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/optik') ?>/${rawatjalan.id_rawat_jalan}';">
-                                                        <i class="fa-solid fa-glasses"></i> Resep Kacamata
-                                                    </button>
-                                                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/laporanrajal') ?>/${rawatjalan.id_rawat_jalan}';">
-                                                        <i class="fa-solid fa-file-medical"></i> Tindakan Rajal
-                                                    </button>
-                                                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/layanan') ?>/${rawatjalan.id_rawat_jalan}';">
-                                                        <i class="fa-solid fa-user-nurse"></i> Layanan
-                                                    </button>
-                                                <?php endif; ?>
-                                            <?php endif; ?>
-                                        </div>
-                        `;
-                } else if (tombol_rme === 'BATAL') {
-                    tombol_rme = `
-                                        <div class="d-flex flex-wrap justify-content-end gap-2 mt-2">
-                                            <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') : ?>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/struk') ?>/${rawatjalan.id_rawat_jalan}');">
-                                                    <i class="fa-solid fa-receipt"></i> Struk
-                                                </button>
-                                            <?php endif; ?>
-                                        </div>
-                    `;
-                }
 
                 // Membuat elemen baris untuk setiap rawatjalan
                 const rawatJalanElement = `
-                <div class="accordion-item shadow-sm">
-                    <div class="accordion-header">
-                        <button class="accordion-button px-3 py-2 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-${rawatjalan.number}" aria-expanded="false" aria-controls="collapse-${rawatjalan.number}">
-                            <div class="me-3 text-truncate">
-                                <h5 class="d-flex date justify-content-start mb-0 text-truncate">
-                                    <span class="badge bg-body text-body border px-2 align-self-start" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">${rawatjalan.number}</span>
-                                    <span class="ms-1 align-self-center text-truncate">${rawatjalan.nama_pasien}</span>
-                                </h5>
-                                <h6 class="card-subtitle text-truncate">${rawatjalan.dokter}</h6>
-                                <div class="card-text overflow-hidden text-nowrap"><small class="date">${rawatjalan.nomor_registrasi} ${jenis_kelamin}</small></div>
-                                <div>
-                                    <span class="badge bg-body text-body border date" style="font-weight: 900;">${rawatjalan.kode_antrian}${rawatjalan.no_antrian}</span> ${status}
-                                </div>
-                            </div>
-                        </button>
-                    </div>
-                    <div id="collapse-${rawatjalan.number}" class="accordion-collapse collapse" data-bs-parent="#rawatjalan-tanggal">
-                        <div class="accordion-body px-3 py-2">
-                            <div class="row g-3">
-                                <div class="col-lg-6 d-flex flex-column justify-content-between">
-                                    <div>
-                                        <div class="fw-bold mb-2 border-bottom">Identitas Pasien</div>
-                                        <div style="font-size: 0.75em;">
-                                            <div class="mb-0 row g-1">
-                                                <div class="col-5 fw-medium text-truncate">Nama</div>
-                                                <div class="col">
-                                                    ${rawatjalan.nama_pasien}
-                                                </div>
-                                            </div>
-                                            <div class="mb-0 row g-1">
-                                                <div class="col-5 fw-medium text-truncate">Nomor Rekam Medis</div>
-                                                <div class="col date">
-                                                    ${rawatjalan.no_rm}
-                                                </div>
-                                            </div>
-                                            <div class="mb-0 row g-1">
-                                                <div class="col-5 fw-medium text-truncate">Jenis Kelamin</div>
-                                                <div class="col">
-                                                    ${jenis_kelamin_string}
-                                                </div>
-                                            </div>
-                                            <div class="mb-0 row g-1">
-                                                <div class="col-5 fw-medium text-truncate">Tempat/Tanggal Lahir</div>
-                                                <div class="col">
-                                                    ${rawatjalan.tempat_lahir}, <span class="date text-nowrap">${rawatjalan.tanggal_lahir}</span>
-                                                </div>
-                                            </div>
-                                            <div class="mb-0 row g-1">
-                                                <div class="col-5 fw-medium text-truncate">Usia</div>
-                                                <div class="col date">
-                                                    ${usia.usia} tahun ${usia.bulan} bulan
-                                                </div>
-                                            </div>
-                                            <div class="mb-0 row g-1">
-                                                <div class="col-5 fw-medium text-truncate">Alamat</div>
-                                                <div class="col">
-                                                    ${rawatjalan.alamat}
-                                                </div>
-                                            </div>
-                                            <div class="mb-0 row g-1">
-                                                <div class="col-5 fw-medium text-truncate">Nomor Telepon</div>
-                                                <div class="col date">
-                                                    ${telpon}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <div class="d-flex flex-wrap justify-content-end gap-2 mt-2">
-                                            <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') : ?>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('pasien/kiup') ?>/${rawatjalan.id_pasien}')">
-                                                    <i class="fa-solid fa-print"></i> KIUP
-                                                </button>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('pasien/barcode') ?>/${rawatjalan.id_pasien}')">
-                                                    <i class="fa-solid fa-barcode"></i> Barcode
-                                                </button>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('pasien/detailpasien') ?>/${rawatjalan.id_pasien}'">
-                                                    <i class="fa-solid fa-user-injured"></i> Lihat Pasien
-                                                </button>
-                                            <?php endif; ?>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 d-flex flex-column justify-content-between">
-                                    <div>
-                                        <div class="fw-bold mb-2 border-bottom">Rawat Jalan</div>
-                                        <div style="font-size: 0.75em;">
-                                            <div class="mb-0 row g-1">
-                                                <div class="col-5 fw-medium text-truncate">Operator</div>
-                                                <div class="col date">
-                                                    ${rawatjalan.pendaftar}
-                                                </div>
-                                            </div>
-                                            <div class="mb-0 row g-1">
-                                                <div class="col-5 fw-medium text-truncate">Nomor Registrasi</div>
-                                                <div class="col date">
-                                                    ${rawatjalan.nomor_registrasi}
-                                                </div>
-                                            </div>
-                                            <div class="mb-0 row g-1">
-                                                <div class="col-5 fw-medium text-truncate">Tanggal dan Waktu</div>
-                                                <div class="col date">
-                                                    ${rawatjalan.tanggal_registrasi}
-                                                </div>
-                                            </div>
-                                            <div class="mb-0 row g-1">
-                                                <div class="col-5 fw-medium text-truncate">Jenis Kunjungan</div>
-                                                <div class="col">
-                                                    ${rawatjalan.jenis_kunjungan}
-                                                </div>
-                                            </div>
-                                            <div class="mb-0 row g-1">
-                                                <div class="col-5 fw-medium text-truncate">Status Kunjungan</div>
-                                                <div class="col">
-                                                    ${rawatjalan.status_kunjungan}
-                                                </div>
-                                            </div>
-                                            <div class="mb-0 row g-1">
-                                                <div class="col-5 fw-medium text-truncate">Jaminan</div>
-                                                <div class="col">
-                                                    ${rawatjalan.jaminan}
-                                                </div>
-                                            </div>
-                                            <div class="mb-0 row g-1">
-                                                <div class="col-5 fw-medium text-truncate">Ruangan</div>
-                                                <div class="col">
-                                                    ${rawatjalan.ruangan}
-                                                </div>
-                                            </div>
-                                            <div class="mb-0 row g-1">
-                                                <div class="col-5 fw-medium text-truncate">Dokter</div>
-                                                <div class="col">
-                                                    ${rawatjalan.dokter}
-                                                </div>
-                                            </div>
-                                            <div class="mb-0 row g-1">
-                                                <div class="col-5 fw-medium text-truncate">Keluhan</div>
-                                                <div class="col">
-                                                    ${rawatjalan.keluhan}
-                                                </div>
-                                            </div>
-                                            ${isian_ok}
-                                            ${pembatal}
-                                        </div>
-                                    </div>
-                                    <div>
-                                        ${tombol_rme}
-                                    </div>
-                                </div>
+                <a href="#" class="list-group-item p-1 list-group-item-action detail-rajal" data-id="${rawatjalan.id_rawat_jalan}">
+                    <div class="px-3 py-2">
+                        <div class="me-3 text-truncate">
+                            <h5 class="d-flex date justify-content-start mb-0 text-truncate">
+                                <span class="badge bg-body text-body border px-2 align-self-start" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">${rawatjalan.number}</span>
+                                <span class="ms-1 align-self-center text-truncate">${rawatjalan.nama_pasien}</span>
+                            </h5>
+                            <h6 class="card-subtitle text-truncate">${rawatjalan.dokter}</h6>
+                            <div class="card-text overflow-hidden text-nowrap"><small class="date">${rawatjalan.nomor_registrasi} ${jenis_kelamin}</small></div>
+                            <div>
+                                <span class="badge bg-body text-body border date" style="font-weight: 900;">${rawatjalan.kode_antrian}${rawatjalan.no_antrian}</span> ${status}
                             </div>
                         </div>
                     </div>
-                </div>
+                </a>
                 `;
                 const promise = new Promise((resolve) => {
                     $('#rawatjalan-nama').append(rawatJalanElement);
@@ -1662,6 +1075,197 @@
         socket.onclose = () => {
             console.log("Disconnected from WebSocket server");
         };
+        $(document).on('click', '.detail-rajal', async function(ə) {
+            ə.preventDefault();
+            var $this = $(this);
+            var id = $this.data('id');
+            $('#loadingSpinner').show();
+            $this.addClass('disabled').prop('aria-disabled', true);
+
+            try {
+                let response = await axios.get(`<?= base_url('/rawatjalan/rawatjalan') ?>/` + id);
+                const rawatjalan = response.data;
+
+                $('#rajalModalLabel').text('Informasi Rawat Jalan');
+                // Mengkondisikan jenis kelamin
+                let jenis_kelamin_string = rawatjalan.jenis_kelamin;
+                if (jenis_kelamin_string === 'L') {
+                    jenis_kelamin_string = `Laki-laki`;
+                } else if (jenis_kelamin_string === 'P') {
+                    jenis_kelamin_string = `Perempuan`;
+                }
+                // Gunakan pesan jika tidak ada nomor telepon
+                const telpon = rawatjalan.telpon ? rawatjalan.telpon : "<em>Tidak ada</em>";
+                const usia = hitungUsia(rawatjalan.tanggal_lahir, rawatjalan.tanggal_registrasi); // Menghitung usia pasien
+
+                let pembatal = rawatjalan.status;
+                if (pembatal === 'BATAL') {
+                    $('.rajal_batal').show();
+                } else if (pembatal === 'DAFTAR') {
+                    $('.rajal_batal').hide();
+                }
+                let tombol_isian_ok = rawatjalan.ruangan;
+                if (tombol_isian_ok === 'Kamar Operasi') {
+                    tombol_isian_ok = `
+                                            <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') : ?>
+                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/lembarisianoperasi') ?>/${rawatjalan.id_rawat_jalan}');">
+                                                    <i class="fa-solid fa-receipt"></i> Lembar Isian Operasi
+                                                </button>
+                                            <?php endif; ?>
+                    `;
+                } else {
+                    tombol_isian_ok = ``;
+                }
+                let isian_ok = rawatjalan.ruangan;
+                const tindakan_operasi_rajal = rawatjalan.tindakan_operasi_rajal ?
+                    rawatjalan.tindakan_operasi_rajal :
+                    `<em>Belum diisi</em>`;
+                let waktu_operasi_rajal = `<em>Belum diisi</em>`;
+                if (rawatjalan.tanggal_operasi_rajal) {
+                    waktu_operasi_rajal = `${rawatjalan.tanggal_operasi_rajal}`;
+                    if (rawatjalan.jam_operasi_rajal) {
+                        waktu_operasi_rajal += ` ${rawatjalan.jam_operasi_rajal}`;
+                    }
+                }
+                if (isian_ok === 'Kamar Operasi') {
+                    $('.pasien_operasi').show();
+                } else {
+                    $('.pasien_operasi').hide();
+                }
+                let tombol_rme = rawatjalan.status;
+                if (tombol_rme === 'DAFTAR') {
+                    tombol_rme = `
+                                        <div class="d-flex flex-wrap justify-content-end gap-2 mt-2">
+                                            <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') : ?>
+                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/struk') ?>/${rawatjalan.id_rawat_jalan}');">
+                                                    <i class="fa-solid fa-receipt"></i> Struk
+                                                </button>
+                                                ${tombol_isian_ok}
+                                                <?php if (session()->get('role') != 'Admin') : ?>
+                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/asesmen/export') ?>/${rawatjalan.id_rawat_jalan}');">
+                                                    <i class="fa-solid fa-print"></i> Asesmen
+                                                </button>
+                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/skrining/export') ?>/${rawatjalan.id_rawat_jalan}');">
+                                                    <i class="fa-solid fa-print"></i> Skrining
+                                                </button>
+                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/edukasi/export') ?>/${rawatjalan.id_rawat_jalan}');">
+                                                    <i class="fa-solid fa-print"></i> Edukasi
+                                                </button>
+                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/penunjang/export') ?>/${rawatjalan.id_rawat_jalan}');">
+                                                    <i class="fa-solid fa-print"></i> Penunjang
+                                                </button>
+                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/optik/export') ?>/${rawatjalan.id_rawat_jalan}');">
+                                                    <i class="fa-solid fa-print"></i> Resep Kacamata
+                                                </button>
+                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/laporanrajal/export') ?>/${rawatjalan.id_rawat_jalan}');">
+                                                    <i class="fa-solid fa-print"></i> Tindakan Rajal
+                                                </button>
+                                                <?php endif; ?>
+                                            <?php endif; ?>
+                                            <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') : ?>
+                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/asesmen') ?>/${rawatjalan.id_rawat_jalan}';">
+                                                    <i class="fa-solid fa-user-check"></i> Asesmen
+                                                </button>
+                                                <?php if (session()->get('role') != 'Dokter') : ?>
+                                                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/skrining') ?>/${rawatjalan.id_rawat_jalan}';">
+                                                        <i class="fa-solid fa-user-check"></i> Skrining
+                                                    </button>
+                                                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/edukasi') ?>/${rawatjalan.id_rawat_jalan}';">
+                                                        <i class="fa-solid fa-user-graduate"></i> Edukasi
+                                                    </button>
+                                                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/penunjang') ?>/${rawatjalan.id_rawat_jalan}';">
+                                                        <i class="fa-solid fa-stethoscope"></i> Penunjang
+                                                    </button>
+                                                <?php endif; ?>
+                                                <?php if (session()->get('role') != 'Perawat') : ?>
+                                                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/resepobat') ?>/${rawatjalan.id_rawat_jalan}';">
+                                                        <i class="fa-solid fa-prescription"></i> Resep Obat
+                                                    </button>
+                                                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/optik') ?>/${rawatjalan.id_rawat_jalan}';">
+                                                        <i class="fa-solid fa-glasses"></i> Resep Kacamata
+                                                    </button>
+                                                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/laporanrajal') ?>/${rawatjalan.id_rawat_jalan}';">
+                                                        <i class="fa-solid fa-file-medical"></i> Tindakan Rajal
+                                                    </button>
+                                                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/layanan') ?>/${rawatjalan.id_rawat_jalan}';">
+                                                        <i class="fa-solid fa-user-nurse"></i> Layanan
+                                                    </button>
+                                                <?php endif; ?>
+                                            <?php endif; ?>
+                                        </div>
+                        `;
+                } else if (tombol_rme === 'BATAL') {
+                    tombol_rme = `
+                                        <div class="d-flex flex-wrap justify-content-end gap-2 mt-2">
+                                            <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') : ?>
+                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/struk') ?>/${rawatjalan.id_rawat_jalan}');">
+                                                    <i class="fa-solid fa-receipt"></i> Struk
+                                                </button>
+                                            <?php endif; ?>
+                                        </div>
+                    `;
+                }
+
+                $('#nama_pasien').text(rawatjalan.nama_pasien);
+                $('#no_rekam_medis').text(rawatjalan.no_rm);
+                $('#jenis_kelamin').text(jenis_kelamin_string);
+                $('#kelahiran').html(`${rawatjalan.tempat_lahir}, <span class="date text-nowrap">${rawatjalan.tanggal_lahir}</span>`);
+                $('#usia').html(`${usia.usia} tahun ${usia.bulan} bulan`);
+                $('#alamat').text(rawatjalan.alamat);
+                $('#telpon').text(rawatjalan.telpon);
+                $('#kiup_btn').attr('onclick', "window.open('<?= base_url('pasien/kiup') ?>/" + rawatjalan.id_pasien + "')");
+                $('#barcode_btn').attr('onclick', "window.open('<?= base_url('pasien/barcode') ?>/" + rawatjalan.id_pasien + "')");
+                $('#detail_pasien_btn').attr('onclick', "window.location.href = '<?= base_url('pasien/detailpasien') ?>/" + rawatjalan.id_pasien + "'");
+                $('#pendaftar').text(rawatjalan.pendaftar);
+                $('#nomor_registrasi').text(rawatjalan.nomor_registrasi);
+                $('#tanggal_registrasi').text(rawatjalan.tanggal_registrasi);
+                $('#jenis_kunjungan').text(rawatjalan.jenis_kunjungan);
+                $('#status_kunjungan').text(rawatjalan.status_kunjungan);
+                $('#jaminan').text(rawatjalan.jaminan);
+                $('#ruangan').text(rawatjalan.ruangan);
+                $('#dokter').text(rawatjalan.dokter);
+                $('#keluhan').text(rawatjalan.keluhan);
+                $('#status_kunjungan').text(rawatjalan.status_kunjungan);
+                $('#tindakan_operasi_rajal').html(tindakan_operasi_rajal);
+                $('#waktu_operasi_rajal').html(waktu_operasi_rajal);
+                $('#pembatal').text(rawatjalan.pembatal);
+                $('#alasan_batal').text(rawatjalan.alasan_batal);
+                $('#tombol_rme').html(tombol_rme);
+                $('#rajalModal').modal('show');
+            } catch (error) {
+                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+            } finally {
+                $('#loadingSpinner').hide();
+                $this.removeClass('disabled').removeProp('aria-disabled');
+            }
+        });
+        $('#rajalModal').on('hidden.bs.modal', function() {
+            $('#nama_pasien').html('');
+            $('#no_rekam_medis').html('');
+            $('#jenis_kelamin').html('');
+            $('#kelahiran').html('');
+            $('#usia').html('');
+            $('#alamat').html('');
+            $('#telpon').html('');
+            $('#kiup_btn').attr('onclick', ``);
+            $('#barcode_btn').attr('onclick', ``);
+            $('#detail_pasien_btn').attr('onclick', ``);
+            $('#pendaftar').html('');
+            $('#nomor_registrasi').html('');
+            $('#tanggal_registrasi').html('');
+            $('#jenis_kunjungan').html('');
+            $('#status_kunjungan').html('');
+            $('#jaminan').html('');
+            $('#ruangan').html('');
+            $('#dokter').html('');
+            $('#keluhan').html('');
+            $('#status_kunjungan').html('');
+            $('#tindakan_operasi_rajal').html('');
+            $('#waktu_operasi_rajal').html('');
+            $('#pembatal').html('');
+            $('#alasan_batal').html('');
+            $('#tombol_rme').html('');
+        });
         // Menangani event klik pada tombol bersihkan
         $('#setTodayTglButton').on('click', async function() {
             // Mendapatkan tanggal hari ini dalam format YYYY-MM-DD
