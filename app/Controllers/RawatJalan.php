@@ -371,8 +371,8 @@ class RawatJalan extends BaseController
 
     public function rawatjalan($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Admisi' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') {
+        // Memeriksa peran pengguna, hanya 'Admin', 'Admisi', 'Perawat', atau 'Dokter' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi' || session()->get('role') == 'Perawat' || session()->get('role') == 'Dokter') {
             // Mengambil data pasien berdasarkan ID
             $data = $this->RawatJalanModel
                 ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
