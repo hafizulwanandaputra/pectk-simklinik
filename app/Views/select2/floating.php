@@ -57,6 +57,14 @@
         background-color: var(--bs-secondary-bg);
     }
 
+    [data-bs-theme=dark] .select2-container--bootstrap-5 .select2-selection {
+        background-color: #000000;
+    }
+
+    .select2-container--bootstrap-5 .select2-dropdown .select2-search .select2-search__field {
+        background-color: #000000;
+    }
+
     [data-bs-theme=dark] .select2-container--bootstrap-5 .select2-selection--single {
         background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23dee2e6' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
     }
