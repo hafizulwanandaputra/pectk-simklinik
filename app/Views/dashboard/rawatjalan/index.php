@@ -214,7 +214,7 @@
                                             <i class="fa-solid fa-print"></i> KIUP
                                         </button>
                                         <button id="barcode_btn" type="button" class="btn btn-body btn-sm bg-gradient" onclick="">
-                                            <i class="fa-solid fa-barcode"></i> Barcode
+                                            <i class="fa-solid fa-barcode"></i> <em>Barcode</em>
                                         </button>
                                         <button id="detail_pasien_btn" type="button" class="btn btn-body btn-sm bg-gradient" onclick="">
                                             <i class="fa-solid fa-circle-info"></i> Detail Pasien
