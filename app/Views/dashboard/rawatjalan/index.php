@@ -1079,7 +1079,7 @@
             var $this = $(this);
             var id = $this.data('id');
             $('#loadingSpinner').show();
-            $this.prop('disabled', true).css('cursor', 'wait');
+            $this.prop('disabled', true);
 
             try {
                 let response = await axios.get(`<?= base_url('/rawatjalan/rawatjalan') ?>/` + id);
@@ -1235,7 +1235,7 @@
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
             } finally {
                 $('#loadingSpinner').hide();
-                $this.prop('disabled', false).css('cursor', '');
+                $this.prop('disabled', false);
             }
         });
         $('#rajalModal').on('hidden.bs.modal', function() {
