@@ -70,11 +70,11 @@
                                             <span class="badge bg-body text-body border py-1 px-2 date placeholder number-placeholder" style="font-weight: 900; font-size: 0.85em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><?= $this->include('spinner/spinner'); ?></span> <span class="placeholder ms-1" style="width: 100%"></span>
                                         </h5>
                                         <h6 class="card-subtitle text-truncate placeholder-glow">
-                                            <span class="placeholder w-100" style="max-width: 150px;"></span>
+                                            <span class="placeholder w-100" style="max-width: 250px;"></span>
                                         </h6>
                                         <div class="card-text overflow-hidden text-nowrap placeholder-glow">
                                             <small class="date">
-                                                <span class="placeholder w-100" style="max-width: 100px;"></span> <span class="placeholder w-100" style="max-width: 100px;"></span>
+                                                <span class="placeholder w-100" style="max-width: 140px;"></span> <span class="placeholder w-100" style="max-width: 100px;"></span>
                                             </small>
                                         </div>
                                         <div class="placeholder-glow">
@@ -99,11 +99,11 @@
                                             <span class="badge bg-body text-body border py-1 px-2 date placeholder number-placeholder" style="font-weight: 900; font-size: 0.85em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><?= $this->include('spinner/spinner'); ?></span> <span class="placeholder ms-1" style="width: 100%"></span>
                                         </h5>
                                         <h6 class="card-subtitle text-truncate placeholder-glow">
-                                            <span class="placeholder w-100" style="max-width: 150px;"></span>
+                                            <span class="placeholder w-100" style="max-width: 250px;"></span>
                                         </h6>
                                         <div class="card-text overflow-hidden text-nowrap placeholder-glow">
                                             <small class="date">
-                                                <span class="placeholder w-100" style="max-width: 100px;"></span> <span class="placeholder w-100" style="max-width: 100px;"></span>
+                                                <span class="placeholder w-100" style="max-width: 150px;"></span> <span class="placeholder w-100" style="max-width: 100px;"></span>
                                             </small>
                                         </div>
                                         <div class="placeholder-glow">
@@ -128,11 +128,11 @@
                                             <span class="badge bg-body text-body border py-1 px-2 date placeholder number-placeholder" style="font-weight: 900; font-size: 0.85em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><?= $this->include('spinner/spinner'); ?></span> <span class="placeholder ms-1" style="width: 100%"></span>
                                         </h5>
                                         <h6 class="card-subtitle text-truncate placeholder-glow">
-                                            <span class="placeholder w-100" style="max-width: 150px;"></span>
+                                            <span class="placeholder w-100" style="max-width: 250px;"></span>
                                         </h6>
                                         <div class="card-text overflow-hidden text-nowrap placeholder-glow">
                                             <small class="date">
-                                                <span class="placeholder w-100" style="max-width: 100px;"></span> <span class="placeholder w-100" style="max-width: 100px;"></span>
+                                                <span class="placeholder w-100" style="max-width: 150px;"></span> <span class="placeholder w-100" style="max-width: 100px;"></span>
                                             </small>
                                         </div>
                                         <div class="placeholder-glow">
@@ -334,11 +334,11 @@
                         <span class="placeholder ms-1" style="width: 100%"></span>
                     </h5>
                     <h6 class="card-subtitle text-truncate placeholder-glow">
-                        <span class="placeholder w-100" style="max-width: 150px;"></span> 
+                        <span class="placeholder w-100" style="max-width: 250px;"></span> 
                     </h6>
                     <div class="card-text overflow-hidden text-nowrap placeholder-glow">
                         <small class="date">
-                            <span class="placeholder w-100" style="max-width: 100px;"></span> <span class="placeholder w-100" style="max-width: 100px;"></span>
+                            <span class="placeholder w-100" style="max-width: 150px;"></span> <span class="placeholder w-100" style="max-width: 100px;"></span>
                         </small>
                     </div>
                     <div class="placeholder-glow">
