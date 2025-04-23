@@ -78,7 +78,7 @@
                                             </small>
                                         </div>
                                         <div class="placeholder-glow">
-                                            <span class="placeholder w-100" style="max-width: 100px;"></span> <span class="placeholder w-100" style="max-width: 100px;"></span> <span class="placeholder w-100" style="max-width: 100px;"></span>
+                                            <span class="placeholder w-100" style="max-width: 25px;"></span> <span class="placeholder w-100" style="max-width: 100px;"></span> <span class="placeholder w-100" style="max-width: 100px;"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -107,7 +107,7 @@
                                             </small>
                                         </div>
                                         <div class="placeholder-glow">
-                                            <span class="placeholder w-100" style="max-width: 100px;"></span> <span class="placeholder w-100" style="max-width: 100px;"></span> <span class="placeholder w-100" style="max-width: 100px;"></span>
+                                            <span class="placeholder w-100" style="max-width: 25px;"></span> <span class="placeholder w-100" style="max-width: 100px;"></span> <span class="placeholder w-100" style="max-width: 100px;"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -136,7 +136,7 @@
                                             </small>
                                         </div>
                                         <div class="placeholder-glow">
-                                            <span class="placeholder w-100" style="max-width: 100px;"></span> <span class="placeholder w-100" style="max-width: 100px;"></span> <span class="placeholder w-100" style="max-width: 100px;"></span>
+                                            <span class="placeholder w-100" style="max-width: 25px;"></span> <span class="placeholder w-100" style="max-width: 100px;"></span> <span class="placeholder w-100" style="max-width: 100px;"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -342,7 +342,7 @@
                         </small>
                     </div>
                     <div class="placeholder-glow">
-                        <span class="placeholder w-100" style="max-width: 100px;"></span> 
+                        <span class="placeholder w-100" style="max-width: 25px;"></span> 
                         <span class="placeholder w-100" style="max-width: 100px;"></span> 
                         <span class="placeholder w-100" style="max-width: 100px;"></span>
                     </div>
