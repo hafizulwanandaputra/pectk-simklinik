@@ -21,6 +21,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
     <!-- Akhir dari Favicon -->
     <link href="<?= base_url(); ?>assets/css/dashboard/dashboard.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/css/main.css" rel="stylesheet">
+    <?= $this->include('main-css/index'); ?>
     <link href="<?= base_url(); ?>assets_public/css/JawiDubai.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.bootstrap5.min.css" rel="stylesheet">

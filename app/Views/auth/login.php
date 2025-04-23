@@ -13,7 +13,7 @@
     <link href="<?= base_url(); ?>favicon.png" rel="apple-touch-icon" />
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/heroes/">
     <link href="<?= base_url(); ?>assets_public/fontawesome/css/all.css" rel="stylesheet">
-    <link href="<?= base_url(); ?>assets_public/css/main.css" rel="stylesheet">
+    <?= $this->include('main-css/index'); ?>
     <link href="<?= base_url(); ?>assets_public/css/JawiDubai.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/fonts/IosevkaHwpMono/IosevkaHwpMono.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/fonts/inter-hwp/inter-hwp.css" rel="stylesheet">
@@ -352,114 +352,114 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous">
-        </script>
-        <script>
-            $(document).ready(function() {
-                // Menangani semua input password dengan jQuery
-                $('input[type="password"]').each(function() {
-                    const passwordInput = $(this); // Menggunakan jQuery untuk elemen input
-                    const popover = new bootstrap.Popover(passwordInput[0], {
-                        html: true,
-                        template: '<div class="popover shadow-lg" role="tooltip">' +
-                            '<div class="popover-arrow"></div>' +
-                            '<h3 class="popover-header"></h3>' +
-                            '<div class="popover-body">Caps Lock aktif!</div>' +
-                            '</div>'
-                    });
+    </script>
+    <script>
+        $(document).ready(function() {
+            // Menangani semua input password dengan jQuery
+            $('input[type="password"]').each(function() {
+                const passwordInput = $(this); // Menggunakan jQuery untuk elemen input
+                const popover = new bootstrap.Popover(passwordInput[0], {
+                    html: true,
+                    template: '<div class="popover shadow-lg" role="tooltip">' +
+                        '<div class="popover-arrow"></div>' +
+                        '<h3 class="popover-header"></h3>' +
+                        '<div class="popover-body">Caps Lock aktif!</div>' +
+                        '</div>'
+                });
 
-                    let capsLockActive = false; // Status Caps Lock sebelumnya
+                let capsLockActive = false; // Status Caps Lock sebelumnya
 
-                    // Menambahkan event listener untuk 'focus' pada setiap input password
-                    passwordInput.on('focus', function() {
-                        passwordInput[0].addEventListener('keyup', function(event) {
-                            const currentCapsLock = event.getModifierState('CapsLock'); // Memeriksa status Caps Lock
+                // Menambahkan event listener untuk 'focus' pada setiap input password
+                passwordInput.on('focus', function() {
+                    passwordInput[0].addEventListener('keyup', function(event) {
+                        const currentCapsLock = event.getModifierState('CapsLock'); // Memeriksa status Caps Lock
 
-                            // Jika status Caps Lock berubah
-                            if (currentCapsLock !== capsLockActive) {
-                                capsLockActive = currentCapsLock; // Perbarui status
-                                if (capsLockActive) {
-                                    popover.show(); // Tampilkan popover jika Caps Lock aktif
-                                } else {
-                                    popover.hide(); // Sembunyikan popover jika Caps Lock tidak aktif
-                                }
+                        // Jika status Caps Lock berubah
+                        if (currentCapsLock !== capsLockActive) {
+                            capsLockActive = currentCapsLock; // Perbarui status
+                            if (capsLockActive) {
+                                popover.show(); // Tampilkan popover jika Caps Lock aktif
+                            } else {
+                                popover.hide(); // Sembunyikan popover jika Caps Lock tidak aktif
                             }
-                        });
-                    });
-
-                    // Menambahkan event listener untuk 'blur' pada setiap input password
-                    passwordInput.on('blur', function() {
-                        popover.hide(); // Sembunyikan popover saat kehilangan fokus
-                        passwordInput[0].removeEventListener('keyup', function() {}); // Hapus listener keyup saat blur
-                        capsLockActive = false; // Reset status Caps Lock
+                        }
                     });
                 });
 
-                // Mengecek apakah elemen dengan id 'redirectToast' ada di dalam dokumen
-                if ($('#redirectToast').length) {
-                    var redirectToast = new bootstrap.Toast($('#redirectToast')[0]);
-                    redirectToast.show(); // Menampilkan toast redirect
-                }
-
-                // Mengecek apakah elemen dengan id 'msgToast' ada di dalam dokumen
-                if ($('#msgToast').length) {
-                    var msgToast = new bootstrap.Toast($('#msgToast')[0]);
-                    msgToast.show(); // Menampilkan toast pesan
-                }
-
-                // Mengecek apakah elemen dengan id 'errorToast' ada di dalam dokumen
-                if ($('#errorToast').length) {
-                    var errorToast = new bootstrap.Toast($('#errorToast')[0]);
-                    errorToast.show(); // Menampilkan toast error
-                }
-
-                // Mengecek apakah elemen dengan id 'validationToast' ada di dalam dokumen
-                if ($('#validationToast').length) {
-                    var validationToast = new bootstrap.Toast($('#validationToast')[0]);
-                    validationToast.show(); // Menampilkan toast validasi
-                }
-
-                // Mengatur waktu untuk menyembunyikan toast setelah 5 detik
-                setTimeout(function() {
-                    // Mengecek kembali untuk menyembunyikan setiap toast jika ada
-                    if ($('#redirectToast').length) {
-                        var redirectToast = new bootstrap.Toast($('#redirectToast')[0]);
-                        redirectToast.hide(); // Menyembunyikan toast redirect
-                    }
-
-                    if ($('#msgToast').length) {
-                        var msgToast = new bootstrap.Toast($('#msgToast')[0]);
-                        msgToast.hide(); // Menyembunyikan toast pesan
-                    }
-
-                    if ($('#errorToast').length) {
-                        var errorToast = new bootstrap.Toast($('#errorToast')[0]);
-                        errorToast.hide(); // Menyembunyikan toast error
-                    }
-
-                    if ($('#validationToast').length) {
-                        var validationToast = new bootstrap.Toast($('#validationToast')[0]);
-                        validationToast.hide(); // Menyembunyikan toast validasi
-                    }
-                }, 5000); // Durasi waktu untuk menyembunyikan toast (5000 ms)
-
-                // Menghapus kelas 'is-invalid' dan menyembunyikan pesan invalid ketika input diubah
-                $('input.form-control').on('input', function() {
-                    $(this).removeClass('is-invalid'); // Menghapus kelas 'is-invalid'
-                    $(this).siblings('.invalid-feedback').hide(); // Menyembunyikan pesan feedback invalid
-                });
-
-                // Menangani event klik pada tombol login
-                $(document).on('click', '#loginBtn', function(e) {
-                    e.preventDefault(); // Mencegah aksi default tombol
-                    $('#loginForm').submit(); // Mengirimkan form login
-                    $('input').prop('disabled', true).removeClass('is-invalid'); // Menonaktifkan semua input dan menghapus kelas 'is-invalid'
-                    $('#loginForm button').prop('disabled', true)
-                    $('#loginBtn').html(`
-                    <?= $this->include('spinner/spinner'); ?> <span class="d-md-none">SILAKAN TUNGGU</span>
-                `); // Menampilkan spinner dan teks 'SILAKAN TUNGGU...' pada tombol login
+                // Menambahkan event listener untuk 'blur' pada setiap input password
+                passwordInput.on('blur', function() {
+                    popover.hide(); // Sembunyikan popover saat kehilangan fokus
+                    passwordInput[0].removeEventListener('keyup', function() {}); // Hapus listener keyup saat blur
+                    capsLockActive = false; // Reset status Caps Lock
                 });
             });
-        </script>
+
+            // Mengecek apakah elemen dengan id 'redirectToast' ada di dalam dokumen
+            if ($('#redirectToast').length) {
+                var redirectToast = new bootstrap.Toast($('#redirectToast')[0]);
+                redirectToast.show(); // Menampilkan toast redirect
+            }
+
+            // Mengecek apakah elemen dengan id 'msgToast' ada di dalam dokumen
+            if ($('#msgToast').length) {
+                var msgToast = new bootstrap.Toast($('#msgToast')[0]);
+                msgToast.show(); // Menampilkan toast pesan
+            }
+
+            // Mengecek apakah elemen dengan id 'errorToast' ada di dalam dokumen
+            if ($('#errorToast').length) {
+                var errorToast = new bootstrap.Toast($('#errorToast')[0]);
+                errorToast.show(); // Menampilkan toast error
+            }
+
+            // Mengecek apakah elemen dengan id 'validationToast' ada di dalam dokumen
+            if ($('#validationToast').length) {
+                var validationToast = new bootstrap.Toast($('#validationToast')[0]);
+                validationToast.show(); // Menampilkan toast validasi
+            }
+
+            // Mengatur waktu untuk menyembunyikan toast setelah 5 detik
+            setTimeout(function() {
+                // Mengecek kembali untuk menyembunyikan setiap toast jika ada
+                if ($('#redirectToast').length) {
+                    var redirectToast = new bootstrap.Toast($('#redirectToast')[0]);
+                    redirectToast.hide(); // Menyembunyikan toast redirect
+                }
+
+                if ($('#msgToast').length) {
+                    var msgToast = new bootstrap.Toast($('#msgToast')[0]);
+                    msgToast.hide(); // Menyembunyikan toast pesan
+                }
+
+                if ($('#errorToast').length) {
+                    var errorToast = new bootstrap.Toast($('#errorToast')[0]);
+                    errorToast.hide(); // Menyembunyikan toast error
+                }
+
+                if ($('#validationToast').length) {
+                    var validationToast = new bootstrap.Toast($('#validationToast')[0]);
+                    validationToast.hide(); // Menyembunyikan toast validasi
+                }
+            }, 5000); // Durasi waktu untuk menyembunyikan toast (5000 ms)
+
+            // Menghapus kelas 'is-invalid' dan menyembunyikan pesan invalid ketika input diubah
+            $('input.form-control').on('input', function() {
+                $(this).removeClass('is-invalid'); // Menghapus kelas 'is-invalid'
+                $(this).siblings('.invalid-feedback').hide(); // Menyembunyikan pesan feedback invalid
+            });
+
+            // Menangani event klik pada tombol login
+            $(document).on('click', '#loginBtn', function(e) {
+                e.preventDefault(); // Mencegah aksi default tombol
+                $('#loginForm').submit(); // Mengirimkan form login
+                $('input').prop('disabled', true).removeClass('is-invalid'); // Menonaktifkan semua input dan menghapus kelas 'is-invalid'
+                $('#loginForm button').prop('disabled', true)
+                $('#loginBtn').html(`
+                    <?= $this->include('spinner/spinner'); ?> <span class="d-md-none">SILAKAN TUNGGU</span>
+                `); // Menampilkan spinner dan teks 'SILAKAN TUNGGU...' pada tombol login
+            });
+        });
+    </script>
 </body>
 
 </html>
