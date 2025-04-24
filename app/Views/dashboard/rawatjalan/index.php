@@ -1211,7 +1211,7 @@
                 $('#kelahiran').html(`${rawatjalan.tempat_lahir}, <span class="date text-nowrap">${rawatjalan.tanggal_lahir}</span>`);
                 $('#usia').html(`${usia.usia} tahun ${usia.bulan} bulan`);
                 $('#alamat').text(rawatjalan.alamat);
-                $('#telpon').text(telpon);
+                $('#telpon').html(telpon);
                 $('#kiup_btn').attr('onclick', "window.open('<?= base_url('pasien/kiup') ?>/" + rawatjalan.id_pasien + "')");
                 $('#barcode_btn').attr('onclick', "window.open('<?= base_url('pasien/barcode') ?>/" + rawatjalan.id_pasien + "')");
                 $('#detail_pasien_btn').attr('onclick', "window.location.href = '<?= base_url('pasien/detailpasien') ?>/" + rawatjalan.id_pasien + "'");
