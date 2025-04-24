@@ -482,8 +482,17 @@
         background-color: #000000;
     }
 
+    [data-bs-theme=dark] .form-control:disabled {
+        background-color: var(--bs-secondary-bg);
+        opacity: 1;
+    }
+
     [data-bs-theme=dark] .form-select {
         background-color: #000000;
+    }
+
+    [data-bs-theme=dark] .form-select:disabled {
+        background-color: var(--bs-secondary-bg);
     }
 
     [data-bs-theme=dark] .form-check-input {
