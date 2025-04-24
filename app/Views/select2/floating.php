@@ -61,8 +61,13 @@
         background-color: #000000;
     }
 
-    .select2-container--bootstrap-5 .select2-dropdown .select2-search .select2-search__field {
+    [data-bs-theme=dark] .select2-container--bootstrap-5 .select2-dropdown .select2-search .select2-search__field {
         background-color: #000000;
+    }
+
+    [data-bs-theme=dark] .select2-container--bootstrap-5.select2-container--disabled .select2-selection,
+    [data-bs-theme=dark] .select2-container--bootstrap-5.select2-container--disabled.select2-container--focus .select2-selection {
+        background-color: var(--bs-secondary-bg);
     }
 
     [data-bs-theme=dark] .select2-container--bootstrap-5 .select2-selection--single {
