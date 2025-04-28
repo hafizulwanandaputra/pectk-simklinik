@@ -342,8 +342,7 @@
         $('#exportButton').on('click', async function(ə) {
             ə.preventDefault();
             $(this).hide();
-            $('#searchInput, #addButton, .details-btn').prop('disabled', true);
-            $('.page-item').addClass('disabled');
+            $('#searchInput, #addButton').prop('disabled', true);
             $('#loadingSpinner').show(); // Menampilkan spinner
 
             // Membuat toast ekspor berjalan
@@ -499,8 +498,7 @@
             } finally {
                 $('#loadingSpinner').hide(); // Menyembunyikan spinner setelah unduhan selesai
                 $(this).show();
-                $('#searchInput, #addButton, .details-btn').prop('disabled', false);
-                $('.page-item').removeClass('disabled');
+                $('#searchInput, #addButton').prop('disabled', false);
             }
         });
 
