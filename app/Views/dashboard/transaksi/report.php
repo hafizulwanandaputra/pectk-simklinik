@@ -15,7 +15,7 @@
         <ul class="list-group shadow-sm rounded-0">
             <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-secondary transparent-blur">
                 <div class="no-fluid-content">
-                    <div class="input-group input-group-sm">
+                    <div class="input-group input-group-sm" id="form-tanggal">
                         <input type="date" id="tanggal" name="tanggal" class="form-control" <?= (session()->get('auto_date') == 1) ? 'value="' . date('Y-m-d') . '"' : ''; ?>>
                         <button class="btn btn-danger bg-gradient" type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
                         <button class="btn btn-success bg-gradient " type="button" id="refreshButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan" disabled><i class="fa-solid fa-sync"></i></button>
@@ -76,26 +76,28 @@
 <script>
     async function downloadReport() {
         $('#reportBtn').prop('disabled', true);
+        $('#form-tanggal input, #form-tanggal button').prop('disabled', true);
         $('#loadingSpinner').show(); // Menampilkan spinner
 
         // Membuat toast ekspor berjalan
         const toast = $(`
         <div id="exportToast" class="toast show transparent-blur" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-body">
-                <div class="d-flex justify-content-between align-items-start mb-1">
-                    <div>
-                        <strong>Mengekspor</strong>
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                    <div class="text-truncate me-1">
+                        <strong id="statusHeader">Menunggu respons peladen...</strong>
                     </div>
-                    <div class="d-flex flex-row">
+                    <div class="d-flex align-items-center">
                         <span class="date" id="exportPercent">0%</span>
-                        <div class="mb-1 ms-2">
-                            <div class="vr"></div>
-                            <button type="button" class="btn-close" aria-label="Close" id="cancelExport"></button>
-                        </div>
+                        <button type="button" class="btn-close p-0 ms-1" aria-label="Close" id="cancelExport" style="height: 1rem; width: 1rem;"></button>
                     </div>
                 </div>
-                <div class="progress" style="border-top: 1px solid var(--bs-border-color-translucent); border-bottom: 1px solid var(--bs-border-color-translucent); border-left: 1px solid var(--bs-border-color-translucent); border-right: 1px solid var(--bs-border-color-translucent);">
+                <div class="progress mb-1" style="border-top: 1px solid var(--bs-border-color-translucent); border-bottom: 1px solid var(--bs-border-color-translucent); border-left: 1px solid var(--bs-border-color-translucent); border-right: 1px solid var(--bs-border-color-translucent);">
                     <div id="exportProgressBar" class="progress-bar progress-bar-striped progress-bar-animated bg-gradient bg-primary" role="progressbar" style="width: 0%; transition: none"></div>
+                </div>
+                <div style="font-size: 0.75em;">
+                    <span class="date" id="loadedKB">0 B</span> dari <span class="date" id="totalKB">0 B</span> diunduh<br>
+                    <span class="date" id="eta">Menunggu respons peladen...</span>
                 </div>
             </div>
         </div>
@@ -111,17 +113,84 @@
             source.cancel('Ekspor dibatalkan');
         });
 
+        // Event listener untuk menangani sebelum halaman di-unload
+        $(window).on('beforeunload', function() {
+            source.cancel('Ekspor dibatalkan');
+        });
+
         try {
             // Ambil nilai tanggal dari input
             const tanggal = $('#tanggal').val();
-            // Mengambil file dari server
+            // Fungsi untuk mengubah byte ke satuan otomatis
+            function formatBytes(bytes) {
+                if (bytes === 0) return '0 B';
+                const k = 1024;
+                const sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                const value = bytes / Math.pow(k, i);
+                return `${value.toLocaleString('id-ID', { maximumFractionDigits: 2 })} ${sizes[i]}`;
+            }
+
+            // Fungsi untuk memformat ETA dengan jam/menit/detik
+            function formatETA(seconds) {
+                const hours = Math.floor(seconds / 3600);
+                const minutes = Math.floor((seconds % 3600) / 60);
+                const secs = Math.floor(seconds % 60);
+
+                let parts = [];
+                if (hours > 0) parts.push(`${hours} jam`);
+                if (minutes > 0) parts.push(`${minutes} menit`);
+                if (secs > 0 || parts.length === 0) parts.push(`${secs} detik`);
+
+                return parts.join(' ');
+            }
+
+            let startTime = null;
+            let loadedBytes = 0;
+            let totalBytes = 0;
+            let speedBps = 0;
+            let etaTimer = null;
+
+            // Fungsi untuk memperbarui ETA setiap detik
+            function updateETA() {
+                if (speedBps > 0) {
+                    const remainingBytes = totalBytes - loadedBytes;
+                    const estimatedTimeInSeconds = remainingBytes / speedBps;
+
+                    const etaFormatted = formatETA(estimatedTimeInSeconds);
+                    $('#eta').text(`Selesai dalam ${etaFormatted}`);
+                }
+            }
+
+            startTime = Date.now(); // Waktu mulai unduhan
+
+            // Mulai interval ETA
+            etaTimer = setInterval(updateETA, 1000);
+            // Mulai unduhan file
             const response = await axios.get(`<?= base_url('transaksi/reportexcel') ?>/${tanggal}`, {
                 responseType: 'blob', // Mendapatkan data sebagai blob
                 onDownloadProgress: function(progressEvent) {
                     if (progressEvent.lengthComputable) {
-                        let percentComplete = Math.round((progressEvent.loaded / progressEvent.total) * 100);
-                        $('#exportPercent').text(percentComplete + '%');
-                        $('#exportProgressBar').css('width', percentComplete + '%');
+                        loadedBytes = progressEvent.loaded;
+                        totalBytes = progressEvent.total;
+
+                        const percentComplete = Math.round((loadedBytes / totalBytes) * 100);
+                        const elapsedTimeInSeconds = (Date.now() - startTime) / 1000;
+                        speedBps = elapsedTimeInSeconds > 0 ? (loadedBytes / elapsedTimeInSeconds) : 0;
+
+                        // Update tampilan progress
+                        $('#exportPercent').text(`${percentComplete}%`);
+                        $('#exportProgressBar').css('width', `${percentComplete}%`);
+                        $('#statusHeader').text(`Mengunduh...`);
+                        $('#loadedKB').text(formatBytes(loadedBytes));
+                        $('#totalKB').text(formatBytes(totalBytes));
+
+                        // Jika selesai
+                        if (loadedBytes >= totalBytes) {
+                            clearInterval(etaTimer); // Hentikan ETA timer
+                            $('#eta').text('Selesai');
+                            $('#statusHeader').text('Unduhan selesai');
+                        }
                     }
                 },
                 cancelToken: source.token
@@ -164,6 +233,7 @@
         } finally {
             $('#loadingSpinner').hide(); // Menyembunyikan spinner setelah unduhan selesai
             $('#reportBtn').prop('disabled', false);
+            $('#form-tanggal input, #form-tanggal button').prop('disabled', false);
         }
     }
     // HTML untuk menunjukkan bahwa data transaksi sedang dimuat

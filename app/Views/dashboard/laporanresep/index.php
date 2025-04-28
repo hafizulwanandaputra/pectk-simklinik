@@ -24,7 +24,7 @@
             </li>
             <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-secondary transparent-blur" id="tanggal_form">
                 <div class="no-fluid-content">
-                    <div class="input-group input-group-sm">
+                    <div class="input-group input-group-sm" id="form-resep-harian">
                         <input type="date" id="tanggal" name="tanggal" class="form-control" <?= (session()->get('auto_date') == 1) ? 'value="' . date('Y-m-d') . '"' : ''; ?>>
                         <button class="btn btn-danger bg-gradient" type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
                         <button class="btn btn-success bg-gradient " type="button" id="refreshButton1" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan" disabled><i class="fa-solid fa-sync"></i></button>
@@ -33,7 +33,7 @@
             </li>
             <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-secondary transparent-blur" id="bulan_form" style="display: none;">
                 <div class="no-fluid-content">
-                    <div class="input-group input-group-sm">
+                    <div class="input-group input-group-sm" id="form-resep-bulanan">
                         <input type="month" id="bulan" name="bulan" class="form-control" <?= (session()->get('auto_date') == 1) ? 'value="' . date('Y-m') . '"' : ''; ?>>
                         <button class="btn btn-danger bg-gradient" type="button" id="clearBlnButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Bulan"><i class="fa-solid fa-xmark"></i></button>
                         <button class="btn btn-success bg-gradient " type="button" id="refreshButton2" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan" disabled><i class="fa-solid fa-sync"></i></button>
@@ -173,6 +173,7 @@
     // LAPORAN HARIAN
     async function downloadReport1() {
         $('#reportBtn1').prop('disabled', true);
+        $('#form-resep-harian input, #form-resep-harian button, .dokter-checkbox-1').prop('disabled', true);
         $('#loadingSpinner').show(); // Menampilkan spinner
 
         // Mengambil semua checkbox yang dipilih
@@ -190,20 +191,22 @@
         const toast = $(`
         <div id="exportToast" class="toast show transparent-blur" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-body">
-                <div class="d-flex justify-content-between align-items-start mb-1">
-                    <div>
-                        <strong>Mengekspor</strong>
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                    <div class="text-truncate me-1">
+                        <strong id="statusHeader1">Menunggu respons peladen...</strong>
                     </div>
-                    <div class="d-flex flex-row">
-                        <span class="date" id="exportPercent">0%</span>
-                        <div class="mb-1 ms-2">
-                            <div class="vr"></div>
-                            <button type="button" class="btn-close" aria-label="Close" id="cancelExport"></button>
-                        </div>
+                    <div class="d-flex align-items-center">
+                        <span class="date" id="exportPercent1">0%</span>
+                        <button type="button" class="btn-close p-0 ms-1" aria-label="Close" id="cancelExport1" style="height: 1rem; width: 1rem;"></button>
                     </div>
                 </div>
-                <div class="progress" style="border-top: 1px solid var(--bs-border-color-translucent); border-bottom: 1px solid var(--bs-border-color-translucent); border-left: 1px solid var(--bs-border-color-translucent); border-right: 1px solid var(--bs-border-color-translucent);">
-                    <div id="exportProgressBar" class="progress-bar progress-bar-striped progress-bar-animated bg-gradient bg-primary" role="progressbar" style="width: 0%; transition: none"></div>
+                <div class="progress mb-1" style="border-top: 1px solid var(--bs-border-color-translucent); border-bottom: 1px solid var(--bs-border-color-translucent); border-left: 1px solid var(--bs-border-color-translucent); border-right: 1px solid var(--bs-border-color-translucent);">
+                    <div id="exportProgressBar1" class="progress-bar progress-bar-striped progress-bar-animated bg-gradient bg-primary" role="progressbar" style="width: 0%; transition: none"></div>
+                </div>
+                <div style="font-size: 0.75em;">
+                    <span><strong>Laporan Resep Harian</strong></span><br>
+                    <span class="date" id="loadedKB1">0 B</span> dari <span class="date" id="totalKB1">0 B</span> diunduh<br>
+                    <span class="date" id="eta1">Menunggu respons peladen...</span>
                 </div>
             </div>
         </div>
@@ -215,21 +218,88 @@
         const source = CancelToken.source();
 
         // Menangani pembatalan ekspor
-        $(document).on('click', '#cancelExport', function() {
-            source.cancel('Ekspor dibatalkan');
+        $(document).on('click', '#cancelExport1', function() {
+            source.cancel('Ekspor laporan resep harian dibatalkan');
+        });
+
+        // Event listener untuk menangani sebelum halaman di-unload
+        $(window).on('beforeunload', function() {
+            source.cancel('Ekspor laporan resep harian dibatalkan');
         });
 
         try {
             // Ambil nilai tanggal dari input
             const tanggal = $('#tanggal').val();
-            // Mengambil file dari server
+            // Fungsi untuk mengubah byte ke satuan otomatis
+            function formatBytes(bytes) {
+                if (bytes === 0) return '0 B';
+                const k = 1024;
+                const sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                const value = bytes / Math.pow(k, i);
+                return `${value.toLocaleString('id-ID', { maximumFractionDigits: 2 })} ${sizes[i]}`;
+            }
+
+            // Fungsi untuk memformat ETA dengan jam/menit/detik
+            function formatETA(seconds) {
+                const hours = Math.floor(seconds / 3600);
+                const minutes = Math.floor((seconds % 3600) / 60);
+                const secs = Math.floor(seconds % 60);
+
+                let parts = [];
+                if (hours > 0) parts.push(`${hours} jam`);
+                if (minutes > 0) parts.push(`${minutes} menit`);
+                if (secs > 0 || parts.length === 0) parts.push(`${secs} detik`);
+
+                return parts.join(' ');
+            }
+
+            let startTime = null;
+            let loadedBytes = 0;
+            let totalBytes = 0;
+            let speedBps = 0;
+            let etaTimer = null;
+
+            // Fungsi untuk memperbarui ETA setiap detik
+            function updateETA() {
+                if (speedBps > 0) {
+                    const remainingBytes = totalBytes - loadedBytes;
+                    const estimatedTimeInSeconds = remainingBytes / speedBps;
+
+                    const etaFormatted = formatETA(estimatedTimeInSeconds);
+                    $('#eta1').text(`Selesai dalam ${etaFormatted}`);
+                }
+            }
+
+            startTime = Date.now(); // Waktu mulai unduhan
+
+            // Mulai interval ETA
+            etaTimer = setInterval(updateETA, 1000);
+            // Mulai unduhan file
             const response = await axios.get(`<?= base_url('laporanresep/exportdailyexcel') ?>/${tanggal}?${queryString}`, {
                 responseType: 'blob', // Mendapatkan data sebagai blob
                 onDownloadProgress: function(progressEvent) {
                     if (progressEvent.lengthComputable) {
-                        let percentComplete = Math.round((progressEvent.loaded / progressEvent.total) * 100);
-                        $('#exportPercent').text(percentComplete + '%');
-                        $('#exportProgressBar').css('width', percentComplete + '%');
+                        loadedBytes = progressEvent.loaded;
+                        totalBytes = progressEvent.total;
+
+                        const percentComplete = Math.round((loadedBytes / totalBytes) * 100);
+                        const elapsedTimeInSeconds = (Date.now() - startTime) / 1000;
+                        speedBps = elapsedTimeInSeconds > 0 ? (loadedBytes / elapsedTimeInSeconds) : 0;
+
+                        // Update tampilan progress
+                        $('#exportPercent1').text(`${percentComplete}%`);
+                        $('#exportProgressBar1').css('width', `${percentComplete}%`);
+                        $('#statusHeader1').text(`Mengunduh...`);
+                        $('#loadedKB1').text(formatBytes(loadedBytes));
+                        $('#totalKB1').text(formatBytes(totalBytes));
+
+                        // Jika selesai
+                        if (loadedBytes >= totalBytes) {
+                            clearInterval(etaTimer); // Hentikan ETA timer
+                            $('#eta1').text('Selesai');
+                            $('#statusHeader1').text('Unduhan selesai');
+                        }
                     }
                 },
                 cancelToken: source.token
@@ -257,7 +327,7 @@
             // Hapus #exportToast dan ganti dengan sukses
             $('#exportToast').fadeOut(300, function() {
                 $('#exportToast').remove();
-                showSuccessToast('Berhasil diekspor');
+                showSuccessToast('Laporan resep harian berhasil diekspor');
             });
         } catch (error) {
             // Hapus #exportToast dan ganti dengan gagal
@@ -274,12 +344,14 @@
         } finally {
             $('#loadingSpinner').hide(); // Menyembunyikan spinner setelah unduhan selesai
             $('#reportBtn1').prop('disabled', false);
+            $('#form-resep-harian input, #form-resep-harian button, .dokter-checkbox-1').prop('disabled', false);
         }
     }
 
     // LAPORAN BULANAN
     async function downloadReport2() {
         $('#reportBtn2').prop('disabled', true);
+        $('#form-resep-bulanan input, #form-resep-bulanan button, .dokter-checkbox-2').prop('disabled', true);
         $('#loadingSpinner').show(); // Menampilkan spinner
 
         // Mengambil semua checkbox yang dipilih
@@ -297,20 +369,22 @@
         const toast = $(`
         <div id="exportToast" class="toast show transparent-blur" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-body">
-                <div class="d-flex justify-content-between align-items-start mb-1">
-                    <div>
-                        <strong>Mengekspor</strong>
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                    <div class="text-truncate me-1">
+                        <strong id="statusHeader2">Menunggu respons peladen...</strong>
                     </div>
-                    <div class="d-flex flex-row">
-                        <span class="date" id="exportPercent">0%</span>
-                        <div class="mb-1 ms-2">
-                            <div class="vr"></div>
-                            <button type="button" class="btn-close" aria-label="Close" id="cancelExport"></button>
-                        </div>
+                    <div class="d-flex align-items-center">
+                        <span class="date" id="exportPercent2">0%</span>
+                        <button type="button" class="btn-close p-0 ms-1" aria-label="Close" id="cancelExport2" style="height: 1rem; width: 1rem;"></button>
                     </div>
                 </div>
-                <div class="progress" style="border-top: 1px solid var(--bs-border-color-translucent); border-bottom: 1px solid var(--bs-border-color-translucent); border-left: 1px solid var(--bs-border-color-translucent); border-right: 1px solid var(--bs-border-color-translucent);">
-                    <div id="exportProgressBar" class="progress-bar progress-bar-striped progress-bar-animated bg-gradient bg-primary" role="progressbar" style="width: 0%; transition: none"></div>
+                <div class="progress mb-1" style="border-top: 1px solid var(--bs-border-color-translucent); border-bottom: 1px solid var(--bs-border-color-translucent); border-left: 1px solid var(--bs-border-color-translucent); border-right: 1px solid var(--bs-border-color-translucent);">
+                    <div id="exportProgressBar2" class="progress-bar progress-bar-striped progress-bar-animated bg-gradient bg-primary" role="progressbar" style="width: 0%; transition: none"></div>
+                </div>
+                <div style="font-size: 0.75em;">
+                    <span><strong>Laporan Resep Bulanan</strong></span><br>
+                    <span class="date" id="loadedKB2">0 B</span> dari <span class="date" id="totalKB2">0 B</span> diunduh<br>
+                    <span class="date" id="eta2">Menunggu respons peladen...</span>
                 </div>
             </div>
         </div>
@@ -322,21 +396,88 @@
         const source = CancelToken.source();
 
         // Menangani pembatalan ekspor
-        $(document).on('click', '#cancelExport', function() {
-            source.cancel('Ekspor dibatalkan');
+        $(document).on('click', '#cancelExport2', function() {
+            source.cancel('Ekspor laporan resep bulanan dibatalkan');
+        });
+
+        // Event listener untuk menangani sebelum halaman di-unload
+        $(window).on('beforeunload', function() {
+            source.cancel('Ekspor laporan resep harian dibatalkan');
         });
 
         try {
             // Ambil nilai bulan dari input
             const bulan = $('#bulan').val();
-            // Mengambil file dari server
+            // Fungsi untuk mengubah byte ke satuan otomatis
+            function formatBytes(bytes) {
+                if (bytes === 0) return '0 B';
+                const k = 1024;
+                const sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                const value = bytes / Math.pow(k, i);
+                return `${value.toLocaleString('id-ID', { maximumFractionDigits: 2 })} ${sizes[i]}`;
+            }
+
+            // Fungsi untuk memformat ETA dengan jam/menit/detik
+            function formatETA(seconds) {
+                const hours = Math.floor(seconds / 3600);
+                const minutes = Math.floor((seconds % 3600) / 60);
+                const secs = Math.floor(seconds % 60);
+
+                let parts = [];
+                if (hours > 0) parts.push(`${hours} jam`);
+                if (minutes > 0) parts.push(`${minutes} menit`);
+                if (secs > 0 || parts.length === 0) parts.push(`${secs} detik`);
+
+                return parts.join(' ');
+            }
+
+            let startTime = null;
+            let loadedBytes = 0;
+            let totalBytes = 0;
+            let speedBps = 0;
+            let etaTimer = null;
+
+            // Fungsi untuk memperbarui ETA setiap detik
+            function updateETA() {
+                if (speedBps > 0) {
+                    const remainingBytes = totalBytes - loadedBytes;
+                    const estimatedTimeInSeconds = remainingBytes / speedBps;
+
+                    const etaFormatted = formatETA(estimatedTimeInSeconds);
+                    $('#eta2').text(`Selesai dalam ${etaFormatted}`);
+                }
+            }
+
+            startTime = Date.now(); // Waktu mulai unduhan
+
+            // Mulai interval ETA
+            etaTimer = setInterval(updateETA, 1000);
+            // Mulai unduhan file
             const response = await axios.get(`<?= base_url('laporanresep/exportmonthlyexcel') ?>/${bulan}?${queryString}`, {
                 responseType: 'blob', // Mendapatkan data sebagai blob
                 onDownloadProgress: function(progressEvent) {
                     if (progressEvent.lengthComputable) {
-                        let percentComplete = Math.round((progressEvent.loaded / progressEvent.total) * 100);
-                        $('#exportPercent').text(percentComplete + '%');
-                        $('#exportProgressBar').css('width', percentComplete + '%');
+                        loadedBytes = progressEvent.loaded;
+                        totalBytes = progressEvent.total;
+
+                        const percentComplete = Math.round((loadedBytes / totalBytes) * 100);
+                        const elapsedTimeInSeconds = (Date.now() - startTime) / 1000;
+                        speedBps = elapsedTimeInSeconds > 0 ? (loadedBytes / elapsedTimeInSeconds) : 0;
+
+                        // Update tampilan progress
+                        $('#exportPercent2').text(`${percentComplete}%`);
+                        $('#exportProgressBar2').css('width', `${percentComplete}%`);
+                        $('#statusHeader2').text(`Mengunduh...`);
+                        $('#loadedKB2').text(formatBytes(loadedBytes));
+                        $('#totalKB2').text(formatBytes(totalBytes));
+
+                        // Jika selesai
+                        if (loadedBytes >= totalBytes) {
+                            clearInterval(etaTimer); // Hentikan ETA timer
+                            $('#eta2').text('Selesai');
+                            $('#statusHeader2').text('Unduhan selesai');
+                        }
                     }
                 },
                 cancelToken: source.token
@@ -364,7 +505,7 @@
             // Hapus #exportToast dan ganti dengan sukses
             $('#exportToast').fadeOut(300, function() {
                 $('#exportToast').remove();
-                showSuccessToast('Berhasil diekspor');
+                showSuccessToast('Laporan resep bulanan berhasil diekspor');
             });
         } catch (error) {
             // Hapus #exportToast dan ganti dengan gagal
@@ -381,6 +522,7 @@
         } finally {
             $('#loadingSpinner').hide(); // Menyembunyikan spinner setelah unduhan selesai
             $('#reportBtn2').prop('disabled', false);
+            $('#form-resep-bulanan input, #form-resep-bulanan button, .dokter-checkbox-2').prop('disabled', false);
         }
     }
     // HTML untuk menunjukkan bahwa data transaksi sedang dimuat
