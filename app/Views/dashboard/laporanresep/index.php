@@ -225,6 +225,10 @@
         // Event listener untuk menangani sebelum halaman di-unload
         $(window).on('beforeunload', function() {
             source.cancel('Ekspor laporan resep harian dibatalkan');
+            // Memberi jeda sebelum menyembunyikan loading spinner
+            setTimeout(function() {
+                $('#loadingSpinner').show();
+            }, 300); // jeda 300 milidetik (0.3 detik)
         });
 
         try {
@@ -403,6 +407,10 @@
         // Event listener untuk menangani sebelum halaman di-unload
         $(window).on('beforeunload', function() {
             source.cancel('Ekspor laporan resep harian dibatalkan');
+            // Memberi jeda sebelum menyembunyikan loading spinner
+            setTimeout(function() {
+                $('#loadingSpinner').show();
+            }, 300); // jeda 300 milidetik (0.3 detik)
         });
 
         try {
