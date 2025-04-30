@@ -563,9 +563,9 @@
             // Menangani error jika permintaan gagal
             console.error(error); // Menampilkan error di konsol
             const errorRow = `
-                <div class="accordion-item shadow-sm p-3 p-3">
+                <span class="list-group-item pb-3 pt-3">
                     <h2 class="text-center text-danger mb-0" style="font-weight: 300;">${error}</h2>
-                </div>
+                </span>
             `;
             $('#paginationNav-tanggal ul').empty();
             $('#rawatjalan-tanggal').empty(); // Kosongkan tabel pasien
@@ -755,9 +755,9 @@
             // Menangani error jika permintaan gagal
             console.error(error); // Menampilkan error di konsol
             const errorRow = `
-                <div class="accordion-item shadow-sm p-3 p-3">
+                <span class="list-group-item pb-3 pt-3">
                     <h2 class="text-center text-danger mb-0" style="font-weight: 300;">${error}</h2>
-                </div>
+                </span>
             `;
             $('#paginationNav-no_rm ul').empty();
             $('#rawatjalan-no_rm').empty(); // Kosongkan tabel pasien
@@ -939,9 +939,9 @@
             // Menangani error jika permintaan gagal
             console.error(error); // Menampilkan error di konsol
             const errorRow = `
-                <div class="accordion-item shadow-sm p-3 p-3">
+                <span class="list-group-item pb-3 pt-3">
                     <h2 class="text-center text-danger mb-0" style="font-weight: 300;">${error}</h2>
-                </div>
+                </span>
             `;
             $('#paginationNav-nama ul').empty();
             $('#rawatjalan-nama').empty(); // Kosongkan tabel pasien
