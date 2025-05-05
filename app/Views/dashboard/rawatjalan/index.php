@@ -166,19 +166,17 @@
                                     <div class="mb-0 row g-1">
                                         <div class="col-5 fw-medium text-truncate">Nama</div>
                                         <div class="col">
-                                            <div id="nama_pasien"></div>
-                                            <div>
-                                                <span role="button" id="copy_nama_pasien" class="link-primary"><i class="fa-solid fa-copy"></i> <span id="copy_nama_pasien_status">Salin</span></span>
-                                            </div>
+                                            <span id="nama_pasien"></span> <span class="text-nowrap">
+                                                <span role="button" id="copy_nama_pasien" class="link-primary"><i class="fa-solid fa-copy"></i></span>
+                                            </span>
                                         </div>
                                     </div>
                                     <div class="mb-0 row g-1">
                                         <div class="col-5 fw-medium text-truncate">Nomor Rekam Medis</div>
                                         <div class="col date">
-                                            <div id="no_rekam_medis"></div>
-                                            <div>
-                                                <span role="button" id="copy_no_rekam_medis" class="link-primary"><i class="fa-solid fa-copy"></i> <span id="copy_no_rekam_medis_status">Salin</span></span>
-                                            </div>
+                                            <span id="no_rekam_medis"></span> <span class="text-nowrap">
+                                                <span role="button" id="copy_no_rekam_medis" class="link-primary"><i class="fa-solid fa-copy"></i></span>
+                                            </span>
                                         </div>
                                     </div>
                                     <div class="mb-0 row g-1">
@@ -190,10 +188,9 @@
                                     <div class="mb-0 row g-1">
                                         <div class="col-5 fw-medium text-truncate">Tempat/Tanggal Lahir</div>
                                         <div class="col">
-                                            <div id="kelahiran"></div>
-                                            <div>
-                                                <span role="button" id="copy_tanggal_lahir" class="link-primary"><i class="fa-solid fa-copy"></i> <span id="copy_tanggal_lahir_status">Salin Tanggal Lahir</span></span>
-                                            </div>
+                                            <span id="kelahiran"></span> <span class="text-nowrap">
+                                                <span role="button" id="copy_tanggal_lahir" class="link-primary"><i class="fa-solid fa-copy"></i></span>
+                                            </span>
                                         </div>
                                     </div>
                                     <div class="mb-0 row g-1">
@@ -205,19 +202,17 @@
                                     <div class="mb-0 row g-1">
                                         <div class="col-5 fw-medium text-truncate">Alamat</div>
                                         <div class="col">
-                                            <div id="alamat"></div>
-                                            <div>
-                                                <span role="button" id="copy_alamat" class="link-primary"><i class="fa-solid fa-copy"></i> <span id="copy_alamat_status">Salin</span></span>
-                                            </div>
+                                            <span id="alamat"></span> <span class="text-nowrap">
+                                                <span role="button" id="copy_alamat" class="link-primary"><i class="fa-solid fa-copy"></i></span>
+                                            </span>
                                         </div>
                                     </div>
                                     <div class="mb-0 row g-1">
                                         <div class="col-5 fw-medium text-truncate">Nomor Telepon</div>
                                         <div class="col date">
-                                            <div id="telpon"></div>
-                                            <div id="copy_telpon_container" style="display: none;">
-                                                <span role="button" id="copy_telpon" class="link-primary"><i class="fa-solid fa-copy"></i> <span id="copy_telpon_status">Salin</span></span>
-                                            </div>
+                                            <span id="telpon"></span> <span class="text-nowrap" id="copy_telpon_container" style="display: none;">
+                                                <span role="button" id="copy_telpon" class="link-primary"><i class="fa-solid fa-copy"></i></span>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -1095,16 +1090,16 @@
 
             if (navigator.clipboard) {
                 navigator.clipboard.writeText(textToCopy).then(function() {
-                    $('#copy_nama_pasien_status').addClass('link-success').text('Disalin');
+                    $('#copy_nama_pasien').removeClass('link-primary').addClass('link-success').html(`<i class="fa-solid fa-check"></i>`);
 
                     setTimeout(function() {
-                        $('#copy_nama_pasien_status').removeClass('link-success').text('Salin');
+                        $('#copy_nama_pasien').addClass('link-primary').removeClass('link-success').html(`<i class="fa-solid fa-copy"></i>`);
                     }, 1000);
                 }).catch(function(err) {
-                    $('#copy_nama_pasien_status').addClass('link-danger').text(`Gagal menyalin (${err})`);
+                    $('#copy_nama_pasien').removeClass('link-primary').addClass('link-danger').html(`<i class="fa-solid fa-xmark"></i>`);
 
                     setTimeout(function() {
-                        $('#copy_nama_pasien_status').removeClass('link-danger').text('Salin');
+                        $('#copy_nama_pasien').addClass('link-primary').removeClass('link-danger').html(`<i class="fa-solid fa-copy"></i>`);
                     }, 1000);
                     console.error('Gagal menyalin teks:', err);
                 });
@@ -1118,16 +1113,16 @@
 
             if (navigator.clipboard) {
                 navigator.clipboard.writeText(textToCopy).then(function() {
-                    $('#copy_no_rekam_medis_status').addClass('link-success').text('Disalin');
+                    $('#copy_no_rekam_medis').removeClass('link-primary').addClass('link-success').html(`<i class="fa-solid fa-check"></i>`);
 
                     setTimeout(function() {
-                        $('#copy_no_rekam_medis_status').removeClass('link-success').text('Salin');
+                        $('#copy_no_rekam_medis').addClass('link-primary').removeClass('link-success').html(`<i class="fa-solid fa-copy"></i>`);
                     }, 1000);
                 }).catch(function(err) {
-                    $('#copy_no_rekam_medis_status').addClass('link-danger').text(`Gagal menyalin (${err})`);
+                    $('#copy_no_rekam_medis').removeClass('link-primary').addClass('link-danger').html(`<i class="fa-solid fa-xmark"></i>`);
 
                     setTimeout(function() {
-                        $('#copy_no_rekam_medis_status').removeClass('link-danger').text('Salin');
+                        $('#copy_no_rekam_medis').addClass('link-primary').removeClass('link-danger').html(`<i class="fa-solid fa-copy"></i>`);
                     }, 1000);
                     console.error('Gagal menyalin teks:', err);
                 });
@@ -1141,16 +1136,16 @@
 
             if (navigator.clipboard) {
                 navigator.clipboard.writeText(textToCopy).then(function() {
-                    $('#copy_tanggal_lahir_status').addClass('link-success').text('Disalin');
+                    $('#copy_tanggal_lahir').removeClass('link-primary').addClass('link-success').html(`<i class="fa-solid fa-check"></i>`);
 
                     setTimeout(function() {
-                        $('#copy_tanggal_lahir_status').removeClass('link-success').text('Salin Tanggal Lahir');
+                        $('#copy_tanggal_lahir').addClass('link-primary').removeClass('link-success').html(`<i class="fa-solid fa-copy"></i>`);
                     }, 1000);
                 }).catch(function(err) {
-                    $('#copy_tanggal_lahir_status').addClass('link-danger').text(`Gagal menyalin (${err})`);
+                    $('#copy_tanggal_lahir').removeClass('link-primary').addClass('link-danger').html(`<i class="fa-solid fa-xmark"></i>`);
 
                     setTimeout(function() {
-                        $('#copy_tanggal_lahir_status').removeClass('link-danger').text('Salin Tanggal Lahir');
+                        $('#copy_tanggal_lahir').addClass('link-primary').removeClass('link-danger').html(`<i class="fa-solid fa-copy"></i>`);
                     }, 1000);
                     console.error('Gagal menyalin teks:', err);
                 });
@@ -1164,16 +1159,16 @@
 
             if (navigator.clipboard) {
                 navigator.clipboard.writeText(textToCopy).then(function() {
-                    $('#copy_alamat_status').addClass('link-success').text('Disalin');
+                    $('#copy_alamat').removeClass('link-primary').addClass('link-success').html(`<i class="fa-solid fa-check"></i>`);
 
                     setTimeout(function() {
-                        $('#copy_alamat_status').removeClass('link-success').text('Salin');
+                        $('#copy_alamat').addClass('link-primary').removeClass('link-success').html(`<i class="fa-solid fa-copy"></i>`);
                     }, 1000);
                 }).catch(function(err) {
-                    $('#copy_alamat_status').addClass('link-danger').text(`Gagal menyalin (${err})`);
+                    $('#copy_alamat').removeClass('link-primary').addClass('link-danger').html(`<i class="fa-solid fa-xmark"></i>`);
 
                     setTimeout(function() {
-                        $('#copy_alamat_status').removeClass('link-danger').text('Salin');
+                        $('#copy_alamat').addClass('link-primary').removeClass('link-danger').html(`<i class="fa-solid fa-copy"></i>`);
                     }, 1000);
                     console.error('Gagal menyalin teks:', err);
                 });
@@ -1187,16 +1182,16 @@
 
             if (navigator.clipboard) {
                 navigator.clipboard.writeText(textToCopy).then(function() {
-                    $('#copy_telpon_status').addClass('link-success').text('Disalin');
+                    $('#copy_telpon').removeClass('link-primary').addClass('link-success').html(`<i class="fa-solid fa-check"></i>`);
 
                     setTimeout(function() {
-                        $('#copy_telpon_status').removeClass('link-success').text('Salin');
+                        $('#copy_telpon').addClass('link-primary').removeClass('link-success').html(`<i class="fa-solid fa-copy"></i>`);
                     }, 1000);
                 }).catch(function(err) {
-                    $('#copy_telpon_status').addClass('link-danger').text(`Gagal menyalin (${err})`);
+                    $('#copy_telpon').removeClass('link-primary').addClass('link-danger').html(`<i class="fa-solid fa-xmark"></i>`);
 
                     setTimeout(function() {
-                        $('#copy_telpon_status').removeClass('link-danger').text('Salin');
+                        $('#copy_telpon').addClass('link-primary').removeClass('link-danger').html(`<i class="fa-solid fa-copy"></i>`);
                     }, 1000);
                     console.error('Gagal menyalin teks:', err);
                 });
