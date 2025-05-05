@@ -166,7 +166,10 @@
                                     <div class="mb-0 row g-1">
                                         <div class="col-5 fw-medium text-truncate">Nama</div>
                                         <div class="col">
-                                            <span id="nama_pasien"></span> <span role="button" id="copy_nama_pasien" class="link-primary"><i class="fa-solid fa-copy"></i></span> <span id="copy_nama_pasien_status"></span>
+                                            <div id="nama_pasien"></div>
+                                            <div>
+                                                <span role="button" id="copy_nama_pasien" class="link-primary"><i class="fa-solid fa-copy"></i> <span id="copy_nama_pasien_status">Salin</span></span>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="mb-0 row g-1">
@@ -1080,16 +1083,16 @@
 
             if (navigator.clipboard) {
                 navigator.clipboard.writeText(textToCopy).then(function() {
-                    $('#copy_nama_pasien_status').addClass('text-success').text('disalin');
+                    $('#copy_nama_pasien_status').addClass('link-success').text('Disalin');
 
                     setTimeout(function() {
-                        $('#copy_nama_pasien_status').removeClass('text-success').text('');
+                        $('#copy_nama_pasien_status').removeClass('link-success').text('Salin');
                     }, 1000);
                 }).catch(function(err) {
-                    $('#copy_nama_pasien_status').addClass('text-danger').text(`gagal menyalin (${err})`);
+                    $('#copy_nama_pasien_status').addClass('link-danger').text(`Gagal menyalin (${err})`);
 
                     setTimeout(function() {
-                        $('#copy_nama_pasien_status').removeClass('text-danger').text('');
+                        $('#copy_nama_pasien_status').removeClass('link-danger').text('Salin');
                     }, 1000);
                     console.error('Gagal menyalin teks:', err);
                 });

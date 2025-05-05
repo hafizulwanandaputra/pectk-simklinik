@@ -209,7 +209,7 @@
     <?= $this->include('spinner/spinner-css'); ?>
 </head>
 
-<body class="bg-success-subtle d-flex flex-column h-100">
+<body class="bg-success-subtle d-flex flex-column h-100 user-select-none">
     <div class="my-auto">
         <div class="no-fluid-content px-3 py-3 px-md-5">
             <div class="row align-items-center">

@@ -487,7 +487,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
     <?= $this->renderSection('css'); ?>
 </head>
 
-<body class="bg-body-hwpweb">
+<body class="bg-body-hwpweb user-select-none">
     <div class="wrapper">
         <!-- HEADER -->
         <header class="navbar sticky-top flex-md-nowrap p-0 shadow-sm bg-success-subtle text-success-emphasis border-bottom border-success-subtle header">
