@@ -135,7 +135,7 @@
                                 <div class="col fw-medium text-nowrap">Nomor Rekam Medis</div>
                                 <div class="col text-end">
                                     <div class="date text-truncate">
-                                        <?= $pasien['no_rm'] ?>
+                                        <span id="no_rekam_medis"><?= $pasien['no_rm'] ?></span> <span role="button" id="copy_no_rekam_medis" class="link-primary"><i class="fa-solid fa-copy"></i></span>
                                     </div>
                                 </div>
                             </div>
@@ -1495,6 +1495,29 @@
         socket.onclose = () => {
             console.log("Disconnected from WebSocket server");
         };
+
+        $('#copy_no_rekam_medis').on('click', function() {
+            var textToCopy = $('#no_rekam_medis').text().trim();
+
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(textToCopy).then(function() {
+                    $('#copy_no_rekam_medis').removeClass('link-primary').addClass('link-success').html(`<i class="fa-solid fa-check"></i>`);
+
+                    setTimeout(function() {
+                        $('#copy_no_rekam_medis').addClass('link-primary').removeClass('link-success').html(`<i class="fa-solid fa-copy"></i>`);
+                    }, 1000);
+                }).catch(function(err) {
+                    $('#copy_no_rekam_medis').removeClass('link-primary').addClass('link-danger').html(`<i class="fa-solid fa-xmark"></i>`);
+
+                    setTimeout(function() {
+                        $('#copy_no_rekam_medis').addClass('link-primary').removeClass('link-danger').html(`<i class="fa-solid fa-copy"></i>`);
+                    }, 1000);
+                    console.error('Gagal menyalin teks:', err);
+                });
+            } else {
+                showFailedToast('Clipboard API tidak didukung di peramban ini.');
+            }
+        });
 
         $('[data-bs-toggle="tooltip"]').tooltip();
         $('#id_obat').select2({

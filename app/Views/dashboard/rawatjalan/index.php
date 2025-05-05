@@ -174,8 +174,11 @@
                                     </div>
                                     <div class="mb-0 row g-1">
                                         <div class="col-5 fw-medium text-truncate">Nomor Rekam Medis</div>
-                                        <div class="col date" id="no_rekam_medis">
-
+                                        <div class="col date">
+                                            <div id="no_rekam_medis"></div>
+                                            <div>
+                                                <span role="button" id="copy_no_rekam_medis" class="link-primary"><i class="fa-solid fa-copy"></i> <span id="copy_no_rekam_medis_status">Salin</span></span>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="mb-0 row g-1">
@@ -186,8 +189,11 @@
                                     </div>
                                     <div class="mb-0 row g-1">
                                         <div class="col-5 fw-medium text-truncate">Tempat/Tanggal Lahir</div>
-                                        <div class="col" id="kelahiran">
-
+                                        <div class="col">
+                                            <div id="kelahiran"></div>
+                                            <div>
+                                                <span role="button" id="copy_tanggal_lahir" class="link-primary"><i class="fa-solid fa-copy"></i> <span id="copy_tanggal_lahir_status">Salin Tanggal Lahir</span></span>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="mb-0 row g-1">
@@ -198,14 +204,20 @@
                                     </div>
                                     <div class="mb-0 row g-1">
                                         <div class="col-5 fw-medium text-truncate">Alamat</div>
-                                        <div class="col" id="alamat">
-
+                                        <div class="col">
+                                            <div id="alamat"></div>
+                                            <div>
+                                                <span role="button" id="copy_alamat" class="link-primary"><i class="fa-solid fa-copy"></i> <span id="copy_alamat_status">Salin</span></span>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="mb-0 row g-1">
                                         <div class="col-5 fw-medium text-truncate">Nomor Telepon</div>
-                                        <div class="col date" id="telpon">
-
+                                        <div class="col date">
+                                            <div id="telpon"></div>
+                                            <div id="copy_telpon_container" style="display: none;">
+                                                <span role="button" id="copy_telpon" class="link-primary"><i class="fa-solid fa-copy"></i> <span id="copy_telpon_status">Salin</span></span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -1101,6 +1113,98 @@
             }
         });
 
+        $('#copy_no_rekam_medis').on('click', function() {
+            var textToCopy = $('#no_rekam_medis').text().trim();
+
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(textToCopy).then(function() {
+                    $('#copy_no_rekam_medis_status').addClass('link-success').text('Disalin');
+
+                    setTimeout(function() {
+                        $('#copy_no_rekam_medis_status').removeClass('link-success').text('Salin');
+                    }, 1000);
+                }).catch(function(err) {
+                    $('#copy_no_rekam_medis_status').addClass('link-danger').text(`Gagal menyalin (${err})`);
+
+                    setTimeout(function() {
+                        $('#copy_no_rekam_medis_status').removeClass('link-danger').text('Salin');
+                    }, 1000);
+                    console.error('Gagal menyalin teks:', err);
+                });
+            } else {
+                showFailedToast('Clipboard API tidak didukung di peramban ini.');
+            }
+        });
+
+        $('#copy_tanggal_lahir').on('click', function() {
+            var textToCopy = $('#tanggal_lahir').text().trim();
+
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(textToCopy).then(function() {
+                    $('#copy_tanggal_lahir_status').addClass('link-success').text('Disalin');
+
+                    setTimeout(function() {
+                        $('#copy_tanggal_lahir_status').removeClass('link-success').text('Salin Tanggal Lahir');
+                    }, 1000);
+                }).catch(function(err) {
+                    $('#copy_tanggal_lahir_status').addClass('link-danger').text(`Gagal menyalin (${err})`);
+
+                    setTimeout(function() {
+                        $('#copy_tanggal_lahir_status').removeClass('link-danger').text('Salin Tanggal Lahir');
+                    }, 1000);
+                    console.error('Gagal menyalin teks:', err);
+                });
+            } else {
+                showFailedToast('Clipboard API tidak didukung di peramban ini.');
+            }
+        });
+
+        $('#copy_alamat').on('click', function() {
+            var textToCopy = $('#alamat').text().trim();
+
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(textToCopy).then(function() {
+                    $('#copy_alamat_status').addClass('link-success').text('Disalin');
+
+                    setTimeout(function() {
+                        $('#copy_alamat_status').removeClass('link-success').text('Salin');
+                    }, 1000);
+                }).catch(function(err) {
+                    $('#copy_alamat_status').addClass('link-danger').text(`Gagal menyalin (${err})`);
+
+                    setTimeout(function() {
+                        $('#copy_alamat_status').removeClass('link-danger').text('Salin');
+                    }, 1000);
+                    console.error('Gagal menyalin teks:', err);
+                });
+            } else {
+                showFailedToast('Clipboard API tidak didukung di peramban ini.');
+            }
+        });
+
+        $('#copy_telpon').on('click', function() {
+            var textToCopy = $('#telpon').text().trim();
+
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(textToCopy).then(function() {
+                    $('#copy_telpon_status').addClass('link-success').text('Disalin');
+
+                    setTimeout(function() {
+                        $('#copy_telpon_status').removeClass('link-success').text('Salin');
+                    }, 1000);
+                }).catch(function(err) {
+                    $('#copy_telpon_status').addClass('link-danger').text(`Gagal menyalin (${err})`);
+
+                    setTimeout(function() {
+                        $('#copy_telpon_status').removeClass('link-danger').text('Salin');
+                    }, 1000);
+                    console.error('Gagal menyalin teks:', err);
+                });
+            } else {
+                showFailedToast('Clipboard API tidak didukung di peramban ini.');
+            }
+        });
+
         $(document).on('click', '.detail-rajal', async function(ə) {
             ə.preventDefault();
             var $this = $(this);
@@ -1235,10 +1339,15 @@
                 $('#nama_pasien').text(rawatjalan.nama_pasien);
                 $('#no_rekam_medis').text(rawatjalan.no_rm);
                 $('#jenis_kelamin').text(jenis_kelamin_string);
-                $('#kelahiran').html(`${rawatjalan.tempat_lahir}, <span class="date text-nowrap">${rawatjalan.tanggal_lahir}</span>`);
+                $('#kelahiran').html(`${rawatjalan.tempat_lahir}, <span class="date text-nowrap" id="tanggal_lahir">${rawatjalan.tanggal_lahir}</span>`);
                 $('#usia').html(`${usia.usia} tahun ${usia.bulan} bulan`);
                 $('#alamat').text(rawatjalan.alamat);
                 $('#telpon').html(telpon);
+                if (rawatjalan.telpon) {
+                    $('#copy_telpon_container').show();
+                } else {
+                    $('#copy_telpon_container').hide();
+                }
                 $('#kiup_btn').attr('onclick', "window.open('<?= base_url('pasien/kiup') ?>/" + rawatjalan.id_pasien + "')");
                 $('#barcode_btn').attr('onclick', "window.open('<?= base_url('pasien/barcode') ?>/" + rawatjalan.id_pasien + "')");
                 $('#detail_pasien_btn').attr('onclick', "window.location.href = '<?= base_url('pasien/detailpasien') ?>/" + rawatjalan.id_pasien + "'");
