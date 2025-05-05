@@ -165,8 +165,8 @@
                                 <div style="font-size: 0.75em;">
                                     <div class="mb-0 row g-1">
                                         <div class="col-5 fw-medium text-truncate">Nama</div>
-                                        <div class="col" id="nama_pasien">
-
+                                        <div class="col">
+                                            <span id="nama_pasien"></span> <span role="button" id="copy_nama_pasien" class="link-primary"><i class="fa-solid fa-copy"></i></span> <span id="copy_nama_pasien_status"></span>
                                         </div>
                                     </div>
                                     <div class="mb-0 row g-1">
@@ -1074,6 +1074,30 @@
         socket.onclose = () => {
             console.log("Disconnected from WebSocket server");
         };
+
+        $('#copy_nama_pasien').on('click', function() {
+            var textToCopy = $('#nama_pasien').text().trim();
+
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(textToCopy).then(function() {
+                    $('#copy_nama_pasien_status').addClass('text-success').text('disalin');
+
+                    setTimeout(function() {
+                        $('#copy_nama_pasien_status').removeClass('text-success').text('');
+                    }, 1000);
+                }).catch(function(err) {
+                    $('#copy_nama_pasien_status').addClass('text-danger').text(`gagal menyalin (${err})`);
+
+                    setTimeout(function() {
+                        $('#copy_nama_pasien_status').removeClass('text-danger').text('');
+                    }, 1000);
+                    console.error('Gagal menyalin teks:', err);
+                });
+            } else {
+                showFailedToast('Clipboard API tidak didukung di peramban ini.');
+            }
+        });
+
         $(document).on('click', '.detail-rajal', async function(ə) {
             ə.preventDefault();
             var $this = $(this);
