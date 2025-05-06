@@ -161,9 +161,11 @@
                     <div class="row g-3">
                         <div class="d-flex flex-column justify-content-between">
                             <div>
-                                <div class="fw-bold mb-2 border-bottom">Identitas Pasien <span class="text-nowrap">
-                                        <span role="button" id="copy_identitas_pasien" class="link-primary" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Salin nama pasien, nomor rekam medis, dan tanggal lahir"><i class="fa-solid fa-copy"></i></span>
-                                    </span>
+                                <div class="fw-bold mb-2 d-flex justify-content-between align-items-start" style="border-bottom: 1px solid var(--bs-border-color-translucent);">
+                                    <div>Identitas Pasien</div>
+                                    <div class="text-nowrap">
+                                        <span role="button" id="copy_identitas_pasien" class="link-primary" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Salin nama pasien, nomor rekam medis, dan tanggal lahir"><i class="fa-solid fa-copy"></i></span>
+                                    </div>
                                 </div>
                                 <div style="font-size: 0.75em;">
                                     <div class="mb-0 row g-1">
@@ -226,7 +228,7 @@
                         </div>
                         <div class="d-flex flex-column justify-content-between">
                             <div>
-                                <div class="fw-bold mb-2 border-bottom">Rawat Jalan</div>
+                                <div class="fw-bold mb-2" style="border-bottom: 1px solid var(--bs-border-color-translucent);">Rawat Jalan</div>
                                 <div style="font-size: 0.75em;">
                                     <div class="mb-0 row g-1">
                                         <div class="col-5 fw-medium text-truncate">Operator</div>
