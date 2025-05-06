@@ -284,9 +284,17 @@
                     const status_buta_warna = butawarna.status_buta_warna ?
                         butawarna.status_buta_warna :
                         `<em>Belum ada</em>`;
-                    const delete_today = new Date(butawarna.tanggal_registrasi).toISOString().split('T')[0] !== new Date().toISOString().split('T')[0] ?
-                        `disabled` :
-                        ``;
+                    const tanggalRegistrasi = new Date(butawarna.tanggal_registrasi);
+                    const today = new Date();
+                    const yesterday = new Date();
+                    yesterday.setDate(today.getDate() - 1);
+
+                    const tanggalStr = tanggalRegistrasi.toISOString().split('T')[0];
+                    const todayStr = today.toISOString().split('T')[0];
+                    const yesterdayStr = yesterday.toISOString().split('T')[0];
+
+                    const delete_today = (tanggalStr !== todayStr && tanggalStr !== yesterdayStr) ? 'disabled' : '';
+
                     const ButaWarnaElement = `
                     <li class="list-group-item <?= (session()->get('role') != 'Admisi') ? 'border-top-0' : ''; ?> pb-3 pt-3">
                         <div class="d-flex">

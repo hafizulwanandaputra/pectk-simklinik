@@ -259,9 +259,17 @@
                     } else if (biasa === '1') {
                         biasa = `<span class="badge text-bg-secondary bg-gradient text-nowrap">BIASA</span>`;
                     }
-                    const delete_today = new Date(sakitmata.tanggal_registrasi).toISOString().split('T')[0] !== new Date().toISOString().split('T')[0] ?
-                        `disabled` :
-                        ``;
+                    const tanggalRegistrasi = new Date(sakitmata.tanggal_registrasi);
+                    const today = new Date();
+                    const yesterday = new Date();
+                    yesterday.setDate(today.getDate() - 1);
+
+                    const tanggalStr = tanggalRegistrasi.toISOString().split('T')[0];
+                    const todayStr = today.toISOString().split('T')[0];
+                    const yesterdayStr = yesterday.toISOString().split('T')[0];
+
+                    const delete_today = (tanggalStr !== todayStr && tanggalStr !== yesterdayStr) ? 'disabled' : '';
+
                     const SakitMataElement = `
                     <li class="list-group-item <?= (session()->get('role') != 'Admisi') ? 'border-top-0' : ''; ?> pb-3 pt-3">
                         <div class="d-flex">

@@ -104,9 +104,15 @@ class ButaWarna extends BaseController
     {
         // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', 'Perawat', atau 'Admisi' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Admisi') {
+            $today = date('Y-m-d');
+            $yesterday = date('Y-m-d', strtotime('-1 day'));
+
             $data = $this->RawatJalanModel
                 ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
-                ->like('tanggal_registrasi', date('Y-m-d'))
+                ->groupStart()
+                ->like('tanggal_registrasi', $today)
+                ->orLike('tanggal_registrasi', $yesterday)
+                ->groupEnd()
                 ->where('status', 'DAFTAR')
                 ->orderBy('rawat_jalan.id_rawat_jalan', 'DESC')
                 ->findAll();
@@ -163,9 +169,15 @@ class ButaWarna extends BaseController
             // Mengambil nomor registrasi dari permintaan POST
             $nomorRegistrasi = $this->request->getPost('nomor_registrasi');
 
+            $today = date('Y-m-d');
+            $yesterday = date('Y-m-d', strtotime('-1 day'));
+
             $data = $this->RawatJalanModel
                 ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
-                ->like('tanggal_registrasi', date('Y-m-d'))
+                ->groupStart()
+                ->like('tanggal_registrasi', $today)
+                ->orLike('tanggal_registrasi', $yesterday)
+                ->groupEnd()
                 ->where('status', 'DAFTAR')
                 ->findAll();
 
@@ -273,8 +285,17 @@ class ButaWarna extends BaseController
                 ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_keterangan_buta_warna.nomor_registrasi', 'inner')
                 ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
                 ->find($id);
-            if (date('Y-m-d', strtotime($butawarna['tanggal_registrasi'])) != date('Y-m-d')) {
-                return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Surat keterangan buta warna yang bukan hari ini tidak dapat dihapus']);
+            $tanggal = date('Y-m-d', strtotime($butawarna['tanggal_registrasi']));
+            $today = date('Y-m-d');
+            $yesterday = date('Y-m-d', strtotime('-1 day'));
+
+            if ($tanggal != $today && $tanggal != $yesterday) {
+                return $this->response
+                    ->setStatusCode(422)
+                    ->setJSON([
+                        'success' => false,
+                        'message' => 'Surat keterangan buta warna yang bukan hari ini atau kemarin tidak dapat dihapus'
+                    ]);
             }
             if ($butawarna) {
                 $db = db_connect();
