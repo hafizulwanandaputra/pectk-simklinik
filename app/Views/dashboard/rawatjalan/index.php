@@ -161,13 +161,16 @@
                     <div class="row g-3">
                         <div class="d-flex flex-column justify-content-between">
                             <div>
-                                <div class="fw-bold mb-2 border-bottom">Identitas Pasien</div>
+                                <div class="fw-bold mb-2 border-bottom">Identitas Pasien <span class="text-nowrap">
+                                        <span role="button" id="copy_identitas_pasien" class="link-primary" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Salin nama pasien, nomor rekam medis, dan tanggal lahir"><i class="fa-solid fa-copy"></i></span>
+                                    </span>
+                                </div>
                                 <div style="font-size: 0.75em;">
                                     <div class="mb-0 row g-1">
                                         <div class="col-5 fw-medium text-truncate">Nama</div>
                                         <div class="col">
                                             <span id="nama_pasien"></span> <span class="text-nowrap">
-                                                <span role="button" id="copy_nama_pasien" class="link-primary"><i class="fa-solid fa-copy"></i></span>
+                                                <span role="button" id="copy_nama_pasien" class="link-primary" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Salin nama pasien"><i class="fa-solid fa-copy"></i></span>
                                             </span>
                                         </div>
                                     </div>
@@ -175,45 +178,33 @@
                                         <div class="col-5 fw-medium text-truncate">Nomor Rekam Medis</div>
                                         <div class="col date">
                                             <span id="no_rekam_medis"></span> <span class="text-nowrap">
-                                                <span role="button" id="copy_no_rekam_medis" class="link-primary"><i class="fa-solid fa-copy"></i></span>
+                                                <span role="button" id="copy_no_rekam_medis" class="link-primary" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Salin nomor rekam medis"><i class="fa-solid fa-copy"></i></span>
                                             </span>
                                         </div>
                                     </div>
                                     <div class="mb-0 row g-1">
                                         <div class="col-5 fw-medium text-truncate">Jenis Kelamin</div>
-                                        <div class="col" id="jenis_kelamin">
-
-                                        </div>
+                                        <div class="col" id="jenis_kelamin"></div>
                                     </div>
                                     <div class="mb-0 row g-1">
                                         <div class="col-5 fw-medium text-truncate">Tempat/Tanggal Lahir</div>
                                         <div class="col">
                                             <span id="kelahiran"></span> <span class="text-nowrap">
-                                                <span role="button" id="copy_tanggal_lahir" class="link-primary"><i class="fa-solid fa-copy"></i></span>
+                                                <span role="button" id="copy_tanggal_lahir" class="link-primary" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Salin tanggal lahir"><i class="fa-solid fa-copy"></i></span>
                                             </span>
                                         </div>
                                     </div>
                                     <div class="mb-0 row g-1">
                                         <div class="col-5 fw-medium text-truncate">Usia</div>
-                                        <div class="col date" id="usia">
-
-                                        </div>
+                                        <div class="col date" id="usia"></div>
                                     </div>
                                     <div class="mb-0 row g-1">
                                         <div class="col-5 fw-medium text-truncate">Alamat</div>
-                                        <div class="col">
-                                            <span id="alamat"></span> <span class="text-nowrap">
-                                                <span role="button" id="copy_alamat" class="link-primary"><i class="fa-solid fa-copy"></i></span>
-                                            </span>
-                                        </div>
+                                        <div class="col" id="alamat"></div>
                                     </div>
                                     <div class="mb-0 row g-1">
                                         <div class="col-5 fw-medium text-truncate">Nomor Telepon</div>
-                                        <div class="col date">
-                                            <span id="telpon"></span> <span class="text-nowrap" id="copy_telpon_container" style="display: none;">
-                                                <span role="button" id="copy_telpon" class="link-primary"><i class="fa-solid fa-copy"></i></span>
-                                            </span>
-                                        </div>
+                                        <div class="col date" id="telpon"></div>
                                     </div>
                                 </div>
                             </div>
@@ -1085,6 +1076,47 @@
             console.log("Disconnected from WebSocket server");
         };
 
+        $('#copy_identitas_pasien').on('click', function() {
+            var nama = $('#nama_pasien').text().trim();
+            var noRekamMedis = $('#no_rekam_medis').text().trim();
+            var tanggalLahir = $('#tanggal_lahir').text().trim();
+
+            var textToCopy = `${nama} ${noRekamMedis} ${tanggalLahir}`;
+
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(textToCopy).then(function() {
+                    $('#copy_identitas_pasien')
+                        .removeClass('link-primary')
+                        .addClass('link-success')
+                        .html(`<i class="fa-solid fa-check"></i>`);
+
+                    setTimeout(function() {
+                        $('#copy_identitas_pasien')
+                            .addClass('link-primary')
+                            .removeClass('link-success')
+                            .html(`<i class="fa-solid fa-copy"></i>`);
+                    }, 1000);
+                }).catch(function(err) {
+                    $('#copy_identitas_pasien')
+                        .removeClass('link-primary')
+                        .addClass('link-danger')
+                        .html(`<i class="fa-solid fa-xmark"></i>`);
+
+                    setTimeout(function() {
+                        $('#copy_identitas_pasien')
+                            .addClass('link-primary')
+                            .removeClass('link-danger')
+                            .html(`<i class="fa-solid fa-copy"></i>`);
+                    }, 1000);
+
+                    console.error('Gagal menyalin teks:', err);
+                });
+            } else {
+                // Toast fallback jika tidak didukung (jika kamu punya fungsi seperti ini)
+                showFailedToast('Clipboard API tidak didukung di peramban ini.');
+            }
+        });
+
         $('#copy_nama_pasien').on('click', function() {
             var textToCopy = $('#nama_pasien').text().trim();
 
@@ -1146,52 +1178,6 @@
 
                     setTimeout(function() {
                         $('#copy_tanggal_lahir').addClass('link-primary').removeClass('link-danger').html(`<i class="fa-solid fa-copy"></i>`);
-                    }, 1000);
-                    console.error('Gagal menyalin teks:', err);
-                });
-            } else {
-                showFailedToast('Clipboard API tidak didukung di peramban ini.');
-            }
-        });
-
-        $('#copy_alamat').on('click', function() {
-            var textToCopy = $('#alamat').text().trim();
-
-            if (navigator.clipboard) {
-                navigator.clipboard.writeText(textToCopy).then(function() {
-                    $('#copy_alamat').removeClass('link-primary').addClass('link-success').html(`<i class="fa-solid fa-check"></i>`);
-
-                    setTimeout(function() {
-                        $('#copy_alamat').addClass('link-primary').removeClass('link-success').html(`<i class="fa-solid fa-copy"></i>`);
-                    }, 1000);
-                }).catch(function(err) {
-                    $('#copy_alamat').removeClass('link-primary').addClass('link-danger').html(`<i class="fa-solid fa-xmark"></i>`);
-
-                    setTimeout(function() {
-                        $('#copy_alamat').addClass('link-primary').removeClass('link-danger').html(`<i class="fa-solid fa-copy"></i>`);
-                    }, 1000);
-                    console.error('Gagal menyalin teks:', err);
-                });
-            } else {
-                showFailedToast('Clipboard API tidak didukung di peramban ini.');
-            }
-        });
-
-        $('#copy_telpon').on('click', function() {
-            var textToCopy = $('#telpon').text().trim();
-
-            if (navigator.clipboard) {
-                navigator.clipboard.writeText(textToCopy).then(function() {
-                    $('#copy_telpon').removeClass('link-primary').addClass('link-success').html(`<i class="fa-solid fa-check"></i>`);
-
-                    setTimeout(function() {
-                        $('#copy_telpon').addClass('link-primary').removeClass('link-success').html(`<i class="fa-solid fa-copy"></i>`);
-                    }, 1000);
-                }).catch(function(err) {
-                    $('#copy_telpon').removeClass('link-primary').addClass('link-danger').html(`<i class="fa-solid fa-xmark"></i>`);
-
-                    setTimeout(function() {
-                        $('#copy_telpon').addClass('link-primary').removeClass('link-danger').html(`<i class="fa-solid fa-copy"></i>`);
                     }, 1000);
                     console.error('Gagal menyalin teks:', err);
                 });
