@@ -405,7 +405,7 @@
                 <div class="d-flex">
                     <div class="align-self-center w-100">
                         <h5 class="card-title d-flex date justify-content-between">
-                            <div class="d-flex justify-content-start text-truncate">
+                            <div class="d-flex justify-content-start">
                                 <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">${resep.number}</span>
                                 <span class="mx-1 align-self-center" id="nama-pasien-${resep.number}">${resep.nama_pasien}</span>
                             </div>
