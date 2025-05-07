@@ -116,8 +116,8 @@ class SakitMata extends BaseController
             $data = $this->RawatJalanModel
                 ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
                 ->where('status', 'DAFTAR')
-                ->where('tanggal_registrasi >=', $seven_days_ago)
-                ->where('tanggal_registrasi <=', $today)
+                ->where("DATE(tanggal_registrasi) >=", $seven_days_ago)
+                ->where("DATE(tanggal_registrasi) <=", $today)
                 ->orderBy('rawat_jalan.id_rawat_jalan', 'DESC')
                 ->findAll();
 
@@ -178,8 +178,8 @@ class SakitMata extends BaseController
 
             $data = $this->RawatJalanModel
                 ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
-                ->where('tanggal_registrasi >=', $seven_days_ago)
-                ->where('tanggal_registrasi <=', $today)
+                ->where("DATE(tanggal_registrasi) >=", $seven_days_ago)
+                ->where("DATE(tanggal_registrasi) <=", $today)
                 ->where('status', 'DAFTAR')
                 ->findAll();
 
