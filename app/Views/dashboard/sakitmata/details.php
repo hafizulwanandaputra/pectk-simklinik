@@ -9,6 +9,10 @@ $registrasi = new DateTime(date('Y-m-d', strtotime($sakitmata['tanggal_registras
 
 // Hitung selisih antara tanggal sekarang dan tanggal lahir
 $usia = $registrasi->diff($tanggal_lahir);
+
+$tanggal_registrasi = date('Y-m-d', strtotime($sakitmata['tanggal_registrasi']));
+$today = date('Y-m-d');
+$seven_days_ago = date('Y-m-d', strtotime('-6 days'));
 ?>
 <?= $this->extend('dashboard/templates/dashboard'); ?>
 <?= $this->section('css'); ?>
@@ -81,7 +85,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <div class="no-fluid-content">
                     <nav class="nav nav-underline flex-nowrap overflow-auto">
                         <?php foreach ($listRawatJalan as $list) : ?>
-                            <a class="<?= (date('Y-m-d', strtotime($list['tanggal_registrasi'])) != date('Y-m-d')) ? 'text-danger' : ''; ?> nav-link py-1 <?= ($activeSegment === $list['id_keterangan_sakit_mata']) ? 'active activeLink' : '' ?>" href="<?= base_url('sakitmata/details/' . $list['id_keterangan_sakit_mata']); ?>">
+                            <a class="<?= ($tanggal_registrasi < $seven_days_ago) ? 'text-danger' : ''; ?> nav-link py-1 <?= ($activeSegment === $list['id_keterangan_sakit_mata']) ? 'active activeLink' : '' ?>" href="<?= base_url('sakitmata/details/' . $list['id_keterangan_sakit_mata']); ?>">
                                 <div class="text-center">
                                     <div class="text-nowrap lh-sm"><?= $list['nomor_registrasi']; ?></div>
                                     <div class="text-nowrap lh-sm" style="font-size: 0.75em;"><?= $list['tanggal_registrasi'] ?></div>
@@ -97,14 +101,14 @@ $usia = $registrasi->diff($tanggal_lahir);
         <div class="no-fluid-content">
             <?= form_open_multipart('sakitmata/update/' . $sakitmata['id_keterangan_sakit_mata'], 'id="SuratForm"'); ?>
             <?= csrf_field(); ?>
-            <?php if (date('Y-m-d', strtotime($sakitmata['tanggal_registrasi'])) != date('Y-m-d')) : ?>
+            <?php if ($tanggal_registrasi < $seven_days_ago) : ?>
                 <div id="alert-date" class="alert alert-warning alert-dismissible" role="alert">
                     <div class="d-flex align-items-start">
                         <div style="width: 12px; text-align: center;">
                             <i class="fa-solid fa-triangle-exclamation"></i>
                         </div>
                         <div class="w-100 ms-3">
-                            Saat ini Anda melihat data kunjungan pasien pada <?= date('Y-m-d', strtotime($sakitmata['tanggal_registrasi'])) ?>. Pastikan Anda mengisi data sesuai dengan tanggal kunjungan pasien.
+                            Saat ini Anda melihat surat keterangan sakit mata pasien pada <?= date('Y-m-d', strtotime($sakitmata['tanggal_registrasi'])) ?>. Pastikan Anda mengisi data sesuai dengan tanggal kunjungan pasien (7 hari yang lalu hingga hari ini).
                         </div>
                         <button type="button" id="close-alert" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
