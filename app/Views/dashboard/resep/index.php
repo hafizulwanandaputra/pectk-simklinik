@@ -102,8 +102,9 @@
                         <li class="list-group-item pb-3 pt-3" style="cursor: wait;">
                             <div class="d-flex">
                                 <div class="align-self-center w-100">
-                                    <h5 class="card-title d-flex placeholder-glow">
-                                        <span class="badge bg-body text-body border py-1 px-2 date placeholder number-placeholder" style="font-weight: 900; font-size: 0.85em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><?= $this->include('spinner/spinner'); ?></span> <span class="placeholder ms-1" style="width: 100%"></span>
+                                    <h5 class="card-title d-flex justify-content-start placeholder-glow">
+                                        <span class="badge bg-body text-body border py-1 px-2 date placeholder number-placeholder" style="font-weight: 900; font-size: 0.85em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><?= $this->include('spinner/spinner'); ?></span> <span class="placeholder mx-1" style="width: 100%"></span>
+                                        <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><i class="fa-solid fa-copy"></i></span>
                                     </h5>
                                     <h6 class="card-subtitle mb-2 placeholder-glow">
                                         <span class="placeholder" style="width: 100%;"></span><br>
@@ -201,8 +202,9 @@
             <li class="list-group-item pb-3 pt-3" style="cursor: wait;">
                 <div class="d-flex">
                     <div class="align-self-center w-100">
-                        <h5 class="card-title d-flex placeholder-glow">
-                            <span class="badge bg-body text-body border py-1 px-2 date placeholder number-placeholder" style="font-weight: 900; font-size: 0.85em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><?= $this->include('spinner/spinner'); ?></span> <span class="placeholder ms-1" style="width: 100%"></span>
+                        <h5 class="card-title d-flex justify-content-start placeholder-glow">
+                            <span class="badge bg-body text-body border py-1 px-2 date placeholder number-placeholder" style="font-weight: 900; font-size: 0.85em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><?= $this->include('spinner/spinner'); ?></span> <span class="placeholder mx-1" style="width: 100%"></span>
+                            <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><i class="fa-solid fa-copy"></i></span>
                         </h5>
                         <h6 class="card-subtitle mb-2 placeholder-glow">
                             <span class="placeholder" style="width: 100%;"></span><br>
@@ -309,6 +311,35 @@
             $('#loadingSpinner').hide();
         }
     }
+
+    function salinNamaPasien(resepNumber) {
+        const $namaSpan = $(`#nama-pasien-${resepNumber}`);
+        const textToCopy = $namaSpan.length ? $.trim($namaSpan.text()) : '';
+
+        const $copyButton = $(`#copy-nama-pasien-${resepNumber}`);
+        const originalHTML = $copyButton.html();
+
+        if (navigator.clipboard) {
+            navigator.clipboard.writeText(textToCopy).then(function() {
+                $copyButton.removeClass('text-body').addClass('text-success').html(`<i class="fa-solid fa-check"></i>`);
+
+                setTimeout(function() {
+                    $copyButton.addClass('text-body').removeClass('text-success').html(originalHTML);
+                }, 1000);
+            }).catch(function(err) {
+                $copyButton.removeClass('text-body').addClass('text-danger').html(`<i class="fa-solid fa-xmark"></i>`);
+
+                setTimeout(function() {
+                    $copyButton.addClass('text-body').removeClass('text-danger').html(originalHTML);
+                }, 1000);
+
+                console.error('Gagal menyalin teks:', err);
+            });
+        } else {
+            showFailedToast('Clipboard API tidak didukung di peramban ini.');
+        }
+    }
+
     async function fetchResep() {
         const search = $('#searchInput').val();
         const offset = (currentPage - 1) * limit;
@@ -373,9 +404,12 @@
             <li class="list-group-item pb-3 pt-3">
                 <div class="d-flex">
                     <div class="align-self-center w-100">
-                        <h5 class="card-title d-flex date justify-content-start">
-                            <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">${resep.number}</span>
-                            <span class="ms-1 align-self-center">${resep.nama_pasien}</span>
+                        <h5 class="card-title d-flex date justify-content-between">
+                            <div class="d-flex justify-content-start text-truncate">
+                                <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">${resep.number}</span>
+                                <span class="mx-1 align-self-center" id="nama-pasien-${resep.number}">${resep.nama_pasien}</span>
+                            </div>
+                            <span role="button" class="badge bg-body text-body border px-2 align-self-start date" id="copy-nama-pasien-${resep.number}" onclick="salinNamaPasien('${resep.number}')" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Salin nama pasien" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><i class="fa-solid fa-copy"></i></span>
                         </h5>
                         <h6 class="card-subtitle mb-2">
                             ${resep.dokter}<br>${jenis_kelamin} ${nomor_registrasi}
@@ -437,6 +471,8 @@
 
                     $('#resepContainer').append(resepElement);
                 });
+
+                $('[data-bs-toggle="tooltip"]').tooltip();
 
                 // Pagination logic with ellipsis for more than 3 pages
                 const totalPages = Math.ceil(data.total / limit);
