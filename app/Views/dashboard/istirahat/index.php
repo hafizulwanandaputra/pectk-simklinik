@@ -317,14 +317,15 @@
                         `<em>Belum ada</em>`;
                     const tanggalRegistrasi = new Date(istirahat.tanggal_registrasi);
                     const today = new Date();
-                    const yesterday = new Date();
-                    yesterday.setDate(today.getDate() - 1);
+                    const sevenDaysAgo = new Date();
+                    sevenDaysAgo.setDate(today.getDate() - 6); // Termasuk hari ini
 
-                    const tanggalStr = tanggalRegistrasi.toISOString().split('T')[0];
-                    const todayStr = today.toISOString().split('T')[0];
-                    const yesterdayStr = yesterday.toISOString().split('T')[0];
+                    // Normalisasi hanya ke tanggal (tanpa jam) agar perbandingan akurat
+                    tanggalRegistrasi.setHours(0, 0, 0, 0);
+                    today.setHours(0, 0, 0, 0);
+                    sevenDaysAgo.setHours(0, 0, 0, 0);
 
-                    const delete_today = (tanggalStr !== todayStr && tanggalStr !== yesterdayStr) ? 'disabled' : '';
+                    const delete_today = (tanggalRegistrasi < sevenDaysAgo || tanggalRegistrasi > today) ? 'disabled' : '';
 
                     const IstirahatElement = `
                     <li class="list-group-item <?= (session()->get('role') != 'Admisi') ? 'border-top-0' : ''; ?> pb-3 pt-3">

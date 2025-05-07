@@ -6,9 +6,7 @@ use App\Controllers\BaseController;
 use App\Models\RawatJalanModel;
 use App\Models\ButaWarnaModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
-use DateTime;
 use Picqer\Barcode\BarcodeGeneratorPNG;
-use NumberToWords\NumberToWords;
 
 class ButaWarna extends BaseController
 {
@@ -104,16 +102,14 @@ class ButaWarna extends BaseController
     {
         // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', 'Perawat', atau 'Admisi' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Admisi') {
+            $seven_days_ago = date('Y-m-d', strtotime('-6 days')); // Termasuk hari ini
             $today = date('Y-m-d');
-            $yesterday = date('Y-m-d', strtotime('-1 day'));
 
             $data = $this->RawatJalanModel
                 ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
-                ->groupStart()
-                ->like('tanggal_registrasi', $today)
-                ->orLike('tanggal_registrasi', $yesterday)
-                ->groupEnd()
                 ->where('status', 'DAFTAR')
+                ->where('tanggal_registrasi >=', $seven_days_ago)
+                ->where('tanggal_registrasi <=', $today)
                 ->orderBy('rawat_jalan.id_rawat_jalan', 'DESC')
                 ->findAll();
 
@@ -170,14 +166,12 @@ class ButaWarna extends BaseController
             $nomorRegistrasi = $this->request->getPost('nomor_registrasi');
 
             $today = date('Y-m-d');
-            $yesterday = date('Y-m-d', strtotime('-1 day'));
+            $seven_days_ago = date('Y-m-d', strtotime('-6 days')); // Termasuk hari ini
 
             $data = $this->RawatJalanModel
                 ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
-                ->groupStart()
-                ->like('tanggal_registrasi', $today)
-                ->orLike('tanggal_registrasi', $yesterday)
-                ->groupEnd()
+                ->where('tanggal_registrasi >=', $seven_days_ago)
+                ->where('tanggal_registrasi <=', $today)
                 ->where('status', 'DAFTAR')
                 ->findAll();
 
@@ -287,14 +281,14 @@ class ButaWarna extends BaseController
                 ->find($id);
             $tanggal = date('Y-m-d', strtotime($butawarna['tanggal_registrasi']));
             $today = date('Y-m-d');
-            $yesterday = date('Y-m-d', strtotime('-1 day'));
+            $seven_days_ago = date('Y-m-d', strtotime('-6 days')); // Termasuk hari ini
 
-            if ($tanggal != $today && $tanggal != $yesterday) {
+            if ($tanggal < $seven_days_ago || $tanggal > $today) {
                 return $this->response
                     ->setStatusCode(422)
                     ->setJSON([
                         'success' => false,
-                        'message' => 'Surat keterangan buta warna yang bukan hari ini atau kemarin tidak dapat dihapus'
+                        'message' => 'Surat keterangan buta warna yang lebih dari 7 hari lalu tidak dapat dihapus'
                     ]);
             }
             if ($butawarna) {
