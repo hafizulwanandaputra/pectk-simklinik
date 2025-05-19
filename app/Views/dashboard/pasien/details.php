@@ -572,6 +572,17 @@
                     <button id="editRajalCloseBtn" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body py-2">
+                    <div class="alert alert-warning mb-1 mt-1" role="alert">
+                        <div class="d-flex align-items-start">
+                            <div style="width: 12px; text-align: center;">
+                                <i class="fa-solid fa-triangle-exclamation"></i>
+                            </div>
+                            <div class="w-100 ms-3">
+                                <h4 style="font-weight: 900;">PERINGATAN!</h4>
+                                <p class="mb-0">Mengganti dokter melalui formulir ini tidak akan mengubah nomor antrian. Jika ingin mengubah nomor antrian, hapus rawat jalan ini dan registrasikan dengan rawat jalan baru.</p>
+                            </div>
+                        </div>
+                    </div>
                     <div class="form-floating mt-1 mb-1">
                         <select class="form-select" id="edit_ruangan" name="edit_ruangan" aria-label="edit_ruangan">
                             <option value="" disabled selected>-- Pilih Ruangan --</option>
