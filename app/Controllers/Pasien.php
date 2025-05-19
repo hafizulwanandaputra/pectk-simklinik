@@ -635,6 +635,23 @@ class Pasien extends BaseController
                 } else {
                     $rajal['jaminan'] = 'Tidak Diketahui'; // Default jika kode jaminan tidak ditemukan
                 }
+                // Tambahkan field resep_obat_digunakan
+                $resepObatCount = $db->table('resep')
+                    ->where('nomor_registrasi', $rajal['nomor_registrasi'])
+                    ->countAllResults();
+                $rajal['resep_obat_digunakan'] = (int) ($resepObatCount > 0);
+
+                // Tambahkan field resep_kacamata_digunakan
+                $resepKacamataCount = $db->table('medrec_optik')
+                    ->where('nomor_registrasi', $rajal['nomor_registrasi'])
+                    ->countAllResults();
+                $rajal['resep_kacamata_digunakan'] = (int) ($resepKacamataCount > 0);
+
+                // Tambahkan field transaksi_digunakan
+                $transaksiCount = $db->table('transaksi')
+                    ->where('nomor_registrasi', $rajal['nomor_registrasi'])
+                    ->countAllResults();
+                $rajal['transaksi_digunakan'] = (int) ($transaksiCount > 0);
             }
 
             // Mengembalikan data pasien dalam format JSON

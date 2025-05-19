@@ -491,7 +491,7 @@
                     <div class="form-floating mb-1 mt-1">
                         <select class="form-select" id="alasan_batal" name="alasan_batal" aria-label="alasan_batal">
                             <option value="" disabled selected>-- Pilih Alasan Pembatalan --</option>
-                            <option value="HAPUS">Kesalahan Input, Ganti Jadwal Dokter, atau Pasien Salah Tempat Berobat (Hapus Registrasi)</option>
+                            <option value="HAPUS">Kesalahan Input atau Pasien Salah Tempat Berobat (Hapus Registrasi)</option>
                             <option value="Pasien Tidak Jadi Berobat">Pasien Tidak Jadi Berobat (Atur ke Batal)</option>
                         </select>
                         <label for="alasan_batal">Alasan Pembatalan<span class="text-danger">*</span></label>
@@ -559,6 +559,42 @@
                 <div class="modal-footer justify-content-end pt-2 pb-2" style="border-top: 1px solid var(--bs-border-color-translucent);">
                     <button type="submit" id="submitButton" class="btn btn-primary bg-gradient ">
                         <i class="fa-solid fa-plus"></i> Registrasi
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="modal fade" id="editRajalModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="editRajalModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable ">
+            <form id="editRajalForm" enctype="multipart/form-data" class="modal-content bg-body-tertiary shadow-lg transparent-blur">
+                <div class="modal-header justify-content-between pt-2 pb-2" style="border-bottom: 1px solid var(--bs-border-color-translucent);">
+                    <h6 class="pe-2 modal-title fs-6 text-truncate" id="editRajalModalLabel" style="font-weight: bold;"></h6>
+                    <button id="editRajalCloseBtn" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body py-2">
+                    <div class="form-floating mt-1 mb-1">
+                        <select class="form-select" id="edit_ruangan" name="edit_ruangan" aria-label="edit_ruangan">
+                            <option value="" disabled selected>-- Pilih Ruangan --</option>
+                        </select>
+                        <label for="edit_ruangan">Ruangan<span class="text-danger">*</span></label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="form-floating mt-1 mb-1">
+                        <select class="form-select" id="edit_dokter" name="edit_dokter" aria-label="dokter">
+                            <option value="" disabled selected>-- Pilih Dokter --</option>
+                        </select>
+                        <label for="edit_dokter">Dokter<span class="text-danger">*</span></label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="form-floating mb-1 mt-1">
+                        <input type="text" class="form-control " autocomplete="off" dir="auto" placeholder="keluhan" id="edit_keluhan" name="edit_keluhan">
+                        <label for="edit_keluhan">Keluhan<span class="text-danger">*</span></label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-end pt-2 pb-2" style="border-top: 1px solid var(--bs-border-color-translucent);">
+                    <button type="submit" id="submitButton" class="btn btn-primary bg-gradient ">
+                        <i class="fa-solid fa-floppy-disk"></i> Simpan
                     </button>
                 </div>
             </form>
@@ -1010,6 +1046,30 @@
         }
     }
 
+    async function fetchRuanganOptionsModalEdit() {
+        try {
+            // Panggil API dengan query string tanggal
+            const response = await axios.get(`<?= base_url('pasien/ruanganoptions') ?>`);
+
+            if (response.data.success) {
+                const options = response.data.data;
+
+                // Hapus opsi yang ada, kecuali opsi pertama (default)
+                $('#edit_ruangan').prop('disabled', false).find('option:not(:first)').remove();
+
+                // Tambahkan opsi ke elemen select
+                options.forEach(option => {
+                    $('#edit_ruangan').append(`<option value="${option.value}">${option.text}</option>`);
+                });
+            } else {
+                showFailedToast('Gagal mendapatkan ruangan.');
+            }
+        } catch (error) {
+            console.error(error);
+            showFailedToast(`${error}`);
+        }
+    }
+
     async function fetchDokterOptions(selectedDokter = null) {
         $('#loadingSpinner').show();
         try {
@@ -1057,6 +1117,30 @@
                 // Tambahkan opsi ke elemen select
                 options.forEach(option => {
                     $('#dokter').append(`<option value="${option.value}">${option.text}</option>`);
+                });
+            } else {
+                showFailedToast('Gagal mendapatkan dokter.');
+            }
+        } catch (error) {
+            console.error(error);
+            showFailedToast(`${error}`);
+        }
+    }
+
+    async function fetchDokterOptionsModalEdit() {
+        try {
+            // Panggil API dengan query string tanggal
+            const response = await axios.get(`<?= base_url('pasien/dokteroptions') ?>`);
+
+            if (response.data.success) {
+                const options = response.data.data;
+
+                // Hapus opsi yang ada, kecuali opsi pertama (default)
+                $('#edit_dokter').prop('disabled', false).find('option:not(:first)').remove();
+
+                // Tambahkan opsi ke elemen select
+                options.forEach(option => {
+                    $('#edit_dokter').append(`<option value="${option.value}">${option.text}</option>`);
                 });
             } else {
                 showFailedToast('Gagal mendapatkan dokter.');
@@ -1206,6 +1290,7 @@
                     const transaksi = rajal.transaksi == '1' ?
                         `disabled` :
                         ``;
+                    const digunakan = (rajal.resep_obat_digunakan > 0 || rajal.resep_kacamata_digunakan > 0 || rajal.transaksi_digunakan > 0) ? 'disabled' : '';
                     let tombol_isian_ok = rajal.ruangan;
                     if (tombol_isian_ok === 'Kamar Operasi') {
                         tombol_isian_ok = `
@@ -1326,6 +1411,9 @@
                         <i class="fa-solid fa-receipt"></i> Struk
                     </button>
                     ${tombol_isian_ok}
+                    <button type="button" class="btn btn-body btn-sm bg-gradient edit-rajal-btn" data-id="${rajal.id_rawat_jalan}" ${transaksi} ${tblbatal} ${digunakan}>
+                        <i class="fa-solid fa-file-pen"></i> Edit Rawat Jalan
+                    </button>
                     <button type="button" class="btn btn-danger btn-sm bg-gradient cancel-btn" data-id="${rajal.id_rawat_jalan}" ${transaksi} ${tblbatal}>
                         <i class="fa-solid fa-xmark"></i> Batal
                     </button>
@@ -1648,11 +1736,32 @@
             $('#batalRajalModal').modal('show'); // Tampilkan modal resep luar
         });
 
-        // Tampilkan modal batalkan rawat halan
-        $(document).on('click', '.edit-isian-ok-btn', function() {
+        $(document).on('click', '.edit-rajal-btn', async function() {
+            const $this = $(this); // Menyimpan referensi ke tombol yang diklik
             rajalId = $(this).data('id');
-            $('#isianOperasiModalLabel').text('Lembar Isian Operasi'); // Ubah judul modal menjadi 'Lembar Isian Operasi'
-            $('#isianOperasiModal').modal('show'); // Tampilkan modal resep luar
+            $('[data-bs-toggle="tooltip"]').tooltip('hide'); // Menyembunyikan tooltip
+            $this.prop('disabled', true).html(`<?= $this->include('spinner/spinner'); ?> Edit Rawat Jalan`); // Menampilkan spinner
+
+            try {
+                // Melakukan permintaan dengan Axios untuk mendapatkan data pengguna
+                const response = await axios.get(`<?= base_url('/rawatjalan/rawatjalan') ?>/${rajalId}`);
+                await Promise.all([
+                    fetchRuanganOptionsModalEdit(),
+                    fetchDokterOptionsModalEdit()
+                ]);
+                // Memperbarui field modal dengan data pengguna yang diterima
+                $('#editRajalModalLabel').text('Edit Rawat Jalan');
+                $('#edit_ruangan').val(response.data.ruangan);
+                $('#edit_dokter').val(response.data.dokter);
+                $('#edit_keluhan').val(response.data.keluhan);
+                // Menampilkan modal
+                $('#editRajalModal').modal('show');
+            } catch (error) {
+                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error); // Menampilkan pesan kesalahan
+            } finally {
+                // Mengatur ulang status tombol
+                $this.prop('disabled', false).html(`<i class="fa-solid fa-file-pen"></i> Edit Rawat Jalan`); // Mengembalikan tampilan tombol
+            }
         });
 
         // Mengedit pengguna saat tombol edit diklik
@@ -1776,6 +1885,104 @@
                     <i class="fa-solid fa-plus"></i> Registrasi
                 `);
                 $('#rajalForm input, #rajalForm select').prop('disabled', false);
+            }
+        });
+
+        $('#editRajalForm').submit(async function(e) {
+            e.preventDefault();
+
+            const formData = new FormData(this);
+            console.log("Form Data:", $(this).serialize());
+
+            // Clear previous validation states
+            $('#editRajalForm .is-invalid').removeClass('is-invalid');
+            $('#editRajalForm .invalid-feedback').text('').hide();
+            $('#submitIsianOKButton').prop('disabled', true).html(`
+                <?= $this->include('spinner/spinner'); ?> Simpan
+            `);
+
+            // Disable form inputs
+            $('#editRajalForm input, #editRajalForm select').prop('disabled', true);
+
+            try {
+                const response = await axios.post(`<?= base_url('/rawatjalan/edit') ?>/${rajalId}`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
+
+                if (response.data.success) {
+                    $('#editRajalModal').modal('hide');
+                    const selectedJenisKunjungan = $('#kunjunganFilter').val();
+                    const selectedJaminan = $('#jaminanFilter, #jaminan').val();
+                    const selectedRuangan = $('#ruanganFilter, #ruangan').val();
+                    const selectedDokter = $('#dokterFilter, #dokter').val();
+                    const selectedPendaftar = $('#pendaftarFilter').val();
+                    await Promise.all([
+                        fetchJenisKunjunganOptions(selectedJenisKunjungan),
+                        fetchJaminanOptions(selectedJaminan),
+                        fetchRuanganOptions(selectedRuangan),
+                        fetchDokterOptions(selectedDokter),
+                        fetchPendaftarOptions(selectedPendaftar)
+                    ]);
+                    fetchRajal();
+                } else {
+                    console.log("Validation Errors:", response.data.errors);
+
+                    // Clear previous validation states
+                    $('#editRajalForm .is-invalid').removeClass('is-invalid');
+                    $('#editRajalForm .invalid-feedback').text('').hide();
+
+                    // Display new validation errors
+                    for (const field in response.data.errors) {
+                        if (response.data.errors.hasOwnProperty(field)) {
+                            const fieldElement = $('#' + field);
+
+                            // Handle radio button group separately
+                            if (field === 'jenis_kelamin') {
+                                const radioGroup = $("input[name='jenis_kelamin']");
+                                const feedbackElement = radioGroup.closest('.col-form-label').find('.invalid-feedback');
+
+                                if (radioGroup.length > 0 && feedbackElement.length > 0) {
+                                    radioGroup.addClass('is-invalid');
+                                    feedbackElement.text(response.data.errors[field]).show();
+
+                                    // Remove error message when the user selects any radio button in the group
+                                    radioGroup.on('change', function() {
+                                        $("input[name='jenis_kelamin']").removeClass('is-invalid');
+                                        feedbackElement.removeAttr('style').hide();
+                                    });
+                                }
+                            } else {
+                                const feedbackElement = fieldElement.siblings('.invalid-feedback');
+
+                                if (fieldElement.length > 0 && feedbackElement.length > 0) {
+                                    fieldElement.addClass('is-invalid');
+                                    feedbackElement.text(response.data.errors[field]).show();
+
+                                    // Remove error message when the user corrects the input
+                                    fieldElement.on('input change', function() {
+                                        $(this).removeClass('is-invalid');
+                                        $(this).siblings('.invalid-feedback').text('').hide();
+                                    });
+                                } else {
+                                    console.warn("Elemen tidak ditemukan pada field:", field);
+                                }
+                            }
+                        }
+                    }
+                }
+            } catch (error) {
+                if (error.response.request.status === 401) {
+                    showFailedToast(error.response.data.message);
+                } else {
+                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                }
+            } finally {
+                $('#submitIsianOKButton').prop('disabled', false).html(`
+                    <i class="fa-solid fa-floppy-disk"></i> Simpan
+                `);
+                $('#editRajalForm input, #editRajalForm select').prop('disabled', false);
             }
         });
 
@@ -1988,6 +2195,11 @@
             $('#batalRajalForm')[0].reset();
             $('#batalRajalForm .is-invalid').removeClass('is-invalid');
             $('#batalRajalForm .invalid-feedback').text('').hide();
+        });
+        $('#editRajalModal').on('hidden.bs.modal', function() {
+            $('#editRajalForm')[0].reset();
+            $('#editRajalForm .is-invalid').removeClass('is-invalid');
+            $('#editRajalForm .invalid-feedback').text('').hide();
         });
         $('#isianOperasiModal').on('hidden.bs.modal', function() {
             $('#isianOperasiForm')[0].reset();

@@ -50,6 +50,7 @@ $routes->get('/(?i)rawatjalan/(?i)ruanganoptions', 'Pasien::ruanganoptions');
 $routes->get('/(?i)rawatjalan/(?i)dokteroptions', 'Pasien::dokteroptions');
 $routes->get('/(?i)rawatjalan/(?i)statusoptions', 'Pasien::statusoptions');
 $routes->post('/(?i)rawatjalan/(?i)create/(:any)', 'RawatJalan::create/$1');
+$routes->post('/(?i)rawatjalan/(?i)edit/(:any)', 'RawatJalan::edit/$1');
 $routes->post('/(?i)rawatjalan/(?i)editlembarisianoperasi/(:any)', 'RawatJalan::editlembarisianoperasi/$1');
 $routes->get('/(?i)rawatjalan/(?i)lembarisianoperasi/(:any)', 'RawatJalan::lembarisianoperasi/$1');
 $routes->get('/(?i)rawatjalan/(?i)struk/(:any)', 'RawatJalan::struk/$1');

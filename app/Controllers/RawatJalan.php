@@ -386,6 +386,69 @@ class RawatJalan extends BaseController
         }
     }
 
+    public function edit($id)
+    {
+        // Memeriksa peran pengguna, hanya 'Admin', 'Admisi' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') {
+            // Validasi input
+            $validation = \Config\Services::validation();
+            // Menetapkan aturan validasi dasar
+            $validation->setRules([
+                'edit_ruangan' => 'required',
+                'edit_dokter' => 'required',
+                'edit_keluhan' => 'required'
+            ]);
+
+            // Memeriksa validasi
+            if (!$this->validate($validation->getRules())) {
+                return $this->response->setJSON(['success' => false, 'message' => NULL, 'errors' => $validation->getErrors()]);
+            }
+
+            $db = db_connect();
+
+            // Ambil rawat jalan
+            $rajal = $db->table('rawat_jalan')
+                ->where('id_rawat_jalan', $id)
+                ->get()->getRowArray();
+
+            if ($rajal['transaksi'] == 1) {
+                return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Rawat jalan tidak dapat diedit karena transaksi sudah diproses']);
+            }
+            if ($rajal['status'] == 'BATAL') {
+                return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Rawat jalan tidak dapat diedit karena rawat jalan ini sudah dibatalkan']);
+            }
+
+            // Cek apakah nomor_registrasi digunakan di tabel resep atau transaksi
+            $nomorReg = $rajal['nomor_registrasi'];
+
+            $digunakanDiResepObat = $db->table('resep')->where('nomor_registrasi', $nomorReg)->countAllResults();
+            $digunakanDiResepKacamata = $db->table('medrec_optik')->where('nomor_registrasi', $nomorReg)->countAllResults();
+            $digunakanDiTransaksi = $db->table('transaksi')->where('nomor_registrasi', $nomorReg)->countAllResults();
+
+            if ($digunakanDiResepObat > 0 || $digunakanDiResepKacamata > 0 || $digunakanDiTransaksi > 0) {
+                return $this->response->setStatusCode(422)->setJSON([
+                    'success' => false,
+                    'message' => 'Rawat jalan tidak dapat diedit karena rawat jalan ini sudah memiliki resep obat, resep kacamata, atau transaksi'
+                ]);
+            }
+
+            // Simpan data pasien
+            $data = [
+                'ruangan' => $this->request->getPost('edit_ruangan'),
+                'dokter' => $this->request->getPost('edit_dokter'),
+                'keluhan' => $this->request->getPost('edit_keluhan'),
+            ];
+            // Update data menggunakan Query Builder
+            $db->table('rawat_jalan')->where('id_rawat_jalan', $id)->update($data);
+            // Panggil WebSocket untuk update client
+            $this->notify_clients('update');
+            return $this->response->setJSON(['success' => true, 'message' => 'Rawat jalan berhasil diedit']);
+        } else {
+            // Jika peran tidak dikenali, lemparkan pengecualian 404
+            throw PageNotFoundException::forPageNotFound();
+        }
+    }
+
     public function editlembarisianoperasi($id)
     {
         // Memeriksa peran pengguna, hanya 'Admin', 'Admisi' yang diizinkan
@@ -427,7 +490,7 @@ class RawatJalan extends BaseController
             $db->table('rawat_jalan')->where('id_rawat_jalan', $id)->update($data);
             // Panggil WebSocket untuk update client
             $this->notify_clients('update');
-            return $this->response->setJSON(['success' => true, 'message' => 'Lembar isian operasi berhasil diregistrasi']);
+            return $this->response->setJSON(['success' => true, 'message' => 'Lembar isian operasi berhasil diedit']);
         } else {
             // Jika peran tidak dikenali, lemparkan pengecualian 404
             throw PageNotFoundException::forPageNotFound();
