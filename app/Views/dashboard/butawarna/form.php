@@ -214,7 +214,7 @@ $waktuFormatted = $dateTime->format('H.i.s');
                                 :
                             </td>
                             <td style="width: 0%; vertical-align: top; white-space: nowrap;">
-                                <?= (!empty($butawarna['od_ukuran_kacamata'])) ? $butawarna['od_ukuran_kacamata'] . ' | ' : '' ?><?= $butawarna['od_visus'] ?>
+                                <?= (!empty($butawarna['od_ukuran_kacamata'])) ? $butawarna['od_ukuran_kacamata'] . ' • ' : '' ?><?= $butawarna['od_visus'] ?>
                             </td>
                             <td rowspan="2" style="width: 80%; vertical-align: middle;">
                                 <div style="display: flex; justify-content: flex-start; align-items: center; transform: translateY(-3px);">
@@ -231,7 +231,7 @@ $waktuFormatted = $dateTime->format('H.i.s');
                                 :
                             </td>
                             <td style="width: 0%; vertical-align: top; white-space: nowrap;">
-                                <?= (!empty($butawarna['os_ukuran_kacamata'])) ? $butawarna['os_ukuran_kacamata'] . ' | ' : '' ?><?= $butawarna['os_visus'] ?>
+                                <?= (!empty($butawarna['os_ukuran_kacamata'])) ? $butawarna['os_ukuran_kacamata'] . ' • ' : '' ?><?= $butawarna['os_visus'] ?>
                             </td>
                         </tr>
                     </tbody>
