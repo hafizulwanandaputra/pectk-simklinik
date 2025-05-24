@@ -841,9 +841,9 @@ class ResepLuar extends BaseController
             $detail = $builderDetail->where('id_detail_resep', $id)->get()->getRowArray();
 
             if ($detail) {
-                $id_resep = $detail['id_resep']; // Mengambil id resep dari detail
-                $id_obat = $detail['id_obat']; // Mengambil id obat dari detail
-                $jumlah_obat = $detail['jumlah']; // Mengambil jumlah obat dari detail
+                $id_resep = $detail['id_resep'];
+                $jumlah_obat = $detail['jumlah'];
+                $id_batch_obat = $detail['id_batch_obat']; // ← ini penting
 
                 // Mengambil data resep
                 $resepb = $db->table('resep');
@@ -861,19 +861,17 @@ class ResepLuar extends BaseController
                     return $this->response->setStatusCode(401)->setJSON(['success' => false, 'message' => 'Tidak bisa dilakukan karena transaksi yang menggunakan resep ini sudah diproses', 'errors' => NULL]);
                 }
 
-                // Mengambil jumlah_keluar saat ini dari tabel obat
+                // Ambil batch yang sesuai
                 $builderObat = $db->table('batch_obat');
-                $obat = $builderObat
-                    ->join('obat', 'obat.id_obat = batch_obat.id_obat', 'inner')
-                    ->get()->getRowArray();
+                $obat = $builderObat->where('id_batch_obat', $id_batch_obat)->get()->getRowArray();
 
                 if ($obat) {
-                    // Memperbarui jumlah_keluar di tabel obat (mengurangi stok berdasarkan detail yang dihapus)
                     $new_jumlah_keluar = $obat['jumlah_keluar'] - $jumlah_obat;
                     if ($new_jumlah_keluar < 0) {
-                        $new_jumlah_keluar = 0; // Jika jumlah keluar negatif, set menjadi 0
+                        $new_jumlah_keluar = 0;
                     }
-                    $builderObat->where('id_obat', $id_obat)->update([
+
+                    $builderObat->where('id_batch_obat', $id_batch_obat)->update([
                         'jumlah_keluar' => $new_jumlah_keluar,
                         'diperbarui' => date('Y-m-d H:i:s')
                     ]);
