@@ -279,12 +279,9 @@
                                 <div class="form-floating">
                                     <select class="form-select" id="agama" name="agama" aria-label="agama">
                                         <option value="" selected>-- Pilih Agama --</option>
-                                        <option value="1">Islam</option>
-                                        <option value="2">Kristen</option>
-                                        <option value="4">Katolik</option>
-                                        <option value="5">Hindu</option>
-                                        <option value="6">Buddha</option>
-                                        <option value="7">Konghucu</option>
+                                        <?php foreach ($agama as $agama_list) : ?>
+                                            <option value="<?= $agama_list['agamaId'] ?>"><?= $agama_list['agamaNama'] ?></option>
+                                        <?php endforeach; ?>
                                     </select>
                                     <label for="agama">Agama<span class="text-danger">*</span></label>
                                     <div class="invalid-feedback"></div>
@@ -294,10 +291,9 @@
                                 <div class="form-floating">
                                     <select class="form-select" id="status_nikah" name="status_nikah" aria-label="status_nikah">
                                         <option value="" selected>-- Pilih Status Perkawinan --</option>
-                                        <option value="1">BELUM KAWIN</option>
-                                        <option value="2">KAWIN</option>
-                                        <option value="3">CERAI HIDUP</option>
-                                        <option value="4">CERAI MATI</option>
+                                        <?php foreach ($status_pernikahan as $status_pernikahan_list) : ?>
+                                            <option value="<?= $status_pernikahan_list['pernikahanId'] ?>"><?= $status_pernikahan_list['pernikahanStatus'] ?></option>
+                                        <?php endforeach; ?>
                                     </select>
                                     <label for="status_nikah">Status Perkawinan<span class="text-danger">*</span></label>
                                     <div class="invalid-feedback"></div>
@@ -308,52 +304,9 @@
                             <div class="form-floating">
                                 <select class="form-select" id="pekerjaan" name="pekerjaan" aria-label="pekerjaan">
                                     <option value="" selected>-- Pilih Pekerjaan --</option>
-                                    <option value="1">
-                                        TIDAK BEKERJA</option>
-                                    <option value="2">
-                                        I R T</option>
-                                    <option value="3">
-                                        BURUH</option>
-                                    <option value="4">
-                                        PELAJAR</option>
-                                    <option value="5">
-                                        MAHASISWA</option>
-                                    <option value="6">
-                                        WIRASWASTA</option>
-                                    <option value="7">
-                                        P N S</option>
-                                    <option value="8">
-                                        PEDAGANG</option>
-                                    <option value="9">
-                                        KARYAWAN/TI</option>
-                                    <option value="10">
-                                        SWASTA</option>
-                                    <option value="11">
-                                        KARYAWAN RS</option>
-                                    <option value="12">
-                                        PETANI</option>
-                                    <option value="13">
-                                        PERAWAT</option>
-                                    <option value="14">
-                                        BIDAN</option>
-                                    <option value="15">
-                                        DOKTER</option>
-                                    <option value="16">
-                                        TUKANG</option>
-                                    <option value="17">
-                                        SOPIR</option>
-                                    <option value="18">
-                                        DOSEN</option>
-                                    <option value="19">
-                                        GURU</option>
-                                    <option value="20">
-                                        BUMN</option>
-                                    <option value="21">
-                                        PENSIUNAN</option>
-                                    <option value="22">
-                                        ABRI</option>
-                                    <option value="23">
-                                        POLRI</option>
+                                    <?php foreach ($pekerjaan as $pekerjaan_list) : ?>
+                                        <option value="<?= $pekerjaan_list['pekerjaanId'] ?>"><?= $pekerjaan_list['pekerjaanNama'] ?></option>
+                                    <?php endforeach; ?>
                                 </select>
                                 <label for="pekerjaan">Pekerjaan<span class="text-danger">*</span></label>
                                 <div class="invalid-feedback"></div>
