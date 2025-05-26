@@ -267,7 +267,7 @@
                             <div class="col">
                                 <div class="form-floating">
                                     <select class="form-select" id="kewarganegaraan" name="kewarganegaraan" aria-label="kewarganegaraan">
-                                        <option value="" selected>-- Pilih Kewarganegaraan --</option>
+                                        <option value="" selected disabled>-- Pilih Kewarganegaraan --</option>
                                         <option value="WNI">INDONESIA</option>
                                         <option value="WNA">WARGA NEGARA ASING</option>
                                     </select>
@@ -278,7 +278,7 @@
                             <div class="col">
                                 <div class="form-floating">
                                     <select class="form-select" id="agama" name="agama" aria-label="agama">
-                                        <option value="" selected>-- Pilih Agama --</option>
+                                        <option value="" selected disabled>-- Pilih Agama --</option>
                                         <?php foreach ($agama as $agama_list) : ?>
                                             <option value="<?= $agama_list['agamaId'] ?>"><?= $agama_list['agamaNama'] ?></option>
                                         <?php endforeach; ?>
@@ -290,7 +290,7 @@
                             <div class="col">
                                 <div class="form-floating">
                                     <select class="form-select" id="status_nikah" name="status_nikah" aria-label="status_nikah">
-                                        <option value="" selected>-- Pilih Status Perkawinan --</option>
+                                        <option value="" selected disabled>-- Pilih Status Perkawinan --</option>
                                         <?php foreach ($status_pernikahan as $status_pernikahan_list) : ?>
                                             <option value="<?= $status_pernikahan_list['pernikahanId'] ?>"><?= $status_pernikahan_list['pernikahanStatus'] ?></option>
                                         <?php endforeach; ?>
@@ -303,7 +303,7 @@
                         <div class="mb-2">
                             <div class="form-floating">
                                 <select class="form-select" id="pekerjaan" name="pekerjaan" aria-label="pekerjaan">
-                                    <option value="" selected>-- Pilih Pekerjaan --</option>
+                                    <option value="" selected disabled>-- Pilih Pekerjaan --</option>
                                     <?php foreach ($pekerjaan as $pekerjaan_list) : ?>
                                         <option value="<?= $pekerjaan_list['pekerjaanId'] ?>"><?= $pekerjaan_list['pekerjaanNama'] ?></option>
                                     <?php endforeach; ?>
@@ -722,7 +722,7 @@
                 $('#status_nikah').val(data.status_nikah);
             }
             if (data.pekerjaan > 0) {
-                $('#pekerjaan').val(data.pekerjaan);
+                $('#pekerjaan').val(data.pekerjaan).trigger('change');
             }
             await loadProvinsi(data.provinsi); // Muat dan pilih provinsi
             if (data.kabupaten) {
@@ -851,7 +851,7 @@
         }
     });
 
-    $('#provinsi, #kabupaten, #kecamatan, #kelurahan').select2({
+    $('#provinsi, #kabupaten, #kecamatan, #kelurahan, #pekerjaan').select2({
         dropdownParent: $('#pasienForm'),
         theme: "bootstrap-5",
         width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
