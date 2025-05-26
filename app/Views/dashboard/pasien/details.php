@@ -304,6 +304,7 @@
                             <div class="form-floating">
                                 <select class="form-select" id="pekerjaan" name="pekerjaan" aria-label="pekerjaan">
                                     <option value="" selected disabled>-- Pilih Pekerjaan --</option>
+                                    <option value="1">BELUM/TIDAK BEKERJA</option>
                                     <?php foreach ($pekerjaan as $pekerjaan_list) : ?>
                                         <option value="<?= $pekerjaan_list['pekerjaanId'] ?>"><?= $pekerjaan_list['pekerjaanNama'] ?></option>
                                     <?php endforeach; ?>

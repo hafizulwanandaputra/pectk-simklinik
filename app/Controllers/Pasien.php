@@ -166,8 +166,8 @@ class Pasien extends BaseController
             // Status Pernikahan
             $status_pernikahan = $db->table('master_status_pernikahan')->get()->getResultArray();
 
-            // Status Pekerjaan
-            $pekerjaan = $db->table('master_pekerjaan')->orderBy('pekerjaanNama', 'ASC')->get()->getResultArray();
+            // Pekerjaan
+            $pekerjaan = $db->table('master_pekerjaan')->where('pekerjaanId !=', 1)->orderBy('pekerjaanNama', 'ASC')->get()->getResultArray();
 
             // Query untuk item sebelumnya
             $previous = $db->table('pasien')
