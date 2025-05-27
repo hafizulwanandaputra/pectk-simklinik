@@ -306,9 +306,14 @@
                     const asisten = lp_operasi_pterigium.asisten ?
                         lp_operasi_pterigium.asisten :
                         `<em>Belum ada</em>`;
-                    const delete_today = new Date(lp_operasi_pterigium.tanggal_registrasi).toISOString().split('T')[0] !== new Date().toISOString().split('T')[0] ?
-                        `disabled` :
-                        ``;
+                    const tanggalRegistrasi = new Date(lp_operasi_pterigium.tanggal_registrasi);
+                    const hariIni = new Date();
+
+                    // Hitung selisih hari
+                    const selisihHari = (hariIni - tanggalRegistrasi) / (1000 * 60 * 60 * 24);
+
+                    // Cek apakah lebih dari 14 hari
+                    const delete_today = selisihHari > 14 ? 'disabled' : '';
                     const lPOperasiPterigiumElement = `
                     <li class="list-group-item <?= (session()->get('role') != 'Admisi') ? 'border-top-0' : ''; ?> pb-3 pt-3">
                         <div class="d-flex">

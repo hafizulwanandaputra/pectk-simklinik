@@ -306,9 +306,14 @@
                     const asisten_dokter_bedah = lp_operasi.asisten_dokter_bedah ?
                         lp_operasi.asisten_dokter_bedah :
                         `<em>Belum ada</em>`;
-                    const delete_today = new Date(lp_operasi.tanggal_registrasi).toISOString().split('T')[0] !== new Date().toISOString().split('T')[0] ?
-                        `disabled` :
-                        ``;
+                    const tanggalRegistrasi = new Date(lp_operasi.tanggal_registrasi);
+                    const hariIni = new Date();
+
+                    // Hitung selisih hari
+                    const selisihHari = (hariIni - tanggalRegistrasi) / (1000 * 60 * 60 * 24);
+
+                    // Cek apakah lebih dari 14 hari
+                    const delete_today = selisihHari > 14 ? 'disabled' : '';
                     const lPOperasiElement = `
                     <li class="list-group-item <?= (session()->get('role') != 'Admisi') ? 'border-top-0' : ''; ?> pb-3 pt-3">
                         <div class="d-flex">

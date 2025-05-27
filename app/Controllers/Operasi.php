@@ -114,9 +114,13 @@ class Operasi extends BaseController
     {
         // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Admisi' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Admisi') {
+            $hari_yang_lalu = date('Y-m-d', strtotime('-13 days')); // Termasuk hari ini
+            $today = date('Y-m-d');
+
             $data = $this->RawatJalanModel
                 ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
-                ->like('tanggal_registrasi', date('Y-m-d'))
+                ->where("DATE(tanggal_registrasi) >=", $hari_yang_lalu)
+                ->where("DATE(tanggal_registrasi) <=", $today)
                 ->where('status', 'DAFTAR')
                 ->where('ruangan', 'Kamar Operasi')
                 ->orderBy('rawat_jalan.id_rawat_jalan', 'DESC')
@@ -207,9 +211,13 @@ class Operasi extends BaseController
             // Mengambil nomor registrasi dari permintaan POST
             $nomorRegistrasi = $this->request->getPost('nomor_registrasi');
 
+            $today = date('Y-m-d');
+            $hari_yang_lalu = date('Y-m-d', strtotime('-13 days')); // Termasuk hari ini
+
             $data = $this->RawatJalanModel
                 ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
-                ->like('tanggal_registrasi', date('Y-m-d'))
+                ->where("DATE(tanggal_registrasi) >=", $hari_yang_lalu)
+                ->where("DATE(tanggal_registrasi) <=", $today)
                 ->where('status', 'DAFTAR')
                 ->where('ruangan', 'Kamar Operasi')
                 ->findAll();
@@ -299,8 +307,11 @@ class Operasi extends BaseController
                     ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
                     ->where('id_sp_operasi', $this->request->getPost('id_sp_operasi'))
                     ->get()->getRowArray();
-                if (date('Y-m-d', strtotime($sp_operasi['tanggal_registrasi'])) != date('Y-m-d')) {
-                    return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Pasien operasi yang bukan hari ini tidak dapat dihapus']);
+                $tanggal = date('Y-m-d', strtotime($sp_operasi['tanggal_registrasi']));
+                $today = date('Y-m-d');
+                $hari_yang_lalu = date('Y-m-d', strtotime('-13 days')); // Termasuk hari ini
+                if ($tanggal < $hari_yang_lalu || $tanggal > $today) {
+                    return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Pasien operasi yang didaftarkan lebih dari 14 hari tidak dapat dihapus']);
                 }
                 if ($sp_operasi['site_marking']) {
                     @unlink(FCPATH . 'uploads/site_marking/' . $sp_operasi['site_marking']);

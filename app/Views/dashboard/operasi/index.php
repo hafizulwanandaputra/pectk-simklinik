@@ -672,9 +672,20 @@
                 let response = await axios.get(`<?= base_url('/operasi/spko/view') ?>/` + id);
                 let data = response.data;
                 console.log(data);
-                if (new Date(data.tanggal_registrasi).toISOString().split('T')[0] !== new Date().toISOString().split('T')[0]) {
+                const tanggalRegistrasi = new Date(data.tanggal_registrasi);
+                const hariIni = new Date();
+
+                // Hitung selisih waktu dalam milidetik
+                const selisihWaktu = hariIni - tanggalRegistrasi;
+
+                // Ubah ke hari (1 hari = 86.400.000 ms)
+                const selisihHari = selisihWaktu / (1000 * 60 * 60 * 24);
+
+                // Cek apakah lebih dari 14 hari
+                if (selisihHari > 14) {
                     $('#status_operasi5').prop('disabled', true);
                 }
+
                 $('#statusModalLabel').text('Atur Status Pasien Operasi');
                 $('#id_sp_operasi').val(data.id_sp_operasi);;
                 const status_operasi = data.status_operasi;
