@@ -469,7 +469,7 @@ class ResepDokter extends BaseController
 
                 // 5. Cek apakah obat sudah digunakan dalam resep yang sama
                 $isUsed = $DetailResepModel
-                    ->where('id_obat', $row['id_obat'])
+                    ->where('id_batch_obat', $row['id_batch_obat'])
                     ->where('id_resep', $id_resep)
                     ->first();
 
