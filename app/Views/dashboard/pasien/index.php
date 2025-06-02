@@ -24,7 +24,7 @@
                 <div class="no-fluid-content">
                     <div class="d-flex flex-column flex-lg-row gap-2">
                         <div class="input-group input-group-sm flex-grow-1">
-                            <input type="search" id="searchInput" class="form-control" placeholder="Cari nomor rekam medis, NIK, atau, nama pasien">
+                            <input type="search" id="searchInput" class="form-control" placeholder="Cari nomor rekam medis, NIK, atau nama pasien">
                         </div>
                         <div class="input-group input-group-sm w-auto">
                             <input type="date" id="tanggalFilter" class="form-control rounded-start">
