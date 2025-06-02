@@ -53,6 +53,7 @@ class Pasien extends BaseController
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') {
             // Mengambil parameter pencarian, limit, offset, dan status dari query string
             $search = $this->request->getGet('search');
+            $tanggal_lahir = $this->request->getGet('tanggal_lahir');
             $limit = $this->request->getGet('limit');
             $offset = $this->request->getGet('offset');
 
@@ -64,20 +65,19 @@ class Pasien extends BaseController
 
             // Menerapkan filter pencarian berdasarkan nomor rekam medis dan nama pasien, pasien
             if ($search) {
-                // Konversi dd-mm-yyyy ke yyyy-mm-dd jika cocok
-                if (preg_match('/^\d{2}-\d{2}-\d{4}$/', $search)) {
-                    $dateParts = explode('-', $search);
-                    $searchDate = $dateParts[2] . '-' . $dateParts[1] . '-' . $dateParts[0];
-                } else {
-                    $searchDate = $search;
-                }
-
                 // Terapkan filter pencarian
                 $PasienModel->groupStart()
                     ->like('no_rm', $search)
                     ->orLike('nama_pasien', $search)
                     ->orLike('nik', $search)
-                    ->orLike('tanggal_lahir', $searchDate)
+                    ->groupEnd();
+            }
+
+            // Menerapkan filter pencarian berdasarkan tanggal_lahir
+            if ($tanggal_lahir) {
+                // Terapkan filter pencarian
+                $PasienModel->groupStart()
+                    ->like('tanggal_lahir', $tanggal_lahir)
                     ->groupEnd();
             }
 

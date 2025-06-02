@@ -22,8 +22,14 @@
         <ul class="list-group shadow-sm rounded-0">
             <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-secondary transparent-blur">
                 <div class="no-fluid-content">
-                    <div class="input-group input-group-sm">
-                        <input type="search" id="searchInput" class="form-control" placeholder="Cari nomor rekam medis, NIK, nama pasien, atau tanggal lahir">
+                    <div class="d-flex flex-column flex-lg-row gap-2">
+                        <div class="input-group input-group-sm flex-grow-1">
+                            <input type="search" id="searchInput" class="form-control" placeholder="Cari nomor rekam medis, NIK, atau, nama pasien">
+                        </div>
+                        <div class="input-group input-group-sm w-auto">
+                            <input type="date" id="tanggalFilter" class="form-control rounded-start">
+                            <button class="btn btn-danger btn-sm bg-gradient " type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
+                        </div>
                     </div>
                 </div>
             </li>
@@ -136,15 +142,22 @@
 
     async function fetchPasien() {
         const search = $('#searchInput').val();
+        const tanggal_lahir = $('#tanggalFilter').val();
         const offset = (currentPage - 1) * limit;
 
         // Show the spinner
         $('#loadingSpinner').show();
 
         try {
+            $('#tanggalFilter').flatpickr({
+                altInput: true,
+                allowInput: true,
+                altFormat: "d-m-Y"
+            });
             const response = await axios.get('<?= base_url('pasien/pasienlist') ?>', {
                 params: {
                     search: search,
+                    tanggal_lahir: tanggal_lahir,
                     limit: limit,
                     offset: offset
                 }
@@ -351,6 +364,17 @@
 
         $('#searchInput').on('input', function() {
             currentPage = 1;
+            fetchPasien();
+        });
+
+        $('#tanggalFilter').on('change', function() {
+            currentPage = 1;
+            fetchPasien();
+        });
+
+        $('#clearTglButton').on('click', function() {
+            currentPage = 1;
+            $('#tanggalFilter').val('');
             fetchPasien();
         });
 
