@@ -23,7 +23,7 @@
             <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-secondary transparent-blur">
                 <div class="no-fluid-content">
                     <div class="input-group input-group-sm">
-                        <input type="search" id="searchInput" class="form-control" placeholder="Cari nomor rekam medis atau nama pasien">
+                        <input type="search" id="searchInput" class="form-control" placeholder="Cari nomor rekam medis, NIK, nama pasien, atau tanggal lahir">
                     </div>
                 </div>
             </li>
@@ -47,6 +47,14 @@
                                         <span class="badge bg-body text-body border py-1 px-2 date placeholder number-placeholder" style="font-weight: 900; font-size: 0.85em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><?= $this->include('spinner/spinner'); ?></span>
                                     </h5>
                                     <div style="font-size: 0.75em;">
+                                        <div class="mb-0 row g-1 placeholder-glow">
+                                            <div class="col-5 fw-medium text-truncate">
+                                                <span class="placeholder w-100"></span>
+                                            </div>
+                                            <div class="col placeholder-glow">
+                                                <span class="placeholder w-100"></span>
+                                            </div>
+                                        </div>
                                         <div class="mb-0 row g-1 placeholder-glow">
                                             <div class="col-5 fw-medium text-truncate">
                                                 <span class="placeholder w-100"></span>
@@ -155,6 +163,7 @@
                 );
             } else {
                 data.pasien.forEach(function(pasien) {
+                    const nik = pasien.nik ? pasien.nik : "<em>Tidak ada</em>";
                     const nama_pasien = pasien.nama_pasien ? pasien.nama_pasien : "<em>Belum Diisi</em>";
                     let jenis_kelamin = pasien.jenis_kelamin;
                     if (jenis_kelamin === 'L') {
@@ -180,6 +189,12 @@
                             <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">${pasien.no_rm}</span>
                         </h5>
                                     <div style="font-size: 0.75em;">
+                                        <div class="mb-0 row g-1">
+                                            <div class="col-5 fw-medium text-truncate">Nomor Induk Kependudukan</div>
+                                            <div class="col date">
+                                                ${nik}
+                                            </div>
+                                        </div>
                                         <div class="mb-0 row g-1">
                                             <div class="col-5 fw-medium text-truncate">Nama</div>
                                             <div class="col">
