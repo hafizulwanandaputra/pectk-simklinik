@@ -923,10 +923,6 @@ class ResepLuar extends BaseController
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
             // Mengambil data resep berdasarkan id dan status
             $resep = $this->ResepModel
-                ->where('nomor_registrasi', null)
-                ->where('no_rm', null)
-                ->where('telpon', null)
-                ->where('tempat_lahir', null)
                 ->where('dokter', 'Resep Luar')
                 ->find($id);
 
