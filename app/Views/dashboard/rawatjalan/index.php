@@ -1139,12 +1139,12 @@
 
                 const tempat_tanggal_lahir = (rawatjalan.tempat_lahir && rawatjalan.tanggal_lahir) ?
                     `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rawatjalan.tempat_lahir}, ${rawatjalan.tanggal_lahir}">` :
-                    `<input type="text" disabled class="form-control-plaintext p-0 border border-0 fst-italic" value="Tidak ada">`;
+                    `<em>Tidak ada</em>`;
 
                 // Gunakan pesan jika tidak ada nomor telepon
                 const usia = hitungUsia(rawatjalan.tanggal_lahir, rawatjalan.tanggal_registrasi); // Menghitung usia pasien
 
-                const telpon = rawatjalan.telpon ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${rawatjalan.telpon}">` : `<input type="text" disabled class="form-control-plaintext p-0 border border-0 fst-italic" value="Tidak ada">`;
+                const telpon = rawatjalan.telpon ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${rawatjalan.telpon}">` : `<em>Tidak ada</em>`;
 
                 let pembatal = rawatjalan.status;
                 if (pembatal === 'BATAL') {
@@ -1167,8 +1167,8 @@
                 let isian_ok = rawatjalan.ruangan;
                 const tindakan_operasi_rajal = rawatjalan.tindakan_operasi_rajal ?
                     `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rawatjalan.tindakan_operasi_rajal}">` :
-                    `<input type="text" disabled class="form-control-plaintext p-0 border border-0 fst-italic" value="Belum diisi">`;
-                let waktu_operasi_rajal = `<input type="text" disabled class="form-control-plaintext p-0 border border-0 fst-italic" value="Belum diisi">`;
+                    `<em>Belum diisi</em>`;
+                let waktu_operasi_rajal = `<em>Belum diisi</em>`;
                 if (rawatjalan.tanggal_operasi_rajal) {
                     waktu_operasi_rajal = `<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${rawatjalan.tanggal_operasi_rajal}`;
                     if (rawatjalan.jam_operasi_rajal) {

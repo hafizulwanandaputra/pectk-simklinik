@@ -193,21 +193,21 @@
             } else {
                 data.pasien.forEach(function(pasien) {
                     const nama_pasien_header = pasien.nama_pasien ? pasien.nama_pasien : "<em>Belum Diisi</em>";
-                    const nama_pasien = pasien.nama_pasien ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${pasien.nama_pasien}">` : `<input type="text" disabled class="form-control-plaintext p-0 border border-0 fst-italic" value="Belum diisi">`;
+                    const nama_pasien = pasien.nama_pasien ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${pasien.nama_pasien}">` : `<em>Belum diisi</em>`;
                     let jenis_kelamin = pasien.jenis_kelamin;
                     if (jenis_kelamin === 'L') {
                         jenis_kelamin = `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="Laki-Laki">`;
                     } else if (jenis_kelamin === 'P') {
                         jenis_kelamin = `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="Perempuan">`;
                     } else {
-                        jenis_kelamin = `<input type="text" disabled class="form-control-plaintext p-0 border border-0 fst-italic" value="Tidak ada">`;
+                        jenis_kelamin = `<em>Tidak ada</em>`;
                     }
-                    const nik = pasien.nik ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${pasien.nik}">` : `<input type="text" disabled class="form-control-plaintext p-0 border border-0 fst-italic" value="Tidak ada">`;
-                    const no_bpjs = pasien.no_bpjs ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${pasien.no_bpjs}">` : `<input type="text" disabled class="form-control-plaintext p-0 border border-0 fst-italic" value="Tidak ada">`;
-                    const tempat_lahir = pasien.tempat_lahir ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${pasien.tempat_lahir}">` : `<input type="text" disabled class="form-control-plaintext p-0 border border-0 fst-italic" value="Tidak ada">`;
-                    const tanggal_lahir = pasien.tanggal_lahir ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${pasien.tanggal_lahir}">` : `<input type="text" disabled class="form-control-plaintext p-0 border border-0 fst-italic" value="Tidak ada">`;
-                    const alamat = pasien.alamat ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${pasien.alamat}">` : `<input type="text" disabled class="form-control-plaintext p-0 border border-0 fst-italic" value="Tidak ada">`;
-                    const telpon = pasien.telpon ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${pasien.telpon}">` : `<input type="text" disabled class="form-control-plaintext p-0 border border-0 fst-italic" value="Tidak ada">`;
+                    const nik = pasien.nik ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${pasien.nik}">` : `<em>Tidak ada</em>`;
+                    const no_bpjs = pasien.no_bpjs ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${pasien.no_bpjs}">` : `<em>Tidak ada</em>`;
+                    const tempat_lahir = pasien.tempat_lahir ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${pasien.tempat_lahir}">` : `<em>Tidak ada</em>`;
+                    const tanggal_lahir = pasien.tanggal_lahir ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${pasien.tanggal_lahir}">` : `<em>Tidak ada</em>`;
+                    const alamat = pasien.alamat ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${pasien.alamat}">` : `<em>Tidak ada</em>`;
+                    const telpon = pasien.telpon ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${pasien.telpon}">` : `<em>Tidak ada</em>`;
                     const pasienElement = `
             <span class="list-group-item border-top-0 pb-3 pt-3">
                 <div class="d-flex">

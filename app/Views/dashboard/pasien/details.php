@@ -1273,8 +1273,8 @@
                     if (isian_ok === 'Kamar Operasi') {
                         const tindakan_operasi_rajal = rajal.tindakan_operasi_rajal ?
                             `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rajal.tindakan_operasi_rajal}">` :
-                            `<input type="text" disabled class="form-control-plaintext p-0 border border-0 fst-italic" value="Belum diisi">`;
-                        let waktu_operasi_rajal = `<input type="text" disabled class="form-control-plaintext p-0 border border-0 fst-italic" value="Belum diisi">`;
+                            `<em>Belum diisi</em>`;
+                        let waktu_operasi_rajal = `<em>Belum diisi</em>`;
                         if (rajal.tanggal_operasi_rajal) {
                             waktu_operasi_rajal = `<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${rajal.tanggal_operasi_rajal}`;
                             if (rajal.jam_operasi_rajal) {
