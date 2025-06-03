@@ -101,6 +101,14 @@
                                                 <span class="placeholder w-100"></span>
                                             </div>
                                         </div>
+                                        <div class="mb-0 row g-1 placeholder-glow">
+                                            <div class="col-5 fw-medium text-truncate">
+                                                <span class="placeholder w-100"></span>
+                                            </div>
+                                            <div class="col placeholder-glow">
+                                                <span class="placeholder w-100"></span>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="d-flex flex-wrap justify-content-end gap-2 mt-2">
                                         <button type="button" class="btn btn-body btn-sm bg-gradient" style="width: 80px; height: 31px;" disabled></button>
@@ -176,7 +184,6 @@
                 );
             } else {
                 data.pasien.forEach(function(pasien) {
-                    const nik = pasien.nik ? pasien.nik : "<em>Tidak ada</em>";
                     const nama_pasien = pasien.nama_pasien ? pasien.nama_pasien : "<em>Belum Diisi</em>";
                     let jenis_kelamin = pasien.jenis_kelamin;
                     if (jenis_kelamin === 'L') {
@@ -186,6 +193,8 @@
                     } else {
                         jenis_kelamin = `<em>Tidak ada</em>`;
                     }
+                    const nik = pasien.nik ? pasien.nik : "<em>Tidak ada</em>";
+                    const no_bpjs = pasien.no_bpjs ? pasien.no_bpjs : "<em>Tidak ada</em>";
                     const tempat_lahir = pasien.tempat_lahir ? pasien.tempat_lahir : "<em>Tidak ada</em>";
                     const tanggal_lahir = pasien.tanggal_lahir ? pasien.tanggal_lahir : "<em>Tidak ada</em>";
                     const alamat = pasien.alamat ? pasien.alamat : "<em>Tidak ada</em>";
@@ -203,15 +212,21 @@
                         </h5>
                                     <div style="font-size: 0.75em;">
                                         <div class="mb-0 row g-1">
+                                            <div class="col-5 fw-medium text-truncate">Nama</div>
+                                            <div class="col">
+                                                ${nama_pasien}
+                                            </div>
+                                        </div>
+                                        <div class="mb-0 row g-1">
                                             <div class="col-5 fw-medium text-truncate">Nomor Induk Kependudukan</div>
                                             <div class="col date">
                                                 ${nik}
                                             </div>
                                         </div>
                                         <div class="mb-0 row g-1">
-                                            <div class="col-5 fw-medium text-truncate">Nama</div>
-                                            <div class="col">
-                                                ${nama_pasien}
+                                            <div class="col-5 fw-medium text-truncate">Nomor BPJS</div>
+                                            <div class="col date">
+                                                ${no_bpjs}
                                             </div>
                                         </div>
                                         <div class="mb-0 row g-1">
