@@ -1272,15 +1272,15 @@
                     let isian_ok = rajal.ruangan;
                     if (isian_ok === 'Kamar Operasi') {
                         const tindakan_operasi_rajal = rajal.tindakan_operasi_rajal ?
-                            rajal.tindakan_operasi_rajal :
+                            `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rajal.tindakan_operasi_rajal}">` :
                             `<em>Belum diisi</em>`;
                         let waktu_operasi_rajal = `<em>Belum diisi</em>`;
                         if (rajal.tanggal_operasi_rajal) {
-                            waktu_operasi_rajal = `<span class="date">${rajal.tanggal_operasi_rajal}`;
+                            waktu_operasi_rajal = `<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${rajal.tanggal_operasi_rajal}`;
                             if (rajal.jam_operasi_rajal) {
                                 waktu_operasi_rajal += ` ${rajal.jam_operasi_rajal}`;
                             }
-                            waktu_operasi_rajal += `</span>`;
+                            waktu_operasi_rajal += `">`;
                         }
                         isian_ok = `
                             <div class="mb-0 row g-1">
@@ -1319,32 +1319,32 @@
                                     <div class="col-lg-6">
                                         <div class="mb-0 row g-1">
                                             <div class="col-5 fw-medium text-truncate">Tanggal dan Waktu</div>
-                                            <div class="col date">
-                                                ${rajal.tanggal_registrasi}
+                                            <div class="col">
+                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${rajal.tanggal_registrasi}">
                                             </div>
                                         </div>
                                         <div class="mb-0 row g-1">
                                             <div class="col-5 fw-medium text-truncate">Jenis Kunjungan</div>
-                                            <div class="col date">
-                                                ${rajal.jenis_kunjungan}
+                                            <div class="col">
+                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rajal.jenis_kunjungan}">
                                             </div>
                                         </div>
                                         <div class="mb-0 row g-1">
                                             <div class="col-5 fw-medium text-truncate">Status Kunjungan</div>
                                             <div class="col date">
-                                                ${rajal.status_kunjungan}
+                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rajal.status_kunjungan}">
                                             </div>
                                         </div>
                                         <div class="mb-0 row g-1">
                                             <div class="col-5 fw-medium text-truncate">Jaminan</div>
-                                            <div class="col date">
-                                                ${rajal.jaminan}
+                                            <div class="col">
+                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rajal.jaminan}">
                                             </div>
                                         </div>
                                         <div class="mb-0 row g-1">
                                             <div class="col-5 fw-medium text-truncate">Ruangan</div>
                                             <div class="col">
-                                                ${rajal.ruangan}
+                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rajal.ruangan}">
                                             </div>
                                         </div>
                                     </div>
@@ -1352,13 +1352,13 @@
                                         <div class="mb-0 row g-1">
                                             <div class="col-5 fw-medium text-truncate">Dokter</div>
                                             <div class="col date">
-                                                ${rajal.dokter}
+                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rajal.dokter}">
                                             </div>
                                         </div>
                                         <div class="mb-0 row g-1">
                                             <div class="col-5 fw-medium text-truncate">Keluhan</div>
                                             <div class="col date">
-                                                ${rajal.keluhan}
+                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rajal.keluhan}">
                                             </div>
                                         </div>
                                         ${isian_ok}
