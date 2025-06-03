@@ -70,6 +70,7 @@ class Pasien extends BaseController
                     ->like('no_rm', $search)
                     ->orLike('nama_pasien', $search)
                     ->orLike('nik', $search)
+                    ->orLike('no_bpjs', $search)
                     ->groupEnd();
             }
 
