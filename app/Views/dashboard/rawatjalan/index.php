@@ -169,43 +169,43 @@
                                 </div>
                                 <div style="font-size: 0.75em;">
                                     <span id="copy_identitas_pasien_value" class="d-none"></span>
-                                    <div class="mb-0 row g-1">
+                                    <div class="mb-0 row g-1 align-items-center">
                                         <div class="col-5 fw-medium text-truncate">Nama</div>
                                         <div class="col">
                                             <span id="nama_pasien"></span>
                                         </div>
                                     </div>
-                                    <div class="mb-0 row g-1">
+                                    <div class="mb-0 row g-1 align-items-center">
                                         <div class="col-5 fw-medium text-truncate">Nomor Rekam Medis</div>
                                         <div class="col date">
                                             <span id="no_rekam_medis"></span>
                                         </div>
                                     </div>
-                                    <div class="mb-0 row g-1">
+                                    <div class="mb-0 row g-1 align-items-center">
                                         <div class="col-5 fw-medium text-truncate">Jenis Kelamin</div>
                                         <div class="col" id="jenis_kelamin"></div>
                                     </div>
-                                    <div class="mb-0 row g-1">
+                                    <div class="mb-0 row g-1 align-items-center">
                                         <div class="col-5 fw-medium text-truncate">Tempat Lahir</div>
                                         <div class="col">
                                             <span id="tempat_lahir"></span>
                                         </div>
                                     </div>
-                                    <div class="mb-0 row g-1">
+                                    <div class="mb-0 row g-1 align-items-center">
                                         <div class="col-5 fw-medium text-truncate">Tanggal Lahir</div>
                                         <div class="col">
                                             <span id="tanggal_lahir"></span>
                                         </div>
                                     </div>
-                                    <div class="mb-0 row g-1">
+                                    <div class="mb-0 row g-1 align-items-center">
                                         <div class="col-5 fw-medium text-truncate">Usia</div>
                                         <div class="col date" id="usia"></div>
                                     </div>
-                                    <div class="mb-0 row g-1">
+                                    <div class="mb-0 row g-1 align-items-center">
                                         <div class="col-5 fw-medium text-truncate">Alamat</div>
                                         <div class="col" id="alamat"></div>
                                     </div>
-                                    <div class="mb-0 row g-1">
+                                    <div class="mb-0 row g-1 align-items-center">
                                         <div class="col-5 fw-medium text-truncate">Nomor Telepon</div>
                                         <div class="col date" id="telpon"></div>
                                     </div>
@@ -231,79 +231,79 @@
                             <div>
                                 <div class="fw-bold mb-2" style="border-bottom: 1px solid var(--bs-border-color-translucent);">Rawat Jalan</div>
                                 <div style="font-size: 0.75em;">
-                                    <div class="mb-0 row g-1">
+                                    <div class="mb-0 row g-1 align-items-center">
                                         <div class="col-5 fw-medium text-truncate">Operator</div>
                                         <div class="col date" id="pendaftar">
 
                                         </div>
                                     </div>
-                                    <div class="mb-0 row g-1">
+                                    <div class="mb-0 row g-1 align-items-center">
                                         <div class="col-5 fw-medium text-truncate">Nomor Registrasi</div>
                                         <div class="col date" id="nomor_registrasi">
 
                                         </div>
                                     </div>
-                                    <div class="mb-0 row g-1">
+                                    <div class="mb-0 row g-1 align-items-center">
                                         <div class="col-5 fw-medium text-truncate">Tanggal dan Waktu</div>
                                         <div class="col date" id="tanggal_registrasi">
 
                                         </div>
                                     </div>
-                                    <div class="mb-0 row g-1">
+                                    <div class="mb-0 row g-1 align-items-center">
                                         <div class="col-5 fw-medium text-truncate">Jenis Kunjungan</div>
                                         <div class="col" id="jenis_kunjungan">
 
                                         </div>
                                     </div>
-                                    <div class="mb-0 row g-1">
+                                    <div class="mb-0 row g-1 align-items-center">
                                         <div class="col-5 fw-medium text-truncate">Status Kunjungan</div>
                                         <div class="col" id="status_kunjungan">
 
                                         </div>
                                     </div>
-                                    <div class="mb-0 row g-1">
+                                    <div class="mb-0 row g-1 align-items-center">
                                         <div class="col-5 fw-medium text-truncate">Jaminan</div>
                                         <div class="col" id="jaminan">
 
                                         </div>
                                     </div>
-                                    <div class="mb-0 row g-1">
+                                    <div class="mb-0 row g-1 align-items-center">
                                         <div class="col-5 fw-medium text-truncate">Ruangan</div>
                                         <div class="col" id="ruangan">
 
                                         </div>
                                     </div>
-                                    <div class="mb-0 row g-1">
+                                    <div class="mb-0 row g-1 align-items-center">
                                         <div class="col-5 fw-medium text-truncate">Dokter</div>
                                         <div class="col" id="dokter">
 
                                         </div>
                                     </div>
-                                    <div class="mb-0 row g-1">
+                                    <div class="mb-0 row g-1 align-items-center">
                                         <div class="col-5 fw-medium text-truncate">Keluhan</div>
                                         <div class="col" id="keluhan">
 
                                         </div>
                                     </div>
-                                    <div class="mb-0 row g-1 pasien_operasi">
+                                    <div class="mb-0 row g-1 align-items-center pasien_operasi">
                                         <div class="col-5 fw-medium text-truncate">Tindakan yang Akan Dilakukan</div>
                                         <div class="col date" id="tindakan_operasi_rajal">
 
                                         </div>
                                     </div>
-                                    <div class="mb-0 row g-1 pasien_operasi">
+                                    <div class="mb-0 row g-1 align-items-center pasien_operasi">
                                         <div class="col-5 fw-medium text-truncate">Waktu Tindakan</div>
                                         <div class="col date" id="waktu_operasi_rajal">
 
                                         </div>
                                     </div>
-                                    <div class="mb-0 row g-1 rajal_batal">
+                                    <div class="mb-0 row g-1 align-items-center rajal_batal">
                                         <div class="col-5 fw-medium text-truncate">Dibatalkan oleh</div>
                                         <div class="col date" id="pembatal">
 
                                         </div>
                                     </div>
-                                    <div class="mb-0 row g-1 rajal_batal">
+                                    <div class="mb-0 row g-1 align-items-center rajal_batal">
                                         <div class="col-5 fw-medium text-truncate">Alasan Pembatalan</div>
                                         <div class="col date" id="alasan_batal">
 
@@ -1139,12 +1139,12 @@
 
                 const tempat_tanggal_lahir = (rawatjalan.tempat_lahir && rawatjalan.tanggal_lahir) ?
                     `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rawatjalan.tempat_lahir}, ${rawatjalan.tanggal_lahir}">` :
-                    "<em>Tidak ada</em>";
+                    `<input type="text" disabled class="form-control-plaintext p-0 border border-0 fst-italic" value="Tidak ada">`;
 
                 // Gunakan pesan jika tidak ada nomor telepon
                 const usia = hitungUsia(rawatjalan.tanggal_lahir, rawatjalan.tanggal_registrasi); // Menghitung usia pasien
 
-                const telpon = rawatjalan.telpon ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${rawatjalan.telpon}">` : "<em>Tidak ada</em>";
+                const telpon = rawatjalan.telpon ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${rawatjalan.telpon}">` : `<input type="text" disabled class="form-control-plaintext p-0 border border-0 fst-italic" value="Tidak ada">`;
 
                 let pembatal = rawatjalan.status;
                 if (pembatal === 'BATAL') {
@@ -1167,8 +1167,8 @@
                 let isian_ok = rawatjalan.ruangan;
                 const tindakan_operasi_rajal = rawatjalan.tindakan_operasi_rajal ?
                     `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rawatjalan.tindakan_operasi_rajal}">` :
-                    `<em>Belum diisi</em>`;
-                let waktu_operasi_rajal = `<em>Belum diisi</em>`;
+                    `<input type="text" disabled class="form-control-plaintext p-0 border border-0 fst-italic" value="Belum diisi">`;
+                let waktu_operasi_rajal = `<input type="text" disabled class="form-control-plaintext p-0 border border-0 fst-italic" value="Belum diisi">`;
                 if (rawatjalan.tanggal_operasi_rajal) {
                     waktu_operasi_rajal = `<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${rawatjalan.tanggal_operasi_rajal}`;
                     if (rawatjalan.jam_operasi_rajal) {

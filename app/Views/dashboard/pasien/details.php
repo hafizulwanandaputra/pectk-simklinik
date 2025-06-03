@@ -123,7 +123,7 @@
                     <?= csrf_field(); ?>
                     <div class="mb-3">
                         <div class="mb-2">
-                            <div class="mb-0 row g-1 overflow-hidden d-flex align-items-end">
+                            <div class="mb-0 row g-1 align-items-center overflow-hidden d-flex align-items-end">
                                 <div class="col fw-medium text-nowrap">Didaftarkan</div>
                                 <div class="col text-end">
                                     <div class="date text-truncate">
@@ -131,7 +131,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="mb-0 row g-1 overflow-hidden d-flex  align-items-end">
+                            <div class="mb-0 row g-1 align-items-center overflow-hidden d-flex  align-items-end">
                                 <div class="col fw-medium text-nowrap">Nomor Rekam Medis</div>
                                 <div class="col text-end">
                                     <div class="date text-truncate">
@@ -348,7 +348,7 @@
                                                 <div style="font-size: 0.75em;">
                                                     <div class="row gx-3">
                                                         <div class="col-lg-6">
-                                                            <div class="mb-0 row g-1 placeholder-glow">
+                                                            <div class="mb-0 row g-1 align-items-center placeholder-glow">
                                                                 <div class="col-5 fw-medium text-truncate">
                                                                     <span class="placeholder w-100"></span>
                                                                 </div>
@@ -356,7 +356,7 @@
                                                                     <span class="placeholder w-100"></span>
                                                                 </div>
                                                             </div>
-                                                            <div class="mb-0 row g-1 placeholder-glow">
+                                                            <div class="mb-0 row g-1 align-items-center placeholder-glow">
                                                                 <div class="col-5 fw-medium text-truncate">
                                                                     <span class="placeholder w-100"></span>
                                                                 </div>
@@ -364,7 +364,7 @@
                                                                     <span class="placeholder w-100"></span>
                                                                 </div>
                                                             </div>
-                                                            <div class="mb-0 row g-1 placeholder-glow">
+                                                            <div class="mb-0 row g-1 align-items-center placeholder-glow">
                                                                 <div class="col-5 fw-medium text-truncate">
                                                                     <span class="placeholder w-100"></span>
                                                                 </div>
@@ -372,7 +372,7 @@
                                                                     <span class="placeholder w-100"></span>
                                                                 </div>
                                                             </div>
-                                                            <div class="mb-0 row g-1 placeholder-glow">
+                                                            <div class="mb-0 row g-1 align-items-center placeholder-glow">
                                                                 <div class="col-5 fw-medium text-truncate">
                                                                     <span class="placeholder w-100"></span>
                                                                 </div>
@@ -382,7 +382,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-6">
-                                                            <div class="mb-0 row g-1 placeholder-glow">
+                                                            <div class="mb-0 row g-1 align-items-center placeholder-glow">
                                                                 <div class="col-5 fw-medium text-truncate">
                                                                     <span class="placeholder w-100"></span>
                                                                 </div>
@@ -390,7 +390,7 @@
                                                                     <span class="placeholder w-100"></span>
                                                                 </div>
                                                             </div>
-                                                            <div class="mb-0 row g-1 placeholder-glow">
+                                                            <div class="mb-0 row g-1 align-items-center placeholder-glow">
                                                                 <div class="col-5 fw-medium text-truncate">
                                                                     <span class="placeholder w-100"></span>
                                                                 </div>
@@ -621,7 +621,7 @@
                                                 <div style="font-size: 0.75em;">
                                                     <div class="row gx-3">
                                                         <div class="col-lg-6">
-                                                            <div class="mb-0 row g-1 placeholder-glow">
+                                                            <div class="mb-0 row g-1 align-items-center placeholder-glow">
                                                                 <div class="col-5 fw-medium text-truncate">
                                                                     <span class="placeholder w-100"></span>
                                                                 </div>
@@ -629,7 +629,7 @@
                                                                     <span class="placeholder w-100"></span>
                                                                 </div>
                                                             </div>
-                                                            <div class="mb-0 row g-1 placeholder-glow">
+                                                            <div class="mb-0 row g-1 align-items-center placeholder-glow">
                                                                 <div class="col-5 fw-medium text-truncate">
                                                                     <span class="placeholder w-100"></span>
                                                                 </div>
@@ -637,7 +637,7 @@
                                                                     <span class="placeholder w-100"></span>
                                                                 </div>
                                                             </div>
-                                                            <div class="mb-0 row g-1 placeholder-glow">
+                                                            <div class="mb-0 row g-1 align-items-center placeholder-glow">
                                                                 <div class="col-5 fw-medium text-truncate">
                                                                     <span class="placeholder w-100"></span>
                                                                 </div>
@@ -645,7 +645,7 @@
                                                                     <span class="placeholder w-100"></span>
                                                                 </div>
                                                             </div>
-                                                            <div class="mb-0 row g-1 placeholder-glow">
+                                                            <div class="mb-0 row g-1 align-items-center placeholder-glow">
                                                                 <div class="col-5 fw-medium text-truncate">
                                                                     <span class="placeholder w-100"></span>
                                                                 </div>
@@ -655,7 +655,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-6">
-                                                            <div class="mb-0 row g-1 placeholder-glow">
+                                                            <div class="mb-0 row g-1 align-items-center placeholder-glow">
                                                                 <div class="col-5 fw-medium text-truncate">
                                                                     <span class="placeholder w-100"></span>
                                                                 </div>
@@ -663,7 +663,7 @@
                                                                     <span class="placeholder w-100"></span>
                                                                 </div>
                                                             </div>
-                                                            <div class="mb-0 row g-1 placeholder-glow">
+                                                            <div class="mb-0 row g-1 align-items-center placeholder-glow">
                                                                 <div class="col-5 fw-medium text-truncate">
                                                                     <span class="placeholder w-100"></span>
                                                                 </div>
@@ -1230,13 +1230,13 @@
                     let pembatal = rajal.status;
                     if (pembatal === 'BATAL') {
                         pembatal = `
-                            <div class="mb-0 row g-1">
+                            <div class="mb-0 row g-1 align-items-center">
                                 <div class="col-5 fw-medium text-truncate">Dibatalkan oleh</div>
                                 <div class="col date">
                                     ${rajal.pembatal}
                                 </div>
                             </div>
-                            <div class="mb-0 row g-1">
+                            <div class="mb-0 row g-1 align-items-center">
                                 <div class="col-5 fw-medium text-truncate">Alasan Pembatalan</div>
                                 <div class="col date">
                                     ${rajal.alasan_batal}
@@ -1273,8 +1273,8 @@
                     if (isian_ok === 'Kamar Operasi') {
                         const tindakan_operasi_rajal = rajal.tindakan_operasi_rajal ?
                             `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rajal.tindakan_operasi_rajal}">` :
-                            `<em>Belum diisi</em>`;
-                        let waktu_operasi_rajal = `<em>Belum diisi</em>`;
+                            `<input type="text" disabled class="form-control-plaintext p-0 border border-0 fst-italic" value="Belum diisi">`;
+                        let waktu_operasi_rajal = `<input type="text" disabled class="form-control-plaintext p-0 border border-0 fst-italic" value="Belum diisi">`;
                         if (rajal.tanggal_operasi_rajal) {
                             waktu_operasi_rajal = `<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${rajal.tanggal_operasi_rajal}`;
                             if (rajal.jam_operasi_rajal) {
@@ -1283,13 +1283,13 @@
                             waktu_operasi_rajal += `">`;
                         }
                         isian_ok = `
-                            <div class="mb-0 row g-1">
+                            <div class="mb-0 row g-1 align-items-center">
                                 <div class="col-5 fw-medium text-truncate">Tindakan yang Akan Dilakukan</div>
                                 <div class="col date">
                                     ${tindakan_operasi_rajal}
                                 </div>
                             </div>
-                            <div class="mb-0 row g-1">
+                            <div class="mb-0 row g-1 align-items-center">
                                 <div class="col-5 fw-medium text-truncate">Waktu Tindakan</div>
                                 <div class="col date">
                                     ${waktu_operasi_rajal}
@@ -1317,31 +1317,31 @@
                             <div style="font-size: 0.75em;">
                                 <div class="row gx-3">
                                     <div class="col-lg-6">
-                                        <div class="mb-0 row g-1">
+                                        <div class="mb-0 row g-1 align-items-center">
                                             <div class="col-5 fw-medium text-truncate">Tanggal dan Waktu</div>
                                             <div class="col">
                                                 <input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${rajal.tanggal_registrasi}">
                                             </div>
                                         </div>
-                                        <div class="mb-0 row g-1">
+                                        <div class="mb-0 row g-1 align-items-center">
                                             <div class="col-5 fw-medium text-truncate">Jenis Kunjungan</div>
                                             <div class="col">
                                                 <input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rajal.jenis_kunjungan}">
                                             </div>
                                         </div>
-                                        <div class="mb-0 row g-1">
+                                        <div class="mb-0 row g-1 align-items-center">
                                             <div class="col-5 fw-medium text-truncate">Status Kunjungan</div>
                                             <div class="col date">
                                                 <input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rajal.status_kunjungan}">
                                             </div>
                                         </div>
-                                        <div class="mb-0 row g-1">
+                                        <div class="mb-0 row g-1 align-items-center">
                                             <div class="col-5 fw-medium text-truncate">Jaminan</div>
                                             <div class="col">
                                                 <input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rajal.jaminan}">
                                             </div>
                                         </div>
-                                        <div class="mb-0 row g-1">
+                                        <div class="mb-0 row g-1 align-items-center">
                                             <div class="col-5 fw-medium text-truncate">Ruangan</div>
                                             <div class="col">
                                                 <input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rajal.ruangan}">
@@ -1349,13 +1349,13 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
-                                        <div class="mb-0 row g-1">
+                                        <div class="mb-0 row g-1 align-items-center">
                                             <div class="col-5 fw-medium text-truncate">Dokter</div>
                                             <div class="col date">
                                                 <input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rajal.dokter}">
                                             </div>
                                         </div>
-                                        <div class="mb-0 row g-1">
+                                        <div class="mb-0 row g-1 align-items-center">
                                             <div class="col-5 fw-medium text-truncate">Keluhan</div>
                                             <div class="col date">
                                                 <input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rajal.keluhan}">
