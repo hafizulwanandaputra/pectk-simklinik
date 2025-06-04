@@ -145,10 +145,8 @@ $waktuFormatted = $dateTime->format('H.i.s');
                                 <tr>
                                     <td style="width: 55%; vertical-align: top;"></td>
                                     <td style="width: 45%; vertical-align: top;">
-                                        Kepada<br>
-                                        Yth. <?= $rujukan['dokter_rujukan'] ?><br>
-                                        Di
-                                        <div style="padding-left: 0.5cm;"><?= $rujukan['alamat_dokter_rujukan'] ?></div>
+                                        <div>Yth. <?= $rujukan['dokter_rujukan'] ?></div>
+                                        <div><?= $rujukan['alamat_dokter_rujukan'] ?></div>
                                     </td>
                                 </tr>
                             </tbody>

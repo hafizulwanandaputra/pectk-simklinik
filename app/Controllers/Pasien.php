@@ -53,6 +53,7 @@ class Pasien extends BaseController
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') {
             // Mengambil parameter pencarian, limit, offset, dan status dari query string
             $search = $this->request->getGet('search');
+            $tanggal_lahir = $this->request->getGet('tanggal_lahir');
             $limit = $this->request->getGet('limit');
             $offset = $this->request->getGet('offset');
 
@@ -64,9 +65,20 @@ class Pasien extends BaseController
 
             // Menerapkan filter pencarian berdasarkan nomor rekam medis dan nama pasien, pasien
             if ($search) {
+                // Terapkan filter pencarian
                 $PasienModel->groupStart()
                     ->like('no_rm', $search)
                     ->orLike('nama_pasien', $search)
+                    ->orLike('nik', $search)
+                    ->orLike('no_bpjs', $search)
+                    ->groupEnd();
+            }
+
+            // Menerapkan filter pencarian berdasarkan tanggal_lahir
+            if ($tanggal_lahir) {
+                // Terapkan filter pencarian
+                $PasienModel->groupStart()
+                    ->like('tanggal_lahir', $tanggal_lahir)
                     ->groupEnd();
             }
 
@@ -160,6 +172,15 @@ class Pasien extends BaseController
             $pasien = $this->PasienModel
                 ->find($id);
 
+            // Agama
+            $agama = $db->table('master_agama')->get()->getResultArray();
+
+            // Status Pernikahan
+            $status_pernikahan = $db->table('master_status_pernikahan')->get()->getResultArray();
+
+            // Pekerjaan
+            $pekerjaan = $db->table('master_pekerjaan')->where('pekerjaanId !=', 1)->orderBy('pekerjaanNama', 'ASC')->get()->getResultArray();
+
             // Query untuk item sebelumnya
             $previous = $db->table('pasien')
                 ->where('pasien.id_pasien <', $id) // Kondisi untuk id sebelumnya
@@ -182,6 +203,9 @@ class Pasien extends BaseController
                 $data = [
                     'pasien' => $pasien,
                     'title' => 'Detail Pasien ' . $pasien['nama_pasien'] . ' (' . $pasien['no_rm'] . ') - ' . $this->systemName,
+                    'agama' => $agama,
+                    'status_pernikahan' => $status_pernikahan,
+                    'pekerjaan' => $pekerjaan,
                     'systemname' => $this->systemName,
                     'headertitle' => 'Detail Pasien',
                     'agent' => $this->request->getUserAgent(), // Menyimpan informasi tentang user agent

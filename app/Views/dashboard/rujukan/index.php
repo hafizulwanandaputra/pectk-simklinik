@@ -107,6 +107,14 @@
                                                     <span class="placeholder w-100"></span>
                                                 </div>
                                             </div>
+                                            <div class="mb-0 row g-1 placeholder-glow">
+                                                <div class="col-5 fw-medium text-truncate">
+                                                    <span class="placeholder w-100"></span>
+                                                </div>
+                                                <div class="col placeholder-glow">
+                                                    <span class="placeholder w-100"></span>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -168,6 +176,14 @@
                         </h6>
                         <div class="card-text placeholder-glow">
                             <div style="font-size: 0.75em;">
+                                        <div class="mb-0 row g-1 placeholder-glow">
+                                            <div class="col-5 fw-medium text-truncate">
+                                                <span class="placeholder w-100"></span>
+                                            </div>
+                                            <div class="col placeholder-glow">
+                                                <span class="placeholder w-100"></span>
+                                            </div>
+                                        </div>
                                         <div class="mb-0 row g-1 placeholder-glow">
                                             <div class="col-5 fw-medium text-truncate">
                                                 <span class="placeholder w-100"></span>
@@ -265,6 +281,9 @@
                     const dokter_rujukan = rujukan.dokter_rujukan ?
                         rujukan.dokter_rujukan :
                         `<em>Belum ada</em>`;
+                    const alamat_dokter_rujukan = rujukan.alamat_dokter_rujukan ?
+                        rujukan.alamat_dokter_rujukan :
+                        `<em>Belum ada</em>`;
                     const delete_today = new Date(rujukan.tanggal_registrasi).toISOString().split('T')[0] !== new Date().toISOString().split('T')[0] ?
                         `disabled` :
                         ``;
@@ -291,6 +310,12 @@
                                                         <div class="col-5 fw-medium text-truncate">Dokter Rujukan</div>
                                                         <div class="col date">
                                                             ${dokter_rujukan}
+                                                        </div>
+                                                    </div>
+                                                    <div class="mb-0 row g-1">
+                                                        <div class="col-5 fw-medium text-truncate">Alamat Rujukan</div>
+                                                        <div class="col date">
+                                                            ${alamat_dokter_rujukan}
                                                         </div>
                                                     </div>
                                         </div>

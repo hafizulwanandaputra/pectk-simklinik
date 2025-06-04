@@ -102,9 +102,13 @@ class FRMSetujuPhaco extends BaseController
     {
         // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Admisi' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Admisi') {
+            $hari_yang_lalu = date('Y-m-d', strtotime('-13 days')); // Termasuk hari ini
+            $today = date('Y-m-d');
+
             $data = $this->RawatJalanModel
                 ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
-                ->like('tanggal_registrasi', date('Y-m-d'))
+                ->where("DATE(tanggal_registrasi) >=", $hari_yang_lalu)
+                ->where("DATE(tanggal_registrasi) <=", $today)
                 ->where('status', 'DAFTAR')
                 ->orderBy('rawat_jalan.id_rawat_jalan', 'DESC')
                 ->findAll();
@@ -161,9 +165,13 @@ class FRMSetujuPhaco extends BaseController
             // Mengambil nomor registrasi dari permintaan POST
             $nomorRegistrasi = $this->request->getPost('nomor_registrasi');
 
+            $today = date('Y-m-d');
+            $hari_yang_lalu = date('Y-m-d', strtotime('-13 days')); // Termasuk hari ini
+
             $data = $this->RawatJalanModel
                 ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
-                ->like('tanggal_registrasi', date('Y-m-d'))
+                ->where("DATE(tanggal_registrasi) >=", $hari_yang_lalu)
+                ->where("DATE(tanggal_registrasi) <=", $today)
                 ->where('status', 'DAFTAR')
                 ->findAll();
 
@@ -275,8 +283,11 @@ class FRMSetujuPhaco extends BaseController
                 ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_form_persetujuan_tindakan_phaco.nomor_registrasi', 'inner')
                 ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
                 ->find($id);
-            if (date('Y-m-d', strtotime($form_persetujuan_tindakan['tanggal_registrasi'])) != date('Y-m-d')) {
-                return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Form persetujuan tindakan phacoemulsifikasi yang bukan hari ini tidak dapat dihapus']);
+            $tanggal = date('Y-m-d', strtotime($form_persetujuan_tindakan['tanggal_registrasi']));
+            $today = date('Y-m-d');
+            $hari_yang_lalu = date('Y-m-d', strtotime('-13 days')); // Termasuk hari ini
+            if ($tanggal < $hari_yang_lalu || $tanggal > $today) {
+                return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Form persetujuan tindakan phacoemulsifikasi untuk pasien yang didaftarkan lebih dari 14 hari tidak dapat dihapus']);
             }
             if ($form_persetujuan_tindakan) {
                 $db = db_connect();

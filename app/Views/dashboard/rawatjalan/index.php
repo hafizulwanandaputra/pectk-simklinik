@@ -168,43 +168,44 @@
                                     </div>
                                 </div>
                                 <div style="font-size: 0.75em;">
-                                    <div class="mb-0 row g-1">
+                                    <span id="copy_identitas_pasien_value" class="d-none"></span>
+                                    <div class="mb-0 row g-1 align-items-center">
                                         <div class="col-5 fw-medium text-truncate">Nama</div>
                                         <div class="col">
-                                            <span id="nama_pasien"></span> <span class="text-nowrap">
-                                                <span role="button" id="copy_nama_pasien" class="link-primary" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Salin nama pasien"><i class="fa-solid fa-copy"></i></span>
-                                            </span>
+                                            <span id="nama_pasien"></span>
                                         </div>
                                     </div>
-                                    <div class="mb-0 row g-1">
+                                    <div class="mb-0 row g-1 align-items-center">
                                         <div class="col-5 fw-medium text-truncate">Nomor Rekam Medis</div>
                                         <div class="col date">
-                                            <span id="no_rekam_medis"></span> <span class="text-nowrap">
-                                                <span role="button" id="copy_no_rekam_medis" class="link-primary" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Salin nomor rekam medis"><i class="fa-solid fa-copy"></i></span>
-                                            </span>
+                                            <span id="no_rekam_medis"></span>
                                         </div>
                                     </div>
-                                    <div class="mb-0 row g-1">
+                                    <div class="mb-0 row g-1 align-items-center">
                                         <div class="col-5 fw-medium text-truncate">Jenis Kelamin</div>
                                         <div class="col" id="jenis_kelamin"></div>
                                     </div>
-                                    <div class="mb-0 row g-1">
-                                        <div class="col-5 fw-medium text-truncate">Tempat/Tanggal Lahir</div>
+                                    <div class="mb-0 row g-1 align-items-center">
+                                        <div class="col-5 fw-medium text-truncate">Tempat Lahir</div>
                                         <div class="col">
-                                            <span id="kelahiran"></span> <span class="text-nowrap">
-                                                <span role="button" id="copy_tanggal_lahir" class="link-primary" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="Salin tanggal lahir"><i class="fa-solid fa-copy"></i></span>
-                                            </span>
+                                            <span id="tempat_lahir"></span>
                                         </div>
                                     </div>
-                                    <div class="mb-0 row g-1">
+                                    <div class="mb-0 row g-1 align-items-center">
+                                        <div class="col-5 fw-medium text-truncate">Tanggal Lahir</div>
+                                        <div class="col">
+                                            <span id="tanggal_lahir"></span>
+                                        </div>
+                                    </div>
+                                    <div class="mb-0 row g-1 align-items-center">
                                         <div class="col-5 fw-medium text-truncate">Usia</div>
                                         <div class="col date" id="usia"></div>
                                     </div>
-                                    <div class="mb-0 row g-1">
+                                    <div class="mb-0 row g-1 align-items-center">
                                         <div class="col-5 fw-medium text-truncate">Alamat</div>
                                         <div class="col" id="alamat"></div>
                                     </div>
-                                    <div class="mb-0 row g-1">
+                                    <div class="mb-0 row g-1 align-items-center">
                                         <div class="col-5 fw-medium text-truncate">Nomor Telepon</div>
                                         <div class="col date" id="telpon"></div>
                                     </div>
@@ -230,79 +231,79 @@
                             <div>
                                 <div class="fw-bold mb-2" style="border-bottom: 1px solid var(--bs-border-color-translucent);">Rawat Jalan</div>
                                 <div style="font-size: 0.75em;">
-                                    <div class="mb-0 row g-1">
+                                    <div class="mb-0 row g-1 align-items-center">
                                         <div class="col-5 fw-medium text-truncate">Operator</div>
                                         <div class="col date" id="pendaftar">
 
                                         </div>
                                     </div>
-                                    <div class="mb-0 row g-1">
+                                    <div class="mb-0 row g-1 align-items-center">
                                         <div class="col-5 fw-medium text-truncate">Nomor Registrasi</div>
                                         <div class="col date" id="nomor_registrasi">
 
                                         </div>
                                     </div>
-                                    <div class="mb-0 row g-1">
+                                    <div class="mb-0 row g-1 align-items-center">
                                         <div class="col-5 fw-medium text-truncate">Tanggal dan Waktu</div>
                                         <div class="col date" id="tanggal_registrasi">
 
                                         </div>
                                     </div>
-                                    <div class="mb-0 row g-1">
+                                    <div class="mb-0 row g-1 align-items-center">
                                         <div class="col-5 fw-medium text-truncate">Jenis Kunjungan</div>
                                         <div class="col" id="jenis_kunjungan">
 
                                         </div>
                                     </div>
-                                    <div class="mb-0 row g-1">
+                                    <div class="mb-0 row g-1 align-items-center">
                                         <div class="col-5 fw-medium text-truncate">Status Kunjungan</div>
                                         <div class="col" id="status_kunjungan">
 
                                         </div>
                                     </div>
-                                    <div class="mb-0 row g-1">
+                                    <div class="mb-0 row g-1 align-items-center">
                                         <div class="col-5 fw-medium text-truncate">Jaminan</div>
                                         <div class="col" id="jaminan">
 
                                         </div>
                                     </div>
-                                    <div class="mb-0 row g-1">
+                                    <div class="mb-0 row g-1 align-items-center">
                                         <div class="col-5 fw-medium text-truncate">Ruangan</div>
                                         <div class="col" id="ruangan">
 
                                         </div>
                                     </div>
-                                    <div class="mb-0 row g-1">
+                                    <div class="mb-0 row g-1 align-items-center">
                                         <div class="col-5 fw-medium text-truncate">Dokter</div>
                                         <div class="col" id="dokter">
 
                                         </div>
                                     </div>
-                                    <div class="mb-0 row g-1">
+                                    <div class="mb-0 row g-1 align-items-center">
                                         <div class="col-5 fw-medium text-truncate">Keluhan</div>
                                         <div class="col" id="keluhan">
 
                                         </div>
                                     </div>
-                                    <div class="mb-0 row g-1 pasien_operasi">
+                                    <div class="mb-0 row g-1 align-items-center pasien_operasi">
                                         <div class="col-5 fw-medium text-truncate">Tindakan yang Akan Dilakukan</div>
                                         <div class="col date" id="tindakan_operasi_rajal">
 
                                         </div>
                                     </div>
-                                    <div class="mb-0 row g-1 pasien_operasi">
+                                    <div class="mb-0 row g-1 align-items-center pasien_operasi">
                                         <div class="col-5 fw-medium text-truncate">Waktu Tindakan</div>
                                         <div class="col date" id="waktu_operasi_rajal">
 
                                         </div>
                                     </div>
-                                    <div class="mb-0 row g-1 rajal_batal">
+                                    <div class="mb-0 row g-1 align-items-center rajal_batal">
                                         <div class="col-5 fw-medium text-truncate">Dibatalkan oleh</div>
                                         <div class="col date" id="pembatal">
 
                                         </div>
                                     </div>
-                                    <div class="mb-0 row g-1 rajal_batal">
+                                    <div class="mb-0 row g-1 align-items-center rajal_batal">
                                         <div class="col-5 fw-medium text-truncate">Alasan Pembatalan</div>
                                         <div class="col date" id="alasan_batal">
 
@@ -1079,11 +1080,7 @@
         };
 
         $('#copy_identitas_pasien').on('click', function() {
-            var nama = $('#nama_pasien').text().trim();
-            var noRekamMedis = $('#no_rekam_medis').text().trim();
-            var tanggalLahir = $('#tanggal_lahir').text().trim();
-
-            var textToCopy = `${nama} ${noRekamMedis} ${tanggalLahir}`;
+            var textToCopy = $('#copy_identitas_pasien_value').text().trim();;
 
             if (navigator.clipboard) {
                 navigator.clipboard.writeText(textToCopy).then(function() {
@@ -1119,75 +1116,6 @@
             }
         });
 
-        $('#copy_nama_pasien').on('click', function() {
-            var textToCopy = $('#nama_pasien').text().trim();
-
-            if (navigator.clipboard) {
-                navigator.clipboard.writeText(textToCopy).then(function() {
-                    $('#copy_nama_pasien').removeClass('link-primary').addClass('link-success').html(`<i class="fa-solid fa-check"></i>`);
-
-                    setTimeout(function() {
-                        $('#copy_nama_pasien').addClass('link-primary').removeClass('link-success').html(`<i class="fa-solid fa-copy"></i>`);
-                    }, 1000);
-                }).catch(function(err) {
-                    $('#copy_nama_pasien').removeClass('link-primary').addClass('link-danger').html(`<i class="fa-solid fa-xmark"></i>`);
-
-                    setTimeout(function() {
-                        $('#copy_nama_pasien').addClass('link-primary').removeClass('link-danger').html(`<i class="fa-solid fa-copy"></i>`);
-                    }, 1000);
-                    console.error('Gagal menyalin teks:', err);
-                });
-            } else {
-                showFailedToast('Clipboard API tidak didukung di peramban ini.');
-            }
-        });
-
-        $('#copy_no_rekam_medis').on('click', function() {
-            var textToCopy = $('#no_rekam_medis').text().trim();
-
-            if (navigator.clipboard) {
-                navigator.clipboard.writeText(textToCopy).then(function() {
-                    $('#copy_no_rekam_medis').removeClass('link-primary').addClass('link-success').html(`<i class="fa-solid fa-check"></i>`);
-
-                    setTimeout(function() {
-                        $('#copy_no_rekam_medis').addClass('link-primary').removeClass('link-success').html(`<i class="fa-solid fa-copy"></i>`);
-                    }, 1000);
-                }).catch(function(err) {
-                    $('#copy_no_rekam_medis').removeClass('link-primary').addClass('link-danger').html(`<i class="fa-solid fa-xmark"></i>`);
-
-                    setTimeout(function() {
-                        $('#copy_no_rekam_medis').addClass('link-primary').removeClass('link-danger').html(`<i class="fa-solid fa-copy"></i>`);
-                    }, 1000);
-                    console.error('Gagal menyalin teks:', err);
-                });
-            } else {
-                showFailedToast('Clipboard API tidak didukung di peramban ini.');
-            }
-        });
-
-        $('#copy_tanggal_lahir').on('click', function() {
-            var textToCopy = $('#tanggal_lahir').text().trim();
-
-            if (navigator.clipboard) {
-                navigator.clipboard.writeText(textToCopy).then(function() {
-                    $('#copy_tanggal_lahir').removeClass('link-primary').addClass('link-success').html(`<i class="fa-solid fa-check"></i>`);
-
-                    setTimeout(function() {
-                        $('#copy_tanggal_lahir').addClass('link-primary').removeClass('link-success').html(`<i class="fa-solid fa-copy"></i>`);
-                    }, 1000);
-                }).catch(function(err) {
-                    $('#copy_tanggal_lahir').removeClass('link-primary').addClass('link-danger').html(`<i class="fa-solid fa-xmark"></i>`);
-
-                    setTimeout(function() {
-                        $('#copy_tanggal_lahir').addClass('link-primary').removeClass('link-danger').html(`<i class="fa-solid fa-copy"></i>`);
-                    }, 1000);
-                    console.error('Gagal menyalin teks:', err);
-                });
-            } else {
-                showFailedToast('Clipboard API tidak didukung di peramban ini.');
-            }
-        });
-
         $(document).on('click', '.detail-rajal', async function(ə) {
             ə.preventDefault();
             var $this = $(this);
@@ -1200,16 +1128,23 @@
                 const rawatjalan = response.data;
 
                 $('#rajalModalLabel').text('Informasi Rawat Jalan');
+
                 // Mengkondisikan jenis kelamin
                 let jenis_kelamin_string = rawatjalan.jenis_kelamin;
                 if (jenis_kelamin_string === 'L') {
-                    jenis_kelamin_string = `Laki-laki`;
+                    jenis_kelamin_string = `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="Laki-Laki">`;
                 } else if (jenis_kelamin_string === 'P') {
-                    jenis_kelamin_string = `Perempuan`;
+                    jenis_kelamin_string = `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="Perempuan">`;
                 }
+
+                const tempat_tanggal_lahir = (rawatjalan.tempat_lahir && rawatjalan.tanggal_lahir) ?
+                    `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rawatjalan.tempat_lahir}, ${rawatjalan.tanggal_lahir}">` :
+                    `<em>Tidak ada</em>`;
+
                 // Gunakan pesan jika tidak ada nomor telepon
-                const telpon = rawatjalan.telpon ? rawatjalan.telpon : "<em>Tidak ada</em>";
                 const usia = hitungUsia(rawatjalan.tanggal_lahir, rawatjalan.tanggal_registrasi); // Menghitung usia pasien
+
+                const telpon = rawatjalan.telpon ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${rawatjalan.telpon}">` : `<em>Tidak ada</em>`;
 
                 let pembatal = rawatjalan.status;
                 if (pembatal === 'BATAL') {
@@ -1231,14 +1166,15 @@
                 }
                 let isian_ok = rawatjalan.ruangan;
                 const tindakan_operasi_rajal = rawatjalan.tindakan_operasi_rajal ?
-                    rawatjalan.tindakan_operasi_rajal :
+                    `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rawatjalan.tindakan_operasi_rajal}">` :
                     `<em>Belum diisi</em>`;
                 let waktu_operasi_rajal = `<em>Belum diisi</em>`;
                 if (rawatjalan.tanggal_operasi_rajal) {
-                    waktu_operasi_rajal = `${rawatjalan.tanggal_operasi_rajal}`;
+                    waktu_operasi_rajal = `<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${rawatjalan.tanggal_operasi_rajal}`;
                     if (rawatjalan.jam_operasi_rajal) {
                         waktu_operasi_rajal += ` ${rawatjalan.jam_operasi_rajal}`;
                     }
+                    waktu_operasi_rajal += `">`;
                 }
                 if (isian_ok === 'Kamar Operasi') {
                     $('.pasien_operasi').show();
@@ -1319,35 +1255,31 @@
                     `;
                 }
 
-                $('#nama_pasien').text(rawatjalan.nama_pasien);
-                $('#no_rekam_medis').text(rawatjalan.no_rm);
-                $('#jenis_kelamin').text(jenis_kelamin_string);
-                $('#kelahiran').html(`${rawatjalan.tempat_lahir}, <span class="date text-nowrap" id="tanggal_lahir">${rawatjalan.tanggal_lahir}</span>`);
-                $('#usia').html(`${usia.usia} tahun ${usia.bulan} bulan`);
-                $('#alamat').text(rawatjalan.alamat);
+                $('#copy_identitas_pasien_value').text(`${rawatjalan.nama_pasien} ${rawatjalan.no_rm} ${rawatjalan.tanggal_lahir}`);
+                $('#nama_pasien').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rawatjalan.nama_pasien}">`);
+                $('#no_rekam_medis').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${rawatjalan.no_rm}">`);
+                $('#jenis_kelamin').html(jenis_kelamin_string);
+                $('#tempat_lahir').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rawatjalan.tempat_lahir}">`);
+                $('#tanggal_lahir').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${rawatjalan.tanggal_lahir}">`);
+                $('#usia').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${usia.usia} tahun ${usia.bulan} bulan">`);
+                $('#alamat').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rawatjalan.alamat}">`);
                 $('#telpon').html(telpon);
-                if (rawatjalan.telpon) {
-                    $('#copy_telpon_container').show();
-                } else {
-                    $('#copy_telpon_container').hide();
-                }
                 $('#kiup_btn').attr('onclick', "window.open('<?= base_url('pasien/kiup') ?>/" + rawatjalan.id_pasien + "')");
                 $('#barcode_btn').attr('onclick', "window.open('<?= base_url('pasien/barcode') ?>/" + rawatjalan.id_pasien + "')");
                 $('#detail_pasien_btn').attr('onclick', "window.location.href = '<?= base_url('pasien/detailpasien') ?>/" + rawatjalan.id_pasien + "'");
-                $('#pendaftar').text(rawatjalan.pendaftar);
-                $('#nomor_registrasi').text(rawatjalan.nomor_registrasi);
-                $('#tanggal_registrasi').text(rawatjalan.tanggal_registrasi);
-                $('#jenis_kunjungan').text(rawatjalan.jenis_kunjungan);
-                $('#status_kunjungan').text(rawatjalan.status_kunjungan);
-                $('#jaminan').text(rawatjalan.jaminan);
-                $('#ruangan').text(rawatjalan.ruangan);
-                $('#dokter').text(rawatjalan.dokter);
-                $('#keluhan').text(rawatjalan.keluhan);
-                $('#status_kunjungan').text(rawatjalan.status_kunjungan);
+                $('#pendaftar').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rawatjalan.pendaftar}">`);
+                $('#nomor_registrasi').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${rawatjalan.nomor_registrasi}">`);
+                $('#tanggal_registrasi').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${rawatjalan.tanggal_registrasi}">`);
+                $('#jenis_kunjungan').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rawatjalan.jenis_kunjungan}">`);
+                $('#status_kunjungan').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rawatjalan.status_kunjungan}">`);
+                $('#jaminan').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rawatjalan.jaminan}">`);
+                $('#ruangan').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rawatjalan.ruangan}">`);
+                $('#dokter').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rawatjalan.dokter}">`);
+                $('#keluhan').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rawatjalan.keluhan}">`);
                 $('#tindakan_operasi_rajal').html(tindakan_operasi_rajal);
                 $('#waktu_operasi_rajal').html(waktu_operasi_rajal);
-                $('#pembatal').text(rawatjalan.pembatal);
-                $('#alasan_batal').text(rawatjalan.alasan_batal);
+                $('#pembatal').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rawatjalan.pembatal}">`);
+                $('#alasan_batal').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rawatjalan.alasan_batal}">`);
                 $('#tombol_rme').html(tombol_rme);
                 $('#rajalModal').modal('show');
             } catch (error) {

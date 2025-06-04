@@ -22,8 +22,14 @@
         <ul class="list-group shadow-sm rounded-0">
             <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-secondary transparent-blur">
                 <div class="no-fluid-content">
-                    <div class="input-group input-group-sm">
-                        <input type="search" id="searchInput" class="form-control" placeholder="Cari nomor rekam medis atau nama pasien">
+                    <div class="d-flex flex-column flex-lg-row gap-2">
+                        <div class="input-group input-group-sm flex-grow-1">
+                            <input type="search" id="searchInput" class="form-control" placeholder="Cari nomor rekam medis, nama pasien, NIK, atau nomor BPJS">
+                        </div>
+                        <div class="input-group input-group-sm w-auto">
+                            <input type="date" id="tanggalFilter" class="form-control rounded-start">
+                            <button class="btn btn-danger btn-sm bg-gradient " type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
+                        </div>
                     </div>
                 </div>
             </li>
@@ -47,7 +53,7 @@
                                         <span class="badge bg-body text-body border py-1 px-2 date placeholder number-placeholder" style="font-weight: 900; font-size: 0.85em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><?= $this->include('spinner/spinner'); ?></span>
                                     </h5>
                                     <div style="font-size: 0.75em;">
-                                        <div class="mb-0 row g-1 placeholder-glow">
+                                        <div class="mb-0 row g-1 align-items-center placeholder-glow">
                                             <div class="col-5 fw-medium text-truncate">
                                                 <span class="placeholder w-100"></span>
                                             </div>
@@ -55,7 +61,7 @@
                                                 <span class="placeholder w-100"></span>
                                             </div>
                                         </div>
-                                        <div class="mb-0 row g-1 placeholder-glow">
+                                        <div class="mb-0 row g-1 align-items-center placeholder-glow">
                                             <div class="col-5 fw-medium text-truncate">
                                                 <span class="placeholder w-100"></span>
                                             </div>
@@ -63,7 +69,7 @@
                                                 <span class="placeholder w-100"></span>
                                             </div>
                                         </div>
-                                        <div class="mb-0 row g-1 placeholder-glow">
+                                        <div class="mb-0 row g-1 align-items-center placeholder-glow">
                                             <div class="col-5 fw-medium text-truncate">
                                                 <span class="placeholder w-100"></span>
                                             </div>
@@ -71,7 +77,7 @@
                                                 <span class="placeholder w-100"></span>
                                             </div>
                                         </div>
-                                        <div class="mb-0 row g-1 placeholder-glow">
+                                        <div class="mb-0 row g-1 align-items-center placeholder-glow">
                                             <div class="col-5 fw-medium text-truncate">
                                                 <span class="placeholder w-100"></span>
                                             </div>
@@ -79,7 +85,31 @@
                                                 <span class="placeholder w-100"></span>
                                             </div>
                                         </div>
-                                        <div class="mb-0 row g-1 placeholder-glow">
+                                        <div class="mb-0 row g-1 align-items-center placeholder-glow">
+                                            <div class="col-5 fw-medium text-truncate">
+                                                <span class="placeholder w-100"></span>
+                                            </div>
+                                            <div class="col placeholder-glow">
+                                                <span class="placeholder w-100"></span>
+                                            </div>
+                                        </div>
+                                        <div class="mb-0 row g-1 align-items-center placeholder-glow">
+                                            <div class="col-5 fw-medium text-truncate">
+                                                <span class="placeholder w-100"></span>
+                                            </div>
+                                            <div class="col placeholder-glow">
+                                                <span class="placeholder w-100"></span>
+                                            </div>
+                                        </div>
+                                        <div class="mb-0 row g-1 align-items-center placeholder-glow">
+                                            <div class="col-5 fw-medium text-truncate">
+                                                <span class="placeholder w-100"></span>
+                                            </div>
+                                            <div class="col placeholder-glow">
+                                                <span class="placeholder w-100"></span>
+                                            </div>
+                                        </div>
+                                        <div class="mb-0 row g-1 align-items-center placeholder-glow">
                                             <div class="col-5 fw-medium text-truncate">
                                                 <span class="placeholder w-100"></span>
                                             </div>
@@ -128,15 +158,22 @@
 
     async function fetchPasien() {
         const search = $('#searchInput').val();
+        const tanggal_lahir = $('#tanggalFilter').val();
         const offset = (currentPage - 1) * limit;
 
         // Show the spinner
         $('#loadingSpinner').show();
 
         try {
+            $('#tanggalFilter').flatpickr({
+                altInput: true,
+                allowInput: true,
+                altFormat: "d-m-Y"
+            });
             const response = await axios.get('<?= base_url('pasien/pasienlist') ?>', {
                 params: {
                     search: search,
+                    tanggal_lahir: tanggal_lahir,
                     limit: limit,
                     offset: offset
                 }
@@ -155,19 +192,22 @@
                 );
             } else {
                 data.pasien.forEach(function(pasien) {
-                    const nama_pasien = pasien.nama_pasien ? pasien.nama_pasien : "<em>Belum Diisi</em>";
+                    const nama_pasien_header = pasien.nama_pasien ? pasien.nama_pasien : "<em>Belum Diisi</em>";
+                    const nama_pasien = pasien.nama_pasien ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${pasien.nama_pasien}">` : `<em>Belum diisi</em>`;
                     let jenis_kelamin = pasien.jenis_kelamin;
                     if (jenis_kelamin === 'L') {
-                        jenis_kelamin = `Laki-Laki`;
+                        jenis_kelamin = `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="Laki-Laki">`;
                     } else if (jenis_kelamin === 'P') {
-                        jenis_kelamin = `Perempuan`;
+                        jenis_kelamin = `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="Perempuan">`;
                     } else {
                         jenis_kelamin = `<em>Tidak ada</em>`;
                     }
-                    const tempat_lahir = pasien.tempat_lahir ? pasien.tempat_lahir : "<em>Tidak ada</em>";
-                    const tanggal_lahir = pasien.tanggal_lahir ? pasien.tanggal_lahir : "<em>Tidak ada</em>";
-                    const alamat = pasien.alamat ? pasien.alamat : "<em>Tidak ada</em>";
-                    const telpon = pasien.telpon ? pasien.telpon : "<em>Tidak ada</em>";
+                    const nik = pasien.nik ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${pasien.nik}">` : `<em>Tidak ada</em>`;
+                    const no_bpjs = pasien.no_bpjs ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${pasien.no_bpjs}">` : `<em>Tidak ada</em>`;
+                    const tempat_lahir = pasien.tempat_lahir ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${pasien.tempat_lahir}">` : `<em>Tidak ada</em>`;
+                    const tanggal_lahir = pasien.tanggal_lahir ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${pasien.tanggal_lahir}">` : `<em>Tidak ada</em>`;
+                    const alamat = pasien.alamat ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${pasien.alamat}">` : `<em>Tidak ada</em>`;
+                    const telpon = pasien.telpon ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${pasien.telpon}">` : `<em>Tidak ada</em>`;
                     const pasienElement = `
             <span class="list-group-item border-top-0 pb-3 pt-3">
                 <div class="d-flex">
@@ -175,36 +215,54 @@
                         <h5 class="card-title d-flex date justify-content-between">
                             <div class="d-flex justify-content-start text-truncate">
                                 <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">${pasien.number}</span>
-                                <span class="mx-1 align-self-center text-truncate">${nama_pasien}</span>
+                                <span class="mx-1 align-self-center text-truncate">${nama_pasien_header}</span>
                             </div>
                             <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">${pasien.no_rm}</span>
                         </h5>
                                     <div style="font-size: 0.75em;">
-                                        <div class="mb-0 row g-1">
+                                        <div class="mb-0 row g-1 align-items-center">
                                             <div class="col-5 fw-medium text-truncate">Nama</div>
                                             <div class="col">
                                                 ${nama_pasien}
                                             </div>
                                         </div>
-                                        <div class="mb-0 row g-1">
+                                        <div class="mb-0 row g-1 align-items-center">
+                                            <div class="col-5 fw-medium text-truncate">Nomor Induk Kependudukan</div>
+                                            <div class="col date">
+                                                ${nik}
+                                            </div>
+                                        </div>
+                                        <div class="mb-0 row g-1 align-items-center">
+                                            <div class="col-5 fw-medium text-truncate">Nomor BPJS</div>
+                                            <div class="col date">
+                                                ${no_bpjs}
+                                            </div>
+                                        </div>
+                                        <div class="mb-0 row g-1 align-items-center">
                                             <div class="col-5 fw-medium text-truncate">Jenis Kelamin</div>
                                             <div class="col">
                                                 ${jenis_kelamin}
                                             </div>
                                         </div>
-                                        <div class="mb-0 row g-1">
-                                            <div class="col-5 fw-medium text-truncate">Tempat/Tanggal Lahir</div>
+                                        <div class="mb-0 row g-1 align-items-center">
+                                            <div class="col-5 fw-medium text-truncate">Tempat Lahir</div>
                                             <div class="col">
-                                                ${tempat_lahir}, <span class="date text-nowrap">${tanggal_lahir}</span>
+                                                ${tempat_lahir}
                                             </div>
                                         </div>
-                                        <div class="mb-0 row g-1">
+                                        <div class="mb-0 row g-1 align-items-center">
+                                            <div class="col-5 fw-medium text-truncate">Tanggal Lahir</div>
+                                            <div class="col">
+                                                ${tanggal_lahir}
+                                            </div>
+                                        </div>
+                                        <div class="mb-0 row g-1 align-items-center">
                                             <div class="col-5 fw-medium text-truncate">Alamat</div>
                                             <div class="col">
                                                 ${alamat}
                                             </div>
                                         </div>
-                                        <div class="mb-0 row g-1">
+                                        <div class="mb-0 row g-1 align-items-center">
                                             <div class="col-5 fw-medium text-truncate">Nomor Telepon</div>
                                             <div class="col date">
                                                 ${telpon}
@@ -336,6 +394,17 @@
 
         $('#searchInput').on('input', function() {
             currentPage = 1;
+            fetchPasien();
+        });
+
+        $('#tanggalFilter').on('change', function() {
+            currentPage = 1;
+            fetchPasien();
+        });
+
+        $('#clearTglButton').on('click', function() {
+            currentPage = 1;
+            $('#tanggalFilter').val('');
             fetchPasien();
         });
 

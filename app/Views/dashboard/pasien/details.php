@@ -123,7 +123,7 @@
                     <?= csrf_field(); ?>
                     <div class="mb-3">
                         <div class="mb-2">
-                            <div class="mb-0 row g-1 overflow-hidden d-flex align-items-end">
+                            <div class="mb-0 row g-1 align-items-center overflow-hidden d-flex align-items-end">
                                 <div class="col fw-medium text-nowrap">Didaftarkan</div>
                                 <div class="col text-end">
                                     <div class="date text-truncate">
@@ -131,7 +131,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="mb-0 row g-1 overflow-hidden d-flex  align-items-end">
+                            <div class="mb-0 row g-1 align-items-center overflow-hidden d-flex  align-items-end">
                                 <div class="col fw-medium text-nowrap">Nomor Rekam Medis</div>
                                 <div class="col text-end">
                                     <div class="date text-truncate">
@@ -267,7 +267,7 @@
                             <div class="col">
                                 <div class="form-floating">
                                     <select class="form-select" id="kewarganegaraan" name="kewarganegaraan" aria-label="kewarganegaraan">
-                                        <option value="" selected>-- Pilih Kewarganegaraan --</option>
+                                        <option value="" selected disabled>-- Pilih Kewarganegaraan --</option>
                                         <option value="WNI">INDONESIA</option>
                                         <option value="WNA">WARGA NEGARA ASING</option>
                                     </select>
@@ -278,13 +278,10 @@
                             <div class="col">
                                 <div class="form-floating">
                                     <select class="form-select" id="agama" name="agama" aria-label="agama">
-                                        <option value="" selected>-- Pilih Agama --</option>
-                                        <option value="1">Islam</option>
-                                        <option value="2">Kristen</option>
-                                        <option value="4">Katolik</option>
-                                        <option value="5">Hindu</option>
-                                        <option value="6">Buddha</option>
-                                        <option value="7">Konghucu</option>
+                                        <option value="" selected disabled>-- Pilih Agama --</option>
+                                        <?php foreach ($agama as $agama_list) : ?>
+                                            <option value="<?= $agama_list['agamaId'] ?>"><?= $agama_list['agamaNama'] ?></option>
+                                        <?php endforeach; ?>
                                     </select>
                                     <label for="agama">Agama<span class="text-danger">*</span></label>
                                     <div class="invalid-feedback"></div>
@@ -293,11 +290,10 @@
                             <div class="col">
                                 <div class="form-floating">
                                     <select class="form-select" id="status_nikah" name="status_nikah" aria-label="status_nikah">
-                                        <option value="" selected>-- Pilih Status Perkawinan --</option>
-                                        <option value="1">BELUM KAWIN</option>
-                                        <option value="2">KAWIN</option>
-                                        <option value="3">CERAI HIDUP</option>
-                                        <option value="4">CERAI MATI</option>
+                                        <option value="" selected disabled>-- Pilih Status Perkawinan --</option>
+                                        <?php foreach ($status_pernikahan as $status_pernikahan_list) : ?>
+                                            <option value="<?= $status_pernikahan_list['pernikahanId'] ?>"><?= $status_pernikahan_list['pernikahanStatus'] ?></option>
+                                        <?php endforeach; ?>
                                     </select>
                                     <label for="status_nikah">Status Perkawinan<span class="text-danger">*</span></label>
                                     <div class="invalid-feedback"></div>
@@ -307,53 +303,11 @@
                         <div class="mb-2">
                             <div class="form-floating">
                                 <select class="form-select" id="pekerjaan" name="pekerjaan" aria-label="pekerjaan">
-                                    <option value="" selected>-- Pilih Pekerjaan --</option>
-                                    <option value="1">
-                                        TIDAK BEKERJA</option>
-                                    <option value="2">
-                                        I R T</option>
-                                    <option value="3">
-                                        BURUH</option>
-                                    <option value="4">
-                                        PELAJAR</option>
-                                    <option value="5">
-                                        MAHASISWA</option>
-                                    <option value="6">
-                                        WIRASWASTA</option>
-                                    <option value="7">
-                                        P N S</option>
-                                    <option value="8">
-                                        PEDAGANG</option>
-                                    <option value="9">
-                                        KARYAWAN/TI</option>
-                                    <option value="10">
-                                        SWASTA</option>
-                                    <option value="11">
-                                        KARYAWAN RS</option>
-                                    <option value="12">
-                                        PETANI</option>
-                                    <option value="13">
-                                        PERAWAT</option>
-                                    <option value="14">
-                                        BIDAN</option>
-                                    <option value="15">
-                                        DOKTER</option>
-                                    <option value="16">
-                                        TUKANG</option>
-                                    <option value="17">
-                                        SOPIR</option>
-                                    <option value="18">
-                                        DOSEN</option>
-                                    <option value="19">
-                                        GURU</option>
-                                    <option value="20">
-                                        BUMN</option>
-                                    <option value="21">
-                                        PENSIUNAN</option>
-                                    <option value="22">
-                                        ABRI</option>
-                                    <option value="23">
-                                        POLRI</option>
+                                    <option value="" selected disabled>-- Pilih Pekerjaan --</option>
+                                    <option value="1">BELUM/TIDAK BEKERJA</option>
+                                    <?php foreach ($pekerjaan as $pekerjaan_list) : ?>
+                                        <option value="<?= $pekerjaan_list['pekerjaanId'] ?>"><?= $pekerjaan_list['pekerjaanNama'] ?></option>
+                                    <?php endforeach; ?>
                                 </select>
                                 <label for="pekerjaan">Pekerjaan<span class="text-danger">*</span></label>
                                 <div class="invalid-feedback"></div>
@@ -394,7 +348,7 @@
                                                 <div style="font-size: 0.75em;">
                                                     <div class="row gx-3">
                                                         <div class="col-lg-6">
-                                                            <div class="mb-0 row g-1 placeholder-glow">
+                                                            <div class="mb-0 row g-1 align-items-center placeholder-glow">
                                                                 <div class="col-5 fw-medium text-truncate">
                                                                     <span class="placeholder w-100"></span>
                                                                 </div>
@@ -402,7 +356,7 @@
                                                                     <span class="placeholder w-100"></span>
                                                                 </div>
                                                             </div>
-                                                            <div class="mb-0 row g-1 placeholder-glow">
+                                                            <div class="mb-0 row g-1 align-items-center placeholder-glow">
                                                                 <div class="col-5 fw-medium text-truncate">
                                                                     <span class="placeholder w-100"></span>
                                                                 </div>
@@ -410,7 +364,7 @@
                                                                     <span class="placeholder w-100"></span>
                                                                 </div>
                                                             </div>
-                                                            <div class="mb-0 row g-1 placeholder-glow">
+                                                            <div class="mb-0 row g-1 align-items-center placeholder-glow">
                                                                 <div class="col-5 fw-medium text-truncate">
                                                                     <span class="placeholder w-100"></span>
                                                                 </div>
@@ -418,7 +372,7 @@
                                                                     <span class="placeholder w-100"></span>
                                                                 </div>
                                                             </div>
-                                                            <div class="mb-0 row g-1 placeholder-glow">
+                                                            <div class="mb-0 row g-1 align-items-center placeholder-glow">
                                                                 <div class="col-5 fw-medium text-truncate">
                                                                     <span class="placeholder w-100"></span>
                                                                 </div>
@@ -428,7 +382,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-6">
-                                                            <div class="mb-0 row g-1 placeholder-glow">
+                                                            <div class="mb-0 row g-1 align-items-center placeholder-glow">
                                                                 <div class="col-5 fw-medium text-truncate">
                                                                     <span class="placeholder w-100"></span>
                                                                 </div>
@@ -436,7 +390,7 @@
                                                                     <span class="placeholder w-100"></span>
                                                                 </div>
                                                             </div>
-                                                            <div class="mb-0 row g-1 placeholder-glow">
+                                                            <div class="mb-0 row g-1 align-items-center placeholder-glow">
                                                                 <div class="col-5 fw-medium text-truncate">
                                                                     <span class="placeholder w-100"></span>
                                                                 </div>
@@ -667,7 +621,7 @@
                                                 <div style="font-size: 0.75em;">
                                                     <div class="row gx-3">
                                                         <div class="col-lg-6">
-                                                            <div class="mb-0 row g-1 placeholder-glow">
+                                                            <div class="mb-0 row g-1 align-items-center placeholder-glow">
                                                                 <div class="col-5 fw-medium text-truncate">
                                                                     <span class="placeholder w-100"></span>
                                                                 </div>
@@ -675,7 +629,7 @@
                                                                     <span class="placeholder w-100"></span>
                                                                 </div>
                                                             </div>
-                                                            <div class="mb-0 row g-1 placeholder-glow">
+                                                            <div class="mb-0 row g-1 align-items-center placeholder-glow">
                                                                 <div class="col-5 fw-medium text-truncate">
                                                                     <span class="placeholder w-100"></span>
                                                                 </div>
@@ -683,7 +637,7 @@
                                                                     <span class="placeholder w-100"></span>
                                                                 </div>
                                                             </div>
-                                                            <div class="mb-0 row g-1 placeholder-glow">
+                                                            <div class="mb-0 row g-1 align-items-center placeholder-glow">
                                                                 <div class="col-5 fw-medium text-truncate">
                                                                     <span class="placeholder w-100"></span>
                                                                 </div>
@@ -691,7 +645,7 @@
                                                                     <span class="placeholder w-100"></span>
                                                                 </div>
                                                             </div>
-                                                            <div class="mb-0 row g-1 placeholder-glow">
+                                                            <div class="mb-0 row g-1 align-items-center placeholder-glow">
                                                                 <div class="col-5 fw-medium text-truncate">
                                                                     <span class="placeholder w-100"></span>
                                                                 </div>
@@ -701,7 +655,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-6">
-                                                            <div class="mb-0 row g-1 placeholder-glow">
+                                                            <div class="mb-0 row g-1 align-items-center placeholder-glow">
                                                                 <div class="col-5 fw-medium text-truncate">
                                                                     <span class="placeholder w-100"></span>
                                                                 </div>
@@ -709,7 +663,7 @@
                                                                     <span class="placeholder w-100"></span>
                                                                 </div>
                                                             </div>
-                                                            <div class="mb-0 row g-1 placeholder-glow">
+                                                            <div class="mb-0 row g-1 align-items-center placeholder-glow">
                                                                 <div class="col-5 fw-medium text-truncate">
                                                                     <span class="placeholder w-100"></span>
                                                                 </div>
@@ -769,7 +723,7 @@
                 $('#status_nikah').val(data.status_nikah);
             }
             if (data.pekerjaan > 0) {
-                $('#pekerjaan').val(data.pekerjaan);
+                $('#pekerjaan').val(data.pekerjaan).trigger('change');
             }
             await loadProvinsi(data.provinsi); // Muat dan pilih provinsi
             if (data.kabupaten) {
@@ -898,7 +852,7 @@
         }
     });
 
-    $('#provinsi, #kabupaten, #kecamatan, #kelurahan').select2({
+    $('#provinsi, #kabupaten, #kecamatan, #kelurahan, #pekerjaan').select2({
         dropdownParent: $('#pasienForm'),
         theme: "bootstrap-5",
         width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
@@ -1276,13 +1230,13 @@
                     let pembatal = rajal.status;
                     if (pembatal === 'BATAL') {
                         pembatal = `
-                            <div class="mb-0 row g-1">
+                            <div class="mb-0 row g-1 align-items-center">
                                 <div class="col-5 fw-medium text-truncate">Dibatalkan oleh</div>
                                 <div class="col date">
                                     ${rajal.pembatal}
                                 </div>
                             </div>
-                            <div class="mb-0 row g-1">
+                            <div class="mb-0 row g-1 align-items-center">
                                 <div class="col-5 fw-medium text-truncate">Alasan Pembatalan</div>
                                 <div class="col date">
                                     ${rajal.alasan_batal}
@@ -1318,24 +1272,24 @@
                     let isian_ok = rajal.ruangan;
                     if (isian_ok === 'Kamar Operasi') {
                         const tindakan_operasi_rajal = rajal.tindakan_operasi_rajal ?
-                            rajal.tindakan_operasi_rajal :
+                            `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rajal.tindakan_operasi_rajal}">` :
                             `<em>Belum diisi</em>`;
                         let waktu_operasi_rajal = `<em>Belum diisi</em>`;
                         if (rajal.tanggal_operasi_rajal) {
-                            waktu_operasi_rajal = `<span class="date">${rajal.tanggal_operasi_rajal}`;
+                            waktu_operasi_rajal = `<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${rajal.tanggal_operasi_rajal}`;
                             if (rajal.jam_operasi_rajal) {
                                 waktu_operasi_rajal += ` ${rajal.jam_operasi_rajal}`;
                             }
-                            waktu_operasi_rajal += `</span>`;
+                            waktu_operasi_rajal += `">`;
                         }
                         isian_ok = `
-                            <div class="mb-0 row g-1">
+                            <div class="mb-0 row g-1 align-items-center">
                                 <div class="col-5 fw-medium text-truncate">Tindakan yang Akan Dilakukan</div>
                                 <div class="col date">
                                     ${tindakan_operasi_rajal}
                                 </div>
                             </div>
-                            <div class="mb-0 row g-1">
+                            <div class="mb-0 row g-1 align-items-center">
                                 <div class="col-5 fw-medium text-truncate">Waktu Tindakan</div>
                                 <div class="col date">
                                     ${waktu_operasi_rajal}
@@ -1363,48 +1317,48 @@
                             <div style="font-size: 0.75em;">
                                 <div class="row gx-3">
                                     <div class="col-lg-6">
-                                        <div class="mb-0 row g-1">
+                                        <div class="mb-0 row g-1 align-items-center">
                                             <div class="col-5 fw-medium text-truncate">Tanggal dan Waktu</div>
-                                            <div class="col date">
-                                                ${rajal.tanggal_registrasi}
+                                            <div class="col">
+                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${rajal.tanggal_registrasi}">
                                             </div>
                                         </div>
-                                        <div class="mb-0 row g-1">
+                                        <div class="mb-0 row g-1 align-items-center">
                                             <div class="col-5 fw-medium text-truncate">Jenis Kunjungan</div>
-                                            <div class="col date">
-                                                ${rajal.jenis_kunjungan}
+                                            <div class="col">
+                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rajal.jenis_kunjungan}">
                                             </div>
                                         </div>
-                                        <div class="mb-0 row g-1">
+                                        <div class="mb-0 row g-1 align-items-center">
                                             <div class="col-5 fw-medium text-truncate">Status Kunjungan</div>
                                             <div class="col date">
-                                                ${rajal.status_kunjungan}
+                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rajal.status_kunjungan}">
                                             </div>
                                         </div>
-                                        <div class="mb-0 row g-1">
+                                        <div class="mb-0 row g-1 align-items-center">
                                             <div class="col-5 fw-medium text-truncate">Jaminan</div>
-                                            <div class="col date">
-                                                ${rajal.jaminan}
+                                            <div class="col">
+                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rajal.jaminan}">
                                             </div>
                                         </div>
-                                        <div class="mb-0 row g-1">
+                                        <div class="mb-0 row g-1 align-items-center">
                                             <div class="col-5 fw-medium text-truncate">Ruangan</div>
                                             <div class="col">
-                                                ${rajal.ruangan}
+                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rajal.ruangan}">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
-                                        <div class="mb-0 row g-1">
+                                        <div class="mb-0 row g-1 align-items-center">
                                             <div class="col-5 fw-medium text-truncate">Dokter</div>
                                             <div class="col date">
-                                                ${rajal.dokter}
+                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rajal.dokter}">
                                             </div>
                                         </div>
-                                        <div class="mb-0 row g-1">
+                                        <div class="mb-0 row g-1 align-items-center">
                                             <div class="col-5 fw-medium text-truncate">Keluhan</div>
                                             <div class="col date">
-                                                ${rajal.keluhan}
+                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rajal.keluhan}">
                                             </div>
                                         </div>
                                         ${isian_ok}
