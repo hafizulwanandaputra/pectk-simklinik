@@ -1154,7 +1154,8 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
 
                 try {
                     let response = await axios.post(url);
-                    $this.val(prevChecked ? 1 : 0);
+                    await $this.val(prevChecked ? 1 : 0);
+                    window.location.reload();
                 } catch (error) {
                     showFailedToast('Gagal mengatur status tanggal otomatis.<br>' + error);
                     $this.prop('checked', !prevChecked); // Kembalikan status awal jika gagal
