@@ -1209,6 +1209,8 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                 }
             }, 5000); // Durasi waktu untuk menyembunyikan toast (5000 ms)
         });
+        // Show toast notification
+        <?= $this->include('toast/index') ?>
     </script>
     <script>
         feather.replace({
