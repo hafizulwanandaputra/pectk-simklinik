@@ -53,68 +53,74 @@
                                         <span class="badge bg-body text-body border py-1 px-2 date placeholder number-placeholder" style="font-weight: 900; font-size: 0.85em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><?= $this->include('spinner/spinner'); ?></span>
                                     </h5>
                                     <div style="font-size: 0.75em;">
-                                        <div class="mb-0 row g-1 align-items-center placeholder-glow">
-                                            <div class="col-5 fw-medium text-truncate">
-                                                <span class="placeholder w-100"></span>
+                                        <div class="row gx-3">
+                                            <div class="col-lg-6">
+                                                <div class="mb-0 row g-1 align-items-center placeholder-glow">
+                                                    <div class="col-5 fw-medium text-truncate">
+                                                        <span class="placeholder w-100"></span>
+                                                    </div>
+                                                    <div class="col placeholder-glow">
+                                                        <span class="placeholder w-100"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-0 row g-1 align-items-center placeholder-glow">
+                                                    <div class="col-5 fw-medium text-truncate">
+                                                        <span class="placeholder w-100"></span>
+                                                    </div>
+                                                    <div class="col placeholder-glow">
+                                                        <span class="placeholder w-100"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-0 row g-1 align-items-center placeholder-glow">
+                                                    <div class="col-5 fw-medium text-truncate">
+                                                        <span class="placeholder w-100"></span>
+                                                    </div>
+                                                    <div class="col placeholder-glow">
+                                                        <span class="placeholder w-100"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-0 row g-1 align-items-center placeholder-glow">
+                                                    <div class="col-5 fw-medium text-truncate">
+                                                        <span class="placeholder w-100"></span>
+                                                    </div>
+                                                    <div class="col placeholder-glow">
+                                                        <span class="placeholder w-100"></span>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="col placeholder-glow">
-                                                <span class="placeholder w-100"></span>
-                                            </div>
-                                        </div>
-                                        <div class="mb-0 row g-1 align-items-center placeholder-glow">
-                                            <div class="col-5 fw-medium text-truncate">
-                                                <span class="placeholder w-100"></span>
-                                            </div>
-                                            <div class="col placeholder-glow">
-                                                <span class="placeholder w-100"></span>
-                                            </div>
-                                        </div>
-                                        <div class="mb-0 row g-1 align-items-center placeholder-glow">
-                                            <div class="col-5 fw-medium text-truncate">
-                                                <span class="placeholder w-100"></span>
-                                            </div>
-                                            <div class="col placeholder-glow">
-                                                <span class="placeholder w-100"></span>
-                                            </div>
-                                        </div>
-                                        <div class="mb-0 row g-1 align-items-center placeholder-glow">
-                                            <div class="col-5 fw-medium text-truncate">
-                                                <span class="placeholder w-100"></span>
-                                            </div>
-                                            <div class="col placeholder-glow">
-                                                <span class="placeholder w-100"></span>
-                                            </div>
-                                        </div>
-                                        <div class="mb-0 row g-1 align-items-center placeholder-glow">
-                                            <div class="col-5 fw-medium text-truncate">
-                                                <span class="placeholder w-100"></span>
-                                            </div>
-                                            <div class="col placeholder-glow">
-                                                <span class="placeholder w-100"></span>
-                                            </div>
-                                        </div>
-                                        <div class="mb-0 row g-1 align-items-center placeholder-glow">
-                                            <div class="col-5 fw-medium text-truncate">
-                                                <span class="placeholder w-100"></span>
-                                            </div>
-                                            <div class="col placeholder-glow">
-                                                <span class="placeholder w-100"></span>
-                                            </div>
-                                        </div>
-                                        <div class="mb-0 row g-1 align-items-center placeholder-glow">
-                                            <div class="col-5 fw-medium text-truncate">
-                                                <span class="placeholder w-100"></span>
-                                            </div>
-                                            <div class="col placeholder-glow">
-                                                <span class="placeholder w-100"></span>
-                                            </div>
-                                        </div>
-                                        <div class="mb-0 row g-1 align-items-center placeholder-glow">
-                                            <div class="col-5 fw-medium text-truncate">
-                                                <span class="placeholder w-100"></span>
-                                            </div>
-                                            <div class="col placeholder-glow">
-                                                <span class="placeholder w-100"></span>
+                                            <div class="col-lg-6">
+                                                <div class="mb-0 row g-1 align-items-center placeholder-glow">
+                                                    <div class="col-5 fw-medium text-truncate">
+                                                        <span class="placeholder w-100"></span>
+                                                    </div>
+                                                    <div class="col placeholder-glow">
+                                                        <span class="placeholder w-100"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-0 row g-1 align-items-center placeholder-glow">
+                                                    <div class="col-5 fw-medium text-truncate">
+                                                        <span class="placeholder w-100"></span>
+                                                    </div>
+                                                    <div class="col placeholder-glow">
+                                                        <span class="placeholder w-100"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-0 row g-1 align-items-center placeholder-glow">
+                                                    <div class="col-5 fw-medium text-truncate">
+                                                        <span class="placeholder w-100"></span>
+                                                    </div>
+                                                    <div class="col placeholder-glow">
+                                                        <span class="placeholder w-100"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-0 row g-1 align-items-center placeholder-glow">
+                                                    <div class="col-5 fw-medium text-truncate">
+                                                        <span class="placeholder w-100"></span>
+                                                    </div>
+                                                    <div class="col placeholder-glow">
+                                                        <span class="placeholder w-100"></span>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -219,7 +225,9 @@
                             </div>
                             <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">${pasien.no_rm}</span>
                         </h5>
-                                    <div style="font-size: 0.75em;">
+                            <div style="font-size: 0.75em;">
+                                <div class="row gx-3">
+                                    <div class="col-lg-6">
                                         <div class="mb-0 row g-1 align-items-center">
                                             <div class="col-5 fw-medium text-truncate">Nama</div>
                                             <div class="col">
@@ -244,6 +252,8 @@
                                                 ${jenis_kelamin}
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="col-lg-6">
                                         <div class="mb-0 row g-1 align-items-center">
                                             <div class="col-5 fw-medium text-truncate">Tempat Lahir</div>
                                             <div class="col">
@@ -269,6 +279,8 @@
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
                             <div class="d-flex flex-wrap justify-content-end gap-2 mt-2">
                                 <button type="button" class="btn btn-body btn-sm bg-gradient details-btn" onclick="window.location.href = '<?= base_url('pasien/detailpasien') ?>/${pasien.id_pasien}'">
                                     <i class="fa-solid fa-circle-info"></i> Detail Pasien
