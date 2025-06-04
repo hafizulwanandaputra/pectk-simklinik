@@ -279,10 +279,10 @@
                         jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap" style="background-color: Pink"><i class="fa-solid fa-venus"></i> PEREMPUAN</span>`;
                     }
                     const pemberi_informasi = form_persetujuan_tindakan.pemberi_informasi ?
-                        form_persetujuan_tindakan.pemberi_informasi :
+                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${form_persetujuan_tindakan.pemberi_informasi}">` :
                         `<em>Belum ada</em>`;
                     const penerima_informasi = form_persetujuan_tindakan.penerima_informasi ?
-                        form_persetujuan_tindakan.penerima_informasi :
+                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${form_persetujuan_tindakan.penerima_informasi}">` :
                         `<em>Belum ada</em>`;
                     const tanggalRegistrasi = new Date(form_persetujuan_tindakan.tanggal_registrasi);
                     const hariIni = new Date();
@@ -298,17 +298,17 @@
                             <div class="align-self-center w-100">
                                 <h5 class="card-title d-flex date justify-content-start">
                                     <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">${form_persetujuan_tindakan.number}</span>
-                                    <span class="ms-1 align-self-center">${form_persetujuan_tindakan.nama_pasien}</span>
+                                    <span class="ms-1 align-self-center w-100"><input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 fw-medium" value="${form_persetujuan_tindakan.nama_pasien}"></span>
                                 </h5>
                                     <h6 class="card-subtitle mb-2">
-                                        ${form_persetujuan_tindakan.nomor_registrasi} • ${form_persetujuan_tindakan.no_rm}<br>${jenis_kelamin}
+                                        <input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 fw-medium" value="${form_persetujuan_tindakan.nomor_registrasi} • ${form_persetujuan_tindakan.no_rm}">${jenis_kelamin}
                                     </h6>
                                     <div class="card-text">
                                         <div style="font-size: 0.75em;">
                                                     <div class="mb-0 row g-1">
                                                         <div class="col-5 fw-medium text-truncate">Tanggal Persetujuan</div>
                                                         <div class="col date">
-                                                            ${form_persetujuan_tindakan.waktu_dibuat}
+                                                            <input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${form_persetujuan_tindakan.waktu_dibuat}">
                                                         </div>
                                                     </div>
                                                     <div class="mb-0 row g-1">

@@ -391,7 +391,7 @@
             } else {
                 data.resep.forEach(function(resep) {
                     const nama_pasien = resep.nama_pasien ?
-                        resep.nama_pasien :
+                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 fw-medium" value="${resep.nama_pasien}">` :
                         `<em>Anonim</em>`;
                     let jenis_kelamin = resep.jenis_kelamin;
                     if (jenis_kelamin === 'L') {
@@ -400,7 +400,7 @@
                         jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap" style="background-color: Pink"><i class="fa-solid fa-venus"></i> PEREMPUAN</span>`;
                     }
                     const alamat = resep.alamat ?
-                        resep.alamat :
+                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${resep.alamat}">` :
                         `<em>Tidak ada</em>`;
                     const jumlah_resep = parseInt(resep.jumlah_resep);
                     const total_biaya = parseInt(resep.total_biaya);
@@ -410,17 +410,17 @@
                     const statusButtons = resep.status == '1' ? `disabled` : ``;
                     const tanggal_lahir = !resep.tanggal_lahir || resep.tanggal_lahir === '0000-00-00' ?
                         '<em>Tidak ada</em>' :
-                        resep.tanggal_lahir;
+                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${resep.tanggal_lahir}">`;
                     const resepElement = `
             <li class="list-group-item border-top-0 pb-3 pt-3">
                 <div class="d-flex">
                     <div class="align-self-center w-100">
                         <h5 class="card-title d-flex date justify-content-start">
                             <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">${resep.number}</span>
-                            <span class="ms-1 align-self-center">${nama_pasien}</span>
+                            <span class="ms-1 align-self-center w-100">${nama_pasien}</span>
                         </h5>
                         <h6 class="card-subtitle mb-2">
-                            ${resep.apoteker}<br>${jenis_kelamin}
+                            <input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 fw-medium" value="${resep.apoteker}">${jenis_kelamin}
                         </h6>
                         <div class="card-text">
                             <div style="font-size: 0.75em;">
@@ -429,7 +429,7 @@
                                         <div class="mb-0 row g-1">
                                             <div class="col-5 fw-medium text-truncate">Tanggal dan Waktu</div>
                                             <div class="col date">
-                                                ${resep.tanggal_resep}
+                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${resep.tanggal_resep}">
                                             </div>
                                         </div>
                                         <div class="mb-0 row g-1">
@@ -449,13 +449,13 @@
                                         <div class="mb-0 row g-1">
                                             <div class="col-5 fw-medium text-truncate">Total Resep</div>
                                             <div class="col date">
-                                                ${jumlah_resep.toLocaleString('id-ID')}
+                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${jumlah_resep.toLocaleString('id-ID')}">
                                             </div>
                                         </div>
                                         <div class="mb-0 row g-1">
                                             <div class="col-5 fw-medium text-truncate">Total Harga</div>
                                             <div class="col date">
-                                                Rp${total_biaya.toLocaleString('id-ID')}
+                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="Rp${total_biaya.toLocaleString('id-ID')}">
                                             </div>
                                         </div>
                                     </div>

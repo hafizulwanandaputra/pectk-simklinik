@@ -1132,19 +1132,19 @@
                 // Mengkondisikan jenis kelamin
                 let jenis_kelamin_string = rawatjalan.jenis_kelamin;
                 if (jenis_kelamin_string === 'L') {
-                    jenis_kelamin_string = `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="Laki-Laki">`;
+                    jenis_kelamin_string = `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="Laki-Laki">`;
                 } else if (jenis_kelamin_string === 'P') {
-                    jenis_kelamin_string = `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="Perempuan">`;
+                    jenis_kelamin_string = `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="Perempuan">`;
                 }
 
                 const tempat_tanggal_lahir = (rawatjalan.tempat_lahir && rawatjalan.tanggal_lahir) ?
-                    `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rawatjalan.tempat_lahir}, ${rawatjalan.tanggal_lahir}">` :
+                    `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${rawatjalan.tempat_lahir}, ${rawatjalan.tanggal_lahir}">` :
                     `<em>Tidak ada</em>`;
 
                 // Gunakan pesan jika tidak ada nomor telepon
                 const usia = hitungUsia(rawatjalan.tanggal_lahir, rawatjalan.tanggal_registrasi); // Menghitung usia pasien
 
-                const telpon = rawatjalan.telpon ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${rawatjalan.telpon}">` : `<em>Tidak ada</em>`;
+                const telpon = rawatjalan.telpon ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${rawatjalan.telpon}">` : `<em>Tidak ada</em>`;
 
                 let pembatal = rawatjalan.status;
                 if (pembatal === 'BATAL') {
@@ -1166,11 +1166,11 @@
                 }
                 let isian_ok = rawatjalan.ruangan;
                 const tindakan_operasi_rajal = rawatjalan.tindakan_operasi_rajal ?
-                    `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rawatjalan.tindakan_operasi_rajal}">` :
+                    `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${rawatjalan.tindakan_operasi_rajal}">` :
                     `<em>Belum diisi</em>`;
                 let waktu_operasi_rajal = `<em>Belum diisi</em>`;
                 if (rawatjalan.tanggal_operasi_rajal) {
-                    waktu_operasi_rajal = `<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${rawatjalan.tanggal_operasi_rajal}`;
+                    waktu_operasi_rajal = `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${rawatjalan.tanggal_operasi_rajal}`;
                     if (rawatjalan.jam_operasi_rajal) {
                         waktu_operasi_rajal += ` ${rawatjalan.jam_operasi_rajal}`;
                     }
@@ -1256,30 +1256,30 @@
                 }
 
                 $('#copy_identitas_pasien_value').text(`${rawatjalan.nama_pasien} ${rawatjalan.no_rm} ${rawatjalan.tanggal_lahir}`);
-                $('#nama_pasien').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rawatjalan.nama_pasien}">`);
-                $('#no_rekam_medis').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${rawatjalan.no_rm}">`);
+                $('#nama_pasien').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${rawatjalan.nama_pasien}">`);
+                $('#no_rekam_medis').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${rawatjalan.no_rm}">`);
                 $('#jenis_kelamin').html(jenis_kelamin_string);
-                $('#tempat_lahir').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rawatjalan.tempat_lahir}">`);
-                $('#tanggal_lahir').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${rawatjalan.tanggal_lahir}">`);
-                $('#usia').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${usia.usia} tahun ${usia.bulan} bulan">`);
-                $('#alamat').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rawatjalan.alamat}">`);
+                $('#tempat_lahir').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${rawatjalan.tempat_lahir}">`);
+                $('#tanggal_lahir').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${rawatjalan.tanggal_lahir}">`);
+                $('#usia').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${usia.usia} tahun ${usia.bulan} bulan">`);
+                $('#alamat').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${rawatjalan.alamat}">`);
                 $('#telpon').html(telpon);
                 $('#kiup_btn').attr('onclick', "window.open('<?= base_url('pasien/kiup') ?>/" + rawatjalan.id_pasien + "')");
                 $('#barcode_btn').attr('onclick', "window.open('<?= base_url('pasien/barcode') ?>/" + rawatjalan.id_pasien + "')");
                 $('#detail_pasien_btn').attr('onclick', "window.location.href = '<?= base_url('pasien/detailpasien') ?>/" + rawatjalan.id_pasien + "'");
-                $('#pendaftar').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rawatjalan.pendaftar}">`);
-                $('#nomor_registrasi').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${rawatjalan.nomor_registrasi}">`);
-                $('#tanggal_registrasi').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${rawatjalan.tanggal_registrasi}">`);
-                $('#jenis_kunjungan').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rawatjalan.jenis_kunjungan}">`);
-                $('#status_kunjungan').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rawatjalan.status_kunjungan}">`);
-                $('#jaminan').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rawatjalan.jaminan}">`);
-                $('#ruangan').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rawatjalan.ruangan}">`);
-                $('#dokter').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rawatjalan.dokter}">`);
-                $('#keluhan').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rawatjalan.keluhan}">`);
+                $('#pendaftar').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${rawatjalan.pendaftar}">`);
+                $('#nomor_registrasi').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${rawatjalan.nomor_registrasi}">`);
+                $('#tanggal_registrasi').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${rawatjalan.tanggal_registrasi}">`);
+                $('#jenis_kunjungan').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${rawatjalan.jenis_kunjungan}">`);
+                $('#status_kunjungan').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${rawatjalan.status_kunjungan}">`);
+                $('#jaminan').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${rawatjalan.jaminan}">`);
+                $('#ruangan').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${rawatjalan.ruangan}">`);
+                $('#dokter').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${rawatjalan.dokter}">`);
+                $('#keluhan').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${rawatjalan.keluhan}">`);
                 $('#tindakan_operasi_rajal').html(tindakan_operasi_rajal);
                 $('#waktu_operasi_rajal').html(waktu_operasi_rajal);
-                $('#pembatal').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rawatjalan.pembatal}">`);
-                $('#alasan_batal').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rawatjalan.alasan_batal}">`);
+                $('#pembatal').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${rawatjalan.pembatal}">`);
+                $('#alasan_batal').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${rawatjalan.alasan_batal}">`);
                 $('#tombol_rme').html(tombol_rme);
                 $('#rajalModal').modal('show');
             } catch (error) {

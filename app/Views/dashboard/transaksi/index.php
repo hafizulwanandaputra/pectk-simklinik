@@ -424,7 +424,7 @@
             } else {
                 data.transaksi.forEach(function(transaksi) {
                     const nama_pasien = transaksi.nama_pasien ?
-                        transaksi.nama_pasien :
+                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 fw-medium" value="${transaksi.nama_pasien}">` :
                         `<em>Anonim</em>`;
                     let jenis_kelamin = transaksi.jenis_kelamin;
                     if (jenis_kelamin === 'L') {
@@ -432,14 +432,14 @@
                     } else if (jenis_kelamin === 'P') {
                         jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap" style="background-color: Pink"><i class="fa-solid fa-venus"></i> PEREMPUAN</span>`;
                     }
-                    const kasir = transaksi.kasir == 'Ditambahkan Dokter' ? `<em>${transaksi.kasir}</em>` : `${transaksi.kasir}`;
+                    const kasir = transaksi.kasir == 'Ditambahkan Dokter' ? `<em>${transaksi.kasir}</em>` : `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 fw-medium" value="${transaksi.kasir}">`;
                     const total_pembayaran = parseInt(transaksi.total_pembayaran);
                     const statusBadge = transaksi.lunas == '1' ?
                         `<span class="badge bg-success bg-gradient">Transaksi Diproses</span>` :
                         `<span class="badge bg-danger bg-gradient">Transaksi Belum Diproses</span>`;
                     const bank = transaksi.bank ? ` (${transaksi.bank})` : ``;
                     const metode_pembayaran = transaksi.metode_pembayaran ?
-                        transaksi.metode_pembayaran + bank :
+                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${transaksi.metode_pembayaran} ${bank}">` :
                         `<em>Belum ada</em>`;
                     let nomor_registrasi = transaksi.nomor_registrasi || "";
                     if (nomor_registrasi.includes("RJ")) {
@@ -455,10 +455,10 @@
                             <div class="align-self-center w-100">
                                 <h5 class="card-title d-flex date justify-content-start">
                                     <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">${transaksi.number}</span>
-                                    <span class="ms-1 align-self-center">${nama_pasien}</span>
+                                    <span class="ms-1 align-self-center w-100">${nama_pasien}</span>
                                 </h5>
                                 <h6 class="card-subtitle mb-2">
-                                    ${kasir}<br>${jenis_kelamin} ${jenisResep}
+                                    ${kasir}${jenis_kelamin} ${jenisResep}
                                 </h6>
                                 <div class="card-text">
                                     <div style="font-size: 0.75em;">
@@ -467,13 +467,13 @@
                                                 <div class="mb-0 row g-1">
                                                     <div class="col-5 fw-medium text-truncate">Nomor Kuitansi</div>
                                                     <div class="col date">
-                                                        ${transaksi.no_kwitansi}
+                                                        <input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${transaksi.no_kwitansi}">
                                                     </div>
                                                 </div>
                                                 <div class="mb-0 row g-1">
                                                     <div class="col-5 fw-medium text-truncate">Tanggal dan Waktu</div>
                                                     <div class="col date">
-                                                        ${transaksi.tgl_transaksi}
+                                                        <input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${transaksi.tgl_transaksi}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -481,7 +481,7 @@
                                                 <div class="mb-0 row g-1">
                                                     <div class="col-5 fw-medium text-truncate">Grand Total</div>
                                                     <div class="col date">
-                                                        Rp${total_pembayaran.toLocaleString('id-ID')}
+                                                        <input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="Rp${total_pembayaran.toLocaleString('id-ID')}">
                                                     </div>
                                                 </div>
                                                 <div class="mb-0 row g-1">

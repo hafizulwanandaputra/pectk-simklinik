@@ -307,13 +307,13 @@
                         jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap" style="background-color: Pink"><i class="fa-solid fa-venus"></i> PEREMPUAN</span>`;
                     }
                     const diagnosis = istirahat.diagnosis ?
-                        istirahat.diagnosis :
+                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${istirahat.diagnosis}">` :
                         `<em>Belum ada</em>`;
                     const tanggal_mulai = istirahat.tanggal_mulai ?
-                        istirahat.tanggal_mulai :
+                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${istirahat.tanggal_mulai}">` :
                         `<em>Belum ada</em>`;
                     const tanggal_selesai = istirahat.tanggal_selesai ?
-                        istirahat.tanggal_selesai :
+                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${istirahat.tanggal_selesai}">` :
                         `<em>Belum ada</em>`;
                     const tanggalRegistrasi = new Date(istirahat.tanggal_registrasi);
                     const today = new Date();
@@ -333,10 +333,10 @@
                             <div class="align-self-center w-100">
                                 <h5 class="card-title d-flex date justify-content-start">
                                     <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">${istirahat.number}</span>
-                                    <span class="ms-1 align-self-center">${istirahat.nama_pasien}</span>
+                                    <span class="ms-1 align-self-center w-100"><input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 fw-medium" value="${istirahat.nama_pasien}"></span>
                                 </h5>
                                     <h6 class="card-subtitle mb-2">
-                                        ${istirahat.nomor_registrasi} • ${istirahat.no_rm}<br>${jenis_kelamin}
+                                        <input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 fw-medium" value="${istirahat.nomor_registrasi} • ${istirahat.no_rm}">${jenis_kelamin}
                                     </h6>
                                     <div class="card-text">
                                         <div style="font-size: 0.75em;">
@@ -345,7 +345,7 @@
                                                     <div class="mb-0 row g-1">
                                                         <div class="col-5 fw-medium text-truncate">Tanggal dan Waktu</div>
                                                         <div class="col date">
-                                                            ${istirahat.waktu_dibuat}
+                                                            <input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${istirahat.waktu_dibuat}">
                                                         </div>
                                                     </div>
                                                     <div class="mb-0 row g-1">
