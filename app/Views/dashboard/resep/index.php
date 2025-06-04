@@ -385,19 +385,19 @@
                             <div style="font-size: 0.75em;">
                                 <div class="row gx-3">
                                     <div class="col-lg-6">
-                                        <div class="mb-0 row g-1">
+                                        <div class="mb-0 row g-1 align-items-center">
                                             <div class="col-5 fw-medium text-truncate">Tanggal dan Waktu</div>
                                             <div class="col date">
                                                 <input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${resep.tanggal_resep}">
                                             </div>
                                         </div>
-                                        <div class="mb-0 row g-1">
+                                        <div class="mb-0 row g-1 align-items-center">
                                             <div class="col-5 fw-medium text-truncate">Nomor Rekam Medis</div>
                                             <div class="col date">
                                                 <input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${resep.no_rm}">
                                             </div>
                                         </div>
-                                        <div class="mb-0 row g-1">
+                                        <div class="mb-0 row g-1 align-items-center">
                                             <div class="col-5 fw-medium text-truncate">Nomor Registrasi</div>
                                             <div class="col date">
                                                 <input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${resep.nomor_registrasi}">
@@ -405,13 +405,13 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
-                                        <div class="mb-0 row g-1">
+                                        <div class="mb-0 row g-1 align-items-center">
                                             <div class="col-5 fw-medium text-truncate">Total Resep</div>
                                             <div class="col date">
                                                 <input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${jumlah_resep.toLocaleString('id-ID')}">
                                             </div>
                                         </div>
-                                        <div class="mb-0 row g-1">
+                                        <div class="mb-0 row g-1 align-items-center">
                                             <div class="col-5 fw-medium text-truncate">Total Harga</div>
                                             <div class="col date">
                                                 <input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="Rp${total_biaya.toLocaleString('id-ID')}">

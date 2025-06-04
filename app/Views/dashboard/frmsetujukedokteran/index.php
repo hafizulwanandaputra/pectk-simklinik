@@ -305,19 +305,19 @@
                                     </h6>
                                     <div class="card-text">
                                         <div style="font-size: 0.75em;">
-                                                    <div class="mb-0 row g-1">
+                                                    <div class="mb-0 row g-1 align-items-center">
                                                         <div class="col-5 fw-medium text-truncate">Tanggal Persetujuan</div>
                                                         <div class="col date">
                                                             <input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${form_persetujuan_tindakan.waktu_dibuat}">
                                                         </div>
                                                     </div>
-                                                    <div class="mb-0 row g-1">
+                                                    <div class="mb-0 row g-1 align-items-center">
                                                         <div class="col-5 fw-medium text-truncate">Pemberi Informasi</div>
                                                         <div class="col date">
                                                             ${pemberi_informasi}
                                                         </div>
                                                     </div>
-                                                    <div class="mb-0 row g-1">
+                                                    <div class="mb-0 row g-1 align-items-center">
                                                         <div class="col-5 fw-medium text-truncate">Penerima Informasi</div>
                                                         <div class="col">
                                                             ${penerima_informasi}

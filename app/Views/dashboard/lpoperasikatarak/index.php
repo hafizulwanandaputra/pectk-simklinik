@@ -327,25 +327,25 @@
                                     </h6>
                                     <div class="card-text">
                                         <div style="font-size: 0.75em;">
-                                                    <div class="mb-0 row g-1">
+                                                    <div class="mb-0 row g-1 align-items-center">
                                                         <div class="col-5 fw-medium text-truncate">Tanggal Operasi</div>
                                                         <div class="col date">
                                                             ${tanggal_operasi}
                                                         </div>
                                                     </div>
-                                                    <div class="mb-0 row g-1">
+                                                    <div class="mb-0 row g-1 align-items-center">
                                                         <div class="col-5 fw-medium text-truncate">Lama Operasi</div>
                                                         <div class="col date">
                                                             ${lama_operasi}
                                                         </div>
                                                     </div>
-                                                    <div class="mb-0 row g-1">
+                                                    <div class="mb-0 row g-1 align-items-center">
                                                         <div class="col-5 fw-medium text-truncate">Dokter</div>
                                                         <div class="col">
                                                             ${operator}
                                                         </div>
                                                     </div>
-                                                    <div class="mb-0 row g-1">
+                                                    <div class="mb-0 row g-1 align-items-center">
                                                         <div class="col-5 fw-medium text-truncate">Asisten</div>
                                                         <div class="col">
                                                             ${asisten}

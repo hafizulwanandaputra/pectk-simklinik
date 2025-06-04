@@ -342,13 +342,13 @@
                                         <div style="font-size: 0.75em;">
                                             <div class="row gx-3">
                                                 <div class="col-lg-6">
-                                                    <div class="mb-0 row g-1">
+                                                    <div class="mb-0 row g-1 align-items-center">
                                                         <div class="col-5 fw-medium text-truncate">Tanggal dan Waktu</div>
                                                         <div class="col date">
                                                             <input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${istirahat.waktu_dibuat}">
                                                         </div>
                                                     </div>
-                                                    <div class="mb-0 row g-1">
+                                                    <div class="mb-0 row g-1 align-items-center">
                                                         <div class="col-5 fw-medium text-truncate">Diagnosis</div>
                                                         <div class="col date">
                                                             ${diagnosis}
@@ -356,13 +356,13 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6">
-                                                    <div class="mb-0 row g-1">
+                                                    <div class="mb-0 row g-1 align-items-center">
                                                         <div class="col-5 fw-medium text-truncate">Tanggal Mulai</div>
                                                         <div class="col date">
                                                             ${tanggal_mulai}
                                                         </div>
                                                     </div>
-                                                    <div class="mb-0 row g-1">
+                                                    <div class="mb-0 row g-1 align-items-center">
                                                         <div class="col-5 fw-medium text-truncate">Tanggal Selesai</div>
                                                         <div class="col date">
                                                             ${tanggal_selesai}

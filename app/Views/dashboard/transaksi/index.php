@@ -464,13 +464,13 @@
                                     <div style="font-size: 0.75em;">
                                         <div class="row gx-3">
                                             <div class="col-lg-6">
-                                                <div class="mb-0 row g-1">
+                                                <div class="mb-0 row g-1 align-items-center">
                                                     <div class="col-5 fw-medium text-truncate">Nomor Kuitansi</div>
                                                     <div class="col date">
                                                         <input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${transaksi.no_kwitansi}">
                                                     </div>
                                                 </div>
-                                                <div class="mb-0 row g-1">
+                                                <div class="mb-0 row g-1 align-items-center">
                                                     <div class="col-5 fw-medium text-truncate">Tanggal dan Waktu</div>
                                                     <div class="col date">
                                                         <input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${transaksi.tgl_transaksi}">
@@ -478,13 +478,13 @@
                                                 </div>
                                             </div>
                                             <div class="col-lg-6">
-                                                <div class="mb-0 row g-1">
+                                                <div class="mb-0 row g-1 align-items-center">
                                                     <div class="col-5 fw-medium text-truncate">Grand Total</div>
                                                     <div class="col date">
                                                         <input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="Rp${total_pembayaran.toLocaleString('id-ID')}">
                                                     </div>
                                                 </div>
-                                                <div class="mb-0 row g-1">
+                                                <div class="mb-0 row g-1 align-items-center">
                                                     <div class="col-5 fw-medium text-truncate">Metode</div>
                                                     <div class="col">
                                                         ${metode_pembayaran}
