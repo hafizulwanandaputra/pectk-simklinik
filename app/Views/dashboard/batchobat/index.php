@@ -318,7 +318,7 @@
                                 days = Math.round((end - anchor) / (1000 * 60 * 60 * 24));
                             }
 
-                            if (months < 6) {
+                            if (months < 6 || (months === 6 && days === 0)) {
                                 badgeClass = 'bg-warning text-dark';
 
                                 if (months === 0 && days === 0) {

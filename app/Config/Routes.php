@@ -348,6 +348,7 @@ $routes->get('/(?i)resep/(?i)detailresep/(:any)', 'ResepDokter::detailresep/$1')
 $routes->get('/(?i)resep/(?i)detailreseplist/(:any)', 'ResepDokter::detailreseplist/$1');
 $routes->get('/(?i)resep/(?i)detailresepitem/(:any)', 'ResepDokter::detailresepitem/$1');
 $routes->get('/(?i)resep/(?i)obatlist/(:any)', 'ResepDokter::obatlist/$1');
+$routes->get('/(?i)resep/(?i)obatkedaluwarsa', 'ResepDokter::obatkedaluwarsa');
 $routes->post('/(?i)resep/(?i)tambahdetailresep/(:any)', 'ResepDokter::tambahdetailresep/$1');
 $routes->post('/(?i)resep/(?i)perbaruidetailresep/(:any)', 'ResepDokter::perbaruidetailresep/$1');
 $routes->delete('/(?i)resep/(?i)hapusdetailresep/(:any)', 'ResepDokter::hapusdetailresep/$1');
@@ -369,6 +370,7 @@ $routes->get('/(?i)resepluar/(?i)detailresep/(:any)', 'ResepLuar::detailresep/$1
 $routes->get('/(?i)resepluar/(?i)detailreseplist/(:any)', 'ResepLuar::detailreseplist/$1');
 $routes->get('/(?i)resepluar/(?i)detailresepitem/(:any)', 'ResepLuar::detailresepitem/$1');
 $routes->get('/(?i)resepluar/(?i)obatlist/(:any)', 'ResepLuar::obatlist/$1');
+$routes->get('/(?i)resepluar/(?i)obatkedaluwarsa', 'ResepLuar::obatkedaluwarsa');
 $routes->post('/(?i)resepluar/(?i)tambahdetailresep/(:any)', 'ResepLuar::tambahdetailresep/$1');
 $routes->post('/(?i)resepluar/(?i)perbaruidetailresep/(:any)', 'ResepLuar::perbaruidetailresep/$1');
 $routes->delete('/(?i)resepluar/(?i)hapusdetailresep/(:any)', 'ResepLuar::hapusdetailresep/$1');

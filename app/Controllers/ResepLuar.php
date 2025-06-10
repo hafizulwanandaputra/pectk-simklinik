@@ -559,6 +559,64 @@ class ResepLuar extends BaseController
         }
     }
 
+    public function obatkedaluwarsa()
+    {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+            $BatchObatModel = new BatchObatModel();
+
+            $hari_ini = date('Y-m-d');
+            $enam_bulan_ke_depan = date('Y-m-d', strtotime('+6 months'));
+
+            $results = $BatchObatModel
+                ->join('obat', 'obat.id_obat = batch_obat.id_obat', 'inner')
+                ->where('batch_obat.tgl_kedaluwarsa >=', $hari_ini)
+                ->where('batch_obat.tgl_kedaluwarsa <=', $enam_bulan_ke_depan)
+                ->orderBy('tgl_kedaluwarsa', 'ASC')
+                ->findAll();
+
+            $options = [];
+            foreach ($results as $row) {
+                $ppn = (float) $row['ppn'];
+                $mark_up = (float) $row['mark_up'];
+                $harga_obat = (float) $row['harga_obat'];
+                $penyesuaian_harga = (float) $row['penyesuaian_harga'];
+
+                $jumlah_ppn = ($harga_obat * $ppn) / 100;
+                $total_harga_ppn = $harga_obat + $jumlah_ppn;
+
+                $jumlah_mark_up = ($total_harga_ppn * $mark_up) / 100;
+                $total_harga = $total_harga_ppn + $jumlah_mark_up;
+
+                $harga_bulat = ceil($total_harga / 100) * 100 + $penyesuaian_harga;
+
+                $harga_obat_terformat = number_format($harga_bulat, 0, ',', '.');
+
+                $stok_tersisa = $row['jumlah_masuk'] - $row['jumlah_keluar'];
+
+                $options[] = [
+                    'nama_obat' => $row['nama_obat'],
+                    'isi_obat' => $row['isi_obat'],
+                    'kategori_obat' => $row['kategori_obat'],
+                    'bentuk_obat' => $row['bentuk_obat'],
+                    'nama_batch' => $row['nama_batch'],
+                    'stok_tersisa' => $stok_tersisa,
+                    'harga' => $harga_obat_terformat,
+                    'tgl_kedaluwarsa' => $row['tgl_kedaluwarsa']
+                ];
+            }
+
+            return $this->response->setJSON([
+                'success' => true,
+                'jumlah' => intval(count($options)), // ← ini menambahkan panjang data sebagai int
+                'data' => $options,
+            ]);
+        } else {
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
+        }
+    }
+
     public function tambahdetailresep($id)
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan

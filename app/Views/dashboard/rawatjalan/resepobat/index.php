@@ -112,10 +112,11 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <div class="card-header" id="tambahDetailContainer" style="display: none;">
                     <form id="tambahDetail" enctype="multipart/form-data">
                         <div class="row g-2">
-                            <div class="col-12">
+                            <div class="col-12 input-group has-validation">
                                 <select class="form-select form-select-sm" id="id_batch_obat" name="id_batch_obat" aria-label="id_batch_obat" autocomplete="off">
                                     <option value="" disabled selected>-- Pilih Obat --</option>
                                 </select>
+                                <button id="expired_med_btn" class="btn btn-warning bg-gradient btn-sm" type="button" data-bs-toggle="tooltip" data-bs-title="Peringatan Obat Kedaluwarsa"><i class="fa-solid fa-triangle-exclamation"></i></button>
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="col-6">
@@ -216,6 +217,32 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-2">
                     <button class="btn btn-danger  bg-gradient" type="button" id="cancelConfirmBtn" disabled><i class="fa-solid fa-xmark"></i> Batalkan Konfirmasi</button>
                     <button class="btn btn-success  bg-gradient" type="button" id="confirmBtn" disabled><i class="fa-solid fa-check-double"></i> Konfirmasi</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="expiredModal" tabindex="-1" aria-labelledby="expiredModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-fullscreen-lg-down modal-dialog-centered modal-dialog-scrollable ">
+            <div class="modal-content bg-body-tertiary shadow-lg transparent-blur">
+                <div class="modal-header justify-content-between pt-2 pb-2" style="border-bottom: 1px solid var(--bs-border-color-translucent);">
+                    <h6 class="pe-2 modal-title fs-6 text-truncate" id="expiredModalLabel" style="font-weight: bold;"></h6>
+                    <button id="expiredCloseBtn" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body py-2">
+                    <div id="mediaAlert" class="alert alert-warning  mb-1 mt-1" role="alert">
+                        <div class="d-flex align-items-start">
+                            <div style="width: 12px; text-align: center;">
+                                <i class="fa-solid fa-triangle-exclamation"></i>
+                            </div>
+                            <div class="w-100 ms-3">
+                                <p><strong id="total_exp_med"></strong> obat berikut akan segera kedaluwarsa:</p>
+                                <ol id="expired_med_list">
+                                </ol>
+                                <p class="mb-0">Pastikan Anda memilih obat yang masa kedaluwarsanya masih panjang.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -480,6 +507,60 @@ $usia = $registrasi->diff($tanggal_lahir);
                 inline: "center" // Elemen di-scroll ke tengah horizontal
             });
         });
+
+        $('#expired_med_btn').on('click', async function(ə) {
+            ə.preventDefault();
+            var $this = $(this);
+            $('[data-bs-toggle="tooltip"]').tooltip('hide');
+            $this.prop('disabled', true).html(`<?= $this->include('spinner/spinner'); ?>`);
+
+            try {
+                let response = await axios.get(`<?= base_url('/resep/obatkedaluwarsa') ?>`);
+                const data = response.data;
+
+                $('#expiredModalLabel').text('Peringatan Obat Kedaluwarsa');
+
+                // Kosongkan daftar sebelum menambahkan elemen baru
+                $('#expired_med_list').empty();
+
+                $('#total_exp_med').text(data.jumlah);
+
+                if (data.jumlah > 0) {
+                    data.data.forEach(item => {
+                        $('#expired_med_list').append(`
+                    <li>
+                        <strong>${item.nama_obat}</strong>
+                        <br>
+                        <small>
+                        ${item.isi_obat ?? '<em>Tanpa isi obat</em>'} • ${item.kategori_obat} • ${item.bentuk_obat}
+                        <br>
+                        Batch: ${item.nama_batch ?? '<em>Tanpa nama batch</em>'}
+                        <br>
+                        Stok: ${item.stok_tersisa}
+                        <br>
+                        Harga: Rp${item.harga}
+                        <br>
+                        <span class="text-danger">EXP: <strong>${item.tgl_kedaluwarsa}</strong></span>
+                        </small>
+                    </li>
+                `);
+                    });
+                } else {
+                    $('#expired_med_list').append('<li class="text-muted"><em>Tidak ada obat yang mendekati masa kedaluwarsa dalam 6 bulan ke depan.</em></li>');
+                }
+
+                $('#expiredModal').modal('show');
+            } catch (error) {
+                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+            } finally {
+                $this.prop('disabled', false).html(`<i class="fa-solid fa-triangle-exclamation"></i>`);
+            }
+        });
+
+        $('#expiredModal').on('hidden.bs.modal', function() {
+            $('#expired_med_list').empty();
+        });
+
 
         var detailResepId;
         var detailResepName;
