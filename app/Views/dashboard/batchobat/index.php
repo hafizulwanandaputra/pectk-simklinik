@@ -291,10 +291,50 @@
                 {
                     data: 'tgl_kedaluwarsa',
                     render: function(data, type, row) {
-                        let now = new Date();
-                        let expiryDate = new Date(data);
-                        let badgeClass = expiryDate < now ? 'bg-danger' : 'bg-success';
-                        let statusText = expiryDate < now ? 'Kedaluwarsa' : 'Aktif';
+                        const now = new Date();
+                        const expiryDate = new Date(data);
+
+                        let badgeClass = '';
+                        let statusText = '';
+
+                        if (expiryDate < now) {
+                            badgeClass = 'bg-danger';
+                            statusText = 'Kedaluwarsa';
+                        } else {
+                            // Salin tanggal untuk perhitungan
+                            let start = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                            let end = new Date(expiryDate.getFullYear(), expiryDate.getMonth(), expiryDate.getDate());
+
+                            // Hitung selisih bulan
+                            let months = (end.getFullYear() - start.getFullYear()) * 12 + (end.getMonth() - start.getMonth());
+
+                            // Hitung selisih hari dengan membandingkan tanggal
+                            let anchor = new Date(start.getFullYear(), start.getMonth() + months, start.getDate());
+                            let days = Math.round((end - anchor) / (1000 * 60 * 60 * 24));
+
+                            if (days < 0) {
+                                months--;
+                                anchor = new Date(start.getFullYear(), start.getMonth() + months, start.getDate());
+                                days = Math.round((end - anchor) / (1000 * 60 * 60 * 24));
+                            }
+
+                            if (months < 6) {
+                                badgeClass = 'bg-warning text-dark';
+
+                                if (months === 0 && days === 0) {
+                                    statusText = 'Hari terakhir';
+                                } else if (months === 0) {
+                                    statusText = `${days} hari lagi`;
+                                } else if (days === 0) {
+                                    statusText = `${months} bulan lagi`;
+                                } else {
+                                    statusText = `${months} bulan ${days} hari lagi`;
+                                }
+                            } else {
+                                badgeClass = 'bg-success';
+                                statusText = 'Aktif';
+                            }
+                        }
 
                         return `<span class="date text-nowrap">${data}<br><span class="badge ${badgeClass} bg-gradient">${statusText}</span></span>`;
                     }

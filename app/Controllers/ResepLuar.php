@@ -498,7 +498,7 @@ class ResepLuar extends BaseController
             $results = $BatchObatModel
                 ->join('obat', 'obat.id_obat = batch_obat.id_obat', 'inner')
                 ->where('batch_obat.tgl_kedaluwarsa >', date('Y-m-d'))
-                ->orderBy('nama_obat', 'ASC')
+                ->orderBy('tgl_kedaluwarsa', 'ASC')
                 ->findAll();
 
             $options = []; // Menyiapkan array untuk opsi obat
@@ -540,7 +540,7 @@ class ResepLuar extends BaseController
                             ' • ' . $row['bentuk_obat'] .
                             ' • Rp' . $harga_obat_terformat .
                             ' • ' . (!empty($row['nama_batch']) ? $row['nama_batch'] : 'Tanpa nama batch') .
-                            ' • ' . $row['tgl_kedaluwarsa'] .
+                            ' • EXP ' . $row['tgl_kedaluwarsa'] .
                             ' • ' . $stok_tersisa . ')' // Menyimpan informasi obat
                     ];
                 }

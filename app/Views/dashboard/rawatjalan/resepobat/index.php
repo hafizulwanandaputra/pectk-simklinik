@@ -279,13 +279,26 @@ $usia = $registrasi->diff($tanggal_lahir);
 
                 // Hapus semua opsi kecuali yang pertama
                 select.find('option:not(:first)').remove();
+                select.find('optgroup').remove();
 
-                // Tambahkan opsi baru dari data yang diterima
-                options.forEach(option => {
-                    select.append(`<option value="${option.value}">${option.text}</option>`);
+                // Buat satu optgroup untuk semua opsi
+                const optgroup = $('<optgroup>', {
+                    label: 'Diurutkan menurut tanggal kedaluwarsa terbaru'
                 });
 
-                // Pastikan pilihan kembali ke default setelah submit
+                options.forEach(option => {
+                    optgroup.append(
+                        $('<option>', {
+                            value: option.value,
+                            text: option.text
+                        })
+                    );
+                });
+
+                // Tambahkan optgroup ke select
+                select.append(optgroup);
+
+                // Pilih kembali jika ada selectedObat
                 if (selectedObat) {
                     select.val(selectedObat).trigger('change');
                 }
