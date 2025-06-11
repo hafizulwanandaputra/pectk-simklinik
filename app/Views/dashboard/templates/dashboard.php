@@ -532,7 +532,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                     <button class="btn btn-outline-success bg-gradient dropdown-toggle" id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static" aria-label="Toggle theme (auto)">
                                         <i class="fa-solid fa-palette"></i>
                                     </button>
-                                    <ul class="dropdown-menu shadow-sm dropdown-menu-end" aria-labelledby="bd-theme-text">
+                                    <ul class="dropdown-menu shadow-sm dropdown-menu-end bg-body-tertiary transparent-blur" aria-labelledby="bd-theme-text">
                                         <li>
                                             <button type="button" class="dropdown-item" data-bs-theme-value="light" aria-pressed="false">
                                                 Terang
