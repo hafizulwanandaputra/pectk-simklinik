@@ -440,8 +440,6 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
 
             .sidebar {
                 top: 48px;
-                backdrop-filter: blur(20px);
-                --bs-bg-opacity: 0.6667;
                 border-right: 0px solid var(--bs-border-color);
                 width: 100%;
             }
@@ -472,13 +470,6 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
             @media (prefers-reduced-motion: reduce) {
                 #sidebarMenu {
                     transition: none;
-                }
-            }
-
-            @media (prefers-reduced-transparency) {
-                .sidebar {
-                    --bs-bg-opacity: 1;
-                    backdrop-filter: none;
                 }
             }
         }
@@ -639,7 +630,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
 
         <!-- CONTENTS -->
         <div class="main-content-wrapper">
-            <nav id="sidebarMenu" class="d-md-block sidebar bg-body-secondary shadow-sm collapse">
+            <nav id="sidebarMenu" class="d-md-block sidebar bg-body-secondary shadow-sm collapse transparent-blur">
                 <div id="sidebarMenu2" class="position-sticky sidebar-sticky p-1">
                     <ul class="nav nav-pills flex-column">
                         <li class="nav-item">
