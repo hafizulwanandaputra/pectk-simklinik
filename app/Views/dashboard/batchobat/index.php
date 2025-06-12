@@ -66,12 +66,16 @@
     <div class="modal modal-sheet p-4 py-md-5 fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content bg-body-tertiary rounded-4 shadow-lg transparent-blur">
-                <div class="modal-body p-4 text-center">
+                <div class="modal-body p-3">
                     <h5 class="mb-0" id="deleteMessage"></h5>
-                </div>
-                <div class="modal-footer flex-nowrap p-0" style="border-top: 1px solid var(--bs-border-color-translucent);">
-                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end" style="border-right: 1px solid var(--bs-border-color-translucent)!important;" data-bs-dismiss="modal">Tidak</button>
-                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0" id="confirmDeleteBtn">Ya</button>
+                    <div class="row gx-2 mt-2">
+                        <div class="col d-grid">
+                            <button type="button" class="btn btn-lg btn-body bg-gradient fs-6 mb-0" data-bs-dismiss="modal">Tidak</button>
+                        </div>
+                        <div class="col d-grid">
+                            <button type="submit" class="btn btn-lg btn-primary bg-gradient fs-6 mb-0" id="confirmDeleteBtn">Ya</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -567,10 +571,11 @@
         // Event handler untuk menampilkan modal konfirmasi hapus
         $(document).on('click', '.delete-btn', function() {
             batchObatId = $(this).data('id');
-            fakturObatName = $(this).data('name1');
+            const name1 = $(this).data('name1');
+            fakturObatName = name1 ? ` dari ${name1}` : '';
             batchObatName = $(this).data('name2');
             $('[data-bs-toggle="tooltip"]').tooltip('hide');
-            $('#deleteMessage').html(`Hapus "${batchObatName}" dari ${fakturObatName}?`);
+            $('#deleteMessage').html(`Hapus "${batchObatName}"${fakturObatName}?`);
             $('#deleteModal').modal('show');
         });
 
