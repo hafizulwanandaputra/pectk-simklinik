@@ -427,7 +427,7 @@
         $('#exportButton').on('click', async function(ə) {
             ə.preventDefault();
             $(this).hide();
-            $('#searchInput, #addButton, #clearTglButton, .details-btn').prop('disabled', true);
+            $('#searchInput, #addButton, #tanggalFilter, #clearTglButton, .details-btn').prop('disabled', true);
             const fp = $('#tanggalFilter')[0]._flatpickr;
 
             if (fp) {
@@ -596,7 +596,7 @@
             } finally {
                 $('#loadingSpinner').hide(); // Menyembunyikan spinner setelah unduhan selesai
                 $(this).show();
-                $('#searchInput, #addButton, #clearTglButton, .details-btn').prop('disabled', false);
+                $('#searchInput, #addButton, #tanggalFilter, #clearTglButton, .details-btn').prop('disabled', false);
                 if (fp) {
                     fp.altInput.disabled = false;
                     fp.set('clickOpens', true);
