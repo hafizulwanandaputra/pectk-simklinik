@@ -431,10 +431,24 @@
             const fp = $('#tanggalFilter')[0]._flatpickr;
 
             if (fp) {
-                // Men-disable input buatan Flatpickr (altInput)
-                fp.altInput.disabled = true;
+                // Nonaktifkan altInput (untuk desktop)
+                if (fp.altInput) {
+                    fp.altInput.disabled = true;
+                    fp.altInput.setAttribute('readonly', true);
+                    fp.altInput.style.pointerEvents = 'none';
+                    fp.altInput.style.touchAction = 'none';
+                }
 
-                // Mencegah input dibuka dengan klik
+                // Nonaktifkan mobile input (untuk perangkat mobile)
+                const mobileInput = fp._input.parentElement.querySelector('.flatpickr-mobile');
+                if (mobileInput) {
+                    mobileInput.disabled = true;
+                    mobileInput.setAttribute('readonly', true);
+                    mobileInput.style.pointerEvents = 'none';
+                    mobileInput.style.touchAction = 'none';
+                }
+
+                // Mencegah datepicker muncul saat diklik
                 fp.set('clickOpens', false);
             }
             $('#loadingSpinner').show(); // Menampilkan spinner
@@ -598,7 +612,24 @@
                 $(this).show();
                 $('#searchInput, #addButton, #tanggalFilter, #clearTglButton, .details-btn').prop('disabled', false);
                 if (fp) {
-                    fp.altInput.disabled = false;
+                    // Aktifkan kembali altInput (untuk desktop)
+                    if (fp.altInput) {
+                        fp.altInput.disabled = false;
+                        fp.altInput.removeAttribute('readonly');
+                        fp.altInput.style.pointerEvents = '';
+                        fp.altInput.style.touchAction = '';
+                    }
+
+                    // Aktifkan kembali mobile input (untuk perangkat mobile)
+                    const mobileInput = fp._input.parentElement.querySelector('.flatpickr-mobile');
+                    if (mobileInput) {
+                        mobileInput.disabled = false;
+                        mobileInput.removeAttribute('readonly');
+                        mobileInput.style.pointerEvents = '';
+                        mobileInput.style.touchAction = '';
+                    }
+
+                    // Izinkan datepicker dibuka kembali
                     fp.set('clickOpens', true);
                 }
             }
