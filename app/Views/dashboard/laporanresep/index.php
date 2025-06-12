@@ -371,7 +371,7 @@
 
         // Membuat toast ekspor berjalan
         const toast = $(`
-        <div id="exportToast" class="toast show transparent-blur" role="alert" aria-live="assertive" aria-atomic="true">
+        <div id="exportToast" class="toast show bg-body-tertiary transparent-blur" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="toast-body">
                 <div class="d-flex justify-content-between align-items-center mb-1">
                     <div class="text-truncate me-1">
