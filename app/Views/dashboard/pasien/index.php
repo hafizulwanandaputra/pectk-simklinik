@@ -142,10 +142,10 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content bg-body-tertiary rounded-5 shadow-lg transparent-blur">
                 <?= form_open_multipart('/pasien/create', 'id="addForm"'); ?>
-                <div class="modal-body p-4 text-center">
+                <div class="modal-body p-4">
                     <h5 id="addMessage"></h5>
                     <h6 class="mb-0 fw-normal" id="addSubmessage"></h6>
-                    <div class="row gy-2 pt-3">
+                    <div class="row gy-2 pt-4">
                         <div class="d-grid">
                             <button type="submit" class="btn btn-lg btn-primary bg-gradient fs-6 mb-0 rounded-4" id="confirmAddBtn">Tambah Pasien</button>
                         </div>

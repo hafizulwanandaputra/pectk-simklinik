@@ -60,14 +60,14 @@
     <div class="modal modal-sheet p-4 py-md-5 fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content bg-body-tertiary rounded-5 shadow-lg transparent-blur">
-                <div class="modal-body p-4 text-center">
+                <div class="modal-body p-4">
                     <h5 class="mb-0" id="deleteMessage"></h5>
-                    <div class="row gx-2 pt-3">
+                    <div class="row gx-2 pt-4">
                         <div class="col d-grid">
                             <button type="button" class="btn btn-lg btn-body bg-gradient fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Tidak</button>
                         </div>
                         <div class="col d-grid">
-                            <button type="submit" class="btn btn-lg btn-primary bg-gradient fs-6 mb-0 rounded-4" id="confirmDeleteBtn">Ya</button>
+                            <button type="button" class="btn btn-lg btn-primary bg-gradient fs-6 mb-0 rounded-4" id="confirmDeleteBtn">Ya</button>
                         </div>
                     </div>
                 </div>
@@ -77,10 +77,10 @@
     <div class="modal modal-sheet p-4 py-md-5 fade" id="resetPasswordModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="resetPasswordModalLabel" aria-hidden="true" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content bg-body-tertiary rounded-5 shadow-lg transparent-blur">
-                <div class="modal-body p-4 text-center">
+                <div class="modal-body p-4">
                     <h5 id="resetPasswordMessage"></h5>
                     <h6 class="mb-0 fw-normal" id="resetPasswordSubmessage"></h6>
-                    <div class="row gx-2 pt-3">
+                    <div class="row gx-2 pt-4">
                         <div class="col d-grid">
                             <button type="button" class="btn btn-lg btn-body bg-gradient fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Tidak</button>
                         </div>
@@ -95,9 +95,9 @@
     <div class="modal modal-sheet p-4 py-md-5 fade" id="activateModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="activateModalLabel" aria-hidden="true" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content bg-body-tertiary rounded-5 shadow-lg transparent-blur">
-                <div class="modal-body p-4 text-center">
+                <div class="modal-body p-4">
                     <h5 class="mb-0" id="activateMessage"></h5>
-                    <div class="row gx-2 pt-3">
+                    <div class="row gx-2 pt-4">
                         <div class="col d-grid">
                             <button type="button" class="btn btn-lg btn-body bg-gradient fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Tidak</button>
                         </div>
@@ -112,9 +112,9 @@
     <div class="modal modal-sheet p-4 py-md-5 fade" id="deactivateModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deactivateModalLabel" aria-hidden="true" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content bg-body-tertiary rounded-5 shadow-lg transparent-blur">
-                <div class="modal-body p-4 text-center">
+                <div class="modal-body p-4">
                     <h5 class="mb-0" id="deactivateMessage"></h5>
-                    <div class="row gx-2 pt-3">
+                    <div class="row gx-2 pt-4">
                         <div class="col d-grid">
                             <button type="button" class="btn btn-lg btn-body bg-gradient fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Tidak</button>
                         </div>

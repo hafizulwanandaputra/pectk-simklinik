@@ -250,13 +250,17 @@ $usia = $registrasi->diff($tanggal_lahir);
 
     <div class="modal modal-sheet p-4 py-md-5 fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content bg-body-tertiary rounded-4 shadow-lg transparent-blur">
-                <div class="modal-body p-4 text-center">
+            <div class="modal-content bg-body-tertiary rounded-5 shadow-lg transparent-blur">
+                <div class="modal-body p-4">
                     <h5 class="mb-0" id="deleteMessage"></h5>
-                </div>
-                <div class="modal-footer flex-nowrap p-0" style="border-top: 1px solid var(--bs-border-color-translucent);">
-                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end" style="border-right: 1px solid var(--bs-border-color-translucent)!important;" data-bs-dismiss="modal">Tidak</button>
-                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0" id="confirmDeleteBtn">Ya</button>
+                    <div class="row gx-2 pt-4">
+                        <div class="col d-grid">
+                            <button type="button" class="btn btn-lg btn-body bg-gradient fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Tidak</button>
+                        </div>
+                        <div class="col d-grid">
+                            <button type="button" class="btn btn-lg btn-primary bg-gradient fs-6 mb-0 rounded-4" id="confirmDeleteBtn">Ya</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -264,13 +268,17 @@ $usia = $registrasi->diff($tanggal_lahir);
 
     <div class="modal modal-sheet p-4 py-md-5 fade" id="confirmModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content bg-body-tertiary rounded-4 shadow-lg transparent-blur">
-                <div class="modal-body p-4 text-center">
+            <div class="modal-content bg-body-tertiary rounded-5 shadow-lg transparent-blur">
+                <div class="modal-body p-4">
                     <h5 class="mb-0" id="confirmMessage"></h5>
-                </div>
-                <div class="modal-footer flex-nowrap p-0" style="border-top: 1px solid var(--bs-border-color-translucent);">
-                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end" style="border-right: 1px solid var(--bs-border-color-translucent)!important;" data-bs-dismiss="modal">Tidak</button>
-                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0" id="confirmConfirmBtn">Ya</button>
+                    <div class="row gx-2 pt-4">
+                        <div class="col d-grid">
+                            <button type="button" class="btn btn-lg btn-body bg-gradient fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Tidak</button>
+                        </div>
+                        <div class="col d-grid">
+                            <button type="button" class="btn btn-lg btn-primary bg-gradient fs-6 mb-0 rounded-4" id="confirmConfirmBtn">Ya</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -278,13 +286,17 @@ $usia = $registrasi->diff($tanggal_lahir);
 
     <div class="modal modal-sheet p-4 py-md-5 fade" id="cancelConfirmModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="cancelConfirmModalLabel" aria-hidden="true" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content bg-body-tertiary rounded-4 shadow-lg transparent-blur">
-                <div class="modal-body p-4 text-center">
+            <div class="modal-content bg-body-tertiary rounded-5 shadow-lg transparent-blur">
+                <div class="modal-body p-4">
                     <h5 class="mb-0" id="cancelConfirmMessage"></h5>
-                </div>
-                <div class="modal-footer flex-nowrap p-0" style="border-top: 1px solid var(--bs-border-color-translucent);">
-                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end" style="border-right: 1px solid var(--bs-border-color-translucent)!important;" data-bs-dismiss="modal">Tidak</button>
-                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0" id="confirmCancelConfirmBtn">Ya</button>
+                    <div class="row gx-2 pt-4">
+                        <div class="col d-grid">
+                            <button type="button" class="btn btn-lg btn-body bg-gradient fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Tidak</button>
+                        </div>
+                        <div class="col d-grid">
+                            <button type="button" class="btn btn-lg btn-primary bg-gradient fs-6 mb-0 rounded-4" id="confirmCancelConfirmBtn">Ya</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
