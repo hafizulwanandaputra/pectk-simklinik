@@ -616,15 +616,15 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
 
         <div class="modal modal-sheet p-4 py-md-5 fade" id="logoutModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="logoutModal" aria-hidden="true" role="dialog">
             <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content bg-body-tertiary rounded-4 shadow-lg transparent-blur">
-                    <div class="modal-body p-3">
+                <div class="modal-content bg-body-tertiary rounded-5 shadow-lg transparent-blur">
+                    <div class="modal-body p-4">
                         <h5 class="mb-0" id="logoutMessage">Apakah Anda ingin keluar?</h5>
                         <div class="row gx-2 mt-2">
                             <div class="col d-grid">
-                                <button type="button" class="btn btn-lg btn-body bg-gradient fs-6 mb-0" data-bs-dismiss="modal">Tidak</button>
+                                <button type="button" class="btn btn-lg btn-body bg-gradient fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Tidak</button>
                             </div>
                             <div class="col d-grid">
-                                <button type="button" class="btn btn-lg btn-primary bg-gradient fs-6 mb-0" id="confirmLogout" onclick="window.location.href='<?= base_url('/logout'); ?>';">Ya</a>
+                                <button type="button" class="btn btn-lg btn-primary bg-gradient fs-6 mb-0 rounded-4" id="confirmLogout" onclick="window.location.href='<?= base_url('/logout'); ?>';">Ya</a>
                             </div>
                         </div>
                     </div>

@@ -140,17 +140,17 @@
     </div>
     <div class="modal modal-sheet p-4 py-md-5 fade" id="addModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content bg-body-tertiary rounded-4 shadow-lg transparent-blur">
+            <div class="modal-content bg-body-tertiary rounded-5 shadow-lg transparent-blur">
                 <?= form_open_multipart('/pasien/create', 'id="addForm"'); ?>
-                <div class="modal-body p-3">
+                <div class="modal-body p-4">
                     <h5 id="addMessage"></h5>
                     <h6 class="mb-0 fw-normal" id="addSubmessage"></h6>
                     <div class="row gy-2 pt-2">
                         <div class="d-grid">
-                            <button type="submit" class="btn btn-lg btn-primary bg-gradient fs-6 mb-0" id="confirmAddBtn">Tambah Pasien</button>
+                            <button type="submit" class="btn btn-lg btn-primary bg-gradient fs-6 mb-0 rounded-4" id="confirmAddBtn">Tambah Pasien</button>
                         </div>
                         <div class="d-grid">
-                            <button type="button" class="btn btn-lg btn-body bg-gradient fs-6 mb-0" data-bs-dismiss="modal">Batal</button>
+                            <button type="button" class="btn btn-lg btn-body bg-gradient fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Batal</button>
                         </div>
                     </div>
                 </div>
