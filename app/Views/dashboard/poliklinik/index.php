@@ -57,9 +57,9 @@
     <div class="modal modal-sheet p-4 py-md-5 fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content bg-body-tertiary rounded-5 shadow-lg transparent-blur">
-                <div class="modal-body p-4">
+                <div class="modal-body p-4 text-center">
                     <h5 class="mb-0" id="deleteMessage"></h5>
-                    <div class="row gx-2 mt-2">
+                    <div class="row gx-2 pt-3">
                         <div class="col d-grid">
                             <button type="button" class="btn btn-lg btn-body bg-gradient fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Tidak</button>
                         </div>
