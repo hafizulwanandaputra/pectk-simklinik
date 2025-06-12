@@ -427,7 +427,16 @@
         $('#exportButton').on('click', async function(ə) {
             ə.preventDefault();
             $(this).hide();
-            $('#searchInput, #addButton').prop('disabled', true);
+            $('#searchInput, #addButton, #clearTglButton, .details-btn').prop('disabled', true);
+            const fp = $('#tanggalFilter')[0]._flatpickr;
+
+            if (fp) {
+                // Men-disable input buatan Flatpickr (altInput)
+                fp.altInput.disabled = true;
+
+                // Mencegah input dibuka dengan klik
+                fp.set('clickOpens', false);
+            }
             $('#loadingSpinner').show(); // Menampilkan spinner
 
             // Membuat toast ekspor berjalan
@@ -587,7 +596,11 @@
             } finally {
                 $('#loadingSpinner').hide(); // Menyembunyikan spinner setelah unduhan selesai
                 $(this).show();
-                $('#searchInput, #addButton').prop('disabled', false);
+                $('#searchInput, #addButton, #clearTglButton, .details-btn').prop('disabled', false);
+                if (fp) {
+                    fp.altInput.disabled = false;
+                    fp.set('clickOpens', true);
+                }
             }
         });
 
