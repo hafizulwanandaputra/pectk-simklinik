@@ -64,10 +64,10 @@
                     <h5 class="mb-0" id="deleteMessage"></h5>
                     <div class="row gx-2 pt-4">
                         <div class="col d-grid">
-                            <button type="button" class="btn btn-lg btn-body bg-gradient fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Tidak</button>
+                            <button type="button" class="btn btn-lg btn-body bg-gradient fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Batal</button>
                         </div>
                         <div class="col d-grid">
-                            <button type="button" class="btn btn-lg btn-primary bg-gradient fs-6 mb-0 rounded-4" id="confirmDeleteBtn">Ya</button>
+                            <button type="button" class="btn btn-lg btn-danger bg-gradient fs-6 mb-0 rounded-4" id="confirmDeleteBtn">Hapus</button>
                         </div>
                     </div>
                 </div>
@@ -82,10 +82,10 @@
                     <h6 class="mb-0 fw-normal" id="resetPasswordSubmessage"></h6>
                     <div class="row gx-2 pt-4">
                         <div class="col d-grid">
-                            <button type="button" class="btn btn-lg btn-body bg-gradient fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Tidak</button>
+                            <button type="button" class="btn btn-lg btn-body bg-gradient fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Batal</button>
                         </div>
                         <div class="col d-grid">
-                            <button type="submit" class="btn btn-lg btn-primary bg-gradient fs-6 mb-0 rounded-4" id="confirmResetPasswordBtn">Ya</button>
+                            <button type="submit" class="btn btn-lg btn-danger bg-gradient fs-6 mb-0 rounded-4" id="confirmResetPasswordBtn">Reset</button>
                         </div>
                     </div>
                 </div>
@@ -99,10 +99,10 @@
                     <h5 class="mb-0" id="activateMessage"></h5>
                     <div class="row gx-2 pt-4">
                         <div class="col d-grid">
-                            <button type="button" class="btn btn-lg btn-body bg-gradient fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Tidak</button>
+                            <button type="button" class="btn btn-lg btn-body bg-gradient fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Batal</button>
                         </div>
                         <div class="col d-grid">
-                            <button type="submit" class="btn btn-lg btn-primary bg-gradient fs-6 mb-0 rounded-4" id="confirmActivateBtn">Ya</button>
+                            <button type="submit" class="btn btn-lg btn-primary bg-gradient fs-6 mb-0 rounded-4" id="confirmActivateBtn">Aktifkan</button>
                         </div>
                     </div>
                 </div>
@@ -116,10 +116,10 @@
                     <h5 class="mb-0" id="deactivateMessage"></h5>
                     <div class="row gx-2 pt-4">
                         <div class="col d-grid">
-                            <button type="button" class="btn btn-lg btn-body bg-gradient fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Tidak</button>
+                            <button type="button" class="btn btn-lg btn-body bg-gradient fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Batal</button>
                         </div>
                         <div class="col d-grid">
-                            <button type="submit" class="btn btn-lg btn-primary bg-gradient fs-6 mb-0 rounded-4" id="confirmDeactivateBtn">Ya</button>
+                            <button type="submit" class="btn btn-lg btn-danger bg-gradient fs-6 mb-0 rounded-4" id="confirmDeactivateBtn">Nonaktifkan</button>
                         </div>
                     </div>
                 </div>
@@ -474,7 +474,7 @@
         // Konfirmasi penghapusan pengguna
         $('#confirmDeleteBtn').click(async function() {
             $('#deleteModal button').prop('disabled', true); // Menonaktifkan tombol konfirmasi
-            $('#deleteMessage').html('Mengapus, silakan tunggu...'); // Menampilkan pesan loading
+            $(this).html(`<?= $this->include('spinner/spinner'); ?>`); // Menampilkan pesan loading
 
             try {
                 await axios.delete(`<?= base_url('/admin/delete') ?>/${userId}`); // Menghapus pengguna
@@ -486,13 +486,14 @@
             } finally {
                 $('#deleteModal').modal('hide'); // Menyembunyikan modal penghapusan
                 $('#deleteModal button').prop('disabled', false); // Mengembalikan status tombol
+                $(this).text(`Hapus`); // Mengembalikan teks tombol asal
             }
         });
 
         // Konfirmasi aktivasi pengguna
         $('#confirmActivateBtn').click(async function() {
             $('#activateModal button').prop('disabled', true); // Menonaktifkan tombol konfirmasi
-            $('#activateMessage').html('Mengaktifkan, silakan tunggu...'); // Menampilkan pesan loading
+            $(this).html(`<?= $this->include('spinner/spinner'); ?>`); // Menampilkan pesan loading
 
             try {
                 await axios.post(`<?= base_url('/admin/activate') ?>/${userId}`); // Mengaktifkan pengguna
@@ -501,14 +502,14 @@
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error); // Menampilkan pesan kesalahan
             } finally {
                 $('#activateModal').modal('hide'); // Menyembunyikan modal aktivasi
-                $('#activateModal button').prop('disabled', false); // Mengembalikan status tombol
+                $(this).text(`Aktifkan`); // Mengembalikan teks tombol asal
             }
         });
 
         // Konfirmasi nonaktifkan pengguna
         $('#confirmDeactivateBtn').click(async function() {
             $('#deactivateModal button').prop('disabled', true); // Menonaktifkan tombol konfirmasi
-            $('#deactivateMessage').html('Menonaktifkan, silakan tunggu...'); // Menampilkan pesan loading
+            $(this).html(`<?= $this->include('spinner/spinner'); ?>`); // Menampilkan pesan loading
 
             try {
                 await axios.post(`<?= base_url('/admin/deactivate') ?>/${userId}`); // Menonaktifkan pengguna
@@ -518,14 +519,14 @@
             } finally {
                 $('#deactivateModal').modal('hide'); // Menyembunyikan modal nonaktif
                 $('#deactivateModal button').prop('disabled', false); // Mengembalikan status tombol
+                $(this).text(`Nonaktifkan`); // Mengembalikan teks tombol asal
             }
         });
 
         // Konfirmasi reset kata sandi
         $('#confirmResetPasswordBtn').click(async function() {
             $('#resetPasswordModal button').prop('disabled', true); // Menonaktifkan tombol konfirmasi
-            $('#resetPasswordMessage').addClass('mb-0').html('Mengatur ulang kata sandi, silakan tunggu...'); // Menampilkan pesan loading
-            $('#resetPasswordSubmessage').hide(); // Menyembunyikan subpesan
+            $(this).html(`<?= $this->include('spinner/spinner'); ?>`); // Menampilkan pesan loading
 
             try {
                 await axios.post(`<?= base_url('/admin/resetpassword') ?>/${userId}`); // Mengatur ulang kata sandi pengguna
@@ -535,9 +536,8 @@
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error); // Menampilkan pesan kesalahan
             } finally {
                 $('#resetPasswordModal').modal('hide'); // Menyembunyikan modal reset kata sandi
-                $('#resetPasswordMessage').removeClass('mb-0'); // Menghapus kelas margin
-                $('#resetPasswordSubmessage').show(); // Menampilkan subpesan
                 $('#resetPasswordModal button').prop('disabled', false); // Mengembalikan status tombol
+                $(this).text(`Reset`); // Mengembalikan teks tombol asal
             }
         });
 

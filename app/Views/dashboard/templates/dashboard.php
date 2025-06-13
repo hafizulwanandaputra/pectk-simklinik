@@ -621,10 +621,10 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                         <h5 class="mb-0" id="logoutMessage">Apakah Anda ingin keluar?</h5>
                         <div class="row gx-2 pt-4">
                             <div class="col d-grid">
-                                <button type="button" class="btn btn-lg btn-body bg-gradient fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Tidak</button>
+                                <button type="button" class="btn btn-lg btn-body bg-gradient fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Batal</button>
                             </div>
                             <div class="col d-grid">
-                                <button type="button" class="btn btn-lg btn-primary bg-gradient fs-6 mb-0 rounded-4" id="confirmLogout" onclick="window.location.href='<?= base_url('/logout'); ?>';">Ya</a>
+                                <button type="button" class="btn btn-lg btn-danger bg-gradient fs-6 mb-0 rounded-4" id="confirmLogout" onclick="window.location.href='<?= base_url('/logout'); ?>';">Keluar</a>
                             </div>
                         </div>
                     </div>
@@ -1092,7 +1092,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
         // Event listener untuk menangani klik pada tombol konfirmasi logout
         $(document).on('click', '#confirmLogout', function() {
             $('#logoutModal button').prop('disabled', true); // Nonaktifkan tombol logout
-            $('#logoutMessage').html(`Silakan tunggu...`); // Tampilkan pesan menunggu saat logout
+            $('#confirmLogout').html(`<?= $this->include('spinner/spinner'); ?>`); // Tampilkan pesan menunggu saat logout
         });
 
         // Ketika dokumen siap

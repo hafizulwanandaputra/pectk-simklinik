@@ -368,10 +368,10 @@ $usia = $registrasi->diff($tanggal_lahir);
                     <h5 class="mb-0" id="deleteMessage"></h5>
                     <div class="row gx-2 pt-4">
                         <div class="col d-grid">
-                            <button type="button" class="btn btn-lg btn-body bg-gradient fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Tidak</button>
+                            <button type="button" class="btn btn-lg btn-body bg-gradient fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Batal</button>
                         </div>
                         <div class="col d-grid">
-                            <button type="button" class="btn btn-lg btn-primary bg-gradient fs-6 mb-0 rounded-4" id="confirmDeleteBtn">Ya</button>
+                            <button type="button" class="btn btn-lg btn-danger bg-gradient fs-6 mb-0 rounded-4" id="confirmDeleteBtn">Hapus</button>
                         </div>
                     </div>
                 </div>
@@ -653,7 +653,7 @@ $usia = $registrasi->diff($tanggal_lahir);
         // Confirm deletion
         $('#confirmDeleteBtn').click(async function() {
             $('#deleteModal button').prop('disabled', true);
-            $('#deleteMessage').html(`Menghapus, silakan tunggu...`);
+            $(this).html(`<?= $this->include('spinner/spinner'); ?>`); // Menampilkan pesan loading
 
             try {
                 // Perform the delete operation
@@ -671,6 +671,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 // Re-enable the delete button and hide the modal
                 $('#deleteModal').modal('hide');
                 $('#deleteModal button').prop('disabled', false);
+                $(this).text(`Hapus`); // Mengembalikan teks tombol asal
             }
         });
 

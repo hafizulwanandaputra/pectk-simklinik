@@ -60,39 +60,51 @@
     </div>
     <div class="modal modal-sheet p-4 py-md-5 fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content bg-body-tertiary rounded-4 shadow-lg transparent-blur">
-                <div class="modal-body p-4 text-center">
+            <div class="modal-content bg-body-tertiary rounded-5 shadow-lg transparent-blur">
+                <div class="modal-body p-4">
                     <h5 class="mb-0" id="deleteMessage"></h5>
-                </div>
-                <div class="modal-footer flex-nowrap p-0" style="border-top: 1px solid var(--bs-border-color-translucent);">
-                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end" style="border-right: 1px solid var(--bs-border-color-translucent)!important;" data-bs-dismiss="modal">Tidak</button>
-                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0" id="confirmDeleteBtn">Ya</button>
+                    <div class="row gx-2 pt-4">
+                        <div class="col d-grid">
+                            <button type="button" class="btn btn-lg btn-body bg-gradient fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Batal</button>
+                        </div>
+                        <div class="col d-grid">
+                            <button type="button" class="btn btn-lg btn-danger bg-gradient fs-6 mb-0 rounded-4" id="confirmDeleteBtn">Hapus</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="modal modal-sheet p-4 py-md-5 fade" id="flushModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="flushModal" aria-hidden="true" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content bg-body-tertiary rounded-4 shadow-lg transparent-blur">
-                <div class="modal-body p-4 text-center">
+            <div class="modal-content bg-body-tertiary rounded-5 shadow-lg transparent-blur">
+                <div class="modal-body p-4">
                     <h5 class="mb-0" id="flushMessage"></h5>
-                </div>
-                <div class="modal-footer flex-nowrap p-0" style="border-top: 1px solid var(--bs-border-color-translucent);">
-                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0" data-bs-dismiss="modal" style="border-right: 1px solid var(--bs-border-color-translucent);">Tidak</button>
-                    <button type="submit" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0" id="confirmFlushBtn">Ya</a>
+                    <div class="row gx-2 pt-4">
+                        <div class="col d-grid">
+                            <button type="button" class="btn btn-lg btn-body bg-gradient fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Batal</button>
+                        </div>
+                        <div class="col d-grid">
+                            <button type="button" class="btn btn-lg btn-danger bg-gradient fs-6 mb-0 rounded-4" id="confirmFlushBtn">Bersihkan</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="modal modal-sheet p-4 py-md-5 fade" id="deleteExpiredModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteExpiredModalLabel" aria-hidden="true" role="dialog">
         <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content bg-body-tertiary rounded-4 shadow-lg transparent-blur">
-                <div class="modal-body p-4 text-center">
+            <div class="modal-content bg-body-tertiary rounded-5 shadow-lg transparent-blur">
+                <div class="modal-body p-4">
                     <h5 class="mb-0" id="deleteExpiredMessage"></h5>
-                </div>
-                <div class="modal-footer flex-nowrap p-0" style="border-top: 1px solid var(--bs-border-color-translucent);">
-                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0 border-end" style="border-right: 1px solid var(--bs-border-color-translucent)!important;" data-bs-dismiss="modal">Tidak</button>
-                    <button type="button" class="btn btn-lg btn-link fs-6 text-decoration-none col-6 py-3 m-0 rounded-0" id="confirmDeleteExpiredBtn">Ya</button>
+                    <div class="row gx-2 pt-4">
+                        <div class="col d-grid">
+                            <button type="button" class="btn btn-lg btn-body bg-gradient fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Batal</button>
+                        </div>
+                        <div class="col d-grid">
+                            <button type="button" class="btn btn-lg btn-danger bg-gradient fs-6 mb-0 rounded-4" id="confirmDeleteExpiredBtn">Hapus</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -339,7 +351,7 @@
         // Konfirmasi penghapusan pengguna
         $('#confirmDeleteBtn').click(async function() {
             $('#deleteModal button').prop('disabled', true); // Menonaktifkan tombol konfirmasi
-            $('#deleteMessage').html('Mengapus, silakan tunggu...'); // Menampilkan pesan loading
+            $(this).html(`<?= $this->include('spinner/spinner'); ?>`); // Menampilkan pesan loading
 
             try {
                 await axios.delete(`<?= base_url('/settings/deletesession') ?>/${userId}`); // Menghapus pengguna
@@ -353,13 +365,14 @@
             } finally {
                 $('#deleteModal').modal('hide'); // Menyembunyikan modal penghapusan
                 $('#deleteModal button').prop('disabled', false); // Mengembalikan status tombol
+                $(this).text(`Hapus`); // Mengembalikan teks tombol asal
             }
         });
 
         // Konfirmasi aktivasi pengguna
         $('#confirmFlushBtn').click(async function() {
             $('#flushModal button').prop('disabled', true); // Menonaktifkan tombol konfirmasi
-            $('#flushMessage').html('Membersihkan, silakan tunggu...'); // Menampilkan pesan loading
+            $(this).html(`<?= $this->include('spinner/spinner'); ?>`); // Menampilkan pesan loading
 
             try {
                 const response = await axios.delete(`<?= base_url('/settings/flush') ?>`); // Mengaktifkan pengguna
@@ -374,13 +387,14 @@
             } finally {
                 $('#flushModal').modal('hide'); // Menyembunyikan modal aktivasi
                 $('#flushModal button').prop('disabled', false); // Mengembalikan status tombol
+                $(this).text(`Bersihkan`); // Mengembalikan teks tombol asal
             }
         });
 
         // Konfirmasi nonaktifkan pengguna
         $('#confirmDeleteExpiredBtn').click(async function() {
             $('#deleteExpiredModal button').prop('disabled', true); // Menonaktifkan tombol konfirmasi
-            $('#deleteExpiredMessage').html('Menghapus, silakan tunggu...'); // Menampilkan pesan loading
+            $(this).html(`<?= $this->include('spinner/spinner'); ?>`); // Menampilkan pesan loading
 
             try {
                 const response = await axios.delete(`<?= base_url('/settings/deleteexpired') ?>`); // Menghapus sesi yang kadaluwarsa
@@ -395,6 +409,7 @@
             } finally {
                 $('#deleteExpiredModal').modal('hide'); // Menyembunyikan modal nonaktif
                 $('#deleteExpiredModal button').prop('disabled', false); // Mengembalikan status tombol
+                $(this).text(`Hapus`); // Mengembalikan teks tombol asal
             }
         });
 

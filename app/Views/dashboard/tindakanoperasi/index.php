@@ -60,10 +60,10 @@
                     <h5 class="mb-0" id="deleteMessage"></h5>
                     <div class="row gx-2 pt-4">
                         <div class="col d-grid">
-                            <button type="button" class="btn btn-lg btn-body bg-gradient fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Tidak</button>
+                            <button type="button" class="btn btn-lg btn-body bg-gradient fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Batal</button>
                         </div>
                         <div class="col d-grid">
-                            <button type="button" class="btn btn-lg btn-primary bg-gradient fs-6 mb-0 rounded-4" id="confirmDeleteBtn">Ya</button>
+                            <button type="button" class="btn btn-lg btn-danger bg-gradient fs-6 mb-0 rounded-4" id="confirmDeleteBtn">Hapus</button>
                         </div>
                     </div>
                 </div>
@@ -336,7 +336,7 @@
         // Konfirmasi penghapusan pengguna
         $('#confirmDeleteBtn').click(async function() {
             $('#deleteModal button').prop('disabled', true); // Menonaktifkan tombol konfirmasi
-            $('#deleteMessage').html('Mengapus, silakan tunggu...'); // Menampilkan pesan loading
+            $(this).html(`<?= $this->include('spinner/spinner'); ?>`); // Menampilkan pesan loading
 
             try {
                 await axios.delete(`<?= base_url('/tindakanoperasi/delete') ?>/${id_tindakanok}`); // Menghapus pengguna
@@ -348,6 +348,7 @@
             } finally {
                 $('#deleteModal').modal('hide'); // Menyembunyikan modal penghapusan
                 $('#deleteModal button').prop('disabled', false); // Mengembalikan status tombol
+                $(this).text(`Hapus`); // Mengembalikan teks tombol asal
             }
         });
 
