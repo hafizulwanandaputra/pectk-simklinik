@@ -1,6 +1,18 @@
 <?= $this->extend('dashboard/templates/dashboard'); ?>
 <?= $this->section('css'); ?>
 <?= $this->include('select2/floating'); ?>
+<style>
+    .no-fluid-content {
+        --bs-gutter-x: 0;
+        --bs-gutter-y: 0;
+        width: 100%;
+        padding-right: calc(var(--bs-gutter-x) * 0.5);
+        padding-left: calc(var(--bs-gutter-x) * 0.5);
+        margin-right: auto;
+        margin-left: auto;
+        max-width: 1140px;
+    }
+</style>
 <?= $this->endSection(); ?>
 <?= $this->section('title'); ?>
 <div class="d-flex justify-content-start align-items-center">
