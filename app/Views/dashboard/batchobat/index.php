@@ -54,7 +54,8 @@
                             <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Jumlah Masuk</th>
                             <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Jumlah Keluar</th>
                             <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Sisa Stok</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Terakhir Diperbarui</th>
+                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Ditambah</th>
+                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Diperbarui</th>
                         </tr>
                     </thead>
                     <tbody class="align-top">
@@ -377,11 +378,33 @@
                     }
                 },
                 {
-                    data: 'diperbarui',
+                    data: 'ditambah',
                     render: function(data, type, row) {
-                        return `<span class="date text-nowrap">${data}</span>`;
+                        if (!data) return '';
+                        const date = new Date(data);
+                        const formatted = date.getFullYear() + '-' +
+                            String(date.getMonth() + 1).padStart(2, '0') + '-' +
+                            String(date.getDate()).padStart(2, '0') + '<br>' +
+                            String(date.getHours()).padStart(2, '0') + ':' +
+                            String(date.getMinutes()).padStart(2, '0') + ':' +
+                            String(date.getSeconds()).padStart(2, '0');
+                        return `<span class="date text-nowrap">${formatted}</span>`;
                     }
                 },
+                {
+                    data: 'diperbarui',
+                    render: function(data, type, row) {
+                        if (!data) return '';
+                        const date = new Date(data);
+                        const formatted = date.getFullYear() + '-' +
+                            String(date.getMonth() + 1).padStart(2, '0') + '-' +
+                            String(date.getDate()).padStart(2, '0') + '<br>' +
+                            String(date.getHours()).padStart(2, '0') + ':' +
+                            String(date.getMinutes()).padStart(2, '0') + ':' +
+                            String(date.getSeconds()).padStart(2, '0');
+                        return `<span class="date text-nowrap">${formatted}</span>`;
+                    }
+                }
 
             ],
             "order": [
@@ -391,7 +414,7 @@
                 "target": [1],
                 "orderable": false
             }, {
-                "target": [0, 1, 5, 6, 7, 8, 9],
+                "target": [0, 1, 5, 6, 7, 8, 9, 10],
                 "width": "0%"
             }, {
                 "target": [2, 3, 4],

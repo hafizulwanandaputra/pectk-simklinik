@@ -60,7 +60,8 @@ class BatchObat extends BaseController
                 6 => 'jumlah_masuk',
                 7 => 'jumlah_keluar',
                 8 => 'sisa_stok',
-                9 => 'diperbarui',
+                9 => 'ditambah',
+                10 => 'diperbarui',
             ];
 
             // Mengambil kolom untuk diurutkan
