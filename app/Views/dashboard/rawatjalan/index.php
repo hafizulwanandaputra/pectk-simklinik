@@ -69,16 +69,17 @@
                                         <h5 class="d-flex date justify-content-start mb-0 text-truncate placeholder-glow">
                                             <span class="badge bg-body text-body border py-1 px-2 date placeholder number-placeholder" style="font-weight: 900; font-size: 0.85em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><?= $this->include('spinner/spinner'); ?></span> <span class="placeholder ms-1" style="width: 100%"></span>
                                         </h5>
-                                        <h6 class="card-subtitle text-truncate placeholder-glow">
+                                        <h6 class="mb-1 text-truncate placeholder-glow">
                                             <span class="placeholder w-100" style="max-width: 250px;"></span>
                                         </h6>
-                                        <div class="card-text overflow-hidden text-nowrap placeholder-glow">
-                                            <small class="date">
-                                                <span class="placeholder w-100" style="max-width: 140px;"></span> <span class="placeholder w-100" style="max-width: 100px;"></span>
-                                            </small>
+                                        <div class="d-flex align-items-stretch date mb-1 placeholder-glow" style="height: 1.25em;">
+                                            <span class="placeholder w-100 h-100 d-flex align-items-center me-1" style="max-width: 150px;"></span>
+                                            <span class="placeholder w-100 h-100 d-flex align-items-center" style="max-width: 100px;"></span>
                                         </div>
-                                        <div class="placeholder-glow">
-                                            <span class="placeholder w-100" style="max-width: 25px;"></span> <span class="placeholder w-100" style="max-width: 100px;"></span> <span class="placeholder w-100" style="max-width: 100px;"></span>
+                                        <div class="d-flex align-items-stretch date placeholder-glow" style="height: 1.25em;">
+                                            <span class="placeholder w-100 d-flex align-items-center me-1" style="max-width: 25px;"></span>
+                                            <span class="placeholder w-100 d-flex align-items-center me-1" style="max-width: 100px;"></span>
+                                            <span class="placeholder w-100 d-flex align-items-center" style="max-width: 100px;"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -98,16 +99,17 @@
                                         <h5 class="d-flex date justify-content-start mb-0 text-truncate placeholder-glow">
                                             <span class="badge bg-body text-body border py-1 px-2 date placeholder number-placeholder" style="font-weight: 900; font-size: 0.85em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><?= $this->include('spinner/spinner'); ?></span> <span class="placeholder ms-1" style="width: 100%"></span>
                                         </h5>
-                                        <h6 class="card-subtitle text-truncate placeholder-glow">
+                                        <h6 class="mb-1 text-truncate placeholder-glow">
                                             <span class="placeholder w-100" style="max-width: 250px;"></span>
                                         </h6>
-                                        <div class="card-text overflow-hidden text-nowrap placeholder-glow">
-                                            <small class="date">
-                                                <span class="placeholder w-100" style="max-width: 150px;"></span> <span class="placeholder w-100" style="max-width: 100px;"></span>
-                                            </small>
+                                        <div class="d-flex align-items-stretch date mb-1 placeholder-glow" style="height: 1.25em;">
+                                            <span class="placeholder w-100 h-100 d-flex align-items-center me-1" style="max-width: 150px;"></span>
+                                            <span class="placeholder w-100 h-100 d-flex align-items-center" style="max-width: 100px;"></span>
                                         </div>
-                                        <div class="placeholder-glow">
-                                            <span class="placeholder w-100" style="max-width: 25px;"></span> <span class="placeholder w-100" style="max-width: 100px;"></span> <span class="placeholder w-100" style="max-width: 100px;"></span>
+                                        <div class="d-flex align-items-stretch date placeholder-glow" style="height: 1.25em;">
+                                            <span class="placeholder w-100 d-flex align-items-center me-1" style="max-width: 25px;"></span>
+                                            <span class="placeholder w-100 d-flex align-items-center me-1" style="max-width: 100px;"></span>
+                                            <span class="placeholder w-100 d-flex align-items-center" style="max-width: 100px;"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -127,16 +129,17 @@
                                         <h5 class="d-flex date justify-content-start mb-0 text-truncate placeholder-glow">
                                             <span class="badge bg-body text-body border py-1 px-2 date placeholder number-placeholder" style="font-weight: 900; font-size: 0.85em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><?= $this->include('spinner/spinner'); ?></span> <span class="placeholder ms-1" style="width: 100%"></span>
                                         </h5>
-                                        <h6 class="card-subtitle text-truncate placeholder-glow">
+                                        <h6 class="mb-1 text-truncate placeholder-glow">
                                             <span class="placeholder w-100" style="max-width: 250px;"></span>
                                         </h6>
-                                        <div class="card-text overflow-hidden text-nowrap placeholder-glow">
-                                            <small class="date">
-                                                <span class="placeholder w-100" style="max-width: 150px;"></span> <span class="placeholder w-100" style="max-width: 100px;"></span>
-                                            </small>
+                                        <div class="d-flex align-items-stretch date mb-1 placeholder-glow" style="height: 1.25em;">
+                                            <span class="placeholder w-100 h-100 d-flex align-items-center me-1" style="max-width: 150px;"></span>
+                                            <span class="placeholder w-100 h-100 d-flex align-items-center" style="max-width: 100px;"></span>
                                         </div>
-                                        <div class="placeholder-glow">
-                                            <span class="placeholder w-100" style="max-width: 25px;"></span> <span class="placeholder w-100" style="max-width: 100px;"></span> <span class="placeholder w-100" style="max-width: 100px;"></span>
+                                        <div class="d-flex align-items-stretch date placeholder-glow" style="height: 1.25em;">
+                                            <span class="placeholder w-100 d-flex align-items-center me-1" style="max-width: 25px;"></span>
+                                            <span class="placeholder w-100 d-flex align-items-center me-1" style="max-width: 100px;"></span>
+                                            <span class="placeholder w-100 d-flex align-items-center" style="max-width: 100px;"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -337,18 +340,17 @@
                         </span> 
                         <span class="placeholder ms-1" style="width: 100%"></span>
                     </h5>
-                    <h6 class="card-subtitle text-truncate placeholder-glow">
+                    <h6 class="mb-1 text-truncate placeholder-glow">
                         <span class="placeholder w-100" style="max-width: 250px;"></span> 
                     </h6>
-                    <div class="card-text overflow-hidden text-nowrap placeholder-glow">
-                        <small class="date">
-                            <span class="placeholder w-100" style="max-width: 150px;"></span> <span class="placeholder w-100" style="max-width: 100px;"></span>
-                        </small>
+                    <div class="d-flex align-items-stretch date mb-1 placeholder-glow" style="height: 1.25em;">
+                        <span class="placeholder w-100 h-100 d-flex align-items-center me-1" style="max-width: 150px;"></span>
+                        <span class="placeholder w-100 h-100 d-flex align-items-center" style="max-width: 100px;"></span>
                     </div>
-                    <div class="placeholder-glow">
-                        <span class="placeholder w-100" style="max-width: 25px;"></span> 
-                        <span class="placeholder w-100" style="max-width: 100px;"></span> 
-                        <span class="placeholder w-100" style="max-width: 100px;"></span>
+                    <div class="d-flex align-items-stretch date placeholder-glow" style="height: 1.25em;">
+                        <span class="placeholder w-100 d-flex align-items-center me-1" style="max-width: 25px;"></span> 
+                        <span class="placeholder w-100 d-flex align-items-center me-1" style="max-width: 100px;"></span> 
+                        <span class="placeholder w-100 d-flex align-items-center" style="max-width: 100px;"></span>
                     </div>
                 </div>
             </div>
@@ -455,23 +457,23 @@
                 // Mengkondisikan jenis kelamin
                 let jenis_kelamin = rawatjalan.jenis_kelamin;
                 if (jenis_kelamin === 'L') {
-                    jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap" style="background-color: SkyBlue"><i class="fa-solid fa-mars"></i> LAKI-LAKI</span>`;
+                    jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap h-100 d-flex align-items-center" style="background-color: SkyBlue"><i class="fa-solid fa-mars"></i> LAKI-LAKI</span>`;
                 } else if (jenis_kelamin === 'P') {
-                    jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap" style="background-color: Pink"><i class="fa-solid fa-venus"></i> PEREMPUAN</span>`;
+                    jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap h-100 d-flex align-items-center" style="background-color: Pink"><i class="fa-solid fa-venus"></i> PEREMPUAN</span>`;
                 }
                 // Gunakan pesan jika tidak ada nomor telepon
                 const telpon = rawatjalan.telpon ? rawatjalan.telpon : "<em>Tidak ada</em>";
                 const usia = hitungUsia(rawatjalan.tanggal_lahir, rawatjalan.tanggal_registrasi); // Menghitung usia pasien
 
                 const transaksiBadge = rawatjalan.transaksi == '1' ?
-                    `<span class="badge bg-success bg-gradient">Transaksi Diproses</span>` :
-                    `<span class="badge bg-danger bg-gradient">Transaksi Belum Diproses</span>`;
+                    `<span class="badge bg-success bg-gradient h-100 d-flex align-items-center">Transaksi Diproses</span>` :
+                    `<span class="badge bg-danger bg-gradient h-100 d-flex align-items-center">Transaksi Belum Diproses</span>`;
 
                 let status = rawatjalan.status;
                 if (status === 'DAFTAR') {
-                    status = `<span class="badge bg-success bg-gradient">Didaftarkan</span> ${transaksiBadge}`;
+                    status = `<span class="badge bg-success bg-gradient h-100 d-flex align-items-center me-1">Didaftarkan</span> ${transaksiBadge}`;
                 } else if (status === 'BATAL') {
-                    status = `<span class="badge bg-danger bg-gradient">Dibatalkan</span>`;
+                    status = `<span class="badge bg-danger bg-gradient h-100 d-flex align-items-center">Dibatalkan</span>`;
                 }
 
                 // Membuat elemen baris untuk setiap rawatjalan
@@ -483,10 +485,13 @@
                                 <span class="badge bg-body text-body border px-2 align-self-start" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">${rawatjalan.number}</span>
                                 <span class="ms-1 align-self-center text-truncate">${rawatjalan.nama_pasien}</span>
                             </h5>
-                            <h6 class="card-subtitle text-truncate">${rawatjalan.dokter}</h6>
-                            <div class="card-text overflow-hidden text-nowrap"><small class="date">${rawatjalan.nomor_registrasi} ${jenis_kelamin}</small></div>
-                            <div>
-                                <span class="badge bg-body text-body border date" style="font-weight: 900;">${rawatjalan.kode_antrian}${rawatjalan.no_antrian}</span> ${status}
+                            <h6 class="mb-1 text-truncate">${rawatjalan.dokter}</h6>
+                            <div class="d-flex align-items-stretch date mb-1" style="height: 1.25em;">
+                                <span class="badge bg-body text-body border text-nowrap h-100 d-flex align-items-center me-1">${rawatjalan.nomor_registrasi}</span> ${jenis_kelamin}
+                            </div>
+                            <div class="d-flex align-items-stretch date" style="height: 1.25em;">
+                                <span class="badge bg-body text-body border date h-100 d-flex align-items-center me-1">${rawatjalan.kode_antrian}${rawatjalan.no_antrian}</span>
+                                ${status}
                             </div>
                         </div>
                     </div>
@@ -647,23 +652,23 @@
                 // Mengkondisikan jenis kelamin
                 let jenis_kelamin = rawatjalan.jenis_kelamin;
                 if (jenis_kelamin === 'L') {
-                    jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap" style="background-color: SkyBlue"><i class="fa-solid fa-mars"></i> LAKI-LAKI</span>`;
+                    jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap h-100 d-flex align-items-center" style="background-color: SkyBlue"><i class="fa-solid fa-mars"></i> LAKI-LAKI</span>`;
                 } else if (jenis_kelamin === 'P') {
-                    jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap" style="background-color: Pink"><i class="fa-solid fa-venus"></i> PEREMPUAN</span>`;
+                    jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap h-100 d-flex align-items-center" style="background-color: Pink"><i class="fa-solid fa-venus"></i> PEREMPUAN</span>`;
                 }
                 // Gunakan pesan jika tidak ada nomor telepon
                 const telpon = rawatjalan.telpon ? rawatjalan.telpon : "<em>Tidak ada</em>";
                 const usia = hitungUsia(rawatjalan.tanggal_lahir, rawatjalan.tanggal_registrasi); // Menghitung usia pasien
 
                 const transaksiBadge = rawatjalan.transaksi == '1' ?
-                    `<span class="badge bg-success bg-gradient">Transaksi Diproses</span>` :
-                    `<span class="badge bg-danger bg-gradient">Transaksi Belum Diproses</span>`;
+                    `<span class="badge bg-success bg-gradient h-100 d-flex align-items-center">Transaksi Diproses</span>` :
+                    `<span class="badge bg-danger bg-gradient h-100 d-flex align-items-center">Transaksi Belum Diproses</span>`;
 
                 let status = rawatjalan.status;
                 if (status === 'DAFTAR') {
-                    status = `<span class="badge bg-success bg-gradient">Didaftarkan</span> ${transaksiBadge}`;
+                    status = `<span class="badge bg-success bg-gradient h-100 d-flex align-items-center me-1">Didaftarkan</span> ${transaksiBadge}`;
                 } else if (status === 'BATAL') {
-                    status = `<span class="badge bg-danger bg-gradient">Dibatalkan</span>`;
+                    status = `<span class="badge bg-danger bg-gradient h-100 d-flex align-items-center">Dibatalkan</span>`;
                 }
 
                 // Membuat elemen baris untuk setiap rawatjalan
@@ -675,10 +680,13 @@
                                 <span class="badge bg-body text-body border px-2 align-self-start" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">${rawatjalan.number}</span>
                                 <span class="ms-1 align-self-center text-truncate">${rawatjalan.nama_pasien}</span>
                             </h5>
-                            <h6 class="card-subtitle text-truncate">${rawatjalan.dokter}</h6>
-                            <div class="card-text overflow-hidden text-nowrap"><small class="date">${rawatjalan.nomor_registrasi} ${jenis_kelamin}</small></div>
-                            <div>
-                                <span class="badge bg-body text-body border date" style="font-weight: 900;">${rawatjalan.kode_antrian}${rawatjalan.no_antrian}</span> ${status}
+                            <h6 class="mb-1 text-truncate">${rawatjalan.dokter}</h6>
+                            <div class="d-flex align-items-stretch date mb-1" style="height: 1.25em;">
+                                <span class="badge bg-body text-body border text-nowrap h-100 d-flex align-items-center me-1">${rawatjalan.nomor_registrasi}</span> ${jenis_kelamin}
+                            </div>
+                            <div class="d-flex align-items-stretch date" style="height: 1.25em;">
+                                <span class="badge bg-body text-body border date h-100 d-flex align-items-center me-1">${rawatjalan.kode_antrian}${rawatjalan.no_antrian}</span>
+                                ${status}
                             </div>
                         </div>
                     </div>
@@ -831,23 +839,23 @@
                 // Mengkondisikan jenis kelamin
                 let jenis_kelamin = rawatjalan.jenis_kelamin;
                 if (jenis_kelamin === 'L') {
-                    jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap" style="background-color: SkyBlue"><i class="fa-solid fa-mars"></i> LAKI-LAKI</span>`;
+                    jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap h-100 d-flex align-items-center" style="background-color: SkyBlue"><i class="fa-solid fa-mars"></i> LAKI-LAKI</span>`;
                 } else if (jenis_kelamin === 'P') {
-                    jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap" style="background-color: Pink"><i class="fa-solid fa-venus"></i> PEREMPUAN</span>`;
+                    jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap h-100 d-flex align-items-center" style="background-color: Pink"><i class="fa-solid fa-venus"></i> PEREMPUAN</span>`;
                 }
                 // Gunakan pesan jika tidak ada nomor telepon
                 const telpon = rawatjalan.telpon ? rawatjalan.telpon : "<em>Tidak ada</em>";
                 const usia = hitungUsia(rawatjalan.tanggal_lahir, rawatjalan.tanggal_registrasi); // Menghitung usia pasien
 
                 const transaksiBadge = rawatjalan.transaksi == '1' ?
-                    `<span class="badge bg-success bg-gradient">Transaksi Diproses</span>` :
-                    `<span class="badge bg-danger bg-gradient">Transaksi Belum Diproses</span>`;
+                    `<span class="badge bg-success bg-gradient h-100 d-flex align-items-center">Transaksi Diproses</span>` :
+                    `<span class="badge bg-danger bg-gradient h-100 d-flex align-items-center">Transaksi Belum Diproses</span>`;
 
                 let status = rawatjalan.status;
                 if (status === 'DAFTAR') {
-                    status = `<span class="badge bg-success bg-gradient">Didaftarkan</span> ${transaksiBadge}`;
+                    status = `<span class="badge bg-success bg-gradient h-100 d-flex align-items-center me-1">Didaftarkan</span> ${transaksiBadge}`;
                 } else if (status === 'BATAL') {
-                    status = `<span class="badge bg-danger bg-gradient">Dibatalkan</span>`;
+                    status = `<span class="badge bg-danger bg-gradient h-100 d-flex align-items-center">Dibatalkan</span>`;
                 }
 
                 // Membuat elemen baris untuk setiap rawatjalan
@@ -859,10 +867,13 @@
                                 <span class="badge bg-body text-body border px-2 align-self-start" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">${rawatjalan.number}</span>
                                 <span class="ms-1 align-self-center text-truncate">${rawatjalan.nama_pasien}</span>
                             </h5>
-                            <h6 class="card-subtitle text-truncate">${rawatjalan.dokter}</h6>
-                            <div class="card-text overflow-hidden text-nowrap"><small class="date">${rawatjalan.nomor_registrasi} ${jenis_kelamin}</small></div>
-                            <div>
-                                <span class="badge bg-body text-body border date" style="font-weight: 900;">${rawatjalan.kode_antrian}${rawatjalan.no_antrian}</span> ${status}
+                            <h6 class="mb-1 text-truncate">${rawatjalan.dokter}</h6>
+                            <div class="d-flex align-items-stretch date mb-1" style="height: 1.25em;">
+                                <span class="badge bg-body text-body border text-nowrap h-100 d-flex align-items-center me-1">${rawatjalan.nomor_registrasi}</span> ${jenis_kelamin}
+                            </div>
+                            <div class="d-flex align-items-stretch date" style="height: 1.25em;">
+                                <span class="badge bg-body text-body border date h-100 d-flex align-items-center me-1">${rawatjalan.kode_antrian}${rawatjalan.no_antrian}</span>
+                                ${status}
                             </div>
                         </div>
                     </div>
