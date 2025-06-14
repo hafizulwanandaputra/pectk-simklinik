@@ -839,9 +839,9 @@
                 // Mengkondisikan jenis kelamin
                 let jenis_kelamin = rawatjalan.jenis_kelamin;
                 if (jenis_kelamin === 'L') {
-                    jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap h-100 d-flex align-items-center" style="background-color: SkyBlue"><i class="fa-solid fa-mars"></i> LAKI-LAKI</span>`;
+                    jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap h-100 d-flex align-items-center" style="background-color: SkyBlue"><i class="fa-solid fa-mars"></i><span class="ms-1">LAKI-LAKI</span></span>`;
                 } else if (jenis_kelamin === 'P') {
-                    jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap h-100 d-flex align-items-center" style="background-color: Pink"><i class="fa-solid fa-venus"></i> PEREMPUAN</span>`;
+                    jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap h-100 d-flex align-items-center" style="background-color: Pink"><i class="fa-solid fa-venus"></i><span class="ms-1">PEREMPUAN</span></span>`;
                 }
                 // Gunakan pesan jika tidak ada nomor telepon
                 const telpon = rawatjalan.telpon ? rawatjalan.telpon : "<em>Tidak ada</em>";
