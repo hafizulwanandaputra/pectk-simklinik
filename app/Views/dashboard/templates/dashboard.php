@@ -362,9 +362,9 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
             top: 50% !important;
             left: 50% !important;
             transform: translate(-50%, -50%) !important;
+            --bs-bg-opacity: 1;
+            backdrop-filter: none;
             background-color: rgba(var(--bs-body-bg-rgb), var(--bs-bg-opacity)) !important;
-            --bs-bg-opacity: 0.6667;
-            backdrop-filter: blur(20px);
             border: 1px solid var(--bs-border-color-translucent);
             box-shadow: var(--bs-box-shadow) !important;
             border-radius: var(--bs-border-radius) !important;
@@ -400,10 +400,10 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
             --bs-card-border-color: var(--bs-border-color);
         }
 
-        @media (prefers-reduced-transparency) {
+        @media (prefers-reduced-transparency: no-preference) {
             div.dataTables_wrapper div.dataTables_processing.card {
-                --bs-bg-opacity: 1;
-                backdrop-filter: none;
+                --bs-bg-opacity: 0.6;
+                backdrop-filter: blur(20px);
             }
         }
 

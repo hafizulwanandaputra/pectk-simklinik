@@ -435,7 +435,7 @@
 
     @media (prefers-reduced-transparency: no-preference) {
         .transparent-blur {
-            --bs-bg-opacity: 0.5;
+            --bs-bg-opacity: 0.6;
             backdrop-filter: blur(20px);
         }
     }
