@@ -402,7 +402,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
 
         @media (prefers-reduced-transparency: no-preference) {
             div.dataTables_wrapper div.dataTables_processing.card {
-                --bs-bg-opacity: 0.6;
+                --bs-bg-opacity: 0.75;
                 backdrop-filter: blur(20px);
             }
         }
