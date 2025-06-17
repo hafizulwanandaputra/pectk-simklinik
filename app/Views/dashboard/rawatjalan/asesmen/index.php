@@ -628,7 +628,7 @@ $usia = $registrasi->diff($tanggal_lahir);
     <?php if (session()->get('role') != 'Perawat') : ?>
         <div class="modal modal-sheet p-4 py-md-5 fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" role="dialog">
             <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content bg-body-tertiary rounded-4 shadow-lg transparent-blur">
+                <div class="modal-content bg-body-tertiary rounded-5 shadow-lg transparent-blur">
                     <div class="modal-body p-4">
                         <h5 class="mb-0" id="deleteMessage"></h5>
                         <div class="row gx-2 pt-4">
