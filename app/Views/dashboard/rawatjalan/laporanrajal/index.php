@@ -278,7 +278,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             <strong>${data.text}</strong>
                         </div>
                         <div>
-                            <small>${data.nama}</small>
+                            <span style="font-size: 0.75em">${data.nama}</span>
                         </div>
                     `;
                     return $(template);
