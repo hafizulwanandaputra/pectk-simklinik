@@ -143,7 +143,6 @@ class SakitMata extends BaseController
             // Tambahkan filter pencarian
             $builder->groupStart()
                 ->like('pasien.nama_pasien', $search)
-                ->orLike('rawat_jalan.nomor_registrasi', $search)
                 ->orLike('rawat_jalan.tanggal_registrasi', $search)
                 ->orLike('pasien.no_rm', $search)
                 ->orLike('pasien.tanggal_lahir', $search)

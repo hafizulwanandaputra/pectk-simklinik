@@ -205,7 +205,13 @@
                 allowClear: true,
                 language: {
                     inputTooShort: function() {
-                        return "Ketik minimal 1 karakter...";
+                        const currentDate = new Date();
+                        const year = currentDate.getFullYear();
+                        const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // 01 - 12
+                        const day = String(currentDate.getDate()).padStart(2, '0'); // 01 - 31
+
+                        const formattedDate = `${year}-${month}-${day}`;
+                        return `Ketik minimal 1 karakter...<br><small>Untuk mencari pasien rawat jalan berdasarkan tanggal registrasi atau tanggal lahir, gunakan format YYYY-MM-DD.<br>Contoh: <span class="date">${formattedDate}</span></small>`;
                     },
                     noResults: function() {
                         return "Data tidak ditemukan";
