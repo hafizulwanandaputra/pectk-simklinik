@@ -211,10 +211,10 @@
                         return "Data tidak ditemukan";
                     },
                     searching: function() {
-                        return "Mencari...";
+                        return `<?= $this->include('spinner/spinner'); ?> <span class="ms-1">Memuat...</span>`;
                     },
                     loadingMore: function() {
-                        return "Memuat lainnya...";
+                        return `<?= $this->include('spinner/spinner'); ?> <span class="ms-1">Memuat lainnya...</span>`;
                     }
                 },
                 ajax: {
