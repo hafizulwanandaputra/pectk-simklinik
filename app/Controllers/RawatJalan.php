@@ -92,17 +92,14 @@ class RawatJalan extends BaseController
                 $jaminanMap[$jaminan['jaminanKode']] = $jaminan['jaminanNama'];
             }
 
+            $totalPasien = count($Pasien);
+
             // Mapping data pasien
             foreach ($Pasien as $i => &$rajal) {
-                $rajal['number'] = $startNumber + $i;
+                $rajal['number'] = $startNumber + ($totalPasien - 1 - $i); // urutan angka dibalik
                 $rajal['jaminan'] = isset($jaminanMap[$rajal['jaminan']]) ? $jaminanMap[$rajal['jaminan']] : 'Tidak Diketahui';
             }
-            unset($rajal); // Penting: putuskan referensi
-
-            // Urutkan berdasarkan 'number' secara descending
-            usort($Pasien, function ($a, $b) {
-                return $b['number'] <=> $a['number'];
-            });
+            unset($rajal); // putuskan referensi
 
             return $this->response->setJSON([
                 'data' => $Pasien,
@@ -169,17 +166,14 @@ class RawatJalan extends BaseController
                 $jaminanMap[$jaminan['jaminanKode']] = $jaminan['jaminanNama'];
             }
 
+            $totalPasien = count($Pasien);
+
             // Mapping data pasien
             foreach ($Pasien as $i => &$rajal) {
-                $rajal['number'] = $startNumber + $i;
+                $rajal['number'] = $startNumber + ($totalPasien - 1 - $i); // urutan angka dibalik
                 $rajal['jaminan'] = isset($jaminanMap[$rajal['jaminan']]) ? $jaminanMap[$rajal['jaminan']] : 'Tidak Diketahui';
             }
-            unset($rajal); // Penting: putuskan referensi
-
-            // Urutkan berdasarkan 'number' secara descending
-            usort($Pasien, function ($a, $b) {
-                return $b['number'] <=> $a['number'];
-            });
+            unset($rajal); // putuskan referensi
 
             return $this->response->setJSON([
                 'data' => $Pasien,
@@ -245,17 +239,14 @@ class RawatJalan extends BaseController
                 $jaminanMap[$jaminan['jaminanKode']] = $jaminan['jaminanNama'];
             }
 
+            $totalPasien = count($Pasien);
+
             // Mapping data pasien
             foreach ($Pasien as $i => &$rajal) {
-                $rajal['number'] = $startNumber + $i;
+                $rajal['number'] = $startNumber + ($totalPasien - 1 - $i); // urutan angka dibalik
                 $rajal['jaminan'] = isset($jaminanMap[$rajal['jaminan']]) ? $jaminanMap[$rajal['jaminan']] : 'Tidak Diketahui';
             }
-            unset($rajal); // Penting: putuskan referensi
-
-            // Urutkan berdasarkan 'number' secara descending
-            usort($Pasien, function ($a, $b) {
-                return $b['number'] <=> $a['number'];
-            });
+            unset($rajal); // putuskan referensi
 
             return $this->response->setJSON([
                 'data' => $Pasien,
