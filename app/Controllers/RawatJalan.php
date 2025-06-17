@@ -97,6 +97,12 @@ class RawatJalan extends BaseController
                 $rajal['number'] = $startNumber + $i;
                 $rajal['jaminan'] = isset($jaminanMap[$rajal['jaminan']]) ? $jaminanMap[$rajal['jaminan']] : 'Tidak Diketahui';
             }
+            unset($rajal); // Penting: putuskan referensi
+
+            // Urutkan berdasarkan 'number' secara descending
+            usort($Pasien, function ($a, $b) {
+                return $b['number'] <=> $a['number'];
+            });
 
             return $this->response->setJSON([
                 'data' => $Pasien,
@@ -163,10 +169,17 @@ class RawatJalan extends BaseController
                 $jaminanMap[$jaminan['jaminanKode']] = $jaminan['jaminanNama'];
             }
 
+            // Mapping data pasien
             foreach ($Pasien as $i => &$rajal) {
                 $rajal['number'] = $startNumber + $i;
                 $rajal['jaminan'] = isset($jaminanMap[$rajal['jaminan']]) ? $jaminanMap[$rajal['jaminan']] : 'Tidak Diketahui';
             }
+            unset($rajal); // Penting: putuskan referensi
+
+            // Urutkan berdasarkan 'number' secara descending
+            usort($Pasien, function ($a, $b) {
+                return $b['number'] <=> $a['number'];
+            });
 
             return $this->response->setJSON([
                 'data' => $Pasien,
@@ -232,10 +245,17 @@ class RawatJalan extends BaseController
                 $jaminanMap[$jaminan['jaminanKode']] = $jaminan['jaminanNama'];
             }
 
+            // Mapping data pasien
             foreach ($Pasien as $i => &$rajal) {
                 $rajal['number'] = $startNumber + $i;
                 $rajal['jaminan'] = isset($jaminanMap[$rajal['jaminan']]) ? $jaminanMap[$rajal['jaminan']] : 'Tidak Diketahui';
             }
+            unset($rajal); // Penting: putuskan referensi
+
+            // Urutkan berdasarkan 'number' secara descending
+            usort($Pasien, function ($a, $b) {
+                return $b['number'] <=> $a['number'];
+            });
 
             return $this->response->setJSON([
                 'data' => $Pasien,
