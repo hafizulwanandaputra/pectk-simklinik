@@ -274,10 +274,10 @@ $usia = $registrasi->diff($tanggal_lahir);
                     }
 
                     const template = `
-                        <div>
+                        <div class="border-bottom">
                             <strong>${data.text}</strong>
                         </div>
-                        <div>
+                        <div class="border-top">
                             <span style="font-size: 0.75em">${data.nama}</span>
                         </div>
                     `;
