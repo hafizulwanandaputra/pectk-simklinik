@@ -8,7 +8,7 @@ $registrasi = new DateTime(date('Y-m-d', strtotime($sakitmata['tanggal_registras
 // Hitung selisih antara tanggal sekarang dan tanggal lahir
 $usia = $registrasi->diff($tanggal_lahir);
 
-$tanggalRegistrasi = $sakitmata['waktu_dibuat']; // Misalnya: "2025-01-14 15:23:45"
+$tanggalRegistrasi = $sakitmata['tanggal_registrasi']; // Misalnya: "2025-01-14 15:23:45"
 
 // Pastikan input adalah format tanggal dan waktu yang valid
 $dateTime = new DateTime($tanggalRegistrasi);
