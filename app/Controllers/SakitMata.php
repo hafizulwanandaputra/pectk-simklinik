@@ -125,18 +125,35 @@ class SakitMata extends BaseController
 
             $db = db_connect();
             $builder = $db->table('rawat_jalan');
+            $builder->select([
+                'rawat_jalan.nomor_registrasi',
+                'pasien.nama_pasien',
+                'rawat_jalan.tanggal_registrasi',
+                'pasien.no_rm',
+                'pasien.tanggal_lahir'
+            ]);
             $builder->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner');
 
-            // Group kondisi LIKE agar WHERE status='DAFTAR' berlaku untuk semua pencarian
+            // LEFT JOIN ke medrec_keterangan_sakit_mata
+            $builder->join('medrec_keterangan_sakit_mata', 'rawat_jalan.nomor_registrasi = medrec_keterangan_sakit_mata.nomor_registrasi', 'left');
+
+            // Hanya ambil data yang belum ada di medrec_keterangan_sakit_mata
+            $builder->where('medrec_keterangan_sakit_mata.nomor_registrasi IS NULL');
+
+            // Tambahkan filter pencarian
             $builder->groupStart()
-                ->like('nama_pasien', $search)
-                ->orLike('nomor_registrasi', $search)
-                ->orLike('tanggal_registrasi', $search)
+                ->like('pasien.nama_pasien', $search)
+                ->orLike('rawat_jalan.nomor_registrasi', $search)
+                ->orLike('rawat_jalan.tanggal_registrasi', $search)
                 ->orLike('pasien.no_rm', $search)
-                ->orLike('tanggal_lahir', $search)
-                ->groupEnd()
-                ->where('status', 'DAFTAR')
-                ->orderBy('rawat_jalan.id_rawat_jalan', 'DESC')
+                ->orLike('pasien.tanggal_lahir', $search)
+                ->groupEnd();
+
+            // Filter status DAFTAR
+            $builder->where('rawat_jalan.status', 'DAFTAR');
+
+            // Sorting dan limit
+            $builder->orderBy('rawat_jalan.id_rawat_jalan', 'DESC')
                 ->limit($limit, $offset);
 
             $result = $builder->get()->getResultArray();
@@ -173,29 +190,28 @@ class SakitMata extends BaseController
             // Mengambil nomor registrasi dari permintaan POST
             $nomorRegistrasi = $this->request->getPost('nomor_registrasi');
 
-            $data = $this->RawatJalanModel
-                ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
-                ->where('status', 'DAFTAR')
-                ->findAll();
+            // Ambil data rawat_jalan yang belum ada di medrec_keterangan_sakit_mata
+            $builder = $db->table('rawat_jalan');
+            $builder->select('rawat_jalan.nomor_registrasi, rawat_jalan.no_rm');
+            $builder->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner');
+            $builder->join('medrec_keterangan_sakit_mata', 'rawat_jalan.nomor_registrasi = medrec_keterangan_sakit_mata.nomor_registrasi', 'left');
+            $builder->where('rawat_jalan.nomor_registrasi', $nomorRegistrasi);
+            $builder->where('rawat_jalan.status', 'DAFTAR');
+            $builder->where('medrec_keterangan_sakit_mata.nomor_registrasi IS NULL');
+            $patient = $builder->get()->getRowArray();
 
-            // Memeriksa apakah data mengandung nomor registrasi yang diminta
-            $SakitMataData = null;
-            foreach ($data as $patient) {
-                if ($patient['nomor_registrasi'] == $nomorRegistrasi) {
-                    $SakitMataData = $patient; // Menyimpan data pasien jika ditemukan
-                    break;
-                }
-            }
-
-            // Jika data pasien tidak ditemukan
-            if (!$SakitMataData) {
-                return $this->response->setJSON(['success' => false, 'message' => 'Data rawat jalan tidak ditemukan', 'errors' => NULL]);
+            if (!$patient) {
+                return $this->response->setStatusCode(422)->setJSON([
+                    'success' => false,
+                    'message' => 'Data rawat jalan tidak ditemukan atau sudah pernah dibuat sebelumnya',
+                    'errors' => null
+                ]);
             }
 
             // Menyimpan data transaksi
             $data = [
                 'nomor_registrasi' => $nomorRegistrasi, // Nomor registrasi
-                'no_rm' => $SakitMataData['no_rm'], // Nomor rekam medis
+                'no_rm' => $patient['no_rm'], // Nomor rekam medis
                 'waktu_dibuat' => date('Y-m-d H:i:s'),
             ];
             $db->table('medrec_keterangan_sakit_mata')->insert($data);

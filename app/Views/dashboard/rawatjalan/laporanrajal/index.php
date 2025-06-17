@@ -227,6 +227,20 @@ $usia = $registrasi->diff($tanggal_lahir);
                 width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
                 placeholder: "ICD-10",
                 allowClear: true,
+                language: {
+                    inputTooShort: function() {
+                        return "Ketik minimal 1 karakter...";
+                    },
+                    noResults: function() {
+                        return "Data tidak ditemukan";
+                    },
+                    searching: function() {
+                        return "Mencari...";
+                    },
+                    loadingMore: function() {
+                        return "Memuat lainnya...";
+                    }
+                },
                 ajax: {
                     url: '<?= base_url('rawatjalan/laporanrajal/icdx') ?>',
                     dataType: 'json',
@@ -253,9 +267,10 @@ $usia = $registrasi->diff($tanggal_lahir);
                 },
                 minimumInputLength: 1,
                 templateResult: function(data) {
-                    // Format untuk tampilan hasil pencarian
                     if (!data.id) {
-                        return data.text; // Untuk placeholder
+                        // Kosongkan hasil sebelumnya secara eksplisit (opsional, Select2 biasanya handle ini)
+                        $('.select2-results__options').empty();
+                        return `<?= $this->include('spinner/spinner'); ?> <span class="ms-1">Mencari...</span>`;
                     }
 
                     const template = `

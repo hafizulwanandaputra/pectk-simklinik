@@ -203,6 +203,20 @@
                 placeholder: "Pilih Pasien Rawat Jalan",
                 disabled: <?= (session()->get('role') == 'Perawat') ? 'true' : 'false' ?>,
                 allowClear: true,
+                language: {
+                    inputTooShort: function() {
+                        return "Ketik minimal 1 karakter...";
+                    },
+                    noResults: function() {
+                        return "Data tidak ditemukan";
+                    },
+                    searching: function() {
+                        return "Mencari...";
+                    },
+                    loadingMore: function() {
+                        return "Memuat lainnya...";
+                    }
+                },
                 ajax: {
                     url: '<?= base_url('sakitmata/pasienlist') ?>',
                     dataType: 'json',
@@ -234,7 +248,9 @@
                 minimumInputLength: 1,
                 templateResult: function(data) {
                     if (!data.id) {
-                        return data.text; // Tampilkan placeholder jika belum dipilih
+                        // Kosongkan hasil sebelumnya secara eksplisit (opsional, Select2 biasanya handle ini)
+                        $('.select2-results__options').empty();
+                        return `<?= $this->include('spinner/spinner'); ?> <span class="ms-1">Mencari...</span>`;
                     }
 
                     return $(`
@@ -248,7 +264,7 @@
                 },
                 templateSelection: function(data) {
                     if (!data.id) {
-                        return "Pilih Pasien Rawat Jalan"; // Tampilkan placeholder di input jika kosong
+                        return "Pilih Pasien Rawat Jalan";
                     }
 
                     return `${data.nomor_registrasi} (${data.nama_pasien} • ${data.no_rm} • ${data.tanggal_lahir})`;
