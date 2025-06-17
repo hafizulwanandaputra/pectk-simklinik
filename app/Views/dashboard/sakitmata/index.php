@@ -197,24 +197,72 @@
     `;
     <?php if (session()->get('role') != 'Admisi') : ?>
         async function fetchPasienOptions() {
-            try {
-                const response = await axios.get('<?= base_url('sakitmata/pasienlist') ?>');
+            $('#nomor_registrasi').select2({
+                theme: "bootstrap-5",
+                width: $('#nomor_registrasi').data('width') ? $('#nomor_registrasi').data('width') : $('#nomor_registrasi').hasClass('w-100') ? '100%' : 'style',
+                placeholder: "Pilih Pasien Rawat Jalan",
+                disabled: <?= (session()->get('role') == 'Perawat') ? 'true' : 'false' ?>,
+                allowClear: true,
+                ajax: {
+                    url: '<?= base_url('sakitmata/pasienlist') ?>',
+                    dataType: 'json',
+                    delay: 250,
+                    data: function(params) {
+                        return {
+                            search: params.term,
+                            offset: (params.page || 0) * 50,
+                            limit: 50
+                        };
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: data.data.map(item => ({
+                                id: item.nomor_registrasi,
+                                text: item.nomor_registrasi, // penting untuk fallback text & placeholder
+                                nama_pasien: item.nama_pasien,
+                                nomor_registrasi: item.nomor_registrasi,
+                                tanggal_registrasi: item.tanggal_registrasi,
+                                no_rm: item.no_rm,
+                                tanggal_lahir: item.tanggal_lahir
+                            })),
+                            pagination: {
+                                more: data.data.length >= 50
+                            }
+                        };
+                    }
+                },
+                minimumInputLength: 1,
+                templateResult: function(data) {
+                    if (!data.id) {
+                        return data.text; // Tampilkan placeholder jika belum dipilih
+                    }
 
-                if (response.data.success) {
-                    const options = response.data.data;
-                    const select = $('#nomor_registrasi');
+                    return $(`
+                <div class="border-bottom">
+                    <strong class="date">${data.nomor_registrasi}</strong> <small class="text-muted date">${data.tanggal_registrasi}</small>
+                </div>
+                <div class="border-top">
+                    <small>${data.nama_pasien} • <span class="date">${data.no_rm}</span> • <span class="date">${data.tanggal_lahir}</span></small>
+                </div>
+            `);
+                },
+                templateSelection: function(data) {
+                    if (!data.id) {
+                        return "Pilih Pasien Rawat Jalan"; // Tampilkan placeholder di input jika kosong
+                    }
 
-                    // Clear existing options except the first one
-                    select.find('option:not(:first)').remove();
-
-                    // Loop through the options and append them to the select element
-                    options.forEach(option => {
-                        select.append(`<option value="${option.value}">${option.text}</option>`);
-                    });
+                    return `${data.nomor_registrasi} (${data.nama_pasien} • ${data.no_rm} • ${data.tanggal_lahir})`;
+                },
+                escapeMarkup: function(markup) {
+                    return markup;
                 }
-            } catch (error) {
-                showFailedToast(`${error.response.data.error}<br>${error.response.data.details.message}`);
-            }
+            });
+
+            toggleSubmitButton();
+
+            $('#nomor_registrasi').on('change.select2', function() {
+                toggleSubmitButton();
+            });
         }
     <?php endif; ?>
 
@@ -263,17 +311,6 @@
                     } else if (biasa === '1') {
                         biasa = `<span class="badge text-bg-secondary bg-gradient text-nowrap">BIASA</span>`;
                     }
-                    const tanggalRegistrasi = new Date(sakitmata.tanggal_registrasi);
-                    const today = new Date();
-                    const sevenDaysAgo = new Date();
-                    sevenDaysAgo.setDate(today.getDate() - 6); // Termasuk hari ini
-
-                    // Normalisasi hanya ke tanggal (tanpa jam) agar perbandingan akurat
-                    tanggalRegistrasi.setHours(0, 0, 0, 0);
-                    today.setHours(0, 0, 0, 0);
-                    sevenDaysAgo.setHours(0, 0, 0, 0);
-
-                    const delete_today = (tanggalRegistrasi < sevenDaysAgo || tanggalRegistrasi > today) ? 'disabled' : '';
 
                     const SakitMataElement = `
                     <li class="list-group-item <?= (session()->get('role') != 'Admisi') ? 'border-top-0' : ''; ?> pb-3 pt-3">
@@ -316,7 +353,7 @@
                             </div>
                         <?php endif; ?>
                         <?php if (session()->get('role') != 'Admisi') : ?>
-                            <button type="button" class="btn btn-danger btn-sm bg-gradient  delete-btn" data-id="${sakitmata.id_keterangan_sakit_mata}" data-name="${sakitmata.nama_pasien}" data-date="${sakitmata.nomor_registrasi}" ${delete_today}>
+                            <button type="button" class="btn btn-danger btn-sm bg-gradient  delete-btn" data-id="${sakitmata.id_keterangan_sakit_mata}" data-name="${sakitmata.nama_pasien}" data-date="${sakitmata.nomor_registrasi}">
                                 <i class="fa-solid fa-trash"></i> Hapus
                             </button>
                         <?php endif; ?>
@@ -450,9 +487,6 @@
                 $('#submitButton').prop('disabled', false);
             }
         }
-        $('#nomor_registrasi').on('change.select2', function() {
-            toggleSubmitButton();
-        });
     <?php endif; ?>
 
     $(document).ready(async function() {
@@ -466,7 +500,6 @@
             const data = JSON.parse(event.data);
             if (data.update || data.delete) {
                 console.log("Received update from WebSocket");
-                <?= (session()->get('role') != 'Admisi') ? 'fetchPasienOptions();' : ''; ?>;
                 fetchSurat();
             }
         };
@@ -623,13 +656,11 @@
 
         $(document).on('visibilitychange', async function() {
             if (document.visibilityState === "visible") {
-                <?= (session()->get('role') != 'Admisi') ? 'fetchPasienOptions();' : ''; ?>;
                 fetchSurat(); // Refresh articles on button click
             }
         });
         $('#refreshButton').on('click', async function(e) {
             e.preventDefault();
-            <?= (session()->get('role') != 'Admisi') ? 'fetchPasienOptions();' : ''; ?>;
             fetchSurat(); // Refresh articles on button click
         });
         <?= (session()->get('role') != 'Admisi') ? 'fetchPasienOptions();' : ''; ?>

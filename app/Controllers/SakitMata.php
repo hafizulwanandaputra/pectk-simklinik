@@ -110,41 +110,41 @@ class SakitMata extends BaseController
     {
         // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', 'Perawat', atau 'Admisi' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Admisi') {
-            $seven_days_ago = date('Y-m-d', strtotime('-6 days')); // Termasuk hari ini
-            $today = date('Y-m-d');
+            // Mendapatkan parameter pencarian dari permintaan GET
+            $search = $this->request->getGet('search');
+            $offset = (int) $this->request->getGet('offset') ?? 0; // Default 0 jika tidak ada
+            $limit = (int) $this->request->getGet('limit') ?? 50; // Default 50 jika tidak ada
 
-            $data = $this->RawatJalanModel
-                ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
-                ->where('status', 'DAFTAR')
-                ->where("DATE(tanggal_registrasi) >=", $seven_days_ago)
-                ->where("DATE(tanggal_registrasi) <=", $today)
-                ->orderBy('rawat_jalan.id_rawat_jalan', 'DESC')
-                ->findAll();
-
-            // Mengambil nomor_registrasi yang sudah terpakai di rawat_jalan
-            $db = \Config\Database::connect();
-            $usedNoRegInit = $db->table('medrec_keterangan_sakit_mata')->select('nomor_registrasi')->get()->getResultArray();
-            $usedNoReg = array_column($usedNoRegInit, 'nomor_registrasi');
-
-            $options = [];
-            // Menyusun opsi dari data rawat jalan yang diterima
-            foreach ($data as $row) {
-                // Memeriksa apakah nomor_registrasi ada dalam daftar nomor_registrasi yang terpakai
-                if (in_array($row['nomor_registrasi'], $usedNoReg)) {
-                    continue; // Lewati rawat jalan yang sudah terpakai
-                }
-
-                // Menambahkan opsi ke dalam array
-                $options[] = [
-                    'value' => $row['nomor_registrasi'], // Nilai untuk opsi
-                    'text' => $row['nama_pasien'] . ' (' . $row['nomor_registrasi'] . ' - ' . $row['no_rm'] . ' - ' . $row['tanggal_lahir'] . ')' // Teks untuk opsi
-                ];
+            // Jika parameter pencarian kosong, kembalikan data kosong
+            if (empty($search)) {
+                return $this->response->setJSON([
+                    'status' => 'success',
+                    'data' => [] // Data kosong
+                ]);
             }
 
-            // Mengembalikan data rawat jalan dalam format JSON
+            $db = db_connect();
+            $builder = $db->table('rawat_jalan');
+            $builder->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner');
+
+            // Group kondisi LIKE agar WHERE status='DAFTAR' berlaku untuk semua pencarian
+            $builder->groupStart()
+                ->like('nama_pasien', $search)
+                ->orLike('nomor_registrasi', $search)
+                ->orLike('tanggal_registrasi', $search)
+                ->orLike('pasien.no_rm', $search)
+                ->orLike('tanggal_lahir', $search)
+                ->groupEnd()
+                ->where('status', 'DAFTAR')
+                ->orderBy('rawat_jalan.id_rawat_jalan', 'DESC')
+                ->limit($limit, $offset);
+
+            $result = $builder->get()->getResultArray();
+
+            // Mengembalikan data dalam format JSON
             return $this->response->setJSON([
-                'success' => true, // Indikator sukses
-                'data' => $options, // Data opsi
+                'status' => 'success',
+                'data' => $result
             ]);
         } else {
             return $this->response->setStatusCode(404)->setJSON([
@@ -173,13 +173,8 @@ class SakitMata extends BaseController
             // Mengambil nomor registrasi dari permintaan POST
             $nomorRegistrasi = $this->request->getPost('nomor_registrasi');
 
-            $today = date('Y-m-d');
-            $seven_days_ago = date('Y-m-d', strtotime('-6 days')); // Termasuk hari ini
-
             $data = $this->RawatJalanModel
                 ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
-                ->where("DATE(tanggal_registrasi) >=", $seven_days_ago)
-                ->where("DATE(tanggal_registrasi) <=", $today)
                 ->where('status', 'DAFTAR')
                 ->findAll();
 
@@ -292,18 +287,7 @@ class SakitMata extends BaseController
                 ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_keterangan_sakit_mata.nomor_registrasi', 'inner')
                 ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
                 ->find($id);
-            $tanggal = date('Y-m-d', strtotime($sakitmata['tanggal_registrasi']));
-            $today = date('Y-m-d');
-            $seven_days_ago = date('Y-m-d', strtotime('-6 days')); // Termasuk hari ini
 
-            if ($tanggal < $seven_days_ago || $tanggal > $today) {
-                return $this->response
-                    ->setStatusCode(422)
-                    ->setJSON([
-                        'success' => false,
-                        'message' => 'Surat keterangan sakit mata yang lebih dari 7 hari lalu tidak dapat dihapus'
-                    ]);
-            }
             if ($sakitmata) {
                 $db = db_connect();
 
