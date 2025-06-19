@@ -141,9 +141,9 @@ $usia = $registrasi->diff($tanggal_lahir);
                                 <input type="text" id="catatan" name="catatan" class="form-control form-control-sm" placeholder="Catatan" list="list_catatan" autocomplete="off">
                                 <div class="invalid-feedback"></div>
                                 <datalist id="list_catatan">
-                                    <option value="1 Tetes">
-                                    <option value="1 Tablet">
-                                    <option value="1 Salep">
+                                    <option value="Tetes">
+                                    <option value="Tablet">
+                                    <option value="Salep">
                                     <option value="Sendok Teh">
                                     <option value="Sendok Makan">
                                 </datalist>
