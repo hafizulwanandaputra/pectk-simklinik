@@ -260,10 +260,10 @@
                     }
 
                     return $(`
-                <div class="border-bottom">
+                <div>
                     <strong class="date">${data.nomor_registrasi}</strong> <small class="text-muted date">${data.tanggal_registrasi}</small>
                 </div>
-                <div class="border-top">
+                <div>
                     <span style="font-size: 0.75em">${data.nama_pasien} • <span class="date">${data.no_rm}</span> • <span class="date">${data.tanggal_lahir}</span></span>
                 </div>
             `);
