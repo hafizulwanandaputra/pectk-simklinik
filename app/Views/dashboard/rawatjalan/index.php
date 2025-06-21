@@ -70,16 +70,17 @@
                                             <span class="badge bg-body text-body border py-1 px-2 date placeholder number-placeholder" style="font-weight: 900; font-size: 0.85em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><?= $this->include('spinner/spinner'); ?></span> <span class="placeholder ms-1" style="width: 100%"></span>
                                         </h5>
                                         <h6 class="mb-1 text-truncate placeholder-glow">
-                                            <span class="placeholder w-100" style="max-width: 250px;"></span>
+                                            <span class="placeholder w-100" style="max-width: 15.625em;"></span> <!-- 250px -->
                                         </h6>
                                         <div class="d-flex align-items-stretch date mb-1 placeholder-glow" style="height: 1.25em;">
-                                            <span class="placeholder w-100 h-100 d-flex align-items-center me-1" style="max-width: 150px;"></span>
-                                            <span class="placeholder w-100 h-100 d-flex align-items-center" style="max-width: 100px;"></span>
+                                            <span class="placeholder w-100 h-100 d-flex align-items-center me-1" style="max-width: 9.375em;"></span> <!-- 150px -->
+                                            <span class="placeholder w-100 h-100 d-flex align-items-center" style="max-width: 6.25em;"></span> <!-- 100px -->
                                         </div>
                                         <div class="d-flex align-items-stretch date placeholder-glow" style="height: 1.25em;">
-                                            <span class="placeholder w-100 d-flex align-items-center me-1" style="max-width: 25px;"></span>
-                                            <span class="placeholder w-100 d-flex align-items-center me-1" style="max-width: 100px;"></span>
-                                            <span class="placeholder w-100 d-flex align-items-center" style="max-width: 100px;"></span>
+                                            <span class="placeholder w-100 d-flex align-items-center me-1" style="max-width: 1.5625em;"></span> <!-- 25px -->
+                                            <span class="placeholder w-100 d-flex align-items-center me-1" style="max-width: 3.125em;"></span> <!-- 50px -->
+                                            <span class="placeholder w-100 d-flex align-items-center me-1" style="max-width: 6.25em;"></span> <!-- 100px -->
+                                            <span class="placeholder w-100 d-flex align-items-center" style="max-width: 6.25em;"></span> <!-- 100px -->
                                         </div>
                                     </div>
                                 </div>
@@ -100,16 +101,17 @@
                                             <span class="badge bg-body text-body border py-1 px-2 date placeholder number-placeholder" style="font-weight: 900; font-size: 0.85em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><?= $this->include('spinner/spinner'); ?></span> <span class="placeholder ms-1" style="width: 100%"></span>
                                         </h5>
                                         <h6 class="mb-1 text-truncate placeholder-glow">
-                                            <span class="placeholder w-100" style="max-width: 250px;"></span>
+                                            <span class="placeholder w-100" style="max-width: 15.625em;"></span> <!-- 250px -->
                                         </h6>
                                         <div class="d-flex align-items-stretch date mb-1 placeholder-glow" style="height: 1.25em;">
-                                            <span class="placeholder w-100 h-100 d-flex align-items-center me-1" style="max-width: 150px;"></span>
-                                            <span class="placeholder w-100 h-100 d-flex align-items-center" style="max-width: 100px;"></span>
+                                            <span class="placeholder w-100 h-100 d-flex align-items-center me-1" style="max-width: 9.375em;"></span> <!-- 150px -->
+                                            <span class="placeholder w-100 h-100 d-flex align-items-center" style="max-width: 6.25em;"></span> <!-- 100px -->
                                         </div>
                                         <div class="d-flex align-items-stretch date placeholder-glow" style="height: 1.25em;">
-                                            <span class="placeholder w-100 d-flex align-items-center me-1" style="max-width: 25px;"></span>
-                                            <span class="placeholder w-100 d-flex align-items-center me-1" style="max-width: 100px;"></span>
-                                            <span class="placeholder w-100 d-flex align-items-center" style="max-width: 100px;"></span>
+                                            <span class="placeholder w-100 d-flex align-items-center me-1" style="max-width: 1.5625em;"></span> <!-- 25px -->
+                                            <span class="placeholder w-100 d-flex align-items-center me-1" style="max-width: 3.125em;"></span> <!-- 50px -->
+                                            <span class="placeholder w-100 d-flex align-items-center me-1" style="max-width: 6.25em;"></span> <!-- 100px -->
+                                            <span class="placeholder w-100 d-flex align-items-center" style="max-width: 6.25em;"></span> <!-- 100px -->
                                         </div>
                                     </div>
                                 </div>
@@ -130,16 +132,17 @@
                                             <span class="badge bg-body text-body border py-1 px-2 date placeholder number-placeholder" style="font-weight: 900; font-size: 0.85em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><?= $this->include('spinner/spinner'); ?></span> <span class="placeholder ms-1" style="width: 100%"></span>
                                         </h5>
                                         <h6 class="mb-1 text-truncate placeholder-glow">
-                                            <span class="placeholder w-100" style="max-width: 250px;"></span>
+                                            <span class="placeholder w-100" style="max-width: 15.625em;"></span> <!-- 250px -->
                                         </h6>
                                         <div class="d-flex align-items-stretch date mb-1 placeholder-glow" style="height: 1.25em;">
-                                            <span class="placeholder w-100 h-100 d-flex align-items-center me-1" style="max-width: 150px;"></span>
-                                            <span class="placeholder w-100 h-100 d-flex align-items-center" style="max-width: 100px;"></span>
+                                            <span class="placeholder w-100 h-100 d-flex align-items-center me-1" style="max-width: 9.375em;"></span> <!-- 150px -->
+                                            <span class="placeholder w-100 h-100 d-flex align-items-center" style="max-width: 6.25em;"></span> <!-- 100px -->
                                         </div>
                                         <div class="d-flex align-items-stretch date placeholder-glow" style="height: 1.25em;">
-                                            <span class="placeholder w-100 d-flex align-items-center me-1" style="max-width: 25px;"></span>
-                                            <span class="placeholder w-100 d-flex align-items-center me-1" style="max-width: 100px;"></span>
-                                            <span class="placeholder w-100 d-flex align-items-center" style="max-width: 100px;"></span>
+                                            <span class="placeholder w-100 d-flex align-items-center me-1" style="max-width: 1.5625em;"></span> <!-- 25px -->
+                                            <span class="placeholder w-100 d-flex align-items-center me-1" style="max-width: 3.125em;"></span> <!-- 50px -->
+                                            <span class="placeholder w-100 d-flex align-items-center me-1" style="max-width: 6.25em;"></span> <!-- 100px -->
+                                            <span class="placeholder w-100 d-flex align-items-center" style="max-width: 6.25em;"></span> <!-- 100px -->
                                         </div>
                                     </div>
                                 </div>
@@ -341,16 +344,17 @@
                         <span class="placeholder ms-1" style="width: 100%"></span>
                     </h5>
                     <h6 class="mb-1 text-truncate placeholder-glow">
-                        <span class="placeholder w-100" style="max-width: 250px;"></span> 
+                        <span class="placeholder w-100" style="max-width: 15.625em;"></span> <!-- 250px -->
                     </h6>
                     <div class="d-flex align-items-stretch date mb-1 placeholder-glow" style="height: 1.25em;">
-                        <span class="placeholder w-100 h-100 d-flex align-items-center me-1" style="max-width: 150px;"></span>
-                        <span class="placeholder w-100 h-100 d-flex align-items-center" style="max-width: 100px;"></span>
+                        <span class="placeholder w-100 h-100 d-flex align-items-center me-1" style="max-width: 9.375em;"></span> <!-- 150px -->
+                        <span class="placeholder w-100 h-100 d-flex align-items-center" style="max-width: 6.25em;"></span> <!-- 100px -->
                     </div>
                     <div class="d-flex align-items-stretch date placeholder-glow" style="height: 1.25em;">
-                        <span class="placeholder w-100 d-flex align-items-center me-1" style="max-width: 25px;"></span> 
-                        <span class="placeholder w-100 d-flex align-items-center me-1" style="max-width: 100px;"></span> 
-                        <span class="placeholder w-100 d-flex align-items-center" style="max-width: 100px;"></span>
+                        <span class="placeholder w-100 d-flex align-items-center me-1" style="max-width: 1.5625em;"></span> <!-- 25px -->
+                        <span class="placeholder w-100 d-flex align-items-center me-1" style="max-width: 3.125em;"></span> <!-- 50px -->
+                        <span class="placeholder w-100 d-flex align-items-center me-1" style="max-width: 6.25em;"></span> <!-- 100px -->
+                        <span class="placeholder w-100 d-flex align-items-center" style="max-width: 6.25em;"></span> <!-- 100px -->
                     </div>
                 </div>
             </div>
@@ -465,13 +469,12 @@
                 const telpon = rawatjalan.telpon ? rawatjalan.telpon : "<em>Tidak ada</em>";
                 const usia = hitungUsia(rawatjalan.tanggal_lahir, rawatjalan.tanggal_registrasi); // Menghitung usia pasien
 
-                const transaksiBadge = rawatjalan.transaksi == '1' ?
-                    `<span class="badge bg-success bg-gradient h-100 d-flex align-items-center">Transaksi Diproses</span>` :
-                    `<span class="badge bg-danger bg-gradient h-100 d-flex align-items-center">Transaksi Belum Diproses</span>`;
-
                 let status = rawatjalan.status;
-                if (status === 'DAFTAR') {
-                    status = `<span class="badge bg-success bg-gradient h-100 d-flex align-items-center me-1">Didaftarkan</span> ${transaksiBadge}`;
+                let transaksi = rawatjalan.transaksi;
+                if (status === 'DAFTAR' && transaksi === '0') {
+                    status = `<span class="badge bg-secondary bg-gradient h-100 d-flex align-items-center me-1">Didaftarkan</span>`;
+                } else if (status === 'DAFTAR' && transaksi === '1') {
+                    status = `<span class="badge bg-success bg-gradient h-100 d-flex align-items-center me-1">Sudah Dilayani</span>`;
                 } else if (status === 'BATAL') {
                     status = `<span class="badge bg-danger bg-gradient h-100 d-flex align-items-center">Dibatalkan</span>`;
                 }
@@ -490,7 +493,7 @@
                                 <span class="badge bg-body text-body border text-nowrap h-100 d-flex align-items-center me-1">${rawatjalan.nomor_registrasi}</span> ${jenis_kelamin}
                             </div>
                             <div class="d-flex align-items-stretch date" style="height: 1.25em;">
-                                <span class="badge bg-body text-body border date h-100 d-flex align-items-center me-1">${rawatjalan.kode_antrian}${rawatjalan.no_antrian}</span>
+                                <span class="badge bg-body text-body border date h-100 d-flex align-items-center me-1">${rawatjalan.kode_antrian}${rawatjalan.no_antrian}</span><span class="badge bg-body text-body border date h-100 d-flex align-items-center me-1">${rawatjalan.status_kunjungan}</span>
                                 ${status}
                             </div>
                         </div>
@@ -660,13 +663,12 @@
                 const telpon = rawatjalan.telpon ? rawatjalan.telpon : "<em>Tidak ada</em>";
                 const usia = hitungUsia(rawatjalan.tanggal_lahir, rawatjalan.tanggal_registrasi); // Menghitung usia pasien
 
-                const transaksiBadge = rawatjalan.transaksi == '1' ?
-                    `<span class="badge bg-success bg-gradient h-100 d-flex align-items-center">Transaksi Diproses</span>` :
-                    `<span class="badge bg-danger bg-gradient h-100 d-flex align-items-center">Transaksi Belum Diproses</span>`;
-
                 let status = rawatjalan.status;
-                if (status === 'DAFTAR') {
-                    status = `<span class="badge bg-success bg-gradient h-100 d-flex align-items-center me-1">Didaftarkan</span> ${transaksiBadge}`;
+                let transaksi = rawatjalan.transaksi;
+                if (status === 'DAFTAR' && transaksi === '0') {
+                    status = `<span class="badge bg-secondary bg-gradient h-100 d-flex align-items-center me-1">Didaftarkan</span>`;
+                } else if (status === 'DAFTAR' && transaksi === '1') {
+                    status = `<span class="badge bg-success bg-gradient h-100 d-flex align-items-center me-1">Sudah Dilayani</span>`;
                 } else if (status === 'BATAL') {
                     status = `<span class="badge bg-danger bg-gradient h-100 d-flex align-items-center">Dibatalkan</span>`;
                 }
@@ -685,7 +687,7 @@
                                 <span class="badge bg-body text-body border text-nowrap h-100 d-flex align-items-center me-1">${rawatjalan.nomor_registrasi}</span> ${jenis_kelamin}
                             </div>
                             <div class="d-flex align-items-stretch date" style="height: 1.25em;">
-                                <span class="badge bg-body text-body border date h-100 d-flex align-items-center me-1">${rawatjalan.kode_antrian}${rawatjalan.no_antrian}</span>
+                                <span class="badge bg-body text-body border date h-100 d-flex align-items-center me-1">${rawatjalan.kode_antrian}${rawatjalan.no_antrian}</span><span class="badge bg-body text-body border date h-100 d-flex align-items-center me-1">${rawatjalan.status_kunjungan}</span>
                                 ${status}
                             </div>
                         </div>
@@ -847,13 +849,12 @@
                 const telpon = rawatjalan.telpon ? rawatjalan.telpon : "<em>Tidak ada</em>";
                 const usia = hitungUsia(rawatjalan.tanggal_lahir, rawatjalan.tanggal_registrasi); // Menghitung usia pasien
 
-                const transaksiBadge = rawatjalan.transaksi == '1' ?
-                    `<span class="badge bg-success bg-gradient h-100 d-flex align-items-center">Transaksi Diproses</span>` :
-                    `<span class="badge bg-danger bg-gradient h-100 d-flex align-items-center">Transaksi Belum Diproses</span>`;
-
                 let status = rawatjalan.status;
-                if (status === 'DAFTAR') {
-                    status = `<span class="badge bg-success bg-gradient h-100 d-flex align-items-center me-1">Didaftarkan</span> ${transaksiBadge}`;
+                let transaksi = rawatjalan.transaksi;
+                if (status === 'DAFTAR' && transaksi === '0') {
+                    status = `<span class="badge bg-secondary bg-gradient h-100 d-flex align-items-center me-1">Didaftarkan</span>`;
+                } else if (status === 'DAFTAR' && transaksi === '1') {
+                    status = `<span class="badge bg-success bg-gradient h-100 d-flex align-items-center me-1">Sudah Dilayani</span>`;
                 } else if (status === 'BATAL') {
                     status = `<span class="badge bg-danger bg-gradient h-100 d-flex align-items-center">Dibatalkan</span>`;
                 }
@@ -872,7 +873,7 @@
                                 <span class="badge bg-body text-body border text-nowrap h-100 d-flex align-items-center me-1">${rawatjalan.nomor_registrasi}</span> ${jenis_kelamin}
                             </div>
                             <div class="d-flex align-items-stretch date" style="height: 1.25em;">
-                                <span class="badge bg-body text-body border date h-100 d-flex align-items-center me-1">${rawatjalan.kode_antrian}${rawatjalan.no_antrian}</span>
+                                <span class="badge bg-body text-body border date h-100 d-flex align-items-center me-1">${rawatjalan.kode_antrian}${rawatjalan.no_antrian}</span><span class="badge bg-body text-body border date h-100 d-flex align-items-center me-1">${rawatjalan.status_kunjungan}</span>
                                 ${status}
                             </div>
                         </div>
