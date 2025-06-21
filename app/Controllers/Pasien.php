@@ -1185,6 +1185,9 @@ class Pasien extends BaseController
             // Ambil resep luar
             $pasien = $this->PasienModel->find($id);
 
+            $rt_input = $this->request->getPost('rt');
+            $rw_input = $this->request->getPost('rw');
+
             // Simpan data pasien
             $data = [
                 'id_pasien' => $id,
@@ -1200,8 +1203,8 @@ class Pasien extends BaseController
                 'kabupaten' => $this->request->getPost('kabupaten'),
                 'kecamatan' => $this->request->getPost('kecamatan'),
                 'kelurahan' => $this->request->getPost('kelurahan'),
-                'rt' => $this->request->getPost('rt') !== '' ? str_pad($this->request->getPost('rt'), 3, '0', STR_PAD_LEFT) : NULL,
-                'rw' => $this->request->getPost('rw') !== '' ? str_pad($this->request->getPost('rw'), 3, '0', STR_PAD_LEFT) : NULL,
+                'rt' => ($rt_input !== '' && !preg_match('/^0+$/', $rt_input)) ? str_pad($rt_input, 3, '0', STR_PAD_LEFT) : NULL,
+                'rw' => ($rw_input !== '' && !preg_match('/^0+$/', $rw_input)) ? str_pad($rw_input, 3, '0', STR_PAD_LEFT) : NULL,
                 'telpon' => $this->request->getPost('telpon'),
                 'kewarganegaraan' => $this->request->getPost('kewarganegaraan'),
                 'agama' => $this->request->getPost('agama'),
