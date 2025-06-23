@@ -468,7 +468,7 @@
                 let status = rawatjalan.status;
                 let transaksi = rawatjalan.transaksi;
                 if (status === 'DAFTAR' && transaksi === '0') {
-                    status = `<span class="badge text-bg-info bg-gradient h-100 d-flex align-items-center me-1">Didaftarkan</span>`;
+                    status = `<span class="badge text-bg-primary bg-gradient h-100 d-flex align-items-center me-1">Didaftarkan</span>`;
                 } else if (status === 'DAFTAR' && transaksi === '1') {
                     status = `<span class="badge text-bg-success bg-gradient h-100 d-flex align-items-center me-1">Sudah Dilayani</span>`;
                 } else if (status === 'BATAL') {
@@ -662,7 +662,7 @@
                 let status = rawatjalan.status;
                 let transaksi = rawatjalan.transaksi;
                 if (status === 'DAFTAR' && transaksi === '0') {
-                    status = `<span class="badge text-bg-info bg-gradient h-100 d-flex align-items-center me-1">Didaftarkan</span>`;
+                    status = `<span class="badge text-bg-primary bg-gradient h-100 d-flex align-items-center me-1">Didaftarkan</span>`;
                 } else if (status === 'DAFTAR' && transaksi === '1') {
                     status = `<span class="badge text-bg-success bg-gradient h-100 d-flex align-items-center me-1">Sudah Dilayani</span>`;
                 } else if (status === 'BATAL') {
@@ -848,7 +848,7 @@
                 let status = rawatjalan.status;
                 let transaksi = rawatjalan.transaksi;
                 if (status === 'DAFTAR' && transaksi === '0') {
-                    status = `<span class="badge text-bg-info bg-gradient h-100 d-flex align-items-center me-1">Didaftarkan</span>`;
+                    status = `<span class="badge text-bg-primary bg-gradient h-100 d-flex align-items-center me-1">Didaftarkan</span>`;
                 } else if (status === 'DAFTAR' && transaksi === '1') {
                     status = `<span class="badge text-bg-success bg-gradient h-100 d-flex align-items-center me-1">Sudah Dilayani</span>`;
                 } else if (status === 'BATAL') {
