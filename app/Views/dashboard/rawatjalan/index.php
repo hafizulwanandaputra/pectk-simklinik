@@ -294,6 +294,12 @@
 
                                         </div>
                                     </div>
+                                    <div class="mb-0 row g-1 align-items-center">
+                                        <div class="col-5 fw-medium text-truncate">Status Layanan</div>
+                                        <div class="col" id="status">
+
+                                        </div>
+                                    </div>
                                     <div class="mb-0 row g-1 align-items-center rajal_batal">
                                         <div class="col-5 fw-medium text-truncate">Dibatalkan oleh</div>
                                         <div class="col date" id="pembatal">
@@ -1257,6 +1263,16 @@
                     `;
                 }
 
+                let status = rawatjalan.status;
+                let transaksi = rawatjalan.transaksi;
+                if (status === 'DAFTAR' && transaksi === '0') {
+                    status = `Didaftarkan`;
+                } else if (status === 'DAFTAR' && transaksi === '1') {
+                    status = `Sudah Dilayani`;
+                } else if (status === 'BATAL') {
+                    status = `Dibatalkan`;
+                }
+
                 $('#copy_identitas_pasien_value').text(`${rawatjalan.nama_pasien} ${rawatjalan.no_rm} ${rawatjalan.tanggal_lahir}`);
                 $('#nama_pasien').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${rawatjalan.nama_pasien}">`);
                 $('#no_rekam_medis').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${rawatjalan.no_rm}">`);
@@ -1279,6 +1295,7 @@
                 $('#keluhan').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${rawatjalan.keluhan}">`);
                 $('#tindakan_operasi_rajal').html(tindakan_operasi_rajal);
                 $('#waktu_operasi_rajal').html(waktu_operasi_rajal);
+                $('#status').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${status}">`);
                 $('#pembatal').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${rawatjalan.pembatal}">`);
                 $('#alasan_batal').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${rawatjalan.alasan_batal}">`);
                 $('#tombol_rme').html(tombol_rme);
@@ -1312,6 +1329,7 @@
             $('#status_kunjungan').html('');
             $('#tindakan_operasi_rajal').html('');
             $('#waktu_operasi_rajal').html('');
+            $('#status').html('');
             $('#pembatal').html('');
             $('#alasan_batal').html('');
             $('#tombol_rme').html('');
