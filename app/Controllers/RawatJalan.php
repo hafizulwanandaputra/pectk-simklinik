@@ -270,7 +270,6 @@ class RawatJalan extends BaseController
             $validation = \Config\Services::validation();
             // Menetapkan aturan validasi dasar
             $validation->setRules([
-                'jenis_kunjungan' => 'required',
                 'jaminan' => 'required',
                 'ruangan' => 'required',
                 'dokter' => 'required',
@@ -344,11 +343,16 @@ class RawatJalan extends BaseController
             $kode_antrian = $kodeDokter . $jaminanAntrian;
             $no_antrian = str_pad($queueIncrement, 3, '0', STR_PAD_LEFT);
 
+            $totalrawatjalan = $db->table('rawat_jalan')
+                ->where('no_rm', $no_rm)
+                ->where('status', 'DAFTAR')
+                ->countAllResults(false);
+
             // Kondisikan status kunjungan
-            if ($this->request->getPost('jenis_kunjungan') == 'BARU') {
-                $status_kunjungan = 'BARU';
-            } else {
+            if ($totalrawatjalan > 0) {
                 $status_kunjungan = 'LAMA';
+            } else {
+                $status_kunjungan = 'BARU';
             }
 
             // Simpan data pasien
@@ -356,7 +360,7 @@ class RawatJalan extends BaseController
                 'no_rm' => $no_rm,
                 'nomor_registrasi' => $nomor_registrasi,
                 'tanggal_registrasi' => date('Y-m-d H:i:s'),
-                'jenis_kunjungan' => $this->request->getPost('jenis_kunjungan'),
+                'jenis_kunjungan' => NULL,
                 'status_kunjungan' => $status_kunjungan,
                 'jaminan' => $this->request->getPost('jaminan'),
                 'ruangan' => $this->request->getPost('ruangan'),

@@ -253,12 +253,6 @@
                                         </div>
                                     </div>
                                     <div class="mb-0 row g-1 align-items-center">
-                                        <div class="col-5 fw-medium text-truncate">Jenis Kunjungan</div>
-                                        <div class="col" id="jenis_kunjungan">
-
-                                        </div>
-                                    </div>
-                                    <div class="mb-0 row g-1 align-items-center">
                                         <div class="col-5 fw-medium text-truncate">Status Kunjungan</div>
                                         <div class="col" id="status_kunjungan">
 
@@ -1278,7 +1272,6 @@
                 $('#pendaftar').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${rawatjalan.pendaftar}">`);
                 $('#nomor_registrasi').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${rawatjalan.nomor_registrasi}">`);
                 $('#tanggal_registrasi').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${rawatjalan.tanggal_registrasi}">`);
-                $('#jenis_kunjungan').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${rawatjalan.jenis_kunjungan}">`);
                 $('#status_kunjungan').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${rawatjalan.status_kunjungan}">`);
                 $('#jaminan').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${rawatjalan.jaminan}">`);
                 $('#ruangan').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${rawatjalan.ruangan}">`);
@@ -1311,7 +1304,6 @@
             $('#pendaftar').html('');
             $('#nomor_registrasi').html('');
             $('#tanggal_registrasi').html('');
-            $('#jenis_kunjungan').html('');
             $('#status_kunjungan').html('');
             $('#jaminan').html('');
             $('#ruangan').html('');

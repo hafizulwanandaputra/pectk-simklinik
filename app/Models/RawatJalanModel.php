@@ -13,7 +13,6 @@ class RawatJalanModel extends Model
         'no_rm',
         'nomor_registrasi',
         'tanggal_registrasi',
-        'jenis_kunjungan',
         'status_kunjungan',
         'jaminan',
         'ruangan',

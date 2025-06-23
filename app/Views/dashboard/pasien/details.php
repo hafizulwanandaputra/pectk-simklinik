@@ -398,6 +398,22 @@
                                                                     <span class="placeholder w-100"></span>
                                                                 </div>
                                                             </div>
+                                                            <div class="mb-0 row g-1 align-items-center placeholder-glow">
+                                                                <div class="col-5 fw-medium text-truncate">
+                                                                    <span class="placeholder w-100"></span>
+                                                                </div>
+                                                                <div class="col placeholder-glow">
+                                                                    <span class="placeholder w-100"></span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb-0 row g-1 align-items-center placeholder-glow">
+                                                                <div class="col-5 fw-medium text-truncate">
+                                                                    <span class="placeholder w-100"></span>
+                                                                </div>
+                                                                <div class="col placeholder-glow">
+                                                                    <span class="placeholder w-100"></span>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -468,21 +484,6 @@
                     <button id="rajalCloseBtn" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body py-2">
-                    <div class="form-floating mt-1 mb-1">
-                        <select class="form-select" id="jenis_kunjungan" name="jenis_kunjungan" aria-label="jenis_kunjungan">
-                            <option value="" disabled selected>-- Pilih Jenis Kunjungan --</option>
-                            <option value="BARU">
-                                BARU</option>
-                            <option value="INTERNAL">
-                                INTERNAL</option>
-                            <option value="KONTROL">
-                                KONTROL</option>
-                            <option value="RUJUKAN">
-                                RUJUKAN</option>
-                        </select>
-                        <label for="jenis_kunjungan">Jenis Kunjungan<span class="text-danger">*</span></label>
-                        <div class="invalid-feedback"></div>
-                    </div>
                     <div class="form-floating mt-1 mb-1">
                         <select class="form-select" id="jaminan" name="jaminan" aria-label="jaminan">
                             <option value="" disabled selected>-- Pilih Jaminan --</option>
@@ -655,6 +656,22 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-6">
+                                                            <div class="mb-0 row g-1 align-items-center placeholder-glow">
+                                                                <div class="col-5 fw-medium text-truncate">
+                                                                    <span class="placeholder w-100"></span>
+                                                                </div>
+                                                                <div class="col placeholder-glow">
+                                                                    <span class="placeholder w-100"></span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb-0 row g-1 align-items-center placeholder-glow">
+                                                                <div class="col-5 fw-medium text-truncate">
+                                                                    <span class="placeholder w-100"></span>
+                                                                </div>
+                                                                <div class="col placeholder-glow">
+                                                                    <span class="placeholder w-100"></span>
+                                                                </div>
+                                                            </div>
                                                             <div class="mb-0 row g-1 align-items-center placeholder-glow">
                                                                 <div class="col-5 fw-medium text-truncate">
                                                                     <span class="placeholder w-100"></span>
@@ -1321,12 +1338,6 @@
                                             <div class="col-5 fw-medium text-truncate">Tanggal dan Waktu</div>
                                             <div class="col">
                                                 <input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${rajal.tanggal_registrasi}">
-                                            </div>
-                                        </div>
-                                        <div class="mb-0 row g-1 align-items-center">
-                                            <div class="col-5 fw-medium text-truncate">Jenis Kunjungan</div>
-                                            <div class="col">
-                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${rajal.jenis_kunjungan}">
                                             </div>
                                         </div>
                                         <div class="mb-0 row g-1 align-items-center">
