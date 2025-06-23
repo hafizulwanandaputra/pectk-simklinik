@@ -484,6 +484,17 @@
                     <button id="rajalCloseBtn" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body py-2">
+                    <div id="mediaAlert" class="alert alert-info  mb-1 mt-1" role="alert">
+                        <div class="d-flex align-items-start">
+                            <div style="width: 12px; text-align: center;">
+                                <i class="fa-solid fa-circle-info"></i>
+                            </div>
+                            <div class="w-100 ms-3">
+                                <p>Jika pasien ini belum pernah berobat, status kunjungan rawat jalan diatur ke BARU.</p>
+                                <p class="mb-0">Jika pasien ini sudah pernah berobat, status kunjungan rawat jalan diatur ke LAMA.</p>
+                            </div>
+                        </div>
+                    </div>
                     <div class="form-floating mt-1 mb-1">
                         <select class="form-select" id="jaminan" name="jaminan" aria-label="jaminan">
                             <option value="" disabled selected>-- Pilih Jaminan --</option>
