@@ -2,10 +2,7 @@
     :root {
         font-variant-numeric: proportional-nums;
 
-        --bs-gradient: linear-gradient(180deg,
-                rgba(255, 255, 255, 0.25) 0%,
-                rgba(255, 255, 255, 0) 10px,
-                rgba(0, 0, 0, 0.25) 100%);
+        --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
         --bs-border-radius: 0.5rem;
         --bs-border-radius-sm: 0.5rem;
         --bs-border-radius-lg: 0.75rem;
@@ -45,38 +42,23 @@
     .btn:first-child:active.bg-gradient,
     .btn.active.bg-gradient,
     .btn.show.bg-gradient {
-        --bs-gradient: linear-gradient(180deg,
-                rgba(0, 0, 0, 0.25) 0%,
-                rgba(0, 0, 0, 0) 10px,
-                rgba(255, 255, 255, 0.25) 100%);
+        --bs-gradient: linear-gradient(180deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0));
     }
 
     .page-link:active.bg-gradient {
-        --bs-gradient: linear-gradient(180deg,
-                rgba(0, 0, 0, 0.25) 0%,
-                rgba(0, 0, 0, 0) 10px,
-                rgba(255, 255, 255, 0.25) 100%);
+        --bs-gradient: linear-gradient(180deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0));
     }
 
     .navbar-toggler:active.bg-gradient {
-        --bs-gradient: linear-gradient(180deg,
-                rgba(0, 0, 0, 0.25) 0%,
-                rgba(0, 0, 0, 0) 10px,
-                rgba(255, 255, 255, 0.25) 100%);
+        --bs-gradient: linear-gradient(180deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0));
     }
 
     .form-control:active::-webkit-file-upload-button {
-        background-image: linear-gradient(180deg,
-                rgba(0, 0, 0, 0.25) 0%,
-                rgba(0, 0, 0, 0) 10px,
-                rgba(255, 255, 255, 0.25) 100%);
+        background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0));
     }
 
     .form-control:active::file-selector-button {
-        background-image: linear-gradient(180deg,
-                rgba(0, 0, 0, 0.25) 0%,
-                rgba(0, 0, 0, 0) 10px,
-                rgba(255, 255, 255, 0.25) 100%);
+        background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0));
     }
 
     .form-switch .form-check-input:checked {
@@ -206,66 +188,42 @@
 
     .btn-outline-primary:hover,
     .btn-outline-primary:focus-visible {
-        --bs-gradient: linear-gradient(180deg,
-                rgba(255, 255, 255, 0.25) 0%,
-                rgba(255, 255, 255, 0) 10px,
-                rgba(0, 0, 0, 0.25) 100%);
+        --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
     }
 
     .btn-outline-secondary:hover,
     .btn-outline-secondary:focus-visible {
-        --bs-gradient: linear-gradient(180deg,
-                rgba(255, 255, 255, 0.25) 0%,
-                rgba(255, 255, 255, 0) 10px,
-                rgba(0, 0, 0, 0.25) 100%);
+        --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
     }
 
     .btn-outline-success:hover,
     .btn-outline-success:focus-visible {
-        --bs-gradient: linear-gradient(180deg,
-                rgba(255, 255, 255, 0.25) 0%,
-                rgba(255, 255, 255, 0) 10px,
-                rgba(0, 0, 0, 0.25) 100%);
+        --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
     }
 
     .btn-outline-info:hover,
     .btn-outline-info:focus-visible {
-        --bs-gradient: linear-gradient(180deg,
-                rgba(255, 255, 255, 0.25) 0%,
-                rgba(255, 255, 255, 0) 10px,
-                rgba(0, 0, 0, 0.25) 100%);
+        --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
     }
 
     .btn-outline-warning:hover,
     .btn-outline-warning:focus-visible {
-        --bs-gradient: linear-gradient(180deg,
-                rgba(255, 255, 255, 0.25) 0%,
-                rgba(255, 255, 255, 0) 10px,
-                rgba(0, 0, 0, 0.25) 100%);
+        --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
     }
 
     .btn-outline-danger:hover,
     .btn-outline-danger:focus-visible {
-        --bs-gradient: linear-gradient(180deg,
-                rgba(255, 255, 255, 0.25) 0%,
-                rgba(255, 255, 255, 0) 10px,
-                rgba(0, 0, 0, 0.25) 100%);
+        --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
     }
 
     .btn-outline-light:hover,
     .btn-outline-light:focus-visible {
-        --bs-gradient: linear-gradient(180deg,
-                rgba(255, 255, 255, 0.25) 0%,
-                rgba(255, 255, 255, 0) 10px,
-                rgba(0, 0, 0, 0.25) 100%);
+        --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
     }
 
     .btn-outline-dark:hover,
     .btn-outline-dark:focus-visible {
-        --bs-gradient: linear-gradient(180deg,
-                rgba(255, 255, 255, 0.25) 0%,
-                rgba(255, 255, 255, 0) 10px,
-                rgba(0, 0, 0, 0.25) 100%);
+        --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
     }
 
     .btn-body {
@@ -304,10 +262,7 @@
 
     .btn-outline-body:hover,
     .btn-outline-body:focus-visible {
-        --bs-gradient: linear-gradient(180deg,
-                rgba(255, 255, 255, 0.25) 0%,
-                rgba(255, 255, 255, 0) 10px,
-                rgba(0, 0, 0, 0.25) 100%);
+        --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
         ;
     }
 
@@ -417,10 +372,7 @@
     }
 
     .dropdown-item:active {
-        background-image: linear-gradient(180deg,
-                rgba(0, 0, 0, 0.25) 0%,
-                rgba(0, 0, 0, 0) 10px,
-                rgba(255, 255, 255, 0.25) 100%);
+        background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0));
         color: var(--bs-dropdown-link-active-color);
         text-decoration: none;
         background-color: var(--bs-dropdown-link-active-bg);
@@ -542,10 +494,7 @@
 
     [data-bs-theme=dark] .btn-outline-body:hover,
     [data-bs-theme=dark] .btn-outline-body:focus-visible {
-        --bs-gradient: linear-gradient(180deg,
-                rgba(255, 255, 255, 0.25) 0%,
-                rgba(255, 255, 255, 0) 10px,
-                rgba(0, 0, 0, 0.25) 100%);
+        --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
         ;
     }
 </style>
