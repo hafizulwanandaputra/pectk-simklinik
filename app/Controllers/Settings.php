@@ -161,7 +161,7 @@ class Settings extends BaseController
 
         // Mendapatkan versi Node.js dari sistem
         $node_raw = shell_exec('node -v');
-        $node_version = $node_raw ? trim($node_raw) : null;
+        $node_version = $node_raw ? ltrim(trim($node_raw), 'v') : null;
 
         // Menyiapkan data untuk tampilan halaman tentang
         $data = [
