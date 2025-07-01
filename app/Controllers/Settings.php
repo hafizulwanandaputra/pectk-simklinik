@@ -159,6 +159,10 @@ class Settings extends BaseController
         $row_compile_machine = $query_compile_machine->getRow(); // Mendapatkan hasil jenis mesin
         $agent = $this->request->getUserAgent(); // Mengambil informasi user agent
 
+        // Mendapatkan versi Node.js dari sistem
+        $node_raw = shell_exec('node -v');
+        $node_version = $node_raw ? trim($node_raw) : null;
+
         // Menyiapkan data untuk tampilan halaman tentang
         $data = [
             'php_extensions' => implode(', ', $php_extensions), // Menggabungkan ekstensi PHP menjadi string
@@ -166,6 +170,7 @@ class Settings extends BaseController
             'version_comment' => $row_comment->Value, // Komentar versi database
             'version_compile_os' => $row_compile_os->Value, // Sistem operasi database
             'version_compile_machine' => $row_compile_machine->Value, // Jenis mesin database
+            'node_version' => $node_version,
             'systemName' => $this->systemName,
             'systemSubtitleName' => $this->systemSubtitleName,
             'companyName' => $this->companyName,

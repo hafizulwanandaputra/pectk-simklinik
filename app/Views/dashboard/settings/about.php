@@ -5,15 +5,19 @@ $browser = $agent->getBrowser();
 $browserIcon = '';
 
 if (stripos($platform, 'Windows') !== false) {
-    $iconClass = '<i class="fa-brands fa-windows"></i>';
-} elseif (stripos($platform, 'Mac') !== false) {
+    $iconClass = '<i class="fa-brands fa-microsoft"></i>';
+} elseif (stripos($platform, 'Mac') !== false || stripos($platform, 'macOS') !== false || stripos($platform, 'iOS') !== false || stripos($platform, 'iPadOS') !== false) {
     $iconClass = '<i class="fa-brands fa-apple"></i>';
 } elseif (stripos($platform, 'Linux') !== false) {
     $iconClass = '<i class="fa-brands fa-linux"></i>';
 } elseif (stripos($platform, 'Android') !== false) {
     $iconClass = '<i class="fa-brands fa-android"></i>';
-} elseif (stripos($platform, 'iOS') !== false || stripos($platform, 'iPhone') !== false || stripos($platform, 'iPad') !== false) {
-    $iconClass = '<i class="fa-brands fa-apple"></i>';
+} elseif (stripos($platform, 'BlackBerry') !== false) {
+    $iconClass = '<i class="fa-brands fa-blackberry"></i>';
+} elseif (stripos($platform, 'FreeBSD') !== false) {
+    $iconClass = '<i class="fa-brands fa-freebsd"></i>';
+} elseif (stripos($platform, 'Debian') !== false) {
+    $iconClass = '<i class="fa-brands fa-debian"></i>';
 } else {
     $iconClass = '<i class="fa-solid fa-computer"></i>';
 }
@@ -24,7 +28,7 @@ if (stripos($browser, 'Chrome') !== false) {
     $browserIcon = '<i class="fa-brands fa-firefox-browser"></i>';
 } elseif (stripos($browser, 'Safari') !== false) {
     $browserIcon = '<i class="fa-brands fa-safari"></i>';
-} elseif (stripos($browser, 'Edge') !== false) {
+} elseif (stripos($browser, 'Edge') !== false || stripos($browser, 'Spartan') !== false) {
     $browserIcon = '<i class="fa-brands fa-edge"></i>';
 } elseif (stripos($browser, 'Opera') !== false || stripos($browser, 'OPR') !== false) {
     $browserIcon = '<i class="fa-brands fa-opera"></i>';
@@ -209,6 +213,21 @@ if (stripos($browser, 'Chrome') !== false) {
                     </div>
                 </div>
             </li>
+            <?php if ($node_version !== null) : ?>
+                <li class="list-group-item p-1 list-group-item-action disabled" aria-disabled="true">
+                    <div class="d-flex align-items-start">
+                        <a href="#" class="stretched-link" style="min-width: 3rem; max-width: 3rem; text-align: center;">
+                            <p class="mb-0" style="font-size: 1.75rem!important;"><i class="fa-brands fa-node-js"></i></p>
+                        </a>
+                        <div class="align-self-stretch flex-fill ps-1 text-wrap overflow-hidden d-flex align-items-center" style="text-overflow: ellipsis;">
+                            <div>
+                                <h5 class="card-title">Versi Node.js</h5>
+                                <span><?= esc($node_version) ?></span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            <?php endif; ?>
         </ul>
         <h5>Informasi <em>Frontend</em></h5>
         <ul class="list-group shadow-sm  mb-3">
