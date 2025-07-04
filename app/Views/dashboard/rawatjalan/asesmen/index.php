@@ -1394,6 +1394,11 @@ $usia = $registrasi->diff($tanggal_lahir);
                     <i class="fa-solid fa-floppy-disk"></i> Simpan
                 `);
                 $('#asesmenForm input, #asesmenForm textarea, #asesmenForm select, #asesmenForm button').prop('disabled', false);
+                <?php if (session()->get('role') == 'Perawat') : ?>
+                    $('#icdx_kode_1, #icdx_kode_2, #icdx_kode_3, #icdx_kode_4, #icdx_kode_5, #icd9_kode_1, #icd9_kode_2, #icd9_kode_3, #icd9_kode_4, #icd9_kode_5').each(function() {
+                        $(this).prop('disabled', true).trigger('change.select2');
+                    });
+                <?php endif; ?>
             }
         });
         await fetchAsesmen();
