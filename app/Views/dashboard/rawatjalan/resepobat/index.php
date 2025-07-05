@@ -18,6 +18,8 @@ $usia = $registrasi->diff($tanggal_lahir);
     .select2-container {
         z-index: 1050;
         /* Make sure it's above other elements, like modals */
+        flex: 1 1 auto;
+        min-width: 0;
     }
 
     .select2-dropdown {
@@ -112,7 +114,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <div class="card-header" id="tambahDetailContainer" style="display: none;">
                     <form id="tambahDetail" enctype="multipart/form-data">
                         <div class="row g-2">
-                            <div class="col-12 input-group has-validation">
+                            <div class="col-12 input-group has-validation flex-nowrap">
                                 <select class="form-select form-select-sm" id="id_batch_obat" name="id_batch_obat" aria-label="id_batch_obat" autocomplete="off">
                                     <option value="" disabled selected>-- Pilih Obat --</option>
                                 </select>
