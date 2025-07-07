@@ -235,10 +235,9 @@
                                 <i class="fa-solid fa-triangle-exclamation"></i>
                             </div>
                             <div class="w-100 ms-3">
-                                <p><strong id="total_exp_med"></strong> obat berikut akan segera kedaluwarsa:</p>
+                                <p><strong id="total_exp_med"></strong> obat berikut akan segera kedaluwarsa. Pastikan Anda memilih obat yang masa kedaluwarsanya masih panjang.</p>
                                 <ol id="expired_med_list">
                                 </ol>
-                                <p class="mb-0">Pastikan Anda memilih obat yang masa kedaluwarsanya masih panjang.</p>
                             </div>
                         </div>
                     </div>
