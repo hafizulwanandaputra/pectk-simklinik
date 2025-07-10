@@ -112,11 +112,13 @@
             <div class="card-header" id="tambahDetailContainer" style="display: none;">
                 <form id="tambahDetail" enctype="multipart/form-data">
                     <div class="row g-2">
-                        <div class="col-12 input-group has-validation flex-nowrap">
-                            <select class="form-select form-select-sm" id="id_batch_obat" name="id_batch_obat" aria-label="id_batch_obat" autocomplete="off">
-                                <option value="" disabled selected>-- Pilih Obat --</option>
-                            </select>
-                            <button id="expired_med_btn" class="btn btn-warning bg-gradient btn-sm" type="button" data-bs-toggle="tooltip" data-bs-title="Peringatan Obat Kedaluwarsa"><i class="fa-solid fa-triangle-exclamation"></i></button>
+                        <div class="col-12 has-validation">
+                            <div class="input-group flex-nowrap">
+                                <select class="form-select form-select-sm" id="id_batch_obat" name="id_batch_obat" aria-label="id_batch_obat" autocomplete="off">
+                                    <option value="" disabled selected>-- Pilih Obat --</option>
+                                </select>
+                                <button id="expired_med_btn" class="btn btn-warning bg-gradient btn-sm" type="button" data-bs-toggle="tooltip" data-bs-title="Peringatan Obat Kedaluwarsa"><i class="fa-solid fa-triangle-exclamation"></i></button>
+                            </div>
                             <div class="invalid-feedback"></div>
                         </div>
                         <div class="col-6">
@@ -769,7 +771,14 @@
                     for (const field in response.data.errors) {
                         if (response.data.errors.hasOwnProperty(field)) {
                             const fieldElement = $('#' + field);
-                            const feedbackElement = fieldElement.siblings('.invalid-feedback');
+
+                            // Coba cari feedback di dalam .has-validation
+                            let feedbackElement = fieldElement.closest('.has-validation').find('.invalid-feedback');
+
+                            // Jika tidak ketemu, fallback ke sibling (untuk kasus lama)
+                            if (feedbackElement.length === 0) {
+                                feedbackElement = fieldElement.siblings('.invalid-feedback');
+                            }
 
                             console.log("Target Field:", fieldElement);
                             console.log("Target Feedback:", feedbackElement);
@@ -778,13 +787,20 @@
                                 fieldElement.addClass('is-invalid');
                                 feedbackElement.text(response.data.errors[field]).show();
 
-                                // Remove error message when the user corrects the input
+                                // Hapus validasi jika pengguna memperbaiki input
                                 fieldElement.on('input change', function() {
                                     $(this).removeClass('is-invalid');
-                                    $(this).siblings('.invalid-feedback').text('').hide();
+
+                                    // Ulangi logika untuk cari feedbackElement
+                                    let currentFeedback = $(this).closest('.has-validation').find('.invalid-feedback');
+                                    if (currentFeedback.length === 0) {
+                                        currentFeedback = $(this).siblings('.invalid-feedback');
+                                    }
+
+                                    currentFeedback.text('').hide();
                                 });
                             } else {
-                                console.warn("Elemen tidak ditemukan pada field:", field);
+                                console.warn("Elemen atau feedback tidak ditemukan:", field);
                             }
                         }
                     }
