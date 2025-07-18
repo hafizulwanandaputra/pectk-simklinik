@@ -1,5 +1,18 @@
 <?= $this->extend('dashboard/templates/dashboard'); ?>
 <?= $this->section('title'); ?>
+<style>
+    .second-row-form {
+        min-width: 15em;
+    }
+
+    @media (max-width: 767.98px) {
+        .second-row-form {
+            min-width: 0;
+        }
+    }
+</style>
+<?= $this->endSection(); ?>
+<?= $this->section('title'); ?>
 <div class="d-flex justify-content-start align-items-center">
     <div class="flex-fill text-truncate">
         <div class="d-flex flex-column">
@@ -26,8 +39,8 @@
                         <div class="input-group input-group-sm flex-grow-1">
                             <input type="search" id="searchInput" class="form-control" placeholder="Cari nomor rekam medis, nama pasien, NIK, atau nomor BPJS">
                         </div>
-                        <div class="input-group input-group-sm w-auto">
-                            <input type="date" id="tanggalFilter" class="form-control rounded-start">
+                        <div class="input-group input-group-sm w-auto second-row-form">
+                            <input type="date" id="tanggalFilter" class="form-control rounded-start" placeholder="Tanggal lahir (dd-mm-yyyy)">
                             <button class="btn btn-danger btn-sm bg-gradient " type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
                         </div>
                     </div>
