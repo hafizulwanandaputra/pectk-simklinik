@@ -178,7 +178,8 @@
             $('#tanggalFilter').flatpickr({
                 altInput: true,
                 allowInput: true,
-                altFormat: "d-m-Y"
+                altFormat: "d-m-Y",
+                disableMobile: "true"
             });
             const response = await axios.get('<?= base_url('pasien/pasienlist') ?>', {
                 params: {
@@ -420,7 +421,9 @@
 
         $('#clearTglButton').on('click', function() {
             currentPage = 1;
-            $('#tanggalFilter').val('');
+            if ($('#tanggalFilter')[0]._flatpickr) {
+                $('#tanggalFilter')[0]._flatpickr.clear();
+            }
             fetchPasien();
         });
 

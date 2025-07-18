@@ -35,6 +35,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/plugins/monthSelect/index.js"></script>
     <script src="https://npmcdn.com/flatpickr/dist/l10n/id.js"></script>
     <script>
         flatpickr.localize(flatpickr.l10ns.id);
@@ -161,6 +162,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
 
                 $('[data-bs-theme-value]').on('click', function() {
                     const theme = $(this).attr('data-bs-theme-value');
+                    // Inisialisasi flatpickr untuk semua .month-picker
                     setStoredTheme(theme);
                     setTheme(theme);
                     showActiveTheme(theme, true);
@@ -473,6 +475,9 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                 }
             }
         }
+    </style>
+    <style>
+
     </style>
     <?= $this->include('spinner/spinner-css'); ?>
     <?= $this->renderSection('css'); ?>

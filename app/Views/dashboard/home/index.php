@@ -461,9 +461,20 @@ $db = db_connect();
     let currentPage = 1;
 
     <?php if (session()->get('role') == "Admin" || session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admisi") : ?>
+        $('#ICD10bulanFilter, #ICD9bulanFilter').flatpickr({
+            plugins: [
+                new monthSelectPlugin({
+                    altFormat: "F Y",
+                    dateFormat: "Y-m",
+                })
+            ],
+            altInput: true,
+            disableMobile: "true"
+        });
         async function fetchICD10() {
             const bulan = $('#ICD10bulanFilter').val();
             const offset = (currentPage - 1) * limit;
+
 
             // Show the spinner
             $('#loadingSpinner').show();

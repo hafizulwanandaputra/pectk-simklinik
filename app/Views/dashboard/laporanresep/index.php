@@ -34,7 +34,7 @@
             <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-secondary transparent-blur" id="bulan_form" style="display: none;">
                 <div class="no-fluid-content">
                     <div class="input-group input-group-sm" id="form-resep-bulanan">
-                        <input type="month" id="bulan" name="bulan" class="form-control" <?= (session()->get('auto_date') == 1) ? 'value="' . date('Y-m') . '"' : ''; ?>>
+                        <input type="month" id="bulan" name="bulan" class="form-control rounded-start" <?= (session()->get('auto_date') == 1) ? 'value="' . date('Y-m') . '"' : ''; ?>>
                         <button class="btn btn-danger bg-gradient" type="button" id="clearBlnButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Bulan"><i class="fa-solid fa-xmark"></i></button>
                         <button class="btn btn-success bg-gradient " type="button" id="refreshButton2" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan" disabled><i class="fa-solid fa-sync"></i></button>
                     </div>
@@ -353,6 +353,16 @@
     }
 
     // LAPORAN BULANAN
+    $('#bulan').flatpickr({
+        plugins: [
+            new monthSelectPlugin({
+                altFormat: "F Y",
+                dateFormat: "Y-m",
+            })
+        ],
+        altInput: true,
+        disableMobile: "true"
+    });
     async function downloadReport2() {
         $('#reportBtn2').prop('disabled', true);
         $('#form-resep-bulanan input, #form-resep-bulanan button, .dokter-checkbox-2').prop('disabled', true);
@@ -818,7 +828,7 @@
         });
         // Menangani event klik pada tombol bersihkan tanggal
         $('#clearTglButton').on('click', function() {
-            $('#tanggal').val(''); // Kosongkan tanggal
+            $('#tanggal').val('');
             $('.dokter-checkbox-1').prop('checked', false); // Hapus checklist pada checkbox dengan kelas dokter-checkbox-1
             $('#resepharian').empty(); // Kosongkan tabel resep
             $('#resepharian').append(loading1); // Tampilkan loading indicator
@@ -830,7 +840,10 @@
         });
         // Menangani event klik pada tombol bersihkan bulan
         $('#clearBlnButton').on('click', function() {
-            $('#bulan').val(''); // Kosongkan tanggal
+            // Kosongkan flatpickr secara resmi
+            if ($('#bulan')[0]._flatpickr) {
+                $('#bulan')[0]._flatpickr.clear();
+            }
             $('.dokter-checkbox-2').prop('checked', false); // Hapus checklist pada checkbox dengan kelas dokter-checkbox-2
             $('#resepbulanan').empty(); // Kosongkan tabel resep
             $('#resepbulanan').append(loading2); // Tampilkan loading indicator

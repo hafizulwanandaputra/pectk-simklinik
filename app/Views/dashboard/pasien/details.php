@@ -733,7 +733,8 @@
                 altInput: true,
                 allowInput: true,
                 altFormat: "d-m-Y",
-                defaultDate: data.tanggal_lahir
+                defaultDate: data.tanggal_lahir,
+                disableMobile: "true"
             });
             const selectedGender = response.data.jenis_kelamin;
             if (selectedGender) {

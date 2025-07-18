@@ -1,4 +1,119 @@
 <style>
+    .flatpickr-monthSelect-months {
+        margin: 10px 1px 3px 1px;
+        flex-wrap: wrap;
+    }
+
+    .flatpickr-monthSelect-month {
+        background: none;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        color: #393939;
+        cursor: pointer;
+        display: inline-block;
+        font-weight: 400;
+        margin: 0.5px;
+        justify-content: center;
+        padding: 10px;
+        position: relative;
+        -webkit-box-pack: center;
+        -webkit-justify-content: center;
+        -ms-flex-pack: center;
+        text-align: center;
+        width: 33%;
+    }
+
+    .flatpickr-monthSelect-month.flatpickr-disabled {
+        color: #eee;
+    }
+
+    .flatpickr-monthSelect-month.flatpickr-disabled:hover,
+    .flatpickr-monthSelect-month.flatpickr-disabled:focus {
+        cursor: not-allowed;
+        background: none !important;
+    }
+
+    [data-bs-theme=dark] .flatpickr-current-month input.cur-year {
+        color: #fff;
+    }
+
+    [data-bs-theme=dark] .flatpickr-months .flatpickr-prev-month,
+    [data-bs-theme=dark] .flatpickr-months .flatpickr-next-month {
+        color: #fff;
+        fill: #fff;
+    }
+
+    [data-bs-theme=dark] .flatpickr-monthSelect-month {
+        color: rgba(255, 255, 255, 0.95);
+    }
+
+    .flatpickr-monthSelect-month.today {
+        border-color: #959ea9;
+    }
+
+    .flatpickr-monthSelect-month.inRange,
+    .flatpickr-monthSelect-month.inRange.today,
+    .flatpickr-monthSelect-month:hover,
+    .flatpickr-monthSelect-month:focus {
+        background: #e6e6e6;
+        cursor: pointer;
+        outline: 0;
+        border-color: #e6e6e6;
+    }
+
+    [data-bs-theme=dark] .flatpickr-monthSelect-month.inRange,
+    [data-bs-theme=dark] .flatpickr-monthSelect-month:hover,
+    [data-bs-theme=dark] .flatpickr-monthSelect-month:focus {
+        background: #646c8c;
+        border-color: #646c8c;
+    }
+
+    .flatpickr-monthSelect-month.today:hover,
+    .flatpickr-monthSelect-month.today:focus {
+        background: #959ea9;
+        border-color: #959ea9;
+        color: #fff;
+    }
+
+    .flatpickr-monthSelect-month.selected,
+    .flatpickr-monthSelect-month.startRange,
+    .flatpickr-monthSelect-month.endRange {
+        background-color: #569ff7;
+        box-shadow: none;
+        color: #fff;
+        border-color: #569ff7;
+    }
+
+    .flatpickr-monthSelect-month.startRange {
+        border-radius: 50px 0 0 50px;
+    }
+
+    .flatpickr-monthSelect-month.endRange {
+        border-radius: 0 50px 50px 0;
+    }
+
+    .flatpickr-monthSelect-month.startRange.endRange {
+        border-radius: 50px;
+    }
+
+    .flatpickr-monthSelect-month.inRange {
+        border-radius: 0;
+        box-shadow: -5px 0 0 #e6e6e6, 5px 0 0 #e6e6e6;
+    }
+
+    [data-bs-theme=dark] .flatpickr-monthSelect-month.selected,
+    [data-bs-theme=dark] .flatpickr-monthSelect-month.startRange,
+    [data-bs-theme=dark] .flatpickr-monthSelect-month.endRange {
+        background: #80cbc4;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        color: #fff;
+        border-color: #80cbc4;
+    }
+</style>
+<style>
     :root {
         font-variant-numeric: proportional-nums;
 
