@@ -90,7 +90,7 @@ $usia = $sekarang->diff($tanggal_lahir);
             </thead>
         </table>
         <div style="text-align: center;">
-            <div>Nomor Antrian:</div>
+            <div>Nomor Antrean:</div>
             <div style="font-size: 32px;"><strong><?= $rajal['kode_antrian'] . $rajal['no_antrian'] ?></strong></div>
         </div>
         <div class="box" style="width: 100%; padding-top: 2px;">
