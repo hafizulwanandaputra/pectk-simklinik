@@ -268,8 +268,6 @@ $usia = $registrasi->diff($tanggal_lahir);
                 minimumInputLength: 1,
                 templateResult: function(data) {
                     if (!data.id) {
-                        // Kosongkan hasil sebelumnya secara eksplisit (opsional, Select2 biasanya handle ini)
-                        $('.select2-results__options').empty();
                         return `<?= $this->include('spinner/spinner'); ?> <span class="ms-1">Mencari...</span>`;
                     }
 
