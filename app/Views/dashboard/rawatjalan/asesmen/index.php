@@ -884,6 +884,20 @@ $usia = $registrasi->diff($tanggal_lahir);
                 placeholder: "ICD-9 CM",
                 disabled: <?= (session()->get('role') == 'Perawat') ? 'true' : 'false' ?>,
                 allowClear: true,
+                language: {
+                    inputTooShort: function() {
+                        return "Ketik minimal 1 karakter...";
+                    },
+                    noResults: function() {
+                        return "Data tidak ditemukan";
+                    },
+                    searching: function() {
+                        return `<?= $this->include('spinner/spinner'); ?> <span class="ms-1">Memuat...</span>`;
+                    },
+                    loadingMore: function() {
+                        return `<?= $this->include('spinner/spinner'); ?> <span class="ms-1">Memuat lainnya...</span>`;
+                    }
+                },
                 ajax: {
                     url: '<?= base_url('rawatjalan/asesmen/icd9') ?>',
                     dataType: 'json',
@@ -910,9 +924,10 @@ $usia = $registrasi->diff($tanggal_lahir);
                 },
                 minimumInputLength: 1,
                 templateResult: function(data) {
-                    // Format untuk tampilan hasil pencarian
                     if (!data.id) {
-                        return data.text; // Untuk placeholder
+                        // Kosongkan hasil sebelumnya secara eksplisit (opsional, Select2 biasanya handle ini)
+                        $('.select2-results__options').empty();
+                        return `<?= $this->include('spinner/spinner'); ?> <span class="ms-1">Mencari...</span>`;
                     }
 
                     const template = `
@@ -920,7 +935,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             <strong>${data.text}</strong>
                         </div>
                         <div>
-                            <small>${data.nama}</small>
+                            <span style="font-size: 0.75em">${data.nama}</span>
                         </div>
                     `;
                     return $(template);
