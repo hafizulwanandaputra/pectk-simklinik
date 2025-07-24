@@ -267,7 +267,7 @@ To set up PWA application:
 There are 4 user roles used on this application:
 
 1. **Admin**: is used to manage everything of this application with exclusively access to manage users and its sessions and generating transaction password for transaction cancellation.
-2. **Medical Records**: used to manage patients and register patients for outpatient care.
+2. **Admission**: used to manage patients and register patients for outpatient care.
 3. **Pharmacist**: is used to manage medicine stocks, external prescriptions, and printing e-ticket and prescription document from confirmed doctor prescriptions.
 4. **Doctor**: is used to provide diagnoses, procedures, medicine prescriptions, and eyeglass prescriptions given to patients, as well as to create surgery room orders, outpatient reports, and surgical reports.
 5. **Cashier**: is used to manage actions and making transaction of the actions and medicines.
