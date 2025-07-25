@@ -502,6 +502,7 @@
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error); // Menampilkan pesan kesalahan
             } finally {
                 $('#activateModal').modal('hide'); // Menyembunyikan modal aktivasi
+                $('#activateModal button').prop('disabled', false);
                 $(this).text(`Aktifkan`); // Mengembalikan teks tombol asal
             }
         });
