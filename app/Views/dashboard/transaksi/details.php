@@ -285,11 +285,12 @@
         <div id="prosesTransaksi">
             <hr>
             <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-3">
-                <button class="btn btn-body  bg-gradient" type="button" id="printBtn" onclick="window.open(`<?= base_url('/transaksi/struk/' . $transaksi['id_transaksi']) ?>`)" disabled><i class="fa-solid fa-print"></i> Cetak Kuitansi</button>
+                <button class="btn btn-body  bg-gradient" type="button" id="printBtn" data-id="<?= $transaksi['id_transaksi'] ?>" disabled><i class="fa-solid fa-print"></i> Cetak Kuitansi</button>
                 <button class="btn btn-danger  bg-gradient" type="button" id="cancelBtn" data-id="<?= $transaksi['id_transaksi'] ?>" disabled><i class="fa-solid fa-xmark"></i> Batalkan Transaksi</button>
                 <button class="btn btn-success  bg-gradient" type="button" id="processBtn" data-id="<?= $transaksi['id_transaksi'] ?>" disabled><i class="fa-solid fa-money-bills"></i> Proses Transaksi</button>
             </div>
         </div>
+        <iframe id="print_frame_1" style="display: none;"></iframe>
     </div>
 
     <div class="modal modal-sheet p-4 py-md-5 fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" role="dialog">
@@ -1573,6 +1574,30 @@
                 $('#batalTransaksiForm .invalid-feedback').text('').hide();
             });
         <?php endif; ?>
+
+        $('#printBtn').on('click', function() {
+            const id = $(this).data('id');
+
+            // Tampilkan loading di tombol cetak
+            const $btn = $(this);
+            $btn.prop('disabled', true).html(`<?= $this->include('spinner/spinner'); ?> Cetak Kuitansi`);
+
+            // Muat PDF ke iframe
+            var iframe = $('#print_frame_1');
+            iframe.attr('src', `<?= base_url("transaksi/struk") ?>/${id}`);
+
+            // Saat iframe selesai memuat, jalankan print
+            iframe.off('load').on('load', function() {
+                try {
+                    this.contentWindow.focus();
+                    this.contentWindow.print();
+                } catch (e) {
+                    showFailedToast("Peramban memblokir pencetakan otomatis. Harap izinkan pop-up atau pastikan file berasal dari domain yang sama.");
+                } finally {
+                    $btn.prop('disabled', false).html(`<i class="fa-solid fa-print"></i> Cetak Kuitansi`);
+                }
+            });
+        });
 
         $(document).on('visibilitychange', async function() {
             if (document.visibilityState === "visible") {

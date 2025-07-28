@@ -149,6 +149,10 @@
                     <nav id="paginationNav-nama" class="d-flex justify-content-center justify-content-lg-end mt-3 overflow-auto w-100">
                         <ul class="pagination pagination-sm"></ul>
                     </nav>
+                    <iframe id="print_frame_1" style="display: none;"></iframe>
+                    <iframe id="print_frame_2" style="display: none;"></iframe>
+                    <iframe id="print_frame_3" style="display: none;"></iframe>
+                    <iframe id="print_frame_4" style="display: none;"></iframe>
                 </div>
             </div>
         </div>
@@ -217,10 +221,10 @@
                             <div>
                                 <div class="d-flex flex-wrap justify-content-end gap-2 mt-2">
                                     <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') : ?>
-                                        <button id="kiup_btn" type="button" class="btn btn-body btn-sm bg-gradient" onclick="">
+                                        <button id="kiup_btn" type="button" class="btn btn-body btn-sm bg-gradient print-kiup" data-id="">
                                             <i class="fa-solid fa-print"></i> KIUP
                                         </button>
-                                        <button id="barcode_btn" type="button" class="btn btn-body btn-sm bg-gradient" onclick="">
+                                        <button id="barcode_btn" type="button" class="btn btn-body btn-sm bg-gradient print-barcode" data-id="">
                                             <i class="fa-solid fa-barcode"></i> <em>Barcode</em>
                                         </button>
                                         <button id="detail_pasien_btn" type="button" class="btn btn-body btn-sm bg-gradient" onclick="">
@@ -1164,7 +1168,7 @@
                 if (tombol_isian_ok === 'Kamar Operasi') {
                     tombol_isian_ok = `
                                             <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') : ?>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/lembarisianoperasi') ?>/${rawatjalan.id_rawat_jalan}');">
+                                                <button type="button" class="btn btn-body btn-sm bg-gradient print-lio" data-id="${rawatjalan.id_rawat_jalan}">
                                                     <i class="fa-solid fa-receipt"></i> Lembar Isian Operasi
                                                 </button>
                                             <?php endif; ?>
@@ -1194,7 +1198,7 @@
                     tombol_rme = `
                                         <div class="d-flex flex-wrap justify-content-end gap-2 mt-2">
                                             <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') : ?>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/struk') ?>/${rawatjalan.id_rawat_jalan}');">
+                                                <button type="button" class="btn btn-body btn-sm bg-gradient print-struk" data-id="${rawatjalan.id_rawat_jalan}">
                                                     <i class="fa-solid fa-receipt"></i> Struk
                                                 </button>
                                                 ${tombol_isian_ok}
@@ -1282,8 +1286,8 @@
                 $('#usia').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${usia.usia} tahun ${usia.bulan} bulan">`);
                 $('#alamat').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${rawatjalan.alamat}">`);
                 $('#telpon').html(telpon);
-                $('#kiup_btn').attr('onclick', "window.open('<?= base_url('pasien/kiup') ?>/" + rawatjalan.id_pasien + "')");
-                $('#barcode_btn').attr('onclick', "window.open('<?= base_url('pasien/barcode') ?>/" + rawatjalan.id_pasien + "')");
+                $('#kiup_btn').attr('data-id', rawatjalan.id_pasien);
+                $('#barcode_btn').attr('data-id', rawatjalan.id_pasien);
                 $('#detail_pasien_btn').attr('onclick', "window.location.href = '<?= base_url('pasien/detailpasien') ?>/" + rawatjalan.id_pasien + "'");
                 $('#pendaftar').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${rawatjalan.pendaftar}">`);
                 $('#nomor_registrasi').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${rawatjalan.nomor_registrasi}">`);
@@ -1307,6 +1311,98 @@
                 $this.prop('disabled', false);
             }
         });
+        $(document).on('click', '.print-kiup', function() {
+            const id = $(this).data('id');
+
+            // Tampilkan loading di tombol cetak
+            const $btn = $(this);
+            $btn.prop('disabled', true).html(`<?= $this->include('spinner/spinner'); ?> KIUP`);
+
+            // Muat PDF ke iframe
+            var iframe = $('#print_frame_1');
+            iframe.attr('src', `<?= base_url('pasien/kiup') ?>/${id}`);
+
+            // Saat iframe selesai memuat, jalankan print
+            iframe.off('load').on('load', function() {
+                try {
+                    this.contentWindow.focus();
+                    this.contentWindow.print();
+                } catch (e) {
+                    showFailedToast("Peramban memblokir pencetakan otomatis. Harap izinkan pop-up atau pastikan file berasal dari domain yang sama.");
+                } finally {
+                    $btn.prop('disabled', false).html(`<i class="fa-solid fa-print"></i> KIUP`);
+                }
+            });
+        });
+        $(document).on('click', '.print-barcode', function() {
+            const id = $(this).data('id');
+
+            // Tampilkan loading di tombol cetak
+            const $btn = $(this);
+            $btn.prop('disabled', true).html(`<?= $this->include('spinner/spinner'); ?> <em>Barcode</em>`);
+
+            // Muat PDF ke iframe
+            var iframe = $('#print_frame_2');
+            iframe.attr('src', `<?= base_url('pasien/barcode') ?>/${id}`);
+
+            // Saat iframe selesai memuat, jalankan print
+            iframe.off('load').on('load', function() {
+                try {
+                    this.contentWindow.focus();
+                    this.contentWindow.print();
+                } catch (e) {
+                    showFailedToast("Peramban memblokir pencetakan otomatis. Harap izinkan pop-up atau pastikan file berasal dari domain yang sama.");
+                } finally {
+                    $btn.prop('disabled', false).html(`<i class="fa-solid fa-barcode"></i> <em>Barcode</em>`);
+                }
+            });
+        });
+        $(document).on('click', '.print-struk', function() {
+            const id = $(this).data('id');
+
+            // Tampilkan loading di tombol cetak
+            const $btn = $(this);
+            $btn.prop('disabled', true).html(`<?= $this->include('spinner/spinner'); ?> Struk`);
+
+            // Muat PDF ke iframe
+            var iframe = $('#print_frame_2');
+            iframe.attr('src', `<?= base_url('rawatjalan/struk') ?>/${id}`);
+
+            // Saat iframe selesai memuat, jalankan print
+            iframe.off('load').on('load', function() {
+                try {
+                    this.contentWindow.focus();
+                    this.contentWindow.print();
+                } catch (e) {
+                    showFailedToast("Peramban memblokir pencetakan otomatis. Harap izinkan pop-up atau pastikan file berasal dari domain yang sama.");
+                } finally {
+                    $btn.prop('disabled', false).html(`<i class="fa-solid fa-receipt"></i> Struk`);
+                }
+            });
+        });
+        $(document).on('click', '.print-lio', function() {
+            const id = $(this).data('id');
+
+            // Tampilkan loading di tombol cetak
+            const $btn = $(this);
+            $btn.prop('disabled', true).html(`<?= $this->include('spinner/spinner'); ?> Lembar Isian Operasi`);
+
+            // Muat PDF ke iframe
+            var iframe = $('#print_frame_2');
+            iframe.attr('src', `<?= base_url('rawatjalan/lembarisianoperasi') ?>/${id}`);
+
+            // Saat iframe selesai memuat, jalankan print
+            iframe.off('load').on('load', function() {
+                try {
+                    this.contentWindow.focus();
+                    this.contentWindow.print();
+                } catch (e) {
+                    showFailedToast("Peramban memblokir pencetakan otomatis. Harap izinkan pop-up atau pastikan file berasal dari domain yang sama.");
+                } finally {
+                    $btn.prop('disabled', false).html(`<i class="fa-solid fa-receipt"></i> Lembar Isian Operasi`);
+                }
+            });
+        });
         $('#rajalModal').on('hidden.bs.modal', function() {
             $('#nama_pasien').html('');
             $('#no_rekam_medis').html('');
@@ -1315,8 +1411,8 @@
             $('#usia').html('');
             $('#alamat').html('');
             $('#telpon').html('');
-            $('#kiup_btn').attr('onclick', ``);
-            $('#barcode_btn').attr('onclick', ``);
+            $('#kiup_btn').attr('data-id', ``);
+            $('#barcode_btn').attr('data-id', ``);
             $('#detail_pasien_btn').attr('onclick', ``);
             $('#pendaftar').html('');
             $('#nomor_registrasi').html('');

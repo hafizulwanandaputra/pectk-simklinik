@@ -318,11 +318,13 @@
                     <div>
                         <hr>
                         <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-3">
-                            <button class="btn btn-body  bg-gradient" type="button" onclick="window.open(`<?= base_url('/pasien/kiup/' . $pasien['id_pasien']) ?>`)"><i class="fa-solid fa-print"></i> Cetak KIUP</button>
-                            <button class="btn btn-body  bg-gradient" type="button" onclick="window.open(`<?= base_url('/pasien/barcode/' . $pasien['id_pasien']) ?>`)"><i class="fa-solid fa-barcode"></i> Cetak <em>Barcode</em></button>
+                            <button class="btn btn-body bg-gradient" type="button" data-id="<?= $pasien['id_pasien'] ?>" id="printBtn1"><i class="fa-solid fa-print"></i> Cetak KIUP</button>
+                            <button class="btn btn-body bg-gradient" type="button" data-id="<?= $pasien['id_pasien'] ?>" id="printBtn2"><i class="fa-solid fa-barcode"></i> Cetak <em>Barcode</em></button>
                             <button class="btn btn-primary  bg-gradient" type="submit" id="submitBtn"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
                         </div>
                     </div>
+                    <iframe id="print_frame_1" style="display: none;"></iframe>
+                    <iframe id="print_frame_2" style="display: none;"></iframe>
                     <?= form_close(); ?>
                 </div>
                 <div class="tab-pane" id="rawatjalan-container" role="tabpanel" aria-labelledby="rawatjalan-container-tab" tabindex="0">
@@ -433,6 +435,8 @@
                     <nav id="paginationNav" class="d-flex justify-content-center justify-content-lg-end mt-3 overflow-auto w-100">
                         <ul class="pagination pagination-sm"></ul>
                     </nav>
+                    <iframe id="print_frame_3" style="display: none;"></iframe>
+                    <iframe id="print_frame_4" style="display: none;"></iframe>
                 </div>
             </div>
         </div>
@@ -888,6 +892,54 @@
         placeholder: $(this).data('placeholder'),
     });
 
+    $('#printBtn1').on('click', function() {
+        const id = $(this).data('id');
+
+        // Tampilkan loading di tombol cetak
+        const $btn = $(this);
+        $btn.prop('disabled', true).html(`<?= $this->include('spinner/spinner'); ?> Cetak KIUP`);
+
+        // Muat PDF ke iframe
+        var iframe = $('#print_frame_1');
+        iframe.attr('src', `<?= base_url("pasien/kiup") ?>/${id}`);
+
+        // Saat iframe selesai memuat, jalankan print
+        iframe.off('load').on('load', function() {
+            try {
+                this.contentWindow.focus();
+                this.contentWindow.print();
+            } catch (e) {
+                showFailedToast("Peramban memblokir pencetakan otomatis. Harap izinkan pop-up atau pastikan file berasal dari domain yang sama.");
+            } finally {
+                $btn.prop('disabled', false).html(`<i class="fa-solid fa-print"></i> Cetak KIUP`);
+            }
+        });
+    });
+
+    $('#printBtn2').on('click', function() {
+        const id = $(this).data('id');
+
+        // Tampilkan loading di tombol cetak
+        const $btn = $(this);
+        $btn.prop('disabled', true).html(`<?= $this->include('spinner/spinner'); ?> Cetak <em>Barcode</em>`);
+
+        // Muat PDF ke iframe
+        var iframe = $('#print_frame_2');
+        iframe.attr('src', `<?= base_url("pasien/barcode") ?>/${id}`);
+
+        // Saat iframe selesai memuat, jalankan print
+        iframe.off('load').on('load', function() {
+            try {
+                this.contentWindow.focus();
+                this.contentWindow.print();
+            } catch (e) {
+                showFailedToast("Peramban memblokir pencetakan otomatis. Harap izinkan pop-up atau pastikan file berasal dari domain yang sama.");
+            } finally {
+                $btn.prop('disabled', false).html(`<i class="fa-solid fa-print"></i> Cetak <em>Barcode</em>`);
+            }
+        });
+    });
+
     $('#pasien-container-tab').on('click', function() {
         $('#tanggal_form').hide();
     });
@@ -1288,7 +1340,7 @@
                     let tombol_isian_ok = rajal.ruangan;
                     if (tombol_isian_ok === 'Kamar Operasi') {
                         tombol_isian_ok = `
-                        <button type="button" class="btn btn-body btn-sm bg-gradient " onclick="window.open('<?= base_url('rawatjalan/lembarisianoperasi') ?>/${rajal.id_rawat_jalan}');">
+                        <button type="button" class="btn btn-body btn-sm bg-gradient print-lio-btn" data-id="${rajal.id_rawat_jalan}">
                             <i class="fa-solid fa-receipt"></i> Cetak Lembar Isian Operasi
                         </button>
                         <button type="button" class="btn btn-body btn-sm bg-gradient edit-isian-ok-btn" data-id="${rajal.id_rawat_jalan}" ${transaksi} ${tblbatal}>
@@ -1395,7 +1447,7 @@
                 </div>
                 <hr>
                 <div class="d-flex flex-wrap justify-content-end gap-2 mt-2">
-                    <button type="button" class="btn btn-body btn-sm bg-gradient " onclick="window.open('<?= base_url('rawatjalan/struk') ?>/${rajal.id_rawat_jalan}');">
+                    <button type="button" class="btn btn-body btn-sm bg-gradient print-struk-btn" data-id="${rajal.id_rawat_jalan}">
                         <i class="fa-solid fa-receipt"></i> Struk
                     </button>
                     ${tombol_isian_ok}
@@ -1484,6 +1536,54 @@
             $('#loadingSpinner').hide();
         }
     }
+
+    $(document).on('click', '.print-struk-btn', function() {
+        const id = $(this).data('id');
+
+        // Tampilkan loading di tombol cetak
+        const $btn = $(this);
+        $btn.prop('disabled', true).html(`<?= $this->include('spinner/spinner'); ?> Struk`);
+
+        // Muat PDF ke iframe
+        var iframe = $('#print_frame_3');
+        iframe.attr('src', `<?= base_url("rawatjalan/struk") ?>/${id}`);
+
+        // Saat iframe selesai memuat, jalankan print
+        iframe.off('load').on('load', function() {
+            try {
+                this.contentWindow.focus();
+                this.contentWindow.print();
+            } catch (e) {
+                showFailedToast("Peramban memblokir pencetakan otomatis. Harap izinkan pop-up atau pastikan file berasal dari domain yang sama.");
+            } finally {
+                $btn.prop('disabled', false).html(`<i class="fa-solid fa-receipt"></i> Struk`);
+            }
+        });
+    });
+
+    $(document).on('click', '.print-lio-btn', function() {
+        const id = $(this).data('id');
+
+        // Tampilkan loading di tombol cetak
+        const $btn = $(this);
+        $btn.prop('disabled', true).html(`<?= $this->include('spinner/spinner'); ?> Cetak Lembar Isian Operasi`);
+
+        // Muat PDF ke iframe
+        var iframe = $('#print_frame_4');
+        iframe.attr('src', `<?= base_url('rawatjalan/lembarisianoperasi') ?>/${id}`);
+
+        // Saat iframe selesai memuat, jalankan print
+        iframe.off('load').on('load', function() {
+            try {
+                this.contentWindow.focus();
+                this.contentWindow.print();
+            } catch (e) {
+                showFailedToast("Peramban memblokir pencetakan otomatis. Harap izinkan pop-up atau pastikan file berasal dari domain yang sama.");
+            } finally {
+                $btn.prop('disabled', false).html(`<i class="fa-solid fa-receipt"></i> Cetak Lembar Isian Operasi`);
+            }
+        });
+    });
 
     $(document).on('click', '#paginationNav a', function(event) {
         event.preventDefault(); // Prevents default behavior (scrolling)

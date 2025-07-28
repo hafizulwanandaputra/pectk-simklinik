@@ -183,11 +183,14 @@
         <div class="mb-3">
             <hr>
             <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-2">
-                <button class="btn btn-body  bg-gradient" type="button" id="printBtn1" onclick="window.open(`<?= base_url('/resep/etiket-dalam/' . $resep['id_resep']) ?>`)" disabled><i class="fa-solid fa-print"></i> Cetak E-Tiket Obat Dalam</button>
-                <button class="btn btn-body  bg-gradient" type="button" id="printBtn2" onclick="window.open(`<?= base_url('/resep/etiket-luar/' . $resep['id_resep']) ?>`)" disabled><i class="fa-solid fa-print"></i> Cetak E-Tiket Obat Luar</button>
-                <button class="btn btn-body  bg-gradient" type="button" id="printBtn3" onclick="window.open(`<?= base_url('/resep/print/' . $resep['id_resep']) ?>`)" disabled><i class="fa-solid fa-print"></i> Cetak Resep</button>
+                <button class="btn btn-body  bg-gradient" type="button" id="printBtn1" data-id="<?= $resep['id_resep'] ?>" disabled><i class="fa-solid fa-print"></i> Cetak E-Tiket Obat Dalam</button>
+                <button class="btn btn-body  bg-gradient" type="button" id="printBtn2" data-id="<?= $resep['id_resep'] ?>" disabled><i class="fa-solid fa-print"></i> Cetak E-Tiket Obat Luar</button>
+                <button class="btn btn-body  bg-gradient" type="button" id="printBtn3" data-id="<?= $resep['id_resep'] ?>" disabled><i class="fa-solid fa-print"></i> Cetak Resep</button>
             </div>
         </div>
+        <iframe id="print_frame_1" style="display: none;"></iframe>
+        <iframe id="print_frame_2" style="display: none;"></iframe>
+        <iframe id="print_frame_3" style="display: none;"></iframe>
     </div>
 </main>
 <?= $this->endSection(); ?>
@@ -333,6 +336,78 @@
         };
 
         $('[data-bs-toggle="tooltip"]').tooltip();
+
+        $('#printBtn1').on('click', function() {
+            const id = $(this).data('id');
+
+            // Tampilkan loading di tombol cetak
+            const $btn = $(this);
+            $btn.prop('disabled', true).html(`<?= $this->include('spinner/spinner'); ?> Cetak E-Tiket Obat Dalam`);
+
+            // Muat PDF ke iframe
+            var iframe = $('#print_frame_1');
+            iframe.attr('src', `<?= base_url("resep/etiket-dalam") ?>/${id}`);
+
+            // Saat iframe selesai memuat, jalankan print
+            iframe.off('load').on('load', function() {
+                try {
+                    this.contentWindow.focus();
+                    this.contentWindow.print();
+                } catch (e) {
+                    showFailedToast("Peramban memblokir pencetakan otomatis. Harap izinkan pop-up atau pastikan file berasal dari domain yang sama.");
+                } finally {
+                    $btn.prop('disabled', false).html(`<i class="fa-solid fa-print"></i> Cetak E-Tiket Obat Dalam`);
+                }
+            });
+        });
+
+        $('#printBtn2').on('click', function() {
+            const id = $(this).data('id');
+
+            // Tampilkan loading di tombol cetak
+            const $btn = $(this);
+            $btn.prop('disabled', true).html(`<?= $this->include('spinner/spinner'); ?> Cetak E-Tiket Obat Luar`);
+
+            // Muat PDF ke iframe
+            var iframe = $('#print_frame_1');
+            iframe.attr('src', `<?= base_url("resep/etiket-luar") ?>/${id}`);
+
+            // Saat iframe selesai memuat, jalankan print
+            iframe.off('load').on('load', function() {
+                try {
+                    this.contentWindow.focus();
+                    this.contentWindow.print();
+                } catch (e) {
+                    showFailedToast("Peramban memblokir pencetakan otomatis. Harap izinkan pop-up atau pastikan file berasal dari domain yang sama.");
+                } finally {
+                    $btn.prop('disabled', false).html(`<i class="fa-solid fa-print"></i> Cetak E-Tiket Obat Luar`);
+                }
+            });
+        });
+
+        $('#printBtn3').on('click', function() {
+            const id = $(this).data('id');
+
+            // Tampilkan loading di tombol cetak
+            const $btn = $(this);
+            $btn.prop('disabled', true).html(`<?= $this->include('spinner/spinner'); ?> Cetak Resep`);
+
+            // Muat PDF ke iframe
+            var iframe = $('#print_frame_1');
+            iframe.attr('src', `<?= base_url("resep/print") ?>/${id}`);
+
+            // Saat iframe selesai memuat, jalankan print
+            iframe.off('load').on('load', function() {
+                try {
+                    this.contentWindow.focus();
+                    this.contentWindow.print();
+                } catch (e) {
+                    showFailedToast("Peramban memblokir pencetakan otomatis. Harap izinkan pop-up atau pastikan file berasal dari domain yang sama.");
+                } finally {
+                    $btn.prop('disabled', false).html(`<i class="fa-solid fa-print"></i> Cetak Resep`);
+                }
+            });
+        });
 
         $(document).on('visibilitychange', function() {
             if (document.visibilityState === "visible") {
