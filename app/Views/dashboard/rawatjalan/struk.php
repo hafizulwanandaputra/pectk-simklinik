@@ -18,7 +18,7 @@ $usia = $sekarang->diff($tanggal_lahir);
     <style>
         @media print {
             @page {
-                size: 80mm 100mm;
+                size: 80mm 297mm;
                 margin-top: 0.1cm;
                 margin-bottom: 0.1cm;
                 margin-left: 0.82cm;
