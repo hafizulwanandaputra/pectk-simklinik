@@ -338,8 +338,8 @@ class Pasien extends BaseController
                     'title' => 'KIUP ' . $pasien['nama_pasien'] . ' (' . $pasien['no_rm'] . ') - ' . $this->systemName,
                     'agent' => $this->request->getUserAgent()
                 ];
-                // return view('dashboard/pasien/kiup', $data);
-                // die;
+                return view('dashboard/pasien/kiup', $data);
+                die;
                 // Simpan HTML ke file sementara
                 $htmlFile = WRITEPATH . 'temp/output-kiup.html';
                 file_put_contents($htmlFile, view('dashboard/pasien/kiup', $data));
@@ -400,8 +400,8 @@ class Pasien extends BaseController
                     'title' => 'Barcode ' . $pasien['nama_pasien'] . ' (' . $pasien['no_rm'] . ') - ' . $this->systemName,
                     'agent' => $this->request->getUserAgent()
                 ];
-                // return view('dashboard/pasien/barcode', $data);
-                // die;
+                return view('dashboard/pasien/barcode', $data);
+                die;
                 // Simpan HTML ke file sementara
                 $htmlFile = WRITEPATH . 'temp/output-barcode.html';
                 file_put_contents($htmlFile, view('dashboard/pasien/barcode', $data));

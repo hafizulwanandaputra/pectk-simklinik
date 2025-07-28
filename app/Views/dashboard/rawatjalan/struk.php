@@ -16,6 +16,16 @@ $usia = $sekarang->diff($tanggal_lahir);
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= $title; ?></title>
     <style>
+        @media print {
+            @page {
+                size: 80mm 100mm;
+                margin-top: 0.1cm;
+                margin-bottom: 0.1cm;
+                margin-left: 0.82cm;
+                margin-right: 0.82cm;
+            }
+        }
+
         body {
             font-family: Helvetica, Arial, sans-serif;
             font-size: 7.8pt;

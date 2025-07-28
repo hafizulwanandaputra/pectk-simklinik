@@ -532,8 +532,8 @@ class RawatJalan extends BaseController
                     'title' => 'Lembar Isian Operasi ' . $rajal['nomor_registrasi'] . ' - ' . $this->systemName,
                     'agent' => $this->request->getUserAgent()
                 ];
-                // return view('dashboard/rawatjalan/lembarisianoperasi', $data);
-                // die;
+                return view('dashboard/rawatjalan/lembarisianoperasi', $data);
+                die;
                 // Simpan HTML ke file sementara
                 $htmlFile = WRITEPATH . 'temp/output-lembarisianoperasi.html';
                 file_put_contents($htmlFile, view('dashboard/rawatjalan/lembarisianoperasi', $data));
@@ -592,8 +592,8 @@ class RawatJalan extends BaseController
                     'title' => 'Struk ' . $rajal['nomor_registrasi'] . ' - ' . $this->systemName,
                     'agent' => $this->request->getUserAgent()
                 ];
-                // return view('dashboard/rawatjalan/struk', $data);
-                // die;
+                return view('dashboard/rawatjalan/struk', $data);
+                die;
                 // Simpan HTML ke file sementara
                 $htmlFile = WRITEPATH . 'temp/output-struk.html';
                 file_put_contents($htmlFile, view('dashboard/rawatjalan/struk', $data));

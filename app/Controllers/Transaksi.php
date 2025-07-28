@@ -1566,6 +1566,8 @@ class Transaksi extends BaseController
                     'title' => 'Detail Transaksi ' . $id . ' - ' . $this->systemName // Judul halaman
                 ];
 
+                return view('dashboard/transaksi/struk', $data);
+                die;
                 // Simpan HTML ke file sementara
                 $htmlFile = WRITEPATH . 'temp/output-transaksi.html';
                 file_put_contents($htmlFile, view('dashboard/transaksi/struk', $data));
