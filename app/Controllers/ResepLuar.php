@@ -1007,8 +1007,8 @@ class ResepLuar extends BaseController
                     'detail_resep' => $detail_resep,
                     'title' => 'E-Tiket Resep ' . $id . ' - ' . $this->systemName
                 ];
-                return view('dashboard/resepluar/etiket', $data);
-                die;
+                // return view('dashboard/resepluar/etiket', $data);
+                // die;
                 // Simpan HTML ke file sementara
                 $htmlFile = WRITEPATH . 'temp/output-resepluar-dalam.html';
                 file_put_contents($htmlFile, view('dashboard/resepluar/etiket', $data));
@@ -1085,8 +1085,8 @@ class ResepLuar extends BaseController
                     'detail_resep' => $detail_resep,
                     'title' => 'E-Tiket Resep ' . $id . ' - ' . $this->systemName
                 ];
-                return view('dashboard/resepluar/etiket', $data);
-                die;
+                // return view('dashboard/resepluar/etiket', $data);
+                // die;
                 // Simpan HTML ke file sementara
                 $htmlFile = WRITEPATH . 'temp/output-resepluar-luar.html';
                 file_put_contents($htmlFile, view('dashboard/resepluar/etiket', $data));

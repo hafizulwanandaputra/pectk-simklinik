@@ -13,16 +13,6 @@ $tanggal_lahir = Time::parse($resep['tanggal_lahir']);
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= $title; ?></title>
     <style>
-        @media print {
-            @page {
-                size: 5.5cm 3.75cm;
-                margin-top: 0.15cm;
-                margin-bottom: 0.5cm;
-                margin-left: 0.65cm;
-                margin-right: 0.65cm;
-            }
-        }
-
         body {
             font-family: Helvetica, Arial, sans-serif;
             font-size: 5pt;

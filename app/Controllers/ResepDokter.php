@@ -1077,8 +1077,8 @@ class ResepDokter extends BaseController
                     'detail_resep' => $detail_resep,
                     'title' => 'E-Tiket Resep ' . $id . ' - ' . $this->systemName
                 ];
-                return view('dashboard/resep/etiket', $data);
-                die;
+                // return view('dashboard/resep/etiket', $data);
+                // die;
                 // Simpan HTML ke file sementara
                 $htmlFile = WRITEPATH . 'temp/output-obat-dalam.html';
                 file_put_contents($htmlFile, view('dashboard/resep/etiket', $data));
@@ -1152,8 +1152,8 @@ class ResepDokter extends BaseController
                     'detail_resep' => $detail_resep,
                     'title' => 'E-Tiket Resep ' . $id . ' - ' . $this->systemName
                 ];
-                return view('dashboard/resep/etiket', $data);
-                die;
+                // return view('dashboard/resep/etiket', $data);
+                // die;
                 // Simpan HTML ke file sementara
                 $htmlFile = WRITEPATH . 'temp/output-obat-luar.html';
                 file_put_contents($htmlFile, view('dashboard/resep/etiket', $data));
@@ -1226,8 +1226,8 @@ class ResepDokter extends BaseController
                     'headertitle' => 'Struk Resep Dokter',
                     'agent' => $this->request->getUserAgent() // Menyimpan informasi tentang user agent
                 ];
-                // return view('dashboard/resep/struk', $data);
-                // die;
+                return view('dashboard/resep/struk', $data);
+                die;
                 // Simpan HTML ke file sementara
                 $htmlFile = WRITEPATH . 'temp/output-obat-struk.html';
                 file_put_contents($htmlFile, view('dashboard/resep/struk', $data));
