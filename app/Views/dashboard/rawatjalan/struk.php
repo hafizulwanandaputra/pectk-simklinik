@@ -27,7 +27,10 @@ $usia = $sekarang->diff($tanggal_lahir);
 
             body {
                 margin: 0;
-                padding: 0;
+                padding-top: 0;
+                padding-bottom: 0;
+                padding-left: 2px;
+                padding-right: 2px;
             }
         }
 
