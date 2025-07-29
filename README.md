@@ -20,11 +20,11 @@
 7. Untuk menjalankan websocket, ikuti instruksi pada bagian websocket.
 8. Masuk menggunakan nama pengguna `admin` dan kata sandi `12345`. Anda perlu mengubah kata sandi dari `{base_url_anda}/settings/changepassword` dan kami sarankan untuk menggunakan kata sandi yang kuat demi keamanan yang lebih baik.
 
-### Websocket
+### Websocket dan Puppeteer Cluster
 
-Konfigurasi URL websocket terletak pada `.env` dengan nilai `WS-URL-JS` untuk _frontend_ (contoh: `ws://localhost:8090`) dan `WS-URL-PHP` untuk _backend_ (contoh: `http://localhost:3000/notify`).
+Konfigurasi URL websocket dan Puppeteer Cluster terletak pada `.env` dengan nilai `WS-URL-JS` untuk _frontend_ (contoh: `ws://localhost:8090`), `WS-URL-PHP` untuk _backend_ (contoh: `http://localhost:3000/notify`), dan `PDF-URL` untuk Puppeteer Cluster (contoh: `http://localhost:3001/generate-pdf`).
 
-Jika Anda menjalankannya di peladen pribadi virtual (VPS) dengan SSL, gunakan `wss://alamatdomain.com/ws/` pada `WS-URL-JS` dan `https://alamatdomain.com/notify/` pada `WS-URL-PHP`. Pastikan Anda membuat hos virtual atau peladen proksi sesuai dengan peladen web yang Anda gunakan.
+Jika Anda menjalankannya di peladen pribadi virtual (VPS) dengan SSL, gunakan `wss://alamatdomain.com/ws/` pada `WS-URL-JS`, `https://alamatdomain.com/notify/` pada `WS-URL-PHP`, dan `https://alamatdomain.com/generate-pdf/` pada `PDF-URL`. Pastikan Anda membuat hos virtual atau peladen proksi sesuai dengan peladen web yang Anda gunakan.
 
 Contoh untuk nginx:
 
@@ -42,6 +42,15 @@ location /ws/ {
    proxy_read_timeout 3600;
 }
 
+location /generate-pdf/ {
+   proxy_pass http://127.0.0.1:3001/generate-pdf;
+   proxy_http_version 1.1;
+   proxy_set_header Connection "";
+   proxy_set_header Host $host;
+   proxy_set_header X-Real-IP $remote_addr;
+   proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+}
+
 location /notify/ {
    proxy_pass http://127.0.0.1:3000/notify;
    proxy_http_version 1.1;
@@ -52,28 +61,30 @@ location /notify/ {
 }
 ```
 
-Agar websocket berjalan dengan baik (Linux):
+Agar websocket dan Puppeteer Cluster berjalan dengan baik (Linux sebagai root):
 
-1. Izinkan port agar bisa menggunakan websocket dengan perintah sebagai berikut:
+1. Izinkan port agar bisa menggunakan websocket dan Puppeteer Cluster dengan perintah sebagai berikut:
    ```
-   sudo ufw allow 8090/tcp
-   sudo ufw allow 3000/tcp
+   ufw allow 8090/tcp
+   ufw allow 3000/tcp
+   ufw allow 3001/tcp
    ```
-2. Instal `pm2` dengan perintah sebagai berikut (gunakan `sudo` atau masuk sebagai root):
+2. Instal `pm2` dengan perintah sebagai berikut:
    ```
    npm insall -g pm2
    ```
-3. Lalu, jalankan websocket dan aktifkan pemulaian otomatis saat memulai ulang peladan dengan perintah sebagai berikut:
+3. Lalu, jalankan websocket dan Puppeteer Cluster dan aktifkan pemulaian otomatis saat memulai ulang peladan dengan perintah sebagai berikut:
    ```
-   pm2 start /path/to/websocket.js --name websocket
+   pm2 start /path/to/websocket.js --name ws-pectk-simklinik
+   pm2 start /path/to/puppeteer-pdf.js --name pdf-pectk-simklinik
    pm2 save
    pm2 startup
    ```
    Setelah menjalankan `pm2 startup`, ikuti instruksi yang ada pada keluaran.
 
-### Puppeteer untuk ekspor PDF
+### Puppeteer Cluster untuk ekspor PDF
 
-Ekspor dokumen-dokumen PDF pada sistem ini menggunakan [Puppeteer](https://github.com/puppeteer/puppeteer) yang merupakan pustaka JavaScript untuk Node.js. Pastikan peladen Anda sudah memiliki Node.js. Jika ada masalah terkait dengan Puppeteer, [silakan kunjungi halaman ini](https://pptr.dev/troubleshooting).
+Ekspor dokumen-dokumen PDF pada sistem ini menggunakan [Puppeteer Cluster](https://github.com/thomasdondorf/puppeteer-cluster) yang merupakan pustaka JavaScript untuk Node.js yang dapat dijalan secara konkruen. Pastikan peladen Anda sudah memiliki Node.js dan peramban web Chromium atau Google Chrome.
 
 ## Pengaturan Aplikasi Web Progresif (PWA)
 
@@ -185,11 +196,11 @@ Kode sumber aplikasi ini dilisensikan di bawah Lisensi MIT
 7. To run a websocket, follow the instructions in the websocket section.
 8. Sign in using username `admin` and password `12345`. You need to change the password from `{your_base_url}/settings/changepassword` and we recommend using a strong password for better security.
 
-### Websocket
+### Websocket and Puppeteer Cluster
 
-The websocket URL configuration is located in `.env` with the values ​​`WS-URL-JS` for the frontend (example: `ws://localhost:8090`) and `WS-URL-PHP` for the backend (example: `http://localhost:3000/notify`).
+The websocket and Puppeteer Cluster URL configuration is located in `.env` with the values ​​`WS-URL-JS` for the frontend (example: `ws://localhost:8090`), `WS-URL-PHP` for the backend (example: `http://localhost:3000/notify`), and `PDF-URL` for Puppeteer Cluster (example: `http://localhost:3001/generate-pdf`).
 
-If you are running on a virtual private server (VPS) with SSL, use `wss://domainaddress.com/ws/` for `WS-URL-JS` and `https://domainaddress.com/notify/` for `WS-URL-PHP`. Make sure you create a virtual host or proxy server that matches the web server you are using.
+If you are running on a virtual private server (VPS) with SSL, use `wss://domainaddress.com/ws/` on `WS-URL-JS`, `https://domainaddress.com/notify/` on `WS-URL-PHP`, and `https://domainaddress.com/generate-pdf/` on `PDF-URL`. Make sure you create a virtual host or proxy server that matches the web server you are using.
 
 Example for nginx:
 
@@ -207,6 +218,15 @@ location /ws/ {
    proxy_read_timeout 3600;
 }
 
+location /generate-pdf/ {
+   proxy_pass http://127.0.0.1:3001/generate-pdf;
+   proxy_http_version 1.1;
+   proxy_set_header Connection "";
+   proxy_set_header Host $host;
+   proxy_set_header X-Real-IP $remote_addr;
+   proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+}
+
 location /notify/ {
    proxy_pass http://127.0.0.1:3000/notify;
    proxy_http_version 1.1;
@@ -217,28 +237,30 @@ location /notify/ {
 }
 ```
 
-To make websocket work properly (Linux):
+To make websocket and Puppeteer Cluster work properly (Linux as root):
 
-1. Allow the port to use websocket with the following command:
+1. Allow the port to use websocket and Puppeteer Cluster with the following command:
    ```
-   sudo ufw allow 8090/tcp
-   sudo ufw allow 3000/tcp
+   ufw allow 8090/tcp
+   ufw allow 3000/tcp
+   ufw allow 3001/tcp
    ```
-2. Install `pm2` with the following command (use `sudo` or log in as root):
+2. Install `pm2` with the following command:
    ```
    npm insall -g pm2
    ```
-3. Then, run websocket and enable automatic startup when restarting the server with the following command:
+3. Then, run websocket and Puppeteer Cluster and enable automatic startup when restarting the server with the following command:
    ```
-   pm2 start /path/to/websocket.js --name websocket
+   pm2 start /path/to/websocket.js --name ws-pectk-simklinik
+   pm2 start /path/to/puppeteer-pdf.js --name pdf-pectk-simklinik
    pm2 save
    pm2 startup
    ```
    After running `pm2 startup`, follow the instructions in the output.
 
-### Puppeteer for PDF export
+### Puppeteer Cluster for PDF export
 
-Export PDF documents on this system using [Puppeteer](https://github.com/puppeteer/puppeteer) which is a JavaScript library for Node.js. Make sure your server has Node.js. If you have any issues with Puppeteer, [please visit this page](https://pptr.dev/troubleshooting).
+Export PDF documents on this system using [Puppeteer Cluster](https://github.com/thomasdondorf/puppeteer-cluster) which is a JavaScript library for Node.js that can be run concurrently. Make sure your server has Node.js and Chromium or Google Chrome web browser.
 
 ## Progressive Web App (PWA) Setup
 
