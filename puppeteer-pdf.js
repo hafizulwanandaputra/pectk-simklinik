@@ -58,7 +58,7 @@ console.log("📦 Menggunakan browser:", chromePath);
 
   const cluster = await Cluster.launch({
     concurrency: Cluster.CONCURRENCY_CONTEXT,
-    maxConcurrency: 4,
+    maxConcurrency: 8,
     puppeteerOptions: {
       headless: "new",
       executablePath: chromePath,
