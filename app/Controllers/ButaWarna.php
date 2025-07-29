@@ -232,35 +232,54 @@ class ButaWarna extends BaseController
                 ];
                 // return view('dashboard/butawarna/form', $data);
                 // die;
-                // Simpan HTML ke file sementara
-                $htmlFile = WRITEPATH . 'temp/output-butawarna.html';
-                file_put_contents($htmlFile, view('dashboard/butawarna/form', $data));
+                $client = \Config\Services::curlrequest();
+                $html = view('dashboard/butawarna/form', $data);
+                $filename = 'output-butawarna.pdf';
 
-                // Tentukan path output PDF
-                $pdfFile = WRITEPATH . 'temp/output-butawarna.pdf';
+                try {
+                    $response = $client->post(env('PDF-URL'), [
+                        'headers' => ['Content-Type' => 'application/json'],
+                        'json' => [
+                            'html' => $html,
+                            'filename' => $filename,
+                            'paper' => [
+                                'format' => 'A4',
+                                'margin' => [
+                                    'top' => '1cm',
+                                    'right' => '1cm',
+                                    'bottom' => '1cm',
+                                    'left' => '1cm'
+                                ]
+                            ]
+                        ]
+                    ]);
 
-                // Jalankan Puppeteer untuk konversi HTML ke PDF
-                // Keterangan: "node " . ROOTPATH . "puppeteer-pdf.js $htmlFile $pdfFile panjang lebar marginAtas margin Kanan marginBawah marginKiri"
-                // Silakan lihat puppeteer-pdf.js di root projectt untuk keterangan lebih lanjut.
-                $command = env('CMD-ENV') . "node " . ROOTPATH . "puppeteer-pdf.js $htmlFile $pdfFile 210mm 297mm 1cm 1cm 1cm 1cm 2>&1";
-                $output = shell_exec($command);
+                    $result = json_decode($response->getBody(), true);
 
-                // Hapus file HTML setelah eksekusi
-                @unlink($htmlFile);
+                    if (isset($result['success']) && $result['success']) {
+                        $path = WRITEPATH . 'temp/' . $result['file'];
 
-                // Jika tidak ada output, langsung stream PDF
-                if (!$output) {
+                        if (!is_file($path)) {
+                            return $this->response
+                                ->setStatusCode(500)
+                                ->setBody("PDF berhasil dibuat tapi file tidak ditemukan: $path");
+                        }
+
+                        return $this->response
+                            ->setHeader('Content-Type', 'application/pdf')
+                            ->setHeader('Content-Disposition', 'inline; filename="' . $filename . '"')
+                            ->setBody(file_get_contents($path));
+                    } else {
+                        $errorMessage = $result['error'] ?? 'Tidak diketahui';
+                        return $this->response
+                            ->setStatusCode(500)
+                            ->setBody("Gagal membuat PDF: " . esc($errorMessage));
+                    }
+                } catch (\Exception $e) {
                     return $this->response
-                        ->setHeader('Content-Type', 'application/pdf')
-                        ->setHeader('Content-Disposition', 'inline; filename="ButaWarna_' . $butawarna['nomor_registrasi'] . '_' . str_replace('-', '', $butawarna['no_rm']) . '.pdf')
-                        ->setBody(file_get_contents($pdfFile));
+                        ->setStatusCode(500)
+                        ->setBody("Kesalahan saat request ke PDF worker: " . esc($e->getMessage()));
                 }
-
-                // Jika ada output (kemungkinan error), kembalikan HTTP 500 dengan <pre>
-                return $this->response
-                    ->setStatusCode(500)
-                    ->setHeader('Content-Type', 'text/html')
-                    ->setBody('<pre>' . htmlspecialchars($output) . '</pre>');
             } else {
                 // Menampilkan halaman tidak ditemukan jika pasien tidak ditemukan
                 throw PageNotFoundException::forPageNotFound();

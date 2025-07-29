@@ -6,13 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= $title; ?></title>
     <style>
-        @media print {
-            @page {
-                size: A4;
-                margin: 1cm;
-            }
-        }
-
         body {
             font-family: Helvetica, Arial, sans-serif;
             font-size: 10pt;

@@ -260,33 +260,55 @@ class Istirahat extends BaseController
         // Tentukan tampilan berdasarkan parameter side
         $viewFile = ($side === 'left') ? 'dashboard/istirahat/form-left' : 'dashboard/istirahat/form-right';
 
-        // Simpan HTML ke file sementara
-        $htmlFile = WRITEPATH . 'temp/output-istirahat.html';
-        file_put_contents($htmlFile, view($viewFile, $data));
+        $client = \Config\Services::curlrequest();
+        $html = view($viewFile, $data);
+        $filename = 'output-istirahat.pdf';
 
-        // Tentukan path output PDF
-        $pdfFile = WRITEPATH . 'temp/output-istirahat.pdf';
+        try {
+            $response = $client->post(env('PDF-URL'), [
+                'headers' => ['Content-Type' => 'application/json'],
+                'json' => [
+                    'html' => $html,
+                    'filename' => $filename,
+                    'paper' => [
+                        'format' => 'A4',
+                        'landscape' => true,
+                        'margin' => [
+                            'top' => '0cm',
+                            'right' => '0cm',
+                            'bottom' => '0cm',
+                            'left' => '0cm'
+                        ]
+                    ]
+                ]
+            ]);
 
-        // Jalankan Puppeteer untuk konversi HTML ke PDF
-        $command = env('CMD-ENV') . "node " . ROOTPATH . "puppeteer-pdf.js $htmlFile $pdfFile 297mm 210mm 0cm 0cm 0cm 0cm 2>&1";
-        $output = shell_exec($command);
+            $result = json_decode($response->getBody(), true);
 
-        // Hapus file HTML setelah eksekusi
-        @unlink($htmlFile);
+            if (isset($result['success']) && $result['success']) {
+                $path = WRITEPATH . 'temp/' . $result['file'];
 
-        // Jika tidak ada output, langsung stream PDF
-        if (!$output) {
+                if (!is_file($path)) {
+                    return $this->response
+                        ->setStatusCode(500)
+                        ->setBody("PDF berhasil dibuat tapi file tidak ditemukan: $path");
+                }
+
+                return $this->response
+                    ->setHeader('Content-Type', 'application/pdf')
+                    ->setHeader('Content-Disposition', 'inline; filename="' . $filename . '"')
+                    ->setBody(file_get_contents($path));
+            } else {
+                $errorMessage = $result['error'] ?? 'Tidak diketahui';
+                return $this->response
+                    ->setStatusCode(500)
+                    ->setBody("Gagal membuat PDF: " . esc($errorMessage));
+            }
+        } catch (\Exception $e) {
             return $this->response
-                ->setHeader('Content-Type', 'application/pdf')
-                ->setHeader('Content-Disposition', 'inline; filename=\"Istirahat_"' . $istirahat['nomor_registrasi'] . '_' . str_replace('-', '', $istirahat['no_rm']) . '.pdf')
-                ->setBody(file_get_contents($pdfFile));
+                ->setStatusCode(500)
+                ->setBody("Kesalahan saat request ke PDF worker: " . esc($e->getMessage()));
         }
-
-        // Jika ada output (kemungkinan error), kembalikan HTTP 500 dengan <pre>
-        return $this->response
-            ->setStatusCode(500)
-            ->setHeader('Content-Type', 'text/html')
-            ->setBody('<pre>' . htmlspecialchars($output) . '</pre>');
     }
 
     public function delete($id)

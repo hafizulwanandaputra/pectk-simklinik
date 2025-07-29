@@ -338,37 +338,56 @@ class Pasien extends BaseController
                     'title' => 'KIUP ' . $pasien['nama_pasien'] . ' (' . $pasien['no_rm'] . ') - ' . $this->systemName,
                     'agent' => $this->request->getUserAgent()
                 ];
-                return view('dashboard/pasien/kiup', $data);
-                die;
-                // Simpan HTML ke file sementara
-                $htmlFile = WRITEPATH . 'temp/output-kiup.html';
-                file_put_contents($htmlFile, view('dashboard/pasien/kiup', $data));
+                // return view('dashboard/pasien/kiup', $data);
+                // die;
+                $client = \Config\Services::curlrequest();
+                $html = view('dashboard/pasien/kiup', $data);
+                $filename = 'output-kiup.pdf';
 
-                // Tentukan path output PDF
-                $pdfFile = WRITEPATH . 'temp/output-kiup.pdf';
+                try {
+                    $response = $client->post(env('PDF-URL'), [
+                        'headers' => ['Content-Type' => 'application/json'],
+                        'json' => [
+                            'html' => $html,
+                            'filename' => $filename,
+                            'paper' => [
+                                'format' => 'A4',
+                                'margin' => [
+                                    'top' => '1cm',
+                                    'right' => '1cm',
+                                    'bottom' => '1cm',
+                                    'left' => '1cm'
+                                ]
+                            ]
+                        ]
+                    ]);
 
-                // Jalankan Puppeteer untuk konversi HTML ke PDF
-                // Keterangan: "node " . ROOTPATH . "puppeteer-pdf.js $htmlFile $pdfFile panjang lebar marginAtas margin Kanan marginBawah marginKiri"
-                // Silakan lihat puppeteer-pdf.js di root projectt untuk keterangan lebih lanjut.
-                $command = env('CMD-ENV') . "node " . ROOTPATH . "puppeteer-pdf.js $htmlFile $pdfFile 210mm 297mm 1cm 1cm 1cm 1cm 2>&1";
-                $output = shell_exec($command);
+                    $result = json_decode($response->getBody(), true);
 
-                // Hapus file HTML setelah eksekusi
-                @unlink($htmlFile);
+                    if (isset($result['success']) && $result['success']) {
+                        $path = WRITEPATH . 'temp/' . $result['file'];
 
-                // Jika tidak ada output, langsung stream PDF
-                if (!$output) {
+                        if (!is_file($path)) {
+                            return $this->response
+                                ->setStatusCode(500)
+                                ->setBody("PDF berhasil dibuat tapi file tidak ditemukan: $path");
+                        }
+
+                        return $this->response
+                            ->setHeader('Content-Type', 'application/pdf')
+                            ->setHeader('Content-Disposition', 'inline; filename="' . $filename . '"')
+                            ->setBody(file_get_contents($path));
+                    } else {
+                        $errorMessage = $result['error'] ?? 'Tidak diketahui';
+                        return $this->response
+                            ->setStatusCode(500)
+                            ->setBody("Gagal membuat PDF: " . esc($errorMessage));
+                    }
+                } catch (\Exception $e) {
                     return $this->response
-                        ->setHeader('Content-Type', 'application/pdf')
-                        ->setHeader('Content-Disposition', 'inline; filename="' . 'kiup-' . $pasien['no_rm'] . '-' . urlencode($pasien['nama_pasien']) . '.pdf"')
-                        ->setBody(file_get_contents($pdfFile));
+                        ->setStatusCode(500)
+                        ->setBody("Kesalahan saat request ke PDF worker: " . esc($e->getMessage()));
                 }
-
-                // Jika ada output (kemungkinan error), kembalikan HTTP 500 dengan <pre>
-                return $this->response
-                    ->setStatusCode(500)
-                    ->setHeader('Content-Type', 'text/html')
-                    ->setBody('<pre>' . htmlspecialchars($output) . '</pre>');
             } else {
                 // Menampilkan halaman tidak ditemukan jika pasien tidak ditemukan
                 throw PageNotFoundException::forPageNotFound();
@@ -400,37 +419,57 @@ class Pasien extends BaseController
                     'title' => 'Barcode ' . $pasien['nama_pasien'] . ' (' . $pasien['no_rm'] . ') - ' . $this->systemName,
                     'agent' => $this->request->getUserAgent()
                 ];
-                return view('dashboard/pasien/barcode', $data);
-                die;
-                // Simpan HTML ke file sementara
-                $htmlFile = WRITEPATH . 'temp/output-barcode.html';
-                file_put_contents($htmlFile, view('dashboard/pasien/barcode', $data));
+                // return view('dashboard/pasien/barcode', $data);
+                // die;
+                $client = \Config\Services::curlrequest();
+                $html = view('dashboard/pasien/barcode', $data);
+                $filename = 'output-barcode.pdf';
 
-                // Tentukan path output PDF
-                $pdfFile = WRITEPATH . 'temp/output-barcode.pdf';
+                try {
+                    $response = $client->post(env('PDF-URL'), [
+                        'headers' => ['Content-Type' => 'application/json'],
+                        'json' => [
+                            'html' => $html,
+                            'filename' => $filename,
+                            'paper' => [
+                                'width' => '50mm',
+                                'height' => '20.15mm',
+                                'margin' => [
+                                    'top' => '0.025cm',
+                                    'right' => '0.05cm',
+                                    'bottom' => '0.025cm',
+                                    'left' => '0.05cm'
+                                ]
+                            ]
+                        ]
+                    ]);
 
-                // Jalankan Puppeteer untuk konversi HTML ke PDF
-                // Keterangan: "node " . ROOTPATH . "puppeteer-pdf.js $htmlFile $pdfFile panjang lebar marginAtas margin Kanan marginBawah marginKiri"
-                // Silakan lihat puppeteer-pdf.js di root projectt untuk keterangan lebih lanjut.
-                $command = env('CMD-ENV') . "node " . ROOTPATH . "puppeteer-pdf.js $htmlFile $pdfFile 50mm 20.15mm 0.025cm 0.05cm 0.025cm 0.05cm 2>&1";
-                $output = shell_exec($command);
+                    $result = json_decode($response->getBody(), true);
 
-                // Hapus file HTML setelah eksekusi
-                @unlink($htmlFile);
+                    if (isset($result['success']) && $result['success']) {
+                        $path = WRITEPATH . 'temp/' . $result['file'];
 
-                // Jika tidak ada output, langsung stream PDF
-                if (!$output) {
+                        if (!is_file($path)) {
+                            return $this->response
+                                ->setStatusCode(500)
+                                ->setBody("PDF berhasil dibuat tapi file tidak ditemukan: $path");
+                        }
+
+                        return $this->response
+                            ->setHeader('Content-Type', 'application/pdf')
+                            ->setHeader('Content-Disposition', 'inline; filename="' . $filename . '"')
+                            ->setBody(file_get_contents($path));
+                    } else {
+                        $errorMessage = $result['error'] ?? 'Tidak diketahui';
+                        return $this->response
+                            ->setStatusCode(500)
+                            ->setBody("Gagal membuat PDF: " . esc($errorMessage));
+                    }
+                } catch (\Exception $e) {
                     return $this->response
-                        ->setHeader('Content-Type', 'application/pdf')
-                        ->setHeader('Content-Disposition', 'inline; filename="' . 'barcode-' . $pasien['no_rm'] . '-' . urlencode($pasien['nama_pasien']) . '.pdf"')
-                        ->setBody(file_get_contents($pdfFile));
+                        ->setStatusCode(500)
+                        ->setBody("Kesalahan saat request ke PDF worker: " . esc($e->getMessage()));
                 }
-
-                // Jika ada output (kemungkinan error), kembalikan HTTP 500 dengan <pre>
-                return $this->response
-                    ->setStatusCode(500)
-                    ->setHeader('Content-Type', 'text/html')
-                    ->setBody('<pre>' . htmlspecialchars($output) . '</pre>');
             } else {
                 // Menampilkan halaman tidak ditemukan jika pasien tidak ditemukan
                 throw PageNotFoundException::forPageNotFound();
