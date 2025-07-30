@@ -909,7 +909,7 @@
                 this.contentWindow.focus();
                 this.contentWindow.print();
             } catch (e) {
-                showFailedPrintToast(`Pencetakan otomatis tidak dapat dilakukan: <br>${e}`, `<?= base_url("pasien/kiup") ?>/${id}`);
+                showFailedPrintToast(`<p>Pencetakan otomatis tidak dapat dilakukan</p><p class="mb-0">${e}</p>`, `<?= base_url("pasien/kiup") ?>/${id}`);
             } finally {
                 $btn.prop('disabled', false).html(`<i class="fa-solid fa-print"></i> Cetak KIUP`);
             }
@@ -933,7 +933,7 @@
                 this.contentWindow.focus();
                 this.contentWindow.print();
             } catch (e) {
-                showFailedPrintToast(`Pencetakan otomatis tidak dapat dilakukan: <br>${e}`, `<?= base_url("pasien/barcode") ?>/${id}`);
+                showFailedPrintToast(`<p>Pencetakan otomatis tidak dapat dilakukan</p><p class="mb-0">${e}</p>`, `<?= base_url("pasien/barcode") ?>/${id}`);
             } finally {
                 $btn.prop('disabled', false).html(`<i class="fa-solid fa-print"></i> Cetak <em>Barcode</em>`);
             }
@@ -1554,7 +1554,7 @@
                 this.contentWindow.focus();
                 this.contentWindow.print();
             } catch (e) {
-                showFailedPrintToast(`Pencetakan otomatis tidak dapat dilakukan: <br>${e}`, `<?= base_url("rawatjalan/struk") ?>/${id}`);
+                showFailedPrintToast(`<p>Pencetakan otomatis tidak dapat dilakukan</p><p class="mb-0">${e}</p>`, `<?= base_url("rawatjalan/struk") ?>/${id}`);
             } finally {
                 $btn.prop('disabled', false).html(`<i class="fa-solid fa-receipt"></i> Struk`);
             }
@@ -1578,7 +1578,7 @@
                 this.contentWindow.focus();
                 this.contentWindow.print();
             } catch (e) {
-                showFailedPrintToast(`Pencetakan otomatis tidak dapat dilakukan: <br>${e}`, `<?= base_url('rawatjalan/lembarisianoperasi') ?>/${id}`);
+                showFailedPrintToast(`<p>Pencetakan otomatis tidak dapat dilakukan</p><p class="mb-0">${e}</p>`, `<?= base_url('rawatjalan/lembarisianoperasi') ?>/${id}`);
             } finally {
                 $btn.prop('disabled', false).html(`<i class="fa-solid fa-receipt"></i> Cetak Lembar Isian Operasi`);
             }

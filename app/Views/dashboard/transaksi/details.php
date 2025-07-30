@@ -1592,7 +1592,7 @@
                     this.contentWindow.focus();
                     this.contentWindow.print();
                 } catch (e) {
-                    showFailedPrintToast(`Pencetakan otomatis tidak dapat dilakukan: <br>${e}`, `<?= base_url("transaksi/struk") ?>/${id}`);
+                    showFailedPrintToast(`<p>Pencetakan otomatis tidak dapat dilakukan</p><p class="mb-0">${e}</p>`, `<?= base_url("transaksi/struk") ?>/${id}`);
                 } finally {
                     $btn.prop('disabled', false).html(`<i class="fa-solid fa-print"></i> Cetak Kuitansi`);
                 }
