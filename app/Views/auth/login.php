@@ -170,12 +170,6 @@
             font-variant-numeric: tabular-nums;
         }
 
-        @supports (font-variation-settings: normal) {
-            :root {
-                --bs-font-sans-serif: "Roboto Variable", "Noto Sans", "Noto Sans Arabic", system-ui, -apple-system, "Helvetica Neue", Arial, "Liberation Sans", sans-serif;
-            }
-        }
-
         html,
         body {
             height: 100%;
