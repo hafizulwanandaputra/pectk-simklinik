@@ -1328,7 +1328,7 @@
                     this.contentWindow.focus();
                     this.contentWindow.print();
                 } catch (e) {
-                    showFailedPrintToast("Peramban memblokir pencetakan otomatis. Harap izinkan pop-up atau pastikan file berasal dari domain yang sama.", `<?= base_url('pasien/kiup') ?>/${id}`);
+                    showFailedPrintToast(`Pencetakan otomatis tidak dapat dilakukan: <br>${e}`, `<?= base_url('pasien/kiup') ?>/${id}`);
                 } finally {
                     $btn.prop('disabled', false).html(`<i class="fa-solid fa-print"></i> KIUP`);
                 }
@@ -1351,7 +1351,7 @@
                     this.contentWindow.focus();
                     this.contentWindow.print();
                 } catch (e) {
-                    showFailedPrintToast("Peramban memblokir pencetakan otomatis. Harap izinkan pop-up atau pastikan file berasal dari domain yang sama.", `<?= base_url('pasien/barcode') ?>/${id}`);
+                    showFailedPrintToast(`Pencetakan otomatis tidak dapat dilakukan: <br>${e}`, `<?= base_url('pasien/barcode') ?>/${id}`);
                 } finally {
                     $btn.prop('disabled', false).html(`<i class="fa-solid fa-barcode"></i> <em>Barcode</em>`);
                 }
@@ -1374,7 +1374,7 @@
                     this.contentWindow.focus();
                     this.contentWindow.print();
                 } catch (e) {
-                    showFailedPrintToast("Peramban memblokir pencetakan otomatis. Harap izinkan pop-up atau pastikan file berasal dari domain yang sama."), `<?= base_url('rawatjalan/struk') ?>/${id}`;
+                    showFailedPrintToast(`Pencetakan otomatis tidak dapat dilakukan: <br>${e}`), `<?= base_url('rawatjalan/struk') ?>/${id}`;
                 } finally {
                     $btn.prop('disabled', false).html(`<i class="fa-solid fa-receipt"></i> Struk`);
                 }
@@ -1397,7 +1397,7 @@
                     this.contentWindow.focus();
                     this.contentWindow.print();
                 } catch (e) {
-                    showFailedPrintToast("Peramban memblokir pencetakan otomatis. Harap izinkan pop-up atau pastikan file berasal dari domain yang sama.", `<?= base_url('rawatjalan/lembarisianoperasi') ?>/${id}`);
+                    showFailedPrintToast(`Pencetakan otomatis tidak dapat dilakukan: <br>${e}`, `<?= base_url('rawatjalan/lembarisianoperasi') ?>/${id}`);
                 } finally {
                     $btn.prop('disabled', false).html(`<i class="fa-solid fa-receipt"></i> Lembar Isian Operasi`);
                 }

@@ -839,7 +839,7 @@
                     this.contentWindow.focus();
                     this.contentWindow.print();
                 } catch (e) {
-                    showFailedPrintToast("Peramban memblokir pencetakan otomatis. Harap izinkan pop-up atau pastikan file berasal dari domain yang sama.", `<?= base_url("resepluar/etiket-dalam") ?>/${id}`);
+                    showFailedPrintToast(`Pencetakan otomatis tidak dapat dilakukan: <br>${e}`, `<?= base_url("resepluar/etiket-dalam") ?>/${id}`);
                 } finally {
                     $btn.prop('disabled', false).html(`<i class="fa-solid fa-print"></i> Cetak E-Tiket Obat Dalam`);
                 }
@@ -863,7 +863,7 @@
                     this.contentWindow.focus();
                     this.contentWindow.print();
                 } catch (e) {
-                    showFailedPrintToast("Peramban memblokir pencetakan otomatis. Harap izinkan pop-up atau pastikan file berasal dari domain yang sama.", `<?= base_url("resepluar/etiket-luar") ?>/${id}`);
+                    showFailedPrintToast(`Pencetakan otomatis tidak dapat dilakukan: <br>${e}`, `<?= base_url("resepluar/etiket-luar") ?>/${id}`);
                 } finally {
                     $btn.prop('disabled', false).html(`<i class="fa-solid fa-print"></i> Cetak E-Tiket Obat Luar`);
                 }
