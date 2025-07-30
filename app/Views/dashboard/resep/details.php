@@ -354,7 +354,7 @@
                     this.contentWindow.focus();
                     this.contentWindow.print();
                 } catch (e) {
-                    showFailedToast("Peramban memblokir pencetakan otomatis. Harap izinkan pop-up atau pastikan file berasal dari domain yang sama.");
+                    showFailedPrintToast("Peramban memblokir pencetakan otomatis. Harap izinkan pop-up atau pastikan file berasal dari domain yang sama.", `<?= base_url("resep/etiket-dalam") ?>/${id}`);
                 } finally {
                     $btn.prop('disabled', false).html(`<i class="fa-solid fa-print"></i> Cetak E-Tiket Obat Dalam`);
                 }
@@ -378,7 +378,7 @@
                     this.contentWindow.focus();
                     this.contentWindow.print();
                 } catch (e) {
-                    showFailedToast("Peramban memblokir pencetakan otomatis. Harap izinkan pop-up atau pastikan file berasal dari domain yang sama.");
+                    showFailedPrintToast("Peramban memblokir pencetakan otomatis. Harap izinkan pop-up atau pastikan file berasal dari domain yang sama.", `<?= base_url("resep/etiket-luar") ?>/${id}`);
                 } finally {
                     $btn.prop('disabled', false).html(`<i class="fa-solid fa-print"></i> Cetak E-Tiket Obat Luar`);
                 }
@@ -402,7 +402,7 @@
                     this.contentWindow.focus();
                     this.contentWindow.print();
                 } catch (e) {
-                    showFailedToast("Peramban memblokir pencetakan otomatis. Harap izinkan pop-up atau pastikan file berasal dari domain yang sama.");
+                    showFailedPrintToast("Peramban memblokir pencetakan otomatis. Harap izinkan pop-up atau pastikan file berasal dari domain yang sama.", `<?= base_url("resep/print") ?>/${id}`);
                 } finally {
                     $btn.prop('disabled', false).html(`<i class="fa-solid fa-print"></i> Cetak Resep`);
                 }
