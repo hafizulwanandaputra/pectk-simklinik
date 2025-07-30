@@ -16,7 +16,6 @@
     <?= $this->include('main-css/index'); ?>
     <link href="<?= base_url(); ?>assets_public/css/JawiDubai.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/fonts/IosevkaHwpMono/IosevkaHwpMono.css" rel="stylesheet">
-    <link href="<?= base_url(); ?>assets_public/fonts/inter-hwp/inter-hwp.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/fonts/roboto/stylesheet.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/fonts/noto-sans-lgc/stylesheet.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/fonts/noto-sans-lgc-mono/stylesheet.css" rel="stylesheet">
@@ -142,7 +141,7 @@
     </script>
     <style>
         :root {
-            --bs-font-sans-serif: "Inter HWP", Roboto, "Noto Sans", "Noto Sans Arabic", system-ui, -apple-system, "Helvetica Neue", Arial, "Liberation Sans", sans-serif;
+            --bs-font-sans-serif: Roboto, "Noto Sans", "Noto Sans Arabic", system-ui, -apple-system, "Helvetica Neue", Arial, "Liberation Sans", sans-serif;
             --bs-font-monospace: "Iosevka HWP Mono Web", Menlo, Monaco, Consolas, "Courier New", "Liberation Mono", monospace;
         }
 
@@ -173,7 +172,7 @@
 
         @supports (font-variation-settings: normal) {
             :root {
-                --bs-font-sans-serif: "Inter HWP Variable", Roboto, "Noto Sans", "Noto Sans Arabic", system-ui, -apple-system, "Helvetica Neue", Arial, "Liberation Sans", sans-serif;
+                --bs-font-sans-serif: "Roboto Variable", "Noto Sans", "Noto Sans Arabic", system-ui, -apple-system, "Helvetica Neue", Arial, "Liberation Sans", sans-serif;
             }
         }
 

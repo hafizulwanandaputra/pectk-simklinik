@@ -25,7 +25,6 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
     <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.bootstrap5.min.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/fonts/IosevkaHwpMono/IosevkaHwpMono.css" rel="stylesheet">
-    <link href="<?= base_url(); ?>assets_public/fonts/inter-hwp/inter-hwp.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/fonts/roboto/stylesheet.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/fonts/noto-sans-lgc/stylesheet.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/fonts/noto-sans-lgc-mono/stylesheet.css" rel="stylesheet">
@@ -209,7 +208,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
     </script>
     <style>
         :root {
-            --bs-font-sans-serif: "Inter HWP", Roboto, "Noto Sans", "Noto Sans Arabic", system-ui, -apple-system, "Helvetica Neue", Arial, "Liberation Sans", sans-serif;
+            --bs-font-sans-serif: Roboto, "Noto Sans", "Noto Sans Arabic", system-ui, -apple-system, "Helvetica Neue", Arial, "Liberation Sans", sans-serif;
             --bs-font-monospace: "Iosevka HWP Mono Web", Menlo, Monaco, Consolas, "Courier New", "Liberation Mono", monospace;
             --gold: #ffe680;
             /* Emas lebih terang */
@@ -272,7 +271,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
 
         @supports (font-variation-settings: normal) {
             :root {
-                --bs-font-sans-serif: "Inter HWP Variable", Roboto, "Noto Sans", "Noto Sans Arabic", system-ui, -apple-system, "Helvetica Neue", Arial, "Liberation Sans", sans-serif;
+                --bs-font-sans-serif: "Roboto Variable", "Noto Sans", "Noto Sans Arabic", system-ui, -apple-system, "Helvetica Neue", Arial, "Liberation Sans", sans-serif;
             }
         }
 
