@@ -2258,7 +2258,7 @@
                     }
                 }
             } catch (error) {
-                if (error.response.request.status === 401) {
+                if (error.response.request.status === 422) {
                     showFailedToast(error.response.data.message);
                 } else {
                     showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
