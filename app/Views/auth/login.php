@@ -141,14 +141,7 @@
     </script>
     <style>
         :root {
-            --bs-font-sans-serif: Roboto, "Noto Sans", "Noto Sans Arabic", system-ui, -apple-system, "Helvetica Neue", Arial, "Liberation Sans", sans-serif;
-            --bs-font-monospace: "Iosevka HWP Mono Web", Menlo, Monaco, Consolas, "Courier New", "Liberation Mono", monospace;
-        }
-
-        @supports (font-variation-settings: normal) {
-            :root {
-                --bs-font-sans-serif: "Roboto Variable", "Noto Sans", "Noto Sans Arabic", system-ui, -apple-system, "Helvetica Neue", Arial, "Liberation Sans", sans-serif;
-            }
+            --bs-font-monospace: "Iosevka HWP Mono Web", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
         }
 
         html,

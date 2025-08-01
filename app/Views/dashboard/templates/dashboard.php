@@ -208,20 +208,13 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
     </script>
     <style>
         :root {
-            --bs-font-sans-serif: Roboto, "Noto Sans", "Noto Sans Arabic", system-ui, -apple-system, "Helvetica Neue", Arial, "Liberation Sans", sans-serif;
-            --bs-font-monospace: "Iosevka HWP Mono Web", Menlo, Monaco, Consolas, "Courier New", "Liberation Mono", monospace;
+            --bs-font-monospace: "Iosevka HWP Mono Web", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
             --gold: #ffe680;
             /* Emas lebih terang */
             --silver: #bfbfbf;
             /* Perak lebih terang */
             --bronze: #e7bd98;
             /* Perunggu lebih terang */
-        }
-
-        @supports (font-variation-settings: normal) {
-            :root {
-                --bs-font-sans-serif: "Roboto Variable", "Noto Sans", "Noto Sans Arabic", system-ui, -apple-system, "Helvetica Neue", Arial, "Liberation Sans", sans-serif;
-            }
         }
 
         /* Warna untuk tema gelap */
