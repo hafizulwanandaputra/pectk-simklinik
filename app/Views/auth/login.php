@@ -12,14 +12,10 @@
     <link href="<?= base_url(); ?>favicon.png" rel="icon" />
     <link href="<?= base_url(); ?>favicon.png" rel="apple-touch-icon" />
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/heroes/">
-    <link href="<?= base_url(); ?>assets_public/fontawesome/css/all.css" rel="stylesheet">
     <?= $this->include('main-css/index'); ?>
     <link href="<?= base_url(); ?>assets_public/css/JawiDubai.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/fonts/IosevkaHwpMono/IosevkaHwpMono.css" rel="stylesheet">
-    <link href="<?= base_url(); ?>assets_public/fonts/roboto/stylesheet.css" rel="stylesheet">
-    <link href="<?= base_url(); ?>assets_public/fonts/noto-sans-lgc/stylesheet.css" rel="stylesheet">
-    <link href="<?= base_url(); ?>assets_public/fonts/noto-sans-lgc-mono/stylesheet.css" rel="stylesheet">
-    <link href="<?= base_url(); ?>assets_public/fonts/noto-sans-arabic/stylesheet.css" rel="stylesheet">
+    <link href="<?= base_url(); ?>assets_public/fontawesome/css/all.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script>
         (() => {
