@@ -21,7 +21,7 @@
                     <div class="align-self-stretch flex-fill ps-1 text-wrap overflow-hidden d-flex align-items-center" style="text-overflow: ellipsis;">
                         <div>
                             <h5 class="card-title">Resep Kacamata Kosong</h5>
-                            <span>Dokumen resep kacama kosong yang dapat digunakan untuk membuat resep kacamata tanpa registrasi rawat jalan.</span>
+                            <span>Dokumen resep kacamata kosong yang dapat digunakan untuk membuat resep kacamata tanpa registrasi rawat jalan.</span>
                         </div>
                     </div>
                     <div class="align-self-center lh-sm" style="min-width: 3rem; max-width: 3rem; text-align: center;">
