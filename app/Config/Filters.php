@@ -106,6 +106,8 @@ class Filters extends BaseConfig
                 '/jaminan/*',
                 '/tindakanoperasi',
                 '/tindakanoperasi/*',
+                '/unduhdokumen',
+                '/unduhdokumen/*',
                 '/admin',
                 '/admin/*',
                 '/settings',

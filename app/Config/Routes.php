@@ -448,6 +448,10 @@ $routes->post('/(?i)tindakanoperasi/(?i)create', 'TindakanOperasi::create');
 $routes->post('/(?i)tindakanoperasi/(?i)update', 'TindakanOperasi::update');
 $routes->delete('/(?i)tindakanoperasi/(?i)delete/(:any)', 'TindakanOperasi::delete/$1');
 
+// UNDUH DOKUMEN
+$routes->get('/(?i)unduhdokumen', 'Unduhan::index');
+$routes->get('/(?i)unduhdokumen/optik', 'Unduhan::optik');
+
 // PENGGUNA
 $routes->get('/(?i)admin', 'Admin::index');
 $routes->post('/(?i)admin/(?i)adminlist', 'Admin::adminlist');

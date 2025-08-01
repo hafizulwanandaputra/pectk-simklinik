@@ -955,6 +955,20 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                 </a>
                             </li>
                         <?php endif; ?>
+                        <?php if (session()->get('role') == "Admin" || session()->get('role') == "Admisi") : ?>
+                            <li class="nav-item">
+                                <a style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'unduhdokumen') ? 'active bg-success activeLinkSideBar' : '' ?>" href=" <?= base_url('/unduhdokumen'); ?>">
+                                    <div class="d-flex align-items-start <?= ($activeSegment === 'unduhdokumen') ? 'text-white' : 'link-success' ?>">
+                                        <div style="min-width: 24px; max-width: 24px; text-align: center;">
+                                            <i class="fa-solid fa-file-arrow-down"></i>
+                                        </div>
+                                        <div class="flex-fill mx-2 <?= ($activeSegment === 'unduhdokumen') ? 'text-white' : 'link-body-emphasis' ?>">
+                                            Unduh Dokumen
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                        <?php endif; ?>
                         <?php if (session()->get('role') == "Admin") : ?>
                             <li class="nav-item">
                                 <span style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'jaminan' || $activeSegment === 'tindakanoperasi' || $activeSegment === 'poliklinik') ? 'active bg-success' : '' ?>" role="button" data-bs-toggle="collapse" data-bs-target="#submenu-masterdata">
