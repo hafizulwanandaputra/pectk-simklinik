@@ -58,7 +58,7 @@
     </div>
     <div class="px-3 mt-3">
         <div class="no-fluid-content">
-            <h1 id="no-data-alert" class="text-center" style="display: none;">Tidak ada Antrean</h1>
+            <h1 id="no-data-alert" class="text-center" style="display: none;">Tidak ada antrean</h1>
             <div id="antreanContainer" class="row row-cols-1 row-cols-lg-2 g-2">
                 <?php for ($i = 0; $i < 8; $i++) : ?>
                     <div class="col">
