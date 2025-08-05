@@ -132,7 +132,7 @@ class Antrean extends BaseController
             $loket = $this->request->getPost('loket');
 
             if (empty($loket)) {
-                return $this->response->setStatusCode(400)->setJSON(['error' => 'Loket tidak boleh kosong.']);
+                return $this->response->setStatusCode(400)->setJSON(['error' => 'Loket harus dipilih']);
             }
 
             // Data yang akan diupdate
@@ -164,7 +164,7 @@ class Antrean extends BaseController
             $loket = $this->request->getPost('loket');
 
             if (empty($loket)) {
-                return $this->response->setStatusCode(400)->setJSON(['error' => 'Loket tidak boleh kosong.']);
+                return $this->response->setStatusCode(400)->setJSON(['error' => 'Loket harus dipilih']);
             }
 
             // Data yang akan diupdate

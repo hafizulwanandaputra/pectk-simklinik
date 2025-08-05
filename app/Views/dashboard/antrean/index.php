@@ -1,12 +1,20 @@
 <?= $this->extend('dashboard/templates/dashboard'); ?>
 <?= $this->section('title'); ?>
 <style>
-    .second-row-form {
+    .first-row-form {
+        min-width: 10em;
+    }
+
+    .third-row-form {
         min-width: 15em;
     }
 
     @media (max-width: 767.98px) {
-        .second-row-form {
+        .first-row-form {
+            min-width: 0;
+        }
+
+        .third-row-form {
             min-width: 0;
         }
     }
@@ -34,20 +42,26 @@
         <ul class="list-group shadow-sm rounded-0">
             <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-secondary transparent-blur">
                 <div class="no-fluid-content">
-                    <div class="d-flex flex-column flex-lg-row gap-2">
-                        <div class="input-group input-group-sm flex-grow-1">
+                    <div class="d-flex flex-column flex-lg-row gap-2 position-relative">
+                        <div class="input-group input-group-sm w-auto first-row-form has-validation">
                             <select class="form-select form-select-sm" id="nama_loket">
+                                <option value="" selected>Semua Loket</option>
                                 <?php foreach ($loket as $l) : ?>
                                     <option value="<?= $l['nama_loket']; ?>"><?= $l['nama_loket']; ?></option>
                                 <?php endforeach; ?>
                             </select>
+                            <div class="invalid-tooltip">
+                                Pilih loket untuk memanggil antrean.
+                            </div>
+                        </div>
+                        <div class="input-group input-group-sm flex-grow-1">
                             <select class="form-select form-select-sm" id="nama_jaminan">
                                 <option value="UMUM" selected>UMUM</option>
                                 <option value="BPJS KESEHATAN">BPJS KESEHATAN</option>
                                 <option value="ASURANSI">ASURANSI</option>
                             </select>
                         </div>
-                        <div class="input-group input-group-sm w-auto second-row-form">
+                        <div class="input-group input-group-sm w-auto third-row-form">
                             <input type="date" id="tanggalFilter" class="form-control" value="<?= date('Y-m-d') ?>">
                             <button class="btn btn-primary btn-sm bg-gradient" type="button" id="setTodayTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Kembali ke Hari Ini"><i class="fa-solid fa-calendar-day"></i></button>
                         </div>
@@ -413,6 +427,13 @@
         });
 
         // Simpan saat dipilih
+        $('#nama_loket').on('change', function() {
+            const selectedValue = $(this).val();
+            localStorage.setItem('nama_loket', selectedValue);
+            $(this).removeClass('is-invalid'); // Tambahkan kelas invalid agar tooltip muncul
+            $(this).siblings('.invalid-tooltip').text('').hide();
+        });
+
         $('#nama_jaminan').on('change', function() {
             const selectedValue = $(this).val();
             localStorage.setItem('nama_jaminan', selectedValue);
@@ -430,16 +451,21 @@
             try {
                 const response = await axios.post(`<?= base_url('/antrean/cek_antrean') ?>/${idAntrean}`);
                 if (response.data.status === 'BELUM DIPANGGIL') {
-                    // Ucapkan kalimat
-                    const utterance = new SpeechSynthesisUtterance(kalimat);
-                    utterance.lang = 'id-ID';
-                    utterance.rate = 1; // Perlambat suara
-                    if (googleVoice) {
-                        utterance.voice = googleVoice;
-                    }
+                    if (nama_loket && nama_loket.trim() !== '') {
+                        // Ucapkan kalimat
+                        const utterance = new SpeechSynthesisUtterance(kalimat);
+                        utterance.lang = 'id-ID';
+                        utterance.rate = 1; // Perlambat suara
+                        if (googleVoice) {
+                            utterance.voice = googleVoice;
+                        }
 
-                    speechSynthesis.speak(utterance);
-                    showSuccessToast(`Memanggil antrean ${nomorAntrean}...`); // Menampilkan pesan sukses
+                        speechSynthesis.speak(utterance);
+                        showSuccessToast(`Memanggil antrean ${nomorAntrean}...`); // Menampilkan pesan sukses
+                    } else {
+                        $('#nama_loket').addClass('is-invalid'); // Tambahkan kelas invalid agar tooltip muncul
+                        $('#nama_loket').siblings('.invalid-tooltip').text('Pilih loket sebelum memanggil').show();
+                    }
                 } else if (response.data.status === 'SUDAH DIPANGGIL') {
                     showFailedToast(`Antrean ${nomorAntrean} sudah dipanggil sebelumnya.`); // Menampilkan pesan gagal
                 } else {
@@ -447,7 +473,7 @@
                 }
             } catch (error) {
                 if (error.response.request.status === 401) {
-                    showFailedToast(error.response.data.message);
+                    showFailedToast(error.response.data.error);
                 } else {
                     showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
                 }
@@ -491,7 +517,12 @@
                 });
                 fetchAntrean();
             } catch (error) {
-                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                if (error.response.request.status === 400) {
+                    $('#nama_loket').addClass('is-invalid'); // Tambahkan kelas invalid agar tooltip muncul
+                    $('#nama_loket').siblings('.invalid-tooltip').text(error.response.data.error).show();
+                } else {
+                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                }
             } finally {
                 $('#completeModal').modal('hide');
                 $('#completeModal button').prop('disabled', false);
@@ -516,7 +547,12 @@
                 });
                 fetchAntrean();
             } catch (error) {
-                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error); // Menampilkan pesan kesalahan
+                if (error.response.request.status === 400) {
+                    $('#nama_loket').addClass('is-invalid'); // Tambahkan kelas invalid agar tooltip muncul
+                    $('#nama_loket').siblings('.invalid-tooltip').text(error.response.data.error).show();
+                } else {
+                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                }
             } finally {
                 $('#cancelModal').modal('hide'); // Menyembunyikan modal nonaktif
                 $('#cancelModal button').prop('disabled', false); // Mengembalikan status tombol
