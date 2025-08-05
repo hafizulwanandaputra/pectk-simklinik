@@ -465,6 +465,8 @@
                     } else {
                         $('#nama_loket').addClass('is-invalid'); // Tambahkan kelas invalid agar tooltip muncul
                         $('#nama_loket').siblings('.invalid-tooltip').text('Pilih loket sebelum memanggil').show();
+                        $('#filterFields').show();
+                        localStorage.setItem('filterFieldsToggleState', 'visible');
                     }
                 } else if (response.data.status === 'SUDAH DIPANGGIL') {
                     showFailedToast(`Antrean ${nomorAntrean} sudah dipanggil sebelumnya.`); // Menampilkan pesan gagal
@@ -520,6 +522,8 @@
                 if (error.response.request.status === 400) {
                     $('#nama_loket').addClass('is-invalid'); // Tambahkan kelas invalid agar tooltip muncul
                     $('#nama_loket').siblings('.invalid-tooltip').text(error.response.data.error).show();
+                    $('#filterFields').show();
+                    localStorage.setItem('filterFieldsToggleState', 'visible');
                 } else {
                     showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
                 }
@@ -550,6 +554,8 @@
                 if (error.response.request.status === 400) {
                     $('#nama_loket').addClass('is-invalid'); // Tambahkan kelas invalid agar tooltip muncul
                     $('#nama_loket').siblings('.invalid-tooltip').text(error.response.data.error).show();
+                    $('#filterFields').show();
+                    localStorage.setItem('filterFieldsToggleState', 'visible');
                 } else {
                     showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
                 }
