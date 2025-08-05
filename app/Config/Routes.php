@@ -15,6 +15,16 @@ $routes->get('/(?i)logout', 'Auth::logout');
 $routes->get('/(?i)home', 'Home::index');
 $routes->get('/(?i)home/(?i)icd_x', 'Home::icd_x');
 $routes->get('/(?i)home/(?i)icd_9', 'Home::icd_9');
+$routes->post('/(?i)home/(?i)list_antrean', 'Home::list_antrean');
+$routes->post('/(?i)home/(?i)buat_antrean', 'Home::buat_antrean');
+$routes->get('/(?i)home/(?i)cetak_antrean/(:num)', 'Home::cetak_antrean/$1');
+
+// ANTREAN
+$routes->get('/(?i)antrean', 'Antrean::index');
+$routes->get('/(?i)antrean/(?i)list_antrean', 'Antrean::list_antrean');
+$routes->post('/(?i)antrean/(?i)cek_antrean/(:num)', 'Antrean::cek_antrean/$1');
+$routes->post('/(?i)antrean/(?i)selesai_antrean/(:num)', 'Antrean::selesai_antrean/$1');
+$routes->post('/(?i)antrean/(?i)batal_antrean/(:num)', 'Antrean::batal_antrean/$1');
 
 // PASIEN
 $routes->get('/(?i)pasien', 'Pasien::index');
@@ -423,6 +433,14 @@ $routes->post('/(?i)transaksi/(?i)perbaruilayanan/(:any)', 'Transaksi::perbaruil
 $routes->post('/(?i)transaksi/(?i)perbaruiobatalkes/(:any)', 'Transaksi::perbaruiobatalkes/$1');
 $routes->delete('/(?i)transaksi/(?i)hapusdetailtransaksi/(:any)', 'Transaksi::hapusdetailtransaksi/$1');
 $routes->get('/(?i)transaksi/(?i)struk/(:any)', 'Transaksi::struk/$1');
+
+// LOKET
+$routes->get('/(?i)loket', 'Loket::index');
+$routes->post('/(?i)loket/(?i)loketlist', 'Loket::loketlist');
+$routes->get('/(?i)loket/(?i)loket/(:any)', 'Loket::loket/$1');
+$routes->post('/(?i)loket/(?i)create', 'Loket::create');
+$routes->post('/(?i)loket/(?i)update', 'Loket::update');
+$routes->delete('/(?i)loket/(?i)delete/(:any)', 'Loket::delete/$1');
 
 // RUANGAN POLIKLINIK
 $routes->get('/(?i)poliklinik', 'Poliklinik::index');
