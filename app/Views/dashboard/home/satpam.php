@@ -55,57 +55,33 @@ $db = db_connect();
         </div>
         <div class="mb-3">
             <div class="row row-cols-1 row-cols-lg-3 g-3">
-                <div class="col">
-                    <div class="card h-100 rounded-5">
-                        <div class="card-body text-center py-1">
-                            <div style="font-size: 80pt;"><i class="fa-solid fa-users"></i></div>
-                            <div class="fs-5 fw-bold">UMUM</div>
-                        </div>
-                        <div class="card-footer rounded-bottom-5 p-3">
-                            <div class="d-grid gap-2">
-                                <button type="button" class="btn btn-lg btn-primary bg-gradient rounded-4 btn-apply" data-name="UMUM">
-                                    Buat Antrean
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                <div class="col d-grid">
+                    <button type="button" class="btn btn-lg btn-success bg-gradient rounded-4 btn-apply" data-name="UMUM">
+                        <div style="font-size: 80pt;"><i class="fa-solid fa-users"></i></div>
+                        <div class="fs-5 fw-bold mb-3">UMUM</div>
+                    </button>
                 </div>
-                <div class="col">
-                    <div class="card h-100 rounded-5">
-                        <div class="card-body text-center py-1">
-                            <div style="font-size: 80pt;">
-                                <?= file_get_contents(FCPATH . 'assets/images/logo-bpjs.svg') ?>
-                            </div>
-                            <div class="fs-5 fw-bold">BPJS KESEHATAN</div>
+                <div class="col d-grid">
+                    <button type="button" class="btn btn-lg btn-success bg-gradient rounded-4 btn-apply" data-name="BPJS KESEHATAN">
+                        <div style="font-size: 80pt;">
+                            <?= file_get_contents(FCPATH . 'assets/images/logo-bpjs.svg') ?>
                         </div>
-                        <div class="card-footer rounded-bottom-5 p-3">
-                            <div class="d-grid gap-2">
-                                <button type="button" class="btn btn-lg btn-primary bg-gradient rounded-4 btn-apply" data-name="BPJS KESEHATAN">
-                                    Buat Antrean
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                        <div class="fs-5 fw-bold mb-3">BPJS KESEHATAN</div>
+                    </button>
                 </div>
-                <div class="col">
-                    <div class="card h-100 rounded-5">
-                        <div class="card-body text-center py-1">
-                            <div style="font-size: 80pt;"><i class="fa-solid fa-user-shield"></i></div>
-                            <div class="fs-5 fw-bold">ASURANSI</div>
-                        </div>
-                        <div class="card-footer rounded-bottom-5 p-3">
-                            <div class="d-grid gap-2">
-                                <button type="button" class="btn btn-lg btn-primary bg-gradient rounded-4 btn-apply" data-name="ASURANSI">
-                                    Buat Antrean
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                <div class="col d-grid">
+                    <button type="button" class="btn btn-lg btn-success bg-gradient rounded-4 btn-apply" data-name="ASURANSI">
+                        <div style="font-size: 80pt;"><i class="fa-solid fa-user-shield"></i></div>
+                        <div class="fs-5 fw-bold mb-3">ASURANSI</div>
+                    </button>
                 </div>
             </div>
         </div>
-        <div class="d-grid gap-2 mb-3">
+        <div class=" d-grid gap-2 mb-3">
             <button type="button" class="btn btn-body bg-gradient rounded-4" id="list_antrean_btn" data-bs-toggle="modal" data-bs-target="#listAntreanModal">Lihat Nomor Antrean Sebelumnya</button>
+        </div>
+        <div class="text-center fs-5" id="status-tunggu" style="display: none;">
+
         </div>
     </div>
     <div class="modal fade" id="listAntreanModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="listAntreanModalLabel" aria-hidden="true">
@@ -122,6 +98,7 @@ $db = db_connect();
                         <div class="input-group input-group-sm flex-grow-1">
                             <input type="date" class="form-control form-control-sm" id="externalSearch">
                             <button class="btn btn-danger btn-sm bg-gradient " type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
+                            <button id="refreshButton" type="button" class="btn btn-primary btn-sm bg-gradient"><i class="fa-solid fa-arrows-rotate"></i></button>
                         </div>
                     </div>
                     <button id="listAntreanCloseBtn" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -144,7 +121,6 @@ $db = db_connect();
                 </div>
                 <div class="modal-footer pt-2 pb-2 d-flex justify-content-between" style="border-top: 1px solid var(--bs-border-color-translucent);">
                     <div id="loading"></div>
-                    <button id="refreshButton" type="button" class="btn btn-primary btn-sm bg-gradient"><i class="fa-solid fa-arrows-rotate"></i></button>
                 </div>
             </div>
         </div>
@@ -157,12 +133,9 @@ $db = db_connect();
                     <h1 class="mb-0 fw-medium" id="antrean"></h1>
                     <p class="mb-0">Jaminan: <span id="nama_jaminan"></span></p>
                     <p>Tanggal dan waktu: <span id="tanggal_antrean"></span></p>
-                    <p class="mb-0">Nomor antrean ini akan dicetak secara otomatis. Jika tidak, klik "Cetak Nomor Antrean" untuk mencetaknya lagi.</p>
+                    <p class="mb-0">Silakan tunggu hingga nomor antrean Anda dipanggil.<br>Terima kasih!</p>
                     <iframe id="print_frame" style="display: none;"></iframe>
                     <div class="row gy-2 pt-4">
-                        <div class="d-grid">
-                            <button type="button" class="btn btn-lg btn-primary bg-gradient fs-6 mb-0 rounded-4" id="cetak-btn">Cetak Nomor Antrean</button>
-                        </div>
                         <div class="d-grid">
                             <button type="button" class="btn btn-lg btn-body bg-gradient fs-6 mb-0 rounded-4" id="closeModalBtn" data-bs-dismiss="modal">Tutup</button>
                         </div>
@@ -198,7 +171,7 @@ $db = db_connect();
     function updateDateTime() {
         const now = dayjs();
         $('#tanggal').text(now.format('dddd, D MMMM YYYY'));
-        $('#waktu').text(now.format('HH.mm.ss'));
+        $('#waktu').text(now.format('HH.mm.ss (UTCZ)'));
     }
     $(document).ready(async function() {
         var table = $('#tabel').DataTable({
@@ -375,7 +348,6 @@ $db = db_connect();
 
             // Tampilkan loading di tombol cetak
             $closeBtn.prop('disabled', true).text('Tutup');
-            $btn.prop('disabled', true).html(`<?= $this->include('spinner/spinner'); ?> Mencetak. Silakan tunggu...`);
 
             // Muat PDF ke iframe
             $iframe.attr('src', `<?= base_url("home/cetak_antrean") ?>/${id}`);
@@ -386,8 +358,10 @@ $db = db_connect();
                     this.contentWindow.focus();
                     this.contentWindow.print();
 
+                    $('#printModal').modal('show');
+
                     // Setelah berhasil, mulai countdown 5 detik untuk tutup modal
-                    let countdown = 5;
+                    let countdown = 10;
                     $closeBtn.text(`Menutup dalam ${countdown} detik`);
 
                     countdownTimer = setInterval(() => {
@@ -405,25 +379,14 @@ $db = db_connect();
                 } catch (e) {
                     showFailedToast(`<p>Pencetakan otomatis tidak dapat dilakukan</p><p class="mb-0">${e}</p>`);
                 } finally {
-                    $btn.prop('disabled', false).html('Cetak Nomor Antrean');
                     $closeBtn.prop('disabled', false);
+                    $('.btn-apply').prop('disabled', false);
+                    $('#status-tunggu').html(``).hide();
                 }
             });
         }
 
         // Pemicu klik tombol cetak
-        $('#cetak-btn').on('click', function() {
-            const id = $(this).data('id');
-
-            // Jika sedang menghitung mundur, batalkan
-            if (countdownTimer !== null) {
-                clearInterval(countdownTimer);
-                countdownTimer = null;
-                $('#closeModalBtn').text('Tutup');
-            }
-
-            cetakAntrean(id);
-        });
         $(document).on('click', '.cetak-btn', function() {
             const id = $(this).data('id');
 
@@ -461,9 +424,7 @@ $db = db_connect();
             const jaminan = $(this).data('name');
             const $btn = $(this);
             $('.btn-apply').prop('disabled', true);
-            $btn.html(`
-                <?= $this->include('spinner/spinner'); ?> Tunggu...
-            `);
+            $('#status-tunggu').html(`<?= $this->include('spinner/spinner'); ?><span class="ps-2">Membuat nomor antrean. Silakan tunggu...</span>`).show();
 
             try {
                 const response = await axios.post(`<?= base_url('/home/buat_antrean') ?>?jaminan=${jaminan}`);
@@ -490,15 +451,11 @@ $db = db_connect();
                     $('#tanggal_antrean').text(data.tanggal_antrean),
                     $('#cetak-btn').attr('data-id', data.id_antrean),
                 ]);
-                await $('#printModal').modal('show');
-                cetakAntrean(data.id_antrean);
+                await cetakAntrean(data.id_antrean);
+                $('#status-tunggu').html(`<?= $this->include('spinner/spinner'); ?><span class="ps-2">Mencetak nomor antrean. Silakan tunggu...</span>`).show();
             } catch (error) {
                 showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
-            } finally {
-                $('.btn-apply').prop('disabled', false);
-                $btn.html(`
-                    Buat Antrean
-                `);
+                $('#status-tunggu').html(``).hide();
             }
         });
         $('#printModal').on('hidden.bs.modal', function() {

@@ -115,7 +115,7 @@
             </table>
         </div>
         <div style="text-align: center; font-size: 7pt;">
-            <em>Silakan tunggu hingga nomor antrean Anda dipanggil<br>Terima kasih!</em>
+            Silakan tunggu hingga nomor antrean Anda dipanggil.<br>Terima kasih!
         </div>
     </div>
 
