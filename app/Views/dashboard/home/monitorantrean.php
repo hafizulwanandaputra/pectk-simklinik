@@ -231,6 +231,13 @@ $db = db_connect();
         socket.onclose = () => {
             console.log("Disconnected from WebSocket server");
         };
+
+        $(document).on('visibilitychange', function() {
+            if (document.visibilityState === "visible") {
+                fetchAntrean();
+            }
+        });
+
         fetchAntrean();
         updateDateTime(); // Jalankan sekali saat load
         setInterval(updateDateTime, 1000); // Update tiap 1 detik
