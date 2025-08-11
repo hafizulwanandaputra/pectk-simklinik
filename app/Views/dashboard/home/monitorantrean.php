@@ -62,7 +62,7 @@ $db = db_connect();
 <main class="main-content-inside px-3">
     <div class="no-fluid-content">
         <div class="row row-cols-1 row-cols-lg-2 g-4">
-            <div class="col">
+            <div class="col col-lg-5">
                 <div class="mt-3 mb-3" style="max-height: 48px; min-height: 48px;">
                     <span class="lh-sm d-flex justify-content-center justify-content-lg-start align-items-center" style="font-size: 16pt;">
                         <img src="<?= base_url('/assets/images/pec-klinik-logo.png'); ?>" alt="KLINIK MATA PECTK" height="56px">
@@ -71,7 +71,7 @@ $db = db_connect();
                 </div>
                 <div class="row row-cols-1 g-4">
                     <div class="col full-card-height">
-                        <div class="card h-100">
+                        <div class="card shadow-sm h-100">
                             <div class="card-header">
                                 <div class="fs-5">Nomor antrean:</div>
                                 <h1 class="fw-medium mb-0"></h1>
@@ -85,9 +85,8 @@ $db = db_connect();
                     </div>
                 </div>
             </div>
-            <div class="col">
-                <div class="card mt-lg-3">
-                    <h5 class="card-header">PLACEHOLDER</h5>
+            <div class="col col-lg-7">
+                <div class="card shadow-sm mt-lg-3">
                     <div class="card-body">
 
                     </div>
