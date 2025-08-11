@@ -613,11 +613,10 @@ class Home extends BaseController
     public function list_antrean_monitor()
     {
         if (session()->get('role') == 'Monitor Antrean') {
-            $loket = $this->request->getGet('loket');
             $tanggal_antrean = $this->request->getGet('tanggal_antrean');
 
             // Kalau salah satu kosong, kirim data kosong
-            if (empty($loket) || empty($tanggal_antrean)) {
+            if (empty($tanggal_antrean)) {
                 return $this->response->setJSON([
                     'antrean' => [],
                     'total' => 0
@@ -628,7 +627,6 @@ class Home extends BaseController
 
             // Filter berdasarkan loket, tanggal, dan status
             $AntreanModel
-                ->where('loket', $loket)
                 ->like('tanggal_antrean', $tanggal_antrean) // gunakan where jika format tanggal pas
                 ->where('status', 'SUDAH DIPANGGIL');
 

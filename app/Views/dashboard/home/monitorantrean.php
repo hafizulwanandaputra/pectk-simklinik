@@ -62,77 +62,30 @@ $db = db_connect();
 <main class="main-content-inside px-3">
     <div class="no-fluid-content">
         <div class="row row-cols-1 row-cols-lg-2 g-4">
-            <div class="col col-lg-7">
+            <div class="col">
                 <div class="mt-3 mb-3" style="max-height: 48px; min-height: 48px;">
                     <span class="lh-sm d-flex justify-content-center justify-content-lg-start align-items-center" style="font-size: 16pt;">
                         <img src="<?= base_url('/assets/images/pec-klinik-logo.png'); ?>" alt="KLINIK MATA PECTK" height="56px">
                         <div class="ps-3 text-start text-success-emphasis fw-bold">PADANG EYE CENTER<br>TELUK KUANTAN</div>
                     </span>
                 </div>
-                <div class="row row-cols-1 row-cols-lg-2 g-4">
+                <div class="row row-cols-1 g-4">
                     <div class="col full-card-height">
                         <div class="card h-100">
                             <div class="card-header">
-                                <div class="fs-5">Antrean <span id="kolom_1"></span></div>
-                                <h1 class="fw-medium mb-0">U-001</h1>
+                                <div class="fs-5">Nomor antrean:</div>
+                                <h1 class="fw-medium mb-0"></h1>
+                                <div class="fs-5">Silakan menuju <span id="loket"></span></div>
                             </div>
                             <div class="card-body p-0 overflow-hidden">
-                                <ul class="list-group list-group-flush fs-5">
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        <div>
-                                            <div>Subheading</div>
-                                        </div>
-                                        <span class="badge text-bg-primary bg-gradient">14</span>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        <div>
-                                            <div>Subheading</div>
-                                        </div>
-                                        <span class="badge text-bg-primary bg-gradient">14</span>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        <div>
-                                            <div>Subheading</div>
-                                        </div>
-                                        <span class="badge text-bg-primary bg-gradient">14</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col full-card-height">
-                        <div class="card h-100">
-                            <div class="card-header">
-                                <div class="fs-5">Antrean <span id="kolom_2"></span></div>
-                                <h1 class="fw-medium mb-0">U-001</h1>
-                            </div>
-                            <div class="card-body p-0 overflow-hidden">
-                                <ul class="list-group list-group-flush fs-5">
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        <div>
-                                            <div>Subheading</div>
-                                        </div>
-                                        <span class="badge text-bg-primary bg-gradient"></span>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        <div>
-                                            <div>Subheading</div>
-                                        </div>
-                                        <span class="badge text-bg-primary bg-gradient"></span>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        <div>
-                                            <div>Subheading</div>
-                                        </div>
-                                        <span class="badge text-bg-primary bg-gradient"></span>
-                                    </li>
+                                <ul class="list-group list-group-flush" id="list_antrean_monitor">
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col col-lg-5">
+            <div class="col">
                 <div class="card mt-lg-3">
                     <h5 class="card-header">PLACEHOLDER</h5>
                     <div class="card-body">
@@ -164,8 +117,43 @@ $db = db_connect();
         $('#tanggal').text(now.format('dddd, D MMMM YYYY'));
         $('#waktu').text(now.format('HH.mm.ss (UTCZ)'));
     }
+
+    async function fetchAntrean() {
+        // Show the spinner
+        $('#loadingSpinner').show();
+
+        try {
+            const response = await axios.get('<?= base_url('home/list_antrean_monitor') ?>', {
+                params: {
+                    tanggal_antrean: `<?= date('Y-m-d'); ?>`,
+                }
+            });
+
+            const data = response.data;
+            $('#list_antrean_monitor').empty();
+
+            data.antrean.forEach(function(antrean) {
+                const antreanElement = `
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div>
+                                <div class="fw-bold fs-4">${antrean.kode_antrean}-${antrean.nomor_antrean}</div>
+                                ${antrean.loket}
+                            </div>
+                        </li>
+                    `;
+
+                $('#list_antrean_monitor').append(antreanElement);
+            });
+        } catch (error) {
+            showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+            $('#list_antrean_monitor').empty();
+        } finally {
+            // Hide the spinner when done
+            $('#loadingSpinner').hide();
+        }
+    }
     $(document).ready(async function() {
-        $('#loadingSpinner').hide();
+        fetchAntrean();
         updateDateTime(); // Jalankan sekali saat load
         setInterval(updateDateTime, 1000); // Update tiap 1 detik
     });
