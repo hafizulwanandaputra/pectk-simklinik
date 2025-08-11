@@ -444,10 +444,6 @@
             const idAntrean = $(this).data('id');
             const nomorAntrean = $(this).data('name');
 
-            // Pisahkan menjadi huruf dan angka: "U" dan "001"
-            // const [huruf, angka] = nomorAntrean.split('-');
-            // const kalimat = `Nomor antrean, ${huruf}, ${angka}, silakan menuju ${nama_loket}.`;
-
             $(this).prop('disabled', true).html(`<?= $this->include('spinner/spinner'); ?>`);
 
             try {
@@ -463,15 +459,6 @@
                                 loket: nama_loket
                             })
                         );
-
-                        // // Ucapkan kalimat
-                        // const utterance = new SpeechSynthesisUtterance(kalimat);
-                        // utterance.lang = 'id-ID';
-                        // utterance.rate = 1;
-                        // if (googleVoice) {
-                        //     utterance.voice = googleVoice;
-                        // }
-                        // speechSynthesis.speak(utterance);
 
                         showSuccessToast(`Memanggil antrean ${nomorAntrean}...`);
 
