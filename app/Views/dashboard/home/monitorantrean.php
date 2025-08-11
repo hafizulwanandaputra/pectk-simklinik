@@ -209,7 +209,6 @@ $db = db_connect();
             const message = JSON.parse(event.data);
 
             if (message.panggil_antrean && message.data) {
-                console.log(message);
                 const nomorAntrean = message.data.nomor;
                 const [huruf, angka] = nomorAntrean.split('-');
                 const kalimat = `Nomor antrean, ${huruf}, ${angka}, silakan menuju ${message.data.loket}.`;
@@ -223,7 +222,7 @@ $db = db_connect();
 
                 $('#nomor_antrean_label').text(nomorAntrean);
                 $('#loket').text(message.data.loket);
-            } else if (data.update) {
+            } else if (message.update) {
                 console.log("Received update from WebSocket");
                 fetchAntrean();
             }
