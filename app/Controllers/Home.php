@@ -14,7 +14,27 @@ class Home extends BaseController
     }
     public function index()
     {
-        if (session()->get('role') != "Satpam") {
+        if (session()->get('role') == "Satpam") {
+            // Menyusun data untuk ditampilkan di view
+            $data = [
+                'title' => 'Beranda - ' . $this->systemName, // Judul halaman
+                'headertitle' => 'Beranda', // Judul header
+                'agent' => $this->request->getUserAgent() // Mendapatkan user agent dari request
+            ];
+
+            // Mengembalikan tampilan beranda dengan data yang telah disiapkan
+            return view('dashboard/home/satpam', $data);
+        } else if (session()->get('role') == "Monitor Antrean") {
+            // Menyusun data untuk ditampilkan di view
+            $data = [
+                'title' => 'Beranda - ' . $this->systemName, // Judul halaman
+                'headertitle' => 'Beranda', // Judul header
+                'agent' => $this->request->getUserAgent() // Mendapatkan user agent dari request
+            ];
+
+            // Mengembalikan tampilan beranda dengan data yang telah disiapkan
+            return view('dashboard/home/monitorantrean', $data);
+        } else {
             // GREETINGS
             $seasonalGreetingA = array(); // Array untuk menyimpan ucapan musiman
             $seasonalGreetingA[] = array('dayBegin' => 30, 'monthBegin' => 12, 'dayEnd' => 31, 'monthEnd' => 12, 'text' => 'Selamat Tahun Baru'); // Ucapan untuk Tahun Baru
@@ -439,16 +459,6 @@ class Home extends BaseController
 
             // Mengembalikan tampilan beranda dengan data yang telah disiapkan
             return view('dashboard/home/index', $data);
-        } else {
-            // Menyusun data untuk ditampilkan di view
-            $data = [
-                'title' => 'Beranda - ' . $this->systemName, // Judul halaman
-                'headertitle' => 'Beranda', // Judul header
-                'agent' => $this->request->getUserAgent() // Mendapatkan user agent dari request
-            ];
-
-            // Mengembalikan tampilan beranda dengan data yang telah disiapkan
-            return view('dashboard/home/satpam', $data);
         }
     }
 

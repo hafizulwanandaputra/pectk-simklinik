@@ -149,6 +149,7 @@
                     <div class="form-floating mb-1 mt-1">
                         <select class="form-select " id="role" name="role" aria-label="role">
                             <option value="" disabled selected>-- Pilih Jenis Pengguna --</option>
+                            <option value="Monitor Antrean">Monitor Antrean</option>
                             <option value="Satpam">Satpam</option>
                             <option value="Admin">Admin</option>
                             <option value="Admisi">Admisi</option>

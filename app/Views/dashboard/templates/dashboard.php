@@ -422,7 +422,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
 
         @media (max-width: 767.98px) {
             .toast-container {
-                padding-top: <?= (!(session()->get('role') == "Satpam" && $activeSegment === 'home')) ? '7rem' : '4rem' ?> !important;
+                padding-top: <?= (!(in_array(session()->get('role'), ['Satpam', 'Monitor Antrean']) && $activeSegment === 'home')) ? '7rem' : '4rem' ?> !important;
                 transform: translateX(-50%) !important;
                 left: 50% !important;
             }
@@ -478,7 +478,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
     <div class="wrapper">
         <!-- HEADER -->
         <header class="navbar sticky-top flex-md-nowrap p-0 shadow-sm bg-success-subtle text-success-emphasis border-bottom border-success-subtle header">
-            <?php if (!(session()->get('role') == "Satpam" && $activeSegment === 'home')) : ?>
+            <?php if (!(in_array(session()->get('role'), ['Satpam', 'Monitor Antrean']) && $activeSegment === 'home')) : ?>
                 <div id="sidebarHeader" class="d-flex justify-content-center align-items-center me-0 px-3 py-md-1" style="min-height: 48px; max-height: 48px;">
                     <span class="navbar-brand mx-0 text-start text-md-center lh-sm d-flex justify-content-center align-items-center" style="font-size: 7.5pt;">
                         <img src="<?= base_url('/assets/images/pec-klinik-logo.png'); ?>" alt="KLINIK MATA PECTK" height="24px">
@@ -562,7 +562,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                             </div>
                             <hr class="my-1">
                             <ul class="nav nav-pills flex-column">
-                                <?php if (!(session()->get('role') == "Satpam")) : ?>
+                                <?php if (!(in_array(session()->get('role'), ['Satpam', 'Monitor Antrean']))) : ?>
                                     <li class="nav-item">
                                         <span style="font-size: 0.95em;" class="nav-link px-2 py-1 link-success" role="button">
                                             <div class="d-flex align-items-between">
@@ -634,7 +634,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
 
         <!-- CONTENTS -->
         <div class="main-content-wrapper">
-            <?php if (!(session()->get('role') == "Satpam" && $activeSegment === 'home')) : ?>
+            <?php if (!(in_array(session()->get('role'), ['Satpam', 'Monitor Antrean']) && $activeSegment === 'home')) : ?>
                 <nav id="sidebarMenu" class="d-md-block sidebar bg-body-secondary shadow-sm collapse transparent-blur">
                     <div id="sidebarMenu2" class="position-sticky sidebar-sticky p-1">
                         <ul class="nav nav-pills flex-column">
