@@ -223,6 +223,9 @@ $db = db_connect();
 
                 $('#nomor_antrean_label').text(nomorAntrean);
                 $('#loket').text(message.data.loket);
+            } else if (data.update) {
+                console.log("Received update from WebSocket");
+                fetchAntrean();
             }
         };
 
