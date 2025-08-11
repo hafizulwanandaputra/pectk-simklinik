@@ -610,6 +610,51 @@ class Home extends BaseController
         }
     }
 
+    public function list_antrean_monitor()
+    {
+        if (session()->get('role') == 'Monitor Antrean') {
+            $loket = $this->request->getGet('loket');
+            $tanggal_antrean = $this->request->getGet('tanggal_antrean');
+
+            // Kalau salah satu kosong, kirim data kosong
+            if (empty($loket) || empty($tanggal_antrean)) {
+                return $this->response->setJSON([
+                    'antrean' => [],
+                    'total' => 0
+                ]);
+            }
+
+            $AntreanModel = $this->AntreanModel;
+
+            // Filter berdasarkan loket, tanggal, dan status
+            $AntreanModel
+                ->where('loket', $loket)
+                ->like('tanggal_antrean', $tanggal_antrean) // gunakan where jika format tanggal pas
+                ->where('status', 'SUDAH DIPANGGIL');
+
+            $total = $AntreanModel->countAllResults(false);
+
+            $Pasien = $AntreanModel
+                ->orderBy('id_antrean', 'DESC')
+                ->findAll(); // tanpa paginasi
+
+            // Tambahkan nomor urut mulai dari 1
+            $dataAntrean = array_map(function ($data, $index) {
+                $data['number'] = $index + 1;
+                return $data;
+            }, $Pasien, array_keys($Pasien));
+
+            return $this->response->setJSON([
+                'antrean' => $dataAntrean,
+                'total' => $total
+            ]);
+        } else {
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
+        }
+    }
+
     public function list_antrean()
     {
         // Memeriksa apakah peran pengguna dalam sesi adalah "Satpam"
