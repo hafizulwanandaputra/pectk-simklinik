@@ -122,6 +122,38 @@ class Antrean extends BaseController
         }
     }
 
+    public function panggil_antrean($id)
+    {
+        if (session()->get('role') == 'Admisi') {
+            $loket = $this->request->getPost('loket');
+
+            if (empty($loket)) {
+                return $this->response->setStatusCode(400)->setJSON([
+                    'error' => 'Loket harus dipilih',
+                ]);
+            }
+
+            $antrean = $this->AntreanModel->find($id);
+
+            // Broadcast ke WebSocket dengan data lengkap
+            $this->notify_clients('panggil_antrean', [
+                'id'    => $id,
+                'nomor' => $antrean['kode_antrean'] . '-' . $antrean['nomor_antrean'],
+                'loket' => $loket
+            ]);
+
+            return $this->response->setJSON([
+                'success' => true,
+                'message' => 'Antrean berhasil dipanggil'
+            ]);
+        }
+
+        return $this->response->setStatusCode(404)->setJSON([
+            'error' => 'Halaman tidak ditemukan',
+        ]);
+    }
+
+
     public function selesai_antrean($id)
     {
         // Memeriksa peran pengguna, hanya 'Admin' dan 'Admisi' yang diizinkan
@@ -143,7 +175,7 @@ class Antrean extends BaseController
             // Mengubah status dan mengisi nama loket
             $db->table('antrean')->set($data)->where('id_antrean', $id)->update();
             // Panggil WebSocket untuk update client
-            $this->notify_clients();
+            $this->notify_clients('update');
             // Mengembalikan respons JSON sukses
             return $this->response->setJSON(['success' => true, 'message' => 'Antrean sudah selesai dipanggil']);
         } else {
@@ -175,7 +207,7 @@ class Antrean extends BaseController
             // Mengubah status dan mengisi nama loket
             $db->table('antrean')->set($data)->where('id_antrean', $id)->update();
             // Panggil WebSocket untuk update client
-            $this->notify_clients();
+            $this->notify_clients('update');
             // Mengembalikan respons JSON sukses
             return $this->response->setJSON(['success' => true, 'message' => 'Antrean dibatalkan']);
         } else {
@@ -186,11 +218,19 @@ class Antrean extends BaseController
         }
     }
 
-    public function notify_clients()
+    public function notify_clients($action, $extraData = null)
     {
         $client = \Config\Services::curlrequest();
+        $payload = [
+            'action' => $action
+        ];
+
+        if (!empty($extraData)) {
+            $payload['data'] = $extraData;
+        }
+
         $response = $client->post(env('WS-URL-PHP'), [
-            'json' => []
+            'json' => $payload
         ]);
 
         return $this->response->setJSON([

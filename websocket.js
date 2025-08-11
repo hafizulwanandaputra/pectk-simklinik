@@ -76,14 +76,17 @@ app.use(express.json());
 
 // Endpoint untuk memicu update atau hapus data di klien
 app.post("/notify", (req, res) => {
-  const { action = "update" } = req.body; // Default ke "update" jika action tidak diberikan
+  const { action = "update", data = null } = req.body;
 
   console.log(`📢 Received ${action} request`);
+  console.log("📦 Data:", data);
 
   if (action === "update") {
     broadcast({ update: true });
   } else if (action === "delete") {
     broadcast({ delete: true });
+  } else if (action === "panggil_antrean") {
+    broadcast({ panggil_antrean: true, data: data });
   } else {
     return res.status(400).json({ status: "Invalid action" });
   }

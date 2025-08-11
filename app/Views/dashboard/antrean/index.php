@@ -443,38 +443,52 @@
             const nama_loket = $('#nama_loket').val();
             const idAntrean = $(this).data('id');
             const nomorAntrean = $(this).data('name');
+
             // Pisahkan menjadi huruf dan angka: "U" dan "001"
-            const [huruf, angka] = nomorAntrean.split('-');
-            const kalimat = `Nomor antrean, ${huruf}, ${angka}, silakan menuju ${nama_loket}.`;
+            // const [huruf, angka] = nomorAntrean.split('-');
+            // const kalimat = `Nomor antrean, ${huruf}, ${angka}, silakan menuju ${nama_loket}.`;
+
             $(this).prop('disabled', true).html(`<?= $this->include('spinner/spinner'); ?>`);
 
             try {
-                const response = await axios.post(`<?= base_url('/antrean/cek_antrean') ?>/${idAntrean}`);
-                if (response.data.status === 'BELUM DIPANGGIL') {
-                    if (nama_loket && nama_loket.trim() !== '') {
-                        // Ucapkan kalimat
-                        const utterance = new SpeechSynthesisUtterance(kalimat);
-                        utterance.lang = 'id-ID';
-                        utterance.rate = 1; // Perlambat suara
-                        if (googleVoice) {
-                            utterance.voice = googleVoice;
-                        }
+                // Cek status antrean
+                const cekResponse = await axios.post(`<?= base_url('/antrean/cek_antrean') ?>/${idAntrean}`);
 
-                        speechSynthesis.speak(utterance);
-                        showSuccessToast(`Memanggil antrean ${nomorAntrean}...`); // Menampilkan pesan sukses
+                if (cekResponse.data.status === 'BELUM DIPANGGIL') {
+                    if (nama_loket && nama_loket.trim() !== '') {
+
+                        // Kirim request ke panggil_antrean
+                        await axios.post(`<?= base_url('/antrean/panggil_antrean') ?>/${idAntrean}`,
+                            new URLSearchParams({
+                                loket: nama_loket
+                            })
+                        );
+
+                        // // Ucapkan kalimat
+                        // const utterance = new SpeechSynthesisUtterance(kalimat);
+                        // utterance.lang = 'id-ID';
+                        // utterance.rate = 1;
+                        // if (googleVoice) {
+                        //     utterance.voice = googleVoice;
+                        // }
+                        // speechSynthesis.speak(utterance);
+
+                        showSuccessToast(`Memanggil antrean ${nomorAntrean}...`);
+
                     } else {
-                        $('#nama_loket').addClass('is-invalid'); // Tambahkan kelas invalid agar tooltip muncul
-                        $('#nama_loket').siblings('.invalid-tooltip').text('Pilih loket sebelum memanggil').show();
+                        $('#nama_loket').addClass('is-invalid');
+                        $('#nama_loket').siblings('.invalid-tooltip')
+                            .text('Pilih loket sebelum memanggil').show();
                         $('#filterFields').show();
                         localStorage.setItem('filterFieldsToggleState', 'visible');
                     }
-                } else if (response.data.status === 'SUDAH DIPANGGIL') {
-                    showFailedToast(`Antrean ${nomorAntrean} sudah dipanggil sebelumnya.`); // Menampilkan pesan gagal
+                } else if (cekResponse.data.status === 'SUDAH DIPANGGIL') {
+                    showFailedToast(`Antrean ${nomorAntrean} sudah dipanggil sebelumnya.`);
                 } else {
-                    showFailedToast(`Antrean ${nomorAntrean} sudah dibatalkan sebelumnya.`); // Menampilkan pesan gagal
+                    showFailedToast(`Antrean ${nomorAntrean} sudah dibatalkan sebelumnya.`);
                 }
             } catch (error) {
-                if (error.response.request.status === 401) {
+                if (error.response && error.response.status === 401) {
                     showFailedToast(error.response.data.error);
                 } else {
                     showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);

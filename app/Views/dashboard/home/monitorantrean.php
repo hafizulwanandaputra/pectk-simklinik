@@ -55,6 +55,7 @@ $db = db_connect();
     <div id="loadingSpinner" class="px-2">
         <?= $this->include('spinner/spinner'); ?>
     </div>
+    <a id="btnEnableVoice" class="fs-6 mx-2 text-success-emphasis" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Aktifkan suara"><i class="fa-solid fa-microphone"></i></a>
 </div>
 <div style="min-width: 1px; max-width: 1px;"></div>
 <?= $this->endSection(); ?>
@@ -74,7 +75,7 @@ $db = db_connect();
                         <div class="card shadow-sm h-100">
                             <div class="card-header">
                                 <div class="fs-5">Nomor antrean:</div>
-                                <h1 class="fw-medium mb-0"></h1>
+                                <h1 class="fw-medium mb-0" id="nomor_antrean_label"></h1>
                                 <div class="fs-5">Silakan menuju <span id="loket"></span></div>
                             </div>
                             <div class="card-body p-0 overflow-hidden">
@@ -86,7 +87,17 @@ $db = db_connect();
                 </div>
             </div>
             <div class="col col-lg-7">
-                <div class="card shadow-sm mt-lg-3">
+                <div id="alert-voice" class="alert alert-warning mt-lg-3" role="alert">
+                    <div class="d-flex align-items-start">
+                        <div style="width: 12px; text-align: center;">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </div>
+                        <div class="w-100 ms-3">
+                            Mulai Chrome 71+ dan mayoritas peramban modern, <code>speechSynthesis.speak()</code> tidak boleh jalan otomatis tanpa interaksi pengguna (klik, tap, keypress) karena alasan privasi/spam audio. Silakan klik tombol <kbd><i class="fa-solid fa-microphone"></i></kbd> untuk mengaktifkan suara.
+                        </div>
+                    </div>
+                </div>
+                <div class="card shadow-sm" id="top-card-right">
                     <div class="card-body">
 
                     </div>
@@ -115,6 +126,33 @@ $db = db_connect();
         const now = dayjs();
         $('#tanggal').text(now.format('dddd, D MMMM YYYY'));
         $('#waktu').text(now.format('HH.mm.ss (UTCZ)'));
+    }
+
+    let voiceEnabled = false;
+    let googleVoice = null;
+
+    // Ambil daftar voice Google Indonesia
+    function loadVoices() {
+        const voices = speechSynthesis.getVoices();
+        googleVoice = voices.find(voice =>
+            voice.name.includes("Google") && voice.lang === "id-ID"
+        );
+    }
+
+    // Chrome/Edge kadang perlu event onvoiceschanged
+    speechSynthesis.onvoiceschanged = loadVoices;
+
+    // Fungsi untuk aktifkan suara
+    function enableVoice() {
+        loadVoices();
+        const u = new SpeechSynthesisUtterance("");
+        u.lang = 'id-ID';
+        if (googleVoice) {
+            u.voice = googleVoice;
+        }
+        speechSynthesis.speak(u);
+        voiceEnabled = true;
+        console.log("Voice enabled with Google Indonesia");
     }
 
     async function fetchAntrean() {
@@ -152,6 +190,45 @@ $db = db_connect();
         }
     }
     $(document).ready(async function() {
+        $('#btnEnableVoice').on('click', function(ə) {
+            ə.preventDefault();
+            enableVoice();
+            $('#alert-voice').remove();
+            $('#top-card-right').addClass('mt-lg-3');
+            $(this).remove();
+            showSuccessToast('Suara diaktifkan. Pemanggilan nomor antrean sudah dapat dilakukan.')
+        });
+
+        const socket = new WebSocket('<?= env('WS-URL-JS') ?>'); // Ganti dengan domain VPS
+
+        socket.onopen = () => {
+            console.log("Connected to WebSocket server");
+        };
+
+        socket.onmessage = async function(event) {
+            const message = JSON.parse(event.data);
+
+            if (message.panggil_antrean && message.data) {
+                console.log(message);
+                const nomorAntrean = message.data.nomor;
+                const [huruf, angka] = nomorAntrean.split('-');
+                const kalimat = `Nomor antrean, ${huruf}, ${angka}, silakan menuju ${message.data.loket}.`;
+
+                const utterance = new SpeechSynthesisUtterance(kalimat);
+                utterance.lang = 'id-ID';
+                if (googleVoice) {
+                    utterance.voice = googleVoice;
+                }
+                speechSynthesis.speak(utterance);
+
+                $('#nomor_antrean_label').text(nomorAntrean);
+                $('#loket').text(message.data.loket);
+            }
+        };
+
+        socket.onclose = () => {
+            console.log("Disconnected from WebSocket server");
+        };
         fetchAntrean();
         updateDateTime(); // Jalankan sekali saat load
         setInterval(updateDateTime, 1000); // Update tiap 1 detik
