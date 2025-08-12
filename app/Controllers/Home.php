@@ -25,8 +25,12 @@ class Home extends BaseController
             // Mengembalikan tampilan beranda dengan data yang telah disiapkan
             return view('dashboard/home/satpam', $data);
         } else if (session()->get('role') == "Monitor Antrean") {
+            $db = db_connect(); // Menghubungkan ke database
+            // Mengambil daftar loket dari database
+            $loket = $db->table('master_loket')->where('status', 1)->get()->getResultArray();
             // Menyusun data untuk ditampilkan di view
             $data = [
+                'loket' => $loket, // Daftar loket yang diambil dari database
                 'title' => 'Beranda - ' . $this->systemName, // Judul halaman
                 'headertitle' => 'Beranda', // Judul header
                 'agent' => $this->request->getUserAgent() // Mendapatkan user agent dari request
@@ -613,10 +617,11 @@ class Home extends BaseController
     public function list_antrean_monitor()
     {
         if (session()->get('role') == 'Monitor Antrean') {
+            $loket = $this->request->getGet('loket');
             $tanggal_antrean = $this->request->getGet('tanggal_antrean');
 
             // Kalau salah satu kosong, kirim data kosong
-            if (empty($tanggal_antrean)) {
+            if (empty($loket) && empty($tanggal_antrean)) {
                 return $this->response->setJSON([
                     'antrean' => [],
                     'total' => 0
@@ -627,6 +632,7 @@ class Home extends BaseController
 
             // Filter berdasarkan loket, tanggal, dan status
             $AntreanModel
+                ->where('loket', $loket)
                 ->like('tanggal_antrean', $tanggal_antrean) // gunakan where jika format tanggal pas
                 ->where('status', 'SUDAH DIPANGGIL');
 

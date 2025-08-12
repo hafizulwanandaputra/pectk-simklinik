@@ -45,7 +45,7 @@
                     <div class="d-flex flex-column flex-lg-row gap-2 position-relative">
                         <div class="input-group input-group-sm w-auto first-row-form has-validation">
                             <select class="form-select form-select-sm" id="nama_loket">
-                                <option value="" selected>Semua Loket</option>
+                                <option value="" selected disabled>Pilih Loket</option>
                                 <?php foreach ($loket as $l) : ?>
                                     <option value="<?= $l['nama_loket']; ?>"><?= $l['nama_loket']; ?></option>
                                 <?php endforeach; ?>

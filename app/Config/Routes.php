@@ -15,6 +15,7 @@ $routes->get('/(?i)logout', 'Auth::logout');
 $routes->get('/(?i)home', 'Home::index');
 $routes->get('/(?i)home/(?i)icd_x', 'Home::icd_x');
 $routes->get('/(?i)home/(?i)icd_9', 'Home::icd_9');
+$routes->post('/(?i)home/(?i)list_loket', 'Home::list_loket');
 $routes->post('/(?i)home/(?i)list_antrean', 'Home::list_antrean');
 $routes->get('/(?i)home/(?i)list_antrean_monitor', 'Home::list_antrean_monitor');
 $routes->post('/(?i)home/(?i)buat_antrean', 'Home::buat_antrean');
