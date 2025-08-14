@@ -216,141 +216,141 @@ $tanggalFormatted = $tanggalFormatter->format($dateTime);
         <table class="table" style="width: 100%; margin-bottom: 4px; border-collapse: collapse; font-size: 9pt;">
             <thead>
                 <tr>
-                    <th style="padding-top: 3px; padding-bottom: 0px; border-right: 1px solid black;"></th>
-                    <th style="padding-top: 3px; padding-bottom: 0px; border: 1px solid black;" colspan="5">
+                    <th style="padding-top: 1px; padding-bottom: 0px; border-right: 1px solid black;"></th>
+                    <th style="padding-top: 1px; padding-bottom: 0px; border: 1px solid black;" colspan="5">
                         <h2 style="text-align: center; margin: 0.25cm;">O.D</h2>
                     </th>
-                    <th style="padding-top: 3px; padding-bottom: 0px; border: 1px solid black;" colspan="5">
+                    <th style="padding-top: 1px; padding-bottom: 0px; border: 1px solid black;" colspan="5">
                         <h2 style="text-align: center; margin: 0.25cm;">O.S</h2>
                     </th>
-                    <th colspan="2" style="padding-top: 3px; padding-bottom: 0px; border-left: 1px solid black;"></th>
+                    <th colspan="2" style="padding-top: 1px; padding-bottom: 0px; border-left: 1px solid black;"></th>
                 </tr>
                 <tr>
-                    <th style="padding-top: 3px; padding-bottom: 0px; text-align: center; width: 7.692307692307692%; border-bottom: 1px solid black; border-right: 1px solid black;"></th>
-                    <th style="padding-top: 3px; padding-bottom: 0px; text-align: center; width: 7.692307692307692%; border: 1px solid black;">Vitrum Spher</th>
-                    <th style="padding-top: 3px; padding-bottom: 0px; text-align: center; width: 7.692307692307692%; border: 1px solid black;">Vitrum Cyldr</th>
-                    <th style="padding-top: 3px; padding-bottom: 0px; text-align: center; width: 7.692307692307692%; border: 1px solid black;">Axis</th>
-                    <th style="padding-top: 3px; padding-bottom: 0px; text-align: center; width: 7.692307692307692%; border: 1px solid black;">Prisma</th>
-                    <th style="padding-top: 3px; padding-bottom: 0px; text-align: center; width: 7.692307692307692%; border: 1px solid black;">Basis</th>
-                    <th style="padding-top: 3px; padding-bottom: 0px; text-align: center; width: 7.692307692307692%; border: 1px solid black;">Vitrum Spher</th>
-                    <th style="padding-top: 3px; padding-bottom: 0px; text-align: center; width: 7.692307692307692%; border: 1px solid black;">Vitrum Cyldr</th>
-                    <th style="padding-top: 3px; padding-bottom: 0px; text-align: center; width: 7.692307692307692%; border: 1px solid black;">Axis</th>
-                    <th style="padding-top: 3px; padding-bottom: 0px; text-align: center; width: 7.692307692307692%; border: 1px solid black;">Prisma</th>
-                    <th style="padding-top: 3px; padding-bottom: 0px; text-align: center; width: 7.692307692307692%; border: 1px solid black;">Basis</th>
-                    <th style="padding-top: 3px; padding-bottom: 0px; text-align: center; width: 7.692307692307692%; border: 1px solid black;">Golor Vitror</th>
-                    <th style="padding-top: 3px; padding-bottom: 0px; text-align: center; width: 7.692307692307692%; border: 1px solid black;">Distant Pupil</th>
+                    <th style="padding-top: 1px; padding-bottom: 0px; text-align: center; width: 7.692307692307692%; border-bottom: 1px solid black; border-right: 1px solid black;"></th>
+                    <th style="padding-top: 1px; padding-bottom: 0px; text-align: center; width: 7.692307692307692%; border: 1px solid black;">Vitrum Spher</th>
+                    <th style="padding-top: 1px; padding-bottom: 0px; text-align: center; width: 7.692307692307692%; border: 1px solid black;">Vitrum Cyldr</th>
+                    <th style="padding-top: 1px; padding-bottom: 0px; text-align: center; width: 7.692307692307692%; border: 1px solid black;">Axis</th>
+                    <th style="padding-top: 1px; padding-bottom: 0px; text-align: center; width: 7.692307692307692%; border: 1px solid black;">Prisma</th>
+                    <th style="padding-top: 1px; padding-bottom: 0px; text-align: center; width: 7.692307692307692%; border: 1px solid black;">Basis</th>
+                    <th style="padding-top: 1px; padding-bottom: 0px; text-align: center; width: 7.692307692307692%; border: 1px solid black;">Vitrum Spher</th>
+                    <th style="padding-top: 1px; padding-bottom: 0px; text-align: center; width: 7.692307692307692%; border: 1px solid black;">Vitrum Cyldr</th>
+                    <th style="padding-top: 1px; padding-bottom: 0px; text-align: center; width: 7.692307692307692%; border: 1px solid black;">Axis</th>
+                    <th style="padding-top: 1px; padding-bottom: 0px; text-align: center; width: 7.692307692307692%; border: 1px solid black;">Prisma</th>
+                    <th style="padding-top: 1px; padding-bottom: 0px; text-align: center; width: 7.692307692307692%; border: 1px solid black;">Basis</th>
+                    <th style="padding-top: 1px; padding-bottom: 0px; text-align: center; width: 7.692307692307692%; border: 1px solid black;">Golor Vitror</th>
+                    <th style="padding-top: 1px; padding-bottom: 0px; text-align: center; width: 7.692307692307692%; border: 1px solid black;">Distant Pupil</th>
                 </tr>
                 <tr>
-                    <th style="padding-top: 3px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap;">Pro Login<br>Quitat</th>
-                    <td style="padding-top: 3px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
+                    <th style="padding-top: 1px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap;">Pro Login<br>Quitat</th>
+                    <td style="padding-top: 1px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
                         <?= $optik['od_login_spher']; ?>
                     </td>
-                    <td style="padding-top: 3px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
+                    <td style="padding-top: 1px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
                         <?= $optik['od_login_cyldr']; ?>
                     </td>
-                    <td style="padding-top: 3px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
+                    <td style="padding-top: 1px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
                         <?= $optik['od_login_axis']; ?>
                     </td>
-                    <td style="padding-top: 3px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
+                    <td style="padding-top: 1px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
                         <?= $optik['od_login_prisma']; ?>
                     </td>
-                    <td style="padding-top: 3px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
+                    <td style="padding-top: 1px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
                         <?= $optik['od_login_basis']; ?>
                     </td>
-                    <td style="padding-top: 3px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
+                    <td style="padding-top: 1px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
                         <?= $optik['os_login_spher']; ?>
                     </td>
-                    <td style="padding-top: 3px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
+                    <td style="padding-top: 1px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
                         <?= $optik['os_login_cyldr']; ?>
                     </td>
-                    <td style="padding-top: 3px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
+                    <td style="padding-top: 1px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
                         <?= $optik['os_login_axis']; ?>
                     </td>
-                    <td style="padding-top: 3px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
+                    <td style="padding-top: 1px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
                         <?= $optik['os_login_prisma']; ?>
                     </td>
-                    <td style="padding-top: 3px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
+                    <td style="padding-top: 1px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
                         <?= $optik['os_login_basis']; ?>
-                    <td style="padding-top: 3px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
+                    <td style="padding-top: 1px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
                         <?= $optik['os_login_vitror']; ?>
                     </td>
-                    <td style="padding-top: 3px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
+                    <td style="padding-top: 1px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
                         <?= $optik['os_login_pupil']; ?>
                     </td>
                 </tr>
                 <tr>
-                    <th style="padding-top: 3px; padding-bottom: 0px; text-align: center; border: 1px solid black;">Pro<br>Domo</th>
-                    <td style="padding-top: 3px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
+                    <th style="padding-top: 1px; padding-bottom: 0px; text-align: center; border: 1px solid black;">Pro<br>Domo</th>
+                    <td style="padding-top: 1px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
                         <?= $optik['od_domo_spher']; ?>
                     </td>
-                    <td style="padding-top: 3px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
+                    <td style="padding-top: 1px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
                         <?= $optik['od_domo_cyldr']; ?>
                     </td>
-                    <td style="padding-top: 3px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
+                    <td style="padding-top: 1px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
                         <?= $optik['od_domo_axis']; ?>
                     </td>
-                    <td style="padding-top: 3px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
+                    <td style="padding-top: 1px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
                         <?= $optik['od_domo_prisma']; ?>
                     </td>
-                    <td style="padding-top: 3px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
+                    <td style="padding-top: 1px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
                         <?= $optik['od_domo_basis']; ?>
                     </td>
-                    <td style="padding-top: 3px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
+                    <td style="padding-top: 1px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
                         <?= $optik['os_domo_spher']; ?>
                     </td>
-                    <td style="padding-top: 3px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
+                    <td style="padding-top: 1px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
                         <?= $optik['os_domo_cyldr']; ?>
                     </td>
-                    <td style="padding-top: 3px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
+                    <td style="padding-top: 1px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
                         <?= $optik['os_domo_axis']; ?>
                     </td>
-                    <td style="padding-top: 3px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
+                    <td style="padding-top: 1px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
                         <?= $optik['os_domo_prisma']; ?>
                     </td>
-                    <td style="padding-top: 3px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
+                    <td style="padding-top: 1px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
                         <?= $optik['os_domo_basis']; ?>
-                    <td style="padding-top: 3px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
+                    <td style="padding-top: 1px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
                         <?= $optik['os_domo_vitror']; ?>
                     </td>
-                    <td style="padding-top: 3px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
+                    <td style="padding-top: 1px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
                         <?= $optik['os_domo_pupil']; ?>
                     </td>
                 </tr>
                 <tr>
-                    <th style="padding-top: 3px; padding-bottom: 0px; text-align: center; border: 1px solid black;">Propin<br>Quitat</th>
-                    <td style="padding-top: 3px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
+                    <th style="padding-top: 1px; padding-bottom: 0px; text-align: center; border: 1px solid black;">Propin<br>Quitat</th>
+                    <td style="padding-top: 1px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
                         <?= $optik['od_quitat_spher']; ?>
                     </td>
-                    <td style="padding-top: 3px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
+                    <td style="padding-top: 1px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
                         <?= $optik['od_quitat_cyldr']; ?>
                     </td>
-                    <td style="padding-top: 3px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
+                    <td style="padding-top: 1px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
                         <?= $optik['od_quitat_axis']; ?>
                     </td>
-                    <td style="padding-top: 3px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
+                    <td style="padding-top: 1px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
                         <?= $optik['od_quitat_prisma']; ?>
                     </td>
-                    <td style="padding-top: 3px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
+                    <td style="padding-top: 1px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
                         <?= $optik['od_quitat_basis']; ?>
                     </td>
-                    <td style="padding-top: 3px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
+                    <td style="padding-top: 1px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
                         <?= $optik['os_quitat_spher']; ?>
                     </td>
-                    <td style="padding-top: 3px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
+                    <td style="padding-top: 1px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
                         <?= $optik['os_quitat_cyldr']; ?>
                     </td>
-                    <td style="padding-top: 3px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
+                    <td style="padding-top: 1px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
                         <?= $optik['os_quitat_axis']; ?>
                     </td>
-                    <td style="padding-top: 3px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
+                    <td style="padding-top: 1px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
                         <?= $optik['os_quitat_prisma']; ?>
                     </td>
-                    <td style="padding-top: 3px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
+                    <td style="padding-top: 1px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
                         <?= $optik['os_quitat_basis']; ?>
-                    <td style="padding-top: 3px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
+                    <td style="padding-top: 1px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
                         <?= $optik['os_quitat_vitror']; ?>
                     </td>
-                    <td style="padding-top: 3px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
+                    <td style="padding-top: 1px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
                         <?= $optik['os_quitat_pupil']; ?>
                     </td>
                 </tr>
