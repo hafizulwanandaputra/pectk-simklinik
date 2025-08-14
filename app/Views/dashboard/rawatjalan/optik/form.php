@@ -279,7 +279,7 @@ $tanggalFormatted = $tanggalFormatter->format($dateTime);
                     </td>
                 </tr>
                 <tr>
-                    <th style="padding-top: 3px; padding-bottom: 0px; text-align: center; border: 1px solid black;">Pro Domo</th>
+                    <th style="padding-top: 3px; padding-bottom: 0px; text-align: center; border: 1px solid black;">Pro<br>Domo</th>
                     <td style="padding-top: 3px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
                         <?= $optik['od_domo_spher']; ?>
                     </td>
@@ -317,7 +317,7 @@ $tanggalFormatted = $tanggalFormatter->format($dateTime);
                     </td>
                 </tr>
                 <tr>
-                    <th style="padding-top: 3px; padding-bottom: 0px; text-align: center; border: 1px solid black;">Propin Quitat</th>
+                    <th style="padding-top: 3px; padding-bottom: 0px; text-align: center; border: 1px solid black;">Propin<br>Quitat</th>
                     <td style="padding-top: 3px; padding-bottom: 0px; text-align: center; border: 1px solid black; white-space: nowrap; overflow: hidden;">
                         <?= $optik['od_quitat_spher']; ?>
                     </td>
