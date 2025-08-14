@@ -26,7 +26,7 @@ $tanggalFormat = $formatter->format($tanggal_isi_resep);
     <title><?= $title; ?></title>
     <style>
         body {
-            font-family: Helvetica, Arial, sans-serif;
+            font-family: <?= env('PDF-FONT') ?>;
             font-size: 10pt;
             line-height: 1.2;
         }

@@ -13,7 +13,7 @@ $tanggal = Time::parse($transaksi['tgl_transaksi']);
     <title><?= $title; ?></title>
     <style>
         body {
-            font-family: Helvetica, Arial, sans-serif;
+            font-family: <?= env('PDF-FONT') ?>;
             font-size: 9pt;
             line-height: 1.2;
         }

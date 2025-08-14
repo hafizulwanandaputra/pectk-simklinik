@@ -14,7 +14,7 @@ $tanggal_lahir = Time::parse($resep['tanggal_lahir']);
     <title><?= $title; ?></title>
     <style>
         body {
-            font-family: Helvetica, Arial, sans-serif;
+            font-family: <?= env('PDF-FONT') ?>;
             font-size: 5pt;
             line-height: 1.2;
             margin: 0;

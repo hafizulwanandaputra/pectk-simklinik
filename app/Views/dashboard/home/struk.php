@@ -16,7 +16,7 @@
         }
 
         body {
-            font-family: Helvetica, Arial, sans-serif;
+            font-family: <?= env('PDF-FONT') ?>;
             font-size: 6pt;
             line-height: 1.2;
         }
