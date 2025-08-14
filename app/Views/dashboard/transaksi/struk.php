@@ -173,7 +173,7 @@ $tanggal = Time::parse($transaksi['tgl_transaksi']);
                             Disc %
                         </th>
                         <th colspan="2" class="outline-border" style="width: 0%; vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: center; white-space: nowrap;">
-                            Sub Total
+                            Subtotal
                         </th>
                     </tr>
                     <?php
@@ -209,7 +209,7 @@ $tanggal = Time::parse($transaksi['tgl_transaksi']);
                     <tr>
                         <th colspan="3" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;"></th>
                         <th colspan="3" class="outline-border" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
-                            Sub Total
+                            Subtotal
                         </th>
                         <th class="outline-border-right" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: left; white-space: nowrap;">
                             Rp
@@ -239,7 +239,7 @@ $tanggal = Time::parse($transaksi['tgl_transaksi']);
                         Disc %
                     </th>
                     <th colspan="2" class="outline-border" style="width: 0%; vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: center; white-space: nowrap;">
-                        Sub Total
+                        Subtotal
                     </th>
                 </tr>
                 <?php
@@ -277,7 +277,7 @@ $tanggal = Time::parse($transaksi['tgl_transaksi']);
                 <tr>
                     <th colspan="3" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;"></th>
                     <th colspan="3" class="outline-border" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
-                        Sub Total
+                        Subttotal
                     </th>
                     <th class="outline-border-right" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: left; white-space: nowrap;">
                         Rp
@@ -289,7 +289,7 @@ $tanggal = Time::parse($transaksi['tgl_transaksi']);
                 <tr>
                     <th colspan="3" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;"></th>
                     <th colspan="3" class="outline-border" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
-                        Grand Total
+                        Total Keseluruhan
                     </th>
                     <th class="outline-border-right" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: left; white-space: nowrap;">
                         Rp

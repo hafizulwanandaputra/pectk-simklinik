@@ -183,7 +183,7 @@
                         </div>
                         <div class="card-footer">
                             <div class="row overflow-hidden d-flex align-items-end">
-                                <div class="col fw-medium text-nowrap">Sub Total</div>
+                                <div class="col fw-medium text-nowrap">Subtotal</div>
                                 <div class="col text-end">
                                     <div class="date text-truncate placeholder-glow fw-bold" id="subtotal_layanan">
                                         <span class="placeholder w-100"></span>
@@ -237,7 +237,7 @@
                     </div>
                     <div class="card-footer">
                         <div class="row overflow-hidden d-flex align-items-end">
-                            <div class="col fw-medium text-nowrap">Sub Total</div>
+                            <div class="col fw-medium text-nowrap">Subtotal</div>
                             <div class="col text-end">
                                 <div class="date text-truncate placeholder-glow fw-bold" id="subtotal_obat_alkes">
                                     <span class="placeholder w-100"></span>
@@ -250,7 +250,7 @@
         </div>
 
         <div class="mb-0 row g-1 overflow-hidden d-flex align-items-end">
-            <div class="col fw-medium text-nowrap">Grand Total</div>
+            <div class="col fw-medium text-nowrap">Total Keseluruhan</div>
             <div class="col text-end">
                 <div class="fs-4 date text-truncate placeholder-glow" style="font-weight: 900;" id="total_pembayaran">
                     <span class="placeholder w-100"></span>
