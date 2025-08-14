@@ -155,8 +155,8 @@ $usia = $registrasi->diff($tanggal_lahir);
                     <div class="btn-group">
                         <button class="btn btn-body dropdown-toggle bg-gradient" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-print"></i> Cetak Form</button>
                         <ul class="dropdown-menu dropdown-menu-end shadow-sm w-100">
-                            <li><a class="dropdown-item" href="<?= base_url('rujukan/export/' . $rujukan['id_rujukan']) ?>?side=left" target="_blank">Sisi kiri</a></li>
-                            <li><a class="dropdown-item" href="<?= base_url('rujukan/export/' . $rujukan['id_rujukan']) ?>?side=right" target="_blank">Sisi kanan</a></li>
+                            <li><a class="dropdown-item print-btn" href="<?= base_url('rujukan/export/' . $rujukan['id_rujukan']) ?>?side=left">Sisi kiri</a></li>
+                            <li><a class="dropdown-item print-btn" href="<?= base_url('rujukan/export/' . $rujukan['id_rujukan']) ?>?side=right">Sisi kanan</a></li>
                         </ul>
                     </div>
                     <button class="btn btn-primary bg-gradient" type="submit" id="submitBtn"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
@@ -189,6 +189,12 @@ $usia = $registrasi->diff($tanggal_lahir);
     }
 
     $(document).ready(async function() {
+        $('.print-btn').on('click', function(e) {
+            e.preventDefault();
+            const url = $(this).attr('href');
+            window.open(url);
+        });
+
         $(".nav .activeLink").each(function() {
             // Scroll ke elemen yang aktif
             this.scrollIntoView({
