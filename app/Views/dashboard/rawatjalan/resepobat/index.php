@@ -363,8 +363,16 @@ $usia = $registrasi->diff($tanggal_lahir);
             // Cek status `status`
             if (data.status === "1" || data.confirmed === "1") {
                 $('#tambahDetailContainer').hide();
+                $('.edit-btn').prop('disabled', true);
+                $('.delete-btn').prop('disabled', true);
+                $('#cancelConfirmBtn').prop('disabled', false);
+                $('#confirmBtn').prop('disabled', true);
             } else if (data.status === "0" || data.confirmed === "0") {
                 $('#tambahDetailContainer').show();
+                $('.edit-btn').prop('disabled', false);
+                $('.delete-btn').prop('disabled', false);
+                $('#cancelConfirmBtn').prop('disabled', true);
+                $('#confirmBtn').prop('disabled', false);
             }
         } catch (error) {
             showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
@@ -493,11 +501,13 @@ $usia = $registrasi->diff($tanggal_lahir);
         socket.onmessage = async function(event) {
             const data = JSON.parse(event.data);
 
-            if (data.update) {
+            if (data.update_resep) {
                 console.log("Received update from WebSocket");
                 const selectedObat = $('#id_batch_obat').val();
                 await fetchObatOptions(selectedObat);
                 fetchDetailResep();
+            } else if (data.update) {
+                console.log("Received update from WebSocket");
                 fetchStatusResep();
             }
         };

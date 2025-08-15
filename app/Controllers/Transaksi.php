@@ -913,7 +913,7 @@ class Transaksi extends BaseController
                 'total_pembayaran' => $total_pembayaran, // Memperbarui total pembayaran di tabel transaksi
             ]);
             // Panggil WebSocket untuk update client
-            $this->notify_clients_submit('update');
+            $this->notify_clients_submit('update_transaksi');
             // Mengembalikan respons sukses
             return $this->response->setJSON(['success' => true, 'message' => 'Item transaksi berhasil ditambahkan']);
         } else {
@@ -993,7 +993,7 @@ class Transaksi extends BaseController
                 'total_pembayaran' => $total_pembayaran, // Memperbarui total pembayaran di tabel transaksi
             ]);
             // Panggil WebSocket untuk update client
-            $this->notify_clients_submit('update');
+            $this->notify_clients_submit('update_transaksi');
             // Mengembalikan respons sukses
             return $this->response->setJSON(['success' => true, 'message' => 'Item transaksi berhasil ditambahkan']);
         } else {
@@ -1078,7 +1078,7 @@ class Transaksi extends BaseController
                 'total_pembayaran' => $total_pembayaran, // Memperbarui total pembayaran di tabel transaksi
             ]);
             // Panggil WebSocket untuk update client
-            $this->notify_clients_submit('update');
+            $this->notify_clients_submit('update_transaksi');
             // Mengembalikan respons sukses
             return $this->response->setJSON(['success' => true, 'message' => 'Item transaksi berhasil diperbarui']);
         } else {
@@ -1157,7 +1157,7 @@ class Transaksi extends BaseController
                 'total_pembayaran' => $total_pembayaran, // Memperbarui total pembayaran di tabel transaksi
             ]);
             // Panggil WebSocket untuk update client
-            $this->notify_clients_submit('update');
+            $this->notify_clients_submit('update_transaksi');
             // Mengembalikan respons sukses
             return $this->response->setJSON(['success' => true, 'message' => 'Item transaksi berhasil diperbarui']);
         } else {
@@ -1216,7 +1216,7 @@ class Transaksi extends BaseController
                 'total_pembayaran' => $total_pembayaran, // Memperbarui total pembayaran di tabel transaksi
             ]);
             // Panggil WebSocket untuk update client
-            $this->notify_clients_submit('update');
+            $this->notify_clients_submit('update_transaksi');
             // Mengembalikan respons sukses
             return $this->response->setJSON(['message' => 'Item transaksi berhasil dihapus']);
         } else {
@@ -2088,7 +2088,7 @@ class Transaksi extends BaseController
 
     public function notify_clients($action)
     {
-        if (!in_array($action, ['update', 'delete'])) {
+        if (!in_array($action, ['update', 'update_transaksi', 'delete'])) {
             return $this->response->setJSON([
                 'status' => 'Invalid action',
                 'error' => 'Action must be either "update" or "delete"'
@@ -2103,10 +2103,10 @@ class Transaksi extends BaseController
 
     public function notify_clients_submit($action)
     {
-        if (!in_array($action, ['update', 'delete'])) {
+        if (!in_array($action, ['update', 'update_transaksi', 'delete'])) {
             return $this->response->setJSON([
                 'status' => 'Invalid action',
-                'error' => 'Action must be either "update" or "delete"'
+                'error' => 'Action must be either "update", "update_transaksi", or "delete"'
             ])->setStatusCode(400);
         }
 

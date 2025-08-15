@@ -685,7 +685,7 @@
 
         socket.onmessage = async function(event) {
             const data = JSON.parse(event.data);
-            if (data.update || data.delete) {
+            if (data.update || data.update_transaksi || data.delete) {
                 console.log("Received update from WebSocket");
                 // Simpan nilai pilihan kasir saat ini
                 const selectedKasir = $('#kasirFilter').val();

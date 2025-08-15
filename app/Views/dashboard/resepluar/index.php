@@ -605,7 +605,7 @@
 
         socket.onmessage = async function(event) {
             const data = JSON.parse(event.data);
-            if (data.update || data.delete) {
+            if (data.update || data.update_resep || data.delete) {
                 console.log("Received update from WebSocket");
                 // Simpan nilai pilihan apoteker saat ini
                 const selectedApoteker = $('#apotekerFilter').val();

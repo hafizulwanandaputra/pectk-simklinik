@@ -601,11 +601,15 @@
                 $('#tambahObatAlkesContainer').hide();
                 $('#printBtn').prop('disabled', false);
                 $('#cancelBtn').prop('disabled', false);
+                $('.edit-layanan-btn, .edit-obatalkes-btn').prop('disabled', true);
+                $('.delete-btn').prop('disabled', true);
             } else if (data.lunas === "0") {
                 $('#tambahLayananContainer').show();
                 $('#tambahObatAlkesContainer').show();
                 $('#printBtn').prop('disabled', true);
                 $('#cancelBtn').prop('disabled', true);
+                $('.edit-layanan-btn, .edit-obatalkes-btn').prop('disabled', false);
+                $('.delete-btn').prop('disabled', false);
             }
         } catch (error) {
             showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
@@ -809,7 +813,7 @@
 
         socket.onmessage = async function(event) {
             const data = JSON.parse(event.data);
-            if (data.update) {
+            if (data.update_transaksi) {
                 console.log("Received update from WebSocket");
                 const selectedLayanan = $('#id_layanan').val();
                 <?php if ($transaksi['dokter'] != 'Resep Luar') : ?>
@@ -825,6 +829,9 @@
                     await fetchResepOptions();
                     await fetchObatAlkes();
                 <?php endif; ?>
+                fetchStatusTransaksi();
+            } else if (data.update) {
+                console.log("Received update from WebSocket");
                 fetchStatusTransaksi();
                 transactionProcessBtn();
             }

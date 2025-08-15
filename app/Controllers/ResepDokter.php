@@ -706,7 +706,7 @@ class ResepDokter extends BaseController
             } else {
                 $db->transCommit();
                 // Panggil WebSocket untuk update client
-                $this->notify_clients('update');
+                $this->notify_clients('update_resep');
                 return $this->response->setJSON(['success' => true, 'message' => 'Item resep berhasil ditambahkan']);
             }
         } else {
@@ -853,7 +853,7 @@ class ResepDokter extends BaseController
             } else {
                 $db->transCommit();
                 // Panggil WebSocket untuk update client
-                $this->notify_clients('update');
+                $this->notify_clients('update_resep');
                 return $this->response->setJSON(['success' => true, 'message' => 'Item resep berhasil diperbarui']);
             }
         } else {
@@ -948,7 +948,7 @@ class ResepDokter extends BaseController
                 $builderTransaksiDetail = $db->table('detail_transaksi');
                 $builderTransaksiDetail->where('id_resep', $id_resep)->delete();
                 // Panggil WebSocket untuk update client
-                $this->notify_clients('update');
+                $this->notify_clients('update_resep');
                 return $this->response->setJSON(['message' => 'Item resep berhasil dihapus']);
             }
 
@@ -1329,10 +1329,10 @@ class ResepDokter extends BaseController
 
     public function notify_clients($action)
     {
-        if (!in_array($action, ['update', 'delete'])) {
+        if (!in_array($action, ['update', 'update_resep', 'delete'])) {
             return $this->response->setJSON([
                 'status' => 'Invalid action',
-                'error' => 'Action must be either "update" or "delete"'
+                'error' => 'Action must be either "update", "update_resep", or "delete"'
             ])->setStatusCode(400);
         }
 

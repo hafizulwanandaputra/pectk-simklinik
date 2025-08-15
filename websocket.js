@@ -83,6 +83,10 @@ app.post("/notify", (req, res) => {
 
   if (action === "update") {
     broadcast({ update: true });
+  } else if (action === "update_resep") {
+    broadcast({ update_resep: true });
+  } else if (action === "update_transaksi") {
+    broadcast({ update_transaksi: true });
   } else if (action === "delete") {
     broadcast({ delete: true });
   } else if (action === "panggil_antrean") {
