@@ -302,7 +302,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
         }
 
         .toast-container {
-            padding-top: 4rem !important;
+            padding-top: calc(48px + 1rem) !important;
             right: 0 !important;
         }
 
@@ -422,7 +422,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
 
         @media (max-width: 767.98px) {
             .toast-container {
-                padding-top: <?= (!(in_array(session()->get('role'), ['Satpam', 'Monitor Antrean']) && $activeSegment === 'home')) ? '7rem' : '4rem' ?> !important;
+                padding-top: <?= (!(in_array(session()->get('role'), ['Satpam', 'Monitor Antrean']) && $activeSegment === 'home')) ? 'calc(96px + 1rem)' : 'calc(48px + 1rem)' ?> !important;
                 transform: translateX(-50%) !important;
                 left: 50% !important;
             }

@@ -16,8 +16,8 @@ $db = db_connect();
     }
 
     .full-card-height {
-        max-height: calc(100vh - 117px - 2rem);
-        min-height: calc(100vh - 117px - 2rem);
+        max-height: calc((100vh - 101px) - 3rem);
+        min-height: calc((100vh - 101px) - 3rem);
     }
 
     .main-content-inside {
@@ -62,17 +62,23 @@ $db = db_connect();
 <?= $this->endSection(); ?>
 <?= $this->section('content'); ?>
 <main class="main-content-inside p-3">
+    <div id="alert-voice" class="fixed-top" style="z-index: 99; margin-top: 48px;">
+        <ul class="list-group shadow-sm rounded-0">
+            <li class="list-group-item border-top-0 border-end-0 border-start-0 border-warning-subtle bg-warning-subtle text-warning-emphasis transparent-blur">
+                <div class="no-fluid-content">
+                    <div class="d-flex align-items-start">
+                        <div style="width: 12px; text-align: center;">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </div>
+                        <div class="w-100 ms-3">
+                            Mulai Chrome 71+ dan mayoritas peramban modern, <code>speechSynthesis.speak()</code> tidak boleh jalan otomatis tanpa interaksi pengguna (klik, ketuk, atau <em>keypress</em>) karena alasan privasi atau spam audio. Silakan klik tombol <kbd><i class="fa-solid fa-microphone"></i></kbd> untuk mengaktifkan suara.
+                        </div>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
     <div class="no-fluid-content">
-        <div id="alert-voice" class="alert alert-warning " role="alert">
-            <div class="d-flex align-items-start">
-                <div style="width: 12px; text-align: center;">
-                    <i class="fa-solid fa-triangle-exclamation"></i>
-                </div>
-                <div class="w-100 ms-3">
-                    Mulai Chrome 71+ dan mayoritas peramban modern, <code>speechSynthesis.speak()</code> tidak boleh jalan otomatis tanpa interaksi pengguna (klik, ketuk, atau <em>keypress</em>) karena alasan privasi atau spam audio. Silakan klik tombol <kbd><i class="fa-solid fa-microphone"></i></kbd> untuk mengaktifkan suara.
-                </div>
-            </div>
-        </div>
         <div class="row row-cols-1 row-cols-lg-2 g-3">
             <div class="col col-lg-6 col-xl-5">
                 <div class="mb-3" style="max-height: 52px; min-height: 52px;">
@@ -88,7 +94,7 @@ $db = db_connect();
                     <div class="col full-card-height">
                         <div class="card shadow-sm h-100">
                             <div class="card-header">
-                                <div class="fs-3 fw-light" id="nama_loket_1"><?= $this->include('spinner/spinner'); ?></div>
+                                <div class="fs-3 fw-light" id="nama_loket_1"><em>Loket Tutup</em></div>
                                 <div class="fs-6">Nomor antrean:</div>
                                 <h1 class="fw-medium mb-0" id="nomor_antrean_label_1"><i class="fa-solid fa-minus"></i></h1>
                             </div>
@@ -101,7 +107,7 @@ $db = db_connect();
                     <div class="col full-card-height">
                         <div class="card shadow-sm h-100">
                             <div class="card-header">
-                                <div class="fs-3 fw-light" id="nama_loket_2"><?= $this->include('spinner/spinner'); ?></div>
+                                <div class="fs-3 fw-light" id="nama_loket_2"><em>Loket Tutup</em></div>
                                 <div class="fs-6">Nomor antrean:</div>
                                 <h1 class="fw-medium mb-0" id="nomor_antrean_label_2"><i class="fa-solid fa-minus"></i></h1>
                             </div>
