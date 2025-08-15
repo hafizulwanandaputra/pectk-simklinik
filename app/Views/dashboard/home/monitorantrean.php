@@ -16,8 +16,8 @@ $db = db_connect();
     }
 
     .full-card-height {
-        max-height: calc((100vh - 101px) - 3rem);
-        min-height: calc((100vh - 101px) - 3rem);
+        max-height: calc((100vh - 3rem - 53px) - 3rem);
+        min-height: calc((100vh - 3rem - 53px) - 3rem);
     }
 
     .main-content-inside {
@@ -62,7 +62,7 @@ $db = db_connect();
 <?= $this->endSection(); ?>
 <?= $this->section('content'); ?>
 <main class="main-content-inside p-3">
-    <div id="alert-voice" class="fixed-top" style="z-index: 99; margin-top: 48px;">
+    <div id="alert-voice" class="fixed-top" style="z-index: 99; margin-top: 3rem;">
         <ul class="list-group shadow-sm rounded-0">
             <li class="list-group-item border-top-0 border-end-0 border-start-0 border-warning-subtle bg-warning-subtle text-warning-emphasis transparent-blur">
                 <div class="no-fluid-content">

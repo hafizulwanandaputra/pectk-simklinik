@@ -302,7 +302,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
         }
 
         .toast-container {
-            padding-top: calc(48px + 1rem) !important;
+            padding-top: calc(3rem + 1rem) !important;
             right: 0 !important;
         }
 
@@ -422,7 +422,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
 
         @media (max-width: 767.98px) {
             .toast-container {
-                padding-top: <?= (!(in_array(session()->get('role'), ['Satpam', 'Monitor Antrean']) && $activeSegment === 'home')) ? 'calc(96px + 1rem)' : 'calc(48px + 1rem)' ?> !important;
+                padding-top: <?= (!(in_array(session()->get('role'), ['Satpam', 'Monitor Antrean']) && $activeSegment === 'home')) ? 'calc(6rem + 1rem)' : 'calc(3rem + 1rem)' ?> !important;
                 transform: translateX(-50%) !important;
                 left: 50% !important;
             }
@@ -432,13 +432,13 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
             }
 
             .sidebar {
-                top: 48px;
+                top: 3rem;
                 border-right: 0px solid var(--bs-border-color);
                 width: 100%;
             }
 
             #sidebarMenu2 {
-                height: calc(100% - 48px);
+                height: calc(100% - 3rem);
                 padding-top: 0;
             }
 
@@ -479,20 +479,20 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
         <!-- HEADER -->
         <header class="navbar sticky-top flex-md-nowrap p-0 shadow-sm bg-success-subtle text-success-emphasis border-bottom border-success-subtle header">
             <?php if (!(in_array(session()->get('role'), ['Satpam', 'Monitor Antrean']) && $activeSegment === 'home')) : ?>
-                <div id="sidebarHeader" class="d-flex justify-content-center align-items-center me-0 px-3 py-md-1" style="min-height: 48px; max-height: 48px;">
+                <div id="sidebarHeader" class="d-flex justify-content-center align-items-center me-0 px-3 py-md-1" style="min-height: 3rem; max-height: 3rem;">
                     <span class="navbar-brand mx-0 text-start text-md-center lh-sm d-flex justify-content-center align-items-center" style="font-size: 7.5pt;">
                         <img src="<?= base_url('/assets/images/pec-klinik-logo.png'); ?>" alt="KLINIK MATA PECTK" height="24px">
                         <div class="ps-2 text-start text-success-emphasis fw-bold">PADANG EYE CENTER<br>TELUK KUANTAN</div>
                     </span>
                 </div>
             <?php endif; ?>
-            <button type="button" class="btn btn-outline-success bg-gradient d-md-none mx-3" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation" style="min-height: calc(48px - 12px); max-height: calc(48px - 12px); padding-left: 1rem; padding-right: 1rem; padding-top: 0px; padding-bottom: 0px; font-size: 12pt;"><i class="fa-solid fa-bars"></i></button>
-            <div class="d-flex w-100 align-items-center text-truncate" style="min-height: 48px; max-height: 48px;">
+            <button type="button" class="btn btn-outline-success bg-gradient d-md-none mx-3" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation" style="min-height: calc(3rem - 12px); max-height: calc(3rem - 12px); padding-left: 1rem; padding-right: 1rem; padding-top: 0px; padding-bottom: 0px; font-size: 1rem"><i class="fa-solid fa-bars"></i></button>
+            <div class="d-flex w-100 align-items-center text-truncate" style="min-height: 3rem; max-height: 3rem;">
                 <div class="w-100 ps-3 pe-1 pe-lg-2 text-truncate" style="flex: 1; min-width: 0;">
                     <?= $this->renderSection('title'); ?>
                 </div>
                 <div class="d-flex justify-content-center">
-                    <div class="vr d-none d-lg-block border-success-subtle" style="height: 32px;"></div>
+                    <div class="vr d-none d-lg-block border-success-subtle" style="height: 2.5rem;"></div>
                 </div>
                 <div class="me-3 ms-1 ms-lg-3">
                     <a href="#" class="d-flex align-items-center text-success-emphasis text-decoration-none" data-bs-toggle="offcanvas" data-bs-target="#userOffcanvas" role="button" aria-controls="userOffcanvas">
@@ -502,14 +502,14 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                 <div class="text-nowrap lh-sm" style="font-size: 0.7em;">@<?= session()->get('username') ?> • <span class="date"><?= $_SERVER['REMOTE_ADDR'] ?></span></div>
                             </div>
                         </div>
-                        <div class="rounded-pill bg-body profilephotosidebar d-flex justify-content-center align-items-center" style="min-height: 32px; max-height: 32px;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+                        <div class="rounded-pill bg-body profilephotosidebar d-flex justify-content-center align-items-center" style="min-height: 2rem; max-height: 2rem; min-width: 2rem; max-width: 2rem;">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" fill="currentColor" viewBox="0 0 16 16">
                                 <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM14 14s-1-4-6-4-6 4-6 4 1 0 6 0 6 0 6 0z" />
                             </svg>
                         </div>
                     </a>
                     <div class="offcanvas offcanvas-end bg-body-tertiary shadow-sm transparent-blur" tabindex="-1" id="userOffcanvas" aria-labelledby="userOffcanvasLabel">
-                        <div class="offcanvas-header pt-0 pb-0 d-flex justify-content-between align-items-center" style="min-height: 48px;">
+                        <div class="offcanvas-header pt-0 pb-0 d-flex justify-content-between align-items-center" style="min-height: 3rem; max-height: 3rem;">
                             <div>
                                 <span class="navbar-brand mx-0 text-start text-md-center lh-sm d-flex justify-content-center align-items-center" style="font-size: 7.5pt;">
                                     <img src="<?= base_url('/assets/images/pec-klinik-logo.png'); ?>" alt="KLINIK MATA PECTK" height="24px">
