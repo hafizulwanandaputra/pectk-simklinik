@@ -745,6 +745,7 @@ class ResepDokter extends BaseController
             $builderObat = $db->table('batch_obat');
             $obat = $builderObat
                 ->join('obat', 'obat.id_obat = batch_obat.id_obat', 'inner')
+                ->where('id_batch_obat', $detail_resep['id_batch_obat'])
                 ->get()->getRowArray();
 
             // Memeriksa apakah id_obat ditemukan
