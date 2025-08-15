@@ -486,7 +486,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                     </span>
                 </div>
             <?php endif; ?>
-            <button type="button" class="btn btn-outline-success bg-gradient d-md-none mx-3" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation"><i class="fa-solid fa-bars"></i></button>
+            <button type="button" class="btn btn-outline-success bg-gradient d-md-none mx-3" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation" style="min-height: calc(48px - 12px); max-height: calc(48px - 12px); padding-left: 1rem; padding-right: 1rem; padding-top: 0px; padding-bottom: 0px; font-size: 12pt;"><i class="fa-solid fa-bars"></i></button>
             <div class="d-flex w-100 align-items-center text-truncate" style="min-height: 48px; max-height: 48px;">
                 <div class="w-100 ps-3 pe-1 pe-lg-2 text-truncate" style="flex: 1; min-width: 0;">
                     <?= $this->renderSection('title'); ?>
