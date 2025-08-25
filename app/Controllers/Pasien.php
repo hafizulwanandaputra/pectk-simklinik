@@ -110,6 +110,39 @@ class Pasien extends BaseController
         }
     }
 
+    public function cekkososng()
+    {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Admisi' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') {
+            $db = db_connect();
+
+            $pasien = $db->table('pasien')
+                ->where('nama_pasien', null);
+
+            $total_pasien_kosong = $pasien->countAllResults();
+            $no_rm_kosong = $pasien->select('no_rm')->where('nama_pasien', null)->get()->getResultArray();
+
+            if ($total_pasien_kosong > 0) {
+                return $this->response->setJSON([
+                    'cekkosong' => true,
+                    'message' => 'Ada ' . number_format($total_pasien_kosong, 0, ',', '.') . ' pasien dengan data kosong. Silahkan lengkapi data pasien dengan nomor rekam medis berikut:',
+                    'no_rm' => array_column($no_rm_kosong, 'no_rm')
+                ]);
+            } else {
+                return $this->response->setJSON([
+                    'cekkosong' => false,
+                    'message' => 'Tidak ada pasien dengan data kosong.',
+                    'no_rm' => NULL
+                ]);
+            }
+        } else {
+            // Mengembalikan status 404 jika peran tidak diizinkan
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
+        }
+    }
+
     public function create()
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Dokter' yang diizinkan

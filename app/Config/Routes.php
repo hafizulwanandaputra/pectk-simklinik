@@ -34,6 +34,7 @@ $routes->get('/(?i)pasien', 'Pasien::index');
 $routes->get('/(?i)pasien/(?i)pasienlist', 'Pasien::pasienlist');
 $routes->get('/(?i)pasien/(?i)detailpasien/(:any)', 'Pasien::detailpasien/$1');
 $routes->get('/(?i)pasien/(?i)pasien/(:any)', 'Pasien::pasien/$1');
+$routes->post('/(?i)pasien/(?i)cekkososng', 'Pasien::cekkososng');
 $routes->post('/(?i)pasien/(?i)create', 'Pasien::create');
 $routes->get('/(?i)pasien/(?i)provinsi', 'Pasien::provinsi');
 $routes->get('/(?i)pasien/(?i)kabupaten/(:any)', 'Pasien::kabupaten/$1');

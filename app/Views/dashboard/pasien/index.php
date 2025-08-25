@@ -658,11 +658,38 @@
             $('#addModal').modal('show');
         });
 
-        $(document).on('click', '#confirmAddBtn', function(ə) {
+        $(document).on('click', '#confirmAddBtn', async function(ə) {
             ə.preventDefault();
-            $('#addForm').submit();
             $('#addModal button').prop('disabled', true);
-            $('#confirmAddBtn').html(`<?= $this->include('spinner/spinner'); ?> Menambahkan`);
+            $('#confirmAddBtn').html(`<?= $this->include('spinner/spinner'); ?> Memeriksa Data Pasien Kosong...`);
+            try {
+                const response = await axios.post('<?= base_url('pasien/cekkososng') ?>');
+                if (response.data.cekkosong === false) {
+                    $('#addForm').submit();
+                    $('#confirmAddBtn').html(`<?= $this->include('spinner/spinner'); ?> Menambahkan Pasien...`);
+                } else if (response.data.cekkosong === true) {
+                    // ambil array no_rm
+                    const daftarNoRM = response.data.no_rm;
+
+                    // buat <ul> dari array
+                    let ulHtml = '<ul class="mb-0">';
+                    daftarNoRM.forEach(noRM => {
+                        ulHtml += `<li>${noRM}</li>`;
+                    });
+                    ulHtml += '</ul>';
+
+                    // tampilkan di toast atau modal
+                    showFailedToast(`${response.data.message}${ulHtml}`);
+                    $('#addModal button').prop('disabled', false);
+                    $('#confirmAddBtn').html('Tambah Pasien');
+                    $('#addModal').modal('hide');
+                }
+            } catch (error) {
+                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                $('#addModal button').prop('disabled', false);
+                $('#confirmAddBtn').html('Tambah Pasien');
+                $('#addModal').modal('hide');
+            }
         });
 
         $(document).on('visibilitychange', function() {
