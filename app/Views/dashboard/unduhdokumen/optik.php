@@ -257,7 +257,6 @@
                 </tr>
             </tbody>
         </table>
-        <p style="font-size: 9pt;">Dicetak: <?= date("Y-m-d H:i:s") ?></p>
     </div>
 
 </body>
