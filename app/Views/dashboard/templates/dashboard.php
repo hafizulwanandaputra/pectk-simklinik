@@ -720,6 +720,9 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                             <div class="flex-fill mx-2 <?= ($activeSegment === 'lpoperasikatarak' || $activeSegment === 'lpoperasipterigium' || $activeSegment === 'lpoperasi') ? 'text-white' : 'link-body-emphasis' ?>">
                                                 Laporan Operasi
                                             </div>
+                                            <div style="min-width: 16px; max-width: 16px; text-align: center;">
+                                                <i class="fa-solid fa-chevron-right"></i>
+                                            </div>
                                         </div>
                                     </span>
                                 </li>
@@ -762,6 +765,9 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                             </div>
                                             <div class="flex-fill mx-2 <?= ($activeSegment === 'frmsetujukedokteran' || $activeSegment === 'frmsetujuanestesi' || $activeSegment === 'frmsetujuphaco') ? 'text-white' : 'link-body-emphasis' ?>">
                                                 Formulir
+                                            </div>
+                                            <div style="min-width: 16px; max-width: 16px; text-align: center;">
+                                                <i class="fa-solid fa-chevron-right"></i>
                                             </div>
                                         </div>
                                     </span>
@@ -807,6 +813,9 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                             </div>
                                             <div class="flex-fill mx-2 <?= ($activeSegment === 'rujukan' || $activeSegment === 'sakitmata' || $activeSegment === 'istirahat' || $activeSegment === 'butawarna') ? 'text-white' : 'link-body-emphasis' ?>">
                                                 Surat
+                                            </div>
+                                            <div style="min-width: 16px; max-width: 16px; text-align: center;">
+                                                <i class="fa-solid fa-chevron-right"></i>
                                             </div>
                                         </div>
                                     </span>
@@ -995,6 +1004,9 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                             </div>
                                             <div class="flex-fill mx-2 <?= ($activeSegment === 'loket' || $activeSegment === 'jaminan' || $activeSegment === 'tindakanoperasi' || $activeSegment === 'poliklinik') ? 'text-white' : 'link-body-emphasis' ?>">
                                                 Master Data
+                                            </div>
+                                            <div style="min-width: 16px; max-width: 16px; text-align: center;">
+                                                <i class="fa-solid fa-chevron-right"></i>
                                             </div>
                                         </div>
                                     </span>
