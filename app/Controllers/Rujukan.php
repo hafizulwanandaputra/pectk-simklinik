@@ -264,7 +264,7 @@ class Rujukan extends BaseController
                 ]
             ]);
 
-            $$rawBody = $response->getBody()->getContents();
+            $rawBody = $response->getBody()->getContents();
             $result = json_decode($rawBody, true);
 
             if (json_last_error() !== JSON_ERROR_NONE) {
