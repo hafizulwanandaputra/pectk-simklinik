@@ -143,7 +143,7 @@
                                                 <span class="placeholder w-100 d-block"></span>
                                             </div>
                                         </div>
-                                        <div>
+                                        <div class="d-flex justify-content-end align-self-end gap-2">
                                             <button type="button" class="btn btn-body btn-sm bg-gradient placeholder" style="width: 4em;" disabled aria-disabled="true"></button>
                                             <button type="button" class="btn btn-danger btn-sm bg-gradient placeholder" style="width: 4em;" disabled aria-disabled="true"></button>
                                         </div>
@@ -337,7 +337,7 @@
                                 <div style="font-size: 0.75em; min-width: 0;" class="align-self-center text-truncate">
                                     ${jumlah_rawat_jalan}
                                 </div>
-                                <div>
+                                <div class="d-flex justify-content-end align-self-end gap-2">
                                     <button type="button" class="btn btn-body btn-sm bg-gradient text-nowrap details-btn" onclick="window.location.href = '<?= base_url('pasien/detailpasien') ?>/${pasien.id_pasien}'">
                                         Detail
                                     </button>
@@ -485,7 +485,7 @@
         $('#exportButton').on('click', async function(ə) {
             ə.preventDefault();
             $(this).hide();
-            $('#searchInput, #addButton, #tanggalFilter, #clearTglButton, .details-btn').prop('disabled', true);
+            $('#searchInput, #addButton, #tanggalFilter, #clearTglButton').prop('disabled', true);
             const fp = $('#tanggalFilter')[0]._flatpickr;
 
             if (fp) {
@@ -668,7 +668,7 @@
             } finally {
                 $('#loadingSpinner').hide(); // Menyembunyikan spinner setelah unduhan selesai
                 $(this).show();
-                $('#searchInput, #addButton, #tanggalFilter, #clearTglButton, .details-btn').prop('disabled', false);
+                $('#searchInput, #addButton, #tanggalFilter, #clearTglButton').prop('disabled', false);
                 if (fp) {
                     // Aktifkan kembali altInput (untuk desktop)
                     if (fp.altInput) {
