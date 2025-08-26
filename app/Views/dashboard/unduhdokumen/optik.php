@@ -245,8 +245,8 @@
         <table class="table" style="width: 100%; margin-bottom: 4px;">
             <tbody>
                 <tr>
-                    <td style="width: 60%; max-width: 6cm; vertical-align: middle; padding: 0.1cm; font-size: 8pt; overflow: hidden;">
-
+                    <td style="text-align: center; width: 60%; max-width: 6cm; vertical-align: middle; padding: 0.1cm; font-size: 8pt; overflow: hidden; border: 1px solid black;">
+                        Tempel <em>barcode</em><br>pasien di sini
                     </td>
                     <td style="width: 40%; vertical-align: top; padding: 0;">
                         <center>
