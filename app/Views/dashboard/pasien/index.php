@@ -137,8 +137,16 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="d-flex flex-wrap justify-content-end gap-2 mt-2">
-                                        <button type="button" class="btn btn-body btn-sm bg-gradient" style="width: 80px; height: 31px;" disabled></button>
+                                    <div class="d-flex flex-wrap justify-content-between gap-2 mt-2">
+                                        <div style="font-size: 0.75em;" class="align-self-center flex-grow-1">
+                                            <div class="placeholder-glow">
+                                                <span class="placeholder w-100 d-block"></span>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <button type="button" class="btn btn-body btn-sm bg-gradient placeholder" style="width: 4em;" disabled aria-disabled="true"></button>
+                                            <button type="button" class="btn btn-danger btn-sm bg-gradient placeholder" style="width: 4em;" disabled aria-disabled="true"></button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -168,6 +176,23 @@
                     </div>
                 </div>
                 <?= form_close(); ?>
+            </div>
+        </div>
+    </div>
+    <div class="modal modal-sheet p-4 py-md-5 fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content bg-body-tertiary rounded-5 shadow-lg transparent-blur">
+                <div class="modal-body p-4">
+                    <h5 class="mb-0" id="deleteMessage"></h5>
+                    <div class="row gx-2 pt-4">
+                        <div class="col d-grid">
+                            <button type="button" class="btn btn-lg btn-body bg-gradient fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Batal</button>
+                        </div>
+                        <div class="col d-grid">
+                            <button type="button" class="btn btn-lg btn-danger bg-gradient fs-6 mb-0 rounded-4" id="confirmDeleteBtn">Hapus</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -232,17 +257,26 @@
                     const tanggal_lahir = pasien.tanggal_lahir ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${pasien.tanggal_lahir}">` : `<em>Tidak ada</em>`;
                     const alamat = pasien.alamat ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${pasien.alamat}">` : `<em>Tidak ada</em>`;
                     const telpon = pasien.telpon ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${pasien.telpon}">` : `<em>Tidak ada</em>`;
+                    let jumlah_rawat_jalan = pasien.jumlah_rawat_jalan;
+                    if (jumlah_rawat_jalan > 0) {
+                        jumlah_rawat_jalan = `${jumlah_rawat_jalan.toLocaleString('id-ID')} kali berobat jalan.`;
+                    } else if (jumlah_rawat_jalan === 1) {
+                        jumlah_rawat_jalan = `Sekali berobat jalan.`;
+                    } else {
+                        jumlah_rawat_jalan = `<em>Belum pernah berobat jalan.</em>`;
+                    }
+                    const delete_status = pasien.jumlah_rawat_jalan > 0 ? `disabled` : ``;
                     const pasienElement = `
-            <span class="list-group-item border-top-0 pb-3 pt-3">
-                <div class="d-flex">
-                    <div class="align-self-center w-100">
-                        <h5 class="card-title d-flex date justify-content-between">
-                            <div class="d-flex justify-content-start text-truncate">
-                                <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">${pasien.number}</span>
-                                <span class="mx-1 align-self-center text-truncate">${nama_pasien_header}</span>
-                            </div>
-                            <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">${pasien.no_rm}</span>
-                        </h5>
+                <span class="list-group-item border-top-0 pb-3 pt-3">
+                    <div class="d-flex">
+                        <div class="align-self-center w-100">
+                            <h5 class="card-title d-flex date justify-content-between">
+                                <div class="d-flex justify-content-start text-truncate">
+                                    <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">${pasien.number}</span>
+                                    <span class="mx-1 align-self-center text-truncate">${nama_pasien_header}</span>
+                                </div>
+                                <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">${pasien.no_rm}</span>
+                            </h5>
                             <div style="font-size: 0.75em;">
                                 <div class="row gx-3">
                                     <div class="col-lg-6">
@@ -299,14 +333,22 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="d-flex flex-wrap justify-content-end gap-2 mt-2">
-                                <button type="button" class="btn btn-body btn-sm bg-gradient details-btn" onclick="window.location.href = '<?= base_url('pasien/detailpasien') ?>/${pasien.id_pasien}'">
-                                    <i class="fa-solid fa-circle-info"></i> Detail Pasien
-                                </button>
+                            <div class="d-flex justify-content-between gap-2 mt-2">
+                                <div style="font-size: 0.75em; min-width: 0;" class="align-self-center text-truncate">
+                                    ${jumlah_rawat_jalan}
+                                </div>
+                                <div>
+                                    <button type="button" class="btn btn-body btn-sm bg-gradient text-nowrap details-btn" onclick="window.location.href = '<?= base_url('pasien/detailpasien') ?>/${pasien.id_pasien}'">
+                                        Detail
+                                    </button>
+                                    <button type="button" class="btn btn-danger btn-sm bg-gradient text-nowrap delete-btn" data-id="${pasien.id_pasien}" data-name="${pasien.no_rm}" ${delete_status}>
+                                        Hapus
+                                    </button>
+                                </div>
                             </div>        
+                        </div>
                     </div>
-                </div>
-            </span>
+                </span>
                 `;
 
                     $('#pasienContainer').append(pasienElement);
@@ -689,6 +731,42 @@
                 $('#addModal button').prop('disabled', false);
                 $('#confirmAddBtn').html('Tambah Pasien');
                 $('#addModal').modal('hide');
+            }
+        });
+
+        var id_pasien;
+        var no_rm;
+
+        $(document).on('click', '.delete-btn', function() {
+            id_pasien = $(this).data('id');
+            no_rm = $(this).data('name');
+            $('[data-bs-toggle="tooltip"]').tooltip('hide');
+            $('#deleteMessage').html(`Hapus pasien ${no_rm}?`);
+            $('#deleteModal').modal('show');
+        });
+
+        $('#confirmDeleteBtn').click(async function() {
+            $('#deleteModal button').prop('disabled', true);
+            $(this).html(`<?= $this->include('spinner/spinner'); ?>`); // Menampilkan pesan loading
+
+            try {
+                const response = await axios.delete(`<?= base_url('/pasien/delete') ?>/${id_pasien}`);
+                if (response.data.success === true) {
+                    showSuccessToast(response.data.message);
+                    fetchPasien();
+                } else {
+                    showFailedToast(response.data.message);
+                }
+            } catch (error) {
+                if (error.response.request.status === 404) {
+                    showFailedToast(error.response.data.message);
+                } else {
+                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                }
+            } finally {
+                $('#deleteModal').modal('hide');
+                $('#deleteModal button').prop('disabled', false);
+                $(this).text(`Hapus`); // Mengembalikan teks tombol asal
             }
         });
 

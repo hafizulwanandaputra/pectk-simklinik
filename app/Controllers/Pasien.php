@@ -91,10 +91,20 @@ class Pasien extends BaseController
             // Menghitung nomor urut untuk halaman saat ini
             $startNumber = $offset + 1;
 
-            // Menambahkan nomor urut ke setiap pasien
-            $dataPasien = array_map(function ($data, $index) use ($startNumber) {
-                $data['number'] = $startNumber + $index; // Menetapkan nomor urut
-                return $data; // Mengembalikan data yang telah ditambahkan nomor urut
+            $db = db_connect();
+
+            // Tambahkan nomor urut + jumlah rawat jalan ke setiap pasien
+            $dataPasien = array_map(function ($data, $index) use ($startNumber, $db) {
+                $data['number'] = $startNumber + $index;
+
+                // Hitung jumlah rawat jalan dari no_rm
+                $countRJ = $db->table('rawat_jalan')
+                    ->where('no_rm', $data['no_rm'])
+                    ->countAllResults();
+
+                $data['jumlah_rawat_jalan'] = $countRJ;
+
+                return $data;
             }, $Pasien, array_keys($Pasien));
 
             // Mengembalikan data pasien dalam format JSON
@@ -184,7 +194,7 @@ class Pasien extends BaseController
             $newId = $this->PasienModel->insertID();
 
             // Panggil WebSocket untuk update client
-            $this->notify_clients();
+            $this->notify_clients('update');
 
             // Redirect ke halaman detail pasien
             return redirect()->to(base_url('pasien/detailpasien/' . $newId));
@@ -1286,7 +1296,7 @@ class Pasien extends BaseController
             ];
             $this->PasienModel->save($data);
             // Panggil WebSocket untuk update client
-            $this->notify_clients();
+            $this->notify_clients('update');
             return $this->response->setJSON(['success' => true, 'message' => 'Data pasien berhasil diperbarui']);
         } else {
             // Jika peran tidak dikenali, lemparkan pengecualian 404
@@ -1294,15 +1304,91 @@ class Pasien extends BaseController
         }
     }
 
-    public function notify_clients()
+    public function delete($id)
     {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Admisi' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') {
+            $db = db_connect();
+
+            // Cari pasien dengan ID terbesar (terakhir dimasukkan)
+            $lastPasien = $db->table('pasien')
+                ->select('id_pasien, no_rm')
+                ->orderBy('id_pasien', 'DESC')
+                ->get()
+                ->getRow();
+
+            $lastId = $lastPasien->id_pasien;
+            $lastNoRM = $lastPasien->no_rm;
+
+            // Jika ID yang mau dihapus bukan ID terakhir → gagalkan
+            if ($id != $lastId) {
+                return $this->response->setJSON([
+                    'success' => false,
+                    'message' => 'Hanya pasien dengan nomor rekam medis terakhir yang dapat dihapus. '
+                        . 'Hapus pasien ' . $lastNoRM . ' terlebih dahulu.',
+                ]);
+            }
+
+            // Ambil no_rm dari pasien
+            $pasien = $db->table('pasien')->select('no_rm')->where('id_pasien', $id)->get()->getRow();
+
+            if (!$pasien) {
+                return $this->response->setStatusCode(404)->setJSON([
+                    'error' => 'Data pasien tidak ditemukan',
+                ]);
+            }
+
+            // Cek apakah no_rm dipakai di tabel rawat_jalan
+            $count = $db->table('rawat_jalan')
+                ->where('no_rm', $pasien->no_rm)
+                ->countAllResults();
+
+            if ($count > 0) {
+                return $this->response->setJSON([
+                    'success' => false,
+                    'message' => 'Data pasien tidak dapat dihapus karena masih memiliki riwayat rawat jalan',
+                ]);
+            }
+
+            // Menghapus pasien
+            $db->table('pasien')
+                ->where('id_pasien', $id)
+                ->delete();
+
+            // Reset auto increment untuk tabel pasien
+            $db->query('ALTER TABLE `pasien` auto_increment = 1');
+
+            // Panggil WebSocket untuk update client
+            $this->notify_clients('delete');
+
+            return $this->response->setJSON([
+                'success' => true,
+                'message' => 'Data pasien berhasil dihapus',
+            ]);
+        } else {
+            // Jika peran tidak dikenali, kembalikan status 404
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
+        }
+    }
+
+    public function notify_clients($action)
+    {
+        if (!in_array($action, ['update', 'delete'])) {
+            return $this->response->setJSON([
+                'status' => 'Invalid action',
+                'error' => 'Action must be either "update" or "delete"'
+            ])->setStatusCode(400);
+        }
+
         $client = \Config\Services::curlrequest();
         $response = $client->post(env('WS-URL-PHP'), [
-            'json' => []
+            'json' => ['action' => $action]
         ]);
 
         return $this->response->setJSON([
-            'status' => 'Notification sent',
+            'status' => ucfirst($action) . ' notification sent',
             'response' => json_decode($response->getBody(), true)
         ]);
     }

@@ -51,6 +51,7 @@ $routes->get('/(?i)pasien/(?i)pendaftaroptions/(:any)', 'Pasien::pendaftaroption
 $routes->get('/(?i)pasien/(?i)statusoptions/(:any)', 'Pasien::statusoptions/$1');
 $routes->get('/(?i)pasien/(?i)exportexcel', 'Pasien::exportexcel');
 $routes->post('/(?i)pasien/(?i)update/(:any)', 'Pasien::update/$1');
+$routes->delete('/(?i)pasien/(?i)delete/(:any)', 'Pasien::delete/$1');
 
 // RAWAT JALAN
 $routes->get('/(?i)rawatjalan', 'RawatJalan::index');
