@@ -256,11 +256,11 @@
                     const telpon = pasien.telpon ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${pasien.telpon}">` : `<em>Tidak ada</em>`;
                     let jumlah_rawat_jalan = pasien.jumlah_rawat_jalan;
                     if (jumlah_rawat_jalan === 0) {
-                        jumlah_rawat_jalan = `Pasien ini belum pernah berobat jalan sama sekali.`;
+                        jumlah_rawat_jalan = `Pasien ini belum pernah berobat jalan sama sekali`;
                     } else if (jumlah_rawat_jalan === 1) {
-                        jumlah_rawat_jalan = `Pasien ini baru sekali berobat jalan.`;
+                        jumlah_rawat_jalan = `Pasien ini baru sekali berobat jalan`;
                     } else {
-                        jumlah_rawat_jalan = `Pasien ini sudah ${jumlah_rawat_jalan.toLocaleString('id-ID')} kali berobat jalan.`;
+                        jumlah_rawat_jalan = `Pasien ini sudah ${jumlah_rawat_jalan.toLocaleString('id-ID')} kali berobat jalan`;
                     }
                     const delete_status = pasien.jumlah_rawat_jalan > 0 ? `disabled` : ``;
                     const pasienElement = `
