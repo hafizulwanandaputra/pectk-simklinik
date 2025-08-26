@@ -9,6 +9,8 @@ use App\Models\ResepModel;
 use App\Models\RawatJalanModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use DateTime;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
 use IntlDateFormatter;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
@@ -1568,7 +1570,7 @@ class Transaksi extends BaseController
 
                 // return view('dashboard/transaksi/struk', $data);
                 // die;
-                $client = \Config\Services::curlrequest();
+                $client = new Client();
                 $html = view('dashboard/transaksi/struk', $data);
                 $filename = 'output-transaksi.pdf';
 
@@ -1590,9 +1592,16 @@ class Transaksi extends BaseController
                         ]
                     ]);
 
-                    $result = json_decode($response->getBody(), true);
+                    $rawBody = $response->getBody()->getContents();
+                    $result = json_decode($rawBody, true);
 
-                    if (isset($result['success']) && $result['success']) {
+                    if (json_last_error() !== JSON_ERROR_NONE) {
+                        return $this->response
+                            ->setStatusCode($response->getStatusCode())
+                            ->setBody("Gagal membuat PDF. Respons worker:\n\n" . esc($rawBody));
+                    }
+
+                    if (!empty($result['success']) && $result['success']) {
                         $path = WRITEPATH . 'temp/' . $result['file'];
 
                         if (!is_file($path)) {
@@ -1607,14 +1616,37 @@ class Transaksi extends BaseController
                             ->setBody(file_get_contents($path));
                     } else {
                         $errorMessage = $result['error'] ?? 'Tidak diketahui';
+                        $errorDetails = $result['details'] ?? '';
+
                         return $this->response
                             ->setStatusCode(500)
-                            ->setBody("Gagal membuat PDF: " . esc($errorMessage));
+                            ->setBody(
+                                "Gagal membuat PDF: " . esc($errorMessage) .
+                                    (!empty($errorDetails) ? "\n\nDetail:\n" . esc($errorDetails) : '')
+                            );
                     }
-                } catch (\Exception $e) {
+                } catch (RequestException $e) {
+                    // Ambil pesan default
+                    $errorMessage = "Kesalahan saat request ke PDF worker: " . $e->getMessage();
+
+                    // Kalau ada response dari worker
+                    if ($e->hasResponse()) {
+                        $errorBody = (string) $e->getResponse()->getBody();
+
+                        $json = json_decode($errorBody, true);
+                        if (json_last_error() === JSON_ERROR_NONE && isset($json['error'])) {
+                            $errorMessage .= "\n\nPesan dari worker: " . esc($json['error']);
+                            if (!empty($json['details'])) {
+                                $errorMessage .= "\n\nDetail:\n" . esc($json['details']);
+                            }
+                        } else {
+                            $errorMessage .= "\n\nRespons worker:\n" . esc($errorBody);
+                        }
+                    }
+
                     return $this->response
                         ->setStatusCode(500)
-                        ->setBody("Kesalahan saat request ke PDF worker: " . esc($e->getMessage()));
+                        ->setBody($errorMessage);
                 }
             } else {
                 throw PageNotFoundException::forPageNotFound(); // Jika transaksi tidak valid, lempar exception

@@ -6,6 +6,8 @@ use App\Controllers\BaseController;
 use App\Models\RawatJalanModel;
 use App\Models\ButaWarnaModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
 use Picqer\Barcode\BarcodeGeneratorPNG;
 
 class ButaWarna extends BaseController
@@ -232,7 +234,7 @@ class ButaWarna extends BaseController
                 ];
                 // return view('dashboard/butawarna/form', $data);
                 // die;
-                $client = \Config\Services::curlrequest();
+                $client = new Client(); // pakai Guzzle langsung
                 $html = view('dashboard/butawarna/form', $data);
                 $filename = 'output-butawarna.pdf';
 
@@ -254,9 +256,16 @@ class ButaWarna extends BaseController
                         ]
                     ]);
 
-                    $result = json_decode($response->getBody(), true);
+                    $rawBody = $response->getBody()->getContents();
+                    $result = json_decode($rawBody, true);
 
-                    if (isset($result['success']) && $result['success']) {
+                    if (json_last_error() !== JSON_ERROR_NONE) {
+                        return $this->response
+                            ->setStatusCode($response->getStatusCode())
+                            ->setBody("Gagal membuat PDF. Respons worker:\n\n" . esc($rawBody));
+                    }
+
+                    if (!empty($result['success']) && $result['success']) {
                         $path = WRITEPATH . 'temp/' . $result['file'];
 
                         if (!is_file($path)) {
@@ -271,14 +280,37 @@ class ButaWarna extends BaseController
                             ->setBody(file_get_contents($path));
                     } else {
                         $errorMessage = $result['error'] ?? 'Tidak diketahui';
+                        $errorDetails = $result['details'] ?? '';
+
                         return $this->response
                             ->setStatusCode(500)
-                            ->setBody("Gagal membuat PDF: " . esc($errorMessage));
+                            ->setBody(
+                                "Gagal membuat PDF: " . esc($errorMessage) .
+                                    (!empty($errorDetails) ? "\n\nDetail:\n" . esc($errorDetails) : '')
+                            );
                     }
-                } catch (\Exception $e) {
+                } catch (RequestException $e) {
+                    // Ambil pesan default
+                    $errorMessage = "Kesalahan saat request ke PDF worker: " . $e->getMessage();
+
+                    // Kalau ada response dari worker
+                    if ($e->hasResponse()) {
+                        $errorBody = (string) $e->getResponse()->getBody();
+
+                        $json = json_decode($errorBody, true);
+                        if (json_last_error() === JSON_ERROR_NONE && isset($json['error'])) {
+                            $errorMessage .= "\n\nPesan dari worker: " . esc($json['error']);
+                            if (!empty($json['details'])) {
+                                $errorMessage .= "\n\nDetail:\n" . esc($json['details']);
+                            }
+                        } else {
+                            $errorMessage .= "\n\nRespons worker:\n" . esc($errorBody);
+                        }
+                    }
+
                     return $this->response
                         ->setStatusCode(500)
-                        ->setBody("Kesalahan saat request ke PDF worker: " . esc($e->getMessage()));
+                        ->setBody($errorMessage);
                 }
             } else {
                 // Menampilkan halaman tidak ditemukan jika pasien tidak ditemukan
