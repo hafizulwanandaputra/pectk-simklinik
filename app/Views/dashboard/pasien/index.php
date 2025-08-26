@@ -136,17 +136,14 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="placeholder-glow">
+                                            <span class="placeholder w-100"></span>
+                                        </div>
                                     </div>
-                                    <div class="d-flex flex-wrap justify-content-between gap-2 mt-2">
-                                        <div style="font-size: 0.75em;" class="align-self-center flex-grow-1">
-                                            <div class="placeholder-glow">
-                                                <span class="placeholder w-100 d-block"></span>
-                                            </div>
-                                        </div>
-                                        <div class="d-flex justify-content-end align-self-end gap-2">
-                                            <button type="button" class="btn btn-body btn-sm bg-gradient placeholder" style="width: 4em;" disabled aria-disabled="true"></button>
-                                            <button type="button" class="btn btn-danger btn-sm bg-gradient placeholder" style="width: 4em;" disabled aria-disabled="true"></button>
-                                        </div>
+                                    <hr>
+                                    <div class="d-grid gap-2 d-flex flex-wrap justify-content-end">
+                                        <button type="button" class="btn btn-body btn-sm bg-gradient placeholder" style="width: 4em;" disabled aria-disabled="true"></button>
+                                        <button type="button" class="btn btn-danger btn-sm bg-gradient placeholder" style="width: 4em;" disabled aria-disabled="true"></button>
                                     </div>
                                 </div>
                             </div>
@@ -259,11 +256,11 @@
                     const telpon = pasien.telpon ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${pasien.telpon}">` : `<em>Tidak ada</em>`;
                     let jumlah_rawat_jalan = pasien.jumlah_rawat_jalan;
                     if (jumlah_rawat_jalan > 0) {
-                        jumlah_rawat_jalan = `${jumlah_rawat_jalan.toLocaleString('id-ID')} kali berobat jalan.`;
+                        jumlah_rawat_jalan = `Pasien ini sudah ${jumlah_rawat_jalan.toLocaleString('id-ID')} kali berobat jalan.`;
                     } else if (jumlah_rawat_jalan === 1) {
-                        jumlah_rawat_jalan = `Sekali berobat jalan.`;
+                        jumlah_rawat_jalan = `Pasien ini baru sekali berobat jalan.`;
                     } else {
-                        jumlah_rawat_jalan = `<em>Belum pernah berobat jalan.</em>`;
+                        jumlah_rawat_jalan = `Pasien ini belum pernah berobat jalan sama sekali.`;
                     }
                     const delete_status = pasien.jumlah_rawat_jalan > 0 ? `disabled` : ``;
                     const pasienElement = `
@@ -332,19 +329,16 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="fw-bold">${jumlah_rawat_jalan}</div>
                             </div>
-                            <div class="d-flex justify-content-between gap-2 mt-2">
-                                <div style="font-size: 0.75em; min-width: 0;" class="align-self-center text-truncate">
-                                    ${jumlah_rawat_jalan}
-                                </div>
-                                <div class="d-flex justify-content-end align-self-end gap-2">
-                                    <button type="button" class="btn btn-body btn-sm bg-gradient text-nowrap details-btn" onclick="window.location.href = '<?= base_url('pasien/detailpasien') ?>/${pasien.id_pasien}'">
-                                        Detail
-                                    </button>
-                                    <button type="button" class="btn btn-danger btn-sm bg-gradient text-nowrap delete-btn" data-id="${pasien.id_pasien}" data-name="${pasien.no_rm}" ${delete_status}>
-                                        Hapus
-                                    </button>
-                                </div>
+                            <hr>
+                            <div class="d-grid gap-2 d-flex flex-wrap justify-content-end">
+                                <button type="button" class="btn btn-body btn-sm bg-gradient text-nowrap details-btn" onclick="window.location.href = '<?= base_url('pasien/detailpasien') ?>/${pasien.id_pasien}'">
+                                    <i class="fa-solid fa-circle-info"></i> Detail
+                                </button>
+                                <button type="button" class="btn btn-danger btn-sm bg-gradient text-nowrap delete-btn" data-id="${pasien.id_pasien}" data-name="${pasien.no_rm}" ${delete_status}>
+                                    <i class="fa-solid fa-trash"></i> Hapus
+                                </button>
                             </div>        
                         </div>
                     </div>

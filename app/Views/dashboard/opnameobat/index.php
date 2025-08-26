@@ -66,9 +66,9 @@
                                 </div>
                             </div>
                             <hr>
-                            <div class="d-grid gap-2 d-flex justify-content-end">
-                                <a class="btn btn-body bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
-                                <a class="btn btn-danger bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                            <div class="d-grid gap-2 d-flex flex-wrap justify-content-end">
+                                <button type="button" class="btn btn-body btn-sm bg-gradient placeholder" style="width: 4em;" disabled aria-disabled="true"></button>
+                                <button type="button" class="btn btn-danger btn-sm bg-gradient placeholder" style="width: 4em;" disabled aria-disabled="true"></button>
                             </div>
                         </li>
                     <?php endfor; ?>
@@ -118,9 +118,9 @@
                     </div>
                 </div>
                 <hr>
-                <div class="d-grid gap-2 d-flex justify-content-end">
-                    <a class="btn btn-body bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
-                    <a class="btn btn-danger bg-gradient  disabled placeholder" aria-disabled="true" style="width: 75px; height: 31px;"></a>
+                <div class="d-grid gap-2 d-flex flex-wrap justify-content-end">
+                    <button type="button" class="btn btn-body btn-sm bg-gradient placeholder" style="width: 4em;" disabled aria-disabled="true"></button>
+                    <button type="button" class="btn btn-danger btn-sm bg-gradient placeholder" style="width: 4em;" disabled aria-disabled="true"></button>
                 </div>
             </li>
     `;
@@ -216,7 +216,7 @@
                     </div>
                 </div>
                 <hr>
-                <div class="d-grid gap-2 d-flex justify-content-end">
+                <div class="d-grid gap-2 d-flex flex-wrap justify-content-end">
                     <button type="button" class="btn btn-body btn-sm bg-gradient " onclick="window.location.href = '<?= base_url('opnameobat/detailopnameobat') ?>/${opname_obat.id_opname_obat}';">
                         <i class="fa-solid fa-circle-info"></i> Detail
                     </button>
