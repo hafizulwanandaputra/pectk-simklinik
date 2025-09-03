@@ -239,7 +239,7 @@ if (stripos($browser, 'Chrome') !== false) {
                     <div class="align-self-stretch flex-fill ps-1 text-wrap overflow-hidden d-flex align-items-center" style="text-overflow: ellipsis;">
                         <div>
                             <h5 class="card-title">Versi Bootstrap</h5>
-                            <span>5.3.7</span>
+                            <span>5.3.8</span>
                         </div>
                     </div>
                 </div>
