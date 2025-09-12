@@ -98,12 +98,20 @@ class Pasien extends BaseController
             $dataPasien = array_map(function ($data, $index) use ($startNumber, $db) {
                 $data['number'] = $startNumber + $index;
 
-                // Hitung jumlah rawat jalan dari no_rm
-                $countRJ = $db->table('rawat_jalan')
+                // Hitung jumlah rawat jalan dengan status DAFTAR
+                $countDaftar = $db->table('rawat_jalan')
                     ->where('no_rm', $data['no_rm'])
+                    ->where('status', 'DAFTAR')
                     ->countAllResults();
 
-                $data['jumlah_rawat_jalan'] = $countRJ;
+                // Hitung jumlah rawat jalan dengan status BATAL
+                $countBatal = $db->table('rawat_jalan')
+                    ->where('no_rm', $data['no_rm'])
+                    ->where('status', 'BATAL')
+                    ->countAllResults();
+
+                $data['jumlah_rawat_jalan_daftar'] = $countDaftar;
+                $data['jumlah_rawat_jalan_batal']  = $countBatal;
 
                 return $data;
             }, $Pasien, array_keys($Pasien));

@@ -138,6 +138,7 @@
                                         </div>
                                         <div class="placeholder-glow">
                                             <span class="placeholder w-100"></span>
+                                            <span class="placeholder w-100"></span>
                                         </div>
                                     </div>
                                     <hr>
@@ -254,13 +255,21 @@
                     const tanggal_lahir = pasien.tanggal_lahir ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${pasien.tanggal_lahir}">` : `<em>Tidak ada</em>`;
                     const alamat = pasien.alamat ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${pasien.alamat}">` : `<em>Tidak ada</em>`;
                     const telpon = pasien.telpon ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${pasien.telpon}">` : `<em>Tidak ada</em>`;
-                    let jumlah_rawat_jalan = pasien.jumlah_rawat_jalan;
-                    if (jumlah_rawat_jalan === 0) {
-                        jumlah_rawat_jalan = `Pasien ini belum pernah berobat jalan sama sekali`;
-                    } else if (jumlah_rawat_jalan === 1) {
-                        jumlah_rawat_jalan = `Pasien ini baru sekali berobat jalan`;
+                    let jumlah_rawat_jalan_daftar = pasien.jumlah_rawat_jalan_daftar;
+                    if (jumlah_rawat_jalan_daftar === 0) {
+                        jumlah_rawat_jalan_daftar = `Pasien ini belum pernah berobat jalan sama sekali`;
+                    } else if (jumlah_rawat_jalan_daftar === 1) {
+                        jumlah_rawat_jalan_daftar = `Pasien ini baru sekali berobat jalan`;
                     } else {
-                        jumlah_rawat_jalan = `Pasien ini sudah ${jumlah_rawat_jalan.toLocaleString('id-ID')} kali berobat jalan`;
+                        jumlah_rawat_jalan_daftar = `Pasien ini sudah ${jumlah_rawat_jalan_daftar.toLocaleString('id-ID')} kali berobat jalan`;
+                    }
+                    let jumlah_rawat_jalan_batal = pasien.jumlah_rawat_jalan_batal;
+                    if (jumlah_rawat_jalan_batal === 0) {
+                        jumlah_rawat_jalan_batal = `Pasien ini belum pernah batal berobat jalan sama sekali`;
+                    } else if (jumlah_rawat_jalan_batal === 1) {
+                        jumlah_rawat_jalan_batal = `Pasien ini baru sekali batal berobat jalan`;
+                    } else {
+                        jumlah_rawat_jalan_batal = `Pasien ini sudah ${jumlah_rawat_jalan_batal.toLocaleString('id-ID')} kali batal berobat jalan`;
                     }
                     const delete_status = pasien.jumlah_rawat_jalan > 0 ? `disabled` : ``;
                     const pasienElement = `
@@ -329,7 +338,14 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="fw-bold">${jumlah_rawat_jalan}</div>
+                                <div class="fw-bold d-flex align-items-start">
+                                    <span style="min-width: 1rem; max-width: 1rem;"><i class="fa-solid fa-check"></i></span>
+                                    <span>${jumlah_rawat_jalan_daftar}</span>
+                                </div>
+                                <div class="fw-bold d-flex align-items-start">
+                                    <span style="min-width: 1rem; max-width: 1rem;"><i class="fa-solid fa-xmark"></i></span>
+                                    <span>${jumlah_rawat_jalan_batal}</span>
+                                </div>
                             </div>
                             <hr>
                             <div class="d-grid gap-2 d-flex flex-wrap justify-content-end">
