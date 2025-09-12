@@ -98,6 +98,11 @@ class Pasien extends BaseController
             $dataPasien = array_map(function ($data, $index) use ($startNumber, $db) {
                 $data['number'] = $startNumber + $index;
 
+                // Hitung jumlah rawat jalan keseluruhan
+                $countAll = $db->table('rawat_jalan')
+                    ->where('no_rm', $data['no_rm'])
+                    ->countAllResults();
+
                 // Hitung jumlah rawat jalan dengan status DAFTAR
                 $countDaftar = $db->table('rawat_jalan')
                     ->where('no_rm', $data['no_rm'])
@@ -110,6 +115,7 @@ class Pasien extends BaseController
                     ->where('status', 'BATAL')
                     ->countAllResults();
 
+                $data['jumlah_rawat_jalan'] = $countAll;
                 $data['jumlah_rawat_jalan_daftar'] = $countDaftar;
                 $data['jumlah_rawat_jalan_batal']  = $countBatal;
 
@@ -1410,13 +1416,74 @@ class Pasien extends BaseController
             // Cek apakah no_rm dipakai di tabel rawat_jalan
             $count = $db->table('rawat_jalan')
                 ->where('no_rm', $pasien->no_rm)
+                ->where('status', 'DAFTAR')
                 ->countAllResults();
 
             if ($count > 0) {
                 return $this->response->setJSON([
                     'success' => false,
-                    'message' => 'Data pasien tidak dapat dihapus karena masih memiliki riwayat rawat jalan',
+                    'message' => 'Data pasien tidak dapat dihapus karena masih memiliki riwayat rawat jalan terdaftar',
                 ]);
+            }
+
+            // Ambil semua nomor_registrasi dari pasien ini
+            $rawatJalanData = $db->table('rawat_jalan')
+                ->where('no_rm', $pasien->no_rm)
+                ->where('status', 'BATAL')
+                ->get()
+                ->getResultArray();
+
+            if (!empty($rawatJalanData)) {
+                foreach ($rawatJalanData as $rj) {
+                    $nomorRegistrasi = $rj['nomor_registrasi'];
+
+                    // --- Hapus file asesmen mata ---
+                    $asesmen_mata = $db->table('medrec_assesment_mata')
+                        ->where('nomor_registrasi', $nomorRegistrasi)
+                        ->get()
+                        ->getResultArray();
+                    foreach ($asesmen_mata as $mata) {
+                        if (!empty($mata['gambar']) && file_exists(FCPATH . 'uploads/asesmen_mata/' . $mata['gambar'])) {
+                            @unlink(FCPATH . 'uploads/asesmen_mata/' . $mata['gambar']);
+                        }
+                    }
+
+                    // --- Hapus file edukasi evaluasi ---
+                    $edukasi_evaluasi = $db->table('medrec_edukasi_evaluasi')
+                        ->where('nomor_registrasi', $nomorRegistrasi)
+                        ->get()
+                        ->getResultArray();
+                    foreach ($edukasi_evaluasi as $edukasi) {
+                        if (!empty($edukasi['tanda_tangan_edukator']) && file_exists(FCPATH . 'uploads/ttd_edukator_evaluasi/' . $edukasi['tanda_tangan_edukator'])) {
+                            @unlink(FCPATH . 'uploads/ttd_edukator_evaluasi/' . $edukasi['tanda_tangan_edukator']);
+                        }
+                        if (!empty($edukasi['tanda_tangan_pasien']) && file_exists(FCPATH . 'uploads/ttd_pasien_evaluasi/' . $edukasi['tanda_tangan_pasien'])) {
+                            @unlink(FCPATH . 'uploads/ttd_pasien_evaluasi/' . $edukasi['tanda_tangan_pasien']);
+                        }
+                    }
+
+                    // --- Hapus file penunjang scan ---
+                    $penunjang_scan = $db->table('medrec_permintaan_penunjang_scan')
+                        ->where('nomor_registrasi', $nomorRegistrasi)
+                        ->get()
+                        ->getResultArray();
+                    foreach ($penunjang_scan as $scan) {
+                        if (!empty($scan['gambar']) && file_exists(FCPATH . 'uploads/scan_penunjang/' . $scan['gambar'])) {
+                            @unlink(FCPATH . 'uploads/scan_penunjang/' . $scan['gambar']);
+                        }
+                    }
+
+                    // --- Hapus file site marking operasi ---
+                    $sp_operasi = $db->table('medrec_sp_operasi')
+                        ->where('nomor_registrasi', $nomorRegistrasi)
+                        ->get()
+                        ->getResultArray();
+                    foreach ($sp_operasi as $scan) {
+                        if (!empty($scan['site_marking']) && file_exists(FCPATH . 'uploads/site_marking/' . $scan['site_marking'])) {
+                            @unlink(FCPATH . 'uploads/site_marking/' . $scan['site_marking']);
+                        }
+                    }
+                }
             }
 
             // Menghapus pasien
@@ -1425,7 +1492,30 @@ class Pasien extends BaseController
                 ->delete();
 
             // Reset auto increment untuk tabel pasien
-            $db->query('ALTER TABLE `pasien` auto_increment = 1');
+            $db->query('ALTER TABLE pasien auto_increment = 1');
+            $db->query('ALTER TABLE rawat_jalan AUTO_INCREMENT = 1');
+            $db->query('ALTER TABLE medrec_assesment AUTO_INCREMENT = 1');
+            $db->query('ALTER TABLE medrec_assesment_mata AUTO_INCREMENT = 1');
+            $db->query('ALTER TABLE medrec_edukasi AUTO_INCREMENT = 1');
+            $db->query('ALTER TABLE medrec_edukasi_evaluasi AUTO_INCREMENT = 1');
+            $db->query('ALTER TABLE medrec_form_persetujuan_tindakan AUTO_INCREMENT = 1');
+            $db->query('ALTER TABLE medrec_form_persetujuan_tindakan_anestesi AUTO_INCREMENT = 1');
+            $db->query('ALTER TABLE medrec_lp_operasi AUTO_INCREMENT = 1');
+            $db->query('ALTER TABLE medrec_lp_operasi_katarak AUTO_INCREMENT = 1');
+            $db->query('ALTER TABLE medrec_lp_operasi_pterigium AUTO_INCREMENT = 1');
+            $db->query('ALTER TABLE medrec_operasi_pra AUTO_INCREMENT = 1');
+            $db->query('ALTER TABLE medrec_operasi_safety_signin AUTO_INCREMENT = 1');
+            $db->query('ALTER TABLE medrec_operasi_safety_signout AUTO_INCREMENT = 1');
+            $db->query('ALTER TABLE medrec_operasi_safety_timeout AUTO_INCREMENT = 1');
+            $db->query('ALTER TABLE medrec_optik AUTO_INCREMENT = 1');
+            $db->query('ALTER TABLE medrec_permintaan_penunjang AUTO_INCREMENT = 1');
+            $db->query('ALTER TABLE medrec_permintaan_penunjang_scan AUTO_INCREMENT = 1');
+            $db->query('ALTER TABLE medrec_skrining AUTO_INCREMENT = 1');
+            $db->query('ALTER TABLE medrec_sp_operasi AUTO_INCREMENT = 1');
+            $db->query('ALTER TABLE medrec_rujukan AUTO_INCREMENT = 1');
+            $db->query('ALTER TABLE medrec_keterangan_buta_warna AUTO_INCREMENT = 1');
+            $db->query('ALTER TABLE medrec_keterangan_sakit_mata AUTO_INCREMENT = 1');
+            $db->query('ALTER TABLE medrec_keterangan_istirahat AUTO_INCREMENT = 1');
 
             // Panggil WebSocket untuk update client
             $this->notify_clients('delete');
