@@ -217,10 +217,12 @@ $waktuFormatted = $dateTime->format('H.i.s');
                                 <?= (!empty($butawarna['od_ukuran_kacamata'])) ? $butawarna['od_ukuran_kacamata'] . ' • ' : '' ?><?= str_replace(['-->', '->'], ['⟶', '→'], $butawarna['od_visus']) ?>
                             </td>
                             <td rowspan="2" style="width: 80%; vertical-align: middle;">
-                                <div style="display: flex; justify-content: flex-start; align-items: center; transform: translateY(-3px);">
-                                    <div style="font-size: 2.5em">}</div>
-                                    <strong style="padding-left: 0.25cm;">Emetrop</strong>
-                                </div>
+                                <?php if (!empty($butawarna['jenis_rabun'])) : ?>
+                                    <div style="display: flex; justify-content: flex-start; align-items: center; transform: translateY(-3px);">
+                                        <div style="font-size: 2.5em">}</div>
+                                        <strong style="padding-left: 0.25cm;"><?= $butawarna['jenis_rabun'] ?></strong>
+                                    </div>
+                                <?php endif; ?>
                             </td>
                         </tr>
                         <tr>

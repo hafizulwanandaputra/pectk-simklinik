@@ -17,6 +17,7 @@ class ButaWarnaModel extends Model
         'od_visus',
         'os_ukuran_kacamata',
         'os_visus',
+        'jenis_rabun',
         'status_buta_warna',
         'waktu_dibuat'
     ];

@@ -163,6 +163,18 @@ $seven_days_ago = date('Y-m-d', strtotime('-6 days'));
                     </div>
                 </div>
                 <div class="mb-2">
+                    <div class="form-floating">
+                        <select class="form-select" id="jenis_rabun" name="jenis_rabun" aria-label="jenis_rabun">
+                            <option value="" selected>Tidak ada</option>
+                            <option value="Emetropia">Emetropia (normal)</option>
+                            <option value="Miopia">Miopia (rabun jauh)</option>
+                            <option value="Hipermetropia">Hipermetropia (rabun dekat)</option>
+                        </select>
+                        <label for="jenis_rabun">Jenis Rabun<span class="text-danger">*</span></label>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+                <div class="mb-2">
                     <div class="row gx-1 radio-group">
                         <label for="status_buta_warna" class="col col-form-label">Status Buta Warna<span class="text-danger">*</span></label>
                         <div class="col-lg col-form-label">
@@ -217,6 +229,7 @@ $seven_days_ago = date('Y-m-d', strtotime('-6 days'));
             $('#od_visus').val(data.od_visus);
             $('#os_ukuran_kacamata').val(data.os_ukuran_kacamata);
             $('#os_visus').val(data.os_visus);
+            $('#jenis_rabun').val(data.jenis_rabun);
             const status_buta_warna = data.status_buta_warna;
             if (status_buta_warna) {
                 $("input[name='status_buta_warna'][value='" + status_buta_warna + "']").prop('checked', true);

@@ -503,6 +503,7 @@ class ButaWarna extends BaseController
                 'od_visus' => $this->request->getPost('od_visus') ?: null,
                 'os_ukuran_kacamata' => $this->request->getPost('os_ukuran_kacamata') ?: null,
                 'os_visus' => $this->request->getPost('os_visus') ?: null,
+                'jenis_rabun' => $this->request->getPost('jenis_rabun') ?: null,
                 'status_buta_warna' => $this->request->getPost('status_buta_warna') ?: null
             ];
             $db->table('medrec_keterangan_buta_warna')->where('id_keterangan_buta_warna', $id)->update($data);
