@@ -40,7 +40,7 @@ $routes->get('/(?i)pasien/(?i)provinsi', 'Pasien::provinsi');
 $routes->get('/(?i)pasien/(?i)kabupaten/(:any)', 'Pasien::kabupaten/$1');
 $routes->get('/(?i)pasien/(?i)kecamatan/(:any)', 'Pasien::kecamatan/$1');
 $routes->get('/(?i)pasien/(?i)kelurahan/(:any)', 'Pasien::kelurahan/$1');
-$routes->get('/(?i)pasien/(?i)kiup/(:any)', 'Pasien::kiup/$1');
+$routes->get('/(?i)pasien/(?i)identitas/(:any)', 'Pasien::identitas/$1');
 $routes->get('/(?i)pasien/(?i)barcode/(:any)', 'Pasien::barcode/$1');
 $routes->get('/(?i)pasien/(?i)rawatjalanlist/(:any)', 'Pasien::rawatjalanlist/$1');
 $routes->get('/(?i)pasien/(?i)kunjunganoptions/(:any)', 'Pasien::kunjunganoptions/$1');

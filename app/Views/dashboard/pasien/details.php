@@ -318,7 +318,7 @@
                     <div>
                         <hr>
                         <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-3">
-                            <button class="btn btn-body bg-gradient" type="button" data-id="<?= $pasien['id_pasien'] ?>" id="printBtn1"><i class="fa-solid fa-print"></i> Cetak KIUP</button>
+                            <button class="btn btn-body bg-gradient" type="button" data-id="<?= $pasien['id_pasien'] ?>" id="printBtn1"><i class="fa-solid fa-print"></i> Cetak Identitas</button>
                             <button class="btn btn-body bg-gradient" type="button" data-id="<?= $pasien['id_pasien'] ?>" id="printBtn2"><i class="fa-solid fa-barcode"></i> Cetak <em>Barcode</em></button>
                             <button class="btn btn-primary  bg-gradient" type="submit" id="submitBtn"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
                         </div>
@@ -897,11 +897,11 @@
 
         // Tampilkan loading di tombol cetak
         const $btn = $(this);
-        $btn.prop('disabled', true).html(`<?= $this->include('spinner/spinner'); ?> Cetak KIUP`);
+        $btn.prop('disabled', true).html(`<?= $this->include('spinner/spinner'); ?> Cetak Identitas`);
 
         // Muat PDF ke iframe
         var iframe = $('#print_frame_1');
-        iframe.attr('src', `<?= base_url("pasien/kiup") ?>/${id}`);
+        iframe.attr('src', `<?= base_url("pasien/identitas") ?>/${id}`);
 
         // Saat iframe selesai memuat, jalankan print
         iframe.off('load').on('load', function() {
@@ -909,9 +909,9 @@
                 this.contentWindow.focus();
                 this.contentWindow.print();
             } catch (e) {
-                showFailedPrintToast(`<p>Pencetakan otomatis tidak dapat dilakukan</p><p class="mb-0">${e}</p>`, `<?= base_url("pasien/kiup") ?>/${id}`);
+                showFailedPrintToast(`<p>Pencetakan otomatis tidak dapat dilakukan</p><p class="mb-0">${e}</p>`, `<?= base_url("pasien/identitas") ?>/${id}`);
             } finally {
-                $btn.prop('disabled', false).html(`<i class="fa-solid fa-print"></i> Cetak KIUP`);
+                $btn.prop('disabled', false).html(`<i class="fa-solid fa-print"></i> Cetak Identitas`);
             }
         });
     });

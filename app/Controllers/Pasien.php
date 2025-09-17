@@ -282,7 +282,7 @@ class Pasien extends BaseController
         }
     }
 
-    public function kiup($id)
+    public function identitas($id)
     {
         // Memeriksa peran pengguna, hanya 'Admin' dan 'Admisi' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') {
@@ -393,14 +393,14 @@ class Pasien extends BaseController
                 $data = [
                     'pasien' => $pasien,
                     'qrNoRM' => $qrNoRM,
-                    'title' => 'KIUP ' . $pasien['nama_pasien'] . ' (' . $pasien['no_rm'] . ') - ' . $this->systemName,
+                    'title' => 'Identitas Pasien ' . $pasien['nama_pasien'] . ' (' . $pasien['no_rm'] . ') - ' . $this->systemName,
                     'agent' => $this->request->getUserAgent()
                 ];
-                // return view('dashboard/pasien/kiup', $data);
+                // return view('dashboard/pasien/identitas', $data);
                 // die;
                 $client = new Client();
-                $html = view('dashboard/pasien/kiup', $data);
-                $filename = 'output-kiup.pdf';
+                $html = view('dashboard/pasien/identitas', $data);
+                $filename = 'output-identitas.pdf';
 
                 try {
                     $response = $client->post(env('PDF-URL'), [
