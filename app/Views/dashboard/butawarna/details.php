@@ -170,7 +170,7 @@ $seven_days_ago = date('Y-m-d', strtotime('-6 days'));
                             <option value="Miopia">Miopia (rabun jauh)</option>
                             <option value="Hipermetropia">Hipermetropia (rabun dekat)</option>
                         </select>
-                        <label for="jenis_rabun">Jenis Rabun<span class="text-danger">*</span></label>
+                        <label for="jenis_rabun">Jenis Rabun</label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
