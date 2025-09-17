@@ -33,8 +33,9 @@ class SPOperasiModel extends Model
     ];
     public function getLastNoBooking($tahun, $bulan, $tanggal)
     {
-        return $this
-            ->where('nomor_booking LIKE', 'OK' . $tahun . $bulan . $tanggal . '%')
+        $prefix = 'OK' . $tanggal . $bulan . $tahun; // OKddmmyy
+
+        return $this->where('nomor_booking LIKE', $prefix . '%')
             ->orderBy('nomor_booking', 'DESC')
             ->limit(1)
             ->findColumn('nomor_booking')[0] ?? null;

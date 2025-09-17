@@ -247,18 +247,17 @@ class Operasi extends BaseController
                 return $this->response->setJSON(['success' => false, 'message' => 'Data rawat jalan tidak ditemukan', 'errors' => NULL]);
             }
 
-            // Mendapatkan tanggal saat ini
+            // Ambil tanggal_registrasi dari pasien, bukan hari ini
             $date = new \DateTime($spOperasiData['tanggal_registrasi']);
             $tanggal = $date->format('d'); // Hari (2 digit)
-            $bulan = $date->format('m'); // Bulan (2 digit)
-            $tahun = $date->format('y'); // Tahun (2 digit)
+            $bulan = $date->format('m');   // Bulan (2 digit)
+            $tahun = $date->format('y');   // Tahun (2 digit)
 
-            // Mengambil nomor registrasi terakhir untuk di-increment
+            // Ambil nomor terakhir berdasarkan tahun, bulan, hari registrasi
             $lastNoReg = $this->SPOperasiModel->getLastNoBooking($tahun, $bulan, $tanggal);
-            $lastNumber = $lastNoReg ? intval(substr($lastNoReg, -3)) : 0; // Mendapatkan nomor terakhir
-            $nextNumber = str_pad($lastNumber + 1, 3, '0', STR_PAD_LEFT); // Menyiapkan nomor berikutnya
+            $lastNumber = $lastNoReg ? intval(substr($lastNoReg, -3)) : 0;
+            $nextNumber = str_pad($lastNumber + 1, 3, '0', STR_PAD_LEFT);
 
-            // Memformat nomor kwitansi
             $nomor_booking = sprintf('OK%s%s%s%s', $tanggal, $bulan, $tahun, $nextNumber);
 
             // Menyimpan data transaksi
