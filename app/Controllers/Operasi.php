@@ -114,42 +114,57 @@ class Operasi extends BaseController
     {
         // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Admisi' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Admisi') {
-            $hari_yang_lalu = date('Y-m-d', strtotime('-13 days')); // Termasuk hari ini
-            $today = date('Y-m-d');
+            // Mendapatkan parameter pencarian dari permintaan GET
+            $search = $this->request->getGet('search');
+            $offset = (int) $this->request->getGet('offset') ?? 0; // Default 0 jika tidak ada
+            $limit = (int) $this->request->getGet('limit') ?? 50; // Default 50 jika tidak ada
 
-            $data = $this->RawatJalanModel
-                ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
-                ->where("DATE(tanggal_registrasi) >=", $hari_yang_lalu)
-                ->where("DATE(tanggal_registrasi) <=", $today)
-                ->where('status', 'DAFTAR')
-                ->where('ruangan', 'Kamar Operasi')
-                ->orderBy('rawat_jalan.id_rawat_jalan', 'DESC')
-                ->findAll();
-
-            // Mengambil nomor_registrasi yang sudah terpakai di medrec_sp_operasi
-            $db = \Config\Database::connect();
-            $usedNoRegInit = $db->table('medrec_sp_operasi')->select('nomor_registrasi')->get()->getResultArray();
-            $usedNoReg = array_column($usedNoRegInit, 'nomor_registrasi');
-
-            $options = [];
-            // Menyusun opsi dari data rawat jalan yang diterima
-            foreach ($data as $row) {
-                // Memeriksa apakah nomor_registrasi ada dalam daftar nomor_registrasi yang terpakai
-                if (in_array($row['nomor_registrasi'], $usedNoReg)) {
-                    continue; // Lewati rawat jalan yang sudah terpakai
-                }
-
-                // Menambahkan opsi ke dalam array
-                $options[] = [
-                    'value' => $row['nomor_registrasi'], // Nilai untuk opsi
-                    'text' => $row['nama_pasien'] . ' (' . $row['nomor_registrasi'] . ' - ' . $row['no_rm'] . ' - ' . $row['tanggal_lahir'] . ')' // Teks untuk opsi
-                ];
+            // Jika parameter pencarian kosong, kembalikan data kosong
+            if (empty($search)) {
+                return $this->response->setJSON([
+                    'status' => 'success',
+                    'data' => [] // Data kosong
+                ]);
             }
 
-            // Mengembalikan data rawat jalan dalam format JSON
+            $db = db_connect();
+            $builder = $db->table('rawat_jalan');
+            $builder->select([
+                'rawat_jalan.nomor_registrasi',
+                'pasien.nama_pasien',
+                'rawat_jalan.tanggal_registrasi',
+                'pasien.no_rm',
+                'pasien.tanggal_lahir'
+            ]);
+            $builder->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner');
+
+            // LEFT JOIN ke medrec_sp_operasi
+            $builder->join('medrec_sp_operasi', 'rawat_jalan.nomor_registrasi = medrec_sp_operasi.nomor_registrasi', 'left');
+
+            // Hanya ambil data yang belum ada di medrec_sp_operasi
+            $builder->where('medrec_sp_operasi.nomor_registrasi IS NULL');
+
+            // Tambahkan filter pencarian
+            $builder->groupStart()
+                ->like('pasien.nama_pasien', $search)
+                ->orLike('rawat_jalan.tanggal_registrasi', $search)
+                ->orLike('pasien.no_rm', $search)
+                ->orLike('pasien.tanggal_lahir', $search)
+                ->groupEnd();
+
+            // Filter status DAFTAR
+            $builder->where('rawat_jalan.status', 'DAFTAR')->where('ruangan', 'Kamar Operasi');
+
+            // Sorting dan limit
+            $builder->orderBy('rawat_jalan.id_rawat_jalan', 'DESC')
+                ->limit($limit, $offset);
+
+            $result = $builder->get()->getResultArray();
+
+            // Mengembalikan data dalam format JSON
             return $this->response->setJSON([
-                'success' => true, // Indikator sukses
-                'data' => $options, // Data opsi
+                'status' => 'success',
+                'data' => $result
             ]);
         } else {
             return $this->response->setStatusCode(404)->setJSON([
@@ -211,13 +226,9 @@ class Operasi extends BaseController
             // Mengambil nomor registrasi dari permintaan POST
             $nomorRegistrasi = $this->request->getPost('nomor_registrasi');
 
-            $today = date('Y-m-d');
-            $hari_yang_lalu = date('Y-m-d', strtotime('-13 days')); // Termasuk hari ini
 
             $data = $this->RawatJalanModel
                 ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
-                ->where("DATE(tanggal_registrasi) >=", $hari_yang_lalu)
-                ->where("DATE(tanggal_registrasi) <=", $today)
                 ->where('status', 'DAFTAR')
                 ->where('ruangan', 'Kamar Operasi')
                 ->findAll();

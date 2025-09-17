@@ -462,7 +462,6 @@
         const page = $(this).data('page');
         if (page) {
             currentPage = page;
-            <?= (session()->get('role') != 'Admisi') ? 'fetchPasienOptions();' : ''; ?>
             fetchSurat();
         }
     });
@@ -472,7 +471,6 @@
         for (let i = 0; i < limit; i++) {
             $('#SakitMataContainer').append(placeholder);
         }
-        <?= (session()->get('role') != 'Admisi') ? 'fetchPasienOptions();' : ''; ?>
         fetchSurat();
     });
 
@@ -482,7 +480,6 @@
         for (let i = 0; i < limit; i++) {
             $('#SakitMataContainer').append(placeholder);
         }
-        <?= (session()->get('role') != 'Admisi') ? 'fetchPasienOptions();' : ''; ?>
         fetchSurat();
     });
     $('#setTodayTglButton').on('click', async function() {
@@ -493,7 +490,6 @@
         for (let i = 0; i < limit; i++) {
             $('#SakitMataContainer').append(placeholder);
         }
-        <?= (session()->get('role') != 'Admisi') ? 'fetchPasienOptions();' : ''; ?>
         fetchSurat();
     });
 
@@ -578,7 +574,6 @@
 
                 try {
                     await axios.delete(`<?= base_url('/sakitmata/delete') ?>/${SakitMataId}`);
-                    fetchPasienOptions();
                     fetchSurat();
                 } catch (error) {
                     if (error.response.request.status === 404 || error.response.request.status === 422) {
@@ -623,7 +618,6 @@
                     $('#SakitMataForm .is-invalid').removeClass('is-invalid');
                     $('#SakitMataForm .invalid-feedback').text('').hide();
                     $('#submitButton').prop('disabled', true);
-                    <?= (session()->get('role') != 'Admisi') ? 'fetchPasienOptions();' : ''; ?>
                     fetchSurat();
                 } else {
                     console.log("Validation Errors:", response.data.errors);

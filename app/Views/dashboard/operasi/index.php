@@ -301,24 +301,92 @@
             </li>
     `;
     async function fetchPasienOptions() {
-        try {
-            const response = await axios.get('<?= base_url('operasi/rawatjalanlist') ?>');
+        $('#nomor_registrasi').select2({
+            theme: "bootstrap-5",
+            width: $('#nomor_registrasi').data('width') ? $('#nomor_registrasi').data('width') : $('#nomor_registrasi').hasClass('w-100') ? '100%' : 'style',
+            placeholder: "Pilih Pasien Rawat Jalan",
+            disabled: <?= (session()->get('role') == 'Perawat') ? 'true' : 'false' ?>,
+            allowClear: true,
+            language: {
+                inputTooShort: function() {
+                    const currentDate = new Date();
+                    const year = currentDate.getFullYear();
+                    const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // 01 - 12
+                    const day = String(currentDate.getDate()).padStart(2, '0'); // 01 - 31
 
-            if (response.data.success) {
-                const options = response.data.data;
-                const select = $('#nomor_registrasi');
+                    const formattedDate = `${year}-${month}-${day}`;
+                    return `Ketik minimal 1 karakter...<br><small>Untuk mencari pasien rawat jalan berdasarkan tanggal registrasi atau tanggal lahir, gunakan format YYYY-MM-DD.<br>Contoh: <span class="date">${formattedDate}</span></small>`;
+                },
+                noResults: function() {
+                    return "Data tidak ditemukan";
+                },
+                searching: function() {
+                    return `<?= $this->include('spinner/spinner'); ?> <span class="ms-1">Memuat...</span>`;
+                },
+                loadingMore: function() {
+                    return `<?= $this->include('spinner/spinner'); ?> <span class="ms-1">Memuat lainnya...</span>`;
+                }
+            },
+            ajax: {
+                url: '<?= base_url('operasi/rawatjalanlist') ?>',
+                dataType: 'json',
+                delay: 250,
+                data: function(params) {
+                    return {
+                        search: params.term,
+                        offset: (params.page || 0) * 50,
+                        limit: 50
+                    };
+                },
+                processResults: function(data) {
+                    return {
+                        results: data.data.map(item => ({
+                            id: item.nomor_registrasi,
+                            text: item.nomor_registrasi, // penting untuk fallback text & placeholder
+                            nama_pasien: item.nama_pasien,
+                            nomor_registrasi: item.nomor_registrasi,
+                            tanggal_registrasi: item.tanggal_registrasi,
+                            no_rm: item.no_rm,
+                            tanggal_lahir: item.tanggal_lahir
+                        })),
+                        pagination: {
+                            more: data.data.length >= 50
+                        }
+                    };
+                }
+            },
+            minimumInputLength: 1,
+            templateResult: function(data) {
+                if (!data.id) {
+                    return `<?= $this->include('spinner/spinner'); ?> <span class="ms-1">Mencari...</span>`;
+                }
 
-                // Clear existing options except the first one
-                select.find('option:not(:first)').remove();
+                return $(`
+                <div>
+                    <strong class="date">${data.nomor_registrasi}</strong> <small class="text-muted date">${data.tanggal_registrasi}</small>
+                </div>
+                <div>
+                    <span style="font-size: 0.75em">${data.nama_pasien} • <span class="date">${data.no_rm}</span> • <span class="date">${data.tanggal_lahir}</span></span>
+                </div>
+            `);
+            },
+            templateSelection: function(data) {
+                if (!data.id) {
+                    return "Pilih Pasien Rawat Jalan";
+                }
 
-                // Loop through the options and append them to the select element
-                options.forEach(option => {
-                    select.append(`<option value="${option.value}">${option.text}</option>`);
-                });
+                return `${data.nomor_registrasi} (${data.nama_pasien} • ${data.no_rm} • ${data.tanggal_lahir})`;
+            },
+            escapeMarkup: function(markup) {
+                return markup;
             }
-        } catch (error) {
-            showFailedToast(`${error.response.data.error}<br>${error.response.data.details.message}`);
-        }
+        });
+
+        toggleSubmitButton();
+
+        $('#nomor_registrasi').on('change.select2', function() {
+            toggleSubmitButton();
+        });
     }
 
     async function fetchDokterOptions(selectedDokter = null) {
@@ -592,7 +660,7 @@
         for (let i = 0; i < limit; i++) {
             $('#spOperasiContainer').append(placeholder);
         }
-        fetchPasienOptions();
+
         fetchSPOperasi();
     });
     $('#setTodayTglButton').on('click', async function() {
@@ -603,7 +671,7 @@
         for (let i = 0; i < limit; i++) {
             $('#spOperasiContainer').append(placeholder);
         }
-        fetchPasienOptions();
+
         fetchSPOperasi();
     });
 
@@ -634,7 +702,6 @@
                 const selectedDokter = $('#dokterFilter').val();
                 // Panggil fungsi untuk memperbarui opsi dokter
                 await fetchDokterOptions(selectedDokter);
-                fetchPasienOptions();
                 fetchSPOperasi();
             }
         };
@@ -747,7 +814,7 @@
                     $('#nomor_registrasi').val(null).trigger('change');
                     await fetchDokterOptions();
                     fetchSPOperasi();
-                    fetchPasienOptions();
+
                     toggleSubmitButton();
                 } else {
                     console.log("Validation Errors:", response.data.errors);
@@ -850,7 +917,7 @@
                     $('#nomor_registrasi').val(null).trigger('change');
                     await fetchDokterOptions();
                     fetchSPOperasi();
-                    fetchPasienOptions();
+
                     toggleSubmitButton();
                 } else {
                     console.log("Validation Errors:", response.data.errors);
@@ -907,7 +974,7 @@
                 const selectedDokter = $('#dokterFilter').val();
                 // Panggil fungsi untuk memperbarui opsi dokter
                 await fetchDokterOptions(selectedDokter);
-                fetchPasienOptions();
+
                 fetchSPOperasi(); // Refresh articles on button click
             }
         });
@@ -917,7 +984,7 @@
             const selectedDokter = $('#dokterFilter').val();
             // Panggil fungsi untuk memperbarui opsi dokter
             await fetchDokterOptions(selectedDokter);
-            fetchPasienOptions();
+
             fetchSPOperasi(); // Refresh articles on button click
         });
         await fetchDokterOptions();
