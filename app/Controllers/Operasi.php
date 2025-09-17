@@ -237,7 +237,7 @@ class Operasi extends BaseController
             }
 
             // Mendapatkan tanggal saat ini
-            $date = new \DateTime();
+            $date = new \DateTime($spOperasiData['tanggal_registrasi']);
             $tanggal = $date->format('d'); // Hari (2 digit)
             $bulan = $date->format('m'); // Bulan (2 digit)
             $tahun = $date->format('y'); // Tahun (2 digit)
