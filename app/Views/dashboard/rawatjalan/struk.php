@@ -142,7 +142,7 @@ $usia = $sekarang->diff($tanggal_lahir);
                     </tr>
                     <tr>
                         <td style="width: 25%; vertical-align: top; padding-top: 0; padding-bottom: 0; padding-left: 0.1cm; padding-right: 0.1cm;">
-                            <div style="white-space: nowrap;">Register</div>
+                            <div style="white-space: nowrap;">No Reg</div>
                         </td>
                         <td style="width: 0%; vertical-align: top; padding-top: 0; padding-bottom: 0; padding-left: 0.1cm; padding-right: 0.1cm;">
                             <div style="white-space: nowrap;">:</div>
