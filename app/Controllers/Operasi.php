@@ -226,7 +226,6 @@ class Operasi extends BaseController
             // Mengambil nomor registrasi dari permintaan POST
             $nomorRegistrasi = $this->request->getPost('nomor_registrasi');
 
-
             $data = $this->RawatJalanModel
                 ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
                 ->where('status', 'DAFTAR')
@@ -317,12 +316,6 @@ class Operasi extends BaseController
                     ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
                     ->where('id_sp_operasi', $this->request->getPost('id_sp_operasi'))
                     ->get()->getRowArray();
-                $tanggal = date('Y-m-d', strtotime($sp_operasi['tanggal_registrasi']));
-                $today = date('Y-m-d');
-                $hari_yang_lalu = date('Y-m-d', strtotime('-13 days')); // Termasuk hari ini
-                if ($tanggal < $hari_yang_lalu || $tanggal > $today) {
-                    return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Pasien operasi yang didaftarkan lebih dari 14 hari tidak dapat dihapus']);
-                }
                 if ($sp_operasi['site_marking']) {
                     @unlink(FCPATH . 'uploads/site_marking/' . $sp_operasi['site_marking']);
                 }

@@ -59,21 +59,19 @@
                     </div>
                     <ul id="IstirahatFormContainer" class="list-group rounded-0 collapse">
                         <li class="list-group-item border-top-0 bg-body-tertiary">
-                            <div class="row g-3">
-                                <form id="IstirahatForm" enctype="multipart/form-data" class="d-flex flex-column gap-2">
-                                    <div class="flex-fill">
-                                        <select class="form-select form-select-sm" id="nomor_registrasi" name="nomor_registrasi" aria-label="nomor_registrasi">
-                                            <option value="" disabled selected>-- Pilih Pasien Rawat Jalan --</option>
-                                        </select>
-                                        <div class="invalid-feedback"></div>
-                                    </div>
-                                    <div class="d-grid gap-2 d-lg-flex justify-content-lg-end">
-                                        <button type="submit" id="submitButton" class="btn btn-primary bg-gradient btn-sm" disabled>
-                                            <i class="fa-solid fa-plus"></i> Tambah
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
+                            <form id="IstirahatForm" enctype="multipart/form-data" class="d-flex flex-column gap-2">
+                                <div class="flex-fill">
+                                    <select class="form-select form-select-sm" id="nomor_registrasi" name="nomor_registrasi" aria-label="nomor_registrasi">
+                                        <option value="" disabled selected>-- Pilih Pasien Rawat Jalan --</option>
+                                    </select>
+                                    <div class="invalid-feedback"></div>
+                                </div>
+                                <div class="d-grid gap-2 d-lg-flex justify-content-lg-end">
+                                    <button type="submit" id="submitButton" class="btn btn-primary bg-gradient btn-sm" disabled>
+                                        <i class="fa-solid fa-plus"></i> Tambah
+                                    </button>
+                                </div>
+                            </form>
                         </li>
                     </ul>
                 <?php endif; ?>
@@ -252,24 +250,92 @@
     `;
     <?php if (session()->get('role') != 'Admisi') : ?>
         async function fetchPasienOptions() {
-            try {
-                const response = await axios.get('<?= base_url('istirahat/pasienlist') ?>');
+            $('#nomor_registrasi').select2({
+                theme: "bootstrap-5",
+                width: $('#nomor_registrasi').data('width') ? $('#nomor_registrasi').data('width') : $('#nomor_registrasi').hasClass('w-100') ? '100%' : 'style',
+                placeholder: "Pilih Pasien Rawat Jalan",
+                disabled: <?= (session()->get('role') == 'Perawat') ? 'true' : 'false' ?>,
+                allowClear: true,
+                language: {
+                    inputTooShort: function() {
+                        const currentDate = new Date();
+                        const year = currentDate.getFullYear();
+                        const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // 01 - 12
+                        const day = String(currentDate.getDate()).padStart(2, '0'); // 01 - 31
 
-                if (response.data.success) {
-                    const options = response.data.data;
-                    const select = $('#nomor_registrasi');
+                        const formattedDate = `${year}-${month}-${day}`;
+                        return `Ketik minimal 1 karakter...<br><small>Untuk mencari pasien rawat jalan berdasarkan tanggal registrasi atau tanggal lahir, gunakan format YYYY-MM-DD.<br>Contoh: <span class="date">${formattedDate}</span></small>`;
+                    },
+                    noResults: function() {
+                        return "Data tidak ditemukan";
+                    },
+                    searching: function() {
+                        return `<?= $this->include('spinner/spinner'); ?> <span class="ms-1">Memuat...</span>`;
+                    },
+                    loadingMore: function() {
+                        return `<?= $this->include('spinner/spinner'); ?> <span class="ms-1">Memuat lainnya...</span>`;
+                    }
+                },
+                ajax: {
+                    url: '<?= base_url('istirahat/pasienlist') ?>',
+                    dataType: 'json',
+                    delay: 250,
+                    data: function(params) {
+                        return {
+                            search: params.term,
+                            offset: (params.page || 0) * 50,
+                            limit: 50
+                        };
+                    },
+                    processResults: function(data) {
+                        return {
+                            results: data.data.map(item => ({
+                                id: item.nomor_registrasi,
+                                text: item.nomor_registrasi, // penting untuk fallback text & placeholder
+                                nama_pasien: item.nama_pasien,
+                                nomor_registrasi: item.nomor_registrasi,
+                                tanggal_registrasi: item.tanggal_registrasi,
+                                no_rm: item.no_rm,
+                                tanggal_lahir: item.tanggal_lahir
+                            })),
+                            pagination: {
+                                more: data.data.length >= 50
+                            }
+                        };
+                    }
+                },
+                minimumInputLength: 1,
+                templateResult: function(data) {
+                    if (!data.id) {
+                        return `<?= $this->include('spinner/spinner'); ?> <span class="ms-1">Mencari...</span>`;
+                    }
 
-                    // Clear existing options except the first one
-                    select.find('option:not(:first)').remove();
+                    return $(`
+                <div>
+                    <strong class="date">${data.nomor_registrasi}</strong> <small class="text-muted date">${data.tanggal_registrasi}</small>
+                </div>
+                <div>
+                    <span style="font-size: 0.75em">${data.nama_pasien} • <span class="date">${data.no_rm}</span> • <span class="date">${data.tanggal_lahir}</span></span>
+                </div>
+            `);
+                },
+                templateSelection: function(data) {
+                    if (!data.id) {
+                        return "Pilih Pasien Rawat Jalan";
+                    }
 
-                    // Loop through the options and append them to the select element
-                    options.forEach(option => {
-                        select.append(`<option value="${option.value}">${option.text}</option>`);
-                    });
+                    return `${data.nomor_registrasi} (${data.nama_pasien} • ${data.no_rm} • ${data.tanggal_lahir})`;
+                },
+                escapeMarkup: function(markup) {
+                    return markup;
                 }
-            } catch (error) {
-                showFailedToast(`${error.response.data.error}<br>${error.response.data.details.message}`);
-            }
+            });
+
+            toggleSubmitButton();
+
+            $('#nomor_registrasi').on('change.select2', function() {
+                toggleSubmitButton();
+            });
         }
     <?php endif; ?>
 
@@ -319,17 +385,6 @@
                     const tanggal_selesai = istirahat.tanggal_selesai ?
                         `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${istirahat.tanggal_selesai}">` :
                         `<em>Belum ada</em>`;
-                    const tanggalRegistrasi = new Date(istirahat.tanggal_registrasi);
-                    const today = new Date();
-                    const sevenDaysAgo = new Date();
-                    sevenDaysAgo.setDate(today.getDate() - 6); // Termasuk hari ini
-
-                    // Normalisasi hanya ke tanggal (tanpa jam) agar perbandingan akurat
-                    tanggalRegistrasi.setHours(0, 0, 0, 0);
-                    today.setHours(0, 0, 0, 0);
-                    sevenDaysAgo.setHours(0, 0, 0, 0);
-
-                    const delete_today = (tanggalRegistrasi < sevenDaysAgo || tanggalRegistrasi > today) ? 'disabled' : '';
 
                     const IstirahatElement = `
                     <li class="list-group-item <?= (session()->get('role') != 'Admisi') ? 'border-top-0' : ''; ?> pb-3 pt-3">
@@ -396,7 +451,7 @@
                             </div>
                         <?php endif; ?>
                         <?php if (session()->get('role') != 'Admisi') : ?>
-                            <button type="button" class="btn btn-danger btn-sm bg-gradient  delete-btn" data-id="${istirahat.id_keterangan_istirahat}" data-name="${istirahat.nama_pasien}" data-date="${istirahat.nomor_registrasi}" ${delete_today}>
+                            <button type="button" class="btn btn-danger btn-sm bg-gradient  delete-btn" data-id="${istirahat.id_keterangan_istirahat}" data-name="${istirahat.nama_pasien}" data-date="${istirahat.nomor_registrasi}">
                                 <i class="fa-solid fa-trash"></i> Hapus
                             </button>
                         <?php endif; ?>
@@ -485,7 +540,6 @@
         const page = $(this).data('page');
         if (page) {
             currentPage = page;
-            <?= (session()->get('role') != 'Admisi') ? 'fetchPasienOptions();' : ''; ?>
             fetchSurat();
         }
     });
@@ -495,7 +549,6 @@
         for (let i = 0; i < limit; i++) {
             $('#IstirahatContainer').append(placeholder);
         }
-        <?= (session()->get('role') != 'Admisi') ? 'fetchPasienOptions();' : ''; ?>
         fetchSurat();
     });
 
@@ -505,7 +558,6 @@
         for (let i = 0; i < limit; i++) {
             $('#IstirahatContainer').append(placeholder);
         }
-        <?= (session()->get('role') != 'Admisi') ? 'fetchPasienOptions();' : ''; ?>
         fetchSurat();
     });
     $('#setTodayTglButton').on('click', async function() {
@@ -516,7 +568,6 @@
         for (let i = 0; i < limit; i++) {
             $('#IstirahatContainer').append(placeholder);
         }
-        <?= (session()->get('role') != 'Admisi') ? 'fetchPasienOptions();' : ''; ?>
         fetchSurat();
     });
 
@@ -546,7 +597,6 @@
             const data = JSON.parse(event.data);
             if (data.update || data.delete) {
                 console.log("Received update from WebSocket");
-                <?= (session()->get('role') != 'Admisi') ? 'fetchPasienOptions();' : ''; ?>;
                 fetchSurat();
             }
         };
@@ -605,7 +655,6 @@
 
                 try {
                     await axios.delete(`<?= base_url('/istirahat/delete') ?>/${IstirahatId}`);
-                    fetchPasienOptions();
                     fetchSurat();
                 } catch (error) {
                     if (error.response.request.status === 404 || error.response.request.status === 422) {
@@ -650,7 +699,6 @@
                     $('#IstirahatForm .is-invalid').removeClass('is-invalid');
                     $('#IstirahatForm .invalid-feedback').text('').hide();
                     $('#submitButton').prop('disabled', true);
-                    <?= (session()->get('role') != 'Admisi') ? 'fetchPasienOptions();' : ''; ?>
                     fetchSurat();
                 } else {
                     console.log("Validation Errors:", response.data.errors);
@@ -703,13 +751,11 @@
 
         $(document).on('visibilitychange', async function() {
             if (document.visibilityState === "visible") {
-                <?= (session()->get('role') != 'Admisi') ? 'fetchPasienOptions();' : ''; ?>;
                 fetchSurat(); // Refresh articles on button click
             }
         });
         $('#refreshButton').on('click', async function(e) {
             e.preventDefault();
-            <?= (session()->get('role') != 'Admisi') ? 'fetchPasienOptions();' : ''; ?>;
             fetchSurat(); // Refresh articles on button click
         });
         <?= (session()->get('role') != 'Admisi') ? 'fetchPasienOptions();' : ''; ?>

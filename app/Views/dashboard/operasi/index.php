@@ -304,7 +304,7 @@
         $('#nomor_registrasi').select2({
             theme: "bootstrap-5",
             width: $('#nomor_registrasi').data('width') ? $('#nomor_registrasi').data('width') : $('#nomor_registrasi').hasClass('w-100') ? '100%' : 'style',
-            placeholder: "Pilih Pasien Rawat Jalan",
+            placeholder: "Pilih Pasien Operasi",
             disabled: <?= (session()->get('role') == 'Perawat') ? 'true' : 'false' ?>,
             allowClear: true,
             language: {
@@ -372,7 +372,7 @@
             },
             templateSelection: function(data) {
                 if (!data.id) {
-                    return "Pilih Pasien Rawat Jalan";
+                    return "Pilih Pasien Operasi";
                 }
 
                 return `${data.nomor_registrasi} (${data.nama_pasien} • ${data.no_rm} • ${data.tanggal_lahir})`;

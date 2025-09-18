@@ -101,19 +101,6 @@ $seven_days_ago = date('Y-m-d', strtotime('-6 days'));
         <div class="no-fluid-content">
             <?= form_open_multipart('istirahat/update/' . $istirahat['id_keterangan_istirahat'], 'id="SuratForm"'); ?>
             <?= csrf_field(); ?>
-            <?php if ($tanggal_registrasi < $seven_days_ago) : ?>
-                <div id="alert-date" class="alert alert-warning alert-dismissible" role="alert">
-                    <div class="d-flex align-items-start">
-                        <div style="width: 12px; text-align: center;">
-                            <i class="fa-solid fa-triangle-exclamation"></i>
-                        </div>
-                        <div class="w-100 ms-3">
-                            Saat ini Anda melihat surat keterangan istirahat pasien pada <?= date('Y-m-d', strtotime($istirahat['tanggal_registrasi'])) ?>. Pastikan Anda mengisi data sesuai dengan tanggal kunjungan pasien (7 hari yang lalu hingga hari ini).
-                        </div>
-                        <button type="button" id="close-alert" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                </div>
-            <?php endif; ?>
             <div class="mb-3">
                 <div class="mb-2">
                     <div class="form-floating">
