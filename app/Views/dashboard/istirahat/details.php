@@ -85,7 +85,7 @@ $seven_days_ago = date('Y-m-d', strtotime('-6 days'));
                 <div class="no-fluid-content">
                     <nav class="nav nav-underline flex-nowrap overflow-auto">
                         <?php foreach ($listRawatJalan as $list) : ?>
-                            <a class="<?= ($tanggal_registrasi < $seven_days_ago) ? 'text-danger' : ''; ?> nav-link py-1 <?= ($activeSegment === $list['id_keterangan_istirahat']) ? 'active activeLink' : '' ?>" href="<?= base_url('istirahat/details/' . $list['id_keterangan_istirahat']); ?>">
+                            <a class="nav-link py-1 <?= ($activeSegment === $list['id_keterangan_istirahat']) ? 'active activeLink' : '' ?>" href="<?= base_url('istirahat/details/' . $list['id_keterangan_istirahat']); ?>">
                                 <div class="text-center">
                                     <div class="text-nowrap lh-sm"><?= $list['nomor_registrasi']; ?></div>
                                     <div class="text-nowrap lh-sm" style="font-size: 0.75em;"><?= $list['tanggal_registrasi'] ?></div>
