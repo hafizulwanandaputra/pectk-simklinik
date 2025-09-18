@@ -179,49 +179,31 @@
                 <div class="modal-body py-2">
                     <input type="hidden" id="id_sp_operasi" name="id_sp_operasi" value="">
                     <div class="mb-1 mt-1 radio-group">
-                        <div class="d-flex flex-wrap justify-content-center">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="status_operasi" id="status_operasi1" value="DIJADWAL">
-                                <label class="form-check-label" for="status_operasi1">
+                        <div>
+                            <div class="d-grid gap-1">
+                                <input class="btn-check" type="radio" name="status_operasi" id="status_operasi1" value="DIJADWAL">
+                                <label class="btn btn-body" for="status_operasi1">
                                     Dijadwal
                                 </label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="status_operasi" id="status_operasi2" value="OPERASI">
-                                <label class="form-check-label" for="status_operasi2">
+                                <input class="btn-check" type="radio" name="status_operasi" id="status_operasi2" value="OPERASI">
+                                <label class="btn btn-body" for="status_operasi2">
                                     Operasi
                                 </label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="status_operasi" id="status_operasi3" value="TERLAKSANA">
-                                <label class="form-check-label" for="status_operasi3">
+                                <input class="btn-check" type="radio" name="status_operasi" id="status_operasi3" value="TERLAKSANA">
+                                <label class="btn btn-body" for="status_operasi3">
                                     Terlaksana
                                 </label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="status_operasi" id="status_operasi4" value="BATAL">
-                                <label class="form-check-label" for="status_operasi4">
+                                <input class="btn-check" type="radio" name="status_operasi" id="status_operasi4" value="BATAL">
+                                <label class="btn btn-body" for="status_operasi4">
                                     Batal
                                 </label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="status_operasi" id="status_operasi5" value="HAPUS">
-                                <label class="form-check-label" for="status_operasi5">
+                                <input class="btn-check" type="radio" name="status_operasi" id="status_operasi5" value="HAPUS">
+                                <label class="btn btn-body border-danger text-danger" for="status_operasi5">
                                     Hapus
                                 </label>
                             </div>
                         </div>
                         <div class="invalid-feedback"></div>
-                    </div>
-                    <div class="alert alert-danger mb-1 mt-1" id="deleteAlert" role="alert" style="display: none;">
-                        <div class="d-flex align-items-start">
-                            <div style="width: 12px; text-align: center;">
-                                <i class="fa-solid fa-triangle-exclamation"></i>
-                            </div>
-                            <div class="w-100 ms-3">
-                                Pilihan ini akan menghapus pasien operasi.
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="modal-footer justify-content-end pt-2 pb-2" style="border-top: 1px solid var(--bs-border-color-translucent);">
@@ -760,14 +742,12 @@
                     .html('<i class="fa-solid fa-trash"></i> Hapus')
                     .removeClass('btn-primary')
                     .addClass('btn-danger');
-                $('#deleteAlert').show();
             } else {
                 // Kembalikan ke semula jika selain status_operasi5 yang dipilih
                 $('#statusSubmitButton')
                     .html('<i class="fa-solid fa-floppy-disk"></i> Simpan')
                     .removeClass('btn-danger')
                     .addClass('btn-primary');
-                $('#deleteAlert').hide();
             }
         });
 
