@@ -310,17 +310,38 @@ class Operasi extends BaseController
 
             $db = db_connect();
 
-            if ($this->request->getPost('status_operasi') == 'HAPUS') {
-                $sp_operasi = $db->table('medrec_sp_operasi')
-                    ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_sp_operasi.nomor_registrasi', 'inner')
-                    ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
-                    ->where('id_sp_operasi', $this->request->getPost('id_sp_operasi'))
-                    ->get()->getRowArray();
+            $db->table('medrec_sp_operasi')
+                ->where('id_sp_operasi', $this->request->getPost('id_sp_operasi'))
+                ->update([
+                    'status_operasi' => $this->request->getPost('status_operasi'),
+                ]);
+            // Panggil WebSocket untuk update client
+            $this->notify_clients('update');
+            return $this->response->setJSON(['success' => true, 'message' => 'Status pasien operasi berhasil diperbarui']);
+        } else {
+            // Mengembalikan status 404 jika peran tidak diizinkan
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
+        }
+    }
+
+    public function delete($id)
+    {
+        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Admisi' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Admisi') {
+            $db = db_connect();
+            $sp_operasi = $db->table('medrec_sp_operasi')
+                ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_sp_operasi.nomor_registrasi', 'inner')
+                ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
+                ->where('id_sp_operasi', $id)
+                ->get()->getRowArray();
+            if ($sp_operasi) {
                 if ($sp_operasi['site_marking']) {
                     @unlink(FCPATH . 'uploads/site_marking/' . $sp_operasi['site_marking']);
                 }
                 $db->table('medrec_sp_operasi')
-                    ->where('id_sp_operasi', $this->request->getPost('id_sp_operasi'))
+                    ->where('id_sp_operasi', $id)
                     ->delete();
                 $db->query('ALTER TABLE medrec_sp_operasi AUTO_INCREMENT = 1');
                 $db->query('ALTER TABLE medrec_operasi_pra AUTO_INCREMENT = 1');
@@ -331,19 +352,13 @@ class Operasi extends BaseController
                 $this->notify_clients('delete');
                 return $this->response->setJSON(['success' => true, 'message' => 'Pasien operasi berhasil dihapus']);
             } else {
-                $db->table('medrec_sp_operasi')
-                    ->where('id_sp_operasi', $this->request->getPost('id_sp_operasi'))
-                    ->update([
-                        'status_operasi' => $this->request->getPost('status_operasi'),
-                    ]);
-                // Panggil WebSocket untuk update client
-                $this->notify_clients('update');
-                return $this->response->setJSON(['success' => true, 'message' => 'Status pasien operasi berhasil diperbarui']);
+                return $this->response->setStatusCode(404)->setJSON([
+                    'error' => 'Pasien operasi tidak ditemukan', // Pesan jika peran tidak valid
+                ]);
             }
         } else {
-            // Mengembalikan status 404 jika peran tidak diizinkan
             return $this->response->setStatusCode(404)->setJSON([
-                'error' => 'Halaman tidak ditemukan',
+                'error' => 'Halaman tidak ditemukan', // Pesan jika peran tidak valid
             ]);
         }
     }

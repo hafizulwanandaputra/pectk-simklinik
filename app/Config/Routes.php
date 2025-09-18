@@ -157,6 +157,7 @@ $routes->get('/(?i)operasi/(?i)rawatjalanlist', 'Operasi::rawatjalanlist');
 $routes->get('/(?i)operasi/(?i)dokterlist', 'Operasi::dokterlist');
 $routes->post('/(?i)operasi/(?i)create/', 'Operasi::create');
 $routes->post('/(?i)operasi/(?i)setstatus', 'Operasi::setstatus');
+$routes->delete('/(?i)operasi/(?i)delete/(:any)', 'Operasi::delete/$1');
 
 // SPKO
 $routes->get('/(?i)operasi/(?i)spko/(:num)', 'SPOperasi::index/$1');

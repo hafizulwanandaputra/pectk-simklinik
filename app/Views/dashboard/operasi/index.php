@@ -159,6 +159,7 @@
                                 <button type="button" class="btn btn-body btn-sm bg-gradient placeholder" style="width: 4em;" disabled aria-disabled="true"></button>
                                 <button type="button" class="btn btn-body btn-sm bg-gradient placeholder" style="width: 4em;" disabled aria-disabled="true"></button>
                                 <button type="button" class="btn btn-body btn-sm bg-gradient placeholder" style="width: 4em;" disabled aria-disabled="true"></button>
+                                <button type="button" class="btn btn-danger btn-sm bg-gradient placeholder" style="width: 4em;" disabled aria-disabled="true"></button>
                             </div>
                         </li>
                     <?php endfor; ?>
@@ -197,10 +198,6 @@
                                 <label class="btn btn-body" for="status_operasi4">
                                     Batal
                                 </label>
-                                <input class="btn-check" type="radio" name="status_operasi" id="status_operasi5" value="HAPUS">
-                                <label class="btn btn-body border-danger text-danger" for="status_operasi5">
-                                    Hapus
-                                </label>
                             </div>
                         </div>
                         <div class="invalid-feedback"></div>
@@ -214,6 +211,24 @@
                     </div>
                 </div>
             </form>
+        </div>
+    </div>
+    <div class="modal modal-sheet p-4 py-md-5 fade" id="deleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content bg-body-tertiary rounded-5 shadow-lg transparent-blur">
+                <div class="modal-body p-4">
+                    <h5 id="deleteMessage"></h5>
+                    <h6 class="mb-0 fw-normal" id="deleteSubmessage"></h6>
+                    <div class="row gx-2 pt-4">
+                        <div class="col d-grid">
+                            <button type="button" class="btn btn-lg btn-body bg-gradient fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Batal</button>
+                        </div>
+                        <div class="col d-grid">
+                            <button type="button" class="btn btn-lg btn-danger bg-gradient fs-6 mb-0 rounded-4" id="confirmDeleteBtn">Hapus</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </main>
@@ -275,10 +290,11 @@
                 </div>
                 <hr>
                 <div class="d-grid gap-2 d-flex flex-wrap justify-content-end">
-                    <a class="btn btn-body bg-gradient  disabled placeholder" aria-disabled="true" style="width: 50px; height: 31px;"></a>
-                    <a class="btn btn-body bg-gradient  disabled placeholder" aria-disabled="true" style="width: 50px; height: 31px;"></a>
-                    <a class="btn btn-body bg-gradient  disabled placeholder" aria-disabled="true" style="width: 50px; height: 31px;"></a>
-                    <a class="btn btn-body bg-gradient  disabled placeholder" aria-disabled="true" style="width: 50px; height: 31px;"></a>
+                    <button type="button" class="btn btn-body btn-sm bg-gradient placeholder" style="width: 4em;" disabled aria-disabled="true"></button>
+                    <button type="button" class="btn btn-body btn-sm bg-gradient placeholder" style="width: 4em;" disabled aria-disabled="true"></button>
+                    <button type="button" class="btn btn-body btn-sm bg-gradient placeholder" style="width: 4em;" disabled aria-disabled="true"></button>
+                    <button type="button" class="btn btn-body btn-sm bg-gradient placeholder" style="width: 4em;" disabled aria-disabled="true"></button>
+                    <button type="button" class="btn btn-danger btn-sm bg-gradient placeholder" style="width: 4em;" disabled aria-disabled="true"></button>
                 </div>
             </li>
     `;
@@ -534,6 +550,9 @@
                                         <i class="fa-solid fa-user-shield"></i> Keselamatan
                                     </button>
                                 <?php endif; ?>
+                                <button type="button" class="btn btn-danger btn-sm bg-gradient  delete-btn" data-id="${sp_operasi.id_sp_operasi}" data-name="${sp_operasi.nama_pasien}" data-date="${sp_operasi.nomor_booking}">
+                                    <i class="fa-solid fa-trash"></i> Hapus
+                                </button>
                             </div>
                         </div>
                     </li>
@@ -751,6 +770,46 @@
             }
         });
 
+        // Store the ID of the user to be deleted
+        var sPOperasiId;
+        var sPOperasiName;
+        var sPOperasiDate;
+
+        // Show delete confirmation modal
+        $(document).on('click', '.delete-btn', function() {
+            sPOperasiId = $(this).data('id');
+            sPOperasiName = $(this).data('name');
+            sPOperasiDate = $(this).data('date');
+            // Check if sPOperasiName is null or undefined
+            const nama_pasien = (sPOperasiName === null || sPOperasiName === undefined || sPOperasiName === 'null') ?
+                'yang anonim ini' :
+                `dari "${sPOperasiName}"`;
+            $('[data-bs-toggle="tooltip"]').tooltip('hide');
+            $('#deleteMessage').html(`Hapus Pasien Operasi ${nama_pasien}?`);
+            $('#deleteSubmessage').html(`Nomor Booking: ` + sPOperasiDate);
+            $('#deleteModal').modal('show');
+        });
+
+        $('#confirmDeleteBtn').click(async function() {
+            $('#deleteModal button').prop('disabled', true);
+            $(this).html(`<?= $this->include('spinner/spinner'); ?>`); // Menampilkan pesan loading
+
+            try {
+                await axios.delete(`<?= base_url('/operasi/delete') ?>/${sPOperasiId}`);
+                fetchSPOperasi();
+            } catch (error) {
+                if (error.response.request.status === 404 || error.response.request.status === 422) {
+                    showFailedToast(error.response.data.message);
+                } else {
+                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                }
+            } finally {
+                $('#deleteModal').modal('hide');
+                $('#deleteModal button').prop('disabled', false);
+                $(this).text(`Hapus`); // Mengembalikan teks tombol asal
+            }
+        }); // Simpan nilai pilihan apoteker saat ini
+
         $('#statusForm').submit(async function(e) {
             e.preventDefault();
 
@@ -775,7 +834,6 @@
                 });
 
                 if (response.data.success) {
-                    showSuccessToast(response.data.message);
                     $('#statusModal').modal('hide');
                     $('#nomor_registrasi').val(null).trigger('change');
                     await fetchDokterOptions();
