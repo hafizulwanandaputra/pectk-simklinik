@@ -583,7 +583,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             <label for="keterangan">Keterangan</label>
                             <div class="invalid-feedback"></div>
                         </div>
-                        <div class="d-flex justify-content-between align-itmes-center">
+                        <div class="d-flex justify-content-between align-items-center">
                             <label class="w-100" for="keepModalOpen">
                                 Biarkan modal ini tetap terbuka setelah menyimpan
                             </label>
