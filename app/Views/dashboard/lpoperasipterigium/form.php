@@ -342,7 +342,7 @@ $waktuFormatted = $dateTime->format('H.i.s');
                         <tr>
                             <td style="width: 100%; vertical-align: top;">
                                 <div><strong>Laporan Operasi:</strong></div>
-                                <div style="padding-left: 0.5cm;"><?= nl2br($lp_operasi_pterigium['keterangan_tambahan']) ?></div>
+                                <div style="padding-left: 0.5cm;"><?= nl2br($lp_operasi_pterigium['laporan_operasi']) ?></div>
                             </td>
                         </tr>
                     </tbody>
@@ -352,7 +352,7 @@ $waktuFormatted = $dateTime->format('H.i.s');
                         <tr>
                             <td style="width: 100%; vertical-align: top;">
                                 <div><strong>Terapi Pasca Bedah:</strong></div>
-                                <div style="padding-left: 0.5cm;"><?= nl2br($lp_operasi_pterigium['terapi_pasca_bedah']) ?></div>
+                                <div style="padding-left: 0.5cm;"><?= nl2br($lp_operasi_pterigium['terapi_pascabedah']) ?></div>
                             </td>
                         </tr>
                     </tbody>
