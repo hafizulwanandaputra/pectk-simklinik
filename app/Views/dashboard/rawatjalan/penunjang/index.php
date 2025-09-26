@@ -301,7 +301,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                         <select class="form-select" id="pemeriksaan_scan" name="pemeriksaan_scan" aria-label="pemeriksaan_scan">
                             <option value="" disabled selected>-- Pilih Pemeriksaan --</option>
                         </select>
-                        <label for="status_fungsional">Pemeriksaan</label>
+                        <label for="status_fungsional">Pemeriksaan<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="mb-1 mt-1">
@@ -318,6 +318,14 @@ $usia = $registrasi->diff($tanggal_lahir);
                         <input type="text" class="form-control" autocomplete="off" dir="auto" placeholder="keterangan" id="keterangan" name="keterangan">
                         <label for="keterangan">Keterangan</label>
                         <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="d-flex justify-content-between align-itmes-center">
+                        <label class="w-100" for="keepModalOpen">
+                            Biarkan modal ini tetap terbuka setelah menyimpan
+                        </label>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" value="" id="keepModalOpen" switch>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer justify-content-end pt-2 pb-2" style="border-top: 1px solid var(--bs-border-color-translucent);">
@@ -564,6 +572,21 @@ $usia = $registrasi->diff($tanggal_lahir);
                 inline: "center" // Elemen di-scroll ke tengah horizontal
             });
         });
+
+        // Saat halaman dimuat, set checkbox sesuai localStorage
+        if (localStorage.getItem("keepModalOpen") === "true") {
+            $("#keepModalOpen").prop("checked", true);
+        }
+
+        // Toggle simpan ke localStorage
+        $("#keepModalOpen").on("change", function() {
+            if ($(this).is(":checked")) {
+                localStorage.setItem("keepModalOpen", "true");
+            } else {
+                localStorage.setItem("keepModalOpen", "false");
+            }
+        });
+
         // Tampilkan modal tambah scan penunjang
         $('#addScanButton').click(async function() {
             $('#scanModalLabel').text('Tambah Pemindaian Pemeriksaan Penunjang'); // Ubah judul modal menjadi 'Tambah Pemindaian Pemeriksaan Penunjang'
@@ -720,7 +743,20 @@ $usia = $registrasi->diff($tanggal_lahir);
                 // Handle successful response
                 if (response.data.success) {
                     showSuccessToast(response.data.message, 'success');
-                    $('#scanModal').modal('hide');
+                    if ($('#keepModalOpen').is(':checked')) {
+                        // simpan status checkbox sebelum reset
+                        let keepChecked = $('#keepModalOpen').is(':checked');
+
+                        // reset form
+                        $('#scanForm')[0].reset();
+
+                        // balikin status checkbox
+                        $('#keepModalOpen').prop('checked', keepChecked);
+                        $('#gambar_preview').attr('src', '#');
+                        $('#gambar_preview_div').hide();
+                    } else {
+                        $('#scanModal').modal('hide');
+                    }
                     $('#uploadProgressBar').css('width', '0%');
                     fetchScanPenunjang();
                 } else {
@@ -787,7 +823,14 @@ $usia = $registrasi->diff($tanggal_lahir);
 
         // Reset form saat modal ditutup
         $('#scanModal').on('hidden.bs.modal', function() {
+            // simpan status checkbox sebelum reset
+            let keepChecked = $('#keepModalOpen').is(':checked');
+
+            // reset form
             $('#scanForm')[0].reset();
+
+            // balikin status checkbox
+            $('#keepModalOpen').prop('checked', keepChecked);
             $('#uploadProgressBar').removeClass('bg-danger').css('width', '0%');
             $('#gambar_preview').attr('src', '#');
             $('#gambar_preview_div').hide();

@@ -473,6 +473,14 @@ $usia = $registrasi->diff($tanggal_lahir);
                         </div>
                         <div class="invalid-feedback"></div>
                     </div>
+                    <div class="d-flex justify-content-between align-itmes-center">
+                        <label class="w-100" for="keepModalOpen">
+                            Biarkan modal ini tetap terbuka setelah menyimpan
+                        </label>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" value="" id="keepModalOpen" switch>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer justify-content-end pt-2 pb-2" style="border-top: 1px solid var(--bs-border-color-translucent);">
                     <!-- Progress bar -->
@@ -620,6 +628,21 @@ $usia = $registrasi->diff($tanggal_lahir);
                 inline: "center" // Elemen di-scroll ke tengah horizontal
             });
         });
+
+        // Saat halaman dimuat, set checkbox sesuai localStorage
+        if (localStorage.getItem("keepModalOpen") === "true") {
+            $("#keepModalOpen").prop("checked", true);
+        }
+
+        // Toggle simpan ke localStorage
+        $("#keepModalOpen").on("change", function() {
+            if ($(this).is(":checked")) {
+                localStorage.setItem("keepModalOpen", "true");
+            } else {
+                localStorage.setItem("keepModalOpen", "false");
+            }
+        });
+
         // Tampilkan modal tambah evaluasi edukasi
         $('#addEvaluasiButton').click(function() {
             $('#evaluasiModalLabel').text('Tambah Evaluasi Edukasi'); // Ubah judul modal menjadi 'Tambah Evaluasi Edukasi'
@@ -766,6 +789,22 @@ $usia = $registrasi->diff($tanggal_lahir);
                 // Handle successful response
                 if (response.data.success) {
                     showSuccessToast(response.data.message, 'success');
+                    if ($('#keepModalOpen').is(':checked')) {
+                        // simpan status checkbox sebelum reset
+                        let keepChecked = $('#keepModalOpen').is(':checked');
+
+                        // reset form
+                        $('#evaluasiForm')[0].reset();
+
+                        // balikin status checkbox
+                        $('#keepModalOpen').prop('checked', keepChecked);
+                        $('#tanda_tangan_edukator_preview').attr('src', '#');
+                        $('#tanda_tangan_edukator_preview_div').hide();
+                        $('#tanda_tangan_pasien_preview').attr('src', '#');
+                        $('#tanda_tangan_pasien_preview_div').hide();
+                    } else {
+                        $('#evaluasiModal').modal('hide');
+                    }
                     $('#evaluasiModal').modal('hide');
                     $('#uploadProgressBar').css('width', '0%');
                     fetchEvaluasiEdukasi();
@@ -844,7 +883,14 @@ $usia = $registrasi->diff($tanggal_lahir);
 
         // Reset form saat modal ditutup
         $('#evaluasiModal').on('hidden.bs.modal', function() {
+            // simpan status checkbox sebelum reset
+            let keepChecked = $('#keepModalOpen').is(':checked');
+
+            // reset form
             $('#evaluasiForm')[0].reset();
+
+            // balikin status checkbox
+            $('#keepModalOpen').prop('checked', keepChecked);
             $('#uploadProgressBar').removeClass('bg-danger').css('width', '0%');
             $('#tanda_tangan_edukator_preview').attr('src', '#');
             $('#tanda_tangan_edukator_preview_div').hide();
