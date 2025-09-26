@@ -27,6 +27,7 @@ class LPOperasiModel extends Model
         'jam_operasi',
         'lama_operasi',
         'laporan_operasi',
+        'terapi_pascabedah',
         'waktu_dibuat',
     ];
 }

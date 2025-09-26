@@ -1288,8 +1288,8 @@ $usia = $registrasi->diff($tanggal_lahir);
             </div>
             <div class="mb-3">
                 <div class="mb-2">
-                    <label for="tindakan_operasi">Tindakan</label>
-                    <textarea class="form-control" id="tindakan_operasi" name="tindakan_operasi" rows="8" style="resize: none;"></textarea>
+                    <label for="laporan_operasi">Laporan Operasi</label>
+                    <textarea class="form-control" id="laporan_operasi" name="laporan_operasi" rows="8" style="resize: none;"></textarea>
                     <div class="invalid-feedback"></div>
                 </div>
             </div>
@@ -1590,7 +1590,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             }
             $('#komplikasi_lainnya').val(data.komplikasi_lainnya);
 
-            $('#tindakan_operasi').val(data.tindakan_operasi);
+            $('#laporan_operasi').val(data.laporan_operasi);
             $('#terapi_pascabedah').val(data.terapi_pascabedah);
         } catch (error) {
             showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);

@@ -439,8 +439,8 @@ $usia = $registrasi->diff($tanggal_lahir);
                 </div>
                 <div class="mb-3">
                     <div class="mb-2">
-                        <label for="keterangan_tambahan">Keterangan Tambahan</label>
-                        <textarea class="form-control" id="keterangan_tambahan" name="keterangan_tambahan" rows="8" style="resize: none;"></textarea>
+                        <label for="laporan_operasi">Laporan Operasi</label>
+                        <textarea class="form-control" id="laporan_operasi" name="laporan_operasi" rows="8" style="resize: none;"></textarea>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
@@ -527,7 +527,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 $("input[name='penjahitan'][value='" + penjahitan + "']").prop('checked', true);
             }
 
-            $('#keterangan_tambahan').val(data.keterangan_tambahan);
+            $('#laporan_operasi').val(data.laporan_operasi);
             $('#terapi_pasca_bedah').val(data.terapi_pasca_bedah);
         } catch (error) {
             showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);

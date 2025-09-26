@@ -598,7 +598,7 @@ class LPOperasiKatarak extends BaseController
                 'komplikasi_pendarahan' => $this->request->getPost('komplikasi_pendarahan') ?: null,
                 'komplikasi_lainnya' => $this->request->getPost('komplikasi_lainnya') ?: null,
 
-                'tindakan_operasi' => $this->request->getPost('tindakan_operasi') ?: null,
+                'laporan_operasi' => $this->request->getPost('laporan_operasi') ?: null,
                 'terapi_pascabedah' => $this->request->getPost('terapi_pascabedah') ?: null,
             ];
             $db->table('medrec_lp_operasi_katarak')->where('id_lp_operasi_katarak', $id)->update($data);

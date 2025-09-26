@@ -873,8 +873,8 @@ $waktuFormatted = $dateTime->format('H.i.s');
                     <tbody>
                         <tr>
                             <td style="width: 100%; vertical-align: top;">
-                                <div><strong>Tindakan:</strong></div>
-                                <div style="padding-left: 0.5cm;"><?= nl2br($lp_operasi_katarak['tindakan_operasi']) ?></div>
+                                <div><strong>Laporan Operasi:</strong></div>
+                                <div style="padding-left: 0.5cm;"><?= nl2br($lp_operasi_katarak['laporan_operasi']) ?></div>
                             </td>
                         </tr>
                     </tbody>

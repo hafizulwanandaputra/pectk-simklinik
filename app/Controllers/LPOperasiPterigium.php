@@ -564,8 +564,8 @@ class LPOperasiPterigium extends BaseController
                 'mytomicyn_c' => $this->request->getPost('mytomicyn_c') ?: null,
                 'penjahitan' => $this->request->getPost('penjahitan') ?: null,
 
-                'keterangan_tambahan' => $this->request->getPost('keterangan_tambahan') ?: null,
-                'terapi_pasca_bedah' => $this->request->getPost('terapi_pasca_bedah') ?: null,
+                'laporan_operasi' => $this->request->getPost('laporan_operasi') ?: null,
+                'terapi_pascabedah' => $this->request->getPost('terapi_pascabedah') ?: null,
             ];
             $db->table('medrec_lp_operasi_pterigium')->where('id_lp_operasi_pterigium', $id)->update($data);
             // Panggil WebSocket untuk update client

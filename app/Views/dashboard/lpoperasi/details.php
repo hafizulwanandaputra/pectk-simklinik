@@ -269,7 +269,14 @@ $usia = $registrasi->diff($tanggal_lahir);
                 </div>
                 <div class="mb-3">
                     <div class="mb-2">
-                        <label for="laporan_operasi">Laporan Operasi<span class="text-danger">*</span></label>
+                        <label for="laporan_operasi">Laporan Operasi</label>
+                        <textarea class="form-control" id="laporan_operasi" name="laporan_operasi" rows="8" style="resize: none;"></textarea>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="mb-2">
+                        <label for="laporan_operasi">Terapi Pasca Bedah</label>
                         <textarea class="form-control" id="laporan_operasi" name="laporan_operasi" rows="8" style="resize: none;"></textarea>
                         <div class="invalid-feedback"></div>
                     </div>

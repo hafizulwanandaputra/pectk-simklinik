@@ -341,7 +341,7 @@ $waktuFormatted = $dateTime->format('H.i.s');
                     <tbody>
                         <tr>
                             <td style="width: 100%; vertical-align: top;">
-                                <div><strong>Tindakan:</strong></div>
+                                <div><strong>Laporan Operasi:</strong></div>
                                 <div style="padding-left: 0.5cm;"><?= nl2br($lp_operasi_pterigium['keterangan_tambahan']) ?></div>
                             </td>
                         </tr>

@@ -288,6 +288,12 @@ $waktuFormatted = $dateTime->format('H.i.s');
                                 <div style="padding-left: 0.5cm;"><?= nl2br($lp_operasi['laporan_operasi']) ?></div>
                             </td>
                         </tr>
+                        <tr>
+                            <td style="width: 100%; vertical-align: top;">
+                                <div><strong>Terapi Pasca Bedah:</strong></div>
+                                <div style="padding-left: 0.5cm;"><?= nl2br($lp_operasi['terapi_pascabedah']) ?></div>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
                 <table class="table" style="width: 100%; margin-bottom: 4px;">

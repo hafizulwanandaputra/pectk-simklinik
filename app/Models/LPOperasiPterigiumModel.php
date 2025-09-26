@@ -35,8 +35,8 @@ class LPOperasiPterigiumModel extends Model
         'bare_sclera',
         'mytomicyn_c',
         'penjahitan',
-        'keterangan_tambahan',
-        'terapi_pasca_bedah',
+        'laporan_operasi',
+        'terapi_pascabedah',
         'waktu_dibuat',
     ];
 }
