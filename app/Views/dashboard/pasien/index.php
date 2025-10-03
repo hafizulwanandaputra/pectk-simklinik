@@ -37,7 +37,7 @@
                 <div class="no-fluid-content">
                     <div class="d-flex flex-column flex-lg-row gap-2">
                         <div class="input-group input-group-sm flex-grow-1">
-                            <input type="search" id="searchInput" class="form-control" placeholder="Cari nomor rekam medis, nama pasien, NIK, atau nomor BPJS">
+                            <input type="search" id="searchInput" class="form-control" placeholder="Cari nomor rekam medis, nama pasien, nomor identitas, atau nomor BPJS">
                         </div>
                         <div class="input-group input-group-sm w-auto second-row-form">
                             <input type="date" id="tanggalFilter" class="form-control rounded-start" placeholder="Tanggal lahir (dd-mm-yyyy)">
