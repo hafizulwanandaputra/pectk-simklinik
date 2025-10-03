@@ -168,10 +168,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="placeholder-glow">
-                                            <span class="placeholder w-100"></span>
-                                            <span class="placeholder w-100"></span>
-                                        </div>
                                     </div>
                                     <hr>
                                     <div class="d-grid gap-2 d-flex flex-wrap justify-content-end">
