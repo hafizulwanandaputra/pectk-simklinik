@@ -100,7 +100,7 @@
                     </tr>
                     <tr>
                         <td style="width: 25%; vertical-align: top; padding: 0;">
-                            <div>NIK</div>
+                            <div>Nomor Identitas</div>
                         </td>
                         <td style="width: 0%; vertical-align: top; padding: 0;">
                             <div>:</div>
@@ -111,7 +111,7 @@
                     </tr>
                     <tr>
                         <td style="width: 25%; vertical-align: top; padding: 0;">
-                            <div>No BPJS</div>
+                            <div>Nomor BPJS</div>
                         </td>
                         <td style="width: 0%; vertical-align: top; padding: 0;">
                             <div>:</div>
@@ -216,6 +216,17 @@
                     </tr>
                     <tr>
                         <td style="width: 25%; vertical-align: top; padding: 0;">
+                            <div>Kewarganegaraan</div>
+                        </td>
+                        <td style="width: 0%; vertical-align: top; padding: 0;">
+                            <div>:</div>
+                        </td>
+                        <td style="width: 75%; vertical-align: top; padding: 0;">
+                            <div><?= $pasien['kewarganegaraan'] ?></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 25%; vertical-align: top; padding: 0;">
                             <div>Agama</div>
                         </td>
                         <td style="width: 0%; vertical-align: top; padding: 0;">
@@ -272,7 +283,7 @@
                 </tbody>
             </table>
         </div>
-        <p style="font-size: 9pt;">* Identitas pasien sesuai dengan tanda pengenal (KTP, SIM, d.l.l.)</p>
+        <p style="font-size: 9pt;">* Identitas pasien sesuai dengan tanda pengenal (KTP, KIA, KK, atau SIM bagi WNI; Paspor, KITAS, atau KITAP bagi WNA)</p>
         <p style="font-size: 9pt;">Dicetak: <?= date("Y-m-d H:i:s") ?></p>
     </div>
 

@@ -233,6 +233,9 @@ class Pasien extends BaseController
             // Agama
             $agama = $db->table('master_agama')->get()->getResultArray();
 
+            // Kewarganegaraan
+            $kebangsaan = $db->table('master_kebangsaan')->get()->getResultArray();
+
             // Status Pernikahan
             $status_pernikahan = $db->table('master_status_pernikahan')->get()->getResultArray();
 
@@ -262,6 +265,7 @@ class Pasien extends BaseController
                     'pasien' => $pasien,
                     'title' => 'Detail Pasien ' . $pasien['nama_pasien'] . ' (' . $pasien['no_rm'] . ') - ' . $this->systemName,
                     'agama' => $agama,
+                    'kebangsaan' => $kebangsaan,
                     'status_pernikahan' => $status_pernikahan,
                     'pekerjaan' => $pekerjaan,
                     'systemname' => $this->systemName,

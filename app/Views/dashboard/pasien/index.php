@@ -100,8 +100,40 @@
                                                         <span class="placeholder w-100"></span>
                                                     </div>
                                                 </div>
+                                                <div class="mb-0 row g-1 align-items-center placeholder-glow">
+                                                    <div class="col-5 fw-medium text-truncate">
+                                                        <span class="placeholder w-100"></span>
+                                                    </div>
+                                                    <div class="col placeholder-glow">
+                                                        <span class="placeholder w-100"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-0 row g-1 align-items-center placeholder-glow">
+                                                    <div class="col-5 fw-medium text-truncate">
+                                                        <span class="placeholder w-100"></span>
+                                                    </div>
+                                                    <div class="col placeholder-glow">
+                                                        <span class="placeholder w-100"></span>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="col-lg-6">
+                                                <div class="mb-0 row g-1 align-items-center placeholder-glow">
+                                                    <div class="col-5 fw-medium text-truncate">
+                                                        <span class="placeholder w-100"></span>
+                                                    </div>
+                                                    <div class="col placeholder-glow">
+                                                        <span class="placeholder w-100"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="mb-0 row g-1 align-items-center placeholder-glow">
+                                                    <div class="col-5 fw-medium text-truncate">
+                                                        <span class="placeholder w-100"></span>
+                                                    </div>
+                                                    <div class="col placeholder-glow">
+                                                        <span class="placeholder w-100"></span>
+                                                    </div>
+                                                </div>
                                                 <div class="mb-0 row g-1 align-items-center placeholder-glow">
                                                     <div class="col-5 fw-medium text-truncate">
                                                         <span class="placeholder w-100"></span>
@@ -254,13 +286,8 @@
                     const tempat_lahir = pasien.tempat_lahir ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${pasien.tempat_lahir}">` : `<em>Tidak ada</em>`;
                     const tanggal_lahir = pasien.tanggal_lahir ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${pasien.tanggal_lahir}">` : `<em>Tidak ada</em>`;
                     const alamat = pasien.alamat ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${pasien.alamat}">` : `<em>Tidak ada</em>`;
+                    const kewarganegaraan = pasien.kewarganegaraan ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${pasien.kewarganegaraan}">` : `<em>Tidak ada</em>`;
                     const telpon = pasien.telpon ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${pasien.telpon}">` : `<em>Tidak ada</em>`;
-                    let jumlah_rawat_jalan = pasien.jumlah_rawat_jalan;
-                    if (jumlah_rawat_jalan === 0) {
-                        jumlah_rawat_jalan = `Tidak ada rawat jalan`;
-                    } else {
-                        jumlah_rawat_jalan = `${jumlah_rawat_jalan.toLocaleString('id-ID')} rawat jalan`;
-                    }
                     const delete_status = pasien.jumlah_rawat_jalan_daftar > 0 ? `disabled` : ``;
                     const pasienElement = `
                 <span class="list-group-item border-top-0 pb-3 pt-3">
@@ -283,7 +310,7 @@
                                             </div>
                                         </div>
                                         <div class="mb-0 row g-1 align-items-center">
-                                            <div class="col-5 fw-medium text-truncate">Nomor Induk Kependudukan</div>
+                                            <div class="col-5 fw-medium text-truncate">Nomor Identitas</div>
                                             <div class="col date">
                                                 ${nik}
                                             </div>
@@ -300,8 +327,6 @@
                                                 ${jenis_kelamin}
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-6">
                                         <div class="mb-0 row g-1 align-items-center">
                                             <div class="col-5 fw-medium text-truncate">Tempat Lahir</div>
                                             <div class="col">
@@ -314,10 +339,18 @@
                                                 ${tanggal_lahir}
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="col-lg-6">
                                         <div class="mb-0 row g-1 align-items-center">
                                             <div class="col-5 fw-medium text-truncate">Alamat</div>
                                             <div class="col">
                                                 ${alamat}
+                                            </div>
+                                        </div>
+                                        <div class="mb-0 row g-1 align-items-center">
+                                            <div class="col-5 fw-medium text-truncate">Kewarganegaraan</div>
+                                            <div class="col">
+                                                ${kewarganegaraan}
                                             </div>
                                         </div>
                                         <div class="mb-0 row g-1 align-items-center">
@@ -326,13 +359,25 @@
                                                 ${telpon}
                                             </div>
                                         </div>
+                                        <div class="mb-0 row g-1 align-items-center">
+                                            <div class="col-5 fw-medium text-truncate">Rawat Jalan Didaftarkan</div>
+                                            <div class="col date">
+                                                ${pasien.jumlah_rawat_jalan_daftar.toLocaleString('id-ID')}
+                                            </div>
+                                        </div>
+                                        <div class="mb-0 row g-1 align-items-center">
+                                            <div class="col-5 fw-medium text-truncate">Rawat Jalan Dibatalkan</div>
+                                            <div class="col date">
+                                                ${pasien.jumlah_rawat_jalan_batal.toLocaleString('id-ID')}
+                                            </div>
+                                        </div>
+                                        <div class="mb-0 row g-1 align-items-center">
+                                            <div class="col-5 fw-medium text-truncate">Total Rawat Jalan</div>
+                                            <div class="col date">
+                                                ${pasien.jumlah_rawat_jalan.toLocaleString('id-ID')}
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="fw-bold">
-                                    <span class="me-1"><i class="fa-solid fa-check"></i></span><span class="date">${pasien.jumlah_rawat_jalan_daftar.toLocaleString('id-ID')}</span><span class="mx-1"></span><span class="me-1"><i class="fa-solid fa-xmark"></i></span><span class="date">${pasien.jumlah_rawat_jalan_batal.toLocaleString('id-ID')}</span>
-                                </div>
-                                <div class="fw-bold">
-                                    <span class="date">${jumlah_rawat_jalan}</span>
                                 </div>
                             </div>
                             <hr>

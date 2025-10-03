@@ -151,14 +151,14 @@
                             <div class="col">
                                 <div class="form-floating">
                                     <input type="number" class="form-control" id="nik" name="nik" value="" autocomplete="off" dir="auto" placeholder="nik">
-                                    <label for="nik">Nomor Induk Kependudukan</label>
+                                    <label for="nik">NIK (WNI) atau No. Paspor/NIORA (WNA)</label>
                                     <div class="invalid-feedback"></div>
                                 </div>
                             </div>
                             <div class="col">
                                 <div class="form-floating">
                                     <input type="number" class="form-control" id="no_bpjs" name="no_bpjs" value="" autocomplete="off" dir="auto" placeholder="no_bpjs">
-                                    <label for="no_bpjs">Nomor BPJS</label>
+                                    <label for="no_bpjs">Nomor BPJS (Khusus WNI)</label>
                                     <div class="invalid-feedback"></div>
                                 </div>
                             </div>
@@ -268,8 +268,9 @@
                                 <div class="form-floating">
                                     <select class="form-select" id="kewarganegaraan" name="kewarganegaraan" aria-label="kewarganegaraan">
                                         <option value="" selected disabled>-- Pilih Kewarganegaraan --</option>
-                                        <option value="WNI">INDONESIA</option>
-                                        <option value="WNA">WARGA NEGARA ASING</option>
+                                        <?php foreach ($kebangsaan as $kebangsaan_list) : ?>
+                                            <option value="<?= $kebangsaan_list['bangsaNama'] ?>"><?= $kebangsaan_list['bangsaNama'] ?></option>
+                                        <?php endforeach; ?>
                                     </select>
                                     <label for="kewarganegaraan">Kewarganegaraan<span class="text-danger">*</span></label>
                                     <div class="invalid-feedback"></div>
@@ -748,7 +749,7 @@
             $('#rt').val(data.rt);
             $('#rw').val(data.rw);
             $('#telpon').val(data.telpon);
-            $('#kewarganegaraan').val(data.kewarganegaraan);
+            $('#kewarganegaraan').val(data.kewarganegaraan).trigger('change');
             if (data.agama > 0) {
                 $('#agama').val(data.agama);
             }
@@ -885,7 +886,7 @@
         }
     });
 
-    $('#provinsi, #kabupaten, #kecamatan, #kelurahan, #pekerjaan').select2({
+    $('#provinsi, #kabupaten, #kecamatan, #kelurahan, #kewarganegaraan, #pekerjaan').select2({
         dropdownParent: $('#pasienForm'),
         theme: "bootstrap-5",
         width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
