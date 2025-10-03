@@ -213,6 +213,10 @@
                                         <div class="col" id="alamat"></div>
                                     </div>
                                     <div class="mb-0 row g-1 align-items-center">
+                                        <div class="col-5 fw-medium text-truncate">Kewarganegaraan</div>
+                                        <div class="col" id="kewarganegaraan"></div>
+                                    </div>
+                                    <div class="mb-0 row g-1 align-items-center">
                                         <div class="col-5 fw-medium text-truncate">Nomor Telepon</div>
                                         <div class="col date" id="telpon"></div>
                                     </div>
@@ -1285,6 +1289,7 @@
                 $('#tanggal_lahir').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${rawatjalan.tanggal_lahir}">`);
                 $('#usia').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${usia.usia} tahun ${usia.bulan} bulan">`);
                 $('#alamat').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${rawatjalan.alamat}">`);
+                $('#kewarganegaraan').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${rawatjalan.kewarganegaraan}">`);
                 $('#telpon').html(telpon);
                 $('#identitas_btn').attr('data-id', rawatjalan.id_pasien);
                 $('#barcode_btn').attr('data-id', rawatjalan.id_pasien);
