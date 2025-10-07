@@ -479,7 +479,7 @@ $waktuFormatted = $dateTime->format('H.i.s');
                                 <td style="vertical-align: top; padding-top: 2px; padding-bottom: 2px; line-height: 1.1; padding-left: 4px; padding-right: 4px; width: 50%; font-size: 8.5pt;">
                                     <div>Nama dokter operator (spesialis mata):</div>
                                     <div><small><?= $operasi_safety_signout['nama_dokter_operator'] ?></small></div>
-                                    <div>Jam: <?= $operasi_safety_signout['jam'] ?></div>
+                                    <div>Jam: <?= $operasi_safety_signout['jam_signout'] ?></div>
                                 </td>
                                 <td style="vertical-align: top; height: 2cm; padding-top: 2px; padding-bottom: 2px; line-height: 1.1; padding-left: 4px; padding-right: 4px; width: 50%; font-size: 8.5pt;">
                                     <div>Tanda tangan:</div>
