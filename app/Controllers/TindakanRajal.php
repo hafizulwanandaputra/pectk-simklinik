@@ -210,14 +210,13 @@ class TindakanRajal extends BaseController
                 ->get()
                 ->getRowArray();
 
-            $laporanrajal['nama_perawat'] = str_replace(';', ', ', $laporanrajal['nama_perawat']);
-
-            // === Generate Barcode ===
-            $barcodeGenerator = new BarcodeGeneratorPNG();
-            $bcNoReg = base64_encode($barcodeGenerator->getBarcode($rawatjalan['nomor_registrasi'], $barcodeGenerator::TYPE_CODE_128));
-
             // Memeriksa apakah pasien tidak kosong
             if ($laporanrajal) {
+                $laporanrajal['nama_perawat'] = str_replace(';', ', ', $laporanrajal['nama_perawat']);
+
+                // === Generate Barcode ===
+                $barcodeGenerator = new BarcodeGeneratorPNG();
+                $bcNoReg = base64_encode($barcodeGenerator->getBarcode($rawatjalan['nomor_registrasi'], $barcodeGenerator::TYPE_CODE_128));
                 // Menyiapkan data untuk tampilan
                 $data = [
                     'rawatjalan' => $rawatjalan,

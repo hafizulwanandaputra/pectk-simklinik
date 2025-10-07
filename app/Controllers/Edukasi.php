@@ -154,33 +154,33 @@ class Edukasi extends BaseController
                 ->get()
                 ->getRowArray();
 
-            // Ambil tabel master_pendidikan
-            $pendidikan = $db->table('master_pendidikan');
-            $pendidikan->select('keterangan');
-            $pendidikan->where('pendidikan', $edukasi['pendidikan']);
-
-            // Query untuk mendapatkan nama pendidikan
-            $res_pendidikan = $pendidikan->get()->getRow();
-
-            if ($res_pendidikan) {
-                // Ubah pendidikan menjadi keterangan
-                $edukasi['pendidikan'] = $res_pendidikan->keterangan;
-            }
-
-            $edukasi['hambatan'] = str_replace(',', ', ', $edukasi['hambatan']);
-
-            // Memeriksa apakah evaluasi edukasi sudah ada
-            $edukasi_evaluasi = $db->table('medrec_edukasi_evaluasi')
-                ->where('nomor_registrasi', $rawatjalan['nomor_registrasi'])
-                ->get()
-                ->getResultArray();
-
-            // === Generate Barcode ===
-            $barcodeGenerator = new BarcodeGeneratorPNG();
-            $bcNoReg = base64_encode($barcodeGenerator->getBarcode($rawatjalan['nomor_registrasi'], $barcodeGenerator::TYPE_CODE_128));
-
             // Memeriksa apakah pasien tidak kosong
             if ($edukasi) {
+                // Ambil tabel master_pendidikan
+                $pendidikan = $db->table('master_pendidikan');
+                $pendidikan->select('keterangan');
+                $pendidikan->where('pendidikan', $edukasi['pendidikan']);
+
+                // Query untuk mendapatkan nama pendidikan
+                $res_pendidikan = $pendidikan->get()->getRow();
+
+                if ($res_pendidikan) {
+                    // Ubah pendidikan menjadi keterangan
+                    $edukasi['pendidikan'] = $res_pendidikan->keterangan;
+                }
+
+                $edukasi['hambatan'] = str_replace(',', ', ', $edukasi['hambatan']);
+
+                // Memeriksa apakah evaluasi edukasi sudah ada
+                $edukasi_evaluasi = $db->table('medrec_edukasi_evaluasi')
+                    ->where('nomor_registrasi', $rawatjalan['nomor_registrasi'])
+                    ->get()
+                    ->getResultArray();
+
+                // === Generate Barcode ===
+                $barcodeGenerator = new BarcodeGeneratorPNG();
+                $bcNoReg = base64_encode($barcodeGenerator->getBarcode($rawatjalan['nomor_registrasi'], $barcodeGenerator::TYPE_CODE_128));
+
                 // Menyiapkan data untuk tampilan
                 $data = [
                     'rawatjalan' => $rawatjalan,

@@ -272,14 +272,13 @@ class Asesmen extends BaseController
                 ->get()
                 ->getRowArray();
 
-            $asesmen['sakit_lainnya'] = str_replace(',', ', ', $asesmen['sakit_lainnya']);
-
-            // === Generate Barcode ===
-            $barcodeGenerator = new BarcodeGeneratorPNG();
-            $bcNoReg = base64_encode($barcodeGenerator->getBarcode($rawatjalan['nomor_registrasi'], $barcodeGenerator::TYPE_CODE_128));
-
             // Memeriksa apakah pasien tidak kosong
             if ($asesmen) {
+                $asesmen['sakit_lainnya'] = str_replace(',', ', ', $asesmen['sakit_lainnya']);
+
+                // === Generate Barcode ===
+                $barcodeGenerator = new BarcodeGeneratorPNG();
+                $bcNoReg = base64_encode($barcodeGenerator->getBarcode($rawatjalan['nomor_registrasi'], $barcodeGenerator::TYPE_CODE_128));
                 // Menyiapkan data untuk tampilan
                 $data = [
                     'rawatjalan' => $rawatjalan,
