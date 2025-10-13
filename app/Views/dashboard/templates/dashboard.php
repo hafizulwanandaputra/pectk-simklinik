@@ -272,6 +272,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
             height: 100%;
             margin: 0;
             overflow: hidden;
+            scroll-padding-top: 0.5rem;
         }
 
         .loading-spinner {
@@ -308,9 +309,9 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
 
         .sidebar {
             box-shadow: inset 0px 0 0 rgba(0, 0, 0, 0);
-            border-right: 1px solid var(--bs-border-color);
-            height: 100%;
+            border: 1px solid var(--bs-border-color);
             overflow: auto;
+            border-radius: var(--bs-border-radius);
         }
 
         .main-content {
@@ -319,7 +320,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
         }
 
         .main-content-inside {
-            margin-left: 220px;
+            margin-left: calc(0.5rem + 220px);
         }
 
         #sidebarMenu,
@@ -441,21 +442,21 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
 
             .sidebar {
                 top: 3rem;
-                border-right: 0px solid var(--bs-border-color);
                 width: 100%;
             }
 
             #sidebarMenu2 {
-                height: calc(100% - 3rem);
+                height: 100%;
                 padding-top: 0;
             }
 
             #sidebarMenu {
-                max-width: 100%;
+                height: calc(100% - 7rem);
+                max-width: calc(100% - 1rem);
                 min-width: 0;
                 opacity: 0;
                 transition: opacity 0.25s ease-out, transform 0.25s ease-out;
-                transform: translateY(-10px);
+                transform: translateY(-2.5rem) scale(0.9);
             }
 
             #sidebarHeader {
@@ -465,7 +466,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
 
             #sidebarMenu.show {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateY(0) scale(1);
             }
 
             @media (prefers-reduced-motion: reduce) {
@@ -487,7 +488,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
         <!-- HEADER -->
         <header class="navbar sticky-top flex-md-nowrap p-0 shadow-sm bg-success-subtle text-success-emphasis border-bottom border-success-subtle header">
             <?php if (!(in_array(session()->get('role'), ['Satpam', 'Monitor Antrean']) && $activeSegment === 'home')) : ?>
-                <div id="sidebarHeader" class="d-flex justify-content-center align-items-center me-0 px-3 py-md-1" style="min-height: 3rem; max-height: 3rem;">
+                <div id="sidebarHeader" class="d-flex justify-content-center align-items-center mx-0 mx-md-2 px-3 py-md-1" style="min-height: 3rem; max-height: 3rem;">
                     <span class="navbar-brand mx-0 text-start text-md-center lh-sm d-flex justify-content-center align-items-center" style="font-size: 7.5pt;">
                         <img src="<?= base_url('/assets/images/pec-klinik-logo.png'); ?>" alt="KLINIK MATA PECTK" height="24px">
                         <div class="ps-2 text-start text-success-emphasis fw-bold">PADANG EYE CENTER<br>TELUK KUANTAN</div>

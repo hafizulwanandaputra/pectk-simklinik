@@ -62,9 +62,9 @@ $db = db_connect();
 <?= $this->endSection(); ?>
 <?= $this->section('content'); ?>
 <main class="main-content-inside p-3">
-    <div id="alert-voice" class="fixed-top" style="z-index: 99; margin-top: 3rem;">
-        <ul class="list-group shadow-sm rounded-0">
-            <li class="list-group-item border-top-0 border-end-0 border-start-0 border-warning-subtle bg-warning-subtle text-warning-emphasis transparent-blur">
+    <div id="alert-voice" class="fixed-top p-2" style="z-index: 99; margin-top: 3rem;">
+        <ul class="list-group shadow-sm">
+            <li class="list-group-item list-group-item-warning transparent-blur">
                 <div class="no-fluid-content">
                     <div class="d-flex align-items-start">
                         <div style="width: 12px; text-align: center;">

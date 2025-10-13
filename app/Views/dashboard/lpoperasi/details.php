@@ -75,11 +75,11 @@ $usia = $registrasi->diff($tanggal_lahir);
 <?= $this->endSection(); ?>
 <?= $this->section('content'); ?>
 <main class="main-content-inside">
-    <div class="sticky-top" style="z-index: 99;">
-        <ul class="list-group shadow-sm rounded-0">
+    <div class="sticky-top px-3 pt-2" style="z-index: 99;">
+        <ul class="list-group no-fluid-content shadow-sm border border-bottom-0">
             <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-secondary transparent-blur">
                 <div class="no-fluid-content">
-                    <nav class="nav nav-underline flex-nowrap overflow-auto">
+                    <nav class="nav nav-pills flex-nowrap overflow-auto">
                         <?php foreach ($listRawatJalan as $list) : ?>
                             <a class="nav-link py-1 <?= ($activeSegment === $list['id_lp_operasi']) ? 'active activeLink' : '' ?>" href="<?= base_url('lpoperasi/details/' . $list['id_lp_operasi']); ?>">
                                 <div class="text-center">

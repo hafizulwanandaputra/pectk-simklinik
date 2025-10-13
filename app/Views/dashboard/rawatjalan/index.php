@@ -15,45 +15,45 @@
 <?= $this->endSection(); ?>
 <?= $this->section('content'); ?>
 <main class="main-content-inside">
-    <div class="sticky-top" style="z-index: 99;">
-        <ul class="list-group shadow-sm rounded-0">
+    <div class="sticky-top px-3 pt-2" style="z-index: 99;">
+        <ul class="list-group no-fluid-content shadow-sm border border-bottom-0">
             <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-secondary transparent-blur">
                 <div class="no-fluid-content">
                     <nav>
-                        <div class="nav nav-underline nav-justified flex-nowrap overflow-auto" id="nav-tab" role="tablist">
+                        <div class="nav nav-pills nav-justified flex-nowrap overflow-auto" id="nav-tab" role="tablist">
                             <button class="nav-link py-1 text-nowrap active" id="tanggal-container-tab" data-bs-toggle="tab" data-bs-target="#tanggal-container" type="button" role="tab" aria-controls="tanggal-container" aria-selected="true">Tanggal</button>
                             <button class="nav-link py-1 text-nowrap" id="no_rm-container-tab" data-bs-toggle="tab" data-bs-target="#no_rm-container" type="button" role="tab" aria-controls="no_rm-container" aria-selected="false">Nomor Rekam Medis</button>
                             <button class="nav-link py-1 text-nowrap" id="nama-container-tab" data-bs-toggle="tab" data-bs-target="#nama-container" type="button" role="tab" aria-controls="nama-container" aria-selected="false">Nama</button>
                         </div>
                     </nav>
-                </div>
-            </li>
-            <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-secondary transparent-blur" id="tanggal_form">
-                <div class="no-fluid-content">
-                    <div class="input-group input-group-sm">
-                        <input type="date" id="tanggal" name="tanggal" class="form-control" value="<?= date('Y-m-d') ?>">
-                        <button class="btn btn-primary bg-gradient" type="button" id="setTodayTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Kembali ke Hari Ini"><i class="fa-solid fa-calendar-day"></i></button>
-                        <button class="btn btn-success bg-gradient" type="button" id="refreshTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan" disabled><i class="fa-solid fa-sync"></i></button>
+                    <div id="tanggal_form" class="pt-2">
+                        <div class="no-fluid-content">
+                            <div class="input-group input-group-sm">
+                                <input type="date" id="tanggal" name="tanggal" class="form-control" value="<?= date('Y-m-d') ?>">
+                                <button class="btn btn-primary bg-gradient" type="button" id="setTodayTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Kembali ke Hari Ini"><i class="fa-solid fa-calendar-day"></i></button>
+                                <button class="btn btn-success bg-gradient" type="button" id="refreshTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan" disabled><i class="fa-solid fa-sync"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="no-rm_form" class="pt-2" style="display: none;">
+                        <form class="no-fluid-content" id="no-rm_form_content">
+                            <div class="input-group input-group-sm">
+                                <input type="search" id="no_rm" name="no_rm" class="form-control" placeholder="xx-xx-xx" autocomplete="off" dir="auto">
+                                <button class="btn btn-primary bg-gradient" type="submit" id="no_rm_submitBtn" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Cari"><i class="fa-solid fa-magnifying-glass"></i></button>
+                                <button class="btn btn-success bg-gradient" type="button" id="refreshNoRMButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan" disabled><i class="fa-solid fa-sync"></i></button>
+                            </div>
+                        </form>
+                    </div>
+                    <div id="nama_form" class="pt-2" style="display: none;">
+                        <form class="no-fluid-content" id="nama_form_content">
+                            <div class="input-group input-group-sm">
+                                <input type="search" id="nama" name="nama" class="form-control" placeholder="Nama pasien" autocomplete="off" dir="auto">
+                                <button class="btn btn-primary bg-gradient" type="submit" id="nama_submitBtn" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Cari"><i class="fa-solid fa-magnifying-glass"></i></button>
+                                <button class="btn btn-success bg-gradient" type="button" id="refreshNamaButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan" disabled><i class="fa-solid fa-sync"></i></button>
+                            </div>
+                        </form>
                     </div>
                 </div>
-            </li>
-            <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-secondary transparent-blur" id="no-rm_form" style="display: none;">
-                <form class="no-fluid-content" id="no-rm_form_content">
-                    <div class="input-group input-group-sm">
-                        <input type="search" id="no_rm" name="no_rm" class="form-control" placeholder="xx-xx-xx" autocomplete="off" dir="auto">
-                        <button class="btn btn-primary bg-gradient" type="submit" id="no_rm_submitBtn" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Cari"><i class="fa-solid fa-magnifying-glass"></i></button>
-                        <button class="btn btn-success bg-gradient" type="button" id="refreshNoRMButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan" disabled><i class="fa-solid fa-sync"></i></button>
-                    </div>
-                </form>
-            </li>
-            <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-secondary transparent-blur" id="nama_form" style="display: none;">
-                <form class="no-fluid-content" id="nama_form_content">
-                    <div class="input-group input-group-sm">
-                        <input type="search" id="nama" name="nama" class="form-control" placeholder="Nama pasien" autocomplete="off" dir="auto">
-                        <button class="btn btn-primary bg-gradient" type="submit" id="nama_submitBtn" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Cari"><i class="fa-solid fa-magnifying-glass"></i></button>
-                        <button class="btn btn-success bg-gradient" type="button" id="refreshNamaButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan" disabled><i class="fa-solid fa-sync"></i></button>
-                    </div>
-                </form>
             </li>
         </ul>
     </div>

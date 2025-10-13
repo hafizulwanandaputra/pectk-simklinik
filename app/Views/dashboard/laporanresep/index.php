@@ -10,33 +10,33 @@
 <?= $this->endSection(); ?>
 <?= $this->section('content'); ?>
 <main class="main-content-inside">
-    <div class="sticky-top" style="z-index: 99;">
-        <ul class="list-group shadow-sm rounded-0">
+    <div class="sticky-top px-3 pt-2" style="z-index: 99;">
+        <ul class="list-group no-fluid-content shadow-sm border border-bottom-0">
             <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-secondary transparent-blur">
                 <div class="no-fluid-content">
                     <nav>
-                        <div class="nav nav-underline nav-justified flex-nowrap overflow-auto" id="nav-tab" role="tablist">
+                        <div class="nav nav-pills nav-justified flex-nowrap overflow-auto" id="nav-tab" role="tablist">
                             <button class="nav-link py-1 text-nowrap active" id="resepharian-container-tab" data-bs-toggle="tab" data-bs-target="#resepharian-container" type="button" role="tab" aria-controls="resepharian-container" aria-selected="true">Harian</button>
                             <button class="nav-link py-1 text-nowrap" id="resepbulanan-container-tab" data-bs-toggle="tab" data-bs-target="#resepbulanan-container" type="button" role="tab" aria-controls="resepbulanan-container" aria-selected="false">Bulanan</button>
                         </div>
                     </nav>
-                </div>
-            </li>
-            <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-secondary transparent-blur" id="tanggal_form">
-                <div class="no-fluid-content">
-                    <div class="input-group input-group-sm" id="form-resep-harian">
-                        <input type="date" id="tanggal" name="tanggal" class="form-control" <?= (session()->get('auto_date') == 1) ? 'value="' . date('Y-m-d') . '"' : ''; ?>>
-                        <button class="btn btn-danger bg-gradient" type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
-                        <button class="btn btn-success bg-gradient " type="button" id="refreshButton1" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan" disabled><i class="fa-solid fa-sync"></i></button>
+                    <div class="pt-2" id="tanggal_form">
+                        <div class="no-fluid-content">
+                            <div class="input-group input-group-sm" id="form-resep-harian">
+                                <input type="date" id="tanggal" name="tanggal" class="form-control" <?= (session()->get('auto_date') == 1) ? 'value="' . date('Y-m-d') . '"' : ''; ?>>
+                                <button class="btn btn-danger bg-gradient" type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
+                                <button class="btn btn-success bg-gradient " type="button" id="refreshButton1" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan" disabled><i class="fa-solid fa-sync"></i></button>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </li>
-            <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-secondary transparent-blur" id="bulan_form" style="display: none;">
-                <div class="no-fluid-content">
-                    <div class="input-group input-group-sm" id="form-resep-bulanan">
-                        <input type="month" id="bulan" name="bulan" class="form-control rounded-start" <?= (session()->get('auto_date') == 1) ? 'value="' . date('Y-m') . '"' : ''; ?>>
-                        <button class="btn btn-danger bg-gradient" type="button" id="clearBlnButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Bulan"><i class="fa-solid fa-xmark"></i></button>
-                        <button class="btn btn-success bg-gradient " type="button" id="refreshButton2" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan" disabled><i class="fa-solid fa-sync"></i></button>
+                    <div class="pt-2" id="bulan_form" style="display: none;">
+                        <div class="no-fluid-content">
+                            <div class="input-group input-group-sm" id="form-resep-bulanan">
+                                <input type="month" id="bulan" name="bulan" class="form-control rounded-start" <?= (session()->get('auto_date') == 1) ? 'value="' . date('Y-m') . '"' : ''; ?>>
+                                <button class="btn btn-danger bg-gradient" type="button" id="clearBlnButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Bulan"><i class="fa-solid fa-xmark"></i></button>
+                                <button class="btn btn-success bg-gradient " type="button" id="refreshButton2" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan" disabled><i class="fa-solid fa-sync"></i></button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </li>

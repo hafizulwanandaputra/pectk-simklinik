@@ -390,16 +390,16 @@
     }
 
     .fade {
-        transition: opacity 0.25s ease-out;
+        transition: opacity 0.25s ease-in-out;
     }
 
     .modal.fade .modal-dialog {
-        transition: transform 0.25s ease-out;
-        transform: scale(1.05);
+        transition: transform 0.25s ease-in-out;
+        transform: scale(.9);
     }
 
     .modal.fade .modal-dialog.modal-fullscreen {
-        transition: transform 0.25s ease-out;
+        transition: transform 0.25s ease-in-out;
         transform: scale(1);
     }
 
@@ -431,35 +431,35 @@
 
     @media (max-width: 575.98px) {
         .modal.fade .modal-dialog.modal-fullscreen-sm-down {
-            transition: transform 0.25s ease-out;
+            transition: transform 0.25s ease-in-out;
             transform: scale(1);
         }
     }
 
     @media (max-width: 767.98px) {
         .modal.fade .modal-dialog.modal-fullscreen-md-down {
-            transition: transform 0.25s ease-out;
+            transition: transform 0.25s ease-in-out;
             transform: scale(1);
         }
     }
 
     @media (max-width: 991.98px) {
         .modal.fade .modal-dialog.modal-fullscreen-lg-down {
-            transition: transform 0.25s ease-out;
+            transition: transform 0.25s ease-in-out;
             transform: scale(1);
         }
     }
 
     @media (max-width: 1199.98px) {
         .modal.fade .modal-dialog.modal-fullscreen-xl-down {
-            transition: transform 0.25s ease-out;
+            transition: transform 0.25s ease-in-out;
             transform: scale(1);
         }
     }
 
     @media (max-width: 1399.98px) {
         .modal.fade .modal-dialog.modal-fullscreen-xxl-down {
-            transition: transform 0.25s ease-out;
+            transition: transform 0.25s ease-in-out;
             transform: scale(1);
         }
     }
