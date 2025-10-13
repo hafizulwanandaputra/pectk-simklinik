@@ -456,7 +456,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                 min-width: 0;
                 opacity: 0;
                 transition: opacity 0.25s ease-out, transform 0.25s ease-out;
-                transform: translateY(-2.5rem) scale(0.9);
+                transform: translateY(-5%) scale(0.9);
             }
 
             #sidebarHeader {
