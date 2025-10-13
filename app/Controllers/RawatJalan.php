@@ -93,12 +93,15 @@ class RawatJalan extends BaseController
                 $jaminanMap[$jaminan['jaminanKode']] = $jaminan['jaminanNama'];
             }
 
-            $totalPasien = count($Pasien);
+            // Hitung nomor awal per halaman
+            // Contoh: total = 50, offset = 0  → mulai dari 50
+            //         total = 50, offset = 25 → mulai dari 25
+            $startNumber = $total - $offset;
 
-            // Mapping data pasien
+            // Mapping data pasien dengan nomor urut menurun
             foreach ($Pasien as $i => &$rajal) {
-                $rajal['number'] = $startNumber + ($totalPasien - 1 - $i); // urutan angka dibalik
-                $rajal['jaminan'] = isset($jaminanMap[$rajal['jaminan']]) ? $jaminanMap[$rajal['jaminan']] : 'Tidak Diketahui';
+                $rajal['number'] = $startNumber - $i;
+                $rajal['jaminan'] = $jaminanMap[$rajal['jaminan']] ?? 'Tidak Diketahui';
             }
             unset($rajal); // putuskan referensi
 
@@ -167,12 +170,15 @@ class RawatJalan extends BaseController
                 $jaminanMap[$jaminan['jaminanKode']] = $jaminan['jaminanNama'];
             }
 
-            $totalPasien = count($Pasien);
+            // Hitung nomor awal per halaman
+            // Contoh: total = 50, offset = 0  → mulai dari 50
+            //         total = 50, offset = 25 → mulai dari 25
+            $startNumber = $total - $offset;
 
-            // Mapping data pasien
+            // Mapping data pasien dengan nomor urut menurun
             foreach ($Pasien as $i => &$rajal) {
-                $rajal['number'] = $startNumber + ($totalPasien - 1 - $i); // urutan angka dibalik
-                $rajal['jaminan'] = isset($jaminanMap[$rajal['jaminan']]) ? $jaminanMap[$rajal['jaminan']] : 'Tidak Diketahui';
+                $rajal['number'] = $startNumber - $i;
+                $rajal['jaminan'] = $jaminanMap[$rajal['jaminan']] ?? 'Tidak Diketahui';
             }
             unset($rajal); // putuskan referensi
 
@@ -240,12 +246,15 @@ class RawatJalan extends BaseController
                 $jaminanMap[$jaminan['jaminanKode']] = $jaminan['jaminanNama'];
             }
 
-            $totalPasien = count($Pasien);
+            // Hitung nomor awal per halaman
+            // Contoh: total = 50, offset = 0  → mulai dari 50
+            //         total = 50, offset = 25 → mulai dari 25
+            $startNumber = $total - $offset;
 
-            // Mapping data pasien
+            // Mapping data pasien dengan nomor urut menurun
             foreach ($Pasien as $i => &$rajal) {
-                $rajal['number'] = $startNumber + ($totalPasien - 1 - $i); // urutan angka dibalik
-                $rajal['jaminan'] = isset($jaminanMap[$rajal['jaminan']]) ? $jaminanMap[$rajal['jaminan']] : 'Tidak Diketahui';
+                $rajal['number'] = $startNumber - $i;
+                $rajal['jaminan'] = $jaminanMap[$rajal['jaminan']] ?? 'Tidak Diketahui';
             }
             unset($rajal); // putuskan referensi
 
