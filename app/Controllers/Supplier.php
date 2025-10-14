@@ -124,14 +124,14 @@ class Supplier extends BaseController
 
     public function create()
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
             $validation = \Config\Services::validation();
 
-            // Ambil input dulu
-            $nama_supplier = trim($this->request->getPost('nama_supplier'));
-            $merek = trim($this->request->getPost('merek'));
-            $alamat_supplier = trim($this->request->getPost('alamat_supplier'));
+            // Ambil input dan normalisasi
+            $nama_supplier = $this->normalizeInput($this->request->getPost('nama_supplier'));
+            $merek = $this->normalizeInput($this->request->getPost('merek'));
+            $alamat_supplier = $this->normalizeInput($this->request->getPost('alamat_supplier'));
+            $kontak_supplier = $this->normalizeInput($this->request->getPost('kontak_supplier'));
 
             // Tentukan aturan validasi secara dinamis
             if (empty($nama_supplier)) {
@@ -156,86 +156,92 @@ class Supplier extends BaseController
             // Terapkan aturan validasi
             $validation->setRules($rules);
 
-            // Jalankan validasi
             if (!$this->validate($validation->getRules())) {
                 return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
             }
 
-            // Menyimpan data supplier
+            // Simpan data supplier
             $data = [
-                'nama_supplier' => $nama_supplier ?: null,
-                'merek' => $merek ?: null,
-                'alamat_supplier' => $alamat_supplier ?: NULL,
-                'kontak_supplier' => $this->request->getPost('kontak_supplier') ?: NULL // Mengambil kontak supplier dari input
+                'nama_supplier' => $nama_supplier,
+                'merek' => $merek,
+                'alamat_supplier' => $alamat_supplier,
+                'kontak_supplier' => $kontak_supplier,
             ];
-            $this->SupplierModel->save($data); // Menyimpan data ke database
-            // Panggil WebSocket untuk update client
+            $this->SupplierModel->save($data);
+
             $this->notify_clients();
-            return $this->response->setJSON(['success' => true, 'message' => 'Pemasok berhasil ditambahkan']); // Mengembalikan pesan sukses
+
+            return $this->response->setJSON(['success' => true, 'message' => 'Pemasok berhasil ditambahkan']);
         } else {
             return $this->response->setStatusCode(404)->setJSON([
-                'error' => 'Halaman tidak ditemukan', // Pesan jika peran tidak valid
+                'error' => 'Halaman tidak ditemukan',
             ]);
         }
     }
 
     public function update()
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
             $validation = \Config\Services::validation();
 
-            // Ambil input dulu
-            $nama_supplier = trim($this->request->getPost('nama_supplier'));
-            $merek = trim($this->request->getPost('merek'));
-            $alamat_supplier = trim($this->request->getPost('alamat_supplier'));
+            // Ambil input dan normalisasi
+            $id_supplier = $this->request->getPost('id_supplier');
+            $nama_supplier = $this->normalizeInput($this->request->getPost('nama_supplier'));
+            $merek = $this->normalizeInput($this->request->getPost('merek'));
+            $alamat_supplier = $this->normalizeInput($this->request->getPost('alamat_supplier'));
+            $kontak_supplier = $this->normalizeInput($this->request->getPost('kontak_supplier'));
 
             // Tentukan aturan validasi secara dinamis
             if (empty($nama_supplier)) {
                 if (empty($merek)) {
-                    // Jika nama_supplier & merek kosong → alamat wajib diisi
                     $rules = [
-                        'alamat_supplier' => 'required|is_unique[supplier.alamat_supplier]',
+                        'alamat_supplier' => 'required|is_unique[supplier.alamat_supplier,id_supplier,' . $id_supplier . ']',
                     ];
                 } else {
-                    // Jika nama_supplier kosong tapi merek diisi → merek wajib diisi
                     $rules = [
-                        'merek' => 'required|is_unique[supplier.merek]',
+                        'merek' => 'required|is_unique[supplier.merek,id_supplier,' . $id_supplier . ']',
                     ];
                 }
             } else {
-                // Jika nama_supplier diisi → nama_supplier wajib diisi
                 $rules = [
                     'nama_supplier' => 'required',
                 ];
             }
 
-            // Terapkan aturan validasi
             $validation->setRules($rules);
 
-            // Jalankan validasi
             if (!$this->validate($validation->getRules())) {
                 return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
             }
 
-            // Menyimpan data supplier yang telah diperbarui
             $data = [
-                'id_supplier' => $this->request->getPost('id_supplier'), // Mengambil id_supplier dari input
-                'nama_supplier' => $nama_supplier ?: null,
-                'merek' => $merek ?: null,
-                'alamat_supplier' => $alamat_supplier ?: NULL,
-                'kontak_supplier' => $this->request->getPost('kontak_supplier') ?: NULL // Mengambil kontak supplier dari input
+                'id_supplier' => $id_supplier,
+                'nama_supplier' => $nama_supplier,
+                'merek' => $merek,
+                'alamat_supplier' => $alamat_supplier,
+                'kontak_supplier' => $kontak_supplier,
             ];
-            $this->SupplierModel->save($data); // Menyimpan data ke database
-            // Panggil WebSocket untuk update client
+            $this->SupplierModel->save($data);
+
             $this->notify_clients();
-            return $this->response->setJSON(['success' => true, 'message' => 'Pemasok berhasil diedit']); // Mengembalikan pesan sukses
+
+            return $this->response->setJSON(['success' => true, 'message' => 'Pemasok berhasil diedit']);
         } else {
             return $this->response->setStatusCode(404)->setJSON([
-                'error' => 'Halaman tidak ditemukan', // Pesan jika peran tidak valid
+                'error' => 'Halaman tidak ditemukan',
             ]);
         }
     }
+
+    /**
+     * Normalisasi input: ubah '-' atau string kosong menjadi null
+     */
+    private function normalizeInput($value)
+    {
+        $value = trim((string)$value);
+        return ($value === '' || $value === '-') ? null : $value;
+    }
+
 
     public function delete($id)
     {
