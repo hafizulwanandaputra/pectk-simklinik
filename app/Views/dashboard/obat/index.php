@@ -320,17 +320,26 @@
                     data: 'merek',
                     render: function(data, type, row) {
                         const merek = data ? data : '<em>Tanpa merek</em>';
-                        return `<span>${merek}<br><small>${row.nama_supplier}</small></span>`;
+                        const nama_supplier = row.nama_supplier ? row.nama_supplier : '<em>Tanpa nama pemasok</em>';
+                        return `<span>${merek}<br><small>${nama_supplier}</small></span>`;
                     }
                 },
                 {
                     data: 'nama_obat'
                 },
                 {
-                    data: 'isi_obat'
+                    data: 'isi_obat',
+                    render: function(data, type, row) {
+                        const isi_obat = data ? data : '<i class="fa-solid fa-xmark"></i>';
+                        return `${isi_obat}`;
+                    }
                 },
                 {
-                    data: 'kategori_obat'
+                    data: 'kategori_obat',
+                    render: function(data, type, row) {
+                        const kategori_obat = data ? data : '<i class="fa-solid fa-xmark"></i>';
+                        return `${kategori_obat}`;
+                    }
                 },
                 {
                     data: 'bentuk_obat'

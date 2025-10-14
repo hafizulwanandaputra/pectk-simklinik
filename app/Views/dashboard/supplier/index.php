@@ -86,17 +86,17 @@
                     <input type="hidden" id="id_supplier" name="id_supplier">
                     <div class="form-floating mb-1 mt-1">
                         <input type="text" class="form-control " autocomplete="off" dir="auto" placeholder="nama_supplier" id="nama_supplier" name="nama_supplier">
-                        <label for="nama_supplier">Nama<span class="text-danger">*</span></label>
+                        <label for="nama_supplier">Nama</label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
                         <input type="text" class="form-control " autocomplete="off" dir="auto" placeholder="merek" id="merek" name="merek">
-                        <label for="merek">Merek</label>
+                        <label for="merek">Merek (wajib jika tidak ada nama)</label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
                         <input type="text" class="form-control " autocomplete="off" dir="auto" placeholder="alamat_supplier" id="alamat_supplier" name="alamat_supplier">
-                        <label for="alamat_pasien">Alamat<span class="text-danger">*</span></label>
+                        <label for="alamat_pasien">Alamat</label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
@@ -230,7 +230,11 @@
                     }
                 },
                 {
-                    data: 'nama_supplier'
+                    data: 'nama_supplier',
+                    render: function(data, type, row) {
+                        const nama_supplier = data ? data : '<em>Tanpa nama</em>';
+                        return `${nama_supplier}`;
+                    }
                 },
                 {
                     data: 'merek',
@@ -240,7 +244,11 @@
                     }
                 },
                 {
-                    data: 'alamat_supplier'
+                    data: 'alamat_supplier',
+                    render: function(data, type, row) {
+                        const alamat_supplier = data ? data : '<em>Tidak ada alamat</em>';
+                        return `${alamat_supplier}`;
+                    }
                 },
                 {
                     data: 'kontak_supplier',
