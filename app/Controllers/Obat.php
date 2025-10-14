@@ -182,9 +182,11 @@ class Obat extends BaseController
             foreach ($results as $row) {
                 // Mengkondisikan Merek
                 $merek = ($row['merek'] == '') ? 'Tanpa merek' : $row['merek'];
+                $nama_supplier = ($row['nama_supplier'] == '') ? 'Tanpa nama pemasok' : $row['nama_supplier'];
+                $alamat_supplier = ($row['alamat_supplier'] == '') ? 'Tanpa alamat' : $row['alamat_supplier'];
                 $options[] = [
                     'value' => $row['id_supplier'],
-                    'text' => $merek . ' • ' . $row['nama_supplier']
+                    'text' => $merek . ' • ' . $nama_supplier . ' • ' . $alamat_supplier
                 ];
             }
 

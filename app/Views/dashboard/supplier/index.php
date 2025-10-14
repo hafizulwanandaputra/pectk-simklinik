@@ -96,7 +96,7 @@
                     </div>
                     <div class="form-floating mb-1 mt-1">
                         <input type="text" class="form-control " autocomplete="off" dir="auto" placeholder="alamat_supplier" id="alamat_supplier" name="alamat_supplier">
-                        <label for="alamat_pasien">Alamat</label>
+                        <label for="alamat_pasien">Alamat (wajib jika tidak ada merek)</label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">

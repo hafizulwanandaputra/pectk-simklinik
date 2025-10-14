@@ -129,17 +129,25 @@ class Supplier extends BaseController
             $validation = \Config\Services::validation();
 
             // Ambil input dulu
-            $nama_supplier = $this->request->getPost('nama_supplier');
-            $merek = $this->request->getPost('merek');
+            $nama_supplier = trim($this->request->getPost('nama_supplier'));
+            $merek = trim($this->request->getPost('merek'));
+            $alamat_supplier = trim($this->request->getPost('alamat_supplier'));
 
             // Tentukan aturan validasi secara dinamis
             if (empty($nama_supplier)) {
-                // Jika nama supplier kosong, maka merek wajib diisi
-                $rules = [
-                    'merek' => 'required',
-                ];
+                if (empty($merek)) {
+                    // Jika nama_supplier & merek kosong → alamat wajib diisi
+                    $rules = [
+                        'alamat_supplier' => 'required|is_unique[supplier.alamat_supplier]',
+                    ];
+                } else {
+                    // Jika nama_supplier kosong tapi merek diisi → merek wajib diisi
+                    $rules = [
+                        'merek' => 'required|is_unique[supplier.merek]',
+                    ];
+                }
             } else {
-                // Jika nama supplier diisi, maka nama supplier wajib diisi (default)
+                // Jika nama_supplier diisi → nama_supplier wajib diisi
                 $rules = [
                     'nama_supplier' => 'required',
                 ];
@@ -157,7 +165,7 @@ class Supplier extends BaseController
             $data = [
                 'nama_supplier' => $nama_supplier ?: null,
                 'merek' => $merek ?: null,
-                'alamat_supplier' => $this->request->getPost('alamat_supplier') ?: NULL, // Mengambil alamat supplier dari input
+                'alamat_supplier' => $alamat_supplier ?: NULL,
                 'kontak_supplier' => $this->request->getPost('kontak_supplier') ?: NULL // Mengambil kontak supplier dari input
             ];
             $this->SupplierModel->save($data); // Menyimpan data ke database
@@ -178,17 +186,25 @@ class Supplier extends BaseController
             $validation = \Config\Services::validation();
 
             // Ambil input dulu
-            $nama_supplier = $this->request->getPost('nama_supplier');
-            $merek = $this->request->getPost('merek');
+            $nama_supplier = trim($this->request->getPost('nama_supplier'));
+            $merek = trim($this->request->getPost('merek'));
+            $alamat_supplier = trim($this->request->getPost('alamat_supplier'));
 
             // Tentukan aturan validasi secara dinamis
             if (empty($nama_supplier)) {
-                // Jika nama supplier kosong, maka merek wajib diisi
-                $rules = [
-                    'merek' => 'required',
-                ];
+                if (empty($merek)) {
+                    // Jika nama_supplier & merek kosong → alamat wajib diisi
+                    $rules = [
+                        'alamat_supplier' => 'required|is_unique[supplier.alamat_supplier]',
+                    ];
+                } else {
+                    // Jika nama_supplier kosong tapi merek diisi → merek wajib diisi
+                    $rules = [
+                        'merek' => 'required|is_unique[supplier.merek]',
+                    ];
+                }
             } else {
-                // Jika nama supplier diisi, maka nama supplier wajib diisi (default)
+                // Jika nama_supplier diisi → nama_supplier wajib diisi
                 $rules = [
                     'nama_supplier' => 'required',
                 ];
@@ -207,7 +223,7 @@ class Supplier extends BaseController
                 'id_supplier' => $this->request->getPost('id_supplier'), // Mengambil id_supplier dari input
                 'nama_supplier' => $nama_supplier ?: null,
                 'merek' => $merek ?: null,
-                'alamat_supplier' => $this->request->getPost('alamat_supplier') ?: NULL, // Mengambil alamat supplier dari input
+                'alamat_supplier' => $alamat_supplier ?: NULL,
                 'kontak_supplier' => $this->request->getPost('kontak_supplier') ?: NULL // Mengambil kontak supplier dari input
             ];
             $this->SupplierModel->save($data); // Menyimpan data ke database
