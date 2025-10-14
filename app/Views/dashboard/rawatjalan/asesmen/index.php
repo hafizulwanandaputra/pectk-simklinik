@@ -338,7 +338,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                         </button>
                     </div>
                 <?php endif; ?>
-                <div id="empty-placeholder" class="my-3 text-center" style="display: none;">
+                <div id="empty-placeholder" class="my-3" style="display: none;">
                     <img src="<?= base_url('assets/images/eye-svgrepo-com.svg') ?>" style="height: 7rem;" class="mb-2">
                     <h3>Pemeriksaan Fisik</h3>
                     <?php if (session()->get('role') != 'Perawat') : ?>

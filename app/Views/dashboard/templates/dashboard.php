@@ -488,9 +488,9 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
         <!-- HEADER -->
         <header class="navbar sticky-top flex-md-nowrap p-0 shadow-sm bg-success-subtle text-success-emphasis border-bottom border-success-subtle header">
             <?php if (!(in_array(session()->get('role'), ['Satpam', 'Monitor Antrean']) && $activeSegment === 'home')) : ?>
-                <div id="sidebarHeader" class="d-flex justify-content-center align-items-center ms-0 ms-md-2 px-3 py-md-1" style="min-height: 3rem; max-height: 3rem;">
-                    <span class="navbar-brand mx-0 text-start text-md-center lh-sm d-flex justify-content-center align-items-center" style="font-size: 7.5pt;">
-                        <img src="<?= base_url('/assets/images/pec-klinik-logo.png'); ?>" alt="KLINIK MATA PECTK" height="24px">
+                <div id="sidebarHeader" class="d-flex justify-content-start align-items-center ms-0 ms-md-2 px-3 px-md-2 py-md-1" style="min-height: 3rem; max-height: 3rem;">
+                    <span class="navbar-brand mx-0 text-start lh-sm d-flex justify-content-center align-items-center" style="font-size: 9pt;">
+                        <img src="<?= base_url('/assets/images/pec-klinik-logo.png'); ?>" alt="KLINIK MATA PECTK" height="28px">
                         <div class="ps-2 text-start text-success-emphasis fw-bold">PADANG EYE CENTER<br>TELUK KUANTAN</div>
                     </span>
                 </div>
@@ -520,8 +520,8 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                     <div class="offcanvas offcanvas-end bg-body-tertiary shadow-sm transparent-blur" tabindex="-1" id="userOffcanvas" aria-labelledby="userOffcanvasLabel">
                         <div class="offcanvas-header pt-0 pb-0 d-flex justify-content-between align-items-center" style="min-height: 3rem; max-height: 3rem;">
                             <div>
-                                <span class="navbar-brand mx-0 text-start text-md-center lh-sm d-flex justify-content-center align-items-center" style="font-size: 7.5pt;">
-                                    <img src="<?= base_url('/assets/images/pec-klinik-logo.png'); ?>" alt="KLINIK MATA PECTK" height="24px">
+                                <span class="navbar-brand mx-0 text-start text-md-center lh-sm d-flex justify-content-center align-items-center" style="font-size: 9pt;">
+                                    <img src="<?= base_url('/assets/images/pec-klinik-logo.png'); ?>" alt="KLINIK MATA PECTK" height="28px">
                                     <div class="ps-2 text-start text-success-emphasis fw-bold">PADANG EYE CENTER<br>TELUK KUANTAN</div>
                                 </span>
                             </div>

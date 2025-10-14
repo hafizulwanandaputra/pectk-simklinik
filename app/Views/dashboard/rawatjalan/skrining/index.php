@@ -218,7 +218,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             <div class="mb-3">
                 <div class="fw-bold mb-2 border-bottom"><span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">III</span> Skrining Nyeri</div>
                 <div class="mb-2">
-                    <div class="text-center">
+                    <div>
                         <figure class="figure mb-0">
                             <img src="<?= base_url('assets/images/skala_nyeri.png') ?>" class="figure-img img-fluid rounded border shadow-sm mb-0 pb-0" alt="Skala Nyeri">
                         </figure>

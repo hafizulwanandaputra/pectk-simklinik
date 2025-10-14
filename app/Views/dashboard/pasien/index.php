@@ -262,7 +262,7 @@
                 $('#paginationNav ul').empty();
                 $('#pasienContainer').append(
                     '<li class="list-group-item border-top-0 bg-body-tertiary pb-3 pt-3">' +
-                    '    <h1 class="display-4 text-center text-muted mb-0" style="font-weight: 200;">Data Kosong</h1>' +
+                    '    <h1 class="display-4 text-muted mb-0" style="font-weight: 200;">Data Kosong</h1>' +
                     '</li>'
                 );
             } else {

@@ -418,7 +418,7 @@
                 $('#refreshTglButton').prop('disabled', true); // Nonaktifkan tombol refresh
                 const emptyRow = `
                     <span class="list-group-item pb-3 pt-3">
-                        <h2 class="text-center text-muted mb-0" style="font-weight: 300;">Silakan masukkan tanggal</h2>
+                        <h2 class="text-muted mb-0" style="font-weight: 300;">Silakan masukkan tanggal</h2>
                     </span>
                 `;
                 $('#rawatjalan-tanggal').append(emptyRow); // Menambahkan baris kosong ke tabel
@@ -454,7 +454,7 @@
                 // Tampilkan pesan jika tidak ada data
                 const emptyRow = `
                     <span class="list-group-item pb-3 pt-3">
-                        <h2 class="text-center text-muted mb-0" style="font-weight: 300;">Tidak ada pasien yang berobat pada ${tanggal}</h2>
+                        <h2 class="text-muted mb-0" style="font-weight: 300;">Tidak ada pasien yang berobat pada ${tanggal}</h2>
                     </span>
                 `;
                 $('#rawatjalan-tanggal').append(emptyRow); // Menambahkan baris pesan ke tabel
@@ -580,7 +580,7 @@
             console.error(error); // Menampilkan error di konsol
             const errorRow = `
                 <span class="list-group-item pb-3 pt-3">
-                    <h2 class="text-center text-danger mb-0" style="font-weight: 300;">${error}</h2>
+                    <h2 class="text-danger mb-0" style="font-weight: 300;">${error}</h2>
                 </span>
             `;
             $('#paginationNav-tanggal ul').empty();
@@ -606,7 +606,7 @@
                 $('#refreshNoRMButton').prop('disabled', true); // Nonaktifkan tombol refresh
                 const emptyRow = `
                     <span class="list-group-item pb-3 pt-3">
-                        <h2 class="text-center text-muted mb-0" style="font-weight: 300;">Silakan masukkan nomor rekam medis</h2>
+                        <h2 class="text-muted mb-0" style="font-weight: 300;">Silakan masukkan nomor rekam medis</h2>
                     </span>
                 `;
                 $('#rawatjalan-no_rm').append(emptyRow); // Menambahkan baris kosong ke tabel
@@ -643,12 +643,12 @@
                 const emptyRow = !regex.test(no_rm) ?
                     `
                     <span class="list-group-item pb-3 pt-3">
-                        <h2 class="text-center text-muted mb-0" style="font-weight: 300;">Silakan masukkan nomor rekam medis dengan benar</h2>
+                        <h2 class="text-muted mb-0" style="font-weight: 300;">Silakan masukkan nomor rekam medis dengan benar</h2>
                     </span>
                 ` :
                     `
                     <span class="list-group-item pb-3 pt-3">
-                        <h2 class="text-center text-muted mb-0" style="font-weight: 300;">Pasien dengan nomor rekam medis ${no_rm} belum pernah berobat</h2>
+                        <h2 class="text-muted mb-0" style="font-weight: 300;">Pasien dengan nomor rekam medis ${no_rm} belum pernah berobat</h2>
                     </span>
                 `;
                 $('#rawatjalan-no_rm').append(emptyRow); // Menambahkan baris pesan ke tabel
@@ -774,7 +774,7 @@
             console.error(error); // Menampilkan error di konsol
             const errorRow = `
                 <span class="list-group-item pb-3 pt-3">
-                    <h2 class="text-center text-danger mb-0" style="font-weight: 300;">${error}</h2>
+                    <h2 class="text-danger mb-0" style="font-weight: 300;">${error}</h2>
                 </span>
             `;
             $('#paginationNav-no_rm ul').empty();
@@ -798,7 +798,7 @@
                 $('#refreshNamaButton').prop('disabled', true); // Nonaktifkan tombol refresh
                 const emptyRow = `
                     <span class="list-group-item pb-3 pt-3">
-                        <h2 class="text-center text-muted mb-0" style="font-weight: 300;">Silakan masukkan nama pasien</h2>
+                        <h2 class="text-muted mb-0" style="font-weight: 300;">Silakan masukkan nama pasien</h2>
                     </span>
                 `;
                 $('#rawatjalan-nama').append(emptyRow); // Menambahkan baris kosong ke tabel
@@ -834,7 +834,7 @@
                 // Tampilkan pesan jika tidak ada data
                 const emptyRow = `
                     <span class="list-group-item pb-3 pt-3">
-                        <h2 class="text-center text-muted mb-0" style="font-weight: 300;">Tidak ada pasien dengan nama "${nama}"</h2>
+                        <h2 class="text-muted mb-0" style="font-weight: 300;">Tidak ada pasien dengan nama "${nama}"</h2>
                     </span>
                 `;
                 $('#rawatjalan-nama').append(emptyRow); // Menambahkan baris pesan ke tabel
@@ -960,7 +960,7 @@
             console.error(error); // Menampilkan error di konsol
             const errorRow = `
                 <span class="list-group-item pb-3 pt-3">
-                    <h2 class="text-center text-danger mb-0" style="font-weight: 300;">${error}</h2>
+                    <h2 class="text-danger mb-0" style="font-weight: 300;">${error}</h2>
                 </span>
             `;
             $('#paginationNav-nama ul').empty();

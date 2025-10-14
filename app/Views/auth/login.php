@@ -201,7 +201,7 @@
     <div class="my-auto">
         <div class="no-fluid-content px-3 py-3 px-md-5">
             <div class="row align-items-center">
-                <div class="col-md-6 col-lg-7 text-center text-md-start align-self-start">
+                <div class="col-md-6 col-lg-7 text-start align-self-start">
                     <img class="mb-3" src="<?= base_url('/assets/images/logo_pec.png'); ?>" width="128px">
                     <h1 class="display-6 fw-bold lh-1 text-success-emphasis mb-3">SIM Klinik<br>PEC Teluk Kuantan</h1>
                     <p class="fs-6 text-success-emphasis"><?= $systemName ?><br><small class="fw-bold"><em><?= $systemSubtitleName ?></em></small></p>
@@ -274,7 +274,7 @@
                     </div>
                     <input type="hidden" name="url" value="<?= (isset($_GET['redirect'])) ? base_url('/' . urldecode($_GET['redirect'])) : base_url('/home'); ?>">
                     <hr class="border-success-subtle opacity-100">
-                    <div class="text-center text-success-emphasis" style="font-size: 0.75em;">
+                    <div class="text-start text-success-emphasis" style="font-size: 0.75em;">
                         <span class="">&copy; 2025 <?= (date('Y') !== "2025") ? "- " . date('Y') : ''; ?> <?= $companyName ?></span>
                     </div>
                     <?= form_close(); ?>

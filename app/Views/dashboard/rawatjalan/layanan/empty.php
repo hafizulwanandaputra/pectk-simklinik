@@ -94,7 +94,7 @@ $usia = $registrasi->diff($tanggal_lahir);
         <div class="no-fluid-content">
             <?= form_open_multipart('/rawatjalan/layanan/create/' . $rawatjalan['id_rawat_jalan'], 'id="addLayananForm"'); ?>
             <?= csrf_field(); ?>
-            <div id="empty-placeholder" class="my-3 text-center">
+            <div id="empty-placeholder" class="my-3">
                 <h1 style="font-size: 7rem;"><i class="fa-solid fa-cash-register"></i></h1>
                 <h3>Layanan</h3>
                 <?php if ($rawatjalan['transaksi'] == 1) : ?>
