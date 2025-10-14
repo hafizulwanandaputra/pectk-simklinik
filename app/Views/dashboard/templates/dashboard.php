@@ -488,7 +488,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
         <!-- HEADER -->
         <header class="navbar sticky-top flex-md-nowrap p-0 shadow-sm bg-success-subtle text-success-emphasis border-bottom border-success-subtle header">
             <?php if (!(in_array(session()->get('role'), ['Satpam', 'Monitor Antrean']) && $activeSegment === 'home')) : ?>
-                <div id="sidebarHeader" class="d-flex justify-content-center align-items-center mx-0 mx-md-2 px-3 py-md-1" style="min-height: 3rem; max-height: 3rem;">
+                <div id="sidebarHeader" class="d-flex justify-content-center align-items-center ms-0 ms-md-2 px-3 py-md-1" style="min-height: 3rem; max-height: 3rem;">
                     <span class="navbar-brand mx-0 text-start text-md-center lh-sm d-flex justify-content-center align-items-center" style="font-size: 7.5pt;">
                         <img src="<?= base_url('/assets/images/pec-klinik-logo.png'); ?>" alt="KLINIK MATA PECTK" height="24px">
                         <div class="ps-2 text-start text-success-emphasis fw-bold">PADANG EYE CENTER<br>TELUK KUANTAN</div>
@@ -497,7 +497,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                 <button type="button" class="btn btn-outline-success bg-gradient d-md-none mx-3" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation"><i class="fa-solid fa-bars"></i></button>
             <?php endif; ?>
             <div class="d-flex w-100 align-items-center text-truncate" style="min-height: 3rem; max-height: 3rem;">
-                <div class="w-100 ps-3 ps-md-2 pe-1 pe-lg-2 text-truncate" style="flex: 1; min-width: 0;">
+                <div class="w-100 ps-3 pe-1 pe-lg-2 text-truncate" style="flex: 1; min-width: 0;">
                     <?= $this->renderSection('title'); ?>
                 </div>
                 <div class="d-flex justify-content-center">
