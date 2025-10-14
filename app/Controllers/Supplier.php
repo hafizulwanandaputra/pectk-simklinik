@@ -175,26 +175,40 @@ class Supplier extends BaseController
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
-            // Validasi input
             $validation = \Config\Services::validation();
-            // Menetapkan aturan validasi dasar
-            $validation->setRules([
-                'nama_supplier' => 'required', // Nama supplier wajib diisi
-                'alamat_supplier' => 'required', // Alamat supplier wajib diisi
-            ]);
 
-            // Memeriksa validasi
+            // Ambil input dulu
+            $nama_supplier = $this->request->getPost('nama_supplier');
+            $merek = $this->request->getPost('merek');
+
+            // Tentukan aturan validasi secara dinamis
+            if (empty($nama_supplier)) {
+                // Jika nama supplier kosong, maka merek wajib diisi
+                $rules = [
+                    'merek' => 'required',
+                ];
+            } else {
+                // Jika nama supplier diisi, maka nama supplier wajib diisi (default)
+                $rules = [
+                    'nama_supplier' => 'required',
+                ];
+            }
+
+            // Terapkan aturan validasi
+            $validation->setRules($rules);
+
+            // Jalankan validasi
             if (!$this->validate($validation->getRules())) {
-                return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]); // Mengembalikan pesan kesalahan
+                return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
             }
 
             // Menyimpan data supplier yang telah diperbarui
             $data = [
                 'id_supplier' => $this->request->getPost('id_supplier'), // Mengambil id_supplier dari input
-                'nama_supplier' => $this->request->getPost('nama_supplier'), // Mengambil nama supplier dari input
-                'merek' => $this->request->getPost('merek'), // Mengambil merek dari input
-                'alamat_supplier' => $this->request->getPost('alamat_supplier'), // Mengambil alamat supplier dari input
-                'kontak_supplier' => $this->request->getPost('kontak_supplier') // Mengambil kontak supplier dari input
+                'nama_supplier' => $nama_supplier ?: null,
+                'merek' => $merek ?: null,
+                'alamat_supplier' => $this->request->getPost('alamat_supplier') ?: NULL, // Mengambil alamat supplier dari input
+                'kontak_supplier' => $this->request->getPost('kontak_supplier') ?: NULL // Mengambil kontak supplier dari input
             ];
             $this->SupplierModel->save($data); // Menyimpan data ke database
             // Panggil WebSocket untuk update client
