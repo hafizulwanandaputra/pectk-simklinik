@@ -127,45 +127,52 @@ class Supplier extends BaseController
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
             $validation = \Config\Services::validation();
 
-            // Ambil input dan normalisasi
-            $nama_supplier = $this->normalizeInput($this->request->getPost('nama_supplier'));
-            $merek = $this->normalizeInput($this->request->getPost('merek'));
-            $alamat_supplier = $this->normalizeInput($this->request->getPost('alamat_supplier'));
-            $kontak_supplier = $this->normalizeInput($this->request->getPost('kontak_supplier'));
+            // Ambil dan normalisasi input
+            $nama_supplier   = trim($this->request->getPost('nama_supplier'));
+            $merek           = trim($this->request->getPost('merek'));
+            $alamat_supplier = trim($this->request->getPost('alamat_supplier'));
+            $kontak_supplier = trim($this->request->getPost('kontak_supplier'));
 
-            // Tentukan aturan validasi secara dinamis
-            if (empty($nama_supplier)) {
-                if (empty($merek)) {
-                    // Jika nama_supplier & merek kosong → alamat wajib diisi
-                    $rules = [
-                        'alamat_supplier' => 'required|is_unique[supplier.alamat_supplier]',
-                    ];
-                } else {
-                    // Jika nama_supplier kosong tapi merek diisi → merek wajib diisi
-                    $rules = [
-                        'merek' => 'required|is_unique[supplier.merek]',
-                    ];
-                }
-            } else {
-                // Jika nama_supplier diisi → nama_supplier wajib diisi
-                $rules = [
-                    'nama_supplier' => 'required',
-                ];
+            // Perlakuan tanda "-" sebagai kosong
+            $nama_supplier   = ($nama_supplier === '-') ? '' : $nama_supplier;
+            $merek           = ($merek === '-') ? '' : $merek;
+            $alamat_supplier = ($alamat_supplier === '-') ? '' : $alamat_supplier;
+            $kontak_supplier = ($kontak_supplier === '-') ? '' : $kontak_supplier;
+
+            // Jika semua kolom utama kosong → error
+            if (empty($nama_supplier) && empty($merek) && empty($alamat_supplier)) {
+                return $this->response->setJSON([
+                    'success' => false,
+                    'errors' => [
+                        'nama_supplier'   => 'Minimal isi salah satu kolom nama, merek, atau alamat (tidak boleh kosong atau "-").',
+                        'merek'           => 'Minimal isi salah satu kolom nama, merek, atau alamat (tidak boleh kosong atau "-").',
+                        'alamat_supplier' => 'Minimal isi salah satu kolom nama, merek, atau alamat (tidak boleh kosong atau "-").'
+                    ]
+                ]);
             }
 
-            // Terapkan aturan validasi
+            // Validasi dasar
+            $rules = [
+                'nama_supplier'   => 'permit_empty',
+                'merek'           => 'permit_empty',
+                'alamat_supplier' => 'permit_empty',
+                'kontak_supplier' => 'permit_empty',
+            ];
             $validation->setRules($rules);
 
             if (!$this->validate($validation->getRules())) {
-                return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
+                return $this->response->setJSON([
+                    'success' => false,
+                    'errors' => $validation->getErrors(),
+                ]);
             }
 
-            // Simpan data supplier
+            // Simpan data
             $data = [
-                'nama_supplier' => $nama_supplier,
-                'merek' => $merek,
-                'alamat_supplier' => $alamat_supplier,
-                'kontak_supplier' => $kontak_supplier,
+                'nama_supplier'   => $nama_supplier ?: null,
+                'merek'           => $merek ?: null,
+                'alamat_supplier' => $alamat_supplier ?: null,
+                'kontak_supplier' => $kontak_supplier ?: null,
             ];
             $this->SupplierModel->save($data);
 
@@ -184,42 +191,54 @@ class Supplier extends BaseController
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
             $validation = \Config\Services::validation();
 
-            // Ambil input dan normalisasi
-            $id_supplier = $this->request->getPost('id_supplier');
-            $nama_supplier = $this->normalizeInput($this->request->getPost('nama_supplier'));
-            $merek = $this->normalizeInput($this->request->getPost('merek'));
-            $alamat_supplier = $this->normalizeInput($this->request->getPost('alamat_supplier'));
-            $kontak_supplier = $this->normalizeInput($this->request->getPost('kontak_supplier'));
+            // Ambil dan normalisasi input
+            $id_supplier     = $this->request->getPost('id_supplier');
+            $nama_supplier   = trim($this->request->getPost('nama_supplier'));
+            $merek           = trim($this->request->getPost('merek'));
+            $alamat_supplier = trim($this->request->getPost('alamat_supplier'));
+            $kontak_supplier = trim($this->request->getPost('kontak_supplier'));
 
-            // Tentukan aturan validasi secara dinamis
-            if (empty($nama_supplier)) {
-                if (empty($merek)) {
-                    $rules = [
-                        'alamat_supplier' => 'required|is_unique[supplier.alamat_supplier,id_supplier,' . $id_supplier . ']',
-                    ];
-                } else {
-                    $rules = [
-                        'merek' => 'required|is_unique[supplier.merek,id_supplier,' . $id_supplier . ']',
-                    ];
-                }
-            } else {
-                $rules = [
-                    'nama_supplier' => 'required',
-                ];
+            // Perlakuan tanda "-" sebagai kosong
+            $nama_supplier   = ($nama_supplier === '-') ? '' : $nama_supplier;
+            $merek           = ($merek === '-') ? '' : $merek;
+            $alamat_supplier = ($alamat_supplier === '-') ? '' : $alamat_supplier;
+            $kontak_supplier = ($kontak_supplier === '-') ? '' : $kontak_supplier;
+
+            // Jika semua kolom utama kosong → error
+            if (empty($nama_supplier) && empty($merek) && empty($alamat_supplier)) {
+                return $this->response->setJSON([
+                    'success' => false,
+                    'errors' => [
+                        'nama_supplier'   => 'Minimal isi salah satu kolom nama, merek, atau alamat (tidak boleh kosong atau "-").',
+                        'merek'           => 'Minimal isi salah satu kolom nama, merek, atau alamat (tidak boleh kosong atau "-").',
+                        'alamat_supplier' => 'Minimal isi salah satu kolom nama, merek, atau alamat (tidak boleh kosong atau "-").'
+                    ]
+                ]);
             }
 
+            // Validasi dasar
+            $rules = [
+                'nama_supplier'   => 'permit_empty',
+                'merek'           => 'permit_empty',
+                'alamat_supplier' => 'permit_empty',
+                'kontak_supplier' => 'permit_empty',
+            ];
             $validation->setRules($rules);
 
             if (!$this->validate($validation->getRules())) {
-                return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
+                return $this->response->setJSON([
+                    'success' => false,
+                    'errors' => $validation->getErrors(),
+                ]);
             }
 
+            // Simpan data
             $data = [
-                'id_supplier' => $id_supplier,
-                'nama_supplier' => $nama_supplier,
-                'merek' => $merek,
-                'alamat_supplier' => $alamat_supplier,
-                'kontak_supplier' => $kontak_supplier,
+                'id_supplier'     => $id_supplier,
+                'nama_supplier'   => $nama_supplier ?: null,
+                'merek'           => $merek ?: null,
+                'alamat_supplier' => $alamat_supplier ?: null,
+                'kontak_supplier' => $kontak_supplier ?: null,
             ];
             $this->SupplierModel->save($data);
 
@@ -232,16 +251,6 @@ class Supplier extends BaseController
             ]);
         }
     }
-
-    /**
-     * Normalisasi input: ubah '-' atau string kosong menjadi null
-     */
-    private function normalizeInput($value)
-    {
-        $value = trim((string)$value);
-        return ($value === '' || $value === '-') ? null : $value;
-    }
-
 
     public function delete($id)
     {

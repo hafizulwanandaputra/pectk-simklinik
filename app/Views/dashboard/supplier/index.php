@@ -83,6 +83,16 @@
                     <button id="closeBtn" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body py-2">
+                    <div id="mediaAlert" class="alert alert-warning  mb-1 mt-1" role="alert">
+                        <div class="d-flex align-items-start">
+                            <div style="width: 12px; text-align: center;">
+                                <i class="fa-solid fa-triangle-exclamation"></i>
+                            </div>
+                            <div class="w-100 ms-3">
+                                Minimal isi salah satu kolom nama, merek, atau alamat (tidak boleh kosong atau "-").
+                            </div>
+                        </div>
+                    </div>
                     <input type="hidden" id="id_supplier" name="id_supplier">
                     <div class="form-floating mb-1 mt-1">
                         <input type="text" class="form-control " autocomplete="off" dir="auto" placeholder="nama_supplier" id="nama_supplier" name="nama_supplier">
@@ -91,12 +101,12 @@
                     </div>
                     <div class="form-floating mb-1 mt-1">
                         <input type="text" class="form-control " autocomplete="off" dir="auto" placeholder="merek" id="merek" name="merek">
-                        <label for="merek">Merek (wajib jika tidak ada nama)</label>
+                        <label for="merek">Merek</label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
                         <input type="text" class="form-control " autocomplete="off" dir="auto" placeholder="alamat_supplier" id="alamat_supplier" name="alamat_supplier">
-                        <label for="alamat_pasien">Alamat (wajib jika tidak ada merek)</label>
+                        <label for="alamat_pasien">Alamat</label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">
@@ -376,7 +386,7 @@
             supplierName = $(this).data('name');
             $('[data-bs-toggle="tooltip"]').tooltip('hide');
             $('#deleteMessage').html(`Hapus "` + supplierName + `"?`);
-            $('#deleteSubmessage').html(`Pemasok tidak dapat dihapus jika ada obat yang berasal dari supplier ini!`);
+            $('#deleteSubmessage').html(`Pemasok tidak dapat dihapus jika ada obat yang berasal dari pemasok ini!`);
             $('#deleteModal').modal('show');
         });
 
