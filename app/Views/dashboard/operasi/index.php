@@ -81,7 +81,7 @@
         <div class="no-fluid-content">
             <div class="shadow-sm rounded">
                 <div class="d-grid gap-2">
-                    <button id="collapseList" class="btn btn-primary btn-sm bg-gradient  rounded-bottom-0" type="button" data-bs-toggle="collapse" data-bs-target="#spOperasiFormContainer" aria-expanded="false" aria-controls="spOperasiFormContainer">
+                    <button id="collapseList" class="btn btn-primary btn-sm bg-gradient shadow-sm rounded-bottom-0" type="button" data-bs-toggle="collapse" data-bs-target="#spOperasiFormContainer" aria-expanded="false" aria-controls="spOperasiFormContainer">
                         <i class="fa-solid fa-plus"></i> Tambah Pasien Operasi
                     </button>
                 </div>

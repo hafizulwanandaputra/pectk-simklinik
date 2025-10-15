@@ -52,7 +52,7 @@
         <div class="no-fluid-content">
             <div class="shadow-sm rounded">
                 <div class="d-grid gap-2">
-                    <button class="btn btn-primary btn-sm bg-gradient  rounded-bottom-0" type="button" id="addButton">
+                    <button class="btn btn-primary btn-sm bg-gradient shadow-sm rounded-bottom-0" type="button" id="addButton">
                         <i class="fa-solid fa-plus"></i> Tambah Pasien
                     </button>
                 </div>

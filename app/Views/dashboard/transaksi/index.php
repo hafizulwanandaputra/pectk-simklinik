@@ -92,7 +92,7 @@
             <div class="shadow-sm rounded">
                 <?php if (session()->get('role') != 'Admisi') : ?>
                     <div class="d-grid gap-2">
-                        <button id="collapseList" class="btn btn-primary btn-sm bg-gradient  rounded-bottom-0" type="button" data-bs-toggle="collapse" data-bs-target="#transaksiFormContainer" aria-expanded="false" aria-controls="transaksiFormContainer">
+                        <button id="collapseList" class="btn btn-primary btn-sm bg-gradient shadow-sm rounded-bottom-0" type="button" data-bs-toggle="collapse" data-bs-target="#transaksiFormContainer" aria-expanded="false" aria-controls="transaksiFormContainer">
                             <i class="fa-solid fa-plus"></i> Tambah Transaksi
                         </button>
                     </div>

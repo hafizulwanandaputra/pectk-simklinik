@@ -331,7 +331,7 @@
                 <div class="tab-pane" id="rawatjalan-container" role="tabpanel" aria-labelledby="rawatjalan-container-tab" tabindex="0">
                     <div class="shadow-sm rounded">
                         <div class="d-grid gap-2">
-                            <button class="btn btn-primary btn-sm bg-gradient  rounded-bottom-0" type="button" id="addRajalButton">
+                            <button class="btn btn-primary btn-sm bg-gradient shadow-sm rounded-bottom-0" type="button" id="addRajalButton">
                                 <i class="fa-solid fa-plus"></i> Registrasi Rawat Jalan
                             </button>
                         </div>

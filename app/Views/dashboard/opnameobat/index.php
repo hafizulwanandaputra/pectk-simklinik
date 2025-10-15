@@ -46,7 +46,7 @@
             <div class="shadow-sm rounded">
                 <form id="opnameObatForm" enctype="multipart/form-data">
                     <div class="d-grid gap-2">
-                        <button type="submit" id="addButton" class="btn btn-primary btn-sm bg-gradient  rounded-bottom-0">
+                        <button type="submit" id="addButton" class="btn btn-primary btn-sm bg-gradient shadow-sm rounded-bottom-0">
                             <i class="fa-solid fa-plus"></i> Buat Laporan Baru
                         </button>
                     </div>
