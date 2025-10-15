@@ -311,7 +311,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
             box-shadow: inset 0px 0 0 rgba(0, 0, 0, 0);
             border: 1px solid var(--bs-border-color);
             overflow: auto;
-            border-radius: var(--bs-border-radius);
+            border-radius: var(--bs-border-radius-lg);
         }
 
         .main-content {
@@ -420,6 +420,18 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
             max-width: 960px;
         }
 
+        .no-fluid-content-list-group {
+            --bs-gutter-x: 0;
+            --bs-gutter-y: 0;
+            width: 100%;
+            padding-right: calc(var(--bs-gutter-x) * 0.5);
+            padding-left: calc(var(--bs-gutter-x) * 0.5);
+            margin-right: auto;
+            margin-left: auto;
+            max-width: calc(960px + 1rem);
+            border-radius: var(--bs-border-radius-lg);
+        }
+
         .no-caret::after {
             display: none;
             /* Hilangkan ikon panah ke bawah */
@@ -443,6 +455,8 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
             .sidebar {
                 top: 3rem;
                 width: 100%;
+                margin: 3rem 0 0 0;
+                border-radius: 0;
             }
 
             #sidebarMenu2 {
@@ -451,12 +465,12 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
             }
 
             #sidebarMenu {
-                height: calc(100% - 7rem);
-                max-width: calc(100% - 1rem);
+                height: calc(100% - 6rem);
+                max-width: 100%;
                 min-width: 0;
                 opacity: 0;
-                transition: opacity 0.25s ease-out, transform 0.25s ease-out;
-                transform: translateY(-5%) scale(0.9);
+                transition: opacity 0.25s ease-out;
+                border: 0;
             }
 
             #sidebarHeader {
@@ -466,7 +480,6 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
 
             #sidebarMenu.show {
                 opacity: 1;
-                transform: translateY(0) scale(1);
             }
 
             @media (prefers-reduced-motion: reduce) {

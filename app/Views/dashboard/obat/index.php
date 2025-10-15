@@ -12,6 +12,18 @@
         margin-left: auto;
         max-width: 1320px;
     }
+
+    .no-fluid-content-list-group {
+        --bs-gutter-x: 0;
+        --bs-gutter-y: 0;
+        width: 100%;
+        padding-right: calc(var(--bs-gutter-x) * 0.5);
+        padding-left: calc(var(--bs-gutter-x) * 0.5);
+        margin-right: auto;
+        margin-left: auto;
+        max-width: calc(1320px + 1rem);
+        border-radius: var(--bs-border-radius-lg);
+    }
 </style>
 <?= $this->endSection(); ?>
 <?= $this->section('title'); ?>
@@ -32,9 +44,9 @@
 <?= $this->endSection(); ?>
 <?= $this->section('content'); ?>
 <main class="main-content-inside">
-    <div id="filterFields" class="sticky-top px-3 pt-2" style="z-index: 99; display: none;">
-        <ul class="list-group no-fluid-content shadow-sm border border-bottom-0">
-            <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-secondary transparent-blur">
+    <div id="filterFields" class="sticky-top px-2 pt-2" style="z-index: 99; display: none;">
+        <ul class="list-group no-fluid-content-list-group shadow-sm border border-bottom-0">
+            <li class="list-group-item px-2 border-top-0 border-end-0 border-start-0 bg-body-secondary transparent-blur">
                 <div class="no-fluid-content">
                     <div class="d-flex flex-row gap-2">
                         <select class="form-select form-select-sm w-auto" id="length-menu">

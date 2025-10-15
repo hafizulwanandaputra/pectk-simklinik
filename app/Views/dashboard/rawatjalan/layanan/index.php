@@ -70,9 +70,9 @@ $usia = $registrasi->diff($tanggal_lahir);
 <?= $this->endSection(); ?>
 <?= $this->section('content'); ?>
 <main class="main-content-inside">
-    <div class="sticky-top px-3 pt-2" style="z-index: 99;">
-        <ul class="list-group no-fluid-content shadow-sm border border-bottom-0">
-            <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-secondary transparent-blur">
+    <div class="sticky-top px-2 pt-2" style="z-index: 99;">
+        <ul class="list-group no-fluid-content-list-group shadow-sm border border-bottom-0">
+            <li class="list-group-item px-2 border-top-0 border-end-0 border-start-0 bg-body-secondary transparent-blur">
                 <div class="no-fluid-content">
                     <nav class="nav nav-pills nav-fill flex-nowrap overflow-auto">
                         <a class="nav-link py-1 text-nowrap" href="<?= base_url('rawatjalan/asesmen/' . $rawatjalan['id_rawat_jalan']); ?>">Asesmen</a>
@@ -90,7 +90,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                     </nav>
                 </div>
             </li>
-            <li class="list-group-item border-top-0 border-end-0 border-start-0 bg-body-secondary transparent-blur">
+            <li class="list-group-item px-2 border-top-0 border-end-0 border-start-0 bg-body-secondary transparent-blur">
                 <div class="no-fluid-content">
                     <nav class="nav nav-pills flex-nowrap overflow-auto">
                         <?php foreach ($listRawatJalan as $list) : ?>
