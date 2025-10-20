@@ -12,6 +12,18 @@
         margin-left: auto;
         max-width: 1140px;
     }
+
+    .no-fluid-content-list-group {
+        --bs-gutter-x: 0;
+        --bs-gutter-y: 0;
+        width: 100%;
+        padding-right: calc(var(--bs-gutter-x) * 0.5);
+        padding-left: calc(var(--bs-gutter-x) * 0.5);
+        margin-right: auto;
+        margin-left: auto;
+        max-width: calc(1140px + 1rem);
+        border-radius: var(--bs-border-radius-lg);
+    }
 </style>
 <?= $this->endSection(); ?>
 <?= $this->section('title'); ?>
