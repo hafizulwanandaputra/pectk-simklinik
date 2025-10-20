@@ -1345,7 +1345,7 @@
                             <i class="fa-solid fa-receipt"></i> Cetak Lembar Isian Operasi
                         </button>
                         <button type="button" class="btn btn-body btn-sm bg-gradient edit-isian-ok-btn" data-id="${rajal.id_rawat_jalan}" ${transaksi} ${tblbatal}>
-                            <i class="fa-solid fa-file-pen"></i> Edit Lembar Isian Operasi
+                            <i class="fa-solid fa-pen-to-square"></i> Edit Lembar Isian Operasi
                         </button>
                         `;
                     } else {
@@ -1453,7 +1453,7 @@
                     </button>
                     ${tombol_isian_ok}
                     <button type="button" class="btn btn-body btn-sm bg-gradient edit-rajal-btn" data-id="${rajal.id_rawat_jalan}" ${transaksi} ${tblbatal} ${digunakan}>
-                        <i class="fa-solid fa-file-pen"></i> Edit Rawat Jalan
+                        <i class="fa-solid fa-pen-to-square"></i> Edit Rawat Jalan
                     </button>
                     <button type="button" class="btn btn-danger btn-sm bg-gradient cancel-btn" data-id="${rajal.id_rawat_jalan}" ${transaksi} ${tblbatal}>
                         <i class="fa-solid fa-xmark"></i> Batal
