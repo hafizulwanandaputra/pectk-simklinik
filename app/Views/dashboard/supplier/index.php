@@ -384,8 +384,13 @@
         $(document).on('click', '.delete-btn', function() {
             supplierId = $(this).data('id');
             supplierName = $(this).data('name');
+            if (supplierName == 'null' || supplierName == '' || supplierName == null) {
+                supplierName = 'Hapus pemasok tanpa nama ini?';
+            } else {
+                supplierName = `Hapus "${supplierName}"?`;
+            }
             $('[data-bs-toggle="tooltip"]').tooltip('hide');
-            $('#deleteMessage').html(`Hapus "` + supplierName + `"?`);
+            $('#deleteMessage').html(supplierName);
             $('#deleteSubmessage').html(`Pemasok tidak dapat dihapus jika ada obat yang berasal dari pemasok ini!`);
             $('#deleteModal').modal('show');
         });
