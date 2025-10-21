@@ -164,7 +164,7 @@ $tanggal = Time::parse($transaksi['tgl_transaksi']);
                             Deskripsi
                         </th>
                         <th class="outline-border" style="width: 0%; vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: center;">
-                            Qty
+                            Kuantitas
                         </th>
                         <th colspan="2" class="outline-border" style="width: 0%; vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: center;">
                             Biaya
@@ -230,7 +230,7 @@ $tanggal = Time::parse($transaksi['tgl_transaksi']);
                         Deskripsi
                     </th>
                     <th class="outline-border" style="width: 0%; vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: center;">
-                        Qty
+                        Kuantitas
                     </th>
                     <th colspan="2" class="outline-border" style="width: 0%; vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: center;">
                         Biaya

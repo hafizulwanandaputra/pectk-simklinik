@@ -147,7 +147,7 @@
                                 </div>
                                 <div class="d-flex flex-column flex-lg-row gap-2">
                                     <div class="flex-fill">
-                                        <input type="number" id="qty_transaksi" name="qty_transaksi" class="form-control form-control-sm form-tindakan" placeholder="Qty" autocomplete="off">
+                                        <input type="number" id="qty_transaksi" name="qty_transaksi" class="form-control form-control-sm form-tindakan" placeholder="Kuantitas" autocomplete="off">
                                         <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="flex-fill">
@@ -168,7 +168,7 @@
                                     <tr class="align-middle">
                                         <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Tindakan</th>
                                         <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">Nama Layanan</th>
-                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Qty</th>
+                                        <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Kuantitas</th>
                                         <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Harga</th>
                                         <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Diskon</th>
                                         <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total</th>
@@ -921,7 +921,7 @@
                             <div class="d-flex flex-column flex-lg-row gap-1">
                                 <input type="hidden" id="id_detail_transaksi" name="id_detail_transaksi" value="${response.data.id_detail_transaksi}">
                                 <div class="flex-fill">
-                                    <input type="number" id="qty_transaksi_edit" name="qty_transaksi_edit" class="form-control form-control-sm" placeholder="Diskon (%)" value="${response.data.qty_transaksi}" autocomplete="off">
+                                    <input type="number" id="qty_transaksi_edit" name="qty_transaksi_edit" class="form-control form-control-sm" placeholder="Kuantitas" value="${response.data.qty_transaksi}" autocomplete="off">
                                     <div class="invalid-feedback"></div>
                                 </div>
                                 <div class="flex-fill">

@@ -113,10 +113,10 @@ $usia = $registrasi->diff($tanggal_lahir);
                     <div class="form-floating">
                         <select class="form-select" id="bahasa" name="bahasa" aria-label="bahasa">
                             <option value="" disabled selected>-- Pilih Bahasa --</option>
-                            <option value="INDONESIA">INDONESIA</option>
-                            <option value="INGGRIS">INGGRIS</option>
-                            <option value="DAERAH">DAERAH</option>
-                            <option value="LAINNYA">LAINNYA</option>
+                            <option value="INDONESIA">Indonesia</option>
+                            <option value="INGGRIS">Inggris</option>
+                            <option value="DAERAH">Daerah</option>
+                            <option value="LAINNYA">Lainnya</option>
                         </select>
                         <label for="bahasa">Bahasa<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
@@ -229,38 +229,38 @@ $usia = $registrasi->diff($tanggal_lahir);
                         <div class="col-sm">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="hambatan_bahasa" name="hambatan[]" value="BAHASA">
-                                <label class="form-check-label" for="hambatan_bahasa">BAHASA</label>
+                                <label class="form-check-label" for="hambatan_bahasa">Bahasa</label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="hambatan_emosional" name="hambatan[]" value="EMOSIONAL">
-                                <label class="form-check-label" for="hambatan_emosional">EMOSIONAL</label>
+                                <label class="form-check-label" for="hambatan_emosional">Emosional</label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="hambatan_fisik_lemah" name="hambatan[]" value="FISIK LEMAH">
-                                <label class="form-check-label" for="hambatan_fisik_lemah">FISIK LEMAH</label>
+                                <label class="form-check-label" for="hambatan_fisik_lemah">Fisik lemah</label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="hambatan_gangguan_bicara" name="hambatan[]" value="GANGGUAN BICARA">
-                                <label class="form-check-label" for="hambatan_gangguan_bicara">GANGGUAN BICARA</label>
+                                <label class="form-check-label" for="hambatan_gangguan_bicara">Gangguan bicara</label>
                             </div>
                         </div>
                         <!-- Kolom Kanan -->
                         <div class="col-sm">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="hambatan_kognitif_terbatas" name="hambatan[]" value="KOGNITIF TERBATAS">
-                                <label class="form-check-label" for="hambatan_kognitif_terbatas">KOGNITIF TERBATAS</label>
+                                <label class="form-check-label" for="hambatan_kognitif_terbatas">Kognitif terbatas</label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="hambatan_motivasi_kurang" name="hambatan[]" value="MOTIVASI KURANG">
-                                <label class="form-check-label" for="hambatan_motivasi_kurang">MOTIVASI KURANG</label>
+                                <label class="form-check-label" for="hambatan_motivasi_kurang">Motivasi kurang</label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="hambatan_pendengaran_terganggu" name="hambatan[]" value="PENDENGARAN TERGANGGU">
-                                <label class="form-check-label" for="hambatan_pendengaran_terganggu">PENDENGARAN TERGANGGU</label>
+                                <label class="form-check-label" for="hambatan_pendengaran_terganggu">Pendengaran terganggu</label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="hambatan_penglihatan_terganggu" name="hambatan[]" value="PENGLIHATAN TERGANGGU">
-                                <label class="form-check-label" for="hambatan_penglihatan_terganggu">PENGLIHATAN TERGANGGU</label>
+                                <label class="form-check-label" for="hambatan_penglihatan_terganggu">Penglihatan terganggu</label>
                             </div>
                         </div>
                     </div>

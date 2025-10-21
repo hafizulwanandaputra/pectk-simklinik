@@ -275,54 +275,54 @@ $usia = $registrasi->diff($tanggal_lahir);
                         <div class="col-sm">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="sakit_lainnya_asma" name="sakit_lainnya[]" value="ASMA">
-                                <label class="form-check-label" for="sakit_lainnya_asma">ASMA</label>
+                                <label class="form-check-label" for="sakit_lainnya_asma">Asma</label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="sakit_lainnya_asam_urat" name="sakit_lainnya[]" value="ASAM URAT">
-                                <label class="form-check-label" for="sakit_lainnya_asam_urat">ASAM URAT</label>
+                                <label class="form-check-label" for="sakit_lainnya_asam_urat">Asam urat</label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="sakit_lainnya_stroke" name="sakit_lainnya[]" value="STROKE">
-                                <label class="form-check-label" for="sakit_lainnya_stroke">STROKE</label>
+                                <label class="form-check-label" for="sakit_lainnya_stroke">Strok</label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="sakit_lainnya_kolesterol" name="sakit_lainnya[]" value="KOLESTEROL">
-                                <label class="form-check-label" for="sakit_lainnya_kolesterol">KOLESTEROL</label>
+                                <label class="form-check-label" for="sakit_lainnya_kolesterol">Kolesterol</label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="sakit_lainnya_tb_paru" name="sakit_lainnya[]" value="TB PARU">
-                                <label class="form-check-label" for="sakit_lainnya_tb_paru">TB PARU</label>
+                                <label class="form-check-label" for="sakit_lainnya_tb_paru">Tuberkulosis paru-paru</label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="sakit_lainnya_diabetes" name="sakit_lainnya[]" value="DIABETES">
-                                <label class="form-check-label" for="sakit_lainnya_diabetes">DIABETES</label>
+                                <label class="form-check-label" for="sakit_lainnya_diabetes">Diabetes</label>
                             </div>
                         </div>
                         <!-- Kolom Kanan -->
                         <div class="col-sm">
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="sakit_lainnya_hipertensi" name="sakit_lainnya[]" value="HIPERTENSI">
-                                <label class="form-check-label" for="sakit_lainnya_hipertensi">HIPERTENSI</label>
+                                <label class="form-check-label" for="sakit_lainnya_hipertensi">Hipertensi</label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="sakit_lainnya_jantung" name="sakit_lainnya[]" value="JANTUNG">
-                                <label class="form-check-label" for="sakit_lainnya_jantung">JANTUNG</label>
+                                <label class="form-check-label" for="sakit_lainnya_jantung">Jantung</label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="sakit_lainnya_magh" name="sakit_lainnya[]" value="MAGH">
-                                <label class="form-check-label" for="sakit_lainnya_magh">MAGH</label>
+                                <label class="form-check-label" for="sakit_lainnya_magh">Mag</label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="sakit_lainnya_tiroid" name="sakit_lainnya[]" value="TIROID">
-                                <label class="form-check-label" for="sakit_lainnya_tiroid">TIROID</label>
+                                <label class="form-check-label" for="sakit_lainnya_tiroid">Tiroid</label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="sakit_lainnya_vertigo" name="sakit_lainnya[]" value="VERTIGO">
-                                <label class="form-check-label" for="sakit_lainnya_vertigo">VERTIGO</label>
+                                <label class="form-check-label" for="sakit_lainnya_vertigo">Vertigo</label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="sakit_lainnya_ginjal" name="sakit_lainnya[]" value="GINJAL">
-                                <label class="form-check-label" for="sakit_lainnya_ginjal">GINJAL</label>
+                                <label class="form-check-label" for="sakit_lainnya_ginjal">Ginjal</label>
                             </div>
                         </div>
                     </div>
