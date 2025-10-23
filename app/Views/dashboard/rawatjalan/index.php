@@ -231,7 +231,7 @@
                                         <button id="barcode_btn" type="button" class="btn btn-body btn-sm bg-gradient print-barcode" data-id="">
                                             <i class="fa-solid fa-barcode"></i> <em>Barcode</em>
                                         </button>
-                                        <button id="detail_pasien_btn" type="button" class="btn btn-body btn-sm bg-gradient" onclick="">
+                                        <button id="detail_pasien_btn" type="button" class="btn btn-body btn-sm redirect-button bg-gradient" data-url="">
                                             <i class="fa-solid fa-circle-info"></i> Detail Pasien
                                         </button>
                                     <?php endif; ?>
@@ -1228,31 +1228,31 @@
                                                 <?php endif; ?>
                                             <?php endif; ?>
                                             <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') : ?>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/asesmen') ?>/${rawatjalan.id_rawat_jalan}';">
+                                                <button type="button" class="btn btn-body btn-sm redirect-button bg-gradient" data-url="<?= base_url('rawatjalan/asesmen') ?>/${rawatjalan.id_rawat_jalan}">
                                                     <i class="fa-solid fa-user-check"></i> Asesmen
                                                 </button>
                                                 <?php if (session()->get('role') != 'Dokter') : ?>
-                                                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/skrining') ?>/${rawatjalan.id_rawat_jalan}';">
+                                                    <button type="button" class="btn btn-body btn-sm redirect-button bg-gradient" data-url="<?= base_url('rawatjalan/skrining') ?>/${rawatjalan.id_rawat_jalan}">
                                                         <i class="fa-solid fa-user-check"></i> Skrining
                                                     </button>
-                                                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/edukasi') ?>/${rawatjalan.id_rawat_jalan}';">
+                                                    <button type="button" class="btn btn-body btn-sm redirect-button bg-gradient" data-url="<?= base_url('rawatjalan/edukasi') ?>/${rawatjalan.id_rawat_jalan}">
                                                         <i class="fa-solid fa-user-graduate"></i> Edukasi
                                                     </button>
-                                                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/penunjang') ?>/${rawatjalan.id_rawat_jalan}';">
+                                                    <button type="button" class="btn btn-body btn-sm redirect-button bg-gradient" data-url="<?= base_url('rawatjalan/penunjang') ?>/${rawatjalan.id_rawat_jalan}">
                                                         <i class="fa-solid fa-stethoscope"></i> Penunjang
                                                     </button>
                                                 <?php endif; ?>
                                                 <?php if (session()->get('role') != 'Perawat') : ?>
-                                                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/resepobat') ?>/${rawatjalan.id_rawat_jalan}';">
+                                                    <button type="button" class="btn btn-body btn-sm redirect-button bg-gradient" data-url="<?= base_url('rawatjalan/resepobat') ?>/${rawatjalan.id_rawat_jalan}">
                                                         <i class="fa-solid fa-prescription"></i> Resep Obat
                                                     </button>
-                                                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/optik') ?>/${rawatjalan.id_rawat_jalan}';">
+                                                    <button type="button" class="btn btn-body btn-sm redirect-button bg-gradient" data-url="<?= base_url('rawatjalan/optik') ?>/${rawatjalan.id_rawat_jalan}">
                                                         <i class="fa-solid fa-glasses"></i> Resep Kacamata
                                                     </button>
-                                                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/laporanrajal') ?>/${rawatjalan.id_rawat_jalan}';">
+                                                    <button type="button" class="btn btn-body btn-sm redirect-button bg-gradient" data-url="<?= base_url('rawatjalan/laporanrajal') ?>/${rawatjalan.id_rawat_jalan}">
                                                         <i class="fa-solid fa-file-medical"></i> Tindakan Rajal
                                                     </button>
-                                                    <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.location.href = '<?= base_url('rawatjalan/layanan') ?>/${rawatjalan.id_rawat_jalan}';">
+                                                    <button type="button" class="btn btn-body btn-sm redirect-button bg-gradient" data-url="<?= base_url('rawatjalan/layanan') ?>/${rawatjalan.id_rawat_jalan}">
                                                         <i class="fa-solid fa-user-nurse"></i> Layanan
                                                     </button>
                                                 <?php endif; ?>
@@ -1293,7 +1293,7 @@
                 $('#telpon').html(telpon);
                 $('#identitas_btn').attr('data-id', rawatjalan.id_pasien);
                 $('#barcode_btn').attr('data-id', rawatjalan.id_pasien);
-                $('#detail_pasien_btn').attr('onclick', "window.location.href = '<?= base_url('pasien/detailpasien') ?>/" + rawatjalan.id_pasien + "'");
+                $('#detail_pasien_btn').attr('data-url', `<?= base_url('pasien/detailpasien') ?>/${rawatjalan.id_pasien}`);
                 $('#pendaftar').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${rawatjalan.pendaftar}">`);
                 $('#nomor_registrasi').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${rawatjalan.nomor_registrasi}">`);
                 $('#tanggal_registrasi').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${rawatjalan.tanggal_registrasi}">`);
@@ -1315,6 +1315,12 @@
                 $('#loadingSpinner').hide();
                 $this.prop('disabled', false);
             }
+        });
+        $(document).on('click', '.redirect-button', async function() {
+            const url = $(this).data('url');
+
+            await $('#rajalModal').modal('hide');
+            window.location.href = url;
         });
         $(document).on('click', '.print-identitas', function() {
             const id = $(this).data('id');

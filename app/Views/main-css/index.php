@@ -412,6 +412,11 @@
         transform: none;
     }
 
+    .modal.fade:not(.show) .modal-dialog {
+        transition: none !important;
+        opacity: 0 !important;
+    }
+
     .modal-fullscreen {
         width: 100vw;
         max-width: none;
