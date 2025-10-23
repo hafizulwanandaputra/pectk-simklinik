@@ -343,14 +343,14 @@
                 {
                     data: 'isi_obat',
                     render: function(data, type, row) {
-                        const isi_obat = data ? data : '<i class="fa-solid fa-xmark"></i>';
+                        const isi_obat = data ? data : '<em>Tidak ada</em>';
                         return `${isi_obat}`;
                     }
                 },
                 {
                     data: 'kategori_obat',
                     render: function(data, type, row) {
-                        const kategori_obat = data ? data : '<i class="fa-solid fa-xmark"></i>';
+                        const kategori_obat = data ? data : '<em>Tidak ada</em>';
                         return `${kategori_obat}`;
                     }
                 },
