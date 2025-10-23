@@ -333,7 +333,8 @@
                     render: function(data, type, row) {
                         const merek = data ? data : '<em>Tanpa merek</em>';
                         const nama_supplier = row.nama_supplier ? row.nama_supplier : '<em>Tanpa nama pemasok</em>';
-                        return `<span>${merek}<br><small>${nama_supplier}</small></span>`;
+                        const alamat_supplier = row.alamat_supplier ? row.alamat_supplier : '<em>Tanpa alamat</em>';
+                        return `<span>${merek}<br><small>${nama_supplier} • ${alamat_supplier}</small></span>`;
                     }
                 },
                 {
