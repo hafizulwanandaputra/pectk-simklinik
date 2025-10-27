@@ -28,6 +28,14 @@ $tanggalFormatted = $tanggalFormatter->format($date);
 
 // Format waktu
 $waktuFormatted = $time->format('H.i');
+
+// Tentukan path file site_marking
+$siteMarkingPath = FCPATH . 'uploads/site_marking/' . $operasi['site_marking'];
+
+// Jika file tidak ada atau kosong, gunakan gambar default
+if (empty($operasi['site_marking']) || !file_exists($siteMarkingPath)) {
+    $siteMarkingPath = FCPATH . 'assets/images/site_marking.jpg';
+}
 ?>
 <!doctype html>
 <html lang="id">
@@ -293,7 +301,7 @@ $waktuFormatted = $time->format('H.i');
                             </dl>
                         </td>
                         <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            <img src="data:image/png;base64,<?= base64_encode(file_get_contents(FCPATH . 'uploads/site_marking/' . $operasi['site_marking'])) ?>" width="240px" alt="">
+                            <img src="data:image/png;base64,<?= base64_encode(file_get_contents($siteMarkingPath)) ?>" width="240px" alt="">
                         </td>
                     </tr>
                 </tbody>

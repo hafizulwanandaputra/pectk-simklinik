@@ -109,24 +109,6 @@ $usia = $registrasi->diff($tanggal_lahir);
             <?php endif; ?>
             <div class="mb-3">
                 <div class="fw-bold mb-2 border-bottom">Pemeriksaan Penunjang</div>
-                <div class="mb-2">
-                    <div class="form-floating">
-                        <select class="form-select" id="dokter_pengirim" name="dokter_pengirim" aria-label="dokter_pengirim">
-                            <option value="" disabled selected>-- Pilih Dokter --</option>
-                        </select>
-                        <label for="dokter_pengirim">Dokter Pengirim</label>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                </div>
-                <div class="mb-2">
-                    <div class="form-floating">
-                        <select class="form-select" id="rujukan_dari" name="rujukan_dari" aria-label="rujukan_dari">
-                            <option value="" disabled selected>-- Pilih Asal Rujukan --</option>
-                        </select>
-                        <label for="rujukan_dari">Rujukan dari</label>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                </div>
                 <div class="mb-2 checkbox-group">
                     <label for="pemeriksaan" class="form-label">
                         Pemeriksaan<br><small class="text-muted">Abaikan jika pemeriksaan lainnya diisi</small>
@@ -397,8 +379,6 @@ $usia = $registrasi->diff($tanggal_lahir);
             const response = await axios.get('<?= base_url('rawatjalan/penunjang/view/') . $penunjang['id_penunjang'] ?>');
             const data = response.data;
 
-            $('#dokter_pengirim').val(data.dokter_pengirim);
-            $('#rujukan_dari').val(data.rujukan_dari);
             const pemeriksaan = data.pemeriksaan;
             $('input[name="pemeriksaan[]"]').each(function() {
                 const value = $(this).val(); // Dapatkan nilai opsi
@@ -425,56 +405,6 @@ $usia = $registrasi->diff($tanggal_lahir);
             showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
         } finally {
             $('#loadingSpinner').hide();
-        }
-    }
-
-    async function fetchDokterOptions() {
-        $('#loadingSpinner').show();
-        try {
-            // Panggil API dengan query string tanggal
-            const response = await axios.get(`<?= base_url('rawatjalan/penunjang/dokteroptions') ?>`);
-
-            if (response.data.success) {
-                const options = response.data.data;
-
-                // Hapus opsi yang ada, kecuali opsi pertama (default)
-                $('#dokter_pengirim').find('option:not(:first)').remove();
-
-                // Tambahkan opsi ke elemen select
-                options.forEach(option => {
-                    $('#dokter_pengirim').append(`<option value="${option.value}">${option.text}</option>`);
-                });
-            } else {
-                showFailedToast('Gagal mendapatkan dokter.');
-            }
-        } catch (error) {
-            console.error(error);
-            showFailedToast(`${error}`);
-        }
-    }
-
-    async function fetchRuanganOptions() {
-        $('#loadingSpinner').show();
-        try {
-            // Panggil API dengan query string tanggal
-            const response = await axios.get(`<?= base_url('rawatjalan/penunjang/ruanganoptions') ?>`);
-
-            if (response.data.success) {
-                const options = response.data.data;
-
-                // Hapus opsi yang ada, kecuali opsi pertama (default)
-                $('#rujukan_dari').find('option:not(:first)').remove();
-
-                // Tambahkan opsi ke elemen select
-                options.forEach(option => {
-                    $('#rujukan_dari').append(`<option value="${option.value}">${option.text}</option>`);
-                });
-            } else {
-                showFailedToast('Gagal mendapatkan ruangan.');
-            }
-        } catch (error) {
-            console.error(error);
-            showFailedToast(`${error}`);
         }
     }
 
@@ -931,7 +861,6 @@ $usia = $registrasi->diff($tanggal_lahir);
                 $('#penunjangForm input, #penunjangForm select, #penunjangForm button').prop('disabled', false);
             }
         });
-        await Promise.all([fetchDokterOptions(), fetchRuanganOptions()]);
         await fetchPenunjang();
         fetchScanPenunjang();
     });

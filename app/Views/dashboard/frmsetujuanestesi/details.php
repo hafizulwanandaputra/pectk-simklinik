@@ -100,26 +100,26 @@ $usia = $registrasi->diff($tanggal_lahir);
             <div class="mb-3">
                 <div class="mb-2">
                     <div class="form-floating">
-                        <select class="form-select" id="dokter_pelaksana" name="dokter_pelaksana" aria-label="dokter_pelaksana">
-                            <option value="" disabled selected>-- Pilih Dokter Pelaksana Tindakan --</option>
+                        <input type="text" class="form-control" id="dokter_pelaksana" name="dokter_pelaksana" value="" autocomplete="off" dir="auto" placeholder="dokter_pelaksana" list="dokter_pelaksana_list">
+                        <label for="dokter_pelaksana">Dokter Pelaksana Tindakan<span class="text-danger">*</span></label>
+                        <div class="invalid-feedback"></div>
+                        <datalist id="dokter_pelaksana_list">
                             <?php foreach ($dokter as $list) : ?>
                                 <option value="<?= $list['fullname'] ?>"><?= $list['fullname'] ?></option>
                             <?php endforeach; ?>
-                        </select>
-                        <label for="dokter_pelaksana">Dokter Pelaksana Tindakan<span class="text-danger">*</span></label>
-                        <div class="invalid-feedback"></div>
+                        </datalist>
                     </div>
                 </div>
                 <div class="mb-2">
                     <div class="form-floating">
-                        <select class="form-select" id="pemberi_informasi" name="pemberi_informasi" aria-label="pemberi_informasi">
-                            <option value="" disabled selected>-- Pilih Pemberi Informasi --</option>
+                        <input type="text" class="form-control" id="pemberi_informasi" name="pemberi_informasi" value="" autocomplete="off" dir="auto" placeholder="pemberi_informasi" list="pemberi_informasi_list">
+                        <label for="pemberi_informasi">Pemberi Informasi<span class="text-danger">*</span></label>
+                        <div class="invalid-feedback"></div>
+                        <datalist id="pemberi_informasi_list">
                             <?php foreach ($dokter as $list) : ?>
                                 <option value="<?= $list['fullname'] ?>"><?= $list['fullname'] ?></option>
                             <?php endforeach; ?>
-                        </select>
-                        <label for="pemberi_informasi">Pemberi Informasi<span class="text-danger">*</span></label>
-                        <div class="invalid-feedback"></div>
+                        </datalist>
                     </div>
                 </div>
             </div>

@@ -367,8 +367,11 @@
                     const lama_operasi = lp_operasi_pterigium.lama_operasi ?
                         `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${lp_operasi_pterigium.lama_operasi} menit">` :
                         `<em>Belum ada</em>`;
+                    const jam_operasi = lp_operasi_pterigium.jam_operasi ?
+                        ` ${lp_operasi_pterigium.jam_operasi}` :
+                        ``;
                     const tanggal_operasi = lp_operasi_pterigium.tanggal_operasi ?
-                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${lp_operasi_pterigium.tanggal_operasi} ${lp_operasi_pterigium.jam_operasi}">` :
+                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${lp_operasi_pterigium.tanggal_operasi}${jam_operasi}">` :
                         `<em>Belum ada</em>`;
                     const operator = lp_operasi_pterigium.operator ?
                         `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${lp_operasi_pterigium.operator}">` :

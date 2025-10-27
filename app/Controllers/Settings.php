@@ -349,8 +349,6 @@ class Settings extends BaseController
                 ->countAllResults();
 
             $medrec_permintaan_penunjang = $db->table('medrec_permintaan_penunjang')
-                ->where('dokter_pengirim', null)
-                ->where('rujukan_dari', null)
                 ->where('pemeriksaan', null)
                 ->where('pemeriksaan_lainnya', null)
                 ->where('lokasi_pemeriksaan', null)
@@ -662,8 +660,6 @@ class Settings extends BaseController
                     'nyeri_info_pukul'
                 ],
                 'medrec_permintaan_penunjang' => [
-                    'dokter_pengirim',
-                    'rujukan_dari',
                     'pemeriksaan',
                     'pemeriksaan_lainnya',
                     'lokasi_pemeriksaan'

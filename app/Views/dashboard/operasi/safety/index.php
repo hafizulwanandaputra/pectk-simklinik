@@ -336,14 +336,14 @@ $usia = $registrasi->diff($tanggal_lahir);
                 </div>
                 <div class="mb-2">
                     <div class="form-floating">
-                        <select class="form-select" id="nama_dokter_anastesi" name="nama_dokter_anastesi" aria-label="nama_dokter_anastesi">
-                            <option value="" selected>Tidak ada dokter anestesi</option>
+                        <input type="text" class="form-control" id="nama_dokter_anastesi" name="nama_dokter_anastesi" value="" autocomplete="off" dir="auto" placeholder="nama_dokter_anastesi" list="dokter_anestesi_list">
+                        <label for="nama_dokter_anastesi">Dokter Anestesi</label>
+                        <div class="invalid-feedback"></div>
+                        <datalist id="dokter_anestesi_list">
                             <?php foreach ($dokter as $list) : ?>
                                 <option value="<?= $list['fullname'] ?>"><?= $list['fullname'] ?></option>
                             <?php endforeach; ?>
-                        </select>
-                        <label for="nama_dokter_anastesi">Dokter Anestesi</label>
-                        <div class="invalid-feedback"></div>
+                        </datalist>
                     </div>
                 </div>
             </div>
@@ -553,14 +553,14 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <div class="mb-2 border-top row row-cols-1 row-cols-lg-2 g-2">
                     <div class="col">
                         <div class="form-floating">
-                            <select class="form-select" id="nama_perawat" name="nama_perawat" aria-label="nama_perawat">
-                                <option value="" disabled selected>-- Pilih Perawat Sirkuler --</option>
+                            <input type="text" class="form-control" id="nama_perawat" name="nama_perawat" value="" autocomplete="off" dir="auto" placeholder="nama_perawat" list="perawatList">
+                            <label for="nama_perawat">Perawat Pra Operasi<span class="text-danger">*</span></label>
+                            <div class="invalid-feedback"></div>
+                            <datalist id="perawatList">
                                 <?php foreach ($perawat as $list) : ?>
                                     <option value="<?= $list['fullname'] ?>"><?= $list['fullname'] ?></option>
                                 <?php endforeach; ?>
-                            </select>
-                            <label for="nama_perawat">Perawat Sirkuler<span class="text-danger">*</span></label>
-                            <div class="invalid-feedback"></div>
+                            </datalist>
                         </div>
                     </div>
                     <div class="col">
@@ -675,14 +675,14 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <div class="mb-2 border-top row row-cols-1 row-cols-lg-2 g-2">
                     <div class="col">
                         <div class="form-floating">
-                            <select class="form-select" id="nama_dokter_operator" name="nama_dokter_operator" aria-label="nama_dokter_operator">
-                                <option value="" disabled selected>-- Pilih Dokter Operator --</option>
+                            <input type="text" class="form-control" id="nama_dokter_operator" name="nama_dokter_operator" value="" autocomplete="off" dir="auto" placeholder="nama_dokter_operator" list="dokter_operator_list">
+                            <label for="nama_dokter_operator">Dokter Anestesi</label>
+                            <div class="invalid-feedback"></div>
+                            <datalist id="dokter_operator_list">
                                 <?php foreach ($dokter as $list) : ?>
                                     <option value="<?= $list['fullname'] ?>"><?= $list['fullname'] ?></option>
                                 <?php endforeach; ?>
-                            </select>
-                            <label for="nama_dokter_operator">Dokter Operator (Spesialis Mata)<span class="text-danger">*</span></label>
-                            <div class="invalid-feedback"></div>
+                            </datalist>
                         </div>
                     </div>
                     <div class="col">

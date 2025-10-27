@@ -459,8 +459,11 @@
                 );
             } else {
                 data.sp_operasi.forEach(function(sp_operasi) {
+                    const jam_operasi = sp_operasi.jam_operasi ?
+                        ` ${sp_operasi.jam_operasi}` :
+                        ``;
                     const tanggal_operasi = sp_operasi.tanggal_operasi ?
-                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${sp_operasi.tanggal_operasi} ${sp_operasi.jam_operasi}">` :
+                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${sp_operasi.tanggal_operasi}${jam_operasi}">` :
                         `<em>Belum ada</em>`;
                     const dokter_operator = sp_operasi.dokter_operator == 'Belum Ada' ?
                         `<em>Belum ada</em>` :

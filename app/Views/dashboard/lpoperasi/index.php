@@ -367,8 +367,11 @@
                     const lama_operasi = lp_operasi.lama_operasi ?
                         `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${lp_operasi.lama_operasi} menit">` :
                         `<em>Belum ada</em>`;
+                    const jam_operasi = lp_operasi.jam_operasi ?
+                        ` ${lp_operasi.jam_operasi}` :
+                        ``;
                     const tanggal_operasi = lp_operasi.tanggal_operasi ?
-                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${lp_operasi.tanggal_operasi} ${lp_operasi.jam_operasi}">` :
+                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${lp_operasi.tanggal_operasi}${jam_operasi}">` :
                         `<em>Belum ada</em>`;
                     const dokter_bedah = lp_operasi.dokter_bedah ?
                         `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${lp_operasi.dokter_bedah}">` :

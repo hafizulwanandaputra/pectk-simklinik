@@ -122,24 +122,17 @@ $usia = $registrasi->diff($tanggal_lahir);
                 </div>
                 <div class="mb-2">
                     <div class="form-floating">
-                        <select class="form-select" id="operator" name="operator" aria-label="operator">
-                            <option value="" disabled selected>-- Pilih Dokter Operator --</option>
+                        <input type="text" class="form-control" id="operator" name="operator" value="" autocomplete="off" dir="auto" placeholder="operator" readonly list="dokter_operator_list">
+                        <label for="operator">Dokter Operator<span class="text-danger">*</span></label>
+                        <div class="invalid-feedback"></div>
+                        <datalist id="dokter_operator_list">
                             <?php foreach ($dokter as $list) : ?>
                                 <option value="<?= $list['fullname'] ?>"><?= $list['fullname'] ?></option>
                             <?php endforeach; ?>
-                        </select>
-                        <label for="operator">Dokter Operator<span class="text-danger">*</span></label>
-                        <div class="invalid-feedback"></div>
+                        </datalist>
                     </div>
                 </div>
-                <div class="mb-2 row row-cols-1 row-cols-lg-3 g-2">
-                    <div class="col">
-                        <div class="form-floating">
-                            <input type="date" class="form-control" id="tanggal_operasi" name="tanggal_operasi" value="" autocomplete="off" dir="auto" placeholder="tanggal_operasi">
-                            <label for="tanggal_operasi">Tanggal Operasi<span class="text-danger">*</span></label>
-                            <div class="invalid-feedback"></div>
-                        </div>
-                    </div>
+                <div class="mb-2 row row-cols-1 row-cols-lg-2 g-2">
                     <div class="col">
                         <div class="form-floating">
                             <input type="time" class="form-control" id="jam_operasi" name="jam_operasi" value="" autocomplete="off" dir="auto" placeholder="jam_operasi">
@@ -164,14 +157,14 @@ $usia = $registrasi->diff($tanggal_lahir);
                 </div>
                 <div class="mb-2">
                     <div class="form-floating">
-                        <select class="form-select" id="asisten" name="asisten" aria-label="asisten">
-                            <option value="" disabled selected>-- Pilih Asisten --</option>
+                        <input type="text" class="form-control" id="asisten" name="asisten" value="" autocomplete="off" dir="auto" placeholder="asisten" list="asistenList">
+                        <label for="asisten">Asisten<span class="text-danger">*</span></label>
+                        <div class="invalid-feedback"></div>
+                        <datalist id="asistenList">
                             <?php foreach ($asisten as $list) : ?>
                                 <option value="<?= $list['fullname'] ?>"><?= $list['fullname'] ?></option>
                             <?php endforeach; ?>
-                        </select>
-                        <label for="asisten">Asisten<span class="text-danger">*</span></label>
-                        <div class="invalid-feedback"></div>
+                        </datalist>
                     </div>
                 </div>
                 <div class="mb-2">
@@ -217,14 +210,14 @@ $usia = $registrasi->diff($tanggal_lahir);
                 </div>
                 <div class="mb-2">
                     <div class="form-floating">
-                        <select class="form-select" id="dokter_anastesi" name="dokter_anastesi" aria-label="dokter_anastesi">
-                            <option value="" disabled selected>-- Pilih Anestesiologis --</option>
+                        <input type="text" class="form-control" id="dokter_anastesi" name="dokter_anastesi" value="" autocomplete="off" dir="auto" placeholder="dokter_anastesi" list="dokter_anastesi_list">
+                        <label for="operator">Anestesiologis<span class="text-danger">*</span></label>
+                        <div class="invalid-feedback"></div>
+                        <datalist id="dokter_anastesi_list">
                             <?php foreach ($dokter as $list) : ?>
                                 <option value="<?= $list['fullname'] ?>"><?= $list['fullname'] ?></option>
                             <?php endforeach; ?>
-                        </select>
-                        <label for="dokter_anastesi">Anestesiologis<span class="text-danger">*</span></label>
-                        <div class="invalid-feedback"></div>
+                        </datalist>
                     </div>
                 </div>
                 <div class="mb-2">

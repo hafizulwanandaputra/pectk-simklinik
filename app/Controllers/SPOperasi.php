@@ -239,13 +239,11 @@ class SPOperasi extends BaseController
                 ->find($id);
 
             $validation->setRules([
-                'tanggal_operasi' => 'required',
                 'jam_operasi' => 'required',
                 'jenis_tindakan' => 'required',
                 'jenis_bius' => 'required',
                 'rajal_ranap' => 'required',
                 'ruang_operasi' => 'required',
-                'dokter_operator' => 'required'
             ]);
 
             if (!$this->validate($validation->getRules())) {
@@ -260,7 +258,7 @@ class SPOperasi extends BaseController
                 'nomor_booking' => $sp_operasi['nomor_booking'],
                 'nomor_registrasi' => $sp_operasi['nomor_registrasi'],
                 'no_rm' => $sp_operasi['no_rm'],
-                'tanggal_operasi' => $this->request->getPost('tanggal_operasi') ?: NULL,
+                'tanggal_operasi' => $sp_operasi['tanggal_operasi'],
                 'jam_operasi' => $this->request->getPost('jam_operasi') ?: NULL,
                 'diagnosa' => $this->request->getPost('diagnosa') ?: NULL,
                 'jenis_tindakan' => $jenis_tindakan_csv,
@@ -269,7 +267,7 @@ class SPOperasi extends BaseController
                 'tipe_bayar' => $this->request->getPost('tipe_bayar') ?: NULL,
                 'rajal_ranap' => $this->request->getPost('rajal_ranap') ?: NULL,
                 'ruang_operasi' => $this->request->getPost('ruang_operasi') ?: NULL,
-                'dokter_operator' => $this->request->getPost('dokter_operator') ?: NULL,
+                'dokter_operator' => $sp_operasi['dokter_operator'],
                 'status_operasi' => $sp_operasi['status_operasi'],
                 'diagnosa_site_marking' => $this->request->getPost('diagnosa_site_marking') ?: NULL,
                 'tindakan_site_marking' => $this->request->getPost('tindakan_site_marking') ?: NULL,

@@ -226,7 +226,7 @@ class Operasi extends BaseController
             // Mengambil nomor registrasi dari permintaan POST
             $nomorRegistrasi = $this->request->getPost('nomor_registrasi');
 
-            $data = $this->RawatJalanModel
+            $rawatjalan = $this->RawatJalanModel
                 ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
                 ->where('status', 'DAFTAR')
                 ->where('ruangan', 'Kamar Operasi')
@@ -234,7 +234,7 @@ class Operasi extends BaseController
 
             // Memeriksa apakah data mengandung nomor registrasi yang diminta
             $spOperasiData = null;
-            foreach ($data as $patient) {
+            foreach ($rawatjalan as $patient) {
                 if ($patient['nomor_registrasi'] == $nomorRegistrasi) {
                     $spOperasiData = $patient; // Menyimpan data pasien jika ditemukan
                     break;
@@ -256,15 +256,23 @@ class Operasi extends BaseController
             $lastNoReg = $this->SPOperasiModel->getLastNoBooking($tahun, $bulan, $tanggal);
             $lastNumber = $lastNoReg ? intval(substr($lastNoReg, -3)) : 0;
             $nextNumber = str_pad($lastNumber + 1, 3, '0', STR_PAD_LEFT);
-
             $nomor_booking = sprintf('OK%s%s%s%s', $tanggal, $bulan, $tahun, $nextNumber);
+
+            // Ambil tanggal_operasi & dokter_operator dari rawat jalan
+            $tanggalOperasi = isset($spOperasiData['tanggal_registrasi'])
+                ? date('Y-m-d', strtotime($spOperasiData['tanggal_registrasi']))
+                : NULL;
+
+            $dokterOperator = isset($spOperasiData['dokter'])
+                ? $spOperasiData['dokter']
+                : NULL;
 
             // Menyimpan data transaksi
             $data = [
                 'nomor_booking' => $nomor_booking,
                 'nomor_registrasi' => $nomorRegistrasi, // Nomor registrasi
                 'no_rm' => $spOperasiData['no_rm'], // Nomor rekam medis
-                'tanggal_operasi' => NULL,
+                'tanggal_operasi' => $tanggalOperasi,
                 'jam_operasi' => NULL,
                 'diagnosa' => NULL,
                 'jenis_tindakan' => NULL,
@@ -273,7 +281,7 @@ class Operasi extends BaseController
                 'tipe_bayar' => NULL,
                 'rajal_ranap' => NULL,
                 'ruang_operasi' => NULL,
-                'dokter_operator' => 'Belum Ada',
+                'dokter_operator' => $dokterOperator,
                 'status_operasi' => 'DIJADWAL',
                 'diagnosa_site_marking' => NULL,
                 'tindakan_site_marking' => NULL,

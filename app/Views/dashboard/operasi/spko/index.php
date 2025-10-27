@@ -107,20 +107,16 @@ $usia = $registrasi->diff($tanggal_lahir);
             <?= form_open_multipart('/operasi/spko/update/' . $operasi['id_sp_operasi'], 'id="SPKOForm"'); ?>
             <?= csrf_field(); ?>
             <div class="mb-3">
-                <div class="mb-2 row row-cols-1 row-cols-lg-2 g-2">
-                    <div class="col">
-                        <div class="form-floating">
-                            <input type="date" class="form-control" id="tanggal_operasi" name="tanggal_operasi" value="" autocomplete="off" dir="auto" placeholder="tanggal_operasi">
-                            <label for="tanggal_operasi">Tanggal Operasi<span class="text-danger">*</span></label>
-                            <div class="invalid-feedback"></div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-floating">
-                            <input type="time" class="form-control" id="jam_operasi" name="jam_operasi" value="" autocomplete="off" dir="auto" placeholder="jam_operasi">
-                            <label for="jam_operasi">Jam Operasi<span class="text-danger">*</span></label>
-                            <div class="invalid-feedback"></div>
-                        </div>
+                <div class="fw-bold mb-2 border-bottom">Dokter Penanggung Jawab Pelayanan</div>
+                <div><?= $operasi['dokter_operator'] ?></div>
+            </div>
+            <div class="mb-3">
+                <div class="fw-bold mb-2 border-bottom">Informasi Operasi</div>
+                <div class="mb-2">
+                    <div class="form-floating">
+                        <input type="time" class="form-control" id="jam_operasi" name="jam_operasi" value="" autocomplete="off" dir="auto" placeholder="jam_operasi">
+                        <label for="jam_operasi">Jam Operasi<span class="text-danger">*</span></label>
+                        <div class="invalid-feedback"></div>
                     </div>
                 </div>
                 <div class="mb-2">
@@ -212,18 +208,6 @@ $usia = $registrasi->diff($tanggal_lahir);
                             <option value="OK1">OK1</option>
                         </select>
                         <label for="ruang_operasi">Ruangan<span class="text-danger">*</span></label>
-                        <div class="invalid-feedback"></div>
-                    </div>
-                </div>
-                <div class="mb-2">
-                    <div class="form-floating">
-                        <select class="form-select" id="dokter_operator" name="dokter_operator" aria-label="dokter_operator">
-                            <option value="" disabled selected>-- Pilih Dokter Operator --</option>
-                            <?php foreach ($dokter as $list) : ?>
-                                <option value="<?= $list['fullname'] ?>"><?= $list['fullname'] ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                        <label for="dokter_operator">Dokter Operator<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>

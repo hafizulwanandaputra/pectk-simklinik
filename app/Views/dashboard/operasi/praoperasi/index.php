@@ -92,14 +92,14 @@ $usia = $registrasi->diff($tanggal_lahir);
             <div class="mb-3">
                 <div class="mb-2">
                     <div class="form-floating">
-                        <select class="form-select" id="perawat_praoperasi" name="perawat_praoperasi" aria-label="perawat_praoperasi">
-                            <option value="" selected>-- Pilih Perawat --</option>
+                        <input type="text" class="form-control" id="perawat_praoperasi" name="perawat_praoperasi" value="" autocomplete="off" dir="auto" placeholder="perawat_praoperasi" list="perawatList">
+                        <label for="perawat_praoperasi">Perawat Pra Operasi<span class="text-danger">*</span></label>
+                        <div class="invalid-feedback"></div>
+                        <datalist id="perawatList">
                             <?php foreach ($perawat as $list) : ?>
                                 <option value="<?= $list['fullname'] ?>"><?= $list['fullname'] ?></option>
                             <?php endforeach; ?>
-                        </select>
-                        <label for="perawat_praoperasi">Perawat Pra Operasi<span class="text-danger">*</span></label>
-                        <div class="invalid-feedback"></div>
+                        </datalist>
                     </div>
                 </div>
                 <div class="mb-2">

@@ -183,7 +183,7 @@ class LPOperasiPterigium extends BaseController
             // Mengambil nomor registrasi dari permintaan POST
             $nomorRegistrasi = $this->request->getPost('nomor_registrasi');
 
-            $data = $this->RawatJalanModel
+            $rawatjalan = $this->RawatJalanModel
                 ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
                 ->where('status', 'DAFTAR')
                 ->where('ruangan', 'Kamar Operasi')
@@ -191,7 +191,7 @@ class LPOperasiPterigium extends BaseController
 
             // Memeriksa apakah data mengandung nomor registrasi yang diminta
             $LPOperasiPterigiumData = null;
-            foreach ($data as $patient) {
+            foreach ($rawatjalan as $patient) {
                 if ($patient['nomor_registrasi'] == $nomorRegistrasi) {
                     $LPOperasiPterigiumData = $patient; // Menyimpan data pasien jika ditemukan
                     break;
@@ -203,10 +203,21 @@ class LPOperasiPterigium extends BaseController
                 return $this->response->setJSON(['success' => false, 'message' => 'Data rawat jalan tidak ditemukan', 'errors' => NULL]);
             }
 
+            // Ambil tanggal_operasi & dokter_operator dari rawat jalan
+            $tanggalOperasi = isset($LPOperasiPterigiumData['tanggal_registrasi'])
+                ? date('Y-m-d', strtotime($LPOperasiPterigiumData['tanggal_registrasi']))
+                : NULL;
+
+            $dokterOperator = isset($LPOperasiPterigiumData['dokter'])
+                ? $LPOperasiPterigiumData['dokter']
+                : NULL;
+
             // Menyimpan data transaksi
             $data = [
                 'nomor_registrasi' => $nomorRegistrasi, // Nomor registrasi
                 'no_rm' => $LPOperasiPterigiumData['no_rm'], // Nomor rekam medis
+                'tanggal_operasi' => $tanggalOperasi,
+                'operator' => $dokterOperator,
                 'waktu_dibuat' => date('Y-m-d H:i:s'),
             ];
             $db->table('medrec_lp_operasi_pterigium')->insert($data);
@@ -469,12 +480,6 @@ class LPOperasiPterigium extends BaseController
                 'mata' => [
                     'rules' => 'required',
                 ],
-                'operator' => [
-                    'rules' => 'required',
-                ],
-                'tanggal_operasi' => [
-                    'rules' => 'required',
-                ],
                 'jam_operasi' => [
                     'rules' => 'required',
                 ],
@@ -541,8 +546,6 @@ class LPOperasiPterigium extends BaseController
             // Menyimpan data transaksi
             $data = [
                 'mata' => $this->request->getPost('mata') ?: null,
-                'operator' => $this->request->getPost('operator') ?: null,
-                'tanggal_operasi' => $this->request->getPost('tanggal_operasi') ?: null,
                 'jam_operasi' => $this->request->getPost('jam_operasi') ?: null,
                 'lama_operasi' => $this->request->getPost('lama_operasi') ?: null,
                 'diagnosis' => $this->request->getPost('diagnosis') ?: null,

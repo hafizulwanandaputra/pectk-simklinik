@@ -53,6 +53,8 @@ class Penunjang extends BaseController
                 $db->table('medrec_permintaan_penunjang')->insert([
                     'nomor_registrasi' => $rawatjalan['nomor_registrasi'],
                     'no_rm' => $rawatjalan['no_rm'],
+                    'dokter_pengirim' => $rawatjalan['dokter'],
+                    'rujukan_dari' => $rawatjalan['ruangan'],
                     'waktu_dibuat' => date('Y-m-d H:i:s')
                 ]);
 
@@ -125,72 +127,6 @@ class Penunjang extends BaseController
             // Mengembalikan status 404 jika peran tidak diizinkan
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan',
-            ]);
-        }
-    }
-
-    public function ruanganoptions()
-    {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Perawat' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat') {
-            // Mengambil ruangan dari tabel poliklinik
-            $poliklinik = $this->PoliklinikModel
-                ->where('status', 1)
-                ->orderBy('id_poli', 'ASC')
-                ->findAll();
-
-            // Menyiapkan array opsi untuk dikirim dalam respon
-            $options = [];
-            // Menyusun opsi dari data poliklinik yang diterima
-            foreach ($poliklinik as $ruangan) {
-                // Menambahkan opsi ke dalam array
-                $options[] = [
-                    'value' => $ruangan['nama_poli'], // Nilai untuk opsi
-                    'text'  => $ruangan['nama_poli'] // Teks untuk opsi
-                ];
-            }
-
-            // Mengembalikan data poliklinik dalam format JSON
-            return $this->response->setJSON([
-                'success' => true, // Indikator sukses
-                'data'    => $options, // Data opsi
-            ]);
-        } else {
-            return $this->response->setStatusCode(404)->setJSON([
-                'error' => 'Halaman tidak ditemukan', // Pesan jika peran tidak valid
-            ]);
-        }
-    }
-
-    public function dokteroptions()
-    {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Perawat' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat') {
-            // Mengambil ruangan dari tabel pengguna
-            $auth = $this->AuthModel
-                ->where('role', 'Dokter')
-                ->where('active', 1)
-                ->findAll();
-
-            // Menyiapkan array opsi untuk dikirim dalam respon
-            $options = [];
-            // Menyusun opsi dari data pengguna yang diterima
-            foreach ($auth as $dokter) {
-                // Menambahkan opsi ke dalam array
-                $options[] = [
-                    'value' => $dokter['fullname'], // Nilai untuk opsi
-                    'text'  => $dokter['fullname'] // Teks untuk opsi
-                ];
-            }
-
-            // Mengembalikan data pengguna dalam format JSON
-            return $this->response->setJSON([
-                'success' => true, // Indikator sukses
-                'data'    => $options, // Data opsi
-            ]);
-        } else {
-            return $this->response->setStatusCode(404)->setJSON([
-                'error' => 'Halaman tidak ditemukan', // Pesan jika peran tidak valid
             ]);
         }
     }

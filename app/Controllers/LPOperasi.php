@@ -183,7 +183,7 @@ class LPOperasi extends BaseController
             // Mengambil nomor registrasi dari permintaan POST
             $nomorRegistrasi = $this->request->getPost('nomor_registrasi');
 
-            $data = $this->RawatJalanModel
+            $rawatjalan = $this->RawatJalanModel
                 ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
                 ->where('status', 'DAFTAR')
                 ->where('ruangan', 'Kamar Operasi')
@@ -191,7 +191,7 @@ class LPOperasi extends BaseController
 
             // Memeriksa apakah data mengandung nomor registrasi yang diminta
             $LPOperasiData = null;
-            foreach ($data as $patient) {
+            foreach ($rawatjalan as $patient) {
                 if ($patient['nomor_registrasi'] == $nomorRegistrasi) {
                     $LPOperasiData = $patient; // Menyimpan data pasien jika ditemukan
                     break;
@@ -203,10 +203,16 @@ class LPOperasi extends BaseController
                 return $this->response->setJSON(['success' => false, 'message' => 'Data rawat jalan tidak ditemukan', 'errors' => NULL]);
             }
 
+            // Ambil tanggal_operasi & dokter_operator dari rawat jalan
+            $tanggalOperasi = isset($LPOperasiData['tanggal_registrasi'])
+                ? date('Y-m-d', strtotime($LPOperasiData['tanggal_registrasi']))
+                : NULL;
+
             // Menyimpan data transaksi
             $data = [
                 'nomor_registrasi' => $nomorRegistrasi, // Nomor registrasi
                 'no_rm' => $LPOperasiData['no_rm'], // Nomor rekam medis
+                'tanggal_operasi' => $tanggalOperasi,
                 'waktu_dibuat' => date('Y-m-d H:i:s'),
             ];
             $db->table('medrec_lp_operasi')->insert($data);
@@ -484,9 +490,6 @@ class LPOperasi extends BaseController
                 'pemeriksaan_pa' => [
                     'rules' => 'required',
                 ],
-                'tanggal_operasi' => [
-                    'rules' => 'required',
-                ],
                 'jam_operasi' => [
                     'rules' => 'required',
                 ],
@@ -512,7 +515,6 @@ class LPOperasi extends BaseController
                 'nama_operasi' => $this->request->getPost('nama_operasi') ?: null,
                 'jaringan_eksisi' => $this->request->getPost('jaringan_eksisi') ?: null,
                 'pemeriksaan_pa' => $this->request->getPost('pemeriksaan_pa') ?: null,
-                'tanggal_operasi' => $this->request->getPost('tanggal_operasi') ?: null,
                 'jam_operasi' => $this->request->getPost('jam_operasi') ?: null,
                 'lama_operasi' => $this->request->getPost('lama_operasi') ?: null,
                 'laporan_operasi' => $this->request->getPost('laporan_operasi') ?: null,
