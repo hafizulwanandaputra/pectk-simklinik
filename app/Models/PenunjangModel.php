@@ -12,8 +12,6 @@ class PenunjangModel extends Model
     protected $allowedFields = [
         'nomor_registrasi',
         'no_rm',
-        'dokter_pengirim',
-        'rujukan_dari',
         'pemeriksaan',
         'pemeriksaan_lainnya',
         'lokasi_pemeriksaan',

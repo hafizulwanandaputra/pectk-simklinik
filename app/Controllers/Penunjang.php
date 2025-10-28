@@ -53,8 +53,6 @@ class Penunjang extends BaseController
                 $db->table('medrec_permintaan_penunjang')->insert([
                     'nomor_registrasi' => $rawatjalan['nomor_registrasi'],
                     'no_rm' => $rawatjalan['no_rm'],
-                    'dokter_pengirim' => $rawatjalan['dokter'],
-                    'rujukan_dari' => $rawatjalan['ruangan'],
                     'waktu_dibuat' => date('Y-m-d H:i:s')
                 ]);
 

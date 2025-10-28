@@ -134,7 +134,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             :
                         </td>
                         <td style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            <?= $penunjang['dokter_pengirim'] ?>
+                            <?= $rawatjalan['dokter'] ?>
                         </td>
                     </tr>
                     <tr>
@@ -145,7 +145,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             :
                         </td>
                         <td style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            <?= $penunjang['rujukan_dari'] ?>
+                            <?= $rawatjalan['ruangan'] ?>
                         </td>
                     </tr>
                     <tr>
