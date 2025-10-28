@@ -1351,7 +1351,12 @@
                             `<em>Belum diisi</em>`;
 
                         const waktu_operasi_rajal = rajal.jam_operasi_rajal ?
-                            `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${rajal.jam_operasi_rajal}">` :
+                            (() => {
+                                // Buat objek Date dari jam mentah, lalu format jadi HH.mm
+                                const jamObj = new Date(`1970-01-01T${rajal.jam_operasi_rajal}`);
+                                const jamFormatted = jamObj.toTimeString().slice(0, 5);
+                                return `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${jamFormatted}">`;
+                            })() :
                             `<em>Belum diisi</em>`;
 
                         isian_ok = `
