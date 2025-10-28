@@ -286,8 +286,6 @@ class Penunjang extends BaseController
                 'id_penunjang' => $id,
                 'no_rm' => $penunjang['no_rm'],
                 'nomor_registrasi' => $penunjang['nomor_registrasi'],
-                'dokter_pengirim' => $this->request->getPost('dokter_pengirim') ?: NULL,
-                'rujukan_dari' => $this->request->getPost('rujukan_dari') ?: NULL,
                 'pemeriksaan' => $pemeriksaan_csv,
                 'pemeriksaan_lainnya' => $this->request->getPost('pemeriksaan_lainnya') ?: NULL,
                 'lokasi_pemeriksaan' => $this->request->getPost('lokasi_pemeriksaan') ?: NULL,
