@@ -1184,14 +1184,10 @@
                 const tindakan_operasi_rajal = rawatjalan.tindakan_operasi_rajal ?
                     `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${rawatjalan.tindakan_operasi_rajal}">` :
                     `<em>Belum diisi</em>`;
-                let waktu_operasi_rajal = `<em>Belum diisi</em>`;
-                if (rawatjalan.tanggal_operasi_rajal) {
-                    waktu_operasi_rajal = `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${rawatjalan.tanggal_operasi_rajal}`;
-                    if (rawatjalan.jam_operasi_rajal) {
-                        waktu_operasi_rajal += ` ${rawatjalan.jam_operasi_rajal}`;
-                    }
-                    waktu_operasi_rajal += `">`;
-                }
+
+                const waktu_operasi_rajal = rawatjalan.jam_operasi_rajal ?
+                    `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${rawatjalan.jam_operasi_rajal}">` :
+                    `<em>Belum diisi</em>`;
                 if (isian_ok === 'Kamar Operasi') {
                     $('.pasien_operasi').show();
                 } else {

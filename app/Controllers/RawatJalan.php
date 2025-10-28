@@ -483,7 +483,7 @@ class RawatJalan extends BaseController
             // Menetapkan aturan validasi dasar
             $validation->setRules([
                 'tindakan_operasi_rajal' => 'required',
-                'tanggal_operasi_rajal' => 'required'
+                'jam_operasi_rajal' => 'required'
             ]);
 
             // Memeriksa validasi
@@ -508,8 +508,7 @@ class RawatJalan extends BaseController
             // Simpan data pasien
             $data = [
                 'tindakan_operasi_rajal' => $this->request->getPost('tindakan_operasi_rajal'),
-                'tanggal_operasi_rajal' => $this->request->getPost('tanggal_operasi_rajal'),
-                'jam_operasi_rajal' => $this->request->getPost('jam_operasi_rajal') ?: NULL,
+                'jam_operasi_rajal' => $this->request->getPost('jam_operasi_rajal'),
             ];
             // Update data menggunakan Query Builder
             $db->table('rawat_jalan')->where('id_rawat_jalan', $id)->update($data);

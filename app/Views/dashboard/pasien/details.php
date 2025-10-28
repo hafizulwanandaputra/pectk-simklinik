@@ -583,7 +583,7 @@
         </div>
     </div>
     <div class="modal fade" id="isianOperasiModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="isianOperasiModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg modal-fullscreen-lg-down modal-dialog-centered modal-dialog-scrollable ">
+        <div class="modal-dialog modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable ">
             <form id="isianOperasiForm" enctype="multipart/form-data" class="modal-content bg-body-tertiary shadow-lg transparent-blur">
                 <div class="modal-header justify-content-between pt-2 pb-2" style="border-bottom: 1px solid var(--bs-border-color-translucent);">
                     <h6 class="pe-2 modal-title fs-6 text-truncate" id="isianOperasiModalLabel" style="font-weight: bold;"></h6>
@@ -595,17 +595,10 @@
                         <label for="tindakan_operasi_rajal">Tindakan yang akan dilakukan<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
-                    <div class="mt-1 mb-1 row row-cols-1 row-cols-sm-2 g-2">
-                        <div class="col form-floating ">
-                            <input type="date" class="form-control " autocomplete="off" dir="auto" placeholder="tanggal_operasi_rajal" id="tanggal_operasi_rajal" name="tanggal_operasi_rajal">
-                            <label for="tanggal_operasi_rajal">Tanggal Tindakan<span class="text-danger">*</span></label>
-                            <div class="invalid-feedback"></div>
-                        </div>
-                        <div class="col form-floating ">
-                            <input type="time" class="form-control " autocomplete="off" dir="auto" placeholder="jam_operasi_rajal" id="jam_operasi_rajal" name="jam_operasi_rajal">
-                            <label for="jam_operasi_rajal">Jam</label>
-                            <div class="invalid-feedback"></div>
-                        </div>
+                    <div class="col form-floating mb-1 mt-1">
+                        <input type="time" class="form-control " autocomplete="off" dir="auto" placeholder="jam_operasi_rajal" id="jam_operasi_rajal" name="jam_operasi_rajal">
+                        <label for="jam_operasi_rajal">Jam<span class="text-danger">*</span></label>
+                        <div class="invalid-feedback"></div>
                     </div>
                 </div>
                 <div class="modal-footer justify-content-end pt-2 pb-2" style="border-top: 1px solid var(--bs-border-color-translucent);">
@@ -1356,14 +1349,11 @@
                         const tindakan_operasi_rajal = rajal.tindakan_operasi_rajal ?
                             `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${rajal.tindakan_operasi_rajal}">` :
                             `<em>Belum diisi</em>`;
-                        let waktu_operasi_rajal = `<em>Belum diisi</em>`;
-                        if (rajal.tanggal_operasi_rajal) {
-                            waktu_operasi_rajal = `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${rajal.tanggal_operasi_rajal}`;
-                            if (rajal.jam_operasi_rajal) {
-                                waktu_operasi_rajal += ` ${rajal.jam_operasi_rajal}`;
-                            }
-                            waktu_operasi_rajal += `">`;
-                        }
+
+                        const waktu_operasi_rajal = rajal.jam_operasi_rajal ?
+                            `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${rajal.jam_operasi_rajal}">` :
+                            `<em>Belum diisi</em>`;
+
                         isian_ok = `
                             <div class="mb-0 row g-1 align-items-center">
                                 <div class="col-5 fw-medium text-truncate">Tindakan yang Akan Dilakukan</div>
@@ -1867,7 +1857,6 @@
                 // Memperbarui field modal dengan data pengguna yang diterima
                 $('#isianOperasiModalLabel').text('Lembar Isian Operasi');
                 $('#tindakan_operasi_rajal').val(response.data.tindakan_operasi_rajal);
-                $('#tanggal_operasi_rajal').val(response.data.tanggal_operasi_rajal);
                 $('#jam_operasi_rajal').val(response.data.jam_operasi_rajal);
                 // Menampilkan modal
                 $('#isianOperasiModal').modal('show');

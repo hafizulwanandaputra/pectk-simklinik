@@ -211,7 +211,7 @@ $waktuFormatted = $dateTime->format('H.i.s');
                             :
                         </td>
                         <td style="width: 70%; vertical-align: top;">
-                            <?= $rajal['tanggal_operasi_rajal'] ?> <?= $rajal['jam_operasi_rajal'] ?>
+                            <?= $rajal['jam_operasi_rajal'] ?>
                         </td>
                     </tr>
                     <tr>
