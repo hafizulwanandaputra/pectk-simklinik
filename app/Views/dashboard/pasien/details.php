@@ -592,12 +592,12 @@
                 <div class="modal-body py-2">
                     <div class="form-floating mb-1 mt-1">
                         <input type="text" class="form-control " autocomplete="off" dir="auto" placeholder="tindakan_operasi_rajal" id="tindakan_operasi_rajal" name="tindakan_operasi_rajal">
-                        <label for="tindakan_operasi_rajal">Tindakan yang akan dilakukan<span class="text-danger">*</span></label>
+                        <label for="tindakan_operasi_rajal">Tindakan yang Akan Dilakukan<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="col form-floating mb-1 mt-1">
                         <input type="time" class="form-control " autocomplete="off" dir="auto" placeholder="jam_operasi_rajal" id="jam_operasi_rajal" name="jam_operasi_rajal">
-                        <label for="jam_operasi_rajal">Jam<span class="text-danger">*</span></label>
+                        <label for="jam_operasi_rajal">Waktu Tindakan<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
