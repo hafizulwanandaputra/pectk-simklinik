@@ -504,37 +504,42 @@ class ResepLuar extends BaseController
 
             $options = []; // Menyiapkan array untuk opsi obat
             foreach ($results as $row) {
-                $ppn = (float) $row['ppn']; // Mengambil nilai PPN
-                $mark_up = (float) $row['mark_up']; // Mengambil nilai mark-up
-                $harga_obat = (float) $row['harga_obat']; // Mengambil harga obat
-                $penyesuaian_harga = (float) $row['penyesuaian_harga']; // Mengambil penyesuaian harga
+                $ppn = (float) $row['ppn'];
+                $mark_up = (float) $row['mark_up'];
+                $diskon = (float) $row['diskon'];
+                $harga_obat = (float) $row['harga_obat'];
+                $penyesuaian_harga = (float) $row['penyesuaian_harga'];
 
-                // 1. Hitung PPN
-                $jumlah_ppn = ($harga_obat * $ppn) / 100;
-                $total_harga_ppn = $harga_obat + $jumlah_ppn;
+                // 1. Harga setelah PPN
+                $harga_setelah_ppn = $harga_obat + ($harga_obat * $ppn / 100);
 
                 // 2. Terapkan mark-up
-                $jumlah_mark_up = ($total_harga_ppn * $mark_up) / 100;
-                $total_harga = $total_harga_ppn + $jumlah_mark_up;
+                $harga_setelah_markup = $harga_setelah_ppn + ($harga_setelah_ppn * $mark_up / 100);
 
-                // 3. Bulatkan harga ke ratusan terdekat ke atas dan tambahkan penyesuaian
-                $harga_bulat = ceil($total_harga / 100) * 100 + $penyesuaian_harga;
+                // 3. Terapkan diskon SEBELUM pembulatan
+                $harga_setelah_diskon = $harga_setelah_markup * (1 - ($diskon / 100));
 
-                // 4. Format harga dengan pemisah ribuan
-                $harga_obat_terformat = number_format($harga_bulat, 0, ',', '.');
+                // 4. Bulatkan ke ratusan atas
+                $harga_bulat = ceil($harga_setelah_diskon / 100) * 100;
 
-                // 5. Cek apakah obat sudah digunakan dalam resep yang sama
+                // 5. Tambahkan penyesuaian harga
+                $harga_final = $harga_bulat + $penyesuaian_harga;
+
+                // 6. Format harga
+                $harga_obat_terformat = number_format($harga_final, 0, ',', '.');
+
+                // 7. Cek apakah sudah digunakan
                 $isUsed = $DetailResepModel
                     ->where('id_batch_obat', $row['id_batch_obat'])
                     ->where('id_resep', $id_resep)
                     ->first();
 
-                // 6. Jika stok tersedia dan obat belum digunakan, tambahkan ke options
+                // 8. Tambahkan hanya jika stok tersedia
                 $stok_tersisa = $row['jumlah_masuk'] - $row['jumlah_keluar'];
 
                 if ($stok_tersisa > 0 && !$isUsed) {
                     $options[] = [
-                        'value' => $row['id_batch_obat'], // Menyimpan id_obat
+                        'value' => $row['id_batch_obat'],
                         'text' => $row['nama_obat'] .
                             ' (' . (!empty($row['isi_obat']) ? $row['isi_obat'] : 'Tanpa isi obat') .
                             ' • ' . $row['kategori_obat'] .
@@ -542,7 +547,7 @@ class ResepLuar extends BaseController
                             ' • Rp' . $harga_obat_terformat .
                             ' • ' . (!empty($row['nama_batch']) ? $row['nama_batch'] : 'Tanpa nama batch') .
                             ' • EXP ' . $row['tgl_kedaluwarsa'] .
-                            ' • ' . $stok_tersisa . ')' // Menyimpan informasi obat
+                            ' • ' . $stok_tersisa . ')'
                     ];
                 }
             }
@@ -579,19 +584,29 @@ class ResepLuar extends BaseController
             foreach ($results as $row) {
                 $ppn = (float) $row['ppn'];
                 $mark_up = (float) $row['mark_up'];
+                $diskon = (float) $row['diskon'];
                 $harga_obat = (float) $row['harga_obat'];
                 $penyesuaian_harga = (float) $row['penyesuaian_harga'];
 
-                $jumlah_ppn = ($harga_obat * $ppn) / 100;
-                $total_harga_ppn = $harga_obat + $jumlah_ppn;
+                // 1. Harga setelah PPN
+                $harga_setelah_ppn = $harga_obat + ($harga_obat * $ppn / 100);
 
-                $jumlah_mark_up = ($total_harga_ppn * $mark_up) / 100;
-                $total_harga = $total_harga_ppn + $jumlah_mark_up;
+                // 2. Terapkan mark-up
+                $harga_setelah_markup = $harga_setelah_ppn + ($harga_setelah_ppn * $mark_up / 100);
 
-                $harga_bulat = ceil($total_harga / 100) * 100 + $penyesuaian_harga;
+                // 3. Terapkan diskon SEBELUM pembulatan
+                $harga_setelah_diskon = $harga_setelah_markup * (1 - ($diskon / 100));
 
-                $harga_obat_terformat = number_format($harga_bulat, 0, ',', '.');
+                // 4. Bulatkan ke ratusan atas
+                $harga_bulat = ceil($harga_setelah_diskon / 100) * 100;
 
+                // 5. Tambahkan penyesuaian harga
+                $harga_final = $harga_bulat + $penyesuaian_harga;
+
+                // 6. Format harga
+                $harga_obat_terformat = number_format($harga_final, 0, ',', '.');
+
+                // 7. Tambahkan hanya jika stok tersedia
                 $stok_tersisa = $row['jumlah_masuk'] - $row['jumlah_keluar'];
 
                 $options[] = [
@@ -620,29 +635,24 @@ class ResepLuar extends BaseController
 
     public function tambahdetailresep($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
+        // Hanya Admin atau Apoteker yang boleh menambah detail resep
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
-            // Validasi input
             $validation = \Config\Services::validation();
-            // Menetapkan aturan validasi dasar
             $validation->setRules([
-                'id_batch_obat' => 'required', // id_batch_obat harus diisi
-                'signa' => 'required', // signa harus diisi
-                'catatan' => 'required', // catatan harus diisi
-                'cara_pakai' => 'required', // cara pakai harus diisi
-                'jumlah' => 'required|numeric|greater_than[0]', // jumlah harus diisi, numerik, dan lebih besar dari 0
+                'id_batch_obat' => 'required',
+                'signa' => 'required',
+                'catatan' => 'required',
+                'cara_pakai' => 'required',
+                'jumlah' => 'required|numeric|greater_than[0]',
             ]);
 
-            // Memeriksa apakah validasi gagal
             if (!$this->validate($validation->getRules())) {
                 return $this->response->setJSON(['success' => false, 'message' => NULL, 'errors' => $validation->getErrors()]);
             }
 
-            // Memulai transaksi database
             $db = db_connect();
             $db->transBegin();
 
-            // Mengambil data obat berdasarkan id_obat yang diberikan
             $builderObat = $db->table('batch_obat');
             $obat = $builderObat
                 ->join('obat', 'obat.id_obat = batch_obat.id_obat', 'inner')
@@ -650,34 +660,46 @@ class ResepLuar extends BaseController
                 ->where('batch_obat.tgl_kedaluwarsa >', date('Y-m-d'))
                 ->get()->getRowArray();
 
-            $ppn = (float) $obat['ppn']; // Mengambil nilai PPN
-            $mark_up = (float) $obat['mark_up']; // Mengambil nilai mark-up
-            $harga_obat = (float) $obat['harga_obat']; // Mengambil harga obat
-            $penyesuaian_harga = (float) $obat['penyesuaian_harga']; // Mengambil penyesuaian harga
+            if (!$obat) {
+                return $this->response->setJSON(['success' => false, 'message' => 'Data obat tidak ditemukan']);
+            }
 
-            // 1. Hitung PPN
-            $jumlah_ppn = ($harga_obat * $ppn) / 100;
-            $total_harga_ppn = $harga_obat + $jumlah_ppn;
+            $ppn = (float) $obat['ppn'];
+            $mark_up = (float) $obat['mark_up'];
+            $diskon = (float) $obat['diskon'];
+            $harga_obat = (float) $obat['harga_obat'];
+            $penyesuaian_harga = (float) $obat['penyesuaian_harga'];
+
+            // 1. Harga setelah PPN
+            $harga_setelah_ppn = $harga_obat + ($harga_obat * $ppn / 100);
 
             // 2. Terapkan mark-up
-            $jumlah_mark_up = ($total_harga_ppn * $mark_up) / 100;
-            $total_harga = $total_harga_ppn + $jumlah_mark_up;
+            $harga_setelah_markup = $harga_setelah_ppn + ($harga_setelah_ppn * $mark_up / 100);
 
-            // 3. Bulatkan harga ke ratusan terdekat ke atas dan tambahkan penyesuaian
-            $harga_bulat = ceil($total_harga / 100) * 100 + $penyesuaian_harga;
-            if ($this->request->getPost('signa') == '-' || $this->request->getPost('signa') == '0') {
+            // 3. Terapkan diskon SEBELUM pembulatan
+            $harga_setelah_diskon = $harga_setelah_markup * (1 - ($diskon / 100));
+
+            // 4. Bulatkan ke ratusan atas
+            $harga_bulat = ceil($harga_setelah_diskon / 100) * 100;
+
+            // 5. Tambahkan penyesuaian harga
+            $harga_final = $harga_bulat + $penyesuaian_harga;
+
+            // 6. Format harga
+            $harga_obat_terformat = number_format($harga_final, 0, ',', '.');
+
+            // Cek input signa & catatan
+            $signa = $this->request->getPost('signa');
+            if ($signa == '-' || $signa == '0') {
                 $signa = NULL;
-            } else {
-                $signa = $this->request->getPost('signa');
             }
 
-            if ($this->request->getPost('catatan') == '-') {
+            $catatan = $this->request->getPost('catatan');
+            if ($catatan == '-') {
                 $catatan = NULL;
-            } else {
-                $catatan = $this->request->getPost('catatan');
             }
 
-            // Simpan data detail resep
+            // Simpan ke detail resep
             $data = [
                 'id_resep' => $id,
                 'id_obat' => $obat['id_obat'],
@@ -690,65 +712,62 @@ class ResepLuar extends BaseController
                 'catatan' => $catatan,
                 'cara_pakai' => $this->request->getPost('cara_pakai'),
                 'jumlah' => $this->request->getPost('jumlah'),
-                'harga_satuan' => $harga_bulat,
+                'harga_satuan' => $harga_final,
             ];
             $this->DetailResepModel->save($data);
 
-            // Mengambil data resep
-            $resepb = $db->table('resep');
-            $resepb
+            // Periksa status resep
+            $resepb = $db->table('resep')
                 ->where('id_resep', $id)
                 ->where('dokter', 'Resep Luar');
             $resep = $resepb->get()->getRowArray();
 
-            // Jika status resep adalah transaksi sudah diproses, gagalkan operasi
-            if ($resep['status'] == 1) {
+            if ($resep && $resep['status'] == 1) {
                 $db->transRollback();
-                return $this->response->setStatusCode(401)->setJSON(['success' => false, 'message' => 'Tidak bisa dilakukan karena transaksi yang menggunakan resep ini sudah diproses', 'errors' => NULL]);
+                return $this->response->setStatusCode(401)->setJSON(['success' => false, 'message' => 'Tidak bisa dilakukan karena transaksi sudah diproses', 'errors' => NULL]);
             }
 
-            // Mengupdate jumlah keluar obat
+            // Update stok obat
             $new_jumlah_keluar = $obat['jumlah_keluar'] + $this->request->getPost('jumlah');
+            if ($new_jumlah_keluar > $obat['jumlah_masuk']) {
+                $db->transRollback();
+                return $this->response->setStatusCode(422)->setJSON([
+                    'success' => false,
+                    'message' => 'Jumlah obat melebihi stok<br>Maksimum: ' . ($obat['jumlah_masuk'] - $obat['jumlah_keluar']),
+                    'errors' => NULL
+                ]);
+            }
+
             $builderObat->where('id_batch_obat', $this->request->getPost('id_batch_obat'))->update([
                 'jumlah_keluar' => $new_jumlah_keluar,
                 'diperbarui' => date('Y-m-d H:i:s')
             ]);
 
-            // Memeriksa apakah jumlah keluar melebihi stok
-            if ($new_jumlah_keluar > $obat['jumlah_masuk']) {
-                $db->transRollback();
-                return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Jumlah obat melebihi stok<br>Maksimum: ' . ($obat['jumlah_masuk'] - $obat['jumlah_keluar']), 'errors' => NULL]);
-            }
-
-            // Menghitung jumlah resep
+            // Hitung ulang total resep
             $builder = $db->table('detail_resep');
             $builder->select('SUM(jumlah) as jumlah_resep, SUM(jumlah * harga_satuan) as total_biaya');
             $builder->where('id_resep', $id);
             $result = $builder->get()->getRow();
 
-            $jumlah_resep = $result->jumlah_resep; // Mengambil jumlah resep
-            $total_biaya = $result->total_biaya; // Mengambil total biaya
+            $jumlah_resep = $result->jumlah_resep;
+            $total_biaya = $result->total_biaya;
 
-            // Memperbarui tabel resep
-            $resepBuilder = $db->table('resep');
-            $resepBuilder->where('id_resep', $id);
-            $resepBuilder->update([
-                'jumlah_resep' => $jumlah_resep,
-                'total_biaya' => $total_biaya,
-            ]);
+            $db->table('resep')
+                ->where('id_resep', $id)
+                ->update([
+                    'jumlah_resep' => $jumlah_resep,
+                    'total_biaya' => $total_biaya,
+                ]);
 
-            // Memeriksa status transaksi
             if ($db->transStatus() === false) {
                 $db->transRollback();
                 return $this->response->setJSON(['success' => false, 'message' => 'Gagal memproses pemberian resep', 'errors' => NULL]);
             } else {
                 $db->transCommit();
-                // Panggil WebSocket untuk update client
                 $this->notify_clients('update_resep');
                 return $this->response->setJSON(['success' => true, 'message' => 'Item resep berhasil ditambahkan']);
             }
         } else {
-            // Mengembalikan status 404 jika peran tidak diizinkan
             return $this->response->setStatusCode(404)->setJSON([
                 'error' => 'Halaman tidak ditemukan',
             ]);

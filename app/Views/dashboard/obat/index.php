@@ -535,15 +535,14 @@
             let jumlahMarkUp = (totalHargaPpn * markUp) / 100;
             let totalHarga = totalHargaPpn + jumlahMarkUp;
 
-            // 3. Bulatkan ke ratusan terdekat ke atas
-            let hargaBulat = Math.ceil(totalHarga / 100) * 100;
+            // 3. Terapkan diskon terlebih dahulu
+            let hargaSetelahDiskon = totalHarga * (1 - (diskon / 100));
 
-            // 4. Hitung diskon terlebih dahulu (dari harga bulat)
-            let potonganDiskon = (hargaBulat * diskon) / 100;
-            let hargaSetelahDiskon = hargaBulat - potonganDiskon;
+            // 4. Bulatkan ke ratusan terdekat ke atas
+            let hargaBulat = Math.ceil(hargaSetelahDiskon / 100) * 100;
 
             // 5. Tambahkan penyesuaian harga
-            let hargaJual = hargaSetelahDiskon + penyesuaianHarga;
+            let hargaJual = hargaBulat + penyesuaianHarga;
 
             // 6. Tampilkan hasil dengan format Rupiah
             $('#hasil_harga_jual').text('Rp' + new Intl.NumberFormat('id-ID').format(hargaJual));

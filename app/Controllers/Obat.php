@@ -88,23 +88,22 @@ class Obat extends BaseController
         ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) 
         + ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) * obat.mark_up / 100)) AS harga_jual_sebelum_bulat,
 
-        CEIL(
+        (
             ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) 
-            + ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) * obat.mark_up / 100)) / 100
-        ) * 100 AS harga_jual_bulat,
+            + ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) * obat.mark_up / 100))
+            * (1 - (obat.diskon / 100))
+        ) AS harga_setelah_diskon,
 
-        obat.penyesuaian_harga AS penyesuaian_harga,
-        obat.diskon AS diskon_persen,
-
-        (CEIL(
-            ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100))
-            + ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) * obat.mark_up / 100)) / 100
-        ) * 100 * (1 - (obat.diskon / 100))) AS harga_setelah_diskon,
-
-        ((CEIL(
-            ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100))
-            + ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) * obat.mark_up / 100)) / 100
-        ) * 100 * (1 - (obat.diskon / 100))) + obat.penyesuaian_harga) AS harga_jual
+        (
+            CEIL(
+                (
+                    ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) 
+                    + ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) * obat.mark_up / 100))
+                    * (1 - (obat.diskon / 100))
+                ) / 100
+            ) * 100
+            + obat.penyesuaian_harga
+        ) AS harga_jual
     ')
                 ->join('supplier', 'supplier.id_supplier = obat.id_supplier', 'inner');
 
