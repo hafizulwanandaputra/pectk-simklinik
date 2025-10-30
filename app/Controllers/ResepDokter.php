@@ -631,9 +631,6 @@ class ResepDokter extends BaseController
             // 5. Tambahkan penyesuaian harga
             $harga_final = $harga_bulat + $penyesuaian_harga;
 
-            // 6. Format harga
-            $harga_obat_terformat = number_format($harga_final, 0, ',', '.');
-
             // Cek input signa & catatan
             $signa = $this->request->getPost('signa');
             if ($signa == '-' || $signa == '0') {
