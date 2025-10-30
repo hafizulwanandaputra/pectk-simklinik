@@ -18,6 +18,7 @@ class ObatModel extends Model
         'harga_obat',
         'ppn',
         'mark_up',
-        'penyesuaian_harga'
+        'penyesuaian_harga',
+        'diskon',
     ];
 }

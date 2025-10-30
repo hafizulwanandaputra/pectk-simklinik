@@ -60,10 +60,10 @@ class Obat extends BaseController
                 7 => 'harga_obat',
                 8 => 'ppn',
                 9 => 'mark_up',
-                10 => 'selisih_harga',
-                11 => 'penyesuaian_harga',
-                12 => 'harga_jual',
-                13 => 'total_stok'
+                12 => 'penyesuaian_harga',
+                13 => 'diskon',
+                14 => 'harga_jual',
+                15 => 'total_stok'
             ];
 
             // Mengambil kolom untuk diurutkan
@@ -75,44 +75,37 @@ class Obat extends BaseController
             // Query utama
             $this->ObatModel
                 ->select('
-                obat.*, 
-                supplier.*, 
+        obat.*, 
+        supplier.*, 
 
-                -- Hitung total stok dari batch_obat sebelum tgl_kedaluwarsa
-                (SELECT SUM(jumlah_masuk - jumlah_keluar) 
-                FROM batch_obat 
-                WHERE batch_obat.id_obat = obat.id_obat 
-                AND batch_obat.tgl_kedaluwarsa > ' . date('Y-m-d') . ') AS total_stok,
+        (SELECT SUM(jumlah_masuk - jumlah_keluar) 
+        FROM batch_obat 
+        WHERE batch_obat.id_obat = obat.id_obat 
+        AND batch_obat.tgl_kedaluwarsa > "' . date('Y-m-d') . '") AS total_stok,
 
-                -- Hitung PPN terlebih dahulu
-                (obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) as harga_setelah_ppn,
+        (obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) AS harga_setelah_ppn,
 
-                -- Hitung harga jual sebelum pembulatan
-                ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) 
-                + ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) * obat.mark_up / 100)) as harga_jual_sebelum_bulat,
+        ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) 
+        + ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) * obat.mark_up / 100)) AS harga_jual_sebelum_bulat,
 
-                -- Bulatkan harga_jual ke ratusan terdekat ke atas
-                CEIL(
-                    ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) 
-                    + ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) * obat.mark_up / 100)) / 100
-                ) * 100 as harga_jual_bulat,
+        CEIL(
+            ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) 
+            + ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) * obat.mark_up / 100)) / 100
+        ) * 100 AS harga_jual_bulat,
 
-                obat.penyesuaian_harga as penyesuaian_harga,
+        obat.penyesuaian_harga AS penyesuaian_harga,
+        obat.diskon AS diskon_persen,
 
-                -- Tambahkan penyesuaian_harga ke harga_jual_bulat
-                (CEIL(
-                    ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) 
-                    + ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) * obat.mark_up / 100)) / 100
-                ) * 100 + obat.penyesuaian_harga) as harga_jual,
+        (CEIL(
+            ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100))
+            + ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) * obat.mark_up / 100)) / 100
+        ) * 100 * (1 - (obat.diskon / 100))) AS harga_setelah_diskon,
 
-                -- Hitung selisih antara harga_jual dan harga_jual_sebelum_bulat
-                ((CEIL(
-                    ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) 
-                    + ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) * obat.mark_up / 100)) / 100
-                ) * 100 + obat.penyesuaian_harga) 
-                - ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) 
-                + ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) * obat.mark_up / 100))) as selisih_harga
-            ')
+        ((CEIL(
+            ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100))
+            + ((obat.harga_obat + (obat.harga_obat * obat.ppn / 100)) * obat.mark_up / 100)) / 100
+        ) * 100 * (1 - (obat.diskon / 100))) + obat.penyesuaian_harga) AS harga_jual
+    ')
                 ->join('supplier', 'supplier.id_supplier = obat.id_supplier', 'inner');
 
             // Menerapkan kueri pencarian
@@ -232,7 +225,8 @@ class Obat extends BaseController
                 'harga_obat' => 'required|numeric|greater_than_equal_to[0]',
                 'ppn' => 'required|numeric|greater_than_equal_to[0]',
                 'mark_up' => 'required|numeric|greater_than_equal_to[0]',
-                'penyesuaian_harga' => 'required|numeric'
+                'penyesuaian_harga' => 'required|numeric',
+                'diskon' => 'required|numeric'
             ]);
 
             // Memeriksa apakah validasi berhasil
@@ -251,7 +245,8 @@ class Obat extends BaseController
                 'harga_obat' => $this->request->getPost('harga_obat'),
                 'ppn' => $this->request->getPost('ppn'),
                 'mark_up' => $this->request->getPost('mark_up'),
-                'penyesuaian_harga' => $this->request->getPost('penyesuaian_harga')
+                'penyesuaian_harga' => $this->request->getPost('penyesuaian_harga'),
+                'diskon' => $this->request->getPost('diskon')
             ];
             // Menyimpan data obat ke dalam database
             $this->ObatModel->save($data);
@@ -282,6 +277,7 @@ class Obat extends BaseController
                 'ppn' => 'required|numeric|greater_than_equal_to[0]',
                 'mark_up' => 'required|numeric|greater_than_equal_to[0]',
                 'penyesuaian_harga' => 'required|numeric',
+                'diskon' => 'required|numeric'
             ]);
 
             // Memeriksa apakah validasi berhasil
@@ -308,6 +304,7 @@ class Obat extends BaseController
                 'ppn' => $this->request->getPost('ppn'),
                 'mark_up' => $this->request->getPost('mark_up'),
                 'penyesuaian_harga' => $this->request->getPost('penyesuaian_harga'),
+                'diskon' => $this->request->getPost('diskon')
             ];
 
             // Memperbarui data obat

@@ -79,7 +79,7 @@
                             <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Harga Obat</th>
                             <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">PPN</th>
                             <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Mark Up</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Pembulatan Harga</th>
+                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Diskon</th>
                             <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Penyesuaian Harga</th>
                             <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Harga Jual</th>
                             <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Total Stok</th>
@@ -188,6 +188,14 @@
                         <div class="form-floating">
                             <input type="number" class="form-control " autocomplete="off" dir="auto" placeholder="mark_up" id="mark_up" name="mark_up">
                             <label for="mark_up">Mark Up<span class="text-danger">*</span></label>
+                        </div>
+                        <span class="input-group-text">%</span>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="input-group has-validation mb-1 mt-1">
+                        <div class="form-floating">
+                            <input type="number" class="form-control " autocomplete="off" dir="auto" placeholder="diskon" id="diskon" name="diskon">
+                            <label for="mark_up">Diskon<span class="text-danger">*</span></label>
                         </div>
                         <span class="input-group-text">%</span>
                         <div class="invalid-feedback"></div>
@@ -382,15 +390,9 @@
                     }
                 },
                 {
-                    data: 'selisih_harga',
+                    data: 'diskon',
                     render: function(data, type, row) {
-                        // Format harga_obat using number_format equivalent in JavaScript
-                        let formattedHarga = new Intl.NumberFormat('id-ID', {
-                            style: 'decimal',
-                            minimumFractionDigits: 0
-                        }).format(data);
-
-                        return `<span class="date text-nowrap" style="display: block; text-align: right;">Rp${formattedHarga}</span>`;
+                        return `<span class="date text-nowrap" style="display: block; text-align: right;">${data}%</span>`;
                     }
                 },
                 {
@@ -437,7 +439,7 @@
                 "target": [1],
                 "orderable": false
             }, {
-                "target": [0, 1, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+                "target": [0, 1, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
                 "width": "0%"
             }, {
                 "target": [2, 3],
@@ -523,6 +525,7 @@
             let ppn = parseFloat($('#ppn').val()) || 0;
             let markUp = parseFloat($('#mark_up').val()) || 0;
             let penyesuaianHarga = parseFloat($('#penyesuaian_harga').val()) || 0;
+            let diskon = parseFloat($('#diskon').val()) || 0; // Diskon dalam persen
 
             // 1. Hitung PPN
             let jumlahPpn = (hargaObat * ppn) / 100;
@@ -535,15 +538,19 @@
             // 3. Bulatkan ke ratusan terdekat ke atas
             let hargaBulat = Math.ceil(totalHarga / 100) * 100;
 
-            // 4. Tambahkan penyesuaian harga
-            let hargaJual = hargaBulat + penyesuaianHarga;
+            // 4. Hitung diskon terlebih dahulu (dari harga bulat)
+            let potonganDiskon = (hargaBulat * diskon) / 100;
+            let hargaSetelahDiskon = hargaBulat - potonganDiskon;
 
-            // 5. Tampilkan hasil dengan format Rupiah
+            // 5. Tambahkan penyesuaian harga
+            let hargaJual = hargaSetelahDiskon + penyesuaianHarga;
+
+            // 6. Tampilkan hasil dengan format Rupiah
             $('#hasil_harga_jual').text('Rp' + new Intl.NumberFormat('id-ID').format(hargaJual));
         }
 
         // Event listener untuk setiap input
-        $('#harga_obat, #ppn, #mark_up, #penyesuaian_harga').on('input', function() {
+        $('#harga_obat, #ppn, #mark_up, #penyesuaian_harga, #diskon').on('input', function() {
             hitungHargaJual(); // Panggil fungsi saat ada perubahan nilai
         });
 
@@ -603,6 +610,7 @@
                 $('#ppn').val(response.data.ppn);
                 $('#mark_up').val(response.data.mark_up);
                 $('#penyesuaian_harga').val(response.data.penyesuaian_harga);
+                $('#diskon').val(response.data.diskon);
                 hitungHargaJual();
                 $('#obatModal').modal('show');
             } catch (error) {
