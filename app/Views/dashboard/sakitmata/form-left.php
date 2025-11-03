@@ -173,7 +173,11 @@ $waktuFormatted = $dateTime->format('H.i.s');
                                         :
                                     </td>
                                     <td style="width: 80%; vertical-align: top;">
-                                        <?= $sakitmata['alamat'] ?>
+                                        <?= $sakitmata['alamat'] ?><br>
+                                        <small><?= (!empty($sakitmata['kelurahan'])) ? $sakitmata['kelurahan'] . ', ' : ''; ?></small>
+                                        <small><?= (!empty($sakitmata['kecamatan'])) ? $sakitmata['kecamatan'] . ', ' : ''; ?></small>
+                                        <small><?= (!empty($sakitmata['kabupaten'])) ? $sakitmata['kabupaten'] . ', ' : ''; ?></small>
+                                        <small><?= (!empty($sakitmata['provinsi'])) ? $sakitmata['provinsi'] : ''; ?></small>
                                     </td>
                                 </tr>
                             </tbody>

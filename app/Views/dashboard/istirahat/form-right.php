@@ -177,7 +177,11 @@ $waktuFormatted = $dateTime->format('H.i.s');
                                         :
                                     </td>
                                     <td style="width: 80%; vertical-align: top;">
-                                        <?= $istirahat['alamat'] ?>
+                                        <?= $istirahat['alamat'] ?><br>
+                                        <small><?= (!empty($istirahat['kelurahan'])) ? $istirahat['kelurahan'] . ', ' : ''; ?></small>
+                                        <small><?= (!empty($istirahat['kecamatan'])) ? $istirahat['kecamatan'] . ', ' : ''; ?></small>
+                                        <small><?= (!empty($istirahat['kabupaten'])) ? $istirahat['kabupaten'] . ', ' : ''; ?></small>
+                                        <small><?= (!empty($istirahat['provinsi'])) ? $istirahat['provinsi'] : ''; ?></small>
                                     </td>
                                 </tr>
                             </tbody>

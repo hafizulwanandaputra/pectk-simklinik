@@ -511,7 +511,11 @@ $waktuFormatted = $dateTime->format('H.i');
                                     :
                                 </td>
                                 <td style="width: 80%; vertical-align: top;">
-                                    <?= $form_persetujuan_tindakan['alamat'] ?>
+                                    <?= $form_persetujuan_tindakan['alamat'] ?><br>
+                                    <small><?= (!empty($form_persetujuan_tindakan['kelurahan'])) ? $form_persetujuan_tindakan['kelurahan'] . ', ' : ''; ?></small>
+                                    <small><?= (!empty($form_persetujuan_tindakan['kecamatan'])) ? $form_persetujuan_tindakan['kecamatan'] . ', ' : ''; ?></small>
+                                    <small><?= (!empty($form_persetujuan_tindakan['kabupaten'])) ? $form_persetujuan_tindakan['kabupaten'] . ', ' : ''; ?></small>
+                                    <small><?= (!empty($form_persetujuan_tindakan['provinsi'])) ? $form_persetujuan_tindakan['provinsi'] : ''; ?></small>
                                 </td>
                             </tr>
                         </tbody>

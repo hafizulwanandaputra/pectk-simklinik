@@ -215,6 +215,8 @@ class Rujukan extends BaseController
             throw PageNotFoundException::forPageNotFound();
         }
 
+        $db = db_connect();
+
         // Inisialisasi rawat jalan
         $rujukan = $this->RujukanModel
             ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_rujukan.nomor_registrasi', 'inner')
@@ -223,6 +225,58 @@ class Rujukan extends BaseController
 
         if (!$rujukan) {
             throw PageNotFoundException::forPageNotFound();
+        }
+
+        // Ambil tabel master_provinsi
+        $provinsi = $db->table('master_provinsi');
+        $provinsi->select('UPPER(provinsiNama) AS provinsiNama');
+        $provinsi->where('provinsiId', $rujukan['provinsi']);
+
+        // Query untuk mendapatkan nama provinsi
+        $res_provinsi = $provinsi->get()->getRow();
+
+        if ($res_provinsi) {
+            // Ubah ID menjadi nama provinsi
+            $rujukan['provinsi'] = $res_provinsi->provinsiNama;
+        }
+
+        // Ambil tabel master_kabupaten
+        $kabupaten = $db->table('master_kabupaten');
+        $kabupaten->select('UPPER(kabupatenNama) AS kabupatenNama');
+        $kabupaten->where('kabupatenId', $rujukan['kabupaten']);
+
+        // Query untuk mendapatkan nama kabupaten
+        $res_kabupaten = $kabupaten->get()->getRow();
+
+        if ($res_kabupaten) {
+            // Ubah ID menjadi nama kabupaten
+            $rujukan['kabupaten'] = $res_kabupaten->kabupatenNama;
+        }
+
+        // Ambil tabel master_kecamatan
+        $kecamatan = $db->table('master_kecamatan');
+        $kecamatan->select('UPPER(kecamatanNama) AS kecamatanNama');
+        $kecamatan->where('kecamatanId', $rujukan['kecamatan']);
+
+        // Query untuk mendapatkan nama kecamatan
+        $res_kecamatan = $kecamatan->get()->getRow();
+
+        if ($res_kecamatan) {
+            // Ubah ID menjadi nama kecamatan
+            $rujukan['kecamatan'] = $res_kecamatan->kecamatanNama;
+        }
+
+        // Ambil tabel master_kelurahan
+        $kelurahan = $db->table('master_kelurahan');
+        $kelurahan->select('UPPER(kelurahanNama) AS kelurahanNama');
+        $kelurahan->where('kelurahanId', $rujukan['kelurahan']);
+
+        // Query untuk mendapatkan nama kelurahan
+        $res_kelurahan = $kelurahan->get()->getRow();
+
+        if ($res_kelurahan) {
+            // Ubah ID menjadi nama kelurahan
+            $rujukan['kelurahan'] = $res_kelurahan->kelurahanNama;
         }
 
         // === Generate Barcode ===

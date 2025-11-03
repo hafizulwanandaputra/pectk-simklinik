@@ -223,11 +223,65 @@ class FRMSetujuKedokteran extends BaseController
     {
         // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Admisi' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Admisi') {
+            $db = db_connect();
+
             // Inisialisasi rawat jalan
             $form_persetujuan_tindakan = $this->FRMSetujuKedokteranModel
                 ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_form_persetujuan_tindakan.nomor_registrasi', 'inner')
                 ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
                 ->find($id);
+
+            // Ambil tabel master_provinsi
+            $provinsi = $db->table('master_provinsi');
+            $provinsi->select('UPPER(provinsiNama) AS provinsiNama');
+            $provinsi->where('provinsiId', $form_persetujuan_tindakan['provinsi']);
+
+            // Query untuk mendapatkan nama provinsi
+            $res_provinsi = $provinsi->get()->getRow();
+
+            if ($res_provinsi) {
+                // Ubah ID menjadi nama provinsi
+                $form_persetujuan_tindakan['provinsi'] = $res_provinsi->provinsiNama;
+            }
+
+            // Ambil tabel master_kabupaten
+            $kabupaten = $db->table('master_kabupaten');
+            $kabupaten->select('UPPER(kabupatenNama) AS kabupatenNama');
+            $kabupaten->where('kabupatenId', $form_persetujuan_tindakan['kabupaten']);
+
+            // Query untuk mendapatkan nama kabupaten
+            $res_kabupaten = $kabupaten->get()->getRow();
+
+            if ($res_kabupaten) {
+                // Ubah ID menjadi nama kabupaten
+                $form_persetujuan_tindakan['kabupaten'] = $res_kabupaten->kabupatenNama;
+            }
+
+            // Ambil tabel master_kecamatan
+            $kecamatan = $db->table('master_kecamatan');
+            $kecamatan->select('UPPER(kecamatanNama) AS kecamatanNama');
+            $kecamatan->where('kecamatanId', $form_persetujuan_tindakan['kecamatan']);
+
+            // Query untuk mendapatkan nama kecamatan
+            $res_kecamatan = $kecamatan->get()->getRow();
+
+            if ($res_kecamatan) {
+                // Ubah ID menjadi nama kecamatan
+                $form_persetujuan_tindakan['kecamatan'] = $res_kecamatan->kecamatanNama;
+            }
+
+            // Ambil tabel master_kelurahan
+            $kelurahan = $db->table('master_kelurahan');
+            $kelurahan->select('UPPER(kelurahanNama) AS kelurahanNama');
+            $kelurahan->where('kelurahanId', $form_persetujuan_tindakan['kelurahan']);
+
+            // Query untuk mendapatkan nama kelurahan
+            $res_kelurahan = $kelurahan->get()->getRow();
+
+            if ($res_kelurahan) {
+                // Ubah ID menjadi nama kelurahan
+                $form_persetujuan_tindakan['kelurahan'] = $res_kelurahan->kelurahanNama;
+            }
 
             // === Generate Barcode ===
             $barcodeGenerator = new BarcodeGeneratorPNG();
