@@ -176,47 +176,47 @@
                                 </div>
                                 <div style="font-size: 0.75em;">
                                     <span id="copy_identitas_pasien_value" class="d-none"></span>
-                                    <div class="mb-0 row g-1 align-items-center">
+                                    <div class="mb-0 row g-1 align-items-start">
                                         <div class="col-5 fw-medium text-truncate">Nama</div>
                                         <div class="col">
                                             <span id="nama_pasien"></span>
                                         </div>
                                     </div>
-                                    <div class="mb-0 row g-1 align-items-center">
+                                    <div class="mb-0 row g-1 align-items-start">
                                         <div class="col-5 fw-medium text-truncate">Nomor Rekam Medis</div>
                                         <div class="col date">
                                             <span id="no_rekam_medis"></span>
                                         </div>
                                     </div>
-                                    <div class="mb-0 row g-1 align-items-center">
+                                    <div class="mb-0 row g-1 align-items-start">
                                         <div class="col-5 fw-medium text-truncate">Jenis Kelamin</div>
                                         <div class="col" id="jenis_kelamin"></div>
                                     </div>
-                                    <div class="mb-0 row g-1 align-items-center">
+                                    <div class="mb-0 row g-1 align-items-start">
                                         <div class="col-5 fw-medium text-truncate">Tempat Lahir</div>
                                         <div class="col">
                                             <span id="tempat_lahir"></span>
                                         </div>
                                     </div>
-                                    <div class="mb-0 row g-1 align-items-center">
+                                    <div class="mb-0 row g-1 align-items-start">
                                         <div class="col-5 fw-medium text-truncate">Tanggal Lahir</div>
                                         <div class="col">
                                             <span id="tanggal_lahir"></span>
                                         </div>
                                     </div>
-                                    <div class="mb-0 row g-1 align-items-center">
+                                    <div class="mb-0 row g-1 align-items-start">
                                         <div class="col-5 fw-medium text-truncate">Usia</div>
                                         <div class="col date" id="usia"></div>
                                     </div>
-                                    <div class="mb-0 row g-1 align-items-center">
+                                    <div class="mb-0 row g-1 align-items-start">
                                         <div class="col-5 fw-medium text-truncate">Alamat</div>
                                         <div class="col" id="alamat"></div>
                                     </div>
-                                    <div class="mb-0 row g-1 align-items-center">
+                                    <div class="mb-0 row g-1 align-items-start">
                                         <div class="col-5 fw-medium text-truncate">Kewarganegaraan</div>
                                         <div class="col" id="kewarganegaraan"></div>
                                     </div>
-                                    <div class="mb-0 row g-1 align-items-center">
+                                    <div class="mb-0 row g-1 align-items-start">
                                         <div class="col-5 fw-medium text-truncate">Nomor Telepon</div>
                                         <div class="col date" id="telpon"></div>
                                     </div>
@@ -242,79 +242,79 @@
                             <div>
                                 <div class="fw-bold mb-2" style="border-bottom: 1px solid var(--bs-border-color-translucent);">Rawat Jalan</div>
                                 <div style="font-size: 0.75em;">
-                                    <div class="mb-0 row g-1 align-items-center">
+                                    <div class="mb-0 row g-1 align-items-start">
                                         <div class="col-5 fw-medium text-truncate">Operator</div>
                                         <div class="col date" id="pendaftar">
 
                                         </div>
                                     </div>
-                                    <div class="mb-0 row g-1 align-items-center">
+                                    <div class="mb-0 row g-1 align-items-start">
                                         <div class="col-5 fw-medium text-truncate">Nomor Registrasi</div>
                                         <div class="col date" id="nomor_registrasi">
 
                                         </div>
                                     </div>
-                                    <div class="mb-0 row g-1 align-items-center">
+                                    <div class="mb-0 row g-1 align-items-start">
                                         <div class="col-5 fw-medium text-truncate">Tanggal dan Waktu</div>
                                         <div class="col date" id="tanggal_registrasi">
 
                                         </div>
                                     </div>
-                                    <div class="mb-0 row g-1 align-items-center">
+                                    <div class="mb-0 row g-1 align-items-start">
                                         <div class="col-5 fw-medium text-truncate">Status Kunjungan</div>
                                         <div class="col" id="status_kunjungan">
 
                                         </div>
                                     </div>
-                                    <div class="mb-0 row g-1 align-items-center">
+                                    <div class="mb-0 row g-1 align-items-start">
                                         <div class="col-5 fw-medium text-truncate">Jaminan</div>
                                         <div class="col" id="jaminan">
 
                                         </div>
                                     </div>
-                                    <div class="mb-0 row g-1 align-items-center">
+                                    <div class="mb-0 row g-1 align-items-start">
                                         <div class="col-5 fw-medium text-truncate">Ruangan</div>
                                         <div class="col" id="ruangan">
 
                                         </div>
                                     </div>
-                                    <div class="mb-0 row g-1 align-items-center">
+                                    <div class="mb-0 row g-1 align-items-start">
                                         <div class="col-5 fw-medium text-truncate">Dokter</div>
                                         <div class="col" id="dokter">
 
                                         </div>
                                     </div>
-                                    <div class="mb-0 row g-1 align-items-center">
+                                    <div class="mb-0 row g-1 align-items-start">
                                         <div class="col-5 fw-medium text-truncate">Keluhan</div>
                                         <div class="col" id="keluhan">
 
                                         </div>
                                     </div>
-                                    <div class="mb-0 row g-1 align-items-center pasien_operasi">
+                                    <div class="mb-0 row g-1 align-items-start pasien_operasi">
                                         <div class="col-5 fw-medium text-truncate">Tindakan yang Akan Dilakukan</div>
                                         <div class="col date" id="tindakan_operasi_rajal">
 
                                         </div>
                                     </div>
-                                    <div class="mb-0 row g-1 align-items-center pasien_operasi">
+                                    <div class="mb-0 row g-1 align-items-start pasien_operasi">
                                         <div class="col-5 fw-medium text-truncate">Waktu Tindakan</div>
                                         <div class="col date" id="waktu_operasi_rajal">
 
                                         </div>
                                     </div>
-                                    <div class="mb-0 row g-1 align-items-center">
+                                    <div class="mb-0 row g-1 align-items-start">
                                         <div class="col-5 fw-medium text-truncate">Status Layanan</div>
                                         <div class="col" id="status">
 
                                         </div>
                                     </div>
-                                    <div class="mb-0 row g-1 align-items-center rajal_batal">
+                                    <div class="mb-0 row g-1 align-items-start rajal_batal">
                                         <div class="col-5 fw-medium text-truncate">Dibatalkan oleh</div>
                                         <div class="col date" id="pembatal">
 
                                         </div>
                                     </div>
-                                    <div class="mb-0 row g-1 align-items-center rajal_batal">
+                                    <div class="mb-0 row g-1 align-items-start rajal_batal">
                                         <div class="col-5 fw-medium text-truncate">Alasan Pembatalan</div>
                                         <div class="col date" id="alasan_batal">
 
@@ -1148,19 +1148,19 @@
                 // Mengkondisikan jenis kelamin
                 let jenis_kelamin_string = rawatjalan.jenis_kelamin;
                 if (jenis_kelamin_string === 'L') {
-                    jenis_kelamin_string = `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="Laki-Laki">`;
+                    jenis_kelamin_string = `<input type="text" readonly style="padding: 1px 0 1px 0;" class="form-control-plaintext border border-0 lh-1" value="Laki-Laki">`;
                 } else if (jenis_kelamin_string === 'P') {
-                    jenis_kelamin_string = `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="Perempuan">`;
+                    jenis_kelamin_string = `<input type="text" readonly style="padding: 1px 0 1px 0;" class="form-control-plaintext border border-0 lh-1" value="Perempuan">`;
                 }
 
                 const tempat_tanggal_lahir = (rawatjalan.tempat_lahir && rawatjalan.tanggal_lahir) ?
-                    `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${rawatjalan.tempat_lahir}, ${rawatjalan.tanggal_lahir}">` :
+                    `<input type="text" readonly style="padding: 1px 0 1px 0;" class="form-control-plaintext border border-0 lh-1" value="${rawatjalan.tempat_lahir}, ${rawatjalan.tanggal_lahir}">` :
                     `<em>Tidak ada</em>`;
 
                 // Gunakan pesan jika tidak ada nomor telepon
                 const usia = hitungUsia(rawatjalan.tanggal_lahir, rawatjalan.tanggal_registrasi); // Menghitung usia pasien
 
-                const telpon = rawatjalan.telpon ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${rawatjalan.telpon}">` : `<em>Tidak ada</em>`;
+                const telpon = rawatjalan.telpon ? `<input type="text" readonly style="padding: 1px 0 1px 0;" class="form-control-plaintext border border-0 lh-1 date" value="${rawatjalan.telpon}">` : `<em>Tidak ada</em>`;
 
                 let pembatal = rawatjalan.status;
                 if (pembatal === 'BATAL') {
@@ -1182,7 +1182,7 @@
                 }
                 let isian_ok = rawatjalan.ruangan;
                 const tindakan_operasi_rajal = rawatjalan.tindakan_operasi_rajal ?
-                    `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${rawatjalan.tindakan_operasi_rajal}">` :
+                    `<input type="text" readonly style="padding: 1px 0 1px 0;" class="form-control-plaintext border border-0 lh-1" value="${rawatjalan.tindakan_operasi_rajal}">` :
                     `<em>Belum diisi</em>`;
 
                 const waktu_operasi_rajal = rawatjalan.jam_operasi_rajal ?
@@ -1190,7 +1190,7 @@
                         // Buat objek Date dari jam mentah, lalu format jadi HH.mm
                         const jamObj = new Date(`1970-01-01T${rawatjalan.jam_operasi_rajal}`);
                         const jamFormatted = jamObj.toTimeString().slice(0, 5);
-                        return `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${jamFormatted}">`;
+                        return `<input type="text" readonly style="padding: 1px 0 1px 0;" class="form-control-plaintext border border-0 lh-1" value="${jamFormatted}">`;
                     })() :
                     `<em>Belum diisi</em>`;
                 if (isian_ok === 'Kamar Operasi') {
@@ -1282,32 +1282,44 @@
                     status = `Dibatalkan`;
                 }
 
+                const kelurahan = rawatjalan.kelurahan ? `${rawatjalan.kelurahan}, ` : ``;
+                const kecamatan = rawatjalan.kecamatan ? `${rawatjalan.kecamatan}, ` : ``;
+                const kabupaten = rawatjalan.kabupaten ? `${rawatjalan.kabupaten}, ` : ``;
+                const provinsi = rawatjalan.provinsi ? rawatjalan.provinsi : ``;
+
+                let alamat_lokasi = rawatjalan.alamat_lokasi;
+                if (kelurahan.length > 0 && kecamatan.length > 0 && kabupaten.length > 0 && provinsi.length > 0) {
+                    alamat_lokasi = `<input type="text" readonly style="padding: 1px 0 1px 0; font-size: 0.7rem" class="form-control-plaintext border border-0 lh-1" value="${kelurahan}${kecamatan}${kabupaten}${provinsi}">`;
+                } else {
+                    alamat_lokasi = ``;
+                }
+
                 $('#copy_identitas_pasien_value').text(`${rawatjalan.nama_pasien} ${rawatjalan.no_rm} ${rawatjalan.tanggal_lahir}`);
-                $('#nama_pasien').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${rawatjalan.nama_pasien}">`);
-                $('#no_rekam_medis').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${rawatjalan.no_rm}">`);
+                $('#nama_pasien').html(`<input type="text" readonly style="padding: 1px 0 1px 0;" class="form-control-plaintext border border-0 lh-1" value="${rawatjalan.nama_pasien}">`);
+                $('#no_rekam_medis').html(`<input type="text" readonly style="padding: 1px 0 1px 0;" class="form-control-plaintext border border-0 lh-1 date" value="${rawatjalan.no_rm}">`);
                 $('#jenis_kelamin').html(jenis_kelamin_string);
-                $('#tempat_lahir').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${rawatjalan.tempat_lahir}">`);
-                $('#tanggal_lahir').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${rawatjalan.tanggal_lahir}">`);
-                $('#usia').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${usia.usia} tahun ${usia.bulan} bulan">`);
-                $('#alamat').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${rawatjalan.alamat}">`);
-                $('#kewarganegaraan').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${rawatjalan.kewarganegaraan}">`);
+                $('#tempat_lahir').html(`<input type="text" readonly style="padding: 1px 0 1px 0;" class="form-control-plaintext border border-0 lh-1" value="${rawatjalan.tempat_lahir}">`);
+                $('#tanggal_lahir').html(`<input type="text" readonly style="padding: 1px 0 1px 0;" class="form-control-plaintext border border-0 lh-1 date" value="${rawatjalan.tanggal_lahir}">`);
+                $('#usia').html(`<input type="text" readonly style="padding: 1px 0 1px 0;" class="form-control-plaintext border border-0 lh-1" value="${usia.usia} tahun ${usia.bulan} bulan">`);
+                $('#alamat').html(`<input type="text" readonly style="padding: 1px 0 1px 0;" class="form-control-plaintext border border-0 lh-1" value="${rawatjalan.alamat}">${alamat_lokasi}`);
+                $('#kewarganegaraan').html(`<input type="text" readonly style="padding: 1px 0 1px 0;" class="form-control-plaintext border border-0 lh-1" value="${rawatjalan.kewarganegaraan}">`);
                 $('#telpon').html(telpon);
                 $('#identitas_btn').attr('data-id', rawatjalan.id_pasien);
                 $('#barcode_btn').attr('data-id', rawatjalan.id_pasien);
                 $('#detail_pasien_btn').attr('data-url', `<?= base_url('pasien/detailpasien') ?>/${rawatjalan.id_pasien}`);
-                $('#pendaftar').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${rawatjalan.pendaftar}">`);
-                $('#nomor_registrasi').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${rawatjalan.nomor_registrasi}">`);
-                $('#tanggal_registrasi').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${rawatjalan.tanggal_registrasi}">`);
-                $('#status_kunjungan').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${rawatjalan.status_kunjungan}">`);
-                $('#jaminan').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${rawatjalan.jaminan}">`);
-                $('#ruangan').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${rawatjalan.ruangan}">`);
-                $('#dokter').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${rawatjalan.dokter}">`);
-                $('#keluhan').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${rawatjalan.keluhan}">`);
+                $('#pendaftar').html(`<input type="text" readonly style="padding: 1px 0 1px 0;" class="form-control-plaintext border border-0 lh-1" value="${rawatjalan.pendaftar}">`);
+                $('#nomor_registrasi').html(`<input type="text" readonly style="padding: 1px 0 1px 0;" class="form-control-plaintext border border-0 lh-1 date" value="${rawatjalan.nomor_registrasi}">`);
+                $('#tanggal_registrasi').html(`<input type="text" readonly style="padding: 1px 0 1px 0;" class="form-control-plaintext border border-0 lh-1 date" value="${rawatjalan.tanggal_registrasi}">`);
+                $('#status_kunjungan').html(`<input type="text" readonly style="padding: 1px 0 1px 0;" class="form-control-plaintext border border-0 lh-1" value="${rawatjalan.status_kunjungan}">`);
+                $('#jaminan').html(`<input type="text" readonly style="padding: 1px 0 1px 0;" class="form-control-plaintext border border-0 lh-1" value="${rawatjalan.jaminan}">`);
+                $('#ruangan').html(`<input type="text" readonly style="padding: 1px 0 1px 0;" class="form-control-plaintext border border-0 lh-1" value="${rawatjalan.ruangan}">`);
+                $('#dokter').html(`<input type="text" readonly style="padding: 1px 0 1px 0;" class="form-control-plaintext border border-0 lh-1" value="${rawatjalan.dokter}">`);
+                $('#keluhan').html(`<input type="text" readonly style="padding: 1px 0 1px 0;" class="form-control-plaintext border border-0 lh-1" value="${rawatjalan.keluhan}">`);
                 $('#tindakan_operasi_rajal').html(tindakan_operasi_rajal);
                 $('#waktu_operasi_rajal').html(waktu_operasi_rajal);
-                $('#status').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${status}">`);
-                $('#pembatal').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${rawatjalan.pembatal}">`);
-                $('#alasan_batal').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${rawatjalan.alasan_batal}">`);
+                $('#status').html(`<input type="text" readonly style="padding: 1px 0 1px 0;" class="form-control-plaintext border border-0 lh-1" value="${status}">`);
+                $('#pembatal').html(`<input type="text" readonly style="padding: 1px 0 1px 0;" class="form-control-plaintext border border-0 lh-1" value="${rawatjalan.pembatal}">`);
+                $('#alasan_batal').html(`<input type="text" readonly style="padding: 1px 0 1px 0;" class="form-control-plaintext border border-0 lh-1" value="${rawatjalan.alasan_batal}">`);
                 $('#tombol_rme').html(tombol_rme);
                 $('#rajalModal').modal('show');
             } catch (error) {
