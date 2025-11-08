@@ -119,6 +119,59 @@ class Pasien extends BaseController
                 $data['jumlah_rawat_jalan_daftar'] = $countDaftar;
                 $data['jumlah_rawat_jalan_batal']  = $countBatal;
 
+
+                // Ambil tabel master_provinsi
+                $provinsi = $db->table('master_provinsi');
+                $provinsi->select('UPPER(provinsiNama) AS provinsiNama');
+                $provinsi->where('provinsiId', $data['provinsi']);
+
+                // Query untuk mendapatkan nama provinsi
+                $res_provinsi = $provinsi->get()->getRow();
+
+                if ($res_provinsi) {
+                    // Ubah ID menjadi nama provinsi
+                    $data['provinsi'] = $res_provinsi->provinsiNama;
+                }
+
+                // Ambil tabel master_kabupaten
+                $kabupaten = $db->table('master_kabupaten');
+                $kabupaten->select('UPPER(kabupatenNama) AS kabupatenNama');
+                $kabupaten->where('kabupatenId', $data['kabupaten']);
+
+                // Query untuk mendapatkan nama kabupaten
+                $res_kabupaten = $kabupaten->get()->getRow();
+
+                if ($res_kabupaten) {
+                    // Ubah ID menjadi nama kabupaten
+                    $data['kabupaten'] = $res_kabupaten->kabupatenNama;
+                }
+
+                // Ambil tabel master_kecamatan
+                $kecamatan = $db->table('master_kecamatan');
+                $kecamatan->select('UPPER(kecamatanNama) AS kecamatanNama');
+                $kecamatan->where('kecamatanId', $data['kecamatan']);
+
+                // Query untuk mendapatkan nama kecamatan
+                $res_kecamatan = $kecamatan->get()->getRow();
+
+                if ($res_kecamatan) {
+                    // Ubah ID menjadi nama kecamatan
+                    $data['kecamatan'] = $res_kecamatan->kecamatanNama;
+                }
+
+                // Ambil tabel master_kelurahan
+                $kelurahan = $db->table('master_kelurahan');
+                $kelurahan->select('UPPER(kelurahanNama) AS kelurahanNama');
+                $kelurahan->where('kelurahanId', $data['kelurahan']);
+
+                // Query untuk mendapatkan nama kelurahan
+                $res_kelurahan = $kelurahan->get()->getRow();
+
+                if ($res_kelurahan) {
+                    // Ubah ID menjadi nama kelurahan
+                    $data['kelurahan'] = $res_kelurahan->kelurahanNama;
+                }
+
                 return $data;
             }, $Pasien, array_keys($Pasien));
 
