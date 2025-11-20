@@ -291,7 +291,7 @@
                     if (kelurahan.length > 0 && kecamatan.length > 0 && kabupaten.length > 0 && provinsi.length > 0) {
                         alamat_lokasi = `<input type="text" readonly style="padding: 1px 0 1px 0; font-size: 0.7rem" class="form-control-plaintext border border-0 lh-1" value="${kelurahan}${kecamatan}${kabupaten}${provinsi}">`;
                     } else {
-                        alamat_lokasi = ``;
+                        alamat_lokasi = `<em>Tidak ada</em>`;
                     }
                     const kewarganegaraan = pasien.kewarganegaraan ? `<input type="text" readonly style="padding: 1px 0 1px 0;" class="form-control-plaintext border border-0 lh-1" value="${pasien.kewarganegaraan}">` : `<em>Tidak ada</em>`;
                     const telpon = pasien.telpon ? `<input type="text" readonly style="padding: 1px 0 1px 0;" class="form-control-plaintext border border-0 lh-1 date" value="${pasien.telpon}">` : `<em>Tidak ada</em>`;
