@@ -198,8 +198,37 @@ $db = db_connect();
                         <div class="card w-100  shadow-sm">
                             <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Persebaran Provinsi Pasien</div>
                             <div class="card-body py-2 px-3">
-                                <div class="ratio ratio-4x3 w-100">
-                                    <canvas id="persebaranprovinsigraph"></canvas>
+                                <input type="search" id="ProvinsiFilter" class="form-control form-control-sm mb-2" placeholder="Masukkan provinsi">
+                                <div class="card ratio ratio-4x3 w-100 overflow-auto">
+                                    <div class="table-responsive">
+                                        <table class="table table-sm mb-0" style="width:100%; font-size: 0.75rem;">
+                                            <thead>
+                                                <tr class="align-middle">
+                                                    <th scope="col" class="bg-body-secondary border-secondary text-nowrap tindakan" style="border-bottom-width: 2px; width: 0%;">No</th>
+                                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">Provinsi</th>
+                                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Pasien</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="align-top" id="view_provinsi">
+                                                <tr>
+                                                    <td colspan="3" class="text-center">Memuat provinsi...</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <nav id="paginationNav_provinsi" class="d-flex justify-content-end mt-2 overflow-auto w-100">
+                                    <ul class="pagination pagination-sm mb-0"></ul>
+                                </nav>
+                            </div>
+                            <div class="card-footer bg-body-tertiary">
+                                <div class="row overflow-hidden d-flex align-items-end">
+                                    <div class="col fw-medium text-nowrap">Total Keseluruhan</div>
+                                    <div class="col text-end">
+                                        <div class="date text-truncate placeholder-glow fw-bold" id="total_provinsi">
+                                            <span class="placeholder w-100"></span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -208,8 +237,37 @@ $db = db_connect();
                         <div class="card w-100  shadow-sm">
                             <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Persebaran Kabupaten/Kota Pasien</div>
                             <div class="card-body py-2 px-3">
-                                <div class="ratio ratio-4x3 w-100">
-                                    <canvas id="persebarankabupatengraph"></canvas>
+                                <input type="search" id="KabupatenFilter" class="form-control form-control-sm mb-2" placeholder="Masukkan kabuapaten/kota">
+                                <div class="card ratio ratio-4x3 w-100 overflow-auto">
+                                    <div class="table-responsive">
+                                        <table class="table table-sm mb-0" style="width:100%; font-size: 0.75rem;">
+                                            <thead>
+                                                <tr class="align-middle">
+                                                    <th scope="col" class="bg-body-secondary border-secondary text-nowrap tindakan" style="border-bottom-width: 2px; width: 0%;">No</th>
+                                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">Kabupaten/Kota</th>
+                                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Pasien</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="align-top" id="view_kabkota">
+                                                <tr>
+                                                    <td colspan="3" class="text-center">Memuat kabupaten/kota...</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <nav id="paginationNav_kabkota" class="d-flex justify-content-end mt-2 overflow-auto w-100">
+                                    <ul class="pagination pagination-sm mb-0"></ul>
+                                </nav>
+                            </div>
+                            <div class="card-footer bg-body-tertiary">
+                                <div class="row overflow-hidden d-flex align-items-end">
+                                    <div class="col fw-medium text-nowrap">Total Keseluruhan</div>
+                                    <div class="col text-end">
+                                        <div class="date text-truncate placeholder-glow fw-bold" id="total_kabkota">
+                                            <span class="placeholder w-100"></span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -218,8 +276,37 @@ $db = db_connect();
                         <div class="card w-100  shadow-sm">
                             <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Persebaran Kecamatan Pasien</div>
                             <div class="card-body py-2 px-3">
-                                <div class="ratio ratio-4x3 w-100">
-                                    <canvas id="persebarankecamatangraph"></canvas>
+                                <input type="search" id="KecamatanFilter" class="form-control form-control-sm mb-2" placeholder="Masukkan kecamatan">
+                                <div class="card ratio ratio-4x3 w-100 overflow-auto">
+                                    <div class="table-responsive">
+                                        <table class="table table-sm mb-0" style="width:100%; font-size: 0.75rem;">
+                                            <thead>
+                                                <tr class="align-middle">
+                                                    <th scope="col" class="bg-body-secondary border-secondary text-nowrap tindakan" style="border-bottom-width: 2px; width: 0%;">No</th>
+                                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">Kecamatan</th>
+                                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Pasien</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="align-top" id="view_kecamatan">
+                                                <tr>
+                                                    <td colspan="3" class="text-center">Memuat kecamatan...</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <nav id="paginationNav_kecamatan" class="d-flex justify-content-end mt-2 overflow-auto w-100">
+                                    <ul class="pagination pagination-sm mb-0"></ul>
+                                </nav>
+                            </div>
+                            <div class="card-footer bg-body-tertiary">
+                                <div class="row overflow-hidden d-flex align-items-end">
+                                    <div class="col fw-medium text-nowrap">Total Keseluruhan</div>
+                                    <div class="col text-end">
+                                        <div class="date text-truncate placeholder-glow fw-bold" id="total_kecamatan">
+                                            <span class="placeholder w-100"></span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -228,8 +315,37 @@ $db = db_connect();
                         <div class="card w-100  shadow-sm">
                             <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Persebaran Kelurahan Pasien</div>
                             <div class="card-body py-2 px-3">
-                                <div class="ratio ratio-4x3 w-100">
-                                    <canvas id="persebarankelurahangraph"></canvas>
+                                <input type="search" id="KelurahanFilter" class="form-control form-control-sm mb-2" placeholder="Masukkan kelurahan">
+                                <div class="card ratio ratio-4x3 w-100 overflow-auto">
+                                    <div class="table-responsive">
+                                        <table class="table table-sm mb-0" style="width:100%; font-size: 0.75rem;">
+                                            <thead>
+                                                <tr class="align-middle">
+                                                    <th scope="col" class="bg-body-secondary border-secondary text-nowrap tindakan" style="border-bottom-width: 2px; width: 0%;">No</th>
+                                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">Kelurahan</th>
+                                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Pasien</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="align-top" id="view_kelurahan">
+                                                <tr>
+                                                    <td colspan="3" class="text-center">Memuat kelurahan...</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <nav id="paginationNav_kelurahan" class="d-flex justify-content-end mt-2 overflow-auto w-100">
+                                    <ul class="pagination pagination-sm mb-0"></ul>
+                                </nav>
+                            </div>
+                            <div class="card-footer bg-body-tertiary">
+                                <div class="row overflow-hidden d-flex align-items-end">
+                                    <div class="col fw-medium text-nowrap">Total Keseluruhan</div>
+                                    <div class="col text-end">
+                                        <div class="date text-truncate placeholder-glow fw-bold" id="total_kelurahan">
+                                            <span class="placeholder w-100"></span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -508,6 +624,627 @@ $db = db_connect();
             altInput: true,
             disableMobile: "true"
         });
+
+        // Fetch Provinsi
+        async function fetchProvinsi() {
+            const kueri = $('#ProvinsiFilter').val();
+            const offset = (currentPage - 1) * limit;
+
+            // Show the spinner
+            $('#loadingSpinner').show();
+
+            try {
+                const response = await axios.get('<?= base_url('home/persebaran_provinsi') ?>', {
+                    params: {
+                        kueri: kueri,
+                        limit: limit,
+                        offset: offset,
+                    }
+                });
+
+                const data = response.data;
+                $('#view_provinsi').empty();
+                $('#total_provinsi').text(data.total.toLocaleString('id-ID'));
+
+                if (data.total === "0") {
+                    $('#paginationNav_provinsi ul').empty();
+                    $('#view_provinsi').append(`
+                    <tr>
+                        <td colspan="3" class="text-center">Tidak ada provinsi</td>
+                    </tr>
+                `);
+                } else {
+                    data.data.forEach(function(data) {
+                        const total_pasien = parseInt(data.total_pasien);
+                        // Tentukan kelas berdasarkan data.number
+                        let rowClass = "";
+                        if (data.number == 1) {
+                            rowClass = "bg-gold";
+                        } else if (data.number == 2) {
+                            rowClass = "bg-silver";
+                        } else if (data.number == 3) {
+                            rowClass = "bg-bronze";
+                        } else {
+                            rowClass = "";
+                        }
+                        let rowBold = "";
+                        if (data.number == 1 || data.number == 2 || data.number == 3) {
+                            rowBold = "fw-bold";
+                        } else {
+                            rowBold = "";
+                        }
+                        const ProvinsiElement = `
+                    <tr>
+                        <td class="date text-nowrap text-center ${rowClass} ${rowBold}">${data.number}</td>
+                        <td class="${rowClass} ${rowBold}">${data.provinsiNama}</td>
+                        <td class="date text-end ${rowClass} ${rowBold}">${total_pasien.toLocaleString('id-ID')}</td>
+                    </tr>
+                `;
+
+                        $('#view_provinsi').append(ProvinsiElement);
+                    });
+
+                    // Pagination logic with ellipsis for more than 3 pages
+                    const totalPages = Math.ceil(data.total / limit);
+                    $('#paginationNav_provinsi ul').empty();
+
+                    if (currentPage > 1) {
+                        $('#paginationNav_provinsi ul').append(`
+                    <li class="page-item">
+                        <a class="page-link bg-gradient date" href="#" data-page="${currentPage - 1}">
+                            <i class="fa-solid fa-angle-left"></i>
+                        </a>
+                    </li>
+                `);
+                    }
+
+                    if (totalPages > 5) {
+                        $('#paginationNav_provinsi ul').append(`
+                    <li class="page-item ${currentPage === 1 ? 'active' : ''}">
+                        <a class="page-link bg-gradient date" href="#" data-page="1">1</a>
+                    </li>
+                `);
+
+                        if (currentPage > 3) {
+                            $('#paginationNav_provinsi ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">…</span></li>');
+                        }
+
+                        for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
+                            $('#paginationNav_provinsi ul').append(`
+                        <li class="page-item ${i === currentPage ? 'active' : ''}">
+                            <a class="page-link bg-gradient date" href="#" data-page="${i}">${i}</a>
+                        </li>
+                    `);
+                        }
+
+                        if (currentPage < totalPages - 2) {
+                            $('#paginationNav_provinsi ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">…</span></li>');
+                        }
+
+                        $('#paginationNav_provinsi ul').append(`
+                    <li class="page-item ${currentPage === totalPages ? 'active' : ''}">
+                        <a class="page-link bg-gradient date" href="#" data-page="${totalPages}">${totalPages}</a>
+                    </li>
+                `);
+                    } else {
+                        // Show all pages if total pages are 3 or fewer
+                        for (let i = 1; i <= totalPages; i++) {
+                            $('#paginationNav_provinsi ul').append(`
+                        <li class="page-item ${i === currentPage ? 'active' : ''}">
+                            <a class="page-link bg-gradient date" href="#" data-page="${i}">${i}</a>
+                        </li>
+                    `);
+                        }
+                    }
+
+                    if (currentPage < totalPages) {
+                        $('#paginationNav_provinsi ul').append(`
+                    <li class="page-item">
+                        <a class="page-link bg-gradient date" href="#" data-page="${currentPage + 1}">
+                            <i class="fa-solid fa-angle-right"></i>
+                        </a>
+                    </li>
+                `);
+                    }
+                }
+            } catch (error) {
+                $('#view_provinsi').empty();
+                if (error.response.request.status === 400) {
+                    $('#view_provinsi').append(`
+                    <tr>
+                        <td colspan="3" class="text-center text-danger">${error.response.data.error}</td>
+                    </tr>
+                `);
+                    showFailedToast(error.response.data.error);
+                } else {
+                    $('#view_provinsi').append(`
+                    <tr>
+                        <td colspan="3" class="text-center text-danger">${error}</td>
+                    </tr>
+                `);
+                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                }
+                $('#paginationNav_provinsi ul').empty();
+            } finally {
+                // Hide the spinner when done
+                $('#loadingSpinner').hide();
+            }
+        }
+
+        $(document).on('click', '#paginationNav_provinsi a', function(event) {
+            event.preventDefault(); // Prevents default behavior (scrolling)
+            const page = $(this).data('page');
+            if (page) {
+                currentPage = page;
+                fetchProvinsi();
+            }
+        });
+
+        // Fetch Kabupaten/Kota
+        async function fetchKabupaten() {
+            const kueri = $('#KabupatenFilter').val();
+            const offset = (currentPage - 1) * limit;
+
+            // Show the spinner
+            $('#loadingSpinner').show();
+
+            try {
+                const response = await axios.get('<?= base_url('home/persebaran_kabkota') ?>', {
+                    params: {
+                        kueri: kueri,
+                        limit: limit,
+                        offset: offset,
+                    }
+                });
+
+                const data = response.data;
+                $('#view_kabkota').empty();
+                $('#total_kabkota').text(data.total.toLocaleString('id-ID'));
+
+                if (data.total === "0") {
+                    $('#paginationNav_kabkota ul').empty();
+                    $('#view_kabkota').append(`
+                    <tr>
+                        <td colspan="3" class="text-center">Tidak ada provinsi</td>
+                    </tr>
+                `);
+                } else {
+                    data.data.forEach(function(data) {
+                        const total_pasien = parseInt(data.total_pasien);
+                        // Tentukan kelas berdasarkan data.number
+                        let rowClass = "";
+                        if (data.number == 1) {
+                            rowClass = "bg-gold";
+                        } else if (data.number == 2) {
+                            rowClass = "bg-silver";
+                        } else if (data.number == 3) {
+                            rowClass = "bg-bronze";
+                        } else {
+                            rowClass = "";
+                        }
+                        let rowBold = "";
+                        if (data.number == 1 || data.number == 2 || data.number == 3) {
+                            rowBold = "fw-bold";
+                        } else {
+                            rowBold = "";
+                        }
+                        const KabupatenElement = `
+                    <tr>
+                        <td class="date text-nowrap text-center ${rowClass} ${rowBold}">${data.number}</td>
+                        <td class="${rowClass} ${rowBold}">${data.kabupatenNama}<br><small>${data.provinsiNama}</small></td>
+                        <td class="date text-end ${rowClass} ${rowBold}">${total_pasien.toLocaleString('id-ID')}</td>
+                    </tr>
+                `;
+
+                        $('#view_kabkota').append(KabupatenElement);
+                    });
+
+                    // Pagination logic with ellipsis for more than 3 pages
+                    const totalPages = Math.ceil(data.total / limit);
+                    $('#paginationNav_kabkota ul').empty();
+
+                    if (currentPage > 1) {
+                        $('#paginationNav_kabkota ul').append(`
+                    <li class="page-item">
+                        <a class="page-link bg-gradient date" href="#" data-page="${currentPage - 1}">
+                            <i class="fa-solid fa-angle-left"></i>
+                        </a>
+                    </li>
+                `);
+                    }
+
+                    if (totalPages > 5) {
+                        $('#paginationNav_kabkota ul').append(`
+                    <li class="page-item ${currentPage === 1 ? 'active' : ''}">
+                        <a class="page-link bg-gradient date" href="#" data-page="1">1</a>
+                    </li>
+                `);
+
+                        if (currentPage > 3) {
+                            $('#paginationNav_kabkota ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">…</span></li>');
+                        }
+
+                        for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
+                            $('#paginationNav_kabkota ul').append(`
+                        <li class="page-item ${i === currentPage ? 'active' : ''}">
+                            <a class="page-link bg-gradient date" href="#" data-page="${i}">${i}</a>
+                        </li>
+                    `);
+                        }
+
+                        if (currentPage < totalPages - 2) {
+                            $('#paginationNav_kabkota ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">…</span></li>');
+                        }
+
+                        $('#paginationNav_kabkota ul').append(`
+                    <li class="page-item ${currentPage === totalPages ? 'active' : ''}">
+                        <a class="page-link bg-gradient date" href="#" data-page="${totalPages}">${totalPages}</a>
+                    </li>
+                `);
+                    } else {
+                        // Show all pages if total pages are 3 or fewer
+                        for (let i = 1; i <= totalPages; i++) {
+                            $('#paginationNav_kabkota ul').append(`
+                        <li class="page-item ${i === currentPage ? 'active' : ''}">
+                            <a class="page-link bg-gradient date" href="#" data-page="${i}">${i}</a>
+                        </li>
+                    `);
+                        }
+                    }
+
+                    if (currentPage < totalPages) {
+                        $('#paginationNav_kabkota ul').append(`
+                    <li class="page-item">
+                        <a class="page-link bg-gradient date" href="#" data-page="${currentPage + 1}">
+                            <i class="fa-solid fa-angle-right"></i>
+                        </a>
+                    </li>
+                `);
+                    }
+                }
+            } catch (error) {
+                $('#view_kabkota').empty();
+                if (error.response.request.status === 400) {
+                    $('#view_kabkota').append(`
+                    <tr>
+                        <td colspan="3" class="text-center text-danger">${error.response.data.error}</td>
+                    </tr>
+                `);
+                    showFailedToast(error.response.data.error);
+                } else {
+                    $('#view_kabkota').append(`
+                    <tr>
+                        <td colspan="3" class="text-center text-danger">${error}</td>
+                    </tr>
+                `);
+                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                }
+                $('#paginationNav_kabkota ul').empty();
+            } finally {
+                // Hide the spinner when done
+                $('#loadingSpinner').hide();
+            }
+        }
+
+        $(document).on('click', '#paginationNav_kabkota a', function(event) {
+            event.preventDefault(); // Prevents default behavior (scrolling)
+            const page = $(this).data('page');
+            if (page) {
+                currentPage = page;
+                fetchKabupaten();
+            }
+        });
+
+        // Fetch Kecamatan
+        async function fetchKecamatan() {
+            const kueri = $('#KecamatanFilter').val();
+            const offset = (currentPage - 1) * limit;
+
+            // Show the spinner
+            $('#loadingSpinner').show();
+
+            try {
+                const response = await axios.get('<?= base_url('home/persebaran_kecamatan') ?>', {
+                    params: {
+                        kueri: kueri,
+                        limit: limit,
+                        offset: offset,
+                    }
+                });
+
+                const data = response.data;
+                $('#view_kecamatan').empty();
+                $('#total_kecamatan').text(data.total.toLocaleString('id-ID'));
+
+                if (data.total === "0") {
+                    $('#paginationNav_kecamatan ul').empty();
+                    $('#view_kecamatan').append(`
+                    <tr>
+                        <td colspan="3" class="text-center">Tidak ada provinsi</td>
+                    </tr>
+                `);
+                } else {
+                    data.data.forEach(function(data) {
+                        const total_pasien = parseInt(data.total_pasien);
+                        // Tentukan kelas berdasarkan data.number
+                        let rowClass = "";
+                        if (data.number == 1) {
+                            rowClass = "bg-gold";
+                        } else if (data.number == 2) {
+                            rowClass = "bg-silver";
+                        } else if (data.number == 3) {
+                            rowClass = "bg-bronze";
+                        } else {
+                            rowClass = "";
+                        }
+                        let rowBold = "";
+                        if (data.number == 1 || data.number == 2 || data.number == 3) {
+                            rowBold = "fw-bold";
+                        } else {
+                            rowBold = "";
+                        }
+                        const KecamatanElement = `
+                    <tr>
+                        <td class="date text-nowrap text-center ${rowClass} ${rowBold}">${data.number}</td>
+                        <td class="${rowClass} ${rowBold}">${data.kecamatanNama}<br><small>${data.kabupatenNama}, ${data.provinsiNama}</small></td>
+                        <td class="date text-end ${rowClass} ${rowBold}">${total_pasien.toLocaleString('id-ID')}</td>
+                    </tr>
+                `;
+
+                        $('#view_kecamatan').append(KecamatanElement);
+                    });
+
+                    // Pagination logic with ellipsis for more than 3 pages
+                    const totalPages = Math.ceil(data.total / limit);
+                    $('#paginationNav_kecamatan ul').empty();
+
+                    if (currentPage > 1) {
+                        $('#paginationNav_kecamatan ul').append(`
+                    <li class="page-item">
+                        <a class="page-link bg-gradient date" href="#" data-page="${currentPage - 1}">
+                            <i class="fa-solid fa-angle-left"></i>
+                        </a>
+                    </li>
+                `);
+                    }
+
+                    if (totalPages > 5) {
+                        $('#paginationNav_kecamatan ul').append(`
+                    <li class="page-item ${currentPage === 1 ? 'active' : ''}">
+                        <a class="page-link bg-gradient date" href="#" data-page="1">1</a>
+                    </li>
+                `);
+
+                        if (currentPage > 3) {
+                            $('#paginationNav_kecamatan ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">…</span></li>');
+                        }
+
+                        for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
+                            $('#paginationNav_kecamatan ul').append(`
+                        <li class="page-item ${i === currentPage ? 'active' : ''}">
+                            <a class="page-link bg-gradient date" href="#" data-page="${i}">${i}</a>
+                        </li>
+                    `);
+                        }
+
+                        if (currentPage < totalPages - 2) {
+                            $('#paginationNav_kecamatan ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">…</span></li>');
+                        }
+
+                        $('#paginationNav_kecamatan ul').append(`
+                    <li class="page-item ${currentPage === totalPages ? 'active' : ''}">
+                        <a class="page-link bg-gradient date" href="#" data-page="${totalPages}">${totalPages}</a>
+                    </li>
+                `);
+                    } else {
+                        // Show all pages if total pages are 3 or fewer
+                        for (let i = 1; i <= totalPages; i++) {
+                            $('#paginationNav_kecamatan ul').append(`
+                        <li class="page-item ${i === currentPage ? 'active' : ''}">
+                            <a class="page-link bg-gradient date" href="#" data-page="${i}">${i}</a>
+                        </li>
+                    `);
+                        }
+                    }
+
+                    if (currentPage < totalPages) {
+                        $('#paginationNav_kecamatan ul').append(`
+                    <li class="page-item">
+                        <a class="page-link bg-gradient date" href="#" data-page="${currentPage + 1}">
+                            <i class="fa-solid fa-angle-right"></i>
+                        </a>
+                    </li>
+                `);
+                    }
+                }
+            } catch (error) {
+                $('#view_kecamatan').empty();
+                if (error.response.request.status === 400) {
+                    $('#view_kecamatan').append(`
+                    <tr>
+                        <td colspan="3" class="text-center text-danger">${error.response.data.error}</td>
+                    </tr>
+                `);
+                    showFailedToast(error.response.data.error);
+                } else {
+                    $('#view_kecamatan').append(`
+                    <tr>
+                        <td colspan="3" class="text-center text-danger">${error}</td>
+                    </tr>
+                `);
+                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                }
+                $('#paginationNav_kecamatan ul').empty();
+            } finally {
+                // Hide the spinner when done
+                $('#loadingSpinner').hide();
+            }
+        }
+
+        $(document).on('click', '#paginationNav_kecamatan a', function(event) {
+            event.preventDefault(); // Prevents default behavior (scrolling)
+            const page = $(this).data('page');
+            if (page) {
+                currentPage = page;
+                fetchKecamatan();
+            }
+        });
+
+        // Fetch Kelurahan
+        async function fetchKelurahan() {
+            const kueri = $('#KelurahanFilter').val();
+            const offset = (currentPage - 1) * limit;
+
+            // Show the spinner
+            $('#loadingSpinner').show();
+
+            try {
+                const response = await axios.get('<?= base_url('home/persebaran_kelurahan') ?>', {
+                    params: {
+                        kueri: kueri,
+                        limit: limit,
+                        offset: offset,
+                    }
+                });
+
+                const data = response.data;
+                $('#view_kelurahan').empty();
+                $('#total_kelurahan').text(data.total.toLocaleString('id-ID'));
+
+                if (data.total === "0") {
+                    $('#paginationNav_kelurahan ul').empty();
+                    $('#view_kelurahan').append(`
+                    <tr>
+                        <td colspan="3" class="text-center">Tidak ada provinsi</td>
+                    </tr>
+                `);
+                } else {
+                    data.data.forEach(function(data) {
+                        const total_pasien = parseInt(data.total_pasien);
+                        // Tentukan kelas berdasarkan data.number
+                        let rowClass = "";
+                        if (data.number == 1) {
+                            rowClass = "bg-gold";
+                        } else if (data.number == 2) {
+                            rowClass = "bg-silver";
+                        } else if (data.number == 3) {
+                            rowClass = "bg-bronze";
+                        } else {
+                            rowClass = "";
+                        }
+                        let rowBold = "";
+                        if (data.number == 1 || data.number == 2 || data.number == 3) {
+                            rowBold = "fw-bold";
+                        } else {
+                            rowBold = "";
+                        }
+                        const KelurahanElement = `
+                    <tr>
+                        <td class="date text-nowrap text-center ${rowClass} ${rowBold}">${data.number}</td>
+                        <td class="${rowClass} ${rowBold}">${data.kelurahanNama}<br><small>${data.kecamatanNama}, ${data.kabupatenNama}, ${data.provinsiNama}</small></td>
+                        <td class="date text-end ${rowClass} ${rowBold}">${total_pasien.toLocaleString('id-ID')}</td>
+                    </tr>
+                `;
+
+                        $('#view_kelurahan').append(KelurahanElement);
+                    });
+
+                    // Pagination logic with ellipsis for more than 3 pages
+                    const totalPages = Math.ceil(data.total / limit);
+                    $('#paginationNav_kelurahan ul').empty();
+
+                    if (currentPage > 1) {
+                        $('#paginationNav_kelurahan ul').append(`
+                    <li class="page-item">
+                        <a class="page-link bg-gradient date" href="#" data-page="${currentPage - 1}">
+                            <i class="fa-solid fa-angle-left"></i>
+                        </a>
+                    </li>
+                `);
+                    }
+
+                    if (totalPages > 5) {
+                        $('#paginationNav_kelurahan ul').append(`
+                    <li class="page-item ${currentPage === 1 ? 'active' : ''}">
+                        <a class="page-link bg-gradient date" href="#" data-page="1">1</a>
+                    </li>
+                `);
+
+                        if (currentPage > 3) {
+                            $('#paginationNav_kelurahan ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">…</span></li>');
+                        }
+
+                        for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
+                            $('#paginationNav_kelurahan ul').append(`
+                        <li class="page-item ${i === currentPage ? 'active' : ''}">
+                            <a class="page-link bg-gradient date" href="#" data-page="${i}">${i}</a>
+                        </li>
+                    `);
+                        }
+
+                        if (currentPage < totalPages - 2) {
+                            $('#paginationNav_kelurahan ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">…</span></li>');
+                        }
+
+                        $('#paginationNav_kelurahan ul').append(`
+                    <li class="page-item ${currentPage === totalPages ? 'active' : ''}">
+                        <a class="page-link bg-gradient date" href="#" data-page="${totalPages}">${totalPages}</a>
+                    </li>
+                `);
+                    } else {
+                        // Show all pages if total pages are 3 or fewer
+                        for (let i = 1; i <= totalPages; i++) {
+                            $('#paginationNav_kelurahan ul').append(`
+                        <li class="page-item ${i === currentPage ? 'active' : ''}">
+                            <a class="page-link bg-gradient date" href="#" data-page="${i}">${i}</a>
+                        </li>
+                    `);
+                        }
+                    }
+
+                    if (currentPage < totalPages) {
+                        $('#paginationNav_kelurahan ul').append(`
+                    <li class="page-item">
+                        <a class="page-link bg-gradient date" href="#" data-page="${currentPage + 1}">
+                            <i class="fa-solid fa-angle-right"></i>
+                        </a>
+                    </li>
+                `);
+                    }
+                }
+            } catch (error) {
+                $('#view_kelurahan').empty();
+                if (error.response.request.status === 400) {
+                    $('#view_kelurahan').append(`
+                    <tr>
+                        <td colspan="3" class="text-center text-danger">${error.response.data.error}</td>
+                    </tr>
+                `);
+                    showFailedToast(error.response.data.error);
+                } else {
+                    $('#view_kelurahan').append(`
+                    <tr>
+                        <td colspan="3" class="text-center text-danger">${error}</td>
+                    </tr>
+                `);
+                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                }
+                $('#paginationNav_kelurahan ul').empty();
+            } finally {
+                // Hide the spinner when done
+                $('#loadingSpinner').hide();
+            }
+        }
+
+        $(document).on('click', '#paginationNav_kelurahan a', function(event) {
+            event.preventDefault(); // Prevents default behavior (scrolling)
+            const page = $(this).data('page');
+            if (page) {
+                currentPage = page;
+                fetchKelurahan();
+            }
+        });
+
         async function fetchICD10() {
             const bulan = $('#ICD10bulanFilter').val();
             const offset = (currentPage - 1) * limit;
@@ -820,12 +1557,28 @@ $db = db_connect();
 
     $(document).ready(function() {
         <?php if (session()->get('role') == "Admin" || session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admisi") : ?>
+            $('#ProvinsiFilter').on('input', function() {
+                fetchProvinsi();
+            });
+            $('#KabupatenFilter').on('input', function() {
+                fetchKabupaten();
+            });
+            $('#KecamatanFilter').on('input', function() {
+                fetchKecamatan();
+            });
+            $('#KelurahanFilter').on('input', function() {
+                fetchKelurahan();
+            });
             $('#ICD10bulanFilter').on('change', function() {
                 fetchICD10();
             });
             $('#ICD9bulanFilter').on('change', function() {
                 fetchICD9();
             });
+            fetchProvinsi();
+            fetchKabupaten();
+            fetchKecamatan();
+            fetchKelurahan();
             fetchICD10();
             fetchICD9();
         <?php else: ?>
@@ -918,14 +1671,6 @@ $db = db_connect();
         const label_agamagraph = [];
         const data_jeniskelamingraph = [];
         const label_jeniskelamingraph = [];
-        const data_persebaranprovinsigraph = [];
-        const label_persebaranprovinsigraph = [];
-        const data_persebarankabupatengraph = [];
-        const label_persebarankabupatengraph = [];
-        const data_persebarankecamatangraph = [];
-        const label_persebarankecamatangraph = [];
-        const data_persebarankelurahangraph = [];
-        const label_persebarankelurahangraph = [];
         const data_rawatjalanpiegraph = [];
         const label_rawatjalanpiegraph = [];
         const data_rawatjalandoktergraph = [];
@@ -993,90 +1738,6 @@ $db = db_connect();
             }
             ?>
             label_jeniskelamingraph.push('<?= $jenisKelamin; ?>');
-        <?php endforeach; ?>
-        <?php foreach ($persebaranprovinsigraph->getResult() as $key => $persebaranprovinsigraph) :
-            // Query untuk mencocokkan ID provinsi dengan nama provinsi
-            $provinsiId = $persebaranprovinsigraph->provinsi;
-            $query = $db->table('master_provinsi')
-                ->select('provinsiNama')
-                ->where('provinsiId', $provinsiId)
-                ->get();
-
-            // Ambil nama provinsi
-            $provinsiNama = $query->getRow();
-
-            if ($provinsiNama) {
-                // Ambil nama kelurahan jika ditemukan
-                $provinsiNama = $provinsiNama->provinsiNama;
-            } else {
-                // Jika tidak ditemukan, beri nilai default
-                $provinsiNama = 'Tidak Ada';
-            } ?>
-            data_persebaranprovinsigraph.push(<?= $persebaranprovinsigraph->total_provinsi; ?>);
-            label_persebaranprovinsigraph.push('<?= htmlspecialchars($provinsiNama, ENT_QUOTES, 'UTF-8'); ?>');
-        <?php endforeach; ?>
-        <?php foreach ($persebarankabupatengraph->getResult() as $key => $persebarankabupatengraph) :
-            // Query untuk mencocokkan ID kabupaten dengan nama kabupaten
-            $kabupatenId = $persebarankabupatengraph->kabupaten;
-            $query = $db->table('master_kabupaten')
-                ->select('kabupatenNama')
-                ->where('kabupatenId', $kabupatenId)
-                ->get();
-
-            // Ambil nama kabupaten
-            $kabupatenNama = $query->getRow();
-
-            if ($kabupatenNama) {
-                // Ambil nama kelurahan jika ditemukan
-                $kabupatenNama = $kabupatenNama->kabupatenNama;
-            } else {
-                // Jika tidak ditemukan, beri nilai default
-                $kabupatenNama = 'Tidak Ada';
-            } ?>
-            data_persebarankabupatengraph.push(<?= $persebarankabupatengraph->total_kabupaten; ?>);
-            label_persebarankabupatengraph.push('<?= htmlspecialchars($kabupatenNama, ENT_QUOTES, 'UTF-8'); ?>');
-        <?php endforeach; ?>
-        <?php foreach ($persebarankecamatangraph->getResult() as $key => $persebarankecamatangraph) :
-            // Query untuk mencocokkan ID kecamatan dengan nama kecamatan
-            $kecamatanId = $persebarankecamatangraph->kecamatan;
-            $query = $db->table('master_kecamatan')
-                ->select('kecamatanNama')
-                ->where('kecamatanId', $kecamatanId)
-                ->get();
-
-            // Ambil nama kecamatan
-            $kecamatanNama = $query->getRow();
-
-            if ($kecamatanNama) {
-                // Ambil nama kelurahan jika ditemukan
-                $kecamatanNama = $kecamatanNama->kecamatanNama;
-            } else {
-                // Jika tidak ditemukan, beri nilai default
-                $kecamatanNama = 'Tidak Ada';
-            } ?>
-            data_persebarankecamatangraph.push(<?= $persebarankecamatangraph->total_kecamatan; ?>);
-            label_persebarankecamatangraph.push('<?= htmlspecialchars($kecamatanNama, ENT_QUOTES, 'UTF-8'); ?>');
-        <?php endforeach; ?>
-        <?php foreach ($persebarankelurahangraph->getResult() as $key => $persebarankelurahangraph) :
-            // Query untuk mencocokkan ID kelurahan dengan nama kelurahan
-            $kelurahanId = $persebarankelurahangraph->kelurahan;
-            $query = $db->table('master_kelurahan')
-                ->select('kelurahanNama')
-                ->where('kelurahanId', $kelurahanId)
-                ->get();
-
-            // Ambil nama kelurahan
-            $kelurahanNama = $query->getRow();
-
-            if ($kelurahanNama) {
-                // Ambil nama kelurahan jika ditemukan
-                $kelurahanNama = $kelurahanNama->kelurahanNama;
-            } else {
-                // Jika tidak ditemukan, beri nilai default
-                $kelurahanNama = 'Tidak Ada';
-            } ?>
-            data_persebarankelurahangraph.push(<?= $persebarankelurahangraph->total_kelurahan; ?>);
-            label_persebarankelurahangraph.push('<?= htmlspecialchars($kelurahanNama, ENT_QUOTES, 'UTF-8'); ?>');
         <?php endforeach; ?>
         <?php foreach ($rawatjalanpiegraph->getResult() as $key => $rawatjalanpiegraph) : ?>
             data_rawatjalanpiegraph.push(<?= $rawatjalanpiegraph->total_rajal; ?>);
@@ -1159,54 +1820,6 @@ $db = db_connect();
                 borderRadius: 10,
                 fill: true,
                 data: data_jeniskelamingraph
-            }]
-        }
-        var data_content_persebaranprovinsigraph = {
-            labels: label_persebaranprovinsigraph,
-            datasets: [{
-                label: 'Total Pasien',
-                pointStyle: 'circle',
-                pointRadius: 6,
-                pointHoverRadius: 12,
-                borderWidth: 0,
-                fill: true,
-                data: data_persebaranprovinsigraph
-            }]
-        }
-        var data_content_persebarankabupatengraph = {
-            labels: label_persebarankabupatengraph,
-            datasets: [{
-                label: 'Total Pasien',
-                pointStyle: 'circle',
-                pointRadius: 6,
-                pointHoverRadius: 12,
-                borderWidth: 0,
-                fill: true,
-                data: data_persebarankabupatengraph
-            }]
-        }
-        var data_content_persebarankecamatangraph = {
-            labels: label_persebarankecamatangraph,
-            datasets: [{
-                label: 'Total Pasien',
-                pointStyle: 'circle',
-                pointRadius: 6,
-                pointHoverRadius: 12,
-                borderWidth: 0,
-                fill: true,
-                data: data_persebarankecamatangraph
-            }]
-        }
-        var data_content_persebarankelurahangraph = {
-            labels: label_persebarankelurahangraph,
-            datasets: [{
-                label: 'Total Pasien',
-                pointStyle: 'circle',
-                pointRadius: 6,
-                pointHoverRadius: 12,
-                borderWidth: 0,
-                fill: true,
-                data: data_persebarankelurahangraph
             }]
         }
         var data_content_rawatjalanpiegraph = {
@@ -1473,94 +2086,6 @@ $db = db_connect();
                             display: true,
                             text: 'Total Pasien'
                         }
-                    }
-                },
-                scale: {
-                    ticks: {
-                        precision: 0
-                    }
-                }
-            }
-        })
-        var chart_persebaranprovinsigraph = createChart(document.getElementById('persebaranprovinsigraph').getContext('2d'), {
-            type: 'doughnut',
-            data: data_content_persebaranprovinsigraph,
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                locale: 'id-ID',
-                plugins: {
-                    legend: {
-                        display: false
-                    },
-                    filler: {
-                        drawTime: 'beforeDraw'
-                    }
-                },
-                scale: {
-                    ticks: {
-                        precision: 0
-                    }
-                }
-            }
-        })
-        var chart_persebarankabupatengraph = createChart(document.getElementById('persebarankabupatengraph').getContext('2d'), {
-            type: 'doughnut',
-            data: data_content_persebarankabupatengraph,
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                locale: 'id-ID',
-                plugins: {
-                    legend: {
-                        display: false
-                    },
-                    filler: {
-                        drawTime: 'beforeDraw'
-                    }
-                },
-                scale: {
-                    ticks: {
-                        precision: 0
-                    }
-                }
-            }
-        })
-        var chart_persebarankecamatangraph = createChart(document.getElementById('persebarankecamatangraph').getContext('2d'), {
-            type: 'doughnut',
-            data: data_content_persebarankecamatangraph,
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                locale: 'id-ID',
-                plugins: {
-                    legend: {
-                        display: false
-                    },
-                    filler: {
-                        drawTime: 'beforeDraw'
-                    }
-                },
-                scale: {
-                    ticks: {
-                        precision: 0
-                    }
-                }
-            }
-        })
-        var chart_persebarankelurahangraph = createChart(document.getElementById('persebarankelurahangraph').getContext('2d'), {
-            type: 'doughnut',
-            data: data_content_persebarankelurahangraph,
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                locale: 'id-ID',
-                plugins: {
-                    legend: {
-                        display: false
-                    },
-                    filler: {
-                        drawTime: 'beforeDraw'
                     }
                 },
                 scale: {

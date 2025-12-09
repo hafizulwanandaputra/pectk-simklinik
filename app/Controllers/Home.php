@@ -468,6 +468,312 @@ class Home extends BaseController
         }
     }
 
+    public function persebaran_provinsi()
+    {
+        if (session()->get('role') == "Admin" || session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admisi") {
+            $db = db_connect();
+
+            $kueri = $this->request->getGet('kueri');
+            $limit  = (int) $this->request->getGet('limit');
+            $offset = (int) $this->request->getGet('offset');
+
+            $whereKueri = '';
+            if (!empty($kueri)) {
+                $kueri = addslashes($kueri);
+                $whereKueri = "WHERE master_provinsi.provinsiNama LIKE '%{$kueri}%'";
+            }
+
+            if ($limit <= 0) $limit = 10;
+            if ($offset < 0) $offset = 0;
+
+            $startNumber = $offset + 1;
+
+            // Query utama menggunakan bentuk LIMIT offset, count
+            $query = "
+            SELECT 
+                pasien.provinsi,
+                master_provinsi.provinsiNama,
+                COUNT(*) AS total_pasien
+            FROM pasien
+            JOIN master_provinsi ON pasien.provinsi = master_provinsi.provinsiId
+            {$whereKueri}
+            GROUP BY pasien.provinsi, master_provinsi.provinsiNama
+            ORDER BY total_pasien DESC
+            LIMIT {$offset}, {$limit}
+        ";
+
+            $items = $db->query($query)->getResultArray();
+
+            foreach ($items as $index => &$data) {
+                $data['number'] = $startNumber + $index;
+            }
+
+            // Query total untuk pagination
+            $totalQuery = "
+            SELECT COUNT(*) AS total FROM (
+                SELECT pasien.provinsi 
+                FROM pasien
+                JOIN master_provinsi ON pasien.provinsi = master_provinsi.provinsiId
+                {$whereKueri}
+                GROUP BY pasien.provinsi, master_provinsi.provinsiNama
+            ) AS t
+        ";
+
+            $total = $db->query($totalQuery)->getRowArray()['total'] ?? 0;
+
+            return $this->response->setJSON([
+                'data' => $items,
+                'total' => $total,
+                'limit' => $limit,
+                'offset' => $offset
+            ]);
+        } else {
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
+        }
+    }
+
+    public function persebaran_kabkota()
+    {
+        if (session()->get('role') == "Admin" || session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admisi") {
+            $db = db_connect();
+
+            $kueri = $this->request->getGet('kueri');
+            $limit  = (int) $this->request->getGet('limit');
+            $offset = (int) $this->request->getGet('offset');
+
+            $whereKueri = '';
+            if (!empty($kueri)) {
+                $kueri = addslashes($kueri);
+                $whereKueri = "WHERE master_kabupaten.kabupatenNama LIKE '%{$kueri}%'
+                   OR master_provinsi.provinsiNama LIKE '%{$kueri}%'";
+            }
+
+            if ($limit <= 0) $limit = 10;
+            if ($offset < 0) $offset = 0;
+
+            $startNumber = $offset + 1;
+
+            $query = "
+            SELECT 
+                pasien.kabupaten,
+                master_kabupaten.kabupatenNama,
+                master_provinsi.provinsiNama,
+                COUNT(*) AS total_pasien
+            FROM pasien
+            JOIN master_kabupaten ON pasien.kabupaten = master_kabupaten.kabupatenId
+            JOIN master_provinsi ON master_kabupaten.provinsiId = master_provinsi.provinsiId
+            {$whereKueri}
+            GROUP BY 
+                pasien.kabupaten,
+                master_kabupaten.kabupatenNama,
+                master_provinsi.provinsiNama
+            ORDER BY total_pasien DESC
+            LIMIT {$offset}, {$limit}
+        ";
+
+            $items = $db->query($query)->getResultArray();
+
+            foreach ($items as $index => &$data) {
+                $data['number'] = $startNumber + $index;
+            }
+
+            $totalQuery = "
+            SELECT COUNT(*) AS total FROM (
+                SELECT pasien.kabupaten
+                FROM pasien
+                JOIN master_kabupaten ON pasien.kabupaten = master_kabupaten.kabupatenId
+                JOIN master_provinsi ON master_kabupaten.provinsiId = master_provinsi.provinsiId
+                {$whereKueri}
+                GROUP BY 
+                    pasien.kabupaten,
+                    master_kabupaten.kabupatenNama,
+                    master_provinsi.provinsiNama
+            ) AS t
+        ";
+
+            $total = $db->query($totalQuery)->getRowArray()['total'] ?? 0;
+
+            return $this->response->setJSON([
+                'data' => $items,
+                'total' => $total,
+                'limit' => $limit,
+                'offset' => $offset
+            ]);
+        } else {
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
+        }
+    }
+
+    public function persebaran_kecamatan()
+    {
+        if (session()->get('role') == "Admin" || session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admisi") {
+            $db = db_connect();
+
+            $kueri = $this->request->getGet('kueri');
+            $limit  = (int) $this->request->getGet('limit');
+            $offset = (int) $this->request->getGet('offset');
+
+            $whereKueri = '';
+            if (!empty($kueri)) {
+                $kueri = addslashes($kueri);
+                $whereKueri = "WHERE master_kecamatan.kecamatanNama LIKE '%{$kueri}%'
+                   OR master_kabupaten.kabupatenNama LIKE '%{$kueri}%'
+                   OR master_provinsi.provinsiNama LIKE '%{$kueri}%'";
+            }
+
+            if ($limit <= 0) $limit = 10;
+            if ($offset < 0) $offset = 0;
+
+            $startNumber = $offset + 1;
+
+            $query = "
+            SELECT 
+                pasien.kecamatan,
+                master_kecamatan.kecamatanNama,
+                master_kabupaten.kabupatenNama,
+                master_provinsi.provinsiNama,
+                COUNT(*) AS total_pasien
+            FROM pasien
+            JOIN master_kecamatan ON pasien.kecamatan = master_kecamatan.kecamatanId
+            JOIN master_kabupaten ON master_kecamatan.kabupatenId = master_kabupaten.kabupatenId
+            JOIN master_provinsi ON master_kabupaten.provinsiId = master_provinsi.provinsiId
+            {$whereKueri}
+            GROUP BY 
+                pasien.kecamatan,
+                master_kecamatan.kecamatanNama,
+                master_kabupaten.kabupatenNama,
+                master_provinsi.provinsiNama
+            ORDER BY total_pasien DESC
+            LIMIT {$offset}, {$limit}
+        ";
+
+            $items = $db->query($query)->getResultArray();
+
+            foreach ($items as $index => &$data) {
+                $data['number'] = $startNumber + $index;
+            }
+
+            $totalQuery = "
+            SELECT COUNT(*) AS total FROM (
+                SELECT pasien.kecamatan
+                FROM pasien
+                JOIN master_kecamatan ON pasien.kecamatan = master_kecamatan.kecamatanId
+                JOIN master_kabupaten ON master_kecamatan.kabupatenId = master_kabupaten.kabupatenId
+                JOIN master_provinsi ON master_kabupaten.provinsiId = master_provinsi.provinsiId
+                {$whereKueri}
+                GROUP BY 
+                    pasien.kecamatan,
+                    master_kecamatan.kecamatanNama,
+                    master_kabupaten.kabupatenNama,
+                    master_provinsi.provinsiNama
+            ) AS t
+        ";
+
+            $total = $db->query($totalQuery)->getRowArray()['total'] ?? 0;
+
+            return $this->response->setJSON([
+                'data' => $items,
+                'total' => $total,
+                'limit' => $limit,
+                'offset' => $offset
+            ]);
+        } else {
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
+        }
+    }
+
+    public function persebaran_kelurahan()
+    {
+        if (session()->get('role') == "Admin" || session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admisi") {
+            $db = db_connect();
+
+            $kueri = $this->request->getGet('kueri');
+            $limit  = (int) $this->request->getGet('limit');
+            $offset = (int) $this->request->getGet('offset');
+
+            $whereKueri = '';
+            if (!empty($kueri)) {
+                $kueri = addslashes($kueri);
+                $whereKueri = "WHERE master_kelurahan.kelurahanNama LIKE '%{$kueri}%'
+                   OR master_kecamatan.kecamatanNama LIKE '%{$kueri}%'
+                   OR master_kabupaten.kabupatenNama LIKE '%{$kueri}%'
+                   OR master_provinsi.provinsiNama LIKE '%{$kueri}%'";
+            }
+
+            if ($limit <= 0) $limit = 10;
+            if ($offset < 0) $offset = 0;
+
+            $startNumber = $offset + 1;
+
+            $query = "
+            SELECT 
+                pasien.kelurahan,
+                master_kelurahan.kelurahanNama,
+                master_kecamatan.kecamatanNama,
+                master_kabupaten.kabupatenNama,
+                master_provinsi.provinsiNama,
+                COUNT(*) AS total_pasien
+            FROM pasien
+            JOIN master_kelurahan ON pasien.kelurahan = master_kelurahan.kelurahanId
+            JOIN master_kecamatan ON master_kelurahan.kecamatanId = master_kecamatan.kecamatanId
+            JOIN master_kabupaten ON master_kecamatan.kabupatenId = master_kabupaten.kabupatenId
+            JOIN master_provinsi ON master_kabupaten.provinsiId = master_provinsi.provinsiId
+            {$whereKueri}
+            GROUP BY 
+                pasien.kelurahan,
+                master_kelurahan.kelurahanNama,
+                master_kecamatan.kecamatanNama,
+                master_kabupaten.kabupatenNama,
+                master_provinsi.provinsiNama
+            ORDER BY total_pasien DESC
+            LIMIT {$offset}, {$limit}
+        ";
+
+            $items = $db->query($query)->getResultArray();
+
+            foreach ($items as $index => &$data) {
+                $data['number'] = $startNumber + $index;
+            }
+
+            $totalQuery = "
+            SELECT COUNT(*) AS total FROM (
+                SELECT pasien.kelurahan
+                FROM pasien
+                JOIN master_kelurahan ON pasien.kelurahan = master_kelurahan.kelurahanId
+                JOIN master_kecamatan ON master_kelurahan.kecamatanId = master_kecamatan.kecamatanId
+                JOIN master_kabupaten ON master_kecamatan.kabupatenId = master_kabupaten.kabupatenId
+                JOIN master_provinsi ON master_kabupaten.provinsiId = master_provinsi.provinsiId
+                {$whereKueri}
+                GROUP BY 
+                    pasien.kelurahan,
+                    master_kelurahan.kelurahanNama,
+                    master_kecamatan.kecamatanNama,
+                    master_kabupaten.kabupatenNama,
+                    master_provinsi.provinsiNama
+            ) AS t
+        ";
+
+            $total = $db->query($totalQuery)->getRowArray()['total'] ?? 0;
+
+            return $this->response->setJSON([
+                'data' => $items,
+                'total' => $total,
+                'limit' => $limit,
+                'offset' => $offset
+            ]);
+        } else {
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
+        }
+    }
+
     public function icd_x()
     {
         if (session()->get('role') == "Admin" || session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admisi") {

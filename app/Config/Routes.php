@@ -13,6 +13,10 @@ $routes->get('/(?i)logout', 'Auth::logout');
 
 // HOME
 $routes->get('/(?i)home', 'Home::index');
+$routes->get('/(?i)home/(?i)persebaran_provinsi', 'Home::persebaran_provinsi');
+$routes->get('/(?i)home/(?i)persebaran_kabkota', 'Home::persebaran_kabkota');
+$routes->get('/(?i)home/(?i)persebaran_kecamatan', 'Home::persebaran_kecamatan');
+$routes->get('/(?i)home/(?i)persebaran_kelurahan', 'Home::persebaran_kelurahan');
 $routes->get('/(?i)home/(?i)icd_x', 'Home::icd_x');
 $routes->get('/(?i)home/(?i)icd_9', 'Home::icd_9');
 $routes->post('/(?i)home/(?i)list_loket', 'Home::list_loket');
