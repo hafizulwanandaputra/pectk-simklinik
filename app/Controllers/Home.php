@@ -143,26 +143,6 @@ class Home extends BaseController
                 ->orderBy('jenis_kelamin', 'ASC')
                 ->groupBy('jenis_kelamin')
                 ->get();
-            $persebaranprovinsigraph = $pasien->select('provinsi, COUNT(*) AS total_provinsi')
-                ->orderBy('total_provinsi', 'DESC')
-                ->orderBy('provinsi', 'ASC')
-                ->groupBy('provinsi')
-                ->get();
-            $persebarankabupatengraph = $pasien->select('kabupaten, COUNT(*) AS total_kabupaten')
-                ->orderBy('total_kabupaten', 'DESC')
-                ->orderBy('kabupaten', 'ASC')
-                ->groupBy('kabupaten')
-                ->get();
-            $persebarankecamatangraph = $pasien->select('kecamatan, COUNT(*) AS total_kecamatan')
-                ->orderBy('total_kecamatan', 'DESC')
-                ->orderBy('kecamatan', 'ASC')
-                ->groupBy('kecamatan')
-                ->get();
-            $persebarankelurahangraph = $pasien->select('kelurahan, COUNT(*) AS total_kelurahan')
-                ->orderBy('total_kelurahan', 'DESC')
-                ->orderBy('kelurahan', 'ASC')
-                ->groupBy('kelurahan')
-                ->get();
             $rawatjalanpiegraph = $rawatjalan->select('dokter, COUNT(*) AS total_rajal')
                 ->where('status', 'DAFTAR')
                 ->orderBy('dokter', 'ASC')
@@ -425,10 +405,6 @@ class Home extends BaseController
                 'total_rawatjalan_batal' => $total_rawatjalan_batal,
                 'agamagraph' => $agamagraph,
                 'jeniskelamingraph' => $jeniskelamingraph,
-                'persebaranprovinsigraph' => $persebaranprovinsigraph,
-                'persebarankabupatengraph' => $persebarankabupatengraph,
-                'persebarankecamatangraph' => $persebarankecamatangraph,
-                'persebarankelurahangraph' => $persebarankelurahangraph,
                 'rawatjalanpiegraph' => $rawatjalanpiegraph,
                 'labels_rawatjalandokter' => json_encode($labels_rawatjalandokter),
                 'datasets_rawatjalandokter' => json_encode($datasets_rawatjalandokter),
