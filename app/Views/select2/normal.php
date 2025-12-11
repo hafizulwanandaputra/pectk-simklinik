@@ -60,11 +60,11 @@
     }
 
     [data-bs-theme=dark] .select2-container--bootstrap-5 .select2-selection {
-        background-color: #000000;
+        background-color: var(--bs-body-bg);
     }
 
     [data-bs-theme=dark] .select2-container--bootstrap-5 .select2-dropdown .select2-search .select2-search__field {
-        background-color: #000000;
+        background-color: var(--bs-body-bg);
     }
 
     [data-bs-theme=dark] .select2-container--bootstrap-5.select2-container--disabled .select2-selection,
