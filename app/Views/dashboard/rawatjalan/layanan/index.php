@@ -170,7 +170,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                                 </tbody>
                             </table>
                         </div>
-                        <div class="card-footer bg-body-tertiary">
+                        <div class="card-footer">
                             <div class="row overflow-hidden d-flex align-items-end">
                                 <div class="col fw-medium text-nowrap">Sub Total</div>
                                 <div class="col text-end">
