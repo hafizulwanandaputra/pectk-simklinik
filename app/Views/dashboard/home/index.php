@@ -221,7 +221,7 @@ $db = db_connect();
                                     <ul class="pagination pagination-sm mb-0"></ul>
                                 </nav>
                             </div>
-                            <div class="card-footer bg-body-tertiary">
+                            <div class="card-footer">
                                 <div class="row overflow-hidden d-flex align-items-end">
                                     <div class="col fw-medium text-nowrap">Total Keseluruhan</div>
                                     <div class="col text-end">
@@ -260,7 +260,7 @@ $db = db_connect();
                                     <ul class="pagination pagination-sm mb-0"></ul>
                                 </nav>
                             </div>
-                            <div class="card-footer bg-body-tertiary">
+                            <div class="card-footer">
                                 <div class="row overflow-hidden d-flex align-items-end">
                                     <div class="col fw-medium text-nowrap">Total Keseluruhan</div>
                                     <div class="col text-end">
@@ -299,7 +299,7 @@ $db = db_connect();
                                     <ul class="pagination pagination-sm mb-0"></ul>
                                 </nav>
                             </div>
-                            <div class="card-footer bg-body-tertiary">
+                            <div class="card-footer">
                                 <div class="row overflow-hidden d-flex align-items-end">
                                     <div class="col fw-medium text-nowrap">Total Keseluruhan</div>
                                     <div class="col text-end">
@@ -338,7 +338,7 @@ $db = db_connect();
                                     <ul class="pagination pagination-sm mb-0"></ul>
                                 </nav>
                             </div>
-                            <div class="card-footer bg-body-tertiary">
+                            <div class="card-footer">
                                 <div class="row overflow-hidden d-flex align-items-end">
                                     <div class="col fw-medium text-nowrap">Total Keseluruhan</div>
                                     <div class="col text-end">
@@ -409,7 +409,7 @@ $db = db_connect();
                                     <ul class="pagination pagination-sm mb-0"></ul>
                                 </nav>
                             </div>
-                            <div class="card-footer bg-body-tertiary">
+                            <div class="card-footer">
                                 <div class="row overflow-hidden d-flex align-items-end">
                                     <div class="col fw-medium text-nowrap">Total Keseluruhan</div>
                                     <div class="col text-end">
@@ -448,7 +448,7 @@ $db = db_connect();
                                     <ul class="pagination pagination-sm mb-0"></ul>
                                 </nav>
                             </div>
-                            <div class="card-footer bg-body-tertiary">
+                            <div class="card-footer">
                                 <div class="row overflow-hidden d-flex align-items-end">
                                     <div class="col fw-medium text-nowrap">Total Keseluruhan</div>
                                     <div class="col text-end">
