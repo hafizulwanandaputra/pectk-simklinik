@@ -57,9 +57,9 @@
                 <table class="table table-sm mb-0" style="width:100%; font-size: 0.75rem;">
                     <thead>
                         <tr class="align-middle">
-                            <th scope="col" class="bg-body-secondary border-secondary text-nowrap tindakan" style="border-bottom-width: 2px; width: 0%;">No</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">Nama Obat</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Sisa Stok</th>
+                            <th scope="col" class="text-nowrap" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 0%;">No</th>
+                            <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 100%;">Nama Obat</th>
+                            <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 0%;">Sisa Stok</th>
                         </tr>
                     </thead>
                     <tbody class="align-top" id="detail_opname_obat">

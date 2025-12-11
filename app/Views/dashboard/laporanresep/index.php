@@ -63,12 +63,12 @@
                                 <table class="table table-sm mb-0" style="width:100%; font-size: 0.75rem;">
                                     <thead>
                                         <tr class="align-middle">
-                                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">No</th>
-                                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 50%;">Dokter</th>
-                                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 50%;">Nama Obat</th>
-                                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Harga Satuan</th>
-                                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Obat Keluar</th>
-                                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Harga</th>
+                                            <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 0%;">No</th>
+                                            <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 50%;">Dokter</th>
+                                            <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 50%;">Nama Obat</th>
+                                            <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 0%;">Harga Satuan</th>
+                                            <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 0%;">Obat Keluar</th>
+                                            <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 0%;">Total Harga</th>
                                         </tr>
                                     </thead>
                                     <tbody class="align-top" id="resepharian">
@@ -121,12 +121,12 @@
                                 <table class="table table-sm mb-0" style="width:100%; font-size: 0.75rem;">
                                     <thead>
                                         <tr class="align-middle">
-                                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">No</th>
-                                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 50%;">Dokter</th>
-                                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 50%;">Nama Obat</th>
-                                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Harga Satuan</th>
-                                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Obat Keluar</th>
-                                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Harga</th>
+                                            <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 0%;">No</th>
+                                            <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 50%;">Dokter</th>
+                                            <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 50%;">Nama Obat</th>
+                                            <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 0%;">Harga Satuan</th>
+                                            <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 0%;">Obat Keluar</th>
+                                            <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 0%;">Total Harga</th>
                                         </tr>
                                     </thead>
                                     <tbody class="align-top" id="resepbulanan">

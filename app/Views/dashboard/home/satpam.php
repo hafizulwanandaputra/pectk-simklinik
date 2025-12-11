@@ -107,12 +107,12 @@ $db = db_connect();
                     <table id="tabel" class="table table-sm table-hover m-0 p-0" style="width:100%; font-size: 0.75rem;">
                         <thead>
                             <tr class="align-middle">
-                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">No.</th>
-                                <th scope="col" class="bg-body-secondary border-secondary text-nowrap" style="border-bottom-width: 2px;">Tindakan</th>
-                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Jaminan</th>
-                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Nomor Antrean</th>
-                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Tanggal dan Waktu Antrean</th>
-                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Satpam</th>
+                                <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px;">No.</th>
+                                <th scope="col" class="text-nowrap" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px;">Tindakan</th>
+                                <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px;">Jaminan</th>
+                                <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px;">Nomor Antrean</th>
+                                <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px;">Tanggal dan Waktu Antrean</th>
+                                <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px;">Satpam</th>
                             </tr>
                         </thead>
                         <tbody class="align-top">

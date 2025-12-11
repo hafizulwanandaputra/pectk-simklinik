@@ -32,15 +32,15 @@
                         <table class="table table-sm mb-0" style="width:100%; font-size: 0.75rem;">
                             <thead>
                                 <tr class="align-middle">
-                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">No</th>
-                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Nomor Kuitansi</th>
-                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 12.5%;">Kasir</th>
-                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Nomor Rekam Medis</th>
-                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 12.5%;">Nama Pasien</th>
-                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Metode Pembayaran</th>
-                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 12.5%;">Dokter</th>
-                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 12.5%;">Tindakan</th>
-                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Kas</th>
+                                    <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 0%;">No</th>
+                                    <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 0%;">Nomor Kuitansi</th>
+                                    <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 12.5%;">Kasir</th>
+                                    <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 0%;">Nomor Rekam Medis</th>
+                                    <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 12.5%;">Nama Pasien</th>
+                                    <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 0%;">Metode Pembayaran</th>
+                                    <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 12.5%;">Dokter</th>
+                                    <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 12.5%;">Tindakan</th>
+                                    <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 0%;">Kas</th>
                                 </tr>
                             </thead>
                             <tbody class="align-top" id="datatransaksi">

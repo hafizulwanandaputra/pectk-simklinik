@@ -42,12 +42,12 @@
                 <table id="tabel" class="table table-sm table-hover m-0 p-0" style="width:100%; font-size: 0.75rem;">
                     <thead>
                         <tr class="align-middle">
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">No.</th>
-                            <th scope="col" class="bg-body-secondary border-secondary text-nowrap" style="border-bottom-width: 2px;">Tindakan</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Kode</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Nama</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Kode Antrian</th>
-                            <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px;">Status</th>
+                            <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px;">No.</th>
+                            <th scope="col" class="text-nowrap" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px;">Tindakan</th>
+                            <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px;">Kode</th>
+                            <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px;">Nama</th>
+                            <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px;">Kode Antrian</th>
+                            <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px;">Status</th>
                         </tr>
                     </thead>
                     <tbody class="align-top">

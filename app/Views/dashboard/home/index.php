@@ -204,9 +204,9 @@ $db = db_connect();
                                         <table class="table table-sm mb-0" style="width:100%; font-size: 0.75rem;">
                                             <thead>
                                                 <tr class="align-middle">
-                                                    <th scope="col" class="bg-body-secondary border-secondary text-nowrap tindakan" style="border-bottom-width: 2px; width: 0%;">No</th>
-                                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">Provinsi</th>
-                                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Pasien</th>
+                                                    <th scope="col" class="text-nowrap" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 0%;">No</th>
+                                                    <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 100%;">Provinsi</th>
+                                                    <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 0%;">Total Pasien</th>
                                                 </tr>
                                             </thead>
                                             <tbody class="align-top" id="view_provinsi">
@@ -243,9 +243,9 @@ $db = db_connect();
                                         <table class="table table-sm mb-0" style="width:100%; font-size: 0.75rem;">
                                             <thead>
                                                 <tr class="align-middle">
-                                                    <th scope="col" class="bg-body-secondary border-secondary text-nowrap tindakan" style="border-bottom-width: 2px; width: 0%;">No</th>
-                                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">Kabupaten/Kota</th>
-                                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Pasien</th>
+                                                    <th scope="col" class="text-nowrap" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 0%;">No</th>
+                                                    <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 100%;">Kabupaten/Kota</th>
+                                                    <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 0%;">Total Pasien</th>
                                                 </tr>
                                             </thead>
                                             <tbody class="align-top" id="view_kabkota">
@@ -282,9 +282,9 @@ $db = db_connect();
                                         <table class="table table-sm mb-0" style="width:100%; font-size: 0.75rem;">
                                             <thead>
                                                 <tr class="align-middle">
-                                                    <th scope="col" class="bg-body-secondary border-secondary text-nowrap tindakan" style="border-bottom-width: 2px; width: 0%;">No</th>
-                                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">Kecamatan</th>
-                                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Pasien</th>
+                                                    <th scope="col" class="text-nowrap" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 0%;">No</th>
+                                                    <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 100%;">Kecamatan</th>
+                                                    <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 0%;">Total Pasien</th>
                                                 </tr>
                                             </thead>
                                             <tbody class="align-top" id="view_kecamatan">
@@ -321,9 +321,9 @@ $db = db_connect();
                                         <table class="table table-sm mb-0" style="width:100%; font-size: 0.75rem;">
                                             <thead>
                                                 <tr class="align-middle">
-                                                    <th scope="col" class="bg-body-secondary border-secondary text-nowrap tindakan" style="border-bottom-width: 2px; width: 0%;">No</th>
-                                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">Kelurahan</th>
-                                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Pasien</th>
+                                                    <th scope="col" class="text-nowrap" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 0%;">No</th>
+                                                    <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 100%;">Kelurahan</th>
+                                                    <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 0%;">Total Pasien</th>
                                                 </tr>
                                             </thead>
                                             <tbody class="align-top" id="view_kelurahan">
@@ -392,9 +392,9 @@ $db = db_connect();
                                         <table class="table table-sm mb-0" style="width:100%; font-size: 0.75rem;">
                                             <thead>
                                                 <tr class="align-middle">
-                                                    <th scope="col" class="bg-body-secondary border-secondary text-nowrap tindakan" style="border-bottom-width: 2px; width: 0%;">No</th>
-                                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">ICD-10</th>
-                                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Kasus</th>
+                                                    <th scope="col" class="text-nowrap" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 0%;">No</th>
+                                                    <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 100%;">ICD-10</th>
+                                                    <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 0%;">Total Kasus</th>
                                                 </tr>
                                             </thead>
                                             <tbody class="align-top" id="view_icd_x">
@@ -431,9 +431,9 @@ $db = db_connect();
                                         <table class="table table-sm mb-0" style="width:100%; font-size: 0.75rem;">
                                             <thead>
                                                 <tr class="align-middle">
-                                                    <th scope="col" class="bg-body-secondary border-secondary text-nowrap tindakan" style="border-bottom-width: 2px; width: 0%;">No</th>
-                                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 100%;">ICD-9 CM</th>
-                                                    <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Tindakan</th>
+                                                    <th scope="col" class="text-nowrap" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 0%;">No</th>
+                                                    <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 100%;">ICD-9 CM</th>
+                                                    <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 0%;">Total Tindakan</th>
                                                 </tr>
                                             </thead>
                                             <tbody class="align-top" id="view_icd_9">

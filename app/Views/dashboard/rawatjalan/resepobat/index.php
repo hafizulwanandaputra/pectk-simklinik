@@ -182,11 +182,11 @@ $usia = $registrasi->diff($tanggal_lahir);
                     <table class="table table-sm mb-0" style="width:100%; font-size: 0.75em;">
                         <thead>
                             <tr class="align-middle">
-                                <th scope="col" class="bg-body-secondary border-secondary text-nowrap tindakan" style="border-bottom-width: 2px; width: 0%;">Tindakan</th>
-                                <th scope="col" class="bg-body-secondary border-secondary col-resize" style="border-bottom-width: 2px; width: 100%;">Obat</th>
-                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Kuantitas</th>
-                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Harga Satuan</th>
-                                <th scope="col" class="bg-body-secondary border-secondary" style="border-bottom-width: 2px; width: 0%;">Total Harga</th>
+                                <th scope="col" class="text-nowrap" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 0%;">Tindakan</th>
+                                <th scope="col" class="col-resize" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 100%;">Obat</th>
+                                <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 0%;">Kuantitas</th>
+                                <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 0%;">Harga Satuan</th>
+                                <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 0%;">Total Harga</th>
                             </tr>
                         </thead>
                         <tbody class="align-top" id="detail_resep">
