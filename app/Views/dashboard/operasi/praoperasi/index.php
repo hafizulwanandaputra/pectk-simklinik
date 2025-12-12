@@ -424,7 +424,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             </div>
             <div class="mb-3 table-responsive">
                 <div class="fw-bold mb-2 border-bottom"><span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">B</span> <em>Checklist</em> Persiapan Pasien Pra Operasi</div>
-                <table class="table table-borderless table-body-hwpweb mb-0">
+                <table class="table table-borderless mb-0" style="--bs-table-bg: var(--bs-body-tertiary-bg);">
                     <tbody>
                         <tr>
                             <td class="py-1 px-0 m-0 align-middle" style="width: 0%;">
