@@ -110,110 +110,166 @@ $usia = $registrasi->diff($tanggal_lahir);
                     </div>
                 <?php endif; ?>
             <?php endif; ?>
-            <div class="card shadow-sm  overflow-auto">
-                <div class="card-header" id="tambahDetailContainer" style="display: none;">
-                    <form id="tambahDetail" enctype="multipart/form-data">
-                        <div class="row g-2">
-                            <div class="col-12 has-validation">
-                                <div class="input-group flex-nowrap">
-                                    <select class="form-select form-select-sm" id="id_batch_obat" name="id_batch_obat" aria-label="id_batch_obat" autocomplete="off">
-                                        <option value="" disabled selected>-- Pilih Obat --</option>
-                                    </select>
-                                    <button id="expired_med_btn" class="btn btn-warning bg-gradient btn-sm" type="button" data-bs-toggle="tooltip" data-bs-title="Peringatan Obat Kedaluwarsa"><i class="fa-solid fa-triangle-exclamation"></i></button>
+            <div class="row <?= (date('Y-m-d', strtotime($rawatjalan['tanggal_registrasi'])) != date('Y-m-d')) ? 'row-cols-1' : 'row-cols-1 row-cols-lg-2'; ?> g-2 mb-2">
+                <div class="col">
+                    <div class="card shadow-sm h-100 overflow-auto">
+                        <div class="card-header" id="tambahDetailContainer" style="display: none;">
+                            <form id="tambahDetail" enctype="multipart/form-data">
+                                <div class="row g-2">
+                                    <div class="col-12 has-validation">
+                                        <div class="input-group flex-nowrap">
+                                            <select class="form-select form-select-sm" id="id_batch_obat" name="id_batch_obat" aria-label="id_batch_obat" autocomplete="off">
+                                                <option value="" disabled selected>-- Pilih Obat --</option>
+                                            </select>
+                                            <button id="expired_med_btn" class="btn btn-warning bg-gradient btn-sm" type="button" data-bs-toggle="tooltip" data-bs-title="Peringatan Obat Kedaluwarsa"><i class="fa-solid fa-triangle-exclamation"></i></button>
+                                        </div>
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                    <div class="col-6">
+                                        <input type="text" id="signa" name="signa" class="form-control form-control-sm" placeholder="Dosis" list="list_signa" autocomplete="off">
+                                        <div class="invalid-feedback"></div>
+                                        <datalist id="list_signa">
+                                            <option value="1×½">
+                                            <option value="1×1">
+                                            <option value="2×½">
+                                            <option value="2×1">
+                                            <option value="3×½">
+                                            <option value="3×1">
+                                            <option value="4×½">
+                                            <option value="4×1">
+                                            <option value="5×½">
+                                            <option value="5×1">
+                                            <option value="6×½">
+                                            <option value="6×1">
+                                        </datalist>
+                                    </div>
+                                    <div class="col-6">
+                                        <input type="text" id="catatan" name="catatan" class="form-control form-control-sm" placeholder="Catatan" list="list_catatan" autocomplete="off">
+                                        <div class="invalid-feedback"></div>
+                                        <datalist id="list_catatan">
+                                            <option value="Tetes">
+                                            <option value="Tablet">
+                                            <option value="Salep">
+                                            <option value="Sendok Teh">
+                                            <option value="Sendok Makan">
+                                        </datalist>
+                                    </div>
+                                    <div class="col-6">
+                                        <select class="form-select form-select-sm" id="cara_pakai" name="cara_pakai" aria-label="cara_pakai">
+                                            <option value="" disabled selected>-- Pilih Cara Pakai --</option>
+                                            <option value="Mata Kanan">Mata Kanan</option>
+                                            <option value="Mata Kiri">Mata Kiri</option>
+                                            <option value="Kedua Mata">Kedua Mata</option>
+                                            <option value="Sebelum Makan">Sebelum Makan</option>
+                                            <option value="Sesudah Makan">Sesudah Makan</option>
+                                            <option value="Sesudah Makan Dihabiskan">Sesudah Makan Dihabiskan</option>
+                                            <option value="Sesudah Makan Bila Sakit">Sesudah Makan Bila Sakit</option>
+                                            <option value="Alat Kesehatan">Alat Kesehatan</option>
+                                        </select>
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                    <div class="col-6">
+                                        <input type="number" id="jumlah" name="jumlah" class="form-control form-control-sm" placeholder="Kuantitas">
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                    <div class="d-grid gap-2 d-lg-flex justify-content-lg-end">
+                                        <button type="submit" id="addButton" class="btn btn-primary bg-gradient btn-sm text-nowrap">
+                                            <i class="fa-solid fa-plus"></i> Tambah
+                                        </button>
+                                    </div>
                                 </div>
-                                <div class="invalid-feedback"></div>
-                            </div>
-                            <div class="col-6">
-                                <input type="text" id="signa" name="signa" class="form-control form-control-sm" placeholder="Dosis" list="list_signa" autocomplete="off">
-                                <div class="invalid-feedback"></div>
-                                <datalist id="list_signa">
-                                    <option value="1×½">
-                                    <option value="1×1">
-                                    <option value="2×½">
-                                    <option value="2×1">
-                                    <option value="3×½">
-                                    <option value="3×1">
-                                    <option value="4×½">
-                                    <option value="4×1">
-                                    <option value="5×½">
-                                    <option value="5×1">
-                                    <option value="6×½">
-                                    <option value="6×1">
-                                </datalist>
-                            </div>
-                            <div class="col-6">
-                                <input type="text" id="catatan" name="catatan" class="form-control form-control-sm" placeholder="Catatan" list="list_catatan" autocomplete="off">
-                                <div class="invalid-feedback"></div>
-                                <datalist id="list_catatan">
-                                    <option value="Tetes">
-                                    <option value="Tablet">
-                                    <option value="Salep">
-                                    <option value="Sendok Teh">
-                                    <option value="Sendok Makan">
-                                </datalist>
-                            </div>
-                            <div class="col-6">
-                                <select class="form-select form-select-sm" id="cara_pakai" name="cara_pakai" aria-label="cara_pakai">
-                                    <option value="" disabled selected>-- Pilih Cara Pakai --</option>
-                                    <option value="Mata Kanan">Mata Kanan</option>
-                                    <option value="Mata Kiri">Mata Kiri</option>
-                                    <option value="Kedua Mata">Kedua Mata</option>
-                                    <option value="Sebelum Makan">Sebelum Makan</option>
-                                    <option value="Sesudah Makan">Sesudah Makan</option>
-                                    <option value="Sesudah Makan Dihabiskan">Sesudah Makan Dihabiskan</option>
-                                    <option value="Sesudah Makan Bila Sakit">Sesudah Makan Bila Sakit</option>
-                                    <option value="Alat Kesehatan">Alat Kesehatan</option>
-                                </select>
-                                <div class="invalid-feedback"></div>
-                            </div>
-                            <div class="col-6">
-                                <input type="number" id="jumlah" name="jumlah" class="form-control form-control-sm" placeholder="Kuantitas">
-                                <div class="invalid-feedback"></div>
-                            </div>
-                            <div class="d-grid gap-2 d-lg-flex justify-content-lg-end">
-                                <button type="submit" id="addButton" class="btn btn-primary bg-gradient btn-sm text-nowrap">
-                                    <i class="fa-solid fa-plus"></i> Tambah
-                                </button>
-                            </div>
+                            </form>
                         </div>
-                    </form>
-                </div>
-                <div class="card-body p-0 m-0 table-responsive">
-                    <table class="table table-sm mb-0" style="width:100%; font-size: 0.75em;">
-                        <thead>
-                            <tr class="align-middle">
-                                <th scope="col" class="text-nowrap" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 0%;">Tindakan</th>
-                                <th scope="col" class="col-resize" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 100%;">Obat</th>
-                                <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 0%;">Kuantitas</th>
-                                <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 0%;">Harga Satuan</th>
-                                <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 0%;">Total Harga</th>
-                            </tr>
-                        </thead>
-                        <tbody class="align-top" id="detail_resep">
-                            <tr>
-                                <td colspan="5" class="text-center">Memuat detail resep...</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="card-footer">
-                    <div class="row overflow-hidden d-flex align-items-end">
-                        <div class="col fw-medium text-nowrap">Total Resep</div>
-                        <div class="col text-end">
-                            <div class="date text-truncate placeholder-glow" id="jumlah_resep">
-                                <span class="placeholder w-100"></span>
-                            </div>
+                        <div class="card-body p-0 m-0 table-responsive">
+                            <table class="table table-sm mb-0" style="width:100%; font-size: 0.75em;">
+                                <thead>
+                                    <tr class="align-middle">
+                                        <th scope="col" class="text-nowrap" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 0%;">Tindakan</th>
+                                        <th scope="col" class="col-resize" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 100%;">Obat</th>
+                                        <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 0%;">Kuantitas</th>
+                                        <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 0%;">Harga Satuan</th>
+                                        <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 0%;">Total Harga</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="align-top" id="detail_resep">
+                                    <tr>
+                                        <td colspan="5" class="text-center">Memuat detail resep...</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
-                    </div>
-                    <div class="row overflow-hidden d-flex align-items-end">
-                        <div class="col fw-medium text-nowrap">Total Harga</div>
-                        <div class="col text-end">
-                            <div class="date text-truncate placeholder-glow fw-bold" id="total_harga">
-                                <span class="placeholder w-100"></span>
+                        <div class="card-footer">
+                            <div class="row overflow-hidden d-flex align-items-end">
+                                <div class="col fw-medium text-nowrap">Total Resep</div>
+                                <div class="col text-end">
+                                    <div class="date text-truncate placeholder-glow" id="jumlah_resep">
+                                        <span class="placeholder w-100"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row overflow-hidden d-flex align-items-end">
+                                <div class="col fw-medium text-nowrap">Total Harga</div>
+                                <div class="col text-end">
+                                    <div class="date text-truncate placeholder-glow fw-bold" id="total_harga">
+                                        <span class="placeholder w-100"></span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <?php if (date('Y-m-d', strtotime($rawatjalan['tanggal_registrasi'])) == date('Y-m-d')) : ?>
+                    <div class="col">
+                        <div class="card shadow-sm h-100 overflow-auto">
+                            <div class="card-header" id="resepOldContainer" style="display: none;">
+                                <div class="row g-2">
+                                    <div class="col-12 has-validation">
+                                        <div class="input-group flex-nowrap">
+                                            <select class="form-select form-select-sm" id="id_resep_old" aria-label="id_resep_old" autocomplete="off">
+                                                <option value="" disabled selected>-- Pilih Resep Sebelumnya --</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body p-0 m-0 table-responsive">
+                                <table class="table table-sm mb-0" style="width:100%; font-size: 0.75em;">
+                                    <thead>
+                                        <tr class="align-middle">
+                                            <th scope="col" class="col-resize" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 100%;">Obat</th>
+                                            <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 0%;">Kuantitas</th>
+                                            <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 0%;">Harga Satuan</th>
+                                            <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 0%;">Total Harga</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="align-top" id="detail_resep_old">
+                                        <tr>
+                                            <td colspan="4" class="text-center">Resep lama dapat ditampilkan di sini.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="card-footer">
+                                <div class="row overflow-hidden d-flex align-items-end">
+                                    <div class="col fw-medium text-nowrap">Total Resep</div>
+                                    <div class="col text-end">
+                                        <div class="date text-truncate placeholder-glow" id="jumlah_resep_old">
+                                            0
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row overflow-hidden d-flex align-items-end">
+                                    <div class="col fw-medium text-nowrap">Total Harga</div>
+                                    <div class="col text-end">
+                                        <div class="date text-truncate placeholder-glow fw-bold" id="total_harga_old">
+                                            Rp0
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <?php endif; ?>
             </div>
 
             <div class="mb-3">
@@ -352,6 +408,50 @@ $usia = $registrasi->diff($tanggal_lahir);
         }
     }
 
+    <?php if (date('Y-m-d', strtotime($rawatjalan['tanggal_registrasi'])) == date('Y-m-d')) : ?>
+        async function fetchResepOldOptions(selectedResep = null) {
+            try {
+                const id_resep = <?= $resep['id_resep']; ?>;
+                const no_rm = `<?= $rawatjalan['no_rm']; ?>`;
+
+                const response = await axios.get('<?= base_url('rawatjalan/resepobat/listresepold/' . $rawatjalan['id_rawat_jalan']) ?>', {
+                    params: {
+                        id_resep: id_resep,
+                        no_rm: no_rm,
+                    }
+                });
+
+                // Jika backend mengembalikan array langsung: []
+                const options = Array.isArray(response.data) ?
+                    response.data :
+                    (response.data.data ?? []);
+
+                const select = $('#id_resep_old');
+
+                // Hapus semua option kecuali placeholder pertama
+                select.find('option:not(:first)').remove();
+
+                // Tambahkan option langsung (tanpa optgroup)
+                options.forEach(option => {
+                    select.append(
+                        $('<option>', {
+                            value: option.value,
+                            text: option.text
+                        })
+                    );
+                });
+
+                // Set kembali nilai terpilih jika ada
+                if (selectedResep) {
+                    select.val(selectedResep).trigger('change');
+                }
+
+            } catch (error) {
+                showFailedToast('Gagal mendapatkan resep obat lama.<br>' + error);
+            }
+        }
+    <?php endif; ?>
+
     async function fetchStatusResep() {
         $('#loadingSpinner').show();
 
@@ -363,12 +463,19 @@ $usia = $registrasi->diff($tanggal_lahir);
             // Cek status `status`
             if (data.status === "1" || data.confirmed === "1") {
                 $('#tambahDetailContainer').hide();
+                $('#resepOldContainer').hide();
                 $('.edit-btn').prop('disabled', true);
                 $('.delete-btn').prop('disabled', true);
                 $('#cancelConfirmBtn').prop('disabled', false);
                 $('#confirmBtn').prop('disabled', true);
+                $('#detail_resep_old').empty().append(
+                    `<tr>
+                        <td colspan="4" class="text-center">Resep lama tidak dapat ditampilkan karena resep ini sudah dikonfirmasi.</td>
+                    </tr>`
+                );
             } else if (data.status === "0" || data.confirmed === "0") {
                 $('#tambahDetailContainer').show();
+                $('#resepOldContainer').show();
                 $('.edit-btn').prop('disabled', false);
                 $('.delete-btn').prop('disabled', false);
                 $('#cancelConfirmBtn').prop('disabled', true);
@@ -491,7 +598,91 @@ $usia = $registrasi->diff($tanggal_lahir);
         }
     }
 
-    $(document).ready(function() {
+    <?php if (date('Y-m-d', strtotime($rawatjalan['tanggal_registrasi'])) == date('Y-m-d')) : ?>
+        async function fetchDetailResepOld() {
+            const id_resep = $('#id_resep_old').val();
+            $('#loadingSpinner').show();
+
+            try {
+                const response = await axios.get(`<?= base_url('rawatjalan/resepobat/listdetailresepold') ?>`, {
+                    params: {
+                        id_resep: id_resep
+                    }
+                });
+
+                const data = response.data;
+                $('#detail_resep_old').empty();
+
+                let jumlahResep = 0;
+                let totalHarga = 0;
+
+                if (data.length === 0) {
+                    // Tampilkan pesan jika tidak ada data
+                    const emptyRow = `
+                    <tr>
+                        <td colspan="5" class="text-center">Resep lama dapat ditampilkan di sini.</td>
+                    </tr>
+                `;
+                    $('#detail_resep_old').append(emptyRow);
+                } else {
+                    data.forEach(function(detail_resep) {
+                        const jumlah = parseInt(detail_resep.jumlah); // Konversi jumlah ke integer
+                        const harga_satuan = parseInt(detail_resep.harga_satuan); // Konversi harga obat ke integer
+                        const total_harga = jumlah * harga_satuan; // Hitung total harga
+                        totalHarga += total_harga;
+                        jumlahResep += jumlah;
+
+                        // Check if the medicine is internal (kapsul/tablet) or external (tetes/salep)
+                        if (['Tablet/Kapsul', 'Sirup'].includes(detail_resep.bentuk_obat)) {
+                            hasInternalMedicine = true;
+                        } else if (['Tetes', 'Salep'].includes(detail_resep.bentuk_obat)) {
+                            hasExternalMedicine = true;
+                        }
+
+                        if (detail_resep.confirmed !== "1") {
+                            allConfirmed = false;
+                        }
+
+                        const kategori_obat = detail_resep.kategori_obat ? `${detail_resep.kategori_obat}, ` : ``;
+                        const signa = detail_resep.signa ? `${detail_resep.signa}` : `<em>Tidak ada dosis</em>`;
+                        const catatan = detail_resep.catatan ? `${detail_resep.catatan}` : `<em>Tidak ada catatan</em>`;
+                        const nama_batch = detail_resep.nama_batch ? `${detail_resep.nama_batch}` : `<em>Tidak ada batch</em>`;
+
+                        const detail_resepElement = `
+                    <tr>
+                        <td><i class="fa-solid fa-prescription"></i> ${detail_resep.nama_obat}
+                        <small>
+                            <ul class="ps-3 mb-0">
+                                <li>${kategori_obat}${detail_resep.bentuk_obat}</li>
+                                <li>${nama_batch}</li>
+                                <li>${signa}, ${detail_resep.cara_pakai}, ${catatan}</li>
+                            </ul>
+                        </small></td>
+                        <td class="date text-end">${jumlah.toLocaleString('id-ID')}</td>
+                        <td class="date text-end">Rp${harga_satuan.toLocaleString('id-ID')}</td>
+                        <td class="date text-end">Rp${total_harga.toLocaleString('id-ID')}</td>
+                    </tr>
+                `;
+
+                        $('#detail_resep_old').append(detail_resepElement);
+                    });
+                }
+                const totalHargaElement = `Rp${totalHarga.toLocaleString('id-ID')}`;
+                const jumlahResepElement = `${jumlahResep.toLocaleString('id-ID')}`;
+                $('#total_harga_old').text(totalHargaElement);
+                $('#jumlah_resep_old').text(jumlahResepElement);
+            } catch (error) {
+                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                $('.col-resize').css('min-width', '0');
+                $('#detail_resep_old').empty();
+            } finally {
+                // Hide the spinner when done
+                $('#loadingSpinner').hide();
+            }
+        }
+    <?php endif; ?>
+
+    $(document).ready(async function() {
         const socket = new WebSocket('<?= env('WS-URL-JS') ?>'); // Ganti dengan domain VPS
 
         socket.onopen = () => {
@@ -506,6 +697,10 @@ $usia = $registrasi->diff($tanggal_lahir);
                 const selectedObat = $('#id_batch_obat').val();
                 await fetchObatOptions(selectedObat);
                 fetchDetailResep();
+                <?php if (date('Y-m-d', strtotime($rawatjalan['tanggal_registrasi'])) == date('Y-m-d')) : ?>
+                    fetchResepOldOptions();
+                    fetchDetailResepOld();
+                <?php endif; ?>
             } else if (data.update) {
                 console.log("Received update from WebSocket");
                 fetchStatusResep();
@@ -517,11 +712,14 @@ $usia = $registrasi->diff($tanggal_lahir);
         };
 
         $('[data-bs-toggle="tooltip"]').tooltip();
-        $('#id_batch_obat').select2({
+        $('#id_batch_obat, #id_resep_old').select2({
             dropdownParent: $(document.body),
             theme: "bootstrap-5",
             width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
             placeholder: $(this).data('placeholder'),
+        });
+        $('#id_resep_old').on('select2:select', function() {
+            fetchDetailResepOld();
         });
 
         // Cari semua elemen dengan kelas 'activeLink' di kedua navigasi
@@ -634,6 +832,14 @@ $usia = $registrasi->diff($tanggal_lahir);
 
             try {
                 await axios.post(`<?= base_url('/rawatjalan/resepobat/confirm/' . $resep['id_resep']) ?>`);
+                $('#detail_resep_old').empty().append(
+                    `<tr>
+                        <td colspan="4" class="text-center">Resep lama tidak dapat ditampilkan karena resep ini sudah dikonfirmasi.</td>
+                    </tr>`
+                );
+                $('#id_resep_old').val(null).trigger('change');
+                $('#jumlah_resep_old').text('0');
+                $('#total_harga_old').text('Rp0');
                 fetchDetailResep();
                 fetchObatOptions();
                 fetchStatusResep();
@@ -662,6 +868,13 @@ $usia = $registrasi->diff($tanggal_lahir);
 
             try {
                 await axios.post(`<?= base_url('/rawatjalan/resepobat/cancel/' . $resep['id_resep']) ?>`);
+                $('#detail_resep_old').empty().append(
+                    `<tr>
+                        <td colspan="4" class="text-center">Resep lama dapat ditampilkan di sini.</td>
+                    </tr>`
+                );
+                $('#jumlah_resep_old').text('0');
+                $('#total_harga_old').text('Rp0');
                 fetchDetailResep();
                 fetchObatOptions();
                 fetchStatusResep();
@@ -950,6 +1163,10 @@ $usia = $registrasi->diff($tanggal_lahir);
                 const selectedObat = $('#id_batch_obat').val();
                 await fetchObatOptions(selectedObat);
                 fetchDetailResep();
+                <?php if (date('Y-m-d', strtotime($rawatjalan['tanggal_registrasi'])) == date('Y-m-d')) : ?>
+                    fetchResepOldOptions();
+                    fetchDetailResepOld();
+                <?php endif; ?>
                 fetchStatusResep();
             }
         });
@@ -959,11 +1176,19 @@ $usia = $registrasi->diff($tanggal_lahir);
             const selectedObat = $('#id_batch_obat').val();
             await fetchObatOptions(selectedObat);
             fetchDetailResep();
+            <?php if (date('Y-m-d', strtotime($rawatjalan['tanggal_registrasi'])) == date('Y-m-d')) : ?>
+                fetchResepOldOptions();
+                fetchDetailResepOld();
+            <?php endif; ?>
             fetchStatusResep();
         });
 
+        await fetchObatOptions();
         fetchDetailResep();
-        fetchObatOptions();
+        <?php if (date('Y-m-d', strtotime($rawatjalan['tanggal_registrasi'])) == date('Y-m-d')) : ?>
+            fetchResepOldOptions();
+            fetchDetailResepOld();
+        <?php endif; ?>
         fetchStatusResep();
     });
     // Show toast notification

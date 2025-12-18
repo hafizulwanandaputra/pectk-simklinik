@@ -133,6 +133,8 @@ $routes->get('/(?i)uploads/(?i)scan_penunjang/(:any)', 'PenunjangScan::gambar/$1
 // RESEP OBAT
 $routes->get('/(?i)rawatjalan/(?i)resepobat/(:num)', 'ResepObat::index/$1');
 $routes->post('/(?i)rawatjalan/(?i)resepobat/(?i)create/(:any)', 'ResepObat::create/$1');
+$routes->get('/(?i)rawatjalan/(?i)resepobat/(?i)listresepold/(:num)', 'ResepObat::listresepold/$1');
+$routes->get('/(?i)rawatjalan/(?i)resepobat/(?i)listdetailresepold', 'ResepObat::listdetailresepold');
 $routes->post('/(?i)rawatjalan/(?i)resepobat/(?i)confirm/(:any)', 'ResepObat::confirm/$1');
 $routes->post('/(?i)rawatjalan/(?i)resepobat/(?i)cancel/(:any)', 'ResepObat::cancel/$1');
 

@@ -156,6 +156,76 @@ class ResepObat extends BaseController
         }
     }
 
+    public function listresepold($id)
+    {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Dokter' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
+            // Ambil parameter no_rm
+            $id_resep = $this->request->getGet('id_resep');
+            $no_rm = $this->request->getGet('no_rm');
+
+            // Jika no_rm tidak ada / kosong → kirim data kosong
+            if (empty($id_resep) && empty($no_rm)) {
+                return $this->response->setJSON([]);
+            }
+
+            // ambil resep berdasarkan ID
+            $results = $this->ResepModel
+                ->where('id_resep !=', $id_resep)
+                ->where('no_rm', $no_rm)
+                ->findAll();
+
+            $options = [];
+            // Memetakan hasil resep ke dalam format yang diinginkan
+            foreach ($results as $row) {
+                $total_biaya = (int) $row['total_biaya']; // Mengonversi total biaya ke integer
+                $total_biaya_terformat = number_format($total_biaya, 0, ',', '.'); // Memformat total biaya
+
+                $options[] = [
+                    'value' => $row['id_resep'], // ID resep
+                    'text' =>  $row['nomor_registrasi'] . ' (' . $row['tanggal_resep'] . ' • Rp' . $total_biaya_terformat . ')' // Tanggal resep dengan total biaya terformat
+                ];
+            }
+
+            // Mengembalikan opsi resep dalam bentuk JSON
+            return $this->response->setJSON([
+                'success' => true,
+                'data' => $options,
+            ]);
+        } else {
+            // Mengembalikan status 404 jika peran tidak diizinkan
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
+        }
+    }
+
+    public function listdetailresepold()
+    {
+        // Memeriksa peran pengguna, hanya 'Admin' dan 'Dokter' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
+            $id = $this->request->getGet('id_resep');
+            // Jika no_rm tidak ada / kosong → kirim data kosong
+            if (empty($id)) {
+                return $this->response->setJSON([]);
+            }
+            // Mengambil detail resep berdasarkan id_resep yang diberikan
+            $data = $this->DetailResepModel
+                ->join('resep', 'resep.id_resep = detail_resep.id_resep', 'inner') // Bergabung dengan tabel resep
+                ->where('detail_resep.id_resep', $id)
+                ->orderBy('id_detail_resep', 'ASC') // Mengurutkan berdasarkan id_detail_resep
+                ->findAll();
+
+            // Mengembalikan data dalam format JSON
+            return $this->response->setJSON($data);
+        } else {
+            // Mengembalikan status 404 jika peran tidak diizinkan
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
+        }
+    }
+
     public function confirm($id)
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Dokter' yang diizinkan
