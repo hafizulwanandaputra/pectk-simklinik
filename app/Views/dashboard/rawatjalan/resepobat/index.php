@@ -254,7 +254,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                                     <div class="col fw-medium text-nowrap">Total Resep</div>
                                     <div class="col text-end">
                                         <div class="date text-truncate placeholder-glow" id="jumlah_resep_old">
-                                            0
+                                            <span class="placeholder w-100"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -262,7 +262,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                                     <div class="col fw-medium text-nowrap">Total Harga</div>
                                     <div class="col text-end">
                                         <div class="date text-truncate placeholder-glow fw-bold" id="total_harga_old">
-                                            Rp0
+                                            <span class="placeholder w-100"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -641,6 +641,8 @@ $usia = $registrasi->diff($tanggal_lahir);
                     } else if (resep.confirmed === "0") {
                         $('#detail_resep_old').append(emptyRow);
                     }
+                    $('#total_harga_old').text('Rp0');
+                    $('#jumlah_resep_old').text('0');
                 } else {
                     data.forEach(function(detail_resep) {
                         const jumlah = parseInt(detail_resep.jumlah); // Konversi jumlah ke integer
