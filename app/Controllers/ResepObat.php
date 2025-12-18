@@ -243,6 +243,17 @@ class ResepObat extends BaseController
                 ]);
             }
 
+            $detailCount = $db->table('detail_resep')
+                ->where('id_resep', $id)
+                ->countAllResults();
+
+            if ($detailCount < 1) {
+                return $this->response->setStatusCode(400)->setJSON([
+                    'success' => false,
+                    'message' => 'Gagal mengonfirmasi resep, detail resep masih kosong.'
+                ]);
+            }
+
             if (session()->get('role') == 'Dokter') {
                 if (!$prescription) {
                     // Jika dokter tidak sesuai atau resep tidak ditemukan

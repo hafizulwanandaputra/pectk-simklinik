@@ -244,7 +244,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                                     </thead>
                                     <tbody class="align-top" id="detail_resep_old">
                                         <tr>
-                                            <td colspan="4" class="text-center">Resep lama dapat ditampilkan di sini.</td>
+                                            <td colspan="4" class="text-center">Memuat detail resep...</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -602,6 +602,13 @@ $usia = $registrasi->diff($tanggal_lahir);
         async function fetchDetailResepOld() {
             const id_resep = $('#id_resep_old').val();
             $('#loadingSpinner').show();
+            $('#detail_resep_old').empty();
+            const LoadingRow = `
+                    <tr>
+                        <td colspan="5" class="text-center">Memuat detail resep...</td>
+                    </tr>
+                `;
+            $('#detail_resep_old').append(LoadingRow);
 
             try {
                 const response = await axios.get(`<?= base_url('rawatjalan/resepobat/listdetailresepold') ?>`, {
@@ -697,10 +704,6 @@ $usia = $registrasi->diff($tanggal_lahir);
                 const selectedObat = $('#id_batch_obat').val();
                 await fetchObatOptions(selectedObat);
                 fetchDetailResep();
-                <?php if (date('Y-m-d', strtotime($rawatjalan['tanggal_registrasi'])) == date('Y-m-d') && $rawatjalan['status_kunjungan'] == 'LAMA') : ?>
-                    fetchResepOldOptions();
-                    fetchDetailResepOld();
-                <?php endif; ?>
             } else if (data.update) {
                 console.log("Received update from WebSocket");
                 fetchStatusResep();
@@ -805,8 +808,8 @@ $usia = $registrasi->diff($tanggal_lahir);
                 await axios.delete(`<?= base_url('/resep/hapusdetailresep') ?>/${detailResepId}`);
                 const selectedObat = $('#id_batch_obat').val();
                 await fetchObatOptions(selectedObat);
+                await fetchStatusResep();
                 fetchDetailResep();
-                fetchStatusResep();
             } catch (error) {
                 if (error.response.request.status === 400) {
                     showFailedToast(error.response.data.message);
@@ -840,9 +843,9 @@ $usia = $registrasi->diff($tanggal_lahir);
                 $('#id_resep_old').val(null).trigger('change');
                 $('#jumlah_resep_old').text('0');
                 $('#total_harga_old').text('Rp0');
+                await fetchObatOptions();
+                await fetchStatusResep();
                 fetchDetailResep();
-                fetchObatOptions();
-                fetchStatusResep();
             } catch (error) {
                 if (error.response.request.status === 400) {
                     showFailedToast(error.response.data.message);
@@ -875,9 +878,9 @@ $usia = $registrasi->diff($tanggal_lahir);
                 );
                 $('#jumlah_resep_old').text('0');
                 $('#total_harga_old').text('Rp0');
+                await fetchObatOptions();
+                await fetchStatusResep();
                 fetchDetailResep();
-                fetchObatOptions();
-                fetchStatusResep();
             } catch (error) {
                 if (error.response.request.status === 400) {
                     showFailedToast(error.response.data.message);
@@ -1005,8 +1008,8 @@ $usia = $registrasi->diff($tanggal_lahir);
                             $('#editDetailResep').remove();
                             const selectedObat = $('#id_batch_obat').val();
                             await fetchObatOptions(selectedObat);
+                            await fetchStatusResep();
                             fetchDetailResep();
-                            fetchStatusResep();
                         } else {
                             console.log("Validation Errors:", response.data.errors);
 
@@ -1096,8 +1099,8 @@ $usia = $registrasi->diff($tanggal_lahir);
                     $('#tambahDetail .invalid-feedback').text('').hide();
                     const selectedObat = $('#id_batch_obat').val();
                     await fetchObatOptions(selectedObat);
+                    await fetchStatusResep();
                     fetchDetailResep();
-                    fetchStatusResep();
                 } else {
                     console.log("Validation Errors:", response.data.errors);
 
@@ -1162,12 +1165,8 @@ $usia = $registrasi->diff($tanggal_lahir);
             if (document.visibilityState === "visible") {
                 const selectedObat = $('#id_batch_obat').val();
                 await fetchObatOptions(selectedObat);
+                await fetchStatusResep();
                 fetchDetailResep();
-                <?php if (date('Y-m-d', strtotime($rawatjalan['tanggal_registrasi'])) == date('Y-m-d') && $rawatjalan['status_kunjungan'] == 'LAMA') : ?>
-                    fetchResepOldOptions();
-                    fetchDetailResepOld();
-                <?php endif; ?>
-                fetchStatusResep();
             }
         });
 
@@ -1175,21 +1174,17 @@ $usia = $registrasi->diff($tanggal_lahir);
             e.preventDefault();
             const selectedObat = $('#id_batch_obat').val();
             await fetchObatOptions(selectedObat);
+            await fetchStatusResep();
             fetchDetailResep();
-            <?php if (date('Y-m-d', strtotime($rawatjalan['tanggal_registrasi'])) == date('Y-m-d') && $rawatjalan['status_kunjungan'] == 'LAMA') : ?>
-                fetchResepOldOptions();
-                fetchDetailResepOld();
-            <?php endif; ?>
-            fetchStatusResep();
         });
 
         await fetchObatOptions();
+        await fetchStatusResep();
         fetchDetailResep();
         <?php if (date('Y-m-d', strtotime($rawatjalan['tanggal_registrasi'])) == date('Y-m-d') && $rawatjalan['status_kunjungan'] == 'LAMA') : ?>
             fetchResepOldOptions();
             fetchDetailResepOld();
         <?php endif; ?>
-        fetchStatusResep();
     });
     // Show toast notification
     <?= $this->include('toast/index') ?>

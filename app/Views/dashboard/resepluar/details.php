@@ -441,7 +441,7 @@
         }
     }
 
-    $(document).ready(function() {
+    $(document).ready(async function() {
         const socket = new WebSocket('<?= env('WS-URL-JS') ?>'); // Ganti dengan domain VPS
 
         socket.onopen = () => {
@@ -546,8 +546,8 @@
                 await axios.delete(`<?= base_url('/resepluar/hapusdetailresep') ?>/${detailResepId}`);
                 const selectedObat = $('#id_batch_obat').val();
                 await fetchObatOptions(selectedObat);
+                await fetchStatusResep();
                 fetchDetailResep();
-                fetchStatusResep();
             } catch (error) {
                 if (error.response.request.status === 401) {
                     showFailedToast(error.response.data.message);
@@ -675,8 +675,8 @@
                             $('#editDetailResep').remove();
                             const selectedObat = $('#id_batch_obat').val();
                             await fetchObatOptions(selectedObat);
+                            await fetchStatusResep();
                             fetchDetailResep();
-                            fetchStatusResep();
                         } else {
                             console.log("Validation Errors:", response.data.errors);
 
@@ -766,8 +766,8 @@
                     $('#tambahDetail .invalid-feedback').text('').hide();
                     const selectedObat = $('#id_batch_obat').val();
                     await fetchObatOptions(selectedObat);
+                    await fetchStatusResep();
                     fetchDetailResep();
-                    fetchStatusResep();
                 } else {
                     console.log("Validation Errors:", response.data.errors);
 
@@ -880,8 +880,8 @@
             if (document.visibilityState === "visible") {
                 const selectedObat = $('#id_batch_obat').val();
                 await fetchObatOptions(selectedObat);
+                await fetchStatusResep();
                 fetchDetailResep();
-                fetchStatusResep();
             }
         });
 
@@ -889,13 +889,13 @@
             e.preventDefault();
             const selectedObat = $('#id_batch_obat').val();
             await fetchObatOptions(selectedObat);
+            await fetchStatusResep();
             fetchDetailResep();
-            fetchStatusResep();
         });
 
-        fetchObatOptions();
+        await fetchObatOptions();
+        await fetchStatusResep();
         fetchDetailResep();
-        fetchStatusResep();
     });
     // Show toast notification
     <?= $this->include('toast/index') ?>
