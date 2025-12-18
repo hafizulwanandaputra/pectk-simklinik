@@ -627,7 +627,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                     // Tampilkan pesan jika tidak ada data
                     const emptyRow = `
                     <tr>
-                        <td colspan="5" class="text-center">Resep lama dapat ditampilkan di sini.</td>
+                        <td colspan="5" class="text-center">Resep lama dapat ditampilkan di sini</td>
                     </tr>
                 `;
                     $('#detail_resep_old').append(emptyRow);
@@ -837,7 +837,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 await axios.post(`<?= base_url('/rawatjalan/resepobat/confirm/' . $resep['id_resep']) ?>`);
                 $('#detail_resep_old').empty().append(
                     `<tr>
-                        <td colspan="4" class="text-center">Resep lama tidak dapat ditampilkan karena resep ini sudah dikonfirmasi.</td>
+                        <td colspan="4" class="text-center">Resep lama tidak dapat ditampilkan karena resep ini sudah dikonfirmasi</td>
                     </tr>`
                 );
                 $('#id_resep_old').val(null).trigger('change');
@@ -873,7 +873,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 await axios.post(`<?= base_url('/rawatjalan/resepobat/cancel/' . $resep['id_resep']) ?>`);
                 $('#detail_resep_old').empty().append(
                     `<tr>
-                        <td colspan="4" class="text-center">Resep lama dapat ditampilkan di sini.</td>
+                        <td colspan="4" class="text-center">Resep lama dapat ditampilkan di sini</td>
                     </tr>`
                 );
                 $('#jumlah_resep_old').text('0');
