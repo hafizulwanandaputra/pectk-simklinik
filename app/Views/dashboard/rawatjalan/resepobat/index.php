@@ -244,7 +244,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                                     </thead>
                                     <tbody class="align-top" id="detail_resep_old">
                                         <tr>
-                                            <td colspan="4" class="text-center">Memuat detail resep...</td>
+                                            <td colspan="4" class="text-center">Memuat detail resep lama...</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -605,7 +605,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             $('#detail_resep_old').empty();
             const LoadingRow = `
                     <tr>
-                        <td colspan="5" class="text-center">Memuat detail resep...</td>
+                        <td colspan="5" class="text-center">Memuat detail resep lama...</td>
                     </tr>
                 `;
             $('#detail_resep_old').append(LoadingRow);
