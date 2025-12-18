@@ -470,7 +470,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 $('#confirmBtn').prop('disabled', true);
                 $('#detail_resep_old').empty().append(
                     `<tr>
-                        <td colspan="4" class="text-center">Resep lama tidak dapat ditampilkan karena resep ini sudah dikonfirmasi.</td>
+                        <td colspan="4" class="text-center">Resep lama tidak dapat ditampilkan karena resep ini sudah dikonfirmasi</td>
                     </tr>`
                 );
             } else if (data.status === "0" || data.confirmed === "0") {
