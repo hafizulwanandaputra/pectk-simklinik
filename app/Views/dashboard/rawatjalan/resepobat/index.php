@@ -110,7 +110,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                     </div>
                 <?php endif; ?>
             <?php endif; ?>
-            <div class="row <?= (date('Y-m-d', strtotime($rawatjalan['tanggal_registrasi'])) != date('Y-m-d')) ? 'row-cols-1' : 'row-cols-1 row-cols-lg-2'; ?> g-2 mb-2">
+            <div class="row <?= (date('Y-m-d', strtotime($rawatjalan['tanggal_registrasi'])) != date('Y-m-d') || $rawatjalan['status_kunjungan'] == 'BARU') ? 'row-cols-1' : 'row-cols-1 row-cols-lg-2'; ?> g-2 mb-2">
                 <div class="col">
                     <div class="card shadow-sm h-100 overflow-auto">
                         <div class="card-header" id="tambahDetailContainer" style="display: none;">
@@ -218,7 +218,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                         </div>
                     </div>
                 </div>
-                <?php if (date('Y-m-d', strtotime($rawatjalan['tanggal_registrasi'])) == date('Y-m-d')) : ?>
+                <?php if (date('Y-m-d', strtotime($rawatjalan['tanggal_registrasi'])) == date('Y-m-d') && $rawatjalan['status_kunjungan'] == 'LAMA') : ?>
                     <div class="col">
                         <div class="card shadow-sm h-100 overflow-auto">
                             <div class="card-header" id="resepOldContainer" style="display: none;">
@@ -408,7 +408,7 @@ $usia = $registrasi->diff($tanggal_lahir);
         }
     }
 
-    <?php if (date('Y-m-d', strtotime($rawatjalan['tanggal_registrasi'])) == date('Y-m-d')) : ?>
+    <?php if (date('Y-m-d', strtotime($rawatjalan['tanggal_registrasi'])) == date('Y-m-d') && $rawatjalan['status_kunjungan'] == 'LAMA') : ?>
         async function fetchResepOldOptions(selectedResep = null) {
             try {
                 const id_resep = <?= $resep['id_resep']; ?>;
@@ -598,7 +598,7 @@ $usia = $registrasi->diff($tanggal_lahir);
         }
     }
 
-    <?php if (date('Y-m-d', strtotime($rawatjalan['tanggal_registrasi'])) == date('Y-m-d')) : ?>
+    <?php if (date('Y-m-d', strtotime($rawatjalan['tanggal_registrasi'])) == date('Y-m-d') && $rawatjalan['status_kunjungan'] == 'LAMA') : ?>
         async function fetchDetailResepOld() {
             const id_resep = $('#id_resep_old').val();
             $('#loadingSpinner').show();
@@ -697,7 +697,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 const selectedObat = $('#id_batch_obat').val();
                 await fetchObatOptions(selectedObat);
                 fetchDetailResep();
-                <?php if (date('Y-m-d', strtotime($rawatjalan['tanggal_registrasi'])) == date('Y-m-d')) : ?>
+                <?php if (date('Y-m-d', strtotime($rawatjalan['tanggal_registrasi'])) == date('Y-m-d') && $rawatjalan['status_kunjungan'] == 'LAMA') : ?>
                     fetchResepOldOptions();
                     fetchDetailResepOld();
                 <?php endif; ?>
@@ -1163,7 +1163,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 const selectedObat = $('#id_batch_obat').val();
                 await fetchObatOptions(selectedObat);
                 fetchDetailResep();
-                <?php if (date('Y-m-d', strtotime($rawatjalan['tanggal_registrasi'])) == date('Y-m-d')) : ?>
+                <?php if (date('Y-m-d', strtotime($rawatjalan['tanggal_registrasi'])) == date('Y-m-d') && $rawatjalan['status_kunjungan'] == 'LAMA') : ?>
                     fetchResepOldOptions();
                     fetchDetailResepOld();
                 <?php endif; ?>
@@ -1176,7 +1176,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             const selectedObat = $('#id_batch_obat').val();
             await fetchObatOptions(selectedObat);
             fetchDetailResep();
-            <?php if (date('Y-m-d', strtotime($rawatjalan['tanggal_registrasi'])) == date('Y-m-d')) : ?>
+            <?php if (date('Y-m-d', strtotime($rawatjalan['tanggal_registrasi'])) == date('Y-m-d') && $rawatjalan['status_kunjungan'] == 'LAMA') : ?>
                 fetchResepOldOptions();
                 fetchDetailResepOld();
             <?php endif; ?>
@@ -1185,7 +1185,7 @@ $usia = $registrasi->diff($tanggal_lahir);
 
         await fetchObatOptions();
         fetchDetailResep();
-        <?php if (date('Y-m-d', strtotime($rawatjalan['tanggal_registrasi'])) == date('Y-m-d')) : ?>
+        <?php if (date('Y-m-d', strtotime($rawatjalan['tanggal_registrasi'])) == date('Y-m-d') && $rawatjalan['status_kunjungan'] == 'LAMA') : ?>
             fetchResepOldOptions();
             fetchDetailResepOld();
         <?php endif; ?>
