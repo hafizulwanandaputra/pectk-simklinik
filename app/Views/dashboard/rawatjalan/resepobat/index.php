@@ -110,7 +110,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                     </div>
                 <?php endif; ?>
             <?php endif; ?>
-            <div class="row <?= (date('Y-m-d', strtotime($rawatjalan['tanggal_registrasi'])) != date('Y-m-d') || $rawatjalan['status_kunjungan'] == 'BARU') ? 'row-cols-1' : 'row-cols-1 row-cols-lg-2'; ?> g-2 mb-2">
+            <div class="row <?= ($rawatjalan['status_kunjungan'] == 'BARU') ? 'row-cols-1' : 'row-cols-1 row-cols-lg-2'; ?> g-2 mb-2">
                 <div class="col">
                     <div class="card shadow-sm h-100 overflow-auto">
                         <div class="card-header" id="tambahDetailContainer" style="display: none;">
@@ -218,7 +218,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                         </div>
                     </div>
                 </div>
-                <?php if (date('Y-m-d', strtotime($rawatjalan['tanggal_registrasi'])) == date('Y-m-d') && $rawatjalan['status_kunjungan'] == 'LAMA') : ?>
+                <?php if ($rawatjalan['status_kunjungan'] == 'LAMA') : ?>
                     <div class="col">
                         <div class="card shadow-sm h-100 overflow-auto">
                             <div class="card-header" id="resepOldContainer" style="display: none;">
@@ -244,7 +244,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                                     </thead>
                                     <tbody class="align-top" id="detail_resep_old">
                                         <tr>
-                                            <td colspan="4" class="text-center">Memuat detail resep...</td>
+                                            <td colspan="4" class="text-center">Memuat detail resep lama...</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -254,7 +254,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                                     <div class="col fw-medium text-nowrap">Total Resep</div>
                                     <div class="col text-end">
                                         <div class="date text-truncate placeholder-glow" id="jumlah_resep_old">
-                                            0
+                                            <span class="placeholder w-100"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -262,7 +262,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                                     <div class="col fw-medium text-nowrap">Total Harga</div>
                                     <div class="col text-end">
                                         <div class="date text-truncate placeholder-glow fw-bold" id="total_harga_old">
-                                            Rp0
+                                            <span class="placeholder w-100"></span>
                                         </div>
                                     </div>
                                 </div>
@@ -408,7 +408,7 @@ $usia = $registrasi->diff($tanggal_lahir);
         }
     }
 
-    <?php if (date('Y-m-d', strtotime($rawatjalan['tanggal_registrasi'])) == date('Y-m-d') && $rawatjalan['status_kunjungan'] == 'LAMA') : ?>
+    <?php if ($rawatjalan['status_kunjungan'] == 'LAMA') : ?>
         async function fetchResepOldOptions(selectedResep = null) {
             try {
                 const id_resep = <?= $resep['id_resep']; ?>;
@@ -470,7 +470,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 $('#confirmBtn').prop('disabled', true);
                 $('#detail_resep_old').empty().append(
                     `<tr>
-                        <td colspan="4" class="text-center">Resep lama tidak dapat ditampilkan karena resep ini sudah dikonfirmasi.</td>
+                        <td colspan="4" class="text-center">Resep lama tidak dapat ditampilkan karena resep ini sudah dikonfirmasi</td>
                     </tr>`
                 );
             } else if (data.status === "0" || data.confirmed === "0") {
@@ -598,26 +598,27 @@ $usia = $registrasi->diff($tanggal_lahir);
         }
     }
 
-    <?php if (date('Y-m-d', strtotime($rawatjalan['tanggal_registrasi'])) == date('Y-m-d') && $rawatjalan['status_kunjungan'] == 'LAMA') : ?>
+    <?php if ($rawatjalan['status_kunjungan'] == 'LAMA') : ?>
         async function fetchDetailResepOld() {
             const id_resep = $('#id_resep_old').val();
             $('#loadingSpinner').show();
             $('#detail_resep_old').empty();
             const LoadingRow = `
                     <tr>
-                        <td colspan="5" class="text-center">Memuat detail resep...</td>
+                        <td colspan="5" class="text-center">Memuat detail resep lama...</td>
                     </tr>
                 `;
             $('#detail_resep_old').append(LoadingRow);
 
             try {
-                const response = await axios.get(`<?= base_url('rawatjalan/resepobat/listdetailresepold') ?>`, {
+                const response = await axios.get(`<?= base_url('rawatjalan/resepobat/listdetailresepold/') . $resep['id_resep'] ?>`, {
                     params: {
                         id_resep: id_resep
                     }
                 });
 
-                const data = response.data;
+                const data = response.data.data;
+                const resep = response.data.resep;
                 $('#detail_resep_old').empty();
 
                 let jumlahResep = 0;
@@ -629,8 +630,19 @@ $usia = $registrasi->diff($tanggal_lahir);
                     <tr>
                         <td colspan="5" class="text-center">Resep lama dapat ditampilkan di sini</td>
                     </tr>
-                `;
-                    $('#detail_resep_old').append(emptyRow);
+                    `;
+                    const confirmedRow = `
+                    <tr>
+                        <td colspan="5" class="text-center">Resep lama tidak dapat ditampilkan karena resep ini sudah dikonfirmasi</td>
+                    </tr>
+                    `;
+                    if (resep.confirmed === "1") {
+                        $('#detail_resep_old').append(confirmedRow);
+                    } else if (resep.confirmed === "0") {
+                        $('#detail_resep_old').append(emptyRow);
+                    }
+                    $('#total_harga_old').text('Rp0');
+                    $('#jumlah_resep_old').text('0');
                 } else {
                     data.forEach(function(detail_resep) {
                         const jumlah = parseInt(detail_resep.jumlah); // Konversi jumlah ke integer
@@ -1181,7 +1193,7 @@ $usia = $registrasi->diff($tanggal_lahir);
         await fetchObatOptions();
         await fetchStatusResep();
         fetchDetailResep();
-        <?php if (date('Y-m-d', strtotime($rawatjalan['tanggal_registrasi'])) == date('Y-m-d') && $rawatjalan['status_kunjungan'] == 'LAMA') : ?>
+        <?php if ($rawatjalan['status_kunjungan'] == 'LAMA') : ?>
             fetchResepOldOptions();
             fetchDetailResepOld();
         <?php endif; ?>

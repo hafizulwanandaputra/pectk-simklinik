@@ -201,24 +201,27 @@ class ResepObat extends BaseController
         }
     }
 
-    public function listdetailresepold()
+    public function listdetailresepold($id)
     {
         // Memeriksa peran pengguna, hanya 'Admin' dan 'Dokter' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
-            $id = $this->request->getGet('id_resep');
-            // Jika no_rm tidak ada / kosong → kirim data kosong
-            if (empty($id)) {
-                return $this->response->setJSON([]);
-            }
+            $id_resep = $this->request->getGet('id_resep');
+            // ambil resep berdasarkan ID
+            $resep = $this->ResepModel
+                ->where('id_resep', $id)
+                ->first();
             // Mengambil detail resep berdasarkan id_resep yang diberikan
             $data = $this->DetailResepModel
                 ->join('resep', 'resep.id_resep = detail_resep.id_resep', 'inner') // Bergabung dengan tabel resep
-                ->where('detail_resep.id_resep', $id)
+                ->where('detail_resep.id_resep', $id_resep)
                 ->orderBy('id_detail_resep', 'ASC') // Mengurutkan berdasarkan id_detail_resep
                 ->findAll();
 
             // Mengembalikan data dalam format JSON
-            return $this->response->setJSON($data);
+            return $this->response->setJSON([
+                'resep' => $resep,
+                'data' => $data,
+            ]);
         } else {
             // Mengembalikan status 404 jika peran tidak diizinkan
             return $this->response->setStatusCode(404)->setJSON([
