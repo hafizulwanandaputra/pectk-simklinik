@@ -200,7 +200,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                         </div>
                         <div class="card-footer">
                             <div class="row overflow-hidden d-flex align-items-end">
-                                <div class="col fw-medium text-nowrap">Total Resep</div>
+                                <div class="col fw-medium text-nowrap">Total Obat</div>
                                 <div class="col text-end">
                                     <div class="date text-truncate placeholder-glow" id="jumlah_resep">
                                         <span class="placeholder w-100"></span>
@@ -251,7 +251,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             </div>
                             <div class="card-footer">
                                 <div class="row overflow-hidden d-flex align-items-end">
-                                    <div class="col fw-medium text-nowrap">Total Resep</div>
+                                    <div class="col fw-medium text-nowrap">Total Obat</div>
                                     <div class="col text-end">
                                         <div class="date text-truncate placeholder-glow" id="jumlah_resep_old">
                                             <span class="placeholder w-100"></span>
