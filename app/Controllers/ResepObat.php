@@ -173,6 +173,7 @@ class ResepObat extends BaseController
             $results = $this->ResepModel
                 ->where('id_resep !=', $id_resep)
                 ->where('no_rm', $no_rm)
+                ->orderBy('id_resep', 'DESC')
                 ->findAll();
 
             $options = [];
