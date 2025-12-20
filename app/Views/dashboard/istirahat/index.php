@@ -445,8 +445,8 @@
                             <div class="btn-group">
                                 <button class="btn btn-body btn-sm dropdown-toggle bg-gradient" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-print"></i> Cetak</button>
                                 <ul class="dropdown-menu dropdown-menu-end shadow-sm w-100">
-                                    <li><a class="dropdown-item" href="<?= base_url('istirahat/export') ?>/${istirahat.id_keterangan_istirahat}?side=left" target="_blank">Sisi kiri</a></li>
-                                    <li><a class="dropdown-item" href="<?= base_url('istirahat/export') ?>/${istirahat.id_keterangan_istirahat}?side=right" target="_blank">Sisi kanan</a></li>
+                                    <li><a class="dropdown-item print-btn" href="<?= base_url('istirahat/export') ?>/${istirahat.id_keterangan_istirahat}?side=left">Sisi kiri</a></li>
+                                    <li><a class="dropdown-item print-btn" href="<?= base_url('istirahat/export') ?>/${istirahat.id_keterangan_istirahat}?side=right">Sisi kanan</a></li>
                                 </ul>
                             </div>
                         <?php endif; ?>
@@ -604,6 +604,12 @@
         socket.onclose = () => {
             console.log("Disconnected from WebSocket server");
         };
+
+        $(document).on('click', '.print-btn', function(e) {
+            e.preventDefault();
+            const url = $(this).attr('href');
+            window.open(url);
+        });
 
         $('[data-bs-toggle="popover"]').popover({
             html: true,
