@@ -73,8 +73,8 @@
                                             <span class="placeholder w-100" style="max-width: 15.625em;"></span> <!-- 250px -->
                                         </h6>
                                         <div class="d-flex align-items-stretch date mb-1 placeholder-glow" style="height: 1.25em;">
-                                            <span class="placeholder w-100 h-100 d-flex align-items-center" style="max-width: 6.25em;"></span> <!-- 100px -->
-                                            <span class="placeholder w-100 h-100 d-flex align-items-center me-1" style="max-width: 9.375em;"></span> <!-- 150px -->
+                                            <span class="placeholder w-100 h-100 d-flex align-items-center me-1" style="max-width: 6.25em;"></span> <!-- 100px -->
+                                            <span class="placeholder w-100 h-100 d-flex align-items-center" style="max-width: 9.375em;"></span> <!-- 150px -->
                                         </div>
                                         <div class="d-flex align-items-stretch date placeholder-glow" style="height: 1.25em;">
                                             <span class="placeholder w-100 d-flex align-items-center me-1" style="max-width: 1.5625em;"></span> <!-- 25px -->
@@ -103,8 +103,8 @@
                                             <span class="placeholder w-100" style="max-width: 15.625em;"></span> <!-- 250px -->
                                         </h6>
                                         <div class="d-flex align-items-stretch date mb-1 placeholder-glow" style="height: 1.25em;">
-                                            <span class="placeholder w-100 h-100 d-flex align-items-center" style="max-width: 6.25em;"></span> <!-- 100px -->
-                                            <span class="placeholder w-100 h-100 d-flex align-items-center me-1" style="max-width: 9.375em;"></span> <!-- 150px -->
+                                            <span class="placeholder w-100 h-100 d-flex align-items-center me-1" style="max-width: 6.25em;"></span> <!-- 100px -->
+                                            <span class="placeholder w-100 h-100 d-flex align-items-center" style="max-width: 9.375em;"></span> <!-- 150px -->
                                         </div>
                                         <div class="d-flex align-items-stretch date placeholder-glow" style="height: 1.25em;">
                                             <span class="placeholder w-100 d-flex align-items-center me-1" style="max-width: 1.5625em;"></span> <!-- 25px -->
@@ -133,8 +133,8 @@
                                             <span class="placeholder w-100" style="max-width: 15.625em;"></span> <!-- 250px -->
                                         </h6>
                                         <div class="d-flex align-items-stretch date mb-1 placeholder-glow" style="height: 1.25em;">
-                                            <span class="placeholder w-100 h-100 d-flex align-items-center" style="max-width: 6.25em;"></span> <!-- 100px -->
-                                            <span class="placeholder w-100 h-100 d-flex align-items-center me-1" style="max-width: 9.375em;"></span> <!-- 150px -->
+                                            <span class="placeholder w-100 h-100 d-flex align-items-center me-1" style="max-width: 6.25em;"></span> <!-- 100px -->
+                                            <span class="placeholder w-100 h-100 d-flex align-items-center" style="max-width: 9.375em;"></span> <!-- 150px -->
                                         </div>
                                         <div class="d-flex align-items-stretch date placeholder-glow" style="height: 1.25em;">
                                             <span class="placeholder w-100 d-flex align-items-center me-1" style="max-width: 1.5625em;"></span> <!-- 25px -->
@@ -352,8 +352,8 @@
                         <span class="placeholder w-100" style="max-width: 15.625em;"></span> <!-- 250px -->
                     </h6>
                     <div class="d-flex align-items-stretch date mb-1 placeholder-glow" style="height: 1.25em;">
-                        <span class="placeholder w-100 h-100 d-flex align-items-center" style="max-width: 6.25em;"></span> <!-- 100px -->
-                        <span class="placeholder w-100 h-100 d-flex align-items-center me-1" style="max-width: 9.375em;"></span> <!-- 150px -->
+                        <span class="placeholder w-100 h-100 d-flex align-items-center me-1" style="max-width: 6.25em;"></span> <!-- 100px -->
+                        <span class="placeholder w-100 h-100 d-flex align-items-center" style="max-width: 9.375em;"></span> <!-- 150px -->
                     </div>
                     <div class="d-flex align-items-stretch date placeholder-glow" style="height: 1.25em;">
                         <span class="placeholder w-100 d-flex align-items-center me-1" style="max-width: 1.5625em;"></span> <!-- 25px -->
