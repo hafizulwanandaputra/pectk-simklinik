@@ -416,6 +416,7 @@ $routes->delete('/(?i)layanan/(?i)delete/(:any)', 'Layanan::delete/$1');
 
 // TRANSAKSI
 $routes->get('/(?i)transaksi', 'Transaksi::index');
+$routes->get('/(?i)transaksi/(?i)jaminanlist', 'Transaksi::jaminanlist');
 $routes->get('/(?i)transaksi/(?i)kasirlist', 'Transaksi::kasirlist');
 $routes->get('/(?i)transaksi/(?i)listtransaksi', 'Transaksi::listtransaksi');
 $routes->get('/(?i)transaksi/(?i)pasienlist', 'Transaksi::pasienlist');
@@ -429,6 +430,9 @@ $routes->post('/(?i)transaksi/(?i)cancel/(:any)', 'Transaksi::cancel/$1');
 $routes->get('/(?i)transaksi/(?i)report', 'Transaksi::reportinit');
 $routes->get('/(?i)transaksi/(?i)report/(:any)', 'Transaksi::report/$1');
 $routes->get('/(?i)transaksi/(?i)reportexcel/(:any)', 'Transaksi::reportexcel/$1');
+$routes->get('/(?i)transaksi/(?i)reportjaminan', 'Transaksi::reportjaminaninit');
+$routes->get('/(?i)transaksi/(?i)reportjaminanlist', 'Transaksi::reportjaminanlist');
+$routes->get('/(?i)transaksi/(?i)reportjaminanexcel', 'Transaksi::reportjaminanexcel');
 $routes->delete('/(?i)transaksi/(?i)delete/(:any)', 'Transaksi::delete/$1');
 
 // DETAIL TRANSAKSI

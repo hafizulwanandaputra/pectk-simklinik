@@ -21,10 +21,38 @@
         <?= $this->include('spinner/spinner'); ?>
     </div>
     <?php if (session()->get('role') != 'Admisi') : ?>
-        <a class="fs-6 mx-2 text-success-emphasis" href="<?= base_url('transaksi/report') ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Laporan Transaksi Harian"><i class="fa-solid fa-file-invoice-dollar"></i></a>
+        <a class="fs-6 mx-2 text-success-emphasis" href="#" id="reportOffcanvasToggle" data-bs-placement="bottom" data-bs-title="Laporan Transaksi" data-bs-toggle="offcanvas" data-bs-target="#reportOffcanvas" role="button" aria-controls="reportOffcanvas"><i class="fa-solid fa-file-invoice-dollar"></i></a>
     <?php endif; ?>
     <a id="toggleFilter" class="fs-6 mx-2 text-success-emphasis" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Pencarian"><i class="fa-solid fa-magnifying-glass"></i></a>
     <a id="refreshButton" class="fs-6 mx-2 text-success-emphasis" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan"><i class="fa-solid fa-sync"></i></a>
+    <div class="offcanvas offcanvas-end bg-body-tertiary shadow-sm transparent-blur" tabindex="-1" id="reportOffcanvas" aria-labelledby="reportOffcanvasLabel">
+        <div class="offcanvas-header pt-0 pb-0 d-flex justify-content-between align-items-center" style="min-height: 3rem; max-height: 3rem;">
+            <div class="w-100 text-truncate">
+                <span class="navbar-brand mx-0 text-start text-md-center text-truncate fw-medium">
+                    Laporan Transaksi
+                </span>
+            </div>
+            <div class="d-flex flex-row">
+                <button id="closeOffcanvasBtn2" type="button" class="btn btn-success bg-gradient ms-2" data-bs-dismiss="offcanvas" aria-label="Close"><i class="fa-solid fa-angles-right"></i></button>
+            </div>
+        </div>
+        <div class="offcanvas-body p-1">
+            <ul class="nav nav-pills flex-column">
+                <li class="nav-item">
+                    <a style="font-size: 0.95em;" class="nav-link nav-link-offcanvas px-2 py-1 link-success" href="<?= base_url('/transaksi/report'); ?>">
+                        <div class="d-flex align-items-start">
+                            <div style="min-width: 24px; max-width: 24px; text-align: center;">
+                                <i class="fa-solid fa-calendar-days"></i>
+                            </div>
+                            <div class="ms-2 link-body-emphasis">
+                                Laporan Transaksi Harian
+                            </div>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
 </div>
 <div style="min-width: 1px; max-width: 1px;"></div>
 <?= $this->endSection(); ?>
@@ -76,9 +104,14 @@
                                             <option value="0">Anonim</option>
                                         </select>
                                     </div>
-                                    <select id="kasirFilter" class="form-select form-select-sm  my-1">
-                                        <option value="">Semua Petugas Kasir</option>
-                                    </select>
+                                    <div class="d-flex flex-column flex-lg-row mb-1 gap-1 my-1">
+                                        <select id="jaminanFilter" class="form-select form-select-sm w-auto flex-fill">
+                                            <option value="">Semua Jaminan</option>
+                                        </select>
+                                        <select id="kasirFilter" class="form-select form-select-sm w-auto flex-fill">
+                                            <option value="">Semua Petugas Kasir</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -351,6 +384,43 @@
         }
     <?php endif; ?>
 
+    async function fetchJaminanOptions(selectedJaminan = null) {
+        // Show the spinner
+        $('#loadingSpinner').show();
+        try {
+            // Panggil API dengan query string tanggal
+            const response = await axios.get(`<?= base_url('transaksi/jaminanlist') ?>`);
+
+            if (response.data.success) {
+                const options = response.data.data;
+                const select = $('#jaminanFilter');
+
+                // Simpan nilai yang saat ini dipilih
+                const currentSelection = selectedJaminan || select.val();
+
+                // Hapus semua opsi kecuali opsi pertama (default)
+                select.find('option:not(:first)').remove();
+
+                // Tambahkan opsi ke elemen select
+                options.forEach(option => {
+                    select.append(`<option value="${option.value}">${option.text}</option>`);
+                });
+
+                // Mengatur ulang pilihan sebelumnya
+                if (currentSelection) {
+                    select.val(currentSelection);
+                }
+            } else {
+                showFailedToast('Gagal mendapatkan kasir.');
+            }
+        } catch (error) {
+            showFailedToast('Gagal mendapatkan kasir.<br>' + error);
+        } finally {
+            // Hide the spinner when done
+            $('#loadingSpinner').hide();
+        }
+    }
+
     async function fetchKasirOptions(selectedKasir = null) {
         // Show the spinner
         $('#loadingSpinner').show();
@@ -394,6 +464,7 @@
         const status = <?= (session()->get('role') == 'Admisi') ? "'1'" : "$('#statusFilter').val()"; ?>;
         const jenis = $('#jenisFilter').val();
         const names = $('#namesFilter').val();
+        const jaminan = $('#jaminanFilter').val();
         const kasir = $('#kasirFilter').val();
         const tanggal = $('#tanggalFilter').val();
 
@@ -409,6 +480,7 @@
                     status: status,
                     jenis: jenis,
                     names: names,
+                    jaminan: jaminan,
                     kasir: kasir,
                     tanggal: tanggal
                 }
@@ -452,6 +524,7 @@
                         nomor_registrasi = `<span class="badge bg-success bg-gradient text-nowrap"><i class="fa-solid fa-bed-pulse"></i> RAWAT INAP</span>`;
                     }
                     const jenisResep = transaksi.id_resep ? `<span class="badge bg-secondary bg-gradient text-nowrap"><i class="fa-solid fa-prescription-bottle-medical"></i> RESEP LUAR</span>` : nomor_registrasi;
+                    const jaminan = transaksi.jaminan ? `<span class="badge bg-secondary bg-gradient text-nowrap">${transaksi.jaminan}</span>` : ``;
                     const statusButtons = transaksi.lunas == '1' ? `disabled` : ``;
                     const transaksiElement = `
                     <li class="list-group-item <?= (session()->get('role') != 'Admisi') ? 'border-top-0' : ''; ?> pb-3 pt-3">
@@ -462,7 +535,7 @@
                                     <span class="ms-1 align-self-center w-100">${nama_pasien}</span>
                                 </h5>
                                 <h6 class="card-subtitle mb-2">
-                                    ${kasir}${jenis_kelamin} ${jenisResep}
+                                    ${kasir}${jenis_kelamin} ${jenisResep} ${jaminan}
                                 </h6>
                                 <div class="card-text">
                                     <div style="font-size: 0.75em;">
@@ -610,7 +683,7 @@
         }
     });
 
-    $('#statusFilter, #jenisFilter, #namesFilter, #kasirFilter, #tanggalFilter').on('change', function() {
+    $('#statusFilter, #jenisFilter, #namesFilter, #jaminanFilter, #kasirFilter, #tanggalFilter').on('change', function() {
         $('#transaksiContainer').empty();
         for (let i = 0; i < limit; i++) {
             $('#transaksiContainer').append(placeholder);
@@ -688,9 +761,13 @@
             if (data.update || data.update_transaksi || data.delete) {
                 console.log("Received update from WebSocket");
                 // Simpan nilai pilihan kasir saat ini
+                const selectedJaminan = $('#jaminanFilter').val();
                 const selectedKasir = $('#kasirFilter').val();
                 // Panggil fungsi untuk memperbarui opsi kasir
-                await fetchKasirOptions(selectedKasir);
+                await Promise.all([
+                    fetchKasirOptions(selectedKasir),
+                    fetchJaminanOptions(selectedJaminan)
+                ]);
                 <?php if (session()->get('role') != 'Admisi') : ?>
                     fetchPasienOptions1()
                     fetchPasienOptions2()
@@ -710,6 +787,23 @@
                 '<h3 class="popover-header"></h3>' +
                 '<div class="popover-body"></div>' +
                 '</div>'
+        });
+
+        $('.nav-link-offcanvas').on('click', function(e) {
+            const offcanvasInstance = bootstrap.Offcanvas.getInstance($('#reportOffcanvas')[0]);
+            if (offcanvasInstance) {
+                e.preventDefault(); // Prevent the immediate navigation
+
+                offcanvasInstance.hide(); // Hide the offcanvas
+
+                // Get the target URL from the clicked link
+                const targetUrl = $(this).attr('href');
+
+                // Once the offcanvas is hidden, navigate to the settings page
+                $('#reportOffcanvas').one('hidden.bs.offcanvas', function() {
+                    window.location.href = targetUrl;
+                });
+            }
         });
 
         // Hilangkan popover ketika tombol #collapseList diklik
@@ -764,9 +858,13 @@
                 try {
                     await axios.delete(`<?= base_url('/transaksi/delete') ?>/${transaksiId}`);
                     // Simpan nilai pilihan kasir saat ini
+                    const selectedJaminan = $('#jaminanFilter').val();
                     const selectedKasir = $('#kasirFilter').val();
                     // Panggil fungsi untuk memperbarui opsi kasir
-                    await fetchKasirOptions(selectedKasir);
+                    await Promise.all([
+                        fetchKasirOptions(selectedKasir),
+                        fetchJaminanOptions(selectedJaminan)
+                    ]);
                     fetchPasienOptions1();
                     fetchPasienOptions2();
                     fetchTransaksi();
@@ -814,9 +912,13 @@
                         $('#transaksiForm1 .invalid-feedback').text('').hide();
                         $('#submitButton1').prop('disabled', true);
                         // Simpan nilai pilihan kasir saat ini
+                        const selectedJaminan = $('#jaminanFilter').val();
                         const selectedKasir = $('#kasirFilter').val();
                         // Panggil fungsi untuk memperbarui opsi kasir
-                        await fetchKasirOptions(selectedKasir);
+                        await Promise.all([
+                            fetchKasirOptions(selectedKasir),
+                            fetchJaminanOptions(selectedJaminan)
+                        ]);
                         fetchPasienOptions1();
                         fetchTransaksi();
                     } else {
@@ -898,9 +1000,13 @@
                         $('#transaksiForm2 .invalid-feedback').text('').hide();
                         $('#submitButton2').prop('disabled', true);
                         // Simpan nilai pilihan kasir saat ini
+                        const selectedJaminan = $('#jaminanFilter').val();
                         const selectedKasir = $('#kasirFilter').val();
                         // Panggil fungsi untuk memperbarui opsi kasir
-                        await fetchKasirOptions(selectedKasir);
+                        await Promise.all([
+                            fetchKasirOptions(selectedKasir),
+                            fetchJaminanOptions(selectedJaminan)
+                        ]);
                         fetchPasienOptions2();
                         fetchTransaksi();
                     } else {
@@ -953,9 +1059,13 @@
         $(document).on('visibilitychange', async function() {
             if (document.visibilityState === "visible") {
                 // Simpan nilai pilihan kasir saat ini
+                const selectedJaminan = $('#jaminanFilter').val();
                 const selectedKasir = $('#kasirFilter').val();
                 // Panggil fungsi untuk memperbarui opsi kasir
-                await fetchKasirOptions(selectedKasir);
+                await Promise.all([
+                    fetchKasirOptions(selectedKasir),
+                    fetchJaminanOptions(selectedJaminan)
+                ]);
                 <?php if (session()->get('role') != 'Admisi') : ?>
                     fetchPasienOptions1()
                     fetchPasienOptions2()
@@ -966,16 +1076,24 @@
         $('#refreshButton').on('click', async function(e) {
             e.preventDefault();
             // Simpan nilai pilihan kasir saat ini
+            const selectedJaminan = $('#jaminanFilter').val();
             const selectedKasir = $('#kasirFilter').val();
             // Panggil fungsi untuk memperbarui opsi kasir
-            await fetchKasirOptions(selectedKasir);
+            await Promise.all([
+                fetchKasirOptions(selectedKasir),
+                fetchJaminanOptions(selectedJaminan)
+            ]);
             <?php if (session()->get('role') != 'Admisi') : ?>
                 fetchPasienOptions1()
                 fetchPasienOptions2()
             <?php endif; ?>
             fetchTransaksi(); // Refresh articles on button click
         });
-        await fetchKasirOptions();
+        $('#reportOffcanvasToggle').tooltip();
+        await Promise.all([
+            fetchKasirOptions(),
+            fetchJaminanOptions()
+        ]);
         fetchTransaksi();
         <?php if (session()->get('role') != 'Admisi') : ?>
             fetchPasienOptions1()

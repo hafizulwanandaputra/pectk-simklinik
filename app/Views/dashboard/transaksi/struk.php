@@ -86,10 +86,10 @@ $tanggal = Time::parse($transaksi['tgl_transaksi']);
                             <div><?= $transaksi['no_rm'] ?></div>
                         </td>
                         <td style="width: 15%; vertical-align: top; padding: 0;">
-                            <div>Nomor Kuitansi:</div>
+                            <div>Jaminan:</div>
                         </td>
                         <td style="width: 35%; vertical-align: top; padding: 0;">
-                            <div><?= $transaksi['no_kwitansi'] ?></div>
+                            <div><?= $transaksi['jaminan'] ?></div>
                         </td>
                     <?php endif; ?>
                 </tr>
@@ -102,7 +102,7 @@ $tanggal = Time::parse($transaksi['tgl_transaksi']);
                             <div><?= $transaksi['alamat'] ?></div>
                         </td>
                         <td style="width: 15%; vertical-align: top; padding: 0;">
-                            <div>Tanggal/Waktu:</div>
+                            <div>Tanggal dan Waktu:</div>
                         </td>
                         <td style="width: 35%; vertical-align: top; padding: 0;">
                             <div><?= $tanggal ?></div>
@@ -115,10 +115,10 @@ $tanggal = Time::parse($transaksi['tgl_transaksi']);
                             <div><?= ($transaksi['nama_pasien'] == NULL) ? '<em>Anonim</em>' : $transaksi['nama_pasien']; ?></div>
                         </td>
                         <td style="width: 15%; vertical-align: top; padding: 0;">
-                            <div>Tanggal dan Waktu:</div>
+                            <div>Nomor Kuitansi:</div>
                         </td>
                         <td style="width: 35%; vertical-align: top; padding: 0;">
-                            <div><?= $tanggal ?></div>
+                            <div><?= $transaksi['no_kwitansi'] ?></div>
                         </td>
                     <?php endif; ?>
                 </tr>
@@ -131,10 +131,10 @@ $tanggal = Time::parse($transaksi['tgl_transaksi']);
                             <div><?= $transaksi['telpon'] ?></div>
                         </td>
                         <td style="width: 15%; vertical-align: top; padding: 0;">
-                            <div>Dokter:</div>
+                            <div>Tanggal dan Waktu:</div>
                         </td>
-                        <td rowspan="2" style="width: 35%; vertical-align: top; padding: 0;">
-                            <div><?= $transaksi['dokter'] ?></div>
+                        <td style="width: 35%; vertical-align: top; padding: 0;">
+                            <div><?= $tanggal ?></div>
                         </td>
                     <?php endif; ?>
                 </tr>
@@ -143,8 +143,14 @@ $tanggal = Time::parse($transaksi['tgl_transaksi']);
                         <td style="width: 15%; vertical-align: top; padding: 0;">
                             <div>Alamat:</div>
                         </td>
-                        <td style="width: 35%; vertical-align: top; padding: 0;" colspan="2">
+                        <td style="width: 35%; vertical-align: top; padding: 0;">
                             <div><?= $transaksi['alamat'] ?></div>
+                        </td>
+                        <td style="width: 15%; vertical-align: top; padding: 0;">
+                            <div>Dokter:</div>
+                        </td>
+                        <td style="width: 35%; vertical-align: top; padding: 0;">
+                            <div><?= $transaksi['dokter'] ?></div>
                         </td>
                     </tr>
                 <?php endif; ?>

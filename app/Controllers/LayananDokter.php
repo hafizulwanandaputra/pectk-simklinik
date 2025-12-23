@@ -153,6 +153,7 @@ class LayananDokter extends BaseController
                 'tanggal_lahir' => $rawatjalan['tanggal_lahir'],
                 'dokter' => $rawatjalan['dokter'], // Menyimpan nama dokter yang sedang login
                 'kasir' => 'Ditambahkan Dokter',
+                'jaminan' => $rawatjalan['jaminan'],
                 'no_kwitansi' => $no_kwitansi, // Nomor kwitansi
                 'tgl_transaksi' => date('Y-m-d H:i:s'), // Tanggal dan waktu transaksi
                 'total_pembayaran' => 0, // Total pembayaran awal

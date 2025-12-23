@@ -56,6 +56,7 @@ class Transaksi extends BaseController
             $jenis = $this->request->getGet('jenis'); // Status transaksi
             $names = $this->request->getGet('names'); // Ada nama atau anonim
             $kasir = $this->request->getGet('kasir'); // Petugas kasir
+            $jaminan = $this->request->getGet('jaminan'); // Petugas jaminan
             $tanggal = $this->request->getGet('tanggal'); // Tanggal Transaksi
 
             // Mengubah limit dan offset menjadi integer, jika tidak ada, set ke 0
@@ -66,7 +67,8 @@ class Transaksi extends BaseController
             $TransaksiModel = $this->TransaksiModel;
 
             // Memilih semua kolom dari tabel transaksi
-            $TransaksiModel->select('transaksi.*');
+            $TransaksiModel
+                ->select('transaksi.*,');
 
             // Menerapkan filter status jika ada
             if ($status === '1') {
@@ -113,6 +115,11 @@ class Transaksi extends BaseController
                 $TransaksiModel->where('kasir', $kasir); // Menambahkan filter berdasarkan kasir
             }
 
+            // Menerapkan filter untuk jaminan jika disediakan
+            if ($jaminan) {
+                $TransaksiModel->where('jaminan', $jaminan); // Menambahkan filter berdasarkan jaminan
+            }
+
             // Menghitung total hasil tanpa filter
             $total = $TransaksiModel->countAllResults(false);
 
@@ -126,30 +133,85 @@ class Transaksi extends BaseController
 
             // Mengolah setiap transaksi dan menghitung total_pembayaran
             $dataTransaksi = array_map(function ($data, $index) use ($startNumber) {
-                $data['number'] = $startNumber + $index; // Menambahkan nomor urut
-                $db = db_connect(); // Menghubungkan ke database
+                $data['number'] = $startNumber + $index;
+                $db = db_connect();
 
-                // Menghitung total pembayaran dari detail_transaksi
+                // ===============================
+                // Ambil jaminanNama dari master_jaminan
+                // ===============================
+                if (!empty($data['jaminan'])) {
+                    $jaminanRow = $db->table('master_jaminan')
+                        ->select('jaminanNama')
+                        ->where('jaminanKode', $data['jaminan'])
+                        ->get()
+                        ->getRow();
+
+                    if ($jaminanRow) {
+                        // TIMPA: kode -> nama
+                        $data['jaminan'] = $jaminanRow->jaminanNama;
+                    }
+                }
+
+                // ===============================
+                // Hitung total pembayaran
+                // ===============================
                 $builder = $db->table('detail_transaksi');
                 $builder->select('SUM((harga_transaksi * qty_transaksi) * (1 - (diskon / 100))) as total_pembayaran');
                 $builder->where('id_transaksi', $data['id_transaksi']);
-                $result = $builder->get()->getRow(); // Mengambil hasil dari query
+                $result = $builder->get()->getRow();
 
-                $total_pembayaran = $result->total_pembayaran; // Mengambil total pembayaran
+                $total_pembayaran = $result->total_pembayaran ?? 0;
 
-                // Memperbarui tabel transaksi dengan total_pembayaran
-                $transaksiBuilder = $db->table('transaksi');
-                $transaksiBuilder->where('id_transaksi', $data['id_transaksi']);
-                $transaksiBuilder->update([
-                    'total_pembayaran' => $total_pembayaran, // Memperbarui total pembayaran
-                ]);
-                return $data; // Mengembalikan data transaksi yang telah diproses
+                // Update tabel transaksi
+                $db->table('transaksi')
+                    ->where('id_transaksi', $data['id_transaksi'])
+                    ->update([
+                        'total_pembayaran' => $total_pembayaran,
+                    ]);
+
+                return $data;
             }, $Transaksi, array_keys($Transaksi));
+
 
             // Mengembalikan respon JSON dengan data transaksi dan total hasil
             return $this->response->setJSON([
                 'transaksi' => $dataTransaksi, // Data transaksi
                 'total' => $total // Total hasil
+            ]);
+        } else {
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan', // Pesan jika peran tidak valid
+            ]);
+        }
+    }
+
+    public function jaminanlist()
+    {
+        // Memeriksa peran pengguna, hanya 'Admin', 'Admisi', atau 'Kasir' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi' || session()->get('role') == 'Kasir') {
+            $db = db_connect();
+            // Mengambil jaminan dari tabel user
+            $transaksiData = $this->TransaksiModel
+                ->where('jaminan IS NOT NULL')
+                ->groupBy('jaminan')
+                ->orderBy('jaminan', 'ASC')
+                ->findAll();
+
+            // Menyiapkan array opsi untuk dikirim dalam respon
+            $options = [];
+            // Menyusun opsi dari data transaksi luar yang diterima
+            foreach ($transaksiData as $transaksi) {
+                // Menambahkan opsi ke dalam array
+                $options[] = [
+                    'value' => $transaksi['jaminan'], // Nilai untuk opsi
+                    'text'  => $transaksi['jaminan'] // Teks untuk opsi
+                ];
+            }
+
+            // Mengembalikan data transaksi luar dalam format JSON
+            return $this->response->setJSON([
+                'success' => true, // Indikator sukses
+                'data'    => $options, // Data opsi
             ]);
         } else {
             return $this->response->setStatusCode(404)->setJSON([
@@ -367,6 +429,7 @@ class Transaksi extends BaseController
                 'tanggal_lahir' => $resepData['tanggal_lahir'], // Tanggal lahir pasien
                 'dokter' => $resepData['dokter'], // Tanggal lahir pasien
                 'kasir' => session()->get('fullname'), // Nama kasir dari session
+                'jaminan' => $resepData['jaminan'], // Jaminan
                 'no_kwitansi' => $no_kwitansi, // Nomor kwitansi
                 'tgl_transaksi' => date('Y-m-d H:i:s'), // Tanggal dan waktu transaksi
                 'total_pembayaran' => 0, // Total pembayaran awal
@@ -443,6 +506,7 @@ class Transaksi extends BaseController
                 'tanggal_lahir' => $resepData['tanggal_lahir'], // Tanggal lahir pasien
                 'dokter' => 'Resep Luar', // Tanggal lahir pasien
                 'kasir' => session()->get('fullname'), // Nama kasir dari session
+                'jaminan' => NULL, // Jaminan
                 'no_kwitansi' => $no_kwitansi, // Nomor kwitansi
                 'tgl_transaksi' => date('Y-m-d H:i:s'), // Tanggal dan waktu transaksi
                 'total_pembayaran' => 0, // Total pembayaran awal
@@ -536,6 +600,7 @@ class Transaksi extends BaseController
                     $db->table('transaksi')
                         ->where('id_transaksi', $id)
                         ->update([
+                            'jaminan' => $transaksi['jaminan'],
                             'kasir' => $kasirBaru,
                             'tgl_transaksi' => date('Y-m-d H:i:s')
                         ]);
@@ -545,6 +610,16 @@ class Transaksi extends BaseController
 
                     // Panggil WebSocket untuk update client
                     $this->notify_clients('update');
+                }
+                $jaminanRow = $db->table('master_jaminan')
+                    ->select('jaminanNama')
+                    ->where('jaminanKode', $transaksi['jaminan'])
+                    ->get()
+                    ->getRow();
+
+                if ($jaminanRow) {
+                    // TIMPA: kode -> nama
+                    $transaksi['jaminan'] = $jaminanRow->jaminanNama;
                 }
                 // Menyiapkan data untuk tampilan
                 $data = [
@@ -1460,6 +1535,18 @@ class Transaksi extends BaseController
                 ->join('layanan', 'layanan.id_layanan = detail_transaksi.id_layanan', 'inner')
                 ->orderBy('id_detail_transaksi', 'ASC')
                 ->findAll();
+
+            $db = db_connect();
+            $jaminanRow = $db->table('master_jaminan')
+                ->select('jaminanNama')
+                ->where('jaminanKode', $transaksi['jaminan'])
+                ->get()
+                ->getRow();
+
+            if ($jaminanRow) {
+                // TIMPA: kode -> nama
+                $transaksi['jaminan'] = $jaminanRow->jaminanNama;
+            }
 
             // Array untuk menyimpan hasil terstruktur layanan
             $result_layanan = [];
