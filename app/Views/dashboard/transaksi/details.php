@@ -97,14 +97,16 @@
                     </div>
                 </div>
                 <div class="col-lg-6" style="font-size: 0.75em;">
-                    <div class="mb-0 row g-1">
-                        <div class="col-5 fw-medium text-truncate">Jaminan</div>
-                        <div class="col">
-                            <div class="date">
-                                <?= $transaksi['jaminan'] ?>
+                    <?php if ($transaksi['dokter'] != "Resep Luar") : ?>
+                        <div class="mb-0 row g-1">
+                            <div class="col-5 fw-medium text-truncate">Jaminan</div>
+                            <div class="col">
+                                <div class="date">
+                                    <?= $transaksi['jaminan'] ?>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    <?php endif; ?>
                     <div class="mb-0 row g-1">
                         <div class="col-5 fw-medium text-truncate">Nomor Kuitansi</div>
                         <div class="col">

@@ -611,6 +611,8 @@ class Transaksi extends BaseController
                     // Panggil WebSocket untuk update client
                     $this->notify_clients('update');
                 }
+                // default agar tidak undefined
+                $transaksi['jaminanKode'] = $transaksi['jaminan'];
                 $jaminanRow = $db->table('master_jaminan')
                     ->select('jaminanNama, jaminanKode')
                     ->where('jaminanKode', $transaksi['jaminan'])
