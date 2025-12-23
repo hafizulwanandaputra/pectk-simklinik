@@ -1583,11 +1583,11 @@
         });
 
         $('#transaksiModal').on('hidden.bs.modal', function() {
-            $('#transaksiForm')[0].reset();
             <?php if ($transaksi['jaminanKode'] == 'UMUM') : ?>
+                $('#transaksiForm')[0].reset();
                 $('#terima_uang').val('');
+                $('#metode_pembayaran').val('').change(); // Trigger change agar toggleBankField dipanggil
             <?php endif; ?>
-            $('#metode_pembayaran').val('').change(); // Trigger change agar toggleBankField dipanggil
             $('#bank').val(''); // Kosongkan field bank
             $('#bank_field').hide(); // Reset bank dan hilangkan
             $('#transaksiForm .is-invalid').removeClass('is-invalid');
