@@ -494,7 +494,7 @@
                             </h5>
                             <h6 class="mb-1 text-truncate">${rawatjalan.dokter}</h6>
                             <div class="d-flex align-items-stretch date mb-1" style="height: 1.25em;">
-                                ${jenis_kelamin} <span class="badge bg-body text-body border text-nowrap h-100 d-flex align-items-center me-1">${rawatjalan.nomor_registrasi}</span>
+                                ${jenis_kelamin} <span class="badge bg-body text-body border text-nowrap h-100 d-flex align-items-center me-1"> ${rawatjalan.nomor_registrasi}</span>
                             </div>
                             <div class="d-flex align-items-stretch date" style="height: 1.25em;">
                                 <span class="badge bg-body text-body border date h-100 d-flex align-items-center me-1">${rawatjalan.kode_antrian}${rawatjalan.no_antrian}</span><span class="badge bg-body text-body border date h-100 d-flex align-items-center me-1">${rawatjalan.status_kunjungan}</span>
@@ -688,7 +688,7 @@
                             </h5>
                             <h6 class="mb-1 text-truncate">${rawatjalan.dokter}</h6>
                             <div class="d-flex align-items-stretch date mb-1" style="height: 1.25em;">
-                                ${jenis_kelamin} <span class="badge bg-body text-body border text-nowrap h-100 d-flex align-items-center me-1">${rawatjalan.nomor_registrasi}</span>
+                                ${jenis_kelamin} <span class="badge bg-body text-body border text-nowrap h-100 d-flex align-items-center me-1"> ${rawatjalan.nomor_registrasi}</span>
                             </div>
                             <div class="d-flex align-items-stretch date" style="height: 1.25em;">
                                 <span class="badge bg-body text-body border date h-100 d-flex align-items-center me-1">${rawatjalan.kode_antrian}${rawatjalan.no_antrian}</span><span class="badge bg-body text-body border date h-100 d-flex align-items-center me-1">${rawatjalan.status_kunjungan}</span>
@@ -874,7 +874,7 @@
                             </h5>
                             <h6 class="mb-1 text-truncate">${rawatjalan.dokter}</h6>
                             <div class="d-flex align-items-stretch date mb-1" style="height: 1.25em;">
-                                ${jenis_kelamin} <span class="badge bg-body text-body border text-nowrap h-100 d-flex align-items-center me-1">${rawatjalan.nomor_registrasi}</span>
+                                ${jenis_kelamin} <span class="badge bg-body text-body border text-nowrap h-100 d-flex align-items-center me-1"> ${rawatjalan.nomor_registrasi}</span>
                             </div>
                             <div class="d-flex align-items-stretch date" style="height: 1.25em;">
                                 <span class="badge bg-body text-body border date h-100 d-flex align-items-center me-1">${rawatjalan.kode_antrian}${rawatjalan.no_antrian}</span><span class="badge bg-body text-body border date h-100 d-flex align-items-center me-1">${rawatjalan.status_kunjungan}</span>
