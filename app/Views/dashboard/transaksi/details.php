@@ -344,15 +344,15 @@
                     <div class="input-group has-validation mb-1 mt-1">
                         <span class="input-group-text">Rp</span>
                         <div class="form-floating">
-                            <input type="number" class="form-control" autocomplete="off" dir="auto" placeholder="terima_uang" id="terima_uang" name="terima_uang" <?= ($transaksi['jaminanKode'] != 'UMUM') ? 'readonly' : ''; ?>>
+                            <input type="number" class="form-control" autocomplete="off" dir="auto" placeholder="terima_uang" id="terima_uang" name="terima_uang" <?= (isset($transaksi['jaminanKode']) && $transaksi['jaminanKode'] != 'UMUM') ? 'readonly' : ''; ?>>
                             <label for="terima_uang">Terima Uang</label>
                         </div>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mt-1 mb-1">
-                        <select class="form-select <?= ($transaksi['jaminanKode'] != 'UMUM') ? 'pe-none' : ''; ?>" id="metode_pembayaran" name="metode_pembayaran" aria-label="metode_pembayaran">
+                        <select class="form-select <?= (isset($transaksi['jaminanKode']) && $transaksi['jaminanKode'] != 'UMUM') ? 'pe-none' : ''; ?>" id="metode_pembayaran" name="metode_pembayaran" aria-label="metode_pembayaran">
                             <option value="" disabled selected>-- Pilih Metode Pembayaran --</option>
-                            <?php if ($transaksi['jaminanKode'] != 'UMUM') : ?>
+                            <?php if (isset($transaksi['jaminanKode']) && $transaksi['jaminanKode'] != 'UMUM') : ?>
                                 <option value="Jaminan">Jaminan (<?= $transaksi['jaminan']; ?>)</option>
                             <?php else : ?>
                                 <option value="Tunai">Tunai</option>
@@ -603,7 +603,7 @@
             $('#uang_kembali_table').text(`Rp${uang_kembali.toLocaleString('id-ID')}`);
             $('#metode_pembayaran_table').html(data.metode_pembayaran + bank);
             $('#total_pembayaran_modal').text(`Rp${total_pembayaran.toLocaleString('id-ID')}`);
-            <?php if ($transaksi['jaminanKode'] != 'UMUM') : ?>
+            <?php if (isset($transaksi['jaminanKode']) && $transaksi['jaminanKode'] != 'UMUM') : ?>
                 $('#terima_uang').val(`${total_pembayaran}`);
                 $('#metode_pembayaran').val(`Jaminan`).trigger('change');
             <?php endif; ?>
