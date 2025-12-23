@@ -457,6 +457,17 @@ class RawatJalan extends BaseController
                 $data['kelurahan'] = $res_kelurahan->kelurahanNama;
             }
 
+            $jaminanRow = $db->table('master_jaminan')
+                ->select('jaminanNama')
+                ->where('jaminanKode', $data['jaminan'])
+                ->get()
+                ->getRow();
+
+            if ($jaminanRow) {
+                // TIMPA: kode -> nama
+                $data['jaminan'] = $jaminanRow->jaminanNama;
+            }
+
             return $this->response->setJSON($data); // Mengembalikan data pasien dalam format JSON
         } else {
             // Mengembalikan status 404 jika peran tidak diizinkan
@@ -588,7 +599,7 @@ class RawatJalan extends BaseController
                 ->where('ruangan', 'Kamar Operasi')
                 ->find($id);
 
-                // Ambil tabel master_provinsi
+            // Ambil tabel master_provinsi
             $provinsi = $db->table('master_provinsi');
             $provinsi->select('UPPER(provinsiNama) AS provinsiNama');
             $provinsi->where('provinsiId', $rajal['provinsi']);
