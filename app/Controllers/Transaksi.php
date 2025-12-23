@@ -612,7 +612,7 @@ class Transaksi extends BaseController
                     $this->notify_clients('update');
                 }
                 $jaminanRow = $db->table('master_jaminan')
-                    ->select('jaminanNama')
+                    ->select('jaminanNama, jaminanKode')
                     ->where('jaminanKode', $transaksi['jaminan'])
                     ->get()
                     ->getRow();
@@ -620,6 +620,7 @@ class Transaksi extends BaseController
                 if ($jaminanRow) {
                     // TIMPA: kode -> nama
                     $transaksi['jaminan'] = $jaminanRow->jaminanNama;
+                    $transaksi['jaminanKode'] = $jaminanRow->jaminanKode;
                 }
                 // Menyiapkan data untuk tampilan
                 $data = [
