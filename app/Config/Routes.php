@@ -430,7 +430,7 @@ $routes->post('/(?i)transaksi/(?i)cancel/(:any)', 'Transaksi::cancel/$1');
 $routes->get('/(?i)transaksi/(?i)report', 'Transaksi::reportinit');
 $routes->get('/(?i)transaksi/(?i)report/(:any)', 'Transaksi::report/$1');
 $routes->get('/(?i)transaksi/(?i)reportexcel/(:any)', 'Transaksi::reportexcel/$1');
-$routes->get('/(?i)transaksi/(?i)reportjaminan', 'Transaksi::reportjaminaninit');
+$routes->get('/(?i)transaksi/(?i)reportjaminan', 'Transaksi::reportjaminan');
 $routes->get('/(?i)transaksi/(?i)reportjaminanlist', 'Transaksi::reportjaminanlist');
 $routes->get('/(?i)transaksi/(?i)reportjaminanexcel', 'Transaksi::reportjaminanexcel');
 $routes->delete('/(?i)transaksi/(?i)delete/(:any)', 'Transaksi::delete/$1');

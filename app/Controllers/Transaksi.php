@@ -192,6 +192,7 @@ class Transaksi extends BaseController
             $db = db_connect();
             // Mengambil jaminan dari tabel user
             $transaksiData = $this->TransaksiModel
+                ->join('master_jaminan', 'transaksi.jaminan = master_jaminan.jaminanKode', 'inner')
                 ->where('jaminan IS NOT NULL')
                 ->groupBy('jaminan')
                 ->orderBy('jaminan', 'ASC')
@@ -204,7 +205,7 @@ class Transaksi extends BaseController
                 // Menambahkan opsi ke dalam array
                 $options[] = [
                     'value' => $transaksi['jaminan'], // Nilai untuk opsi
-                    'text'  => $transaksi['jaminan'] // Teks untuk opsi
+                    'text'  => $transaksi['jaminanNama'] // Teks untuk opsi
                 ];
             }
 
@@ -2186,6 +2187,472 @@ class Transaksi extends BaseController
                 $sheet->getColumnDimension('G')->setWidth(150, 'px');
                 $sheet->getColumnDimension('H')->setWidth(175, 'px');
                 $sheet->getColumnDimension('I')->setWidth(150, 'px');
+
+                // Menyimpan file spreadsheet dan mengirimkan ke browser
+                $writer = new Xlsx($spreadsheet);
+                // Simpan ke file sementara
+                $temp_file = WRITEPATH . 'exports/' . $filename;
+                $writer->save($temp_file);
+
+                // Kirimkan file dalam mode streaming agar bisa dipantau progresnya
+                header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                header('Content-Disposition: attachment; filename="' . $filename . '"');
+                header('Content-Length: ' . filesize($temp_file));
+
+                readfile($temp_file);
+                unlink($temp_file); // Hapus setelah dikirim
+                exit();
+            }
+        } else {
+            // Menghasilkan exception jika peran tidak diizinkan
+            throw PageNotFoundException::forPageNotFound();
+        }
+    }
+
+    public function reportjaminan()
+    {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+            // Menyiapkan data untuk tampilan halaman laporan
+            $data = [
+                'title' => 'Laporan Transaksi Berdasarkan Jaminan - ' . $this->systemName, // Judul halaman
+                'headertitle' => 'Laporan Transaksi Berdasarkan Jaminan', // Judul header
+                'agent' => $this->request->getUserAgent() // Mengambil informasi user agent
+            ];
+            return view('dashboard/transaksi/reportjaminan', $data); // Mengembalikan tampilan halaman laporan
+        } else {
+            throw PageNotFoundException::forPageNotFound(); // Menampilkan halaman tidak ditemukan jika peran tidak valid
+        }
+    }
+
+    public function reportjaminanlist()
+    {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+            $jaminan        = $this->request->getGet('jaminan');
+            $tanggal_awal   = $this->request->getGet('tanggal_awal');
+            $tanggal_akhir  = $this->request->getGet('tanggal_akhir');
+
+            // Validasi
+            if (!$jaminan) {
+                return $this->response->setStatusCode(400)->setJSON([
+                    'error' => 'Jaminan harus diisi',
+                ]);
+            }
+
+            if (!$tanggal_awal || !$tanggal_akhir) {
+                return $this->response->setStatusCode(400)->setJSON([
+                    'error' => 'Tanggal awal dan tanggal akhir harus diisi',
+                ]);
+            }
+
+            $builder = $this->TransaksiModel
+                ->where('lunas', 1)
+                ->where('jaminan', $jaminan)
+                ->where('tgl_transaksi >=', $tanggal_awal . ' 00:00:00')
+                ->where('tgl_transaksi <=', $tanggal_akhir . ' 23:59:59')
+                ->orderBy('id_transaksi', 'ASC');
+
+            $transaksi = $builder->findAll();
+
+            $result = [];
+
+            foreach ($transaksi as $item) {
+
+                // Layanan
+                $layanan = $this->DetailTransaksiModel
+                    ->where('id_transaksi', $item['id_transaksi'])
+                    ->where('jenis_transaksi', 'Tindakan')
+                    ->orderBy('id_detail_transaksi', 'ASC')
+                    ->findAll();
+
+                $result_layanan = array_map(function ($row) {
+                    return [
+                        'id_detail_transaksi' => $row['id_detail_transaksi'],
+                        'id_layanan' => $row['id_layanan'],
+                        'id_transaksi' => $row['id_transaksi'],
+                        'qty_transaksi' => $row['qty_transaksi'],
+                        'harga_transaksi' => $row['harga_transaksi'],
+                        'diskon' => $row['diskon'],
+                        'nama_layanan' => $row['nama_layanan'],
+                    ];
+                }, $layanan);
+
+                // Obat & Alkes
+                $total_obatalkes = $this->DetailTransaksiModel
+                    ->selectSum('(harga_transaksi * qty_transaksi) - ((harga_transaksi * qty_transaksi) * diskon / 100)', 'total')
+                    ->where('id_transaksi', $item['id_transaksi'])
+                    ->where('jenis_transaksi', 'Obat dan Alkes')
+                    ->get()
+                    ->getRow()
+                    ->total ?? 0;
+
+                $result[] = [
+                    'id_transaksi' => $item['id_transaksi'],
+                    'tgl_transaksi' => $item['tgl_transaksi'],
+                    'no_kwitansi' => $item['no_kwitansi'],
+                    'kasir' => $item['kasir'],
+                    'no_rm' => $item['no_rm'],
+                    'nama_pasien' => $item['nama_pasien'],
+                    'jaminan' => $item['jaminan'],
+                    'metode_pembayaran' => $item['metode_pembayaran'],
+                    'bank' => $item['bank'],
+                    'total_pembayaran' => $item['total_pembayaran'],
+                    'dokter' => $item['dokter'],
+                    'detail' => [
+                        'layanan' => $result_layanan,
+                        'obatalkes' => round($total_obatalkes, 0)
+                    ]
+                ];
+            }
+
+            // Total pemasukan
+            $total_all_builder = $this->TransaksiModel
+                ->where('lunas', 1)
+                ->where('jaminan', $jaminan)
+                ->where('tgl_transaksi >=', $tanggal_awal . ' 00:00:00')
+                ->where('tgl_transaksi <=', $tanggal_akhir . ' 23:59:59');
+
+            $total_all = $total_all_builder
+                ->selectSum('total_pembayaran')
+                ->get()
+                ->getRow()
+                ->total_pembayaran ?? 0;
+
+            return $this->response->setJSON([
+                'data' => $result,
+                'total_all' => $total_all
+            ]);
+        } else {
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
+        }
+    }
+
+    public function reportjaminanexcel()
+    {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+            $jaminan        = $this->request->getGet('jaminan');
+            $jaminanNama        = $this->request->getGet('jaminanNama');
+            $tanggal_awal   = $this->request->getGet('tanggal_awal');
+            $tanggal_akhir  = $this->request->getGet('tanggal_akhir');
+
+            $transaksi = $this->TransaksiModel
+                ->where('lunas', 1)
+                ->where('jaminan', $jaminan)
+                ->where('tgl_transaksi >=', $tanggal_awal . ' 00:00:00')
+                ->where('tgl_transaksi <=', $tanggal_akhir . ' 23:59:59')
+                ->findAll();
+
+            $result = []; // Untuk menyimpan transaksi terstruktur
+
+            foreach ($transaksi as $item) {
+                $dokter = $item['dokter'];
+                $layanan = $this->DetailTransaksiModel
+                    ->where('detail_transaksi.id_transaksi', $item['id_transaksi'])
+                    ->where('detail_transaksi.jenis_transaksi', 'Tindakan')
+                    ->orderBy('id_detail_transaksi', 'ASC')
+                    ->findAll();
+
+                $result_layanan = array_map(function ($row) {
+                    return [
+                        'id_detail_transaksi' => $row['id_detail_transaksi'],
+                        'id_layanan' => $row['id_layanan'],
+                        'id_transaksi' => $row['id_transaksi'],
+                        'qty_transaksi' => $row['qty_transaksi'],
+                        'harga_transaksi' => $row['harga_transaksi'],
+                        'diskon' => $row['diskon'],
+                        'nama_layanan' => $row['nama_layanan'],
+                    ];
+                }, $layanan);
+
+                $obatalkes = $this->DetailTransaksiModel
+                    ->where('detail_transaksi.id_transaksi', $item['id_transaksi'])
+                    ->where('detail_transaksi.jenis_transaksi', 'Obat dan Alkes')
+                    ->join('resep', 'resep.id_resep = detail_transaksi.id_resep', 'inner')
+                    ->orderBy('id_detail_transaksi', 'ASC')
+                    ->findAll();
+
+                $result_obatalkes = array_map(function ($row) {
+                    return [
+                        'id_detail_transaksi' => $row['id_detail_transaksi'],
+                        'id_resep' => $row['id_resep'],
+                        'id_transaksi' => $row['id_transaksi'],
+                        'qty_transaksi' => $row['qty_transaksi'],
+                        'harga_transaksi' => $row['harga_transaksi'],
+                        'diskon' => $row['diskon'],
+                        'resep' => [
+                            'id_resep' => $row['id_resep'],
+                            'dokter' => $row['dokter'],
+                            'tanggal_resep' => $row['tanggal_resep'],
+                            'jumlah_resep' => $row['jumlah_resep'],
+                            'total_biaya' => $row['total_biaya'],
+                            'status' => $row['status'],
+                        ]
+                    ];
+                }, $obatalkes);
+
+                // Menghitung total harga obat dan alkes
+                $total_obatalkes_awal = $this->DetailTransaksiModel
+                    ->selectSum('((harga_transaksi * qty_transaksi) - ((harga_transaksi * qty_transaksi) * diskon / 100))', 'total_harga')
+                    ->where('detail_transaksi.id_transaksi', $item['id_transaksi'])
+                    ->where('detail_transaksi.jenis_transaksi', 'Obat dan Alkes')
+                    ->get()->getRowArray();
+
+                // Memastikan nilai total_harga ada
+                $total_harga = isset($total_obatalkes_awal['total_harga']) ? $total_obatalkes_awal['total_harga'] : 0;
+
+                // Membulatkan hasil total_harga (misalnya 2 angka di belakang koma)
+                $total_obatalkes = round($total_harga, 0);
+
+                $result[] = [
+                    'id_transaksi' => $item['id_transaksi'],
+                    'tgl_transaksi' => $item['tgl_transaksi'],
+                    'no_kwitansi' => $item['no_kwitansi'],
+                    'kasir' => $item['kasir'],
+                    'no_rm' => $item['no_rm'],
+                    'nama_pasien' => $item['nama_pasien'],
+                    'metode_pembayaran' => $item['metode_pembayaran'],
+                    'bank' => $item['bank'],
+                    'total_pembayaran' => $item['total_pembayaran'],
+                    'dokter' => $dokter,
+                    'detail' => [
+                        'layanan' => $result_layanan,
+                        'obatalkes' => $total_obatalkes
+                    ]
+                ];
+            }
+
+            // Menghitung Total Pemasukan
+            $total_all = $this->TransaksiModel
+                ->where('lunas', 1)
+                ->where('jaminan', $jaminan)
+                ->where('tgl_transaksi >=', $tanggal_awal . ' 00:00:00')
+                ->where('tgl_transaksi <=', $tanggal_akhir . ' 23:59:59')
+                ->selectSum('total_pembayaran')
+                ->get()
+                ->getRow()
+                ->total_pembayaran;
+
+            // Memeriksa apakah detail pembelian obat kosong
+            if (empty($transaksi)) {
+                throw PageNotFoundException::forPageNotFound();
+            } else {
+                // Membuat nama file berdasarkan tanggal pembelian
+                $filename = 'transaksi-' . $jaminan . '-' . $tanggal_awal . '-' . $tanggal_akhir . '-transaksi.xlsx';
+                $tanggal_awal_format = new DateTime($tanggal_awal);
+                $tanggal_akhir_format = new DateTime($tanggal_akhir);
+                // Buat formatter untuk tanggal dan waktu
+                $formatter = new IntlDateFormatter(
+                    'id_ID', // Locale untuk bahasa Indonesia
+                    IntlDateFormatter::LONG, // Format untuk tanggal
+                    IntlDateFormatter::NONE, // Tidak ada waktu
+                    'Asia/Jakarta', // Timezone
+                    IntlDateFormatter::GREGORIAN, // Calendar
+                    'EEEE, d MMMM yyyy' // Format tanggal lengkap dengan nama hari
+                );
+
+                // Format tanggal
+                $tanggalAwalFormat = $formatter->format($tanggal_awal_format);
+                $tanggalAkhirFormat = $formatter->format($tanggal_akhir_format);
+                $spreadsheet = new Spreadsheet();
+                $sheet = $spreadsheet->getActiveSheet();
+
+                // Menambahkan informasi header di spreadsheet
+                $sheet->setCellValue('A1', 'KLINIK UTAMA MATA PADANG EYE CENTER TELUK KUANTAN');
+                $sheet->setCellValue('A2', 'Jl. Rusdi S. Abrus No. 35 LK III Sinambek, Kelurahan Sungai Jering, Kecamatan Kuantan Tengah, Kabupaten Kuantan Singingi, Riau.');
+                $sheet->setCellValue('A3', 'LAPORAN TRANSAKSI BERDASARKAN JAMINAN');
+
+                // Path gambar yang ingin ditambahkan
+                $gambarPath = FCPATH . 'assets/images/logo_pec.png'; // Ganti dengan path gambar Anda
+
+                // Membuat objek Drawing
+                $drawing = new Drawing();
+                $drawing->setName('Logo PEC-TK'); // Nama gambar
+                $drawing->setDescription('Logo PEC-TK'); // Deskripsi gambar
+                $drawing->setPath($gambarPath); // Path ke gambar
+                $drawing->setCoordinates('A1'); // Koordinat sel tempat gambar akan ditambahkan
+                $drawing->setHeight(36); // Tinggi gambar dalam piksel (opsional)
+                $drawing->setWorksheet($sheet); // Menambahkan gambar ke worksheet
+
+                // Menambahkan informasi tanggal dan supplier
+                $sheet->setCellValue('A4', 'Jaminan:');
+                $sheet->setCellValue('C4', $jaminanNama);
+                $sheet->setCellValue('A5', 'Rentang Tanggal:');
+                $sheet->setCellValue('C5', $tanggalAwalFormat . ' s.d. ' . $tanggalAkhirFormat);
+
+                // Menambahkan header tabel detail pembelian
+                $sheet->setCellValue('A6', 'No');
+                $sheet->setCellValue('B6', 'Tanggal dan Waktu');
+                $sheet->setCellValue('C6', 'Nomor Kwitansi');
+                $sheet->setCellValue('D6', 'Kasir');
+                $sheet->setCellValue('E6', 'Nomor RM');
+                $sheet->setCellValue('F6', 'Nama Pasien');
+                $sheet->setCellValue('G6', 'Metode Pembayaran');
+                $sheet->setCellValue('H6', 'Dokter');
+                $sheet->setCellValue('I6', 'Tindakan');
+                $sheet->setCellValue('J6', 'Kas');
+
+                // Mengatur tata letak dan gaya untuk header
+                $spreadsheet->getActiveSheet()->mergeCells('A1:J1');
+                $spreadsheet->getActiveSheet()->mergeCells('A2:J2');
+                $spreadsheet->getActiveSheet()->mergeCells('A3:J3');
+                $spreadsheet->getActiveSheet()->getPageSetup()
+                    ->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
+                $spreadsheet->getActiveSheet()->getPageSetup()
+                    ->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_A4);
+                $spreadsheet->getDefaultStyle()->getFont()->setName('Helvetica');
+                $spreadsheet->getDefaultStyle()->getFont()->setSize(8);
+
+                // Mengisi data detail pembelian obat ke dalam spreadsheet
+                $column = 7; // Baris awal data
+                $nomor = 1;  // Nomor urut transaksi
+
+                foreach ($result as $list) {
+                    // Tentukan posisi awal untuk setiap transaksi
+                    $startRow = $column; // Simpan posisi awal transaksi
+
+                    // Kondisikan jika ada resep luar
+                    $no_rm = ($list['no_rm'] == NULL) ? '-' : $list['no_rm'];
+
+                    // Kondisikan jika nama pasien adalah anonim atau bukan
+                    $nama_pasien = ($list['nama_pasien'] == NULL) ? '-' : $list['nama_pasien'];
+
+                    // Isi data transaksi utama
+                    $sheet->setCellValue('A' . $column, $nomor++);
+                    $sheet->setCellValue('B' . $column, $list['tgl_transaksi']);
+                    $sheet->setCellValue('C' . $column, $list['no_kwitansi']);
+                    $sheet->setCellValue('D' . $column, $list['kasir']);
+                    $sheet->setCellValue('E' . $column, $no_rm);
+                    $sheet->setCellValue('F' . $column, $nama_pasien);
+                    $sheet->setCellValue('G' . $column, $list['metode_pembayaran']);
+                    $sheet->setCellValue('H' . $column, $list['dokter']);
+
+                    // Atur ke bold
+                    $sheet->getStyle("A{$column}")->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+
+                    // Loop layanan dan pastikan harga terformat
+                    foreach ($list['detail']['layanan'] as $layanan) {
+                        $sheet->setCellValue('I' . $column, $layanan['nama_layanan']);
+
+                        // Terapkan format angka sebelum isi nilai
+                        $sheet->getStyle("J{$column}")->getNumberFormat()->setFormatCode(
+                            '_\Rp * #,##0_-;[Red]_\Rp * -#,##0_-;_-_\Rp * "-"_-;_-@_-'
+                        );
+                        $sheet->setCellValue('J' . $column, $layanan['harga_transaksi']);
+                        $column++;
+                    }
+
+                    // Baris obat
+                    $sheet->setCellValue('I' . $column, 'Obat');
+
+                    // Terapkan format angka sebelum isi nilai
+                    $sheet->getStyle("J{$column}")->getNumberFormat()->setFormatCode(
+                        '_\Rp * #,##0_-;[Red]_\Rp * -#,##0_-;_-_\Rp * "-"_-;_-@_-'
+                    );
+                    $sheet->setCellValue('J' . $column, $list['detail']['obatalkes']);
+
+                    // Tambahkan baris pemisah antar transaksi
+                    $column++;
+
+                    // Baris total pembayaran
+                    $sheet->setCellValue('I' . $column, 'Total');
+                    $sheet->getStyle("J{$column}")->getNumberFormat()->setFormatCode(
+                        '_\Rp * #,##0_-;[Red]_\Rp * -#,##0_-;_-_\Rp * "-"_-;_-@_-'
+                    );
+                    $sheet->setCellValue('J' . $column, $list['total_pembayaran']);
+                    // Atur ke bold
+                    $sheet->getStyle("I{$column}")->getFont()->setBold(TRUE);
+                    $sheet->getStyle("J{$column}")->getFont()->setBold(TRUE);
+
+                    // Tambahkan baris pemisah antar transaksi
+                    $column++;
+
+                    // Kondisikan jika tidak ada bank
+                    $bank = ($list['bank'] == NULL) ? '-' : $list['bank'];
+
+                    // Baris bank
+                    $sheet->setCellValue('I' . $column, 'Bank/E-wallet');
+                    $sheet->setCellValue('J' . $column, $bank); // Menambahkan data bank
+                    // Atur ke bold
+                    $sheet->getStyle("I{$column}")->getFont()->setBold(TRUE);
+                    $sheet->getStyle("J{$column}")->getFont()->setBold(TRUE);
+                    // Atur rata kanan untuk bank
+                    $sheet->getStyle("J{$column}")->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT);
+
+                    // Menggabungkan sel dari A hingga G
+                    $sheet->mergeCells("A{$startRow}:A{$column}");
+                    $sheet->mergeCells("B{$startRow}:B{$column}");
+                    $sheet->mergeCells("C{$startRow}:C{$column}");
+                    $sheet->mergeCells("D{$startRow}:D{$column}");
+                    $sheet->mergeCells("E{$startRow}:E{$column}");
+                    $sheet->mergeCells("F{$startRow}:F{$column}");
+                    $sheet->mergeCells("G{$startRow}:G{$column}");
+                    $sheet->mergeCells("H{$startRow}:H{$column}");
+
+                    // Tambahkan baris pemisah antar transaksi
+                    $column++;
+                }
+
+                // Menambahkan total pemasukan di bawah tabel
+                $sheet->setCellValue('A' . ($column), 'Total Pemasukan');
+                $spreadsheet->getActiveSheet()->mergeCells('A' . ($column) . ':I' . ($column));
+                $sheet->setCellValue('J' . ($column), $total_all);
+                // Mengatur format untuk total pemasukan
+                $sheet->getStyle('J' . ($column))->getNumberFormat()->setFormatCode('_\Rp * #,##0_-;[Red]_\Rp * -#,##0_-;_-_\Rp * \"-\"_-;_-@_-');
+
+                // Mengatur gaya teks untuk header dan total
+                $sheet->getStyle('A1')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+                $sheet->getStyle('A1')->getFont()->setSize(12);
+                $sheet->getStyle('A2')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+                $sheet->getStyle('A3')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+                $sheet->getStyle('A3')->getFont()->setSize(10);
+                $sheet->getStyle('C4')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT);
+                $sheet->getStyle('C5')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT);
+                $sheet->getStyle('A6:J6')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+                $sheet->getStyle('A' . ($column))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT);
+                $sheet->getStyle('E' . ($column + 2) . ':E' . ($column + 8))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+
+                // Mengatur gaya font untuk header dan total
+                $sheet->getStyle('A1:A5')->getFont()->setBold(TRUE);
+                $sheet->getStyle('A6:J6')->getFont()->setBold(TRUE);
+                $sheet->getStyle('A6:J6')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+                $sheet->getStyle('A' . ($column) . ':J' . ($column))->getFont()->setBold(TRUE);
+
+                // Menambahkan border untuk header dan tabel
+                $headerBorder1 = [
+                    'borders' => [
+                        'bottom' => [
+                            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                            'color' => ['argb' => 'FF000000']
+                        ]
+                    ]
+                ];
+                $sheet->getStyle('A2:J2')->applyFromArray($headerBorder1);
+                $tableBorder = [
+                    'borders' => [
+                        'allBorders' => [
+                            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                            'color' => ['argb' => 'FF000000']
+                        ]
+                    ]
+                ];
+                $sheet->getStyle('A6:J' . ($column))->applyFromArray($tableBorder);
+                $sheet->getStyle('A6:J' . ($column))->getAlignment()->setWrapText(true);
+                $sheet->getStyle('A7:J' . ($column + 1))->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
+
+                // Mengatur lebar kolom
+                $sheet->getColumnDimension('A')->setWidth(30, 'px');
+                $sheet->getColumnDimension('B')->setWidth(150, 'px');
+                $sheet->getColumnDimension('C')->setWidth(150, 'px');
+                $sheet->getColumnDimension('D')->setWidth(150, 'px');
+                $sheet->getColumnDimension('E')->setWidth(75, 'px');
+                $sheet->getColumnDimension('F')->setWidth(150, 'px');
+                $sheet->getColumnDimension('G')->setWidth(100, 'px');
+                $sheet->getColumnDimension('H')->setWidth(150, 'px');
+                $sheet->getColumnDimension('I')->setWidth(175, 'px');
+                $sheet->getColumnDimension('J')->setWidth(150, 'px');
 
                 // Menyimpan file spreadsheet dan mengirimkan ke browser
                 $writer = new Xlsx($spreadsheet);

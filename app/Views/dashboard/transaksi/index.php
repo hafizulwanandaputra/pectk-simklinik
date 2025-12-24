@@ -50,6 +50,18 @@
                         </div>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a style="font-size: 0.95em;" class="nav-link nav-link-offcanvas px-2 py-1 link-success" href="<?= base_url('/transaksi/reportjaminan'); ?>">
+                        <div class="d-flex align-items-start">
+                            <div style="min-width: 24px; max-width: 24px; text-align: center;">
+                                <i class="fa-solid fa-calendar-days"></i>
+                            </div>
+                            <div class="ms-2 link-body-emphasis">
+                                Laporan Transaksi Berdasarkan Jaminan
+                            </div>
+                        </div>
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
