@@ -486,7 +486,8 @@
             }
         });
         // Menangani event klik pada tombol refresh
-        $('#refreshButton').on('click', function() {
+        $('#refreshButton').on('click', function(ə) {
+            ə.preventDefault(); // Mencegah aksi default dari tautan
             fetchTransaksi(); // Panggil fungsi untuk mengambil data transaksi
         });
 
