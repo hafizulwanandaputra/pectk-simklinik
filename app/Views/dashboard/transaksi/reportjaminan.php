@@ -15,10 +15,10 @@
         <ul class="list-group no-fluid-content-list-group shadow-sm border border-bottom-0">
             <li class="list-group-item px-2 border-top-0 border-end-0 border-start-0 bg-body-secondary transparent-blur">
                 <div class="no-fluid-content">
-                    <select id="jaminanFilter" class="form-select form-select-sm flex-grow-1">
+                    <select id="jaminanFilter" class="form-select form-select-sm mb-2 flex-grow-1">
                         <option value="" disabled selected>-- Pilih Jaminan --</option>
                     </select>
-                    <div class="d-flex flex-column flex-lg-row mb-1 gap-1 my-1">
+                    <div class="d-flex flex-column flex-lg-row gap-1">
                         <div class="input-group input-group-sm w-auto flex-fill" id="form-tanggal-awal">
                             <input type="date" id="tanggal-awal" name="tanggal-awal" class="form-control">
                             <button class="btn btn-danger bg-gradient" type="button" id="clearTglAwalButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
@@ -468,8 +468,14 @@
 
     $(document).ready(function() {
         // Menangani event klik pada tombol bersihkan
-        $('#clearTglButton').on('click', function() {
-            $('#tanggal').val(''); // Kosongkan tanggal
+        $('#clearTglAwalButton').on('click', function() {
+            $('#tanggal_awal').val(''); // Kosongkan tanggal
+            $('#datatransaksi').empty(); // Kosongkan tabel transaksi
+            $('#datatransaksi').append(loading); // Tampilkan loading indicator
+            fetchTransaksi(); // Panggil fungsi untuk mengambil data transaksi
+        });
+        $('#clearTglAkhirButton').on('click', function() {
+            $('#tanggal_akhir').val(''); // Kosongkan tanggal
             $('#datatransaksi').empty(); // Kosongkan tabel transaksi
             $('#datatransaksi').append(loading); // Tampilkan loading indicator
             fetchTransaksi(); // Panggil fungsi untuk mengambil data transaksi
