@@ -465,9 +465,9 @@
                 // Mengkondisikan jenis kelamin
                 let jenis_kelamin = rawatjalan.jenis_kelamin;
                 if (jenis_kelamin === 'L') {
-                    jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap h-100 d-flex align-items-center" style="background-color: SkyBlue"><i class="fa-solid fa-mars"></i><span class="ms-1">LAKI-LAKI</span></span>`;
+                    jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap h-100 d-flex align-items-center me-1" style="background-color: SkyBlue"><i class="fa-solid fa-mars"></i><span class="ms-1">LAKI-LAKI</span></span>`;
                 } else if (jenis_kelamin === 'P') {
-                    jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap h-100 d-flex align-items-center" style="background-color: Pink"><i class="fa-solid fa-venus"></i><span class="ms-1">PEREMPUAN</span></span>`;
+                    jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap h-100 d-flex align-items-center me-1" style="background-color: Pink"><i class="fa-solid fa-venus"></i><span class="ms-1">PEREMPUAN</span></span>`;
                 }
                 // Gunakan pesan jika tidak ada nomor telepon
                 const telpon = rawatjalan.telpon ? rawatjalan.telpon : "<em>Tidak ada</em>";
@@ -494,7 +494,7 @@
                             </h5>
                             <h6 class="mb-1 text-truncate">${rawatjalan.dokter}</h6>
                             <div class="d-flex align-items-stretch date mb-1" style="height: 1.25em;">
-                                ${jenis_kelamin} <span class="badge bg-body text-body border text-nowrap h-100 d-flex align-items-center me-1">${rawatjalan.nomor_registrasi}</span>
+                                ${jenis_kelamin} <span class="badge bg-body text-body border text-nowrap h-100 d-flex align-items-center">${rawatjalan.nomor_registrasi}</span>
                             </div>
                             <div class="d-flex align-items-stretch date" style="height: 1.25em;">
                                 <span class="badge bg-body text-body border date h-100 d-flex align-items-center me-1">${rawatjalan.kode_antrian}${rawatjalan.no_antrian}</span><span class="badge bg-body text-body border date h-100 d-flex align-items-center me-1">${rawatjalan.status_kunjungan}</span>
@@ -659,9 +659,9 @@
                 // Mengkondisikan jenis kelamin
                 let jenis_kelamin = rawatjalan.jenis_kelamin;
                 if (jenis_kelamin === 'L') {
-                    jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap h-100 d-flex align-items-center" style="background-color: SkyBlue"><i class="fa-solid fa-mars"></i><span class="ms-1">LAKI-LAKI</span></span>`;
+                    jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap h-100 d-flex align-items-center me-1" style="background-color: SkyBlue"><i class="fa-solid fa-mars"></i><span class="ms-1">LAKI-LAKI</span></span>`;
                 } else if (jenis_kelamin === 'P') {
-                    jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap h-100 d-flex align-items-center" style="background-color: Pink"><i class="fa-solid fa-venus"></i><span class="ms-1">PEREMPUAN</span></span>`;
+                    jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap h-100 d-flex align-items-center me-1" style="background-color: Pink"><i class="fa-solid fa-venus"></i><span class="ms-1">PEREMPUAN</span></span>`;
                 }
                 // Gunakan pesan jika tidak ada nomor telepon
                 const telpon = rawatjalan.telpon ? rawatjalan.telpon : "<em>Tidak ada</em>";
@@ -688,7 +688,7 @@
                             </h5>
                             <h6 class="mb-1 text-truncate">${rawatjalan.dokter}</h6>
                             <div class="d-flex align-items-stretch date mb-1" style="height: 1.25em;">
-                                ${jenis_kelamin} <span class="badge bg-body text-body border text-nowrap h-100 d-flex align-items-center me-1">${rawatjalan.nomor_registrasi}</span>
+                                ${jenis_kelamin} <span class="badge bg-body text-body border text-nowrap h-100 d-flex align-items-center">${rawatjalan.nomor_registrasi}</span>
                             </div>
                             <div class="d-flex align-items-stretch date" style="height: 1.25em;">
                                 <span class="badge bg-body text-body border date h-100 d-flex align-items-center me-1">${rawatjalan.kode_antrian}${rawatjalan.no_antrian}</span><span class="badge bg-body text-body border date h-100 d-flex align-items-center me-1">${rawatjalan.status_kunjungan}</span>
@@ -845,9 +845,9 @@
                 // Mengkondisikan jenis kelamin
                 let jenis_kelamin = rawatjalan.jenis_kelamin;
                 if (jenis_kelamin === 'L') {
-                    jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap h-100 d-flex align-items-center" style="background-color: SkyBlue"><i class="fa-solid fa-mars"></i><span class="ms-1">LAKI-LAKI</span></span>`;
+                    jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap h-100 d-flex align-items-center me-1" style="background-color: SkyBlue"><i class="fa-solid fa-mars"></i><span class="ms-1">LAKI-LAKI</span></span>`;
                 } else if (jenis_kelamin === 'P') {
-                    jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap h-100 d-flex align-items-center" style="background-color: Pink"><i class="fa-solid fa-venus"></i><span class="ms-1">PEREMPUAN</span></span>`;
+                    jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap h-100 d-flex align-items-center me-1" style="background-color: Pink"><i class="fa-solid fa-venus"></i><span class="ms-1">PEREMPUAN</span></span>`;
                 }
                 // Gunakan pesan jika tidak ada nomor telepon
                 const telpon = rawatjalan.telpon ? rawatjalan.telpon : "<em>Tidak ada</em>";
@@ -874,7 +874,7 @@
                             </h5>
                             <h6 class="mb-1 text-truncate">${rawatjalan.dokter}</h6>
                             <div class="d-flex align-items-stretch date mb-1" style="height: 1.25em;">
-                                ${jenis_kelamin} <span class="badge bg-body text-body border text-nowrap h-100 d-flex align-items-center me-1">${rawatjalan.nomor_registrasi}</span>
+                                ${jenis_kelamin} <span class="badge bg-body text-body border text-nowrap h-100 d-flex align-items-center">${rawatjalan.nomor_registrasi}</span>
                             </div>
                             <div class="d-flex align-items-stretch date" style="height: 1.25em;">
                                 <span class="badge bg-body text-body border date h-100 d-flex align-items-center me-1">${rawatjalan.kode_antrian}${rawatjalan.no_antrian}</span><span class="badge bg-body text-body border date h-100 d-flex align-items-center me-1">${rawatjalan.status_kunjungan}</span>
