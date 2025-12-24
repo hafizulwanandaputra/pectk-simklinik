@@ -18,7 +18,7 @@
                     <select id="jaminanFilter" class="form-select form-select-sm mb-2 flex-grow-1">
                         <option value="" disabled selected>-- Pilih Jaminan --</option>
                     </select>
-                    <div class="d-flex flex-column flex-lg-row gap-1">
+                    <div class="d-flex flex-column flex-lg-row gap-2">
                         <div class="input-group input-group-sm w-auto flex-fill" id="form-tanggal-awal">
                             <input type="date" id="tanggal-awal" name="tanggal-awal" class="form-control">
                             <button class="btn btn-danger bg-gradient" type="button" id="clearTglAwalButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
