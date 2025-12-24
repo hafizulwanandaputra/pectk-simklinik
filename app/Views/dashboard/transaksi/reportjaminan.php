@@ -469,13 +469,13 @@
     $(document).ready(function() {
         // Menangani event klik pada tombol bersihkan
         $('#clearTglAwalButton').on('click', function() {
-            $('#tanggal_awal').val(''); // Kosongkan tanggal
+            $('#tanggal-awal').val(''); // Kosongkan tanggal
             $('#datatransaksi').empty(); // Kosongkan tabel transaksi
             $('#datatransaksi').append(loading); // Tampilkan loading indicator
             fetchTransaksi(); // Panggil fungsi untuk mengambil data transaksi
         });
         $('#clearTglAkhirButton').on('click', function() {
-            $('#tanggal_akhir').val(''); // Kosongkan tanggal
+            $('#tanggal-akhir').val(''); // Kosongkan tanggal
             $('#datatransaksi').empty(); // Kosongkan tabel transaksi
             $('#datatransaksi').append(loading); // Tampilkan loading indicator
             fetchTransaksi(); // Panggil fungsi untuk mengambil data transaksi
