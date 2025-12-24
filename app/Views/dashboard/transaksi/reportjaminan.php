@@ -318,7 +318,6 @@
             if (!jaminan) {
                 $('#reportBtns').hide(); // Sembunyikan tombol buat laporan
                 $('#datatransaksi').empty(); // Kosongkan tabel transaksi
-                $('#refreshButton').prop('disabled', true); // Nonaktifkan tombol refresh
                 const emptyRow = `
                     <tr>
                         <td colspan="9" class="text-center">Silakan pilih jaminan</td>
@@ -333,7 +332,6 @@
             if (!tanggal_awal || !tanggal_akhir) {
                 $('#reportBtns').hide(); // Sembunyikan tombol buat laporan
                 $('#datatransaksi').empty(); // Kosongkan tabel transaksi
-                $('#refreshButton').prop('disabled', true); // Nonaktifkan tombol refresh
                 const emptyRow = `
                     <tr>
                         <td colspan="9" class="text-center">Silakan masukkan rentang tanggal</td>
@@ -357,7 +355,6 @@
 
             $('#reportBtns').show(); // Tampilkan tombol buat laporan
             $('#datatransaksi').empty(); // Kosongkan tabel transaksi
-            $('#refreshButton').prop('disabled', false); // Aktifkan tombol refresh
 
             // Cek apakah data transaksi kosong
             if (data.length === 0) {
