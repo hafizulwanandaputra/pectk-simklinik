@@ -335,9 +335,9 @@
                                 <i class="fa-solid fa-circle-info"></i>
                             </div>
                             <div class="w-100 ms-3">
-                                <p>Pastikan Anda telah memasukkan nominal transaksi sesuai dengan grand total yang diminta dan telah menyelesaikan proses pembayaran.</p>
-                                <p>Grand Total:<br><span id="total_pembayaran_modal" class="date fs-4" style="font-weight: 900;"></span></p>
-                                <p class="mb-0">Jika uang yang diterima melebihi grand total, maka akan ada uang kembali.</p>
+                                <p>Pastikan Anda telah memasukkan nominal transaksi sesuai dengan total keseluruhan yang diminta dan telah menyelesaikan proses pembayaran.</p>
+                                <p>Total Keseluruhan:<br><span id="total_pembayaran_modal" class="date fs-4" style="font-weight: 900;"></span></p>
+                                <p class="mb-0">Jika uang yang diterima melebihi total keseluruhan, maka akan ada uang kembali.</p>
                             </div>
                         </div>
                     </div>

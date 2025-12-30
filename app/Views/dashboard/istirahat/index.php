@@ -377,14 +377,14 @@
                         jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap" style="background-color: Pink"><i class="fa-solid fa-venus"></i> PEREMPUAN</span>`;
                     }
                     const diagnosis = istirahat.diagnosis ?
-                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${istirahat.diagnosis}">` :
-                        `<em>Belum ada</em>`;
+                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${istirahat.diagnosis}">` :
+                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 opacity-50 pe-none fst-italic" value="Belum ada">`;
                     const tanggal_mulai = istirahat.tanggal_mulai ?
-                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${istirahat.tanggal_mulai}">` :
-                        `<em>Belum ada</em>`;
+                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${istirahat.tanggal_mulai}">` :
+                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 opacity-50 pe-none fst-italic" value="Belum ada">`;
                     const tanggal_selesai = istirahat.tanggal_selesai ?
-                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${istirahat.tanggal_selesai}">` :
-                        `<em>Belum ada</em>`;
+                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${istirahat.tanggal_selesai}">` :
+                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 opacity-50 pe-none fst-italic" value="Belum ada">`;
 
                     const IstirahatElement = `
                     <li class="list-group-item <?= (session()->get('role') != 'Admisi') ? 'border-top-0' : ''; ?> pb-3 pt-3">
@@ -392,7 +392,7 @@
                             <div class="align-self-center w-100">
                                 <h5 class="card-title d-flex date justify-content-start">
                                     <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">${istirahat.number}</span>
-                                    <span class="ms-1 align-self-center w-100"><input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 fw-medium" value="${istirahat.nama_pasien}"></span>
+                                    <span class="ms-1 align-self-center w-100"><input type="text" readonly style="height: 1em;" class="form-control-plaintext p-0 border border-0 lh-1 fw-medium" value="${istirahat.nama_pasien}"></span>
                                 </h5>
                                     <h6 class="card-subtitle mb-2">
                                         <input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 fw-medium" value="${istirahat.nomor_registrasi} • ${istirahat.no_rm}">${jenis_kelamin}
@@ -402,13 +402,17 @@
                                             <div class="row gx-3">
                                                 <div class="col-lg-6">
                                                     <div class="mb-0 row g-1 align-items-center">
-                                                        <div class="col-5 fw-medium text-truncate">Tanggal dan Waktu</div>
+                                                        <div class="col-5">
+                                                            <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Tanggal dan Waktu">
+                                                        </div>
                                                         <div class="col date">
-                                                            <input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${istirahat.waktu_dibuat}">
+                                                            <input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${istirahat.waktu_dibuat}">
                                                         </div>
                                                     </div>
                                                     <div class="mb-0 row g-1 align-items-center">
-                                                        <div class="col-5 fw-medium text-truncate">Diagnosis</div>
+                                                        <div class="col-5">
+                                                            <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Diagnosis">
+                                                        </div>
                                                         <div class="col date">
                                                             ${diagnosis}
                                                         </div>
@@ -416,13 +420,17 @@
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <div class="mb-0 row g-1 align-items-center">
-                                                        <div class="col-5 fw-medium text-truncate">Tanggal Mulai</div>
+                                                        <div class="col-5">
+                                                            <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Tanggal Mulai">
+                                                        </div>
                                                         <div class="col date">
                                                             ${tanggal_mulai}
                                                         </div>
                                                     </div>
                                                     <div class="mb-0 row g-1 align-items-center">
-                                                        <div class="col-5 fw-medium text-truncate">Tanggal Selesai</div>
+                                                        <div class="col-5">
+                                                            <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Tanggal Selesai">
+                                                        </div>
                                                         <div class="col date">
                                                             ${tanggal_selesai}
                                                         </div>

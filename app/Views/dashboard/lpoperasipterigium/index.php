@@ -178,7 +178,7 @@
                 <div class="d-flex">
                     <div class="align-self-center w-100">
                         <h5 class="card-title d-flex placeholder-glow">
-                            <span class="badge bg-body text-body border py-1 px-2 date placeholder number-placeholder" style="font-weight: 900; font-size: 0.85em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><span class="spinner-border" style="width: 0.9em; height: 0.9em;" aria-hidden="true"></span></span> <span class="placeholder ms-1" style="width: 100%"></span>
+                            <span class="badge bg-body text-body border py-1 px-2 date placeholder number-placeholder" style="font-weight: 900; font-size: 0.85em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><?= $this->include('spinner/spinner'); ?></span> <span class="placeholder ms-1" style="width: 100%"></span>
                         </h5>
                         <h6 class="card-subtitle mb-2 placeholder-glow">
                             <span class="placeholder" style="width: 100%;"></span><br>
@@ -365,27 +365,27 @@
                         jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap" style="background-color: Pink"><i class="fa-solid fa-venus"></i> PEREMPUAN</span>`;
                     }
                     const lama_operasi = lp_operasi_pterigium.lama_operasi ?
-                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${lp_operasi_pterigium.lama_operasi} menit">` :
-                        `<em>Belum ada</em>`;
+                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${lp_operasi_pterigium.lama_operasi} menit">` :
+                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 opacity-50 pe-none fst-italic" value="Belum ada">`;
                     const jam_operasi = lp_operasi_pterigium.jam_operasi ?
                         ` ${lp_operasi_pterigium.jam_operasi}` :
                         ``;
                     const tanggal_operasi = lp_operasi_pterigium.tanggal_operasi ?
-                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${lp_operasi_pterigium.tanggal_operasi}${jam_operasi}">` :
-                        `<em>Belum ada</em>`;
+                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${lp_operasi_pterigium.tanggal_operasi}${jam_operasi}">` :
+                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 opacity-50 pe-none fst-italic" value="Belum ada">`;
                     const operator = lp_operasi_pterigium.operator ?
-                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${lp_operasi_pterigium.operator}">` :
-                        `<em>Belum ada</em>`;
+                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${lp_operasi_pterigium.operator}">` :
+                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 opacity-50 pe-none fst-italic" value="Belum ada">`;
                     const asisten = lp_operasi_pterigium.asisten ?
-                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${lp_operasi_pterigium.asisten}">` :
-                        `<em>Belum ada</em>`;
+                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${lp_operasi_pterigium.asisten}">` :
+                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 opacity-50 pe-none fst-italic" value="Belum ada">`;
                     const lPOperasiPterigiumElement = `
                     <li class="list-group-item <?= (session()->get('role') != 'Admisi') ? 'border-top-0' : ''; ?> pb-3 pt-3">
                         <div class="d-flex">
                             <div class="align-self-center w-100">
                                 <h5 class="card-title d-flex date justify-content-start">
                                     <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">${lp_operasi_pterigium.number}</span>
-                                    <span class="ms-1 align-self-center w-100"><input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 fw-medium" value="${lp_operasi_pterigium.nama_pasien}"></span>
+                                    <span class="ms-1 align-self-center w-100"><input type="text" readonly style="height: 1em;" class="form-control-plaintext p-0 border border-0 lh-1 fw-medium" value="${lp_operasi_pterigium.nama_pasien}"></span>
                                 </h5>
                                     <h6 class="card-subtitle mb-2">
                                         <input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 fw-medium" value="${lp_operasi_pterigium.nomor_registrasi} • ${lp_operasi_pterigium.no_rm}">${jenis_kelamin}
@@ -393,25 +393,33 @@
                                     <div class="card-text">
                                         <div style="font-size: 0.75em;">
                                                     <div class="mb-0 row g-1 align-items-center">
-                                                        <div class="col-5 fw-medium text-truncate">Tanggal Operasi</div>
+                                                        <div class="col-5">
+                                                            <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Tanggal Operasi">
+                                                        </div>
                                                         <div class="col date">
                                                             ${tanggal_operasi}
                                                         </div>
                                                     </div>
                                                     <div class="mb-0 row g-1 align-items-center">
-                                                        <div class="col-5 fw-medium text-truncate">Lama Operasi</div>
+                                                        <div class="col-5">
+                                                            <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Lama Operasi">
+                                                        </div>
                                                         <div class="col date">
                                                             ${lama_operasi}
                                                         </div>
                                                     </div>
                                                     <div class="mb-0 row g-1 align-items-center">
-                                                        <div class="col-5 fw-medium text-truncate">Dokter</div>
+                                                        <div class="col-5">
+                                                            <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Dokter">
+                                                        </div>
                                                         <div class="col">
                                                             ${operator}
                                                         </div>
                                                     </div>
                                                     <div class="mb-0 row g-1 align-items-center">
-                                                        <div class="col-5 fw-medium text-truncate">Asisten</div>
+                                                        <div class="col-5">
+                                                            <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Asisten">
+                                                        </div>
                                                         <div class="col">
                                                             ${asisten}
                                                         </div>

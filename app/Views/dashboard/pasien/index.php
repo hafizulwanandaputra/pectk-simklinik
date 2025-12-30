@@ -267,21 +267,21 @@
                 );
             } else {
                 data.pasien.forEach(function(pasien) {
-                    const nama_pasien_header = pasien.nama_pasien ? pasien.nama_pasien : "<em>Belum Diisi</em>";
-                    const nama_pasien = pasien.nama_pasien ? `<input type="text" readonly style="padding: 1px 0 1px 0;" class="form-control-plaintext border border-0 lh-1" value="${pasien.nama_pasien}">` : `<em>Belum diisi</em>`;
+                    const nama_pasien_header = pasien.nama_pasien ? pasien.nama_pasien : `<em>Belum Diisi</em>`;
+                    const nama_pasien = pasien.nama_pasien ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${pasien.nama_pasien}">` : `<input type="text" readonly class="form-control-plaintext p-0 border border-0 opacity-50 pe-none fst-italic" value="Belum diisi">`;
                     let jenis_kelamin = pasien.jenis_kelamin;
                     if (jenis_kelamin === 'L') {
-                        jenis_kelamin = `<input type="text" readonly style="padding: 1px 0 1px 0;" class="form-control-plaintext border border-0 lh-1" value="Laki-Laki">`;
+                        jenis_kelamin = `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="Laki-Laki">`;
                     } else if (jenis_kelamin === 'P') {
-                        jenis_kelamin = `<input type="text" readonly style="padding: 1px 0 1px 0;" class="form-control-plaintext border border-0 lh-1" value="Perempuan">`;
+                        jenis_kelamin = `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="Perempuan">`;
                     } else {
-                        jenis_kelamin = `<em>Tidak ada</em>`;
+                        jenis_kelamin = `<input type="text" readonly class="form-control-plaintext p-0 border border-0 opacity-50 pe-none fst-italic" value="Tidak ada">`;
                     }
-                    const nik = pasien.nik ? `<input type="text" readonly style="padding: 1px 0 1px 0;" class="form-control-plaintext border border-0 lh-1 date" value="${pasien.nik}">` : `<em>Tidak ada</em>`;
-                    const no_bpjs = pasien.no_bpjs ? `<input type="text" readonly style="padding: 1px 0 1px 0;" class="form-control-plaintext border border-0 lh-1 date" value="${pasien.no_bpjs}">` : `<em>Tidak ada</em>`;
-                    const tempat_lahir = pasien.tempat_lahir ? `<input type="text" readonly style="padding: 1px 0 1px 0;" class="form-control-plaintext border border-0 lh-1" value="${pasien.tempat_lahir}">` : `<em>Tidak ada</em>`;
-                    const tanggal_lahir = pasien.tanggal_lahir ? `<input type="text" readonly style="padding: 1px 0 1px 0;" class="form-control-plaintext border border-0 lh-1 date" value="${pasien.tanggal_lahir}">` : `<em>Tidak ada</em>`;
-                    const alamat = pasien.alamat ? `<input type="text" readonly style="padding: 1px 0 1px 0;" class="form-control-plaintext border border-0 lh-1" value="${pasien.alamat}">` : `<em>Tidak ada</em>`;
+                    const nik = pasien.nik ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${pasien.nik}">` : `<input type="text" readonly class="form-control-plaintext p-0 border border-0 opacity-50 pe-none fst-italic" value="Tidak ada">`;
+                    const no_bpjs = pasien.no_bpjs ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${pasien.no_bpjs}">` : `<input type="text" readonly class="form-control-plaintext p-0 border border-0 opacity-50 pe-none fst-italic" value="Tidak ada">`;
+                    const tempat_lahir = pasien.tempat_lahir ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${pasien.tempat_lahir}">` : `<input type="text" readonly class="form-control-plaintext p-0 border border-0 opacity-50 pe-none fst-italic" value="Tidak ada">`;
+                    const tanggal_lahir = pasien.tanggal_lahir ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${pasien.tanggal_lahir}">` : `<input type="text" readonly class="form-control-plaintext p-0 border border-0 opacity-50 pe-none fst-italic" value="Tidak ada">`;
+                    const alamat = pasien.alamat ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${pasien.alamat}">` : `<input type="text" readonly class="form-control-plaintext p-0 border border-0 opacity-50 pe-none fst-italic" value="Tidak ada">`;
                     const kelurahan = pasien.kelurahan ? `${pasien.kelurahan}, ` : ``;
                     const kecamatan = pasien.kecamatan ? `${pasien.kecamatan}, ` : ``;
                     const kabupaten = pasien.kabupaten ? `${pasien.kabupaten}, ` : ``;
@@ -289,12 +289,12 @@
 
                     let alamat_lokasi = pasien.alamat_lokasi;
                     if (kelurahan.length > 0 && kecamatan.length > 0 && kabupaten.length > 0 && provinsi.length > 0) {
-                        alamat_lokasi = `<input type="text" readonly style="padding: 1px 0 1px 0; font-size: 0.7rem" class="form-control-plaintext border border-0 lh-1" value="${kelurahan}${kecamatan}${kabupaten}${provinsi}">`;
+                        alamat_lokasi = `<input type="text" readonly style="font-size: 0.7rem" class="form-control-plaintext p-0 border border-0" value="${kelurahan}${kecamatan}${kabupaten}${provinsi}">`;
                     } else {
-                        alamat_lokasi = `<em style="font-size: 0.7rem;">Tidak ada</em>`;
+                        alamat_lokasi = `<input type="text" readonly style="font-size: 0.7rem" class="form-control-plaintext p-0 border border-0 opacity-50 pe-none fst-italic" value="Tidak ada">`;
                     }
-                    const kewarganegaraan = pasien.kewarganegaraan ? `<input type="text" readonly style="padding: 1px 0 1px 0;" class="form-control-plaintext border border-0 lh-1" value="${pasien.kewarganegaraan}">` : `<em>Tidak ada</em>`;
-                    const telpon = pasien.telpon ? `<input type="text" readonly style="padding: 1px 0 1px 0;" class="form-control-plaintext border border-0 lh-1 date" value="${pasien.telpon}">` : `<em>Tidak ada</em>`;
+                    const kewarganegaraan = pasien.kewarganegaraan ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${pasien.kewarganegaraan}">` : `<input type="text" readonly class="form-control-plaintext p-0 border border-0 opacity-50 pe-none fst-italic" value="Tidak ada">`;
+                    const telpon = pasien.telpon ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${pasien.telpon}">` : `<input type="text" readonly class="form-control-plaintext p-0 border border-0 opacity-50 pe-none fst-italic" value="Tidak ada">`;
                     const delete_status = pasien.jumlah_rawat_jalan_daftar > 0 ? `disabled` : ``;
                     const pasienElement = `
                 <span class="list-group-item border-top-0 pb-3 pt-3">
@@ -311,43 +311,57 @@
                                 <div class="row gx-3">
                                     <div class="col-lg-6">
                                         <div class="mb-0 row g-1 align-items-start">
-                                            <div class="col-5 fw-medium text-truncate">Nama</div>
+                                            <div class="col-5">
+                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Nama">
+                                            </div>
                                             <div class="col">
                                                 ${nama_pasien}
                                             </div>
                                         </div>
                                         <div class="mb-0 row g-1 align-items-start">
-                                            <div class="col-5 fw-medium text-truncate">Nomor Identitas</div>
+                                            <div class="col-5">
+                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Nomor Identitas">
+                                            </div>
                                             <div class="col date">
                                                 ${nik}
                                             </div>
                                         </div>
                                         <div class="mb-0 row g-1 align-items-start">
-                                            <div class="col-5 fw-medium text-truncate">Nomor BPJS</div>
+                                            <div class="col-5">
+                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Nomor BPJS">
+                                            </div>
                                             <div class="col date">
                                                 ${no_bpjs}
                                             </div>
                                         </div>
                                         <div class="mb-0 row g-1 align-items-start">
-                                            <div class="col-5 fw-medium text-truncate">Jenis Kelamin</div>
+                                            <div class="col-5">
+                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Jenis Kelamin">
+                                            </div>
                                             <div class="col">
                                                 ${jenis_kelamin}
                                             </div>
                                         </div>
                                         <div class="mb-0 row g-1 align-items-start">
-                                            <div class="col-5 fw-medium text-truncate">Tempat Lahir</div>
+                                            <div class="col-5">
+                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Tempat Lahir">
+                                            </div>
                                             <div class="col">
                                                 ${tempat_lahir}
                                             </div>
                                         </div>
                                         <div class="mb-0 row g-1 align-items-start">
-                                            <div class="col-5 fw-medium text-truncate">Tanggal Lahir</div>
+                                            <div class="col-5">
+                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Tanggal Lahir">
+                                            </div>
                                             <div class="col">
                                                 ${tanggal_lahir}
                                             </div>
                                         </div>
                                         <div class="mb-0 row g-1 align-items-start">
-                                            <div class="col-5 fw-medium text-truncate">Alamat</div>
+                                            <div class="col-5">
+                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Alamat">
+                                            </div>
                                             <div class="col">
                                                 ${alamat}${alamat_lokasi}
                                             </div>
@@ -355,33 +369,43 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="mb-0 row g-1 align-items-start">
-                                            <div class="col-5 fw-medium text-truncate">Kewarganegaraan</div>
+                                            <div class="col-5">
+                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Kewarganegaraan">
+                                            </div>
                                             <div class="col">
                                                 ${kewarganegaraan}
                                             </div>
                                         </div>
                                         <div class="mb-0 row g-1 align-items-start">
-                                            <div class="col-5 fw-medium text-truncate">Nomor Telepon</div>
+                                            <div class="col-5">
+                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Nomor Telepon">
+                                            </div>
                                             <div class="col date">
                                                 ${telpon}
                                             </div>
                                         </div>
                                         <div class="mb-0 row g-1 align-items-start">
-                                            <div class="col-5 fw-medium text-truncate">Rawat Jalan Didaftarkan</div>
+                                            <div class="col-5">
+                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Rawat Jalan Didaftarkan">
+                                            </div>
                                             <div class="col date">
-                                                ${pasien.jumlah_rawat_jalan_daftar.toLocaleString('id-ID')}
+                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${pasien.jumlah_rawat_jalan_daftar.toLocaleString('id-ID')}">
                                             </div>
                                         </div>
                                         <div class="mb-0 row g-1 align-items-start">
-                                            <div class="col-5 fw-medium text-truncate">Rawat Jalan Dibatalkan</div>
+                                            <div class="col-5">
+                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Rawat Jalan Dibatalkan">
+                                            </div>
                                             <div class="col date">
-                                                ${pasien.jumlah_rawat_jalan_batal.toLocaleString('id-ID')}
+                                            <input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${pasien.jumlah_rawat_jalan_batal.toLocaleString('id-ID')}">
                                             </div>
                                         </div>
                                         <div class="mb-0 row g-1 align-items-start">
-                                            <div class="col-5 fw-medium text-truncate">Total Rawat Jalan</div>
+                                            <div class="col-5">
+                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Total Rawat Jalan">
+                                            </div>
                                             <div class="col date">
-                                                ${pasien.jumlah_rawat_jalan.toLocaleString('id-ID')}
+                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${pasien.jumlah_rawat_jalan.toLocaleString('id-ID')}">
                                             </div>
                                         </div>
                                     </div>

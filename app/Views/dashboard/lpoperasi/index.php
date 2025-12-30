@@ -365,27 +365,27 @@
                         jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap" style="background-color: Pink"><i class="fa-solid fa-venus"></i> PEREMPUAN</span>`;
                     }
                     const lama_operasi = lp_operasi.lama_operasi ?
-                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${lp_operasi.lama_operasi} menit">` :
-                        `<em>Belum ada</em>`;
+                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${lp_operasi.lama_operasi} menit">` :
+                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 opacity-50 pe-none fst-italic" value="Belum ada">`;
                     const jam_operasi = lp_operasi.jam_operasi ?
                         ` ${lp_operasi.jam_operasi}` :
                         ``;
                     const tanggal_operasi = lp_operasi.tanggal_operasi ?
-                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${lp_operasi.tanggal_operasi}${jam_operasi}">` :
-                        `<em>Belum ada</em>`;
+                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${lp_operasi.tanggal_operasi}${jam_operasi}">` :
+                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 opacity-50 pe-none fst-italic" value="Belum ada">`;
                     const dokter_bedah = lp_operasi.dokter_bedah ?
-                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${lp_operasi.dokter_bedah}">` :
-                        `<em>Belum ada</em>`;
+                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${lp_operasi.dokter_bedah}">` :
+                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 opacity-50 pe-none fst-italic" value="Belum ada">`;
                     const asisten_dokter_bedah = lp_operasi.asisten_dokter_bedah ?
-                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${lp_operasi.asisten_dokter_bedah}">` :
-                        `<em>Belum ada</em>`;
+                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${lp_operasi.asisten_dokter_bedah}">` :
+                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 opacity-50 pe-none fst-italic" value="Belum ada">`;
                     const lPOperasiElement = `
                     <li class="list-group-item <?= (session()->get('role') != 'Admisi') ? 'border-top-0' : ''; ?> pb-3 pt-3">
                         <div class="d-flex">
                             <div class="align-self-center w-100">
                                 <h5 class="card-title d-flex date justify-content-start">
                                     <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">${lp_operasi.number}</span>
-                                    <span class="ms-1 align-self-center w-100"><input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 fw-medium" value="${lp_operasi.nama_pasien}"></span>
+                                    <span class="ms-1 align-self-center w-100"><input type="text" readonly style="height: 1em;" class="form-control-plaintext p-0 border border-0 lh-1 fw-medium" value="${lp_operasi.nama_pasien}"></span>
                                 </h5>
                                     <h6 class="card-subtitle mb-2">
                                         <input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 fw-medium" value="${lp_operasi.nomor_registrasi} • ${lp_operasi.no_rm}">${jenis_kelamin}
@@ -393,25 +393,33 @@
                                     <div class="card-text">
                                         <div style="font-size: 0.75em;">
                                                     <div class="mb-0 row g-1 align-items-center">
-                                                        <div class="col-5 fw-medium text-truncate">Tanggal Operasi</div>
+                                                        <div class="col-5">
+                                                            <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Tanggal Operasi">
+                                                        </div>
                                                         <div class="col date">
                                                             ${tanggal_operasi}
                                                         </div>
                                                     </div>
                                                     <div class="mb-0 row g-1 align-items-center">
-                                                        <div class="col-5 fw-medium text-truncate">Lama Operasi</div>
+                                                        <div class="col-5">
+                                                            <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Lama Operasi">
+                                                        </div>
                                                         <div class="col date">
                                                             ${lama_operasi}
                                                         </div>
                                                     </div>
                                                     <div class="mb-0 row g-1 align-items-center">
-                                                        <div class="col-5 fw-medium text-truncate">Dokter</div>
+                                                        <div class="col-5">
+                                                            <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Dokter">
+                                                        </div>
                                                         <div class="col">
                                                             ${dokter_bedah}
                                                         </div>
                                                     </div>
                                                     <div class="mb-0 row g-1 align-items-center">
-                                                        <div class="col-5 fw-medium text-truncate">Asisten</div>
+                                                        <div class="col-5">
+                                                            <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Asisten">
+                                                        </div>
                                                         <div class="col">
                                                             ${asisten_dokter_bedah}
                                                         </div>

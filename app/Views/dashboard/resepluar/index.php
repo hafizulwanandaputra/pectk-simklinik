@@ -395,8 +395,8 @@
             } else {
                 data.resep.forEach(function(resep) {
                     const nama_pasien = resep.nama_pasien ?
-                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 fw-medium" value="${resep.nama_pasien}">` :
-                        `<em>Anonim</em>`;
+                        `<input type="text" readonly style="height: 1em;" class="form-control-plaintext p-0 border border-0 lh-1 fw-medium" value="${resep.nama_pasien}">` :
+                        `<input type="text" readonly disabled style="height: 1em;" class="form-control-plaintext p-0 border border-0 lh-1 fw-medium pe-none fst-italic" value="Anomim">`;
                     let jenis_kelamin = resep.jenis_kelamin;
                     if (jenis_kelamin === 'L') {
                         jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap" style="background-color: SkyBlue"><i class="fa-solid fa-mars"></i> LAKI-LAKI</span>`;
@@ -404,8 +404,8 @@
                         jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap" style="background-color: Pink"><i class="fa-solid fa-venus"></i> PEREMPUAN</span>`;
                     }
                     const alamat = resep.alamat ?
-                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${resep.alamat}">` :
-                        `<em>Tidak ada</em>`;
+                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${resep.alamat}">` :
+                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 opacity-50 pe-none fst-italic" value="Tidak ada">`;
                     const jumlah_resep = parseInt(resep.jumlah_resep);
                     const total_biaya = parseInt(resep.total_biaya);
                     const statusBadge = resep.status == '1' ?
@@ -413,8 +413,8 @@
                         `<span class="badge bg-danger bg-gradient">Transaksi Belum Diproses</span>`;
                     const statusButtons = resep.status == '1' ? `disabled` : ``;
                     const tanggal_lahir = !resep.tanggal_lahir || resep.tanggal_lahir === '0000-00-00' ?
-                        '<em>Tidak ada</em>' :
-                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${resep.tanggal_lahir}">`;
+                        '<input type="text" readonly class="form-control-plaintext p-0 border border-0 opacity-50 pe-none fst-italic" value="Tidak ada">' :
+                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${resep.tanggal_lahir}">`;
                     const resepElement = `
             <li class="list-group-item border-top-0 pb-3 pt-3">
                 <div class="d-flex">
@@ -431,19 +431,25 @@
                                 <div class="row gx-3">
                                     <div class="col-lg-6">
                                         <div class="mb-0 row g-1 align-items-center">
-                                            <div class="col-5 fw-medium text-truncate">Tanggal dan Waktu</div>
+                                            <div class="col-5">
+                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Tanggal dan Waktu">
+                                            </div>
                                             <div class="col date">
-                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${resep.tanggal_resep}">
+                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${resep.tanggal_resep}">
                                             </div>
                                         </div>
                                         <div class="mb-0 row g-1 align-items-center">
-                                            <div class="col-5 fw-medium text-truncate">Tanggal Lahir</div>
+                                            <div class="col-5">
+                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Tanggal Lahir">
+                                            </div>
                                             <div class="col date">
                                                 ${tanggal_lahir}
                                             </div>
                                         </div>
                                         <div class="mb-0 row g-1 align-items-center">
-                                            <div class="col-5 fw-medium text-truncate">Alamat</div>
+                                            <div class="col-5">
+                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Alamat">
+                                            </div>
                                             <div class="col">
                                                 ${alamat}
                                             </div>
@@ -451,15 +457,19 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="mb-0 row g-1 align-items-center">
-                                            <div class="col-5 fw-medium text-truncate">Total Resep</div>
+                                            <div class="col-5">
+                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Total Resep">
+                                            </div>
                                             <div class="col date">
-                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${jumlah_resep.toLocaleString('id-ID')}">
+                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${jumlah_resep.toLocaleString('id-ID')}">
                                             </div>
                                         </div>
                                         <div class="mb-0 row g-1 align-items-center">
-                                            <div class="col-5 fw-medium text-truncate">Total Harga</div>
+                                            <div class="col-5">
+                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Total Harga">
+                                            </div>
                                             <div class="col date">
-                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="Rp${total_biaya.toLocaleString('id-ID')}">
+                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="Rp${total_biaya.toLocaleString('id-ID')}">
                                             </div>
                                         </div>
                                     </div>

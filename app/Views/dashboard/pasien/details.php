@@ -342,7 +342,7 @@
                                         <div class="align-self-center w-100">
                                             <h5 class="card-title d-flex justify-content-start placeholder-glow">
                                                 <span class="badge bg-body text-body border py-1 px-2 date placeholder number-placeholder" style="font-weight: 900; font-size: 0.85em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><?= $this->include('spinner/spinner'); ?></span> <span class="placeholder mx-1" style="width: 100%"></span>
-                                                <span class="badge bg-body text-body border py-1 px-2 date placeholder number-placeholder" style="font-weight: 900; font-size: 0.85em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><?= $this->include('spinner/spinner'); ?></span>
+                                                <span class="rounded-1 bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 0.8em;"></span>
                                             </h5>
                                             <h6 class="card-subtitle placeholder-glow">
                                                 <span class="placeholder" style="width: 100%;"></span>
@@ -622,7 +622,7 @@
                                         <div class="align-self-center w-100">
                                             <h5 class="card-title d-flex justify-content-start placeholder-glow">
                                                 <span class="badge bg-body text-body border py-1 px-2 date placeholder number-placeholder" style="font-weight: 900; font-size: 0.85em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><?= $this->include('spinner/spinner'); ?></span> <span class="placeholder mx-1" style="width: 100%"></span>
-                                                <span class="badge bg-body text-body border py-1 px-2 date placeholder number-placeholder" style="font-weight: 900; font-size: 0.85em; padding-top: .1rem !important; padding-bottom: .1rem !important;"><?= $this->include('spinner/spinner'); ?></span>
+                                                <span class="rounded-1 bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 0.8em;"></span>
                                             </h5>
                                             <h6 class="card-subtitle placeholder-glow">
                                                 <span class="placeholder" style="width: 100%;"></span>
@@ -1306,13 +1306,17 @@
                     if (pembatal === 'BATAL') {
                         pembatal = `
                             <div class="mb-0 row g-1 align-items-center">
-                                <div class="col-5 fw-medium text-truncate">Dibatalkan oleh</div>
+                                <div class="col-5">
+                                    <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Dibatalkan oleh">
+                                </div>
                                 <div class="col date">
                                     ${rajal.pembatal}
                                 </div>
                             </div>
                             <div class="mb-0 row g-1 align-items-center">
-                                <div class="col-5 fw-medium text-truncate">Alasan Pembatalan</div>
+                                <div class="col-5">
+                                    <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Alasan Pembatalan">
+                                </div>
                                 <div class="col date">
                                     ${rajal.alasan_batal}
                                 </div>
@@ -1347,27 +1351,31 @@
                     let isian_ok = rajal.ruangan;
                     if (isian_ok === 'Kamar Operasi') {
                         const tindakan_operasi_rajal = rajal.tindakan_operasi_rajal ?
-                            `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${rajal.tindakan_operasi_rajal}">` :
-                            `<em>Belum diisi</em>`;
+                            `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rajal.tindakan_operasi_rajal}">` :
+                            `<input type="text" readonly class="form-control-plaintext p-0 border border-0 opacity-50 pe-none fst-italic" value="Belum diisi">`;
 
                         const waktu_operasi_rajal = rajal.jam_operasi_rajal ?
                             (() => {
                                 // Buat objek Date dari jam mentah, lalu format jadi HH.mm
                                 const jamObj = new Date(`1970-01-01T${rajal.jam_operasi_rajal}`);
                                 const jamFormatted = jamObj.toTimeString().slice(0, 5);
-                                return `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${jamFormatted}">`;
+                                return `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${jamFormatted}">`;
                             })() :
-                            `<em>Belum diisi</em>`;
+                            `<input type="text" readonly class="form-control-plaintext p-0 border border-0 opacity-50 pe-none fst-italic" value="Belum diisi">`;
 
                         isian_ok = `
                             <div class="mb-0 row g-1 align-items-center">
-                                <div class="col-5 fw-medium text-truncate">Tindakan yang Akan Dilakukan</div>
+                                <div class="col-5">
+                                    <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Tindakan yang Akan Dilakukan">
+                                </div>
                                 <div class="col date">
                                     ${tindakan_operasi_rajal}
                                 </div>
                             </div>
                             <div class="mb-0 row g-1 align-items-center">
-                                <div class="col-5 fw-medium text-truncate">Waktu Tindakan</div>
+                                <div class="col-5">
+                                    <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Waktu Tindakan">
+                                </div>
                                 <div class="col date">
                                     ${waktu_operasi_rajal}
                                 </div>
@@ -1395,41 +1403,53 @@
                                 <div class="row gx-3">
                                     <div class="col-lg-6">
                                         <div class="mb-0 row g-1 align-items-center">
-                                            <div class="col-5 fw-medium text-truncate">Tanggal dan Waktu</div>
+                                            <div class="col-5">
+                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Tanggal dan Waktu">
+                                            </div>
                                             <div class="col">
-                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${rajal.tanggal_registrasi}">
+                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${rajal.tanggal_registrasi}">
                                             </div>
                                         </div>
                                         <div class="mb-0 row g-1 align-items-center">
-                                            <div class="col-5 fw-medium text-truncate">Status Kunjungan</div>
+                                            <div class="col-5">
+                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Status Kunjungan">
+                                            </div>
                                             <div class="col date">
-                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${rajal.status_kunjungan}">
+                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rajal.status_kunjungan}">
                                             </div>
                                         </div>
                                         <div class="mb-0 row g-1 align-items-center">
-                                            <div class="col-5 fw-medium text-truncate">Jaminan</div>
+                                            <div class="col-5">
+                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Jaminan">
+                                            </div>
                                             <div class="col">
-                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${rajal.jaminan}">
+                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rajal.jaminan}">
                                             </div>
                                         </div>
                                         <div class="mb-0 row g-1 align-items-center">
-                                            <div class="col-5 fw-medium text-truncate">Ruangan</div>
+                                            <div class="col-5">
+                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Ruangan">
+                                            </div>
                                             <div class="col">
-                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${rajal.ruangan}">
+                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rajal.ruangan}">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="mb-0 row g-1 align-items-center">
-                                            <div class="col-5 fw-medium text-truncate">Dokter</div>
+                                            <div class="col-5">
+                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Dokter">
+                                            </div>
                                             <div class="col date">
-                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${rajal.dokter}">
+                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rajal.dokter}">
                                             </div>
                                         </div>
                                         <div class="mb-0 row g-1 align-items-center">
-                                            <div class="col-5 fw-medium text-truncate">Keluhan</div>
+                                            <div class="col-5">
+                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Keluhan">
+                                            </div>
                                             <div class="col date">
-                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${rajal.keluhan}">
+                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rajal.keluhan}">
                                             </div>
                                         </div>
                                         ${isian_ok}

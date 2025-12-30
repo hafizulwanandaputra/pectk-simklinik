@@ -46,7 +46,7 @@
                     </div>
                     <div class="accordion accordion-bg-body" id="accordionFilter">
                         <div class="accordion-item">
-                            <div class="accordion-header lh-1">
+                            <div class="accordion-header">
                                 <button class="accordion-button p-2 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFilter" aria-expanded="false" aria-controls="collapseFilter">
                                     Pencarian Tambahan
                                 </button>
@@ -112,7 +112,7 @@
                                     </h5>
                                     <h6 class="card-subtitle mb-2 placeholder-glow">
                                         <span class="placeholder" style="width: 100%;"></span><br>
-                                        <span class="placeholder w-100" style="max-width: 100px;"></span> <span class="placeholder w-100" style="max-width: 100px;"></span>
+                                        <span class="placeholder w-100" style="max-width: 100px;"></span>
                                     </h6>
                                     <div class="card-text placeholder-glow">
                                         <div style="font-size: 0.75em;">
@@ -247,7 +247,7 @@
                         </h5>
                         <h6 class="card-subtitle mb-2 placeholder-glow">
                             <span class="placeholder" style="width: 100%;"></span><br>
-                            <span class="placeholder w-100" style="max-width: 100px;"></span> <span class="placeholder w-100" style="max-width: 100px;"></span>
+                            <span class="placeholder w-100" style="max-width: 100px;">
                         </h6>
                         <div class="card-text placeholder-glow">
                             <div style="font-size: 0.75em;">
@@ -463,11 +463,11 @@
                         ` ${sp_operasi.jam_operasi}` :
                         ``;
                     const tanggal_operasi = sp_operasi.tanggal_operasi ?
-                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${sp_operasi.tanggal_operasi}${jam_operasi}">` :
-                        `<em>Belum ada</em>`;
+                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${sp_operasi.tanggal_operasi}${jam_operasi}">` :
+                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 opacity-50 pe-none fst-italic" value="Belum ada">`;
                     const dokter_operator = sp_operasi.dokter_operator == 'Belum Ada' ?
-                        `<em>Belum ada</em>` :
-                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${sp_operasi.dokter_operator}">`;
+                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 opacity-50 pe-none fst-italic" value="Belum ada">` :
+                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${sp_operasi.dokter_operator}">`;
                     let jenis_kelamin = sp_operasi.jenis_kelamin;
                     if (jenis_kelamin === 'L') {
                         jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap" style="background-color: SkyBlue"><i class="fa-solid fa-mars"></i> LAKI-LAKI</span>`;
@@ -490,7 +490,7 @@
                             <div class="align-self-center w-100">
                                 <h5 class="card-title d-flex date justify-content-start">
                                     <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">${sp_operasi.number}</span>
-                                    <span class="ms-1 align-self-center w-100"><input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 fw-medium" value="${sp_operasi.nama_pasien}"></span>
+                                    <span class="ms-1 align-self-center w-100"><input type="text" readonly style="height: 1em;" class="form-control-plaintext p-0 border border-0 lh-1 fw-medium" value="${sp_operasi.nama_pasien}"></span>
                                 </h5>
                                 <h6 class="card-subtitle mb-2">
                                     <input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 fw-medium" value="${sp_operasi.nomor_booking}">${jenis_kelamin}
@@ -498,25 +498,33 @@
                                 <div class="card-text">
                                     <div style="font-size: 0.75em;">
                                                 <div class="mb-0 row g-1 align-items-center">
-                                                    <div class="col-5 fw-medium text-truncate">Nomor Rekam Medis</div>
+                                                    <div class="col-5">
+                                                        <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Nomor Rekam Medis">
+                                                    </div>
                                                     <div class="col date">
-                                                        <input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${sp_operasi.no_rm}">
+                                                        <input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${sp_operasi.no_rm}">
                                                     </div>
                                                 </div>
                                                 <div class="mb-0 row g-1 align-items-center">
-                                                    <div class="col-5 fw-medium text-truncate">Nomor Registrasi</div>
+                                                    <div class="col-5">
+                                                        <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Nomor Registrasi">
+                                                    </div>
                                                     <div class="col date">
-                                                        <input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${sp_operasi.nomor_registrasi}">
+                                                        <input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${sp_operasi.nomor_registrasi}">
                                                     </div>
                                                 </div>
                                                 <div class="mb-0 row g-1 align-items-center">
-                                                    <div class="col-5 fw-medium text-truncate">Tanggal dan Waktu</div>
+                                                    <div class="col-5">
+                                                        <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Tanggal dan Waktu">
+                                                    </div>
                                                     <div class="col date">
                                                         ${tanggal_operasi}
                                                     </div>
                                                 </div>
                                                 <div class="mb-0 row g-1 align-items-center">
-                                                    <div class="col-5 fw-medium text-truncate">Dokter</div>
+                                                    <div class="col-5">
+                                                        <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Dokter">
+                                                    </div>
                                                     <div class="col">
                                                         ${dokter_operator}
                                                     </div>

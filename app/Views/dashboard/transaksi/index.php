@@ -512,23 +512,23 @@
             } else {
                 data.transaksi.forEach(function(transaksi) {
                     const nama_pasien = transaksi.nama_pasien ?
-                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 fw-medium" value="${transaksi.nama_pasien}">` :
-                        `<em>Anonim</em>`;
+                        `<input type="text" readonly disabled style="height: 1em;" class="form-control-plaintext p-0 border border-0 lh-1 fw-medium" value="${transaksi.nama_pasien}">` :
+                        `<input type="text" readonly disabled style="height: 1em;" class="form-control-plaintext p-0 border border-0 lh-1 fw-medium pe-none fst-italic" value="Anomim">`;
                     let jenis_kelamin = transaksi.jenis_kelamin;
                     if (jenis_kelamin === 'L') {
                         jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap" style="background-color: SkyBlue"><i class="fa-solid fa-mars"></i> LAKI-LAKI</span>`;
                     } else if (jenis_kelamin === 'P') {
                         jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap" style="background-color: Pink"><i class="fa-solid fa-venus"></i> PEREMPUAN</span>`;
                     }
-                    const kasir = transaksi.kasir == 'Ditambahkan Dokter' ? `<em>${transaksi.kasir}</em>` : `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 fw-medium" value="${transaksi.kasir}">`;
+                    const kasir = transaksi.kasir == 'Ditambahkan Dokter' ? `opacity-50 fst-italic` : ``;
                     const total_pembayaran = parseInt(transaksi.total_pembayaran);
                     const statusBadge = transaksi.lunas == '1' ?
                         `<span class="badge bg-success bg-gradient">Transaksi Diproses</span>` :
                         `<span class="badge bg-danger bg-gradient">Transaksi Belum Diproses</span>`;
                     const bank = transaksi.bank ? ` (${transaksi.bank})` : ``;
                     const metode_pembayaran = transaksi.metode_pembayaran ?
-                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1" value="${transaksi.metode_pembayaran} ${bank}">` :
-                        `<em>Belum ada</em>`;
+                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${transaksi.metode_pembayaran} ${bank}">` :
+                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 opacity-50 pe-none fst-italic" value="Belum ada">`;
                     let nomor_registrasi = transaksi.nomor_registrasi || "";
                     if (nomor_registrasi.includes("RJ")) {
                         nomor_registrasi = `<span class="badge bg-success bg-gradient text-nowrap"><i class="fa-solid fa-hospital-user"></i> RAWAT JALAN</span>`;
@@ -547,20 +547,24 @@
                                     <span class="ms-1 align-self-center w-100">${nama_pasien}</span>
                                 </h5>
                                 <h6 class="card-subtitle mb-2">
-                                    ${kasir}${jenis_kelamin} ${jenisResep} ${jaminan}
+                                    <input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 fw-medium ${kasir}" value="${transaksi.kasir}">${jenis_kelamin} ${jenisResep} ${jaminan}
                                 </h6>
                                 <div class="card-text">
                                     <div style="font-size: 0.75em;">
                                         <div class="row gx-3">
                                             <div class="col-lg-6">
                                                 <div class="mb-0 row g-1 align-items-center">
-                                                    <div class="col-5 fw-medium text-truncate">Nomor Kuitansi</div>
+                                                    <div class="col-5">
+                                                        <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Nomor Kuitansi">
+                                                    </div>
                                                     <div class="col date">
                                                         <input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${transaksi.no_kwitansi}">
                                                     </div>
                                                 </div>
                                                 <div class="mb-0 row g-1 align-items-center">
-                                                    <div class="col-5 fw-medium text-truncate">Tanggal dan Waktu</div>
+                                                    <div class="col-5">
+                                                        <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Tanggal dan Waktu">
+                                                    </div>
                                                     <div class="col date">
                                                         <input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="${transaksi.tgl_transaksi}">
                                                     </div>
@@ -568,13 +572,17 @@
                                             </div>
                                             <div class="col-lg-6">
                                                 <div class="mb-0 row g-1 align-items-center">
-                                                    <div class="col-5 fw-medium text-truncate">Grand Total</div>
+                                                    <div class="col-5">
+                                                        <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Total Keseluruhan">
+                                                    </div>
                                                     <div class="col date">
                                                         <input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 date" value="Rp${total_pembayaran.toLocaleString('id-ID')}">
                                                     </div>
                                                 </div>
                                                 <div class="mb-0 row g-1 align-items-center">
-                                                    <div class="col-5 fw-medium text-truncate">Metode</div>
+                                                    <div class="col-5">
+                                                        <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Metode Bayar">
+                                                    </div>
                                                     <div class="col">
                                                         ${metode_pembayaran}
                                                     </div>
