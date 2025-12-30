@@ -29,7 +29,7 @@ $db = db_connect();
     <div class="no-fluid-content">
         <div class="d-flex justify-content-start align-items-start pt-3">
             <h1 class="h2 mb-0 me-3"><i class="fa-regular fa-face-smile-beam"></i></h1>
-            <h1 class="h2 mb-0"><?= $txtgreeting . ', ' . session()->get('fullname') . '!'; ?></h1>
+            <h1 class="h2 mb-0"><?= $txtgreeting . ', ' . session()->get('fullname') . '!'; ?><?= ($seasonaltxtgreeting ?? '') ? '<br><small class="text-muted">' . $seasonaltxtgreeting . '</small>' : ''; ?></h1>
         </div>
         <hr>
         <?php if (session()->get('role') == "Admin") : ?>

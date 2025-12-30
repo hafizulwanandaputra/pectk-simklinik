@@ -81,8 +81,8 @@ class AuthFilter implements FilterInterface
         if ($session) {
             // GREETINGS
             $seasonalGreetingA = array();
-            $seasonalGreetingA[] = array('dayBegin' => 30, 'monthBegin' => 12, 'dayEnd' => 31, 'monthEnd' => 12, 'text' => 'Selamat Tahun Baru ' . date('Y') + 1); // Ucapan untuk Tahun Baru
-            $seasonalGreetingA[] = array('dayBegin' => 1, 'monthBegin' => 1, 'dayEnd' => 2, 'monthEnd' => 1, 'text' => 'Selamat Tahun Baru ' . date('Y')); // Ucapan untuk hari pertama Tahun Baru
+            $seasonalGreetingA[] = array('dayBegin' => 30, 'monthBegin' => 12, 'dayEnd' => 31, 'monthEnd' => 12, 'text' => 'Selamat Tahun Baru ' . date('Y') + 1 . '!'); // Ucapan untuk Tahun Baru
+            $seasonalGreetingA[] = array('dayBegin' => 1, 'monthBegin' => 1, 'dayEnd' => 2, 'monthEnd' => 1, 'text' => 'Selamat Tahun Baru ' . date('Y') . '!'); // Ucapan untuk hari pertama Tahun Baru
 
             $timeGreetingA = array();
             $timeGreetingA[] = array('timeBegin' => 0, 'timeEnd' => 5, 'text' => 'Selamat Malam');
@@ -111,7 +111,7 @@ class AuthFilter implements FilterInterface
                         //echo $m1.' >= '.$m.' <= '.$m2.'<br />';
                         if ($m >= $m1 and $m <= $m2)
                             if ($d >= $d1 and $d <= $d2)
-                                $txtGreeting = $sgA['text'];
+                                $SeasonalTxtGreeting = $sgA['text'];
                     }
 
             $time = (int)date('H');
@@ -136,9 +136,10 @@ class AuthFilter implements FilterInterface
                 }
                 return redirect()->to($url);
             } else {
+                $seasonalTxtGreeting = isset($SeasonalTxtGreeting) ? '<br>' . $SeasonalTxtGreeting : '';
                 session()->remove('url');
                 session()->set('url', base_url('home'));
-                session()->setFlashdata('msg', 'Berhasil masuk!<br>' . $txtGreeting . ', ' . session()->get('fullname') . '!');
+                session()->setFlashdata('msg', 'Berhasil masuk!<br>' . $txtGreeting . ', ' . session()->get('fullname') . '!' . $seasonalTxtGreeting);
                 return redirect()->to($url);
             }
         }

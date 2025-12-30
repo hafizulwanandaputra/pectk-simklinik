@@ -43,8 +43,8 @@ class Home extends BaseController
         } else {
             // GREETINGS
             $seasonalGreetingA = array(); // Array untuk menyimpan ucapan musiman
-            $seasonalGreetingA[] = array('dayBegin' => 30, 'monthBegin' => 12, 'dayEnd' => 31, 'monthEnd' => 12, 'text' => 'Selamat Tahun Baru ' . date('Y') + 1); // Ucapan untuk Tahun Baru
-            $seasonalGreetingA[] = array('dayBegin' => 1, 'monthBegin' => 1, 'dayEnd' => 2, 'monthEnd' => 1, 'text' => 'Selamat Tahun Baru ' . date('Y')); // Ucapan untuk hari pertama Tahun Baru
+            $seasonalGreetingA[] = array('dayBegin' => 30, 'monthBegin' => 12, 'dayEnd' => 31, 'monthEnd' => 12, 'text' => 'Selamat Tahun Baru ' . date('Y') + 1 . '!'); // Ucapan untuk Tahun Baru
+            $seasonalGreetingA[] = array('dayBegin' => 1, 'monthBegin' => 1, 'dayEnd' => 2, 'monthEnd' => 1, 'text' => 'Selamat Tahun Baru ' . date('Y') . '!'); // Ucapan untuk hari pertama Tahun Baru
 
             $timeGreetingA = array(); // Array untuk menyimpan ucapan berdasarkan waktu
             $timeGreetingA[] = array('timeBegin' => 0, 'timeEnd' => 5, 'text' => 'Selamat Malam'); // Ucapan malam
@@ -76,7 +76,7 @@ class Home extends BaseController
                         // Memeriksa apakah tanggal saat ini berada dalam rentang ucapan musiman
                         if ($m >= $m1 and $m <= $m2)
                             if ($d >= $d1 and $d <= $d2)
-                                $txtGreeting = $sgA['text']; // Menyimpan ucapan musiman yang cocok
+                                $SeasonalTxtGreeting = $sgA['text']; // Menyimpan ucapan musiman yang cocok
                     }
 
             // Mendapatkan waktu saat ini
@@ -433,6 +433,7 @@ class Home extends BaseController
                 'total_sessions' => $total_sessions,
                 'total_sessions_expired' => $total_sessions_expired,
                 'total_sessions_active' => $total_sessions_active,
+                'seasonaltxtgreeting' => $SeasonalTxtGreeting ?? null, // Ucapan yang ditentukan sebelumnya
                 'txtgreeting' => $txtGreeting, // Ucapan yang ditentukan sebelumnya
                 'title' => 'Beranda - ' . $this->systemName, // Judul halaman
                 'headertitle' => 'Beranda', // Judul header
