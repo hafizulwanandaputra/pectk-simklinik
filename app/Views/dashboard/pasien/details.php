@@ -49,7 +49,7 @@
                     <nav>
                         <div class="nav nav-pills nav-justified flex-nowrap overflow-auto" id="nav-tab" role="tablist">
                             <button class="nav-link py-1 active" id="pasien-container-tab" data-bs-toggle="tab" data-bs-target="#pasien-container" type="button" role="tab" aria-controls="pasien-container" aria-selected="true">Identitas Pasien</button>
-                            <button class="nav-link py-1" id="rawatjalan-container-tab" data-bs-toggle="tab" data-bs-target="#rawatjalan-container" type="button" role="tab" aria-controls="rawatjalan-container" aria-selected="false">Rawat Jalan <kbd id="totalRecords">0</kbd></button>
+                            <button class="nav-link py-1" id="rawatjalan-container-tab" data-bs-toggle="tab" data-bs-target="#rawatjalan-container" type="button" role="tab" aria-controls="rawatjalan-container" aria-selected="false">Rawat Jalan <kbd id="totalRecords" class="text-bg-secondary border border-secondary fw-bold">0</kbd></button>
                         </div>
                     </nav>
                     <div class="pt-2" id="tanggal_form" style="display: none;">
