@@ -72,10 +72,10 @@
         <table class="table" style="width: 100%; margin-bottom: 4px;">
             <tbody>
                 <tr>
-                    <td style="width: 85%; vertical-align: top; padding: 0;">
+                    <td style="width: 75%; vertical-align: top; padding: 0;">
                         <h2>IDENTITAS PASIEN</h2>
                     </td>
-                    <td style="width: 20%; vertical-align: top; padding: 0;">
+                    <td style="width: 25%; vertical-align: top; padding: 0;">
                         <div style="text-align: center;">
                             <img src="data:image/svg+xml;base64,<?= $qrNoRM ?>" />
                             <div>No RM: <?= $pasien['no_rm']; ?></div>
