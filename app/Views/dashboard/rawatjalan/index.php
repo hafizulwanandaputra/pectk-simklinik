@@ -246,10 +246,10 @@
                                         <button id="identitas_btn" type="button" class="btn btn-body btn-sm bg-gradient print-identitas" data-id="">
                                             <i class="fa-solid fa-print"></i> Identitas
                                         </button>
-                                        <button id="barcode_btn" type="button" class="btn btn-body btn-sm bg-gradient print-barcode" data-id="">
+                                        <button type="button" class="btn btn-body btn-sm bg-gradient print-barcode" data-id="">
                                             <i class="fa-solid fa-barcode"></i> <em>Barcode</em>
                                         </button>
-                                        <button id="detail_pasien_btn" type="button" class="btn btn-body btn-sm redirect-button bg-gradient" data-url="">
+                                        <button type="button" class="btn btn-body btn-sm redirect-button bg-gradient" data-url="">
                                             <i class="fa-solid fa-circle-info"></i> Detail Pasien
                                         </button>
                                     <?php endif; ?>
@@ -1348,8 +1348,8 @@
                 $('#alamat').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rawatjalan.alamat}">${alamat_lokasi}`);
                 $('#kewarganegaraan').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rawatjalan.kewarganegaraan}">`);
                 $('#telpon').html(telpon);
-                $('#identitas_btn').attr('data-id', rawatjalan.id_pasien);
-                $('#barcode_btn').attr('data-id', rawatjalan.id_pasien);
+                $('.print-identitas').attr('data-id', rawatjalan.id_pasien);
+                $('.print-barcode').attr('data-id', rawatjalan.id_pasien);
                 $('#detail_pasien_btn').attr('data-url', `<?= base_url('pasien/detailpasien') ?>/${rawatjalan.id_pasien}`);
                 $('#pendaftar').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rawatjalan.pendaftar}">`);
                 $('#nomor_registrasi').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${rawatjalan.nomor_registrasi}">`);
@@ -1379,8 +1379,8 @@
             await $('#rajalModal').modal('hide');
             window.location.href = url;
         });
-        $(document).on('click', '#identitas_btn', function() {
-            const id = $(this).data('id');
+        $(document).on('click', '.print-identitas', function() {
+            const id = $(this).attr('data-id');
 
             // Tampilkan loading di tombol cetak
             const $btn = $(this);
@@ -1405,8 +1405,9 @@
                 }
             });
         });
-        $(document).on('click', '#barcode_btn', function() {
-            const id = $(this).data('id');
+        $(document).on('click', '.print-barcode', function() {
+            const id = $(this).attr('data-id');
+            console.log('Cetak identitas ID:', id); // 🔍 DEBUG
 
             // Tampilkan loading di tombol cetak
             const $btn = $(this);
@@ -1432,7 +1433,7 @@
             });
         });
         $(document).on('click', '.print-struk', function() {
-            const id = $(this).data('id');
+            const id = $(this).attr('data-id');
 
             // Tampilkan loading di tombol cetak
             const $btn = $(this);
@@ -1458,7 +1459,7 @@
             });
         });
         $(document).on('click', '.print-lio', function() {
-            const id = $(this).data('id');
+            const id = $(this).attr('data-id');
 
             // Tampilkan loading di tombol cetak
             const $btn = $(this);
@@ -1492,8 +1493,8 @@
             $('#usia').html('');
             $('#alamat').html('');
             $('#telpon').html('');
-            $('#identitas_btn').attr('data-id', ``);
-            $('#barcode_btn').attr('data-id', ``);
+            $('.print-identitas').attr('data-id', ``);
+            $('.print-barcode').attr('data-id', ``);
             $('#detail_pasien_btn').attr('onclick', ``);
             $('#pendaftar').html('');
             $('#nomor_registrasi').html('');
