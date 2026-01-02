@@ -1377,7 +1377,7 @@
             await $('#rajalModal').modal('hide');
             window.location.href = url;
         });
-        $(document).on('click', '#identias_btn', function() {
+        $(document).on('click', '#identitas_btn', function() {
             const id = $(this).data('id');
 
             // Tampilkan loading di tombol cetak
@@ -1431,7 +1431,7 @@
             $btn.prop('disabled', true).html(`<?= $this->include('spinner/spinner'); ?> Struk`);
 
             // Muat PDF ke iframe
-            var iframe = $('#print_frame_2');
+            var iframe = $('#print_frame_3');
             iframe.attr('src', `<?= base_url('rawatjalan/struk') ?>/${id}`);
 
             // Saat iframe selesai memuat, jalankan print
@@ -1454,7 +1454,7 @@
             $btn.prop('disabled', true).html(`<?= $this->include('spinner/spinner'); ?> Lembar Isian Operasi`);
 
             // Muat PDF ke iframe
-            var iframe = $('#print_frame_2');
+            var iframe = $('#print_frame_4');
             iframe.attr('src', `<?= base_url('rawatjalan/lembarisianoperasi') ?>/${id}`);
 
             // Saat iframe selesai memuat, jalankan print
@@ -1495,6 +1495,10 @@
             $('#pembatal').html('');
             $('#alasan_batal').html('');
             $('#tombol_rme').html('');
+            $('#print_frame_1').attr('src', 'about:blank');
+            $('#print_frame_2').attr('src', 'about:blank');
+            $('#print_frame_3').attr('src', 'about:blank');
+            $('#print_frame_4').attr('src', 'about:blank');
         });
         // Menangani event klik pada tombol bersihkan
         $('#setTodayTglButton').on('click', async function() {
