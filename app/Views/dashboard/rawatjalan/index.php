@@ -249,7 +249,7 @@
                                         <button type="button" class="btn btn-body btn-sm bg-gradient print-barcode" data-id="">
                                             <i class="fa-solid fa-barcode"></i> <em>Barcode</em>
                                         </button>
-                                        <button type="button" class="btn btn-body btn-sm redirect-button bg-gradient" data-url="">
+                                        <button type="button" class="btn btn-body btn-sm redirect-button bg-gradient detail-pasien-btn" data-url="">
                                             <i class="fa-solid fa-circle-info"></i> Detail Pasien
                                         </button>
                                     <?php endif; ?>
@@ -1350,7 +1350,7 @@
                 $('#telpon').html(telpon);
                 $('.print-identitas').attr('data-id', rawatjalan.id_pasien);
                 $('.print-barcode').attr('data-id', rawatjalan.id_pasien);
-                $('#detail_pasien_btn').attr('data-url', `<?= base_url('pasien/detailpasien') ?>/${rawatjalan.id_pasien}`);
+                $('.detail-pasien-btn').attr('data-url', `<?= base_url('pasien/detailpasien') ?>/${rawatjalan.id_pasien}`);
                 $('#pendaftar').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rawatjalan.pendaftar}">`);
                 $('#nomor_registrasi').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${rawatjalan.nomor_registrasi}">`);
                 $('#tanggal_registrasi').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${rawatjalan.tanggal_registrasi}">`);
@@ -1374,7 +1374,7 @@
             }
         });
         $(document).on('click', '.redirect-button', async function() {
-            const url = $(this).data('url');
+            const url = $(this).attr('data-url');
 
             await $('#rajalModal').modal('hide');
             window.location.href = url;
@@ -1494,7 +1494,7 @@
             $('#telpon').html('');
             $('.print-identitas').attr('data-id', ``);
             $('.print-barcode').attr('data-id', ``);
-            $('#detail_pasien_btn').attr('onclick', ``);
+            $('.detail-pasien-btn').attr('data-url', ``);
             $('#pendaftar').html('');
             $('#nomor_registrasi').html('');
             $('#tanggal_registrasi').html('');
