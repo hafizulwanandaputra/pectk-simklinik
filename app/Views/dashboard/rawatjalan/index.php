@@ -1495,10 +1495,6 @@
             $('#pembatal').html('');
             $('#alasan_batal').html('');
             $('#tombol_rme').html('');
-            $('#print_frame_1').attr('src', 'about:blank');
-            $('#print_frame_2').attr('src', 'about:blank');
-            $('#print_frame_3').attr('src', 'about:blank');
-            $('#print_frame_4').attr('src', 'about:blank');
         });
         // Menangani event klik pada tombol bersihkan
         $('#setTodayTglButton').on('click', async function() {
