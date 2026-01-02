@@ -1114,6 +1114,8 @@
     });
 
     $(document).ready(async function() {
+        let allowPrint = false;
+
         const socket = new WebSocket('<?= env('WS-URL-JS') ?>'); // Ganti dengan domain VPS
 
         socket.onopen = () => {
@@ -1384,6 +1386,8 @@
             const $btn = $(this);
             $btn.prop('disabled', true).html(`<?= $this->include('spinner/spinner'); ?> Identitas`);
 
+            let allowPrint = true;
+
             // Muat PDF ke iframe
             var iframe = $('#print_frame_1');
             iframe.attr('src', `<?= base_url('pasien/identitas') ?>/${id}?t=${Date.now()}`);
@@ -1396,6 +1400,7 @@
                 } catch (e) {
                     showFailedPrintToast(`<p>Pencetakan otomatis tidak dapat dilakukan</p><p class="mb-0">${e}</p>`, `<?= base_url('pasien/identitas') ?>/${id}`);
                 } finally {
+                    allowPrint = false; // reset
                     $btn.prop('disabled', false).html(`<i class="fa-solid fa-print"></i> Identitas`);
                 }
             });
@@ -1406,6 +1411,8 @@
             // Tampilkan loading di tombol cetak
             const $btn = $(this);
             $btn.prop('disabled', true).html(`<?= $this->include('spinner/spinner'); ?> <em>Barcode</em>`);
+
+            let allowPrint = true;
 
             // Muat PDF ke iframe
             var iframe = $('#print_frame_2');
@@ -1419,6 +1426,7 @@
                 } catch (e) {
                     showFailedPrintToast(`<p>Pencetakan otomatis tidak dapat dilakukan</p><p class="mb-0">${e}</p>`, `<?= base_url('pasien/barcode') ?>/${id}`);
                 } finally {
+                    allowPrint = false; // reset
                     $btn.prop('disabled', false).html(`<i class="fa-solid fa-barcode"></i> <em>Barcode</em>`);
                 }
             });
@@ -1429,6 +1437,8 @@
             // Tampilkan loading di tombol cetak
             const $btn = $(this);
             $btn.prop('disabled', true).html(`<?= $this->include('spinner/spinner'); ?> Struk`);
+
+            let allowPrint = true;
 
             // Muat PDF ke iframe
             var iframe = $('#print_frame_3');
@@ -1442,6 +1452,7 @@
                 } catch (e) {
                     showFailedPrintToast(`<p>Pencetakan otomatis tidak dapat dilakukan</p><p class="mb-0">${e}</p>`), `<?= base_url('rawatjalan/struk') ?>/${id}`;
                 } finally {
+                    allowPrint = false; // reset
                     $btn.prop('disabled', false).html(`<i class="fa-solid fa-receipt"></i> Struk`);
                 }
             });
@@ -1452,6 +1463,8 @@
             // Tampilkan loading di tombol cetak
             const $btn = $(this);
             $btn.prop('disabled', true).html(`<?= $this->include('spinner/spinner'); ?> Lembar Isian Operasi`);
+
+            let allowPrint = true;
 
             // Muat PDF ke iframe
             var iframe = $('#print_frame_4');
@@ -1465,11 +1478,13 @@
                 } catch (e) {
                     showFailedPrintToast(`<p>Pencetakan otomatis tidak dapat dilakukan</p><p class="mb-0">${e}</p>`, `<?= base_url('rawatjalan/lembarisianoperasi') ?>/${id}`);
                 } finally {
+                    allowPrint = false; // reset
                     $btn.prop('disabled', false).html(`<i class="fa-solid fa-receipt"></i> Lembar Isian Operasi`);
                 }
             });
         });
         $('#rajalModal').on('hidden.bs.modal', function() {
+            allowPrint = false; // reset
             $('#nama_pasien').html('');
             $('#no_rekam_medis').html('');
             $('#jenis_kelamin').html('');
@@ -1495,6 +1510,10 @@
             $('#pembatal').html('');
             $('#alasan_batal').html('');
             $('#tombol_rme').html('');
+            $('#print_frame_1').attr('src', 'about:blank');
+            $('#print_frame_2').attr('src', 'about:blank');
+            $('#print_frame_3').attr('src', 'about:blank');
+            $('#print_frame_4').attr('src', 'about:blank');
         });
         // Menangani event klik pada tombol bersihkan
         $('#setTodayTglButton').on('click', async function() {
