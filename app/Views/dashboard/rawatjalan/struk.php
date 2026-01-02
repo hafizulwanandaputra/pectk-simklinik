@@ -35,6 +35,7 @@ $usia = $sekarang->diff($tanggal_lahir);
         }
 
         .box {
+            font-family: <?= env('PDF-FONT-CONDENSED') ?>;
             border: 1px solid black;
             height: 3.4cm;
             overflow: hidden;
