@@ -1377,7 +1377,7 @@
             await $('#rajalModal').modal('hide');
             window.location.href = url;
         });
-        $(document).on('click', '.print-identitas', function() {
+        $(document).on('click', '#identias_btn', function() {
             const id = $(this).data('id');
 
             // Tampilkan loading di tombol cetak
@@ -1400,7 +1400,7 @@
                 }
             });
         });
-        $(document).on('click', '.print-barcode', function() {
+        $(document).on('click', '#barcode_btn', function() {
             const id = $(this).data('id');
 
             // Tampilkan loading di tombol cetak
