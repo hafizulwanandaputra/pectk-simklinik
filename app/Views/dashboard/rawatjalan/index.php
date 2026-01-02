@@ -1386,10 +1386,10 @@
 
             // Muat PDF ke iframe
             var iframe = $('#print_frame_1');
-            iframe.attr('src', `<?= base_url('pasien/identitas') ?>/${id}`);
+            iframe.attr('src', `<?= base_url('pasien/identitas') ?>/${id}?t=${Date.now()}`);
 
             // Saat iframe selesai memuat, jalankan print
-            iframe.off('load').on('load', function() {
+            iframe.one('load', function() {
                 try {
                     this.contentWindow.focus();
                     this.contentWindow.print();
@@ -1409,10 +1409,10 @@
 
             // Muat PDF ke iframe
             var iframe = $('#print_frame_2');
-            iframe.attr('src', `<?= base_url('pasien/barcode') ?>/${id}`);
+            iframe.attr('src', `<?= base_url('pasien/barcode') ?>/${id}?t=${Date.now()}`);
 
             // Saat iframe selesai memuat, jalankan print
-            iframe.off('load').on('load', function() {
+            iframe.one('load', function() {
                 try {
                     this.contentWindow.focus();
                     this.contentWindow.print();
@@ -1432,10 +1432,10 @@
 
             // Muat PDF ke iframe
             var iframe = $('#print_frame_3');
-            iframe.attr('src', `<?= base_url('rawatjalan/struk') ?>/${id}`);
+            iframe.attr('src', `<?= base_url('rawatjalan/struk') ?>/${id}?t=${Date.now()}`);
 
             // Saat iframe selesai memuat, jalankan print
-            iframe.off('load').on('load', function() {
+            iframe.one('load', function() {
                 try {
                     this.contentWindow.focus();
                     this.contentWindow.print();
@@ -1455,10 +1455,10 @@
 
             // Muat PDF ke iframe
             var iframe = $('#print_frame_4');
-            iframe.attr('src', `<?= base_url('rawatjalan/lembarisianoperasi') ?>/${id}`);
+            iframe.attr('src', `<?= base_url('rawatjalan/lembarisianoperasi') ?>/${id}?t=${Date.now()}`);
 
             // Saat iframe selesai memuat, jalankan print
-            iframe.off('load').on('load', function() {
+            iframe.one('load', function() {
                 try {
                     this.contentWindow.focus();
                     this.contentWindow.print();
