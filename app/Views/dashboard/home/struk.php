@@ -34,33 +34,12 @@
         }
 
         .box {
+            font-family: <?= env('PDF-FONT-CONDENSED') ?>;
             border: 1px solid black;
             height: 0.7cm;
             overflow: hidden;
             padding: 0cm;
             font-size: 7pt;
-        }
-
-        .tindakan {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 6pt;
-        }
-
-        .tindakan td:nth-child(1),
-        .tindakan td:nth-child(3) {
-            border: 1px solid black;
-        }
-
-        .tindakan-2 {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        /* Border hanya untuk kolom pertama dan baris pertama serta kedua */
-        .tindakan-2 td:nth-child(1):nth-of-type(1),
-        .tindakan-2 td:nth-child(1):nth-of-type(2) {
-            border: 1px solid black;
         }
     </style>
 </head>
