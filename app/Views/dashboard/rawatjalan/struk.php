@@ -43,6 +43,7 @@ $usia = $sekarang->diff($tanggal_lahir);
         }
 
         .tindakan {
+            font-family: <?= env('PDF-FONT-CONDENSED') ?>;
             width: 100%;
             border-collapse: collapse;
             font-size: 7.5pt;
@@ -54,6 +55,7 @@ $usia = $sekarang->diff($tanggal_lahir);
         }
 
         .tindakan-2 {
+            font-family: <?= env('PDF-FONT-CONDENSED') ?>;
             width: 100%;
             border-collapse: collapse;
         }
