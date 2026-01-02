@@ -1407,7 +1407,6 @@
         });
         $(document).on('click', '.print-barcode', function() {
             const id = $(this).attr('data-id');
-            console.log('Cetak identitas ID:', id); // 🔍 DEBUG
 
             // Tampilkan loading di tombol cetak
             const $btn = $(this);
