@@ -79,6 +79,7 @@
                                         <div class="d-flex align-items-stretch date placeholder-glow" style="height: 1.25em;">
                                             <span class="placeholder w-100 d-flex align-items-center me-1" style="max-width: 1.5625em;"></span> <!-- 25px -->
                                             <span class="placeholder w-100 d-flex align-items-center me-1" style="max-width: 3.125em;"></span> <!-- 50px -->
+                                            <span class="placeholder w-100 d-flex align-items-center me-1" style="max-width: 3.125em;"></span> <!-- 50px -->
                                             <span class="placeholder w-100 d-flex align-items-center" style="max-width: 6.25em;"></span> <!-- 100px -->
                                         </div>
                                     </div>
@@ -109,6 +110,7 @@
                                         <div class="d-flex align-items-stretch date placeholder-glow" style="height: 1.25em;">
                                             <span class="placeholder w-100 d-flex align-items-center me-1" style="max-width: 1.5625em;"></span> <!-- 25px -->
                                             <span class="placeholder w-100 d-flex align-items-center me-1" style="max-width: 3.125em;"></span> <!-- 50px -->
+                                            <span class="placeholder w-100 d-flex align-items-center me-1" style="max-width: 3.125em;"></span> <!-- 50px -->
                                             <span class="placeholder w-100 d-flex align-items-center" style="max-width: 6.25em;"></span> <!-- 100px -->
                                         </div>
                                     </div>
@@ -138,6 +140,7 @@
                                         </div>
                                         <div class="d-flex align-items-stretch date placeholder-glow" style="height: 1.25em;">
                                             <span class="placeholder w-100 d-flex align-items-center me-1" style="max-width: 1.5625em;"></span> <!-- 25px -->
+                                            <span class="placeholder w-100 d-flex align-items-center me-1" style="max-width: 3.125em;"></span> <!-- 50px -->
                                             <span class="placeholder w-100 d-flex align-items-center me-1" style="max-width: 3.125em;"></span> <!-- 50px -->
                                             <span class="placeholder w-100 d-flex align-items-center" style="max-width: 6.25em;"></span> <!-- 100px -->
                                         </div>
@@ -400,6 +403,7 @@
                     <div class="d-flex align-items-stretch date placeholder-glow" style="height: 1.25em;">
                         <span class="placeholder w-100 d-flex align-items-center me-1" style="max-width: 1.5625em;"></span> <!-- 25px -->
                         <span class="placeholder w-100 d-flex align-items-center me-1" style="max-width: 3.125em;"></span> <!-- 50px -->
+                        <span class="placeholder w-100 d-flex align-items-center me-1" style="max-width: 3.125em;"></span> <!-- 50px -->
                         <span class="placeholder w-100 d-flex align-items-center" style="max-width: 6.25em;"></span> <!-- 100px -->
                     </div>
                 </div>
@@ -539,7 +543,7 @@
                                 ${jenis_kelamin} <span class="badge bg-body text-body border text-nowrap h-100 d-flex align-items-center">${rawatjalan.nomor_registrasi}</span>
                             </div>
                             <div class="d-flex align-items-stretch date" style="height: 1.25em;">
-                                <span class="badge bg-body text-body border date h-100 d-flex align-items-center me-1">${rawatjalan.kode_antrian}${rawatjalan.no_antrian}</span><span class="badge bg-body text-body border date h-100 d-flex align-items-center me-1">${rawatjalan.status_kunjungan}</span>
+                                <span class="badge bg-body text-body border date h-100 d-flex align-items-center me-1">${rawatjalan.kode_antrian}${rawatjalan.no_antrian}</span><span class="badge bg-body text-body border date h-100 d-flex align-items-center me-1">${rawatjalan.ruangan}</span><span class="badge bg-body text-body border date h-100 d-flex align-items-center me-1">${rawatjalan.status_kunjungan}</span>
                                 ${status}
                             </div>
                         </div>
@@ -733,7 +737,7 @@
                                 ${jenis_kelamin} <span class="badge bg-body text-body border text-nowrap h-100 d-flex align-items-center">${rawatjalan.nomor_registrasi}</span>
                             </div>
                             <div class="d-flex align-items-stretch date" style="height: 1.25em;">
-                                <span class="badge bg-body text-body border date h-100 d-flex align-items-center me-1">${rawatjalan.kode_antrian}${rawatjalan.no_antrian}</span><span class="badge bg-body text-body border date h-100 d-flex align-items-center me-1">${rawatjalan.status_kunjungan}</span>
+                                <span class="badge bg-body text-body border date h-100 d-flex align-items-center me-1">${rawatjalan.kode_antrian}${rawatjalan.no_antrian}</span><span class="badge bg-body text-body border date h-100 d-flex align-items-center me-1">${rawatjalan.ruangan}</span><span class="badge bg-body text-body border date h-100 d-flex align-items-center me-1">${rawatjalan.status_kunjungan}</span>
                                 ${status}
                             </div>
                         </div>
@@ -919,7 +923,7 @@
                                 ${jenis_kelamin} <span class="badge bg-body text-body border text-nowrap h-100 d-flex align-items-center">${rawatjalan.nomor_registrasi}</span>
                             </div>
                             <div class="d-flex align-items-stretch date" style="height: 1.25em;">
-                                <span class="badge bg-body text-body border date h-100 d-flex align-items-center me-1">${rawatjalan.kode_antrian}${rawatjalan.no_antrian}</span><span class="badge bg-body text-body border date h-100 d-flex align-items-center me-1">${rawatjalan.status_kunjungan}</span>
+                                <span class="badge bg-body text-body border date h-100 d-flex align-items-center me-1">${rawatjalan.kode_antrian}${rawatjalan.no_antrian}</span><span class="badge bg-body text-body border date h-100 d-flex align-items-center me-1">${rawatjalan.ruangan}</span><span class="badge bg-body text-body border date h-100 d-flex align-items-center me-1">${rawatjalan.status_kunjungan}</span>
                                 ${status}
                             </div>
                         </div>
