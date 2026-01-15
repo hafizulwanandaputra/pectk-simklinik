@@ -13,6 +13,9 @@
     <link href="<?= base_url(); ?>favicon.png" rel="apple-touch-icon" />
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/heroes/">
     <?= $this->include('main-css/index'); ?>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght,GRAD@0,17..18,400..700,-50..200;1,17..18,400..700,-50..200&display=swap" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/css/JawiDubai.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/fonts/IosevkaHwpMono/IosevkaHwpMono.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/fontawesome/css/all.css" rel="stylesheet">
@@ -137,6 +140,7 @@
     </script>
     <style>
         :root {
+            --bs-font-sans-serif: "Google Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
             --bs-font-monospace: "Iosevka HWP Mono Web", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
         }
 

@@ -21,6 +21,9 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
     <!-- Akhir dari Favicon -->
     <link href="<?= base_url(); ?>assets/css/dashboard/dashboard.css" rel="stylesheet">
     <?= $this->include('main-css/index'); ?>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght,GRAD@0,17..18,400..700,-50..200;1,17..18,400..700,-50..200&display=swap" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/css/JawiDubai.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.bootstrap5.min.css" rel="stylesheet">
@@ -207,6 +210,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
     </script>
     <style>
         :root {
+            --bs-font-sans-serif: "Google Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
             --bs-font-monospace: "Iosevka HWP Mono Web", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
             --gold: #ffe680;
             /* Emas lebih terang */
