@@ -755,6 +755,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             try {
                 let response = await axios.get(`<?= base_url('/resep/obatkedaluwarsa') ?>`);
                 const data = response.data;
+                const safeText = v => (v && v.trim() !== '') ? v : null;
 
                 $('#expiredModalLabel').text('Peringatan Obat Kedaluwarsa');
 
@@ -765,23 +766,33 @@ $usia = $registrasi->diff($tanggal_lahir);
 
                 if (data.jumlah > 0) {
                     data.data.forEach(item => {
+                        const isiObat = safeText(item.isi_obat);
+                        const kategori = safeText(item.kategori_obat);
+                        const bentuk = safeText(item.bentuk_obat);
+
+                        const detail = [isiObat, kategori, bentuk]
+                            .filter(Boolean)
+                            .join(' • ');
+
+                        const batch = safeText(item.nama_batch) ?? '<em>Tidak ada</em>';
+
                         $('#expired_med_list').append(`
-                    <li>
-                        <strong>${item.nama_obat}</strong>
-                        <br>
-                        <small>
-                        ${item.isi_obat ?? '<em>Tanpa isi obat</em>'} • ${item.kategori_obat} • ${item.bentuk_obat}
-                        <br>
-                        Batch: ${item.nama_batch ?? '<em>Tanpa nama batch</em>'}
-                        <br>
-                        Stok: ${item.stok_tersisa}
-                        <br>
-                        Harga: Rp${item.harga}
-                        <br>
-                        <span class="text-danger">EXP: <strong>${item.tgl_kedaluwarsa}</strong></span>
-                        </small>
-                    </li>
-                `);
+                            <li>
+                                <strong>${item.nama_obat}</strong>
+                                <br>
+                                <small>
+                                    ${detail || '<em>Tidak ada detail obat</em>'}
+                                    <br>
+                                    <em>Batch</em>: ${batch}
+                                    <br>
+                                    Stok: ${item.stok_tersisa.toLocaleString('id-ID')}
+                                    <br>
+                                    Harga: Rp${item.harga}
+                                    <br>
+                                    <span class="text-danger">EXP: <strong>${item.tgl_kedaluwarsa}</strong></span>
+                                </small>
+                            </li>
+                        `);
                     });
                 } else {
                     $('#expired_med_list').append('<li class="text-muted"><em>Tidak ada obat yang mendekati masa kedaluwarsa dalam 6 bulan ke depan.</em></li>');

@@ -130,7 +130,7 @@
                     </div>
                     <div class="form-floating mb-1 mt-1">
                         <input type="text" class="form-control " autocomplete="off" dir="auto" placeholder="nama_batch" id="nama_batch" name="nama_batch">
-                        <label for="nama_batch">Nama</label>
+                        <label for="nama_batch">Nama <em>Batch</em></label>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mb-1 mt-1">

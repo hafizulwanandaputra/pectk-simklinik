@@ -166,13 +166,26 @@ class BatchObat extends BaseController
                 // 4. Format harga dengan pemisah ribuan
                 $harga_obat_terformat = number_format($harga_bulat, 0, ',', '.');
 
+                $detail = [];
+
+                $isi_obat = trim($row['isi_obat'] ?? '');
+                $kategori_obat = trim($row['kategori_obat'] ?? '');
+
+                if ($isi_obat !== '') {
+                    $detail[] = $isi_obat;
+                }
+
+                if ($kategori_obat !== '') {
+                    $detail[] = $kategori_obat;
+                }
+
+                $detail[] = $row['bentuk_obat']; // bentuk tetap wajib
+
                 $options[] = [
-                    'value' => $row['id_obat'], // Menyimpan id_obat
+                    'value' => $row['id_obat'],
                     'text' => $row['nama_obat'] .
-                        ' (' . $row['isi_obat'] .
-                        ' • ' . $row['kategori_obat'] .
-                        ' • ' . $row['bentuk_obat'] .
-                        ' • Rp' . $harga_obat_terformat . ')' // Menyimpan informasi obat
+                        ' (' . implode(' • ', $detail) .
+                        ' • Rp' . $harga_obat_terformat . ')'
                 ];
             }
 
