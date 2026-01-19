@@ -467,6 +467,7 @@
 
     .dropdown-menu {
         padding: 0.5rem 0.5rem;
+        border-radius: var(--bs-border-radius-lg);
     }
 
     .dropdown-item:hover,
