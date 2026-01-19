@@ -116,7 +116,7 @@ $seven_days_ago = date('Y-m-d', strtotime('-6 days'));
                     </div>
                 </div>
                 <div class="mb-2">
-                    <label for="keterangan">Pada pemeriksaan saat ini, pasien menderita sakit mata:<span class="text-danger">*</span></label>
+                    <label for="keterangan">Pada pemeriksaan saat ini, pasien <span id="cek-biasa">menderita sakit mata:</span><span class="text-danger">*</span></label>
                     <textarea class="form-control" id="keterangan" name="keterangan" rows="8" style="resize: none;"></textarea>
                     <div class="invalid-feedback"></div>
                 </div>
@@ -160,7 +160,20 @@ $seven_days_ago = date('Y-m-d', strtotime('-6 days'));
         }
     }
 
+    function updateText() {
+        if ($("#biasa").is(":checked")) {
+            $("#cek-biasa").text("memiliki keterangan sebagai berikut:");
+        } else {
+            $("#cek-biasa").text("menderita sakit mata:");
+        }
+    }
+
     $(document).ready(async function() {
+        // saat checkbox diubah
+        $("#biasa").on("change", function() {
+            updateText();
+        });
+
         $('.print-btn').on('click', function(e) {
             e.preventDefault();
             const url = $(this).attr('href');
@@ -248,7 +261,8 @@ $seven_days_ago = date('Y-m-d', strtotime('-6 days'));
             }
         });
         // $('#loadingSpinner').hide();
-        fetchSurat();
+        await fetchSurat();
+        updateText();
     });
     // Show toast notification
     <?= $this->include('toast/index') ?>
