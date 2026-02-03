@@ -385,6 +385,8 @@ $routes->get('/(?i)resepluar/(?i)pasienlist', 'ResepLuar::pasienlist');
 $routes->get('/(?i)resepluar/(?i)resep/(:any)', 'ResepLuar::resep/$1');
 $routes->post('/(?i)resepluar/(?i)create', 'ResepLuar::create');
 $routes->post('/(?i)resepluar/(?i)update', 'ResepLuar::update');
+$routes->post('/(?i)resepluar/(?i)arsip/(:any)', 'ResepLuar::arsip/$1');
+$routes->post('/(?i)resepluar/(?i)bukaarsip/(:any)', 'ResepLuar::bukaarsip/$1');
 $routes->delete('/(?i)resepluar/(?i)delete/(:any)', 'ResepLuar::delete/$1');
 
 // DETAIL RESEP LUAR

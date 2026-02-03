@@ -47,25 +47,31 @@
                             <div id="collapseFilter" class="accordion-collapse collapse" data-bs-parent="#accordionFilter">
                                 <div class="accordion-body px-2 py-1">
                                     <div class="d-flex flex-column flex-lg-row mb-1 gap-1 my-1">
-                                        <select id="statusFilter" class="form-select form-select-sm w-auto  flex-fill">
+                                        <select id="statusFilter" class="form-select form-select-sm w-auto flex-fill">
                                             <option value="">Semua Status Transaksi</option>
                                             <option value="1">Diproses</option>
                                             <option value="0">Belum Diproses</option>
                                         </select>
-                                        <select id="namesFilter" class="form-select form-select-sm w-auto  flex-fill">
+                                        <select id="namesFilter" class="form-select form-select-sm w-auto flex-fill">
                                             <option value="">Semua Nama</option>
                                             <option value="1">Dengan Nama</option>
                                             <option value="0">Anonim</option>
                                         </select>
-                                        <select id="genderFilter" class="form-select form-select-sm w-auto  flex-fill">
+                                        <select id="genderFilter" class="form-select form-select-sm w-auto flex-fill">
                                             <option value="">Semua Jenis Kelamin</option>
                                             <option value="L">Laki-Laki</option>
                                             <option value="P">Perempuan</option>
                                         </select>
                                     </div>
-                                    <select id="apotekerFilter" class="form-select form-select-sm  my-1">
-                                        <option value="">Semua Apoteker</option>
-                                    </select>
+                                    <div class="d-flex flex-column flex-lg-row mb-1 gap-1 my-1">
+                                        <select id="apotekerFilter" class="form-select form-select-sm w-auto flex-fill">
+                                            <option value="">Semua Apoteker</option>
+                                        </select>
+                                        <select id="arsipFilter" class="form-select form-select-sm w-auto flex-fill">
+                                            <option value="0">Belum Diarsipkan</option>
+                                            <option value="1">Diarsipkan</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -151,6 +157,7 @@
                             <div class="d-grid gap-2 d-flex flex-wrap justify-content-end">
                                 <button type="button" class="btn btn-body btn-sm bg-gradient placeholder" style="width: 4em;" disabled aria-disabled="true"></button>
                                 <button type="button" class="btn btn-body btn-sm bg-gradient placeholder" style="width: 4em;" disabled aria-disabled="true"></button>
+                                <button type="button" class="btn btn-body btn-sm bg-gradient placeholder" style="width: 4em;" disabled aria-disabled="true"></button>
                                 <button type="button" class="btn btn-danger btn-sm bg-gradient placeholder" style="width: 4em;" disabled aria-disabled="true"></button>
                             </div>
                         </li>
@@ -174,6 +181,42 @@
                         </div>
                         <div class="col d-grid">
                             <button type="button" class="btn btn-lg btn-danger bg-gradient fs-6 mb-0 rounded-4" id="confirmDeleteBtn">Hapus</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal modal-sheet p-4 py-md-5 fade" id="arsipModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="arsipModalLabel" aria-hidden="true" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content bg-body-tertiary rounded-5 shadow-lg transparent-blur">
+                <div class="modal-body p-4">
+                    <h5 id="arsipMessage"></h5>
+                    <h6 class="mb-0 fw-normal" id="arsipSubmessage"></h6>
+                    <div class="row gx-2 pt-4">
+                        <div class="col d-grid">
+                            <button type="button" class="btn btn-lg btn-body bg-gradient fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Batal</button>
+                        </div>
+                        <div class="col d-grid">
+                            <button type="button" class="btn btn-lg btn-primary bg-gradient fs-6 mb-0 rounded-4" id="confirmArsipBtn">Arsipkan</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal modal-sheet p-4 py-md-5 fade" id="bukaArsipModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="bukaArsipModalLabel" aria-hidden="true" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content bg-body-tertiary rounded-5 shadow-lg transparent-blur">
+                <div class="modal-body p-4">
+                    <h5 id="bukaArsipMessage"></h5>
+                    <h6 class="mb-0 fw-normal" id="bukaArsipSubmessage"></h6>
+                    <div class="row gx-2 pt-4">
+                        <div class="col d-grid">
+                            <button type="button" class="btn btn-lg btn-body bg-gradient fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Batal</button>
+                        </div>
+                        <div class="col d-grid">
+                            <button type="button" class="btn btn-lg btn-primary bg-gradient fs-6 mb-0 rounded-4" id="confirmBukaArsipBtn">BukaArsip</button>
                         </div>
                     </div>
                 </div>
@@ -308,6 +351,7 @@
                 <div class="d-grid gap-2 d-flex flex-wrap justify-content-end">
                     <button type="button" class="btn btn-body btn-sm bg-gradient placeholder" style="width: 4em;" disabled aria-disabled="true"></button>
                     <button type="button" class="btn btn-body btn-sm bg-gradient placeholder" style="width: 4em;" disabled aria-disabled="true"></button>
+                    <button type="button" class="btn btn-body btn-sm bg-gradient placeholder" style="width: 4em;" disabled aria-disabled="true"></button>
                     <button type="button" class="btn btn-danger btn-sm bg-gradient placeholder" style="width: 4em;" disabled aria-disabled="true"></button>
                 </div>
             </li>
@@ -362,6 +406,7 @@
         const gender = $('#genderFilter').val();
         const names = $('#namesFilter').val();
         const apoteker = $('#apotekerFilter').val();
+        const arsip = $('#arsipFilter').val();
         const tanggal = $('#tanggalFilter').val();
 
         // Show the spinner
@@ -377,6 +422,7 @@
                     gender: gender,
                     names: names,
                     apoteker: apoteker,
+                    arsip: arsip,
                     tanggal: tanggal
                 }
             });
@@ -412,6 +458,29 @@
                         `<span class="badge bg-success bg-gradient">Transaksi Diproses</span>` :
                         `<span class="badge bg-danger bg-gradient">Transaksi Belum Diproses</span>`;
                     const statusButtons = resep.status == '1' ? `disabled` : ``;
+                    let arsip = resep.arsip;
+                    if (arsip === '0') {
+                        arsip = `
+                        <button type="button" class="btn btn-body btn-sm bg-gradient arsip-btn" data-id="${resep.id_resep}" data-name="${resep.nama_pasien}" data-date="${resep.tanggal_resep}" ${statusButtons}>
+                            <i class="fa-solid fa-box-archive"></i> Arsip
+                        </button>
+                        <button type="button" class="btn btn-body btn-sm bg-gradient " onclick="window.location.href = '<?= base_url('resepluar/detailresep') ?>/${resep.id_resep}';">
+                            <i class="fa-solid fa-circle-info"></i> Detail
+                        </button>
+                        <button type="button" class="btn btn-body btn-sm bg-gradient  edit-btn" data-id="${resep.id_resep}" ${statusButtons}>
+                            <i class="fa-solid fa-pen-to-square"></i> Edit Identitas
+                        </button>
+                        <button type="button" class="btn btn-danger btn-sm bg-gradient  delete-btn" data-id="${resep.id_resep}" data-name="${resep.nama_pasien}" data-date="${resep.tanggal_resep}" ${statusButtons}>
+                            <i class="fa-solid fa-trash"></i> Hapus
+                        </button>
+                        `;
+                    } else if (arsip === '1') {
+                        arsip = `
+                        <button type="button" class="btn btn-body btn-sm bg-gradient bukaarsip-btn" data-id="${resep.id_resep}" data-name="${resep.nama_pasien}" data-date="${resep.tanggal_resep}" ${statusButtons}>
+                            <i class="fa-solid fa-box-open"></i> Buka Arsip
+                        </button>
+                        `;
+                    }
                     const tanggal_lahir = !resep.tanggal_lahir || resep.tanggal_lahir === '0000-00-00' ?
                         '<input type="text" readonly class="form-control-plaintext p-0 border border-0 opacity-50 pe-none fst-italic" value="Tidak ada">' :
                         `<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${resep.tanggal_lahir}">`;
@@ -481,15 +550,7 @@
                 </div>
                 <hr>
                 <div class="d-grid gap-2 d-flex flex-wrap justify-content-end">
-                    <button type="button" class="btn btn-body btn-sm bg-gradient " onclick="window.location.href = '<?= base_url('resepluar/detailresep') ?>/${resep.id_resep}';">
-                        <i class="fa-solid fa-circle-info"></i> Detail
-                    </button>
-                    <button type="button" class="btn btn-body btn-sm bg-gradient  edit-btn" data-id="${resep.id_resep}" ${statusButtons}>
-                        <i class="fa-solid fa-pen-to-square"></i> Edit Identitas
-                    </button>
-                    <button type="button" class="btn btn-danger btn-sm bg-gradient  delete-btn" data-id="${resep.id_resep}" data-name="${resep.nama_pasien}" data-date="${resep.tanggal_resep}" ${statusButtons}>
-                        <i class="fa-solid fa-trash"></i> Hapus
-                    </button>
+                    ${arsip}
                 </div>
             </li>
                 `;
@@ -561,7 +622,11 @@
                 }
             }
         } catch (error) {
-            showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+            if (error.response.request.status === 400) {
+                showFailedToast(error.response.data.error);
+            } else {
+                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+            }
             $('#resepContainer').empty();
             $('#paginationNav ul').empty();
         } finally {
@@ -579,7 +644,7 @@
         }
     });
 
-    $('#statusFilter, #genderFilter, #namesFilter, #apotekerFilter, #tanggalFilter').on('change', function() {
+    $('#statusFilter, #genderFilter, #namesFilter, #apotekerFilter, #arsipFilter, #tanggalFilter').on('change', function() {
         $('#resepContainer').empty();
         for (let i = 0; i < limit; i++) {
             $('#resepContainer').append(placeholder);
@@ -728,6 +793,76 @@
             }
         });
 
+        // Show archive confirmation modal
+        $(document).on('click', '.arsip-btn', function() {
+            resepId = $(this).data('id');
+            resepName = $(this).data('name');
+            resepDate = $(this).data('date');
+            // Check if transaksiName is null or undefined
+            const nama_pasien = (resepName === null || resepName === undefined || resepName === 'null') ?
+                'yang anonim ini' :
+                `dari "${resepName}"`;
+            $('[data-bs-toggle="tooltip"]').tooltip('hide');
+            $('#arsipMessage').html(`Arsipkan resep ${nama_pasien}?`);
+            $('#arsipSubmessage').html(`Tanggal Resep: ` + resepDate);
+            $('#arsipModal').modal('show');
+        });
+
+        $('#confirmArsipBtn').click(async function() {
+            $('#arsipModal button').prop('disabled', true);
+            $(this).html(`<?= $this->include('spinner/spinner'); ?>`); // Menampilkan pesan loading
+
+            try {
+                await axios.post(`<?= base_url('/resepluar/arsip') ?>/${resepId}`);
+                // Simpan nilai pilihan apoteker saat ini
+                const selectedApoteker = $('#apotekerFilter').val();
+                // Panggil fungsi untuk memperbarui opsi apoteker
+                await fetchApotekerOptions(selectedApoteker);
+                fetchResep();
+            } catch (error) {
+                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+            } finally {
+                $('#arsipModal').modal('hide');
+                $('#arsipModal button').prop('disabled', false);
+                $(this).text(`Arsipkan`); // Mengembalikan teks tombol asal
+            }
+        });
+
+        // Show archive confirmation modal
+        $(document).on('click', '.bukaarsip-btn', function() {
+            resepId = $(this).data('id');
+            resepName = $(this).data('name');
+            resepDate = $(this).data('date');
+            // Check if transaksiName is null or undefined
+            const nama_pasien = (resepName === null || resepName === undefined || resepName === 'null') ?
+                'yang anonim ini' :
+                `dari "${resepName}"`;
+            $('[data-bs-toggle="tooltip"]').tooltip('hide');
+            $('#bukaArsipMessage').html(`Buka arsip resep ${nama_pasien}?`);
+            $('#bukaArsipSubmessage').html(`Tanggal Resep: ` + resepDate);
+            $('#bukaArsipModal').modal('show');
+        });
+
+        $('#confirmBukaArsipBtn').click(async function() {
+            $('#bukaArsipModal button').prop('disabled', true);
+            $(this).html(`<?= $this->include('spinner/spinner'); ?>`); // Menampilkan pesan loading
+
+            try {
+                await axios.post(`<?= base_url('/resepluar/bukaarsip') ?>/${resepId}`);
+                // Simpan nilai pilihan apoteker saat ini
+                const selectedApoteker = $('#apotekerFilter').val();
+                // Panggil fungsi untuk memperbarui opsi apoteker
+                await fetchApotekerOptions(selectedApoteker);
+                fetchResep();
+            } catch (error) {
+                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+            } finally {
+                $('#bukaArsipModal').modal('hide');
+                $('#bukaArsipModal button').prop('disabled', false);
+                $(this).text(`Buka Arsip`); // Mengembalikan teks tombol asal
+            }
+        });
+
         $('#resepluarForm').submit(async function(e) {
             e.preventDefault();
 
@@ -806,7 +941,7 @@
                     }
                 }
             } catch (error) {
-                if (error.response.request.status === 401) {
+                if (error.response.request.status === 0) {
                     showFailedToast(error.response.data.message);
                 } else {
                     showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);

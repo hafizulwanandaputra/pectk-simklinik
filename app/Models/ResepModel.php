@@ -24,6 +24,7 @@ class ResepModel extends Model
         'jumlah_resep',
         'total_biaya',
         'confirmed',
-        'status'
+        'status',
+        'arsip'
     ];
 }
