@@ -476,7 +476,7 @@
                         `;
                     } else if (arsip === '1') {
                         arsip = `
-                        <button type="button" class="btn btn-body btn-sm bg-gradient bukaarsip-btn" data-id="${resep.id_resep}" data-name="${resep.nama_pasien}" data-date="${resep.tanggal_resep}" ${statusButtons}>
+                        <button type="button" class="btn btn-body btn-sm bg-gradient bukaarsip-btn" data-id="${resep.id_resep}" data-name="${resep.nama_pasien}" data-date="${resep.tanggal_resep}">
                             <i class="fa-solid fa-box-open"></i> Buka Arsip
                         </button>
                         `;
