@@ -216,7 +216,7 @@
                             <button type="button" class="btn btn-lg btn-body bg-gradient fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Batal</button>
                         </div>
                         <div class="col d-grid">
-                            <button type="button" class="btn btn-lg btn-primary bg-gradient fs-6 mb-0 rounded-4" id="confirmBukaArsipBtn">BukaArsip</button>
+                            <button type="button" class="btn btn-lg btn-primary bg-gradient fs-6 mb-0 rounded-4" id="confirmBukaArsipBtn">Buka Arsip</button>
                         </div>
                     </div>
                 </div>
@@ -461,7 +461,7 @@
                     let arsip = resep.arsip;
                     if (arsip === '0') {
                         arsip = `
-                        <button type="button" class="btn btn-body btn-sm bg-gradient arsip-btn" data-id="${resep.id_resep}" data-name="${resep.nama_pasien}" data-date="${resep.tanggal_resep}" ${statusButtons}>
+                        <button type="button" class="btn btn-body btn-sm bg-gradient arsip-btn" data-id="${resep.id_resep}" data-name="${resep.nama_pasien}" data-date="${resep.tanggal_resep}">
                             <i class="fa-solid fa-box-archive"></i> Arsip
                         </button>
                         <button type="button" class="btn btn-body btn-sm bg-gradient " onclick="window.location.href = '<?= base_url('resepluar/detailresep') ?>/${resep.id_resep}';">
