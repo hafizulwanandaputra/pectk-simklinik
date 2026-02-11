@@ -11,8 +11,8 @@ class Unduhan extends BaseController
 {
     public function index()
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Admisi' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') {
+        // Memeriksa peran pengguna, hanya 'Admin', 'Admisi', atau 'Apoteker' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi' || session()->get('role') == 'Apoteker') {
             // Menyiapkan data untuk tampilan
             $data = [
                 'title' => 'Unduh Dokumen - ' . $this->systemName,
@@ -23,6 +23,46 @@ class Unduhan extends BaseController
             return view('dashboard/unduhdokumen/index', $data);
         } else {
             // Jika peran tidak dikenali, lempar pengecualian untuk halaman tidak ditemukan
+            throw PageNotFoundException::forPageNotFound();
+        }
+    }
+
+    public function kartuberobat()
+    {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') {
+            $path = WRITEPATH . 'privatefiles/kartuberobat.pdf';
+
+            // Cek apakah file ada
+            if (!file_exists($path)) {
+                throw PageNotFoundException::forPageNotFound();
+            }
+
+            // Tampilkan PDF di browser
+            return $this->response
+                ->setHeader('Content-Type', 'application/pdf')
+                ->setHeader('Content-Disposition', 'inline; filename="Kartu Berobat PECTK.pdf"')
+                ->setBody(file_get_contents($path));
+        } else {
+            throw PageNotFoundException::forPageNotFound();
+        }
+    }
+
+    public function resepobatluar()
+    {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi' || session()->get('role') == 'Apoteker') {
+            $path = WRITEPATH . 'privatefiles/resepobat.pdf';
+
+            // Cek apakah file ada
+            if (!file_exists($path)) {
+                throw PageNotFoundException::forPageNotFound();
+            }
+
+            // Tampilkan PDF di browser
+            return $this->response
+                ->setHeader('Content-Type', 'application/pdf')
+                ->setHeader('Content-Disposition', 'inline; filename="Resep Obat PECTK.pdf"')
+                ->setBody(file_get_contents($path));
+        } else {
             throw PageNotFoundException::forPageNotFound();
         }
     }

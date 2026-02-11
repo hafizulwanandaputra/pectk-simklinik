@@ -999,7 +999,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                     </a>
                                 </li>
                             <?php endif; ?>
-                            <?php if (session()->get('role') == "Admin" || session()->get('role') == "Admisi") : ?>
+                            <?php if (session()->get('role') == "Admin" || session()->get('role') == "Admisi" || session()->get('role') == "Apoteker") : ?>
                                 <li class="nav-item">
                                     <a style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'unduhdokumen') ? 'active bg-success activeLinkSideBar' : '' ?>" href=" <?= base_url('/unduhdokumen'); ?>">
                                         <div class="d-flex align-items-start <?= ($activeSegment === 'unduhdokumen') ? 'text-white' : 'link-success' ?>">

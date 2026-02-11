@@ -486,7 +486,9 @@ $routes->delete('/(?i)tindakanoperasi/(?i)delete/(:any)', 'TindakanOperasi::dele
 
 // UNDUH DOKUMEN
 $routes->get('/(?i)unduhdokumen', 'Unduhan::index');
+$routes->get('/(?i)unduhdokumen/kartuberobat', 'Unduhan::kartuberobat');
 $routes->get('/(?i)unduhdokumen/optik', 'Unduhan::optik');
+$routes->get('/(?i)unduhdokumen/resepobatluar', 'Unduhan::resepobatluar');
 
 // PENGGUNA
 $routes->get('/(?i)admin', 'Admin::index');
