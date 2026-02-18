@@ -20,23 +20,21 @@ class App extends BaseConfig
 
     public function __construct()
     {
-        // Cek apakah aplikasi dijalankan dari CLI
         if (is_cli()) {
-            // Jika dijalankan dari CLI, set default baseURL tanpa mengakses $_SERVER
-            $this->baseURL = env('baseURL', 'http://localhost'); // Gunakan variabel env atau fallback ke 'http://localhost'
-        } else {
-            // Jika dijalankan dari web server, ambil base URL dari $_SERVER
-            $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
-            if ($_SERVER['SERVER_NAME'] === 'localhost') {
-                if ($_SERVER['SERVER_ADDR'] == '::1') {
-                    $this->baseURL = $protocol . '://localhost' . env('requestURL', '/'); // Fallback ke '/' jika requestURL tidak ada
-                } else {
-                    $this->baseURL = $protocol . '://' . $_SERVER['SERVER_ADDR'] . env('requestURL', '/'); // Fallback ke '/' jika requestURL tidak ada
-                }
-            } else {
-                $this->baseURL = $protocol . '://' . $_SERVER['SERVER_NAME'] . env('requestURL', '/'); // Fallback ke '/' jika requestURL tidak ada
-            }
+            $this->baseURL = env('baseURL', 'http://localhost/');
+            return;
         }
+
+        $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+
+        $https =
+            (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ||
+            ($_SERVER['HTTP_X_FORWARDED_PROTO'] ?? '') === 'https' ||
+            $_SERVER['SERVER_PORT'] == 443;
+
+        $protocol = $https ? 'https://' : 'http://';
+
+        $this->baseURL = rtrim($protocol . $host, '/') . env('requestURL', '/');
     }
 
     /**
