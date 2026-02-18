@@ -13,7 +13,7 @@
         "php": "^7.4 || ^8.0",
         "codeigniter4/framework": "^4.0",
         "dompdf/php-svg-lib": "^1.0",
-        "firebase/php-jwt": "^6.10",
+        "firebase/php-jwt": "^7.0",
         "guzzlehttp/guzzle": "^7.9",
         "kint-php/kint": "^5.1",
         "kwn/number-to-words": "^2.11",
