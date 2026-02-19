@@ -19,7 +19,7 @@
     <link href="<?= base_url(); ?>assets_public/css/JawiDubai.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/fonts/IosevkaHwpMono/IosevkaHwpMono.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/fontawesome/css/all.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/jquery-4.0.0.min.js"></script>
     <script>
         (() => {
             'use strict'
