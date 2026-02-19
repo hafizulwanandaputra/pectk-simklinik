@@ -23,7 +23,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
     <?= $this->include('main-css/index'); ?>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,slnt,wdth,wght,GRAD,ROND@6..144,-1..0,87.5,1..1000,0..100,0..100&family=Roboto:ital,wdth,wght@0,75..100,100..900;1,75..100,100..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wdth,wght@0,75..100,100..900;1,75..100,100..900&display=swap" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/css/JawiDubai.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.bootstrap5.min.css" rel="stylesheet">
@@ -210,7 +210,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
     </script>
     <style>
         :root {
-            --bs-font-sans-serif: "Google Sans Flex", "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            --bs-font-sans-serif: "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
             --bs-font-monospace: "Iosevka HWP Mono Web", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
             --gold: #ffe680;
             /* Emas lebih terang */
