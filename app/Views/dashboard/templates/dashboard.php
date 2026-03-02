@@ -942,8 +942,6 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                         </div>
                                     </a>
                                 </li>
-                            <?php endif; ?>
-                            <?php if (session()->get('role') == "Apoteker" || session()->get('role') == "Admin") : ?>
                                 <li class="nav-item">
                                     <a style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'resep') ? 'active bg-success activeLinkSideBar' : '' ?>" href=" <?= base_url('/resep'); ?>">
                                         <div class="d-flex align-items-start <?= ($activeSegment === 'resep') ? 'text-white' : 'link-success' ?>">
@@ -952,6 +950,18 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                             </div>
                                             <div class="flex-fill mx-2 <?= ($activeSegment === 'resep') ? 'text-white' : 'link-body-emphasis' ?>">
                                                 Resep Dokter
+                                            </div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'bmhp') ? 'active bg-success activeLinkSideBar' : '' ?>" href=" <?= base_url('/bmhp'); ?>">
+                                        <div class="d-flex align-items-start <?= ($activeSegment === 'bmhp') ? 'text-white' : 'link-success' ?>">
+                                            <div style="min-width: 24px; max-width: 24px; text-align: center;">
+                                                <i class="fa-solid fa-ban"></i>
+                                            </div>
+                                            <div class="flex-fill mx-2 <?= ($activeSegment === 'bmhp') ? 'text-white' : 'link-body-emphasis' ?>">
+                                                Barang Medis Habis Pakai
                                             </div>
                                         </div>
                                     </a>

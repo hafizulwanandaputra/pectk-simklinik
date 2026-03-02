@@ -96,6 +96,8 @@ class Filters extends BaseConfig
                 '/resepluar/*',
                 '/resep',
                 '/resep/*',
+                '/bmhp',
+                '/bmhp/*',
                 '/laporanresep',
                 '/laporanresep/*',
                 '/layanan',

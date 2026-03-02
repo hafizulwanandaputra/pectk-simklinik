@@ -408,6 +408,26 @@ $routes->get('/(?i)laporanresep/(?i)exportdailyexcel/(:any)', 'LaporanResep::exp
 $routes->get('/(?i)laporanresep/(?i)exportmonthly/(:any)', 'LaporanResep::exportmonthly/$1');
 $routes->get('/(?i)laporanresep/(?i)exportmonthlyexcel/(:any)', 'LaporanResep::exportmonthlyexcel/$1');
 
+// BARANG MEDIS HABIS PAKAI
+$routes->get('/(?i)bmhp', 'BMHP::index');
+$routes->get('/(?i)bmhp/(?i)apotekerlist', 'BMHP::apotekerlist');
+$routes->get('/(?i)bmhp/(?i)listbmhp', 'BMHP::listbmhp');
+$routes->get('/(?i)bmhp/(?i)bmhp/(:any)', 'BMHP::bmhp/$1');
+$routes->post('/(?i)bmhp/(?i)create', 'BMHP::create');
+$routes->post('/(?i)bmhp/(?i)konfirmasi/(:any)', 'BMHP::konfirmasi/$1');
+$routes->post('/(?i)bmhp/(?i)batalkonfirmasi/(:any)', 'BMHP::batalkonfirmasi/$1');
+$routes->delete('/(?i)bmhp/(?i)delete/(:any)', 'BMHP::delete/$1');
+
+// DETAIL BARANG MEDIS HABIS PAKAI
+$routes->get('/(?i)bmhp/(?i)detailbmhp/(:any)', 'BMHP::detailbmhp/$1');
+$routes->get('/(?i)bmhp/(?i)detailbmhplist/(:any)', 'BMHP::detailbmhplist/$1');
+$routes->get('/(?i)bmhp/(?i)detailbmhpitem/(:any)', 'BMHP::detailbmhpitem/$1');
+$routes->get('/(?i)bmhp/(?i)obatlist/(:any)', 'BMHP::obatlist/$1');
+$routes->get('/(?i)bmhp/(?i)obatkedaluwarsa', 'BMHP::obatkedaluwarsa');
+$routes->post('/(?i)bmhp/(?i)tambahdetailbmhp/(:any)', 'BMHP::tambahdetailbmhp/$1');
+$routes->post('/(?i)bmhp/(?i)perbaruidetailbmhp/(:any)', 'BMHP::perbaruidetailbmhp/$1');
+$routes->delete('/(?i)bmhp/(?i)hapusdetailbmhp/(:any)', 'BMHP::hapusdetailbmhp/$1');
+
 // LAYANAN
 $routes->get('/(?i)layanan', 'Layanan::index');
 $routes->post('/(?i)layanan/(?i)layananlist', 'Layanan::layananlist');
@@ -423,10 +443,12 @@ $routes->get('/(?i)transaksi/(?i)kasirlist', 'Transaksi::kasirlist');
 $routes->get('/(?i)transaksi/(?i)listtransaksi', 'Transaksi::listtransaksi');
 $routes->get('/(?i)transaksi/(?i)pasienlist', 'Transaksi::pasienlist');
 $routes->get('/(?i)transaksi/(?i)pasienlistexternal', 'Transaksi::pasienlistexternal');
+$routes->get('/(?i)transaksi/(?i)bmhplist', 'Transaksi::bmhplist');
 $routes->get('/(?i)transaksi/(?i)transaksi/(:any)', 'Transaksi::transaksi/$1');
 $routes->get('/(?i)transaksi/(?i)struk/(:any)', 'Transaksi::struk/$1');
 $routes->post('/(?i)transaksi/(?i)create', 'Transaksi::create');
 $routes->post('/(?i)transaksi/(?i)createexternal', 'Transaksi::createexternal');
+$routes->post('/(?i)transaksi/(?i)createbmhp', 'Transaksi::createbmhp');
 $routes->post('/(?i)transaksi/(?i)process/(:any)', 'Transaksi::process/$1');
 $routes->post('/(?i)transaksi/(?i)cancel/(:any)', 'Transaksi::cancel/$1');
 $routes->get('/(?i)transaksi/(?i)report', 'Transaksi::reportinit');
@@ -441,14 +463,18 @@ $routes->delete('/(?i)transaksi/(?i)delete/(:any)', 'Transaksi::delete/$1');
 $routes->get('/(?i)transaksi/(?i)detailtransaksi/(:any)', 'Transaksi::detailtransaksi/$1');
 $routes->get('/(?i)transaksi/(?i)detaillayananlist/(:any)', 'Transaksi::detaillayananlist/$1');
 $routes->get('/(?i)transaksi/(?i)detailobatalkeslist/(:any)', 'Transaksi::detailobatalkeslist/$1');
+$routes->get('/(?i)transaksi/(?i)detailbmhplist/(:any)', 'Transaksi::detailbmhplist/$1');
 $routes->get('/(?i)transaksi/(?i)detailtransaksiitem/(:any)', 'Transaksi::detailtransaksiitem/$1');
 $routes->get('/(?i)transaksi/(?i)layananlist/(:any)/(:any)', 'Transaksi::layananlist/$1/$2');
 $routes->get('/(?i)transaksi/(?i)reseplist/(:any)/(:any)', 'Transaksi::reseplist/$1/$2');
 $routes->get('/(?i)transaksi/(?i)reseplistexternal/(:any)/(:any)', 'Transaksi::reseplistexternal/$1/$2');
+$routes->get('/(?i)transaksi/(?i)bmhplist/(:any)/(:any)', 'Transaksi::bmhplist/$1/$2');
 $routes->post('/(?i)transaksi/(?i)tambahlayanan/(:any)', 'Transaksi::tambahlayanan/$1');
 $routes->post('/(?i)transaksi/(?i)tambahobatalkes/(:any)', 'Transaksi::tambahobatalkes/$1');
+$routes->post('/(?i)transaksi/(?i)tambahbmhp/(:any)', 'Transaksi::tambahbmhp/$1');
 $routes->post('/(?i)transaksi/(?i)perbaruilayanan/(:any)', 'Transaksi::perbaruilayanan/$1');
 $routes->post('/(?i)transaksi/(?i)perbaruiobatalkes/(:any)', 'Transaksi::perbaruiobatalkes/$1');
+$routes->post('/(?i)transaksi/(?i)perbaruibmhp/(:any)', 'Transaksi::perbaruibmhp/$1');
 $routes->delete('/(?i)transaksi/(?i)hapusdetailtransaksi/(:any)', 'Transaksi::hapusdetailtransaksi/$1');
 $routes->get('/(?i)transaksi/(?i)struk/(:any)', 'Transaksi::struk/$1');
 

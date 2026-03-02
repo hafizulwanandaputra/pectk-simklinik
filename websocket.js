@@ -85,6 +85,8 @@ app.post("/notify", (req, res) => {
     broadcast({ update: true });
   } else if (action === "update_resep") {
     broadcast({ update_resep: true });
+  } else if (action === "update_bmhp") {
+    broadcast({ update_bmhp: true });
   } else if (action === "update_transaksi") {
     broadcast({ update_transaksi: true });
   } else if (action === "delete") {
