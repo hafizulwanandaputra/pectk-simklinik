@@ -7,6 +7,7 @@ use App\Models\DetailTransaksiModel;
 use App\Models\LayananModel;
 use App\Models\ResepModel;
 use App\Models\RawatJalanModel;
+use App\Models\BMHPModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use DateTime;
 use GuzzleHttp\Client;
@@ -21,11 +22,13 @@ class Transaksi extends BaseController
     protected $TransaksiModel;
     protected $DetailTransaksiModel;
     protected $RawatJalanModel;
+    protected $BMHPModel;
     public function __construct()
     {
         $this->TransaksiModel = new TransaksiModel();
         $this->DetailTransaksiModel = new DetailTransaksiModel();
         $this->RawatJalanModel = new RawatJalanModel();
+        $this->BMHPModel = new BMHPModel();
     }
 
     public function index()
@@ -88,6 +91,9 @@ class Transaksi extends BaseController
                 $TransaksiModel
                     ->like('nomor_registrasi', 'RI')
                     ->where('dokter !=', 'Resep Luar'); // Resep Dokter
+            } elseif ($jenis === 'Barang Medis Habis Pakai') {
+                $TransaksiModel
+                    ->where('dokter', 'Barang Medis Habis Pakai'); // BMHP
             }
 
             // Menerapkan filter names jika disediakan
@@ -350,6 +356,52 @@ class Transaksi extends BaseController
         }
     }
 
+    public function bmhplist()
+    {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+            // Mengambil data dari tabel bmhp dengan status = 0 dan mengurutkan berdasarkan nomor_registrasi
+            $BMHPModel = new BMHPModel();
+            $bmhpData = $BMHPModel
+                ->groupStart()
+                ->where('konfirmasi_kasir', 1)
+                ->groupEnd()
+                ->orderBy('id_bmhp', 'DESC')
+                ->findAll();
+
+            // Mengambil id_bmhp yang sudah terpakai di transaksi
+            $db = \Config\Database::connect();
+            $usedBMHPIDs = $db->table('transaksi')->select('id_bmhp')->get()->getResultArray();
+            $usedBMHPIDs = array_column($usedBMHPIDs, 'id_bmhp');
+
+            // Menyiapkan array opsi untuk dikirim dalam respon
+            $options = [];
+            // Menyusun opsi dari data bmhp luar yang diterima
+            foreach ($bmhpData as $bmhp) {
+                // Memeriksa apakah id_bmhp ada dalam daftar id yang terpakai
+                if (in_array($bmhp['id_bmhp'], $usedBMHPIDs)) {
+                    continue; // Lewati bmhp yang sudah terpakai
+                }
+
+                // Menambahkan opsi ke dalam array
+                $options[] = [
+                    'value' => $bmhp['id_bmhp'], // Nilai untuk opsi
+                    'text'  => $bmhp['tanggal_bmhp'] . ' (' . $bmhp['apoteker'] . ')' // Teks untuk opsi
+                ];
+            }
+
+            // Mengembalikan data bmhp luar dalam format JSON
+            return $this->response->setJSON([
+                'success' => true, // Indikator sukses
+                'data'    => $options, // Data opsi
+            ]);
+        } else {
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan', // Pesan jika peran tidak valid
+            ]);
+        }
+    }
+
     public function transaksi($id)
     {
         // Memeriksa peran pengguna, hanya 'Admin', 'Admisi', 'Dokter', atau 'Kasir' yang diizinkan
@@ -506,6 +558,83 @@ class Transaksi extends BaseController
                 'tempat_lahir' => $resepData['tempat_lahir'], // Tempat lahir pasien
                 'tanggal_lahir' => $resepData['tanggal_lahir'], // Tanggal lahir pasien
                 'dokter' => 'Resep Luar', // Tanggal lahir pasien
+                'kasir' => session()->get('fullname'), // Nama kasir dari session
+                'jaminan' => NULL, // Jaminan
+                'no_kwitansi' => $no_kwitansi, // Nomor kwitansi
+                'tgl_transaksi' => date('Y-m-d H:i:s'), // Tanggal dan waktu transaksi
+                'total_pembayaran' => 0, // Total pembayaran awal
+                'metode_pembayaran' => '', // Metode pembayaran (kosong pada awalnya)
+                'lunas' => 0, // Status lunas (0 berarti belum lunas)
+            ];
+            $this->TransaksiModel->save($data); // Menyimpan data transaksi ke database
+            // Panggil WebSocket untuk update client
+            $this->notify_clients_submit('update');
+            return $this->response->setJSON(['success' => true, 'message' => 'Transaksi berhasil ditambahkan']); // Mengembalikan respon sukses
+        } else {
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan', // Pesan jika peran tidak valid
+            ]);
+        }
+    }
+
+    public function createbmhp()
+    {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+            // Melakukan validasi
+            $validation = \Config\Services::validation();
+            // Menetapkan aturan validasi dasar
+            $validation->setRules([
+                'id_bmhp' => 'required', // Nomor registrasi wajib diisi
+            ]);
+
+            // Memeriksa apakah validasi berhasil
+            if (!$this->validate($validation->getRules())) {
+                return $this->response->setJSON(['success' => false, 'message' => NULL, 'errors' => $validation->getErrors()]); // Mengembalikan kesalahan validasi
+            }
+
+            // Mengambil nomor registrasi dari permintaan POST
+            $id_bmhp = $this->request->getPost('id_bmhp');
+            $nama_pasien = $this->request->getPost('nama_pasien');
+
+            // Mengambil data dari tabel resep
+            $BMHPModel = new BMHPModel();
+            $bmhpData = $BMHPModel
+                ->where('konfirmasi_kasir', 1)
+                ->where('id_bmhp', $id_bmhp)
+                ->get()->getRowArray();
+
+            // Jika data BMHP tidak ditemukan
+            if (!$bmhpData) {
+                return $this->response->setStatusCode(404)->setJSON(['success' => false, 'message' => 'Data BMHP tidak ditemukan', 'errors' => NULL]);
+            }
+
+            // Mendapatkan tanggal saat ini
+            $date = new \DateTime();
+            $tanggal = $date->format('d'); // Hari (2 digit)
+            $bulan = $date->format('m'); // Bulan (2 digit)
+            $tahun = $date->format('y'); // Tahun (2 digit)
+
+            // Mengambil nomor registrasi terakhir untuk di-increment
+            $lastNoReg = $this->TransaksiModel->getLastNoReg3($tahun, $bulan, $tanggal);
+            $lastNumber = $lastNoReg ? intval(substr($lastNoReg, -4)) : 0; // Mendapatkan nomor terakhir
+            $nextNumber = str_pad($lastNumber + 1, 4, '0', STR_PAD_LEFT); // Menyiapkan nomor berikutnya
+
+            // Memformat nomor kwitansi
+            $no_kwitansi = sprintf('TBHP%s%s%s-%s', $tanggal, $bulan, $tahun, $nextNumber);
+
+            // Menyimpan data transaksi
+            $data = [
+                'id_bmhp' => $id_bmhp, // ID resep
+                'nomor_registrasi' => NULL, // Nomor registrasi
+                'no_rm' => NULL, // Nomor rekam medis
+                'nama_pasien' => $nama_pasien, // Nama pasien
+                'alamat' => NULL, // Alamat pasien
+                'telpon' => NULL, // Nomor telepon pasien
+                'jenis_kelamin' => NULL, // Jenis kelamin pasien
+                'tempat_lahir' => NULL, // Tempat lahir pasien
+                'tanggal_lahir' => NULL, // Tanggal lahir pasien
+                'dokter' => 'Barang Medis Habis Pakai', // Tanggal lahir pasien
                 'kasir' => session()->get('fullname'), // Nama kasir dari session
                 'jaminan' => NULL, // Jaminan
                 'no_kwitansi' => $no_kwitansi, // Nomor kwitansi
@@ -756,6 +885,73 @@ class Transaksi extends BaseController
         }
     }
 
+    public function detailbmhplist($id)
+    {
+        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Kasir' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+            // Mengambil daftar obat dan alkes berdasarkan ID transaksi
+            $bmhp = $this->DetailTransaksiModel
+                ->where('detail_transaksi.id_transaksi', $id)
+                ->where('detail_transaksi.jenis_transaksi', 'Barang Medis Habis Pakai')
+                ->join('transaksi', 'transaksi.id_transaksi = detail_transaksi.id_transaksi', 'inner')
+                ->join('bmhp', 'bmhp.id_bmhp = detail_transaksi.id_bmhp', 'inner')
+                ->join('detail_bmhp', 'bmhp.id_bmhp = detail_bmhp.id_bmhp', 'inner')
+                ->orderBy('id_detail_transaksi', 'ASC')
+                ->findAll();
+
+            // Array untuk menyimpan hasil terstruktur
+            $result = [];
+
+            // Memetakan setiap transaksi
+            foreach ($bmhp as $row) {
+                // Jika transaksi ini belum ada dalam array $result, tambahkan
+                if (!isset($result[$row['id_detail_transaksi']])) {
+                    $result[$row['id_detail_transaksi']] = [
+                        'id_detail_transaksi' => $row['id_detail_transaksi'],
+                        'id_bmhp' => $row['id_bmhp'],
+                        'id_transaksi' => $row['id_transaksi'],
+                        'qty_transaksi' => $row['qty_transaksi'],
+                        'harga_transaksi' => $row['harga_transaksi'],
+                        'diskon' => $row['diskon'],
+                        'lunas' => $row['lunas'],
+                        'bmhp' => [
+                            'id_bmhp' => $row['id_bmhp'],
+                            'apoteker' => $row['apoteker'],
+                            'tanggal_bmhp' => $row['tanggal_bmhp'],
+                            'jumlah_bmhp' => $row['jumlah_bmhp'],
+                            'total_biaya' => $row['total_biaya'],
+                            'status' => $row['status'],
+                            'detail_bmhp' => []
+                        ],
+                    ];
+                }
+
+                // Tambahkan detail_bmhp ke transaksi
+                $result[$row['id_detail_transaksi']]['bmhp']['detail_bmhp'][] = [
+                    'id_detail_bmhp' => $row['id_detail_bmhp'],
+                    'id_bmhp' => $row['id_bmhp'],
+                    'id_obat' => $row['id_obat'],
+                    'nama_obat' => $row['nama_obat'],
+                    'kategori_obat' => $row['kategori_obat'],
+                    'bentuk_obat' => $row['bentuk_obat'],
+                    'signa' => $row['signa'],
+                    'catatan' => $row['catatan'],
+                    'cara_pakai' => $row['cara_pakai'],
+                    'jumlah' => $row['jumlah'],
+                    'harga_satuan' => $row['harga_satuan']
+                ];
+            }
+
+            // Mengembalikan hasil dalam bentuk JSON
+            return $this->response->setJSON(array_values($result));
+        } else {
+            // Jika peran tidak valid, kembalikan status 404
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
+        }
+    }
+
     public function detailtransaksiitem($id)
     {
         // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Kasir' yang diizinkan
@@ -919,6 +1115,54 @@ class Transaksi extends BaseController
         }
     }
 
+    public function bmhplist2($id_transaksi, $id_bmhp)
+    {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+            $BMHPModel = new BMHPModel();
+            $DetailTransaksiModel = new DetailTransaksiModel();
+
+            // Mengambil bmhp berdasarkan nomor registrasi dengan kondisi tertentu
+            $results = $BMHPModel
+                ->where('id_bmhp', $id_bmhp)
+                ->where('konfirmasi_kasir', 1)
+                ->where('status', 0)
+                ->where('total_biaya >', 0) // Mengambil bmhp dengan total biaya lebih dari 0
+                ->orderBy('bmhp.id_bmhp', 'DESC')->findAll();
+
+            $options = [];
+            // Memetakan hasil bmhp ke dalam format yang diinginkan
+            foreach ($results as $row) {
+                $total_biaya = (int) $row['total_biaya']; // Mengonversi total biaya ke integer
+                $total_biaya_terformat = number_format($total_biaya, 0, ',', '.'); // Memformat total biaya
+
+                // Memeriksa apakah bmhp sudah digunakan dalam transaksi
+                $isUsed = $DetailTransaksiModel->where('id_bmhp', $id_bmhp)
+                    ->where('id_transaksi', $id_transaksi)
+                    ->first();
+
+                // Jika bmhp belum digunakan, tambahkan ke opsi
+                if (!$isUsed) {
+                    $options[] = [
+                        'value' => $id_bmhp, // ID bmhp
+                        'text' => $row['tanggal_bmhp'] . ' (Rp' . $total_biaya_terformat . ')' // Tanggal bmhp dengan total biaya terformat
+                    ];
+                }
+            }
+
+            // Mengembalikan opsi resep dalam bentuk JSON
+            return $this->response->setJSON([
+                'success' => true,
+                'data' => $options,
+            ]);
+        } else {
+            // Jika peran tidak valid, kembalikan status 404
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
+        }
+    }
+
     public function tambahlayanan($id)
     {
         // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Kasir' yang diizinkan
@@ -1055,6 +1299,79 @@ class Transaksi extends BaseController
                 'qty_transaksi' => 1, // Kuantitas untuk obat dan alkes ditetapkan 1
                 'harga_transaksi' => $resep['total_biaya'], // Menggunakan total biaya dari resep
                 'diskon' => $this->request->getPost('diskon_obatalkes'),
+            ];
+            // Menyimpan data ke DetailTransaksiModel
+            $this->DetailTransaksiModel->save($data);
+
+            // Menghitung total pembayaran
+            $builder = $db->table('detail_transaksi');
+            $builder->select('SUM((harga_transaksi * qty_transaksi) * (1 - (diskon / 100))) as total_pembayaran');
+            $builder->where('id_transaksi', $id);
+            $result = $builder->get()->getRow();
+
+            $total_pembayaran = $result->total_pembayaran; // Total pembayaran yang dihitung
+
+            // Memperbarui tabel transaksi
+            $transaksiBuilder = $db->table('transaksi');
+            $transaksiBuilder->where('id_transaksi', $id);
+            $transaksiBuilder->update([
+                'total_pembayaran' => $total_pembayaran, // Memperbarui total pembayaran di tabel transaksi
+            ]);
+            // Panggil WebSocket untuk update client
+            $this->notify_clients_submit('update_transaksi');
+            // Mengembalikan respons sukses
+            return $this->response->setJSON(['success' => true, 'message' => 'Item transaksi berhasil ditambahkan']);
+        } else {
+            // Jika peran tidak valid, kembalikan status 404
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
+        }
+    }
+
+    public function tambahbmhp($id)
+    {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+            // Validasi input
+            $validation = \Config\Services::validation();
+            // Menetapkan aturan validasi dasar
+            $validation->setRules([
+                'id_bmhp' => 'required', // ID bmhp harus diisi
+                'diskon_bmhp' => 'required|numeric|greater_than_equal_to[0]|less_than_equal_to[100]', // Diskon harus diisi, berupa angka, antara 0 dan 100
+            ]);
+
+            // Memeriksa validasi
+            if (!$this->validate($validation->getRules())) {
+                // Mengembalikan kesalahan validasi jika tidak valid
+                return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
+            }
+
+            $db = db_connect();
+
+            $transaksib = $db->table('transaksi');
+            $transaksib->where('id_transaksi', $id);
+            $transaksi = $transaksib->get()->getRowArray();
+
+            if ($transaksi['lunas'] == 1) {
+                // Gagalkan jika transaksi lunas
+                return $this->response->setStatusCode(400)->setJSON(['success' => false, 'message' => 'Tidak bisa dilakukan. Batalkan transaksi terlebih dahulu.']);
+            }
+
+            $BMHPModel = new BMHPModel();
+            // Mengambil data bmhp berdasarkan ID yang diberikan
+            $bmhp = $BMHPModel->find($this->request->getPost('id_bmhp'));
+
+            // Menyimpan data transaksi obat dan alkes
+            $data = [
+                'id_bmhp' => $this->request->getPost('id_bmhp'),
+                'id_layanan' => NULL,
+                'id_transaksi' => $id,
+                'nama_layanan' => NULL,
+                'jenis_transaksi' => 'Barang Medis Habis Pakai',
+                'qty_transaksi' => 1, // Kuantitas untuk obat dan alkes ditetapkan 1
+                'harga_transaksi' => $bmhp['total_biaya'], // Menggunakan total biaya dari bmhp
+                'diskon' => $this->request->getPost('diskon_bmhp'),
             ];
             // Menyimpan data ke DetailTransaksiModel
             $this->DetailTransaksiModel->save($data);
@@ -1249,6 +1566,78 @@ class Transaksi extends BaseController
         }
     }
 
+    public function perbaruibmhp($id)
+    {
+        // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+            // Validasi input
+            $validation = \Config\Services::validation();
+            // Menetapkan aturan validasi dasar
+            $validation->setRules([
+                'diskon_bmhp_edit' => 'required|numeric|greater_than_equal_to[0]|less_than_equal_to[100]', // Diskon harus diisi, berupa angka, antara 0 dan 100
+            ]);
+
+            // Memeriksa validasi
+            if (!$this->validate($validation->getRules())) {
+                // Mengembalikan kesalahan validasi jika tidak valid
+                return $this->response->setJSON(['success' => false, 'errors' => $validation->getErrors()]);
+            }
+
+            $db = db_connect();
+
+            $transaksib = $db->table('transaksi');
+            $transaksib->where('id_transaksi', $id);
+            $transaksi = $transaksib->get()->getRowArray();
+
+            if ($transaksi['lunas'] == 1) {
+                // Gagalkan jika transaksi lunas
+                return $this->response->setStatusCode(400)->setJSON(['success' => false, 'message' => 'Tidak bisa dilakukan. Batalkan transaksi terlebih dahulu.']);
+            }
+
+            // Mengambil detail transaksi berdasarkan ID yang diberikan
+            $detail_transaksi = $this->DetailTransaksiModel->find($this->request->getPost('id_detail_transaksi'));
+
+            // Menyimpan data yang diperbarui
+            $data = [
+                'id_detail_transaksi' => $this->request->getPost('id_detail_transaksi'),
+                'id_bmhp' => $detail_transaksi['id_bmhp'], // Menggunakan ID bmhp yang ada
+                'id_layanan' => NULL,
+                'id_transaksi' => $id,
+                'nama_layanan' => NULL,
+                'jenis_transaksi' => $detail_transaksi['jenis_transaksi'],
+                'qty_transaksi' => $detail_transaksi['qty_transaksi'], // Menggunakan kuantitas yang ada
+                'harga_transaksi' => $detail_transaksi['harga_transaksi'],
+                'diskon' => $this->request->getPost('diskon_obatalkes_edit'), // Menggunakan diskon yang diperbarui
+            ];
+            // Menyimpan data ke DetailTransaksiModel
+            $this->DetailTransaksiModel->save($data);
+
+            // Menghitung total pembayaran
+            $builder = $db->table('detail_transaksi');
+            $builder->select('SUM((harga_transaksi * qty_transaksi) * (1 - (diskon / 100))) as total_pembayaran');
+            $builder->where('id_transaksi', $id);
+            $result = $builder->get()->getRow();
+
+            $total_pembayaran = $result->total_pembayaran; // Total pembayaran yang dihitung
+
+            // Memperbarui tabel transaksi
+            $transaksiBuilder = $db->table('transaksi');
+            $transaksiBuilder->where('id_transaksi', $id);
+            $transaksiBuilder->update([
+                'total_pembayaran' => $total_pembayaran, // Memperbarui total pembayaran di tabel transaksi
+            ]);
+            // Panggil WebSocket untuk update client
+            $this->notify_clients_submit('update_transaksi');
+            // Mengembalikan respons sukses
+            return $this->response->setJSON(['success' => true, 'message' => 'Item transaksi berhasil diperbarui']);
+        } else {
+            // Jika peran tidak valid, kembalikan status 404
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
+        }
+    }
+
     public function hapusdetailtransaksi($id)
     {
         // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Kasir' yang diizinkan
@@ -1399,6 +1788,14 @@ class Transaksi extends BaseController
                             'status' => 1, // Memperbarui status resep menjadi selesai
                         ]);
                     }
+                    if ($detail['id_bmhp'] !== null) { // Memeriksa apakah ada ID bmhp
+                        $bmhp = $db->table('bmhp');
+                        $bmhp->where('id_bmhp', $detail['id_bmhp']); // Memastikan mencocokkan berdasarkan id_bmhp
+                        $bmhp->update([
+                            'konfirmasi_kasir' => 1, // Mengonfirmasi bmhp ketika transaksi diproses
+                            'status' => 1, // Memperbarui status bmhp menjadi selesai
+                        ]);
+                    }
                 }
             }
 
@@ -1489,6 +1886,14 @@ class Transaksi extends BaseController
                             $resep->where('id_resep', $detail['id_resep']); // Memastikan mencocokkan berdasarkan id_resep
                             $resep->update([
                                 'status' => 0, // Memperbarui status resep menjadi belum selesai
+                            ]);
+                        }
+                        if ($detail['id_bmhp'] !== null) { // Memeriksa apakah ada ID bmhp
+                            $bmhp = $db->table('bmhp');
+                            $bmhp->where('id_bmhp', $detail['id_bmhp']); // Memastikan mencocokkan berdasarkan id_bmhp
+                            $bmhp->update([
+                                'konfirmasi_kasir' => 1, // Mengonfirmasi bmhp ketika transaksi diproses
+                                'status' => 0, // Memperbarui status bmhp menjadi selesai
                             ]);
                         }
                     }
@@ -1647,6 +2052,68 @@ class Transaksi extends BaseController
                 ->where('detail_transaksi.jenis_transaksi', 'Obat dan Alkes')
                 ->get()->getRowArray();
 
+            // Mengambil detail barang medis habis pakai
+            $bmhp = $this->DetailTransaksiModel
+                ->where('detail_transaksi.id_transaksi', $id)
+                ->where('detail_transaksi.jenis_transaksi', 'Barang Medis Habis Pakai') // Mengambil hanya jenis transaksi 'Barang Medis Habis Pakai'
+                ->join('transaksi', 'transaksi.id_transaksi = detail_transaksi.id_transaksi', 'inner')
+                ->join('bmhp', 'bmhp.id_bmhp = detail_transaksi.id_bmhp', 'inner')
+                ->join('detail_bmhp', 'bmhp.id_bmhp = detail_bmhp.id_bmhp', 'inner')
+                ->join('obat', 'detail_bmhp.id_obat = obat.id_obat', 'inner')
+                ->orderBy('id_detail_transaksi', 'ASC')
+                ->findAll();
+
+            // Array untuk menyimpan hasil terstruktur obat dan alkes
+            $result_bmhp = [];
+
+            // Memetakan setiap transaksi obat dan alkes
+            foreach ($bmhp as $row) {
+
+                if (!isset($result_bmhp[$row['id_detail_transaksi']])) {
+                    // Menyimpan detail obat ke array jika belum ada
+                    $result_bmhp[$row['id_detail_transaksi']] = [
+                        'id_detail_transaksi' => $row['id_detail_transaksi'],
+                        'id_bmhp' => $row['id_bmhp'],
+                        'id_transaksi' => $row['id_transaksi'],
+                        'qty_transaksi' => $row['qty_transaksi'],
+                        'harga_transaksi' => $row['harga_transaksi'],
+                        'diskon' => $row['diskon'],
+                        'lunas' => $row['lunas'],
+                        'bmhp' => [
+                            'id_bmhp' => $row['id_bmhp'],
+                            'apoteker' => $row['apoteker'],
+                            'tanggal_bmhp' => $row['tanggal_bmhp'],
+                            'jumlah_bmhp' => $row['jumlah_bmhp'],
+                            'total_biaya' => $row['total_biaya'],
+                            'status' => $row['status'],
+                            'detail_bmhp' => [] // Menyimpan detail bmhp
+                        ],
+                    ];
+                }
+
+                // Menambahkan detail_bmhp ke transaksi
+                $result_bmhp[$row['id_detail_transaksi']]['bmhp']['detail_bmhp'][] = [
+                    'id_detail_bmhp' => $row['id_detail_bmhp'],
+                    'id_bmhp' => $row['id_bmhp'],
+                    'id_obat' => $row['id_obat'],
+                    'nama_obat' => $row['nama_obat'],
+                    'kategori_obat' => $row['kategori_obat'],
+                    'bentuk_obat' => $row['bentuk_obat'],
+                    'signa' => $row['signa'],
+                    'catatan' => $row['catatan'],
+                    'cara_pakai' => $row['cara_pakai'],
+                    'jumlah' => $row['jumlah'],
+                    'harga_satuan' => $row['harga_satuan']
+                ];
+            }
+
+            // Menghitung total harga obat dan alkes
+            $total_bmhp = $this->DetailTransaksiModel
+                ->selectSum('((harga_transaksi * qty_transaksi) - ((harga_transaksi * qty_transaksi) * diskon / 100))', 'total_harga')
+                ->where('detail_transaksi.id_transaksi', $id)
+                ->where('detail_transaksi.jenis_transaksi', 'Barang Medis Habis Pakai')
+                ->get()->getRowArray();
+
             // Memeriksa apakah transaksi valid dan lunas
             if (!empty($transaksi) && $transaksi['lunas'] == 1) {
                 // Menyiapkan data untuk ditampilkan
@@ -1654,8 +2121,10 @@ class Transaksi extends BaseController
                     'transaksi' => $transaksi,
                     'layanan' => array_values($result_layanan), // Mengubah array hasil layanan menjadi indexed array
                     'obatalkes' => array_values($result_obatalkes), // Mengubah array hasil obat menjadi indexed array
+                    'bmhp' => array_values($result_bmhp), // Mengubah array hasil obat menjadi indexed array
                     'total_layanan' => $total_layanan['total_harga'], // Total harga layanan
                     'total_obatalkes' => $total_obatalkes['total_harga'], // Total harga obat
+                    'total_bmhp' => $total_bmhp['total_harga'], // Total harga obat
                     'title' => 'Detail Transaksi ' . $id . ' - ' . $this->systemName // Judul halaman
                 ];
 
@@ -1843,6 +2312,45 @@ class Transaksi extends BaseController
                 // Membulatkan hasil total_harga (misalnya 2 angka di belakang koma)
                 $total_obatalkes = round($total_harga, 0);
 
+                $bmhp = $this->DetailTransaksiModel
+                    ->where('detail_transaksi.id_transaksi', $item['id_transaksi'])
+                    ->where('detail_transaksi.jenis_transaksi', 'Barang Medis Habis Pakai')
+                    ->join('bmhp', 'bmhp.id_bmhp = detail_transaksi.id_bmhp', 'inner')
+                    ->orderBy('id_detail_transaksi', 'ASC')
+                    ->findAll();
+
+                $result_bmhp = array_map(function ($row) {
+                    return [
+                        'id_detail_transaksi' => $row['id_detail_transaksi'],
+                        'id_bmhp' => $row['id_bmhp'],
+                        'id_transaksi' => $row['id_transaksi'],
+                        'qty_transaksi' => $row['qty_transaksi'],
+                        'harga_transaksi' => $row['harga_transaksi'],
+                        'diskon' => $row['diskon'],
+                        'bmhp' => [
+                            'id_bmhp' => $row['id_bmhp'],
+                            'apoteker' => $row['apoteker'],
+                            'tanggal_bmhp' => $row['tanggal_bmhp'],
+                            'jumlah_bmhp' => $row['jumlah_bmhp'],
+                            'total_biaya' => $row['total_biaya'],
+                            'status' => $row['status'],
+                        ]
+                    ];
+                }, $bmhp);
+
+                // Menghitung total harga obat dan alkes
+                $total_bmhp_awal = $this->DetailTransaksiModel
+                    ->selectSum('((harga_transaksi * qty_transaksi) - ((harga_transaksi * qty_transaksi) * diskon / 100))', 'total_harga')
+                    ->where('detail_transaksi.id_transaksi', $item['id_transaksi'])
+                    ->where('detail_transaksi.jenis_transaksi', 'Barang Medis Habis Pakai')
+                    ->get()->getRowArray();
+
+                // Memastikan nilai total_harga ada
+                $total_harga = isset($total_bmhp_awal['total_harga']) ? $total_bmhp_awal['total_harga'] : 0;
+
+                // Membulatkan hasil total_harga (misalnya 2 angka di belakang koma)
+                $total_bmhp = round($total_harga, 0);
+
                 $result[] = [
                     'id_transaksi' => $item['id_transaksi'],
                     'no_kwitansi' => $item['no_kwitansi'],
@@ -1855,7 +2363,8 @@ class Transaksi extends BaseController
                     'dokter' => $dokter,
                     'detail' => [
                         'layanan' => $result_layanan,
-                        'obatalkes' => $total_obatalkes
+                        'obatalkes' => $total_obatalkes,
+                        'bmhp' => $total_bmhp
                     ]
                 ];
             }
@@ -1952,6 +2461,45 @@ class Transaksi extends BaseController
                 // Membulatkan hasil total_harga (misalnya 2 angka di belakang koma)
                 $total_obatalkes = round($total_harga, 0);
 
+                $bmhp = $this->DetailTransaksiModel
+                    ->where('detail_transaksi.id_transaksi', $item['id_transaksi'])
+                    ->where('detail_transaksi.jenis_transaksi', 'Obat dan Alkes')
+                    ->join('bmhp', 'bmhp.id_bmhp = detail_transaksi.id_bmhp', 'inner')
+                    ->orderBy('id_detail_transaksi', 'ASC')
+                    ->findAll();
+
+                $result_bmhp = array_map(function ($row) {
+                    return [
+                        'id_detail_transaksi' => $row['id_detail_transaksi'],
+                        'id_bmhp' => $row['id_bmhp'],
+                        'id_transaksi' => $row['id_transaksi'],
+                        'qty_transaksi' => $row['qty_transaksi'],
+                        'harga_transaksi' => $row['harga_transaksi'],
+                        'diskon' => $row['diskon'],
+                        'bmhp' => [
+                            'id_bmhp' => $row['id_bmhp'],
+                            'apoteker' => $row['apoteker'],
+                            'tanggal_bmhp' => $row['tanggal_bmhp'],
+                            'jumlah_bmhp' => $row['jumlah_bmhp'],
+                            'total_biaya' => $row['total_biaya'],
+                            'status' => $row['status'],
+                        ]
+                    ];
+                }, $bmhp);
+
+                // Menghitung total harga obat dan alkes
+                $total_bmhp_awal = $this->DetailTransaksiModel
+                    ->selectSum('((harga_transaksi * qty_transaksi) - ((harga_transaksi * qty_transaksi) * diskon / 100))', 'total_harga')
+                    ->where('detail_transaksi.id_transaksi', $item['id_transaksi'])
+                    ->where('detail_transaksi.jenis_transaksi', 'Barang Medis Habis Pakai')
+                    ->get()->getRowArray();
+
+                // Memastikan nilai total_harga ada
+                $total_harga = isset($total_bmhp_awal['total_harga']) ? $total_bmhp_awal['total_harga'] : 0;
+
+                // Membulatkan hasil total_harga (misalnya 2 angka di belakang koma)
+                $total_bmhp = round($total_harga, 0);
+
                 $result[] = [
                     'id_transaksi' => $item['id_transaksi'],
                     'no_kwitansi' => $item['no_kwitansi'],
@@ -1964,7 +2512,8 @@ class Transaksi extends BaseController
                     'dokter' => $dokter,
                     'detail' => [
                         'layanan' => $result_layanan,
-                        'obatalkes' => $total_obatalkes
+                        'obatalkes' => $total_obatalkes,
+                        'bmhp' => $total_bmhp
                     ]
                 ];
             }
@@ -2026,7 +2575,7 @@ class Transaksi extends BaseController
                 $sheet->setCellValue('B5', 'Nomor Kwitansi');
                 $sheet->setCellValue('C5', 'Kasir');
                 $sheet->setCellValue('D5', 'Nomor RM');
-                $sheet->setCellValue('E5', 'Nama Pasien');
+                $sheet->setCellValue('E5', 'Nama');
                 $sheet->setCellValue('F5', 'Metode Pembayaran');
                 $sheet->setCellValue('G5', 'Dokter');
                 $sheet->setCellValue('H5', 'Tindakan');
@@ -2080,15 +2629,25 @@ class Transaksi extends BaseController
                         $sheet->setCellValue('I' . $column, $layanan['harga_transaksi']);
                         $column++;
                     }
+                    if ($list['dokter'] == 'Barang Medis Habis Pakai') {
+                        // Baris bmhp
+                        $sheet->setCellValue('H' . $column, 'BMHP');
 
-                    // Baris obat
-                    $sheet->setCellValue('H' . $column, 'Obat');
+                        // Terapkan format angka sebelum isi nilai
+                        $sheet->getStyle("I{$column}")->getNumberFormat()->setFormatCode(
+                            '_\Rp * #,##0_-;[Red]_\Rp * -#,##0_-;_-_\Rp * "-"_-;_-@_-'
+                        );
+                        $sheet->setCellValue('I' . $column, $list['detail']['bmhp']);
+                    } else {
+                        // Baris obat
+                        $sheet->setCellValue('H' . $column, 'Obat');
 
-                    // Terapkan format angka sebelum isi nilai
-                    $sheet->getStyle("I{$column}")->getNumberFormat()->setFormatCode(
-                        '_\Rp * #,##0_-;[Red]_\Rp * -#,##0_-;_-_\Rp * "-"_-;_-@_-'
-                    );
-                    $sheet->setCellValue('I' . $column, $list['detail']['obatalkes']);
+                        // Terapkan format angka sebelum isi nilai
+                        $sheet->getStyle("I{$column}")->getNumberFormat()->setFormatCode(
+                            '_\Rp * #,##0_-;[Red]_\Rp * -#,##0_-;_-_\Rp * "-"_-;_-@_-'
+                        );
+                        $sheet->setCellValue('I' . $column, $list['detail']['obatalkes']);
+                    }
 
                     // Tambahkan baris pemisah antar transaksi
                     $column++;
@@ -2488,7 +3047,7 @@ class Transaksi extends BaseController
                 $sheet->setCellValue('C6', 'Nomor Kwitansi');
                 $sheet->setCellValue('D6', 'Kasir');
                 $sheet->setCellValue('E6', 'Nomor RM');
-                $sheet->setCellValue('F6', 'Nama Pasien');
+                $sheet->setCellValue('F6', 'Nama');
                 $sheet->setCellValue('G6', 'Metode Pembayaran');
                 $sheet->setCellValue('H6', 'Dokter');
                 $sheet->setCellValue('I6', 'Tindakan');

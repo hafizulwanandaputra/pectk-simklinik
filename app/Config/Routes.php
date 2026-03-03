@@ -468,7 +468,7 @@ $routes->get('/(?i)transaksi/(?i)detailtransaksiitem/(:any)', 'Transaksi::detail
 $routes->get('/(?i)transaksi/(?i)layananlist/(:any)/(:any)', 'Transaksi::layananlist/$1/$2');
 $routes->get('/(?i)transaksi/(?i)reseplist/(:any)/(:any)', 'Transaksi::reseplist/$1/$2');
 $routes->get('/(?i)transaksi/(?i)reseplistexternal/(:any)/(:any)', 'Transaksi::reseplistexternal/$1/$2');
-$routes->get('/(?i)transaksi/(?i)bmhplist/(:any)/(:any)', 'Transaksi::bmhplist/$1/$2');
+$routes->get('/(?i)transaksi/(?i)bmhplist2/(:any)/(:any)', 'Transaksi::bmhplist2/$1/$2');
 $routes->post('/(?i)transaksi/(?i)tambahlayanan/(:any)', 'Transaksi::tambahlayanan/$1');
 $routes->post('/(?i)transaksi/(?i)tambahobatalkes/(:any)', 'Transaksi::tambahobatalkes/$1');
 $routes->post('/(?i)transaksi/(?i)tambahbmhp/(:any)', 'Transaksi::tambahbmhp/$1');

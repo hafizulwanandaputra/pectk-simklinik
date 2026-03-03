@@ -109,6 +109,7 @@
                                             <option value="Rawat Jalan">Rawat Jalan</option>
                                             <option value="Rawat Inap">Rawat Inap</option>
                                             <option value="Resep Luar">Resep Luar</option>
+                                            <option value="Barang Medis Habis Pakai">Barang Medis Habis Pakai</option>
                                         </select>
                                         <select id="namesFilter" class="form-select form-select-sm w-auto  flex-fill">
                                             <option value="">Semua Nama</option>
@@ -179,6 +180,26 @@
                                             </div>
                                         </form>
                                     </div>
+                                </div>
+                                <div>
+                                    <div class="fw-bold mb-2 border-bottom">Tambah Barang Medis Habis Pakai</div>
+                                    <form id="transaksiForm3" enctype="multipart/form-data" class="d-flex flex-column gap-2">
+                                        <div class="flex-fill">
+                                            <select class="form-select form-select-sm" id="id_bmhp" name="id_bmhp" aria-label="id_bmhp">
+                                                <option value="" disabled selected>-- Pilih Barang Medis Habis Pakai --</option>
+                                            </select>
+                                            <div class="invalid-feedback"></div>
+                                        </div>
+                                        <div class="flex-fill">
+                                            <input type="text" class="form-control form-control-sm" placeholder="Nama Pemesan" autocomplete="off" id="nama_pasien" name="nama_pasien" aria-label="nama_pasien" />
+                                            <div class="invalid-feedback"></div>
+                                        </div>
+                                        <div class="d-grid gap-2 d-lg-flex justify-content-lg-end">
+                                            <button type="submit" id="submitButton3" class="btn btn-primary bg-gradient btn-sm" disabled>
+                                                <i class="fa-solid fa-plus"></i> Tambah
+                                            </button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </li>
@@ -394,6 +415,26 @@
                 showFailedToast('Gagal mendapatkan pasien.<br>' + error);
             }
         }
+        async function fetchBMHP() {
+            try {
+                const response = await axios.get('<?= base_url('transaksi/bmhplist') ?>');
+
+                if (response.data.success) {
+                    const options = response.data.data;
+                    const select = $('#id_bmhp');
+
+                    // Clear existing options except the first one
+                    select.find('option:not(:first)').remove();
+
+                    // Loop through the options and append them to the select element
+                    options.forEach(option => {
+                        select.append(`<option value="${option.value}">${option.text}</option>`);
+                    });
+                }
+            } catch (error) {
+                showFailedToast('Gagal mendapatkan BMHP.<br>' + error);
+            }
+        }
     <?php endif; ?>
 
     async function fetchJaminanOptions(selectedJaminan = null) {
@@ -537,6 +578,12 @@
                     }
                     const jenisResep = transaksi.id_resep ? `<span class="badge bg-secondary bg-gradient text-nowrap"><i class="fa-solid fa-prescription-bottle-medical"></i> RESEP LUAR</span>` : nomor_registrasi;
                     const jaminan = transaksi.jaminan ? `<span class="badge bg-secondary bg-gradient text-nowrap">${transaksi.jaminan}</span>` : ``;
+                    let dokter = transaksi.dokter;
+                    if (dokter === 'Barang Medis Habis Pakai') {
+                        dokter = `<span class="badge bg-secondary bg-gradient text-nowrap">${transaksi.dokter}</span>`;
+                    } else {
+                        dokter = `${jenis_kelamin} ${jenisResep} ${jaminan}`;
+                    }
                     const statusButtons = transaksi.lunas == '1' ? `disabled` : ``;
                     const transaksiElement = `
                     <li class="list-group-item <?= (session()->get('role') != 'Admisi') ? 'border-top-0' : ''; ?> pb-3 pt-3">
@@ -547,7 +594,7 @@
                                     <span class="ms-1 align-self-center w-100">${nama_pasien}</span>
                                 </h5>
                                 <h6 class="card-subtitle mb-2">
-                                    <input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 fw-medium ${kasir}" value="${transaksi.kasir}">${jenis_kelamin} ${jenisResep} ${jaminan}
+                                    <input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 fw-medium ${kasir}" value="${transaksi.kasir}">${dokter}
                                 </h6>
                                 <div class="card-text">
                                     <div style="font-size: 0.75em;">
@@ -698,6 +745,7 @@
             <?php if (session()->get('role') != 'Admisi') : ?>
                 fetchPasienOptions1()
                 fetchPasienOptions2()
+                fetchBMHP()
             <?php endif; ?>
             fetchTransaksi();
         }
@@ -711,6 +759,7 @@
         <?php if (session()->get('role') != 'Admisi') : ?>
             fetchPasienOptions1()
             fetchPasienOptions2()
+            fetchBMHP()
         <?php endif; ?>
         fetchTransaksi();
     });
@@ -724,6 +773,7 @@
         <?php if (session()->get('role') != 'Admisi') : ?>
             fetchPasienOptions1()
             fetchPasienOptions2()
+            fetchBMHP()
         <?php endif; ?>
         fetchTransaksi();
     });
@@ -738,6 +788,7 @@
         <?php if (session()->get('role') != 'Admisi') : ?>
             fetchPasienOptions1()
             fetchPasienOptions2()
+            fetchBMHP()
         <?php endif; ?>
         fetchTransaksi();
     });
@@ -767,6 +818,18 @@
         $('#id_resep').on('change.select2', function() {
             toggleSubmitButton2();
         });
+
+        function toggleSubmitButton3() {
+            var selectedValue = $('#id_bmhp').val();
+            if (selectedValue === null || selectedValue === "") {
+                $('#submitButton3').prop('disabled', true);
+            } else {
+                $('#submitButton3').prop('disabled', false);
+            }
+        }
+        $('#id_bmhp').on('change.select2', function() {
+            toggleSubmitButton3();
+        });
     <?php endif; ?>
 
     $(document).ready(async function() {
@@ -791,6 +854,7 @@
                 <?php if (session()->get('role') != 'Admisi') : ?>
                     fetchPasienOptions1()
                     fetchPasienOptions2()
+                    fetchBMHP()
                 <?php endif; ?>
                 fetchTransaksi();
             }
@@ -844,6 +908,12 @@
                 width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
                 placeholder: $(this).data('placeholder'),
             });
+            $('#id_bmhp').select2({
+                dropdownParent: $('#transaksiForm3'),
+                theme: "bootstrap-5",
+                width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' : 'style',
+                placeholder: $(this).data('placeholder'),
+            });
         <?php endif; ?>
         $('#searchInput').on('input', function() {
             currentPage = 1;
@@ -887,6 +957,7 @@
                     ]);
                     fetchPasienOptions1();
                     fetchPasienOptions2();
+                    fetchBMHP()
                     fetchTransaksi();
                 } catch (error) {
                     if (error.response.request.status === 401) {
@@ -1075,6 +1146,92 @@
                     $('#transaksiForm2 select').prop('disabled', false);
                 }
             });
+            $('#transaksiForm3').submit(async function(e) {
+                e.preventDefault();
+
+                const formData = new FormData(this);
+                console.log("Form Data:", $(this).serialize());
+
+                // Clear previous validation states
+                $('#transaksiForm3 .is-invalid').removeClass('is-invalid');
+                $('#transaksiForm3 .invalid-feedback').text('').hide();
+                $('#submitButton3').prop('disabled', true).html(`
+                <?= $this->include('spinner/spinner'); ?> Tambah
+            `);
+
+                // Disable form inputs
+                $('#transaksiForm3 select').prop('disabled', true);
+
+                try {
+                    const response = await axios.post(`<?= base_url('transaksi/createbmhp') ?>`, formData, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    });
+
+                    if (response.data.success) {
+                        $('#transaksiForm3')[0].reset();
+                        $('#id_bmhp').val(null).trigger('change');
+                        $('#nama_pasien').val('');
+                        $('#transaksiForm3 .is-invalid').removeClass('is-invalid');
+                        $('#transaksiForm3 .invalid-feedback').text('').hide();
+                        $('#submitButton3').prop('disabled', true);
+                        // Simpan nilai pilihan kasir saat ini
+                        const selectedJaminan = $('#jaminanFilter').val();
+                        const selectedKasir = $('#kasirFilter').val();
+                        // Panggil fungsi untuk memperbarui opsi kasir
+                        await Promise.all([
+                            fetchKasirOptions(selectedKasir),
+                            fetchJaminanOptions(selectedJaminan)
+                        ]);
+                        fetchBMHP();
+                        fetchTransaksi();
+                    } else {
+                        console.log("Validation Errors:", response.data.errors);
+
+                        // Clear previous validation states
+                        $('#transaksiForm3 .is-invalid').removeClass('is-invalid');
+                        $('#transaksiForm3 .invalid-feedback').text('').hide();
+
+                        // Display new validation errors
+                        for (const field in response.data.errors) {
+                            if (response.data.errors.hasOwnProperty(field)) {
+                                const fieldElement = $('#' + field);
+                                const feedbackElement = fieldElement.siblings('.invalid-feedback');
+
+                                console.log("Target Field:", fieldElement);
+                                console.log("Target Feedback:", feedbackElement);
+
+                                if (fieldElement.length > 0 && feedbackElement.length > 0) {
+                                    fieldElement.addClass('is-invalid');
+                                    feedbackElement.text(response.data.errors[field]).show();
+
+                                    // Remove error message when the user corrects the input
+                                    fieldElement.on('input change', function() {
+                                        $(this).removeClass('is-invalid');
+                                        $(this).siblings('.invalid-feedback').text('').hide();
+                                    });
+                                } else {
+                                    console.warn("Elemen tidak ditemukan pada field:", field);
+                                }
+                            }
+                        }
+                        console.error('Perbaiki kesalahan pada formulir.');
+                    }
+                } catch (error) {
+                    if (error.response.request.status === 404) {
+                        showFailedToast(error.response.data.message);
+                    } else {
+                        showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                    }
+                    $('#submitButton3').prop('disabled', false);
+                } finally {
+                    $('#submitButton3').html(`
+                    <i class="fa-solid fa-plus"></i> Tambah
+                `);
+                    $('#transaksiForm3 select').prop('disabled', false);
+                }
+            });
         <?php endif; ?>
         $(document).on('visibilitychange', async function() {
             if (document.visibilityState === "visible") {
@@ -1089,6 +1246,7 @@
                 <?php if (session()->get('role') != 'Admisi') : ?>
                     fetchPasienOptions1()
                     fetchPasienOptions2()
+                    fetchBMHP()
                 <?php endif; ?>
                 fetchTransaksi(); // Refresh articles on button click
             }
@@ -1106,6 +1264,7 @@
             <?php if (session()->get('role') != 'Admisi') : ?>
                 fetchPasienOptions1()
                 fetchPasienOptions2()
+                fetchBMHP()
             <?php endif; ?>
             fetchTransaksi(); // Refresh articles on button click
         });
@@ -1118,6 +1277,7 @@
         <?php if (session()->get('role') != 'Admisi') : ?>
             fetchPasienOptions1()
             fetchPasienOptions2()
+            fetchBMHP()
             toggleSubmitButton1();
             toggleSubmitButton2();
         <?php endif; ?>

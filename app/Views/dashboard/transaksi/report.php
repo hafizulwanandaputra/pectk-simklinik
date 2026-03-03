@@ -35,8 +35,8 @@
                                     <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 0%;">No</th>
                                     <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 0%;">Nomor Kuitansi</th>
                                     <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 12.5%;">Kasir</th>
-                                    <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 0%;">Nomor Rekam Medis</th>
-                                    <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 12.5%;">Nama Pasien</th>
+                                    <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 0%;">Nomor RM</th>
+                                    <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 12.5%;">Nama</th>
                                     <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 0%;">Metode Pembayaran</th>
                                     <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 12.5%;">Dokter</th>
                                     <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 12.5%;">Tindakan</th>
@@ -305,6 +305,7 @@
                 const rowspan = (transaksi.detail.layanan.length) + 4;
                 const layanan = transaksi.detail.layanan
                 const obatalkes = transaksi.detail.obatalkes
+                const bmhp = transaksi.detail.bmhp
                 const bank = transaksi.bank ? transaksi.bank : `-`;
                 const no_rm = transaksi.no_rm === null ? `-` : transaksi.no_rm;
                 // Menjadikan angka-angka yang diperoleh sebagai integer
@@ -338,14 +339,26 @@
                     $('#datatransaksi').append(layananRow);
                 });
 
-                // Menambahkan baris untuk setiap obat/alkes
-                const obatRow = `
+                if (transaksi.dokter === 'Barang Medis Habis Pakai') {
+                    // Menambahkan baris untuk setiap obat/alkes
+                    const bmhpRow = `
+                        <tr>
+                            <td>BMHP</td>
+                            <td class="text-end date">Rp${bmhp.toLocaleString('id-ID')}</td>
+                        </tr>
+                    `;
+                    $('#datatransaksi').append(bmhpRow);
+                } else {
+                    // Menambahkan baris untuk setiap obat/alkes
+                    const obatRow = `
                         <tr>
                             <td>Obat</td>
                             <td class="text-end date">Rp${obatalkes.toLocaleString('id-ID')}</td>
                         </tr>
                     `;
-                $('#datatransaksi').append(obatRow);
+                    $('#datatransaksi').append(obatRow);
+                }
+
                 // Menambahkan baris terakhir untuk total pembayaran
                 const totalPembayaranRow = `
                     <tr>

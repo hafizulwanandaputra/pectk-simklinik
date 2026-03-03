@@ -45,8 +45,8 @@
                                     <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 0%;">Tanggal dan Waktu</th>
                                     <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 0%;">Nomor Kuitansi</th>
                                     <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 12.5%;">Kasir</th>
-                                    <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 0%;">Nomor Rekam Medis</th>
-                                    <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 12.5%;">Nama Pasien</th>
+                                    <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 0%;">Nomor RM</th>
+                                    <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 12.5%;">Nama</th>
                                     <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 0%;">Metode Pembayaran</th>
                                     <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 12.5%;">Dokter</th>
                                     <th scope="col" style="background-color: var(--bs-card-cap-bg); border-bottom-width: 2px; width: 12.5%;">Tindakan</th>

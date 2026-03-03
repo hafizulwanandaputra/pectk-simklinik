@@ -297,6 +297,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             </div>
                             <div class="w-100 ms-3">
                                 <p><strong id="total_exp_med"></strong> obat berikut akan segera kedaluwarsa. Pastikan Anda memilih obat yang masa kedaluwarsanya masih panjang.</p>
+                                <small class="text-muted" id="expired_none_msg"><em>Tidak ada obat yang mendekati masa kedaluwarsa dalam 6 bulan ke depan.</em></small>
                                 <ol id="expired_med_list">
                                 </ol>
                             </div>
@@ -765,6 +766,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 $('#total_exp_med').text(data.jumlah);
 
                 if (data.jumlah > 0) {
+                    $('#expired_none_msg').hide();
                     data.data.forEach(item => {
                         const isiObat = safeText(item.isi_obat);
                         const kategori = safeText(item.kategori_obat);
@@ -795,7 +797,8 @@ $usia = $registrasi->diff($tanggal_lahir);
                         `);
                     });
                 } else {
-                    $('#expired_med_list').append('<li class="text-muted"><em>Tidak ada obat yang mendekati masa kedaluwarsa dalam 6 bulan ke depan.</em></li>');
+                    $('#expired_med_list').hide();
+                    $('#expired_none_msg').show();
                 }
 
                 $('#expiredModal').modal('show');

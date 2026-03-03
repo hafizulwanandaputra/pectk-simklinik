@@ -183,6 +183,7 @@ class BMHP extends BaseController
             $bmhp = $db->table('bmhp');
             $bmhp->where('id_bmhp', $id);
             $bmhp->where('konfirmasi_kasir', 0);
+            $bmhp->where('status', 0);
             $bmhp->update([
                 'konfirmasi_kasir' => 1, // Atur sebagai diarsipkan
             ]);
@@ -206,6 +207,7 @@ class BMHP extends BaseController
             $bmhp = $db->table('bmhp');
             $bmhp->where('id_bmhp', $id);
             $bmhp->where('konfirmasi_kasir', 1);
+            $bmhp->where('status', 0);
             $bmhp->update([
                 'konfirmasi_kasir' => 0, // Atur sebagai diarsipkan
             ]);

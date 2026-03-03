@@ -101,7 +101,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <span class="placeholder w-100" style="max-width: 100px;"></span>
+                                        <span class="placeholder w-100" style="max-width: 100px;"></span> <span class="placeholder w-100" style="max-width: 100px;"></span>
                                     </div>
                                 </div>
                             </div>
@@ -206,7 +206,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <span class="placeholder w-100" style="max-width: 100px;"></span>
+                            <span class="placeholder w-100" style="max-width: 100px;"></span> <span class="placeholder w-100" style="max-width: 100px;"></span>
                         </div>
                     </div>
                 </div>
@@ -295,8 +295,11 @@
                 data.bmhp.forEach(function(bmhp) {
                     const jumlah_bmhp = parseInt(bmhp.jumlah_bmhp);
                     const total_biaya = parseInt(bmhp.total_biaya);
-                    const statusBadge = bmhp.konfirmasi_kasir == '1' ?
-                        `<span class="badge bg-success bg-gradient">Dikonfirmasi</span>` :
+                    const statusBadge1 = bmhp.status == '1' ?
+                        `<span class="badge bg-success bg-gradient">Transaksi Diproses</span>` :
+                        `<span class="badge bg-danger bg-gradient">Transaksi Belum Diproses</span>`;
+                    const statusBadge2 = bmhp.konfirmasi_kasir == '1' ?
+                        `<span class="badge bg-success bg-gradient">Dikonfirmasi</span> ${statusBadge1}` :
                         `<span class="badge bg-secondary bg-gradient">Tidak Dikonfirmasi</span>`;
                     const statusButtons = bmhp.konfirmasi_kasir == '1' ? `disabled` : ``;
                     const bmhpElement = `
@@ -341,7 +344,7 @@
                                     </div>
                                 </div>
                             </div>
-                            ${statusBadge}
+                            ${statusBadge2}
                         </div>
                     </div>
                 </div>

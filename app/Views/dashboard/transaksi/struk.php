@@ -78,6 +78,19 @@ $tanggal = Time::parse($transaksi['tgl_transaksi']);
                         <td style="width: 35%; vertical-align: top; padding: 0;">
                             <div><?= $transaksi['no_kwitansi'] ?></div>
                         </td>
+                    <?php elseif ($transaksi['dokter'] == 'Barang Medis Habis Pakai') : ?>
+                        <td style="width: 15%; vertical-align: top; padding: 0;">
+                            <div>Nama Pemesan:</div>
+                        </td>
+                        <td style="width: 35%; vertical-align: top; padding: 0;">
+                            <div><?= ($transaksi['nama_pasien'] == NULL) ? '<em>Anonim</em>' : $transaksi['nama_pasien']; ?></div>
+                        </td>
+                        <td style="width: 15%; vertical-align: top; padding: 0;">
+                            <div>Nomor Kuitansi:</div>
+                        </td>
+                        <td style="width: 35%; vertical-align: top; padding: 0;">
+                            <div><?= $transaksi['no_kwitansi'] ?></div>
+                        </td>
                     <?php else : ?>
                         <td style="width: 15%; vertical-align: top; padding: 0;">
                             <div>Nomor RM:</div>
@@ -107,6 +120,19 @@ $tanggal = Time::parse($transaksi['tgl_transaksi']);
                         <td style="width: 35%; vertical-align: top; padding: 0;">
                             <div><?= $tanggal ?></div>
                         </td>
+                    <?php elseif ($transaksi['dokter'] == 'Barang Medis Habis Pakai') : ?>
+                        <td style="width: 15%; vertical-align: top; padding: 0;">
+                            <div>Jenis Transaksi:</div>
+                        </td>
+                        <td style="width: 35%; vertical-align: top; padding: 0;">
+                            <div><?= $transaksi['dokter'] ?></div>
+                        </td>
+                        <td style="width: 15%; vertical-align: top; padding: 0;">
+                            <div>Tanggal dan Waktu:</div>
+                        </td>
+                        <td style="width: 35%; vertical-align: top; padding: 0;">
+                            <div><?= $tanggal ?></div>
+                        </td>
                     <?php else : ?>
                         <td style="width: 15%; vertical-align: top; padding: 0;">
                             <div>Nama Pasien:</div>
@@ -123,7 +149,7 @@ $tanggal = Time::parse($transaksi['tgl_transaksi']);
                     <?php endif; ?>
                 </tr>
                 <tr>
-                    <?php if ($transaksi['dokter'] != 'Resep Luar') : ?>
+                    <?php if ($transaksi['dokter'] != 'Resep Luar' && $transaksi['dokter'] != 'Barang Medis Habis Pakai') : ?>
                         <td style="width: 15%; vertical-align: top; padding: 0;">
                             <div>Nomor HP:</div>
                         </td>
@@ -138,7 +164,7 @@ $tanggal = Time::parse($transaksi['tgl_transaksi']);
                         </td>
                     <?php endif; ?>
                 </tr>
-                <?php if ($transaksi['dokter'] != 'Resep Luar') : ?>
+                <?php if ($transaksi['dokter'] != 'Resep Luar' && $transaksi['dokter'] != 'Barang Medis Habis Pakai') : ?>
                     <tr>
                         <td style="width: 15%; vertical-align: top; padding: 0;">
                             <div>Alamat:</div>
@@ -158,7 +184,7 @@ $tanggal = Time::parse($transaksi['tgl_transaksi']);
         </table>
         <table class="table listtable" style="width: 100%; margin-bottom: 4px; font-size: 8pt">
             <tbody>
-                <?php if ($transaksi['dokter'] != 'Resep Luar') : ?>
+                <?php if ($transaksi['dokter'] != 'Resep Luar' && $transaksi['dokter'] != 'Barang Medis Habis Pakai') : ?>
                     <tr class="outline-border">
                         <th colspan="8" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: left;">Layanan</th>
                     </tr>
@@ -176,7 +202,7 @@ $tanggal = Time::parse($transaksi['tgl_transaksi']);
                             Biaya
                         </th>
                         <th class="outline-border" style="width: 0%; vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: center; white-space: nowrap;">
-                            Disc %
+                            Diskon
                         </th>
                         <th colspan="2" class="outline-border" style="width: 0%; vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: center; white-space: nowrap;">
                             Subtotal
@@ -202,7 +228,7 @@ $tanggal = Time::parse($transaksi['tgl_transaksi']);
                                 <?= number_format($list['harga_transaksi'], 0, ',', '.') ?>
                             </td>
                             <td class="outline-border" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
-                                <?= $list['diskon'] ?>
+                                <?= $list['diskon'] ?>%
                             </td>
                             <td class="outline-border-right" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: left; white-space: nowrap;">
                                 Rp
@@ -226,7 +252,7 @@ $tanggal = Time::parse($transaksi['tgl_transaksi']);
                     </tr>
                 <?php endif; ?>
                 <tr class="outline-border">
-                    <th colspan="8" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: left;">Obat dan Alkes</th>
+                    <th colspan="8" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: left;"><?= ($transaksi['dokter'] == 'Barang Medis Habis Pakai') ? 'Barang Medis Habis Pakai' : 'Obat dan Alkes'; ?></th>
                 </tr>
                 <tr class="outline-border">
                     <th class="outline-border" style="width: 0%; vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: left;">
@@ -242,56 +268,103 @@ $tanggal = Time::parse($transaksi['tgl_transaksi']);
                         Biaya
                     </th>
                     <th class="outline-border" style="width: 0%; vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: center; white-space: nowrap;">
-                        Disc %
+                        Diskon
                     </th>
                     <th colspan="2" class="outline-border" style="width: 0%; vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: center; white-space: nowrap;">
                         Subtotal
                     </th>
                 </tr>
-                <?php
-                $no_obat_alkes = 1; // Inisialisasi variabel untuk penomoran
-                foreach ($obatalkes as $list) : ?>
-                    <?php foreach ($list['resep']['detail_resep'] as $resep) : ?>
-                        <tr class="outline-border">
-                            <td class="outline-border" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: center;">
-                                <?= $no_obat_alkes++ ?>
-                            </td>
-                            <td class="outline-border" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px;">
-                                <?= $resep['nama_obat'] ?>
-                            </td>
-                            <td class="outline-border" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
-                                <?= $resep['jumlah'] ?>
-                            </td>
-                            <td class="outline-border-rigth" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: left; white-space: nowrap;">
-                                Rp
-                            </td>
-                            <td class="outline-border-left" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
-                                <?= number_format($resep['harga_satuan'], 0, ',', '.') ?>
-                            </td>
-                            <td class="outline-border" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
-                                <?= $list['diskon'] ?>
-                            </td>
-                            <td class="outline-border-right" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: left; white-space: nowrap;">
-                                Rp
-                            </td>
-                            <td class="outline-border-left" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
-                                <?= number_format(($resep['harga_satuan'] * $resep['jumlah']) * (1 - ($list['diskon'] / 100)), 0, ',', '.') ?>
-                            </td>
-                        </tr>
+                <?php if ($transaksi['dokter'] == 'Barang Medis Habis Pakai') : ?>
+                    <?php
+                    $no_bmhp = 1; // Inisialisasi variabel untuk penomoran
+                    foreach ($bmhp as $list) : ?>
+                        <?php foreach ($list['bmhp']['detail_bmhp'] as $bmhp_list) : ?>
+                            <tr class="outline-border">
+                                <td class="outline-border" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: center;">
+                                    <?= $no_bmhp++ ?>
+                                </td>
+                                <td class="outline-border" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px;">
+                                    <?= $bmhp_list['nama_obat'] ?>
+                                </td>
+                                <td class="outline-border" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
+                                    <?= $bmhp_list['jumlah'] ?>
+                                </td>
+                                <td class="outline-border-rigth" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: left; white-space: nowrap;">
+                                    Rp
+                                </td>
+                                <td class="outline-border-left" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
+                                    <?= number_format($bmhp_list['harga_satuan'], 0, ',', '.') ?>
+                                </td>
+                                <td class="outline-border" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
+                                    <?= $list['diskon'] ?>%
+                                </td>
+                                <td class="outline-border-right" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: left; white-space: nowrap;">
+                                    Rp
+                                </td>
+                                <td class="outline-border-left" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
+                                    <?= number_format(($bmhp_list['harga_satuan'] * $bmhp_list['jumlah']) * (1 - ($list['diskon'] / 100)), 0, ',', '.') ?>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
                     <?php endforeach; ?>
-                <?php endforeach; ?>
-                <tr>
-                    <th colspan="3" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;"></th>
-                    <th colspan="3" class="outline-border" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
-                        Subtotal
-                    </th>
-                    <th class="outline-border-right" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: left; white-space: nowrap;">
-                        Rp
-                    </th>
-                    <th class="outline-border-left" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
-                        <?= number_format($total_obatalkes, 0, ',', '.') ?>
-                    </th>
-                </tr>
+                    <tr>
+                        <th colspan="3" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;"></th>
+                        <th colspan="3" class="outline-border" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
+                            Subtotal
+                        </th>
+                        <th class="outline-border-right" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: left; white-space: nowrap;">
+                            Rp
+                        </th>
+                        <th class="outline-border-left" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
+                            <?= number_format($total_bmhp, 0, ',', '.') ?>
+                        </th>
+                    </tr>
+                <?php else : ?>
+                    <?php
+                    $no_obat_alkes = 1; // Inisialisasi variabel untuk penomoran
+                    foreach ($obatalkes as $list) : ?>
+                        <?php foreach ($list['resep']['detail_resep'] as $resep) : ?>
+                            <tr class="outline-border">
+                                <td class="outline-border" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: center;">
+                                    <?= $no_obat_alkes++ ?>
+                                </td>
+                                <td class="outline-border" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px;">
+                                    <?= $resep['nama_obat'] ?>
+                                </td>
+                                <td class="outline-border" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
+                                    <?= $resep['jumlah'] ?>
+                                </td>
+                                <td class="outline-border-rigth" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: left; white-space: nowrap;">
+                                    Rp
+                                </td>
+                                <td class="outline-border-left" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
+                                    <?= number_format($resep['harga_satuan'], 0, ',', '.') ?>
+                                </td>
+                                <td class="outline-border" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
+                                    <?= $list['diskon'] ?>%
+                                </td>
+                                <td class="outline-border-right" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: left; white-space: nowrap;">
+                                    Rp
+                                </td>
+                                <td class="outline-border-left" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
+                                    <?= number_format(($resep['harga_satuan'] * $resep['jumlah']) * (1 - ($list['diskon'] / 100)), 0, ',', '.') ?>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php endforeach; ?>
+                    <tr>
+                        <th colspan="3" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;"></th>
+                        <th colspan="3" class="outline-border" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
+                            Subtotal
+                        </th>
+                        <th class="outline-border-right" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: left; white-space: nowrap;">
+                            Rp
+                        </th>
+                        <th class="outline-border-left" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
+                            <?= number_format($total_obatalkes, 0, ',', '.') ?>
+                        </th>
+                    </tr>
+                <?php endif; ?>
                 <tr>
                     <th colspan="3" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;"></th>
                     <th colspan="3" class="outline-border" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">

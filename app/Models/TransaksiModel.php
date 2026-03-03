@@ -11,6 +11,7 @@ class TransaksiModel extends Model
     protected $useTimestamps = false;
     protected $allowedFields = [
         'id_resep',
+        'id_bmhp',
         'nomor_registrasi',
         'no_rm',
         'nama_pasien',
@@ -42,6 +43,14 @@ class TransaksiModel extends Model
     {
         return $this
             ->where('no_kwitansi LIKE', 'TRL' . $tanggal . $bulan . $tahun . '%')
+            ->orderBy('no_kwitansi', 'DESC')
+            ->limit(1)
+            ->findColumn('no_kwitansi')[0] ?? null;
+    }
+    public function getLastNoReg3($tahun, $bulan, $tanggal)
+    {
+        return $this
+            ->where('no_kwitansi LIKE', 'TBHP' . $tanggal . $bulan . $tahun . '%')
             ->orderBy('no_kwitansi', 'DESC')
             ->limit(1)
             ->findColumn('no_kwitansi')[0] ?? null;
