@@ -409,10 +409,12 @@
                 console.log("Received update from WebSocket");
                 const selectedObat = $('#id_batch_obat').val();
                 await fetchObatOptions(selectedObat);
+                await fetchStatusBMHP();
                 fetchDetailBMHP();
             } else if (data.update) {
                 console.log("Received update from WebSocket");
-                fetchStatusBMHP();
+                await fetchStatusBMHP();
+                fetchDetailBMHP();
             }
         };
 

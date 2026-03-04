@@ -716,10 +716,12 @@ $usia = $registrasi->diff($tanggal_lahir);
                 console.log("Received update from WebSocket");
                 const selectedObat = $('#id_batch_obat').val();
                 await fetchObatOptions(selectedObat);
+                await fetchStatusResep();
                 fetchDetailResep();
             } else if (data.update) {
                 console.log("Received update from WebSocket");
-                fetchStatusResep();
+                await fetchStatusResep();
+                fetchDetailResep();
             }
         };
 
