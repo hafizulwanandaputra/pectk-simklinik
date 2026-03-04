@@ -457,16 +457,16 @@ $usia = $registrasi->diff($tanggal_lahir);
         $('#loadingSpinner').show();
 
         try {
-            const response = await axios.get('<?= base_url('resep/resep/') . $resep['id_resep'] ?>');
+            const response1 = await axios.get('<?= base_url('resep/detailreseplist/') . $resep['id_resep'] ?>');
+            const response2 = await axios.get('<?= base_url('resep/resep/') . $resep['id_resep'] ?>');
 
-            const data = response.data;
+            const data1 = response1.data;
+            const data2 = response2.data;
 
             // Cek status `status`
-            if (data.status === "1" || data.confirmed === "1") {
+            if (data2.confirmed === "1") {
                 $('#tambahDetailContainer').hide();
                 $('#resepOldContainer').hide();
-                $('.edit-btn').prop('disabled', true);
-                $('.delete-btn').prop('disabled', true);
                 $('#cancelConfirmBtn').prop('disabled', false);
                 $('#confirmBtn').prop('disabled', true);
                 $('#detail_resep_old').empty().append(
@@ -474,13 +474,18 @@ $usia = $registrasi->diff($tanggal_lahir);
                         <td colspan="4" class="text-center">Resep lama tidak dapat ditampilkan karena resep ini sudah dikonfirmasi</td>
                     </tr>`
                 );
-            } else if (data.status === "0" || data.confirmed === "0") {
+                if (data2.status === "1") {
+                    $('#cancelConfirmBtn').prop('disabled', true);
+                    $('#confirmBtn').prop('disabled', true);
+                }
+            } else if (data2.confirmed === "0") {
                 $('#tambahDetailContainer').show();
                 $('#resepOldContainer').show();
-                $('.edit-btn').prop('disabled', false);
-                $('.delete-btn').prop('disabled', false);
                 $('#cancelConfirmBtn').prop('disabled', true);
                 $('#confirmBtn').prop('disabled', false);
+                if (data1.length === 0) {
+                    $('#confirmBtn').prop('disabled', true);
+                }
             }
         } catch (error) {
             showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
@@ -514,8 +519,6 @@ $usia = $registrasi->diff($tanggal_lahir);
                     </tr>
                 `;
                 $('#detail_resep').append(emptyRow);
-                $('#cancelConfirmBtn').prop('disabled', true);
-                $('#confirmBtn').prop('disabled', true);
             } else {
                 data.forEach(function(detail_resep) {
                     const jumlah = parseInt(detail_resep.jumlah); // Konversi jumlah ke integer
@@ -566,22 +569,10 @@ $usia = $registrasi->diff($tanggal_lahir);
                     if (detail_resep.status === "1") {
                         $('.edit-btn').prop('disabled', true);
                         $('.delete-btn').prop('disabled', true);
-                        $('#cancelConfirmBtn').prop('disabled', true);
-                        $('#confirmBtn').prop('disabled', true);
                     } else if (detail_resep.status === "0") {
-                        if (detail_resep.confirmed === "1") {
-                            $('.edit-btn').prop('disabled', true);
-                            $('.delete-btn').prop('disabled', true);
-                            $('#cancelConfirmBtn').prop('disabled', false);
-                            $('#confirmBtn').prop('disabled', true);
-                        } else if (detail_resep.confirmed === "0") {
-                            $('.edit-btn').prop('disabled', false);
-                            $('.delete-btn').prop('disabled', false);
-                            $('#cancelConfirmBtn').prop('disabled', true);
-                            $('#confirmBtn').prop('disabled', false);
-                        }
+                        $('.edit-btn').prop('disabled', false);
+                        $('.delete-btn').prop('disabled', false);
                     }
-
                 });
             }
             const totalHargaElement = `Rp${totalHarga.toLocaleString('id-ID')}`;

@@ -327,12 +327,8 @@
             // Cek status `status`
             if (data.status === "1") {
                 $('#tambahDetailContainer').hide();
-                $('.edit-btn').prop('disabled', true);
-                $('.delete-btn').prop('disabled', true);
             } else if (data.status === "0") {
                 $('#tambahDetailContainer').show();
-                $('.edit-btn').prop('disabled', false);
-                $('.delete-btn').prop('disabled', false);
             }
         } catch (error) {
             showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);

@@ -271,23 +271,28 @@
         $('#loadingSpinner').show();
 
         try {
-            const response = await axios.get('<?= base_url('bmhp/bmhp/') . $bmhp['id_bmhp'] ?>');
+            const response1 = await axios.get('<?= base_url('bmhp/detailbmhplist/') . $bmhp['id_bmhp'] ?>');
+            const response2 = await axios.get('<?= base_url('bmhp/bmhp/') . $bmhp['id_bmhp'] ?>');
 
-            const data = response.data;
+            const data1 = response1.data;
+            const data2 = response2.data;
 
             // Cek status `konfirmasi_kasir`
-            if (data.konfirmasi_kasir === "1") {
+            if (data2.konfirmasi_kasir === "1") {
                 $('#tambahDetailContainer').hide();
-                $('.edit-btn').prop('disabled', true);
-                $('.delete-btn').prop('disabled', true);
                 $('#cancelConfirmBtn').prop('disabled', false);
                 $('#confirmBtn').prop('disabled', true);
-            } else if (data.konfirmasi_kasir === "0") {
+                if (data2.status === "1") {
+                    $('#cancelConfirmBtn').prop('disabled', true);
+                    $('#confirmBtn').prop('disabled', true);
+                }
+            } else if (data2.konfirmasi_kasir === "0") {
                 $('#tambahDetailContainer').show();
-                $('.edit-btn').prop('disabled', false);
-                $('.delete-btn').prop('disabled', false);
                 $('#cancelConfirmBtn').prop('disabled', true);
                 $('#confirmBtn').prop('disabled', false);
+                if (data1.length === 0) {
+                    $('#confirmBtn').prop('disabled', true);
+                }
             }
         } catch (error) {
             showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
@@ -319,8 +324,6 @@
                     </tr>
                 `;
                 $('#detail_bmhp').append(emptyRow);
-                $('#cancelConfirmBtn').prop('disabled', true);
-                $('#confirmBtn').prop('disabled', true);
             } else {
                 data.forEach(function(detail_bmhp) {
                     const jumlah = parseInt(detail_bmhp.jumlah); // Konversi jumlah ke integer
@@ -363,22 +366,10 @@
                     if (detail_bmhp.status === "1") {
                         $('.edit-btn').prop('disabled', true);
                         $('.delete-btn').prop('disabled', true);
-                        $('#cancelConfirmBtn').prop('disabled', true);
-                        $('#confirmBtn').prop('disabled', true);
                     } else if (detail_bmhp.status === "0") {
-                        if (detail_bmhp.konfirmasi_kasir === "1") {
-                            $('.edit-btn').prop('disabled', true);
-                            $('.delete-btn').prop('disabled', true);
-                            $('#cancelConfirmBtn').prop('disabled', false);
-                            $('#confirmBtn').prop('disabled', true);
-                        } else if (detail_bmhp.konfirmasi_kasir === "0") {
-                            $('.edit-btn').prop('disabled', false);
-                            $('.delete-btn').prop('disabled', false);
-                            $('#cancelConfirmBtn').prop('disabled', true);
-                            $('#confirmBtn').prop('disabled', false);
-                        }
+                        $('.edit-btn').prop('disabled', false);
+                        $('.delete-btn').prop('disabled', false);
                     }
-
                 });
             }
             const totalHargaElement = `Rp${totalHarga.toLocaleString('id-ID')}`;

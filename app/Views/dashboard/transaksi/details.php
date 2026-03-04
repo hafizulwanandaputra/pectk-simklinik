@@ -44,12 +44,12 @@
     </div>
     <a id="refreshButton" class="fs-6 mx-2 text-success-emphasis" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan"><i class="fa-solid fa-sync"></i></a>
     <?php if ($previous): ?>
-        <a class="fs-6 mx-2 text-success-emphasis" href="<?= site_url('transaksi/detailtransaksi/' . $previous['id_transaksi']) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="<?= $previous['no_kwitansi'] ?> • <?= ($previous['nama_pasien'] == NULL) ? '<em>Anonim</em>' : $previous['nama_pasien']; ?> • <?= $previous['tgl_transaksi'] ?>"><i class="fa-solid fa-circle-arrow-left"></i></a>
+        <a class="fs-6 mx-2 text-success-emphasis" href="<?= site_url('transaksi/detailtransaksi/' . $previous['id_transaksi']) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="<?= $previous['no_kwitansi'] ?> • <?= ($previous['nama_pasien'] == NULL) ? 'Anonim' : $previous['nama_pasien']; ?> • <?= $previous['tgl_transaksi'] ?>"><i class="fa-solid fa-circle-arrow-left"></i></a>
     <?php else: ?>
         <span class="fs-6 mx-2 text-success-emphasis" style="cursor: no-drop; opacity: .5;" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Tidak ada transaksi sebelumnya"><i class="fa-solid fa-circle-arrow-left"></i></span>
     <?php endif; ?>
     <?php if ($next): ?>
-        <a class="fs-6 mx-2 text-success-emphasis" href="<?= site_url('transaksi/detailtransaksi/' . $next['id_transaksi']) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="<?= $next['no_kwitansi'] ?> • <?= ($next['nama_pasien'] == NULL) ? '<em>Anonim</em>' : $next['nama_pasien']; ?> • <?= $next['tgl_transaksi'] ?>"><i class="fa-solid fa-circle-arrow-right"></i></a>
+        <a class="fs-6 mx-2 text-success-emphasis" href="<?= site_url('transaksi/detailtransaksi/' . $next['id_transaksi']) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="<?= $next['no_kwitansi'] ?> • <?= ($next['nama_pasien'] == NULL) ? 'Anonim' : $next['nama_pasien']; ?> • <?= $next['tgl_transaksi'] ?>"><i class="fa-solid fa-circle-arrow-right"></i></a>
     <?php else: ?>
         <span class="fs-6 mx-2 text-success-emphasis" style="cursor: no-drop; opacity: .5;" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Tidak ada transaksi berikutnya"><i class="fa-solid fa-circle-arrow-right"></i></span>
     <?php endif; ?>
