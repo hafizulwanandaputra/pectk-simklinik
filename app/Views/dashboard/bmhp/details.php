@@ -23,7 +23,7 @@
     <div class="flex-fill text-truncate">
         <div class="d-flex flex-column">
             <div class="fw-medium fs-6 lh-sm"><?= $headertitle; ?></div>
-            <div class="fw-medium lh-sm" style="font-size: 0.75em;"><?= $bmhp['id_bmhp'] ?> • <?= $bmhp['tanggal_bmhp']; ?> • <?= $bmhp['apoteker'] ?></div>
+            <div class="fw-medium lh-sm" style="font-size: 0.75em;"><?= $bmhp['tanggal_bmhp']; ?> • <?= $bmhp['apoteker'] ?></div>
         </div>
     </div>
     <div id="loadingSpinner" class="px-2">
@@ -47,7 +47,7 @@
 <main class="main-content-inside px-3 pt-3">
     <div class="no-fluid-content">
         <div class="mb-3">
-            <div class="fw-bold mb-2 border-bottom">Informasi BMHP</div>
+            <div class="fw-bold mb-2 border-bottom">Informasi Barang Medis Habis Pakai</div>
             <div style="font-size: 0.75em;">
                 <div class="mb-0 row g-1">
                     <div class="col-5 fw-medium text-truncate">Tanggal dan Waktu</div>
@@ -75,56 +75,13 @@
                         <div class="col-12 has-validation">
                             <div class="input-group flex-nowrap">
                                 <select class="form-select form-select-sm" id="id_batch_obat" name="id_batch_obat" aria-label="id_batch_obat" autocomplete="off">
-                                    <option value="" disabled selected>-- Pilih Obat --</option>
+                                    <option value="" disabled selected>-- Pilih Barang --</option>
                                 </select>
-                                <button id="expired_med_btn" class="btn btn-warning bg-gradient btn-sm" type="button" data-bs-toggle="tooltip" data-bs-title="Peringatan Obat Kedaluwarsa"><i class="fa-solid fa-triangle-exclamation"></i></button>
+                                <button id="expired_med_btn" class="btn btn-warning bg-gradient btn-sm" type="button" data-bs-toggle="tooltip" data-bs-title="Peringatan Barang Kedaluwarsa"><i class="fa-solid fa-triangle-exclamation"></i></button>
                             </div>
                             <div class="invalid-feedback"></div>
                         </div>
-                        <div class="col-6">
-                            <input type="text" id="signa" name="signa" class="form-control form-control-sm " placeholder="Dosis" list="list_signa" autocomplete="off">
-                            <div class="invalid-feedback"></div>
-                            <datalist id="list_signa">
-                                <option value="1×½">
-                                <option value="1×1">
-                                <option value="2×½">
-                                <option value="2×1">
-                                <option value="3×½">
-                                <option value="3×1">
-                                <option value="4×½">
-                                <option value="4×1">
-                                <option value="5×½">
-                                <option value="5×1">
-                                <option value="6×½">
-                                <option value="6×1">
-                            </datalist>
-                        </div>
-                        <div class="col-6">
-                            <input type="text" id="catatan" name="catatan" class="form-control form-control-sm" placeholder="Catatan" list="list_catatan" autocomplete="off">
-                            <div class="invalid-feedback"></div>
-                            <datalist id="list_catatan">
-                                <option value="Tetes">
-                                <option value="Tablet">
-                                <option value="Salep">
-                                <option value="Sendok Teh">
-                                <option value="Sendok Makan">
-                            </datalist>
-                        </div>
-                        <div class="col-6">
-                            <select class="form-select form-select-sm" id="cara_pakai" name="cara_pakai" aria-label="cara_pakai">
-                                <option value="" disabled selected>-- Pilih Cara Pakai --</option>
-                                <option value="Mata Kanan">Mata Kanan</option>
-                                <option value="Mata Kiri">Mata Kiri</option>
-                                <option value="Kedua Mata">Kedua Mata</option>
-                                <option value="Sebelum Makan">Sebelum Makan</option>
-                                <option value="Sesudah Makan">Sesudah Makan</option>
-                                <option value="Sesudah Makan Dihabiskan">Sesudah Makan Dihabiskan</option>
-                                <option value="Sesudah Makan Bila Sakit">Sesudah Makan Bila Sakit</option>
-                                <option value="Alat Kesehatan">Alat Kesehatan</option>
-                            </select>
-                            <div class="invalid-feedback"></div>
-                        </div>
-                        <div class="col-6">
+                        <div class="col">
                             <input type="number" id="jumlah" name="jumlah" class="form-control form-control-sm" placeholder="Kuantitas">
                             <div class="invalid-feedback"></div>
                         </div>
@@ -394,7 +351,6 @@
                             <ul class="ps-3 mb-0">
                                 <li>${kategori_obat}${detail_bmhp.bentuk_obat}</li>
                                 <li>${nama_batch}</li>
-                                <li>${signa}, ${detail_bmhp.cara_pakai}, ${catatan}</li>
                             </ul>
                         </small></td>
                         <td class="date text-end">${jumlah.toLocaleString('id-ID')}</td>
@@ -646,55 +602,12 @@
                     <td colspan="5">
                         <form id="editDetail" enctype="multipart/form-data">
                         <div class="d-flex justify-content-between align-items-center mb-1">
-                            <div class="fw-bold">Edit Resep</div>
+                            <div class="fw-bold">Edit Barang</div>
                             <button type="button" class="text-end btn-close ms-auto cancel-edit"></button>
                         </div>
                         <input type="hidden" id="id_detail_bmhp" name="id_detail_bmhp" value="${response.data.id_detail_bmhp}">
                         <div class="row g-2">
-                            <div class="col-6">
-                                <input type="text" id="signa_edit" name="signa_edit" class="form-control form-control-sm" placeholder="Dosis" value="${signa}" list="list_signa_edit" autocomplete="off">
-                                <div class="invalid-feedback"></div>
-                                <datalist id="list_signa_edit">
-                                    <option value="1×½">
-                                    <option value="1×1">
-                                    <option value="2×½">
-                                    <option value="2×1">
-                                    <option value="3×½">
-                                    <option value="3×1">
-                                    <option value="4×½">
-                                    <option value="4×1">
-                                    <option value="5×½">
-                                    <option value="5×1">
-                                    <option value="6×½">
-                                    <option value="6×1">
-                                </datalist>
-                            </div>
-                            <div class="col-6">
-                                <input type="text" id="catatan_edit" name="catatan_edit" class="form-control form-control-sm" placeholder="Catatan" value="${catatan}" list="list_catatan_edit" autocomplete="off">
-                                <div class="invalid-feedback"></div>
-                                <datalist id="list_catatan_edit">
-                                    <option value="1 Tetes">
-                                    <option value="1 Tablet">
-                                    <option value="1 Salep">
-                                    <option value="Sendok Teh">
-                                    <option value="Sendok Makan">
-                                </datalist>
-                            </div>
-                            <div class="col-6">
-                                <select class="form-select form-select-sm" id="cara_pakai_edit" name="cara_pakai_edit" aria-label="cara_pakai">
-                                    <option value="" disabled selected>-- Pilih Cara Pakai --</option>
-                                    <option value="Mata Kanan">Mata Kanan</option>
-                                    <option value="Mata Kiri">Mata Kiri</option>
-                                    <option value="Kedua Mata">Kedua Mata</option>
-                                    <option value="Sebelum Makan">Sebelum Makan</option>
-                                    <option value="Sesudah Makan">Sesudah Makan</option>
-                                    <option value="Sesudah Makan Dihabiskan">Sesudah Makan Dihabiskan</option>
-                                    <option value="Sesudah Makan Bila Sakit">Sesudah Makan Bila Sakit</option>
-                                    <option value="Alat Kesehatan">Alat Kesehatan</option>
-                                </select>
-                                <div class="invalid-feedback"></div>
-                            </div>
-                            <div class="col-6">
+                            <div class="col">
                                 <input type="text" id="jumlah_edit" name="jumlah_edit" class="form-control form-control-sm" placeholder="Kuantitas" value="${response.data.jumlah}" autocomplete="off">
                                 <div class="invalid-feedback"></div>
                             </div>

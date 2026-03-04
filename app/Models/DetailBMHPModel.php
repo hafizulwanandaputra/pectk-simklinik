@@ -17,9 +17,6 @@ class DetailBMHPModel extends Model
         'kategori_obat',
         'bentuk_obat',
         'nama_batch',
-        'signa',
-        'catatan',
-        'cara_pakai',
         'jumlah',
         'harga_satuan'
     ];

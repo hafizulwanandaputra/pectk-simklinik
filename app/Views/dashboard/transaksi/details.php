@@ -1003,7 +1003,7 @@
                         <td>
                             <ol class="ps-0 mb-0 custom-counter" id="obat-${bmhp.id_detail_transaksi}">
                             </ol>
-                            <span><small><strong>Dokter</strong>: ${bmhp.bmhp.apoteker}</small></span>
+                            <span><small><strong>Apoteker</strong>: ${bmhp.bmhp.apoteker}</small></span>
                         </td>
                         <td class="date text-end">Rp${harga_transaksi.toLocaleString('id-ID')}</td>
                         <td class="date text-end">${diskon.toLocaleString('id-ID')}%</td>

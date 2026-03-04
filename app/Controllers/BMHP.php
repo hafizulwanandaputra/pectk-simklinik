@@ -331,8 +331,8 @@ class BMHP extends BaseController
                 // Menyiapkan data untuk tampilan
                 $data = [
                     'bmhp' => $bmhp,
-                    'title' => 'Detail BMHP ' . $bmhp['tanggal_bmhp'] . ') - ' . $this->systemName,
-                    'headertitle' => 'Detail BMHP',
+                    'title' => 'Detail Barang Medis Habis Pakai ' . $bmhp['tanggal_bmhp'] . ') - ' . $this->systemName,
+                    'headertitle' => 'Detail Barang Medis Habis Pakai',
                     'agent' => $this->request->getUserAgent(), // Menyimpan informasi tentang user agent
                     'previous' => $previous,
                     'next' => $next
@@ -548,9 +548,6 @@ class BMHP extends BaseController
             $validation = \Config\Services::validation();
             $validation->setRules([
                 'id_batch_obat' => 'required',
-                'signa' => 'required',
-                'catatan' => 'required',
-                'cara_pakai' => 'required',
                 'jumlah' => 'required|numeric|greater_than[0]',
             ]);
 
@@ -613,9 +610,6 @@ class BMHP extends BaseController
                 'kategori_obat' => $obat['kategori_obat'],
                 'bentuk_obat' => $obat['bentuk_obat'],
                 'nama_batch' => $obat['nama_batch'],
-                'signa' => $signa,
-                'catatan' => $catatan,
-                'cara_pakai' => $this->request->getPost('cara_pakai'),
                 'jumlah' => $this->request->getPost('jumlah'),
                 'harga_satuan' => $harga_final,
             ];
@@ -686,9 +680,6 @@ class BMHP extends BaseController
             $validation = \Config\Services::validation();
             // Menetapkan aturan validasi dasar
             $validation->setRules([
-                'signa_edit' => 'required', // signa_edit harus diisi
-                'catatan_edit' => 'required', // catatan_edit harus diisi
-                'cara_pakai_edit' => 'required', // cara_pakai_edit harus diisi
                 'jumlah_edit' => 'required|numeric|greater_than[0]', // jumlah_edit harus diisi, numerik, dan lebih besar dari 0
             ]);
 
@@ -729,9 +720,6 @@ class BMHP extends BaseController
 
             // Simpan data detail bmhp yang diperbarui
             $data = [
-                'signa' => $signa_edit,
-                'catatan' => $catatan_edit,
-                'cara_pakai' => $this->request->getPost('cara_pakai_edit'),
                 'jumlah' => $this->request->getPost('jumlah_edit'),
                 'harga_satuan' => $detail_bmhp['harga_satuan'],
             ];

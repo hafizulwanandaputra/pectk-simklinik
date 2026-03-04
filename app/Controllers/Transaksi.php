@@ -934,9 +934,6 @@ class Transaksi extends BaseController
                     'nama_obat' => $row['nama_obat'],
                     'kategori_obat' => $row['kategori_obat'],
                     'bentuk_obat' => $row['bentuk_obat'],
-                    'signa' => $row['signa'],
-                    'catatan' => $row['catatan'],
-                    'cara_pakai' => $row['cara_pakai'],
                     'jumlah' => $row['jumlah'],
                     'harga_satuan' => $row['harga_satuan']
                 ];
@@ -2099,9 +2096,6 @@ class Transaksi extends BaseController
                     'nama_obat' => $row['nama_obat'],
                     'kategori_obat' => $row['kategori_obat'],
                     'bentuk_obat' => $row['bentuk_obat'],
-                    'signa' => $row['signa'],
-                    'catatan' => $row['catatan'],
-                    'cara_pakai' => $row['cara_pakai'],
                     'jumlah' => $row['jumlah'],
                     'harga_satuan' => $row['harga_satuan']
                 ];
