@@ -208,7 +208,7 @@ $waktuFormatted = $dateTime->format('H.i.s');
                                             :
                                         </td>
                                         <td style="width: 60%; vertical-align: top; padding: 0;">
-                                            <?= $asesmen['tekanan_darah'] ?> mmHg
+                                            <?= (empty($asesmen['tekanan_darah'])) ? '<em>Tidak ada</em>' : $asesmen['tekanan_darah'] . ' mmHg' ?>
                                         </td>
                                     </tr>
                                     <tr>
@@ -219,7 +219,7 @@ $waktuFormatted = $dateTime->format('H.i.s');
                                             :
                                         </td>
                                         <td style="width: 60%; vertical-align: top; padding: 0;">
-                                            <?= $asesmen['nadi'] ?>×/menit
+                                            <?= (empty($asesmen['nadi'])) ? '<em>Tidak ada</em>' : $asesmen['nadi'] . ' ×/menit' ?>
                                         </td>
                                     </tr>
                                     <tr>
@@ -230,7 +230,7 @@ $waktuFormatted = $dateTime->format('H.i.s');
                                             :
                                         </td>
                                         <td style="width: 60%; vertical-align: top; padding: 0;">
-                                            <?= $asesmen['suhu'] ?>°C
+                                            <?= (empty($asesmen['suhu'])) ? '<em>Tidak ada</em>' : $asesmen['suhu'] . ' °C' ?>
                                         </td>
                                     </tr>
                                     <tr>
@@ -241,7 +241,7 @@ $waktuFormatted = $dateTime->format('H.i.s');
                                             :
                                         </td>
                                         <td style="width: 60%; vertical-align: top; padding: 0;">
-                                            <?= $asesmen['pernapasan'] ?>×/menit
+                                            <?= (empty($asesmen['pernapasan'])) ? '<em>Tidak ada</em>' : $asesmen['pernapasan'] . ' ×/menit' ?>
                                         </td>
                                     </tr>
                                 </tbody>
