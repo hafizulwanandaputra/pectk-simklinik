@@ -230,7 +230,7 @@ $waktuFormatted = $dateTime->format('H.i.s');
                                             :
                                         </td>
                                         <td style="width: 60%; vertical-align: top; padding: 0;">
-                                            <?= (empty($asesmen['suhu'])) ? '<em>Tidak ada</em>' : $asesmen['suhu'] . ' °C' ?>
+                                            <?= (empty($asesmen['suhu'])) ? '<em>Tidak ada</em>' : number_format($asesmen['suhu'], 1, ',', '.') . ' °C' ?>
                                         </td>
                                     </tr>
                                     <tr>
