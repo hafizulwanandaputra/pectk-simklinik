@@ -280,7 +280,7 @@ $waktuFormatted = $dateTime->format('H.i.s');
                                             :
                                         </td>
                                         <td style="width: 60%; vertical-align: top; padding: 0;">
-                                            <?= $asesmen['alergi_keterangan'] ?>
+                                            <?= (empty($asesmen['alergi_keterangan'])) ? '<em>Tidak ada</em>' : $asesmen['alergi_keterangan'] ?>
                                         </td>
                                     </tr>
                                     <tr>
@@ -291,7 +291,7 @@ $waktuFormatted = $dateTime->format('H.i.s');
                                             :
                                         </td>
                                         <td style="width: 60%; vertical-align: top; padding: 0;">
-                                            <?= $asesmen['sakit_lainnya'] ?>
+                                            <?= (empty($asesmen['sakit_lainnya'])) ? '<em>Tidak ada</em>' : $asesmen['sakit_lainnya'] ?>
                                         </td>
                                     </tr>
                                 </tbody>
