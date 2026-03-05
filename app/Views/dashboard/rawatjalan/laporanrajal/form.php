@@ -147,7 +147,7 @@ $waktuFormatted = $dateTime->format('H.i.s');
                 <tbody>
                     <tr>
                         <td style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            DPJP
+                            Dokter Penanggung Jawab Pelayanan
                         </td>
                         <td style="width: 0%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
                             :
@@ -219,7 +219,7 @@ $waktuFormatted = $dateTime->format('H.i.s');
                     <tr>
                         <td style="width: 50%; text-align: center; vertical-align: top; padding-bottom: 1.25cm;"></td>
                         <td style="width: 50%; text-align: center; vertical-align: top; padding-bottom: 1.25cm;">
-                            <div>Tanggal <?= $tanggalFormatted ?> pukul <?= $waktuFormatted ?><br>DPJP</div>
+                            <div>Tanggal <?= $tanggalFormatted ?> pukul <?= $waktuFormatted ?><br>Dokter Penanggung Jawab Pelayanan</div>
                         </td>
                     </tr>
                     <tr>

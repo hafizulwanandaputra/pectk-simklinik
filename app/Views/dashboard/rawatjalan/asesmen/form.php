@@ -493,7 +493,7 @@ $waktuFormatted = $dateTime->format('H.i.s');
                     <tr>
                         <td style="width: 50%; text-align: center; vertical-align: top; padding-bottom: 1.25cm;"></td>
                         <td style="width: 50%; text-align: center; vertical-align: top; padding-bottom: 1.25cm;">
-                            <div>Tanggal <?= $tanggalFormatted ?> pukul <?= $waktuFormatted ?><br>DPJP</div>
+                            <div>Tanggal <?= $tanggalFormatted ?> pukul <?= $waktuFormatted ?><br>Dokter Penanggung Jawab Pelayanan</div>
                         </td>
                     </tr>
                     <tr>
