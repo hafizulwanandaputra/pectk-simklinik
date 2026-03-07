@@ -7,7 +7,7 @@
     <div class="flex-fill text-truncate">
         <div class="d-flex flex-column">
             <div class="fw-medium fs-6 lh-sm"><?= $headertitle; ?></div>
-            <div class="fw-medium lh-sm" style="font-size: 0.75em;"><span id="totalRecords">0</span> BMHP</div>
+            <div class="fw-medium lh-sm" style="font-size: 0.75em;"><span id="totalRecords">0</span> barang</div>
         </div>
     </div>
     <div id="loadingSpinner" class="px-2">
