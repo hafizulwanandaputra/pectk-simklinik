@@ -1269,7 +1269,7 @@
                                                     <i class="fa-solid fa-receipt"></i> Struk
                                                 </button>
                                                 ${tombol_isian_ok}
-                                                <?php if (session()->get('role') != 'Admin' || session()->get('role') != "Manajer") : ?>
+                                                <?php if (session()->get('role') != 'Admin' && session()->get('role') != "Manajer") : ?>
                                                 <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/asesmen/export') ?>/${rawatjalan.id_rawat_jalan}');">
                                                     <i class="fa-solid fa-print"></i> Asesmen
                                                 </button>
