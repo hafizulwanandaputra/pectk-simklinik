@@ -580,7 +580,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                 <span>
                                     <?= session()->get('fullname'); ?><br>
                                     <span style="font-size: 0.85em;">@<?= session()->get('username'); ?></span><br>
-                                    <span style="font-size: 0.75em;"><?= session()->get('role'); ?></span><br>
+                                    <span style="font-size: 0.75em;"><?= session()->get('role'); ?><?= (session()->get('is_owner') == '1') ? '<span class="badge text-bg-primary bg-gradient ms-1">Pemilik</span>' : ''; ?></span><br>
                                     <span class="date" style="font-size: 0.75em;">Alamat IP: <?= $_SERVER['REMOTE_ADDR'] ?></span><br>
                                     <span class="date" style="font-size: 0.75em;">Waktu masuk: <?= session()->get('created_at'); ?></span><br>
                                     <span class="date" style="font-size: 0.75em;">Kedaluwarsa: <?= session()->get('expires_at'); ?></span>
