@@ -21,8 +21,7 @@ class ResepObat extends BaseController
 
     public function index($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Dokter' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Manajer') {
             $db = db_connect();
 
             // Inisialisasi rawat jalan
@@ -106,8 +105,7 @@ class ResepObat extends BaseController
 
     public function create($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Dokter' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Manajer') {
             // Inisialisasi rawat jalan
             $rawatjalan = $this->RawatJalanModel
                 ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
@@ -158,8 +156,7 @@ class ResepObat extends BaseController
 
     public function listresepold($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Dokter' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Manajer') {
             // Ambil parameter no_rm
             $id_resep = $this->request->getGet('id_resep');
             $no_rm = $this->request->getGet('no_rm');
@@ -203,8 +200,7 @@ class ResepObat extends BaseController
 
     public function listdetailresepold($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' dan 'Dokter' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Manajer') {
             $id_resep = $this->request->getGet('id_resep');
             // ambil resep berdasarkan ID
             $resep = $this->ResepModel
@@ -232,8 +228,7 @@ class ResepObat extends BaseController
 
     public function confirm($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Dokter' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Manajer') {
             $db = db_connect();
             // Memperbarui resep
             $resep = $db->table('resep');
@@ -258,7 +253,7 @@ class ResepObat extends BaseController
                 ]);
             }
 
-            if (session()->get('role') == 'Dokter') {
+            if (session()->get('role') == 'Dokter' || session()->get('role') == 'Manajer') {
                 if (!$prescription) {
                     // Jika dokter tidak sesuai atau resep tidak ditemukan
                     return $this->response->setStatusCode(400)->setJSON([
@@ -291,8 +286,7 @@ class ResepObat extends BaseController
 
     public function cancel($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Dokter' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Manajer') {
             $db = db_connect();
             // Memperbarui resep
             $resep = $db->table('resep');
@@ -306,7 +300,7 @@ class ResepObat extends BaseController
                 ]);
             }
 
-            if (session()->get('role') == 'Dokter') {
+            if (session()->get('role') == 'Dokter' || session()->get('role') == 'Manajer') {
                 if (!$prescription) {
                     // Jika dokter tidak sesuai atau resep tidak ditemukan
                     return $this->response->setStatusCode(400)->setJSON([

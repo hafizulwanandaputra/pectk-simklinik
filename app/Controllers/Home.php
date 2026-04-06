@@ -447,7 +447,7 @@ class Home extends BaseController
 
     public function persebaran_provinsi()
     {
-        if (session()->get('role') == "Admin" || session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admisi") {
+        if (session()->get('role') == "Admin" || session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admisi" || session()->get('role') == 'Manajer') {
             $db = db_connect();
 
             $kueri = $this->request->getGet('kueri');
@@ -513,7 +513,7 @@ class Home extends BaseController
 
     public function persebaran_kabkota()
     {
-        if (session()->get('role') == "Admin" || session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admisi") {
+        if (session()->get('role') == "Admin" || session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admisi" || session()->get('role') == 'Manajer') {
             $db = db_connect();
 
             $kueri = $this->request->getGet('kueri');
@@ -587,7 +587,7 @@ class Home extends BaseController
 
     public function persebaran_kecamatan()
     {
-        if (session()->get('role') == "Admin" || session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admisi") {
+        if (session()->get('role') == "Admin" || session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admisi" || session()->get('role') == 'Manajer') {
             $db = db_connect();
 
             $kueri = $this->request->getGet('kueri');
@@ -667,7 +667,7 @@ class Home extends BaseController
 
     public function persebaran_kelurahan()
     {
-        if (session()->get('role') == "Admin" || session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admisi") {
+        if (session()->get('role') == "Admin" || session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admisi" || session()->get('role') == 'Manajer') {
             $db = db_connect();
 
             $kueri = $this->request->getGet('kueri');
@@ -753,7 +753,7 @@ class Home extends BaseController
 
     public function icd_x()
     {
-        if (session()->get('role') == "Admin" || session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admisi") {
+        if (session()->get('role') == "Admin" || session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admisi" || session()->get('role') == 'Manajer') {
             $db = db_connect();
             $bulan = $this->request->getGet('bulan');
 
@@ -827,7 +827,7 @@ class Home extends BaseController
 
     public function icd_9()
     {
-        if (session()->get('role') == "Admin" || session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admisi") {
+        if (session()->get('role') == "Admin" || session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admisi" || session()->get('role') == 'Manajer') {
             $db = db_connect();
             $bulan = $this->request->getGet('bulan');
 

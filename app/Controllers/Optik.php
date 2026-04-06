@@ -22,8 +22,7 @@ class Optik extends BaseController
 
     public function index($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Dokter' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Manajer') {
             $db = db_connect();
 
             // Inisialisasi rawat jalan
@@ -108,8 +107,7 @@ class Optik extends BaseController
 
     public function view($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Dokter' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Manajer') {
             // Mengambil data skrining berdasarkan ID
             $data = $this->OptikModel
                 ->join('rawat_jalan', 'medrec_optik.nomor_registrasi = rawat_jalan.nomor_registrasi', 'inner')
@@ -125,8 +123,7 @@ class Optik extends BaseController
 
     public function create($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Dokter' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Manajer') {
             $db = db_connect();
             // Inisialisasi rawat jalan
             $rawatjalan = $this->RawatJalanModel
@@ -163,8 +160,7 @@ class Optik extends BaseController
 
     public function export($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Admisi' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi' || session()->get('role') == 'Dokter') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi' || session()->get('role') == 'Dokter' || session()->get('role') == 'Manajer') {
             $db = db_connect();
 
             // Inisialisasi rawat jalan
@@ -289,8 +285,7 @@ class Optik extends BaseController
 
     public function update($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Dokter' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Manajer') {
             // Validate
             $validation = \Config\Services::validation();
             // Set base validation rules
@@ -307,7 +302,7 @@ class Optik extends BaseController
                 ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_optik.nomor_registrasi')
                 ->find($id);
 
-            if (session()->get('role') == 'Dokter') {
+            if (session()->get('role') == 'Dokter' || session()->get('role') == 'Manajer') {
                 if ($optik['dokter'] != session()->get('fullname')) {
                     return $this->response->setStatusCode(400)->setJSON(['success' => false, 'message' => 'Resep kacamata ini hanya bisa diisi oleh ' . $optik['dokter']]);
                 }

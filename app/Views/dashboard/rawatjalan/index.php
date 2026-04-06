@@ -251,7 +251,7 @@
                             </div>
                             <div>
                                 <div class="d-flex flex-wrap justify-content-end gap-2 mt-2">
-                                    <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') : ?>
+                                    <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi' || session()->get('role') == "Manajer") : ?>
                                         <button id="identitas_btn" type="button" class="btn btn-body btn-sm bg-gradient print-identitas" data-id="">
                                             <i class="fa-solid fa-print"></i> Identitas
                                         </button>
@@ -1233,7 +1233,7 @@
                 let tombol_isian_ok = rawatjalan.ruangan;
                 if (tombol_isian_ok === 'Kamar Operasi') {
                     tombol_isian_ok = `
-                                            <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') : ?>
+                                            <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi' || session()->get('role') == "Manajer") : ?>
                                                 <button type="button" class="btn btn-body btn-sm bg-gradient print-lio" data-id="${rawatjalan.id_rawat_jalan}">
                                                     <i class="fa-solid fa-receipt"></i> Lembar Isian Operasi
                                                 </button>
@@ -1264,12 +1264,12 @@
                 if (tombol_rme === 'DAFTAR') {
                     tombol_rme = `
                                         <div class="d-flex flex-wrap justify-content-end gap-2 mt-2">
-                                            <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') : ?>
+                                            <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi' || session()->get('role') == "Manajer") : ?>
                                                 <button type="button" class="btn btn-body btn-sm bg-gradient print-struk" data-id="${rawatjalan.id_rawat_jalan}">
                                                     <i class="fa-solid fa-receipt"></i> Struk
                                                 </button>
                                                 ${tombol_isian_ok}
-                                                <?php if (session()->get('role') != 'Admin') : ?>
+                                                <?php if (session()->get('role') != 'Admin' || session()->get('role') != "Manajer") : ?>
                                                 <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/asesmen/export') ?>/${rawatjalan.id_rawat_jalan}');">
                                                     <i class="fa-solid fa-print"></i> Asesmen
                                                 </button>
@@ -1290,7 +1290,7 @@
                                                 </button>
                                                 <?php endif; ?>
                                             <?php endif; ?>
-                                            <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') : ?>
+                                            <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == "Manajer") : ?>
                                                 <button type="button" class="btn btn-body btn-sm redirect-button bg-gradient" data-url="<?= base_url('rawatjalan/asesmen') ?>/${rawatjalan.id_rawat_jalan}">
                                                     <i class="fa-solid fa-user-check"></i> Asesmen
                                                 </button>
@@ -1325,7 +1325,7 @@
                 } else if (tombol_rme === 'BATAL') {
                     tombol_rme = `
                                         <div class="d-flex flex-wrap justify-content-end gap-2 mt-2">
-                                            <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') : ?>
+                                            <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi' || session()->get('role') == "Manajer") : ?>
                                                 <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/struk') ?>/${rawatjalan.id_rawat_jalan}');">
                                                     <i class="fa-solid fa-receipt"></i> Struk
                                                 </button>

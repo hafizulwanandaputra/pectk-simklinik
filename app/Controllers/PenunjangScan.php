@@ -21,8 +21,7 @@ class PenunjangScan extends BaseController
 
     public function index($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Perawat' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat' || session()->get('role') == 'Manajer') {
             $db = db_connect();
 
             // Inisialisasi rawat jalan
@@ -55,8 +54,7 @@ class PenunjangScan extends BaseController
 
     public function view($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Perawat' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat' || session()->get('role') == 'Manajer') {
             // Mengambil data skrining berdasarkan ID
             $data = $this->PenunjangScanModel->find($id); // Mengambil skrining
             return $this->response->setJSON($data); // Mengembalikan data skrining dalam format JSON
@@ -70,8 +68,7 @@ class PenunjangScan extends BaseController
 
     public function create($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Perawat' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat' || session()->get('role') == 'Manajer') {
             // Validate
             $validation = \Config\Services::validation();
             // Set base validation rules
@@ -128,8 +125,7 @@ class PenunjangScan extends BaseController
 
     public function update()
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Perawat' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat' || session()->get('role') == 'Manajer') {
             // Unggah gambar
             $gambar = $this->request->getFile('gambar');
 
@@ -206,8 +202,7 @@ class PenunjangScan extends BaseController
 
     public function delete($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Perawat' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat' || session()->get('role') == 'Manajer') {
             $penunjang_scan = $this->PenunjangScanModel->find($id);
             if ($penunjang_scan) {
                 // Hapus tanda tangan edukator

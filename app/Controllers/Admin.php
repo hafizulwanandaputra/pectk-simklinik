@@ -17,8 +17,7 @@ class Admin extends BaseController
 
     public function index()
     {
-        // Memeriksa apakah peran pengguna dalam sesi adalah "Admin"
-        if (session()->get('role') == "Admin") {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Manajer') {
             // Jika ya, siapkan data untuk ditampilkan di tampilan
             $data = [
                 'title' => 'Pengguna - ' . $this->systemName, // Judul halaman
@@ -35,8 +34,7 @@ class Admin extends BaseController
 
     public function adminlist()
     {
-        // Memeriksa apakah peran pengguna dalam sesi adalah "Admin"
-        if (session()->get('role') == 'Admin') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Manajer') {
             // Mengambil data dari permintaan POST
             $request = $this->request->getPost();
             $search = $request['search']['value']; // Nilai pencarian
@@ -78,7 +76,10 @@ class Admin extends BaseController
             }
 
             // Mendapatkan jumlah catatan yang terfilter
-            $filteredRecords = $this->AuthModel->where('id_user !=', session()->get('id_user'))->countAllResults(false);
+            $filteredRecords = $this->AuthModel
+                ->where('id_user !=', session()->get('id_user'))
+                ->where('is_owner', 0)
+                ->countAllResults(false);
 
             // Mengambil data pengguna
             $users = $this->AuthModel->where('id_user !=', session()->get('id_user'))
@@ -107,10 +108,12 @@ class Admin extends BaseController
 
     public function admin($id)
     {
-        // Memeriksa apakah peran pengguna dalam sesi adalah "Admin"
-        if (session()->get('role') == 'Admin') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Manajer') {
             // Mengambil data pengguna berdasarkan ID, kecuali pengguna yang sedang login
-            $data = $this->AuthModel->where('id_user !=', session()->get('id_user'))->find($id);
+            $data = $this->AuthModel
+                ->where('id_user !=', session()->get('id_user'))
+                ->where('is_owner', 1)
+                ->find($id);
             // Mengembalikan respons JSON dengan data pengguna
             return $this->response->setJSON($data);
         } else {
@@ -123,8 +126,7 @@ class Admin extends BaseController
 
     public function create()
     {
-        // Memeriksa apakah peran pengguna dalam sesi adalah "Admin"
-        if (session()->get('role') == 'Admin') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Manajer') {
             // Menginisialisasi layanan validasi
             $validation = \Config\Services::validation();
             // Menetapkan aturan validasi dasar
@@ -156,6 +158,7 @@ class Admin extends BaseController
                 'role' => $this->request->getPost('role'),
                 'kode_antrian' => $kode_antrian,
                 'auto_date' => 0,
+                'is_owner' => 0,
                 'active' => 0, // Status aktif pengguna awalnya diset ke 0
                 'registered' => date('Y-m-d H:i:s') // Tanggal pendaftaran saat ini
             ];
@@ -228,8 +231,7 @@ class Admin extends BaseController
 
     public function update()
     {
-        // Memeriksa apakah peran pengguna dalam sesi adalah "Admin"
-        if (session()->get('role') == 'Admin') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Manajer') {
             // Menginisialisasi layanan validasi
             $validation = \Config\Services::validation();
             // Menetapkan aturan validasi dasar
@@ -282,8 +284,7 @@ class Admin extends BaseController
 
     public function resetpassword($id)
     {
-        // Memeriksa apakah peran pengguna dalam sesi adalah "Admin"
-        if (session()->get('role') == 'Admin') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Manajer') {
             $db = db_connect(); // Menghubungkan ke database
             // Mengambil data pengguna berdasarkan ID
             $user = $this->AuthModel->find($id);
@@ -313,8 +314,7 @@ class Admin extends BaseController
 
     public function activate($id)
     {
-        // Memeriksa apakah peran pengguna dalam sesi adalah "Admin"
-        if (session()->get('role') == 'Admin') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Manajer') {
             $db = db_connect(); // Menghubungkan ke database
             // Mengubah status pengguna menjadi aktif
             $db->table('user')->set('active', 1)->where('id_user', $id)->update();
@@ -332,8 +332,7 @@ class Admin extends BaseController
 
     public function deactivate($id)
     {
-        // Memeriksa apakah peran pengguna dalam sesi adalah "Admin"
-        if (session()->get('role') == 'Admin') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Manajer') {
             $db = db_connect(); // Menghubungkan ke database
             // Mengubah status pengguna menjadi tidak aktif
             $db->table('user')->set('active', 0)->where('id_user', $id)->update();
@@ -356,11 +355,11 @@ class Admin extends BaseController
 
     public function delete($id)
     {
-        // Memeriksa apakah peran pengguna dalam sesi adalah "Admin"
-        if (session()->get('role') == 'Admin') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Manajer') {
             try {
                 // Menghapus pengguna berdasarkan ID
-                $this->AuthModel->delete($id);
+                $this->AuthModel
+                    ->where('is_owner', 1)->delete($id);
                 $db = db_connect(); // Menghubungkan ke database
                 // Mengatur ulang nilai Auto Increment
                 $db->query('ALTER TABLE `user` auto_increment = 1');

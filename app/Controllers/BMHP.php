@@ -19,8 +19,7 @@ class BMHP extends BaseController
 
     public function index()
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             // Menyusun data yang akan dikirim ke tampilan
             $data = [
                 'title' => 'Barang Medis Habis Pakai - ' . $this->systemName, // Judul halaman
@@ -36,8 +35,7 @@ class BMHP extends BaseController
 
     public function listbmhp()
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             // Mengambil parameter pencarian, limit, offset, dan status dari query string
             $search = $this->request->getGet('search');
             $limit = $this->request->getGet('limit');
@@ -100,8 +98,7 @@ class BMHP extends BaseController
 
     public function apotekerlist()
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             // Mengambil apoteker dari tabel resep luar
             $resepData = $this->BMHPModel
                 ->where('apoteker IS NOT NULL')
@@ -134,8 +131,7 @@ class BMHP extends BaseController
 
     public function bmhp($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             $data = $this->BMHPModel
                 ->find($id); // Mengambil BMHP 
             return $this->response->setJSON($data); // Mengembalikan data BMHP dalam format JSON
@@ -149,8 +145,7 @@ class BMHP extends BaseController
 
     public function create()
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             // Menyiapkan data untuk disimpan
             $data = [
                 'tanggal_bmhp' => date('Y-m-d H:i:s'), // Menyimpan tanggal BMHP saat ini
@@ -176,8 +171,7 @@ class BMHP extends BaseController
 
     public function konfirmasi($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             $db = db_connect();
             // Mengambil bmhp
             $bmhp = $db->table('bmhp');
@@ -200,8 +194,7 @@ class BMHP extends BaseController
 
     public function batalkonfirmasi($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             $db = db_connect();
             // Mengambil bmhp
             $bmhp = $db->table('bmhp');
@@ -224,8 +217,7 @@ class BMHP extends BaseController
 
     public function delete($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             $db = db_connect(); // Menghubungkan ke database
 
             // Mengambil bmhp
@@ -301,8 +293,7 @@ class BMHP extends BaseController
     // DETAIL BARANG MEDIS HABIS PAKAI
     public function detailbmhp($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             // Menghubungkan ke database
             $db = db_connect();
 
@@ -351,8 +342,7 @@ class BMHP extends BaseController
 
     public function detailbmhplist($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             // Mengambil detail bmhp berdasarkan id_bmhp yang diberikan
             $data = $this->DetailBMHPModel
                 ->join('bmhp', 'bmhp.id_bmhp = detail_bmhp.id_bmhp', 'inner') // Bergabung dengan tabel bmhp
@@ -372,8 +362,7 @@ class BMHP extends BaseController
 
     public function detailbmhpitem($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             // Mengambil detail bmhp berdasarkan id_detail_bmhp yang diberikan
             $data = $this->DetailBMHPModel
                 ->where('id_detail_bmhp', $id)
@@ -392,8 +381,7 @@ class BMHP extends BaseController
 
     public function obatlist($id_bmhp)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             $BatchObatModel = new BatchObatModel(); // Membuat instance model Obat
             $DetailBMHPModel = new DetailBMHPModel(); // Membuat instance model DetailResep
 
@@ -472,7 +460,7 @@ class BMHP extends BaseController
 
     public function obatkedaluwarsa()
     {
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             $BatchObatModel = new BatchObatModel();
 
             $hari_ini = date('Y-m-d');
@@ -543,8 +531,7 @@ class BMHP extends BaseController
 
     public function tambahdetailbmhp($id)
     {
-        // Hanya Admin atau Apoteker yang boleh menambah detail bmhp
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             $validation = \Config\Services::validation();
             $validation->setRules([
                 'id_batch_obat' => 'required',
@@ -674,8 +661,7 @@ class BMHP extends BaseController
 
     public function perbaruidetailbmhp($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             // Validasi input
             $validation = \Config\Services::validation();
             // Menetapkan aturan validasi dasar
@@ -801,8 +787,7 @@ class BMHP extends BaseController
 
     public function hapusdetailbmhp($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             // Menghubungkan ke database
             $db = db_connect();
 

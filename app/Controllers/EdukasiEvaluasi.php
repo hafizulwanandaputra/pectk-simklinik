@@ -21,8 +21,7 @@ class EdukasiEvaluasi extends BaseController
 
     public function index($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Perawat' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat' || session()->get('role') == 'Manajer') {
             $db = db_connect();
 
             // Inisialisasi rawat jalan
@@ -55,8 +54,7 @@ class EdukasiEvaluasi extends BaseController
 
     public function view($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Admisi' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat' || session()->get('role') == 'Manajer') {
             // Mengambil data skrining berdasarkan ID
             $data = $this->EdukasiEvaluasiModel->find($id); // Mengambil skrining
             return $this->response->setJSON($data); // Mengembalikan data skrining dalam format JSON
@@ -70,8 +68,7 @@ class EdukasiEvaluasi extends BaseController
 
     public function create($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Admisi' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat' || session()->get('role') == 'Manajer') {
             // Validate
             $validation = \Config\Services::validation();
             // Set base validation rules
@@ -150,8 +147,7 @@ class EdukasiEvaluasi extends BaseController
 
     public function update()
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Admisi' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat' || session()->get('role') == 'Manajer') {
             // Ambil file yang diunggah
             $tanda_tangan_edukator = $this->request->getFile('tanda_tangan_edukator');
             $tanda_tangan_pasien = $this->request->getFile('tanda_tangan_pasien');
@@ -237,8 +233,8 @@ class EdukasiEvaluasi extends BaseController
 
     // public function tandatanganedukator($filename)
     // {
-    //     // Memeriksa peran pengguna, hanya 'Admin' atau 'Admisi' yang diizinkan
-    //     if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat') {
+    //     // Memeriksa peran pengguna, hanya 'Admin', 'Perawat' atau 'Manajer' yang diizinkan
+    //     if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat' || session()->get('role') == 'Manajer') {
     //         $path = FCPATH . 'uploads/ttd_edukator_evaluasi/' . $filename;
 
     //         if (is_file($path)) {
@@ -257,8 +253,8 @@ class EdukasiEvaluasi extends BaseController
 
     // public function tandatanganpasien($filename)
     // {
-    //     // Memeriksa peran pengguna, hanya 'Admin' atau 'Admisi' yang diizinkan
-    //     if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat') {
+    //     // Memeriksa peran pengguna, hanya 'Admin', 'Perawat' atau 'Manajer' yang diizinkan
+    //     if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat' || session()->get('role') == 'Manajer') {
     //         $path = FCPATH . 'uploads/ttd_pasien_evaluasi/' . $filename;
 
     //         if (is_file($path)) {
@@ -277,8 +273,7 @@ class EdukasiEvaluasi extends BaseController
 
     public function delete($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Admisi' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat' || session()->get('role') == 'Manajer') {
             $edukasi_evaluasi = $this->EdukasiEvaluasiModel->find($id);
             if ($edukasi_evaluasi) {
                 // Hapus tanda tangan edukator

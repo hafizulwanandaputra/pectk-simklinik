@@ -676,7 +676,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                     </div>
                                 </a>
                             </li>
-                            <?php if (session()->get('role') == "Admin" || session()->get('role') == "Admisi") : ?>
+                            <?php if (session()->get('role') == "Admin" || session()->get('role') == "Admisi" || session()->get('role') == "Manajer") : ?>
                                 <li class="nav-item">
                                     <a style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'antrean') ? 'active bg-success activeLinkSideBar' : '' ?>" href=" <?= base_url('/antrean'); ?>">
                                         <div class="d-flex align-items-start <?= ($activeSegment === 'antrean') ? 'text-white' : 'link-success' ?>">
@@ -702,7 +702,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                     </a>
                                 </li>
                             <?php endif; ?>
-                            <?php if (session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admin" || session()->get('role') == "Admisi") : ?>
+                            <?php if (session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admin" || session()->get('role') == "Admisi" || session()->get('role') == "Manajer") : ?>
                                 <li class="nav-item">
                                     <a style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'rawatjalan') ? 'active bg-success activeLinkSideBar' : '' ?>" href=" <?= base_url('/rawatjalan'); ?>">
                                         <div class="d-flex align-items-start <?= ($activeSegment === 'rawatjalan') ? 'text-white' : 'link-success' ?>">
@@ -728,7 +728,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                     </a>
                                 </li>
                             <?php endif; ?>
-                            <?php if (session()->get('role') == "Dokter" || session()->get('role') == "Admin" || session()->get('role') == "Admisi") : ?>
+                            <?php if (session()->get('role') == "Dokter" || session()->get('role') == "Admin" || session()->get('role') == "Admisi" || session()->get('role') == "Manajer") : ?>
                                 <li class="nav-item">
                                     <span style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'lpoperasikatarak' || $activeSegment === 'lpoperasipterigium' || $activeSegment === 'lpoperasi') ? 'active bg-success' : '' ?>" role="button" data-bs-toggle="collapse" data-bs-target="#submenu-laporan-operasi">
                                         <div class="d-flex align-items-start <?= ($activeSegment === 'lpoperasikatarak' || $activeSegment === 'lpoperasipterigium' || $activeSegment === 'lpoperasi') ? 'text-white' : 'link-success' ?>">
@@ -822,7 +822,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                     </ul>
                                 </div>
                             <?php endif; ?>
-                            <?php if (session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admin" || session()->get('role') == "Admisi") : ?>
+                            <?php if (session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admin" || session()->get('role') == "Admisi" || session()->get('role') == "Manajer") : ?>
                                 <li class="nav-item">
                                     <span style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'rujukan' || $activeSegment === 'sakitmata' || $activeSegment === 'istirahat' || $activeSegment === 'butawarna') ? 'active bg-success' : '' ?>" role="button" data-bs-toggle="collapse" data-bs-target="#submenu-surat">
                                         <div class="d-flex align-items-start <?= ($activeSegment === 'rujukan' || $activeSegment === 'sakitmata' || $activeSegment === 'istirahat' || $activeSegment === 'butawarna') ? 'text-white' : 'link-success' ?>">
@@ -881,7 +881,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                     </ul>
                                 </div>
                             <?php endif; ?>
-                            <?php if (session()->get('role') == "Apoteker" || session()->get('role') == "Admin") : ?>
+                            <?php if (session()->get('role') == "Apoteker" || session()->get('role') == "Admin" || session()->get('role') == "Manajer") : ?>
                                 <li class="nav-item">
                                     <a style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'supplier') ? 'active bg-success activeLinkSideBar' : '' ?>" href=" <?= base_url('/supplier'); ?>">
                                         <div class="d-flex align-items-start <?= ($activeSegment === 'supplier') ? 'text-white' : 'link-success' ?>">
@@ -967,7 +967,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                     </a>
                                 </li>
                             <?php endif; ?>
-                            <?php if (session()->get('role') == "Apoteker" || session()->get('role') == "Admin") : ?>
+                            <?php if (session()->get('role') == "Apoteker" || session()->get('role') == "Admin" || session()->get('role') == "Manajer") : ?>
                                 <li class="nav-item">
                                     <a style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'laporanresep') ? 'active bg-success activeLinkSideBar' : '' ?>" href=" <?= base_url('/laporanresep'); ?>">
                                         <div class="d-flex align-items-start <?= ($activeSegment === 'laporanresep') ? 'text-white' : 'link-success' ?>">
@@ -981,7 +981,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                     </a>
                                 </li>
                             <?php endif; ?>
-                            <?php if (session()->get('role') == "Kasir" || session()->get('role') == "Dokter" || session()->get('role') == "Admin") : ?>
+                            <?php if (session()->get('role') == "Kasir" || session()->get('role') == "Dokter" || session()->get('role') == "Admin" || session()->get('role') == "Manajer") : ?>
                                 <li class="nav-item">
                                     <a style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'layanan') ? 'active bg-success activeLinkSideBar' : '' ?>" href=" <?= base_url('/layanan'); ?>">
                                         <div class="d-flex align-items-start <?= ($activeSegment === 'layanan') ? 'text-white' : 'link-success' ?>">
@@ -995,7 +995,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                     </a>
                                 </li>
                             <?php endif; ?>
-                            <?php if (session()->get('role') == "Admisi" || session()->get('role') == "Kasir" || session()->get('role') == "Admin") : ?>
+                            <?php if (session()->get('role') == "Admisi" || session()->get('role') == "Kasir" || session()->get('role') == "Admin" || session()->get('role') == "Manajer") : ?>
                                 <li class="nav-item">
                                     <a style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'transaksi') ? 'active bg-success activeLinkSideBar' : '' ?>" href=" <?= base_url('/transaksi'); ?>">
                                         <div class="d-flex align-items-start <?= ($activeSegment === 'transaksi') ? 'text-white' : 'link-success' ?>">
@@ -1009,7 +1009,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                     </a>
                                 </li>
                             <?php endif; ?>
-                            <?php if (session()->get('role') == "Admin" || session()->get('role') == "Admisi" || session()->get('role') == "Apoteker") : ?>
+                            <?php if (session()->get('role') == "Admin" || session()->get('role') == "Admisi" || session()->get('role') == "Apoteker" || session()->get('role') == "Manajer") : ?>
                                 <li class="nav-item">
                                     <a style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'unduhdokumen') ? 'active bg-success activeLinkSideBar' : '' ?>" href=" <?= base_url('/unduhdokumen'); ?>">
                                         <div class="d-flex align-items-start <?= ($activeSegment === 'unduhdokumen') ? 'text-white' : 'link-success' ?>">
@@ -1023,7 +1023,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                     </a>
                                 </li>
                             <?php endif; ?>
-                            <?php if (session()->get('role') == "Admin") : ?>
+                            <?php if (session()->get('role') == "Admin" || session()->get('role') == "Manajer") : ?>
                                 <li class="nav-item">
                                     <span style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'loket' || $activeSegment === 'jaminan' || $activeSegment === 'tindakanoperasi' || $activeSegment === 'poliklinik') ? 'active bg-success' : '' ?>" role="button" data-bs-toggle="collapse" data-bs-target="#submenu-masterdata">
                                         <div class="d-flex align-items-start <?= ($activeSegment === 'loket' || $activeSegment === 'jaminan' || $activeSegment === 'tindakanoperasi' || $activeSegment === 'poliklinik') ? 'text-white' : 'link-success' ?>">

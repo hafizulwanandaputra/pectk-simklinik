@@ -32,7 +32,7 @@ $db = db_connect();
             <h1 class="h2 mb-0"><?= $txtgreeting . ', ' . session()->get('fullname') . '!'; ?><?= ($seasonaltxtgreeting ?? '') ? '<br><small class="text-muted">' . $seasonaltxtgreeting . '</small>' : ''; ?></h1>
         </div>
         <hr>
-        <?php if (session()->get('role') == "Admin") : ?>
+        <?php if (session()->get('role') == "Admin" || session()->get('role') == "Manajer") : ?>
             <div class="mb-3">
                 <div class="fw-bold mb-2 border-bottom">Admin</div>
                 <div class="row row-cols-1 row-cols-lg-3 g-2 mb-2">
@@ -89,7 +89,7 @@ $db = db_connect();
                 </div>
             </div>
         <?php endif; ?>
-        <?php if (session()->get('role') == "Admin" || session()->get('role') == "Admisi") : ?>
+        <?php if (session()->get('role') == "Admin" || session()->get('role') == "Admisi" || session()->get('role') == "Manajer") : ?>
             <div class="mb-3">
                 <div class="fw-bold mb-2 border-bottom">Statistik Antrean</div>
                 <div class="row row-cols-1 row-cols-lg-2 g-2 mb-2">
@@ -126,7 +126,7 @@ $db = db_connect();
                 </div>
             </div>
         <?php endif; ?>
-        <?php if (session()->get('role') == "Admin" || session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admisi") : ?>
+        <?php if (session()->get('role') == "Admin" || session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admisi" || session()->get('role') == "Manajer") : ?>
             <div class="mb-3">
                 <div class="fw-bold mb-2 border-bottom">Pasien dan Rawat Jalan</div>
                 <div class="mb-2">
@@ -463,7 +463,7 @@ $db = db_connect();
                 </div>
             </div>
         <?php endif; ?>
-        <?php if (session()->get('role') == "Admin" || session()->get('role') == "Apoteker" || session()->get('role') == "Dokter") : ?>
+        <?php if (session()->get('role') == "Admin" || session()->get('role') == "Apoteker" || session()->get('role') == "Dokter" || session()->get('role') == "Manajer") : ?>
             <div class="mb-3">
                 <div class="fw-bold mb-2 border-bottom">Farmasi</div>
                 <div class="row row-cols-1 row-cols-lg-2 g-2 mb-2">
@@ -534,7 +534,7 @@ $db = db_connect();
                 </div>
             </div>
         <?php endif; ?>
-        <?php if (session()->get('role') == "Admin" || session()->get('role') == "Kasir") : ?>
+        <?php if (session()->get('role') == "Admin" || session()->get('role') == "Kasir" || session()->get('role') == "Manajer") : ?>
             <div class="mb-3">
                 <div class="fw-bold mb-2 border-bottom">Kasir</div>
                 <div class="row row-cols-1 row-cols-lg-2 g-2 mb-2">
@@ -613,7 +613,7 @@ $db = db_connect();
     let limit = 20;
     let currentPage = 1;
 
-    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admisi") : ?>
+    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admisi" || session()->get('role') == "Manajer") : ?>
         $('#ICD10bulanFilter, #ICD9bulanFilter').flatpickr({
             plugins: [
                 new monthSelectPlugin({
@@ -1556,7 +1556,7 @@ $db = db_connect();
     <?php endif; ?>
 
     $(document).ready(function() {
-        <?php if (session()->get('role') == "Admin" || session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admisi") : ?>
+        <?php if (session()->get('role') == "Admin" || session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admisi" || session()->get('role') == "Manajer") : ?>
             $('#ProvinsiFilter').on('input', function() {
                 fetchProvinsi();
             });
@@ -1658,7 +1658,7 @@ $db = db_connect();
     }
     Chart.defaults.font.family = '"Helvetica Neue", Helvetica, Arial, Arimo, "Liberation Sans", sans-serif';
 
-    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Admisi") : ?>
+    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Admisi" || session()->get('role') == "Manajer") : ?>
         const data_antreanpiegraph = [];
         const label_antreanpiegraph = [];
         const data_antreankodegraph = [];
@@ -1666,7 +1666,7 @@ $db = db_connect();
         const data_antreangraph = [];
         const label_antreangraph = [];
     <?php endif; ?>
-    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admisi") : ?>
+    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admisi" || session()->get('role') == "Manajer") : ?>
         const data_agamagraph = [];
         const label_agamagraph = [];
         const data_jeniskelamingraph = [];
@@ -1678,13 +1678,13 @@ $db = db_connect();
         const data_rawatjalangraph = [];
         const label_rawatjalangraph = [];
     <?php endif; ?>
-    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Apoteker" || session()->get('role') == "Dokter") : ?>
+    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Apoteker" || session()->get('role') == "Dokter" || session()->get('role') == "Manajer") : ?>
         const data_resepbydoktergraph = [];
         const label_resepbydoktergraph = [];
         const data_resepallgraph = [];
         const label_resepallgraph = [];
     <?php endif; ?>
-    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Kasir") : ?>
+    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Kasir" || session()->get('role') == "Manajer") : ?>
         const data_transaksibykasirgraph = [];
         const label_transaksibykasirgraph = [];
         const data_transaksiperbulanallgraph = [];
@@ -1693,7 +1693,7 @@ $db = db_connect();
         const label_pemasukanperbulangraph = [];
     <?php endif; ?>
 
-    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Admisi") : ?>
+    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Admisi" || session()->get('role') == "Manajer") : ?>
         <?php foreach ($antreanpiegraph->getResult() as $key => $antreanpiegraph) : ?>
             data_antreanpiegraph.push(<?= $antreanpiegraph->total_antrean; ?>);
             label_antreanpiegraph.push('<?= $antreanpiegraph->nama_jaminan; ?>');
@@ -1703,7 +1703,7 @@ $db = db_connect();
             label_antreangraph.push('<?= $antreangraph->bulan; ?>');
         <?php endforeach; ?>
     <?php endif; ?>
-    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admisi") : ?>
+    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admisi" || session()->get('role') == "Manajer") : ?>
         <?php foreach ($agamagraph->getResult() as $key => $agamagraph) :
             // Query untuk mencocokkan ID agama dengan nama agama
             $agamaId = $agamagraph->agama;
@@ -1748,7 +1748,7 @@ $db = db_connect();
             label_rawatjalangraph.push('<?= $rawatjalangraph->bulan; ?>');
         <?php endforeach; ?>
     <?php endif; ?>
-    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Apoteker" || session()->get('role') == "Dokter") : ?>
+    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Apoteker" || session()->get('role') == "Dokter" || session()->get('role') == "Manajer") : ?>
         <?php foreach ($resepbydoktergraph->getResult() as $key => $resepbydoktergraph) : ?>
             data_resepbydoktergraph.push(<?= $resepbydoktergraph->jumlah; ?>);
             label_resepbydoktergraph.push('<?= $resepbydoktergraph->dokter; ?>');
@@ -1758,7 +1758,7 @@ $db = db_connect();
             label_resepallgraph.push('<?= $resepallgraph->bulan; ?>');
         <?php endforeach; ?>
     <?php endif; ?>
-    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Kasir") : ?>
+    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Kasir" || session()->get('role') == "Manajer") : ?>
         <?php foreach ($transaksibykasirgraph->getResult() as $key => $transaksibykasirgraph) : ?>
             data_transaksibykasirgraph.push(<?= $transaksibykasirgraph->jumlah; ?>);
             label_transaksibykasirgraph.push('<?= $transaksibykasirgraph->kasir; ?>');
@@ -1773,7 +1773,7 @@ $db = db_connect();
         <?php endforeach; ?>
     <?php endif; ?>
 
-    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Admisi") : ?>
+    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Admisi" || session()->get('role') == "Manajer") : ?>
         var data_content_antreanpiegraph = {
             labels: label_antreanpiegraph,
             datasets: [{
@@ -1801,7 +1801,7 @@ $db = db_connect();
             }]
         }
     <?php endif; ?>
-    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admisi") : ?>
+    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admisi" || session()->get('role') == "Manajer") : ?>
         var data_content_agamagraph = {
             labels: label_agamagraph,
             datasets: [{
@@ -1850,7 +1850,7 @@ $db = db_connect();
         }
     <?php endif; ?>
 
-    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Apoteker" || session()->get('role') == "Dokter") : ?>
+    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Apoteker" || session()->get('role') == "Dokter" || session()->get('role') == "Manajer") : ?>
         var data_content_resepbydoktergraph = {
             labels: label_resepbydoktergraph,
             datasets: [{
@@ -1878,7 +1878,7 @@ $db = db_connect();
             }]
         }
     <?php endif; ?>
-    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Kasir") : ?>
+    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Kasir" || session()->get('role') == "Manajer") : ?>
         var data_content_transaksibykasirgraph = {
             labels: label_transaksibykasirgraph,
             datasets: [{
@@ -1917,7 +1917,7 @@ $db = db_connect();
         }
     <?php endif; ?>
 
-    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Admisi") : ?>
+    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Admisi" || session()->get('role') == "Manajer") : ?>
         var chart_antreanpiegraph = createChart(document.getElementById('antreanpiegraph').getContext('2d'), {
             type: 'pie',
             data: data_content_antreanpiegraph,
@@ -2018,7 +2018,7 @@ $db = db_connect();
             }
         })
     <?php endif; ?>
-    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admisi") : ?>
+    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admisi" || session()->get('role') == "Manajer") : ?>
         var chart_agamagraph = createChart(document.getElementById('agamagraph').getContext('2d'), {
             type: 'bar',
             data: data_content_agamagraph,
@@ -2196,7 +2196,7 @@ $db = db_connect();
         })
     <?php endif; ?>
 
-    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Apoteker" || session()->get('role') == "Dokter") : ?>
+    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Apoteker" || session()->get('role') == "Dokter" || session()->get('role') == "Manajer") : ?>
         var chart_resepbydoktergraph = createChart(document.getElementById('resepbydoktergraph').getContext('2d'), {
             type: 'pie',
             data: data_content_resepbydoktergraph,
@@ -2297,7 +2297,7 @@ $db = db_connect();
             }
         })
     <?php endif; ?>
-    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Kasir") : ?>
+    <?php if (session()->get('role') == "Admin" || session()->get('role') == "Kasir" || session()->get('role') == "Manajer") : ?>
         var chart_transaksibykasirgraph = createChart(document.getElementById('transaksibykasirgraph').getContext('2d'), {
             type: 'pie',
             data: data_content_transaksibykasirgraph,

@@ -16,8 +16,7 @@ class TindakanOperasi extends BaseController
 
     public function index()
     {
-        // Memeriksa apakah peran pengguna dalam sesi adalah "Admin"
-        if (session()->get('role') == "Admin") {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Manajer') {
             // Jika ya, siapkan data untuk ditampilkan di tampilan
             $data = [
                 'title' => 'Tindakan Operasi - ' . $this->systemName, // Judul halaman
@@ -34,8 +33,7 @@ class TindakanOperasi extends BaseController
 
     public function tindakanoperasilist()
     {
-        // Memeriksa apakah peran pengguna dalam sesi adalah "Admin"
-        if (session()->get('role') == 'Admin') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Manajer') {
             // Mengambil data dari permintaan POST
             $request = $this->request->getPost();
             $search = $request['search']['value']; // Nilai pencarian
@@ -100,8 +98,7 @@ class TindakanOperasi extends BaseController
 
     public function tindakanoperasi($id)
     {
-        // Memeriksa apakah peran pengguna dalam sesi adalah "Admin"
-        if (session()->get('role') == 'Admin') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Manajer') {
             // Mengambil data pengguna berdasarkan ID, kecuali pengguna yang sedang login
             $data = $this->TindakanOperasiModel->find($id);
             // Mengembalikan respons JSON dengan data pengguna
@@ -116,8 +113,7 @@ class TindakanOperasi extends BaseController
 
     public function create()
     {
-        // Memeriksa apakah peran pengguna dalam sesi adalah "Admin"
-        if (session()->get('role') == 'Admin') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Manajer') {
             // Menginisialisasi layanan validasi
             $validation = \Config\Services::validation();
             // Menetapkan aturan validasi dasar
@@ -151,8 +147,7 @@ class TindakanOperasi extends BaseController
 
     public function update()
     {
-        // Memeriksa apakah peran pengguna dalam sesi adalah "Admin"
-        if (session()->get('role') == 'Admin') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Manajer') {
             // Menginisialisasi layanan validasi
             $validation = \Config\Services::validation();
             // Menetapkan aturan validasi dasar
@@ -185,8 +180,7 @@ class TindakanOperasi extends BaseController
 
     public function delete($id)
     {
-        // Memeriksa apakah peran pengguna dalam sesi adalah "Admin"
-        if (session()->get('role') == 'Admin') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Manajer') {
             try {
                 // Menghapus pengguna berdasarkan ID
                 $this->TindakanOperasiModel->delete($id);

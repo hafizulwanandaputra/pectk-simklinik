@@ -18,8 +18,7 @@ class Operasi extends BaseController
     }
     public function index()
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Admisi' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Admisi') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Admisi' || session()->get('role') == 'Manajer') {
             // Menyiapkan data untuk tampilan
             $data = [
                 'title' => 'Pasien Operasi - ' . $this->systemName,
@@ -36,8 +35,7 @@ class Operasi extends BaseController
 
     public function operasilist()
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Admisi' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Admisi') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Admisi' || session()->get('role') == 'Manajer') {
             // Mengambil parameter pencarian, limit, offset, dan status dari query string
             $tanggal = $this->request->getGet('tanggal');
             $search = $this->request->getGet('search');
@@ -112,8 +110,7 @@ class Operasi extends BaseController
 
     public function rawatjalanlist()
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Admisi' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Admisi') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Admisi' || session()->get('role') == 'Manajer') {
             // Mendapatkan parameter pencarian dari permintaan GET
             $search = $this->request->getGet('search');
             $offset = (int) $this->request->getGet('offset') ?? 0; // Default 0 jika tidak ada
@@ -175,8 +172,7 @@ class Operasi extends BaseController
 
     public function dokterlist()
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Admisi' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Admisi') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Admisi' || session()->get('role') == 'Manajer') {
             $db = db_connect();
             // Mengambil kasir dari tabel user
             $spOperasiData = $this->SPOperasiModel
@@ -209,8 +205,7 @@ class Operasi extends BaseController
 
     public function create()
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Admisi' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Admisi') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Admisi' || session()->get('role') == 'Manajer') {
             // Melakukan validasi
             $validation = \Config\Services::validation();
             // Menetapkan aturan validasi dasar
@@ -303,8 +298,7 @@ class Operasi extends BaseController
 
     public function setstatus()
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Admisi' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Admisi') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Admisi' || session()->get('role') == 'Manajer') {
             // Validate
             $validation = \Config\Services::validation();
             // Set base validation rules
@@ -336,8 +330,7 @@ class Operasi extends BaseController
 
     public function delete($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Admisi' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Admisi') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Admisi' || session()->get('role') == 'Manajer') {
             $db = db_connect();
             $sp_operasi = $db->table('medrec_sp_operasi')
                 ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_sp_operasi.nomor_registrasi', 'inner')

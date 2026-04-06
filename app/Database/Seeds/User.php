@@ -15,6 +15,7 @@ class User extends Seeder
             'profilephoto' => NULL,
             'role' => 'Admin',
             'kode_antrian' => NULL,
+            'is_owner' => '1',
             'active' => '1',
             'registered' => date('Y-m-d H:i:s'),
         ];

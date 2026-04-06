@@ -22,8 +22,7 @@ class Skrining extends BaseController
 
     public function index($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Perawat' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat' || session()->get('role') == 'Manajer') {
             $db = db_connect();
 
             // Inisialisasi rawat jalan
@@ -109,8 +108,7 @@ class Skrining extends BaseController
 
     public function view($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Perawat' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat' || session()->get('role') == 'Manajer') {
             // Mengambil data skrining berdasarkan ID
             $data = $this->SkriningModel->find($id); // Mengambil skrining
             return $this->response->setJSON($data); // Mengembalikan data skrining dalam format JSON
@@ -125,7 +123,7 @@ class Skrining extends BaseController
     public function export($id)
     {
         // Memeriksa peran pengguna, hanya 'Admin', 'Perawat', atau 'Admisi' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi' || session()->get('role') == 'Perawat') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi' || session()->get('role') == 'Perawat' || session()->get('role') == 'Manajer') {
             $db = db_connect();
 
             // Inisialisasi rawat jalan
@@ -249,8 +247,7 @@ class Skrining extends BaseController
 
     public function update($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Perawat' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat' || session()->get('role') == 'Manajer') {
             // Validate
             $validation = \Config\Services::validation();
             $nyeri_hilang_bila = $this->request->getPost('nyeri_hilang_bila');

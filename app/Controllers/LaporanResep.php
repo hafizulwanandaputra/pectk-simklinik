@@ -24,8 +24,7 @@ class LaporanResep extends BaseController
 
     public function index()
     {
-        // Memeriksa peran pengguna, hanya 'Admin' dan 'Apoteker' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             $daftarDokter = $this->ResepModel->select('dokter')->where('status', 1)->groupBy('dokter')->orderBy('dokter', 'ASC')->findAll();
             // Menyiapkan data untuk tampilan
             $data = [
@@ -44,8 +43,7 @@ class LaporanResep extends BaseController
 
     public function exportdaily($tanggal)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' dan 'Apoteker' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             // Ambil daftar dokter dari query string
             $dokterFilter = $this->request->getGet('dokter'); // Array nama dokter
 
@@ -103,8 +101,7 @@ class LaporanResep extends BaseController
 
     public function exportdailyexcel($tanggal)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             // Ambil daftar dokter dari query string
             $dokterFilter = $this->request->getGet('dokter'); // Array nama dokter
 
@@ -301,8 +298,7 @@ class LaporanResep extends BaseController
 
     public function exportmonthly($bulan)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' dan 'Apoteker' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             // Ambil daftar dokter dari query string
             $dokterFilter = $this->request->getGet('dokter'); // Array nama dokter
 
@@ -364,8 +360,7 @@ class LaporanResep extends BaseController
 
     public function exportmonthlyexcel($bulan)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             // Ambil daftar dokter dari query string
             $dokterFilter = $this->request->getGet('dokter'); // Array nama dokter
 

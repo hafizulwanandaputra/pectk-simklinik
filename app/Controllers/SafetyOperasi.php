@@ -28,8 +28,7 @@ class SafetyOperasi extends BaseController
 
     public function index($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Perawat' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Manajer') {
             $db = db_connect();
 
             // Inisialisasi rawat jalan
@@ -173,8 +172,7 @@ class SafetyOperasi extends BaseController
 
     public function view_signin($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Perawat' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Manajer') {
             // Mengambil data safety sign in berdasarkan ID
             $data = $this->SafetySignInModel->find($id); // Mengambil safety sign in
             return $this->response->setJSON($data); // Mengembalikan data safety sign in dalam format JSON
@@ -188,8 +186,7 @@ class SafetyOperasi extends BaseController
 
     public function view_signout($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Perawat' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Manajer') {
             // Mengambil data safety sign out berdasarkan ID
             $data = $this->SafetySignOutModel->find($id); // Mengambil safety sign out
             return $this->response->setJSON($data); // Mengembalikan data safety sign out dalam format JSON
@@ -203,8 +200,7 @@ class SafetyOperasi extends BaseController
 
     public function view_timeout($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Perawat' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Manajer') {
             // Mengambil data safety time out berdasarkan ID
             $data = $this->SafetyTimeOutModel->find($id); // Mengambil safety time out
             return $this->response->setJSON($data); // Mengembalikan data safety time out dalam format JSON
@@ -356,7 +352,7 @@ class SafetyOperasi extends BaseController
 
     public function update_signin($id)
     {
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Manajer') {
             $db = db_connect();
             $validation = \Config\Services::validation();
 
@@ -543,7 +539,7 @@ class SafetyOperasi extends BaseController
 
     public function update_signout($id)
     {
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Manajer') {
             $db = db_connect();
             $validation = \Config\Services::validation();
 
@@ -610,7 +606,7 @@ class SafetyOperasi extends BaseController
 
     public function update_timeout($id)
     {
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Perawat' || session()->get('role') == 'Manajer') {
             $db = db_connect();
             $validation = \Config\Services::validation();
 

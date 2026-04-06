@@ -16,8 +16,7 @@ class Sessions extends BaseController
 
     public function index()
     {
-        // Memeriksa apakah peran pengguna dalam sesi adalah "Admin"
-        if (session()->get('role') == "Admin") {
+        if (session()->get('role') == 'Admin') {
             // Jika ya, siapkan data untuk ditampilkan di tampilan
             $data = [
                 'title' => 'Manajer Sesi - ' . $this->systemName, // Judul halaman
@@ -34,7 +33,6 @@ class Sessions extends BaseController
 
     public function sessionslist()
     {
-        // Memeriksa apakah peran pengguna dalam sesi adalah "Admin"
         if (session()->get('role') == 'Admin') {
             // Mengambil data dari permintaan POST
             $request = $this->request->getPost();
@@ -113,7 +111,6 @@ class Sessions extends BaseController
 
     public function flush()
     {
-        // Memeriksa apakah peran pengguna dalam sesi adalah "Admin"
         if (session()->get('role') == 'Admin') {
             $db = db_connect();
             /// Ambil token sesi perangkat aktif dari sesi saat ini
@@ -144,7 +141,6 @@ class Sessions extends BaseController
 
     public function deleteexpired()
     {
-        // Memeriksa apakah peran pengguna dalam sesi adalah "Admin"
         if (session()->get('role') == 'Admin') {
             // Menghubungkan ke database
             $db = db_connect();
@@ -178,7 +174,6 @@ class Sessions extends BaseController
 
     public function deletesession($id)
     {
-        // Memeriksa apakah peran pengguna dalam sesi adalah "Admin"
         if (session()->get('role') == 'Admin') {
             // Cek apakah sesi dengan ID yang diberikan ada
             $session = $this->SessionsModel->find($id);

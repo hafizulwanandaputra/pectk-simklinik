@@ -23,8 +23,7 @@ class OpnameObat extends BaseController
     }
     public function index()
     {
-        // Memeriksa peran pengguna, hanya 'Admin' dan 'Apoteker' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             // Menyiapkan data untuk tampilan
             $data = [
                 'title' => 'Laporan Stok Obat - ' . $this->systemName,
@@ -41,8 +40,7 @@ class OpnameObat extends BaseController
 
     public function opnameobatlist()
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             // Mengambil parameter pencarian, limit, offset, dan status dari query string
             $tanggal = $this->request->getGet('tanggal');
             $apoteker = $this->request->getGet('apoteker');
@@ -109,7 +107,7 @@ class OpnameObat extends BaseController
     public function apotekerlist()
     {
         // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Apoteker' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             // Mengambil apoteker dari tabel opname obat
             $OpnameObatData = $this->OpnameObatModel
                 ->groupBy('apoteker')
@@ -141,7 +139,7 @@ class OpnameObat extends BaseController
 
     public function create()
     {
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             $db = db_connect();
             $db->transStart(); // Mulai transaksi
 
@@ -215,8 +213,7 @@ class OpnameObat extends BaseController
 
     public function delete($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             $db = db_connect();
 
             // Menghapus detail opname obat
@@ -241,8 +238,7 @@ class OpnameObat extends BaseController
     // DETAIL OPNAME OBAT
     public function detailopnameobat($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             // Menghubungkan ke database
             $db = db_connect();
             // Mengambil opname obat
@@ -284,8 +280,7 @@ class OpnameObat extends BaseController
 
     public function obatlist($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             // Mengambil detail opname obat
             $db = db_connect();
             $detail_opname_obat = $db->table('detail_opname_obat')->where('id_opname_obat', $id)->orderBy('nama_obat')->get()->getResultArray();
@@ -302,8 +297,7 @@ class OpnameObat extends BaseController
 
     public function exportopnameobat($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             // Mengambil opname obat
             $opname_obat = $this->OpnameObatModel->find($id);
             // Mengambil detail opname obat

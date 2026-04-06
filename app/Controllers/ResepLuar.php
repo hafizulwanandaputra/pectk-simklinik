@@ -21,8 +21,7 @@ class ResepLuar extends BaseController
 
     public function index()
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             // Menyusun data yang akan dikirim ke tampilan
             $data = [
                 'title' => 'Resep Luar - ' . $this->systemName, // Judul halaman
@@ -38,8 +37,7 @@ class ResepLuar extends BaseController
 
     public function listresep()
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             // Mengambil parameter pencarian, limit, offset, dan status dari query string
             $search = $this->request->getGet('search');
             $limit = $this->request->getGet('limit');
@@ -142,8 +140,7 @@ class ResepLuar extends BaseController
 
     public function apotekerlist()
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             // Mengambil apoteker dari tabel resep luar
             $resepData = $this->ResepModel
                 ->where('apoteker IS NOT NULL')
@@ -176,8 +173,7 @@ class ResepLuar extends BaseController
 
     public function resep($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             $data = $this->ResepModel
                 ->where('nomor_registrasi', null)
                 ->where('no_rm', null)
@@ -196,8 +192,7 @@ class ResepLuar extends BaseController
 
     public function create()
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             // Validasi input
             $validation = \Config\Services::validation();
             // Menetapkan aturan validasi dasar
@@ -244,8 +239,7 @@ class ResepLuar extends BaseController
 
     public function update()
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             // Validasi input
             $validation = \Config\Services::validation();
             // Menetapkan aturan validasi dasar
@@ -306,8 +300,7 @@ class ResepLuar extends BaseController
 
     public function arsip($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             $db = db_connect();
             // Mengambil resep
             $resep = $db->table('resep');
@@ -329,8 +322,7 @@ class ResepLuar extends BaseController
 
     public function bukaarsip($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             $db = db_connect();
             // Mengambil resep
             $resep = $db->table('resep');
@@ -352,8 +344,7 @@ class ResepLuar extends BaseController
 
     public function delete($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             $db = db_connect(); // Menghubungkan ke database
 
             // Mengambil resep
@@ -430,8 +421,7 @@ class ResepLuar extends BaseController
     // DETAIL RESEP LUAR
     public function detailresep($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             // Menghubungkan ke database
             $db = db_connect();
 
@@ -486,8 +476,7 @@ class ResepLuar extends BaseController
 
     public function detailreseplist($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             // Mengambil detail resep berdasarkan id_resep yang diberikan
             $data = $this->DetailResepModel
                 ->join('resep', 'resep.id_resep = detail_resep.id_resep', 'inner') // Bergabung dengan tabel resep
@@ -509,8 +498,7 @@ class ResepLuar extends BaseController
 
     public function detailresepitem($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             // Mengambil detail resep berdasarkan id_detail_resep yang diberikan
             $data = $this->DetailResepModel
                 ->where('id_detail_resep', $id)
@@ -529,8 +517,7 @@ class ResepLuar extends BaseController
 
     public function obatlist($id_resep)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             $BatchObatModel = new BatchObatModel(); // Membuat instance model Obat
             $DetailResepModel = new DetailResepModel(); // Membuat instance model DetailResep
 
@@ -606,7 +593,7 @@ class ResepLuar extends BaseController
 
     public function obatkedaluwarsa()
     {
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             $BatchObatModel = new BatchObatModel();
 
             $hari_ini = date('Y-m-d');
@@ -675,7 +662,7 @@ class ResepLuar extends BaseController
     public function tambahdetailresep($id)
     {
         // Hanya Admin atau Apoteker yang boleh menambah detail resep
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             $validation = \Config\Services::validation();
             $validation->setRules([
                 'id_batch_obat' => 'required',
@@ -812,8 +799,7 @@ class ResepLuar extends BaseController
 
     public function perbaruidetailresep($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             // Validasi input
             $validation = \Config\Services::validation();
             // Menetapkan aturan validasi dasar
@@ -947,8 +933,7 @@ class ResepLuar extends BaseController
 
     public function hapusdetailresep($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             // Menghubungkan ke database
             $db = db_connect();
 
@@ -1032,8 +1017,7 @@ class ResepLuar extends BaseController
 
     public function etiketdalam($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             // Mengambil data resep berdasarkan id dan status
             $resep = $this->ResepModel
                 ->where('dokter', 'Resep Luar')
@@ -1157,8 +1141,7 @@ class ResepLuar extends BaseController
 
     public function etiketluar($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             // Mengambil data resep berdasarkan id dan status
             $resep = $this->ResepModel
                 ->where('dokter', 'Resep Luar')

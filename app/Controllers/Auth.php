@@ -93,6 +93,7 @@ class Auth extends BaseController
                     session()->set('role', $check['role']);
                     session()->set('kode_antrian', $check['kode_antrian']);
                     session()->set('auto_date', $check['auto_date']);
+                    session()->set('is_owner', $check['is_owner']);
                     session()->set('session_token', $session_token);
                     session()->set('created_at', date('Y-m-d H:i:s'));
                     session()->set('expires_at', $expires_at);

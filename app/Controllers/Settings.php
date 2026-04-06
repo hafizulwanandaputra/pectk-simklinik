@@ -79,8 +79,7 @@ class Settings extends BaseController
 
     public function pwdTransaksi()
     {
-        // Memeriksa apakah peran pengguna dalam sesi adalah "Admin"
-        if (session()->get('role') == 'Admin') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Manajer') {
             // Menyiapkan data untuk tampilan halaman ubah kata sandi
             $data = [
                 'title' => 'Ubah Kata Sandi Transaksi - ' . $this->systemName, // Judul halaman
@@ -97,8 +96,7 @@ class Settings extends BaseController
 
     public function updatePwdTransaksi()
     {
-        // Memeriksa apakah peran pengguna dalam sesi adalah "Admin"
-        if (session()->get('role') == 'Admin') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Manajer') {
             // Memvalidasi input dari form ubah kata sandi
             if (!$this->validate([
                 'new_password1' => [
@@ -218,8 +216,7 @@ class Settings extends BaseController
 
     public function emptyrecords()
     {
-        // Memeriksa apakah peran pengguna dalam sesi adalah "Admin"
-        if (session()->get('role') == 'Admin') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Manajer') {
             $db = db_connect();
 
             $medrec_assesment = $db->table('medrec_assesment')
@@ -532,8 +529,7 @@ class Settings extends BaseController
 
     public function deleteempty()
     {
-        // Memeriksa apakah peran pengguna dalam sesi adalah "Admin"
-        if (session()->get('role') == 'Admin') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Manajer') {
             $db = db_connect();
             $tables = [
                 'medrec_assesment' => [

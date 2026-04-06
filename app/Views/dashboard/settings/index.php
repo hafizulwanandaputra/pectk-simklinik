@@ -11,7 +11,7 @@
 <?= $this->section('content'); ?>
 <main class="main-content-inside px-3 pt-3">
     <div class="no-fluid-content">
-        <?php if (session()->get('role') == "Admin") : ?>
+        <?php if (session()->get('role') == 'Admin' || session()->get('role') == "Manajer") : ?>
             <h5>Rekam Medis yang Kosong</h5>
             <div class="row row-cols-2 row-cols-lg-4 g-2 mb-2">
                 <div class="col">
@@ -136,7 +136,7 @@
         <?php endif; ?>
         <h5>Pengguna</h5>
         <ul class="list-group shadow-sm  mb-3">
-            <?php if (session()->get('role') == "Admin") : ?>
+            <?php if (session()->get('role') == 'Admin') : ?>
                 <li class="list-group-item p-1 list-group-item-action">
                     <div class="d-flex align-items-start">
                         <a href="<?= base_url('/settings/sessions'); ?>" class="stretched-link" style="min-width: 3rem; max-width: 3rem; text-align: center;">
@@ -217,7 +217,7 @@
 <?= $this->endSection(); ?>
 <?= $this->section('javascript'); ?>
 <script>
-    <?php if (session()->get('role') == "Admin") : ?>
+    <?php if (session()->get('role') == 'Admin' || session()->get('role') == "Manajer") : ?>
         async function LoadEmptyRecords() {
             $('#loadingSpinner').show();
             const spinner = `<span class="placeholder w-100"></span>`;
@@ -259,7 +259,7 @@
         };
     <?php endif; ?>
     $(document).ready(function() {
-        <?php if (session()->get('role') == "Admin") : ?>
+        <?php if (session()->get('role') == 'Admin' || session()->get('role') == "Manajer") : ?>
             const socket = new WebSocket('<?= env('WS-URL-JS') ?>'); // Ganti dengan domain VPS
 
             socket.onopen = () => {

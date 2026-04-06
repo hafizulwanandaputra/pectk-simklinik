@@ -25,8 +25,7 @@ class TindakanRajal extends BaseController
 
     public function index($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Dokter' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Manajer') {
             $db = db_connect();
 
             // Inisialisasi rawat jalan
@@ -127,8 +126,7 @@ class TindakanRajal extends BaseController
 
     public function view($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Dokter' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Manajer') {
             // Mengambil data skrining berdasarkan ID
             $data = $this->TindakanRajalModel->find($id); // Mengambil skrining
             $data['nama_perawat'] = explode(';', $data['nama_perawat']); // Ubah CSV menjadi array
@@ -144,7 +142,7 @@ class TindakanRajal extends BaseController
     public function icdx()
     {
         // Memeriksa peran pengguna, hanya 'Admin' dan 'Dokter' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Manajer') {
             // Mendapatkan parameter pencarian dari permintaan GET
             $search = $this->request->getGet('search');
             $offset = (int) $this->request->getGet('offset') ?? 0; // Default 0 jika tidak ada
@@ -190,8 +188,7 @@ class TindakanRajal extends BaseController
 
     public function export($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Admisi' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi' || session()->get('role') == 'Dokter') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi' || session()->get('role') == 'Dokter' || session()->get('role') == 'Manajer') {
             $db = db_connect();
 
             // Inisialisasi rawat jalan
@@ -317,8 +314,7 @@ class TindakanRajal extends BaseController
 
     public function update($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Dokter' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Manajer') {
             // Validate
             $validation = \Config\Services::validation();
             // Set base validation rules

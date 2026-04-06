@@ -16,8 +16,7 @@ class Supplier extends BaseController
 
     public function index()
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             // Menyiapkan data untuk tampilan halaman supplier
             $data = [
                 'title' => 'Pemasok - ' . $this->systemName, // Judul halaman
@@ -32,8 +31,7 @@ class Supplier extends BaseController
 
     public function supplierlist()
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             // Mengambil data dari permintaan POST
             $request = $this->request->getPost();
             $search = $request['search']['value']; // Nilai pencarian
@@ -110,8 +108,7 @@ class Supplier extends BaseController
 
     public function supplier($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             // Mengambil data supplier berdasarkan id
             $data = $this->SupplierModel->find($id);
             return $this->response->setJSON($data); // Mengembalikan data dalam format JSON
@@ -124,7 +121,7 @@ class Supplier extends BaseController
 
     public function create()
     {
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             $validation = \Config\Services::validation();
 
             // Ambil dan normalisasi input
@@ -188,7 +185,7 @@ class Supplier extends BaseController
 
     public function update()
     {
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             $validation = \Config\Services::validation();
 
             // Ambil dan normalisasi input
@@ -254,8 +251,7 @@ class Supplier extends BaseController
 
     public function delete($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Apoteker' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             $db = db_connect(); // Menghubungkan ke database
 
             try {

@@ -21,8 +21,7 @@ class FRMSetujuKedokteran extends BaseController
     }
     public function index()
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Admisi' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Admisi') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Admisi' || session()->get('role') == 'Manajer') {
             // Menyiapkan data untuk tampilan
             $data = [
                 'title' => 'Formulir Persetujuan Tindakan Kedokteran - ' . $this->systemName,
@@ -39,8 +38,7 @@ class FRMSetujuKedokteran extends BaseController
 
     public function frmsetujukedokteranlist()
     {
-        // Memeriksa peran pengguna, hanya 'Admin', atau 'Admisi' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Admisi') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Admisi' || session()->get('role') == 'Manajer') {
             // Mengambil parameter pencarian, limit, offset, dan status dari query string
             $tanggal = $this->request->getGet('tanggal');
             $search = $this->request->getGet('search');
@@ -102,8 +100,7 @@ class FRMSetujuKedokteran extends BaseController
 
     public function pasienlist()
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Admisi' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Admisi') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Admisi' || session()->get('role') == 'Manajer') {
             // Mendapatkan parameter pencarian dari permintaan GET
             $search = $this->request->getGet('search');
             $offset = (int) $this->request->getGet('offset') ?? 0; // Default 0 jika tidak ada
@@ -165,8 +162,7 @@ class FRMSetujuKedokteran extends BaseController
 
     public function create()
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Dokter' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Manajer') {
             $db = db_connect();
             // Melakukan validasi
             $validation = \Config\Services::validation();
@@ -221,8 +217,7 @@ class FRMSetujuKedokteran extends BaseController
 
     public function export($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Admisi' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Admisi') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Admisi' || session()->get('role') == 'Manajer') {
             $db = db_connect();
 
             // Inisialisasi rawat jalan
@@ -389,8 +384,7 @@ class FRMSetujuKedokteran extends BaseController
 
     public function delete($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Dokter' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Manajer') {
             $form_persetujuan_tindakan = $this->FRMSetujuKedokteranModel
                 ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_form_persetujuan_tindakan.nomor_registrasi', 'inner')
                 ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
@@ -420,8 +414,7 @@ class FRMSetujuKedokteran extends BaseController
 
     public function details($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Dokter' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Manajer') {
             $db = db_connect();
 
             $form_persetujuan_tindakan = $this->FRMSetujuKedokteranModel
@@ -484,8 +477,7 @@ class FRMSetujuKedokteran extends BaseController
 
     public function view($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Dokter' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Manajer') {
             // Mengambil data skrining berdasarkan ID
             $data = $this->FRMSetujuKedokteranModel
                 ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_form_persetujuan_tindakan.nomor_registrasi', 'inner')
@@ -502,8 +494,7 @@ class FRMSetujuKedokteran extends BaseController
 
     public function update($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' atau 'Dokter' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Manajer') {
             $db = db_connect();
             // Melakukan validasi
             $validation = \Config\Services::validation();

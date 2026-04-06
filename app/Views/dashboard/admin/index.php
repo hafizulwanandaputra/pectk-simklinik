@@ -152,6 +152,7 @@
                             <option value="Monitor Antrean">Monitor Antrean</option>
                             <option value="Satpam">Satpam</option>
                             <option value="Admin">Admin</option>
+                            <option value="Manajer">Manajer</option>
                             <option value="Admisi">Admisi</option>
                             <option value="Perawat">Perawat</option>
                             <option value="Apoteker">Apoteker</option>

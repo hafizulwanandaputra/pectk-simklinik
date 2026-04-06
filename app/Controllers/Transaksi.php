@@ -33,8 +33,7 @@ class Transaksi extends BaseController
 
     public function index()
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Admisi', atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi' || session()->get('role') == 'Kasir') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi' || session()->get('role') == 'Kasir' || session()->get('role') == 'Manajer') {
             // Menyiapkan data untuk tampilan halaman kasir
             $data = [
                 'title' => 'Kasir - ' . $this->systemName, // Judul halaman
@@ -49,8 +48,7 @@ class Transaksi extends BaseController
 
     public function listtransaksi()
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Admisi', atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi' || session()->get('role') == 'Kasir') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi' || session()->get('role') == 'Kasir' || session()->get('role') == 'Manajer') {
             // Mengambil parameter dari permintaan GET
             $search = $this->request->getGet('search'); // Nilai pencarian
             $limit = $this->request->getGet('limit'); // Batas jumlah hasil
@@ -193,8 +191,7 @@ class Transaksi extends BaseController
 
     public function jaminanlist()
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Admisi', atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi' || session()->get('role') == 'Kasir') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi' || session()->get('role') == 'Kasir' || session()->get('role') == 'Manajer') {
             $db = db_connect();
             // Mengambil jaminan dari tabel user
             $transaksiData = $this->TransaksiModel
@@ -229,8 +226,7 @@ class Transaksi extends BaseController
 
     public function kasirlist()
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Admisi', atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi' || session()->get('role') == 'Kasir') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi' || session()->get('role') == 'Kasir' || session()->get('role') == 'Manajer') {
             $db = db_connect();
             // Mengambil kasir dari tabel user
             $transaksiData = $this->TransaksiModel
@@ -264,7 +260,7 @@ class Transaksi extends BaseController
     public function pasienlist()
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir' || session()->get('role') == 'Manajer') {
             $data = $this->RawatJalanModel
                 ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
                 ->like('tanggal_registrasi', date('Y-m-d'))
@@ -307,7 +303,7 @@ class Transaksi extends BaseController
     public function pasienlistexternal()
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir' || session()->get('role') == 'Manajer') {
             // Mengambil data dari tabel resep dengan status = 0 dan mengurutkan berdasarkan nomor_registrasi
             $ResepModel = new ResepModel();
             $resepData = $ResepModel
@@ -359,7 +355,7 @@ class Transaksi extends BaseController
     public function bmhplist()
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir' || session()->get('role') == 'Manajer') {
             // Mengambil data dari tabel bmhp dengan status = 0 dan mengurutkan berdasarkan nomor_registrasi
             $BMHPModel = new BMHPModel();
             $bmhpData = $BMHPModel
@@ -405,7 +401,7 @@ class Transaksi extends BaseController
     public function transaksi($id)
     {
         // Memeriksa peran pengguna, hanya 'Admin', 'Admisi', 'Dokter', atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi' || session()->get('role') == 'Dokter' || session()->get('role') == 'Kasir') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi' || session()->get('role') == 'Dokter' || session()->get('role') == 'Kasir' || session()->get('role') == 'Manajer') {
             // Mengambil data transaksi berdasarkan id
             $data = $this->TransaksiModel->find($id);
             return $this->response->setJSON($data); // Mengembalikan data dalam format JSON
@@ -419,7 +415,7 @@ class Transaksi extends BaseController
     public function create()
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir' || session()->get('role') == 'Manajer') {
             // Melakukan validasi
             $validation = \Config\Services::validation();
             // Menetapkan aturan validasi dasar
@@ -503,7 +499,7 @@ class Transaksi extends BaseController
     public function createexternal()
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir' || session()->get('role') == 'Manajer') {
             // Melakukan validasi
             $validation = \Config\Services::validation();
             // Menetapkan aturan validasi dasar
@@ -580,7 +576,7 @@ class Transaksi extends BaseController
     public function createbmhp()
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir' || session()->get('role') == 'Manajer') {
             // Melakukan validasi
             $validation = \Config\Services::validation();
             // Menetapkan aturan validasi dasar
@@ -657,7 +653,7 @@ class Transaksi extends BaseController
     public function delete($id)
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir' || session()->get('role') == 'Manajer') {
             $transaksi = $this->TransaksiModel->find($id);
             if ($transaksi['lunas'] == 0) {
                 $db = db_connect();
@@ -695,7 +691,7 @@ class Transaksi extends BaseController
     public function detailtransaksi($id)
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir' || session()->get('role') == 'Manajer') {
             // Menghubungkan ke database
             $db = db_connect();
 
@@ -779,7 +775,7 @@ class Transaksi extends BaseController
     public function detaillayananlist($id)
     {
         // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Kasir') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Kasir' || session()->get('role') == 'Manajer') {
             // Mengambil daftar layanan berdasarkan ID transaksi
             $layanan = $this->DetailTransaksiModel
                 ->where('detail_transaksi.id_transaksi', $id)
@@ -821,7 +817,7 @@ class Transaksi extends BaseController
     public function detailobatalkeslist($id)
     {
         // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Kasir') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Kasir' || session()->get('role') == 'Manajer') {
             // Mengambil daftar obat dan alkes berdasarkan ID transaksi
             $obatalkes = $this->DetailTransaksiModel
                 ->where('detail_transaksi.id_transaksi', $id)
@@ -888,7 +884,7 @@ class Transaksi extends BaseController
     public function detailbmhplist($id)
     {
         // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir' || session()->get('role') == 'Manajer') {
             // Mengambil daftar obat dan alkes berdasarkan ID transaksi
             $bmhp = $this->DetailTransaksiModel
                 ->where('detail_transaksi.id_transaksi', $id)
@@ -952,7 +948,7 @@ class Transaksi extends BaseController
     public function detailtransaksiitem($id)
     {
         // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Kasir') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Kasir' || session()->get('role') == 'Manajer') {
             // Mengambil data detail transaksi berdasarkan ID
             $data = $this->DetailTransaksiModel
                 ->where('id_detail_transaksi', $id)
@@ -972,7 +968,7 @@ class Transaksi extends BaseController
     public function layananlist($id_transaksi, $jenis_layanan = null)
     {
         // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Kasir') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Kasir' || session()->get('role') == 'Manajer') {
             $LayananModel = new LayananModel();
             $DetailTransaksiModel = new DetailTransaksiModel();
 
@@ -1019,7 +1015,7 @@ class Transaksi extends BaseController
     public function reseplist($id_transaksi, $nomor_registrasi)
     {
         // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Kasir') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Kasir' || session()->get('role') == 'Manajer') {
             $ResepModel = new ResepModel();
             $DetailTransaksiModel = new DetailTransaksiModel();
 
@@ -1067,7 +1063,7 @@ class Transaksi extends BaseController
     public function reseplistexternal($id_transaksi, $id_resep)
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir' || session()->get('role') == 'Manajer') {
             $ResepModel = new ResepModel();
             $DetailTransaksiModel = new DetailTransaksiModel();
 
@@ -1115,7 +1111,7 @@ class Transaksi extends BaseController
     public function bmhplist2($id_transaksi, $id_bmhp)
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir' || session()->get('role') == 'Manajer') {
             $BMHPModel = new BMHPModel();
             $DetailTransaksiModel = new DetailTransaksiModel();
 
@@ -1163,7 +1159,7 @@ class Transaksi extends BaseController
     public function tambahlayanan($id)
     {
         // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Kasir') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Kasir' || session()->get('role') == 'Manajer') {
             // Validasi input
             $validation = \Config\Services::validation();
             // Menetapkan aturan validasi dasar
@@ -1249,7 +1245,7 @@ class Transaksi extends BaseController
     public function tambahobatalkes($id)
     {
         // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Kasir') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Kasir' || session()->get('role') == 'Manajer') {
             // Validasi input
             $validation = \Config\Services::validation();
             // Menetapkan aturan validasi dasar
@@ -1329,7 +1325,7 @@ class Transaksi extends BaseController
     public function tambahbmhp($id)
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir' || session()->get('role') == 'Manajer') {
             // Validasi input
             $validation = \Config\Services::validation();
             // Menetapkan aturan validasi dasar
@@ -1402,7 +1398,7 @@ class Transaksi extends BaseController
     public function perbaruilayanan($id)
     {
         // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Kasir') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Kasir' || session()->get('role') == 'Manajer') {
             // Validasi input
             $validation = \Config\Services::validation();
             // Menetapkan aturan validasi dasar
@@ -1487,7 +1483,7 @@ class Transaksi extends BaseController
     public function perbaruiobatalkes($id)
     {
         // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Kasir') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Kasir' || session()->get('role') == 'Manajer') {
             // Validasi input
             $validation = \Config\Services::validation();
             // Menetapkan aturan validasi dasar
@@ -1566,7 +1562,7 @@ class Transaksi extends BaseController
     public function perbaruibmhp($id)
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir' || session()->get('role') == 'Manajer') {
             // Validasi input
             $validation = \Config\Services::validation();
             // Menetapkan aturan validasi dasar
@@ -1638,7 +1634,7 @@ class Transaksi extends BaseController
     public function hapusdetailtransaksi($id)
     {
         // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Kasir') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Kasir' || session()->get('role') == 'Manajer') {
             $db = db_connect();
 
             // Mencari detail pembelian obat sebelum penghapusan untuk mendapatkan id_transaksi
@@ -1697,7 +1693,7 @@ class Transaksi extends BaseController
     public function process($id_transaksi)
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir' || session()->get('role') == 'Manajer') {
             // Validasi input
             $validation = \Config\Services::validation();
             // Menetapkan aturan validasi dasar
@@ -1832,8 +1828,7 @@ class Transaksi extends BaseController
 
     public function cancel($id_transaksi)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' yang diizinkan
-        if (session()->get('role') == 'Admin') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Manajer') {
             // Validasi input
             $validation = \Config\Services::validation();
             // Menetapkan aturan validasi dasar
@@ -1929,8 +1924,7 @@ class Transaksi extends BaseController
 
     public function struk($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Admisi', atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi' || session()->get('role') == 'Kasir') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi' || session()->get('role') == 'Kasir' || session()->get('role') == 'Manajer') {
             // Mengambil data transaksi berdasarkan ID
             $transaksi = $this->TransaksiModel->find($id);
             // Mengambil detail layanan dari transaksi
@@ -2214,7 +2208,7 @@ class Transaksi extends BaseController
     public function reportinit()
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir' || session()->get('role') == 'Manajer') {
             // Menyiapkan data untuk tampilan halaman laporan
             $data = [
                 'title' => 'Laporan Transaksi Harian - ' . $this->systemName, // Judul halaman
@@ -2230,7 +2224,7 @@ class Transaksi extends BaseController
     public function report($tgl_transaksi)
     {
         // Memeriksa peran pengguna, hanya 'Admin' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir' || session()->get('role') == 'Manajer') {
             // Mengambil tanggal dari query string
             $tanggal = $tgl_transaksi;
 
@@ -2389,7 +2383,7 @@ class Transaksi extends BaseController
     public function reportexcel($tgl_transaksi)
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir' || session()->get('role') == 'Manajer') {
             $transaksi = $this->TransaksiModel->where('lunas', 1)
                 ->like('tgl_transaksi', $tgl_transaksi)
                 ->findAll();
@@ -2765,7 +2759,7 @@ class Transaksi extends BaseController
     public function reportjaminan()
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir' || session()->get('role') == 'Manajer') {
             // Menyiapkan data untuk tampilan halaman laporan
             $data = [
                 'title' => 'Laporan Transaksi Berdasarkan Jaminan - ' . $this->systemName, // Judul halaman
@@ -2780,7 +2774,7 @@ class Transaksi extends BaseController
 
     public function reportjaminanlist()
     {
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir' || session()->get('role') == 'Manajer') {
             $jaminan        = $this->request->getGet('jaminan');
             $tanggal_awal   = $this->request->getGet('tanggal_awal');
             $tanggal_akhir  = $this->request->getGet('tanggal_akhir');
@@ -2885,7 +2879,7 @@ class Transaksi extends BaseController
     public function reportjaminanexcel()
     {
         // Memeriksa peran pengguna, hanya 'Admin' atau 'Kasir' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir' || session()->get('role') == 'Manajer') {
             $jaminan        = $this->request->getGet('jaminan');
             $jaminanNama        = $this->request->getGet('jaminanNama');
             $tanggal_awal   = $this->request->getGet('tanggal_awal');

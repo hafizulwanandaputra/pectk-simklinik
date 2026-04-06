@@ -23,8 +23,7 @@ class Istirahat extends BaseController
     }
     public function index()
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', 'Perawat', atau 'Admisi' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Admisi') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Admisi' || session()->get('role') == 'Manajer') {
             // Menyiapkan data untuk tampilan
             $data = [
                 'title' => 'Surat Keterangan Istirahat - ' . $this->systemName,
@@ -41,8 +40,7 @@ class Istirahat extends BaseController
 
     public function istirahatlist()
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', 'Perawat', atau 'Admisi' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Admisi') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Admisi' || session()->get('role') == 'Manajer') {
             // Mengambil parameter pencarian, limit, offset, dan status dari query string
             $tanggal = $this->request->getGet('tanggal');
             $search = $this->request->getGet('search');
@@ -104,8 +102,7 @@ class Istirahat extends BaseController
 
     public function pasienlist()
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', 'Perawat', atau 'Admisi' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Admisi') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Admisi' || session()->get('role') == 'Manajer') {
             // Mendapatkan parameter pencarian dari permintaan GET
             $search = $this->request->getGet('search');
             $offset = (int) $this->request->getGet('offset') ?? 0; // Default 0 jika tidak ada
@@ -167,8 +164,7 @@ class Istirahat extends BaseController
 
     public function create()
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Perawat' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Manajer') {
             $db = db_connect();
             // Melakukan validasi
             $validation = \Config\Services::validation();
@@ -226,8 +222,7 @@ class Istirahat extends BaseController
         // Ambil parameter 'side' dari URL
         $side = $this->request->getGet('side');
 
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', 'Perawat', atau 'Admisi' yang diizinkan
-        if (!in_array(session()->get('role'), ['Admin', 'Dokter', 'Perawat', 'Admisi'])) {
+        if (!in_array(session()->get('role'), ['Admin', 'Dokter', 'Perawat', 'Admisi', 'Manajer'])) {
             throw PageNotFoundException::forPageNotFound();
         }
 
@@ -410,8 +405,7 @@ class Istirahat extends BaseController
 
     public function delete($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Perawat' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Manajer') {
             $istirahat = $this->IstirahatModel
                 ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_keterangan_istirahat.nomor_registrasi', 'inner')
                 ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
@@ -441,8 +435,7 @@ class Istirahat extends BaseController
 
     public function details($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Perawat' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Manajer') {
             $db = db_connect();
 
             $istirahat = $this->IstirahatModel
@@ -499,8 +492,7 @@ class Istirahat extends BaseController
 
     public function view($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Perawat' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Manajer') {
             // Mengambil data skrining berdasarkan ID
             $data = $this->IstirahatModel
                 ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_keterangan_istirahat.nomor_registrasi', 'inner')
@@ -517,8 +509,7 @@ class Istirahat extends BaseController
 
     public function update($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', atau 'Perawat' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Manajer') {
             $db = db_connect();
             // Melakukan validasi
             $validation = \Config\Services::validation();

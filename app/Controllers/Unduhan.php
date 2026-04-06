@@ -11,8 +11,7 @@ class Unduhan extends BaseController
 {
     public function index()
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Admisi', atau 'Apoteker' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             // Menyiapkan data untuk tampilan
             $data = [
                 'title' => 'Unduh Dokumen - ' . $this->systemName,
@@ -29,7 +28,7 @@ class Unduhan extends BaseController
 
     public function kartuberobat()
     {
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi' || session()->get('role') == 'Manajer') {
             $path = WRITEPATH . 'privatefiles/kartuberobat.pdf';
 
             // Cek apakah file ada
@@ -49,7 +48,7 @@ class Unduhan extends BaseController
 
     public function resepobatluar()
     {
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi' || session()->get('role') == 'Apoteker') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
             $path = WRITEPATH . 'privatefiles/resepobat.pdf';
 
             // Cek apakah file ada
@@ -69,7 +68,7 @@ class Unduhan extends BaseController
 
     public function optik()
     {
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi' || session()->get('role') == 'Manajer') {
             $data = [
                 'title' => 'Resep Kacamata - ' . $this->systemName,
                 'agent' => $this->request->getUserAgent()

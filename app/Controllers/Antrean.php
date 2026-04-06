@@ -15,8 +15,7 @@ class Antrean extends BaseController
 
     public function index()
     {
-        // Memeriksa peran pengguna, hanya 'Admin' dan 'Admisi' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi' || session()->get('role') == 'Manajer') {
             $db = db_connect(); // Menghubungkan ke database
             // Mengambil daftar loket dari database
             $loket = $db->table('master_loket')->where('status', 1)->get()->getResultArray();
@@ -37,8 +36,7 @@ class Antrean extends BaseController
 
     public function list_antrean()
     {
-        // Memeriksa peran pengguna, hanya 'Admin' dan 'Admisi' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi' || session()->get('role') == 'Manajer') {
             // Mengambil parameter pencarian, limit, offset, dan status dari query string
             $nama_jaminan = $this->request->getGet('nama_jaminan');
             $tanggal_antrean = $this->request->getGet('tanggal_antrean');
@@ -156,8 +154,7 @@ class Antrean extends BaseController
 
     public function selesai_antrean($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' dan 'Admisi' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi' || session()->get('role') == 'Manajer') {
             $db = db_connect(); // Menghubungkan ke database
 
             // Ambil data 'loket' dari POST
@@ -188,8 +185,7 @@ class Antrean extends BaseController
 
     public function batal_antrean($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin' dan 'Admisi' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi' || session()->get('role') == 'Manajer') {
             $db = db_connect(); // Menghubungkan ke database
 
             // Ambil data 'loket' dari POST

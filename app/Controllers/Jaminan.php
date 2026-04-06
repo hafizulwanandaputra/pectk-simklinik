@@ -16,8 +16,7 @@ class Jaminan extends BaseController
 
     public function index()
     {
-        // Memeriksa apakah peran pengguna dalam sesi adalah "Admin"
-        if (session()->get('role') == "Admin") {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Manajer') {
             // Jika ya, siapkan data untuk ditampilkan di tampilan
             $data = [
                 'title' => 'Jaminan - ' . $this->systemName, // Judul halaman
@@ -34,8 +33,7 @@ class Jaminan extends BaseController
 
     public function jaminanlist()
     {
-        // Memeriksa apakah peran pengguna dalam sesi adalah "Admin"
-        if (session()->get('role') == 'Admin') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Manajer') {
             // Mengambil data dari permintaan POST
             $request = $this->request->getPost();
             $search = $request['search']['value']; // Nilai pencarian
@@ -105,8 +103,7 @@ class Jaminan extends BaseController
 
     public function jaminan($id)
     {
-        // Memeriksa apakah peran pengguna dalam sesi adalah "Admin"
-        if (session()->get('role') == 'Admin') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Manajer') {
             // Mengambil data pengguna berdasarkan ID, kecuali pengguna yang sedang login
             $data = $this->JaminanModel->where('jaminanKode !=', 'UMUM')->find($id);
             // Mengembalikan respons JSON dengan data pengguna
@@ -121,8 +118,7 @@ class Jaminan extends BaseController
 
     public function create()
     {
-        // Memeriksa apakah peran pengguna dalam sesi adalah "Admin"
-        if (session()->get('role') == 'Admin') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Manajer') {
             // Menginisialisasi layanan validasi
             $validation = \Config\Services::validation();
             // Menetapkan aturan validasi dasar
@@ -213,8 +209,7 @@ class Jaminan extends BaseController
 
     public function update()
     {
-        // Memeriksa apakah peran pengguna dalam sesi adalah "Admin"
-        if (session()->get('role') == 'Admin') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Manajer') {
             // Menginisialisasi layanan validasi
             $validation = \Config\Services::validation();
             // Menetapkan aturan validasi dasar
@@ -258,8 +253,7 @@ class Jaminan extends BaseController
 
     public function delete($id)
     {
-        // Memeriksa apakah peran pengguna dalam sesi adalah "Admin"
-        if (session()->get('role') == 'Admin') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Manajer') {
             try {
                 // Menghapus pengguna berdasarkan ID
                 $this->JaminanModel->delete($id);

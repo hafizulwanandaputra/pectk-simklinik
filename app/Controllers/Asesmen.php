@@ -22,8 +22,7 @@ class Asesmen extends BaseController
 
     public function index($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', 'Perawat', atau 'Admisi' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Manajer') {
             $db = db_connect();
 
             // Inisialisasi rawat jalan
@@ -109,8 +108,7 @@ class Asesmen extends BaseController
 
     public function view($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', 'Perawat', atau 'Admisi' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Manajer') {
             // Mengambil data asesmen berdasarkan ID
             $data = $this->AsesmenModel->find($id); // Mengambil asesmen
             $data['sakit_lainnya'] = explode(',', $data['sakit_lainnya']); // Ubah CSV menjadi array
@@ -125,8 +123,7 @@ class Asesmen extends BaseController
 
     public function icdx()
     {
-        // Memeriksa peran pengguna, hanya 'Admin' dan 'Dokter' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Manajer') {
             // Mendapatkan parameter pencarian dari permintaan GET
             $search = $this->request->getGet('search');
             $offset = (int) $this->request->getGet('offset') ?? 0; // Default 0 jika tidak ada
@@ -172,8 +169,7 @@ class Asesmen extends BaseController
 
     public function icd9()
     {
-        // Memeriksa peran pengguna, hanya 'Admin' dan 'Dokter' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Manajer') {
             // Mendapatkan parameter pencarian dari permintaan GET
             $search = $this->request->getGet('search');
             $offset = (int) $this->request->getGet('offset') ?? 0; // Default 0 jika tidak ada
@@ -219,8 +215,7 @@ class Asesmen extends BaseController
 
     public function listvisus()
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', 'Perawat', atau 'Admisi' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Manajer') {
             // Membuat koneksi ke database
             $db = db_connect();
 
@@ -252,7 +247,6 @@ class Asesmen extends BaseController
 
     public function export($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', 'Perawat', atau 'Admisi' yang diizinkan
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
             $db = db_connect();
 
@@ -379,8 +373,7 @@ class Asesmen extends BaseController
 
     public function update($id)
     {
-        // Memeriksa peran pengguna, hanya 'Admin', 'Dokter', 'Perawat', atau 'Admisi' yang diizinkan
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Manajer') {
             // Validate
             $validation = \Config\Services::validation();
             $alergi = $this->request->getPost('alergi');
