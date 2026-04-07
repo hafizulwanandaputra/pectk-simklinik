@@ -503,12 +503,12 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
 <body class="bg-body-tertiary user-select-none">
     <div class="wrapper">
         <!-- HEADER -->
-        <header class="navbar sticky-top flex-md-nowrap p-0 shadow-sm bg-success-subtle text-success-emphasis border-bottom border-success-subtle header">
+        <header class="navbar sticky-top flex-md-nowrap p-0 shadow-sm bg-success-subtle text-body-emphasis border-bottom border-success-subtle header">
             <?php if (!(in_array(session()->get('role'), ['Satpam', 'Monitor Antrean']) && $activeSegment === 'home')) : ?>
                 <div id="sidebarHeader" class="d-flex justify-content-start align-items-center ms-0 ms-md-2 px-3 px-md-2 py-md-1" style="min-height: 3rem; max-height: 3rem;">
                     <span class="navbar-brand mx-0 text-start lh-sm d-flex justify-content-center align-items-center" style="font-size: 9pt;">
                         <img src="<?= base_url('/assets/images/pec-klinik-logo.png'); ?>" alt="KLINIK MATA PECTK" height="28px">
-                        <div class="ps-2 text-start text-success-emphasis fw-bold">PADANG EYE CENTER<br>TELUK KUANTAN</div>
+                        <div class="ps-2 text-start text-body-emphasis fw-bold">PADANG EYE CENTER<br>TELUK KUANTAN</div>
                     </span>
                 </div>
                 <button type="button" class="btn btn-outline-success bg-gradient d-md-none mx-3" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation"><i class="fa-solid fa-bars"></i></button>
@@ -521,7 +521,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                     <div class="vr d-none d-lg-block border-success-subtle" style="height: 2.5rem;"></div>
                 </div>
                 <div class="me-3 ms-1 ms-lg-3">
-                    <a href="#" class="d-flex align-items-center text-success-emphasis text-decoration-none" data-bs-toggle="offcanvas" data-bs-target="#userOffcanvas" role="button" aria-controls="userOffcanvas">
+                    <a href="#" class="d-flex align-items-center text-body-emphasis text-decoration-none" data-bs-toggle="offcanvas" data-bs-target="#userOffcanvas" role="button" aria-controls="userOffcanvas">
                         <div class="me-2 d-none d-lg-block text-end">
                             <div class="d-flex flex-column">
                                 <div class="text-nowrap fw-medium lh-sm" style="font-size: 0.75em;"><?= session()->get('fullname') ?></div>
@@ -539,7 +539,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                             <div>
                                 <span class="navbar-brand mx-0 text-start text-md-center lh-sm d-flex justify-content-center align-items-center" style="font-size: 9pt;">
                                     <img src="<?= base_url('/assets/images/pec-klinik-logo.png'); ?>" alt="KLINIK MATA PECTK" height="28px">
-                                    <div class="ps-2 text-start text-success-emphasis fw-bold">PADANG EYE CENTER<br>TELUK KUANTAN</div>
+                                    <div class="ps-2 text-start text-body-emphasis fw-bold">PADANG EYE CENTER<br>TELUK KUANTAN</div>
                                 </span>
                             </div>
                             <div class="d-flex flex-row">
