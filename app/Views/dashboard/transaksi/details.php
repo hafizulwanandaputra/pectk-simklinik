@@ -32,7 +32,7 @@
 <?= $this->endSection(); ?>
 <?= $this->section('title'); ?>
 <div class="d-flex justify-content-start align-items-center">
-    <a class="fs-5 me-3 text-success-emphasis" href="<?= base_url('/transaksi'); ?>"><i class="fa-solid fa-arrow-left"></i></a>
+    <a class="fs-5 me-3 text-body-emphasis" href="<?= base_url('/transaksi'); ?>"><i class="fa-solid fa-arrow-left"></i></a>
     <div class="flex-fill text-truncate">
         <div class="d-flex flex-column">
             <div class="fw-medium fs-6 lh-sm"><?= $headertitle; ?></div>
@@ -42,16 +42,16 @@
     <div id="loadingSpinner" class="px-2">
         <?= $this->include('spinner/spinner'); ?>
     </div>
-    <a id="refreshButton" class="fs-6 mx-2 text-success-emphasis" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan"><i class="fa-solid fa-sync"></i></a>
+    <a id="refreshButton" class="fs-6 mx-2 text-body-emphasis" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan"><i class="fa-solid fa-sync"></i></a>
     <?php if ($previous): ?>
-        <a class="fs-6 mx-2 text-success-emphasis" href="<?= site_url('transaksi/detailtransaksi/' . $previous['id_transaksi']) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="<?= $previous['no_kwitansi'] ?> • <?= ($previous['nama_pasien'] == NULL) ? 'Anonim' : $previous['nama_pasien']; ?> • <?= $previous['tgl_transaksi'] ?>"><i class="fa-solid fa-circle-arrow-left"></i></a>
+        <a class="fs-6 mx-2 text-body-emphasis" href="<?= site_url('transaksi/detailtransaksi/' . $previous['id_transaksi']) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="<?= $previous['no_kwitansi'] ?> • <?= ($previous['nama_pasien'] == NULL) ? 'Anonim' : $previous['nama_pasien']; ?> • <?= $previous['tgl_transaksi'] ?>"><i class="fa-solid fa-circle-arrow-left"></i></a>
     <?php else: ?>
-        <span class="fs-6 mx-2 text-success-emphasis" style="cursor: no-drop; opacity: .5;" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Tidak ada transaksi sebelumnya"><i class="fa-solid fa-circle-arrow-left"></i></span>
+        <span class="fs-6 mx-2 text-body-emphasis" style="cursor: no-drop; opacity: .5;" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Tidak ada transaksi sebelumnya"><i class="fa-solid fa-circle-arrow-left"></i></span>
     <?php endif; ?>
     <?php if ($next): ?>
-        <a class="fs-6 mx-2 text-success-emphasis" href="<?= site_url('transaksi/detailtransaksi/' . $next['id_transaksi']) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="<?= $next['no_kwitansi'] ?> • <?= ($next['nama_pasien'] == NULL) ? 'Anonim' : $next['nama_pasien']; ?> • <?= $next['tgl_transaksi'] ?>"><i class="fa-solid fa-circle-arrow-right"></i></a>
+        <a class="fs-6 mx-2 text-body-emphasis" href="<?= site_url('transaksi/detailtransaksi/' . $next['id_transaksi']) ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="<?= $next['no_kwitansi'] ?> • <?= ($next['nama_pasien'] == NULL) ? 'Anonim' : $next['nama_pasien']; ?> • <?= $next['tgl_transaksi'] ?>"><i class="fa-solid fa-circle-arrow-right"></i></a>
     <?php else: ?>
-        <span class="fs-6 mx-2 text-success-emphasis" style="cursor: no-drop; opacity: .5;" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Tidak ada transaksi berikutnya"><i class="fa-solid fa-circle-arrow-right"></i></span>
+        <span class="fs-6 mx-2 text-body-emphasis" style="cursor: no-drop; opacity: .5;" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Tidak ada transaksi berikutnya"><i class="fa-solid fa-circle-arrow-right"></i></span>
     <?php endif; ?>
 </div>
 <div style="min-width: 1px; max-width: 1px;"></div>

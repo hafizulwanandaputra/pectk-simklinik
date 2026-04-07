@@ -44,7 +44,7 @@ $db = db_connect();
             <div class="mt-3 mb-2">
                 <span class="text-center lh-sm d-flex justify-content-center align-items-center" style="font-size: 16pt;">
                     <img src="<?= base_url('/assets/images/pec-klinik-logo.png'); ?>" alt="KLINIK MATA PECTK" height="56px">
-                    <div class="ps-3 text-start text-success-emphasis fw-bold d-none d-lg-block">PADANG EYE CENTER<br>TELUK KUANTAN</div>
+                    <div class="ps-3 text-start text-body-emphasis fw-bold d-none d-lg-block">PADANG EYE CENTER<br>TELUK KUANTAN</div>
                 </span>
             </div>
             <h6><em>Melayani dengan Hati</em></h6>

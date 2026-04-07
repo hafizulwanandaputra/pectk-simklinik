@@ -55,8 +55,8 @@ $db = db_connect();
     <div id="loadingSpinner" class="px-2">
         <?= $this->include('spinner/spinner'); ?>
     </div>
-    <a id="btnEnableVoice" class="fs-6 mx-2 text-success-emphasis" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Aktifkan suara"><i class="fa-solid fa-microphone"></i></a>
-    <a id="btnPilihLoket" class="fs-6 mx-2 text-success-emphasis" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Pilih Loket"><i class="fa-solid fa-user-gear"></i></a>
+    <a id="btnEnableVoice" class="fs-6 mx-2 text-body-emphasis" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Aktifkan suara"><i class="fa-solid fa-microphone"></i></a>
+    <a id="btnPilihLoket" class="fs-6 mx-2 text-body-emphasis" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Pilih Loket"><i class="fa-solid fa-user-gear"></i></a>
 </div>
 <div style="min-width: 1px; max-width: 1px;"></div>
 <?= $this->endSection(); ?>
@@ -85,7 +85,7 @@ $db = db_connect();
                     <span class="d-flex justify-content-center align-items-center" style="font-size: 12pt;">
                         <img src="<?= base_url('/assets/images/pec-klinik-logo.png'); ?>" alt="KLINIK MATA PECTK" height="56px">
                         <div class="ps-3">
-                            <div class="lh-sm text-start text-success-emphasis fw-bold">PADANG EYE CENTER<br>TELUK KUANTAN</div>
+                            <div class="lh-sm text-start text-body-emphasis fw-bold">PADANG EYE CENTER<br>TELUK KUANTAN</div>
                             <div class="lh-1"><em style="font-size: 8pt;">Melayani dengan Hati</em></div>
                         </div>
                     </span>

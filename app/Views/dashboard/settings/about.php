@@ -49,7 +49,7 @@ if (stripos($browser, 'Chrome') !== false) {
 <?= $this->endSection(); ?>
 <?= $this->section('title'); ?>
 <div class="d-flex justify-content-start align-items-center">
-    <a class="fs-5 me-3 text-success-emphasis" href="<?= base_url('/settings'); ?>"><i class="fa-solid fa-arrow-left"></i></a>
+    <a class="fs-5 me-3 text-body-emphasis" href="<?= base_url('/settings'); ?>"><i class="fa-solid fa-arrow-left"></i></a>
     <span class="fw-medium fs-5 flex-fill text-truncate"><?= $headertitle; ?></span>
     <div id="loadingSpinner" class="px-2">
         <?= $this->include('spinner/spinner'); ?>

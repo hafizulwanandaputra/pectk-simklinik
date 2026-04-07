@@ -1,12 +1,12 @@
 <?= $this->extend('dashboard/templates/dashboard'); ?>
 <?= $this->section('title'); ?>
 <div class="d-flex justify-content-start align-items-center">
-    <a class="fs-5 me-3 text-success-emphasis" href="<?= base_url('/transaksi'); ?>"><i class="fa-solid fa-arrow-left"></i></a>
+    <a class="fs-5 me-3 text-body-emphasis" href="<?= base_url('/transaksi'); ?>"><i class="fa-solid fa-arrow-left"></i></a>
     <span class="fw-medium fs-5 flex-fill text-truncate"><?= $headertitle; ?></span>
     <div id="loadingSpinner" class="px-2">
         <?= $this->include('spinner/spinner'); ?>
     </div>
-    <a id="refreshButton" class="fs-6 mx-2 text-success-emphasis" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan"><i class="fa-solid fa-sync"></i></a>
+    <a id="refreshButton" class="fs-6 mx-2 text-body-emphasis" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan"><i class="fa-solid fa-sync"></i></a>
 </div>
 <div style="min-width: 1px; max-width: 1px;"></div>
 <?= $this->endSection(); ?>

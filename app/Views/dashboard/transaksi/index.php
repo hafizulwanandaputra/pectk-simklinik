@@ -21,10 +21,10 @@
         <?= $this->include('spinner/spinner'); ?>
     </div>
     <?php if (session()->get('role') != 'Admisi') : ?>
-        <a class="fs-6 mx-2 text-success-emphasis" href="#" id="reportOffcanvasToggle" data-bs-placement="bottom" data-bs-title="Laporan Transaksi" data-bs-toggle="offcanvas" data-bs-target="#reportOffcanvas" role="button" aria-controls="reportOffcanvas"><i class="fa-solid fa-file-invoice-dollar"></i></a>
+        <a class="fs-6 mx-2 text-body-emphasis" href="#" id="reportOffcanvasToggle" data-bs-placement="bottom" data-bs-title="Laporan Transaksi" data-bs-toggle="offcanvas" data-bs-target="#reportOffcanvas" role="button" aria-controls="reportOffcanvas"><i class="fa-solid fa-file-invoice-dollar"></i></a>
     <?php endif; ?>
-    <a id="toggleFilter" class="fs-6 mx-2 text-success-emphasis" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Pencarian"><i class="fa-solid fa-magnifying-glass"></i></a>
-    <a id="refreshButton" class="fs-6 mx-2 text-success-emphasis" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan"><i class="fa-solid fa-sync"></i></a>
+    <a id="toggleFilter" class="fs-6 mx-2 text-body-emphasis" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Pencarian"><i class="fa-solid fa-magnifying-glass"></i></a>
+    <a id="refreshButton" class="fs-6 mx-2 text-body-emphasis" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan"><i class="fa-solid fa-sync"></i></a>
     <div class="offcanvas offcanvas-end bg-body-tertiary shadow-sm transparent-blur" tabindex="-1" id="reportOffcanvas" aria-labelledby="reportOffcanvasLabel">
         <div class="offcanvas-header pt-0 pb-0 d-flex justify-content-between align-items-center" style="min-height: 3rem; max-height: 3rem;">
             <div class="w-100 text-truncate">

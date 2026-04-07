@@ -518,7 +518,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                     <?= $this->renderSection('title'); ?>
                 </div>
                 <div class="d-flex justify-content-center">
-                    <div class="vr d-none d-lg-block border-success-subtle" style="height: 2.5rem;"></div>
+                    <div class="vr d-none d-lg-block border-secondary-subtle" style="height: 2.5rem;"></div>
                 </div>
                 <div class="me-3 ms-1 ms-lg-3">
                     <a href="#" class="d-flex align-items-center text-body-emphasis text-decoration-none" data-bs-toggle="offcanvas" data-bs-target="#userOffcanvas" role="button" aria-controls="userOffcanvas">
