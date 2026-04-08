@@ -1363,7 +1363,7 @@
                 $('#tempat_lahir').html(`<span class="isian-teks">${rawatjalan.tempat_lahir}</span>`);
                 $('#tanggal_lahir').html(`<span class="isian-teks date">${rawatjalan.tanggal_lahir}</span>`);
                 $('#usia').html(`<span class="isian-teks">${usia.usia} tahun ${usia.bulan} bulan</span>`);
-                $('#alamat').html(`<span class="isian-teks">${rawatjalan.alamat}</span><br>${alamat_lokasi}`);
+                $('#alamat').html(`<span class="isian-teks">${rawatjalan.alamat}<br>${alamat_lokasi}</span>`);
                 $('#kewarganegaraan').html(`<span class="isian-teks">${rawatjalan.kewarganegaraan}</span>`);
                 $('#telpon').html(telpon);
                 $('.print-identitas').attr('data-id', rawatjalan.id_pasien);
