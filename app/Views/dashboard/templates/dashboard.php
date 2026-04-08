@@ -209,6 +209,10 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
         });
     </script>
     <style>
+        .isian-teks {
+            user-select: text;
+        }
+
         :root {
             --bs-font-sans-serif: "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
             --bs-font-monospace: "Iosevka HWP Mono Web", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;

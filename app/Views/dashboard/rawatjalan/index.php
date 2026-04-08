@@ -186,66 +186,66 @@
                                 <div style="font-size: 0.75em;">
                                     <span id="copy_identitas_pasien_value" class="d-none"></span>
                                     <div class="mb-0 row g-1 align-items-start">
-                                        <div class="col-5">
-                                            <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Nama">
+                                        <div class="overflow-hidden col-5">
+                                            <span class="fw-medium">Nama</span>
                                         </div>
-                                        <div class="col">
+                                        <div class="overflow-hidden col">
                                             <span id="nama_pasien"></span>
                                         </div>
                                     </div>
                                     <div class="mb-0 row g-1 align-items-start">
-                                        <div class="col-5">
-                                            <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Nomor Rekam Medis">
+                                        <div class="overflow-hidden col-5">
+                                            <span class="fw-medium">Nomor Rekam Medis</span>
                                         </div>
-                                        <div class="col date">
+                                        <div class="overflow-hidden col date">
                                             <span id="no_rekam_medis"></span>
                                         </div>
                                     </div>
                                     <div class="mb-0 row g-1 align-items-start">
-                                        <div class="col-5">
-                                            <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Jenis Kelamin">
+                                        <div class="overflow-hidden col-5">
+                                            <span class="fw-medium">Jenis Kelamin</span>
                                         </div>
-                                        <div class="col" id="jenis_kelamin"></div>
+                                        <div class="overflow-hidden col" id="jenis_kelamin"></div>
                                     </div>
                                     <div class="mb-0 row g-1 align-items-start">
-                                        <div class="col-5">
-                                            <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Tempat Lahir">
+                                        <div class="overflow-hidden col-5">
+                                            <span class="fw-medium">Tempat Lahir</span>
                                         </div>
-                                        <div class="col">
+                                        <div class="overflow-hidden col">
                                             <span id="tempat_lahir"></span>
                                         </div>
                                     </div>
                                     <div class="mb-0 row g-1 align-items-start">
-                                        <div class="col-5">
-                                            <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Tanggal Lahir">
+                                        <div class="overflow-hidden col-5">
+                                            <span class="fw-medium">Tanggal Lahir</span>
                                         </div>
-                                        <div class="col">
+                                        <div class="overflow-hidden col">
                                             <span id="tanggal_lahir"></span>
                                         </div>
                                     </div>
                                     <div class="mb-0 row g-1 align-items-start">
-                                        <div class="col-5">
-                                            <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Usia">
+                                        <div class="overflow-hidden col-5">
+                                            <span class="fw-medium">Usia</span>
                                         </div>
-                                        <div class="col date" id="usia"></div>
+                                        <div class="overflow-hidden col date" id="usia"></div>
                                     </div>
                                     <div class="mb-0 row g-1 align-items-start">
-                                        <div class="col-5">
-                                            <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Alamat">
+                                        <div class="overflow-hidden col-5">
+                                            <span class="fw-medium">Alamat</span>
                                         </div>
-                                        <div class="col" id="alamat"></div>
+                                        <div class="overflow-hidden col" id="alamat"></div>
                                     </div>
                                     <div class="mb-0 row g-1 align-items-start">
-                                        <div class="col-5">
-                                            <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Kewarganegaraan">
+                                        <div class="overflow-hidden col-5">
+                                            <span class="fw-medium">Kewarganegaraan</span>
                                         </div>
-                                        <div class="col" id="kewarganegaraan"></div>
+                                        <div class="overflow-hidden col" id="kewarganegaraan"></div>
                                     </div>
                                     <div class="mb-0 row g-1 align-items-start">
-                                        <div class="col-5">
-                                            <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Nomor Telepon">
+                                        <div class="overflow-hidden col-5">
+                                            <span class="fw-medium">Nomor Telepon</span>
                                         </div>
-                                        <div class="col date" id="telpon"></div>
+                                        <div class="overflow-hidden col date" id="telpon"></div>
                                     </div>
                                 </div>
                             </div>
@@ -271,7 +271,7 @@
                                 <div style="font-size: 0.75em;">
                                     <div class="mb-0 row g-1 align-items-start">
                                         <div class="col-5">
-                                            <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Operator">
+                                            <span class="fw-medium">Operator</span>
                                         </div>
                                         <div class="col date" id="pendaftar">
 
@@ -279,7 +279,7 @@
                                     </div>
                                     <div class="mb-0 row g-1 align-items-start">
                                         <div class="col-5">
-                                            <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Nomor Registrasi">
+                                            <span class="fw-medium">Nomor Registrasi</span>
                                         </div>
                                         <div class="col date" id="nomor_registrasi">
 
@@ -287,7 +287,7 @@
                                     </div>
                                     <div class="mb-0 row g-1 align-items-start">
                                         <div class="col-5">
-                                            <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Tanggal dan Waktu">
+                                            <span class="fw-medium">Tanggal dan Waktu</span>
                                         </div>
                                         <div class="col date" id="tanggal_registrasi">
 
@@ -295,7 +295,7 @@
                                     </div>
                                     <div class="mb-0 row g-1 align-items-start">
                                         <div class="col-5">
-                                            <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Status Kunjungan">
+                                            <span class="fw-medium">Status Kunjungan</span>
                                         </div>
                                         <div class="col" id="status_kunjungan">
 
@@ -303,7 +303,7 @@
                                     </div>
                                     <div class="mb-0 row g-1 align-items-start">
                                         <div class="col-5">
-                                            <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Jaminan">
+                                            <span class="fw-medium">Jaminan</span>
                                         </div>
                                         <div class="col" id="jaminan">
 
@@ -311,7 +311,7 @@
                                     </div>
                                     <div class="mb-0 row g-1 align-items-start">
                                         <div class="col-5">
-                                            <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Ruangan">
+                                            <span class="fw-medium">Ruangan</span>
                                         </div>
                                         <div class="col" id="ruangan">
 
@@ -319,7 +319,7 @@
                                     </div>
                                     <div class="mb-0 row g-1 align-items-start">
                                         <div class="col-5">
-                                            <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Dokter">
+                                            <span class="fw-medium">Dokter</span>
                                         </div>
                                         <div class="col" id="dokter">
 
@@ -327,7 +327,7 @@
                                     </div>
                                     <div class="mb-0 row g-1 align-items-start">
                                         <div class="col-5">
-                                            <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Keluhan">
+                                            <span class="fw-medium">Keluhan</span>
                                         </div>
                                         <div class="col" id="keluhan">
 
@@ -335,7 +335,7 @@
                                     </div>
                                     <div class="mb-0 row g-1 align-items-start pasien_operasi">
                                         <div class="col-5">
-                                            <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Tindakan yang Akan Dilakukan">
+                                            <span class="fw-medium">Tindakan yang Akan Dilakukan</span>
                                         </div>
                                         <div class="col date" id="tindakan_operasi_rajal">
 
@@ -343,7 +343,7 @@
                                     </div>
                                     <div class="mb-0 row g-1 align-items-start pasien_operasi">
                                         <div class="col-5">
-                                            <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Waktu Tindakan">
+                                            <span class="fw-medium">Waktu Tindakan</span>
                                         </div>
                                         <div class="col date" id="waktu_operasi_rajal">
 
@@ -351,7 +351,7 @@
                                     </div>
                                     <div class="mb-0 row g-1 align-items-start">
                                         <div class="col-5">
-                                            <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Status Layanan">
+                                            <span class="fw-medium">Status Layanan</span>
                                         </div>
                                         <div class="col" id="status">
 
@@ -359,7 +359,7 @@
                                     </div>
                                     <div class="mb-0 row g-1 align-items-start rajal_batal">
                                         <div class="col-5">
-                                            <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Dibatalkan oleh">
+                                            <span class="fw-medium">Dibatalkan oleh</span>
                                         </div>
                                         <div class="col date" id="pembatal">
 
@@ -367,7 +367,7 @@
                                     </div>
                                     <div class="mb-0 row g-1 align-items-start rajal_batal">
                                         <div class="col-5">
-                                            <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Alasan Pembatalan">
+                                            <span class="fw-medium">Alasan Pembatalan</span>
                                         </div>
                                         <div class="col date" id="alasan_batal">
 
@@ -1210,19 +1210,19 @@
                 // Mengkondisikan jenis kelamin
                 let jenis_kelamin_string = rawatjalan.jenis_kelamin;
                 if (jenis_kelamin_string === 'L') {
-                    jenis_kelamin_string = `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="Laki-Laki">`;
+                    jenis_kelamin_string = `<span class="isian-teks">Laki-Laki</span>`;
                 } else if (jenis_kelamin_string === 'P') {
-                    jenis_kelamin_string = `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="Perempuan">`;
+                    jenis_kelamin_string = `<span class="isian-teks">Perempuan</span>`;
                 }
 
                 const tempat_tanggal_lahir = (rawatjalan.tempat_lahir && rawatjalan.tanggal_lahir) ?
-                    `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rawatjalan.tempat_lahir}, ${rawatjalan.tanggal_lahir}">` :
-                    `<input type="text" readonly class="form-control-plaintext p-0 border border-0 opacity-50 pe-none fst-italic" value="Tidak ada">`;
+                    `<span class="isian-teks">${rawatjalan.tempat_lahir}, ${rawatjalan.tanggal_lahir}">` :
+                    `<span class="isian-teks opacity-50 fst-italic user-select-none">Tidak ada</span>">`;
 
                 // Gunakan pesan jika tidak ada nomor telepon
                 const usia = hitungUsia(rawatjalan.tanggal_lahir, rawatjalan.tanggal_registrasi); // Menghitung usia pasien
 
-                const telpon = rawatjalan.telpon ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${rawatjalan.telpon}">` : `<input type="text" readonly class="form-control-plaintext p-0 border border-0 opacity-50 pe-none fst-italic" value="Tidak ada">`;
+                const telpon = rawatjalan.telpon ? `<span class="isian-teks date">${rawatjalan.telpon}</span>` : `<span class="isian-teks opacity-50 fst-italic user-select-none">Tidak ada</span>`;
 
                 let pembatal = rawatjalan.status;
                 if (pembatal === 'BATAL') {
@@ -1244,17 +1244,17 @@
                 }
                 let isian_ok = rawatjalan.ruangan;
                 const tindakan_operasi_rajal = rawatjalan.tindakan_operasi_rajal ?
-                    `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rawatjalan.tindakan_operasi_rajal}">` :
-                    `<em>Belum diisi</em>`;
+                    `<span class="isian-teks">${rawatjalan.tindakan_operasi_rajal}</span>` :
+                    `<span class="isian-teks opacity-50 fst-italic user-select-none">Belum diisi</span>`;
 
                 const waktu_operasi_rajal = rawatjalan.jam_operasi_rajal ?
                     (() => {
                         // Buat objek Date dari jam mentah, lalu format jadi HH.mm
                         const jamObj = new Date(`1970-01-01T${rawatjalan.jam_operasi_rajal}`);
                         const jamFormatted = jamObj.toTimeString().slice(0, 5);
-                        return `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${jamFormatted}">`;
+                        return `<span class="isian-teks">${jamFormatted}</span>`;
                     })() :
-                    `<em>Belum diisi</em>`;
+                    `<span class="isian-teks opacity-50 fst-italic user-select-none">Belum diisi</span>`;
                 if (isian_ok === 'Kamar Operasi') {
                     $('.pasien_operasi').show();
                 } else {
@@ -1351,37 +1351,37 @@
 
                 let alamat_lokasi = rawatjalan.alamat_lokasi;
                 if (kelurahan.length > 0 && kecamatan.length > 0 && kabupaten.length > 0 && provinsi.length > 0) {
-                    alamat_lokasi = `<input type="text" readonly style="font-size: 0.7rem" class="form-control-plaintext p-0 border border-0" value="${kelurahan}${kecamatan}${kabupaten}${provinsi}">`;
+                    alamat_lokasi = `<span style="font-size: 0.7rem" class="isian-teks">${kelurahan}${kecamatan}${kabupaten}${provinsi}</span>`;
                 } else {
                     alamat_lokasi = ``;
                 }
 
                 $('#copy_identitas_pasien_value').text(`${rawatjalan.nama_pasien} ${rawatjalan.no_rm} ${rawatjalan.tanggal_lahir}`);
-                $('#nama_pasien').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rawatjalan.nama_pasien}">`);
-                $('#no_rekam_medis').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${rawatjalan.no_rm}">`);
+                $('#nama_pasien').html(`<span class="isian-teks">${rawatjalan.nama_pasien}</span>`);
+                $('#no_rekam_medis').html(`<span class="isian-teks date">${rawatjalan.no_rm}</span>`);
                 $('#jenis_kelamin').html(jenis_kelamin_string);
-                $('#tempat_lahir').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rawatjalan.tempat_lahir}">`);
-                $('#tanggal_lahir').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${rawatjalan.tanggal_lahir}">`);
-                $('#usia').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${usia.usia} tahun ${usia.bulan} bulan">`);
-                $('#alamat').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rawatjalan.alamat}">${alamat_lokasi}`);
-                $('#kewarganegaraan').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rawatjalan.kewarganegaraan}">`);
+                $('#tempat_lahir').html(`<span class="isian-teks">${rawatjalan.tempat_lahir}</span>`);
+                $('#tanggal_lahir').html(`<span class="isian-teks date">${rawatjalan.tanggal_lahir}</span>`);
+                $('#usia').html(`<span class="isian-teks">${usia.usia} tahun ${usia.bulan} bulan</span>`);
+                $('#alamat').html(`<span class="isian-teks">${rawatjalan.alamat}</span><br>${alamat_lokasi}`);
+                $('#kewarganegaraan').html(`<span class="isian-teks">${rawatjalan.kewarganegaraan}</span>`);
                 $('#telpon').html(telpon);
                 $('.print-identitas').attr('data-id', rawatjalan.id_pasien);
                 $('.print-barcode').attr('data-id', rawatjalan.id_pasien);
                 $('.detail-pasien-btn').attr('data-url', `<?= base_url('pasien/detailpasien') ?>/${rawatjalan.id_pasien}`);
-                $('#pendaftar').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rawatjalan.pendaftar}">`);
-                $('#nomor_registrasi').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${rawatjalan.nomor_registrasi}">`);
-                $('#tanggal_registrasi').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${rawatjalan.tanggal_registrasi}">`);
-                $('#status_kunjungan').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rawatjalan.status_kunjungan}">`);
-                $('#jaminan').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rawatjalan.jaminan}">`);
-                $('#ruangan').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rawatjalan.ruangan}">`);
-                $('#dokter').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rawatjalan.dokter}">`);
-                $('#keluhan').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rawatjalan.keluhan}">`);
+                $('#pendaftar').html(`<span class="isian-teks">${rawatjalan.pendaftar}</span>`);
+                $('#nomor_registrasi').html(`<span class="isian-teks date">${rawatjalan.nomor_registrasi}</span>`);
+                $('#tanggal_registrasi').html(`<span class="isian-teks date">${rawatjalan.tanggal_registrasi}</span>`);
+                $('#status_kunjungan').html(`<span class="isian-teks">${rawatjalan.status_kunjungan}</span>`);
+                $('#jaminan').html(`<span class="isian-teks">${rawatjalan.jaminan}</span>`);
+                $('#ruangan').html(`<span class="isian-teks">${rawatjalan.ruangan}</span>`);
+                $('#dokter').html(`<span class="isian-teks">${rawatjalan.dokter}</span>`);
+                $('#keluhan').html(`<span class="isian-teks">${rawatjalan.keluhan}</span>`);
                 $('#tindakan_operasi_rajal').html(tindakan_operasi_rajal);
                 $('#waktu_operasi_rajal').html(waktu_operasi_rajal);
-                $('#status').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${status}">`);
-                $('#pembatal').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rawatjalan.pembatal}">`);
-                $('#alasan_batal').html(`<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rawatjalan.alasan_batal}">`);
+                $('#status').html(`<span class="isian-teks">${status}</span>`);
+                $('#pembatal').html(`<span class="isian-teks">${rawatjalan.pembatal}</span>`);
+                $('#alasan_batal').html(`<span class="isian-teks">${rawatjalan.alasan_batal}</span>`);
                 $('#tombol_rme').html(tombol_rme);
                 $('#rajalModal').modal('show');
             } catch (error) {
@@ -1390,6 +1390,12 @@
                 $('#loadingSpinner').hide();
                 $this.prop('disabled', false);
             }
+        });
+        $('.isian-teks').on('copy', function(e) {
+            var selection = window.getSelection().toString();
+
+            e.preventDefault();
+            e.originalEvent.clipboardData.setData('text/plain', selection);
         });
         $(document).on('click', '.redirect-button', async function() {
             const url = $(this).attr('data-url');

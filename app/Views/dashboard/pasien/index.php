@@ -268,20 +268,20 @@
             } else {
                 data.pasien.forEach(function(pasien) {
                     const nama_pasien_header = pasien.nama_pasien ? pasien.nama_pasien : `<em>Belum Diisi</em>`;
-                    const nama_pasien = pasien.nama_pasien ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${pasien.nama_pasien}">` : `<input type="text" readonly class="form-control-plaintext p-0 border border-0 opacity-50 pe-none fst-italic" value="Belum diisi">`;
+                    const nama_pasien = pasien.nama_pasien ? `<span class="isian-teks">${pasien.nama_pasien}</span>` : `<span class="isian-teks opacity-50 fst-italic user-select-none">Belum diisi</span>`;
                     let jenis_kelamin = pasien.jenis_kelamin;
                     if (jenis_kelamin === 'L') {
-                        jenis_kelamin = `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="Laki-Laki">`;
+                        jenis_kelamin = `<span class="isian-teks">Laki-Laki</span>`;
                     } else if (jenis_kelamin === 'P') {
-                        jenis_kelamin = `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="Perempuan">`;
+                        jenis_kelamin = `<span class="isian-teks">Perempuan</span>`;
                     } else {
-                        jenis_kelamin = `<input type="text" readonly class="form-control-plaintext p-0 border border-0 opacity-50 pe-none fst-italic" value="Tidak ada">`;
+                        jenis_kelamin = `<span class="isian-teks opacity-50 fst-italic user-select-none">Tidak ada</span>`;
                     }
-                    const nik = pasien.nik ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${pasien.nik}">` : `<input type="text" readonly class="form-control-plaintext p-0 border border-0 opacity-50 pe-none fst-italic" value="Tidak ada">`;
-                    const no_bpjs = pasien.no_bpjs ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${pasien.no_bpjs}">` : `<input type="text" readonly class="form-control-plaintext p-0 border border-0 opacity-50 pe-none fst-italic" value="Tidak ada">`;
-                    const tempat_lahir = pasien.tempat_lahir ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${pasien.tempat_lahir}">` : `<input type="text" readonly class="form-control-plaintext p-0 border border-0 opacity-50 pe-none fst-italic" value="Tidak ada">`;
-                    const tanggal_lahir = pasien.tanggal_lahir ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${pasien.tanggal_lahir}">` : `<input type="text" readonly class="form-control-plaintext p-0 border border-0 opacity-50 pe-none fst-italic" value="Tidak ada">`;
-                    const alamat = pasien.alamat ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${pasien.alamat}">` : `<input type="text" readonly class="form-control-plaintext p-0 border border-0 opacity-50 pe-none fst-italic" value="Tidak ada">`;
+                    const nik = pasien.nik ? `<span class="isian-teks date">${pasien.nik}</span>` : `<span class="isian-teks opacity-50 fst-italic user-select-none">Tidak ada</span>`;
+                    const no_bpjs = pasien.no_bpjs ? `<span class="isian-teks date">${pasien.no_bpjs}</span>` : `<span class="isian-teks opacity-50 fst-italic user-select-none">Tidak ada</span>`;
+                    const tempat_lahir = pasien.tempat_lahir ? `<span class="isian-teks">${pasien.tempat_lahir}</span>` : `<span class="isian-teks opacity-50 fst-italic user-select-none">Tidak ada</span>`;
+                    const tanggal_lahir = pasien.tanggal_lahir ? `<span class="isian-teks date">${pasien.tanggal_lahir}</span>` : `<span class="isian-teks opacity-50 fst-italic user-select-none">Tidak ada</span>`;
+                    const alamat = pasien.alamat ? `<span class="isian-teks">${pasien.alamat}</span>` : `<span class="isian-teks opacity-50 fst-italic user-select-none">Tidak ada</span>`;
                     const kelurahan = pasien.kelurahan ? `${pasien.kelurahan}, ` : ``;
                     const kecamatan = pasien.kecamatan ? `${pasien.kecamatan}, ` : ``;
                     const kabupaten = pasien.kabupaten ? `${pasien.kabupaten}, ` : ``;
@@ -289,12 +289,12 @@
 
                     let alamat_lokasi = pasien.alamat_lokasi;
                     if (kelurahan.length > 0 && kecamatan.length > 0 && kabupaten.length > 0 && provinsi.length > 0) {
-                        alamat_lokasi = `<input type="text" readonly style="font-size: 0.7rem" class="form-control-plaintext p-0 border border-0" value="${kelurahan}${kecamatan}${kabupaten}${provinsi}">`;
+                        alamat_lokasi = `<span style="font-size: 0.7rem" class="isian-teks">${kelurahan}${kecamatan}${kabupaten}${provinsi}</span>`;
                     } else {
-                        alamat_lokasi = `<input type="text" readonly style="font-size: 0.7rem" class="form-control-plaintext p-0 border border-0 opacity-50 pe-none fst-italic" value="Tidak ada">`;
+                        alamat_lokasi = `<span style="font-size: 0.7rem" class="isian-teks opacity-50 fst-italic user-select-none">Tidak ada"</span>`;
                     }
-                    const kewarganegaraan = pasien.kewarganegaraan ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${pasien.kewarganegaraan}">` : `<input type="text" readonly class="form-control-plaintext p-0 border border-0 opacity-50 pe-none fst-italic" value="Tidak ada">`;
-                    const telpon = pasien.telpon ? `<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${pasien.telpon}">` : `<input type="text" readonly class="form-control-plaintext p-0 border border-0 opacity-50 pe-none fst-italic" value="Tidak ada">`;
+                    const kewarganegaraan = pasien.kewarganegaraan ? `<span class="isian-teks">${pasien.kewarganegaraan}</span>` : `<span class="isian-teks opacity-50 fst-italic user-select-none">Tidak ada</span>`;
+                    const telpon = pasien.telpon ? `<span class="isian-teks date">${pasien.telpon}</span>` : `<span class="isian-teks opacity-50 fst-italic user-select-none">Tidak ada</span>`;
                     const delete_status = pasien.jumlah_rawat_jalan_daftar > 0 ? `disabled` : ``;
                     const pasienElement = `
                 <span class="list-group-item border-top-0 pb-3 pt-3">
@@ -311,101 +311,101 @@
                                 <div class="row gx-3">
                                     <div class="col-lg-6">
                                         <div class="mb-0 row g-1 align-items-start">
-                                            <div class="col-5">
-                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Nama">
+                                            <div class="overflow-hidden col-5">
+                                                <span class="fw-medium">Nama</span>
                                             </div>
-                                            <div class="col">
+                                            <div class="overflow-hidden col">
                                                 ${nama_pasien}
                                             </div>
                                         </div>
                                         <div class="mb-0 row g-1 align-items-start">
-                                            <div class="col-5">
-                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Nomor Identitas">
+                                            <div class="overflow-hidden col-5">
+                                                <span class="fw-medium">Nomor Identitas</span>
                                             </div>
-                                            <div class="col date">
+                                            <div class="overflow-hidden col date">
                                                 ${nik}
                                             </div>
                                         </div>
                                         <div class="mb-0 row g-1 align-items-start">
-                                            <div class="col-5">
-                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Nomor BPJS">
+                                            <div class="overflow-hidden col-5">
+                                                <span class="fw-medium">Nomor BPJS</span>
                                             </div>
-                                            <div class="col date">
+                                            <div class="overflow-hidden col date">
                                                 ${no_bpjs}
                                             </div>
                                         </div>
                                         <div class="mb-0 row g-1 align-items-start">
-                                            <div class="col-5">
-                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Jenis Kelamin">
+                                            <div class="overflow-hidden col-5">
+                                                <span class="fw-medium">Jenis Kelamin</span>
                                             </div>
-                                            <div class="col">
+                                            <div class="overflow-hidden col">
                                                 ${jenis_kelamin}
                                             </div>
                                         </div>
                                         <div class="mb-0 row g-1 align-items-start">
-                                            <div class="col-5">
-                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Tempat Lahir">
+                                            <div class="overflow-hidden col-5">
+                                                <span class="fw-medium">Tempat Lahir</span>
                                             </div>
-                                            <div class="col">
+                                            <div class="overflow-hidden col">
                                                 ${tempat_lahir}
                                             </div>
                                         </div>
                                         <div class="mb-0 row g-1 align-items-start">
-                                            <div class="col-5">
-                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Tanggal Lahir">
+                                            <div class="overflow-hidden col-5">
+                                                <span class="fw-medium">Tanggal Lahir</span>
                                             </div>
-                                            <div class="col">
+                                            <div class="overflow-hidden col">
                                                 ${tanggal_lahir}
                                             </div>
                                         </div>
                                         <div class="mb-0 row g-1 align-items-start">
-                                            <div class="col-5">
-                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Alamat">
+                                            <div class="overflow-hidden col-5">
+                                                <span class="fw-medium">Alamat</span>
                                             </div>
-                                            <div class="col">
-                                                ${alamat}${alamat_lokasi}
+                                            <div class="overflow-hidden col">
+                                                ${alamat}<br>${alamat_lokasi}
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="mb-0 row g-1 align-items-start">
-                                            <div class="col-5">
-                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Kewarganegaraan">
+                                            <div class="overflow-hidden col-5">
+                                                <span class="fw-medium">Kewarganegaraan</span>
                                             </div>
-                                            <div class="col">
+                                            <div class="overflow-hidden col">
                                                 ${kewarganegaraan}
                                             </div>
                                         </div>
                                         <div class="mb-0 row g-1 align-items-start">
-                                            <div class="col-5">
-                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Nomor Telepon">
+                                            <div class="overflow-hidden col-5">
+                                                <span class="fw-medium">Nomor Telepon</span>
                                             </div>
-                                            <div class="col date">
+                                            <div class="overflow-hidden col date">
                                                 ${telpon}
                                             </div>
                                         </div>
                                         <div class="mb-0 row g-1 align-items-start">
-                                            <div class="col-5">
-                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Rawat Jalan Didaftarkan">
+                                            <div class="overflow-hidden col-5">
+                                                <span class="fw-medium">Rawat Jalan Didaftarkan</span>
                                             </div>
-                                            <div class="col date">
-                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${pasien.jumlah_rawat_jalan_daftar.toLocaleString('id-ID')}">
-                                            </div>
-                                        </div>
-                                        <div class="mb-0 row g-1 align-items-start">
-                                            <div class="col-5">
-                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Rawat Jalan Dibatalkan">
-                                            </div>
-                                            <div class="col date">
-                                            <input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${pasien.jumlah_rawat_jalan_batal.toLocaleString('id-ID')}">
+                                            <div class="overflow-hidden col date">
+                                                <span class="isian-teks">${pasien.jumlah_rawat_jalan_daftar.toLocaleString('id-ID')}</span>
                                             </div>
                                         </div>
                                         <div class="mb-0 row g-1 align-items-start">
-                                            <div class="col-5">
-                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Total Rawat Jalan">
+                                            <div class="overflow-hidden col-5">
+                                                <span class="fw-medium">Rawat Jalan Dibatalkan</span>
                                             </div>
-                                            <div class="col date">
-                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${pasien.jumlah_rawat_jalan.toLocaleString('id-ID')}">
+                                            <div class="overflow-hidden col date">
+                                            <span class="isian-teks">${pasien.jumlah_rawat_jalan_batal.toLocaleString('id-ID')}</span>
+                                            </div>
+                                        </div>
+                                        <div class="mb-0 row g-1 align-items-start">
+                                            <div class="overflow-hidden col-5">
+                                                <span class="fw-medium">Total Rawat Jalan</span>
+                                            </div>
+                                            <div class="overflow-hidden col date">
+                                                <span class="isian-teks">${pasien.jumlah_rawat_jalan.toLocaleString('id-ID')}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -500,6 +500,13 @@
             $('#loadingSpinner').hide();
         }
     }
+
+    $(document).on('copy', '.isian-teks', function(e) {
+        var selection = window.getSelection().toString();
+
+        e.preventDefault();
+        e.originalEvent.clipboardData.setData('text/plain', selection);
+    });
 
     $(document).on('click', '#paginationNav a', function(event) {
         event.preventDefault(); // Prevents default behavior (scrolling)

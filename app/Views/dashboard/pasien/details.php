@@ -1307,7 +1307,7 @@
                         pembatal = `
                             <div class="mb-0 row g-1 align-items-center">
                                 <div class="col-5">
-                                    <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Dibatalkan oleh">
+                                    <span class="fw-medium">Dibatalkan oleh">
                                 </div>
                                 <div class="col date">
                                     ${rajal.pembatal}
@@ -1315,7 +1315,7 @@
                             </div>
                             <div class="mb-0 row g-1 align-items-center">
                                 <div class="col-5">
-                                    <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Alasan Pembatalan">
+                                    <span class="fw-medium">Alasan Pembatalan">
                                 </div>
                                 <div class="col date">
                                     ${rajal.alasan_batal}
@@ -1351,32 +1351,32 @@
                     let isian_ok = rajal.ruangan;
                     if (isian_ok === 'Kamar Operasi') {
                         const tindakan_operasi_rajal = rajal.tindakan_operasi_rajal ?
-                            `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rajal.tindakan_operasi_rajal}">` :
-                            `<input type="text" readonly class="form-control-plaintext p-0 border border-0 opacity-50 pe-none fst-italic" value="Belum diisi">`;
+                            `<span class="isian-teks">${rajal.tindakan_operasi_rajal}">` :
+                            `<span class="isian-teks opacity-50 fst-italic user-select-none">Belum diisi</span>`;
 
                         const waktu_operasi_rajal = rajal.jam_operasi_rajal ?
                             (() => {
                                 // Buat objek Date dari jam mentah, lalu format jadi HH.mm
                                 const jamObj = new Date(`1970-01-01T${rajal.jam_operasi_rajal}`);
                                 const jamFormatted = jamObj.toTimeString().slice(0, 5);
-                                return `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${jamFormatted}">`;
+                                return `<span class="isian-teks">${jamFormatted}">`;
                             })() :
-                            `<input type="text" readonly class="form-control-plaintext p-0 border border-0 opacity-50 pe-none fst-italic" value="Belum diisi">`;
+                            `<span class="isian-teks opacity-50 fst-italic user-select-none">Belum diisi</span>`;
 
                         isian_ok = `
                             <div class="mb-0 row g-1 align-items-center">
-                                <div class="col-5">
-                                    <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Tindakan yang Akan Dilakukan">
+                                <div class="overflow-hidden col-5">
+                                    <span class="fw-medium">Tindakan yang Akan Dilakukan</span>
                                 </div>
-                                <div class="col date">
+                                <div class="overflow-hidden col date">
                                     ${tindakan_operasi_rajal}
                                 </div>
                             </div>
                             <div class="mb-0 row g-1 align-items-center">
-                                <div class="col-5">
-                                    <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Waktu Tindakan">
+                                <div class="overflow-hidden col-5">
+                                    <span class="fw-medium">Waktu Tindakan"</span>
                                 </div>
-                                <div class="col date">
+                                <div class="overflow-hidden col date">
                                     ${waktu_operasi_rajal}
                                 </div>
                             </div>
@@ -1403,53 +1403,53 @@
                                 <div class="row gx-3">
                                     <div class="col-lg-6">
                                         <div class="mb-0 row g-1 align-items-center">
-                                            <div class="col-5">
-                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Tanggal dan Waktu">
+                                            <div class="overflow-hidden col-5">
+                                                <span class="fw-medium">Tanggal dan Waktu</span>
                                             </div>
-                                            <div class="col">
-                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${rajal.tanggal_registrasi}">
-                                            </div>
-                                        </div>
-                                        <div class="mb-0 row g-1 align-items-center">
-                                            <div class="col-5">
-                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Status Kunjungan">
-                                            </div>
-                                            <div class="col date">
-                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rajal.status_kunjungan}">
+                                            <div class="overflow-hidden col">
+                                                <span class="isian-teks date">${rajal.tanggal_registrasi}</span>
                                             </div>
                                         </div>
                                         <div class="mb-0 row g-1 align-items-center">
-                                            <div class="col-5">
-                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Jaminan">
+                                            <div class="overflow-hidden col-5">
+                                                <span class="fw-medium">Status Kunjungan</span>
                                             </div>
-                                            <div class="col">
-                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rajal.jaminan}">
+                                            <div class="overflow-hidden col date">
+                                                <span class="isian-teks">${rajal.status_kunjungan}</span>
                                             </div>
                                         </div>
                                         <div class="mb-0 row g-1 align-items-center">
-                                            <div class="col-5">
-                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Ruangan">
+                                            <div class="overflow-hidden col-5">
+                                                <span class="fw-medium">Jaminan</span>
                                             </div>
-                                            <div class="col">
-                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rajal.ruangan}">
+                                            <div class="overflow-hidden col">
+                                                <span class="isian-teks">${rajal.jaminan}</span>
+                                            </div>
+                                        </div>
+                                        <div class="mb-0 row g-1 align-items-center">
+                                            <div class="overflow-hidden col-5">
+                                                <span class="fw-medium">Ruangan</span>
+                                            </div>
+                                            <div class="overflow-hidden col">
+                                                <span class="isian-teks">${rajal.ruangan}</span>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="mb-0 row g-1 align-items-center">
-                                            <div class="col-5">
-                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Dokter">
+                                            <div class="overflow-hidden col-5">
+                                                <span class="fw-medium">Dokter</span>
                                             </div>
-                                            <div class="col date">
-                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rajal.dokter}">
+                                            <div class="overflow-hidden col date">
+                                                <span class="isian-teks">${rajal.dokter}</span>
                                             </div>
                                         </div>
                                         <div class="mb-0 row g-1 align-items-center">
-                                            <div class="col-5">
-                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Keluhan">
+                                            <div class="overflow-hidden col-5">
+                                                <span class="fw-medium">Keluhan</span>
                                             </div>
-                                            <div class="col date">
-                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${rajal.keluhan}">
+                                            <div class="overflow-hidden col date">
+                                                <span class="isian-teks">${rajal.keluhan}</span>
                                             </div>
                                         </div>
                                         ${isian_ok}
@@ -1552,6 +1552,13 @@
             $('#loadingSpinner').hide();
         }
     }
+
+    $(document).on('copy', '.isian-teks', function(e) {
+        var selection = window.getSelection().toString();
+
+        e.preventDefault();
+        e.originalEvent.clipboardData.setData('text/plain', selection);
+    });
 
     $(document).on('click', '.print-struk-btn', function() {
         const id = $(this).data('id');
