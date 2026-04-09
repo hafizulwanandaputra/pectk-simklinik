@@ -283,11 +283,11 @@
                         jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap" style="background-color: Pink"><i class="fa-solid fa-venus"></i> PEREMPUAN</span>`;
                     }
                     const keperluan = butawarna.keperluan ?
-                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${butawarna.keperluan}">` :
-                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 opacity-50 pe-none fst-italic" value="Belum ada">`;
+                        `<span class="isian-teks">${butawarna.keperluan}</span>` :
+                        `<span class="isian-teks opacity-50 fst-italic user-select-none">Belum ada</span>`;
                     const status_buta_warna = butawarna.status_buta_warna ?
-                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${butawarna.status_buta_warna}">` :
-                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 opacity-50 pe-none fst-italic" value="Belum ada">`;
+                        `<span class="isian-teks">${butawarna.status_buta_warna}</span>` :
+                        `<span class="isian-teks opacity-50 fst-italic user-select-none">Belum ada</span>`;
                     const tanggalRegistrasi = new Date(butawarna.tanggal_registrasi);
                     const today = new Date();
                     const sevenDaysAgo = new Date();
@@ -306,34 +306,34 @@
                             <div class="align-self-center w-100">
                                 <h5 class="card-title d-flex date justify-content-start">
                                     <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">${butawarna.number}</span>
-                                    <span class="ms-1 align-self-center w-100"><input type="text" readonly style="height: 1em;" class="form-control-plaintext p-0 border border-0 lh-1 fw-medium" value="${butawarna.nama_pasien}"></span>
+                                    <span class="ms-1 align-self-center w-100 overflow-hidden"><span style="height: 1em;" class="isian-teks lh-1 fw-medium">${butawarna.nama_pasien}</span></span>
                                 </h5>
                                     <h6 class="card-subtitle mb-2">
-                                        <input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 fw-medium" value="${butawarna.nomor_registrasi} • ${butawarna.no_rm}">${jenis_kelamin}
+                                        <span class="isian-teks lh-1 fw-medium">${butawarna.nomor_registrasi} • ${butawarna.no_rm}</span><br>${jenis_kelamin}
                                     </h6>
                                     <div class="card-text">
                                         <div style="font-size: 0.75em;">
                                                     <div class="mb-0 row g-1 align-items-center">
-                                                        <div class="col-5">
-                                                            <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Tanggal dan Waktu">
+                                                        <div class="overflow-hidden col-5">
+                                                            <span class="fw-medium">Tanggal dan Waktu</span>
                                                         </div>
-                                                        <div class="col date">
-                                                            <input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${butawarna.waktu_dibuat}">
+                                                        <div class="overflow-hidden col date">
+                                                            <span class="isian-teks date">${butawarna.waktu_dibuat}</span>
                                                         </div>
                                                     </div>
                                                     <div class="mb-0 row g-1 align-items-center">
-                                                        <div class="col-5">
-                                                            <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Keperluan">
+                                                        <div class="overflow-hidden col-5">
+                                                            <span class="fw-medium">Keperluan</span>
                                                         </div>
-                                                        <div class="col date">
+                                                        <div class="overflow-hidden col date">
                                                             ${keperluan}
                                                         </div>
                                                     </div>
                                                     <div class="mb-0 row g-1 align-items-center">
-                                                        <div class="col-5">
-                                                            <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Status Buta Warna">
+                                                        <div class="overflow-hidden col-5">
+                                                            <span class="fw-medium">Status Buta Warna</span>
                                                         </div>
-                                                        <div class="col date">
+                                                        <div class="overflow-hidden col date">
                                                             ${status_buta_warna}
                                                         </div>
                                                     </div>
@@ -438,6 +438,12 @@
         }
     }
 
+    $(document).on('copy', '.isian-teks', function(e) {
+        var selection = window.getSelection().toString();
+
+        e.preventDefault();
+        e.originalEvent.clipboardData.setData('text/plain', selection);
+    });
 
     $(document).on('click', '#paginationNav a', function(event) {
         event.preventDefault(); // Prevents default behavior (scrolling)

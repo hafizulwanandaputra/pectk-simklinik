@@ -311,34 +311,34 @@
                             <span class="ms-1 align-self-center w-100">${bmhp.tanggal_bmhp}</span>
                         </h5>
                         <h6 class="card-subtitle mb-2">
-                            <input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 fw-medium" value="${bmhp.apoteker}">
+                            <span class="isian-teks lh-1 fw-medium">${bmhp.apoteker}</span>
                         </h6>
                         <div class="card-text">
                             <div style="font-size: 0.75em;">
                                 <div class="row gx-3">
                                     <div class="col">
                                         <div class="mb-0 row g-1 align-items-center">
-                                            <div class="col-5">
-                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Tanggal dan Waktu">
+                                            <div class="overflow-hidden col-5">
+                                                <span class="fw-medium">Tanggal dan Waktu</span>
                                             </div>
-                                            <div class="col date">
-                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${bmhp.tanggal_bmhp}">
-                                            </div>
-                                        </div>
-                                        <div class="mb-0 row g-1 align-items-center">
-                                            <div class="col-5">
-                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Total Barang">
-                                            </div>
-                                            <div class="col date">
-                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${jumlah_bmhp.toLocaleString('id-ID')}">
+                                            <div class="overflow-hidden col date">
+                                                <span class="isian-teks date">${bmhp.tanggal_bmhp}</span>
                                             </div>
                                         </div>
                                         <div class="mb-0 row g-1 align-items-center">
-                                            <div class="col-5">
-                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Total Harga">
+                                            <div class="overflow-hidden col-5">
+                                                <span class="fw-medium">Total Barang</span>
                                             </div>
-                                            <div class="col date">
-                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="Rp${total_biaya.toLocaleString('id-ID')}">
+                                            <div class="overflow-hidden col date">
+                                                <span class="isian-teks date">${jumlah_bmhp.toLocaleString('id-ID')}</span>
+                                            </div>
+                                        </div>
+                                        <div class="mb-0 row g-1 align-items-center">
+                                            <div class="overflow-hidden col-5">
+                                                <span class="fw-medium">Total Harga</span>
+                                            </div>
+                                            <div class="overflow-hidden col date">
+                                                <span class="isian-teks date">Rp${total_biaya.toLocaleString('id-ID')}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -439,6 +439,13 @@
             $('#loadingSpinner').hide();
         }
     }
+
+    $(document).on('copy', '.isian-teks', function(e) {
+        var selection = window.getSelection().toString();
+
+        e.preventDefault();
+        e.originalEvent.clipboardData.setData('text/plain', selection);
+    });
 
     $(document).on('click', '#paginationNav a', function(event) {
         event.preventDefault(); // Prevents default behavior (scrolling)

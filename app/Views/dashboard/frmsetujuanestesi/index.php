@@ -349,45 +349,45 @@
                         jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap" style="background-color: Pink"><i class="fa-solid fa-venus"></i> PEREMPUAN</span>`;
                     }
                     const pemberi_informasi = form_persetujuan_tindakan.pemberi_informasi ?
-                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${form_persetujuan_tindakan.pemberi_informasi}">` :
-                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 opacity-50 pe-none fst-italic" value="Belum ada">`;
+                        `<span class="isian-teks">${form_persetujuan_tindakan.pemberi_informasi}</span>` :
+                        `<span class="isian-teks opacity-50 fst-italic user-select-none">Belum ada</span>`;
                     const penerima_informasi = form_persetujuan_tindakan.penerima_informasi ?
-                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${form_persetujuan_tindakan.penerima_informasi}">` :
-                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 opacity-50 pe-none fst-italic" value="Belum ada">`;
+                        `<span class="isian-teks">${form_persetujuan_tindakan.penerima_informasi}</span>` :
+                        `<span class="isian-teks opacity-50 fst-italic user-select-none">Belum ada</span>`;
                     const FRMSetujuElement = `
                     <li class="list-group-item <?= (session()->get('role') != 'Admisi') ? 'border-top-0' : ''; ?> pb-3 pt-3">
                         <div class="d-flex">
                             <div class="align-self-center w-100">
                                 <h5 class="card-title d-flex date justify-content-start">
                                     <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">${form_persetujuan_tindakan.number}</span>
-                                    <span class="ms-1 align-self-center w-100"><input type="text" readonly style="height: 1em;" class="form-control-plaintext p-0 border border-0 lh-1 fw-medium" value="${form_persetujuan_tindakan.nama_pasien}"></span>
+                                    <span class="ms-1 align-self-center w-100 overflow-hidden"><span style="height: 1em;" class="isian-teks lh-1 fw-medium">${form_persetujuan_tindakan.nama_pasien}</span></span>
                                 </h5>
                                     <h6 class="card-subtitle mb-2">
-                                        <input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 fw-medium" value="${form_persetujuan_tindakan.nomor_registrasi} • ${form_persetujuan_tindakan.no_rm}">${jenis_kelamin}
+                                        <span class="isian-teks lh-1 fw-medium">${form_persetujuan_tindakan.nomor_registrasi} • ${form_persetujuan_tindakan.no_rm}</span><br>${jenis_kelamin}
                                     </h6>
                                     <div class="card-text">
                                         <div style="font-size: 0.75em;">
                                                     <div class="mb-0 row g-1 align-items-center">
-                                                        <div class="col-5">
-                                                            <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Tanggal Persetujuan">
+                                                        <div class="overflow-hidden col-5">
+                                                            <span class="fw-medium">Tanggal Persetujuan</span>
                                                         </div>
-                                                        <div class="col date">
+                                                        <div class="overflow-hidden col date">
                                                             <input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${form_persetujuan_tindakan.waktu_dibuat}">
                                                         </div>
                                                     </div>
                                                     <div class="mb-0 row g-1 align-items-center">
-                                                        <div class="col-5">
-                                                            <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Pemberi Informasi">
+                                                        <div class="overflow-hidden col-5">
+                                                            <span class="fw-medium">Pemberi Informasi</span>
                                                         </div>
-                                                        <div class="col date">
+                                                        <div class="overflow-hidden col date">
                                                             ${pemberi_informasi}
                                                         </div>
                                                     </div>
                                                     <div class="mb-0 row g-1 align-items-center">
-                                                        <div class="col-5">
-                                                            <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Penerima Informasi">
+                                                        <div class="overflow-hidden col-5">
+                                                            <span class="fw-medium">Penerima Informasi</span>
                                                         </div>
-                                                        <div class="col">
+                                                        <div class="overflow-hidden col">
                                                             ${penerima_informasi}
                                                         </div>
                                                     </div>
@@ -491,6 +491,13 @@
             $('#loadingSpinner').hide();
         }
     }
+
+    $(document).on('copy', '.isian-teks', function(e) {
+        var selection = window.getSelection().toString();
+
+        e.preventDefault();
+        e.originalEvent.clipboardData.setData('text/plain', selection);
+    });
 
 
     $(document).on('click', '#paginationNav a', function(event) {

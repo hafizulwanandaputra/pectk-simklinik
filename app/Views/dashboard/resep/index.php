@@ -380,55 +380,55 @@
                     <div class="align-self-center w-100">
                         <h5 class="card-title d-flex date justify-content-between">
                             <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">${resep.number}</span>
-                            <span class="ms-1 align-self-center w-100"><input type="text" readonly style="height: 1em;" class="form-control-plaintext p-0 border border-0 lh-1 fw-medium" value="${resep.nama_pasien}"></span>
+                            <span class="ms-1 align-self-center w-100 overflow-hidden"><span style="height: 1em;" class="isian-teks lh-1 fw-medium">${resep.nama_pasien}</span></span>
                         </h5>
                         <h6 class="card-subtitle mb-2">
-                            <input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 fw-medium" value="${resep.dokter}">${jenis_kelamin} ${nomor_registrasi}
+                            <span class="isian-teks lh-1 fw-medium">${resep.dokter}</span><br>${jenis_kelamin} ${nomor_registrasi}
                         </h6>
                         <div class="card-text">
                             <div style="font-size: 0.75em;">
                                 <div class="row gx-3">
                                     <div class="col-lg-6">
                                         <div class="mb-0 row g-1 align-items-center">
-                                            <div class="col-5">
-                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Tanggal dan Waktu">
+                                            <div class="overflow-hidden col-5">
+                                                <span class="fw-medium">Tanggal dan Waktu</span>
                                             </div>
-                                            <div class="col date">
-                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${resep.tanggal_resep}">
-                                            </div>
-                                        </div>
-                                        <div class="mb-0 row g-1 align-items-center">
-                                            <div class="col-5">
-                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Nomor Rekam Medis">
-                                            </div>
-                                            <div class="col date">
-                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${resep.no_rm}">
+                                            <div class="overflow-hidden col date">
+                                                <span class="isian-teks date">${resep.tanggal_resep}</span>
                                             </div>
                                         </div>
                                         <div class="mb-0 row g-1 align-items-center">
-                                            <div class="col-5">
-                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Nomor Registrasi">
+                                            <div class="overflow-hidden col-5">
+                                                <span class="fw-medium">Nomor Rekam Medis</span>
                                             </div>
-                                            <div class="col date">
-                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${resep.nomor_registrasi}">
+                                            <div class="overflow-hidden col date">
+                                                <span class="isian-teks date">${resep.no_rm}</span>
+                                            </div>
+                                        </div>
+                                        <div class="mb-0 row g-1 align-items-center">
+                                            <div class="overflow-hidden col-5">
+                                                <span class="fw-medium">Nomor Registrasi</span>
+                                            </div>
+                                            <div class="overflow-hidden col date">
+                                                <span class="isian-teks date">${resep.nomor_registrasi}</span>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="mb-0 row g-1 align-items-center">
-                                            <div class="col-5">
-                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Total Resep">
+                                            <div class="overflow-hidden col-5">
+                                                <span class="fw-medium">Total Resep</span>
                                             </div>
-                                            <div class="col date">
-                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${jumlah_resep.toLocaleString('id-ID')}">
+                                            <div class="overflow-hidden col date">
+                                                <span class="isian-teks date">${jumlah_resep.toLocaleString('id-ID')}</span>
                                             </div>
                                         </div>
                                         <div class="mb-0 row g-1 align-items-center">
-                                            <div class="col-5">
-                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Total Harga">
+                                            <div class="overflow-hidden col-5">
+                                                <span class="fw-medium">Total Harga</span>
                                             </div>
-                                            <div class="col date">
-                                                <input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="Rp${total_biaya.toLocaleString('id-ID')}">
+                                            <div class="overflow-hidden col date">
+                                                <span class="isian-teks date">Rp${total_biaya.toLocaleString('id-ID')}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -527,6 +527,13 @@
             $('#loadingSpinner').hide();
         }
     }
+
+    $(document).on('copy', '.isian-teks', function(e) {
+        var selection = window.getSelection().toString();
+
+        e.preventDefault();
+        e.originalEvent.clipboardData.setData('text/plain', selection);
+    });
 
     $(document).on('click', '#paginationNav a', function(event) {
         event.preventDefault(); // Prevents default behavior (scrolling)

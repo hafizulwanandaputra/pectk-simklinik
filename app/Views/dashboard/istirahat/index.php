@@ -377,14 +377,14 @@
                         jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap" style="background-color: Pink"><i class="fa-solid fa-venus"></i> PEREMPUAN</span>`;
                     }
                     const diagnosis = istirahat.diagnosis ?
-                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0" value="${istirahat.diagnosis}">` :
-                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 opacity-50 pe-none fst-italic" value="Belum ada">`;
+                        `<span class="isian-teks">${istirahat.diagnosis}</span>` :
+                        `<span class="isian-teks opacity-50 fst-italic user-select-none">Belum ada</span>`;
                     const tanggal_mulai = istirahat.tanggal_mulai ?
-                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${istirahat.tanggal_mulai}">` :
-                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 opacity-50 pe-none fst-italic" value="Belum ada">`;
+                        `<span class="isian-teks date">${istirahat.tanggal_mulai}</span>` :
+                        `<span class="isian-teks opacity-50 fst-italic user-select-none">Belum ada</span>`;
                     const tanggal_selesai = istirahat.tanggal_selesai ?
-                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${istirahat.tanggal_selesai}">` :
-                        `<input type="text" readonly class="form-control-plaintext p-0 border border-0 opacity-50 pe-none fst-italic" value="Belum ada">`;
+                        `<span class="isian-teks date">${istirahat.tanggal_selesai}</span>` :
+                        `<span class="isian-teks opacity-50 fst-italic user-select-none">Belum ada</span>`;
 
                     const IstirahatElement = `
                     <li class="list-group-item <?= (session()->get('role') != 'Admisi') ? 'border-top-0' : ''; ?> pb-3 pt-3">
@@ -392,46 +392,46 @@
                             <div class="align-self-center w-100">
                                 <h5 class="card-title d-flex date justify-content-start">
                                     <span class="badge bg-body text-body border px-2 align-self-start date" style="font-weight: 900; font-size: 1em; padding-top: .1rem !important; padding-bottom: .1rem !important;">${istirahat.number}</span>
-                                    <span class="ms-1 align-self-center w-100"><input type="text" readonly style="height: 1em;" class="form-control-plaintext p-0 border border-0 lh-1 fw-medium" value="${istirahat.nama_pasien}"></span>
+                                    <span class="ms-1 align-self-center w-100 overflow-hidden"><span style="height: 1em;" class="isian-teks lh-1 fw-medium">${istirahat.nama_pasien}</span></span>
                                 </h5>
                                     <h6 class="card-subtitle mb-2">
-                                        <input type="text" readonly class="form-control-plaintext p-0 border border-0 lh-1 fw-medium" value="${istirahat.nomor_registrasi} • ${istirahat.no_rm}">${jenis_kelamin}
+                                        <span class="isian-teks lh-1 fw-medium">${istirahat.nomor_registrasi} • ${istirahat.no_rm}</span><br>${jenis_kelamin}
                                     </h6>
                                     <div class="card-text">
                                         <div style="font-size: 0.75em;">
                                             <div class="row gx-3">
                                                 <div class="col-lg-6">
                                                     <div class="mb-0 row g-1 align-items-center">
-                                                        <div class="col-5">
-                                                            <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Tanggal dan Waktu">
+                                                        <div class="overflow-hidden col-5">
+                                                            <span class="fw-medium">Tanggal dan Waktu</span>
                                                         </div>
-                                                        <div class="col date">
-                                                            <input type="text" readonly class="form-control-plaintext p-0 border border-0 date" value="${istirahat.waktu_dibuat}">
+                                                        <div class="overflow-hidden col date">
+                                                            <span class="isian-teks date">${istirahat.waktu_dibuat}</span>
                                                         </div>
                                                     </div>
                                                     <div class="mb-0 row g-1 align-items-center">
-                                                        <div class="col-5">
-                                                            <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Diagnosis">
+                                                        <div class="overflow-hidden col-5">
+                                                            <span class="fw-medium">Diagnosis</span>
                                                         </div>
-                                                        <div class="col date">
+                                                        <div class="overflow-hidden col date">
                                                             ${diagnosis}
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6">
                                                     <div class="mb-0 row g-1 align-items-center">
-                                                        <div class="col-5">
-                                                            <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Tanggal Mulai">
+                                                        <div class="overflow-hidden col-5">
+                                                            <span class="fw-medium">Tanggal Mulai</span>
                                                         </div>
-                                                        <div class="col date">
+                                                        <div class="overflow-hidden col date">
                                                             ${tanggal_mulai}
                                                         </div>
                                                     </div>
                                                     <div class="mb-0 row g-1 align-items-center">
-                                                        <div class="col-5">
-                                                            <input type="text" readonly class="form-control-plaintext p-0 border border-0 fw-medium pe-none" value="Tanggal Selesai">
+                                                        <div class="overflow-hidden col-5">
+                                                            <span class="fw-medium">Tanggal Selesai</span>
                                                         </div>
-                                                        <div class="col date">
+                                                        <div class="overflow-hidden col date">
                                                             ${tanggal_selesai}
                                                         </div>
                                                     </div>
@@ -542,6 +542,12 @@
         }
     }
 
+    $(document).on('copy', '.isian-teks', function(e) {
+        var selection = window.getSelection().toString();
+
+        e.preventDefault();
+        e.originalEvent.clipboardData.setData('text/plain', selection);
+    });
 
     $(document).on('click', '#paginationNav a', function(event) {
         event.preventDefault(); // Prevents default behavior (scrolling)
