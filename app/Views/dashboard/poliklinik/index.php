@@ -227,9 +227,10 @@
                 {
                     data: null,
                     render: function(data, type, row) {
+                        const deletedisabled = (row.nama_poli === 'INSTALASI GAWAT DARURAT' || row.nama_poli === 'Kamar Operasi' || row.nama_poli === 'POLI 1') ? 'disabled' : '';
                         return `<div class="btn-group" role="group">
                                     <button class="btn btn-outline-body text-nowrap bg-gradient edit-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${row.id_poli}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
-                                    <button class="btn btn-outline-danger text-nowrap bg-gradient  delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${row.id_poli}" data-name="${row.nama_poli}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
+                                    <button class="btn btn-outline-danger text-nowrap bg-gradient  delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${row.id_poli}" data-name="${row.nama_poli}" data-bs-toggle="tooltip" data-bs-title="Hapus" ${deletedisabled}><i class="fa-solid fa-trash"></i></button>
                                 </div>`;
                     }
                 },
@@ -383,10 +384,15 @@
                 await axios.delete(`<?= base_url('/poliklinik/delete') ?>/${id_poli}`); // Menghapus pengguna
                 table.ajax.reload(null, false); // Memperbarui tabel
             } catch (error) {
-                // Memeriksa jika error memiliki response dan mengambil pesan kesalahan
-                let errorMessage = 'Terjadi kesalahan. Silakan coba lagi.<br>' + error; // Pesan kesalahan umum
+                console.log("Error Response:", error.response); // Menampilkan respons error di konsol
+                if (error.response.request.status === 403 || error.response.request.status === 404) {
+                    showFailedToast(error.response.data.error);
+                } else {
+                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                }
                 showFailedToast(errorMessage); // Menampilkan pesan kesalahan
             } finally {
+                $('#deleteModal button').prop('disabled', false);
                 $('#deleteModal').modal('hide'); // Menyembunyikan modal penghapusan
                 $(this).text(`Hapus`); // Mengembalikan teks tombol asal
             }
@@ -472,7 +478,7 @@
                     console.error('Perbaiki kesalahan pada formulir.'); // Menampilkan pesan kesalahan di konsol
                 }
             } catch (error) {
-                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error); // Menampilkan pesan kesalahan
+                showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
             } finally {
                 $('#submitButton').prop('disabled', false).html(`
                     <i class="fa-solid fa-floppy-disk"></i> Simpan

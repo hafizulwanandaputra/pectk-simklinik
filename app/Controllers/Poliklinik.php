@@ -209,7 +209,7 @@ class Poliklinik extends BaseController
                     str_contains($poli['nama_poli'], 'POLI 1')
                 ) {
                     return $this->response->setStatusCode(403)->setJSON([
-                        'error' => '"' . $poli['nama_poli'] . '" tidak dapat dihapus',
+                        'error' => '"' . $poli['nama_poli'] . '" tidak dapat dihapus. Ruangan ini digunakan untuk keperluan khusus dan tidak boleh dihapus.',
                     ]);
                 }
 
