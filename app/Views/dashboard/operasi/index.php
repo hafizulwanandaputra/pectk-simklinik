@@ -303,7 +303,6 @@
             theme: "bootstrap-5",
             width: $('#nomor_registrasi').data('width') ? $('#nomor_registrasi').data('width') : $('#nomor_registrasi').hasClass('w-100') ? '100%' : 'style',
             placeholder: "Pilih Pasien Operasi",
-            disabled: <?= (session()->get('role') == 'Perawat') ? 'true' : 'false' ?>,
             allowClear: true,
             language: {
                 inputTooShort: function() {
