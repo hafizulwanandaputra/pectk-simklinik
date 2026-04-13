@@ -506,7 +506,7 @@
                                 <i class="fa-solid fa-triangle-exclamation"></i>
                             </div>
                             <div class="w-100 ms-3">
-                                <div>Mendaftarkan rawat jalan ini dengan ruangan kamar operasi akan menambahkan rawat jalan ini ke dalam daftar pasien operasi!</div>
+                                <div>Mendaftarkan rawat jalan ini dengan ruangan kamar operasi akan menambahkan rawat jalan ini ke dalam daftar pasien operasi.</div>
                             </div>
                         </div>
                     </div>
@@ -561,7 +561,7 @@
                             <div class="w-100 ms-3">
                                 <h4 style="font-weight: 900;">PERINGATAN!</h4>
                                 <p>Mengganti dokter melalui formulir ini tidak akan mengubah nomor antrian. Jika ingin mengubah nomor antrian, hapus rawat jalan ini dan registrasikan dengan rawat jalan baru.</p>
-                                <p class="mb-0">Mengganti ruangan kepada selain kamar operasi pada rawat jalan ini akan menghapus rawat jalan ini dari daftar pasien operasi. Namun, mengganti ruangan kepada kamar operasi pada rawat jalan ini akan menambahkan rawat jalan ini ke dalam daftar pasien operasi!</p>
+                                <p class="mb-0">Mengganti ruangan kepada selain kamar operasi pada rawat jalan ini akan menghapus rawat jalan ini dari daftar pasien operasi. Namun, mengganti ruangan kepada kamar operasi pada rawat jalan ini akan menambahkan rawat jalan ini ke dalam daftar pasien operasi.</p>
                             </div>
                         </div>
                     </div>
