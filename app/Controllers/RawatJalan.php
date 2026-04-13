@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\PasienModel;
 use App\Models\RawatJalanModel;
+use App\Models\SPOperasiModel;
 use App\Models\PoliklinikModel;
 use App\Models\AuthModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
@@ -14,12 +15,14 @@ class RawatJalan extends BaseController
 {
     protected $PasienModel;
     protected $RawatJalanModel;
+    protected $SPOperasiModel;
     protected $PoliklinikModel;
     protected $AuthModel;
     public function __construct()
     {
         $this->PasienModel = new PasienModel();
         $this->RawatJalanModel = new RawatJalanModel();
+        $this->SPOperasiModel = new SPOperasiModel();
         $this->PoliklinikModel = new PoliklinikModel();
         $this->AuthModel = new AuthModel();
     }
@@ -380,6 +383,58 @@ class RawatJalan extends BaseController
                 'transaksi' => 0,
             ];
             $this->RawatJalanModel->insert($data);
+
+            if ($data['ruangan'] == 'Kamar Operasi') {
+
+                // Ambil ulang data yang barusan dipakai
+                $spOperasiData = $data;
+                $nomorRegistrasi = $nomor_registrasi;
+
+                // Ambil tanggal dari tanggal_registrasi (BUKAN hari ini)
+                $date = new \DateTime($spOperasiData['tanggal_registrasi']);
+                $tanggal = $date->format('d');
+                $bulan = $date->format('m');
+                $tahun = $date->format('y');
+
+                // Ambil nomor booking terakhir
+                $lastNoReg = $this->SPOperasiModel->getLastNoBooking($tahun, $bulan, $tanggal);
+                $lastNumber = $lastNoReg ? intval(substr($lastNoReg, -3)) : 0;
+                $nextNumber = str_pad($lastNumber + 1, 3, '0', STR_PAD_LEFT);
+
+                $nomor_booking = sprintf('OK%s%s%s%s', $tanggal, $bulan, $tahun, $nextNumber);
+
+                // Ambil tanggal operasi dari tanggal registrasi
+                $tanggalOperasi = date('Y-m-d', strtotime($spOperasiData['tanggal_registrasi']));
+
+                // Ambil dokter dari rawat jalan
+                $dokterOperator = $spOperasiData['dokter'];
+
+                // Data operasi
+                $dataOperasi = [
+                    'nomor_booking' => $nomor_booking,
+                    'nomor_registrasi' => $nomorRegistrasi,
+                    'no_rm' => $spOperasiData['no_rm'],
+                    'tanggal_operasi' => $tanggalOperasi,
+                    'jam_operasi' => NULL,
+                    'diagnosa' => NULL,
+                    'jenis_tindakan' => NULL,
+                    'indikasi_operasi' => NULL,
+                    'jenis_bius' => NULL,
+                    'tipe_bayar' => NULL,
+                    'rajal_ranap' => NULL,
+                    'ruang_operasi' => NULL,
+                    'dokter_operator' => $dokterOperator,
+                    'status_operasi' => 'DIJADWAL',
+                    'diagnosa_site_marking' => NULL,
+                    'tindakan_site_marking' => NULL,
+                    'site_marking' => NULL,
+                    'nama_pasien_keluarga' => NULL,
+                    'tanda_tangan_pasien' => NULL,
+                    'waktu_dibuat' => date('Y-m-d H:i:s'),
+                ];
+
+                $this->SPOperasiModel->save($dataOperasi);
+            }
             // Panggil WebSocket untuk update client
             $this->notify_clients('update');
             return $this->response->setJSON(['success' => true, 'message' => 'Rawat jalan berhasil diregistrasi']);
@@ -514,6 +569,67 @@ class RawatJalan extends BaseController
                     'success' => false,
                     'message' => 'Rawat jalan tidak dapat diedit karena rawat jalan ini sudah memiliki resep obat, resep kacamata, atau transaksi'
                 ]);
+            }
+
+            $ruanganBaru = $this->request->getPost('edit_ruangan');
+
+            // 👉 1. Jika keluar dari Kamar Operasi → hapus
+            if ($rajal['ruangan'] == 'Kamar Operasi' && $ruanganBaru != 'Kamar Operasi') {
+                $db->table('medrec_sp_operasi')
+                    ->where('nomor_registrasi', $nomorReg)
+                    ->delete();
+            }
+
+            // 👉 2. Jika masuk ke Kamar Operasi → tambah (kalau checkbox aktif)
+            if ($rajal['ruangan'] != 'Kamar Operasi' && $ruanganBaru == 'Kamar Operasi') {
+
+                // 🔒 Cegah double insert
+                $sudahAda = $db->table('medrec_sp_operasi')
+                    ->where('nomor_registrasi', $nomorReg)
+                    ->countAllResults();
+
+                if ($sudahAda == 0) {
+
+                    // Ambil data dari rawat jalan (pakai $rajal yang sudah ada)
+                    $date = new \DateTime($rajal['tanggal_registrasi']);
+                    $tanggal = $date->format('d');
+                    $bulan = $date->format('m');
+                    $tahun = $date->format('y');
+
+                    // Nomor booking
+                    $lastNoReg = $this->SPOperasiModel->getLastNoBooking($tahun, $bulan, $tanggal);
+                    $lastNumber = $lastNoReg ? intval(substr($lastNoReg, -3)) : 0;
+                    $nextNumber = str_pad($lastNumber + 1, 3, '0', STR_PAD_LEFT);
+
+                    $nomor_booking = sprintf('OK%s%s%s%s', $tanggal, $bulan, $tahun, $nextNumber);
+
+                    $tanggalOperasi = date('Y-m-d', strtotime($rajal['tanggal_registrasi']));
+
+                    $dataOperasi = [
+                        'nomor_booking' => $nomor_booking,
+                        'nomor_registrasi' => $nomorReg,
+                        'no_rm' => $rajal['no_rm'],
+                        'tanggal_operasi' => $tanggalOperasi,
+                        'jam_operasi' => NULL,
+                        'diagnosa' => NULL,
+                        'jenis_tindakan' => NULL,
+                        'indikasi_operasi' => NULL,
+                        'jenis_bius' => NULL,
+                        'tipe_bayar' => NULL,
+                        'rajal_ranap' => NULL,
+                        'ruang_operasi' => NULL,
+                        'dokter_operator' => $rajal['dokter'],
+                        'status_operasi' => 'DIJADWAL',
+                        'diagnosa_site_marking' => NULL,
+                        'tindakan_site_marking' => NULL,
+                        'site_marking' => NULL,
+                        'nama_pasien_keluarga' => NULL,
+                        'tanda_tangan_pasien' => NULL,
+                        'waktu_dibuat' => date('Y-m-d H:i:s'),
+                    ];
+
+                    $this->SPOperasiModel->save($dataOperasi);
+                }
             }
 
             // Simpan data pasien

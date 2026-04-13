@@ -119,7 +119,7 @@ class Poliklinik extends BaseController
             $validation = \Config\Services::validation();
             // Menetapkan aturan validasi dasar
             $validation->setRules([
-                'nama_poli' => 'required|is_unique[poliklinik.nama_poli]',
+                'nama_poli' => 'required|is_unique[poliklinik.nama_poli]|not_in_list[INSTALASI GAWAT DARURAT,Kamar Operasi,POLI 1]',
                 'status' => 'required'
             ]);
 
@@ -193,15 +193,37 @@ class Poliklinik extends BaseController
     {
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Manajer') {
             try {
-                // Menghapus ruangan poliklinik
+                // Ambil data berdasarkan ID
+                $poli = $this->PoliklinikModel->find($id);
+
+                if (!$poli) {
+                    return $this->response->setStatusCode(404)->setJSON([
+                        'error' => 'Data tidak ditemukan',
+                    ]);
+                }
+
+                // Cek apakah mengandung kata terlarang
+                if (
+                    str_contains($poli['nama_poli'], 'INSTALASI GAWAT DARURAT') ||
+                    str_contains($poli['nama_poli'], 'Kamar Operasi') ||
+                    str_contains($poli['nama_poli'], 'POLI 1')
+                ) {
+                    return $this->response->setStatusCode(403)->setJSON([
+                        'error' => '"' . $poli['nama_poli'] . '" tidak dapat dihapus',
+                    ]);
+                }
+
+                // Jika lolos, lanjut hapus
                 $this->PoliklinikModel->delete($id);
-                $db = db_connect(); // Menghubungkan ke database
-                // Mengatur ulang nilai Auto Increment
+
+                $db = db_connect();
                 $db->query('ALTER TABLE `poliklinik` auto_increment = 1');
-                // Panggil WebSocket untuk update client
+
                 $this->notify_clients();
-                // Mengembalikan respons JSON sukses
-                return $this->response->setJSON(['message' => 'Ruangan poliklinik berhasil dihapus']);
+
+                return $this->response->setJSON([
+                    'message' => '"' . $poli['nama_poli'] . '" berhasil dihapus'
+                ]);
             } catch (DatabaseException $e) {
                 // Mencatat pesan kesalahan
                 log_message('error', $e->getMessage());

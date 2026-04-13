@@ -588,7 +588,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                                 Biarkan modal ini tetap terbuka setelah menyimpan
                             </label>
                             <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" value="" id="keepModalOpen" switch>
+                                <input class="form-check-input" type="checkbox" value="" id="keepModalOpen">
                             </div>
                         </div>
                     </div>

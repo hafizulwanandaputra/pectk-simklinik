@@ -221,7 +221,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                     </div>
                 </div>
             </div>
-            <div class="mb-3 table-responsive">
+            <div class="mb-3 table-responsive bg-body-tertiary">
                 <div class="fw-bold mb-2 border-bottom">Anestesi</div>
                 <table class="table table-borderless table-body-hwpweb mb-0">
                     <tbody>
@@ -331,7 +331,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                     </tbody>
                 </table>
             </div>
-            <div class="mb-3 table-responsive">
+            <div class="mb-3 table-responsive bg-body-tertiary">
                 <div class="fw-bold mb-2 border-bottom">Peritomi</div>
                 <table class="table table-borderless table-body-hwpweb mb-0">
                     <tbody>
@@ -368,7 +368,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                     </tbody>
                 </table>
             </div>
-            <div class="mb-3 table-responsive">
+            <div class="mb-3 table-responsive bg-body-tertiary">
                 <div class="fw-bold mb-2 border-bottom">Lokasi</div>
                 <table class="table table-borderless table-body-hwpweb mb-0">
                     <tbody>
@@ -433,7 +433,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                     </tbody>
                 </table>
             </div>
-            <div class="mb-3 table-responsive">
+            <div class="mb-3 table-responsive bg-body-tertiary">
                 <div class="fw-bold mb-2 border-bottom">Lokasi Insisi</div>
                 <table class="table table-borderless table-body-hwpweb mb-0">
                     <tbody>
@@ -524,7 +524,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                     </div>
                 </div>
             </div>
-            <div class="mb-3 table-responsive">
+            <div class="mb-3 table-responsive bg-body-tertiary">
                 <div class="fw-bold mb-2 border-bottom">Alat Insisi</div>
                 <table class="table table-borderless table-body-hwpweb mb-0">
                     <tbody>
@@ -576,7 +576,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                     </tbody>
                 </table>
             </div>
-            <div class="mb-3 table-responsive">
+            <div class="mb-3 table-responsive bg-body-tertiary">
                 <div class="fw-bold mb-2 border-bottom">Kapsulotomi Anterior</div>
                 <table class="table table-borderless table-body-hwpweb mb-0">
                     <tbody>
@@ -628,7 +628,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                     </tbody>
                 </table>
             </div>
-            <div class="mb-3 table-responsive">
+            <div class="mb-3 table-responsive bg-body-tertiary">
                 <div class="fw-bold mb-2 border-bottom">Ekstraksi Lensa</div>
                 <table class="table table-borderless table-body-hwpweb mb-0">
                     <tbody>
@@ -725,7 +725,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                     </tbody>
                 </table>
             </div>
-            <div class="mb-3 table-responsive">
+            <div class="mb-3 table-responsive bg-body-tertiary">
                 <div class="fw-bold mb-2 border-bottom">Tindakan Tambahan</div>
                 <table class="table table-borderless table-body-hwpweb mb-0">
                     <tbody>
@@ -806,7 +806,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                     </tbody>
                 </table>
             </div>
-            <div class="mb-3 table-responsive">
+            <div class="mb-3 table-responsive bg-body-tertiary">
                 <div class="fw-bold mb-2 border-bottom">Cairan Irigasi</div>
                 <table class="table table-borderless table-body-hwpweb mb-0">
                     <tbody>
@@ -856,7 +856,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                     </tbody>
                 </table>
             </div>
-            <div class="mb-3 table-responsive">
+            <div class="mb-3 table-responsive bg-body-tertiary">
                 <div class="fw-bold mb-2 border-bottom">Fiksasi LIO</div>
                 <table class="table table-borderless table-body-hwpweb mb-0">
                     <tbody>
@@ -923,7 +923,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                     </tbody>
                 </table>
             </div>
-            <div class="mb-3 table-responsive">
+            <div class="mb-3 table-responsive bg-body-tertiary">
                 <div class="fw-bold mb-2 border-bottom">Penanaman</div>
                 <table class="table table-borderless table-body-hwpweb mb-0">
                     <tbody>
@@ -960,7 +960,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                     </tbody>
                 </table>
             </div>
-            <div class="mb-3 table-responsive">
+            <div class="mb-3 table-responsive bg-body-tertiary">
                 <div class="fw-bold mb-2 border-bottom">Jenis LIO</div>
                 <table class="table table-borderless table-body-hwpweb mb-0">
                     <tbody>
@@ -997,7 +997,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                     </tbody>
                 </table>
             </div>
-            <div class="mb-3 table-responsive">
+            <div class="mb-3 table-responsive bg-body-tertiary">
                 <div class="fw-bold mb-2 border-bottom">Posisi LIO</div>
                 <table class="table table-borderless table-body-hwpweb mb-0">
                     <tbody>
@@ -1049,7 +1049,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                     </tbody>
                 </table>
             </div>
-            <div class="mb-3 table-responsive">
+            <div class="mb-3 table-responsive bg-body-tertiary">
                 <div class="fw-bold mb-2 border-bottom">Cairan Viskoelastis</div>
                 <table class="table table-borderless table-body-hwpweb mb-0">
                     <tbody>
@@ -1131,7 +1131,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                     </tbody>
                 </table>
             </div>
-            <div class="mb-3 table-responsive">
+            <div class="mb-3 table-responsive bg-body-tertiary">
                 <div class="fw-bold mb-2 border-bottom">Benang</div>
                 <table class="table table-borderless table-body-hwpweb mb-0">
                     <tbody>
@@ -1199,7 +1199,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                     </div>
                 </div>
             </div>
-            <div class="mb-3 table-responsive">
+            <div class="mb-3 table-responsive bg-body-tertiary">
                 <div class="fw-bold mb-2 border-bottom">Komplikasi</div>
                 <table class="table table-borderless table-body-hwpweb mb-0">
                     <tbody>

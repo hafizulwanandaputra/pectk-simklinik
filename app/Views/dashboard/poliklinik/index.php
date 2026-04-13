@@ -335,6 +335,12 @@
                 // Melakukan permintaan dengan Axios untuk mendapatkan data pengguna
                 const response = await axios.get(`<?= base_url('/poliklinik/poliklinik') ?>/${id}`);
 
+                if (response.data.nama_poli === 'INSTALASI GAWAT DARURAT' || response.data.nama_poli === 'Kamar Operasi' || response.data.nama_poli === 'POLI 1') {
+                    $('#nama_poli').attr('readonly', true); // Menjadikan field nama_poli hanya baca untuk mencegah perubahan
+                } else {
+                    $('#nama_poli').attr('readonly', false); // Membuat field nama_poli dapat diedit
+                }
+
                 // Memperbarui field modal dengan data pengguna yang diterima
                 $('#poliModalLabel').text('Edit Ruangan Poliklinik');
                 $('#id_poli').val(response.data.id_poli);
