@@ -40,14 +40,14 @@ $usia = $sekarang->diff($tanggal_lahir);
             height: 3.4cm;
             overflow: hidden;
             padding: 0cm;
-            font-size: 8.5pt;
+            font-size: 7.5pt;
         }
 
         .tindakan {
             font-family: <?= env('PDF-FONT-CONDENSED') ?>;
             width: 100%;
             border-collapse: collapse;
-            font-size: 7.5pt;
+            font-size: 6.5pt;
         }
 
         .tindakan td:nth-child(1),
