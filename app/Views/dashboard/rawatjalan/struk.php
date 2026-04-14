@@ -40,7 +40,7 @@ $usia = $sekarang->diff($tanggal_lahir);
             height: 3.4cm;
             overflow: hidden;
             padding: 0cm;
-            font-size: 7.5pt;
+            font-size: 8pt;
         }
 
         .tindakan {
@@ -59,6 +59,7 @@ $usia = $sekarang->diff($tanggal_lahir);
             font-family: <?= env('PDF-FONT-CONDENSED') ?>;
             width: 100%;
             border-collapse: collapse;
+            font-size: 6.5pt;
         }
 
         /* Border hanya untuk kolom pertama dan baris pertama serta kedua */
