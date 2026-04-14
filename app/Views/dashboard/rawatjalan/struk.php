@@ -36,10 +36,10 @@ $usia = $sekarang->diff($tanggal_lahir);
 
         .box {
             border: 1px solid black;
-            height: 3.4cm;
+            height: 2.9cm;
             overflow: hidden;
             padding: 0cm;
-            font-size: 8pt;
+            font-size: 7.5pt;
         }
 
         .tindakan {
