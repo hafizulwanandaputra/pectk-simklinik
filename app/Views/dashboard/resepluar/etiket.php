@@ -66,7 +66,7 @@ if (!empty($resep['tanggal_lahir']) && $resep['tanggal_lahir'] != '0000-00-00') 
                     </tr>
                     <tr>
                         <td style="width: 100%; height: 0.425cm;">DPJP: <?= $resep['dokter'] ?></td>
-                        <td style="width: 0%; text-align: right; white-space: nowrap;">DOB: <?= $tanggal_lahir_formatted ?></td>
+                        <td style="width: 0%; text-align: right; white-space: nowrap;">Tgl. Lahir: <?= $tanggal_lahir_formatted ?></td>
                     </tr>
                 </tbody>
             </table>
