@@ -21,7 +21,7 @@ if (!empty($resep['tanggal_lahir']) && $resep['tanggal_lahir'] != '0000-00-00') 
     <style>
         body {
             font-family: <?= env('PDF-FONT') ?>;
-            font-size: 5pt;
+            font-size: 4.5pt;
             line-height: 1.2;
             margin: 0;
             padding: 0;
@@ -62,7 +62,7 @@ if (!empty($resep['tanggal_lahir']) && $resep['tanggal_lahir'] != '0000-00-00') 
                 <tbody style="vertical-align: top;">
                     <tr>
                         <td style="width: 100%;">No. RM: <?= $resep['no_rm'] ?></td>
-                        <td style="width: 0%; text-align: right; white-space: nowrap;">Tgl: <?= $tanggal_resep->toLocalizedString('dd/MM/yyyy') ?></td>
+                        <td style="width: 0%; text-align: right; white-space: nowrap;">Tgl. Resep: <?= $tanggal_resep->toLocalizedString('dd/MM/yyyy') ?></td>
                     </tr>
                     <tr>
                         <td style="width: 100%; height: 0.425cm;">DPJP: <?= $resep['dokter'] ?></td>

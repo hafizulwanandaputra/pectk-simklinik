@@ -56,7 +56,7 @@ $tanggal_lahir = Time::parse($resep['tanggal_lahir']);
                 <tbody style="vertical-align: top;">
                     <tr>
                         <td style="width: 100%;">No. RM: <?= $resep['no_rm'] ?></td>
-                        <td style="width: 0%; text-align: right; white-space: nowrap;">Tgl: <?= $tanggal_resep->toLocalizedString('dd/MM/yyyy') ?></td>
+                        <td style="width: 0%; text-align: right; white-space: nowrap;">Tgl. Resep: <?= $tanggal_resep->toLocalizedString('dd/MM/yyyy') ?></td>
                     </tr>
                     <tr>
                         <td style="width: 100%; height: 0.425cm;">DPJP: <?= $resep['dokter'] ?></td>
