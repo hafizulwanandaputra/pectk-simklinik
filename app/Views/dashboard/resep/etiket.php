@@ -15,7 +15,7 @@ $tanggal_lahir = Time::parse($resep['tanggal_lahir']);
     <style>
         body {
             font-family: <?= env('PDF-FONT') ?>;
-            font-size: 5pt;
+            font-size: 4pt;
             line-height: 1.2;
             margin: 0;
             padding: 0;
@@ -49,7 +49,7 @@ $tanggal_lahir = Time::parse($resep['tanggal_lahir']);
 <body>
     <div>
         <?php foreach ($detail_resep as $detail) : ?>
-            <div style="text-align: center;">
+            <div style="text-align: center; padding-bottom: 0.05cm;">
                 <h2 style="font-size: 5.4pt;">KLINIK UTAMA MATA<br>PADANG EYE CENTER TELUK KUANTAN</h2>
             </div>
             <table width="100%">
