@@ -63,6 +63,8 @@ $routes->get('/(?i)rawatjalan/(?i)rawatjalanlisttanggal', 'RawatJalan::rawatjala
 $routes->get('/(?i)rawatjalan/(?i)rawatjalanlistrm', 'RawatJalan::rawatjalanlistrm');
 $routes->get('/(?i)rawatjalan/(?i)rawatjalanlistnama', 'RawatJalan::rawatjalanlistnama');
 $routes->get('/(?i)rawatjalan/(?i)rawatjalan/(:any)', 'RawatJalan::rawatjalan/$1');
+$routes->get('/(?i)rawatjalan/(?i)antrean', 'RawatJalan::antrean');
+$routes->post('/(?i)rawatjalan/(?i)panggil_antrean/(:num)', 'RawatJalan::panggil_antrean/$1');
 $routes->get('/(?i)rawatjalan/(?i)kunjunganoptions', 'Pasien::kunjunganoptions');
 $routes->get('/(?i)rawatjalan/(?i)jaminanoptions', 'Pasien::jaminanoptions');
 $routes->get('/(?i)rawatjalan/(?i)ruanganoptions', 'Pasien::ruanganoptions');

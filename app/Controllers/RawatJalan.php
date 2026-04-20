@@ -44,6 +44,63 @@ class RawatJalan extends BaseController
         }
     }
 
+    public function antrean()
+    {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Admisi' || session()->get('role') == 'Manajer') {
+            $db = db_connect(); // Menghubungkan ke database
+            // Mengambil daftar poliklinik dari database
+            $poliklinik = $db->table('poliklinik')->where('status', 1)->get()->getResultArray();
+            // Menyusun data untuk ditampilkan di view
+            $data = [
+                'poliklinik' => $poliklinik, // Daftar poliklinik yang diambil dari database
+                'title' => 'Beranda - ' . $this->systemName, // Judul halaman
+                'headertitle' => 'Beranda', // Judul header
+                'agent' => $this->request->getUserAgent() // Mendapatkan user agent dari request
+            ];
+
+            // Mengembalikan tampilan beranda dengan data yang telah disiapkan
+            return view('dashboard/rawatjalan/monitorantrean', $data);
+        } else {
+            // Jika peran tidak dikenali, lemparkan pengecualian 404
+            throw PageNotFoundException::forPageNotFound();
+        }
+    }
+
+    public function panggil_antrean($id)
+    {
+        if (!in_array(session()->get('role'), ['Admin', 'Dokter', 'Perawat', 'Admisi', 'Manajer'])) {
+            return $this->response->setJSON([
+                'success' => false,
+                'message' => 'Akses ditolak'
+            ]);
+        }
+
+        $rawat_jalan = $this->RawatJalanModel
+            ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
+            ->find($id);
+
+        if (!$rawat_jalan) {
+            return $this->response->setJSON([
+                'success' => false,
+                'message' => 'Data tidak ditemukan'
+            ]);
+        }
+
+        $this->notify_clients('panggil_antrean_poli', [
+            'id' => $id,
+            'nama_pasien' => $rawat_jalan['nama_pasien'],
+            'no_rm' => $rawat_jalan['no_rm'],
+            'nomor_registrasi' => $rawat_jalan['nomor_registrasi'],
+            'dokter' => $rawat_jalan['dokter'],
+            'ruangan' => $rawat_jalan['ruangan']
+        ]);
+
+        return $this->response->setJSON([
+            'success' => true,
+            'message' => 'Antrean berhasil dipanggil',
+        ]);
+    }
+
     public function rawatjalanlisttanggal()
     {
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat'  || session()->get('role') == 'Admisi' || session()->get('role') == 'Manajer') {
@@ -1101,23 +1158,43 @@ class RawatJalan extends BaseController
         }
     }
 
-    public function notify_clients($action)
+    public function notify_clients($action, $extraData = null)
     {
-        if (!in_array($action, ['update', 'delete'])) {
+        // Validasi action
+        if (!in_array($action, ['panggil_antrean_poli', 'update', 'delete'])) {
             return $this->response->setJSON([
-                'status' => 'Invalid action',
-                'error' => 'Action must be either "update" or "delete"'
-            ])->setStatusCode(400);
+                'success' => false,
+                'message' => 'Invalid action',
+            ]);
         }
 
         $client = \Config\Services::curlrequest();
-        $response = $client->post(env('WS-URL-PHP'), [
-            'json' => ['action' => $action]
-        ]);
 
-        return $this->response->setJSON([
-            'status' => ucfirst($action) . ' notification sent',
-            'response' => json_decode($response->getBody(), true)
-        ]);
+        $payload = [
+            'action' => $action
+        ];
+
+        // Pastikan data tidak pernah null kalau memang dikirim
+        if ($extraData !== null) {
+            $payload['data'] = $extraData;
+        }
+
+        try {
+            $response = $client->post(env('WS-URL-PHP'), [
+                'json' => $payload
+            ]);
+
+            return $this->response->setJSON([
+                'success' => true,
+                'message' => ucfirst($action) . ' notification sent',
+                'ws_response' => json_decode($response->getBody(), true)
+            ]);
+        } catch (\Throwable $e) {
+            return $this->response->setJSON([
+                'success' => false,
+                'message' => 'Gagal mengirim ke WebSocket',
+                'error' => $e->getMessage()
+            ]);
+        }
     }
 }

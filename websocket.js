@@ -93,6 +93,8 @@ app.post("/notify", (req, res) => {
     broadcast({ delete: true });
   } else if (action === "panggil_antrean") {
     broadcast({ panggil_antrean: true, data: data });
+  } else if (action === "panggil_antrean_poli") {
+    broadcast({ panggil_antrean_poli: true, data: data });
   } else {
     return res.status(400).json({ status: "Invalid action" });
   }

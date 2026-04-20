@@ -508,7 +508,27 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
     <div class="wrapper">
         <!-- HEADER -->
         <header class="navbar sticky-top flex-md-nowrap p-0 shadow-sm bg-success-subtle text-body-emphasis border-bottom border-success-subtle header">
-            <?php if (!(in_array(session()->get('role'), ['Satpam', 'Monitor Antrean']) && $activeSegment === 'home')) : ?>
+            <?php
+            $role = session()->get('role');
+            $uri = service('uri');
+
+            $seg1 = $uri->getSegment(1);
+            $seg2 = $uri->getSegment(2);
+
+            // Kondisi 1
+            $hideForSatpamHome = in_array($role, ['Satpam', 'Monitor Antrean'])
+                && $seg1 === 'home';
+
+            // Kondisi 2
+            $hideForMedisAntrean = in_array($role, ['Admin', 'Dokter', 'Perawat', 'Admisi', 'Manajer'])
+                && $seg1 === 'rawatjalan'
+                && $seg2 === 'antrean';
+
+            // Gabungan
+            $hideSidebar = $hideForSatpamHome || $hideForMedisAntrean;
+            ?>
+
+            <?php if (!$hideSidebar) : ?>
                 <div id="sidebarHeader" class="d-flex justify-content-start align-items-center ms-0 ms-md-2 px-3 px-md-2 py-md-1" style="min-height: 3rem; max-height: 3rem;">
                     <span class="navbar-brand mx-0 text-start lh-sm d-flex justify-content-center align-items-center" style="font-size: 9pt;">
                         <img src="<?= base_url('/assets/images/pec-klinik-logo.png'); ?>" alt="KLINIK MATA PECTK" height="28px">
@@ -664,7 +684,27 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
 
         <!-- CONTENTS -->
         <div class="main-content-wrapper">
-            <?php if (!(in_array(session()->get('role'), ['Satpam', 'Monitor Antrean']) && $activeSegment === 'home')) : ?>
+            <?php
+            $role = session()->get('role');
+            $uri = service('uri');
+
+            $seg1 = $uri->getSegment(1);
+            $seg2 = $uri->getSegment(2);
+
+            // Kondisi 1
+            $hideForSatpamHome = in_array($role, ['Satpam', 'Monitor Antrean'])
+                && $seg1 === 'home';
+
+            // Kondisi 2
+            $hideForMedisAntrean = in_array($role, ['Admin', 'Dokter', 'Perawat', 'Admisi', 'Manajer'])
+                && $seg1 === 'rawatjalan'
+                && $seg2 === 'antrean';
+
+            // Gabungan
+            $hideSidebar = $hideForSatpamHome || $hideForMedisAntrean;
+            ?>
+
+            <?php if (!$hideSidebar) : ?>
                 <nav id="sidebarMenu" class="d-md-block sidebar bg-body-secondary shadow-sm collapse transparent-blur">
                     <div id="sidebarMenu2" class="position-sticky sidebar-sticky p-1">
                         <ul class="nav nav-pills flex-column">

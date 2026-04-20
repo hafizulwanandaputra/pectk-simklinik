@@ -10,6 +10,7 @@
     <div id="loadingSpinner" class="px-2">
         <?= $this->include('spinner/spinner'); ?>
     </div>
+    <a id="btnAntrean" class="fs-6 mx-2 text-body-emphasis" href="<?= base_url('rawatjalan/antrean') ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Halaman Antrean" target="_blank"><i class="fa-solid fa-people-group"></i></a>
 </div>
 <div style="min-width: 1px; max-width: 1px;"></div>
 <?= $this->endSection(); ?>
@@ -1320,6 +1321,9 @@
                                                     </button>
                                                 <?php endif; ?>
                                             <?php endif; ?>
+                                            <button type="button" class="btn btn-body btn-sm bg-gradient btn-call" data-id="${rawatjalan.id_rawat_jalan}">
+                                                <i class="fa-solid fa-phone-volume"></i> Panggil Antrean
+                                            </button>
                                         </div>
                         `;
                 } else if (tombol_rme === 'BATAL') {
@@ -1506,6 +1510,30 @@
                     $btn.prop('disabled', false).html(`<i class="fa-solid fa-receipt"></i> Lembar Isian Operasi`);
                 }
             });
+        });
+        $(document).on('click', '.btn-call', async function() {
+            const id = $(this).attr('data-id');
+            const $btn = $(this);
+
+            $btn.prop('disabled', true)
+                .html(`<?= $this->include('spinner/spinner'); ?> Panggil Antrean`);
+
+            try {
+                const res = await axios.post(`<?= base_url('/rawatjalan/panggil_antrean') ?>/${id}`);
+
+                if (!res.data.success) {
+                    throw new Error(res.data.message);
+                }
+
+                showSuccessToast(res.data.message);
+
+            } catch (error) {
+                showFailedToast(error.message || 'Terjadi kesalahan');
+            } finally {
+                // Pastikan tombol balik normal baik sukses maupun gagal
+                $btn.prop('disabled', false)
+                    .html(`<i class="fa-solid fa-phone-volume"></i> Panggil Antrean`);
+            }
         });
         $('#rajalModal').on('hidden.bs.modal', function() {
             allowPrint = false; // reset
