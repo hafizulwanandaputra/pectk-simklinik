@@ -171,6 +171,10 @@ $db = db_connect();
             showSuccessToast('Suara diaktifkan. Pemanggilan nomor antrean sudah bisa digunakan.')
         });
 
+        function toTitleCase(str) {
+            return str.toLowerCase().replace(/\b\w/g, char => char.toUpperCase());
+        }
+
         const socket = new WebSocket('<?= env('WS-URL-JS') ?>'); // Ganti dengan domain VPS
 
         socket.onopen = () => {
@@ -182,8 +186,9 @@ $db = db_connect();
             console.log(event);
 
             if (message.panggil_antrean_poli && message.data) {
-                console.log("Antrean masuk:", message.data);
-                const kalimat = `Pasien atas nama ${message.data.nama_pasien}, silakan menuju ke ${message.data.ruangan}.`;
+                const nama = toTitleCase(message.data.nama_pasien);
+                const ruangan = toTitleCase(message.data.ruangan);
+                const kalimat = `Pasien atas nama ${nama}, silakan menuju ke ${ruangan}.`;
 
                 const utterance = new SpeechSynthesisUtterance(kalimat);
                 utterance.lang = 'id-ID';
