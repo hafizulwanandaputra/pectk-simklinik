@@ -112,7 +112,7 @@ class Admin extends BaseController
             // Mengambil data pengguna berdasarkan ID, kecuali pengguna yang sedang login
             $data = $this->AuthModel
                 ->where('id_user !=', session()->get('id_user'))
-                ->where('is_owner', 1)
+                ->orWhere('is_owner', 1)
                 ->find($id);
             // Mengembalikan respons JSON dengan data pengguna
             return $this->response->setJSON($data);
