@@ -15,6 +15,10 @@ $db = db_connect();
         max-width: 100%;
     }
 
+    .nomor-antrean {
+        font-size: 6rem;
+    }
+
     .full-card-height {
         max-height: calc((100dvh - 3rem - 53px) - 3rem);
         min-height: calc((100dvh - 3rem - 53px) - 3rem);
@@ -79,8 +83,8 @@ $db = db_connect();
         </ul>
     </div>
     <div class="no-fluid-content">
-        <div class="row row-cols-1 row-cols-lg-2 g-3">
-            <div class="col col-lg-6 col-xl-5">
+        <div class="row g-3">
+            <div class="col">
                 <div class="mb-3" style="max-height: 52px; min-height: 52px;">
                     <span class="d-flex justify-content-center align-items-center" style="font-size: 12pt;">
                         <img src="<?= base_url('/assets/images/pec-klinik-logo.png'); ?>" alt="KLINIK MATA PECTK" height="56px">
@@ -96,7 +100,7 @@ $db = db_connect();
                             <div class="card-header">
                                 <div class="fs-3 fw-light" id="nama_loket_1"><em>Loket Tutup</em></div>
                                 <div class="fs-6">Nomor antrean:</div>
-                                <h1 class="fw-medium mb-0" id="nomor_antrean_label_1"><i class="fa-solid fa-minus"></i></h1>
+                                <h1 class="fw-medium mb-0 nomor-antrean" id="nomor_antrean_label_1"><i class="fa-solid fa-minus"></i></h1>
                             </div>
                             <div class="card-body p-0 overflow-hidden">
                                 <ul class="list-group list-group-flush" id="list_antrean_monitor_1">
@@ -109,20 +113,13 @@ $db = db_connect();
                             <div class="card-header">
                                 <div class="fs-3 fw-light" id="nama_loket_2"><em>Loket Tutup</em></div>
                                 <div class="fs-6">Nomor antrean:</div>
-                                <h1 class="fw-medium mb-0" id="nomor_antrean_label_2"><i class="fa-solid fa-minus"></i></h1>
+                                <h1 class="fw-medium mb-0 nomor-antrean" id="nomor_antrean_label_2"><i class="fa-solid fa-minus"></i></h1>
                             </div>
                             <div class="card-body p-0 overflow-hidden">
                                 <ul class="list-group list-group-flush" id="list_antrean_monitor_2">
                                 </ul>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col col-lg-6 col-xl-7">
-                <div class="card shadow-sm" id="top-card-right">
-                    <div class="card-body">
-
                     </div>
                 </div>
             </div>

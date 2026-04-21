@@ -15,6 +15,10 @@ $db = db_connect();
         max-width: 100%;
     }
 
+    .nomor-antrean {
+        font-size: 6rem;
+    }
+
     .full-card-height {
         max-height: calc((100dvh - 3rem - 53px) - 3rem);
         min-height: calc((100dvh - 3rem - 53px) - 3rem);
@@ -78,8 +82,8 @@ $db = db_connect();
         </ul>
     </div>
     <div class="no-fluid-content">
-        <div class="row row-cols-1 row-cols-lg-2 g-3">
-            <div class="col col-lg-6 col-xl-5">
+        <div class="row">
+            <div class="col">
                 <div class="mb-3" style="max-height: 52px; min-height: 52px;">
                     <span class="d-flex justify-content-center align-items-center" style="font-size: 12pt;">
                         <img src="<?= base_url('/assets/images/pec-klinik-logo.png'); ?>" alt="KLINIK MATA PECTK" height="56px">
@@ -96,17 +100,10 @@ $db = db_connect();
                                 <div class="fs-3 fw-light" id="nama_poli"><i class="fa-solid fa-minus"></i></div>
                             </div>
                             <div class="card-body overflow-hidden">
-                                <h1 class="fw-medium" id="nomor_antrean_label"><i class="fa-solid fa-minus"></i></h1>
+                                <h1 class="fw-medium nomor-antrean" id="nomor_antrean_label"><i class="fa-solid fa-minus"></i></h1>
                                 <div class="fs-6 date"><span id="label_no_rm"><i class="fa-solid fa-minus"></i></span><br><span id="label_no_reg"><i class="fa-solid fa-minus"></i></span><br><span id="label_dokter"><i class="fa-solid fa-minus"></i></span></div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col col-lg-6 col-xl-7">
-                <div class="card shadow-sm" id="top-card-right">
-                    <div class="card-body">
-
                     </div>
                 </div>
             </div>
