@@ -263,8 +263,8 @@ $db = db_connect();
                 const antreanElement = `
                         <li class="list-group-item d-flex justify-content-between align-items-start">
                             <div>
-                                <div class="fw-bold fs-5">${antrean.kode_antrean}-${antrean.nomor_antrean}</div>
-                                ${antrean.loket}
+                                <div class="fw-bold fs-1">${antrean.kode_antrean}-${antrean.nomor_antrean}</div>
+                                <span class="fs-3">${antrean.loket}</span>
                             </div>
                         </li>
                     `;
@@ -274,8 +274,8 @@ $db = db_connect();
                 const antreanElement = `
                         <li class="list-group-item d-flex justify-content-between align-items-start">
                             <div>
-                                <div class="fw-bold fs-5">${antrean.kode_antrean}-${antrean.nomor_antrean}</div>
-                                ${antrean.loket}
+                                <div class="fw-bold fs-1">${antrean.kode_antrean}-${antrean.nomor_antrean}</div>
+                                <span class="fs-2">${antrean.loket}</span>
                             </div>
                         </li>
                     `;
