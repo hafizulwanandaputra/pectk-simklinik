@@ -88,12 +88,12 @@ $db = db_connect();
     <div class="no-fluid-content">
         <div class="row">
             <div class="col">
-                <div class="mb-3" style="max-height: 52px; min-height: 52px;">
-                    <span class="d-flex justify-content-center align-items-center" style="font-size: 12pt;">
-                        <img src="<?= base_url('/assets/images/pec-klinik-logo.png'); ?>" alt="KLINIK MATA PECTK" height="56px">
+                <div class="mb-3" style="max-height: 128px; min-height: 128px;">
+                    <span class="d-flex justify-content-center align-items-center" style="font-size: 24pt;">
+                        <img src="<?= base_url('/assets/images/pec-klinik-logo.png'); ?>" alt="KLINIK MATA PECTK" height="128px">
                         <div class="ps-3">
                             <div class="lh-sm text-start text-body-emphasis fw-bold">PADANG EYE CENTER<br>TELUK KUANTAN</div>
-                            <div class="lh-1"><em style="font-size: 8pt;">Melayani dengan Hati</em></div>
+                            <div class="lh-1"><em style="font-size: 18pt;">Melayani dengan Hati</em></div>
                         </div>
                     </span>
                 </div>
