@@ -28,13 +28,31 @@ class LaporanResep extends BaseController
             $daftarDokter = $this->ResepModel->select('dokter')->where('status', 1)->groupBy('dokter')->orderBy('dokter', 'ASC')->findAll();
             // Menyiapkan data untuk tampilan
             $data = [
-                'title' => 'Laporan Resep - ' . $this->systemName,
-                'headertitle' => 'Laporan Resep',
+                'title' => 'Laporan Resep Harian dan Bulanan - ' . $this->systemName,
+                'headertitle' => 'Laporan Resep Harian dan Bulanan',
                 'agent' => $this->request->getUserAgent(), // Mengambil informasi user agent
                 'daftarDokter' => $daftarDokter,
             ];
             // Menampilkan tampilan untuk halaman pasien
             return view('dashboard/laporanresep/index', $data);
+        } else {
+            // Jika peran tidak dikenali, lemparkan pengecualian 404
+            throw PageNotFoundException::forPageNotFound();
+        }
+    }
+
+    public function yearly()
+    {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
+            $daftarDokter = $this->ResepModel->select('dokter')->where('status', 1)->groupBy('dokter')->orderBy('dokter', 'ASC')->findAll();
+            // Menyiapkan data untuk tampilan
+            $data = [
+                'title' => 'Laporan Resep Tahunan - ' . $this->systemName,
+                'headertitle' => 'Laporan Resep Tahunan',
+                'agent' => $this->request->getUserAgent(), // Mengambil informasi user agent
+            ];
+            // Menampilkan tampilan untuk halaman pasien
+            return view('dashboard/laporanresep/yearly', $data);
         } else {
             // Jika peran tidak dikenali, lemparkan pengecualian 404
             throw PageNotFoundException::forPageNotFound();
@@ -537,6 +555,211 @@ class LaporanResep extends BaseController
                 $sheet->getColumnDimension('D')->setWidth(125, 'px');
                 $sheet->getColumnDimension('E')->setWidth(75, 'px');
                 $sheet->getColumnDimension('F')->setWidth(125, 'px');
+
+                // Menyimpan file spreadsheet dan mengirimkan ke browser
+                $writer = new Xlsx($spreadsheet);
+                // Simpan ke file sementara
+                $temp_file = WRITEPATH . 'exports/' . $filename;
+                $writer->save($temp_file);
+
+                // Kirimkan file dalam mode streaming agar bisa dipantau progresnya
+                header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                header('Content-Disposition: attachment; filename="' . $filename . '"');
+                header('Content-Length: ' . filesize($temp_file));
+
+                readfile($temp_file);
+                unlink($temp_file); // Hapus setelah dikirim
+                exit();
+            }
+        } else {
+            // Menghasilkan exception jika peran tidak diizinkan
+            throw PageNotFoundException::forPageNotFound();
+        }
+    }
+
+    public function exportyearly($tahun)
+    {
+        if (in_array(session()->get('role'), ['Admin', 'Apoteker', 'Manajer'])) {
+
+            $query = $this->DetailResepModel
+                ->select('
+                    resep.tanggal_resep,
+                    detail_resep.nama_obat, 
+                    SUM(detail_resep.jumlah) AS total_keluar, 
+                    AVG(detail_resep.harga_satuan) AS harga_satuan, 
+                    SUM(detail_resep.jumlah * detail_resep.harga_satuan) AS total_harga
+                ')
+                ->join('resep', 'resep.id_resep = detail_resep.id_resep')
+                ->where('YEAR(resep.tanggal_resep)', $tahun)
+                ->where('resep.status', 1)
+                ->groupBy('YEAR(resep.tanggal_resep), detail_resep.nama_obat')
+                ->orderBy('detail_resep.nama_obat', 'ASC');
+
+            $laporanresep = $query->findAll();
+
+            $totalKeluarKeseluruhan = array_sum(array_column($laporanresep, 'total_keluar'));
+            $totalHargaKeseluruhan = array_sum(array_column($laporanresep, 'total_harga'));
+
+            return $this->response->setJSON([
+                'laporanresep' => $laporanresep,
+                'tahun' => $tahun,
+                'total_keluar_keseluruhan' => $totalKeluarKeseluruhan,
+                'total_harga_keseluruhan' => $totalHargaKeseluruhan,
+                'message' => null
+            ]);
+        } else {
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
+            ]);
+        }
+    }
+
+    public function exportyearlyexcel($tahun)
+    {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Apoteker' || session()->get('role') == 'Manajer') {
+            // Ambil laporan resep
+            $query = $this->DetailResepModel
+                ->select('
+                    resep.tanggal_resep,
+                    detail_resep.nama_obat, 
+                    SUM(detail_resep.jumlah) AS total_keluar, 
+                    MAX(detail_resep.harga_satuan) AS harga_satuan, 
+                    SUM(detail_resep.jumlah * detail_resep.harga_satuan) AS total_harga
+                ')
+                ->join('resep', 'resep.id_resep = detail_resep.id_resep')
+                ->where('YEAR(resep.tanggal_resep)', $tahun)
+                ->where('resep.status', 1)
+                ->groupBy('YEAR(resep.tanggal_resep), detail_resep.nama_obat')
+                ->orderBy('detail_resep.nama_obat', 'ASC');
+
+            $result = $query->findAll();
+
+            // Hitung total keseluruhan obat keluar dan harga
+            $totalKeluarKeseluruhan = array_sum(array_column($result, 'total_keluar'));
+            $totalHargaKeseluruhan = array_sum(array_column($result, 'total_harga'));
+
+            // Memeriksa apakah detail pembelian obat kosong
+            if (empty($result)) {
+                throw PageNotFoundException::forPageNotFound();
+            } else {
+                // Membuat nama file berdasarkan tanggal pembelian
+                $filename = preg_replace('/[^\w\-]/', '-', $tahun) . '-resep.xlsx';
+                $spreadsheet = new Spreadsheet();
+                $sheet = $spreadsheet->getActiveSheet();
+
+                // Menambahkan informasi header di spreadsheet
+                $sheet->setCellValue('A1', 'KLINIK UTAMA MATA PADANG EYE CENTER TELUK KUANTAN');
+                $sheet->setCellValue('A2', 'Jl. Rusdi S. Abrus No. 35 LK III Sinambek, Kelurahan Sungai Jering, Kecamatan Kuantan Tengah, Kabupaten Kuantan Singingi, Riau.');
+                $sheet->setCellValue('A3', 'LAPORAN RESEP TAHUNAN');
+
+                // Path gambar yang ingin ditambahkan
+                $gambarPath = FCPATH . 'assets/images/logo_pec.png'; // Ganti dengan path gambar Anda
+
+                // Membuat objek Drawing
+                $drawing = new Drawing();
+                $drawing->setName('Logo PEC-TK'); // Nama gambar
+                $drawing->setDescription('Logo PEC-TK'); // Deskripsi gambar
+                $drawing->setPath($gambarPath); // Path ke gambar
+                $drawing->setCoordinates('A1'); // Koordinat sel tempat gambar akan ditambahkan
+                $drawing->setHeight(36); // Tinggi gambar dalam piksel (opsional)
+                $drawing->setWorksheet($sheet); // Menambahkan gambar ke worksheet
+
+                // Menambahkan informasi tanggal dan supplier
+                $sheet->setCellValue('A4', 'Tahun: ' . $tahun);
+
+                // Menambahkan header tabel detail laporan resep
+                $sheet->setCellValue('A5', 'No');
+                $sheet->setCellValue('B5', 'Nama Obat');
+                $sheet->setCellValue('C5', 'Harga Satuan');
+                $sheet->setCellValue('D5', 'Obat Keluar');
+                $sheet->setCellValue('E5', 'Total Harga');
+
+                // Mengatur tata letak dan gaya untuk header
+                $spreadsheet->getActiveSheet()->mergeCells('A1:E1');
+                $spreadsheet->getActiveSheet()->mergeCells('A2:E2');
+                $spreadsheet->getActiveSheet()->mergeCells('A3:E3');
+                $spreadsheet->getActiveSheet()->getPageSetup()
+                    ->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
+                $spreadsheet->getActiveSheet()->getPageSetup()
+                    ->setPaperSize(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::PAPERSIZE_A4);
+                $spreadsheet->getDefaultStyle()->getFont()->setName('Helvetica');
+                $spreadsheet->getDefaultStyle()->getFont()->setSize(10);
+
+                $column = 6; // Baris awal data
+                $nomor = 1;  // Nomor urut resep
+
+                foreach ($result as $list) {
+                    // Isi data resep
+                    $sheet->setCellValue('A' . $column, $nomor++);
+                    $sheet->setCellValue('B' . $column, $list['nama_obat']);
+                    $sheet->getStyle('C' . $column)->getNumberFormat()->setFormatCode(
+                        '_\Rp * #,##0_-;[Red]_\Rp * -#,##0_-;_-_\Rp * "-"_-;_-@_-'
+                    );
+                    $sheet->setCellValue('C' . $column, $list['harga_satuan']);
+                    $sheet->setCellValue('D' . $column, $list['total_keluar']);
+                    $sheet->getStyle('E' . $column)->getNumberFormat()->setFormatCode(
+                        '_\Rp * #,##0_-;[Red]_\Rp * -#,##0_-;_-_\Rp * "-"_-;_-@_-'
+                    );
+                    $sheet->setCellValue('E' . $column, $list['total_harga']);
+
+                    // Atur nomor ke rata tengah
+                    $sheet->getStyle("A{$column}")->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+
+                    // Tambahkan baris pemisah antar transaksi
+                    $column++;
+                }
+
+                // Menambahkan total keseluruhan di bawah tabel
+                $sheet->setCellValue('A' . ($column), 'Total Keseluruhan');
+                $spreadsheet->getActiveSheet()->mergeCells('A' . ($column) . ':D' . ($column));
+                $sheet->setCellValue('D' . ($column), $totalKeluarKeseluruhan);
+                $sheet->getStyle('E' . ($column))->getNumberFormat()->setFormatCode('_\Rp * #,##0_-;[Red]_\Rp * -#,##0_-;_-_\Rp * \"-\"_-;_-@_-');
+                $sheet->setCellValue('E' . ($column), $totalHargaKeseluruhan);
+
+                // Mengatur gaya teks untuk header dan total
+                $sheet->getStyle('A1')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+                $sheet->getStyle('A1')->getFont()->setSize(12);
+                $sheet->getStyle('A2')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+                $sheet->getStyle('A2')->getFont()->setSize(8);
+                $sheet->getStyle('A3')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+                $sheet->getStyle('A3')->getFont()->setSize(12);
+                $sheet->getStyle('A5:E5')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+                $sheet->getStyle('A' . ($column))->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_RIGHT);
+
+                // Mengatur gaya font untuk header dan total
+                $sheet->getStyle('A1:A4')->getFont()->setBold(TRUE);
+                $sheet->getStyle('A5:E5')->getFont()->setBold(TRUE);
+                $sheet->getStyle('A5:E5')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+                $sheet->getStyle('A' . ($column) . ':E' . ($column))->getFont()->setBold(TRUE);
+
+                // Menambahkan border untuk header dan tabel
+                $headerBorder1 = [
+                    'borders' => [
+                        'bottom' => [
+                            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                            'color' => ['argb' => 'FF000000']
+                        ]
+                    ]
+                ];
+                $sheet->getStyle('A2:E2')->applyFromArray($headerBorder1);
+                $tableBorder = [
+                    'borders' => [
+                        'allBorders' => [
+                            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                            'color' => ['argb' => 'FF000000']
+                        ]
+                    ]
+                ];
+                $sheet->getStyle('A5:E' . ($column))->applyFromArray($tableBorder);
+                $sheet->getStyle('A5:E' . ($column))->getAlignment()->setWrapText(true);
+                $sheet->getStyle('A6:E' . ($column + 1))->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP);
+
+                // Mengatur lebar kolom
+                $sheet->getColumnDimension('A')->setWidth(30, 'px');
+                $sheet->getColumnDimension('B')->setWidth(550, 'px');
+                $sheet->getColumnDimension('C')->setWidth(125, 'px');
+                $sheet->getColumnDimension('D')->setWidth(75, 'px');
+                $sheet->getColumnDimension('E')->setWidth(125, 'px');
 
                 // Menyimpan file spreadsheet dan mengirimkan ke browser
                 $writer = new Xlsx($spreadsheet);

@@ -973,17 +973,42 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                             <?php endif; ?>
                             <?php if (session()->get('role') == "Apoteker" || session()->get('role') == "Admin" || session()->get('role') == "Manajer") : ?>
                                 <li class="nav-item">
-                                    <a style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'laporanresep') ? 'active bg-success activeLinkSideBar' : '' ?>" href=" <?= base_url('/laporanresep'); ?>">
-                                        <div class="d-flex align-items-start <?= ($activeSegment === 'laporanresep') ? 'text-white' : 'link-success' ?>">
+                                    <span style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'laporanresep' || $activeSegment === 'laporanreseptahunan') ? 'active bg-success' : '' ?>" role="button" data-bs-toggle="collapse" data-bs-target="#submenu-laporanresep">
+                                        <div class="d-flex align-items-start <?= ($activeSegment === 'laporanresep' || $activeSegment === 'laporanreseptahunan') ? 'text-white' : 'link-success' ?>">
                                             <div style="min-width: 24px; max-width: 24px; text-align: center;">
                                                 <i class="fa-solid fa-file-prescription"></i>
                                             </div>
-                                            <div class="flex-fill mx-2 <?= ($activeSegment === 'laporanresep') ? 'text-white' : 'link-body-emphasis' ?>">
+                                            <div class="flex-fill mx-2 <?= ($activeSegment === 'laporanresep' || $activeSegment === 'laporanreseptahunan') ? 'text-white' : 'link-body-emphasis' ?>">
                                                 Laporan Resep
                                             </div>
+                                            <div style="min-width: 16px; max-width: 16px; text-align: center;">
+                                                <i class="fa-solid fa-chevron-right"></i>
+                                            </div>
                                         </div>
-                                    </a>
+                                    </span>
                                 </li>
+                                <div id="submenu-laporanresep" class="collapse <?= ($activeSegment === 'laporanresep' || $activeSegment === 'laporanreseptahunan') ? 'show' : '' ?>">
+                                    <ul class="nav nav-pills flex-column my-1">
+                                        <li class="nav-item" style="margin-left: calc(24px + 0.5rem);">
+                                            <a class="nav-link px-2 py-1 <?= ($activeSegment === 'laporanresep') ? 'active bg-success activeLinkSideBar' : '' ?>" href="<?= base_url('/laporanresep'); ?>">
+                                                <div class="d-flex align-items-start <?= ($activeSegment === 'laporanresep') ? 'text-white' : 'link-body-emphasis' ?>">
+                                                    <div class="flex-fill fw-normal" style="font-size: 0.75em;">
+                                                        Harian dan Bulanan
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item" style="margin-left: calc(24px + 0.5rem);">
+                                            <a class="nav-link px-2 py-1 <?= ($activeSegment === 'laporanreseptahunan') ? 'active bg-success activeLinkSideBar' : '' ?>" href="<?= base_url('/laporanreseptahunan'); ?>">
+                                                <div class="d-flex align-items-start <?= ($activeSegment === 'laporanreseptahunan') ? 'text-white' : 'link-body-emphasis' ?>">
+                                                    <div class="flex-fill fw-normal" style="font-size: 0.75em;">
+                                                        Tahunan
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
                             <?php endif; ?>
                             <?php if (session()->get('role') == "Kasir" || session()->get('role') == "Dokter" || session()->get('role') == "Admin" || session()->get('role') == "Manajer") : ?>
                                 <li class="nav-item">

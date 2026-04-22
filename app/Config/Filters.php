@@ -100,6 +100,8 @@ class Filters extends BaseConfig
                 '/bmhp/*',
                 '/laporanresep',
                 '/laporanresep/*',
+                '/laporanreseptahunan',
+                '/laporanreseptahunan/*',
                 '/layanan',
                 '/layanan/*',
                 '/transaksi',

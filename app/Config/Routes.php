@@ -402,12 +402,17 @@ $routes->delete('/(?i)resepluar/(?i)hapusdetailresep/(:any)', 'ResepLuar::hapusd
 $routes->get('/(?i)resepluar/(?i)etiket-dalam/(:any)', 'ResepLuar::etiketdalam/$1');
 $routes->get('/(?i)resepluar/(?i)etiket-luar/(:any)', 'ResepLuar::etiketluar/$1');
 
-// LAPORAN RESEP
+// LAPORAN RESEP HARIAN BULANAN
 $routes->get('/(?i)laporanresep/', 'LaporanResep::index');
 $routes->get('/(?i)laporanresep/(?i)exportdaily/(:any)', 'LaporanResep::exportdaily/$1');
 $routes->get('/(?i)laporanresep/(?i)exportdailyexcel/(:any)', 'LaporanResep::exportdailyexcel/$1');
 $routes->get('/(?i)laporanresep/(?i)exportmonthly/(:any)', 'LaporanResep::exportmonthly/$1');
 $routes->get('/(?i)laporanresep/(?i)exportmonthlyexcel/(:any)', 'LaporanResep::exportmonthlyexcel/$1');
+
+// LAPORAN RESEP TAHUNAN
+$routes->get('/(?i)laporanreseptahunan/', 'LaporanResep::yearly');
+$routes->get('/(?i)laporanreseptahunan/(?i)export/(:any)', 'LaporanResep::exportyearly/$1');
+$routes->get('/(?i)laporanreseptahunan/(?i)exportexcel/(:any)', 'LaporanResep::exportyearlyexcel/$1');
 
 // BARANG MEDIS HABIS PAKAI
 $routes->get('/(?i)bmhp', 'BMHP::index');
