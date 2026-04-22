@@ -10,7 +10,6 @@
     <div id="loadingSpinner" class="px-2">
         <?= $this->include('spinner/spinner'); ?>
     </div>
-    <a id="btnAntrean" class="fs-6 mx-2 text-body-emphasis" href="<?= base_url('rawatjalan/antrean') ?>" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Halaman Antrean" target="_blank"><i class="fa-solid fa-people-group"></i></a>
 </div>
 <div style="min-width: 1px; max-width: 1px;"></div>
 <?= $this->endSection(); ?>
