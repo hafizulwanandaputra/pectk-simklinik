@@ -37,6 +37,7 @@ $waktuFormatted = $dateTime->format('H.i.s');
     <style>
         body {
             font-family: <?= env('PDF-FONT') ?>;
+            font-feature-settings: <?= env('PDF-FONT-OPENTYPE') ?>;
             font-size: 11pt;
             line-height: 1.2;
         }

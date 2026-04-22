@@ -18,6 +18,7 @@ $usia = $sekarang->diff($tanggal_lahir);
     <style>
         body {
             font-family: <?= env('PDF-FONT') ?>;
+            font-feature-settings: <?= env('PDF-FONT-OPENTYPE') ?>;
             font-size: 6.5pt;
             line-height: 1.2;
             font-variant-numeric: tabular-nums;

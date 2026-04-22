@@ -28,6 +28,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
     <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.bootstrap5.min.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/fonts/HwpSansMono/HwpSansMono.css" rel="stylesheet">
+    <link href="<?= base_url(); ?>assets_public/fonts/Inter/Inter.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/fontawesome/css/all.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://code.jquery.com/jquery-4.0.0.min.js"></script>
@@ -214,7 +215,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
         }
 
         :root {
-            --bs-font-sans-serif: "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            --bs-font-sans-serif: "Inter", "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
             --bs-font-monospace: "HWP Sans Mono Web", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
             --gold: #ffe680;
             /* Emas lebih terang */
@@ -222,6 +223,12 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
             /* Perak lebih terang */
             --bronze: #e7bd98;
             /* Perunggu lebih terang */
+        }
+
+        @supports (font-variation-settings: normal) {
+            :root {
+                --bs-font-sans-serif: "InterVariable", "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            }
         }
 
         /* Warna untuk tema gelap */
@@ -256,6 +263,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
         select,
         button {
             font-variant-numeric: proportional-nums;
+            font-feature-settings: "calt" off, "ss07" on, "ss08" on, "cv05" on, "cv10" on;
         }
 
         input[type="number"],
@@ -265,6 +273,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
         input[type="month"],
         input[type="week"] {
             font-variant-numeric: tabular-nums;
+            font-feature-settings: "calt" off, "ss07" on, "ss08" on, "cv05" on, "cv10" on;
         }
 
         input[type="password"] {
@@ -273,6 +282,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
 
         .date {
             font-variant-numeric: tabular-nums;
+            font-feature-settings: "calt" off, "ss07" on, "ss08" on, "cv05" on, "cv10" on;
         }
 
         html,

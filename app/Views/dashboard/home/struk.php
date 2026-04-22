@@ -17,6 +17,7 @@
 
         body {
             font-family: <?= env('PDF-FONT') ?>;
+            font-feature-settings: <?= env('PDF-FONT-OPENTYPE') ?>;
             font-size: 6pt;
             line-height: 1.2;
         }
@@ -34,7 +35,6 @@
         }
 
         .box {
-            font-family: <?= env('PDF-FONT-CONDENSED') ?>;
             border: 1px solid black;
             height: 0.7cm;
             overflow: hidden;

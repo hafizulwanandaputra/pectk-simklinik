@@ -18,6 +18,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wdth,wght@0,75..100,100..900;1,75..100,100..900&display=swap" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/css/JawiDubai.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/fonts/HwpSansMono/HwpSansMono.css" rel="stylesheet">
+    <link href="<?= base_url(); ?>assets_public/fonts/Inter/Inter.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/fontawesome/css/all.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-4.0.0.min.js"></script>
     <script>
@@ -140,8 +141,14 @@
     </script>
     <style>
         :root {
-            --bs-font-sans-serif: "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            --bs-font-sans-serif: "Inter", "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
             --bs-font-monospace: "HWP Sans Mono Web", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        }
+
+        @supports (font-variation-settings: normal) {
+            :root {
+                --bs-font-sans-serif: "InterVariable", "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            }
         }
 
         html,
@@ -150,6 +157,7 @@
         select,
         button {
             font-variant-numeric: proportional-nums;
+            font-feature-settings: "calt" off, "ss07" on, "ss08" on, "cv05" on, "cv10" on;
         }
 
         input[type="number"],
@@ -159,6 +167,7 @@
         input[type="month"],
         input[type="week"] {
             font-variant-numeric: tabular-nums;
+            font-feature-settings: "calt" off, "ss07" on, "ss08" on, "cv05" on, "cv10" on;
         }
 
         input[type="password"] {
@@ -167,6 +176,7 @@
 
         .date {
             font-variant-numeric: tabular-nums;
+            font-feature-settings: "calt" off, "ss07" on, "ss08" on, "cv05" on, "cv10" on;
         }
 
         html,

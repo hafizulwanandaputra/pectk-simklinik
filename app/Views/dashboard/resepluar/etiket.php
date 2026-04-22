@@ -21,6 +21,7 @@ if (!empty($resep['tanggal_lahir']) && $resep['tanggal_lahir'] != '0000-00-00') 
     <style>
         body {
             font-family: <?= env('PDF-FONT') ?>;
+            font-feature-settings: <?= env('PDF-FONT-OPENTYPE') ?>;
             font-size: 4pt;
             line-height: 1.2;
             margin: 0;

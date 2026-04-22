@@ -47,6 +47,7 @@ if (empty($operasi['site_marking']) || !file_exists($siteMarkingPath)) {
     <style>
         body {
             font-family: <?= env('PDF-FONT') ?>;
+            font-feature-settings: <?= env('PDF-FONT-OPENTYPE') ?>;
             font-size: 11pt;
             line-height: 1.2;
         }
