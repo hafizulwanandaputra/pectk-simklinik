@@ -20,8 +20,8 @@ $db = db_connect();
     }
 
     .full-card-height {
-        max-height: calc((100dvh - 3rem - 53px) - 3rem);
-        min-height: calc((100dvh - 3rem - 53px) - 3rem);
+        max-height: calc((100dvh - 3rem - 129px) - 3rem);
+        min-height: calc((100dvh - 3rem - 129px) - 3rem);
     }
 
     .main-content-inside {
