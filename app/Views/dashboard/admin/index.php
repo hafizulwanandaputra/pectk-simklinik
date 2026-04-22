@@ -150,6 +150,7 @@
                         <select class="form-select " id="role" name="role" aria-label="role">
                             <option value="" disabled selected>-- Pilih Jenis Pengguna --</option>
                             <option value="Monitor Antrean">Monitor Antrean</option>
+                            <option value="Monitor Antrean Poliklinik">Monitor Antrean Poliklinik</option>
                             <option value="Satpam">Satpam</option>
                             <option value="Admin">Admin</option>
                             <option value="Manajer">Manajer</option>

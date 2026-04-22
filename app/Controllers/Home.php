@@ -40,6 +40,20 @@ class Home extends BaseController
 
             // Mengembalikan tampilan beranda dengan data yang telah disiapkan
             return view('dashboard/home/monitorantrean', $data);
+        } else if (session()->get('role') == "Monitor Antrean Poliklinik") {
+            $db = db_connect(); // Menghubungkan ke database
+            // Mengambil daftar poliklinik dari database
+            $poliklinik = $db->table('poliklinik')->where('status', 1)->get()->getResultArray();
+            // Menyusun data untuk ditampilkan di view
+            $data = [
+                'poliklinik' => $poliklinik, // Daftar poliklinik yang diambil dari database
+                'title' => 'Beranda - ' . $this->systemName, // Judul halaman
+                'headertitle' => 'Beranda', // Judul header
+                'agent' => $this->request->getUserAgent() // Mendapatkan user agent dari request
+            ];
+
+            // Mengembalikan tampilan beranda dengan data yang telah disiapkan
+            return view('dashboard/home/monitorantreanpoli', $data);
         } else {
             // GREETINGS
             $seasonalGreetingA = array(); // Array untuk menyimpan ucapan musiman

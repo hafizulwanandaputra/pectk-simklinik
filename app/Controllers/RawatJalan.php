@@ -44,28 +44,6 @@ class RawatJalan extends BaseController
         }
     }
 
-    public function antrean()
-    {
-        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == 'Admisi' || session()->get('role') == 'Manajer') {
-            $db = db_connect(); // Menghubungkan ke database
-            // Mengambil daftar poliklinik dari database
-            $poliklinik = $db->table('poliklinik')->where('status', 1)->get()->getResultArray();
-            // Menyusun data untuk ditampilkan di view
-            $data = [
-                'poliklinik' => $poliklinik, // Daftar poliklinik yang diambil dari database
-                'title' => 'Beranda - ' . $this->systemName, // Judul halaman
-                'headertitle' => 'Beranda', // Judul header
-                'agent' => $this->request->getUserAgent() // Mendapatkan user agent dari request
-            ];
-
-            // Mengembalikan tampilan beranda dengan data yang telah disiapkan
-            return view('dashboard/rawatjalan/monitorantrean', $data);
-        } else {
-            // Jika peran tidak dikenali, lemparkan pengecualian 404
-            throw PageNotFoundException::forPageNotFound();
-        }
-    }
-
     public function panggil_antrean($id)
     {
         if (!in_array(session()->get('role'), ['Admin', 'Dokter', 'Perawat', 'Admisi', 'Manajer'])) {

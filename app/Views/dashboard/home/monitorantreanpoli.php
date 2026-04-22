@@ -19,6 +19,10 @@ $db = db_connect();
         font-size: 6rem;
     }
 
+    #nama_poli {
+        font-size: 3rem;
+    }
+
     .full-card-height {
         max-height: calc((100dvh - 3rem - 53px) - 3rem);
         min-height: calc((100dvh - 3rem - 53px) - 3rem);
@@ -97,11 +101,11 @@ $db = db_connect();
                     <div class="col full-card-height">
                         <div class="card shadow-sm h-100">
                             <div class="card-header">
-                                <div class="fs-3 fw-light" id="nama_poli"><i class="fa-solid fa-minus"></i></div>
+                                <div class="fs-1 fw-light" id="nama_poli"><i class="fa-solid fa-minus"></i></div>
                             </div>
                             <div class="card-body overflow-hidden">
                                 <h1 class="fw-medium nomor-antrean" id="nomor_antrean_label"><i class="fa-solid fa-minus"></i></h1>
-                                <div class="fs-6 date"><span id="label_no_rm"><i class="fa-solid fa-minus"></i></span><br><span id="label_no_reg"><i class="fa-solid fa-minus"></i></span><br><span id="label_dokter"><i class="fa-solid fa-minus"></i></span></div>
+                                <div class="fs-1 date"><span id="label_no_rm"><i class="fa-solid fa-minus"></i></span><br><span id="label_no_reg"><i class="fa-solid fa-minus"></i></span><br><span id="label_dokter"><i class="fa-solid fa-minus"></i></span></div>
                             </div>
                         </div>
                     </div>
