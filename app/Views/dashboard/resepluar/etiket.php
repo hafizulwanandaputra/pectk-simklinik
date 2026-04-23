@@ -18,8 +18,20 @@ if (!empty($resep['tanggal_lahir']) && $resep['tanggal_lahir'] != '0000-00-00') 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= $title; ?></title>
-    <link href="<?= base_url(env('PDF-FONT-CSS')) ?>" rel="stylesheet">
-    <link href="<?= base_url(env('PDF-FONT-MONOSPACE-CSS')) ?>" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wdth,wght@0,75..100,100..900;1,75..100,100..900&display=swap" rel="stylesheet">
+    <?php if (!empty(env('PDF-FONT-CSS')) || !empty(env('PDF-FONT-MONOSPACE-CSS'))): ?>
+
+        <?php if (!empty(env('PDF-FONT-CSS'))): ?>
+            <link href="<?= base_url(env('PDF-FONT-CSS')) ?>" rel="stylesheet">
+        <?php endif; ?>
+
+        <?php if (!empty(env('PDF-FONT-MONOSPACE-CSS'))): ?>
+            <link href="<?= base_url(env('PDF-FONT-MONOSPACE-CSS')) ?>" rel="stylesheet">
+        <?php endif; ?>
+
+    <?php endif; ?>
     <style>
         body {
             font-family: <?= env('PDF-FONT') ?>;
