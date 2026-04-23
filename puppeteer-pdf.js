@@ -29,7 +29,7 @@ function findChromePath() {
   if (platform === "linux") {
     try {
       const chrome = execSync(
-        "which google-chrome || which chromium || which chromium-browser"
+        "which google-chrome || which chromium || which chromium-browser",
       )
         .toString()
         .trim();
@@ -62,7 +62,12 @@ console.log("📦 Menggunakan browser:", chromePath);
     puppeteerOptions: {
       headless: "new",
       executablePath: chromePath,
-      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+      args: [
+        "--no-sandbox",
+        "--disable-setuid-sandbox",
+        "--allow-file-access-from-files",
+        "--disable-web-security",
+      ],
     },
   });
 
@@ -73,6 +78,8 @@ console.log("📦 Menggunakan browser:", chromePath);
 
       console.log(`⚙️ Membuat PDF di ${outputFilename}`);
       await page.setContent(html, { waitUntil: "networkidle0" });
+      await page.evaluateHandle("document.fonts.ready");
+      await new Promise((r) => setTimeout(r, 200));
 
       const pdfOptions = {
         path: outputFilename,

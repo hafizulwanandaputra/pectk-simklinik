@@ -24,6 +24,7 @@ $tanggalFormat = $formatter->format($tanggal_isi_resep);
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= $title; ?></title>
+    <?= env('PDF-FONT-CSS') ?>
     <style>
         body {
             font-family: <?= env('PDF-FONT') ?>;
