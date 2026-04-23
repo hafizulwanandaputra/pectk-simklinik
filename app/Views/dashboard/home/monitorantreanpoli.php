@@ -69,7 +69,48 @@ $db = db_connect();
         font-size: 10pt;
     }
 
-    @media (min-width: 1200px) {
+    #waktu2 {
+        font-size: 28pt;
+    }
+
+    #tanggal2 {
+        font-size: 11pt;
+    }
+
+    @media (min-width: 992px) {
+        .full-card-height {
+            max-height: calc((100dvh - 3rem - 97px) - 3rem);
+            min-height: calc((100dvh - 3rem - 97px) - 3rem);
+        }
+
+        #logo-pec-header {
+            max-height: 96px;
+            min-height: 96px;
+        }
+
+        #logo-pec {
+            height: 96px;
+            width: auto;
+        }
+
+        #logo-pec-text {
+            font-size: 20pt;
+        }
+
+        #logo-pec-subtext {
+            font-size: 12pt;
+        }
+
+        #waktu2 {
+            font-size: 44.8pt;
+        }
+
+        #tanggal2 {
+            font-size: 17.6pt;
+        }
+    }
+
+    @media (min-width: 1280px) {
         .full-card-height {
             max-height: calc((100dvh - 3rem - 129px) - 3rem);
             min-height: calc((100dvh - 3rem - 129px) - 3rem);
@@ -92,13 +133,21 @@ $db = db_connect();
         #logo-pec-subtext {
             font-size: 18pt;
         }
+
+        #waktu2 {
+            font-size: 56pt;
+        }
+
+        #tanggal2 {
+            font-size: 22pt;
+        }
     }
 </style>
 <?= $this->endSection(); ?>
 <?= $this->section('title'); ?>
 <div class="d-flex justify-content-start align-items-center">
     <div class="flex-fill text-truncate">
-        <div class="d-flex flex-column d-xl-none">
+        <div class="d-flex flex-column d-md-none">
             <div class="fw-medium fs-6 lh-sm date" id="waktu1"></div>
             <div class="fw-medium lh-sm" id="tanggal1" style="font-size: 0.75em;"></div>
         </div>
@@ -139,9 +188,9 @@ $db = db_connect();
                             <div id="logo-pec-subtext" class="lh-1"><em>Melayani dengan Hati</em></div>
                         </div>
                     </div>
-                    <div class="d-none d-xl-block">
-                        <div class="fw-medium lh-sm text-end date" id="waktu2" style="font-size: 56pt;"></div>
-                        <div class="fw-light lh-sm text-end" id="tanggal2" style="font-size: 28pt;"></div>
+                    <div class="d-none d-md-block">
+                        <div class="fw-medium lh-sm text-end date" id="waktu2"></div>
+                        <div class="fw-light lh-sm text-end" id="tanggal2"></div>
                     </div>
                 </div>
                 <div class="row row-cols-1 g-2">

@@ -39,6 +39,80 @@ $db = db_connect();
     #logo-pec-subtext {
         font-size: 10pt;
     }
+
+    #waktu2 {
+        font-size: 28pt;
+    }
+
+    #tanggal2 {
+        font-size: 11pt;
+    }
+
+    .icon-btn {
+        font-size: 40pt;
+    }
+
+    @media (min-width: 768px) {
+        .icon-btn {
+            font-size: 80pt;
+        }
+    }
+
+    @media (min-width: 992px) {
+        #logo-pec-header {
+            max-height: 96px;
+            min-height: 96px;
+        }
+
+        #logo-pec {
+            height: 96px;
+            width: auto;
+        }
+
+        #logo-pec-text {
+            font-size: 20pt;
+        }
+
+        #logo-pec-subtext {
+            font-size: 12pt;
+        }
+
+        #waktu2 {
+            font-size: 44.8pt;
+        }
+
+        #tanggal2 {
+            font-size: 17.6pt;
+        }
+    }
+
+    @media (min-width: 1280px) {
+        #logo-pec-header {
+            max-height: 128px;
+            min-height: 128px;
+        }
+
+        #logo-pec {
+            height: 128px;
+            width: auto;
+        }
+
+        #logo-pec-text {
+            font-size: 24pt;
+        }
+
+        #logo-pec-subtext {
+            font-size: 18pt;
+        }
+
+        #waktu2 {
+            font-size: 56pt;
+        }
+
+        #tanggal2 {
+            font-size: 22pt;
+        }
+    }
 </style>
 <?= $this->endSection(); ?>
 <?= $this->section('title'); ?>
@@ -57,57 +131,55 @@ $db = db_connect();
 <?= $this->endSection(); ?>
 <?= $this->section('content'); ?>
 <main class="main-content-inside px-3">
-    <div class="no-fluid-content">
-        <div>
-            <div id="logo-pec-header" class="mt-3 mb-2 d-flex justify-content-between align-items-center">
-                <div class="d-flex justify-content-center align-items-center">
-                    <img id="logo-pec" src="<?= base_url('/assets/images/pec-klinik-logo.png'); ?>" alt="KLINIK MATA PECTK">
-                    <div class="ps-3">
-                        <div id="logo-pec-text" class="lh-sm text-start text-body-emphasis fw-bold">PADANG EYE CENTER<br>TELUK KUANTAN</div>
-                        <div id="logo-pec-subtext" class="lh-1"><em>Melayani dengan Hati</em></div>
+    <div>
+        <div id="logo-pec-header" class="mt-3 mb-2 d-flex justify-content-between align-items-center">
+            <div class="d-flex justify-content-center align-items-center">
+                <img id="logo-pec" src="<?= base_url('/assets/images/pec-klinik-logo.png'); ?>" alt="KLINIK MATA PECTK">
+                <div class="ps-3">
+                    <div id="logo-pec-text" class="lh-sm text-start text-body-emphasis fw-bold">PADANG EYE CENTER<br>TELUK KUANTAN</div>
+                    <div id="logo-pec-subtext" class="lh-1"><em>Melayani dengan Hati</em></div>
+                </div>
+            </div>
+            <div class="d-none d-md-block">
+                <div class="fw-medium lh-sm text-end date" id="waktu2"></div>
+                <div class="fw-light lh-sm text-end" id="tanggal2"></div>
+            </div>
+        </div>
+        <hr>
+        <div class="my-4">
+            <h4><strong>Selamat Datang di Klinik Utama Mata Padang Eye Center Teluk Kuantan</strong></h4>
+            <h5>Silakan ambil nomor antrean bagi pasien yang ingin berobat</h5>
+        </div>
+    </div>
+    <div class="mb-3">
+        <div class="row row-cols-1 row-cols-md-3 g-3">
+            <div class="col d-grid">
+                <button type="button" class="btn btn-lg btn-success bg-gradient rounded-4 btn-apply" data-name="UMUM">
+                    <div class="icon-btn"><i class="fa-solid fa-users"></i></div>
+                    <div class="fs-5 fw-bold mb-3">UMUM</div>
+                </button>
+            </div>
+            <div class="col d-grid">
+                <button type="button" class="btn btn-lg btn-success bg-gradient rounded-4 btn-apply" data-name="BPJS KESEHATAN">
+                    <div class="icon-btn">
+                        <?= file_get_contents(FCPATH . 'assets/images/logo-bpjs.svg') ?>
                     </div>
-                </div>
-                <div class="d-none d-md-block">
-                    <div class="fw-medium lh-sm text-end date" id="waktu2" style="font-size: 28pt;"></div>
-                    <div class="fw-light lh-sm text-end" id="tanggal2" style="font-size: 14pt;"></div>
-                </div>
+                    <div class="fs-5 fw-bold mb-3">BPJS KESEHATAN</div>
+                </button>
             </div>
-            <hr>
-            <div class="my-4">
-                <h4><strong>Selamat Datang di Klinik Utama Mata Padang Eye Center Teluk Kuantan</strong></h4>
-                <h5>Silakan ambil nomor antrean bagi pasien yang ingin berobat</h5>
+            <div class="col d-grid">
+                <button type="button" class="btn btn-lg btn-success bg-gradient rounded-4 btn-apply" data-name="ASURANSI">
+                    <div class="icon-btn"><i class="fa-solid fa-user-shield"></i></div>
+                    <div class="fs-5 fw-bold mb-3">ASURANSI</div>
+                </button>
             </div>
         </div>
-        <div class="mb-3">
-            <div class="row row-cols-1 row-cols-lg-3 g-3">
-                <div class="col d-grid">
-                    <button type="button" class="btn btn-lg btn-success bg-gradient rounded-4 btn-apply" data-name="UMUM">
-                        <div style="font-size: 100pt;"><i class="fa-solid fa-users"></i></div>
-                        <div class="fs-5 fw-bold mb-3">UMUM</div>
-                    </button>
-                </div>
-                <div class="col d-grid">
-                    <button type="button" class="btn btn-lg btn-success bg-gradient rounded-4 btn-apply" data-name="BPJS KESEHATAN">
-                        <div style="font-size: 100pt;">
-                            <?= file_get_contents(FCPATH . 'assets/images/logo-bpjs.svg') ?>
-                        </div>
-                        <div class="fs-5 fw-bold mb-3">BPJS KESEHATAN</div>
-                    </button>
-                </div>
-                <div class="col d-grid">
-                    <button type="button" class="btn btn-lg btn-success bg-gradient rounded-4 btn-apply" data-name="ASURANSI">
-                        <div style="font-size: 100pt;"><i class="fa-solid fa-user-shield"></i></div>
-                        <div class="fs-5 fw-bold mb-3">ASURANSI</div>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div class=" d-grid gap-2 mb-3">
-            <button type="button" class="btn btn-body bg-gradient rounded-4" id="list_antrean_btn" data-bs-toggle="modal" data-bs-target="#listAntreanModal">Lihat Nomor Antrean Sebelumnya</button>
-        </div>
-        <div class="text-center fs-5" id="status-tunggu" style="display: none;">
+    </div>
+    <div class=" d-grid gap-2 mb-3">
+        <button type="button" class="btn btn-body bg-gradient rounded-4" id="list_antrean_btn" data-bs-toggle="modal" data-bs-target="#listAntreanModal">Lihat Nomor Antrean Sebelumnya</button>
+    </div>
+    <div class="text-center fs-5" id="status-tunggu" style="display: none;">
 
-        </div>
     </div>
     <div class="modal fade" id="listAntreanModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="listAntreanModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg modal-fullscreen-lg-down modal-dialog-centered modal-dialog-scrollable ">
