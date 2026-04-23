@@ -24,8 +24,8 @@ $db = db_connect();
     }
 
     .full-card-height {
-        max-height: calc((100dvh - 3rem - 129px) - 3rem);
-        min-height: calc((100dvh - 3rem - 129px) - 3rem);
+        max-height: calc((100dvh - 3rem - 57px) - 3rem);
+        min-height: calc((100dvh - 3rem - 57px) - 3rem);
     }
 
     .main-content-inside {
@@ -50,14 +50,57 @@ $db = db_connect();
             min-height: 100%;
         }
     }
+
+    #logo-pec-header {
+        max-height: 56px;
+        min-height: 56px;
+    }
+
+    #logo-pec {
+        height: 56px;
+        width: auto;
+    }
+
+    #logo-pec-text {
+        font-size: 14pt;
+    }
+
+    #logo-pec-subtext {
+        font-size: 10pt;
+    }
+
+    @media (min-width: 1200px) {
+        .full-card-height {
+            max-height: calc((100dvh - 3rem - 129px) - 3rem);
+            min-height: calc((100dvh - 3rem - 129px) - 3rem);
+        }
+
+        #logo-pec-header {
+            max-height: 128px;
+            min-height: 128px;
+        }
+
+        #logo-pec {
+            height: 128px;
+            width: auto;
+        }
+
+        #logo-pec-text {
+            font-size: 24pt;
+        }
+
+        #logo-pec-subtext {
+            font-size: 18pt;
+        }
+    }
 </style>
 <?= $this->endSection(); ?>
 <?= $this->section('title'); ?>
 <div class="d-flex justify-content-start align-items-center">
     <div class="flex-fill text-truncate">
-        <div class="d-flex flex-column">
-            <div class="fw-medium fs-6 lh-sm" id="tanggal"></div>
-            <div class="fw-medium lh-sm date" id="waktu" style="font-size: 0.75em;"></div>
+        <div class="d-flex flex-column d-xl-none">
+            <div class="fw-medium fs-6 lh-sm date" id="waktu1"></div>
+            <div class="fw-medium lh-sm" id="tanggal1" style="font-size: 0.75em;"></div>
         </div>
     </div>
     <div id="loadingSpinner" class="px-2">
@@ -88,14 +131,18 @@ $db = db_connect();
     <div class="no-fluid-content">
         <div class="row">
             <div class="col">
-                <div class="mb-3" style="max-height: 128px; min-height: 128px;">
-                    <span class="d-flex justify-content-center align-items-center" style="font-size: 24pt;">
-                        <img src="<?= base_url('/assets/images/pec-klinik-logo.png'); ?>" alt="KLINIK MATA PECTK" height="128px">
+                <div id="logo-pec-header" class="mb-3 d-flex justify-content-between align-items-center">
+                    <div class="d-flex justify-content-center align-items-center">
+                        <img id="logo-pec" src="<?= base_url('/assets/images/pec-klinik-logo.png'); ?>" alt="KLINIK MATA PECTK">
                         <div class="ps-3">
-                            <div class="lh-sm text-start text-body-emphasis fw-bold">PADANG EYE CENTER<br>TELUK KUANTAN</div>
-                            <div class="lh-1"><em style="font-size: 18pt;">Melayani dengan Hati</em></div>
+                            <div id="logo-pec-text" class="lh-sm text-start text-body-emphasis fw-bold">PADANG EYE CENTER<br>TELUK KUANTAN</div>
+                            <div id="logo-pec-subtext" class="lh-1"><em>Melayani dengan Hati</em></div>
                         </div>
-                    </span>
+                    </div>
+                    <div class="d-none d-xl-block">
+                        <div class="fw-medium lh-sm text-end date" id="waktu2" style="font-size: 56pt;"></div>
+                        <div class="fw-light lh-sm text-end" id="tanggal2" style="font-size: 28pt;"></div>
+                    </div>
                 </div>
                 <div class="row row-cols-1 g-2">
                     <div class="col full-card-height">
@@ -132,8 +179,10 @@ $db = db_connect();
 
     function updateDateTime() {
         const now = dayjs();
-        $('#tanggal').text(now.format('dddd, D MMMM YYYY'));
-        $('#waktu').text(now.format('HH.mm.ss (UTCZ)'));
+        $('#tanggal1').text(now.format('dddd, D MMMM YYYY'));
+        $('#tanggal2').text(now.format('UTCZ • dddd, D MMMM YYYY'));
+        $('#waktu1').text(now.format('HH.mm.ss (UTCZ)'));
+        $('#waktu2').text(now.format('HH.mm.ss'));
     }
 
     let voiceEnabled = false;

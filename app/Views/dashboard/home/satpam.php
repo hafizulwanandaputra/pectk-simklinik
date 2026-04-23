@@ -21,14 +21,32 @@ $db = db_connect();
             --bs-aspect-ratio: 75%;
         }
     }
+
+    #logo-pec-header {
+        max-height: 56px;
+        min-height: 56px;
+    }
+
+    #logo-pec {
+        height: 56px;
+        width: auto;
+    }
+
+    #logo-pec-text {
+        font-size: 14pt;
+    }
+
+    #logo-pec-subtext {
+        font-size: 10pt;
+    }
 </style>
 <?= $this->endSection(); ?>
 <?= $this->section('title'); ?>
 <div class="d-flex justify-content-start align-items-center">
     <div class="flex-fill text-truncate">
-        <div class="d-flex flex-column">
-            <div class="fw-medium fs-6 lh-sm" id="tanggal"></div>
-            <div class="fw-medium lh-sm date" id="waktu" style="font-size: 0.75em;"></div>
+        <div class="d-flex flex-column d-md-none">
+            <div class="fw-medium fs-6 lh-sm date" id="waktu1"></div>
+            <div class="fw-medium lh-sm" id="tanggal1" style="font-size: 0.75em;"></div>
         </div>
     </div>
     <div id="loadingSpinner" class="px-2">
@@ -40,30 +58,37 @@ $db = db_connect();
 <?= $this->section('content'); ?>
 <main class="main-content-inside px-3">
     <div class="no-fluid-content">
-        <div class="text-center">
-            <div class="mt-3 mb-2">
-                <span class="text-center lh-sm d-flex justify-content-center align-items-center" style="font-size: 16pt;">
-                    <img src="<?= base_url('/assets/images/pec-klinik-logo.png'); ?>" alt="KLINIK MATA PECTK" height="56px">
-                    <div class="ps-3 text-start text-body-emphasis fw-bold d-none d-lg-block">PADANG EYE CENTER<br>TELUK KUANTAN</div>
-                </span>
+        <div>
+            <div id="logo-pec-header" class="mt-3 mb-2 d-flex justify-content-between align-items-center">
+                <div class="d-flex justify-content-center align-items-center">
+                    <img id="logo-pec" src="<?= base_url('/assets/images/pec-klinik-logo.png'); ?>" alt="KLINIK MATA PECTK">
+                    <div class="ps-3">
+                        <div id="logo-pec-text" class="lh-sm text-start text-body-emphasis fw-bold">PADANG EYE CENTER<br>TELUK KUANTAN</div>
+                        <div id="logo-pec-subtext" class="lh-1"><em>Melayani dengan Hati</em></div>
+                    </div>
+                </div>
+                <div class="d-none d-md-block">
+                    <div class="fw-medium lh-sm text-end date" id="waktu2" style="font-size: 28pt;"></div>
+                    <div class="fw-light lh-sm text-end" id="tanggal2" style="font-size: 14pt;"></div>
+                </div>
             </div>
-            <h6><em>Melayani dengan Hati</em></h6>
+            <hr>
             <div class="my-4">
-                <h5><strong>Selamat Datang di Klinik Utama Mata Padang Eye Center Teluk Kuantan</strong></h5>
-                <h6>Silakan ambil nomor antrean bagi pasien yang ingin berobat</h6>
+                <h4><strong>Selamat Datang di Klinik Utama Mata Padang Eye Center Teluk Kuantan</strong></h4>
+                <h5>Silakan ambil nomor antrean bagi pasien yang ingin berobat</h5>
             </div>
         </div>
         <div class="mb-3">
             <div class="row row-cols-1 row-cols-lg-3 g-3">
                 <div class="col d-grid">
                     <button type="button" class="btn btn-lg btn-success bg-gradient rounded-4 btn-apply" data-name="UMUM">
-                        <div style="font-size: 80pt;"><i class="fa-solid fa-users"></i></div>
+                        <div style="font-size: 100pt;"><i class="fa-solid fa-users"></i></div>
                         <div class="fs-5 fw-bold mb-3">UMUM</div>
                     </button>
                 </div>
                 <div class="col d-grid">
                     <button type="button" class="btn btn-lg btn-success bg-gradient rounded-4 btn-apply" data-name="BPJS KESEHATAN">
-                        <div style="font-size: 80pt;">
+                        <div style="font-size: 100pt;">
                             <?= file_get_contents(FCPATH . 'assets/images/logo-bpjs.svg') ?>
                         </div>
                         <div class="fs-5 fw-bold mb-3">BPJS KESEHATAN</div>
@@ -71,7 +96,7 @@ $db = db_connect();
                 </div>
                 <div class="col d-grid">
                     <button type="button" class="btn btn-lg btn-success bg-gradient rounded-4 btn-apply" data-name="ASURANSI">
-                        <div style="font-size: 80pt;"><i class="fa-solid fa-user-shield"></i></div>
+                        <div style="font-size: 100pt;"><i class="fa-solid fa-user-shield"></i></div>
                         <div class="fs-5 fw-bold mb-3">ASURANSI</div>
                     </button>
                 </div>
@@ -170,8 +195,10 @@ $db = db_connect();
 
     function updateDateTime() {
         const now = dayjs();
-        $('#tanggal').text(now.format('dddd, D MMMM YYYY'));
-        $('#waktu').text(now.format('HH.mm.ss (UTCZ)'));
+        $('#tanggal1').text(now.format('dddd, D MMMM YYYY'));
+        $('#tanggal2').text(now.format('UTCZ • dddd, D MMMM YYYY'));
+        $('#waktu1').text(now.format('HH.mm.ss (UTCZ)'));
+        $('#waktu2').text(now.format('HH.mm.ss'));
     }
     $(document).ready(async function() {
         var table = $('#tabel').DataTable({
