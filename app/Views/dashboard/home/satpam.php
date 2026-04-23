@@ -49,12 +49,12 @@ $db = db_connect();
     }
 
     .icon-btn {
-        font-size: 40pt;
+        font-size: 32pt;
     }
 
     @media (min-width: 768px) {
         .icon-btn {
-            font-size: 80pt;
+            font-size: 64pt;
         }
     }
 
