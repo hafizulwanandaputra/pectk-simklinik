@@ -38,7 +38,8 @@ $waktuFormatted = $dateTime->format('H.i.s');
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= $title; ?></title>
-    <?= env('PDF-FONT-CSS') ?>
+    <link href="<?= base_url(env('PDF-FONT-CSS')) ?>" rel="stylesheet">
+    <link href="<?= base_url(env('PDF-FONT-MONOSPACE-CSS')) ?>" rel="stylesheet">
     <style>
         body {
             font-family: <?= env('PDF-FONT') ?>;
