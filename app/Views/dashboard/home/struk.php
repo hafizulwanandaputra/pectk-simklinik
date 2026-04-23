@@ -50,10 +50,10 @@
 
         .box {
             border: 1px solid black;
-            height: 0.7cm;
+            height: 0.55cm;
             overflow: hidden;
             padding: 0cm;
-            font-size: 7pt;
+            font-size: 6pt;
         }
     </style>
 </head>
@@ -107,8 +107,8 @@
                 </tbody>
             </table>
         </div>
-        <div style="text-align: center; font-size: 7pt;">
-            Silakan tunggu hingga nomor antrean Anda dipanggil.<br>Terima kasih!
+        <div style="text-align: center; font-size: 6pt; padding-top: 0.1cm; ">
+            Silakan tunggu hingga nomor antrean Anda dipanggil. Terima kasih!
         </div>
     </div>
 
