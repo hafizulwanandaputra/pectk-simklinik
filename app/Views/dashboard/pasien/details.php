@@ -1385,7 +1385,7 @@
                             </div>
                             <div class="mb-0 row g-1 align-items-center">
                                 <div class="overflow-hidden col-5">
-                                    <span class="fw-medium">Waktu Tindakan"</span>
+                                    <span class="fw-medium">Waktu Tindakan</span>
                                 </div>
                                 <div class="overflow-hidden col date">
                                     ${waktu_operasi_rajal}
