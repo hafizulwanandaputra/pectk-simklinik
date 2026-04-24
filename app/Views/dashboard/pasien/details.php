@@ -1362,7 +1362,7 @@
                     let isian_ok = rajal.ruangan;
                     if (isian_ok === 'Kamar Operasi') {
                         const tindakan_operasi_rajal = rajal.tindakan_operasi_rajal ?
-                            `<span class="isian-teks">${rajal.tindakan_operasi_rajal}">` :
+                            `<span class="isian-teks">${rajal.tindakan_operasi_rajal}` :
                             `<span class="isian-teks opacity-50 fst-italic user-select-none">Belum diisi</span>`;
 
                         const waktu_operasi_rajal = rajal.jam_operasi_rajal ?
@@ -1370,7 +1370,7 @@
                                 // Buat objek Date dari jam mentah, lalu format jadi HH.mm
                                 const jamObj = new Date(`1970-01-01T${rajal.jam_operasi_rajal}`);
                                 const jamFormatted = jamObj.toTimeString().slice(0, 5);
-                                return `<span class="isian-teks">${jamFormatted}">`;
+                                return `<span class="isian-teks">${jamFormatted}`;
                             })() :
                             `<span class="isian-teks opacity-50 fst-italic user-select-none">Belum diisi</span>`;
 
