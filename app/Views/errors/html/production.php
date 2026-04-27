@@ -54,7 +54,6 @@
             <div class="d-grid gap-2 d-flex justify-content-end">
                 <div class="btn-group" role="group">
                     <button class="btn btn-light btn-block bg-gradient" type="button" onclick="window.history.back();">Go Back</button>
-                    <a class="btn btn-outline-light btn-block bg-gradient" href="https://aku-hafizulwananda.com" role="button">Go to Website</a>
                 </div>
             </div>
         </form>

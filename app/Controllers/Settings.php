@@ -89,8 +89,6 @@ class Settings extends BaseController
             'profilephoto' => $newName
         ]);
 
-        session()->remove('profilephoto'); // Menghapus profilephoto lama dari session
-        session()->set('username', $user); // Memastikan username tetap di session
         session()->set('profilephoto', $newName); // Memperbarui username di session
 
         return $this->response->setJSON([
