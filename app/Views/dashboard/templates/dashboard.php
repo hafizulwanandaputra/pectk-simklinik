@@ -261,6 +261,7 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
         body,
         input,
         select,
+        textarea,
         button {
             font-variant-numeric: proportional-nums;
             font-feature-settings: "calt" off, "ss07" on, "ss08" on, "cv05" on, "cv10" on;
