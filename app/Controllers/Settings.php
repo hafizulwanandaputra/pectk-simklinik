@@ -36,6 +36,112 @@ class Settings extends BaseController
         echo view('dashboard/settings/edit', $data); // Mengembalikan tampilan halaman edit
     }
 
+    public function updateprofilephoto()
+    {
+        $file = $this->request->getFile('profilephoto');
+
+        if (!$this->validate([
+            'profilephoto' => [
+                'label' => 'Foto Profil',
+                'rules' => 'uploaded[profilephoto]|is_image[profilephoto]|max_size[profilephoto,8192]|mime_in[profilephoto,image/jpg,image/jpeg,image/png]',
+                'errors' => [
+                    'uploaded' => '{field} wajib diunggah!',
+                    'is_image' => '{field} harus berupa gambar!',
+                    'max_size' => '{field} maksimal 2MB!',
+                    'mime_in' => '{field} harus JPG/JPEG/PNG!'
+                ]
+            ]
+        ])) {
+            return $this->response->setJSON([
+                'success' => false,
+                'errors' => $this->validator->getErrors()
+            ]);
+        }
+
+        $db = \Config\Database::connect();
+        $builder = $db->table('user');
+
+        $id_user = session()->get('id_user');
+
+        // Ambil data lama
+        $user = $builder->where('id_user', $id_user)->get()->getRowArray();
+
+        $path = WRITEPATH . 'profilephoto/';
+
+        if (!is_dir($path)) {
+            mkdir($path, 0777, true);
+        }
+
+        // Generate nama file & pindahkan
+        $newName = $file->getRandomName();
+        $file->move($path, $newName);
+
+        // Hapus foto lama
+        if (!empty($user['profilephoto'])) {
+            $oldFile = $path . $user['profilephoto'];
+            if (file_exists($oldFile)) {
+                unlink($oldFile);
+            }
+        }
+
+        // Update DB
+        $builder->where('id_user', $id_user)->update([
+            'profilephoto' => $newName
+        ]);
+
+        session()->remove('username'); // Menghapus username lama dari session
+        session()->set('username', $this->request->getVar('username')); // Memperbarui username di session
+
+        return $this->response->setJSON([
+            'success' => true,
+            'message' => 'Foto profil berhasil diperbarui!',
+            'filename' => $newName
+        ]);
+    }
+
+    public function currentprofilephoto()
+    {
+        $id_user = session()->get('id_user');
+
+        if (!$id_user) {
+            throw PageNotFoundException::forPageNotFound();
+        }
+
+        return $this->loadProfilePhoto($id_user);
+    }
+
+    public function profilephoto($id_user)
+    {
+        if (!$id_user) {
+            throw PageNotFoundException::forPageNotFound();
+        }
+
+        return $this->loadProfilePhoto($id_user);
+    }
+
+    private function loadProfilePhoto($id_user)
+    {
+        $db = db_connect();
+        $builder = $db->table('user');
+
+        $user = $builder->where('id_user', $id_user)->get()->getRowArray();
+
+        if (!$user || empty($user['profilephoto'])) {
+            throw PageNotFoundException::forPageNotFound();
+        }
+
+        $filePath = WRITEPATH . 'profilephoto/' . $user['profilephoto'];
+
+        if (!file_exists($filePath)) {
+            throw PageNotFoundException::forPageNotFound();
+        }
+
+        return $this->response
+            ->setHeader('Content-Type', mime_content_type($filePath))
+            ->setHeader('Content-Length', filesize($filePath))
+            ->setBody(file_get_contents($filePath));
+    }
+
     public function update()
     {
         // Memeriksa apakah username yang diinput sama dengan username yang ada di session

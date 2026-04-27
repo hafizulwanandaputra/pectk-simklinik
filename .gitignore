@@ -69,6 +69,9 @@ writable/exports/*
 writable/temp/*
 !writable/temp/index.html
 
+writable/profilephoto/*
+!writable/profilephoto/index.html
+
 php_errors.log
 
 #-------------------------

@@ -348,7 +348,8 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
         }
 
         .profilephotosidebar {
-            width: 32px;
+            <?php if (session()->get('profilephoto') != NULL) : ?>background-image: url('<?= base_url('/profilephoto/current'); ?>');
+            <?php endif; ?>width: 32px;
             background-color: var(--bs-body-bg);
             aspect-ratio: 1/1;
             background-position: center;
@@ -366,12 +367,12 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
             max-width: 2rem;
         }
 
-        .profilephotosidebar svg {
+        <?php if (session()->get('profilephoto') == NULL) : ?>.profilephotosidebar svg {
             fill: var(--bs-body-color);
             /* Bootstrap white color */
         }
 
-        div.dataTables_processing>div:last-child {
+        <?php endif; ?>div.dataTables_processing>div:last-child {
             display: none;
         }
 
@@ -543,9 +544,11 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                             </div>
                         </div>
                         <div class="rounded-pill bg-body profilephotosidebar d-flex justify-content-center align-items-center profilephotonavbar">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" fill="currentColor" viewBox="0 0 16 16">
-                                <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM14 14s-1-4-6-4-6 4-6 4 1 0 6 0 6 0 6 0z" />
-                            </svg>
+                            <?php if (session()->get('profilephoto') == NULL) : ?>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" fill="currentColor" viewBox="0 0 16 16">
+                                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM14 14s-1-4-6-4-6 4-6 4 1 0 6 0 6 0 6 0z" />
+                                </svg>
+                            <?php endif; ?>
                         </div>
                     </a>
                     <div class="offcanvas offcanvas-end bg-body-tertiary shadow-sm transparent-blur" tabindex="-1" id="userOffcanvas" aria-labelledby="userOffcanvasLabel">
@@ -585,9 +588,11 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                         <div class="offcanvas-body p-1">
                             <div class="d-flex justify-content-center">
                                 <div class="rounded-pill bg-body profilephotosidebar m-2 d-flex justify-content-center align-items-center" style="width: 96px; height: 96px;">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" viewBox="0 0 16 16">
-                                        <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM14 14s-1-4-6-4-6 4-6 4 1 0 6 0 6 0 6 0z" />
-                                    </svg>
+                                    <?php if (session()->get('profilephoto') == NULL) : ?>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" viewBox="0 0 16 16">
+                                            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM14 14s-1-4-6-4-6 4-6 4 1 0 6 0 6 0 6 0z" />
+                                        </svg>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                             <div class="text-center w-100 lh-sm mb-3">

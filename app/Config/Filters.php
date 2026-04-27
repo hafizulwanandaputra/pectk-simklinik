@@ -118,6 +118,8 @@ class Filters extends BaseConfig
                 '/unduhdokumen/*',
                 '/admin',
                 '/admin/*',
+                '/profilephoto',
+                '/profilephoto/*',
                 '/settings',
                 '/settings/*',
             ]],

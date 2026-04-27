@@ -151,6 +151,19 @@
                     </div>
                 </li>
             <?php endif; ?>
+            <li class="list-group-item p-1 list-group-item-action" id="ubah-foto-profil">
+                <div class="d-flex align-items-start">
+                    <a href="<?= base_url('/settings/changepassword'); ?>" style="min-width: 3rem; max-width: 3rem; text-align: center;">
+                        <p class="mb-0" style="font-size: 1.75rem!important;"><i class="fa-solid fa-file-image"></i></p>
+                    </a>
+                    <div class="align-self-stretch flex-fill ps-1 text-wrap overflow-hidden d-flex align-items-center" style="text-overflow: ellipsis;">
+                        <h5 class="card-title">Ubah Foto Profil</h5>
+                    </div>
+                    <div class="align-self-center" style="min-width: 3rem; max-width: 3rem; text-align: center;">
+                        <span class="text-body-tertiary"></span>
+                    </div>
+                </div>
+            </li>
             <li class="list-group-item p-1 list-group-item-action">
                 <div class="d-flex align-items-start">
                     <a href="<?= base_url('/settings/edit'); ?>" class="stretched-link" style="min-width: 3rem; max-width: 3rem; text-align: center;">
@@ -211,6 +224,46 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modalFotoProfil" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalFotoProfilLabel" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen-md-down modal-dialog-centered modal-dialog-scrollable">
+            <form id="fotoProfilForm" enctype="multipart/form-data" class="modal-content bg-body-tertiary shadow-lg transparent-blur">
+                <div class="modal-header justify-content-between pt-2 pb-2" style="border-bottom: 1px solid var(--bs-border-color-translucent);">
+                    <h6 class="pe-2 modal-title fs-6 text-truncate" id="modalFotoProfilLabel" style="font-weight: bold;"></h6>
+                    <button id="closeBtn" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body py-2">
+                    <div class="mb-1 mt-1">
+                        <label for="profilephoto" class="form-label mb-0">Unggah Gambar (maks 8 MB)</label>
+                        <input class="form-control" type="file" id="profilephoto" name="profilephoto" accept="image/jpg,image/jpeg,image/png">
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div id="gambar_preview_div" style="display: none;" class="mb-1 mt-1">
+                        <div class="d-flex justify-content-center">
+                            <img id="gambar_preview" src="#" alt="Gambar" class="img-thumbnail" style="max-width: 100%">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-end pt-2 pb-2" style="border-top: 1px solid var(--bs-border-color-translucent);">
+                    <!-- Progress bar -->
+                    <div class="mb-1 mt-1 w-100" id="uploadProgressDiv">
+                        <div class="progress" style="border-top: 1px solid var(--bs-border-color-translucent); border-bottom: 1px solid var(--bs-border-color-translucent); border-left: 1px solid var(--bs-border-color-translucent); border-right: 1px solid var(--bs-border-color-translucent);">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-gradient" role="progressbar" style="width: 0%; transition: none;" id="uploadProgressBar"></div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between w-100">
+                        <div>
+                            <button type="button" id="cancelButton" class="btn btn-danger bg-gradient" style="display: none;" disabled>
+                                <i class="fa-solid fa-xmark"></i> Batalkan
+                            </button>
+                        </div>
+                        <button type="submit" id="submitButton" class="btn btn-primary bg-gradient">
+                            <i class="fa-solid fa-file-arrow-up"></i> Unggah
+                        </button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </main>
@@ -309,6 +362,150 @@
         <?php else : ?>
             $('#loadingSpinner').hide();
         <?php endif; ?>
+
+        $('#profilephoto').change(function() {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $('#gambar_preview').attr('src', e.target.result);
+                $('#gambar_preview_div').show();
+            };
+            reader.readAsDataURL(this.files[0]);
+        });
+
+        // Tampilkan modal ubah foto profil
+        $('#ubah-foto-profil').click(function(ə) {
+            ə.preventDefault();
+            $('#modalFotoProfilLabel').text('Unggah Foto Profil'); // Ubah judul modal menjadi 'Unggah Foto Profil'
+            $('#id_user').val('');
+            $('#modalFotoProfil').modal('show'); // Tampilkan modal resep luar
+        });
+
+        $('#fotoProfilForm').submit(async function(ə) {
+            ə.preventDefault();
+
+            var url = `<?= base_url('settings/updateprofilephoto') ?>`;
+            var formData = new FormData(this);
+            console.log("Form URL:", url);
+            console.log("Form Data:", formData);
+
+            const CancelToken = axios.CancelToken;
+            const source = CancelToken.source();
+
+            // Clear previous validation states
+            $('#fotoProfilForm .is-invalid').removeClass('is-invalid');
+            $('#fotoProfilForm .invalid-feedback').text('').hide();
+
+            // Show processing button and progress bar
+            $('#uploadProgressBar').removeClass('bg-danger').css('width', '0%');
+            $('#closeBtn').prop('disabled', true);
+            $('#cancelButton').prop('disabled', false).show();
+            $('#submitButton').prop('disabled', true).html(`
+                <?= $this->include('spinner/spinner'); ?>
+                <span role="status">Memproses <span id="uploadPercentage" style="font-variant-numeric: tabular-nums;">0%</span></span>
+            `);
+
+            // Disable form inputs
+            $('#fotoProfilForm input').prop('disabled', true);
+
+            try {
+                // Perform the post request with progress handling
+                let response = await axios.post(url, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    },
+                    onUploadProgress: function(progressEvent) {
+                        if (progressEvent.lengthComputable) {
+                            var percent = Math.round((progressEvent.loaded / progressEvent.total) * 100);
+                            $('#uploadProgressBar').css('width', percent + '%');
+                            $('#uploadPercentage').html(percent + '%');
+                        }
+                    },
+                    cancelToken: source.token // Attach the token here
+                });
+
+                // Handle successful response
+                if (response.data.success) {
+                    $('#cancelButton').prop('disabled', true).hide();
+                    $('#uploadProgressBar').addClass('bg-success');
+                    $('#submitButton').prop('disabled', true).html(`
+                        <?= $this->include('spinner/spinner'); ?>
+                        <span>Unggah Berhasil! Memuat ulang...</span>
+                    `);
+                    window.location.reload();
+                } else {
+                    console.log("Validation Errors:", response.data.errors);
+
+                    // Clear previous validation states
+                    $('#fotoProfilForm .is-invalid').removeClass('is-invalid');
+                    $('#fotoProfilForm .invalid-feedback').text('').hide();
+
+                    // Display new validation errors
+                    for (const field in response.data.errors) {
+                        if (response.data.errors.hasOwnProperty(field)) {
+                            const fieldElement = $('#' + field);
+                            const feedbackElement = fieldElement.siblings('.invalid-feedback');
+
+                            if (fieldElement.length > 0 && feedbackElement.length > 0) {
+                                fieldElement.addClass('is-invalid');
+                                feedbackElement.text(response.data.errors[field]).show();
+
+                                // Remove error message when the user corrects the input
+                                fieldElement.on('input change', function() {
+                                    $(this).removeClass('is-invalid');
+                                    $(this).siblings('.invalid-feedback').text('').hide();
+                                });
+                            } else {
+                                console.warn("Elemen tidak ditemukan pada field:", field);
+                            }
+                        }
+                    }
+                    console.error('Perbaiki kesalahan pada formulir.');
+                    $('#uploadProgressBar').addClass('bg-danger');
+                    // Reset the form and UI elements
+                    $('#uploadPercentage').html('0%');
+                    $('#closeBtn').prop('disabled', false);
+                    $('#cancelButton').prop('disabled', true).hide();
+                    $('#submitButton').prop('disabled', false).html(`
+                        <i class="fa-solid fa-file-arrow-up"></i> Unggah
+                    `);
+                    $('#fotoProfilForm input').prop('disabled', false);
+                }
+            } catch (error) {
+                if (axios.isCancel(error)) {
+                    showFailedToast(error.message);
+                    $('#uploadProgressBar').css('width', '0%');
+                } else {
+                    showFailedToast('Terjadi kesalahan. Silakan coba lagi.<br>' + error);
+                    $('#uploadProgressBar').addClass('bg-danger');
+                }
+                // Reset the form and UI elements
+                $('#uploadPercentage').html('0%');
+                $('#closeBtn').prop('disabled', false);
+                $('#cancelButton').prop('disabled', true).hide();
+                $('#submitButton').prop('disabled', false).html(`
+                    <i class="fa-solid fa-file-arrow-up"></i> Unggah
+                `);
+                $('#fotoProfilForm input').prop('disabled', false);
+            }
+
+            // Attach the cancel functionality to the close button
+            $('#closeBtn, #cancelButton').on('click', function() {
+                source.cancel('Unggah foto profil dibatalkan.');
+            });
+        });
+
+        // Reset form saat modal ditutup
+        $('#modalFotoProfil').on('hidden.bs.modal', function() {
+            // reset form
+            $('#fotoProfilForm')[0].reset();
+
+            // balikin status checkbox
+            $('#uploadProgressBar').removeClass('bg-danger').css('width', '0%');
+            $('#gambar_preview').attr('src', '#');
+            $('#gambar_preview_div').hide();
+            $('#fotoProfilForm .is-invalid').removeClass('is-invalid');
+            $('#fotoProfilForm .invalid-feedback').text('').hide();
+        });
     });
     // Show toast notification
     <?= $this->include('toast/index') ?>

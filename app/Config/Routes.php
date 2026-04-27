@@ -537,6 +537,10 @@ $routes->delete('/(?i)admin/(?i)delete/(:any)', 'Admin::delete/$1');
 $routes->post('/(?i)settings/(?i)autodate-on/(:any)', 'Settings::autodate_on/$1');
 $routes->post('/(?i)settings/(?i)autodate-off/(:any)', 'Settings::autodate_off/$1');
 
+// FOTO PROFIL
+$routes->get('/(?i)profilephoto/(:num)', 'Settings::profilephoto/$1');
+$routes->get('/(?i)profilephoto/(?i)current', 'Settings::currentprofilephoto');
+
 // SETTINGS
 $routes->get('/(?i)settings', 'Settings::index');
 
@@ -554,6 +558,9 @@ $routes->post('/(?i)settings/(?i)sessionslist', 'Sessions::sessionslist');
 $routes->delete('/(?i)settings/(?i)flush', 'Sessions::flush');
 $routes->delete('/(?i)settings/(?i)deleteexpired', 'Sessions::deleteexpired');
 $routes->delete('/(?i)settings/(?i)deletesession/(:any)', 'Sessions::deletesession/$1');
+
+// CHANGE PROFILE PHOTO
+$routes->post('/(?i)settings/(?i)updateprofilephoto', 'Settings::updateprofilephoto');
 
 // CHANGE USER INFORMATION
 $routes->get('/(?i)settings/(?i)edit', 'Settings::edit');
