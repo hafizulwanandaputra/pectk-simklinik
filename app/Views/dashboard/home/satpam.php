@@ -141,14 +141,14 @@ $db = db_connect();
                 </div>
             </div>
             <div class="d-none d-md-block">
-                <div class="fw-medium lh-sm text-end date" id="waktu2"></div>
-                <div class="fw-light lh-sm text-end" id="tanggal2"></div>
+                <div class="fw-bold lh-sm text-end date" id="waktu2"></div>
+                <div class="fw-semibold lh-sm text-end" id="tanggal2"></div>
             </div>
         </div>
         <hr>
         <div class="my-4">
-            <h4><strong>Selamat Datang di Klinik Utama Mata Padang Eye Center Teluk Kuantan</strong></h4>
-            <h5>Silakan ambil nomor antrean bagi pasien yang ingin berobat</h5>
+            <h3><strong>Selamat Datang di Klinik Utama Mata Padang Eye Center Teluk Kuantan</strong></h3>
+            <h4>Silakan ambil nomor antrean bagi pasien yang ingin berobat</h4>
         </div>
     </div>
     <div class="mb-3">

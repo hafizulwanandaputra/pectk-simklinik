@@ -102,16 +102,12 @@ class Antrean extends BaseController
 
     public function cek_antrean($id)
     {
-        if (session()->get('role') == 'Admisi') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi' || session()->get('role') == 'Manajer') {
             // Mengambil data pengguna berdasarkan ID, kecuali pengguna yang sedang login
             $data = $this->AntreanModel
                 ->find($id);
             // Mengembalikan respons JSON dengan data pengguna
             return $this->response->setJSON($data);
-        } else if (session()->get('role') == 'Admin') {
-            return $this->response->setStatusCode(401)->setJSON([
-                'message' => 'Harap masuk sebagai Admisi untuk memanggil antrean ini.',
-            ]);
         } else {
             // Jika bukan admin, mengembalikan status 404 dengan pesan error
             return $this->response->setStatusCode(404)->setJSON([
@@ -122,7 +118,7 @@ class Antrean extends BaseController
 
     public function panggil_antrean($id)
     {
-        if (session()->get('role') == 'Admisi') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi' || session()->get('role') == 'Manajer') {
             $loket = $this->request->getPost('loket');
 
             if (empty($loket)) {

@@ -16,7 +16,13 @@ $db = db_connect();
     }
 
     .nomor-antrean {
-        font-size: 6rem;
+        font-size: 5rem;
+        font-weight: 900;
+    }
+
+    .nama-loket {
+        font-size: 3rem;
+        font-weight: 700;
     }
 
     .full-card-height {
@@ -186,17 +192,17 @@ $db = db_connect();
                         </div>
                     </div>
                     <div class="d-none d-md-block">
-                        <div class="fw-medium lh-sm text-end date" id="waktu2"></div>
-                        <div class="fw-light lh-sm text-end" id="tanggal2"></div>
+                        <div class="fw-bold lh-sm text-end date" id="waktu2"></div>
+                        <div class="fw-semibold lh-sm text-end" id="tanggal2"></div>
                     </div>
                 </div>
                 <div class="row row-cols-1 row-cols-lg-2 g-2">
                     <div class="col full-card-height">
                         <div class="card shadow-sm h-100">
                             <div class="card-header">
-                                <div class="fs-3 fw-light" id="nama_loket_1"><em>Loket Tutup</em></div>
-                                <div class="fs-6">Nomor antrean:</div>
-                                <h1 class="fw-medium mb-0 nomor-antrean" id="nomor_antrean_label_1"><i class="fa-solid fa-minus"></i></h1>
+                                <div class="fw-bold nama-loket" id="nama_loket_1"><em>Loket Tutup</em></div>
+                                <div class="fs-1">Nomor antrean:</div>
+                                <h1 class="mb-0 date nomor-antrean" id="nomor_antrean_label_1"><i class="fa-solid fa-minus"></i></h1>
                             </div>
                             <div class="card-body p-0 overflow-hidden">
                                 <ul class="list-group list-group-flush" id="list_antrean_monitor_1">
@@ -207,9 +213,9 @@ $db = db_connect();
                     <div class="col full-card-height">
                         <div class="card shadow-sm h-100">
                             <div class="card-header">
-                                <div class="fs-3 fw-light" id="nama_loket_2"><em>Loket Tutup</em></div>
-                                <div class="fs-6">Nomor antrean:</div>
-                                <h1 class="fw-medium mb-0 nomor-antrean" id="nomor_antrean_label_2"><i class="fa-solid fa-minus"></i></h1>
+                                <div class="nama-loket" id="nama_loket_2"><em>Loket Tutup</em></div>
+                                <div class="fs-1">Nomor antrean:</div>
+                                <h1 class="mb-0 date nomor-antrean" id="nomor_antrean_label_2"><i class="fa-solid fa-minus"></i></h1>
                             </div>
                             <div class="card-body p-0 overflow-hidden">
                                 <ul class="list-group list-group-flush" id="list_antrean_monitor_2">
@@ -361,7 +367,7 @@ $db = db_connect();
                 const antreanElement = `
                         <li class="list-group-item d-flex justify-content-between align-items-start">
                             <div>
-                                <div class="fw-bold fs-1">${antrean.kode_antrean}-${antrean.nomor_antrean}</div>
+                                <div class="fw-bold date fs-1">${antrean.kode_antrean}-${antrean.nomor_antrean}</div>
                                 <span class="fs-3">${antrean.loket}</span>
                             </div>
                         </li>
@@ -372,7 +378,7 @@ $db = db_connect();
                 const antreanElement = `
                         <li class="list-group-item d-flex justify-content-between align-items-start">
                             <div>
-                                <div class="fw-bold fs-1">${antrean.kode_antrean}-${antrean.nomor_antrean}</div>
+                                <div class="fw-bold date fs-1">${antrean.kode_antrean}-${antrean.nomor_antrean}</div>
                                 <span class="fs-2">${antrean.loket}</span>
                             </div>
                         </li>

@@ -16,11 +16,18 @@ $db = db_connect();
     }
 
     .nomor-antrean {
-        font-size: 6rem;
+        font-size: 5rem;
+        font-weight: 900;
     }
 
     #nama_poli {
         font-size: 3rem;
+        font-weight: 700;
+    }
+
+    #label_no_rm {
+        font-size: 3rem;
+        font-weight: 900;
     }
 
     .full-card-height {
@@ -189,19 +196,19 @@ $db = db_connect();
                         </div>
                     </div>
                     <div class="d-none d-md-block">
-                        <div class="fw-medium lh-sm text-end date" id="waktu2"></div>
-                        <div class="fw-light lh-sm text-end" id="tanggal2"></div>
+                        <div class="fw-bold lh-sm text-end date" id="waktu2"></div>
+                        <div class="fw-semibold lh-sm text-end" id="tanggal2"></div>
                     </div>
                 </div>
                 <div class="row row-cols-1 g-2">
                     <div class="col full-card-height">
                         <div class="card shadow-sm h-100">
                             <div class="card-header">
-                                <div class="fs-1 fw-light" id="nama_poli"><i class="fa-solid fa-minus"></i></div>
+                                <div id="nama_poli"><i class="fa-solid fa-minus"></i></div>
                             </div>
                             <div class="card-body overflow-hidden">
-                                <h1 class="fw-medium nomor-antrean" id="nomor_antrean_label"><i class="fa-solid fa-minus"></i></h1>
-                                <div class="fs-1 date"><span id="label_no_rm"><i class="fa-solid fa-minus"></i></span><br><span id="label_no_reg"><i class="fa-solid fa-minus"></i></span><br><span id="label_dokter"><i class="fa-solid fa-minus"></i></span></div>
+                                <div class="nomor-antrean lh-sm" id="nomor_antrean_label"><i class="fa-solid fa-minus"></i></div>
+                                <div class="fw-semibold fs-1 lh-sm date"><span id="label_no_rm"><i class="fa-solid fa-minus"></i></span><br><span id="label_no_reg"><i class="fa-solid fa-minus"></i></span><br><span id="label_dokter"><i class="fa-solid fa-minus"></i></span></div>
                             </div>
                         </div>
                     </div>
