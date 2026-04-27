@@ -157,7 +157,7 @@
                         <p class="mb-0" style="font-size: 1.75rem!important;"><i class="fa-solid fa-file-image"></i></p>
                     </a>
                     <div class="align-self-stretch flex-fill ps-1 text-wrap overflow-hidden d-flex align-items-center" style="text-overflow: ellipsis;">
-                        <h5 class="card-title">Ubah Foto Profil</h5>
+                        <h5 class="card-title">Unggah Foto Profil</h5>
                     </div>
                     <div class="align-self-center" style="min-width: 3rem; max-width: 3rem; text-align: center;">
                         <span class="text-body-tertiary"></span>
