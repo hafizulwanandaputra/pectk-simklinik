@@ -355,16 +355,35 @@ class Admin extends BaseController
     {
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Manajer') {
             try {
-                // Menghapus pengguna berdasarkan ID
+                $db = db_connect();
+                $builder = $db->table('user');
+
+                // Ambil data user dulu (untuk foto profil)
+                $user = $builder->where('id_user', $id)->get()->getRowArray();
+
+                // Hapus file foto jika ada
+                if ($user && !empty($user['profilephoto'])) {
+                    $filePath = WRITEPATH . 'profilephoto/' . $user['profilephoto'];
+
+                    if (file_exists($filePath)) {
+                        unlink($filePath);
+                    }
+                }
+
+                // Hapus user (tetap pakai model kamu)
                 $this->AuthModel
-                    ->where('is_owner', 1)->delete($id);
-                $db = db_connect(); // Menghubungkan ke database
-                // Mengatur ulang nilai Auto Increment
+                    ->where('is_owner', 1)
+                    ->delete($id);
+
+                // Reset auto increment
                 $db->query('ALTER TABLE `user` auto_increment = 1');
-                // Panggil WebSocket untuk update client
+
+                // Notify client
                 $this->notify_clients();
-                // Mengembalikan respons JSON sukses
-                return $this->response->setJSON(['message' => 'Pengguna berhasil dihapus']);
+
+                return $this->response->setJSON([
+                    'message' => 'Pengguna berhasil dihapus'
+                ]);
             } catch (DatabaseException $e) {
                 // Mencatat pesan kesalahan
                 log_message('error', $e->getMessage());
