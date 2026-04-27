@@ -429,7 +429,7 @@
                     $('#uploadProgressBar').addClass('bg-success');
                     $('#submitButton').prop('disabled', true).html(`
                         <?= $this->include('spinner/spinner'); ?>
-                        <span>Unggah Berhasil! Memuat ulang...</span>
+                        <span>Memuat ulang...</span>
                     `);
                     window.location.reload();
                 } else {
