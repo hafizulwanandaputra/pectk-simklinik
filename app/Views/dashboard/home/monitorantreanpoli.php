@@ -228,9 +228,9 @@ $db = db_connect();
                                 <div class="d-flex justify-content-between">
                                     <div>
                                         <div class="nomor-antrean lh-sm" id="nomor_antrean_label"><i class="fa-solid fa-minus"></i></div>
-                                        <div class="fw-semibold fs-1 lh-sm date"><span id="label_no_rm"><i class="fa-solid fa-minus"></i></span><br><span id="label_no_reg"><i class="fa-solid fa-minus"></i></span><br><span class="d-block d-lg-none" id="label_dokter_1"><i class="fa-solid fa-minus"></i></span></div>
+                                        <div class="fw-semibold fs-1 lh-sm date"><span id="label_no_rm"><i class="fa-solid fa-minus"></i></span><br><span id="label_no_reg"><i class="fa-solid fa-minus"></i></span><br><span class="d-block d-xl-none" id="label_dokter_1"><i class="fa-solid fa-minus"></i></span></div>
                                     </div>
-                                    <div class="d-none d-lg-block" style="max-width: 440px; min-width: 440px;">
+                                    <div class="d-none d-xl-block" style="max-width: 440px; min-width: 440px;">
                                         <div class="d-flex justify-content-end">
                                             <div id="foto_dokter" class="rounded-pill bg-body m-2 d-flex justify-content-center align-items-center" style="width: 240px; height: 240px;">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="140" height="140" fill="currentColor" viewBox="0 0 16 16">
