@@ -15,6 +15,19 @@ $db = db_connect();
         max-width: 100%;
     }
 
+    #foto_dokter {
+        background-image: url('');
+        width: 32px;
+        background-color: var(--bs-body-bg);
+        aspect-ratio: 1/1;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        position: relative;
+        outline: 1px solid var(--bs-body-bg);
+        box-shadow: 0 0 0 2px var(--bs-secondary);
+    }
+
     .nomor-antrean {
         font-size: 5rem;
         font-weight: 900;
@@ -22,6 +35,11 @@ $db = db_connect();
 
     #nama_poli {
         font-size: 3rem;
+        font-weight: 700;
+    }
+
+    #label_dokter_2 {
+        font-size: 2rem;
         font-weight: 700;
     }
 
@@ -207,8 +225,26 @@ $db = db_connect();
                                 <div id="nama_poli"><i class="fa-solid fa-minus"></i></div>
                             </div>
                             <div class="card-body overflow-hidden">
-                                <div class="nomor-antrean lh-sm" id="nomor_antrean_label"><i class="fa-solid fa-minus"></i></div>
-                                <div class="fw-semibold fs-1 lh-sm date"><span id="label_no_rm"><i class="fa-solid fa-minus"></i></span><br><span id="label_no_reg"><i class="fa-solid fa-minus"></i></span><br><span id="label_dokter"><i class="fa-solid fa-minus"></i></span></div>
+                                <div class="d-flex justify-content-between">
+                                    <div>
+                                        <div class="nomor-antrean lh-sm" id="nomor_antrean_label"><i class="fa-solid fa-minus"></i></div>
+                                        <div class="fw-semibold fs-1 lh-sm date"><span id="label_no_rm"><i class="fa-solid fa-minus"></i></span><br><span id="label_no_reg"><i class="fa-solid fa-minus"></i></span><br><span class="d-block d-lg-none" id="label_dokter_1"><i class="fa-solid fa-minus"></i></span></div>
+                                    </div>
+                                    <div class="d-none d-lg-block" style="max-width: 440px; min-width: 440px;">
+                                        <div class="d-flex justify-content-end">
+                                            <div id="foto_dokter" class="rounded-pill bg-body m-2 d-flex justify-content-center align-items-center" style="width: 240px; height: 240px;">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="140" height="140" fill="currentColor" viewBox="0 0 16 16">
+                                                    <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM14 14s-1-4-6-4-6 4-6 4 1 0 6 0 6 0 6 0z" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <div class="text-end w-100">
+                                            <span>
+                                                <span id="label_dokter_2"><i class="fa-solid fa-minus"></i></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -302,10 +338,20 @@ $db = db_connect();
                     utterance.voice = googleVoice;
                 }
                 speechSynthesis.speak(utterance);
+                let profilephoto = message.data.profilephoto;
+                if (profilephoto === true) {
+                    $('#foto_dokter').css('background-image', `url('<?= base_url('/profilephoto'); ?>/${message.data.id_dokter}')`).html("");
+                } else if (profilephoto == false) {
+                    $('#foto_dokter').css('background-image', `url('')`).html(`
+                        <svg xmlns="http://www.w3.org/2000/svg" width="140" height="140" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM14 14s-1-4-6-4-6 4-6 4 1 0 6 0 6 0 6 0z" />
+                        </svg>
+                    `);
+                }
                 $('#nomor_antrean_label').text(message.data.nama_pasien);
                 $('#label_no_rm').text(message.data.no_rm);
                 $('#label_no_reg').text(message.data.nomor_registrasi);
-                $('#label_dokter').text(message.data.dokter);
+                $('#label_dokter_1, #label_dokter_2').text(message.data.dokter);
                 $('#nama_poli').text(message.data.ruangan);
             } else if (message.update) {
                 console.log("Received update from WebSocket");

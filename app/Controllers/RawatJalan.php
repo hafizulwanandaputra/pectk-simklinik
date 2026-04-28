@@ -55,6 +55,7 @@ class RawatJalan extends BaseController
 
         $rawat_jalan = $this->RawatJalanModel
             ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
+            ->join('user', 'user.fullname = rawat_jalan.dokter AND user.role = "Dokter"', 'left')
             ->find($id);
 
         if (!$rawat_jalan) {
@@ -64,18 +65,22 @@ class RawatJalan extends BaseController
             ]);
         }
 
+        $profilephoto = !empty($rawat_jalan['profilephoto']) ? true : false;
+
         $this->notify_clients('panggil_antrean_poli', [
             'id' => $id,
             'nama_pasien' => $rawat_jalan['nama_pasien'],
             'no_rm' => $rawat_jalan['no_rm'],
             'nomor_registrasi' => $rawat_jalan['nomor_registrasi'],
             'dokter' => $rawat_jalan['dokter'],
+            'id_dokter' => $rawat_jalan['id_user'],
+            'profilephoto' => $profilephoto,
             'ruangan' => $rawat_jalan['ruangan']
         ]);
 
         return $this->response->setJSON([
             'success' => true,
-            'message' => 'Antrean berhasil dipanggil',
+            'message' => 'Antrean berhasil dipanggil'
         ]);
     }
 
