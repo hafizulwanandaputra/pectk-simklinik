@@ -46,10 +46,10 @@ class RawatJalan extends BaseController
 
     public function panggil_antrean($id)
     {
-        if (!in_array(session()->get('role'), ['Admin', 'Dokter', 'Perawat', 'Admisi', 'Manajer'])) {
-            return $this->response->setJSON([
-                'success' => false,
-                'message' => 'Akses ditolak'
+        if (!in_array(session()->get('role'), ['Dokter'])) {
+            // Jika peran tidak dikenali, kembalikan status 404
+            return $this->response->setStatusCode(404)->setJSON([
+                'error' => 'Halaman tidak ditemukan',
             ]);
         }
 

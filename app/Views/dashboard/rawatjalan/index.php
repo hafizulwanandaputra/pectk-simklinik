@@ -1320,9 +1320,11 @@
                                                     </button>
                                                 <?php endif; ?>
                                             <?php endif; ?>
-                                            <button type="button" class="btn btn-body btn-sm bg-gradient btn-call" data-id="${rawatjalan.id_rawat_jalan}">
-                                                <i class="fa-solid fa-phone-volume"></i> Panggil Antrean
-                                            </button>
+                                            <?php if (session()->get('role') == 'Dokter') : ?>
+                                                <button type="button" class="btn btn-body btn-sm bg-gradient btn-call" data-id="${rawatjalan.id_rawat_jalan}">
+                                                    <i class="fa-solid fa-phone-volume"></i> Panggil Antrean
+                                                </button>
+                                            <?php endif; ?>
                                         </div>
                         `;
                 } else if (tombol_rme === 'BATAL') {
