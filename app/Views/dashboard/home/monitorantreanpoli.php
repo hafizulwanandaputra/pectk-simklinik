@@ -252,6 +252,22 @@ $db = db_connect();
             </div>
         </div>
     </div>
+    <div class="modal modal-sheet p-4 py-md-5 fade" id="refreshModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="refreshModalLabel" aria-hidden="true" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content bg-body-tertiary rounded-5 shadow-lg transparent-blur">
+                <div class="modal-body p-4">
+                    <h5 id="refreshMessage"><em>Websocket</em> terputus!</h5>
+                    <h6 class="mb-0 fw-normal">Silakan periksa koneksi <em>websocket</em> Anda. Jika ada masalah, hubungi pengembang aplikasi.</h6>
+                    <h6 class="mb-0 fw-normal date" id="refreshSubmessage">Menyegarkan (<em>refresh</em>) dalam 30 detik.</h6>
+                    <div class="row gx-2 pt-4">
+                        <div class="col d-grid">
+                            <button type="button" class="btn btn-lg btn-primary bg-gradient fs-6 mb-0 rounded-4" id="refreshBtn">Segarkan sekarang</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
 <?= $this->endSection(); ?>
 <?= $this->section('javascript'); ?>
@@ -360,7 +376,50 @@ $db = db_connect();
 
         socket.onclose = () => {
             console.log("Disconnected from WebSocket server");
+            // Batalkan countdown sebelumnya jika ada
+            if (countdownTimer !== null) {
+                clearInterval(countdownTimer);
+                countdownTimer = null;
+            }
+
+            $('#refreshModal').modal('show');
+
+            // Setelah berhasil, mulai countdown 30 detik untuk tutup modal
+            let countdown = 30;
+            $('#refreshSubmessage').html(`Menyegarkan (<em>refresh</em>) dalam ${countdown} detik`);
+
+            countdownTimer = setInterval(() => {
+                countdown--;
+                if (countdown > 0) {
+                    $('#refreshSubmessage').html(`Menyegarkan (<em>refresh</em>) dalam ${countdown} detik`);
+                } else {
+                    clearInterval(countdownTimer);
+                    countdownTimer = null;
+                    $('#refreshModal').modal('hide');
+                    $('#refreshSubmessage').html('Menyegarkan (<em>refresh</em>) dalam 30 detik');
+                    window.location.reload();
+                }
+            }, 1000);
         };
+
+        $('#refreshBtn').on('click', function() {
+            if (countdownTimer !== null) {
+                clearInterval(countdownTimer);
+                countdownTimer = null;
+            }
+            $('#refreshModal').modal('hide');
+            $('#refreshSubmessage').html('Menyegarkan (<em>refresh</em>) dalam 30 detik');
+            window.location.reload();
+        });
+
+        $('#refreshModal').on('hidden.bs.modal', function() {
+            // Jika sedang menghitung mundur, batalkan
+            if (countdownTimer !== null) {
+                clearInterval(countdownTimer);
+                countdownTimer = null;
+                $('#refreshSubmessage').html('Menyegarkan (<em>refresh</em>) dalam 30 detik');
+            }
+        });
 
         // Panggil fungsi untuk mengambil data pasien saat dokumen siap
         updateDateTime(); // Jalankan sekali saat load
