@@ -262,7 +262,7 @@ $db = db_connect();
             <div class="modal-content bg-body-tertiary rounded-5 shadow-lg transparent-blur">
                 <div class="modal-body p-4">
                     <h5 id="refreshMessage"><em>Websocket</em> terputus!</h5>
-                    <h6 class="mb-0 fw-normal">Silakan periksa koneksi <em>websocket</em> Anda. Jika ada masalah, hubungi pengembang aplikasi.</h6>
+                    <h6 class="fw-normal">Silakan periksa koneksi <em>websocket</em> Anda. Jika ada masalah, hubungi pengembang aplikasi.</h6>
                     <h6 class="mb-0 fw-normal date" id="refreshSubmessage">Menyegarkan (<em>refresh</em>) dalam 30 detik.</h6>
                     <div class="row gx-2 pt-4">
                         <div class="col d-grid">
