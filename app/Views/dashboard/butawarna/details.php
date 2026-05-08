@@ -132,12 +132,24 @@ $seven_days_ago = date('Y-m-d', strtotime('-6 days'));
                                 <div class="invalid-feedback"></div>
                             </div>
                         </div>
-                        <div>
+                        <div class="mb-2">
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="od_visus" name="od_visus" value="" autocomplete="off" dir="auto" placeholder="od_visus" list="od_visus_list">
                                 <datalist id="od_visus_list">
                                 </datalist>
                                 <label for="od_visus">Visus</label>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="input-group has-validation">
+                                <div class="form-floating">
+                                    <input type="number" class="form-control" id="od_tekanan_bola_mata" name="od_tekanan_bola_mata" value="" autocomplete="off" dir="auto" placeholder="od_tekanan_bola_mata" list="od_tekanan_bola_mata_list">
+                                    <datalist id="od_tekanan_bola_mata_list">
+                                    </datalist>
+                                    <label for="od_tekanan_bola_mata">Tekanan Bola Mata</label>
+                                </div>
+                                <span class="input-group-text">mmHg</span>
                                 <div class="invalid-feedback"></div>
                             </div>
                         </div>
@@ -151,7 +163,7 @@ $seven_days_ago = date('Y-m-d', strtotime('-6 days'));
                                 <div class="invalid-feedback"></div>
                             </div>
                         </div>
-                        <div>
+                        <div class="mb-2">
                             <div class="form-floating">
                                 <input type="text" class="form-control" id="os_visus" name="os_visus" value="" autocomplete="off" dir="auto" placeholder="os_visus" list="os_visus_list">
                                 <datalist id="os_visus_list">
@@ -160,8 +172,21 @@ $seven_days_ago = date('Y-m-d', strtotime('-6 days'));
                                 <div class="invalid-feedback"></div>
                             </div>
                         </div>
+                        <div>
+                            <div class="input-group has-validation">
+                                <div class="form-floating">
+                                    <input type="number" class="form-control" id="os_tekanan_bola_mata" name="os_tekanan_bola_mata" value="" autocomplete="off" dir="auto" placeholder="os_tekanan_bola_mata" list="os_tekanan_bola_mata_list">
+                                    <datalist id="os_tekanan_bola_mata_list">
+                                    </datalist>
+                                    <label for="os_tekanan_bola_mata">Tekanan Bola Mata</label>
+                                </div>
+                                <span class="input-group-text">mmHg</span>
+                                <div class="invalid-feedback"></div>
+                            </div>
+                        </div>
                     </div>
                 </div>
+                <div class="fw-bold mb-2 border-bottom">Informasi Buta Warna</div>
                 <div class="mb-2">
                     <div class="form-floating">
                         <select class="form-select" id="jenis_rabun" name="jenis_rabun" aria-label="jenis_rabun">
@@ -227,8 +252,10 @@ $seven_days_ago = date('Y-m-d', strtotime('-6 days'));
             $('#keperluan').val(data.keperluan);
             $('#od_ukuran_kacamata').val(data.od_ukuran_kacamata);
             $('#od_visus').val(data.od_visus);
+            $('#od_tekanan_bola_mata').val(data.od_tekanan_bola_mata);
             $('#os_ukuran_kacamata').val(data.os_ukuran_kacamata);
             $('#os_visus').val(data.os_visus);
+            $('#os_tekanan_bola_mata').val(data.os_tekanan_bola_mata);
             $('#jenis_rabun').val(data.jenis_rabun);
             const status_buta_warna = data.status_buta_warna;
             if (status_buta_warna) {

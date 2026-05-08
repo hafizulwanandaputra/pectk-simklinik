@@ -258,6 +258,35 @@ $waktuFormatted = $dateTime->format('H.i.s');
                     </tbody>
                 </table>
             <?php endif; ?>
+            <?php if (!empty($butawarna['od_tekanan_bola_mata']) || !empty($butawarna['os_tekanan_bola_mata'])) : ?>
+                <p>Tekanan bola mata:</p>
+                <table class="table" style="width: 100%; margin-bottom: 4px;">
+                    <tbody>
+                        <tr>
+                            <td style="width: 20%; vertical-align: top;">
+                                Mata Kanan
+                            </td>
+                            <td style="width: 0%; vertical-align: top;">
+                                :
+                            </td>
+                            <td style="width: 80%; vertical-align: top; white-space: nowrap;">
+                                <?= (!empty($butawarna['od_tekanan_bola_mata'])) ? $butawarna['od_tekanan_bola_mata'] . ' mmHg' : '' ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 20%; vertical-align: top;">
+                                Mata Kiri
+                            </td>
+                            <td style="width: 0%; vertical-align: top;">
+                                :
+                            </td>
+                            <td style="width: 80%; vertical-align: top; white-space: nowrap;">
+                                <?= (!empty($butawarna['os_tekanan_bola_mata'])) ? $butawarna['os_tekanan_bola_mata'] . ' mmHg' : '' ?>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            <?php endif; ?>
             <h2 style="padding: 0; text-decoration: underline; text-align: center;">
                 <?= $butawarna['status_buta_warna'] ?>
             </h2>

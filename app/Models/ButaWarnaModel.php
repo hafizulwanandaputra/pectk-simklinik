@@ -15,8 +15,10 @@ class ButaWarnaModel extends Model
         'keperluan',
         'od_ukuran_kacamata',
         'od_visus',
+        'od_tekanan_bola_mata',
         'os_ukuran_kacamata',
         'os_visus',
+        'os_tekanan_bola_mata',
         'jenis_rabun',
         'status_buta_warna',
         'waktu_dibuat'

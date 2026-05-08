@@ -545,8 +545,10 @@ class ButaWarna extends BaseController
                 'keperluan' => $this->request->getPost('keperluan') ?: null,
                 'od_ukuran_kacamata' => $this->request->getPost('od_ukuran_kacamata') ?: null,
                 'od_visus' => $this->request->getPost('od_visus') ?: null,
+                'od_tekanan_bola_mata' => $this->request->getPost('od_tekanan_bola_mata') ?: null,
                 'os_ukuran_kacamata' => $this->request->getPost('os_ukuran_kacamata') ?: null,
                 'os_visus' => $this->request->getPost('os_visus') ?: null,
+                'os_tekanan_bola_mata' => $this->request->getPost('os_tekanan_bola_mata') ?: null,
                 'jenis_rabun' => $this->request->getPost('jenis_rabun') ?: null,
                 'status_buta_warna' => $this->request->getPost('status_buta_warna') ?: null
             ];
