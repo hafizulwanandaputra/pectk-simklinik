@@ -263,9 +263,6 @@ $db = db_connect();
                         <div class="d-grid">
                             <button type="button" class="btn btn-lg btn-danger bg-gradient fs-6 mb-0 rounded-4" id="logoutRefreshBtn">Keluar</button>
                         </div>
-                        <div class="d-grid">
-                            <button type="button" class="btn btn-lg btn-primary bg-gradient fs-6 mb-0 rounded-4" id="refreshBtn">Hubungkan ulang sekarang</button>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -324,12 +321,21 @@ $db = db_connect();
         console.log("Voice enabled with Google Indonesia");
     }
 
+    function toTitleCase(str) {
+        return str.toLowerCase().replace(/\b\w/g, char => char.toUpperCase());
+    }
+
     function connectWebSocket() {
+        $('#refreshSubmessage').html(
+            `Menghubungkan <em>websocket</em>...`
+        );
         socket = new WebSocket('<?= env('WS-URL-JS') ?>');
 
         socket.onopen = () => {
             console.log("Connected to WebSocket server");
-
+            $('#refreshSubmessage').html(
+                `Mencoba menghubungkan ulang dalam 5 detik`
+            );
             $('#refreshModal').modal('hide');
             showSuccessToast('<em>Websocket</em> terhubung');
 
@@ -388,6 +394,8 @@ $db = db_connect();
                 `Mencoba menghubungkan ulang dalam ${countdown} detik`
             );
 
+            $('#refreshBtn').prop('disabled', false).text('Hubungkan ulang sekarang');
+
             if (countdownTimer !== null) {
                 clearInterval(countdownTimer);
             }
@@ -410,7 +418,7 @@ $db = db_connect();
 
         socket.onerror = (error) => {
             console.error("WebSocket error:", error);
-            showFailedToast(`<em>Websocket</em> mengalami kesalahan.<br>` + error);
+            showFailedToast(`<em>Websocket</em> mengalami kesalahan. Silakan coba lagi atau hubungi pengembang aplikasi.`);
             socket.close();
         };
     }
@@ -422,25 +430,6 @@ $db = db_connect();
             $('#alert-voice').remove();
             $(this).remove();
             showSuccessToast('Suara diaktifkan. Pemanggilan nomor antrean sudah bisa digunakan.')
-        });
-
-        function toTitleCase(str) {
-            return str.toLowerCase().replace(/\b\w/g, char => char.toUpperCase());
-        }
-
-        $('#refreshBtn').on('click', function() {
-            if (countdownTimer !== null) {
-                clearInterval(countdownTimer);
-                countdownTimer = null;
-            }
-
-            $('#refreshModal').modal('hide');
-
-            if (socket) {
-                socket.close(); // trigger reconnect normal
-            } else {
-                connectWebSocket();
-            }
         });
 
         // Event listener untuk menangani klik pada tombol konfirmasi logout
