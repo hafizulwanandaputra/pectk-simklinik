@@ -258,10 +258,13 @@ $db = db_connect();
                 <div class="modal-body p-4">
                     <h5 id="refreshMessage"><em>Websocket</em> terputus!</h5>
                     <h6 class="fw-normal">Silakan periksa koneksi <em>websocket</em> Anda. Jika ada masalah, hubungi pengembang aplikasi.</h6>
-                    <h6 class="mb-0 fw-normal date" id="refreshSubmessage">Menyegarkan (<em>refresh</em>) dalam 30 detik.</h6>
-                    <div class="row gx-2 pt-4">
-                        <div class="col d-grid">
-                            <button type="button" class="btn btn-lg btn-primary bg-gradient fs-6 mb-0 rounded-4" id="refreshBtn">Segarkan sekarang</button>
+                    <h6 class="mb-0 fw-normal date" id="refreshSubmessage">Mencoba menghubungkan ulang dalam 5 detik</h6>
+                    <div class="row gy-2 pt-4">
+                        <div class="d-grid">
+                            <button type="button" class="btn btn-lg btn-danger bg-gradient fs-6 mb-0 rounded-4" id="logoutRefreshBtn">Keluar</button>
+                        </div>
+                        <div class="d-grid">
+                            <button type="button" class="btn btn-lg btn-primary bg-gradient fs-6 mb-0 rounded-4" id="refreshBtn">Hubungkan ulang sekarang</button>
                         </div>
                     </div>
                 </div>
@@ -279,7 +282,11 @@ $db = db_connect();
 <?= $this->endSection(); ?>
 <?= $this->section('javascript'); ?>
 <script>
+    let socket;
+    let reconnectDelay = 5000; // 5 detik fix
     let countdownTimer = null; // Untuk menyimpan referensi timer agar bisa dibatalkan
+    let voiceEnabled = false;
+    let googleVoice = null;
 
     // Aktifkan plugin dan set locale ke Bahasa Indonesia
     dayjs.extend(dayjs_plugin_localizedFormat);
@@ -292,9 +299,6 @@ $db = db_connect();
         $('#waktu1').text(now.format('HH.mm.ss (UTCZ)'));
         $('#waktu2').text(now.format('HH.mm.ss'));
     }
-
-    let voiceEnabled = false;
-    let googleVoice = null;
 
     // Ambil daftar voice Google Indonesia
     function loadVoices() {
@@ -320,6 +324,97 @@ $db = db_connect();
         console.log("Voice enabled with Google Indonesia");
     }
 
+    function connectWebSocket() {
+        socket = new WebSocket('<?= env('WS-URL-JS') ?>');
+
+        socket.onopen = () => {
+            console.log("Connected to WebSocket server");
+
+            $('#refreshModal').modal('hide');
+            showSuccessToast('<em>Websocket</em> terhubung');
+
+            if (countdownTimer !== null) {
+                clearInterval(countdownTimer);
+                countdownTimer = null;
+            }
+        };
+
+        socket.onmessage = async function(event) {
+            const message = JSON.parse(event.data);
+            console.log(event);
+
+            if (message.panggil_antrean_poli && message.data) {
+                const nama = toTitleCase(message.data.nama_pasien);
+                const ruangan = toTitleCase(message.data.ruangan);
+                const kalimat = `Pasien atas nama ${nama}, silakan menuju ke ${ruangan}.`;
+
+                // anti suara numpuk
+                speechSynthesis.cancel();
+
+                const utterance = new SpeechSynthesisUtterance(kalimat);
+                utterance.lang = 'id-ID';
+                if (googleVoice) {
+                    utterance.voice = googleVoice;
+                }
+                speechSynthesis.speak(utterance);
+
+                let profilephoto = message.data.profilephoto;
+                if (profilephoto === true) {
+                    $('#foto_dokter').css('background-image', `url('<?= base_url('/profilephoto'); ?>/${message.data.id_dokter}')`).html("");
+                } else {
+                    $('#foto_dokter').css('background-image', `url('')`).html(`
+                    <svg xmlns="http://www.w3.org/2000/svg" width="140" height="140" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM14 14s-1-4-6-4-6 4-6 4 1 0 6 0 6 0 6 0z" />
+                    </svg>
+                `);
+                }
+
+                $('#nomor_antrean_label').text(message.data.nama_pasien);
+                $('#label_no_rm').text(message.data.no_rm);
+                $('#label_no_reg').text(message.data.nomor_registrasi);
+                $('#label_dokter_1, #label_dokter_2').text(message.data.dokter);
+                $('#nama_poli').text(message.data.ruangan);
+            }
+        };
+
+        socket.onclose = () => {
+            console.log("Disconnected from WebSocket server");
+
+            $('#refreshModal').modal('show');
+
+            let countdown = 5;
+
+            $('#refreshSubmessage').html(
+                `Mencoba menghubungkan ulang dalam ${countdown} detik`
+            );
+
+            if (countdownTimer !== null) {
+                clearInterval(countdownTimer);
+            }
+
+            countdownTimer = setInterval(() => {
+                countdown--;
+
+                if (countdown > 0) {
+                    $('#refreshSubmessage').html(
+                        `Mencoba menghubungkan ulang dalam ${countdown} detik`
+                    );
+                } else {
+                    clearInterval(countdownTimer);
+                    countdownTimer = null;
+
+                    connectWebSocket(); // reconnect
+                }
+            }, 1000);
+        };
+
+        socket.onerror = (error) => {
+            console.error("WebSocket error:", error);
+            showFailedToast(`<em>Websocket</em> mengalami kesalahan.<br>` + error);
+            socket.close();
+        };
+    }
+
     $(document).ready(async function() {
         $('#btnEnableVoice').on('click', function(ə) {
             ə.preventDefault();
@@ -333,83 +428,26 @@ $db = db_connect();
             return str.toLowerCase().replace(/\b\w/g, char => char.toUpperCase());
         }
 
-        const socket = new WebSocket('<?= env('WS-URL-JS') ?>'); // Ganti dengan domain VPS
-
-        socket.onopen = () => {
-            console.log("Connected to WebSocket server");
-        };
-
-        socket.onmessage = async function(event) {
-            const message = JSON.parse(event.data);
-            console.log(event);
-
-            if (message.panggil_antrean_poli && message.data) {
-                const nama = toTitleCase(message.data.nama_pasien);
-                const ruangan = toTitleCase(message.data.ruangan);
-                const kalimat = `Pasien atas nama ${nama}, silakan menuju ke ${ruangan}.`;
-
-                const utterance = new SpeechSynthesisUtterance(kalimat);
-                utterance.lang = 'id-ID';
-                if (googleVoice) {
-                    utterance.voice = googleVoice;
-                }
-                speechSynthesis.speak(utterance);
-                let profilephoto = message.data.profilephoto;
-                if (profilephoto === true) {
-                    $('#foto_dokter').css('background-image', `url('<?= base_url('/profilephoto'); ?>/${message.data.id_dokter}')`).html("");
-                } else if (profilephoto == false) {
-                    $('#foto_dokter').css('background-image', `url('')`).html(`
-                        <svg xmlns="http://www.w3.org/2000/svg" width="140" height="140" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM14 14s-1-4-6-4-6 4-6 4 1 0 6 0 6 0 6 0z" />
-                        </svg>
-                    `);
-                }
-                $('#nomor_antrean_label').text(message.data.nama_pasien);
-                $('#label_no_rm').text(message.data.no_rm);
-                $('#label_no_reg').text(message.data.nomor_registrasi);
-                $('#label_dokter_1, #label_dokter_2').text(message.data.dokter);
-                $('#nama_poli').text(message.data.ruangan);
-            } else if (message.update) {
-                console.log("Received update from WebSocket");
-            }
-        };
-
-        socket.onclose = () => {
-            console.log("Disconnected from WebSocket server");
-            // Batalkan countdown sebelumnya jika ada
-            if (countdownTimer !== null) {
-                clearInterval(countdownTimer);
-                countdownTimer = null;
-            }
-
-            $('#refreshModal').modal('show');
-
-            // Setelah berhasil, mulai countdown 30 detik untuk tutup modal
-            let countdown = 30;
-            $('#refreshSubmessage').html(`Menyegarkan (<em>refresh</em>) dalam ${countdown} detik`);
-
-            countdownTimer = setInterval(() => {
-                countdown--;
-                if (countdown > 0) {
-                    $('#refreshSubmessage').html(`Menyegarkan (<em>refresh</em>) dalam ${countdown} detik`);
-                } else {
-                    clearInterval(countdownTimer);
-                    countdownTimer = null;
-                    $('#refreshModal').modal('hide');
-                    $('#refreshSubmessage').html('Menyegarkan (<em>refresh</em>) dalam 30 detik');
-                    window.location.reload();
-                }
-            }, 1000);
-        };
-
         $('#refreshBtn').on('click', function() {
             if (countdownTimer !== null) {
                 clearInterval(countdownTimer);
                 countdownTimer = null;
             }
+
             $('#refreshModal').modal('hide');
-            $('#refreshSubmessage').html('Menyegarkan (<em>refresh</em>) dalam 30 detik');
-            window.location.reload();
+
+            if (socket) {
+                socket.close(); // trigger reconnect normal
+            } else {
+                connectWebSocket();
+            }
+        });
+
+        // Event listener untuk menangani klik pada tombol konfirmasi logout
+        $('#logoutRefreshBtn').on('click', function(e) {
+            e.preventDefault();
+            $('#refreshModal').modal('hide');
+            window.location.href = '<?= base_url('/logout'); ?>'; // Redirect ke halaman logout
         });
 
         $('#refreshModal').on('hidden.bs.modal', function() {
@@ -417,10 +455,11 @@ $db = db_connect();
             if (countdownTimer !== null) {
                 clearInterval(countdownTimer);
                 countdownTimer = null;
-                $('#refreshSubmessage').html('Menyegarkan (<em>refresh</em>) dalam 30 detik');
+                $('#refreshSubmessage').html('Mencoba menghubungkan ulang dalam 5 detik');
             }
         });
 
+        connectWebSocket();
         // Panggil fungsi untuk mengambil data pasien saat dokumen siap
         updateDateTime(); // Jalankan sekali saat load
         setInterval(updateDateTime, 1000); // Update tiap 1 detik
