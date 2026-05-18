@@ -151,9 +151,9 @@
                     </div>
                 </li>
             <?php endif; ?>
-            <li class="list-group-item p-1 list-group-item-action" id="ubah-foto-profil">
+            <li class="list-group-item p-1 list-group-item-action">
                 <div class="d-flex align-items-start">
-                    <a href="<?= base_url('/settings/changepassword'); ?>" style="min-width: 3rem; max-width: 3rem; text-align: center;">
+                    <a href="#" class="stretched-link" id="ubah-foto-profil" style="min-width: 3rem; max-width: 3rem; text-align: center;">
                         <p class="mb-0" style="font-size: 1.75rem!important;"><i class="fa-solid fa-file-image"></i></p>
                     </a>
                     <div class="align-self-stretch flex-fill ps-1 text-wrap overflow-hidden d-flex align-items-center" style="text-overflow: ellipsis;">
