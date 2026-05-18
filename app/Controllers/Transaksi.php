@@ -1983,6 +1983,34 @@ class Transaksi extends BaseController
 
             // Mengambil detail obat dan alat kesehatan
             $obatalkes = $this->DetailTransaksiModel
+                ->select('
+                    detail_transaksi.id_detail_transaksi,
+                    detail_transaksi.id_resep,
+                    detail_transaksi.id_transaksi,
+                    detail_transaksi.qty_transaksi,
+                    detail_transaksi.harga_transaksi,
+                    detail_transaksi.diskon as diskon,
+
+                    resep.dokter,
+                    resep.tanggal_resep,
+                    resep.jumlah_resep,
+                    resep.total_biaya,
+                    resep.status,
+
+                    detail_resep.id_detail_resep,
+                    detail_resep.signa,
+                    detail_resep.catatan,
+                    detail_resep.cara_pakai,
+                    detail_resep.jumlah,
+                    detail_resep.harga_satuan,
+
+                    obat.id_obat,
+                    obat.nama_obat,
+                    obat.kategori_obat,
+                    obat.bentuk_obat,
+
+                    transaksi.lunas as lunas
+                ')
                 ->where('detail_transaksi.id_transaksi', $id)
                 ->where('detail_transaksi.jenis_transaksi', 'Obat dan Alkes') // Mengambil hanya jenis transaksi 'Obat dan Alkes'
                 ->join('transaksi', 'transaksi.id_transaksi = detail_transaksi.id_transaksi', 'inner')
