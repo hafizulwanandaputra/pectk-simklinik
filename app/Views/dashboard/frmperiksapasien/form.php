@@ -232,171 +232,55 @@ $waktuFormatted = $dateTime->format('H.i.s');
                     </tr>
                 </tbody>
             </table>
-            <p>Pada pemeriksaan ini didapatkan diagnosis medis dan tindakan sebagai berikut:</p>
-
-            <h3 style="padding-left: 0.25cm; padding-right: 0.25cm; margin: 0;">DIAGNOSIS MEDIS (A):</h3>
-            <table class="table" style="width: 100%; margin-bottom: 4px; font-size: 10pt; padding-left: 0.25cm; padding-right: 0.25cm;">
+            <p>Pada pemeriksaan ini didapatkan diagnosis dan terapi sebagai berikut:</p>
+            <table class="table" style="width: 100%; margin-bottom: 4px;">
                 <tbody>
                     <tr>
-                        <td style="width: 85%; vertical-align: top; white-space: nowrap; overflow: hidden;"></td>
-                        <td colspan="3" style="width: 15%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center;">
-                            ICD-10
+                        <td style="width: 30%; vertical-align: top;">
+                            Diagnosis
+                        </td>
+                        <td style="width: 0%; vertical-align: top;">
+                            :
+                        </td>
+                        <td style="width: 70%; vertical-align: top;">
+                            <ul style="margin: 0;">
+                                <?php if (!empty($form_pemeriksaan_pasien['diagnosa_medis_1'])) : ?>
+                                    <li><?= $form_pemeriksaan_pasien['diagnosa_medis_1'] ?></li>
+                                <?php endif; ?>
+                                <?php if (!empty($form_pemeriksaan_pasien['diagnosa_medis_2'])) : ?>
+                                    <li><?= $form_pemeriksaan_pasien['diagnosa_medis_2'] ?></li>
+                                <?php endif; ?>
+                                <?php if (!empty($form_pemeriksaan_pasien['diagnosa_medis_3'])) : ?>
+                                    <li><?= $form_pemeriksaan_pasien['diagnosa_medis_3'] ?></li>
+                                <?php endif; ?>
+                                <?php if (!empty($form_pemeriksaan_pasien['diagnosa_medis_4'])) : ?>
+                                    <li><?= $form_pemeriksaan_pasien['diagnosa_medis_4'] ?></li>
+                                <?php endif; ?>
+                                <?php if (!empty($form_pemeriksaan_pasien['diagnosa_medis_5'])) : ?>
+                                    <li><?= $form_pemeriksaan_pasien['diagnosa_medis_5'] ?></li>
+                                <?php endif; ?>
+                            </ul>
                         </td>
                     </tr>
                     <tr>
-                        <td style="width: 85%; vertical-align: top; white-space: nowrap; overflow: hidden; border-bottom: 1px dotted black;">
-                            <?= $form_pemeriksaan_pasien['diagnosa_medis_1'] ?>
+                        <td style="width: 30%; vertical-align: top;">
+                            Terapi
                         </td>
-                        <td style="width: 0%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center;">
-                            (
+                        <td style="width: 0%; vertical-align: top;">
+                            :
                         </td>
-                        <td style="width: 15%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center; border-bottom: 1px dotted black;">
-                            <?= $form_pemeriksaan_pasien['icdx_kode_1'] ?>
-                        </td>
-                        <td style="width: 0%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center;">
-                            )
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 85%; vertical-align: top; white-space: nowrap; overflow: hidden; border-bottom: 1px dotted black;">
-                            <?= $form_pemeriksaan_pasien['diagnosa_medis_2'] ?>
-                        </td>
-                        <td style="width: 0%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center;">
-                            (
-                        </td>
-                        <td style="width: 15%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center; border-bottom: 1px dotted black;">
-                            <?= $form_pemeriksaan_pasien['icdx_kode_2'] ?>
-                        </td>
-                        <td style="width: 0%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center;">
-                            )
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 85%; vertical-align: top; white-space: nowrap; overflow: hidden; border-bottom: 1px dotted black;">
-                            <?= $form_pemeriksaan_pasien['diagnosa_medis_3'] ?>
-                        </td>
-                        <td style="width: 0%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center;">
-                            (
-                        </td>
-                        <td style="width: 15%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center; border-bottom: 1px dotted black;">
-                            <?= $form_pemeriksaan_pasien['icdx_kode_3'] ?>
-                        </td>
-                        <td style="width: 0%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center;">
-                            )
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 85%; vertical-align: top; white-space: nowrap; overflow: hidden; border-bottom: 1px dotted black;">
-                            <?= $form_pemeriksaan_pasien['diagnosa_medis_4'] ?>
-                        </td>
-                        <td style="width: 0%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center;">
-                            (
-                        </td>
-                        <td style="width: 15%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center; border-bottom: 1px dotted black;">
-                            <?= $form_pemeriksaan_pasien['icdx_kode_4'] ?>
-                        </td>
-                        <td style="width: 0%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center;">
-                            )
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 85%; vertical-align: top; white-space: nowrap; overflow: hidden; border-bottom: 1px dotted black;">
-                            <?= $form_pemeriksaan_pasien['diagnosa_medis_5'] ?>
-                        </td>
-                        <td style="width: 0%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center;">
-                            (
-                        </td>
-                        <td style="width: 15%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center; border-bottom: 1px dotted black;">
-                            <?= $form_pemeriksaan_pasien['icdx_kode_5'] ?>
-                        </td>
-                        <td style="width: 0%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center;">
-                            )
+                        <td style="width: 70%; vertical-align: top;">
+                            <ol style="margin: 0;">
+                                <?php foreach ($resep as $r) : ?>
+                                    <?php foreach ($r['detail_resep'] as $d) : ?>
+                                        <li><?= $d['nama_obat'] . ' ' . $d['signa'] . ' ' . $d['cara_pakai']; ?></li>
+                                    <?php endforeach; ?>
+                                <?php endforeach; ?>
+                            </ol>
                         </td>
                     </tr>
                 </tbody>
             </table>
-            <h3 style="padding-left: 0.25cm; padding-right: 0.25cm; margin: 0;">TINDAKAN (P):</h3>
-            <table class="table" style="width: 100%; margin-bottom: 4px; font-size: 10pt; padding-left: 0.25cm; padding-right: 0.25cm;">
-                <tbody>
-                    <tr>
-                        <td style="width: 85%; vertical-align: top; white-space: nowrap; overflow: hidden;"></td>
-                        <td colspan="3" style="width: 15%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center;">
-                            ICD-9 CM
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 85%; vertical-align: top; white-space: nowrap; overflow: hidden; border-bottom: 1px dotted black;">
-                            <?= $form_pemeriksaan_pasien['terapi_1'] ?>
-                        </td>
-                        <td style="width: 0%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center;">
-                            (
-                        </td>
-                        <td style="width: 15%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center; border-bottom: 1px dotted black;">
-                            <?= $form_pemeriksaan_pasien['icd9_kode_1'] ?>
-                        </td>
-                        <td style="width: 0%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center;">
-                            )
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 85%; vertical-align: top; white-space: nowrap; overflow: hidden; border-bottom: 1px dotted black;">
-                            <?= $form_pemeriksaan_pasien['terapi_2'] ?>
-                        </td>
-                        <td style="width: 0%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center;">
-                            (
-                        </td>
-                        <td style="width: 15%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center; border-bottom: 1px dotted black;">
-                            <?= $form_pemeriksaan_pasien['icd9_kode_2'] ?>
-                        </td>
-                        <td style="width: 0%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center;">
-                            )
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 85%; vertical-align: top; white-space: nowrap; overflow: hidden; border-bottom: 1px dotted black;">
-                            <?= $form_pemeriksaan_pasien['terapi_3'] ?>
-                        </td>
-                        <td style="width: 0%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center;">
-                            (
-                        </td>
-                        <td style="width: 15%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center; border-bottom: 1px dotted black;">
-                            <?= $form_pemeriksaan_pasien['icd9_kode_3'] ?>
-                        </td>
-                        <td style="width: 0%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center;">
-                            )
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 85%; vertical-align: top; white-space: nowrap; overflow: hidden; border-bottom: 1px dotted black;">
-                            <?= $form_pemeriksaan_pasien['terapi_4'] ?>
-                        </td>
-                        <td style="width: 0%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center;">
-                            (
-                        </td>
-                        <td style="width: 15%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center; border-bottom: 1px dotted black;">
-                            <?= $form_pemeriksaan_pasien['icd9_kode_4'] ?>
-                        </td>
-                        <td style="width: 0%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center;">
-                            )
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width: 85%; vertical-align: top; white-space: nowrap; overflow: hidden; border-bottom: 1px dotted black;">
-                            <?= $form_pemeriksaan_pasien['terapi_5'] ?>
-                        </td>
-                        <td style="width: 0%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center;">
-                            (
-                        </td>
-                        <td style="width: 15%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center; border-bottom: 1px dotted black;">
-                            <?= $form_pemeriksaan_pasien['icd9_kode_5'] ?>
-                        </td>
-                        <td style="width: 0%; vertical-align: top; white-space: nowrap; overflow: hidden; text-align: center;">
-                            )
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-
             <p>Demikian formulir pemeriksaan ini dibuat untuk dipergunakan seperlunya. Atas perhatiannya, saya ucapkan terima kasih.</p>
             <table class="table" style="width: 100%; margin-bottom: 4px;">
                 <tbody>

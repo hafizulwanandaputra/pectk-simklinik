@@ -132,6 +132,20 @@ class FRMPeriksaPasien extends BaseController
                 ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
                 ->find($id);
 
+            // === Ambil data resep ===
+            $resep = $db->table('resep')
+                ->where('nomor_registrasi', $form_pemeriksaan_pasien['nomor_registrasi'])
+                ->get()
+                ->getResultArray();
+
+            // === Ambil detail resep per resep ===
+            foreach ($resep as &$r) {
+                $r['detail_resep'] = $db->table('detail_resep')
+                    ->where('id_resep', $r['id_resep'])
+                    ->get()
+                    ->getResultArray();
+            }
+
             // Ambil tabel master_provinsi
             $provinsi = $db->table('master_provinsi');
             $provinsi->select('UPPER(provinsiNama) AS provinsiNama');
@@ -204,6 +218,7 @@ class FRMPeriksaPasien extends BaseController
                 // Menyiapkan data untuk tampilan
                 $data = [
                     'form_pemeriksaan_pasien' => $form_pemeriksaan_pasien,
+                    'resep' => $resep,
                     'bcNoReg' => $bcNoReg,
                     'title' => 'Formulir Pemeriksaan Pasien ' . $form_pemeriksaan_pasien['nama_pasien'] . ' (' . $form_pemeriksaan_pasien['no_rm'] . ') - ' . $form_pemeriksaan_pasien['nomor_registrasi'] . ' - ' . $this->systemName,
                     'headertitle' => 'Formulir Pemeriksaan Pasien',
