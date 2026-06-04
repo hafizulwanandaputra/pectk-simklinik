@@ -1696,13 +1696,16 @@ class Transaksi extends BaseController
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir' || session()->get('role') == 'Manajer') {
             // Validasi input
             $validation = \Config\Services::validation();
-            // Menetapkan aturan validasi dasar
             $rules = [
                 'terima_uang' => 'required|numeric|greater_than_equal_to[0]', // Uang yang diterima harus diisi, berupa angka, dan lebih dari 0
                 'metode_pembayaran' => 'required', // Metode pembayaran harus diisi
             ];
 
-            // Cek jika metode pembayaran adalah 'QRIS/Transfer Bank'
+            if ($this->request->getPost('jaminan_hidden') != 'UMUM') {
+                // Tambahkan aturan tambahan jika diperlukan (misalnya validasi terkait bank)
+                $rules['ditanggung'] = 'required|numeric|greater_than_equal_to[0]';
+            }
+
             if ($this->request->getPost('metode_pembayaran') == 'QRIS/Transfer Bank') {
                 // Tambahkan aturan tambahan jika diperlukan (misalnya validasi terkait bank)
                 $rules['bank'] = 'required'; // Nama bank harus diisi
@@ -1730,21 +1733,45 @@ class Transaksi extends BaseController
                 ->getRow();
 
             $total_pembayaran = $transaksi->total_pembayaran; // Total pembayaran yang diambil
+            $ditanggung = $this->request->getPost('ditanggung'); // Total pembayaran yang diambil
+            $sisa_tanggungan = $total_pembayaran - $ditanggung; // Menghitung sisa tanggungan
 
+            if ($this->request->getPost('jaminan_hidden') != 'UMUM') {
+                // Memeriksa apakah uang yang diterima sama dengan total pembayaran
+                if ($terima_uang < $sisa_tanggungan) {
+                    return $this->response->setStatusCode(402)->setJSON(['success' => false, 'message' => 'Uang yang diterima kurang dari sisa pembayaran', 'errors' => NULL]);
+                }
+            }
             if ($this->request->getPost('metode_pembayaran') == 'QRIS/Transfer Bank') {
                 // Memeriksa apakah uang yang diterima sama dengan total pembayaran
-                if ($terima_uang != $total_pembayaran) {
-                    return $this->response->setStatusCode(402)->setJSON(['success' => false, 'message' => 'Uang yang diterima harus sama dengan total pembayaran pada metode QRIS/Transfer Bank', 'errors' => NULL]);
+                if ($this->request->getPost('jaminan_hidden') != 'UMUM') {
+                    if ($terima_uang != $sisa_tanggungan) {
+                        return $this->response->setStatusCode(402)->setJSON(['success' => false, 'message' => 'Uang yang diterima harus sama dengan sisa pembayaran pada metode QRIS/Transfer Bank', 'errors' => NULL]);
+                    }
+                } else {
+                    if ($terima_uang != $total_pembayaran) {
+                        return $this->response->setStatusCode(402)->setJSON(['success' => false, 'message' => 'Uang yang diterima harus sama dengan total pembayaran pada metode QRIS/Transfer Bank', 'errors' => NULL]);
+                    }
                 }
             } else {
                 // Memeriksa apakah uang yang diterima kurang dari total pembayaran
-                if ($terima_uang < $total_pembayaran) {
-                    return $this->response->setStatusCode(402)->setJSON(['success' => false, 'message' => 'Uang yang diterima kurang dari total pembayaran', 'errors' => NULL]);
+                if ($this->request->getPost('jaminan_hidden') != 'UMUM') {
+                    if ($terima_uang < $sisa_tanggungan) {
+                        return $this->response->setStatusCode(402)->setJSON(['success' => false, 'message' => 'Uang yang diterima kurang dari sisa pembayaran', 'errors' => NULL]);
+                    }
+                } else {
+                    if ($terima_uang < $total_pembayaran) {
+                        return $this->response->setStatusCode(402)->setJSON(['success' => false, 'message' => 'Uang yang diterima kurang dari total pembayaran', 'errors' => NULL]);
+                    }
                 }
             }
 
             // Menghitung uang kembali jika uang yang diterima lebih besar dari total pembayaran
-            $uang_kembali = $terima_uang > $total_pembayaran ? $terima_uang - $total_pembayaran : 0;
+            if ($this->request->getPost('jaminan_hidden') != 'UMUM') {
+                $uang_kembali = $terima_uang > $sisa_tanggungan ? $terima_uang - $sisa_tanggungan : 0;
+            } else {
+                $uang_kembali = $terima_uang > $total_pembayaran ? $terima_uang - $total_pembayaran : 0;
+            }
 
 
             // Jika bank kosong, atur ke NULL
@@ -1758,6 +1785,7 @@ class Transaksi extends BaseController
             $transaksi = $db->table('transaksi');
             $transaksi->where('id_transaksi', $id_transaksi);
             $transaksi->update([
+                'ditanggung' => $ditanggung, // Memperbarui jumlah tanggungan
                 'terima_uang' => $terima_uang, // Memperbarui jumlah uang yang diterima
                 'metode_pembayaran' => $this->request->getPost('metode_pembayaran'), // Memperbarui metode pembayaran
                 'bank' => $bank, // Menambahkan bank
@@ -1858,6 +1886,7 @@ class Transaksi extends BaseController
                 $transaksi = $db->table('transaksi');
                 $transaksi->where('id_transaksi', $id_transaksi);
                 $transaksi->update([
+                    'ditanggung' => NULL, // Mengosongkan tanggungan
                     'terima_uang' => 0, // Mengosongkan uang yang terima
                     'metode_pembayaran' => '', // Mengosongkan metode pembayaran
                     'bank' => '', // Mengosongkan bank
@@ -1938,7 +1967,7 @@ class Transaksi extends BaseController
 
             $db = db_connect();
             $jaminanRow = $db->table('master_jaminan')
-                ->select('jaminanNama')
+                ->select('jaminanKode, jaminanNama')
                 ->where('jaminanKode', $transaksi['jaminan'])
                 ->get()
                 ->getRow();
@@ -1946,6 +1975,7 @@ class Transaksi extends BaseController
             if ($jaminanRow) {
                 // TIMPA: kode -> nama
                 $transaksi['jaminan'] = $jaminanRow->jaminanNama;
+                $transaksi['jaminan_kode'] = $jaminanRow->jaminanKode;
             }
 
             // Array untuk menyimpan hasil terstruktur layanan

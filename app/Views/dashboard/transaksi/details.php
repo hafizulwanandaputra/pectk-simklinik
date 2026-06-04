@@ -363,11 +363,29 @@
         <div class="mb-0 row g-1 overflow-hidden d-flex align-items-end">
             <div class="col fw-medium text-nowrap">Total Keseluruhan</div>
             <div class="col text-end">
-                <div class="fs-4 date text-truncate placeholder-glow" style="font-weight: 900;" id="total_pembayaran">
+                <div class="date text-truncate placeholder-glow <?= (isset($transaksi['jaminanKode']) && $transaksi['jaminanKode'] != 'UMUM') ? 'text-decoration-line-through text-muted' : 'fs-4'; ?>" style="font-weight: 900;" id="total_pembayaran">
                     <span class="placeholder w-100"></span>
                 </div>
             </div>
         </div>
+        <?php if (isset($transaksi['jaminanKode']) && $transaksi['jaminanKode'] != 'UMUM') : ?>
+            <div class="mb-0 row g-1 overflow-hidden d-flex align-items-end">
+                <div class="col fw-medium text-nowrap">Ditanggung (<?= $transaksi['jaminan'] ?>)</div>
+                <div class="col text-end">
+                    <div class="date text-truncate placeholder-glow" id="ditanggung_table">
+                        <span class="placeholder w-100"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-0 row g-1 overflow-hidden d-flex align-items-end">
+                <div class="col fw-medium text-nowrap">Sisa Pembayaran</div>
+                <div class="col text-end">
+                    <div class="fs-4 date text-truncate placeholder-glow" style="font-weight: 900;" id="sisa_pembayaran_table">
+                        <span class="placeholder w-100"></span>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
         <div class="mb-0 row g-1 overflow-hidden d-flex align-items-end">
             <div class="col fw-medium text-nowrap">Terima Uang</div>
             <div class="col text-end">
@@ -437,28 +455,39 @@
                             </div>
                             <div class="w-100 ms-3">
                                 <p>Pastikan Anda telah memasukkan nominal transaksi sesuai dengan total keseluruhan yang diminta dan telah menyelesaikan proses pembayaran.</p>
-                                <p>Total Keseluruhan:<br><span id="total_pembayaran_modal" class="date fs-4" style="font-weight: 900;"></span></p>
+                                <p>Total Keseluruhan:<br><span id="total_pembayaran_modal" class="date <?= (isset($transaksi['jaminanKode']) && $transaksi['jaminanKode'] != 'UMUM') ? 'text-decoration-line-through text-muted' : 'fs-4'; ?>" style="font-weight: 900;"></span></p>
+                                <?php if (isset($transaksi['jaminanKode']) && $transaksi['jaminanKode'] != 'UMUM') : ?>
+                                    <p>Dikurangi tanggungan jaminan:<br><span id="sisa_pembayaran_modal" class="date fs-4" style="font-weight: 900;"></span></p>
+                                <?php endif; ?>
                                 <p class="mb-0">Jika uang yang diterima melebihi total keseluruhan, maka akan ada uang kembali.</p>
                             </div>
                         </div>
                     </div>
+                    <input type="hidden" id="jaminan_hidden" name="jaminan_hidden" value="">
+                    <?php if (isset($transaksi['jaminanKode']) && $transaksi['jaminanKode'] != 'UMUM') : ?>
+                        <input type="hidden" id="total_pembayaran_hidden" name="total_pembayaran_hidden" value="">
+                        <div class="input-group has-validation mb-1 mt-1">
+                            <span class="input-group-text">Rp</span>
+                            <div class="form-floating">
+                                <input type="number" class="form-control" autocomplete="off" dir="auto" placeholder="ditanggung" id="ditanggung" name="ditanggung">
+                                <label for="ditanggung">Ditanggung oleh Jaminan</label>
+                            </div>
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    <?php endif; ?>
                     <div class="input-group has-validation mb-1 mt-1">
                         <span class="input-group-text">Rp</span>
                         <div class="form-floating">
-                            <input type="number" class="form-control" autocomplete="off" dir="auto" placeholder="terima_uang" id="terima_uang" name="terima_uang" <?= (isset($transaksi['jaminanKode']) && $transaksi['jaminanKode'] != 'UMUM') ? 'readonly' : ''; ?>>
+                            <input type="number" class="form-control" autocomplete="off" dir="auto" placeholder="terima_uang" id="terima_uang" name="terima_uang">
                             <label for="terima_uang">Terima Uang</label>
                         </div>
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="form-floating mt-1 mb-1">
-                        <select class="form-select <?= (isset($transaksi['jaminanKode']) && $transaksi['jaminanKode'] != 'UMUM') ? 'pe-none' : ''; ?>" id="metode_pembayaran" name="metode_pembayaran" aria-label="metode_pembayaran">
+                        <select class="form-select" id="metode_pembayaran" name="metode_pembayaran" aria-label="metode_pembayaran">
                             <option value="" disabled selected>-- Pilih Metode Pembayaran --</option>
-                            <?php if (isset($transaksi['jaminanKode']) && $transaksi['jaminanKode'] != 'UMUM') : ?>
-                                <option value="Jaminan">Jaminan (<?= $transaksi['jaminan']; ?>)</option>
-                            <?php else : ?>
-                                <option value="Tunai">Tunai</option>
-                                <option value="QRIS/Transfer Bank">QRIS/Transfer Bank</option>
-                            <?php endif; ?>
+                            <option value="Tunai">Tunai</option>
+                            <option value="QRIS/Transfer Bank">QRIS/Transfer Bank</option>
                         </select>
                         <label for="metode_pembayaran">Metode Pembayaran</label>
                         <div class="invalid-feedback"></div>
@@ -725,18 +754,24 @@
             const data = response.data;
 
             const total_pembayaran = parseInt(data.total_pembayaran);
+            const ditanggung = parseInt(data.ditanggung);
+            const sisa_pembayaran = parseInt(data.total_pembayaran - data.ditanggung);
             const terima_uang = parseInt(data.terima_uang);
             const uang_kembali = parseInt(data.uang_kembali);
             const bank = data.bank ? ` (${data.bank})` : ``;
 
             $('#total_pembayaran').text(`Rp${total_pembayaran.toLocaleString('id-ID')}`);
+            <?php if (isset($transaksi['jaminanKode']) && $transaksi['jaminanKode'] != 'UMUM') : ?>
+                $('#ditanggung_table').text(`Rp${ditanggung.toLocaleString('id-ID')}`);
+                $('#sisa_pembayaran_table').text(`Rp${sisa_pembayaran.toLocaleString('id-ID')}`);
+            <?php endif; ?>
             $('#terima_uang_table').text(`Rp${terima_uang.toLocaleString('id-ID')}`);
             $('#uang_kembali_table').text(`Rp${uang_kembali.toLocaleString('id-ID')}`);
             $('#metode_pembayaran_table').html(data.metode_pembayaran + bank);
             $('#total_pembayaran_modal').text(`Rp${total_pembayaran.toLocaleString('id-ID')}`);
+            $('#jaminan_hidden').val(data.jaminan);
             <?php if (isset($transaksi['jaminanKode']) && $transaksi['jaminanKode'] != 'UMUM') : ?>
-                $('#terima_uang').val(`${total_pembayaran}`);
-                $('#metode_pembayaran').val(`Jaminan`).trigger('change');
+                $('#total_pembayaran_hidden').val(total_pembayaran);
             <?php endif; ?>
 
             if (data.dokter === "Resep Luar") {
@@ -1789,8 +1824,28 @@
             $('#batalTransaksiModal').modal('show');
         });
 
+        <?php if (isset($transaksi['jaminanKode']) && $transaksi['jaminanKode'] != 'UMUM') : ?>
+
+            function hitungTotal() {
+                let total_pembayaran = parseFloat($('#total_pembayaran_hidden').val()) || 0;
+                let ditanggung = parseFloat($('#ditanggung').val()) || 0;
+
+                let hasil = total_pembayaran - ditanggung;
+                if (hasil < 0) hasil = 0;
+
+                $('#sisa_pembayaran_modal').text('Rp' + hasil.toLocaleString('id-ID'));
+            }
+
+            $('#ditanggung').on('input', hitungTotal);
+        <?php endif; ?>
+
         $('#transaksiModal').on('shown.bs.modal', function() {
-            $('#terima_uang').trigger('focus');
+            <?php if (isset($transaksi['jaminanKode']) && $transaksi['jaminanKode'] != 'UMUM') : ?>
+                $('#ditanggung').trigger('focus');
+                hitungTotal();
+            <?php else : ?>
+                $('#terima_uang').trigger('focus');
+            <?php endif; ?>
         });
 
         $('#batalTransaksiModal').on('shown.bs.modal', function() {
@@ -2029,11 +2084,9 @@
         });
 
         $('#transaksiModal').on('hidden.bs.modal', function() {
-            <?php if ($transaksi['jaminanKode'] == 'UMUM') : ?>
-                $('#transaksiForm')[0].reset();
-                $('#terima_uang').val('');
-                $('#metode_pembayaran').val('').change(); // Trigger change agar toggleBankField dipanggil
-            <?php endif; ?>
+            $('#transaksiForm')[0].reset();
+            $('#metode_pembayaran').val('').change(); // Trigger change agar toggleBankField dipanggil
+            $('#terima_uang').val('');
             $('#bank').val(''); // Kosongkan field bank
             $('#bank_field').hide(); // Reset bank dan hilangkan
             $('#transaksiForm .is-invalid').removeClass('is-invalid');
@@ -2091,6 +2144,9 @@
                         fetchObatAlkes()
                     ]);
                 <?php endif; ?>
+                <?php if (isset($transaksi['jaminanKode']) && $transaksi['jaminanKode'] != 'UMUM') : ?>
+                    hitungTotal();
+                <?php endif; ?>
                 fetchStatusTransaksi();
                 transactionProcessBtn();
             }
@@ -2115,6 +2171,9 @@
                     fetchObatAlkes()
                 ]);
             <?php endif; ?>
+            <?php if (isset($transaksi['jaminanKode']) && $transaksi['jaminanKode'] != 'UMUM') : ?>
+                hitungTotal();
+            <?php endif; ?>
             fetchStatusTransaksi();
             transactionProcessBtn();
         });
@@ -2134,6 +2193,9 @@
                 fetchLayanan(),
                 fetchObatAlkes()
             ]);
+        <?php endif; ?>
+        <?php if (isset($transaksi['jaminanKode']) && $transaksi['jaminanKode'] != 'UMUM') : ?>
+            hitungTotal();
         <?php endif; ?>
         fetchStatusTransaksi();
         transactionProcessBtn();

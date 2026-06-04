@@ -392,6 +392,32 @@ $tanggal = Time::parse($transaksi['tgl_transaksi']);
                         <?= number_format($transaksi['total_pembayaran'], 0, ',', '.') ?>
                     </th>
                 </tr>
+                <?php if ($transaksi['jaminan_kode'] != 'UMUM') : ?>
+                    <tr>
+                        <th colspan="3" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;"></th>
+                        <th colspan="3" class="outline-border" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
+                            Ditanggung (<?= $transaksi['jaminan'] ?>)
+                        </th>
+                        <th class="outline-border-right" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: left; white-space: nowrap;">
+                            Rp
+                        </th>
+                        <th class="outline-border-left" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
+                            <?= number_format($transaksi['ditanggung'], 0, ',', '.') ?>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th colspan="3" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;"></th>
+                        <th colspan="3" class="outline-border" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
+                            Sisa Pembayaran
+                        </th>
+                        <th class="outline-border-right" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: left; white-space: nowrap;">
+                            Rp
+                        </th>
+                        <th class="outline-border-left" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
+                            <?= number_format($transaksi['total_pembayaran'] - $transaksi['ditanggung'], 0, ',', '.') ?>
+                        </th>
+                    </tr>
+                <?php endif; ?>
                 <tr>
                     <th colspan="3" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;"></th>
                     <th colspan="3" class="outline-border" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">

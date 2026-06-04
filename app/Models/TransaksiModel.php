@@ -26,6 +26,7 @@ class TransaksiModel extends Model
         'no_kwitansi',
         'tgl_transaksi',
         'total_pembayaran',
+        'ditanggung',
         'metode_pembayaran',
         'bank',
         'lunas'
