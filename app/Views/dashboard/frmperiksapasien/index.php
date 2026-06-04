@@ -411,7 +411,6 @@
             fetchFormulir(); // Refresh articles on button click
         });
         fetchFormulir();
-        toggleSubmitButton();
     });
     // Show toast notification
     <?= $this->include('toast/index') ?>

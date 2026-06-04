@@ -232,7 +232,7 @@ $waktuFormatted = $dateTime->format('H.i.s');
                     </tr>
                 </tbody>
             </table>
-            <p>Pada pemeriksaan ini didapatkan diagnosis dan tindakan sebagai berikut:</p>
+            <p>Pada pemeriksaan ini didapatkan diagnosis medis dan tindakan sebagai berikut:</p>
 
             <h3 style="padding-left: 0.25cm; padding-right: 0.25cm; margin: 0;">DIAGNOSIS MEDIS (A):</h3>
             <table class="table" style="width: 100%; margin-bottom: 4px; font-size: 10pt; padding-left: 0.25cm; padding-right: 0.25cm;">
