@@ -230,6 +230,11 @@ $routes->get('/(?i)lpoperasi/(?i)export/(:any)', 'LPOperasi::export/$1');
 $routes->post('/(?i)lpoperasi/(?i)update/(:any)', 'LPOperasi::update/$1');
 $routes->delete('/(?i)lpoperasi/(?i)delete/(:any)', 'LPOperasi::delete/$1');
 
+// FORM PEMERIKSAAN PASIEN
+$routes->get('/(?i)frmperiksapasien', 'FRMPeriksaPasien::index');
+$routes->get('/(?i)frmperiksapasien/frmperiksapasienlist', 'FRMPeriksaPasien::frmperiksapasienlist');
+$routes->get('/(?i)frmperiksapasien/(?i)export/(:any)', 'FRMPeriksaPasien::export/$1');
+
 // FORM PERSETUJUAN TINDAKAN KEDOKTERAN
 $routes->get('/(?i)frmsetujukedokteran', 'FRMSetujuKedokteran::index');
 $routes->get('/(?i)frmsetujukedokteran/frmsetujukedokteranlist', 'FRMSetujuKedokteran::frmsetujukedokteranlist');

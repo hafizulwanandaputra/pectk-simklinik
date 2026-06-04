@@ -795,13 +795,15 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                         </li>
                                     </ul>
                                 </div>
+                            <?php endif; ?>
+                            <?php if (session()->get('role') == "Dokter" || session()->get('role') == "Admin" || session()->get('role') == "Admisi" || session()->get('role') == "Kasir" || session()->get('role') == "Manajer") : ?>
                                 <li class="nav-item">
-                                    <span style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'frmsetujukedokteran' || $activeSegment === 'frmsetujuanestesi' || $activeSegment === 'frmsetujuphaco') ? 'active bg-success' : '' ?>" role="button" data-bs-toggle="collapse" data-bs-target="#submenu-formulir">
-                                        <div class="d-flex align-items-start <?= ($activeSegment === 'frmsetujukedokteran' || $activeSegment === 'frmsetujuanestesi' || $activeSegment === 'frmsetujuphaco') ? 'text-white' : 'link-success' ?>">
+                                    <span style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'frmperiksapasien' || $activeSegment === 'frmsetujukedokteran' || $activeSegment === 'frmsetujuanestesi' || $activeSegment === 'frmsetujuphaco') ? 'active bg-success' : '' ?>" role="button" data-bs-toggle="collapse" data-bs-target="#submenu-formulir">
+                                        <div class="d-flex align-items-start <?= ($activeSegment === 'frmperiksapasien' || $activeSegment === 'frmsetujukedokteran' || $activeSegment === 'frmsetujuanestesi' || $activeSegment === 'frmsetujuphaco') ? 'text-white' : 'link-success' ?>">
                                             <div style="min-width: 24px; max-width: 24px; text-align: center;">
                                                 <i class="fa-solid fa-file-contract"></i>
                                             </div>
-                                            <div class="flex-fill mx-2 <?= ($activeSegment === 'frmsetujukedokteran' || $activeSegment === 'frmsetujuanestesi' || $activeSegment === 'frmsetujuphaco') ? 'text-white' : 'link-body-emphasis' ?>">
+                                            <div class="flex-fill mx-2 <?= ($activeSegment === 'frmperiksapasien' || $activeSegment === 'frmsetujukedokteran' || $activeSegment === 'frmsetujuanestesi' || $activeSegment === 'frmsetujuphaco') ? 'text-white' : 'link-body-emphasis' ?>">
                                                 Formulir
                                             </div>
                                             <div style="min-width: 16px; max-width: 16px; text-align: center;">
@@ -810,35 +812,48 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                         </div>
                                     </span>
                                 </li>
-                                <div id="submenu-formulir" class="collapse <?= ($activeSegment === 'frmsetujukedokteran' || $activeSegment === 'frmsetujuanestesi' || $activeSegment === 'frmsetujuphaco') ? 'show' : '' ?>">
+                                <div id="submenu-formulir" class="collapse <?= ($activeSegment === 'frmperiksapasien' || $activeSegment === 'frmsetujukedokteran' || $activeSegment === 'frmsetujuanestesi' || $activeSegment === 'frmsetujuphaco') ? 'show' : '' ?>">
                                     <ul class="nav nav-pills flex-column my-1">
-                                        <li class="nav-item" style="margin-left: calc(24px + 0.5rem);">
-                                            <a class="nav-link px-2 py-1 <?= ($activeSegment === 'frmsetujukedokteran') ? 'active bg-success activeLinkSideBar' : '' ?>" href="<?= base_url('/frmsetujukedokteran'); ?>">
-                                                <div class="d-flex align-items-start <?= ($activeSegment === 'frmsetujukedokteran') ? 'text-white' : 'link-body-emphasis' ?>">
-                                                    <div class="flex-fill fw-normal" style="font-size: 0.75em;">
-                                                        Persetujuan Tindakan Kedokteran
+                                        <?php if (session()->get('role') == "Kasir" || session()->get('role') == "Admisi") : ?>
+                                            <li class="nav-item" style="margin-left: calc(24px + 0.5rem);">
+                                                <a class="nav-link px-2 py-1 <?= ($activeSegment === 'frmperiksapasien') ? 'active bg-success activeLinkSideBar' : '' ?>" href="<?= base_url('/frmperiksapasien'); ?>">
+                                                    <div class="d-flex align-items-start <?= ($activeSegment === 'frmperiksapasien') ? 'text-white' : 'link-body-emphasis' ?>">
+                                                        <div class="flex-fill fw-normal" style="font-size: 0.75em;">
+                                                            Pemeriksaan Pasien
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item" style="margin-left: calc(24px + 0.5rem);">
-                                            <a class="nav-link px-2 py-1 <?= ($activeSegment === 'frmsetujuanestesi') ? 'active bg-success activeLinkSideBar' : '' ?>" href="<?= base_url('/frmsetujuanestesi'); ?>">
-                                                <div class="d-flex align-items-start <?= ($activeSegment === 'frmsetujuanestesi') ? 'text-white' : 'link-body-emphasis' ?>">
-                                                    <div class="flex-fill fw-normal" style="font-size: 0.75em;">
-                                                        Persetujuan Tindakan Anestesi
+                                                </a>
+                                            </li>
+                                        <?php endif; ?>
+                                        <?php if (session()->get('role') != "Kasir") : ?>
+                                            <li class="nav-item" style="margin-left: calc(24px + 0.5rem);">
+                                                <a class="nav-link px-2 py-1 <?= ($activeSegment === 'frmsetujukedokteran') ? 'active bg-success activeLinkSideBar' : '' ?>" href="<?= base_url('/frmsetujukedokteran'); ?>">
+                                                    <div class="d-flex align-items-start <?= ($activeSegment === 'frmsetujukedokteran') ? 'text-white' : 'link-body-emphasis' ?>">
+                                                        <div class="flex-fill fw-normal" style="font-size: 0.75em;">
+                                                            Persetujuan Tindakan Kedokteran
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </a>
-                                        </li>
-                                        <li class="nav-item" style="margin-left: calc(24px + 0.5rem);">
-                                            <a class="nav-link px-2 py-1 <?= ($activeSegment === 'frmsetujuphaco') ? 'active bg-success activeLinkSideBar' : '' ?>" href="<?= base_url('/frmsetujuphaco'); ?>">
-                                                <div class="d-flex align-items-start <?= ($activeSegment === 'frmsetujuphaco') ? 'text-white' : 'link-body-emphasis' ?>">
-                                                    <div class="flex-fill fw-normal" style="font-size: 0.75em;">
-                                                        Persetujuan Tindakan Phacoemulsifikasi
+                                                </a>
+                                            </li>
+                                            <li class="nav-item" style="margin-left: calc(24px + 0.5rem);">
+                                                <a class="nav-link px-2 py-1 <?= ($activeSegment === 'frmsetujuanestesi') ? 'active bg-success activeLinkSideBar' : '' ?>" href="<?= base_url('/frmsetujuanestesi'); ?>">
+                                                    <div class="d-flex align-items-start <?= ($activeSegment === 'frmsetujuanestesi') ? 'text-white' : 'link-body-emphasis' ?>">
+                                                        <div class="flex-fill fw-normal" style="font-size: 0.75em;">
+                                                            Persetujuan Tindakan Anestesi
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            </a>
-                                        </li>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item" style="margin-left: calc(24px + 0.5rem);">
+                                                <a class="nav-link px-2 py-1 <?= ($activeSegment === 'frmsetujuphaco') ? 'active bg-success activeLinkSideBar' : '' ?>" href="<?= base_url('/frmsetujuphaco'); ?>">
+                                                    <div class="d-flex align-items-start <?= ($activeSegment === 'frmsetujuphaco') ? 'text-white' : 'link-body-emphasis' ?>">
+                                                        <div class="flex-fill fw-normal" style="font-size: 0.75em;">
+                                                            Persetujuan Tindakan Phacoemulsifikasi
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        <?php endif; ?>
                                     </ul>
                                 </div>
                             <?php endif; ?>
