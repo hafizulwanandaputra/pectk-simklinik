@@ -271,6 +271,18 @@ $routes->get('/(?i)frmsetujuphaco/(?i)export/(:any)', 'FRMSetujuPhaco::export/$1
 $routes->post('/(?i)frmsetujuphaco/(?i)update/(:any)', 'FRMSetujuPhaco::update/$1');
 $routes->delete('/(?i)frmsetujuphaco/(?i)delete/(:any)', 'FRMSetujuPhaco::delete/$1');
 
+// FORM PENOLAKAN TINDAKAN MEDIS
+$routes->get('/(?i)frmtolakmedis', 'FRMTolakMedis::index');
+$routes->get('/(?i)frmtolakmedis/frmtolakmedislist', 'FRMTolakMedis::frmtolakmedislist');
+$routes->get('/(?i)frmtolakmedis/pasienlist', 'FRMTolakMedis::pasienlist');
+$routes->get('/(?i)frmtolakmedis/(:num)', 'FRMTolakMedis::details/$1');
+$routes->post('/(?i)frmtolakmedis/(?i)create', 'FRMTolakMedis::create');
+$routes->get('/(?i)frmtolakmedis/(?i)details/(:any)', 'FRMTolakMedis::details/$1');
+$routes->get('/(?i)frmtolakmedis/(?i)view/(:any)', 'FRMTolakMedis::view/$1');
+$routes->get('/(?i)frmtolakmedis/(?i)export/(:any)', 'FRMTolakMedis::export/$1');
+$routes->post('/(?i)frmtolakmedis/(?i)update/(:any)', 'FRMTolakMedis::update/$1');
+$routes->delete('/(?i)frmtolakmedis/(?i)delete/(:any)', 'FRMTolakMedis::delete/$1');
+
 // SURAT RUJUKAN
 $routes->get('/(?i)rujukan', 'Rujukan::index');
 $routes->get('/(?i)rujukan/rujukanlist', 'Rujukan::rujukanlist');

@@ -76,6 +76,8 @@ class Filters extends BaseConfig
                 '/frmsetujuanestesi/*',
                 '/frmsetujuphaco',
                 '/frmsetujuphaco/*',
+                '/frmtolakmedis',
+                '/frmtolakmedis/*',
                 '/rujukan',
                 '/rujukan/*',
                 '/sakitmata',

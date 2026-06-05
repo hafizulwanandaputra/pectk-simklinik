@@ -88,7 +88,7 @@ $seven_days_ago = date('Y-m-d', strtotime('-6 days'));
                             <a class="nav-link py-1 <?= ($activeSegment === $list['id_keterangan_sakit_mata']) ? 'active activeLink' : '' ?>" href="<?= base_url('sakitmata/details/' . $list['id_keterangan_sakit_mata']); ?>">
                                 <div class="text-center">
                                     <div class="text-nowrap lh-sm"><?= $list['nomor_registrasi']; ?></div>
-                                    <div class="text-nowrap lh-sm" style="font-size: 0.75em;"><?= $list['tanggal_registrasi'] ?></div>
+                                    <div class="text-nowrap lh-sm" style="font-size: 0.75em;"><?= $list['waktu_dibuat'] ?></div>
                                 </div>
                             </a>
                         <?php endforeach; ?>
