@@ -73,9 +73,9 @@
                         </form>
                     </li>
                 </ul>
-                <ul id="FRMTolakContainer" class="list-group">
+                <ul id="FRMTolakContainer" class="list-group rounded-top-0">
                     <?php for ($i = 0; $i < 12; $i++) : ?>
-                        <li class="list-group-item pb-3 pt-3" style="cursor: wait;">
+                        <li class="list-group-item border-top-0 pb-3 pt-3" style="cursor: wait;">
                             <div class="d-flex">
                                 <div class="align-self-center w-100">
                                     <h5 class="card-title d-flex placeholder-glow">
@@ -157,7 +157,7 @@
     let currentPage = 1;
     let transaksiId = null;
     var placeholder = `
-            <li class="list-group-item pb-3 pt-3" style="cursor: wait;">
+            <li class="list-group-item border-top-0 pb-3 pt-3" style="cursor: wait;">
                 <div class="d-flex">
                     <div class="align-self-center w-100">
                         <h5 class="card-title d-flex placeholder-glow">
@@ -341,7 +341,7 @@
                         `<span class="isian-teks">${form_penolakan_tindakan.hubungan}${hubungan_lain}</span>` :
                         `<span class="isian-teks opacity-50 fst-italic user-select-none">Belum ada</span>`;
                     const FRMTolakElement = `
-                    <li class="list-group-item pb-3 pt-3">
+                    <li class="list-group-item border-top-0 pb-3 pt-3">
                         <div class="d-flex">
                             <div class="align-self-center w-100">
                                 <h5 class="card-title d-flex date justify-content-start">
