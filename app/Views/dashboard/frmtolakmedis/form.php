@@ -231,7 +231,7 @@ switch ($form_penolakan_tindakan['hubungan']) {
                             <div>Yang menyatakan</div>
                         </td>
                         <td style="width: 50%; text-align: center; vertical-align: bottom; padding-bottom: 2.5cm;">
-                            <div>Teluk Kuantan, <?= $tanggalFormatted ?><br>Dokter Spesialis Mata</div>
+                            <div>Teluk Kuantan, <?= $tanggalFormatted ?> pukul <?= $waktuFormatted ?> WIB<br>Dokter Spesialis Mata</div>
                         </td>
                     </tr>
                     <tr>
