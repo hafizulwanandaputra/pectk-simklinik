@@ -235,8 +235,8 @@ switch ($form_penolakan_tindakan['hubungan']) {
                         </td>
                     </tr>
                     <tr>
-                        <td style="width: 50%; text-align: center; vertical-align: top;">(.................................)</td>
-                        <td style="width: 50%; text-align: center; vertical-align: top;">(.................................)</td>
+                        <td style="width: 50%; text-align: center; vertical-align: top;">(......................................................)</td>
+                        <td style="width: 50%; text-align: center; vertical-align: top;">(......................................................)</td>
                     </tr>
                 </tbody>
             </table>
