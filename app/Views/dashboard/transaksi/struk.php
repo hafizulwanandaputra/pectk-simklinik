@@ -392,7 +392,7 @@ $tanggal = Time::parse($transaksi['tgl_transaksi']);
                         <?= number_format($transaksi['total_pembayaran'], 0, ',', '.') ?>
                     </th>
                 </tr>
-                <?php if ($transaksi['jaminan_kode'] != 'UMUM') : ?>
+                <?php if (isset($transaksi['jaminan_kode']) && $transaksi['jaminan_kode'] != 'UMUM') : ?>
                     <tr>
                         <th colspan="3" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;"></th>
                         <th colspan="3" class="outline-border" style="vertical-align: top; padding-top: 2px; padding-bottom: 0; padding-left: 2px; padding-right: 2px; text-align: right; white-space: nowrap;">
