@@ -1696,12 +1696,13 @@ class Transaksi extends BaseController
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Kasir' || session()->get('role') == 'Manajer') {
             // Validasi input
             $validation = \Config\Services::validation();
+            $jaminan = $this->request->getPost('jaminan_hidden');
             $rules = [
                 'terima_uang' => 'required|numeric|greater_than_equal_to[0]', // Uang yang diterima harus diisi, berupa angka, dan lebih dari 0
                 'metode_pembayaran' => 'required', // Metode pembayaran harus diisi
             ];
 
-            if ($this->request->getPost('jaminan_hidden') != 'UMUM') {
+            if (!empty($jaminan) && $jaminan != 'UMUM') {
                 // Tambahkan aturan tambahan jika diperlukan (misalnya validasi terkait bank)
                 $rules['ditanggung'] = 'required|numeric|greater_than_equal_to[0]';
             }
@@ -1736,7 +1737,7 @@ class Transaksi extends BaseController
             $ditanggung = $this->request->getPost('ditanggung'); // Total pembayaran yang diambil
             $sisa_tanggungan = $total_pembayaran - $ditanggung; // Menghitung sisa tanggungan
 
-            if ($this->request->getPost('jaminan_hidden') != 'UMUM') {
+            if (!empty($jaminan) && $jaminan != 'UMUM') {
                 // Memeriksa apakah uang yang diterima sama dengan total pembayaran
                 if ($terima_uang < $sisa_tanggungan) {
                     return $this->response->setStatusCode(402)->setJSON(['success' => false, 'message' => 'Uang yang diterima kurang dari sisa pembayaran', 'errors' => NULL]);
@@ -1744,7 +1745,7 @@ class Transaksi extends BaseController
             }
             if ($this->request->getPost('metode_pembayaran') == 'QRIS/Transfer Bank') {
                 // Memeriksa apakah uang yang diterima sama dengan total pembayaran
-                if ($this->request->getPost('jaminan_hidden') != 'UMUM') {
+                if (!empty($jaminan) && $jaminan != 'UMUM') {
                     if ($terima_uang != $sisa_tanggungan) {
                         return $this->response->setStatusCode(402)->setJSON(['success' => false, 'message' => 'Uang yang diterima harus sama dengan sisa pembayaran pada metode QRIS/Transfer Bank', 'errors' => NULL]);
                     }
@@ -1755,7 +1756,7 @@ class Transaksi extends BaseController
                 }
             } else {
                 // Memeriksa apakah uang yang diterima kurang dari total pembayaran
-                if ($this->request->getPost('jaminan_hidden') != 'UMUM') {
+                if (!empty($jaminan) && $jaminan != 'UMUM') {
                     if ($terima_uang < $sisa_tanggungan) {
                         return $this->response->setStatusCode(402)->setJSON(['success' => false, 'message' => 'Uang yang diterima kurang dari sisa pembayaran', 'errors' => NULL]);
                     }
@@ -1767,7 +1768,7 @@ class Transaksi extends BaseController
             }
 
             // Menghitung uang kembali jika uang yang diterima lebih besar dari total pembayaran
-            if ($this->request->getPost('jaminan_hidden') != 'UMUM') {
+            if (!empty($jaminan) && $jaminan != 'UMUM') {
                 $uang_kembali = $terima_uang > $sisa_tanggungan ? $terima_uang - $sisa_tanggungan : 0;
             } else {
                 $uang_kembali = $terima_uang > $total_pembayaran ? $terima_uang - $total_pembayaran : 0;
