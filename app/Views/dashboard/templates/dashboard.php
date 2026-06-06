@@ -913,17 +913,15 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
                                                 </div>
                                             </a>
                                         </li>
-                                        <?php if (session()->get('role') != "Dokter" && session()->get('role') != "Perawat") : ?>
-                                            <li class="nav-item" style="margin-left: calc(24px + 0.5rem);">
-                                                <a class="nav-link px-2 py-1 <?= ($activeSegment === 'frmtolakmedis') ? 'active bg-success activeLinkSideBar' : '' ?>" href="<?= base_url('/frmtolakmedis'); ?>">
-                                                    <div class="d-flex align-items-start <?= ($activeSegment === 'frmtolakmedis') ? 'text-white' : 'link-body-emphasis' ?>">
-                                                        <div class="flex-fill fw-normal" style="font-size: 0.75em;">
-                                                            Penolakan Tindakan Medis
-                                                        </div>
+                                        <li class="nav-item" style="margin-left: calc(24px + 0.5rem);">
+                                            <a class="nav-link px-2 py-1 <?= ($activeSegment === 'frmtolakmedis') ? 'active bg-success activeLinkSideBar' : '' ?>" href="<?= base_url('/frmtolakmedis'); ?>">
+                                                <div class="d-flex align-items-start <?= ($activeSegment === 'frmtolakmedis') ? 'text-white' : 'link-body-emphasis' ?>">
+                                                    <div class="flex-fill fw-normal" style="font-size: 0.75em;">
+                                                        Penolakan Tindakan Medis
                                                     </div>
-                                                </a>
-                                            </li>
-                                        <?php endif; ?>
+                                                </div>
+                                            </a>
+                                        </li>
                                     </ul>
                                 </div>
                             <?php endif; ?>
