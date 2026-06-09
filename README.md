@@ -112,12 +112,16 @@ Untuk menyiapkan aplikasi PWA:
 
 Ada 4 peran pengguna yang digunakan pada aplikasi ini:
 
-1. **Admin**: digunakan untuk mengelola semua hal dalam aplikasi ini dengan akses eksklusif untuk mengelola pengguna dan sesinya serta membuat kata sandi transaksi untuk pembatalan transaksi.
+1. **Admin**: digunakan untuk mengelola semua hal dalam aplikasi ini dengan akses eksklusif untuk mengelola pengguna dan sesinya serta membuat kata sandi transaksi untuk pembatalan transaksi. Admin yang bukan pemilik tidak dapat mengubah, mengaktifkan, menonaktifkan, dan menghapus akun Admin yang berstatus pemilik.
 2. **Admisi**: digunakan untuk mengelola pasien dan mendaftarkan pasien untuk rawat jalan.
 3. **Apoteker**: digunakan untuk mengelola stok obat, resep eksternal, dan mencetak e-tiket serta dokumen resep dari resep dokter yang telah dikonfirmasi.
 4. **Dokter**: digunakan untuk memberikan diagnosis, tindakan, resep obat, dan resep kacamata yang diberikan kepada pasien, serta membuat surat perintah kamar operasi, laporan rawat jalan, dan laporan-laporan operasi.
 5. **Kasir**: digunakan untuk mengelola tindakan dan melakukan transaksi atas tindakan dan obat-obatan.
-6. **Perawat**: digunakan untuk memberikan asesmen, skrining, edukasi, dan pemeriksaan penunjang kepada pasien.
+6. **Manajer**: fungsinya sama seperti Admin, tetapi tidak dapat memonitor sesi yang sedang aktif.
+7. **Monitor Antrean**: digunakan untuk memonitor antrean pendaftaran.
+8. **Monitor Antrean Poliklinik**: digunakan untuk memonitor antrean poliklinik.
+9. **Perawat**: digunakan untuk memberikan asesmen, skrining, edukasi, dan pemeriksaan penunjang kepada pasien.
+10. **Satpam**: digunakan untuk mengoperasikan antrean pendaftaran.
 
 ## Perubahan Penting dengan index.php
 
@@ -171,177 +175,3 @@ Aplikasi ini digunakan untuk:
 © 2025 Klinik Mata Utama Padang Eye Center Teluk Kuantan
 
 Kode sumber aplikasi ini dilisensikan di bawah Lisensi MIT
-
-# Management Information System of Main Eye Clinic of Padang Eye Center Teluk Kuantan
-
-**Management Information System of Main Eye Clinic of Padang Eye Center Teluk Kuantan Application** is a system used to fulfill business processes at the Main Eye Clinic Padang Eye Center Teluk Kuantan. This system manages patients, outpatients, electronic medical records (under development), medicine stock, medicine prescriptions, and transactions. This application is based on [HWPweb Admin Template](https://github.com/hafizulwanandaputra/hwpweb-admin-template) which is also based on [CodeIgniter 4](https://github.com/codeigniter4/appstarter).
-
-## Installation
-
-1. Clone this repostiory.
-2. Navigate into cloned repository folder.
-3. Open terminal app and run `composer install --no-dev` and `npm install`.
-
-## Setup
-
-1. Copy `.env.example` to `.env` and tailor for this app, specifically the `requestURL` and the database settings.
-2. Create MySQL database that matches with database name specified in `.env` file.
-3. Use the `pectk-simklinik-no-data.sql.gz` file in this repository to import the tables into the database.
-4. Run `php spark db:seed User` and `php spark db:seed PwdTransaksi` to seed the database items.
-5. For use with PHP development server, run `php spark serve` to start the server. Usually [http://localhost:8080](http://localhost:8080). You can use different port by using `php spark serve --port 8081`. Replace `8081` with the desired port number. You need to modify `requestURL` in `.env` to match with the desired port number.
-6. For use without PHP development server such as Apache or Nginx, just open it from URL like [http://localhost/pectk-farmasi](http://localhost/pectk-farmasi) or others based on your web server's configuration. You need to modify `requestURL` in `.env` to match with the desired URL address.
-   > The base URL is based on PHP's `$_SERVER['SERVER_NAME']` value. You just need to change the `requestURL` which consists of the port and the subfolder (if the app is stored in a subfolder).
-7. To run a websocket, follow the instructions in the websocket section.
-8. Sign in using username `admin` and password `12345`. You need to change the password from `{your_base_url}/settings/changepassword` and we recommend using a strong password for better security.
-
-### Websocket and Puppeteer Cluster
-
-The websocket and Puppeteer Cluster URL configuration is located in `.env` with the values ​​`WS-URL-JS` for the frontend (example: `ws://localhost:8090`), `WS-URL-PHP` for the backend (example: `http://localhost:3000/notify`), and `PDF-URL` for Puppeteer Cluster (example: `http://localhost:3001/generate-pdf`).
-
-If you are running on a virtual private server (VPS) with SSL, use `wss://domainaddress.com/ws/` on `WS-URL-JS`, `https://domainaddress.com/notify/` on `WS-URL-PHP`, and `https://domainaddress.com/generate-pdf/` on `PDF-URL`. Make sure you create a virtual host or proxy server that matches the web server you are using.
-
-Example for nginx:
-
-```
-location /ws/ {
-   proxy_pass http://127.0.0.1:8090;
-   proxy_http_version 1.1;
-   proxy_set_header Upgrade $http_upgrade;
-   proxy_set_header Connection "upgrade";
-   proxy_set_header Host $host;
-   proxy_set_header X-Real-IP $remote_addr;
-   proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-   proxy_cache_bypass $http_upgrade;
-   proxy_redirect off;
-   proxy_read_timeout 3600;
-}
-
-location /generate-pdf/ {
-   proxy_pass http://127.0.0.1:3001/generate-pdf;
-   proxy_http_version 1.1;
-   proxy_set_header Connection "";
-   proxy_set_header Host $host;
-   proxy_set_header X-Real-IP $remote_addr;
-   proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-}
-
-location /notify/ {
-   proxy_pass http://127.0.0.1:3000/notify;
-   proxy_http_version 1.1;
-   proxy_set_header Connection "";
-   proxy_set_header Host $host;
-   proxy_set_header X-Real-IP $remote_addr;
-   proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-}
-```
-
-To make websocket and Puppeteer Cluster work properly (Linux as root):
-
-1. Allow the port to use websocket and Puppeteer Cluster with the following command:
-   ```
-   ufw allow 8090/tcp
-   ufw allow 3000/tcp
-   ufw allow 3001/tcp
-   ```
-2. Install `pm2` with the following command:
-   ```
-   npm insall -g pm2
-   ```
-3. Then, run websocket and Puppeteer Cluster and enable automatic startup when restarting the server with the following command:
-   ```
-   pm2 start /path/to/websocket.js --name ws-pectk-simklinik
-   pm2 start /path/to/puppeteer-pdf.js --name pdf-pectk-simklinik
-   pm2 save
-   pm2 startup
-   ```
-   After running `pm2 startup`, follow the instructions in the output.
-
-### Puppeteer Cluster for PDF export
-
-Export PDF documents on this system using [Puppeteer Cluster](https://github.com/thomasdondorf/puppeteer-cluster) which is a JavaScript library for Node.js that can be run concurrently. Make sure your server has Node.js and Chromium or Google Chrome web browser.
-
-## Progressive Web App (PWA) Setup
-
-The `manifest.json` file contains the application configuration for the PWA located in the `public` folder.
-
-PWA contents:
-
-- In `app/Views/auth/templates/login.php` and `app/Views/dashboard/templates/dashboard.php`, there's is a `<link rel="manifest" href="<?= base_url(); ?>/manifest.json">` tag to initiate `manifest.json`.
-
-- If the PWA located in subfolder, add the subfolder in the `start_url` and `src` values in `manifest.json`.
-
-To set up PWA application:
-
-1. Check or modify PWA configuration above based on your needs.
-2. Run `php spark serve` or `php spark serve --port 8081`. Replace `8081` with the desired port number.
-3. Open the browser's development tools to check manifest information.
-4. If the configuration meets the PWA requirement, you can install the PWA. You can launch it from applications menu or list. Don't forget to run `php spark serve` (or `php spark serve --port 8081` if you use different port) before launching an application.
-5. If not using `localhost` served using or not using `php spark serve` such as your server's domain or IP address, you must use HTTPS.
-
-> [!WARNING]
->
-> You will need to reinstall the PWA if the port or URL is changed. Make sure the port or URL used for the PWA does not conflict with another project.
-
-## User Roles
-
-There are 4 user roles used on this application:
-
-1. **Admin**: is used to manage everything of this application with exclusively access to manage users and its sessions and generating transaction password for transaction cancellation.
-2. **Admission**: used to manage patients and register patients for outpatient care.
-3. **Pharmacist**: is used to manage medicine stocks, external prescriptions, and printing e-ticket and prescription document from confirmed doctor prescriptions.
-4. **Doctor**: is used to provide diagnoses, procedures, medicine prescriptions, and eyeglass prescriptions given to patients, as well as to create surgery room orders, outpatient reports, and surgical reports.
-5. **Cashier**: is used to manage actions and making transaction of the actions and medicines.
-6. **Nurse**: is used to provide assessment, screening, education, and supporting checks to patients.
-
-## Important Change with index.php
-
-`index.php` is no longer in the root of the project! It has been moved inside the `public` folder, for better security and separation of components.
-
-This means that you should configure your web server to "point" to your project's `public` folder, and not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter `public/...`, as the rest of your logic and the framework are exposed.
-
-**Please** read the user guide for a better explanation of how CI4 works!
-
-## Repository Management
-
-Use GitHub Issues, in this main repository, to report any bugs, errors, and failures for this application.
-
-## Server Requirements
-
-### PHP
-
-PHP version 8.2 or higher is required, with the following extensions installed:
-
-- json
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
-- [fileinfo](https://php.net/manual/en/fileinfo.installation.php) and [zip](https://php.net/manual/en/zip.installation.php) for exportng excel files with images generated from [PHPSpreadsheet](https://github.com/PHPOffice/PhpSpreadsheet)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) for connecting MySQL database.
-
-> [!WARNING]
->
-> - The end of life date for PHP 8.2 will be December 31, 2026.
-> - The end of life date for PHP 8.3 will be December 31, 2027.
-> - The end of life date for PHP 8.4 will be December 31, 2028.
-
-### Node.js
-
-Node.js version 22 LTS or higher is required.
-
-> [!WARNING]
->
-> - The end of life date for Node.js 22 LTS was April 30, 2027.
-> - The end of life date for Node.js 24 was April 30, 2028.
-> - The end of life date for Node.js 26 was April 2029.
-> - LTS version of Node.js is recommended.
-
-## Legal Information
-
-This application is used for:
-
-> [**Main Eye Clinic of Padang Eye Center Teluk Kuantan**](https://maps.app.goo.gl/3HLW83B9RjRsH6GY6)
->
-> Jl. Rusdi S. Abrus No. 35, LK III Sinambek, Sungai Jering, Kuantan Tengah, Kuantan Singingi, Riau, Indonesia
-
-© 2025 Main Eye Clinic of Padang Eye Center Teluk Kuantan
-
-The source code of this application is licensed under MIT License

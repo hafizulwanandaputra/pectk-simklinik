@@ -372,7 +372,7 @@ class Admin extends BaseController
 
                 // Hapus user (tetap pakai model kamu)
                 $this->AuthModel
-                    ->where('is_owner', 1)
+                    ->where('is_owner', 0)
                     ->delete($id);
 
                 // Reset auto increment
