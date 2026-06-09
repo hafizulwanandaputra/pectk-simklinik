@@ -135,7 +135,7 @@ Gunakan _GitHub Issues_, di repositori utama ini, untuk melaporkan bug, kesalaha
 
 ### PHP
 
-Diperlukan PHP versi 8.1 atau yang lebih tinggi, dengan ekstensi berikut terpasang:
+Diperlukan PHP versi 8.2 atau yang lebih tinggi, dengan ekstensi berikut terpasang:
 
 - json
 - [intl](http://php.net/manual/en/intl.requirements.php)
@@ -145,21 +145,19 @@ Diperlukan PHP versi 8.1 atau yang lebih tinggi, dengan ekstensi berikut terpasa
 
 > [!WARNING]
 >
-> - Tanggal akhir masa pakai PHP 8.1 adalah 31 Desember 2025.
 > - Tanggal akhir masa pakai PHP 8.2 adalah 31 Desember 2026.
 > - Tanggal akhir masa pakai PHP 8.3 adalah 31 Desember 2027.
 > - Tanggal akhir masa pakai PHP 8.4 adalah 31 Desember 2028.
 
 ### Node.js
 
-Node.js versi 18 LTS atau yang lebih tinggi diperlukan.
+Node.js versi 22 LTS atau yang lebih tinggi diperlukan.
 
 > [!WARNING]
 >
-> - Tanggal akhir masa pakai Node.js 18 LTS adalah 30 April 2025.
-> - Tanggal akhir masa pakai Node.js 20 LTS adalah 30 April 2026.
 > - Tanggal akhir masa pakai Node.js 22 LTS adalah 30 April 2027.
-> - Tanggal akhir masa pakai Node.js 23 adalah 1 Juni 2025.
+> - Tanggal akhir masa pakai Node.js 24 LTS adalah 30 April 2028.
+> - Tanggal akhir masa pakai Node.js 26 LTS adalah April 2029.
 > - Node.js versi LTS direkomendasikan.
 
 ## Informasi Hukum
@@ -311,7 +309,7 @@ Use GitHub Issues, in this main repository, to report any bugs, errors, and fail
 
 ### PHP
 
-PHP version 8.1 or higher is required, with the following extensions installed:
+PHP version 8.2 or higher is required, with the following extensions installed:
 
 - json
 - [intl](http://php.net/manual/en/intl.requirements.php)
@@ -321,21 +319,19 @@ PHP version 8.1 or higher is required, with the following extensions installed:
 
 > [!WARNING]
 >
-> - The end of life date for PHP 8.1 will be December 31, 2025.
 > - The end of life date for PHP 8.2 will be December 31, 2026.
 > - The end of life date for PHP 8.3 will be December 31, 2027.
 > - The end of life date for PHP 8.4 will be December 31, 2028.
 
 ### Node.js
 
-Node.js version 18 LTS or higher is required.
+Node.js version 22 LTS or higher is required.
 
 > [!WARNING]
 >
-> - The end of life date for Node.js 18 LTS was April 30, 2025.
-> - The end of life date for Node.js 20 LTS was April 30, 2026.
 > - The end of life date for Node.js 22 LTS was April 30, 2027.
-> - The end of life date for Node.js 23 was June 1, 2025.
+> - The end of life date for Node.js 24 was April 30, 2028.
+> - The end of life date for Node.js 26 was April 2029.
 > - LTS version of Node.js is recommended.
 
 ## Legal Information
