@@ -747,11 +747,19 @@
                     }
                 });
             } finally {
-                $('#loadingSpinner').hide(); // Menyembunyikan spinner setelah unduhan selesai
-                $(this).show();
-                $('#searchInput, #addButton, #tanggalFilter, #clearTglButton').prop('disabled', false);
+                $('#loadingSpinner').hide();
+                $('#exportButton').show();
+
+                $('#searchInput, #addButton, #clearTglButton').prop('disabled', false);
+
+                const fp = $('#tanggalFilter')[0]?._flatpickr;
+
                 if (fp) {
-                    // Aktifkan kembali altInput (untuk desktop)
+                    // aktifkan input asli
+                    fp._input.disabled = false;
+                    fp._input.removeAttribute('readonly');
+
+                    // aktifkan altInput
                     if (fp.altInput) {
                         fp.altInput.disabled = false;
                         fp.altInput.removeAttribute('readonly');
@@ -759,7 +767,7 @@
                         fp.altInput.style.touchAction = '';
                     }
 
-                    // Aktifkan kembali mobile input (untuk perangkat mobile)
+                    // aktifkan mobile input
                     const mobileInput = fp._input.parentElement.querySelector('.flatpickr-mobile');
                     if (mobileInput) {
                         mobileInput.disabled = false;
@@ -768,9 +776,10 @@
                         mobileInput.style.touchAction = '';
                     }
 
-                    // Izinkan datepicker dibuka kembali
                     fp.set('clickOpens', true);
                 }
+
+                $('#tanggalFilter').prop('disabled', false);
             }
         });
 
