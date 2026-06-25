@@ -101,37 +101,57 @@ class Rujukan extends BaseController
     public function pasienlist()
     {
         if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Admisi' || session()->get('role') == 'Manajer') {
-            $data = $this->RawatJalanModel
-                ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
-                ->like('tanggal_registrasi', date('Y-m-d'))
-                ->where('status', 'DAFTAR')
-                ->orderBy('rawat_jalan.id_rawat_jalan', 'DESC')
-                ->findAll();
+            // Mendapatkan parameter pencarian dari permintaan GET
+            $search = $this->request->getGet('search');
+            $offset = (int) $this->request->getGet('offset') ?? 0; // Default 0 jika tidak ada
+            $limit = (int) $this->request->getGet('limit') ?? 50; // Default 50 jika tidak ada
 
-            // Mengambil nomor_registrasi yang sudah terpakai di rawat_jalan
-            $db = \Config\Database::connect();
-            $usedNoRegInit = $db->table('medrec_rujukan')->select('nomor_registrasi')->get()->getResultArray();
-            $usedNoReg = array_column($usedNoRegInit, 'nomor_registrasi');
-
-            $options = [];
-            // Menyusun opsi dari data rawat jalan yang diterima
-            foreach ($data as $row) {
-                // Memeriksa apakah nomor_registrasi ada dalam daftar nomor_registrasi yang terpakai
-                if (in_array($row['nomor_registrasi'], $usedNoReg)) {
-                    continue; // Lewati rawat jalan yang sudah terpakai
-                }
-
-                // Menambahkan opsi ke dalam array
-                $options[] = [
-                    'value' => $row['nomor_registrasi'], // Nilai untuk opsi
-                    'text' => $row['nama_pasien'] . ' (' . $row['nomor_registrasi'] . ' - ' . $row['no_rm'] . ' - ' . $row['tanggal_lahir'] . ')' // Teks untuk opsi
-                ];
+            // Jika parameter pencarian kosong, kembalikan data kosong
+            if (empty($search)) {
+                return $this->response->setJSON([
+                    'status' => 'success',
+                    'data' => [] // Data kosong
+                ]);
             }
 
-            // Mengembalikan data rawat jalan dalam format JSON
+            $db = db_connect();
+            $builder = $db->table('rawat_jalan');
+            $builder->select([
+                'rawat_jalan.nomor_registrasi',
+                'pasien.nama_pasien',
+                'rawat_jalan.tanggal_registrasi',
+                'pasien.no_rm',
+                'pasien.tanggal_lahir'
+            ]);
+            $builder->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner');
+
+            // LEFT JOIN ke medrec_rujukan
+            $builder->join('medrec_rujukan', 'rawat_jalan.nomor_registrasi = medrec_rujukan.nomor_registrasi', 'left');
+
+            // Hanya ambil data yang belum ada di medrec_rujukan
+            $builder->where('medrec_rujukan.nomor_registrasi IS NULL');
+
+            // Tambahkan filter pencarian
+            $builder->groupStart()
+                ->like('pasien.nama_pasien', $search)
+                ->orLike('rawat_jalan.tanggal_registrasi', $search)
+                ->orLike('pasien.no_rm', $search)
+                ->orLike('pasien.tanggal_lahir', $search)
+                ->groupEnd();
+
+            // Filter status DAFTAR
+            $builder->where('rawat_jalan.status', 'DAFTAR');
+
+            // Sorting dan limit
+            $builder->orderBy('rawat_jalan.id_rawat_jalan', 'DESC')
+                ->limit($limit, $offset);
+
+            $result = $builder->get()->getResultArray();
+
+            // Mengembalikan data dalam format JSON
             return $this->response->setJSON([
-                'success' => true, // Indikator sukses
-                'data' => $options, // Data opsi
+                'status' => 'success',
+                'data' => $result
             ]);
         } else {
             return $this->response->setStatusCode(404)->setJSON([
@@ -159,30 +179,28 @@ class Rujukan extends BaseController
             // Mengambil nomor registrasi dari permintaan POST
             $nomorRegistrasi = $this->request->getPost('nomor_registrasi');
 
-            $data = $this->RawatJalanModel
-                ->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner')
-                ->like('tanggal_registrasi', date('Y-m-d'))
-                ->where('status', 'DAFTAR')
-                ->findAll();
+            // Ambil data rawat_jalan yang belum ada di medrec_rujukan
+            $builder = $db->table('rawat_jalan');
+            $builder->select('rawat_jalan.nomor_registrasi, rawat_jalan.no_rm');
+            $builder->join('pasien', 'rawat_jalan.no_rm = pasien.no_rm', 'inner');
+            $builder->join('medrec_rujukan', 'rawat_jalan.nomor_registrasi = medrec_rujukan.nomor_registrasi', 'left');
+            $builder->where('rawat_jalan.nomor_registrasi', $nomorRegistrasi);
+            $builder->where('rawat_jalan.status', 'DAFTAR');
+            $builder->where('medrec_rujukan.nomor_registrasi IS NULL');
+            $patient = $builder->get()->getRowArray();
 
-            // Memeriksa apakah data mengandung nomor registrasi yang diminta
-            $RujukanData = null;
-            foreach ($data as $patient) {
-                if ($patient['nomor_registrasi'] == $nomorRegistrasi) {
-                    $RujukanData = $patient; // Menyimpan data pasien jika ditemukan
-                    break;
-                }
-            }
-
-            // Jika data pasien tidak ditemukan
-            if (!$RujukanData) {
-                return $this->response->setJSON(['success' => false, 'message' => 'Data rawat jalan tidak ditemukan', 'errors' => NULL]);
+            if (!$patient) {
+                return $this->response->setStatusCode(422)->setJSON([
+                    'success' => false,
+                    'message' => 'Data rawat jalan tidak ditemukan atau sudah pernah dibuat sebelumnya',
+                    'errors' => null
+                ]);
             }
 
             // Menyimpan data transaksi
             $data = [
                 'nomor_registrasi' => $nomorRegistrasi, // Nomor registrasi
-                'no_rm' => $RujukanData['no_rm'], // Nomor rekam medis
+                'no_rm' => $patient['no_rm'], // Nomor rekam medis
                 'waktu_dibuat' => date('Y-m-d H:i:s'),
             ];
             $db->table('medrec_rujukan')->insert($data);
@@ -378,9 +396,6 @@ class Rujukan extends BaseController
                 ->join('rawat_jalan', 'rawat_jalan.nomor_registrasi = medrec_rujukan.nomor_registrasi', 'inner')
                 ->join('pasien', 'pasien.no_rm = rawat_jalan.no_rm', 'inner')
                 ->find($id);
-            if (date('Y-m-d', strtotime($rujukan['tanggal_registrasi'])) != date('Y-m-d')) {
-                return $this->response->setStatusCode(422)->setJSON(['success' => false, 'message' => 'Surat rujukan yang bukan hari ini tidak dapat dihapus']);
-            }
             if ($rujukan) {
                 $db = db_connect();
 
