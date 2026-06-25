@@ -218,10 +218,10 @@
     <?= $this->include('spinner/spinner-css'); ?>
 </head>
 
-<body class="d-flex h-100 text-center bg-success-subtle user-select-none">
+<body class="d-flex h-100 text-center bg-success-subtle pb-0 user-select-none">
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
         <header class="mb-auto">
-            <div>
+            <div clas="mb-3">
                 <nav class="nav justify-content-center">
                     <div class="dropdown">
                         <a class="nav-link py-1 dropdown-toggle" id="bd-theme" role="button" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static" aria-label="Toggle theme (auto)" style="padding-right: var(--bs-navbar-nav-link-padding-x); padding-left: var(--bs-navbar-nav-link-padding-x);">
