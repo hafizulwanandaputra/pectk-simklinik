@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="id">
+<html lang="id" class="h-100">
 
 <head>
     <meta charset="utf-8">
@@ -11,7 +11,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <link href="<?= base_url(); ?>favicon.png" rel="icon" />
     <link href="<?= base_url(); ?>favicon.png" rel="apple-touch-icon" />
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/heroes/">
+    <link href="https://getbootstrap.com/docs/5.3/examples/cover/cover.css" rel="stylesheet">
     <?= $this->include('main-css/index'); ?>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -209,67 +209,25 @@
             fill: currentcolor;
         }
     </style>
+    <style>
+        body {
+            text-shadow: none;
+            box-shadow: none;
+        }
+    </style>
     <?= $this->include('spinner/spinner-css'); ?>
 </head>
 
-<body class="bg-success-subtle d-flex flex-column h-100 user-select-none">
-    <div class="my-auto">
-        <div class="no-fluid-content px-3 py-3 px-md-5">
-            <div class="row align-items-center">
-                <div class="col-md-6 col-lg-7 text-start align-self-start">
-                    <img class="mb-3" src="<?= base_url('/assets/images/logo_pec.png'); ?>" width="128px">
-                    <h1 class="display-6 fw-bold lh-1 text-body-emphasis mb-3">SIM Klinik<br>PEC Teluk Kuantan</h1>
-                    <p class="fs-6 text-body-emphasis"><?= $systemName ?><br><small class="fw-bold"><em><?= $systemSubtitleName ?></em></small></p>
-                </div>
-                <div class="col-md">
-                    <?= form_open('check-login', 'id="loginForm"'); ?>
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control form-control-sm <?= (validation_show_error('username')) ? 'is-invalid' : ''; ?> rounded-4" id="floatingInput" name="username" placeholder="Nama Pengguna" value="" autocomplete="off" list="username">
-                        <datalist id="username">
-                            <?php foreach ($users as $user) : ?>
-                                <option value="<?= $user['username'] ?>">
-                                <?php endforeach; ?>
-                        </datalist>
-                        <label for="floatingInput">
-                            <div class="d-flex align-items-start">
-                                <div style="width: 12px; text-align: center;">
-                                    <i class="fa-solid fa-user"></i>
-                                </div>
-                                <div class="w-100 ms-3">
-                                    Nama Pengguna
-                                </div>
-                            </div>
-                        </label>
-                    </div>
-                    <div class="d-flex flex-column flex-md-row column-gap-3">
-                        <div class="flex-fill form-floating mb-3 mb-md-0">
-                            <input type="password" class="form-control form-control-sm <?= (validation_show_error('password')) ? 'is-invalid' : ''; ?> rounded-4" id="floatingPassword" name="password" placeholder="Kata Sandi" autocomplete="off" data-bs-toggle="popover"
-                                data-bs-placement="top"
-                                data-bs-trigger="manual"
-                                data-bs-title="<em>CAPS LOCK</em> AKTIF"
-                                data-bs-content="Harap periksa status <span class='badge text-bg-dark bg-gradient kbd'>Caps Lock</span> pada papan tombol (<em>keyboard</em>) Anda.">
-                            <label for="floatingPassword">
-                                <div class="d-flex align-items-start">
-                                    <div style="width: 12px; text-align: center;">
-                                        <i class="fa-solid fa-key"></i>
-                                    </div>
-                                    <div class="w-100 ms-3">
-                                        Kata Sandi
-                                    </div>
-                                </div>
-                            </label>
-                        </div>
-                        <div class="d-grid w-auto">
-                            <button id="loginBtn" class="w-100 btn btn-primary bg-gradient btn-lg rounded-4" type="submit">
-                                <i class="fa-solid fa-right-to-bracket"></i> <span class="d-md-none">MASUK</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="dropdown d-grid mt-3">
-                        <button class="btn btn-outline-success bg-gradient btn-sm rounded-4 dropdown-toggle" id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static" aria-label="Toggle theme (auto)">
-                            <i class="fa-solid fa-palette"></i> Atur Tema
-                        </button>
-                        <ul class="dropdown-menu shadow-sm w-100 bg-body-tertiary transparent-blur" aria-labelledby="bd-theme-text">
+<body class="d-flex h-100 text-center bg-success-subtle user-select-none">
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        <header class="mb-auto">
+            <div>
+                <nav class="nav justify-content-center">
+                    <div class="dropdown">
+                        <a class="nav-link py-1 dropdown-toggle" id="bd-theme" role="button" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static" aria-label="Toggle theme (auto)" style="padding-right: var(--bs-navbar-nav-link-padding-x); padding-left: var(--bs-navbar-nav-link-padding-x);">
+                            <i class="fa-solid fa-palette"></i> Tema
+                        </a>
+                        <ul class="dropdown-menu shadow-sm dropdown-menu-end dropdown-menu-lg-start bg-body-tertiary transparent-blur" aria-labelledby="bd-theme-text">
                             <li>
                                 <button type="button" class="dropdown-item" data-bs-theme-value="light" aria-pressed="false">
                                     Terang
@@ -287,15 +245,62 @@
                             </li>
                         </ul>
                     </div>
-                    <input type="hidden" name="url" value="<?= (isset($_GET['redirect'])) ? base_url('/' . urldecode($_GET['redirect'])) : base_url('/home'); ?>">
-                    <hr class="border-success-subtle opacity-100">
-                    <div class="text-start text-body-emphasis" style="font-size: 0.75em;">
-                        <span class="">&copy; 2025 <?= (date('Y') !== "2025") ? "- " . date('Y') : ''; ?> <?= $companyName ?></span>
-                    </div>
-                    <?= form_close(); ?>
-                </div>
+                </nav>
             </div>
-        </div>
+        </header>
+        <main class="px-3">
+            <div class="align-items-center">
+                <img class="mb-3" src="<?= base_url('/assets/images/logo_pec.png'); ?>" width="128px">
+            </div>
+            <h1><?= $systemName; ?></h1>
+            <p class="lead">Silakan masuk dengan akun yang aktif dan terdaftar di sistem ini!</p>
+            <?= form_open('check-login', 'id="loginForm"'); ?>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control form-control-sm <?= (validation_show_error('username')) ? 'is-invalid' : ''; ?> rounded-4" id="floatingInput" name="username" placeholder="Nama Pengguna" value="" autocomplete="off" list="username">
+                <datalist id="username">
+                    <?php foreach ($users as $user) : ?>
+                        <option value="<?= $user['username'] ?>">
+                        <?php endforeach; ?>
+                </datalist>
+                <label for="floatingInput">
+                    <div class="d-flex align-items-start">
+                        <div style="width: 12px; text-align: center;">
+                            <i class="fa-solid fa-user"></i>
+                        </div>
+                        <div class="w-100 ms-3">
+                            Nama Pengguna
+                        </div>
+                    </div>
+                </label>
+            </div>
+            <div class="form-floating mb-3">
+                <input type="password" class="form-control form-control-sm <?= (validation_show_error('password')) ? 'is-invalid' : ''; ?> rounded-4" id="floatingPassword" name="password" placeholder="Kata Sandi" autocomplete="off" data-bs-toggle="popover"
+                    data-bs-placement="top"
+                    data-bs-trigger="manual"
+                    data-bs-title="<em>CAPS LOCK</em> AKTIF"
+                    data-bs-content="Harap periksa status <span class='badge text-bg-dark bg-gradient kbd'>Caps Lock</span> pada papan tombol (<em>keyboard</em>) Anda.">
+                <label for="floatingPassword">
+                    <div class="d-flex align-items-start">
+                        <div style="width: 12px; text-align: center;">
+                            <i class="fa-solid fa-key"></i>
+                        </div>
+                        <div class="w-100 ms-3">
+                            Kata Sandi
+                        </div>
+                    </div>
+                </label>
+            </div>
+            <button id="loginBtn" class="w-100 btn btn-primary bg-gradient btn-lg rounded-4" type="submit">
+                <i class="fa-solid fa-right-to-bracket"></i> MASUK
+            </button>
+            <input type="hidden" name="url" value="<?= (isset($_GET['redirect'])) ? base_url('/' . urldecode($_GET['redirect'])) : base_url('/home'); ?>">
+            <?= form_close(); ?>
+        </main>
+        <footer class="mt-auto">
+            <div class="no-fluid-content mt-3" style="font-size: 0.75em;" id="footer">
+                <span class="">&copy; 2025 <?= (date('Y') !== "2025") ? "- " . date('Y') : ''; ?> <?= $companyName ?></span>
+            </div>
+        </footer>
     </div>
 
     <div class="toast-container position-fixed top-0 start-50 translate-middle-x p-3">
@@ -457,7 +462,7 @@
                 $('input').prop('disabled', true).removeClass('is-invalid'); // Menonaktifkan semua input dan menghapus kelas 'is-invalid'
                 $('#loginForm button').prop('disabled', true)
                 $('#loginBtn').html(`
-                    <?= $this->include('spinner/spinner'); ?> <span class="d-md-none">SILAKAN TUNGGU</span>
+                    <?= $this->include('spinner/spinner'); ?> SILAKAN TUNGGU
                 `); // Menampilkan spinner dan teks 'SILAKAN TUNGGU...' pada tombol login
             });
         });
