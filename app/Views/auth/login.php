@@ -193,7 +193,7 @@ $isApple = in_array($platform, [
         textarea,
         button {
             font-variant-numeric: proportional-nums;
-            font-feature-settings: "calt" off, "ss07" on, "ss08" on, "cv05" on, "cv10" on;
+            font-feature-settings: "calt" off, "cv05" on;
         }
 
         input[type="number"],
@@ -203,12 +203,12 @@ $isApple = in_array($platform, [
         input[type="month"],
         input[type="week"] {
             font-variant-numeric: tabular-nums;
-            font-feature-settings: "calt" off, "ss07" on, "ss08" on, "cv05" on, "cv10" on;
+            font-feature-settings: "cv05" on;
         }
 
         .date {
             font-variant-numeric: tabular-nums;
-            font-feature-settings: "calt" off, "ss07" on, "ss08" on, "cv05" on, "cv10" on;
+            font-feature-settings: "cv05" on;
         }
 
         <?php endif; ?>input[type="password"] {
