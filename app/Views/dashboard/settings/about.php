@@ -6,7 +6,7 @@ $browserIcon = '';
 
 if (stripos($platform, 'Windows') !== false) {
     $iconClass = '<i class="fa-brands fa-microsoft"></i>';
-} elseif (stripos($platform, 'Mac') !== false || stripos($platform, 'macOS') !== false || stripos($platform, 'iOS') !== false || stripos($platform, 'iPadOS') !== false) {
+} elseif (stripos($platform, 'PowerPC Mac OS') !== false || stripos($platform, 'macOS') !== false || stripos($platform, 'iOS') !== false || stripos($platform, 'iPadOS') !== false) {
     $iconClass = '<i class="fa-brands fa-apple"></i>';
 } elseif (stripos($platform, 'Linux') !== false) {
     $iconClass = '<i class="fa-brands fa-linux"></i>';

@@ -1,6 +1,12 @@
 <?php
 $uri = service('uri'); // Load the URI service
 $activeSegment = $uri->getSegment(1); // Get the first segment
+$platform = $agent->getPlatform();
+$isApple = in_array($platform, [
+    'macOS',
+    'iOS',
+    'iPadOS'
+], true);
 ?>
 <!doctype html>
 <html lang="id">
@@ -214,7 +220,40 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
             user-select: text;
         }
 
-        :root {
+        <?php if ($isApple) : ?>:root {
+            --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+            --gold: #ffe680;
+            /* Emas lebih terang */
+            --silver: #bfbfbf;
+            /* Perak lebih terang */
+            --bronze: #e7bd98;
+            /* Perunggu lebih terang */
+        }
+
+        html,
+        body,
+        input,
+        select,
+        textarea,
+        button {
+            font-variant-numeric: proportional-nums;
+        }
+
+        input[type="number"],
+        input[type="date"],
+        input[type="datetime-local"],
+        input[type="time"],
+        input[type="month"],
+        input[type="week"] {
+            font-variant-numeric: tabular-nums;
+        }
+
+        .date {
+            font-variant-numeric: tabular-nums;
+        }
+
+        <?php else : ?> :root {
             --bs-font-sans-serif: "Inter", "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
             --bs-font-monospace: "HWP Sans Mono Web", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
             --gold: #ffe680;
@@ -229,6 +268,35 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
             :root {
                 --bs-font-sans-serif: "InterVariable", "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
             }
+        }
+
+        html,
+        body,
+        input,
+        select,
+        textarea,
+        button {
+            font-variant-numeric: proportional-nums;
+            font-feature-settings: "calt" off, "ss07" on, "ss08" on, "cv05" on, "cv10" on;
+        }
+
+        input[type="number"],
+        input[type="date"],
+        input[type="datetime-local"],
+        input[type="time"],
+        input[type="month"],
+        input[type="week"] {
+            font-variant-numeric: tabular-nums;
+            font-feature-settings: "calt" off, "ss07" on, "ss08" on, "cv05" on, "cv10" on;
+        }
+
+        .date {
+            font-variant-numeric: tabular-nums;
+            font-feature-settings: "calt" off, "ss07" on, "ss08" on, "cv05" on, "cv10" on;
+        }
+
+        <?php endif; ?>input[type="password"] {
+            font-family: var(--bs-font-monospace);
         }
 
         /* Warna untuk tema gelap */
@@ -255,35 +323,6 @@ $activeSegment = $uri->getSegment(1); // Get the first segment
         .bg-bronze {
             background-color: var(--bronze) !important;
             color: var(--bs-body-color);
-        }
-
-        html,
-        body,
-        input,
-        select,
-        textarea,
-        button {
-            font-variant-numeric: proportional-nums;
-            font-feature-settings: "calt" off, "ss07" on, "ss08" on, "cv05" on, "cv10" on;
-        }
-
-        input[type="number"],
-        input[type="date"],
-        input[type="datetime-local"],
-        input[type="time"],
-        input[type="month"],
-        input[type="week"] {
-            font-variant-numeric: tabular-nums;
-            font-feature-settings: "calt" off, "ss07" on, "ss08" on, "cv05" on, "cv10" on;
-        }
-
-        input[type="password"] {
-            font-family: var(--bs-font-monospace);
-        }
-
-        .date {
-            font-variant-numeric: tabular-nums;
-            font-feature-settings: "calt" off, "ss07" on, "ss08" on, "cv05" on, "cv10" on;
         }
 
         html,
