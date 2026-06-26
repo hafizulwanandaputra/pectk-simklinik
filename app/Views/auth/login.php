@@ -1,6 +1,5 @@
 <?php
 $platform = $agent->getPlatform();
-
 $isApple = in_array($platform, [
     'macOS',
     'iOS',
@@ -149,7 +148,34 @@ $isApple = in_array($platform, [
         })();
     </script>
     <style>
-        <?php if ($isApple) : ?> :root {
+        <?php if ($isApple) : ?>:root {
+            --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+        }
+
+        html,
+        body,
+        input,
+        select,
+        textarea,
+        button {
+            font-variant-numeric: proportional-nums;
+        }
+
+        input[type="number"],
+        input[type="date"],
+        input[type="datetime-local"],
+        input[type="time"],
+        input[type="month"],
+        input[type="week"] {
+            font-variant-numeric: tabular-nums;
+        }
+
+        .date {
+            font-variant-numeric: tabular-nums;
+        }
+
+        <?php else : ?> :root {
             --bs-font-sans-serif: "Inter", "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
             --bs-font-monospace: "HWP Sans Mono Web", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
         }
@@ -183,33 +209,6 @@ $isApple = in_array($platform, [
         .date {
             font-variant-numeric: tabular-nums;
             font-feature-settings: "calt" off, "ss07" on, "ss08" on, "cv05" on, "cv10" on;
-        }
-
-        <?php else : ?> :root {
-            --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-            --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-        }
-
-        html,
-        body,
-        input,
-        select,
-        textarea,
-        button {
-            font-variant-numeric: proportional-nums;
-        }
-
-        input[type="number"],
-        input[type="date"],
-        input[type="datetime-local"],
-        input[type="time"],
-        input[type="month"],
-        input[type="week"] {
-            font-variant-numeric: tabular-nums;
-        }
-
-        .date {
-            font-variant-numeric: tabular-nums;
         }
 
         <?php endif; ?>input[type="password"] {
