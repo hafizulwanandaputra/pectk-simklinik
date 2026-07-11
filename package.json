@@ -5,5 +5,8 @@
     "puppeteer": "^24.15.0",
     "puppeteer-cluster": "^0.24.0",
     "ws": "^8.18.1"
+  },
+  "allowScripts": {
+    "puppeteer@24.43.1": true
   }
 }
