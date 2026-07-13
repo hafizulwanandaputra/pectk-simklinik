@@ -144,24 +144,29 @@ class BatchObat extends BaseController
             $options = [];
             // Menyiapkan opsi untuk ditampilkan
             foreach ($results as $row) {
-                $ppn = (float) $row['ppn']; // Mengambil nilai PPN
-                $mark_up = (float) $row['mark_up']; // Mengambil nilai mark-up
-                $harga_obat = (float) $row['harga_obat']; // Mengambil harga obat
-                $penyesuaian_harga = (float) $row['penyesuaian_harga']; // Mengambil penyesuaian harga
+                $ppn = (float) $row['ppn'];
+                $mark_up = (float) $row['mark_up'];
+                $diskon = (float) $row['diskon']; // Tambahkan jika field tersedia
+                $harga_obat = (float) $row['harga_obat'];
+                $penyesuaian_harga = (float) $row['penyesuaian_harga'];
 
-                // 1. Hitung PPN
-                $jumlah_ppn = ($harga_obat * $ppn) / 100;
-                $total_harga_ppn = $harga_obat + $jumlah_ppn;
+                // 1. Harga setelah PPN
+                $harga_setelah_ppn = $harga_obat + ($harga_obat * $ppn / 100);
 
                 // 2. Terapkan mark-up
-                $jumlah_mark_up = ($total_harga_ppn * $mark_up) / 100;
-                $total_harga = $total_harga_ppn + $jumlah_mark_up;
+                $harga_setelah_markup = $harga_setelah_ppn + ($harga_setelah_ppn * $mark_up / 100);
 
-                // 3. Bulatkan harga ke ratusan terdekat ke atas dan tambahkan penyesuaian
-                $harga_bulat = ceil($total_harga / 100) * 100 + $penyesuaian_harga;
+                // 3. Terapkan diskon sebelum pembulatan
+                $harga_setelah_diskon = $harga_setelah_markup * (1 - ($diskon / 100));
 
-                // 4. Format harga dengan pemisah ribuan
-                $harga_obat_terformat = number_format($harga_bulat, 0, ',', '.');
+                // 4. Bulatkan ke ratusan atas
+                $harga_bulat = ceil($harga_setelah_diskon / 100) * 100;
+
+                // 5. Tambahkan penyesuaian harga
+                $harga_final = $harga_bulat + $penyesuaian_harga;
+
+                // 6. Format harga
+                $harga_obat_terformat = number_format($harga_final, 0, ',', '.');
 
                 $detail = [];
 

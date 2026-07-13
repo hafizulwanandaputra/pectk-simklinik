@@ -178,7 +178,7 @@
                     </div>
                     <div class="input-group has-validation mb-1 mt-1">
                         <div class="form-floating">
-                            <input type="number" class="form-control " autocomplete="off" dir="auto" placeholder="ppn" id="ppn" name="ppn">
+                            <input type="number" class="form-control " autocomplete="off" dir="auto" placeholder="ppn" id="ppn" name="ppn" step="0.1">
                             <label for="ppn">PPN<span class="text-danger">*</span></label>
                         </div>
                         <span class="input-group-text">%</span>
@@ -186,7 +186,7 @@
                     </div>
                     <div class="input-group has-validation mb-1 mt-1">
                         <div class="form-floating">
-                            <input type="number" class="form-control " autocomplete="off" dir="auto" placeholder="mark_up" id="mark_up" name="mark_up">
+                            <input type="number" class="form-control " autocomplete="off" dir="auto" placeholder="mark_up" id="mark_up" name="mark_up" step="0.1">
                             <label for="mark_up">Mark Up<span class="text-danger">*</span></label>
                         </div>
                         <span class="input-group-text">%</span>
@@ -194,7 +194,7 @@
                     </div>
                     <div class="input-group has-validation mb-1 mt-1">
                         <div class="form-floating">
-                            <input type="number" class="form-control " autocomplete="off" dir="auto" placeholder="diskon" id="diskon" name="diskon">
+                            <input type="number" class="form-control " autocomplete="off" dir="auto" placeholder="diskon" id="diskon" name="diskon" step="0.1">
                             <label for="mark_up">Diskon<span class="text-danger">*</span></label>
                         </div>
                         <span class="input-group-text">%</span>
