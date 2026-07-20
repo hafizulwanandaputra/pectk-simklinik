@@ -95,7 +95,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                                 <a class="nav-link py-1 <?= ($activeSegment === $list['id_sp_operasi']) ? 'active activeLink' : '' ?>" href="<?= base_url('operasi/spko/' . $list['id_sp_operasi']); ?>">
                                     <div class="text-center">
                                         <div class="text-nowrap lh-sm"><?= $list['nomor_registrasi']; ?></div>
-                                        <div class="text-nowrap lh-sm" style="font-size: 0.75em;"><?= $list['nomor_booking'] ?></div>
+                                        <div class="text-nowrap lh-sm date" style="font-size: 0.75em;"><?= $list['nomor_booking'] ?></div>
                                     </div>
                                 </a>
                             <?php endforeach; ?>
