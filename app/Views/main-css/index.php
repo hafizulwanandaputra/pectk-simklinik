@@ -516,13 +516,13 @@
     @media (prefers-reduced-transparency: no-preference) {
         .transparent-blur {
             --bs-bg-opacity: 0.75;
-            -webkit-backdrop-filter: blur(10px);
-            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(4px);
+            backdrop-filter: blur(4px);
         }
 
         .filter-bg {
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
 
             background: rgba(var(--bs-secondary-bg-rgb), 0.75);
 
