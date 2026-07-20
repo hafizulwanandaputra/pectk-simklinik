@@ -526,8 +526,8 @@
 
             background: rgba(var(--bs-secondary-bg-rgb), 0.75);
 
-            -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 1rem), transparent);
-            mask-image: linear-gradient(to bottom, #000 calc(100% - 1rem), transparent);
+            -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 2rem), transparent);
+            mask-image: linear-gradient(to bottom, #000 calc(100% - 2rem), transparent);
 
             border-bottom: none;
         }
