@@ -193,7 +193,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             :
                         </td>
                         <td style="width: 50%; vertical-align: top; padding-left: 0.25cm; padding-right: 0.25cm;">
-                            <?= $penunjang['lokasi_pemeriksaan'] ?>
+                            <?= ($penunjang['lokasi_pemeriksaan'] == 'N') ? '<em>Tidak ada</em>' : $penunjang['lokasi_pemeriksaan']; ?>
                         </td>
                     </tr>
                 </tbody>

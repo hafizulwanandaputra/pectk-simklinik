@@ -217,6 +217,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                             <option value="OD">OD</option>
                             <option value="OS">OS</option>
                             <option value="ODS">ODS</option>
+                            <option value="N">Tidak ada</option>
                         </select>
                         <label for="lokasi_pemeriksaan">Lokasi Pemeriksaan<span class="text-danger">*</span></label>
                         <div class="invalid-feedback"></div>
