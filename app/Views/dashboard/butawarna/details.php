@@ -79,23 +79,26 @@ $seven_days_ago = date('Y-m-d', strtotime('-6 days'));
 <?= $this->endSection(); ?>
 <?= $this->section('content'); ?>
 <main class="main-content-inside">
-    <div class="sticky-top px-2 pt-2" style="z-index: 99;">
-        <ul class="list-group no-fluid-content-list-group shadow-sm border border-bottom-0">
-            <li class="list-group-item px-2 border-top-0 border-end-0 border-start-0 bg-body-secondary transparent-blur">
-                <div class="no-fluid-content">
-                    <nav class="nav nav-pills flex-nowrap overflow-auto">
-                        <?php foreach ($listRawatJalan as $list) : ?>
-                            <a class="<?= ($tanggal_registrasi < $seven_days_ago) ? 'text-danger' : ''; ?> nav-link py-1 <?= ($activeSegment === $list['id_keterangan_buta_warna']) ? 'active activeLink ' . (($tanggal_registrasi < $seven_days_ago) ? 'bg-danger text-white' : '') : '' ?> : '' ?>" href="<?= base_url('butawarna/details/' . $list['id_keterangan_buta_warna']); ?>">
-                                <div class="text-center">
-                                    <div class="text-nowrap lh-sm"><?= $list['nomor_registrasi']; ?></div>
-                                    <div class="text-nowrap lh-sm" style="font-size: 0.75em;"><?= $list['waktu_dibuat'] ?></div>
-                                </div>
-                            </a>
-                        <?php endforeach; ?>
-                    </nav>
-                </div>
-            </li>
-        </ul>
+    <div class="sticky-top" style="z-index: 99;">
+        <div class="filter-bg"></div>
+        <div class="filter-content px-2 pt-2">
+            <ul class="list-group no-fluid-content-list-group list-group-flush">
+                <li class="list-group-item px-2 border-top-0 border-end-0 border-start-0 bg-body-secondary" style="--bs-bg-opacity: 0;">
+                    <div class="no-fluid-content">
+                        <nav class="nav nav-pills flex-nowrap overflow-auto">
+                            <?php foreach ($listRawatJalan as $list) : ?>
+                                <a class="<?= ($tanggal_registrasi < $seven_days_ago) ? 'text-danger' : ''; ?> nav-link py-1 <?= ($activeSegment === $list['id_keterangan_buta_warna']) ? 'active activeLink ' . (($tanggal_registrasi < $seven_days_ago) ? 'bg-danger text-white' : '') : '' ?> : '' ?>" href="<?= base_url('butawarna/details/' . $list['id_keterangan_buta_warna']); ?>">
+                                    <div class="text-center">
+                                        <div class="text-nowrap lh-sm"><?= $list['nomor_registrasi']; ?></div>
+                                        <div class="text-nowrap lh-sm" style="font-size: 0.75em;"><?= $list['waktu_dibuat'] ?></div>
+                                    </div>
+                                </a>
+                            <?php endforeach; ?>
+                        </nav>
+                    </div>
+                </li>
+            </ul>
+        </div>
     </div>
     <div class="px-3 mt-3">
         <div class="no-fluid-content">

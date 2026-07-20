@@ -13,7 +13,7 @@
     <div class="no-fluid-content">
         <?php if (session()->get('role') != "Apoteker") : ?>
             <h5>Pasien</h5>
-            <ul class="list-group shadow-sm  mb-3">
+            <ul class="list-group   mb-3">
                 <li class="list-group-item p-1 list-group-item-action">
                     <div class="d-flex align-items-start">
                         <a href="<?= base_url('/unduhdokumen/kartuberobat'); ?>" class="stretched-link download-btn" style="min-width: 3rem; max-width: 3rem; text-align: center;" target="_blank">
@@ -33,7 +33,7 @@
             </ul>
         <?php endif; ?>
         <h5>Rawat Jalan</h5>
-        <ul class="list-group shadow-sm  mb-3">
+        <ul class="list-group   mb-3">
             <li class="list-group-item p-1 list-group-item-action">
                 <div class="d-flex align-items-start">
                     <a href="<?= base_url('/unduhdokumen/resepobatluar'); ?>" class="stretched-link download-btn" style="min-width: 3rem; max-width: 3rem; text-align: center;" target="_blank">

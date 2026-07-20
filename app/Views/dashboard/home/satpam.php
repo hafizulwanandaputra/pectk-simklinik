@@ -300,7 +300,7 @@ $db = db_connect();
             },
             'dom': "<'row'<'col-md-12'tr>>" + "<'d-flex justify-content-center align-items-center'<'text-md-center text-lg-start'><'d-md-flex justify-content-md-center d-lg-block'p>>",
             'initComplete': function(settings, json) {
-                $("#tabel").wrap("<div class='card shadow-sm  mb-3 overflow-auto position-relative datatables-height'></div>");
+                $("#tabel").wrap("<div class='card   mb-3 overflow-auto position-relative datatables-height'></div>");
                 $('.dataTables_filter input[type="search"]').css({
                     'width': '220px'
                 });

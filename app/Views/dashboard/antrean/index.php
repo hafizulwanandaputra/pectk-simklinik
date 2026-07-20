@@ -38,37 +38,40 @@
 <?= $this->endSection(); ?>
 <?= $this->section('content'); ?>
 <main class="main-content-inside">
-    <div id="filterFields" class="sticky-top px-2 pt-2" style="z-index: 99; display: none;">
-        <ul class="list-group no-fluid-content-list-group shadow-sm border border-bottom-0">
-            <li class="list-group-item px-2 border-top-0 border-end-0 border-start-0 bg-body-secondary transparent-blur">
-                <div class="no-fluid-content">
-                    <div class="d-flex flex-column flex-lg-row gap-2 position-relative">
-                        <div class="input-group input-group-sm w-auto first-row-form has-validation">
-                            <select class="form-select form-select-sm" id="nama_loket">
-                                <option value="" selected disabled>Pilih Loket</option>
-                                <?php foreach ($loket as $l) : ?>
-                                    <option value="<?= $l['nama_loket']; ?>"><?= $l['nama_loket']; ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                            <div class="invalid-tooltip">
-                                Pilih loket untuk memanggil antrean.
+    <div id="filterFields" class="sticky-top" style="z-index: 99; display: none;">
+        <div class="filter-bg"></div>
+        <div class="filter-content px-2 pt-2">
+            <ul class="list-group no-fluid-content-list-group list-group-flush">
+                <li class="list-group-item px-2 border-top-0 border-end-0 border-start-0 bg-body-secondary" style="--bs-bg-opacity: 0;">
+                    <div class="no-fluid-content">
+                        <div class="d-flex flex-column flex-lg-row gap-2 position-relative">
+                            <div class="input-group input-group-sm w-auto first-row-form has-validation">
+                                <select class="form-select form-select-sm" id="nama_loket">
+                                    <option value="" selected disabled>Pilih Loket</option>
+                                    <?php foreach ($loket as $l) : ?>
+                                        <option value="<?= $l['nama_loket']; ?>"><?= $l['nama_loket']; ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                                <div class="invalid-tooltip">
+                                    Pilih loket untuk memanggil antrean.
+                                </div>
+                            </div>
+                            <div class="input-group input-group-sm flex-grow-1">
+                                <select class="form-select form-select-sm" id="nama_jaminan">
+                                    <option value="UMUM" selected>UMUM</option>
+                                    <option value="BPJS KESEHATAN">BPJS KESEHATAN</option>
+                                    <option value="ASURANSI">ASURANSI</option>
+                                </select>
+                            </div>
+                            <div class="input-group input-group-sm w-auto third-row-form">
+                                <input type="date" id="tanggalFilter" class="form-control" value="<?= date('Y-m-d') ?>">
+                                <button class="btn btn-primary btn-sm bg-gradient" type="button" id="setTodayTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Kembali ke Hari Ini"><i class="fa-solid fa-calendar-day"></i></button>
                             </div>
                         </div>
-                        <div class="input-group input-group-sm flex-grow-1">
-                            <select class="form-select form-select-sm" id="nama_jaminan">
-                                <option value="UMUM" selected>UMUM</option>
-                                <option value="BPJS KESEHATAN">BPJS KESEHATAN</option>
-                                <option value="ASURANSI">ASURANSI</option>
-                            </select>
-                        </div>
-                        <div class="input-group input-group-sm w-auto third-row-form">
-                            <input type="date" id="tanggalFilter" class="form-control" value="<?= date('Y-m-d') ?>">
-                            <button class="btn btn-primary btn-sm bg-gradient" type="button" id="setTodayTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Kembali ke Hari Ini"><i class="fa-solid fa-calendar-day"></i></button>
-                        </div>
                     </div>
-                </div>
-            </li>
-        </ul>
+                </li>
+            </ul>
+        </div>
     </div>
     <div class="px-3 mt-3">
         <div class="no-fluid-content">
@@ -76,7 +79,7 @@
             <div id="antreanContainer" class="row row-cols-1 row-cols-lg-2 g-2">
                 <?php for ($i = 0; $i < 8; $i++) : ?>
                     <div class="col">
-                        <div class="card h-100 shadow-sm">
+                        <div class="card h-100">
                             <div class="card-body">
                                 <h5 class="card-title placeholder-glow">
                                     <span class="placeholder w-100" style="max-width: 256px;"></span>
@@ -211,7 +214,7 @@
                     }
                     const antreanElement = `
                         <div class="col">
-                            <div class="card h-100 shadow-sm">
+                            <div class="card h-100">
                                 <div class="card-body">
                                     <h5 class="card-title date">${antrean.kode_antrean}-${antrean.nomor_antrean}</h5>
                                     <p class="card-text mb-0" style="font-size: 0.75em;">

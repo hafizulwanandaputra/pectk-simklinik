@@ -25,7 +25,7 @@
     <?php endif; ?>
     <a id="toggleFilter" class="fs-6 mx-2 text-body-emphasis" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Pencarian"><i class="fa-solid fa-magnifying-glass"></i></a>
     <a id="refreshButton" class="fs-6 mx-2 text-body-emphasis" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan"><i class="fa-solid fa-sync"></i></a>
-    <div class="offcanvas offcanvas-end bg-body-tertiary shadow-sm transparent-blur" tabindex="-1" id="reportOffcanvas" aria-labelledby="reportOffcanvasLabel">
+    <div class="offcanvas offcanvas-end bg-body-tertiary  transparent-blur" tabindex="-1" id="reportOffcanvas" aria-labelledby="reportOffcanvasLabel">
         <div class="offcanvas-header pt-0 pb-0 d-flex justify-content-between align-items-center" style="min-height: 3rem; max-height: 3rem;">
             <div class="w-100 text-truncate">
                 <span class="navbar-brand mx-0 text-start text-md-center text-truncate fw-medium">
@@ -70,75 +70,78 @@
 <?= $this->endSection(); ?>
 <?= $this->section('content'); ?>
 <main class="main-content-inside">
-    <div id="filterFields" class="sticky-top px-2 pt-2" style="z-index: 99; display: none;">
-        <ul class="list-group no-fluid-content-list-group shadow-sm border border-bottom-0">
-            <li class="list-group-item px-2 border-top-0 border-end-0 border-start-0 bg-body-secondary transparent-blur">
-                <div class="no-fluid-content">
-                    <div class="d-flex flex-column flex-lg-row gap-2 mb-2">
-                        <div class="input-group input-group-sm w-auto">
-                            <input type="date" id="tanggalFilter" class="form-control" <?= (session()->get('auto_date') == 1) ? 'value="' . date('Y-m-d') . '"' : ''; ?>>
-                            <?php if (session()->get('auto_date') == 1) : ?>
-                                <button class="btn btn-primary btn-sm bg-gradient" type="button" id="setTodayTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Kembali ke Hari Ini"><i class="fa-solid fa-calendar-day"></i></button>
-                            <?php else : ?>
-                                <button class="btn btn-danger btn-sm bg-gradient " type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
-                            <?php endif; ?>
-                        </div>
-                        <div class="input-group input-group-sm flex-grow-1">
-                            <input type="search" id="searchInput" class="form-control " placeholder="Cari pasien">
-                        </div>
-                    </div>
-                    <div class="accordion accordion-bg-body" id="accordionFilter">
-                        <div class="accordion-item">
-                            <div class="accordion-header lh-1">
-                                <button class="accordion-button p-2 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFilter" aria-expanded="false" aria-controls="collapseFilter">
-                                    Pencarian Tambahan
-                                </button>
+    <div id="filterFields" class="sticky-top" style="z-index: 99; display: none;">
+        <div class="filter-bg"></div>
+        <div class="filter-content px-2 pt-2">
+            <ul class="list-group no-fluid-content-list-group list-group-flush">
+                <li class="list-group-item px-2 border-top-0 border-end-0 border-start-0 bg-body-secondary" style="--bs-bg-opacity: 0;">
+                    <div class="no-fluid-content">
+                        <div class="d-flex flex-column flex-lg-row gap-2 mb-2">
+                            <div class="input-group input-group-sm w-auto">
+                                <input type="date" id="tanggalFilter" class="form-control" <?= (session()->get('auto_date') == 1) ? 'value="' . date('Y-m-d') . '"' : ''; ?>>
+                                <?php if (session()->get('auto_date') == 1) : ?>
+                                    <button class="btn btn-primary btn-sm bg-gradient" type="button" id="setTodayTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Kembali ke Hari Ini"><i class="fa-solid fa-calendar-day"></i></button>
+                                <?php else : ?>
+                                    <button class="btn btn-danger btn-sm bg-gradient " type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
+                                <?php endif; ?>
                             </div>
-                            <div id="collapseFilter" class="accordion-collapse collapse" data-bs-parent="#accordionFilter">
-                                <div class="accordion-body px-2 py-1">
-                                    <div class="d-flex flex-column flex-lg-row mb-1 gap-1 my-1">
-                                        <?php if (session()->get('role') != 'Admisi') : ?>
-                                            <select id="statusFilter" class="form-select form-select-sm w-auto  flex-fill">
-                                                <option value="">Semua Transaksi</option>
-                                                <option value="1">Diproses</option>
-                                                <option value="0">Belum Diproses</option>
+                            <div class="input-group input-group-sm flex-grow-1">
+                                <input type="search" id="searchInput" class="form-control " placeholder="Cari pasien">
+                            </div>
+                        </div>
+                        <div class="accordion accordion-bg-body" id="accordionFilter">
+                            <div class="accordion-item">
+                                <div class="accordion-header lh-1">
+                                    <button class="accordion-button p-2 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFilter" aria-expanded="false" aria-controls="collapseFilter">
+                                        Pencarian Tambahan
+                                    </button>
+                                </div>
+                                <div id="collapseFilter" class="accordion-collapse collapse" data-bs-parent="#accordionFilter">
+                                    <div class="accordion-body px-2 py-1">
+                                        <div class="d-flex flex-column flex-lg-row mb-1 gap-1 my-1">
+                                            <?php if (session()->get('role') != 'Admisi') : ?>
+                                                <select id="statusFilter" class="form-select form-select-sm w-auto  flex-fill">
+                                                    <option value="">Semua Transaksi</option>
+                                                    <option value="1">Diproses</option>
+                                                    <option value="0">Belum Diproses</option>
+                                                </select>
+                                            <?php endif; ?>
+                                            <select id="jenisFilter" class="form-select form-select-sm w-auto  flex-fill">
+                                                <option value="">Semua Jenis</option>
+                                                <option value="Rawat Jalan">Rawat Jalan</option>
+                                                <option value="Rawat Inap">Rawat Inap</option>
+                                                <option value="Resep Luar">Resep Luar</option>
+                                                <option value="Barang Medis Habis Pakai">Barang Medis Habis Pakai</option>
                                             </select>
-                                        <?php endif; ?>
-                                        <select id="jenisFilter" class="form-select form-select-sm w-auto  flex-fill">
-                                            <option value="">Semua Jenis</option>
-                                            <option value="Rawat Jalan">Rawat Jalan</option>
-                                            <option value="Rawat Inap">Rawat Inap</option>
-                                            <option value="Resep Luar">Resep Luar</option>
-                                            <option value="Barang Medis Habis Pakai">Barang Medis Habis Pakai</option>
-                                        </select>
-                                        <select id="namesFilter" class="form-select form-select-sm w-auto  flex-fill">
-                                            <option value="">Semua Nama</option>
-                                            <option value="1">Dengan Nama</option>
-                                            <option value="0">Anonim</option>
-                                        </select>
-                                    </div>
-                                    <div class="d-flex flex-column flex-lg-row mb-1 gap-1 my-1">
-                                        <select id="jaminanFilter" class="form-select form-select-sm w-auto flex-fill">
-                                            <option value="">Semua Jaminan</option>
-                                        </select>
-                                        <select id="kasirFilter" class="form-select form-select-sm w-auto flex-fill">
-                                            <option value="">Semua Petugas Kasir</option>
-                                        </select>
+                                            <select id="namesFilter" class="form-select form-select-sm w-auto  flex-fill">
+                                                <option value="">Semua Nama</option>
+                                                <option value="1">Dengan Nama</option>
+                                                <option value="0">Anonim</option>
+                                            </select>
+                                        </div>
+                                        <div class="d-flex flex-column flex-lg-row mb-1 gap-1 my-1">
+                                            <select id="jaminanFilter" class="form-select form-select-sm w-auto flex-fill">
+                                                <option value="">Semua Jaminan</option>
+                                            </select>
+                                            <select id="kasirFilter" class="form-select form-select-sm w-auto flex-fill">
+                                                <option value="">Semua Petugas Kasir</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </li>
-        </ul>
+                </li>
+            </ul>
+        </div>
     </div>
     <div class="px-3 mt-3">
         <div class="no-fluid-content">
-            <div class="shadow-sm rounded">
+            <div class=" rounded">
                 <?php if (session()->get('role') != 'Admisi') : ?>
                     <div class="d-grid gap-2">
-                        <button id="collapseList" class="btn btn-primary btn-sm bg-gradient shadow-sm rounded-bottom-0" type="button" data-bs-toggle="collapse" data-bs-target="#transaksiFormContainer" aria-expanded="false" aria-controls="transaksiFormContainer">
+                        <button id="collapseList" class="btn btn-primary btn-sm bg-gradient  rounded-bottom-0" type="button" data-bs-toggle="collapse" data-bs-target="#transaksiFormContainer" aria-expanded="false" aria-controls="transaksiFormContainer">
                             <i class="fa-solid fa-plus"></i> Tambah Transaksi
                         </button>
                     </div>

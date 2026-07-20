@@ -65,7 +65,7 @@ if (stripos($browser, 'Chrome') !== false) {
         </div>
         <hr>
         <h5>Informasi Klien</h5>
-        <ul class="list-group shadow-sm  mb-3">
+        <ul class="list-group   mb-3">
             <li class="list-group-item p-1 list-group-item-action disabled" aria-disabled="true">
                 <div class="d-flex align-items-start">
                     <a href="#" class="stretched-link" style="min-width: 3rem; max-width: 3rem; text-align: center;">
@@ -134,7 +134,7 @@ if (stripos($browser, 'Chrome') !== false) {
             </li>
         </ul>
         <h5>Informasi <em>Backend</em></h5>
-        <ul class="list-group shadow-sm  mb-3">
+        <ul class="list-group   mb-3">
             <li class="list-group-item p-1 list-group-item-action disabled" aria-disabled="true">
                 <div class="d-flex align-items-start">
                     <a href="#" class="stretched-link" style="min-width: 3rem; max-width: 3rem; text-align: center;">
@@ -230,7 +230,7 @@ if (stripos($browser, 'Chrome') !== false) {
             <?php endif; ?>
         </ul>
         <h5>Informasi <em>Frontend</em></h5>
-        <ul class="list-group shadow-sm  mb-3">
+        <ul class="list-group   mb-3">
             <li class="list-group-item p-1 list-group-item-action disabled" aria-disabled="true">
                 <div class="d-flex align-items-start">
                     <a href="#" class="stretched-link" style="min-width: 3rem; max-width: 3rem; text-align: center;">

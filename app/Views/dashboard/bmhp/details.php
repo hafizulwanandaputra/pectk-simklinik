@@ -68,7 +68,7 @@
             </div>
         </div>
 
-        <div class="card shadow-sm  overflow-auto">
+        <div class="card   overflow-auto">
             <div class="card-header" id="tambahDetailContainer" style="display: none;">
                 <form id="tambahDetail" enctype="multipart/form-data">
                     <div class="row g-2">

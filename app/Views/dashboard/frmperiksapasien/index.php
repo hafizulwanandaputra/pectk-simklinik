@@ -27,30 +27,33 @@
 <?= $this->endSection(); ?>
 <?= $this->section('content'); ?>
 <main class="main-content-inside">
-    <div id="filterFields" class="sticky-top px-2 pt-2" style="z-index: 99; display: none;">
-        <ul class="list-group no-fluid-content-list-group shadow-sm border border-bottom-0">
-            <li class="list-group-item px-2 border-top-0 border-end-0 border-start-0 bg-body-secondary transparent-blur">
-                <div class="no-fluid-content">
-                    <div class="d-flex flex-column flex-lg-row gap-2">
-                        <div class="input-group input-group-sm w-auto">
-                            <input type="date" id="tanggalFilter" class="form-control" <?= (session()->get('auto_date') == 1) ? 'value="' . date('Y-m-d') . '"' : ''; ?>>
-                            <?php if (session()->get('auto_date') == 1) : ?>
-                                <button class="btn btn-primary btn-sm bg-gradient" type="button" id="setTodayTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Kembali ke Hari Ini"><i class="fa-solid fa-calendar-day"></i></button>
-                            <?php else : ?>
-                                <button class="btn btn-danger btn-sm bg-gradient " type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
-                            <?php endif; ?>
-                        </div>
-                        <div class="input-group input-group-sm flex-grow-1">
-                            <input type="search" id="searchInput" class="form-control " placeholder="Cari nomor rekam medis atau nama pasien">
+    <div id="filterFields" class="sticky-top" style="z-index: 99; display: none;">
+        <div class="filter-bg"></div>
+        <div class="filter-content px-2 pt-2">
+            <ul class="list-group no-fluid-content-list-group list-group-flush">
+                <li class="list-group-item px-2 border-top-0 border-end-0 border-start-0 bg-body-secondary" style="--bs-bg-opacity: 0;">
+                    <div class="no-fluid-content">
+                        <div class="d-flex flex-column flex-lg-row gap-2">
+                            <div class="input-group input-group-sm w-auto">
+                                <input type="date" id="tanggalFilter" class="form-control" <?= (session()->get('auto_date') == 1) ? 'value="' . date('Y-m-d') . '"' : ''; ?>>
+                                <?php if (session()->get('auto_date') == 1) : ?>
+                                    <button class="btn btn-primary btn-sm bg-gradient" type="button" id="setTodayTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Kembali ke Hari Ini"><i class="fa-solid fa-calendar-day"></i></button>
+                                <?php else : ?>
+                                    <button class="btn btn-danger btn-sm bg-gradient " type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
+                                <?php endif; ?>
+                            </div>
+                            <div class="input-group input-group-sm flex-grow-1">
+                                <input type="search" id="searchInput" class="form-control " placeholder="Cari nomor rekam medis atau nama pasien">
+                            </div>
                         </div>
                     </div>
-                </div>
-            </li>
-        </ul>
+                </li>
+            </ul>
+        </div>
     </div>
     <div class="px-3 mt-3">
         <div class="no-fluid-content">
-            <div class="shadow-sm rounded">
+            <div class=" rounded">
                 <ul id="FRMPeriksaContainer" class="list-group">
                     <?php for ($i = 0; $i < 12; $i++) : ?>
                         <li class="list-group-item pb-3 pt-3" style="cursor: wait;">

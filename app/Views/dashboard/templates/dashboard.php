@@ -366,10 +366,8 @@ $isApple = in_array($platform, [
         }
 
         .sidebar {
-            box-shadow: inset 0px 0 0 rgba(0, 0, 0, 0);
-            border: 1px solid var(--bs-border-color);
+            border-right: 1px solid var(--bs-border-color);
             overflow: auto;
-            border-radius: var(--bs-border-radius-lg);
         }
 
         .main-content {
@@ -378,7 +376,7 @@ $isApple = in_array($platform, [
         }
 
         .main-content-inside {
-            margin-left: calc(0.5rem + 220px);
+            margin-left: 220px;
         }
 
         #sidebarMenu,
@@ -514,8 +512,6 @@ $isApple = in_array($platform, [
             .sidebar {
                 top: 3rem;
                 width: 100%;
-                margin: 3rem 0 0 0;
-                border-radius: 0;
             }
 
             #sidebarMenu2 {
@@ -558,9 +554,9 @@ $isApple = in_array($platform, [
 <body class="bg-body-tertiary user-select-none">
     <div class="wrapper">
         <!-- HEADER -->
-        <header class="navbar sticky-top flex-md-nowrap p-0 shadow-sm bg-success-subtle text-body-emphasis border-bottom border-success-subtle header">
+        <header class="navbar sticky-top flex-md-nowrap p-0 bg-success-subtle text-body-emphasis border-bottom border-success-subtle header">
             <?php if (!(in_array(session()->get('role'), ['Satpam', 'Monitor Antrean', 'Monitor Antrean Poliklinik']) && $activeSegment === 'home')) : ?>
-                <div id="sidebarHeader" class="d-flex justify-content-start align-items-center ms-0 ms-md-2 px-3 px-md-2 py-md-1" style="min-height: 3rem; max-height: 3rem;">
+                <div id="sidebarHeader" class="d-flex justify-content-start align-items-center ms-0 px-3 py-md-1" style="min-height: 3rem; max-height: 3rem;">
                     <span class="navbar-brand mx-0 text-start lh-sm d-flex justify-content-center align-items-center" style="font-size: 9pt;">
                         <img src="<?= base_url('/assets/images/pec-klinik-logo.png'); ?>" alt="KLINIK MATA PECTK" height="28px">
                         <div class="ps-2 text-start text-body-emphasis fw-bold">PADANG EYE CENTER<br>TELUK KUANTAN</div>
@@ -591,7 +587,7 @@ $isApple = in_array($platform, [
                             <?php endif; ?>
                         </div>
                     </a>
-                    <div class="offcanvas offcanvas-end bg-body-tertiary shadow-sm transparent-blur" tabindex="-1" id="userOffcanvas" aria-labelledby="userOffcanvasLabel">
+                    <div class="offcanvas offcanvas-end bg-body-tertiary transparent-blur" tabindex="-1" id="userOffcanvas" aria-labelledby="userOffcanvasLabel">
                         <div class="offcanvas-header pt-0 pb-0 d-flex justify-content-between align-items-center" style="min-height: 3rem; max-height: 3rem;">
                             <div>
                                 <span class="navbar-brand mx-0 text-start text-md-center lh-sm d-flex justify-content-center align-items-center" style="font-size: 9pt;">
@@ -604,7 +600,7 @@ $isApple = in_array($platform, [
                                     <button class="btn btn-outline-success bg-gradient dropdown-toggle" id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static" aria-label="Toggle theme (auto)">
                                         <i class="fa-solid fa-palette"></i>
                                     </button>
-                                    <ul class="dropdown-menu shadow-sm dropdown-menu-end bg-body-tertiary transparent-blur" aria-labelledby="bd-theme-text">
+                                    <ul class="dropdown-menu  dropdown-menu-end bg-body-tertiary transparent-blur" aria-labelledby="bd-theme-text">
                                         <li>
                                             <button type="button" class="dropdown-item" data-bs-theme-value="light" aria-pressed="false">
                                                 Terang
@@ -720,7 +716,7 @@ $isApple = in_array($platform, [
         <!-- CONTENTS -->
         <div class="main-content-wrapper">
             <?php if (!(in_array(session()->get('role'), ['Satpam', 'Monitor Antrean', 'Monitor Antrean Poliklinik']) && $activeSegment === 'home')) : ?>
-                <nav id="sidebarMenu" class="d-md-block sidebar bg-body-secondary shadow-sm collapse transparent-blur">
+                <nav id="sidebarMenu" class="d-md-block sidebar bg-body-secondary collapse transparent-blur">
                     <div id="sidebarMenu2" class="position-sticky sidebar-sticky p-1">
                         <ul class="nav nav-pills flex-column">
                             <li class="nav-item">
@@ -1397,6 +1393,7 @@ $isApple = in_array($platform, [
                 }
             }, 5000); // Durasi waktu untuk menyembunyikan toast (5000 ms)
         });
+
         // Show toast notification
         <?= $this->include('toast/index') ?>
     </script>

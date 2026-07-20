@@ -165,7 +165,7 @@ $db = db_connect();
 <?= $this->section('content'); ?>
 <main class="main-content-inside p-3">
     <div id="alert-voice" class="fixed-top p-2" style="z-index: 99; margin-top: 3rem;">
-        <ul class="list-group shadow-sm">
+        <ul class="list-group ">
             <li class="list-group-item list-group-item-warning transparent-blur">
                 <div class="no-fluid-content">
                     <div class="d-flex align-items-start">
@@ -198,7 +198,7 @@ $db = db_connect();
                 </div>
                 <div class="row row-cols-1 row-cols-lg-2 g-2">
                     <div class="col full-card-height">
-                        <div class="card shadow-sm h-100">
+                        <div class="card  h-100">
                             <div class="card-header">
                                 <div class="fw-bold nama-loket" id="nama_loket_1"><em>Loket Tutup</em></div>
                                 <div class="fs-1">Nomor antrean:</div>
@@ -211,7 +211,7 @@ $db = db_connect();
                         </div>
                     </div>
                     <div class="col full-card-height">
-                        <div class="card shadow-sm h-100">
+                        <div class="card  h-100">
                             <div class="card-header">
                                 <div class="nama-loket" id="nama_loket_2"><em>Loket Tutup</em></div>
                                 <div class="fs-1">Nomor antrean:</div>

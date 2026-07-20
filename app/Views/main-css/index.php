@@ -494,13 +494,42 @@
 
     .transparent-blur {
         --bs-bg-opacity: 1;
+        -webkit-backdrop-filter: none;
         backdrop-filter: none;
+    }
+
+    .filter-bg {
+        position: absolute;
+        inset: 0;
+
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+
+        background: rgba(var(--bs-secondary-bg-rgb), 1);
+
+        border-bottom: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color);
+
+        z-index: -1;
+        pointer-events: none;
     }
 
     @media (prefers-reduced-transparency: no-preference) {
         .transparent-blur {
             --bs-bg-opacity: 0.75;
+            -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
+        }
+
+        .filter-bg {
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+
+            background: rgba(var(--bs-secondary-bg-rgb), 0.75);
+
+            -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 1rem), transparent);
+            mask-image: linear-gradient(to bottom, #000 calc(100% - 1rem), transparent);
+
+            border-bottom: none;
         }
     }
 

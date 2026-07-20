@@ -20,71 +20,74 @@
 <?= $this->endSection(); ?>
 <?= $this->section('content'); ?>
 <main class="main-content-inside">
-    <div id="filterFields" class="sticky-top px-2 pt-2" style="z-index: 99; display: none;">
-        <ul class="list-group no-fluid-content-list-group shadow-sm border border-bottom-0">
-            <li class="list-group-item px-2 border-top-0 border-end-0 border-start-0 bg-body-secondary transparent-blur">
-                <div class="no-fluid-content">
-                    <div class="d-flex flex-column flex-lg-row gap-2 mb-2">
-                        <div class="input-group input-group-sm w-auto">
-                            <input type="date" id="tanggalFilter" class="form-control" <?= (session()->get('auto_date') == 1) ? 'value="' . date('Y-m-d') . '"' : ''; ?>>
-                            <?php if (session()->get('auto_date') == 1) : ?>
-                                <button class="btn btn-primary btn-sm bg-gradient" type="button" id="setTodayTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Kembali ke Hari Ini"><i class="fa-solid fa-calendar-day"></i></button>
-                            <?php else : ?>
-                                <button class="btn btn-danger btn-sm bg-gradient " type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
-                            <?php endif; ?>
-                        </div>
-                        <div class="input-group input-group-sm flex-grow-1">
-                            <input type="search" id="searchInput" class="form-control " placeholder="Cari pasien">
-                        </div>
-                    </div>
-                    <div class="accordion accordion-bg-body" id="accordionFilter">
-                        <div class="accordion-item">
-                            <div class="accordion-header lh-1">
-                                <button class="accordion-button p-2 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFilter" aria-expanded="false" aria-controls="collapseFilter">
-                                    Pencarian Tambahan
-                                </button>
+    <div id="filterFields" class="sticky-top" style="z-index: 99; display: none;">
+        <div class="filter-bg"></div>
+        <div class="filter-content px-2 pt-2">
+            <ul class="list-group no-fluid-content-list-group list-group-flush">
+                <li class="list-group-item px-2 border-top-0 border-end-0 border-start-0 bg-body-secondary" style="--bs-bg-opacity: 0;">
+                    <div class="no-fluid-content">
+                        <div class="d-flex flex-column flex-lg-row gap-2 mb-2">
+                            <div class="input-group input-group-sm w-auto">
+                                <input type="date" id="tanggalFilter" class="form-control" <?= (session()->get('auto_date') == 1) ? 'value="' . date('Y-m-d') . '"' : ''; ?>>
+                                <?php if (session()->get('auto_date') == 1) : ?>
+                                    <button class="btn btn-primary btn-sm bg-gradient" type="button" id="setTodayTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Kembali ke Hari Ini"><i class="fa-solid fa-calendar-day"></i></button>
+                                <?php else : ?>
+                                    <button class="btn btn-danger btn-sm bg-gradient " type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
+                                <?php endif; ?>
                             </div>
-                            <div id="collapseFilter" class="accordion-collapse collapse" data-bs-parent="#accordionFilter">
-                                <div class="accordion-body px-2 py-1">
-                                    <div class="d-flex flex-column flex-lg-row mb-1 gap-1 my-1">
-                                        <select id="statusFilter" class="form-select form-select-sm w-auto flex-fill">
-                                            <option value="">Semua Status Transaksi</option>
-                                            <option value="1">Diproses</option>
-                                            <option value="0">Belum Diproses</option>
-                                        </select>
-                                        <select id="namesFilter" class="form-select form-select-sm w-auto flex-fill">
-                                            <option value="">Semua Nama</option>
-                                            <option value="1">Dengan Nama</option>
-                                            <option value="0">Anonim</option>
-                                        </select>
-                                        <select id="genderFilter" class="form-select form-select-sm w-auto flex-fill">
-                                            <option value="">Semua Jenis Kelamin</option>
-                                            <option value="L">Laki-Laki</option>
-                                            <option value="P">Perempuan</option>
-                                        </select>
-                                    </div>
-                                    <div class="d-flex flex-column flex-lg-row mb-1 gap-1 my-1">
-                                        <select id="apotekerFilter" class="form-select form-select-sm w-auto flex-fill">
-                                            <option value="">Semua Apoteker</option>
-                                        </select>
-                                        <select id="arsipFilter" class="form-select form-select-sm w-auto flex-fill">
-                                            <option value="0">Belum Diarsipkan</option>
-                                            <option value="1">Diarsipkan</option>
-                                        </select>
+                            <div class="input-group input-group-sm flex-grow-1">
+                                <input type="search" id="searchInput" class="form-control " placeholder="Cari pasien">
+                            </div>
+                        </div>
+                        <div class="accordion accordion-bg-body" id="accordionFilter">
+                            <div class="accordion-item">
+                                <div class="accordion-header lh-1">
+                                    <button class="accordion-button p-2 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFilter" aria-expanded="false" aria-controls="collapseFilter">
+                                        Pencarian Tambahan
+                                    </button>
+                                </div>
+                                <div id="collapseFilter" class="accordion-collapse collapse" data-bs-parent="#accordionFilter">
+                                    <div class="accordion-body px-2 py-1">
+                                        <div class="d-flex flex-column flex-lg-row mb-1 gap-1 my-1">
+                                            <select id="statusFilter" class="form-select form-select-sm w-auto flex-fill">
+                                                <option value="">Semua Status Transaksi</option>
+                                                <option value="1">Diproses</option>
+                                                <option value="0">Belum Diproses</option>
+                                            </select>
+                                            <select id="namesFilter" class="form-select form-select-sm w-auto flex-fill">
+                                                <option value="">Semua Nama</option>
+                                                <option value="1">Dengan Nama</option>
+                                                <option value="0">Anonim</option>
+                                            </select>
+                                            <select id="genderFilter" class="form-select form-select-sm w-auto flex-fill">
+                                                <option value="">Semua Jenis Kelamin</option>
+                                                <option value="L">Laki-Laki</option>
+                                                <option value="P">Perempuan</option>
+                                            </select>
+                                        </div>
+                                        <div class="d-flex flex-column flex-lg-row mb-1 gap-1 my-1">
+                                            <select id="apotekerFilter" class="form-select form-select-sm w-auto flex-fill">
+                                                <option value="">Semua Apoteker</option>
+                                            </select>
+                                            <select id="arsipFilter" class="form-select form-select-sm w-auto flex-fill">
+                                                <option value="0">Belum Diarsipkan</option>
+                                                <option value="1">Diarsipkan</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </li>
-        </ul>
+                </li>
+            </ul>
+        </div>
     </div>
     <div class="px-3 mt-3">
         <div class="no-fluid-content">
-            <div class="shadow-sm rounded">
+            <div class=" rounded">
                 <div class="d-grid gap-2">
-                    <button class="btn btn-primary btn-sm bg-gradient shadow-sm rounded-bottom-0" type="button" id="addButton">
+                    <button class="btn btn-primary btn-sm bg-gradient  rounded-bottom-0" type="button" id="addButton">
                         <i class="fa-solid fa-plus"></i> Tambah Resep Luar
                     </button>
                 </div>

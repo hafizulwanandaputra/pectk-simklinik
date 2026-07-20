@@ -37,7 +37,7 @@ $db = db_connect();
                 <div class="fw-bold mb-2 border-bottom">Admin</div>
                 <div class="row row-cols-1 row-cols-lg-3 g-2 mb-2">
                     <div class="col">
-                        <div class="card w-100 h-100 shadow-sm">
+                        <div class="card w-100 h-100 ">
                             <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Pengguna Keseluruhan</div>
                             <div class="card-body py-2 px-3">
                                 <h5 class="display-6 fw-medium date mb-0"><?= number_format($total_user, 0, ',', '.') ?></h5>
@@ -45,7 +45,7 @@ $db = db_connect();
                         </div>
                     </div>
                     <div class="col">
-                        <div class="card bg-danger-subtle border-danger-subtle text-danger-emphasis w-100  shadow-sm">
+                        <div class="card bg-danger-subtle border-danger-subtle text-danger-emphasis w-100  ">
                             <div style="font-size: 0.9em;" class="card-header py-1 px-3 border-danger-subtle w-100 text-truncate">Pengguna Nonaktif</div>
                             <div class="card-body py-2 px-3">
                                 <h5 class="display-6 fw-medium date mb-0"><?= number_format($total_user_inactive, 0, ',', '.') ?></h5>
@@ -53,7 +53,7 @@ $db = db_connect();
                         </div>
                     </div>
                     <div class="col">
-                        <div class="card bg-success-subtle border-success-subtle text-success-emphasis w-100  shadow-sm">
+                        <div class="card bg-success-subtle border-success-subtle text-success-emphasis w-100  ">
                             <div style="font-size: 0.9em;" class="card-header py-1 px-3 border-success-subtle w-100 text-truncate">Pengguna Aktif</div>
                             <div class="card-body py-2 px-3">
                                 <h5 class="display-6 fw-medium date mb-0"><?= number_format($total_user_active, 0, ',', '.') ?></h5>
@@ -63,7 +63,7 @@ $db = db_connect();
                 </div>
                 <div class="row row-cols-1 row-cols-lg-3 g-2 mb-2">
                     <div class="col">
-                        <div class="card w-100 h-100 shadow-sm">
+                        <div class="card w-100 h-100 ">
                             <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Sesi Keseluruhan Selain Anda</div>
                             <div class="card-body py-2 px-3">
                                 <h5 class="display-6 fw-medium date mb-0"><?= number_format($total_sessions, 0, ',', '.') ?></h5>
@@ -71,7 +71,7 @@ $db = db_connect();
                         </div>
                     </div>
                     <div class="col">
-                        <div class="card bg-danger-subtle border-danger-subtle text-danger-emphasis w-100  shadow-sm">
+                        <div class="card bg-danger-subtle border-danger-subtle text-danger-emphasis w-100  ">
                             <div style="font-size: 0.9em;" class="card-header py-1 px-3 border-danger-subtle w-100 text-truncate">Sesi Kedaluwarsa Selain Anda</div>
                             <div class="card-body py-2 px-3">
                                 <h5 class="display-6 fw-medium date mb-0"><?= number_format($total_sessions_expired, 0, ',', '.') ?></h5>
@@ -79,7 +79,7 @@ $db = db_connect();
                         </div>
                     </div>
                     <div class="col">
-                        <div class="card bg-success-subtle border-success-subtle text-success-emphasis w-100  shadow-sm">
+                        <div class="card bg-success-subtle border-success-subtle text-success-emphasis w-100  ">
                             <div style="font-size: 0.9em;" class="card-header py-1 px-3 border-success-subtle w-100 text-truncate">Sesi Aktif Selain Anda</div>
                             <div class="card-body py-2 px-3">
                                 <h5 class="display-6 fw-medium date mb-0"><?= number_format($total_sessions_active, 0, ',', '.') ?></h5>
@@ -94,7 +94,7 @@ $db = db_connect();
                 <div class="fw-bold mb-2 border-bottom">Statistik Antrean</div>
                 <div class="row row-cols-1 row-cols-lg-2 g-2 mb-2">
                     <div class="col">
-                        <div class="card w-100 h-100 shadow-sm">
+                        <div class="card w-100 h-100 ">
                             <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Antrean Menurut Jaminan</div>
                             <div class="card-body py-2 px-3">
                                 <div class="ratio ratio-4x3 w-100">
@@ -104,7 +104,7 @@ $db = db_connect();
                         </div>
                     </div>
                     <div class="col">
-                        <div class="card w-100 h-100 shadow-sm">
+                        <div class="card w-100 h-100 ">
                             <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Antrean Per Bulan Menurut Jaminan</div>
                             <div class="card-body py-2 px-3">
                                 <div class="ratio ratio-4x3 w-100">
@@ -115,7 +115,7 @@ $db = db_connect();
                     </div>
                 </div>
                 <div class="mb-2">
-                    <div class="card w-100 h-100 shadow-sm">
+                    <div class="card w-100 h-100 ">
                         <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Antrean Per Bulan Keseluruhan</div>
                         <div class="card-body py-2 px-3">
                             <div class="ratio ratio-onecol w-100">
@@ -131,7 +131,7 @@ $db = db_connect();
                 <div class="fw-bold mb-2 border-bottom">Pasien dan Rawat Jalan</div>
                 <div class="mb-2">
                     <div class="col">
-                        <div class="card w-100 h-100 shadow-sm">
+                        <div class="card w-100 h-100 ">
                             <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Total Pasien</div>
                             <div class="card-body py-2 px-3">
                                 <h5 class="display-6 fw-medium date mb-0"><?= number_format($total_pasien, 0, ',', '.') ?></h5>
@@ -141,7 +141,7 @@ $db = db_connect();
                 </div>
                 <div class="row row-cols-1 row-cols-lg-2 g-2 mb-2">
                     <div class="col">
-                        <div class="card bg-danger-subtle border-danger-subtle text-danger-emphasis w-100  shadow-sm">
+                        <div class="card bg-danger-subtle border-danger-subtle text-danger-emphasis w-100  ">
                             <div style="font-size: 0.9em;" class="card-header py-1 px-3 border-danger-subtle w-100 text-truncate">Total Rawat Jalan yang Dibatalkan</div>
                             <div class="card-body py-2 px-3">
                                 <h5 class="display-6 fw-medium date mb-0"><?= number_format($total_rajal_all_batal, 0, ',', '.') ?></h5>
@@ -149,7 +149,7 @@ $db = db_connect();
                         </div>
                     </div>
                     <div class="col">
-                        <div class="card bg-success-subtle border-success-subtle text-success-emphasis w-100  shadow-sm">
+                        <div class="card bg-success-subtle border-success-subtle text-success-emphasis w-100  ">
                             <div style="font-size: 0.9em;" class="card-header py-1 px-3 border-success-subtle w-100 text-truncate">Total Rawat Jalan yang Didaftarkan</div>
                             <div class="card-body py-2 px-3">
                                 <h5 class="display-6 fw-medium date mb-0"><?= number_format($total_rajal_all, 0, ',', '.') ?></h5>
@@ -157,7 +157,7 @@ $db = db_connect();
                         </div>
                     </div>
                     <div class="col">
-                        <div class="card bg-danger-subtle border-danger-subtle text-danger-emphasis w-100  shadow-sm">
+                        <div class="card bg-danger-subtle border-danger-subtle text-danger-emphasis w-100  ">
                             <div style="font-size: 0.9em;" class="card-header py-1 px-3 border-danger-subtle w-100 text-truncate">Pasien yang Batal Berobat Hari Ini</div>
                             <div class="card-body py-2 px-3">
                                 <h5 class="display-6 fw-medium date mb-0"><?= number_format($total_rawatjalan_batal, 0, ',', '.') ?></h5>
@@ -165,7 +165,7 @@ $db = db_connect();
                         </div>
                     </div>
                     <div class="col">
-                        <div class="card bg-success-subtle border-success-subtle text-success-emphasis w-100  shadow-sm">
+                        <div class="card bg-success-subtle border-success-subtle text-success-emphasis w-100  ">
                             <div style="font-size: 0.9em;" class="card-header py-1 px-3 border-success-subtle w-100 text-truncate">Pasien yang Berobat Hari Ini</div>
                             <div class="card-body py-2 px-3">
                                 <h5 class="display-6 fw-medium date mb-0"><?= number_format($total_rawatjalan, 0, ',', '.') ?></h5>
@@ -175,7 +175,7 @@ $db = db_connect();
                 </div>
                 <div class="row row-cols-1 row-cols-lg-2 g-2 mb-2">
                     <div class="col">
-                        <div class="card w-100 h-100 shadow-sm">
+                        <div class="card w-100 h-100 ">
                             <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Agama Pasien</div>
                             <div class="card-body py-2 px-3">
                                 <div class="ratio ratio-4x3 w-100">
@@ -185,7 +185,7 @@ $db = db_connect();
                         </div>
                     </div>
                     <div class="col">
-                        <div class="card w-100 h-100 shadow-sm">
+                        <div class="card w-100 h-100 ">
                             <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Jenis Kelamin Pasien</div>
                             <div class="card-body py-2 px-3">
                                 <div class="ratio ratio-4x3 w-100">
@@ -195,7 +195,7 @@ $db = db_connect();
                         </div>
                     </div>
                     <div class="col">
-                        <div class="card w-100 h-100 shadow-sm">
+                        <div class="card w-100 h-100 ">
                             <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Persebaran Provinsi Pasien</div>
                             <div class="card-body py-2 px-3">
                                 <input type="search" id="ProvinsiFilter" class="form-control form-control-sm mb-2" placeholder="Masukkan provinsi">
@@ -234,7 +234,7 @@ $db = db_connect();
                         </div>
                     </div>
                     <div class="col">
-                        <div class="card w-100 h-100 shadow-sm">
+                        <div class="card w-100 h-100 ">
                             <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Persebaran Kabupaten/Kota Pasien</div>
                             <div class="card-body py-2 px-3">
                                 <input type="search" id="KabupatenFilter" class="form-control form-control-sm mb-2" placeholder="Masukkan kabuapaten/kota">
@@ -273,7 +273,7 @@ $db = db_connect();
                         </div>
                     </div>
                     <div class="col">
-                        <div class="card w-100 h-100 shadow-sm">
+                        <div class="card w-100 h-100 ">
                             <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Persebaran Kecamatan Pasien</div>
                             <div class="card-body py-2 px-3">
                                 <input type="search" id="KecamatanFilter" class="form-control form-control-sm mb-2" placeholder="Masukkan kecamatan">
@@ -312,7 +312,7 @@ $db = db_connect();
                         </div>
                     </div>
                     <div class="col">
-                        <div class="card w-100 h-100 shadow-sm">
+                        <div class="card w-100 h-100 ">
                             <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Persebaran Kelurahan Pasien</div>
                             <div class="card-body py-2 px-3">
                                 <input type="search" id="KelurahanFilter" class="form-control form-control-sm mb-2" placeholder="Masukkan kelurahan">
@@ -351,7 +351,7 @@ $db = db_connect();
                         </div>
                     </div>
                     <div class="col">
-                        <div class="card w-100 h-100 shadow-sm">
+                        <div class="card w-100 h-100 ">
                             <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Rawat Jalan Menurut Dokter</div>
                             <div class="card-body py-2 px-3">
                                 <div class="ratio ratio-4x3 w-100">
@@ -361,7 +361,7 @@ $db = db_connect();
                         </div>
                     </div>
                     <div class="col">
-                        <div class="card w-100 h-100 shadow-sm">
+                        <div class="card w-100 h-100 ">
                             <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Rawat Jalan Per Bulan Menurut Dokter</div>
                             <div class="card-body py-2 px-3">
                                 <div class="ratio ratio-4x3 w-100">
@@ -372,7 +372,7 @@ $db = db_connect();
                     </div>
                 </div>
                 <div class="mb-2">
-                    <div class="card w-100 h-100 shadow-sm">
+                    <div class="card w-100 h-100 ">
                         <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Rawat Jalan Per Bulan Keseluruhan</div>
                         <div class="card-body py-2 px-3">
                             <div class="ratio ratio-onecol w-100">
@@ -383,7 +383,7 @@ $db = db_connect();
                 </div>
                 <div class="row row-cols-1 row-cols-lg-2 g-2 mb-2">
                     <div class="col">
-                        <div class="card w-100 h-100 shadow-sm">
+                        <div class="card w-100 h-100 ">
                             <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">ICD-10 (Diagnosis)</div>
                             <div class="card-body py-2 px-3">
                                 <input type="month" id="ICD10bulanFilter" class="form-control form-control-sm mb-2" value="<?= date('Y-m'); ?>">
@@ -422,7 +422,7 @@ $db = db_connect();
                         </div>
                     </div>
                     <div class="col">
-                        <div class="card w-100 h-100 shadow-sm">
+                        <div class="card w-100 h-100 ">
                             <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">ICD-9 CM (Tindakan)</div>
                             <div class="card-body py-2 px-3">
                                 <input type="month" id="ICD9bulanFilter" class="form-control form-control-sm mb-2" value="<?= date('Y-m'); ?>">
@@ -469,7 +469,7 @@ $db = db_connect();
                 <div class="row row-cols-1 row-cols-lg-2 g-2 mb-2">
                     <?php if (session()->get('role') != "Dokter") : ?>
                         <div class="col">
-                            <div class="card w-100 h-100 shadow-sm">
+                            <div class="card w-100 h-100 ">
                                 <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Pemasok</div>
                                 <div class="card-body py-2 px-3">
                                     <h5 class="display-6 fw-medium date mb-0"><?= number_format($total_supplier, 0, ',', '.') ?></h5>
@@ -477,7 +477,7 @@ $db = db_connect();
                             </div>
                         </div>
                         <div class="col">
-                            <div class="card w-100 h-100 shadow-sm">
+                            <div class="card w-100 h-100 ">
                                 <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Obat</div>
                                 <div class="card-body py-2 px-3">
                                     <h5 class="display-6 fw-medium date mb-0"><?= number_format($total_obat, 0, ',', '.') ?></h5>
@@ -486,7 +486,7 @@ $db = db_connect();
                         </div>
                     <?php endif; ?>
                     <div class="col">
-                        <div class="card bg-danger-subtle border-danger-subtle text-danger-emphasis w-100  shadow-sm">
+                        <div class="card bg-danger-subtle border-danger-subtle text-danger-emphasis w-100  ">
                             <div style="font-size: 0.9em;" class="card-header py-1 px-3 border-danger-subtle w-100 text-truncate">Resep yang Belum Diproses</div>
                             <div class="card-body py-2 px-3">
                                 <h5 class="display-6 fw-medium date mb-0"><?= number_format($total_resep_blm_status, 0, ',', '.') ?></h5>
@@ -494,7 +494,7 @@ $db = db_connect();
                         </div>
                     </div>
                     <div class="col">
-                        <div class="card bg-success-subtle border-success-subtle text-success-emphasis w-100  shadow-sm">
+                        <div class="card bg-success-subtle border-success-subtle text-success-emphasis w-100  ">
                             <div style="font-size: 0.9em;" class="card-header py-1 px-3 border-success-subtle w-100 text-truncate">Resep yang Sudah Diproses</div>
                             <div class="card-body py-2 px-3">
                                 <h5 class="display-6 fw-medium date mb-0"><?= number_format($total_resep_sdh_status, 0, ',', '.') ?></h5>
@@ -502,7 +502,7 @@ $db = db_connect();
                         </div>
                     </div>
                     <div class="col">
-                        <div class="card w-100 h-100 shadow-sm">
+                        <div class="card w-100 h-100 ">
                             <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Resep Menurut Dokter</div>
                             <div class="card-body py-2 px-3">
                                 <div class="ratio ratio-4x3 w-100">
@@ -512,7 +512,7 @@ $db = db_connect();
                         </div>
                     </div>
                     <div class="col">
-                        <div class="card w-100 h-100 shadow-sm">
+                        <div class="card w-100 h-100 ">
                             <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Resep Per Bulan Menurut Dokter</div>
                             <div class="card-body py-2 px-3">
                                 <div class="ratio ratio-4x3 w-100">
@@ -523,7 +523,7 @@ $db = db_connect();
                     </div>
                 </div>
                 <div class="mb-2">
-                    <div class="card w-100 h-100 shadow-sm">
+                    <div class="card w-100 h-100 ">
                         <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Resep Per Bulan Keseluruhan</div>
                         <div class="card-body py-2 px-3">
                             <div class="ratio ratio-onecol w-100">
@@ -539,7 +539,7 @@ $db = db_connect();
                 <div class="fw-bold mb-2 border-bottom">Kasir</div>
                 <div class="row row-cols-1 row-cols-lg-2 g-2 mb-2">
                     <div class="col">
-                        <div class="card bg-danger-subtle border-danger-subtle text-danger-emphasis w-100  shadow-sm">
+                        <div class="card bg-danger-subtle border-danger-subtle text-danger-emphasis w-100  ">
                             <div style="font-size: 0.9em;" class="card-header py-1 px-3 border-danger-subtle w-100 text-truncate">Transaksi yang Belum Diproses</div>
                             <div class="card-body py-2 px-3">
                                 <h5 class="display-6 fw-medium date mb-0"><?= number_format($total_transaksi_blm_lunas, 0, ',', '.') ?></h5>
@@ -547,7 +547,7 @@ $db = db_connect();
                         </div>
                     </div>
                     <div class="col">
-                        <div class="card bg-success-subtle border-success-subtle text-success-emphasis w-100  shadow-sm">
+                        <div class="card bg-success-subtle border-success-subtle text-success-emphasis w-100  ">
                             <div style="font-size: 0.9em;" class="card-header py-1 px-3 border-success-subtle w-100 text-truncate">Transaksi yang Sudah Diproses</div>
                             <div class="card-body py-2 px-3">
                                 <h5 class="display-6 fw-medium date mb-0"><?= number_format($total_transaksi_sdh_lunas, 0, ',', '.') ?></h5>
@@ -555,7 +555,7 @@ $db = db_connect();
                         </div>
                     </div>
                     <div class="col">
-                        <div class="card w-100 h-100 shadow-sm">
+                        <div class="card w-100 h-100 ">
                             <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Transaksi Menurut Petugas Kasir</div>
                             <div class="card-body py-2 px-3">
                                 <div class="ratio ratio-4x3 w-100">
@@ -565,7 +565,7 @@ $db = db_connect();
                         </div>
                     </div>
                     <div class="col">
-                        <div class="card w-100 h-100 shadow-sm">
+                        <div class="card w-100 h-100 ">
                             <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Transaksi Per Bulan Menurut Petugas Kasir</div>
                             <div class="card-body py-2 px-3">
                                 <div class="ratio ratio-4x3 w-100">
@@ -576,7 +576,7 @@ $db = db_connect();
                     </div>
                 </div>
                 <div class="mb-2">
-                    <div class="card w-100 h-100 shadow-sm">
+                    <div class="card w-100 h-100 ">
                         <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Transaksi Per Bulan Keseluruhan</div>
                         <div class="card-body py-2 px-3">
                             <div class="ratio ratio-onecol w-100">
@@ -586,7 +586,7 @@ $db = db_connect();
                     </div>
                 </div>
                 <div class="mb-2">
-                    <div class="card bg-primary-subtle border-primary-subtle text-primary-emphasis w-100  shadow-sm">
+                    <div class="card bg-primary-subtle border-primary-subtle text-primary-emphasis w-100  ">
                         <div style="font-size: 0.9em;" class="card-header py-1 px-3 border-primary-subtle w-100 text-truncate">Total Pemasukan Keseluruhan</div>
                         <div class="card-body py-2 px-3">
                             <h5 class="display-6 fw-medium date mb-0"><?= 'Rp' . number_format($total_pemasukan, 0, ',', '.') ?></h5>
@@ -594,7 +594,7 @@ $db = db_connect();
                     </div>
                 </div>
                 <div class="mb-2">
-                    <div class="card w-100 h-100 shadow-sm">
+                    <div class="card w-100 h-100 ">
                         <div style="font-size: 0.9em;" class="card-header py-1 px-3 w-100 text-truncate">Pemasukan Per Bulan</div>
                         <div class="card-body py-2 px-3">
                             <div class="ratio ratio-onecol w-100">

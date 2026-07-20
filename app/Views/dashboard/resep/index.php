@@ -27,76 +27,79 @@
 <?= $this->endSection(); ?>
 <?= $this->section('content'); ?>
 <main class="main-content-inside">
-    <div id="filterFields" class="sticky-top px-2 pt-2" style="z-index: 99; display: none;">
-        <ul class="list-group no-fluid-content-list-group shadow-sm border border-bottom-0">
-            <li class="list-group-item px-2 border-top-0 border-end-0 border-start-0 bg-body-secondary transparent-blur">
-                <div class="no-fluid-content">
-                    <div class="d-flex flex-column flex-lg-row gap-2 mb-2">
-                        <div class="input-group input-group-sm w-auto">
-                            <input type="date" id="tanggalFilter" class="form-control" <?= (session()->get('auto_date') == 1) ? 'value="' . date('Y-m-d') . '"' : ''; ?>>
-                            <?php if (session()->get('auto_date') == 1) : ?>
-                                <button class="btn btn-primary btn-sm bg-gradient" type="button" id="setTodayTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Kembali ke Hari Ini"><i class="fa-solid fa-calendar-day"></i></button>
-                            <?php else : ?>
-                                <button class="btn btn-danger btn-sm bg-gradient " type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
-                            <?php endif; ?>
-                        </div>
-                        <div class="input-group input-group-sm flex-grow-1">
-                            <input type="search" id="searchInput" class="form-control " placeholder="Cari pasien">
-                        </div>
-                    </div>
-                    <div class="accordion accordion-bg-body" id="accordionFilter">
-                        <div class="accordion-item">
-                            <div class="accordion-header">
-                                <button class="accordion-button p-2 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFilter" aria-expanded="false" aria-controls="collapseFilter">
-                                    Pencarian Tambahan
-                                </button>
+    <div id="filterFields" class="sticky-top" style="z-index: 99; display: none;">
+        <div class="filter-bg"></div>
+        <div class="filter-content px-2 pt-2">
+            <ul class="list-group no-fluid-content-list-group list-group-flush">
+                <li class="list-group-item px-2 border-top-0 border-end-0 border-start-0 bg-body-secondary" style="--bs-bg-opacity: 0;">
+                    <div class="no-fluid-content">
+                        <div class="d-flex flex-column flex-lg-row gap-2 mb-2">
+                            <div class="input-group input-group-sm w-auto">
+                                <input type="date" id="tanggalFilter" class="form-control" <?= (session()->get('auto_date') == 1) ? 'value="' . date('Y-m-d') . '"' : ''; ?>>
+                                <?php if (session()->get('auto_date') == 1) : ?>
+                                    <button class="btn btn-primary btn-sm bg-gradient" type="button" id="setTodayTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Kembali ke Hari Ini"><i class="fa-solid fa-calendar-day"></i></button>
+                                <?php else : ?>
+                                    <button class="btn btn-danger btn-sm bg-gradient " type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
+                                <?php endif; ?>
                             </div>
-                            <div id="collapseFilter" class="accordion-collapse collapse" data-bs-parent="#accordionFilter">
-                                <div class="accordion-body px-2 py-1 mt-1">
-                                    <div class="row row-cols-1 row-cols-sm-2 g-1">
-                                        <div class="col">
-                                            <select id="statusFilter" class="form-select form-select-sm">
-                                                <option value="">Semua Status Transaksi</option>
-                                                <option value="1">Diproses</option>
-                                                <option value="0">Belum Diproses</option>
-                                            </select>
+                            <div class="input-group input-group-sm flex-grow-1">
+                                <input type="search" id="searchInput" class="form-control " placeholder="Cari pasien">
+                            </div>
+                        </div>
+                        <div class="accordion accordion-bg-body" id="accordionFilter">
+                            <div class="accordion-item">
+                                <div class="accordion-header">
+                                    <button class="accordion-button p-2 collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFilter" aria-expanded="false" aria-controls="collapseFilter">
+                                        Pencarian Tambahan
+                                    </button>
+                                </div>
+                                <div id="collapseFilter" class="accordion-collapse collapse" data-bs-parent="#accordionFilter">
+                                    <div class="accordion-body px-2 py-1 mt-1">
+                                        <div class="row row-cols-1 row-cols-sm-2 g-1">
+                                            <div class="col">
+                                                <select id="statusFilter" class="form-select form-select-sm">
+                                                    <option value="">Semua Status Transaksi</option>
+                                                    <option value="1">Diproses</option>
+                                                    <option value="0">Belum Diproses</option>
+                                                </select>
+                                            </div>
+                                            <div class="col">
+                                                <select id="jenisFilter" class="form-select form-select-sm">
+                                                    <option value="">Semua Jenis</option>
+                                                    <option value="Rawat Jalan">Rawat Jalan</option>
+                                                    <option value="Rawat Inap">Rawat Inap</option>
+                                                </select>
+                                            </div>
+                                            <div class="col">
+                                                <select id="confirmedFilter" class="form-select form-select-sm">
+                                                    <option value="">Semua Status Konfirmasi</option>
+                                                    <option value="1">Dikonfirmasi</option>
+                                                    <option value="0">Belum Dikonfirmasi</option>
+                                                </select>
+                                            </div>
+                                            <div class="col">
+                                                <select id="genderFilter" class="form-select form-select-sm">
+                                                    <option value="">Semua Jenis Kelamin</option>
+                                                    <option value="L">Laki-Laki</option>
+                                                    <option value="P">Perempuan</option>
+                                                </select>
+                                            </div>
                                         </div>
-                                        <div class="col">
-                                            <select id="jenisFilter" class="form-select form-select-sm">
-                                                <option value="">Semua Jenis</option>
-                                                <option value="Rawat Jalan">Rawat Jalan</option>
-                                                <option value="Rawat Inap">Rawat Inap</option>
-                                            </select>
-                                        </div>
-                                        <div class="col">
-                                            <select id="confirmedFilter" class="form-select form-select-sm">
-                                                <option value="">Semua Status Konfirmasi</option>
-                                                <option value="1">Dikonfirmasi</option>
-                                                <option value="0">Belum Dikonfirmasi</option>
-                                            </select>
-                                        </div>
-                                        <div class="col">
-                                            <select id="genderFilter" class="form-select form-select-sm">
-                                                <option value="">Semua Jenis Kelamin</option>
-                                                <option value="L">Laki-Laki</option>
-                                                <option value="P">Perempuan</option>
-                                            </select>
-                                        </div>
+                                        <select id="dokterFilter" class="form-select form-select-sm  my-1">
+                                            <option value="">Semua Dokter</option>
+                                        </select>
                                     </div>
-                                    <select id="dokterFilter" class="form-select form-select-sm  my-1">
-                                        <option value="">Semua Dokter</option>
-                                    </select>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </li>
-        </ul>
+                </li>
+            </ul>
+        </div>
     </div>
     <div class="px-3 mt-3">
         <div class="no-fluid-content">
-            <div class="shadow-sm rounded">
+            <div class=" rounded">
                 <ul id="resepContainer" class="list-group">
                     <?php for ($i = 0; $i < 12; $i++) : ?>
                         <li class="list-group-item pb-3 pt-3" style="cursor: wait;">

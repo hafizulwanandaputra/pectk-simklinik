@@ -10,25 +10,28 @@
 <?= $this->endSection(); ?>
 <?= $this->section('content'); ?>
 <main class="main-content-inside">
-    <div class="sticky-top px-2 pt-2" style="z-index: 99;">
-        <ul class="list-group no-fluid-content-list-group shadow-sm border border-bottom-0">
-            <li class="list-group-item px-2 border-top-0 border-end-0 border-start-0 bg-body-secondary transparent-blur">
-                <div class="no-fluid-content">
-                    <div class="input-group input-group-sm" id="form-resep-tahunan">
-                        <input type="number" id="tahun" name="tahun" class="form-control rounded-start" <?= (session()->get('auto_date') == 1) ? 'value="' . date('Y') . '"' : ''; ?>>
-                        <button class="btn btn-danger bg-gradient" type="button" id="clearThnButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Bulan"><i class="fa-solid fa-xmark"></i></button>
-                        <button class="btn btn-success bg-gradient " type="button" id="refreshButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan" disabled><i class="fa-solid fa-sync"></i></button>
+    <div class="sticky-top" style="z-index: 99;">
+        <div class="filter-bg"></div>
+        <div class="filter-content px-2 pt-2">
+            <ul class="list-group no-fluid-content-list-group list-group-flush">
+                <li class="list-group-item px-2 border-top-0 border-end-0 border-start-0 bg-body-secondary" style="--bs-bg-opacity: 0;">
+                    <div class="no-fluid-content">
+                        <div class="input-group input-group-sm" id="form-resep-tahunan">
+                            <input type="number" id="tahun" name="tahun" class="form-control rounded-start" <?= (session()->get('auto_date') == 1) ? 'value="' . date('Y') . '"' : ''; ?>>
+                            <button class="btn btn-danger bg-gradient" type="button" id="clearThnButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Bulan"><i class="fa-solid fa-xmark"></i></button>
+                            <button class="btn btn-success bg-gradient " type="button" id="refreshButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan" disabled><i class="fa-solid fa-sync"></i></button>
+                        </div>
                     </div>
-                </div>
-            </li>
-        </ul>
+                </li>
+            </ul>
+        </div>
     </div>
     <div class="px-3 mt-3">
         <div class="no-fluid-content">
             <div class="mb-3">
                 <div class="tab-content" id="nav-tabContent">
                     <div id="reseptahunan-container">
-                        <div class="card shadow-sm  overflow-auto">
+                        <div class="card   overflow-auto">
                             <div class="table-responsive">
                                 <table class="table table-sm mb-0" style="width:100%; font-size: 0.75rem;">
                                     <thead>

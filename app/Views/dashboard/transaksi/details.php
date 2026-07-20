@@ -191,7 +191,7 @@
         <div class="row g-3 mb-2">
             <?php if ($transaksi['dokter'] == 'Barang Medis Habis Pakai') : ?>
                 <div class="col">
-                    <div class="card h-100 shadow-sm  overflow-auto">
+                    <div class="card h-100   overflow-auto">
                         <div class="card-header" id="tambahBMHPContainer" style="display: none;">
                             <form id="tambahBMHP" enctype="multipart/form-data">
                                 <div class="mb-2">
@@ -246,7 +246,7 @@
             <?php else : ?>
                 <?php if ($transaksi['dokter'] != 'Resep Luar') : ?>
                     <div class="col-lg-6">
-                        <div class="card h-100 shadow-sm  overflow-auto">
+                        <div class="card h-100   overflow-auto">
                             <div class="card-header" id="tambahLayananContainer" style="display: none;">
                                 <form id="tambahLayanan" enctype="multipart/form-data">
                                     <div class="mb-2">
@@ -305,7 +305,7 @@
                     </div>
                 <?php endif; ?>
                 <div class="<?= ($transaksi['dokter'] == 'Resep Luar') ? 'col' : 'col-lg-6'; ?>">
-                    <div class="card h-100 shadow-sm  overflow-auto">
+                    <div class="card h-100   overflow-auto">
                         <div class="card-header" id="tambahObatAlkesContainer" style="display: none;">
                             <form id="tambahObatAlkes" enctype="multipart/form-data">
                                 <div class="mb-2">
