@@ -120,7 +120,14 @@
         --bs-box-shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.125);
         --bs-box-shadow-lg: 0 1rem 3rem rgba(0, 0, 0, 0.125);
         --bs-box-shadow-inset: inset 0 1px 2px rgba(0, 0, 0, 0.125);
-        --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
+        --bs-gradient: linear-gradient(to bottom,
+                rgba(255, 255, 255, .3) 0%,
+                rgba(255, 255, 255, .15) 2px,
+                rgba(0, 0, 0, 0.025) 1rem),
+            linear-gradient(to top,
+                rgba(255, 255, 255, .1) 0%,
+                rgba(255, 255, 255, .05) 2px,
+                rgba(0, 0, 0, 0.025) 1rem);
         --bs-border-radius: 0.5rem;
         --bs-border-radius-sm: 0.5rem;
         --bs-border-radius-lg: 0.75rem;
@@ -146,7 +153,7 @@
         background-image: var(--bs-gradient);
     }
 
-    .btn-check:checked.bg+.btn.bg-gradient,
+    /* .btn-check:checked.bg+.btn.bg-gradient,
     :not(.btn-check)+.btn:active.bg-gradient,
     .btn:first-child:active.bg-gradient,
     .btn.active.bg-gradient,
@@ -160,14 +167,14 @@
 
     .navbar-toggler:active.bg-gradient {
         --bs-gradient: linear-gradient(180deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0));
-    }
+    } */
 
     .form-control:active::-webkit-file-upload-button {
-        background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0));
+        background-image: var(--bs-gradient);
     }
 
     .form-control:active::file-selector-button {
-        background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0));
+        background-image: var(--bs-gradient);
     }
 
     .form-switch .form-check-input:checked {
@@ -175,10 +182,7 @@
     }
 
     .form-switch .form-check-input:active {
-        background-image: linear-gradient(180deg,
-                rgba(0, 0, 0, 0.25) 0%,
-                rgba(0, 0, 0, 0) 10px,
-                rgba(255, 255, 255, 0.25) 100%),
+        background-image: var(--bs-gradient),
             var(--bs-form-switch-bg);
     }
 
@@ -187,10 +191,7 @@
     }
 
     .form-check-input:active {
-        background-image: linear-gradient(180deg,
-                rgba(0, 0, 0, 0.25) 0%,
-                rgba(0, 0, 0, 0) 10px,
-                rgba(255, 255, 255, 0.25) 100%),
+        background-image: var(--bs-gradient),
             var(--bs-form-check-bg-image);
     }
 
@@ -295,44 +296,92 @@
         -webkit-overflow-scrolling: touch;
     }
 
-    .btn-outline-primary:hover,
-    .btn-outline-primary:focus-visible {
-        --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
+    .btn-outline-primary {
+        --bs-gradient: linear-gradient(to bottom,
+                rgba(255, 255, 255, .3) 0%,
+                rgba(255, 255, 255, .15) 2px,
+                rgba(0, 0, 0, 0.025) 1rem),
+            linear-gradient(to top,
+                rgba(255, 255, 255, .1) 0%,
+                rgba(255, 255, 255, .05) 2px,
+                rgba(0, 0, 0, 0.025) 1rem);
     }
 
-    .btn-outline-secondary:hover,
-    .btn-outline-secondary:focus-visible {
-        --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
+    .btn-outline-secondary {
+        --bs-gradient: linear-gradient(to bottom,
+                rgba(255, 255, 255, .3) 0%,
+                rgba(255, 255, 255, .15) 2px,
+                rgba(0, 0, 0, 0.025) 1rem),
+            linear-gradient(to top,
+                rgba(255, 255, 255, .1) 0%,
+                rgba(255, 255, 255, .05) 2px,
+                rgba(0, 0, 0, 0.025) 1rem);
     }
 
-    .btn-outline-success:hover,
-    .btn-outline-success:focus-visible {
-        --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
+    .btn-outline-success {
+        --bs-gradient: linear-gradient(to bottom,
+                rgba(255, 255, 255, .3) 0%,
+                rgba(255, 255, 255, .15) 2px,
+                rgba(0, 0, 0, 0.025) 1rem),
+            linear-gradient(to top,
+                rgba(255, 255, 255, .1) 0%,
+                rgba(255, 255, 255, .05) 2px,
+                rgba(0, 0, 0, 0.025) 1rem);
     }
 
-    .btn-outline-info:hover,
-    .btn-outline-info:focus-visible {
-        --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
+    .btn-outline-info {
+        --bs-gradient: linear-gradient(to bottom,
+                rgba(255, 255, 255, .3) 0%,
+                rgba(255, 255, 255, .15) 2px,
+                rgba(0, 0, 0, 0.025) 1rem),
+            linear-gradient(to top,
+                rgba(255, 255, 255, .1) 0%,
+                rgba(255, 255, 255, .05) 2px,
+                rgba(0, 0, 0, 0.025) 1rem);
     }
 
-    .btn-outline-warning:hover,
-    .btn-outline-warning:focus-visible {
-        --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
+    .btn-outline-warning {
+        --bs-gradient: linear-gradient(to bottom,
+                rgba(255, 255, 255, .3) 0%,
+                rgba(255, 255, 255, .15) 2px,
+                rgba(0, 0, 0, 0.025) 1rem),
+            linear-gradient(to top,
+                rgba(255, 255, 255, .1) 0%,
+                rgba(255, 255, 255, .05) 2px,
+                rgba(0, 0, 0, 0.025) 1rem);
     }
 
-    .btn-outline-danger:hover,
-    .btn-outline-danger:focus-visible {
-        --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
+    .btn-outline-danger {
+        --bs-gradient: linear-gradient(to bottom,
+                rgba(255, 255, 255, .3) 0%,
+                rgba(255, 255, 255, .15) 2px,
+                rgba(0, 0, 0, 0.025) 1rem),
+            linear-gradient(to top,
+                rgba(255, 255, 255, .1) 0%,
+                rgba(255, 255, 255, .05) 2px,
+                rgba(0, 0, 0, 0.025) 1rem);
     }
 
-    .btn-outline-light:hover,
-    .btn-outline-light:focus-visible {
-        --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
+    .btn-outline-light {
+        --bs-gradient: linear-gradient(to bottom,
+                rgba(255, 255, 255, .3) 0%,
+                rgba(255, 255, 255, .15) 2px,
+                rgba(0, 0, 0, 0.025) 1rem),
+            linear-gradient(to top,
+                rgba(255, 255, 255, .1) 0%,
+                rgba(255, 255, 255, .05) 2px,
+                rgba(0, 0, 0, 0.025) 1rem);
     }
 
-    .btn-outline-dark:hover,
-    .btn-outline-dark:focus-visible {
-        --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
+    .btn-outline-dark {
+        --bs-gradient: linear-gradient(to bottom,
+                rgba(255, 255, 255, .3) 0%,
+                rgba(255, 255, 255, .15) 2px,
+                rgba(0, 0, 0, 0.025) 1rem),
+            linear-gradient(to top,
+                rgba(255, 255, 255, .1) 0%,
+                rgba(255, 255, 255, .05) 2px,
+                rgba(0, 0, 0, 0.025) 1rem);
     }
 
     .btn-body {
@@ -344,7 +393,7 @@
         --bs-btn-hover-border-color: #dee2e6;
         --bs-btn-focus-shadow-rgb: 211, 212, 213;
         --bs-btn-active-color: #000;
-        --bs-btn-active-bg: #e9ecef;
+        --bs-btn-active-bg: #ced4da;
         --bs-btn-active-border-color: #dee2e6;
         --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
         --bs-btn-disabled-color: #000;
@@ -366,12 +415,18 @@
         --bs-btn-disabled-color: #212529;
         --bs-btn-disabled-bg: transparent;
         --bs-btn-disabled-border-color: #212529;
-        --bs-gradient: none;
     }
 
     .btn-outline-body:hover,
     .btn-outline-body:focus-visible {
-        --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
+        --bs-gradient: linear-gradient(to bottom,
+                rgba(255, 255, 255, .3) 0%,
+                rgba(255, 255, 255, .15) 2px,
+                rgba(0, 0, 0, 0.025) 1rem),
+            linear-gradient(to top,
+                rgba(255, 255, 255, .1) 0%,
+                rgba(255, 255, 255, .05) 2px,
+                rgba(0, 0, 0, 0.025) 1rem);
         ;
     }
 
@@ -473,23 +528,15 @@
     }
 
     .dropdown-item.active {
-        background-image: var(--bs-gradient);
-        color: var(--bs-dropdown-link-active-color);
+        color: var(--bs-dropdown-link-hover-color);
         text-decoration: none;
-        background-color: var(--bs-dropdown-link-active-bg);
-        box-shadow:
-            inset 0 1px 0 0 var(--bs-primary),
-            inset 0 -1px 0 0 var(--bs-primary);
+        background-color: rgba(var(--bs-body-color-rgb), 0.15);
     }
 
     .dropdown-item:active {
-        background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0));
-        color: var(--bs-dropdown-link-active-color);
+        color: var(--bs-dropdown-link-hover-color);
         text-decoration: none;
-        background-color: var(--bs-dropdown-link-active-bg);
-        box-shadow:
-            inset 0 1px 0 0 var(--bs-primary),
-            inset 0 -1px 0 0 var(--bs-primary);
+        background-color: rgba(var(--bs-body-color-rgb), 0.3);
     }
 
     .transparent-blur {
@@ -580,7 +627,7 @@
         --bs-btn-hover-border-color: #495057;
         --bs-btn-focus-shadow-rgb: 66, 70, 73;
         --bs-btn-active-color: #fff;
-        --bs-btn-active-bg: #343a40;
+        --bs-btn-active-bg: #495057;
         --bs-btn-active-border-color: #495057;
         --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
         --bs-btn-disabled-color: #fff;
@@ -602,12 +649,18 @@
         --bs-btn-disabled-color: #f8f9fa;
         --bs-btn-disabled-bg: transparent;
         --bs-btn-disabled-border-color: #f8f9fa;
-        --bs-gradient: none;
     }
 
     [data-bs-theme=dark] .btn-outline-body:hover,
     [data-bs-theme=dark] .btn-outline-body:focus-visible {
-        --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
+        --bs-gradient: linear-gradient(to bottom,
+                rgba(255, 255, 255, .3) 0%,
+                rgba(255, 255, 255, .15) 2px,
+                rgba(0, 0, 0, 0.025) 1rem),
+            linear-gradient(to top,
+                rgba(255, 255, 255, .1) 0%,
+                rgba(255, 255, 255, .05) 2px,
+                rgba(0, 0, 0, 0.025) 1rem);
         ;
     }
 </style>
