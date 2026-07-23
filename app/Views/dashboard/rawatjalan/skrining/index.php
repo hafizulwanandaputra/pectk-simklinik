@@ -223,7 +223,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <div class="mb-2">
                     <div>
                         <figure class="figure mb-0">
-                            <img src="<?= base_url('assets/images/skala_nyeri.png') ?>" class="figure-img img-fluid rounded border shadow-sm mb-0 pb-0" alt="Skala Nyeri">
+                            <img src="<?= base_url('assets/images/skala_nyeri.png') ?>" class="figure-img img-fluid rounded border mb-0 pb-0" alt="Skala Nyeri">
                         </figure>
                     </div>
                 </div>
