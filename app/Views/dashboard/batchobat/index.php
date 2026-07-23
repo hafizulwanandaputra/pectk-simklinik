@@ -368,7 +368,7 @@
                             }
                         }
 
-                        return `<span class="date text-nowrap">${data}<br><span class="badge ${badgeClass} bg-gradient">${statusText}</span></span>`;
+                        return `<span class="date text-nowrap">${data}<br><span class="badge ${badgeClass}">${statusText}</span></span>`;
                     }
                 },
                 {

@@ -375,9 +375,9 @@
                 data.istirahat.forEach(function(istirahat) {
                     let jenis_kelamin = istirahat.jenis_kelamin;
                     if (jenis_kelamin === 'L') {
-                        jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap" style="background-color: SkyBlue"><i class="fa-solid fa-mars"></i> LAKI-LAKI</span>`;
+                        jenis_kelamin = `<span class="badge text-black text-nowrap" style="background-color: SkyBlue"><i class="fa-solid fa-mars"></i> LAKI-LAKI</span>`;
                     } else if (jenis_kelamin === 'P') {
-                        jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap" style="background-color: Pink"><i class="fa-solid fa-venus"></i> PEREMPUAN</span>`;
+                        jenis_kelamin = `<span class="badge text-black text-nowrap" style="background-color: Pink"><i class="fa-solid fa-venus"></i> PEREMPUAN</span>`;
                     }
                     const diagnosis = istirahat.diagnosis ?
                         `<span class="isian-teks">${istirahat.diagnosis}</span>` :

@@ -324,15 +324,15 @@
                 data.sakitmata.forEach(function(sakitmata) {
                     let jenis_kelamin = sakitmata.jenis_kelamin;
                     if (jenis_kelamin === 'L') {
-                        jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap" style="background-color: SkyBlue"><i class="fa-solid fa-mars"></i> LAKI-LAKI</span>`;
+                        jenis_kelamin = `<span class="badge text-black text-nowrap" style="background-color: SkyBlue"><i class="fa-solid fa-mars"></i> LAKI-LAKI</span>`;
                     } else if (jenis_kelamin === 'P') {
-                        jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap" style="background-color: Pink"><i class="fa-solid fa-venus"></i> PEREMPUAN</span>`;
+                        jenis_kelamin = `<span class="badge text-black text-nowrap" style="background-color: Pink"><i class="fa-solid fa-venus"></i> PEREMPUAN</span>`;
                     }
                     let biasa = sakitmata.biasa;
                     if (biasa === '0') {
-                        biasa = `<span class="badge text-bg-danger bg-gradient text-nowrap">SAKIT</span>`;
+                        biasa = `<span class="badge text-bg-danger text-nowrap">SAKIT</span>`;
                     } else if (biasa === '1') {
-                        biasa = `<span class="badge text-bg-secondary bg-gradient text-nowrap">BIASA</span>`;
+                        biasa = `<span class="badge text-bg-secondary text-nowrap">BIASA</span>`;
                     }
 
                     const SakitMataElement = `

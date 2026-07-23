@@ -188,11 +188,11 @@
                     const loket = antrean.loket ? `${antrean.loket}` : `<em>Belum ada loket</em>`;
                     let status = antrean.status;
                     if (status === 'BELUM DIPANGGIL') {
-                        status = `<span class="badge text-bg-warning bg-gradient">${antrean.status}</span>`;
+                        status = `<span class="badge text-bg-warning">${antrean.status}</span>`;
                     } else if (status === 'SUDAH DIPANGGIL') {
-                        status = `<span class="badge text-bg-success bg-gradient">${antrean.status}</span>`;
+                        status = `<span class="badge text-bg-success">${antrean.status}</span>`;
                     } else if (status === 'BATAL') {
-                        status = `<span class="badge text-bg-danger bg-gradient">${antrean.status}</span>`;
+                        status = `<span class="badge text-bg-danger">${antrean.status}</span>`;
                     }
                     let call_status = antrean.status;
                     if (call_status === 'BELUM DIPANGGIL') {

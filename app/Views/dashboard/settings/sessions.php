@@ -251,8 +251,8 @@
                         // Check if 'expires_at' has passed the current date and time
                         const isExpired = expiresAt < currentDate;
                         const statusBadge = isExpired ?
-                            '<span class="badge bg-danger bg-gradient">Kedaluwarsa</span>' :
-                            '<span class="badge bg-success bg-gradient">Aktif</span>';
+                            '<span class="badge bg-danger">Kedaluwarsa</span>' :
+                            '<span class="badge bg-success">Aktif</span>';
                         return `<strong>${row.fullname}</strong><br>@${data} ${statusBadge}`;
                     }
                 },

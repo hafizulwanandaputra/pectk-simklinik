@@ -472,19 +472,19 @@
                         `<span class="isian-teks">${sp_operasi.dokter_operator}</span>`;
                     let jenis_kelamin = sp_operasi.jenis_kelamin;
                     if (jenis_kelamin === 'L') {
-                        jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap" style="background-color: SkyBlue"><i class="fa-solid fa-mars"></i> LAKI-LAKI</span>`;
+                        jenis_kelamin = `<span class="badge text-black text-nowrap" style="background-color: SkyBlue"><i class="fa-solid fa-mars"></i> LAKI-LAKI</span>`;
                     } else if (jenis_kelamin === 'P') {
-                        jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap" style="background-color: Pink"><i class="fa-solid fa-venus"></i> PEREMPUAN</span>`;
+                        jenis_kelamin = `<span class="badge text-black text-nowrap" style="background-color: Pink"><i class="fa-solid fa-venus"></i> PEREMPUAN</span>`;
                     }
                     let statusBadge = sp_operasi.status_operasi;
                     if (statusBadge === 'DIJADWAL') {
-                        statusBadge = `<span class="badge bg-primary bg-gradient">Dijadwal</span>`;
+                        statusBadge = `<span class="badge bg-primary">Dijadwal</span>`;
                     } else if (statusBadge === 'OPERASI') {
-                        statusBadge = `<span class="badge bg-secondary bg-gradient">Operasi</span>`;
+                        statusBadge = `<span class="badge bg-secondary">Operasi</span>`;
                     } else if (statusBadge === 'TERLAKSANA') {
-                        statusBadge = `<span class="badge bg-success bg-gradient">Terlaksana</span>`;
+                        statusBadge = `<span class="badge bg-success">Terlaksana</span>`;
                     } else if (statusBadge === 'BATAL') {
-                        statusBadge = `<span class="badge bg-danger bg-gradient">Batal</span>`;
+                        statusBadge = `<span class="badge bg-danger">Batal</span>`;
                     }
                     const sp_operasiElement = `
                     <li class="list-group-item border-top-0 pb-3 pt-3">

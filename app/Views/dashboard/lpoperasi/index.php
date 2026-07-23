@@ -363,9 +363,9 @@
                 data.lp_operasi.forEach(function(lp_operasi) {
                     let jenis_kelamin = lp_operasi.jenis_kelamin;
                     if (jenis_kelamin === 'L') {
-                        jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap" style="background-color: SkyBlue"><i class="fa-solid fa-mars"></i> LAKI-LAKI</span>`;
+                        jenis_kelamin = `<span class="badge text-black text-nowrap" style="background-color: SkyBlue"><i class="fa-solid fa-mars"></i> LAKI-LAKI</span>`;
                     } else if (jenis_kelamin === 'P') {
-                        jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap" style="background-color: Pink"><i class="fa-solid fa-venus"></i> PEREMPUAN</span>`;
+                        jenis_kelamin = `<span class="badge text-black text-nowrap" style="background-color: Pink"><i class="fa-solid fa-venus"></i> PEREMPUAN</span>`;
                     }
                     const lama_operasi = lp_operasi.lama_operasi ?
                         `<span class="isian-teks date">${lp_operasi.lama_operasi} menit</span>` :

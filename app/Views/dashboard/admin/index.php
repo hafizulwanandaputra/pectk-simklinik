@@ -308,8 +308,8 @@
                     data: 'fullname',
                     render: function(data, type, row) {
                         let statusBadge = row.active == 1 ?
-                            '<span class="badge bg-success bg-gradient">Aktif</span>' :
-                            '<span class="badge bg-danger bg-gradient">Tidak Aktif</span>';
+                            '<span class="badge bg-success">Aktif</span>' :
+                            '<span class="badge bg-danger">Tidak Aktif</span>';
 
                         return `${data} ${statusBadge}`;
                     }

@@ -299,11 +299,11 @@
                     const jumlah_bmhp = parseInt(bmhp.jumlah_bmhp);
                     const total_biaya = parseInt(bmhp.total_biaya);
                     const statusBadge1 = bmhp.status == '1' ?
-                        `<span class="badge bg-success bg-gradient">Transaksi Diproses</span>` :
-                        `<span class="badge bg-danger bg-gradient">Transaksi Belum Diproses</span>`;
+                        `<span class="badge bg-success">Transaksi Diproses</span>` :
+                        `<span class="badge bg-danger">Transaksi Belum Diproses</span>`;
                     const statusBadge2 = bmhp.konfirmasi_kasir == '1' ?
-                        `<span class="badge bg-success bg-gradient">Dikonfirmasi</span> ${statusBadge1}` :
-                        `<span class="badge bg-secondary bg-gradient">Tidak Dikonfirmasi</span>`;
+                        `<span class="badge bg-success">Dikonfirmasi</span> ${statusBadge1}` :
+                        `<span class="badge bg-secondary">Tidak Dikonfirmasi</span>`;
                     const statusButtons = bmhp.konfirmasi_kasir == '1' ? `disabled` : ``;
                     const bmhpElement = `
             <li class="list-group-item border-top-0 pb-3 pt-3">

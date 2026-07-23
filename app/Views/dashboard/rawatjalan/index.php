@@ -522,9 +522,9 @@
                 // Mengkondisikan jenis kelamin
                 let jenis_kelamin = rawatjalan.jenis_kelamin;
                 if (jenis_kelamin === 'L') {
-                    jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap h-100 d-flex align-items-center me-1" style="background-color: SkyBlue"><i class="fa-solid fa-mars"></i><span class="ms-1">LAKI-LAKI</span></span>`;
+                    jenis_kelamin = `<span class="badge text-black text-nowrap h-100 d-flex align-items-center me-1" style="background-color: SkyBlue"><i class="fa-solid fa-mars"></i><span class="ms-1">LAKI-LAKI</span></span>`;
                 } else if (jenis_kelamin === 'P') {
-                    jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap h-100 d-flex align-items-center me-1" style="background-color: Pink"><i class="fa-solid fa-venus"></i><span class="ms-1">PEREMPUAN</span></span>`;
+                    jenis_kelamin = `<span class="badge text-black text-nowrap h-100 d-flex align-items-center me-1" style="background-color: Pink"><i class="fa-solid fa-venus"></i><span class="ms-1">PEREMPUAN</span></span>`;
                 }
                 // Gunakan pesan jika tidak ada nomor telepon
                 const telpon = rawatjalan.telpon ? rawatjalan.telpon : "<em>Tidak ada</em>";
@@ -533,11 +533,11 @@
                 let status = rawatjalan.status;
                 let transaksi = rawatjalan.transaksi;
                 if (status === 'DAFTAR' && transaksi === '0') {
-                    status = `<span class="badge text-bg-primary bg-gradient h-100 d-flex align-items-center me-1">Didaftarkan</span>`;
+                    status = `<span class="badge text-bg-primary h-100 d-flex align-items-center me-1">Didaftarkan</span>`;
                 } else if (status === 'DAFTAR' && transaksi === '1') {
-                    status = `<span class="badge text-bg-success bg-gradient h-100 d-flex align-items-center me-1">Sudah Dilayani</span>`;
+                    status = `<span class="badge text-bg-success h-100 d-flex align-items-center me-1">Sudah Dilayani</span>`;
                 } else if (status === 'BATAL') {
-                    status = `<span class="badge text-bg-danger bg-gradient h-100 d-flex align-items-center">Dibatalkan</span>`;
+                    status = `<span class="badge text-bg-danger h-100 d-flex align-items-center">Dibatalkan</span>`;
                 }
 
                 // Membuat elemen baris untuk setiap rawatjalan
@@ -718,9 +718,9 @@
                 // Mengkondisikan jenis kelamin
                 let jenis_kelamin = rawatjalan.jenis_kelamin;
                 if (jenis_kelamin === 'L') {
-                    jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap h-100 d-flex align-items-center me-1" style="background-color: SkyBlue"><i class="fa-solid fa-mars"></i><span class="ms-1">LAKI-LAKI</span></span>`;
+                    jenis_kelamin = `<span class="badge text-black text-nowrap h-100 d-flex align-items-center me-1" style="background-color: SkyBlue"><i class="fa-solid fa-mars"></i><span class="ms-1">LAKI-LAKI</span></span>`;
                 } else if (jenis_kelamin === 'P') {
-                    jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap h-100 d-flex align-items-center me-1" style="background-color: Pink"><i class="fa-solid fa-venus"></i><span class="ms-1">PEREMPUAN</span></span>`;
+                    jenis_kelamin = `<span class="badge text-black text-nowrap h-100 d-flex align-items-center me-1" style="background-color: Pink"><i class="fa-solid fa-venus"></i><span class="ms-1">PEREMPUAN</span></span>`;
                 }
                 // Gunakan pesan jika tidak ada nomor telepon
                 const telpon = rawatjalan.telpon ? rawatjalan.telpon : "<em>Tidak ada</em>";
@@ -729,11 +729,11 @@
                 let status = rawatjalan.status;
                 let transaksi = rawatjalan.transaksi;
                 if (status === 'DAFTAR' && transaksi === '0') {
-                    status = `<span class="badge text-bg-primary bg-gradient h-100 d-flex align-items-center me-1">Didaftarkan</span>`;
+                    status = `<span class="badge text-bg-primary h-100 d-flex align-items-center me-1">Didaftarkan</span>`;
                 } else if (status === 'DAFTAR' && transaksi === '1') {
-                    status = `<span class="badge text-bg-success bg-gradient h-100 d-flex align-items-center me-1">Sudah Dilayani</span>`;
+                    status = `<span class="badge text-bg-success h-100 d-flex align-items-center me-1">Sudah Dilayani</span>`;
                 } else if (status === 'BATAL') {
-                    status = `<span class="badge text-bg-danger bg-gradient h-100 d-flex align-items-center">Dibatalkan</span>`;
+                    status = `<span class="badge text-bg-danger h-100 d-flex align-items-center">Dibatalkan</span>`;
                 }
 
                 // Membuat elemen baris untuk setiap rawatjalan
@@ -906,9 +906,9 @@
                 // Mengkondisikan jenis kelamin
                 let jenis_kelamin = rawatjalan.jenis_kelamin;
                 if (jenis_kelamin === 'L') {
-                    jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap h-100 d-flex align-items-center me-1" style="background-color: SkyBlue"><i class="fa-solid fa-mars"></i><span class="ms-1">LAKI-LAKI</span></span>`;
+                    jenis_kelamin = `<span class="badge text-black text-nowrap h-100 d-flex align-items-center me-1" style="background-color: SkyBlue"><i class="fa-solid fa-mars"></i><span class="ms-1">LAKI-LAKI</span></span>`;
                 } else if (jenis_kelamin === 'P') {
-                    jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap h-100 d-flex align-items-center me-1" style="background-color: Pink"><i class="fa-solid fa-venus"></i><span class="ms-1">PEREMPUAN</span></span>`;
+                    jenis_kelamin = `<span class="badge text-black text-nowrap h-100 d-flex align-items-center me-1" style="background-color: Pink"><i class="fa-solid fa-venus"></i><span class="ms-1">PEREMPUAN</span></span>`;
                 }
                 // Gunakan pesan jika tidak ada nomor telepon
                 const telpon = rawatjalan.telpon ? rawatjalan.telpon : "<em>Tidak ada</em>";
@@ -917,11 +917,11 @@
                 let status = rawatjalan.status;
                 let transaksi = rawatjalan.transaksi;
                 if (status === 'DAFTAR' && transaksi === '0') {
-                    status = `<span class="badge text-bg-primary bg-gradient h-100 d-flex align-items-center me-1">Didaftarkan</span>`;
+                    status = `<span class="badge text-bg-primary h-100 d-flex align-items-center me-1">Didaftarkan</span>`;
                 } else if (status === 'DAFTAR' && transaksi === '1') {
-                    status = `<span class="badge text-bg-success bg-gradient h-100 d-flex align-items-center me-1">Sudah Dilayani</span>`;
+                    status = `<span class="badge text-bg-success h-100 d-flex align-items-center me-1">Sudah Dilayani</span>`;
                 } else if (status === 'BATAL') {
-                    status = `<span class="badge text-bg-danger bg-gradient h-100 d-flex align-items-center">Dibatalkan</span>`;
+                    status = `<span class="badge text-bg-danger h-100 d-flex align-items-center">Dibatalkan</span>`;
                 }
 
                 // Membuat elemen baris untuk setiap rawatjalan

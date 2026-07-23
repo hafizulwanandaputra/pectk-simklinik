@@ -257,8 +257,8 @@
                     data: 'jaminanStatus',
                     render: function(data, type, row) {
                         let statusBadge = row.jaminanStatus == 'AKTIF' ?
-                            '<span class="badge bg-success bg-gradient">Aktif</span>' :
-                            '<span class="badge bg-danger bg-gradient">Tidak Aktif</span>';
+                            '<span class="badge bg-success">Aktif</span>' :
+                            '<span class="badge bg-danger">Tidak Aktif</span>';
 
                         return `${statusBadge}`;
                     }

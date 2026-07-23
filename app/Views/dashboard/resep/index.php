@@ -360,22 +360,22 @@
                 data.resep.forEach(function(resep) {
                     let jenis_kelamin = resep.jenis_kelamin;
                     if (jenis_kelamin === 'L') {
-                        jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap" style="background-color: SkyBlue"><i class="fa-solid fa-mars"></i> LAKI-LAKI</span>`;
+                        jenis_kelamin = `<span class="badge text-black text-nowrap" style="background-color: SkyBlue"><i class="fa-solid fa-mars"></i> LAKI-LAKI</span>`;
                     } else if (jenis_kelamin === 'P') {
-                        jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap" style="background-color: Pink"><i class="fa-solid fa-venus"></i> PEREMPUAN</span>`;
+                        jenis_kelamin = `<span class="badge text-black text-nowrap" style="background-color: Pink"><i class="fa-solid fa-venus"></i> PEREMPUAN</span>`;
                     }
                     const jumlah_resep = parseInt(resep.jumlah_resep);
                     const total_biaya = parseInt(resep.total_biaya);
                     const statusBadge = resep.status == '1' ?
-                        `<span class="badge bg-success bg-gradient">Transaksi Diproses</span>` :
-                        `<span class="badge bg-danger bg-gradient">Transaksi Belum Diproses</span>`;
+                        `<span class="badge bg-success">Transaksi Diproses</span>` :
+                        `<span class="badge bg-danger">Transaksi Belum Diproses</span>`;
                     const statusButtons = resep.status == '1' ? `disabled` : ``;
                     const status = resep.status == '1' ? `disabled` : ``;
                     let nomor_registrasi = resep.nomor_registrasi || "";
                     if (nomor_registrasi.includes("RJ")) {
-                        nomor_registrasi = `<span class="badge bg-success bg-gradient text-nowrap"><i class="fa-solid fa-hospital-user"></i> RAWAT JALAN</span>`;
+                        nomor_registrasi = `<span class="badge bg-success text-nowrap"><i class="fa-solid fa-hospital-user"></i> RAWAT JALAN</span>`;
                     } else if (nomor_registrasi.includes("RI")) {
-                        nomor_registrasi = `<span class="badge bg-success bg-gradient text-nowrap"><i class="fa-solid fa-bed-pulse"></i> RAWAT INAP</span>`;
+                        nomor_registrasi = `<span class="badge bg-success text-nowrap"><i class="fa-solid fa-bed-pulse"></i> RAWAT INAP</span>`;
                     }
                     const resepElement = `
             <li class="list-group-item pb-3 pt-3">

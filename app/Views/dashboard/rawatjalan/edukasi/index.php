@@ -588,11 +588,11 @@ $usia = $registrasi->diff($tanggal_lahir);
                 data.forEach(function(evaluasi_edukasi) {
                     let evaluasi = evaluasi_edukasi.evaluasi;
                     if (evaluasi === 'MENGERTI') {
-                        evaluasi = `<span class="badge text-bg-success bg-gradient">Mengerti</span>`;
+                        evaluasi = `<span class="badge text-bg-success">Mengerti</span>`;
                     } else if (evaluasi === 'RE-EDUKASI') {
-                        evaluasi = `<span class="badge text-bg-warning bg-gradient">Re-edukasi</span>`;
+                        evaluasi = `<span class="badge text-bg-warning">Re-edukasi</span>`;
                     } else if (evaluasi === 'RE-DEMONSTRASI') {
-                        evaluasi = `<span class="badge text-bg-warning bg-gradient">Re-demonstrasi</span>`;
+                        evaluasi = `<span class="badge text-bg-warning">Re-demonstrasi</span>`;
                     }
                     const evaluasiEdukasiElement = `
                     <li class="list-group-item">

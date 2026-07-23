@@ -560,30 +560,30 @@
                         `<span style="height: 1em;" class="isian-teks lh-1 fw-medium fst-italic user-select-none">Anomim</span>`;
                     let jenis_kelamin = transaksi.jenis_kelamin;
                     if (jenis_kelamin === 'L') {
-                        jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap" style="background-color: SkyBlue"><i class="fa-solid fa-mars"></i> LAKI-LAKI</span>`;
+                        jenis_kelamin = `<span class="badge text-black text-nowrap" style="background-color: SkyBlue"><i class="fa-solid fa-mars"></i> LAKI-LAKI</span>`;
                     } else if (jenis_kelamin === 'P') {
-                        jenis_kelamin = `<span class="badge text-black bg-gradient text-nowrap" style="background-color: Pink"><i class="fa-solid fa-venus"></i> PEREMPUAN</span>`;
+                        jenis_kelamin = `<span class="badge text-black text-nowrap" style="background-color: Pink"><i class="fa-solid fa-venus"></i> PEREMPUAN</span>`;
                     }
                     const kasir = transaksi.kasir == 'Ditambahkan Dokter' ? `opacity-50 fst-italic user-select-none` : ``;
                     const total_pembayaran = parseInt(transaksi.total_pembayaran);
                     const statusBadge = transaksi.lunas == '1' ?
-                        `<span class="badge bg-success bg-gradient">Transaksi Diproses</span>` :
-                        `<span class="badge bg-danger bg-gradient">Transaksi Belum Diproses</span>`;
+                        `<span class="badge bg-success">Transaksi Diproses</span>` :
+                        `<span class="badge bg-danger">Transaksi Belum Diproses</span>`;
                     const bank = transaksi.bank ? ` (${transaksi.bank})` : ``;
                     const metode_pembayaran = transaksi.metode_pembayaran ?
                         `<span class="isian-teks">${transaksi.metode_pembayaran} ${bank}</span>` :
                         `<span class="isian-teks opacity-50 fst-italic user-select-none">Belum ada</span>`;
                     let nomor_registrasi = transaksi.nomor_registrasi || "";
                     if (nomor_registrasi.includes("RJ")) {
-                        nomor_registrasi = `<span class="badge bg-success bg-gradient text-nowrap"><i class="fa-solid fa-hospital-user"></i> RAWAT JALAN</span>`;
+                        nomor_registrasi = `<span class="badge bg-success text-nowrap"><i class="fa-solid fa-hospital-user"></i> RAWAT JALAN</span>`;
                     } else if (nomor_registrasi.includes("RI")) {
-                        nomor_registrasi = `<span class="badge bg-success bg-gradient text-nowrap"><i class="fa-solid fa-bed-pulse"></i> RAWAT INAP</span>`;
+                        nomor_registrasi = `<span class="badge bg-success text-nowrap"><i class="fa-solid fa-bed-pulse"></i> RAWAT INAP</span>`;
                     }
-                    const jenisResep = transaksi.id_resep ? `<span class="badge bg-secondary bg-gradient text-nowrap"><i class="fa-solid fa-prescription-bottle-medical"></i> RESEP LUAR</span>` : nomor_registrasi;
-                    const jaminan = transaksi.jaminan ? `<span class="badge bg-secondary bg-gradient text-nowrap">${transaksi.jaminan}</span>` : ``;
+                    const jenisResep = transaksi.id_resep ? `<span class="badge bg-secondary text-nowrap"><i class="fa-solid fa-prescription-bottle-medical"></i> RESEP LUAR</span>` : nomor_registrasi;
+                    const jaminan = transaksi.jaminan ? `<span class="badge bg-secondary text-nowrap">${transaksi.jaminan}</span>` : ``;
                     let dokter = transaksi.dokter;
                     if (dokter === 'Barang Medis Habis Pakai') {
-                        dokter = `<span class="badge bg-secondary bg-gradient text-nowrap">${transaksi.dokter}</span>`;
+                        dokter = `<span class="badge bg-secondary text-nowrap">${transaksi.dokter}</span>`;
                     } else {
                         dokter = `${jenis_kelamin} ${jenisResep} ${jaminan}`;
                     }
