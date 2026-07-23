@@ -523,19 +523,6 @@
         pointer-events: none;
     }
 
-    .nav-pills {
-        --bs-nav-pills-link-active-color: var(--bs-body-color);
-        --bs-nav-pills-link-active-bg: var(--bs-tertiary-bg);
-    }
-
-    .nav-pills .nav-link.active,
-    .nav-pills .show>.nav-link {
-        background-image: var(--bs-gradient);
-        -webkit-backdrop-filter: blur(0);
-        backdrop-filter: blur(0);
-        box-shadow: inset 0 0 0 1px var(--bs-border-color);
-    }
-
     .form-range:focus::-webkit-slider-thumb {
         background-color: #ced4da;
         box-shadow: var(--bs-box-shadow-sm);
@@ -628,14 +615,6 @@
             border-bottom: none;
         }
 
-        .nav-pills .nav-link.active,
-        .nav-pills .show>.nav-link {
-            background-color: rgba(var(--bs-tertiary-bg-rgb), 0.75);
-            -webkit-backdrop-filter: blur(4px);
-            backdrop-filter: blur(4px);
-            box-shadow: inset 0 0 0 1px var(--bs-border-color);
-        }
-
         .form-range::-webkit-slider-thumb {
             -webkit-backdrop-filter: blur(2px);
             backdrop-filter: blur(2px);
@@ -658,6 +637,16 @@
 
     .btn-close-black {
         filter: none;
+    }
+
+    .form-switch .form-check-input:checked {
+        background-color: #2fc758;
+        border-color: #2fc758;
+    }
+
+    .form-switch .form-check-input:focus {
+        --bs-form-switch-bg: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='3' fill='%23a3cfbb'/%3e%3c/svg%3e");
+        box-shadow: 0 0 0 0.25rem rgba(60, 153, 110, 0.25);
     }
 
     [data-bs-theme="dark"] .btn-close.btn-close-black {
