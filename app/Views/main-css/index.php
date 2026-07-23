@@ -153,46 +153,12 @@
         background-image: var(--bs-gradient);
     }
 
-    /* .btn-check:checked.bg+.btn.bg-gradient,
-    :not(.btn-check)+.btn:active.bg-gradient,
-    .btn:first-child:active.bg-gradient,
-    .btn.active.bg-gradient,
-    .btn.show.bg-gradient {
-        --bs-gradient: linear-gradient(180deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0));
-    }
-
-    .page-link:active.bg-gradient {
-        --bs-gradient: linear-gradient(180deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0));
-    }
-
-    .navbar-toggler:active.bg-gradient {
-        --bs-gradient: linear-gradient(180deg, rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0));
-    } */
-
     .form-control:active::-webkit-file-upload-button {
         background-image: var(--bs-gradient);
     }
 
     .form-control:active::file-selector-button {
         background-image: var(--bs-gradient);
-    }
-
-    .form-switch .form-check-input:checked {
-        background-image: var(--bs-gradient), var(--bs-form-switch-bg);
-    }
-
-    .form-switch .form-check-input:active {
-        background-image: var(--bs-gradient),
-            var(--bs-form-switch-bg);
-    }
-
-    .form-check-input:checked {
-        background-image: var(--bs-gradient), var(--bs-form-check-bg-image);
-    }
-
-    .form-check-input:active {
-        background-image: var(--bs-gradient),
-            var(--bs-form-check-bg-image);
     }
 
     div.dt-buttons {
@@ -524,19 +490,16 @@
     .dropdown-item:focus {
         --bs-dropdown-link-hover-bg: var(--bs-body-color);
         background-color: rgba(var(--bs-body-color-rgb), 0.15);
-        color: var(--bs-dropdown-link-hover-color);
     }
 
     .dropdown-item.active {
-        color: var(--bs-dropdown-link-hover-color);
         text-decoration: none;
-        background-color: rgba(var(--bs-body-color-rgb), 0.15);
+        background-color: var(--bs-dropdown-link-active-bg);
     }
 
     .dropdown-item:active {
-        color: var(--bs-dropdown-link-hover-color);
         text-decoration: none;
-        background-color: rgba(var(--bs-body-color-rgb), 0.3);
+        background-color: var(--bs-dropdown-link-active-bg);
     }
 
     .transparent-blur {
