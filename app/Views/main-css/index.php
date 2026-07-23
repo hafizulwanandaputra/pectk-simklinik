@@ -626,6 +626,11 @@
         }
     }
 
+    .nav-pills {
+        --bs-nav-pills-link-active-color: var(--bs-body-color);
+        --bs-nav-pills-link-active-bg: var(--bs-secondary-bg-subtle);
+    }
+
     .nav-link {
         color: var(--bs-secondary-color);
     }
