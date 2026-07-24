@@ -120,14 +120,7 @@
         --bs-box-shadow-sm: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.125);
         --bs-box-shadow-lg: 0 1rem 3rem rgba(0, 0, 0, 0.125);
         --bs-box-shadow-inset: inset 0 1px 2px rgba(0, 0, 0, 0.125);
-        --bs-gradient: linear-gradient(to bottom,
-                rgba(255, 255, 255, .3) 0%,
-                rgba(255, 255, 255, .15) 2px,
-                rgba(0, 0, 0, 0.025) 1rem),
-            linear-gradient(to top,
-                rgba(255, 255, 255, .1) 0%,
-                rgba(255, 255, 255, .05) 2px,
-                rgba(0, 0, 0, 0.025) 1rem);
+        --bs-gradient: linear-gradient(to bottom, rgba(255, 255, 255, .3) 0%, rgba(255, 255, 255, .15) 2px, rgba(0, 0, 0, 0.025) 1rem), linear-gradient(to top, rgba(255, 255, 255, .1) 0%, rgba(255, 255, 255, .05) 2px, rgba(0, 0, 0, 0.025) 1rem);
         --bs-border-radius: 0.5rem;
         --bs-border-radius-sm: 0.5rem;
         --bs-border-radius-lg: 0.75rem;
@@ -262,92 +255,16 @@
         -webkit-overflow-scrolling: touch;
     }
 
-    .btn-outline-primary {
-        --bs-gradient: linear-gradient(to bottom,
-                rgba(255, 255, 255, .3) 0%,
-                rgba(255, 255, 255, .15) 2px,
-                rgba(0, 0, 0, 0.025) 1rem),
-            linear-gradient(to top,
-                rgba(255, 255, 255, .1) 0%,
-                rgba(255, 255, 255, .05) 2px,
-                rgba(0, 0, 0, 0.025) 1rem);
-    }
-
-    .btn-outline-secondary {
-        --bs-gradient: linear-gradient(to bottom,
-                rgba(255, 255, 255, .3) 0%,
-                rgba(255, 255, 255, .15) 2px,
-                rgba(0, 0, 0, 0.025) 1rem),
-            linear-gradient(to top,
-                rgba(255, 255, 255, .1) 0%,
-                rgba(255, 255, 255, .05) 2px,
-                rgba(0, 0, 0, 0.025) 1rem);
-    }
-
-    .btn-outline-success {
-        --bs-gradient: linear-gradient(to bottom,
-                rgba(255, 255, 255, .3) 0%,
-                rgba(255, 255, 255, .15) 2px,
-                rgba(0, 0, 0, 0.025) 1rem),
-            linear-gradient(to top,
-                rgba(255, 255, 255, .1) 0%,
-                rgba(255, 255, 255, .05) 2px,
-                rgba(0, 0, 0, 0.025) 1rem);
-    }
-
-    .btn-outline-info {
-        --bs-gradient: linear-gradient(to bottom,
-                rgba(255, 255, 255, .3) 0%,
-                rgba(255, 255, 255, .15) 2px,
-                rgba(0, 0, 0, 0.025) 1rem),
-            linear-gradient(to top,
-                rgba(255, 255, 255, .1) 0%,
-                rgba(255, 255, 255, .05) 2px,
-                rgba(0, 0, 0, 0.025) 1rem);
-    }
-
-    .btn-outline-warning {
-        --bs-gradient: linear-gradient(to bottom,
-                rgba(255, 255, 255, .3) 0%,
-                rgba(255, 255, 255, .15) 2px,
-                rgba(0, 0, 0, 0.025) 1rem),
-            linear-gradient(to top,
-                rgba(255, 255, 255, .1) 0%,
-                rgba(255, 255, 255, .05) 2px,
-                rgba(0, 0, 0, 0.025) 1rem);
-    }
-
-    .btn-outline-danger {
-        --bs-gradient: linear-gradient(to bottom,
-                rgba(255, 255, 255, .3) 0%,
-                rgba(255, 255, 255, .15) 2px,
-                rgba(0, 0, 0, 0.025) 1rem),
-            linear-gradient(to top,
-                rgba(255, 255, 255, .1) 0%,
-                rgba(255, 255, 255, .05) 2px,
-                rgba(0, 0, 0, 0.025) 1rem);
-    }
-
-    .btn-outline-light {
-        --bs-gradient: linear-gradient(to bottom,
-                rgba(255, 255, 255, .3) 0%,
-                rgba(255, 255, 255, .15) 2px,
-                rgba(0, 0, 0, 0.025) 1rem),
-            linear-gradient(to top,
-                rgba(255, 255, 255, .1) 0%,
-                rgba(255, 255, 255, .05) 2px,
-                rgba(0, 0, 0, 0.025) 1rem);
-    }
-
-    .btn-outline-dark {
-        --bs-gradient: linear-gradient(to bottom,
-                rgba(255, 255, 255, .3) 0%,
-                rgba(255, 255, 255, .15) 2px,
-                rgba(0, 0, 0, 0.025) 1rem),
-            linear-gradient(to top,
-                rgba(255, 255, 255, .1) 0%,
-                rgba(255, 255, 255, .05) 2px,
-                rgba(0, 0, 0, 0.025) 1rem);
+    .btn-primary,
+    .btn-secondary,
+    .btn-success,
+    .btn-info,
+    .btn-warning,
+    .btn-danger,
+    .btn-light,
+    .btn-dark,
+    .page-link {
+        background-image: var(--bs-gradient);
     }
 
     .btn-body {
@@ -365,6 +282,7 @@
         --bs-btn-disabled-color: #000;
         --bs-btn-disabled-bg: #f8f9fa;
         --bs-btn-disabled-border-color: #dee2e6;
+        background-image: var(--bs-gradient);
     }
 
     .btn-outline-body {
@@ -381,19 +299,6 @@
         --bs-btn-disabled-color: #212529;
         --bs-btn-disabled-bg: transparent;
         --bs-btn-disabled-border-color: #212529;
-    }
-
-    .btn-outline-body:hover,
-    .btn-outline-body:focus-visible {
-        --bs-gradient: linear-gradient(to bottom,
-                rgba(255, 255, 255, .3) 0%,
-                rgba(255, 255, 255, .15) 2px,
-                rgba(0, 0, 0, 0.025) 1rem),
-            linear-gradient(to top,
-                rgba(255, 255, 255, .1) 0%,
-                rgba(255, 255, 255, .05) 2px,
-                rgba(0, 0, 0, 0.025) 1rem);
-        ;
     }
 
     .modal-backdrop {
@@ -628,7 +533,12 @@
 
     .nav-pills {
         --bs-nav-pills-link-active-color: var(--bs-body-color);
-        --bs-nav-pills-link-active-bg: var(--bs-secondary-bg-subtle);
+        --bs-nav-pills-link-active-bg: #ced4da;
+    }
+
+    [data-bs-theme=dark] .nav-pills {
+        --bs-nav-pills-link-active-color: var(--bs-body-color);
+        --bs-nav-pills-link-active-bg: #495057;
     }
 
     .nav-link {
@@ -689,18 +599,5 @@
         --bs-btn-disabled-color: #f8f9fa;
         --bs-btn-disabled-bg: transparent;
         --bs-btn-disabled-border-color: #f8f9fa;
-    }
-
-    [data-bs-theme=dark] .btn-outline-body:hover,
-    [data-bs-theme=dark] .btn-outline-body:focus-visible {
-        --bs-gradient: linear-gradient(to bottom,
-                rgba(255, 255, 255, .3) 0%,
-                rgba(255, 255, 255, .15) 2px,
-                rgba(0, 0, 0, 0.025) 1rem),
-            linear-gradient(to top,
-                rgba(255, 255, 255, .1) 0%,
-                rgba(255, 255, 255, .05) 2px,
-                rgba(0, 0, 0, 0.025) 1rem);
-        ;
     }
 </style>

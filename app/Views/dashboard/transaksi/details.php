@@ -206,7 +206,7 @@
                                         <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="d-grid d-lg-block w-auto">
-                                        <button type="submit" id="addBMHPButton" class="btn btn-primary bg-gradient btn-sm text-nowrap">
+                                        <button type="submit" id="addBMHPButton" class="btn btn-primary  btn-sm text-nowrap">
                                             <i class="fa-solid fa-plus"></i> Tambah
                                         </button>
                                     </div>
@@ -265,7 +265,7 @@
                                             <div class="invalid-feedback"></div>
                                         </div>
                                         <div class="d-grid d-lg-block w-auto">
-                                            <button type="submit" id="addLayananButton" class="btn btn-primary bg-gradient btn-sm text-nowrap">
+                                            <button type="submit" id="addLayananButton" class="btn btn-primary  btn-sm text-nowrap">
                                                 <i class="fa-solid fa-plus"></i> Tambah
                                             </button>
                                         </div>
@@ -320,7 +320,7 @@
                                         <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="d-grid d-lg-block w-auto">
-                                        <button type="submit" id="addObatAlkesButton" class="btn btn-primary bg-gradient btn-sm text-nowrap">
+                                        <button type="submit" id="addObatAlkesButton" class="btn btn-primary  btn-sm text-nowrap">
                                             <i class="fa-solid fa-plus"></i> Tambah
                                         </button>
                                     </div>
@@ -414,9 +414,9 @@
         <div id="prosesTransaksi">
             <hr>
             <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-3">
-                <button class="btn btn-body  bg-gradient" type="button" id="printBtn" data-id="<?= $transaksi['id_transaksi'] ?>" disabled><i class="fa-solid fa-print"></i> Cetak Kuitansi</button>
-                <button class="btn btn-danger  bg-gradient" type="button" id="cancelBtn" data-id="<?= $transaksi['id_transaksi'] ?>" disabled><i class="fa-solid fa-xmark"></i> Batalkan Transaksi</button>
-                <button class="btn btn-success  bg-gradient" type="button" id="processBtn" data-id="<?= $transaksi['id_transaksi'] ?>" disabled><i class="fa-solid fa-money-bills"></i> Proses Transaksi</button>
+                <button class="btn btn-body  " type="button" id="printBtn" data-id="<?= $transaksi['id_transaksi'] ?>" disabled><i class="fa-solid fa-print"></i> Cetak Kuitansi</button>
+                <button class="btn btn-danger  " type="button" id="cancelBtn" data-id="<?= $transaksi['id_transaksi'] ?>" disabled><i class="fa-solid fa-xmark"></i> Batalkan Transaksi</button>
+                <button class="btn btn-success  " type="button" id="processBtn" data-id="<?= $transaksi['id_transaksi'] ?>" disabled><i class="fa-solid fa-money-bills"></i> Proses Transaksi</button>
             </div>
         </div>
         <iframe id="print_frame_1" style="display: none;"></iframe>
@@ -429,10 +429,10 @@
                     <h5 class="mb-0" id="deleteMessage"></h5>
                     <div class="row gx-2 pt-4">
                         <div class="col d-grid">
-                            <button type="button" class="btn btn-lg btn-body bg-gradient fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Batal</button>
+                            <button type="button" class="btn btn-lg btn-body  fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Batal</button>
                         </div>
                         <div class="col d-grid">
-                            <button type="button" class="btn btn-lg btn-danger bg-gradient fs-6 mb-0 rounded-4" id="confirmDeleteBtn">Hapus</button>
+                            <button type="button" class="btn btn-lg btn-danger  fs-6 mb-0 rounded-4" id="confirmDeleteBtn">Hapus</button>
                         </div>
                     </div>
                 </div>
@@ -517,7 +517,7 @@
                     </div>
                 </div>
                 <div class="modal-footer justify-content-end pt-2 pb-2" style="border-top: 1px solid var(--bs-border-color-translucent);">
-                    <button type="submit" id="submitButton" class="btn btn-primary bg-gradient ">
+                    <button type="submit" id="submitButton" class="btn btn-primary  ">
                         <i class="fa-solid fa-money-bill-transfer"></i> Proses
                     </button>
                 </div>
@@ -550,13 +550,13 @@
                                 data-bs-placement="top"
                                 data-bs-trigger="manual"
                                 data-bs-title="<em>CAPS LOCK</em> AKTIF"
-                                data-bs-content="Harap periksa status <span class='badge text-bg-dark bg-gradient kbd'>Caps Lock</span> pada papan tombol (<em>keyboard</em>) Anda.">
+                                data-bs-content="Harap periksa status <span class='badge text-bg-dark  kbd'>Caps Lock</span> pada papan tombol (<em>keyboard</em>) Anda.">
                             <label for="password">Masukkan Kata Sandi Transaksi</label>
                             <div class="invalid-feedback"></div>
                         </div>
                     </div>
                     <div class="modal-footer justify-content-end pt-2 pb-2" style="border-top: 1px solid var(--bs-border-color-translucent);">
-                        <button type="submit" id="cancelSubmitButton" class="btn btn-danger bg-gradient ">
+                        <button type="submit" id="cancelSubmitButton" class="btn btn-danger  ">
                             <i class="fa-solid fa-xmark"></i> Batalkan
                         </button>
                     </div>
@@ -875,8 +875,8 @@
                         <tr>
                             <td class="tindakan">
                             <div class="btn-group" role="group">
-                                <button class="btn btn-outline-body text-nowrap bg-gradient  edit-layanan-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${layanan.id_detail_transaksi}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
-                                <button class="btn btn-outline-danger text-nowrap bg-gradient  delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${layanan.id_detail_transaksi}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
+                                <button class="btn btn-outline-body text-nowrap   edit-layanan-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${layanan.id_detail_transaksi}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
+                                <button class="btn btn-outline-danger text-nowrap   delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${layanan.id_detail_transaksi}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
                             </div>
                         </td>
                         <td>
@@ -950,8 +950,8 @@
                         <tr>
                             <td class="tindakan">
                             <div class="btn-group" role="group">
-                                <button class="btn btn-outline-body text-nowrap bg-gradient  edit-obatalkes-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${obat_alkes.id_detail_transaksi}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
-                                <button class="btn btn-outline-danger text-nowrap bg-gradient  delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${obat_alkes.id_detail_transaksi}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
+                                <button class="btn btn-outline-body text-nowrap   edit-obatalkes-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${obat_alkes.id_detail_transaksi}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
+                                <button class="btn btn-outline-danger text-nowrap   delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${obat_alkes.id_detail_transaksi}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
                             </div>
                         </td>
                         <td>
@@ -1031,8 +1031,8 @@
                         <tr>
                             <td class="tindakan">
                             <div class="btn-group" role="group">
-                                <button class="btn btn-outline-body text-nowrap bg-gradient  edit-bmhp-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${bmhp.id_detail_transaksi}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
-                                <button class="btn btn-outline-danger text-nowrap bg-gradient  delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${bmhp.id_detail_transaksi}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
+                                <button class="btn btn-outline-body text-nowrap   edit-bmhp-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${bmhp.id_detail_transaksi}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
+                                <button class="btn btn-outline-danger text-nowrap   delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${bmhp.id_detail_transaksi}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
                             </div>
                         </td>
                         <td>
@@ -1215,7 +1215,7 @@
                                     <div class="invalid-feedback"></div>
                                 </div>
                                 <div class="d-grid d-lg-block w-auto">
-                                    <button type="submit" id="editLayananButton" class="btn btn-primary bg-gradient btn-sm">
+                                    <button type="submit" id="editLayananButton" class="btn btn-primary  btn-sm">
                                         <i class="fa-solid fa-pen-to-square"></i> Edit
                                     </button>
                                 </div>
@@ -1344,7 +1344,7 @@
                                     <div class="invalid-feedback"></div>
                                 </div>
                                 <div class="d-grid d-lg-block w-auto">
-                                    <button type="submit" id="editObatAlkesButton" class="btn btn-primary bg-gradient btn-sm">
+                                    <button type="submit" id="editObatAlkesButton" class="btn btn-primary  btn-sm">
                                         <i class="fa-solid fa-pen-to-square"></i> Edit
                                     </button>
                                 </div>
@@ -1472,7 +1472,7 @@
                                     <div class="invalid-feedback"></div>
                                 </div>
                                 <div class="d-grid d-lg-block w-auto">
-                                    <button type="submit" id="editBMHPButton" class="btn btn-primary bg-gradient btn-sm">
+                                    <button type="submit" id="editBMHPButton" class="btn btn-primary  btn-sm">
                                         <i class="fa-solid fa-pen-to-square"></i> Edit
                                     </button>
                                 </div>

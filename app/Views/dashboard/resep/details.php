@@ -183,9 +183,9 @@
         <div class="mb-3">
             <hr>
             <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-2">
-                <button class="btn btn-body  bg-gradient" type="button" id="printBtn1" data-id="<?= $resep['id_resep'] ?>" disabled><i class="fa-solid fa-print"></i> Cetak E-Tiket Obat Dalam</button>
-                <button class="btn btn-body  bg-gradient" type="button" id="printBtn2" data-id="<?= $resep['id_resep'] ?>" disabled><i class="fa-solid fa-print"></i> Cetak E-Tiket Obat Luar</button>
-                <button class="btn btn-body  bg-gradient" type="button" id="printBtn3" data-id="<?= $resep['id_resep'] ?>" disabled><i class="fa-solid fa-print"></i> Cetak Resep</button>
+                <button class="btn btn-body  " type="button" id="printBtn1" data-id="<?= $resep['id_resep'] ?>" disabled><i class="fa-solid fa-print"></i> Cetak E-Tiket Obat Dalam</button>
+                <button class="btn btn-body  " type="button" id="printBtn2" data-id="<?= $resep['id_resep'] ?>" disabled><i class="fa-solid fa-print"></i> Cetak E-Tiket Obat Luar</button>
+                <button class="btn btn-body  " type="button" id="printBtn3" data-id="<?= $resep['id_resep'] ?>" disabled><i class="fa-solid fa-print"></i> Cetak Resep</button>
             </div>
         </div>
         <iframe id="print_frame_1" style="display: none;"></iframe>

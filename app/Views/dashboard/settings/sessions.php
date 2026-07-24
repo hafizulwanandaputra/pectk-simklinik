@@ -68,10 +68,10 @@
                     <h5 class="mb-0" id="deleteMessage"></h5>
                     <div class="row gx-2 pt-4">
                         <div class="col d-grid">
-                            <button type="button" class="btn btn-lg btn-body bg-gradient fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Batal</button>
+                            <button type="button" class="btn btn-lg btn-body  fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Batal</button>
                         </div>
                         <div class="col d-grid">
-                            <button type="button" class="btn btn-lg btn-danger bg-gradient fs-6 mb-0 rounded-4" id="confirmDeleteBtn">Hapus</button>
+                            <button type="button" class="btn btn-lg btn-danger  fs-6 mb-0 rounded-4" id="confirmDeleteBtn">Hapus</button>
                         </div>
                     </div>
                 </div>
@@ -85,10 +85,10 @@
                     <h5 class="mb-0" id="flushMessage"></h5>
                     <div class="row gx-2 pt-4">
                         <div class="col d-grid">
-                            <button type="button" class="btn btn-lg btn-body bg-gradient fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Batal</button>
+                            <button type="button" class="btn btn-lg btn-body  fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Batal</button>
                         </div>
                         <div class="col d-grid">
-                            <button type="button" class="btn btn-lg btn-danger bg-gradient fs-6 mb-0 rounded-4" id="confirmFlushBtn">Bersihkan</button>
+                            <button type="button" class="btn btn-lg btn-danger  fs-6 mb-0 rounded-4" id="confirmFlushBtn">Bersihkan</button>
                         </div>
                     </div>
                 </div>
@@ -102,10 +102,10 @@
                     <h5 class="mb-0" id="deleteExpiredMessage"></h5>
                     <div class="row gx-2 pt-4">
                         <div class="col d-grid">
-                            <button type="button" class="btn btn-lg btn-body bg-gradient fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Batal</button>
+                            <button type="button" class="btn btn-lg btn-body  fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Batal</button>
                         </div>
                         <div class="col d-grid">
-                            <button type="button" class="btn btn-lg btn-danger bg-gradient fs-6 mb-0 rounded-4" id="confirmDeleteExpiredBtn">Hapus</button>
+                            <button type="button" class="btn btn-lg btn-danger  fs-6 mb-0 rounded-4" id="confirmDeleteExpiredBtn">Hapus</button>
                         </div>
                     </div>
                 </div>
@@ -163,7 +163,7 @@
             "drawCallback": function() {
                 $(".pagination").wrap("<div class='overflow-auto'></div>");
                 $(".pagination").addClass("pagination-sm");
-                $(".page-item .page-link").addClass("bg-gradient date");
+                $(".page-item .page-link").addClass(" date");
                 var pageInfo = this.api().page.info();
                 var infoText = `${pageInfo.recordsDisplay}`;
                 $('#total_datatables').html(infoText);
@@ -171,7 +171,7 @@
             'buttons': [{
                 // Tombol Bersihkan Sesi
                 text: '<i class="fa-solid fa-broom"></i> Bersihkan',
-                className: 'btn-danger btn-sm bg-gradient ',
+                className: 'btn-danger btn-sm  ',
                 attr: {
                     id: 'flushBtn'
                 },
@@ -181,7 +181,7 @@
             }, {
                 // Tombol Hapus Sesi Kedaluwarsa
                 text: '<i class="fa-solid fa-trash"></i> Kedaluwarsa',
-                className: 'btn-danger btn-sm bg-gradient ',
+                className: 'btn-danger btn-sm  ',
                 attr: {
                     id: 'deleteExpiredBtn'
                 },
@@ -235,7 +235,7 @@
                         return `
                             <div class="d-grid">
                                 <div class="btn-group" role="group">
-                                    <button class="btn btn-outline-danger text-nowrap bg-gradient  delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${row.id}" data-username="${row.username}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
+                                    <button class="btn btn-outline-danger text-nowrap   delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${row.id}" data-username="${row.username}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
                                 </div>
                             </div>
                         `;

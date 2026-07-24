@@ -154,13 +154,13 @@ $db = db_connect();
     <div class="mb-3">
         <div class="row row-cols-1 row-cols-md-3 g-3">
             <div class="col d-grid">
-                <button type="button" class="btn btn-lg btn-success bg-gradient rounded-4 btn-apply" data-name="UMUM">
+                <button type="button" class="btn btn-lg btn-success  rounded-4 btn-apply" data-name="UMUM">
                     <div class="icon-btn"><i class="fa-solid fa-users"></i></div>
                     <div class="fs-5 fw-bold mb-3">UMUM</div>
                 </button>
             </div>
             <div class="col d-grid">
-                <button type="button" class="btn btn-lg btn-success bg-gradient rounded-4 btn-apply" data-name="BPJS KESEHATAN">
+                <button type="button" class="btn btn-lg btn-success  rounded-4 btn-apply" data-name="BPJS KESEHATAN">
                     <div class="icon-btn">
                         <?= file_get_contents(FCPATH . 'assets/images/logo-bpjs.svg') ?>
                     </div>
@@ -168,7 +168,7 @@ $db = db_connect();
                 </button>
             </div>
             <div class="col d-grid">
-                <button type="button" class="btn btn-lg btn-success bg-gradient rounded-4 btn-apply" data-name="ASURANSI">
+                <button type="button" class="btn btn-lg btn-success  rounded-4 btn-apply" data-name="ASURANSI">
                     <div class="icon-btn"><i class="fa-solid fa-user-shield"></i></div>
                     <div class="fs-5 fw-bold mb-3">ASURANSI</div>
                 </button>
@@ -176,7 +176,7 @@ $db = db_connect();
         </div>
     </div>
     <div class=" d-grid gap-2 mb-3">
-        <button type="button" class="btn btn-body bg-gradient rounded-4" id="list_antrean_btn" data-bs-toggle="modal" data-bs-target="#listAntreanModal">Lihat Nomor Antrean Sebelumnya</button>
+        <button type="button" class="btn btn-body  rounded-4" id="list_antrean_btn" data-bs-toggle="modal" data-bs-target="#listAntreanModal">Lihat Nomor Antrean Sebelumnya</button>
     </div>
     <div class="text-center fs-5" id="status-tunggu" style="display: none;">
 
@@ -194,8 +194,8 @@ $db = db_connect();
                         </select>
                         <div class="input-group input-group-sm flex-grow-1">
                             <input type="date" class="form-control form-control-sm" id="externalSearch">
-                            <button class="btn btn-danger btn-sm bg-gradient " type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
-                            <button id="refreshButton" type="button" class="btn btn-primary btn-sm bg-gradient"><i class="fa-solid fa-arrows-rotate"></i></button>
+                            <button class="btn btn-danger btn-sm  " type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
+                            <button id="refreshButton" type="button" class="btn btn-primary btn-sm "><i class="fa-solid fa-arrows-rotate"></i></button>
                         </div>
                     </div>
                     <button id="listAntreanCloseBtn" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -234,7 +234,7 @@ $db = db_connect();
                     <iframe id="print_frame" style="display: none;"></iframe>
                     <div class="row gy-2 pt-4">
                         <div class="d-grid">
-                            <button type="button" class="btn btn-lg btn-body bg-gradient fs-6 mb-0 rounded-4" id="closeModalBtn" data-bs-dismiss="modal">Tutup</button>
+                            <button type="button" class="btn btn-lg btn-body  fs-6 mb-0 rounded-4" id="closeModalBtn" data-bs-dismiss="modal">Tutup</button>
                         </div>
                     </div>
                 </div>
@@ -312,7 +312,7 @@ $db = db_connect();
             "drawCallback": function() {
                 $(".pagination").wrap("<div class='overflow-auto'></div>");
                 $(".pagination").addClass("pagination-sm");
-                $(".page-item .page-link").addClass("bg-gradient date");
+                $(".page-item .page-link").addClass(" date");
                 var pageInfo = this.api().page.info();
                 var infoText = `${pageInfo.recordsDisplay}`;
                 $('#loading').html(`${infoText} antrean`);
@@ -355,7 +355,7 @@ $db = db_connect();
                     render: function(data, type, row) {
                         return `<div class="d-grid">
                             <div class="btn-group" role="group">
-                                <button class="btn btn-outline-body text-nowrap bg-gradient cetak-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${row.id_antrean}" data-bs-toggle="tooltip" data-bs-title="Cetak"><i class="fa-solid fa-print"></i></button>
+                                <button class="btn btn-outline-body text-nowrap  cetak-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${row.id_antrean}" data-bs-toggle="tooltip" data-bs-title="Cetak"><i class="fa-solid fa-print"></i></button>
                             </div>
                             </div>`;
                     }

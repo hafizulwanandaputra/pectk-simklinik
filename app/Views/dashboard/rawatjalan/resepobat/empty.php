@@ -111,7 +111,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                         <?php else : ?>
                             <div class="text-muted">Klik "Tambah Resep Obat" di bawah ini untuk menambahkan resep obat</div>
                             <div class="d-grid gap-2 mt-3">
-                                <button class="btn btn-primary bg-gradient" type="button" id="addResepBtn">
+                                <button class="btn btn-primary " type="button" id="addResepBtn">
                                     <i class="fa-solid fa-plus"></i> Tambah Resep Obat
                                 </button>
                             </div>
@@ -119,7 +119,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                     <?php else : ?>
                         <div class="text-muted">Klik "Tambah Resep Obat" di bawah ini untuk menambahkan resep obat</div>
                         <div class="d-grid gap-2 mt-3">
-                            <button class="btn btn-primary bg-gradient" type="button" id="addResepBtn">
+                            <button class="btn btn-primary " type="button" id="addResepBtn">
                                 <i class="fa-solid fa-plus"></i> Tambah Resep Obat
                             </button>
                         </div>

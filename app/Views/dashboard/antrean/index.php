@@ -65,7 +65,7 @@
                             </div>
                             <div class="input-group input-group-sm w-auto third-row-form">
                                 <input type="date" id="tanggalFilter" class="form-control" value="<?= date('Y-m-d') ?>">
-                                <button class="btn btn-primary btn-sm bg-gradient" type="button" id="setTodayTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Kembali ke Hari Ini"><i class="fa-solid fa-calendar-day"></i></button>
+                                <button class="btn btn-primary btn-sm " type="button" id="setTodayTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Kembali ke Hari Ini"><i class="fa-solid fa-calendar-day"></i></button>
                             </div>
                         </div>
                     </div>
@@ -96,13 +96,13 @@
                             <div class="card-footer">
                                 <div class="row gx-2">
                                     <div class="col d-grid">
-                                        <a class="btn btn-primary bg-gradient btn-sm disabled placeholder" aria-disabled="true"></a>
+                                        <a class="btn btn-primary  btn-sm disabled placeholder" aria-disabled="true"></a>
                                     </div>
                                     <div class="col d-grid">
-                                        <a class="btn btn-success bg-gradient btn-sm disabled placeholder" aria-disabled="true"></a>
+                                        <a class="btn btn-success  btn-sm disabled placeholder" aria-disabled="true"></a>
                                     </div>
                                     <div class="col d-grid">
-                                        <a class="btn btn-danger bg-gradient btn-sm disabled placeholder" aria-disabled="true"></a>
+                                        <a class="btn btn-danger  btn-sm disabled placeholder" aria-disabled="true"></a>
                                     </div>
                                 </div>
                             </div>
@@ -122,10 +122,10 @@
                     <h5 class="mb-0" id="completeMessage"></h5>
                     <div class="row gx-2 pt-4">
                         <div class="col d-grid">
-                            <button type="button" class="btn btn-lg btn-body bg-gradient fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Jangan Selesaikan</button>
+                            <button type="button" class="btn btn-lg btn-body  fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Jangan Selesaikan</button>
                         </div>
                         <div class="col d-grid">
-                            <button type="submit" class="btn btn-lg btn-primary bg-gradient fs-6 mb-0 rounded-4" id="confirmCompleteBtn">Selesaikan</button>
+                            <button type="submit" class="btn btn-lg btn-primary  fs-6 mb-0 rounded-4" id="confirmCompleteBtn">Selesaikan</button>
                         </div>
                     </div>
                 </div>
@@ -139,10 +139,10 @@
                     <h5 class="mb-0" id="cancelMessage"></h5>
                     <div class="row gx-2 pt-4">
                         <div class="col d-grid">
-                            <button type="button" class="btn btn-lg btn-body bg-gradient fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Jangan Batalkan</button>
+                            <button type="button" class="btn btn-lg btn-body  fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Jangan Batalkan</button>
                         </div>
                         <div class="col d-grid">
-                            <button type="submit" class="btn btn-lg btn-danger bg-gradient fs-6 mb-0 rounded-4" id="confirmCancelBtn">Batalkan</button>
+                            <button type="submit" class="btn btn-lg btn-danger  fs-6 mb-0 rounded-4" id="confirmCancelBtn">Batalkan</button>
                         </div>
                     </div>
                 </div>
@@ -229,17 +229,17 @@
                                 <div class="card-footer">
                                     <div class="row gx-2">
                                         <div class="col d-grid">
-                                            <button type="button" class="btn btn-primary btn-sm bg-gradient btn-call" data-id="${antrean.id_antrean}" data-name="${antrean.kode_antrean}-${antrean.nomor_antrean}" ${call_status}>
+                                            <button type="button" class="btn btn-primary btn-sm  btn-call" data-id="${antrean.id_antrean}" data-name="${antrean.kode_antrean}-${antrean.nomor_antrean}" ${call_status}>
                                                 Panggil
                                             </button>
                                         </div>
                                         <div class="col d-grid">
-                                            <button type="button" class="btn btn-success btn-sm bg-gradient btn-complete" data-id="${antrean.id_antrean}" data-name="${antrean.kode_antrean}-${antrean.nomor_antrean}" ${call_status}>
+                                            <button type="button" class="btn btn-success btn-sm  btn-complete" data-id="${antrean.id_antrean}" data-name="${antrean.kode_antrean}-${antrean.nomor_antrean}" ${call_status}>
                                                 Selesai
                                             </button>
                                         </div>
                                         <div class="col d-grid">
-                                            <button type="button" class="btn btn-danger btn-sm bg-gradient btn-cancel" data-id="${antrean.id_antrean}" data-name="${antrean.kode_antrean}-${antrean.nomor_antrean}" ${batal_status}>
+                                            <button type="button" class="btn btn-danger btn-sm  btn-cancel" data-id="${antrean.id_antrean}" data-name="${antrean.kode_antrean}-${antrean.nomor_antrean}" ${batal_status}>
                                                 Batal
                                             </button>
                                         </div>
@@ -259,7 +259,7 @@
                 if (currentPage > 1) {
                     $('#paginationNav ul').append(`
                     <li class="page-item">
-                        <a class="page-link bg-gradient date" href="#" data-page="${currentPage - 1}">
+                        <a class="page-link  date" href="#" data-page="${currentPage - 1}">
                             <i class="fa-solid fa-angle-left"></i>
                         </a>
                     </li>
@@ -269,29 +269,29 @@
                 if (totalPages > 5) {
                     $('#paginationNav ul').append(`
                     <li class="page-item ${currentPage === 1 ? 'active' : ''}">
-                        <a class="page-link bg-gradient date" href="#" data-page="1">1</a>
+                        <a class="page-link  date" href="#" data-page="1">1</a>
                     </li>
                 `);
 
                     if (currentPage > 3) {
-                        $('#paginationNav ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">…</span></li>');
+                        $('#paginationNav ul').append('<li class="page-item disabled"><span class="page-link ">…</span></li>');
                     }
 
                     for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
                         $('#paginationNav ul').append(`
                         <li class="page-item ${i === currentPage ? 'active' : ''}">
-                            <a class="page-link bg-gradient date" href="#" data-page="${i}">${i}</a>
+                            <a class="page-link  date" href="#" data-page="${i}">${i}</a>
                         </li>
                     `);
                     }
 
                     if (currentPage < totalPages - 2) {
-                        $('#paginationNav ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">…</span></li>');
+                        $('#paginationNav ul').append('<li class="page-item disabled"><span class="page-link ">…</span></li>');
                     }
 
                     $('#paginationNav ul').append(`
                     <li class="page-item ${currentPage === totalPages ? 'active' : ''}">
-                        <a class="page-link bg-gradient date" href="#" data-page="${totalPages}">${totalPages}</a>
+                        <a class="page-link  date" href="#" data-page="${totalPages}">${totalPages}</a>
                     </li>
                 `);
                 } else {
@@ -299,7 +299,7 @@
                     for (let i = 1; i <= totalPages; i++) {
                         $('#paginationNav ul').append(`
                         <li class="page-item ${i === currentPage ? 'active' : ''}">
-                            <a class="page-link bg-gradient date" href="#" data-page="${i}">${i}</a>
+                            <a class="page-link  date" href="#" data-page="${i}">${i}</a>
                         </li>
                     `);
                     }
@@ -308,7 +308,7 @@
                 if (currentPage < totalPages) {
                     $('#paginationNav ul').append(`
                     <li class="page-item">
-                        <a class="page-link bg-gradient date" href="#" data-page="${currentPage + 1}">
+                        <a class="page-link  date" href="#" data-page="${currentPage + 1}">
                             <i class="fa-solid fa-angle-right"></i>
                         </a>
                     </li>

@@ -124,7 +124,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                                             <select class="form-select form-select-sm" id="id_batch_obat" name="id_batch_obat" aria-label="id_batch_obat" autocomplete="off">
                                                 <option value="" disabled selected>-- Pilih Obat --</option>
                                             </select>
-                                            <button id="expired_med_btn" class="btn btn-warning bg-gradient btn-sm" type="button" data-bs-toggle="tooltip" data-bs-title="Peringatan Obat Kedaluwarsa"><i class="fa-solid fa-triangle-exclamation"></i></button>
+                                            <button id="expired_med_btn" class="btn btn-warning  btn-sm" type="button" data-bs-toggle="tooltip" data-bs-title="Peringatan Obat Kedaluwarsa"><i class="fa-solid fa-triangle-exclamation"></i></button>
                                         </div>
                                         <div class="invalid-feedback"></div>
                                     </div>
@@ -176,7 +176,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                                         <div class="invalid-feedback"></div>
                                     </div>
                                     <div class="d-grid gap-2 d-lg-flex justify-content-lg-end">
-                                        <button type="submit" id="addButton" class="btn btn-primary bg-gradient btn-sm text-nowrap">
+                                        <button type="submit" id="addButton" class="btn btn-primary  btn-sm text-nowrap">
                                             <i class="fa-solid fa-plus"></i> Tambah
                                         </button>
                                     </div>
@@ -278,8 +278,8 @@ $usia = $registrasi->diff($tanggal_lahir);
             <div class="mb-3">
                 <hr>
                 <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-2">
-                    <button class="btn btn-danger  bg-gradient" type="button" id="cancelConfirmBtn" disabled><i class="fa-solid fa-xmark"></i> Batalkan Konfirmasi</button>
-                    <button class="btn btn-success  bg-gradient" type="button" id="confirmBtn" disabled><i class="fa-solid fa-check-double"></i> Konfirmasi</button>
+                    <button class="btn btn-danger  " type="button" id="cancelConfirmBtn" disabled><i class="fa-solid fa-xmark"></i> Batalkan Konfirmasi</button>
+                    <button class="btn btn-success  " type="button" id="confirmBtn" disabled><i class="fa-solid fa-check-double"></i> Konfirmasi</button>
                 </div>
             </div>
         </div>
@@ -318,10 +318,10 @@ $usia = $registrasi->diff($tanggal_lahir);
                     <h5 class="mb-0" id="deleteMessage"></h5>
                     <div class="row gx-2 pt-4">
                         <div class="col d-grid">
-                            <button type="button" class="btn btn-lg btn-body bg-gradient fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Batal</button>
+                            <button type="button" class="btn btn-lg btn-body  fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Batal</button>
                         </div>
                         <div class="col d-grid">
-                            <button type="button" class="btn btn-lg btn-danger bg-gradient fs-6 mb-0 rounded-4" id="confirmDeleteBtn">Hapus</button>
+                            <button type="button" class="btn btn-lg btn-danger  fs-6 mb-0 rounded-4" id="confirmDeleteBtn">Hapus</button>
                         </div>
                     </div>
                 </div>
@@ -336,10 +336,10 @@ $usia = $registrasi->diff($tanggal_lahir);
                     <h5 class="mb-0" id="confirmMessage"></h5>
                     <div class="row gx-2 pt-4">
                         <div class="col d-grid">
-                            <button type="button" class="btn btn-lg btn-body bg-gradient fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Jangan Konfirmasi</button>
+                            <button type="button" class="btn btn-lg btn-body  fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Jangan Konfirmasi</button>
                         </div>
                         <div class="col d-grid">
-                            <button type="button" class="btn btn-lg btn-primary bg-gradient fs-6 mb-0 rounded-4" id="confirmConfirmBtn">Konfirmasi</button>
+                            <button type="button" class="btn btn-lg btn-primary  fs-6 mb-0 rounded-4" id="confirmConfirmBtn">Konfirmasi</button>
                         </div>
                     </div>
                 </div>
@@ -354,10 +354,10 @@ $usia = $registrasi->diff($tanggal_lahir);
                     <h5 class="mb-0" id="cancelConfirmMessage"></h5>
                     <div class="row gx-2 pt-4">
                         <div class="col d-grid">
-                            <button type="button" class="btn btn-lg btn-body bg-gradient fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Jangan Batalkan</button>
+                            <button type="button" class="btn btn-lg btn-body  fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Jangan Batalkan</button>
                         </div>
                         <div class="col d-grid">
-                            <button type="button" class="btn btn-lg btn-danger bg-gradient fs-6 mb-0 rounded-4" id="confirmCancelConfirmBtn">Batalkan</button>
+                            <button type="button" class="btn btn-lg btn-danger  fs-6 mb-0 rounded-4" id="confirmCancelConfirmBtn">Batalkan</button>
                         </div>
                     </div>
                 </div>
@@ -550,8 +550,8 @@ $usia = $registrasi->diff($tanggal_lahir);
                     <tr>
                         <td class="tindakan">
                             <div class="btn-group" role="group">
-                                <button class="btn btn-outline-body text-nowrap bg-gradient  edit-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${detail_resep.id_detail_resep}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
-                                <button class="btn btn-outline-danger text-nowrap bg-gradient  delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${detail_resep.id_detail_resep}" data-name="${detail_resep.nama_obat}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
+                                <button class="btn btn-outline-body text-nowrap   edit-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${detail_resep.id_detail_resep}" data-bs-toggle="tooltip" data-bs-title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
+                                <button class="btn btn-outline-danger text-nowrap   delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${detail_resep.id_detail_resep}" data-name="${detail_resep.nama_obat}" data-bs-toggle="tooltip" data-bs-title="Hapus"><i class="fa-solid fa-trash"></i></button>
                             </div>
                         </td>
                         <td><i class="fa-solid fa-prescription"></i> ${detail_resep.nama_obat}
@@ -985,7 +985,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                                 <div class="invalid-feedback"></div>
                             </div>
                             <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-2">
-                                <button type="submit" id="editButton" class="btn btn-primary bg-gradient btn-sm text-nowrap">
+                                <button type="submit" id="editButton" class="btn btn-primary  btn-sm text-nowrap">
                                     <i class="fa-solid fa-pen-to-square"></i> Edit
                                 </button>
                             </div>

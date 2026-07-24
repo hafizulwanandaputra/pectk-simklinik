@@ -341,8 +341,8 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <div>
                     <hr>
                     <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-3">
-                        <button class="btn btn-body  bg-gradient" type="button" onclick="window.open(`<?= base_url('/rawatjalan/edukasi/export/' . $rawatjalan['id_rawat_jalan']) ?>`)"><i class="fa-solid fa-print"></i> Cetak Formulir</button>
-                        <button class="btn btn-primary bg-gradient" type="submit" id="submitBtn"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
+                        <button class="btn btn-body  " type="button" onclick="window.open(`<?= base_url('/rawatjalan/edukasi/export/' . $rawatjalan['id_rawat_jalan']) ?>`)"><i class="fa-solid fa-print"></i> Cetak Formulir</button>
+                        <button class="btn btn-primary " type="submit" id="submitBtn"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
                     </div>
                 </div>
             </div>
@@ -350,7 +350,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             <div class="mb-3">
                 <div class="fw-bold mb-2 border-bottom">Evaluasi Edukasi</div>
                 <div class="d-grid gap-2">
-                    <button class="btn btn-primary btn-sm bg-gradient mb-2" type="button" id="addEvaluasiButton">
+                    <button class="btn btn-primary btn-sm  mb-2" type="button" id="addEvaluasiButton">
                         <i class="fa-solid fa-plus"></i> Tambah Evaluasi
                     </button>
                 </div>
@@ -381,8 +381,8 @@ $usia = $registrasi->diff($tanggal_lahir);
                                 <span class="placeholder w-100" style="max-width: 128px;"></span>
                             </div>
                             <div class="btn-group float-end" role="group">
-                                <button class="btn btn-outline-body text-nowrap bg-gradient edit-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em; width: 80px; height: 30.781px;" disabled></button>
-                                <button class="btn btn-outline-danger text-nowrap bg-gradient delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em; width: 80px; height: 30.781px;" disabled></button>
+                                <button class="btn btn-outline-body text-nowrap  edit-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em; width: 80px; height: 30.781px;" disabled></button>
+                                <button class="btn btn-outline-danger text-nowrap  delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em; width: 80px; height: 30.781px;" disabled></button>
                             </div>
                         </li>
                     <?php endfor; ?>
@@ -489,16 +489,16 @@ $usia = $registrasi->diff($tanggal_lahir);
                     <!-- Progress bar -->
                     <div class="mb-1 mt-1 w-100" id="uploadProgressDiv">
                         <div class="progress" style="border-top: 1px solid var(--bs-border-color-translucent); border-bottom: 1px solid var(--bs-border-color-translucent); border-left: 1px solid var(--bs-border-color-translucent); border-right: 1px solid var(--bs-border-color-translucent);">
-                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-gradient" role="progressbar" style="width: 0%; transition: none;" id="uploadProgressBar"></div>
+                            <div class="progress-bar progress-bar-striped progress-bar-animated " role="progressbar" style="width: 0%; transition: none;" id="uploadProgressBar"></div>
                         </div>
                     </div>
                     <div class="d-flex justify-content-between w-100">
                         <div>
-                            <button type="button" id="cancelButton" class="btn btn-danger bg-gradient" style="display: none;" disabled>
+                            <button type="button" id="cancelButton" class="btn btn-danger " style="display: none;" disabled>
                                 <i class="fa-solid fa-xmark"></i> Batalkan
                             </button>
                         </div>
-                        <button type="submit" id="submitButton" class="btn btn-primary bg-gradient">
+                        <button type="submit" id="submitButton" class="btn btn-primary ">
                             <i class="fa-solid fa-floppy-disk"></i> Simpan
                         </button>
                     </div>
@@ -603,8 +603,8 @@ $usia = $registrasi->diff($tanggal_lahir);
                         <div class="date text-nowrap text-muted"><small>Pasien/Keluarga/Lainnya: ${evaluasi_edukasi.nama_pasien_keluarga}</small></div>
                         ${evaluasi}
                         <div class="btn-group float-end" role="group">
-                            <button class="btn btn-body text-nowrap bg-gradient edit-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${evaluasi_edukasi.id_edukasi_evaluasi}"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
-                            <button class="btn btn-danger text-nowrap bg-gradient delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${evaluasi_edukasi.id_edukasi_evaluasi}"><i class="fa-solid fa-trash"></i> Hapus</button>
+                            <button class="btn btn-body text-nowrap  edit-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${evaluasi_edukasi.id_edukasi_evaluasi}"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
+                            <button class="btn btn-danger text-nowrap  delete-btn" style="--bs-btn-padding-y: 0.15rem; --bs-btn-padding-x: 0.5rem; --bs-btn-font-size: 1em;" data-id="${evaluasi_edukasi.id_edukasi_evaluasi}"><i class="fa-solid fa-trash"></i> Hapus</button>
                         </div>
                     </li>
                     `;

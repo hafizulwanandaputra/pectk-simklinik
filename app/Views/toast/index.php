@@ -49,7 +49,7 @@ var toastHTML = `<div id="${toastId}" class="toast fade align-items-center text-
         </div>
         <div>
             <div class="d-flex flex-wrap justify-content-end gap-2 mt-2">
-                <button type="button" class="btn btn-light btn-sm bg-gradient open-pdf-btn">
+                <button type="button" class="btn btn-light btn-sm  open-pdf-btn">
                     Buka PDF
                 </button>
             </div>

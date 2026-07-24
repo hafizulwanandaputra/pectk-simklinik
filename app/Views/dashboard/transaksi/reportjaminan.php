@@ -24,11 +24,11 @@
                         <div class="d-flex flex-column flex-lg-row gap-2">
                             <div class="input-group input-group-sm w-auto flex-fill" id="form-tanggal-awal">
                                 <input type="date" id="tanggal-awal" name="tanggal-awal" class="form-control">
-                                <button class="btn btn-danger bg-gradient" type="button" id="clearTglAwalButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
+                                <button class="btn btn-danger " type="button" id="clearTglAwalButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
                             </div>
                             <div class="input-group input-group-sm w-auto flex-fill" id="form-tanggal-akhir">
                                 <input type="date" id="tanggal-akhir" name="tanggal-akhir" class="form-control">
-                                <button class="btn btn-danger bg-gradient" type="button" id="clearTglAkhirButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
+                                <button class="btn btn-danger " type="button" id="clearTglAkhirButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
                             </div>
                         </div>
                     </div>
@@ -77,7 +77,7 @@
                 <div id="reportBtns" style="display: none;">
                     <hr>
                     <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
-                        <button class="btn btn-success  bg-gradient" type="button" id="reportBtn" onclick="downloadReport()"><i class="fa-solid fa-file-excel"></i> Buat Laporan (Excel)</button>
+                        <button class="btn btn-success  " type="button" id="reportBtn" onclick="downloadReport()"><i class="fa-solid fa-file-excel"></i> Buat Laporan (Excel)</button>
                     </div>
                 </div>
             </div>
@@ -106,7 +106,7 @@
                     </div>
                 </div>
                 <div class="progress mb-1" style="border-top: 1px solid var(--bs-border-color-translucent); border-bottom: 1px solid var(--bs-border-color-translucent); border-left: 1px solid var(--bs-border-color-translucent); border-right: 1px solid var(--bs-border-color-translucent);">
-                    <div id="exportProgressBar" class="progress-bar progress-bar-striped progress-bar-animated bg-gradient bg-primary" role="progressbar" style="width: 0%; transition: none"></div>
+                    <div id="exportProgressBar" class="progress-bar progress-bar-striped progress-bar-animated  bg-primary" role="progressbar" style="width: 0%; transition: none"></div>
                 </div>
                 <div style="font-size: 0.75em;">
                     <span class="date" id="loadedKB">0 B</span> dari <span class="date" id="totalKB">0 B</span> diunduh<br>

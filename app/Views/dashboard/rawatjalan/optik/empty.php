@@ -111,7 +111,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                         <?php else : ?>
                             <div class="text-muted">Klik "Tambah Resep Kacamata" di bawah ini untuk menambahkan resep kacamata</div>
                             <div class="d-grid gap-2 mt-3">
-                                <button class="btn btn-primary bg-gradient" type="button" id="addOptikBtn">
+                                <button class="btn btn-primary " type="button" id="addOptikBtn">
                                     <i class="fa-solid fa-plus"></i> Tambah Resep Kacamata
                                 </button>
                             </div>
@@ -119,7 +119,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                     <?php else : ?>
                         <div class="text-muted">Klik "Tambah Resep Kacamata" di bawah ini untuk menambahkan resep kacamata</div>
                         <div class="d-grid gap-2 mt-3">
-                            <button class="btn btn-primary bg-gradient" type="button" id="addOptikBtn">
+                            <button class="btn btn-primary " type="button" id="addOptikBtn">
                                 <i class="fa-solid fa-plus"></i> Tambah Resep Kacamata
                             </button>
                         </div>

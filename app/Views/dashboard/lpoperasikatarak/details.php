@@ -1299,8 +1299,8 @@ $usia = $registrasi->diff($tanggal_lahir);
             <div>
                 <hr>
                 <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-3">
-                    <button class="btn btn-body  bg-gradient" type="button" onclick="window.open(`<?= base_url('lpoperasikatarak/export/' . $lp_operasi_katarak['id_lp_operasi_katarak']) ?>`)"><i class="fa-solid fa-print"></i> Cetak Form</button>
-                    <button class="btn btn-primary bg-gradient" type="submit" id="submitBtn"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
+                    <button class="btn btn-body  " type="button" onclick="window.open(`<?= base_url('lpoperasikatarak/export/' . $lp_operasi_katarak['id_lp_operasi_katarak']) ?>`)"><i class="fa-solid fa-print"></i> Cetak Form</button>
+                    <button class="btn btn-primary " type="submit" id="submitBtn"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
                 </div>
             </div>
             <?= form_close(); ?>

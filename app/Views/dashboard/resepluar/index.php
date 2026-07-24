@@ -30,9 +30,9 @@
                             <div class="input-group input-group-sm w-auto">
                                 <input type="date" id="tanggalFilter" class="form-control" <?= (session()->get('auto_date') == 1) ? 'value="' . date('Y-m-d') . '"' : ''; ?>>
                                 <?php if (session()->get('auto_date') == 1) : ?>
-                                    <button class="btn btn-primary btn-sm bg-gradient" type="button" id="setTodayTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Kembali ke Hari Ini"><i class="fa-solid fa-calendar-day"></i></button>
+                                    <button class="btn btn-primary btn-sm " type="button" id="setTodayTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Kembali ke Hari Ini"><i class="fa-solid fa-calendar-day"></i></button>
                                 <?php else : ?>
-                                    <button class="btn btn-danger btn-sm bg-gradient " type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
+                                    <button class="btn btn-danger btn-sm  " type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
                                 <?php endif; ?>
                             </div>
                             <div class="input-group input-group-sm flex-grow-1">
@@ -87,7 +87,7 @@
         <div class="no-fluid-content">
             <div class=" rounded">
                 <div class="d-grid gap-2">
-                    <button class="btn btn-primary btn-sm bg-gradient  rounded-bottom-0" type="button" id="addButton">
+                    <button class="btn btn-primary btn-sm   rounded-bottom-0" type="button" id="addButton">
                         <i class="fa-solid fa-plus"></i> Tambah Resep Luar
                     </button>
                 </div>
@@ -158,10 +158,10 @@
                             </div>
                             <hr>
                             <div class="d-grid gap-2 d-flex flex-wrap justify-content-end">
-                                <button type="button" class="btn btn-body btn-sm bg-gradient placeholder" style="width: 4em;" disabled aria-disabled="true"></button>
-                                <button type="button" class="btn btn-body btn-sm bg-gradient placeholder" style="width: 4em;" disabled aria-disabled="true"></button>
-                                <button type="button" class="btn btn-body btn-sm bg-gradient placeholder" style="width: 4em;" disabled aria-disabled="true"></button>
-                                <button type="button" class="btn btn-danger btn-sm bg-gradient placeholder" style="width: 4em;" disabled aria-disabled="true"></button>
+                                <button type="button" class="btn btn-body btn-sm  placeholder" style="width: 4em;" disabled aria-disabled="true"></button>
+                                <button type="button" class="btn btn-body btn-sm  placeholder" style="width: 4em;" disabled aria-disabled="true"></button>
+                                <button type="button" class="btn btn-body btn-sm  placeholder" style="width: 4em;" disabled aria-disabled="true"></button>
+                                <button type="button" class="btn btn-danger btn-sm  placeholder" style="width: 4em;" disabled aria-disabled="true"></button>
                             </div>
                         </li>
                     <?php endfor; ?>
@@ -180,10 +180,10 @@
                     <h6 class="mb-0 fw-normal" id="deleteSubmessage"></h6>
                     <div class="row gx-2 pt-4">
                         <div class="col d-grid">
-                            <button type="button" class="btn btn-lg btn-body bg-gradient fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Batal</button>
+                            <button type="button" class="btn btn-lg btn-body  fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Batal</button>
                         </div>
                         <div class="col d-grid">
-                            <button type="button" class="btn btn-lg btn-danger bg-gradient fs-6 mb-0 rounded-4" id="confirmDeleteBtn">Hapus</button>
+                            <button type="button" class="btn btn-lg btn-danger  fs-6 mb-0 rounded-4" id="confirmDeleteBtn">Hapus</button>
                         </div>
                     </div>
                 </div>
@@ -198,10 +198,10 @@
                     <h6 class="mb-0 fw-normal" id="arsipSubmessage"></h6>
                     <div class="row gx-2 pt-4">
                         <div class="col d-grid">
-                            <button type="button" class="btn btn-lg btn-body bg-gradient fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Batal</button>
+                            <button type="button" class="btn btn-lg btn-body  fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Batal</button>
                         </div>
                         <div class="col d-grid">
-                            <button type="button" class="btn btn-lg btn-primary bg-gradient fs-6 mb-0 rounded-4" id="confirmArsipBtn">Arsipkan</button>
+                            <button type="button" class="btn btn-lg btn-primary  fs-6 mb-0 rounded-4" id="confirmArsipBtn">Arsipkan</button>
                         </div>
                     </div>
                 </div>
@@ -216,10 +216,10 @@
                     <h6 class="mb-0 fw-normal" id="bukaArsipSubmessage"></h6>
                     <div class="row gx-2 pt-4">
                         <div class="col d-grid">
-                            <button type="button" class="btn btn-lg btn-body bg-gradient fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Batal</button>
+                            <button type="button" class="btn btn-lg btn-body  fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Batal</button>
                         </div>
                         <div class="col d-grid">
-                            <button type="button" class="btn btn-lg btn-primary bg-gradient fs-6 mb-0 rounded-4" id="confirmBukaArsipBtn">Buka Arsip</button>
+                            <button type="button" class="btn btn-lg btn-primary  fs-6 mb-0 rounded-4" id="confirmBukaArsipBtn">Buka Arsip</button>
                         </div>
                     </div>
                 </div>
@@ -272,7 +272,7 @@
                     </div>
                 </div>
                 <div class="modal-footer justify-content-end pt-2 pb-2" style="border-top: 1px solid var(--bs-border-color-translucent);">
-                    <button type="submit" id="submitButton" class="btn btn-primary bg-gradient ">
+                    <button type="submit" id="submitButton" class="btn btn-primary  ">
                         <i class="fa-solid fa-floppy-disk"></i> Simpan
                     </button>
                 </div>
@@ -352,10 +352,10 @@
                 </div>
                 <hr>
                 <div class="d-grid gap-2 d-flex flex-wrap justify-content-end">
-                    <button type="button" class="btn btn-body btn-sm bg-gradient placeholder" style="width: 4em;" disabled aria-disabled="true"></button>
-                    <button type="button" class="btn btn-body btn-sm bg-gradient placeholder" style="width: 4em;" disabled aria-disabled="true"></button>
-                    <button type="button" class="btn btn-body btn-sm bg-gradient placeholder" style="width: 4em;" disabled aria-disabled="true"></button>
-                    <button type="button" class="btn btn-danger btn-sm bg-gradient placeholder" style="width: 4em;" disabled aria-disabled="true"></button>
+                    <button type="button" class="btn btn-body btn-sm  placeholder" style="width: 4em;" disabled aria-disabled="true"></button>
+                    <button type="button" class="btn btn-body btn-sm  placeholder" style="width: 4em;" disabled aria-disabled="true"></button>
+                    <button type="button" class="btn btn-body btn-sm  placeholder" style="width: 4em;" disabled aria-disabled="true"></button>
+                    <button type="button" class="btn btn-danger btn-sm  placeholder" style="width: 4em;" disabled aria-disabled="true"></button>
                 </div>
             </li>
     `;
@@ -464,22 +464,22 @@
                     let arsip = resep.arsip;
                     if (arsip === '0') {
                         arsip = `
-                        <button type="button" class="btn btn-body btn-sm bg-gradient arsip-btn" data-id="${resep.id_resep}" data-name="${resep.nama_pasien}" data-date="${resep.tanggal_resep}">
+                        <button type="button" class="btn btn-body btn-sm  arsip-btn" data-id="${resep.id_resep}" data-name="${resep.nama_pasien}" data-date="${resep.tanggal_resep}">
                             <i class="fa-solid fa-box-archive"></i> Arsip
                         </button>
-                        <button type="button" class="btn btn-body btn-sm bg-gradient " onclick="window.location.href = '<?= base_url('resepluar/detailresep') ?>/${resep.id_resep}';">
+                        <button type="button" class="btn btn-body btn-sm  " onclick="window.location.href = '<?= base_url('resepluar/detailresep') ?>/${resep.id_resep}';">
                             <i class="fa-solid fa-circle-info"></i> Detail
                         </button>
-                        <button type="button" class="btn btn-body btn-sm bg-gradient  edit-btn" data-id="${resep.id_resep}" ${statusButtons}>
+                        <button type="button" class="btn btn-body btn-sm   edit-btn" data-id="${resep.id_resep}" ${statusButtons}>
                             <i class="fa-solid fa-pen-to-square"></i> Edit Identitas
                         </button>
-                        <button type="button" class="btn btn-danger btn-sm bg-gradient  delete-btn" data-id="${resep.id_resep}" data-name="${resep.nama_pasien}" data-date="${resep.tanggal_resep}" ${statusButtons}>
+                        <button type="button" class="btn btn-danger btn-sm   delete-btn" data-id="${resep.id_resep}" data-name="${resep.nama_pasien}" data-date="${resep.tanggal_resep}" ${statusButtons}>
                             <i class="fa-solid fa-trash"></i> Hapus
                         </button>
                         `;
                     } else if (arsip === '1') {
                         arsip = `
-                        <button type="button" class="btn btn-body btn-sm bg-gradient bukaarsip-btn" data-id="${resep.id_resep}" data-name="${resep.nama_pasien}" data-date="${resep.tanggal_resep}">
+                        <button type="button" class="btn btn-body btn-sm  bukaarsip-btn" data-id="${resep.id_resep}" data-name="${resep.nama_pasien}" data-date="${resep.tanggal_resep}">
                             <i class="fa-solid fa-box-open"></i> Buka Arsip
                         </button>
                         `;
@@ -568,7 +568,7 @@
                 if (currentPage > 1) {
                     $('#paginationNav ul').append(`
                     <li class="page-item">
-                        <a class="page-link bg-gradient date" href="#" data-page="${currentPage - 1}">
+                        <a class="page-link  date" href="#" data-page="${currentPage - 1}">
                             <i class="fa-solid fa-angle-left"></i>
                         </a>
                     </li>
@@ -578,29 +578,29 @@
                 if (totalPages > 5) {
                     $('#paginationNav ul').append(`
                     <li class="page-item ${currentPage === 1 ? 'active' : ''}">
-                        <a class="page-link bg-gradient date" href="#" data-page="1">1</a>
+                        <a class="page-link  date" href="#" data-page="1">1</a>
                     </li>
                 `);
 
                     if (currentPage > 3) {
-                        $('#paginationNav ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">…</span></li>');
+                        $('#paginationNav ul').append('<li class="page-item disabled"><span class="page-link ">…</span></li>');
                     }
 
                     for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
                         $('#paginationNav ul').append(`
                         <li class="page-item ${i === currentPage ? 'active' : ''}">
-                            <a class="page-link bg-gradient date" href="#" data-page="${i}">${i}</a>
+                            <a class="page-link  date" href="#" data-page="${i}">${i}</a>
                         </li>
                     `);
                     }
 
                     if (currentPage < totalPages - 2) {
-                        $('#paginationNav ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">…</span></li>');
+                        $('#paginationNav ul').append('<li class="page-item disabled"><span class="page-link ">…</span></li>');
                     }
 
                     $('#paginationNav ul').append(`
                     <li class="page-item ${currentPage === totalPages ? 'active' : ''}">
-                        <a class="page-link bg-gradient date" href="#" data-page="${totalPages}">${totalPages}</a>
+                        <a class="page-link  date" href="#" data-page="${totalPages}">${totalPages}</a>
                     </li>
                 `);
                 } else {
@@ -608,7 +608,7 @@
                     for (let i = 1; i <= totalPages; i++) {
                         $('#paginationNav ul').append(`
                         <li class="page-item ${i === currentPage ? 'active' : ''}">
-                            <a class="page-link bg-gradient date" href="#" data-page="${i}">${i}</a>
+                            <a class="page-link  date" href="#" data-page="${i}">${i}</a>
                         </li>
                     `);
                     }
@@ -617,7 +617,7 @@
                 if (currentPage < totalPages) {
                     $('#paginationNav ul').append(`
                     <li class="page-item">
-                        <a class="page-link bg-gradient date" href="#" data-page="${currentPage + 1}">
+                        <a class="page-link  date" href="#" data-page="${currentPage + 1}">
                             <i class="fa-solid fa-angle-right"></i>
                         </a>
                     </li>

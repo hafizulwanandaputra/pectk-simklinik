@@ -32,8 +32,8 @@
                             <div class="no-fluid-content">
                                 <div class="input-group input-group-sm">
                                     <input type="date" id="tanggal" name="tanggal" class="form-control" value="<?= date('Y-m-d') ?>">
-                                    <button class="btn btn-primary bg-gradient" type="button" id="setTodayTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Kembali ke Hari Ini"><i class="fa-solid fa-calendar-day"></i></button>
-                                    <button class="btn btn-success bg-gradient" type="button" id="refreshTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan" disabled><i class="fa-solid fa-sync"></i></button>
+                                    <button class="btn btn-primary " type="button" id="setTodayTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Kembali ke Hari Ini"><i class="fa-solid fa-calendar-day"></i></button>
+                                    <button class="btn btn-success " type="button" id="refreshTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan" disabled><i class="fa-solid fa-sync"></i></button>
                                 </div>
                             </div>
                         </div>
@@ -41,8 +41,8 @@
                             <form class="no-fluid-content" id="no-rm_form_content">
                                 <div class="input-group input-group-sm">
                                     <input type="search" id="no_rm" name="no_rm" class="form-control" placeholder="xx-xx-xx" autocomplete="off" dir="auto">
-                                    <button class="btn btn-primary bg-gradient" type="submit" id="no_rm_submitBtn" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Cari"><i class="fa-solid fa-magnifying-glass"></i></button>
-                                    <button class="btn btn-success bg-gradient" type="button" id="refreshNoRMButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan" disabled><i class="fa-solid fa-sync"></i></button>
+                                    <button class="btn btn-primary " type="submit" id="no_rm_submitBtn" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Cari"><i class="fa-solid fa-magnifying-glass"></i></button>
+                                    <button class="btn btn-success " type="button" id="refreshNoRMButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan" disabled><i class="fa-solid fa-sync"></i></button>
                                 </div>
                             </form>
                         </div>
@@ -50,8 +50,8 @@
                             <form class="no-fluid-content" id="nama_form_content">
                                 <div class="input-group input-group-sm">
                                     <input type="search" id="nama" name="nama" class="form-control" placeholder="Nama pasien" autocomplete="off" dir="auto">
-                                    <button class="btn btn-primary bg-gradient" type="submit" id="nama_submitBtn" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Cari"><i class="fa-solid fa-magnifying-glass"></i></button>
-                                    <button class="btn btn-success bg-gradient" type="button" id="refreshNamaButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan" disabled><i class="fa-solid fa-sync"></i></button>
+                                    <button class="btn btn-primary " type="submit" id="nama_submitBtn" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Cari"><i class="fa-solid fa-magnifying-glass"></i></button>
+                                    <button class="btn btn-success " type="button" id="refreshNamaButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan" disabled><i class="fa-solid fa-sync"></i></button>
                                 </div>
                             </form>
                         </div>
@@ -255,13 +255,13 @@
                             <div>
                                 <div class="d-flex flex-wrap justify-content-end gap-2 mt-2">
                                     <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi' || session()->get('role') == "Manajer") : ?>
-                                        <button id="identitas_btn" type="button" class="btn btn-body btn-sm bg-gradient print-identitas" data-id="">
+                                        <button id="identitas_btn" type="button" class="btn btn-body btn-sm  print-identitas" data-id="">
                                             <i class="fa-solid fa-print"></i> Identitas
                                         </button>
-                                        <button type="button" class="btn btn-body btn-sm bg-gradient print-barcode" data-id="">
+                                        <button type="button" class="btn btn-body btn-sm  print-barcode" data-id="">
                                             <i class="fa-solid fa-barcode"></i> <em>Barcode</em>
                                         </button>
-                                        <button type="button" class="btn btn-body btn-sm redirect-button bg-gradient detail-pasien-btn" data-url="">
+                                        <button type="button" class="btn btn-body btn-sm redirect-button  detail-pasien-btn" data-url="">
                                             <i class="fa-solid fa-circle-info"></i> Detail Pasien
                                         </button>
                                     <?php endif; ?>
@@ -579,7 +579,7 @@
             if (currentPage > 1) {
                 $('#paginationNav-tanggal ul').append(`
                     <li class="page-item">
-                        <a class="page-link bg-gradient date" href="#" data-page="${currentPage - 1}">
+                        <a class="page-link  date" href="#" data-page="${currentPage - 1}">
                             <i class="fa-solid fa-angle-left"></i>
                         </a>
                     </li>
@@ -589,29 +589,29 @@
             if (totalPages > 5) {
                 $('#paginationNav-tanggal ul').append(`
                     <li class="page-item ${currentPage === 1 ? 'active' : ''}">
-                        <a class="page-link bg-gradient date" href="#" data-page="1">1</a>
+                        <a class="page-link  date" href="#" data-page="1">1</a>
                     </li>
                 `);
 
                 if (currentPage > 3) {
-                    $('#paginationNav-tanggal ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">…</span></li>');
+                    $('#paginationNav-tanggal ul').append('<li class="page-item disabled"><span class="page-link ">…</span></li>');
                 }
 
                 for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
                     $('#paginationNav-tanggal ul').append(`
                         <li class="page-item ${i === currentPage ? 'active' : ''}">
-                            <a class="page-link bg-gradient date" href="#" data-page="${i}">${i}</a>
+                            <a class="page-link  date" href="#" data-page="${i}">${i}</a>
                         </li>
                     `);
                 }
 
                 if (currentPage < totalPages - 2) {
-                    $('#paginationNav-tanggal ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">…</span></li>');
+                    $('#paginationNav-tanggal ul').append('<li class="page-item disabled"><span class="page-link ">…</span></li>');
                 }
 
                 $('#paginationNav-tanggal ul').append(`
                     <li class="page-item ${currentPage === totalPages ? 'active' : ''}">
-                        <a class="page-link bg-gradient date" href="#" data-page="${totalPages}">${totalPages}</a>
+                        <a class="page-link  date" href="#" data-page="${totalPages}">${totalPages}</a>
                     </li>
                 `);
             } else {
@@ -619,7 +619,7 @@
                 for (let i = 1; i <= totalPages; i++) {
                     $('#paginationNav-tanggal ul').append(`
                         <li class="page-item ${i === currentPage ? 'active' : ''}">
-                            <a class="page-link bg-gradient date" href="#" data-page="${i}">${i}</a>
+                            <a class="page-link  date" href="#" data-page="${i}">${i}</a>
                         </li>
                     `);
                 }
@@ -628,7 +628,7 @@
             if (currentPage < totalPages) {
                 $('#paginationNav-tanggal ul').append(`
                     <li class="page-item">
-                        <a class="page-link bg-gradient date" href="#" data-page="${currentPage + 1}">
+                        <a class="page-link  date" href="#" data-page="${currentPage + 1}">
                             <i class="fa-solid fa-angle-right"></i>
                         </a>
                     </li>
@@ -775,7 +775,7 @@
             if (currentPage > 1) {
                 $('#paginationNav-no_rm ul').append(`
                     <li class="page-item">
-                        <a class="page-link bg-gradient date" href="#" data-page="${currentPage - 1}">
+                        <a class="page-link  date" href="#" data-page="${currentPage - 1}">
                             <i class="fa-solid fa-angle-left"></i>
                         </a>
                     </li>
@@ -785,29 +785,29 @@
             if (totalPages > 5) {
                 $('#paginationNav-no_rm ul').append(`
                     <li class="page-item ${currentPage === 1 ? 'active' : ''}">
-                        <a class="page-link bg-gradient date" href="#" data-page="1">1</a>
+                        <a class="page-link  date" href="#" data-page="1">1</a>
                     </li>
                 `);
 
                 if (currentPage > 3) {
-                    $('#paginationNav-no_rm ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">…</span></li>');
+                    $('#paginationNav-no_rm ul').append('<li class="page-item disabled"><span class="page-link ">…</span></li>');
                 }
 
                 for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
                     $('#paginationNav-no_rm ul').append(`
                         <li class="page-item ${i === currentPage ? 'active' : ''}">
-                            <a class="page-link bg-gradient date" href="#" data-page="${i}">${i}</a>
+                            <a class="page-link  date" href="#" data-page="${i}">${i}</a>
                         </li>
                     `);
                 }
 
                 if (currentPage < totalPages - 2) {
-                    $('#paginationNav-no_rm ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">…</span></li>');
+                    $('#paginationNav-no_rm ul').append('<li class="page-item disabled"><span class="page-link ">…</span></li>');
                 }
 
                 $('#paginationNav-no_rm ul').append(`
                     <li class="page-item ${currentPage === totalPages ? 'active' : ''}">
-                        <a class="page-link bg-gradient date" href="#" data-page="${totalPages}">${totalPages}</a>
+                        <a class="page-link  date" href="#" data-page="${totalPages}">${totalPages}</a>
                     </li>
                 `);
             } else {
@@ -815,7 +815,7 @@
                 for (let i = 1; i <= totalPages; i++) {
                     $('#paginationNav-no_rm ul').append(`
                         <li class="page-item ${i === currentPage ? 'active' : ''}">
-                            <a class="page-link bg-gradient date" href="#" data-page="${i}">${i}</a>
+                            <a class="page-link  date" href="#" data-page="${i}">${i}</a>
                         </li>
                     `);
                 }
@@ -824,7 +824,7 @@
             if (currentPage < totalPages) {
                 $('#paginationNav-no_rm ul').append(`
                     <li class="page-item">
-                        <a class="page-link bg-gradient date" href="#" data-page="${currentPage + 1}">
+                        <a class="page-link  date" href="#" data-page="${currentPage + 1}">
                             <i class="fa-solid fa-angle-right"></i>
                         </a>
                     </li>
@@ -963,7 +963,7 @@
             if (currentPage > 1) {
                 $('#paginationNav-nama ul').append(`
                     <li class="page-item">
-                        <a class="page-link bg-gradient date" href="#" data-page="${currentPage - 1}">
+                        <a class="page-link  date" href="#" data-page="${currentPage - 1}">
                             <i class="fa-solid fa-angle-left"></i>
                         </a>
                     </li>
@@ -973,29 +973,29 @@
             if (totalPages > 5) {
                 $('#paginationNav-nama ul').append(`
                     <li class="page-item ${currentPage === 1 ? 'active' : ''}">
-                        <a class="page-link bg-gradient date" href="#" data-page="1">1</a>
+                        <a class="page-link  date" href="#" data-page="1">1</a>
                     </li>
                 `);
 
                 if (currentPage > 3) {
-                    $('#paginationNav-nama ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">…</span></li>');
+                    $('#paginationNav-nama ul').append('<li class="page-item disabled"><span class="page-link ">…</span></li>');
                 }
 
                 for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
                     $('#paginationNav-nama ul').append(`
                         <li class="page-item ${i === currentPage ? 'active' : ''}">
-                            <a class="page-link bg-gradient date" href="#" data-page="${i}">${i}</a>
+                            <a class="page-link  date" href="#" data-page="${i}">${i}</a>
                         </li>
                     `);
                 }
 
                 if (currentPage < totalPages - 2) {
-                    $('#paginationNav-nama ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">…</span></li>');
+                    $('#paginationNav-nama ul').append('<li class="page-item disabled"><span class="page-link ">…</span></li>');
                 }
 
                 $('#paginationNav-nama ul').append(`
                     <li class="page-item ${currentPage === totalPages ? 'active' : ''}">
-                        <a class="page-link bg-gradient date" href="#" data-page="${totalPages}">${totalPages}</a>
+                        <a class="page-link  date" href="#" data-page="${totalPages}">${totalPages}</a>
                     </li>
                 `);
             } else {
@@ -1003,7 +1003,7 @@
                 for (let i = 1; i <= totalPages; i++) {
                     $('#paginationNav-nama ul').append(`
                         <li class="page-item ${i === currentPage ? 'active' : ''}">
-                            <a class="page-link bg-gradient date" href="#" data-page="${i}">${i}</a>
+                            <a class="page-link  date" href="#" data-page="${i}">${i}</a>
                         </li>
                     `);
                 }
@@ -1012,7 +1012,7 @@
             if (currentPage < totalPages) {
                 $('#paginationNav-nama ul').append(`
                     <li class="page-item">
-                        <a class="page-link bg-gradient date" href="#" data-page="${currentPage + 1}">
+                        <a class="page-link  date" href="#" data-page="${currentPage + 1}">
                             <i class="fa-solid fa-angle-right"></i>
                         </a>
                     </li>
@@ -1237,7 +1237,7 @@
                 if (tombol_isian_ok === 'Kamar Operasi') {
                     tombol_isian_ok = `
                                             <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi' || session()->get('role') == "Manajer") : ?>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient print-lio" data-id="${rawatjalan.id_rawat_jalan}">
+                                                <button type="button" class="btn btn-body btn-sm  print-lio" data-id="${rawatjalan.id_rawat_jalan}">
                                                     <i class="fa-solid fa-receipt"></i> Lembar Isian Operasi
                                                 </button>
                                             <?php endif; ?>
@@ -1268,63 +1268,63 @@
                     tombol_rme = `
                                         <div class="d-flex flex-wrap justify-content-end gap-2 mt-2">
                                             <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi' || session()->get('role') == "Manajer") : ?>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient print-struk" data-id="${rawatjalan.id_rawat_jalan}">
+                                                <button type="button" class="btn btn-body btn-sm  print-struk" data-id="${rawatjalan.id_rawat_jalan}">
                                                     <i class="fa-solid fa-receipt"></i> Struk
                                                 </button>
                                                 ${tombol_isian_ok}
                                                 <?php if (session()->get('role') != 'Admin' && session()->get('role') != "Manajer") : ?>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/asesmen/export') ?>/${rawatjalan.id_rawat_jalan}');">
+                                                <button type="button" class="btn btn-body btn-sm " onclick="window.open('<?= base_url('rawatjalan/asesmen/export') ?>/${rawatjalan.id_rawat_jalan}');">
                                                     <i class="fa-solid fa-print"></i> Asesmen
                                                 </button>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/skrining/export') ?>/${rawatjalan.id_rawat_jalan}');">
+                                                <button type="button" class="btn btn-body btn-sm " onclick="window.open('<?= base_url('rawatjalan/skrining/export') ?>/${rawatjalan.id_rawat_jalan}');">
                                                     <i class="fa-solid fa-print"></i> Skrining
                                                 </button>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/edukasi/export') ?>/${rawatjalan.id_rawat_jalan}');">
+                                                <button type="button" class="btn btn-body btn-sm " onclick="window.open('<?= base_url('rawatjalan/edukasi/export') ?>/${rawatjalan.id_rawat_jalan}');">
                                                     <i class="fa-solid fa-print"></i> Edukasi
                                                 </button>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/penunjang/export') ?>/${rawatjalan.id_rawat_jalan}');">
+                                                <button type="button" class="btn btn-body btn-sm " onclick="window.open('<?= base_url('rawatjalan/penunjang/export') ?>/${rawatjalan.id_rawat_jalan}');">
                                                     <i class="fa-solid fa-print"></i> Penunjang
                                                 </button>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/optik/export') ?>/${rawatjalan.id_rawat_jalan}');">
+                                                <button type="button" class="btn btn-body btn-sm " onclick="window.open('<?= base_url('rawatjalan/optik/export') ?>/${rawatjalan.id_rawat_jalan}');">
                                                     <i class="fa-solid fa-print"></i> Resep Kacamata
                                                 </button>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/laporanrajal/export') ?>/${rawatjalan.id_rawat_jalan}');">
+                                                <button type="button" class="btn btn-body btn-sm " onclick="window.open('<?= base_url('rawatjalan/laporanrajal/export') ?>/${rawatjalan.id_rawat_jalan}');">
                                                     <i class="fa-solid fa-print"></i> Tindakan Rajal
                                                 </button>
                                                 <?php endif; ?>
                                             <?php endif; ?>
                                             <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Perawat' || session()->get('role') == "Manajer") : ?>
-                                                <button type="button" class="btn btn-body btn-sm redirect-button bg-gradient" data-url="<?= base_url('rawatjalan/asesmen') ?>/${rawatjalan.id_rawat_jalan}">
+                                                <button type="button" class="btn btn-body btn-sm redirect-button " data-url="<?= base_url('rawatjalan/asesmen') ?>/${rawatjalan.id_rawat_jalan}">
                                                     <i class="fa-solid fa-user-check"></i> Asesmen
                                                 </button>
                                                 <?php if (session()->get('role') != 'Dokter') : ?>
-                                                    <button type="button" class="btn btn-body btn-sm redirect-button bg-gradient" data-url="<?= base_url('rawatjalan/skrining') ?>/${rawatjalan.id_rawat_jalan}">
+                                                    <button type="button" class="btn btn-body btn-sm redirect-button " data-url="<?= base_url('rawatjalan/skrining') ?>/${rawatjalan.id_rawat_jalan}">
                                                         <i class="fa-solid fa-user-check"></i> Skrining
                                                     </button>
-                                                    <button type="button" class="btn btn-body btn-sm redirect-button bg-gradient" data-url="<?= base_url('rawatjalan/edukasi') ?>/${rawatjalan.id_rawat_jalan}">
+                                                    <button type="button" class="btn btn-body btn-sm redirect-button " data-url="<?= base_url('rawatjalan/edukasi') ?>/${rawatjalan.id_rawat_jalan}">
                                                         <i class="fa-solid fa-user-graduate"></i> Edukasi
                                                     </button>
-                                                    <button type="button" class="btn btn-body btn-sm redirect-button bg-gradient" data-url="<?= base_url('rawatjalan/penunjang') ?>/${rawatjalan.id_rawat_jalan}">
+                                                    <button type="button" class="btn btn-body btn-sm redirect-button " data-url="<?= base_url('rawatjalan/penunjang') ?>/${rawatjalan.id_rawat_jalan}">
                                                         <i class="fa-solid fa-stethoscope"></i> Penunjang
                                                     </button>
                                                 <?php endif; ?>
                                                 <?php if (session()->get('role') != 'Perawat') : ?>
-                                                    <button type="button" class="btn btn-body btn-sm redirect-button bg-gradient" data-url="<?= base_url('rawatjalan/resepobat') ?>/${rawatjalan.id_rawat_jalan}">
+                                                    <button type="button" class="btn btn-body btn-sm redirect-button " data-url="<?= base_url('rawatjalan/resepobat') ?>/${rawatjalan.id_rawat_jalan}">
                                                         <i class="fa-solid fa-prescription"></i> Resep Obat
                                                     </button>
-                                                    <button type="button" class="btn btn-body btn-sm redirect-button bg-gradient" data-url="<?= base_url('rawatjalan/optik') ?>/${rawatjalan.id_rawat_jalan}">
+                                                    <button type="button" class="btn btn-body btn-sm redirect-button " data-url="<?= base_url('rawatjalan/optik') ?>/${rawatjalan.id_rawat_jalan}">
                                                         <i class="fa-solid fa-glasses"></i> Resep Kacamata
                                                     </button>
-                                                    <button type="button" class="btn btn-body btn-sm redirect-button bg-gradient" data-url="<?= base_url('rawatjalan/laporanrajal') ?>/${rawatjalan.id_rawat_jalan}">
+                                                    <button type="button" class="btn btn-body btn-sm redirect-button " data-url="<?= base_url('rawatjalan/laporanrajal') ?>/${rawatjalan.id_rawat_jalan}">
                                                         <i class="fa-solid fa-file-medical"></i> Tindakan Rajal
                                                     </button>
-                                                    <button type="button" class="btn btn-body btn-sm redirect-button bg-gradient" data-url="<?= base_url('rawatjalan/layanan') ?>/${rawatjalan.id_rawat_jalan}">
+                                                    <button type="button" class="btn btn-body btn-sm redirect-button " data-url="<?= base_url('rawatjalan/layanan') ?>/${rawatjalan.id_rawat_jalan}">
                                                         <i class="fa-solid fa-user-nurse"></i> Layanan
                                                     </button>
                                                 <?php endif; ?>
                                             <?php endif; ?>
                                             <?php if (session()->get('role') == 'Dokter') : ?>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient btn-call" data-id="${rawatjalan.id_rawat_jalan}">
+                                                <button type="button" class="btn btn-body btn-sm  btn-call" data-id="${rawatjalan.id_rawat_jalan}">
                                                     <i class="fa-solid fa-phone-volume"></i> Panggil Antrean
                                                 </button>
                                             <?php endif; ?>
@@ -1334,7 +1334,7 @@
                     tombol_rme = `
                                         <div class="d-flex flex-wrap justify-content-end gap-2 mt-2">
                                             <?php if (session()->get('role') == 'Admin' || session()->get('role') == 'Admisi' || session()->get('role') == "Manajer") : ?>
-                                                <button type="button" class="btn btn-body btn-sm bg-gradient" onclick="window.open('<?= base_url('rawatjalan/struk') ?>/${rawatjalan.id_rawat_jalan}');">
+                                                <button type="button" class="btn btn-body btn-sm " onclick="window.open('<?= base_url('rawatjalan/struk') ?>/${rawatjalan.id_rawat_jalan}');">
                                                     <i class="fa-solid fa-receipt"></i> Struk
                                                 </button>
                                             <?php endif; ?>

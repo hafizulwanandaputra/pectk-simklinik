@@ -26,7 +26,7 @@
         </div>
         <hr>
         <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
-            <button class="btn btn-primary  bg-gradient" type="submit" id="submitBtn"><i class="fa-solid fa-user-pen"></i> Ubah</button>
+            <button class="btn btn-primary  " type="submit" id="submitBtn"><i class="fa-solid fa-user-pen"></i> Ubah</button>
         </div>
         <?= form_close(); ?>
     </div>

@@ -229,8 +229,8 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <div>
                     <hr>
                     <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-3">
-                        <button class="btn btn-body  bg-gradient" type="button" onclick="window.open(`<?= base_url('/rawatjalan/penunjang/export/' . $rawatjalan['id_rawat_jalan']) ?>`)"><i class="fa-solid fa-print"></i> Cetak Formulir</button>
-                        <button class="btn btn-primary bg-gradient" type="submit" id="submitBtn"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
+                        <button class="btn btn-body  " type="button" onclick="window.open(`<?= base_url('/rawatjalan/penunjang/export/' . $rawatjalan['id_rawat_jalan']) ?>`)"><i class="fa-solid fa-print"></i> Cetak Formulir</button>
+                        <button class="btn btn-primary " type="submit" id="submitBtn"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
                     </div>
                 </div>
             </div>
@@ -238,7 +238,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             <div class="mb-3">
                 <div class="fw-bold mb-2 border-bottom">Pemindaian Pemeriksaan Penunjang</div>
                 <div class="d-grid gap-2">
-                    <button class="btn btn-primary btn-sm bg-gradient mb-2" type="button" id="addScanButton" disabled>
+                    <button class="btn btn-primary btn-sm  mb-2" type="button" id="addScanButton" disabled>
                         <i class="fa-solid fa-plus"></i> Tambah Pemindaian
                     </button>
                 </div>
@@ -264,8 +264,8 @@ $usia = $registrasi->diff($tanggal_lahir);
                                     </div>
                                 </div>
                                 <div class="card-footer d-flex justify-content-end gap-1">
-                                    <a class="btn btn-body btn-sm bg-gradient disabled placeholder" aria-disabled="true" style="width: 32px; height: 31px;"></a>
-                                    <a class="btn btn-danger bg-gradient disabled placeholder" aria-disabled="true" style="width: 32px; height: 31px;"></a>
+                                    <a class="btn btn-body btn-sm  disabled placeholder" aria-disabled="true" style="width: 32px; height: 31px;"></a>
+                                    <a class="btn btn-danger  disabled placeholder" aria-disabled="true" style="width: 32px; height: 31px;"></a>
                                 </div>
                             </div>
                         </div>
@@ -318,16 +318,16 @@ $usia = $registrasi->diff($tanggal_lahir);
                     <!-- Progress bar -->
                     <div class="mb-1 mt-1 w-100" id="uploadProgressDiv">
                         <div class="progress" style="border-top: 1px solid var(--bs-border-color-translucent); border-bottom: 1px solid var(--bs-border-color-translucent); border-left: 1px solid var(--bs-border-color-translucent); border-right: 1px solid var(--bs-border-color-translucent);">
-                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-gradient" role="progressbar" style="width: 0%; transition: none;" id="uploadProgressBar"></div>
+                            <div class="progress-bar progress-bar-striped progress-bar-animated " role="progressbar" style="width: 0%; transition: none;" id="uploadProgressBar"></div>
                         </div>
                     </div>
                     <div class="d-flex justify-content-between w-100">
                         <div>
-                            <button type="button" id="cancelButton" class="btn btn-danger bg-gradient" style="display: none;" disabled>
+                            <button type="button" id="cancelButton" class="btn btn-danger " style="display: none;" disabled>
                                 <i class="fa-solid fa-xmark"></i> Batalkan
                             </button>
                         </div>
-                        <button type="submit" id="submitButton" class="btn btn-primary bg-gradient">
+                        <button type="submit" id="submitButton" class="btn btn-primary ">
                             <i class="fa-solid fa-floppy-disk"></i> Simpan
                         </button>
                     </div>
@@ -362,10 +362,10 @@ $usia = $registrasi->diff($tanggal_lahir);
                     <h5 class="mb-0" id="deleteMessage"></h5>
                     <div class="row gx-2 pt-4">
                         <div class="col d-grid">
-                            <button type="button" class="btn btn-lg btn-body bg-gradient fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Batal</button>
+                            <button type="button" class="btn btn-lg btn-body  fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Batal</button>
                         </div>
                         <div class="col d-grid">
-                            <button type="button" class="btn btn-lg btn-danger bg-gradient fs-6 mb-0 rounded-4" id="confirmDeleteBtn">Hapus</button>
+                            <button type="button" class="btn btn-lg btn-danger  fs-6 mb-0 rounded-4" id="confirmDeleteBtn">Hapus</button>
                         </div>
                     </div>
                 </div>
@@ -478,8 +478,8 @@ $usia = $registrasi->diff($tanggal_lahir);
                             </div>
                         </div>
                         <div class="card-footer d-flex justify-content-end gap-1">
-                            <button class="btn btn-body btn-sm bg-gradient edit-btn" data-id="${penunjang_scan.id_penunjang_scan}"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
-                            <button class="btn btn-danger btn-sm bg-gradient delete-btn" data-id="${penunjang_scan.id_penunjang_scan}"><i class="fa-solid fa-trash"></i> Hapus</button>
+                            <button class="btn btn-body btn-sm  edit-btn" data-id="${penunjang_scan.id_penunjang_scan}"><i class="fa-solid fa-pen-to-square"></i> Edit</button>
+                            <button class="btn btn-danger btn-sm  delete-btn" data-id="${penunjang_scan.id_penunjang_scan}"><i class="fa-solid fa-trash"></i> Hapus</button>
                         </div>                               
                     </div>
                 </div>

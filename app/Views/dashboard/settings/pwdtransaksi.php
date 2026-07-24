@@ -30,7 +30,7 @@
                     data-bs-placement="top"
                     data-bs-trigger="manual"
                     data-bs-title="<em>CAPS LOCK</em> AKTIF"
-                    data-bs-content="Harap periksa status <span class='badge text-bg-dark bg-gradient kbd'>Caps Lock</span> pada papan tombol (<em>keyboard</em>) Anda.">
+                    data-bs-content="Harap periksa status <span class='badge text-bg-dark  kbd'>Caps Lock</span> pada papan tombol (<em>keyboard</em>) Anda.">
                 <label for="new_password1">Kata Sandi Baru</label>
                 <div class="invalid-feedback">
                     <?= validation_show_error('new_password1'); ?>
@@ -41,7 +41,7 @@
                     data-bs-placement="top"
                     data-bs-trigger="manual"
                     data-bs-title="<em>CAPS LOCK</em> AKTIF"
-                    data-bs-content="Harap periksa status <span class='badge text-bg-dark bg-gradient kbd'>Caps Lock</span> pada papan tombol (<em>keyboard</em>) Anda.">
+                    data-bs-content="Harap periksa status <span class='badge text-bg-dark  kbd'>Caps Lock</span> pada papan tombol (<em>keyboard</em>) Anda.">
                 <label for="new_password2">Konfirmsi Kata Sandi Baru</label>
                 <div class="invalid-feedback">
                     <?= validation_show_error('new_password2'); ?>
@@ -50,7 +50,7 @@
         </div>
         <hr>
         <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
-            <button class="btn btn-primary  bg-gradient" type="submit" id="submitBtn"><i class="fa-solid fa-pen-to-square"></i> Ubah</button>
+            <button class="btn btn-primary  " type="submit" id="submitBtn"><i class="fa-solid fa-pen-to-square"></i> Ubah</button>
         </div>
         <?= form_close(); ?>
     </div>

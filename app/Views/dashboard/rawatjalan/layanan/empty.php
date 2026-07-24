@@ -111,7 +111,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                         <?php else : ?>
                             <div class="text-muted">Klik "Tambah Layanan" di bawah ini untuk menambahkan layanan</div>
                             <div class="d-grid gap-2 mt-3">
-                                <button class="btn btn-primary bg-gradient" type="button" id="addLayananBtn">
+                                <button class="btn btn-primary " type="button" id="addLayananBtn">
                                     <i class="fa-solid fa-plus"></i> Tambah Layanan
                                 </button>
                             </div>
@@ -119,7 +119,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                     <?php else : ?>
                         <div class="text-muted">Klik "Tambah Layanan" di bawah ini untuk menambahkan layanan</div>
                         <div class="d-grid gap-2 mt-3">
-                            <button class="btn btn-primary bg-gradient" type="button" id="addLayananBtn">
+                            <button class="btn btn-primary " type="button" id="addLayananBtn">
                                 <i class="fa-solid fa-plus"></i> Tambah Layanan
                             </button>
                         </div>

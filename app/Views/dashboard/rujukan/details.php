@@ -143,13 +143,13 @@ $usia = $registrasi->diff($tanggal_lahir);
                 <hr>
                 <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-3">
                     <div class="btn-group">
-                        <button class="btn btn-body dropdown-toggle bg-gradient" type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-print"></i> Cetak Form</button>
+                        <button class="btn btn-body dropdown-toggle " type="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa-solid fa-print"></i> Cetak Form</button>
                         <ul class="dropdown-menu dropdown-menu-end  w-100">
                             <li><a class="dropdown-item print-btn" href="<?= base_url('rujukan/export/' . $rujukan['id_rujukan']) ?>?side=left">Sisi kiri</a></li>
                             <li><a class="dropdown-item print-btn" href="<?= base_url('rujukan/export/' . $rujukan['id_rujukan']) ?>?side=right">Sisi kanan</a></li>
                         </ul>
                     </div>
-                    <button class="btn btn-primary bg-gradient" type="submit" id="submitBtn"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
+                    <button class="btn btn-primary " type="submit" id="submitBtn"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
                 </div>
             </div>
             <?= form_close(); ?>

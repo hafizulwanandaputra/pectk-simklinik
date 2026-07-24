@@ -26,8 +26,8 @@
                             <div class="no-fluid-content">
                                 <div class="input-group input-group-sm" id="form-resep-harian">
                                     <input type="date" id="tanggal" name="tanggal" class="form-control" <?= (session()->get('auto_date') == 1) ? 'value="' . date('Y-m-d') . '"' : ''; ?>>
-                                    <button class="btn btn-danger bg-gradient" type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
-                                    <button class="btn btn-success bg-gradient " type="button" id="refreshButton1" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan" disabled><i class="fa-solid fa-sync"></i></button>
+                                    <button class="btn btn-danger " type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
+                                    <button class="btn btn-success  " type="button" id="refreshButton1" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan" disabled><i class="fa-solid fa-sync"></i></button>
                                 </div>
                             </div>
                         </div>
@@ -35,8 +35,8 @@
                             <div class="no-fluid-content">
                                 <div class="input-group input-group-sm" id="form-resep-bulanan">
                                     <input type="month" id="bulan" name="bulan" class="form-control rounded-start" <?= (session()->get('auto_date') == 1) ? 'value="' . date('Y-m') . '"' : ''; ?>>
-                                    <button class="btn btn-danger bg-gradient" type="button" id="clearBlnButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Bulan"><i class="fa-solid fa-xmark"></i></button>
-                                    <button class="btn btn-success bg-gradient " type="button" id="refreshButton2" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan" disabled><i class="fa-solid fa-sync"></i></button>
+                                    <button class="btn btn-danger " type="button" id="clearBlnButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Bulan"><i class="fa-solid fa-xmark"></i></button>
+                                    <button class="btn btn-success  " type="button" id="refreshButton2" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Segarkan" disabled><i class="fa-solid fa-sync"></i></button>
                                 </div>
                             </div>
                         </div>
@@ -103,7 +103,7 @@
                         <div id="reportBtns1" style="display: none;">
                             <hr>
                             <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
-                                <button class="btn btn-success  bg-gradient" type="button" id="reportBtn1" onclick="downloadReport1()"><i class="fa-solid fa-file-excel"></i> Buat Laporan (Excel)</button>
+                                <button class="btn btn-success  " type="button" id="reportBtn1" onclick="downloadReport1()"><i class="fa-solid fa-file-excel"></i> Buat Laporan (Excel)</button>
                             </div>
                         </div>
                     </div>
@@ -161,7 +161,7 @@
                         <div id="reportBtns2" style="display: none;">
                             <hr>
                             <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
-                                <button class="btn btn-success  bg-gradient" type="button" id="reportBtn2" onclick="downloadReport2()"><i class="fa-solid fa-file-excel"></i> Buat Laporan (Excel)</button>
+                                <button class="btn btn-success  " type="button" id="reportBtn2" onclick="downloadReport2()"><i class="fa-solid fa-file-excel"></i> Buat Laporan (Excel)</button>
                             </div>
                         </div>
                     </div>
@@ -204,7 +204,7 @@
                     </div>
                 </div>
                 <div class="progress mb-1" style="border-top: 1px solid var(--bs-border-color-translucent); border-bottom: 1px solid var(--bs-border-color-translucent); border-left: 1px solid var(--bs-border-color-translucent); border-right: 1px solid var(--bs-border-color-translucent);">
-                    <div id="exportProgressBar1" class="progress-bar progress-bar-striped progress-bar-animated bg-gradient bg-primary" role="progressbar" style="width: 0%; transition: none"></div>
+                    <div id="exportProgressBar1" class="progress-bar progress-bar-striped progress-bar-animated  bg-primary" role="progressbar" style="width: 0%; transition: none"></div>
                 </div>
                 <div style="font-size: 0.75em;">
                     <span><strong>Laporan Resep Harian</strong></span><br>
@@ -396,7 +396,7 @@
                     </div>
                 </div>
                 <div class="progress mb-1" style="border-top: 1px solid var(--bs-border-color-translucent); border-bottom: 1px solid var(--bs-border-color-translucent); border-left: 1px solid var(--bs-border-color-translucent); border-right: 1px solid var(--bs-border-color-translucent);">
-                    <div id="exportProgressBar2" class="progress-bar progress-bar-striped progress-bar-animated bg-gradient bg-primary" role="progressbar" style="width: 0%; transition: none"></div>
+                    <div id="exportProgressBar2" class="progress-bar progress-bar-striped progress-bar-animated  bg-primary" role="progressbar" style="width: 0%; transition: none"></div>
                 </div>
                 <div style="font-size: 0.75em;">
                     <span><strong>Laporan Resep Bulanan</strong></span><br>

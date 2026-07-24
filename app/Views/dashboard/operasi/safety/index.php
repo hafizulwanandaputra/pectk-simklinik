@@ -353,7 +353,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             <div>
                 <hr>
                 <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-3">
-                    <button class="btn btn-primary bg-gradient" type="submit" id="submitSignInBtn"><i class="fa-solid fa-floppy-disk"></i> Simpan <em>Sign In</em></button>
+                    <button class="btn btn-primary " type="submit" id="submitSignInBtn"><i class="fa-solid fa-floppy-disk"></i> Simpan <em>Sign In</em></button>
                 </div>
             </div>
             <?= form_close(); ?>
@@ -578,7 +578,7 @@ $usia = $registrasi->diff($tanggal_lahir);
             <div>
                 <hr>
                 <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-3">
-                    <button class="btn btn-primary bg-gradient" type="submit" id="submitTimeOutBtn"><i class="fa-solid fa-floppy-disk"></i> Simpan <em>Time Out</em></button>
+                    <button class="btn btn-primary " type="submit" id="submitTimeOutBtn"><i class="fa-solid fa-floppy-disk"></i> Simpan <em>Time Out</em></button>
                 </div>
             </div>
             <?= form_close(); ?>
@@ -700,14 +700,14 @@ $usia = $registrasi->diff($tanggal_lahir);
             <div>
                 <hr>
                 <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-3">
-                    <button class="btn btn-primary bg-gradient" type="submit" id="submitSignOutBtn"><i class="fa-solid fa-floppy-disk"></i> Simpan <em>Sign Out</em></button>
+                    <button class="btn btn-primary " type="submit" id="submitSignOutBtn"><i class="fa-solid fa-floppy-disk"></i> Simpan <em>Sign Out</em></button>
                 </div>
             </div>
             <?= form_close(); ?>
             <div>
                 <hr>
                 <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-3">
-                    <button class="btn btn-body  bg-gradient" type="button" onclick="window.open(`<?= base_url('/operasi/safety/export/' . $operasi['id_sp_operasi']) ?>`)"><i class="fa-solid fa-print"></i> Cetak Form</button>
+                    <button class="btn btn-body  " type="button" onclick="window.open(`<?= base_url('/operasi/safety/export/' . $operasi['id_sp_operasi']) ?>`)"><i class="fa-solid fa-print"></i> Cetak Form</button>
                 </div>
             </div>
         </div>

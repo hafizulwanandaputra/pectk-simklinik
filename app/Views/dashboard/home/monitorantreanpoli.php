@@ -261,7 +261,7 @@ $db = db_connect();
                     <h6 class="mb-0 fw-normal date" id="refreshSubmessage">Mencoba menghubungkan ulang dalam 5 detik</h6>
                     <div class="row gy-2 pt-4">
                         <div class="d-grid">
-                            <button type="button" class="btn btn-lg btn-danger bg-gradient fs-6 mb-0 rounded-4" id="logoutRefreshBtn">Keluar</button>
+                            <button type="button" class="btn btn-lg btn-danger  fs-6 mb-0 rounded-4" id="logoutRefreshBtn">Keluar</button>
                         </div>
                     </div>
                 </div>

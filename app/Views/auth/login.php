@@ -313,7 +313,7 @@ $isApple = in_array($platform, [
                     data-bs-placement="top"
                     data-bs-trigger="manual"
                     data-bs-title="<em>CAPS LOCK</em> AKTIF"
-                    data-bs-content="Harap periksa status <span class='badge text-bg-dark bg-gradient kbd'>Caps Lock</span> pada papan tombol (<em>keyboard</em>) Anda.">
+                    data-bs-content="Harap periksa status <span class='badge text-bg-dark kbd'>Caps Lock</span> pada papan tombol (<em>keyboard</em>) Anda.">
                 <label for="floatingPassword">
                     <div class="d-flex align-items-start">
                         <div style="width: 12px; text-align: center;">
@@ -325,7 +325,7 @@ $isApple = in_array($platform, [
                     </div>
                 </label>
             </div>
-            <button id="loginBtn" class="w-100 btn btn-primary bg-gradient btn-lg rounded-4" type="submit">
+            <button id="loginBtn" class="w-100 btn btn-primary btn-lg rounded-4" type="submit">
                 <i class="fa-solid fa-right-to-bracket"></i> MASUK
             </button>
             <input type="hidden" name="url" value="<?= (isset($_GET['redirect'])) ? base_url('/' . urldecode($_GET['redirect'])) : base_url('/home'); ?>">

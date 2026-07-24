@@ -562,7 +562,7 @@ $isApple = in_array($platform, [
                         <div class="ps-2 text-start text-body-emphasis fw-bold">PADANG EYE CENTER<br>TELUK KUANTAN</div>
                     </span>
                 </div>
-                <button type="button" class="btn btn-outline-success bg-gradient d-md-none mx-3" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation"><i class="fa-solid fa-bars"></i></button>
+                <button type="button" class="btn btn-outline-success  d-md-none mx-3" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation"><i class="fa-solid fa-bars"></i></button>
             <?php endif; ?>
             <div class="d-flex w-100 align-items-center text-truncate" style="min-height: 3rem; max-height: 3rem;">
                 <div class="w-100 ps-3 pe-1 pe-lg-2 text-truncate" style="flex: 1; min-width: 0;">
@@ -597,7 +597,7 @@ $isApple = in_array($platform, [
                             </div>
                             <div class="d-flex flex-row">
                                 <div class="dropdown">
-                                    <button class="btn btn-outline-success bg-gradient dropdown-toggle" id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static" aria-label="Toggle theme (auto)">
+                                    <button class="btn btn-outline-success  dropdown-toggle" id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static" aria-label="Toggle theme (auto)">
                                         <i class="fa-solid fa-palette"></i>
                                     </button>
                                     <ul class="dropdown-menu  dropdown-menu-end bg-body-tertiary transparent-blur" aria-labelledby="bd-theme-text">
@@ -618,7 +618,7 @@ $isApple = in_array($platform, [
                                         </li>
                                     </ul>
                                 </div>
-                                <button id="closeOffcanvasBtn" type="button" class="btn btn-success bg-gradient ms-2" data-bs-dismiss="offcanvas" aria-label="Close"><i class="fa-solid fa-angles-right"></i></button>
+                                <button id="closeOffcanvasBtn" type="button" class="btn btn-success  ms-2" data-bs-dismiss="offcanvas" aria-label="Close"><i class="fa-solid fa-angles-right"></i></button>
                             </div>
                         </div>
                         <div class="offcanvas-body p-1">
@@ -702,10 +702,10 @@ $isApple = in_array($platform, [
                         <h5 class="mb-0" id="logoutMessage">Apakah Anda ingin keluar?</h5>
                         <div class="row gx-2 pt-4">
                             <div class="col d-grid">
-                                <button type="button" class="btn btn-lg btn-body bg-gradient fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Batal</button>
+                                <button type="button" class="btn btn-lg btn-body  fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Batal</button>
                             </div>
                             <div class="col d-grid">
-                                <button type="button" class="btn btn-lg btn-danger bg-gradient fs-6 mb-0 rounded-4" id="confirmLogout" onclick="window.location.href='<?= base_url('/logout'); ?>';">Keluar</a>
+                                <button type="button" class="btn btn-lg btn-danger  fs-6 mb-0 rounded-4" id="confirmLogout" onclick="window.location.href='<?= base_url('/logout'); ?>';">Keluar</a>
                             </div>
                         </div>
                     </div>

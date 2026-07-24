@@ -691,7 +691,7 @@ $db = db_connect();
                     if (currentPage > 1) {
                         $('#paginationNav_provinsi ul').append(`
                     <li class="page-item">
-                        <a class="page-link bg-gradient date" href="#" data-page="${currentPage - 1}">
+                        <a class="page-link  date" href="#" data-page="${currentPage - 1}">
                             <i class="fa-solid fa-angle-left"></i>
                         </a>
                     </li>
@@ -701,29 +701,29 @@ $db = db_connect();
                     if (totalPages > 5) {
                         $('#paginationNav_provinsi ul').append(`
                     <li class="page-item ${currentPage === 1 ? 'active' : ''}">
-                        <a class="page-link bg-gradient date" href="#" data-page="1">1</a>
+                        <a class="page-link  date" href="#" data-page="1">1</a>
                     </li>
                 `);
 
                         if (currentPage > 3) {
-                            $('#paginationNav_provinsi ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">…</span></li>');
+                            $('#paginationNav_provinsi ul').append('<li class="page-item disabled"><span class="page-link ">…</span></li>');
                         }
 
                         for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
                             $('#paginationNav_provinsi ul').append(`
                         <li class="page-item ${i === currentPage ? 'active' : ''}">
-                            <a class="page-link bg-gradient date" href="#" data-page="${i}">${i}</a>
+                            <a class="page-link  date" href="#" data-page="${i}">${i}</a>
                         </li>
                     `);
                         }
 
                         if (currentPage < totalPages - 2) {
-                            $('#paginationNav_provinsi ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">…</span></li>');
+                            $('#paginationNav_provinsi ul').append('<li class="page-item disabled"><span class="page-link ">…</span></li>');
                         }
 
                         $('#paginationNav_provinsi ul').append(`
                     <li class="page-item ${currentPage === totalPages ? 'active' : ''}">
-                        <a class="page-link bg-gradient date" href="#" data-page="${totalPages}">${totalPages}</a>
+                        <a class="page-link  date" href="#" data-page="${totalPages}">${totalPages}</a>
                     </li>
                 `);
                     } else {
@@ -731,7 +731,7 @@ $db = db_connect();
                         for (let i = 1; i <= totalPages; i++) {
                             $('#paginationNav_provinsi ul').append(`
                         <li class="page-item ${i === currentPage ? 'active' : ''}">
-                            <a class="page-link bg-gradient date" href="#" data-page="${i}">${i}</a>
+                            <a class="page-link  date" href="#" data-page="${i}">${i}</a>
                         </li>
                     `);
                         }
@@ -740,7 +740,7 @@ $db = db_connect();
                     if (currentPage < totalPages) {
                         $('#paginationNav_provinsi ul').append(`
                     <li class="page-item">
-                        <a class="page-link bg-gradient date" href="#" data-page="${currentPage + 1}">
+                        <a class="page-link  date" href="#" data-page="${currentPage + 1}">
                             <i class="fa-solid fa-angle-right"></i>
                         </a>
                     </li>
@@ -846,7 +846,7 @@ $db = db_connect();
                     if (currentPage > 1) {
                         $('#paginationNav_kabkota ul').append(`
                     <li class="page-item">
-                        <a class="page-link bg-gradient date" href="#" data-page="${currentPage - 1}">
+                        <a class="page-link  date" href="#" data-page="${currentPage - 1}">
                             <i class="fa-solid fa-angle-left"></i>
                         </a>
                     </li>
@@ -856,29 +856,29 @@ $db = db_connect();
                     if (totalPages > 5) {
                         $('#paginationNav_kabkota ul').append(`
                     <li class="page-item ${currentPage === 1 ? 'active' : ''}">
-                        <a class="page-link bg-gradient date" href="#" data-page="1">1</a>
+                        <a class="page-link  date" href="#" data-page="1">1</a>
                     </li>
                 `);
 
                         if (currentPage > 3) {
-                            $('#paginationNav_kabkota ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">…</span></li>');
+                            $('#paginationNav_kabkota ul').append('<li class="page-item disabled"><span class="page-link ">…</span></li>');
                         }
 
                         for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
                             $('#paginationNav_kabkota ul').append(`
                         <li class="page-item ${i === currentPage ? 'active' : ''}">
-                            <a class="page-link bg-gradient date" href="#" data-page="${i}">${i}</a>
+                            <a class="page-link  date" href="#" data-page="${i}">${i}</a>
                         </li>
                     `);
                         }
 
                         if (currentPage < totalPages - 2) {
-                            $('#paginationNav_kabkota ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">…</span></li>');
+                            $('#paginationNav_kabkota ul').append('<li class="page-item disabled"><span class="page-link ">…</span></li>');
                         }
 
                         $('#paginationNav_kabkota ul').append(`
                     <li class="page-item ${currentPage === totalPages ? 'active' : ''}">
-                        <a class="page-link bg-gradient date" href="#" data-page="${totalPages}">${totalPages}</a>
+                        <a class="page-link  date" href="#" data-page="${totalPages}">${totalPages}</a>
                     </li>
                 `);
                     } else {
@@ -886,7 +886,7 @@ $db = db_connect();
                         for (let i = 1; i <= totalPages; i++) {
                             $('#paginationNav_kabkota ul').append(`
                         <li class="page-item ${i === currentPage ? 'active' : ''}">
-                            <a class="page-link bg-gradient date" href="#" data-page="${i}">${i}</a>
+                            <a class="page-link  date" href="#" data-page="${i}">${i}</a>
                         </li>
                     `);
                         }
@@ -895,7 +895,7 @@ $db = db_connect();
                     if (currentPage < totalPages) {
                         $('#paginationNav_kabkota ul').append(`
                     <li class="page-item">
-                        <a class="page-link bg-gradient date" href="#" data-page="${currentPage + 1}">
+                        <a class="page-link  date" href="#" data-page="${currentPage + 1}">
                             <i class="fa-solid fa-angle-right"></i>
                         </a>
                     </li>
@@ -1001,7 +1001,7 @@ $db = db_connect();
                     if (currentPage > 1) {
                         $('#paginationNav_kecamatan ul').append(`
                     <li class="page-item">
-                        <a class="page-link bg-gradient date" href="#" data-page="${currentPage - 1}">
+                        <a class="page-link  date" href="#" data-page="${currentPage - 1}">
                             <i class="fa-solid fa-angle-left"></i>
                         </a>
                     </li>
@@ -1011,29 +1011,29 @@ $db = db_connect();
                     if (totalPages > 5) {
                         $('#paginationNav_kecamatan ul').append(`
                     <li class="page-item ${currentPage === 1 ? 'active' : ''}">
-                        <a class="page-link bg-gradient date" href="#" data-page="1">1</a>
+                        <a class="page-link  date" href="#" data-page="1">1</a>
                     </li>
                 `);
 
                         if (currentPage > 3) {
-                            $('#paginationNav_kecamatan ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">…</span></li>');
+                            $('#paginationNav_kecamatan ul').append('<li class="page-item disabled"><span class="page-link ">…</span></li>');
                         }
 
                         for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
                             $('#paginationNav_kecamatan ul').append(`
                         <li class="page-item ${i === currentPage ? 'active' : ''}">
-                            <a class="page-link bg-gradient date" href="#" data-page="${i}">${i}</a>
+                            <a class="page-link  date" href="#" data-page="${i}">${i}</a>
                         </li>
                     `);
                         }
 
                         if (currentPage < totalPages - 2) {
-                            $('#paginationNav_kecamatan ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">…</span></li>');
+                            $('#paginationNav_kecamatan ul').append('<li class="page-item disabled"><span class="page-link ">…</span></li>');
                         }
 
                         $('#paginationNav_kecamatan ul').append(`
                     <li class="page-item ${currentPage === totalPages ? 'active' : ''}">
-                        <a class="page-link bg-gradient date" href="#" data-page="${totalPages}">${totalPages}</a>
+                        <a class="page-link  date" href="#" data-page="${totalPages}">${totalPages}</a>
                     </li>
                 `);
                     } else {
@@ -1041,7 +1041,7 @@ $db = db_connect();
                         for (let i = 1; i <= totalPages; i++) {
                             $('#paginationNav_kecamatan ul').append(`
                         <li class="page-item ${i === currentPage ? 'active' : ''}">
-                            <a class="page-link bg-gradient date" href="#" data-page="${i}">${i}</a>
+                            <a class="page-link  date" href="#" data-page="${i}">${i}</a>
                         </li>
                     `);
                         }
@@ -1050,7 +1050,7 @@ $db = db_connect();
                     if (currentPage < totalPages) {
                         $('#paginationNav_kecamatan ul').append(`
                     <li class="page-item">
-                        <a class="page-link bg-gradient date" href="#" data-page="${currentPage + 1}">
+                        <a class="page-link  date" href="#" data-page="${currentPage + 1}">
                             <i class="fa-solid fa-angle-right"></i>
                         </a>
                     </li>
@@ -1156,7 +1156,7 @@ $db = db_connect();
                     if (currentPage > 1) {
                         $('#paginationNav_kelurahan ul').append(`
                     <li class="page-item">
-                        <a class="page-link bg-gradient date" href="#" data-page="${currentPage - 1}">
+                        <a class="page-link  date" href="#" data-page="${currentPage - 1}">
                             <i class="fa-solid fa-angle-left"></i>
                         </a>
                     </li>
@@ -1166,29 +1166,29 @@ $db = db_connect();
                     if (totalPages > 5) {
                         $('#paginationNav_kelurahan ul').append(`
                     <li class="page-item ${currentPage === 1 ? 'active' : ''}">
-                        <a class="page-link bg-gradient date" href="#" data-page="1">1</a>
+                        <a class="page-link  date" href="#" data-page="1">1</a>
                     </li>
                 `);
 
                         if (currentPage > 3) {
-                            $('#paginationNav_kelurahan ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">…</span></li>');
+                            $('#paginationNav_kelurahan ul').append('<li class="page-item disabled"><span class="page-link ">…</span></li>');
                         }
 
                         for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
                             $('#paginationNav_kelurahan ul').append(`
                         <li class="page-item ${i === currentPage ? 'active' : ''}">
-                            <a class="page-link bg-gradient date" href="#" data-page="${i}">${i}</a>
+                            <a class="page-link  date" href="#" data-page="${i}">${i}</a>
                         </li>
                     `);
                         }
 
                         if (currentPage < totalPages - 2) {
-                            $('#paginationNav_kelurahan ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">…</span></li>');
+                            $('#paginationNav_kelurahan ul').append('<li class="page-item disabled"><span class="page-link ">…</span></li>');
                         }
 
                         $('#paginationNav_kelurahan ul').append(`
                     <li class="page-item ${currentPage === totalPages ? 'active' : ''}">
-                        <a class="page-link bg-gradient date" href="#" data-page="${totalPages}">${totalPages}</a>
+                        <a class="page-link  date" href="#" data-page="${totalPages}">${totalPages}</a>
                     </li>
                 `);
                     } else {
@@ -1196,7 +1196,7 @@ $db = db_connect();
                         for (let i = 1; i <= totalPages; i++) {
                             $('#paginationNav_kelurahan ul').append(`
                         <li class="page-item ${i === currentPage ? 'active' : ''}">
-                            <a class="page-link bg-gradient date" href="#" data-page="${i}">${i}</a>
+                            <a class="page-link  date" href="#" data-page="${i}">${i}</a>
                         </li>
                     `);
                         }
@@ -1205,7 +1205,7 @@ $db = db_connect();
                     if (currentPage < totalPages) {
                         $('#paginationNav_kelurahan ul').append(`
                     <li class="page-item">
-                        <a class="page-link bg-gradient date" href="#" data-page="${currentPage + 1}">
+                        <a class="page-link  date" href="#" data-page="${currentPage + 1}">
                             <i class="fa-solid fa-angle-right"></i>
                         </a>
                     </li>
@@ -1311,7 +1311,7 @@ $db = db_connect();
                     if (currentPage > 1) {
                         $('#paginationNav_icd_x ul').append(`
                     <li class="page-item">
-                        <a class="page-link bg-gradient date" href="#" data-page="${currentPage - 1}">
+                        <a class="page-link  date" href="#" data-page="${currentPage - 1}">
                             <i class="fa-solid fa-angle-left"></i>
                         </a>
                     </li>
@@ -1321,29 +1321,29 @@ $db = db_connect();
                     if (totalPages > 5) {
                         $('#paginationNav_icd_x ul').append(`
                     <li class="page-item ${currentPage === 1 ? 'active' : ''}">
-                        <a class="page-link bg-gradient date" href="#" data-page="1">1</a>
+                        <a class="page-link  date" href="#" data-page="1">1</a>
                     </li>
                 `);
 
                         if (currentPage > 3) {
-                            $('#paginationNav_icd_x ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">…</span></li>');
+                            $('#paginationNav_icd_x ul').append('<li class="page-item disabled"><span class="page-link ">…</span></li>');
                         }
 
                         for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
                             $('#paginationNav_icd_x ul').append(`
                         <li class="page-item ${i === currentPage ? 'active' : ''}">
-                            <a class="page-link bg-gradient date" href="#" data-page="${i}">${i}</a>
+                            <a class="page-link  date" href="#" data-page="${i}">${i}</a>
                         </li>
                     `);
                         }
 
                         if (currentPage < totalPages - 2) {
-                            $('#paginationNav_icd_x ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">…</span></li>');
+                            $('#paginationNav_icd_x ul').append('<li class="page-item disabled"><span class="page-link ">…</span></li>');
                         }
 
                         $('#paginationNav_icd_x ul').append(`
                     <li class="page-item ${currentPage === totalPages ? 'active' : ''}">
-                        <a class="page-link bg-gradient date" href="#" data-page="${totalPages}">${totalPages}</a>
+                        <a class="page-link  date" href="#" data-page="${totalPages}">${totalPages}</a>
                     </li>
                 `);
                     } else {
@@ -1351,7 +1351,7 @@ $db = db_connect();
                         for (let i = 1; i <= totalPages; i++) {
                             $('#paginationNav_icd_x ul').append(`
                         <li class="page-item ${i === currentPage ? 'active' : ''}">
-                            <a class="page-link bg-gradient date" href="#" data-page="${i}">${i}</a>
+                            <a class="page-link  date" href="#" data-page="${i}">${i}</a>
                         </li>
                     `);
                         }
@@ -1360,7 +1360,7 @@ $db = db_connect();
                     if (currentPage < totalPages) {
                         $('#paginationNav_icd_x ul').append(`
                     <li class="page-item">
-                        <a class="page-link bg-gradient date" href="#" data-page="${currentPage + 1}">
+                        <a class="page-link  date" href="#" data-page="${currentPage + 1}">
                             <i class="fa-solid fa-angle-right"></i>
                         </a>
                     </li>
@@ -1465,7 +1465,7 @@ $db = db_connect();
                     if (currentPage > 1) {
                         $('#paginationNav_icd_9 ul').append(`
                     <li class="page-item">
-                        <a class="page-link bg-gradient date" href="#" data-page="${currentPage - 1}">
+                        <a class="page-link  date" href="#" data-page="${currentPage - 1}">
                             <i class="fa-solid fa-angle-left"></i>
                         </a>
                     </li>
@@ -1475,29 +1475,29 @@ $db = db_connect();
                     if (totalPages > 5) {
                         $('#paginationNav_icd_9 ul').append(`
                     <li class="page-item ${currentPage === 1 ? 'active' : ''}">
-                        <a class="page-link bg-gradient date" href="#" data-page="1">1</a>
+                        <a class="page-link  date" href="#" data-page="1">1</a>
                     </li>
                 `);
 
                         if (currentPage > 3) {
-                            $('#paginationNav_icd_9 ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">…</span></li>');
+                            $('#paginationNav_icd_9 ul').append('<li class="page-item disabled"><span class="page-link ">…</span></li>');
                         }
 
                         for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
                             $('#paginationNav_icd_9 ul').append(`
                         <li class="page-item ${i === currentPage ? 'active' : ''}">
-                            <a class="page-link bg-gradient date" href="#" data-page="${i}">${i}</a>
+                            <a class="page-link  date" href="#" data-page="${i}">${i}</a>
                         </li>
                     `);
                         }
 
                         if (currentPage < totalPages - 2) {
-                            $('#paginationNav_icd_9 ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">…</span></li>');
+                            $('#paginationNav_icd_9 ul').append('<li class="page-item disabled"><span class="page-link ">…</span></li>');
                         }
 
                         $('#paginationNav_icd_9 ul').append(`
                     <li class="page-item ${currentPage === totalPages ? 'active' : ''}">
-                        <a class="page-link bg-gradient date" href="#" data-page="${totalPages}">${totalPages}</a>
+                        <a class="page-link  date" href="#" data-page="${totalPages}">${totalPages}</a>
                     </li>
                 `);
                     } else {
@@ -1505,7 +1505,7 @@ $db = db_connect();
                         for (let i = 1; i <= totalPages; i++) {
                             $('#paginationNav_icd_9 ul').append(`
                         <li class="page-item ${i === currentPage ? 'active' : ''}">
-                            <a class="page-link bg-gradient date" href="#" data-page="${i}">${i}</a>
+                            <a class="page-link  date" href="#" data-page="${i}">${i}</a>
                         </li>
                     `);
                         }
@@ -1514,7 +1514,7 @@ $db = db_connect();
                     if (currentPage < totalPages) {
                         $('#paginationNav_icd_9 ul').append(`
                     <li class="page-item">
-                        <a class="page-link bg-gradient date" href="#" data-page="${currentPage + 1}">
+                        <a class="page-link  date" href="#" data-page="${currentPage + 1}">
                             <i class="fa-solid fa-angle-right"></i>
                         </a>
                     </li>

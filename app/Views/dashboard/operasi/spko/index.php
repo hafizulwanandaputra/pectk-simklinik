@@ -247,8 +247,8 @@ $usia = $registrasi->diff($tanggal_lahir);
                                 </div>
                                 <div class="card-footer d-grid">
                                     <div class="btn-group">
-                                        <button type="button" id="clear_drawing" class="btn btn-danger btn-sm bg-gradient"><i class="fa-solid fa-xmark"></i> Bersihkan</button>
-                                        <button type="button" id="apply_drawing" class="btn btn-success btn-sm bg-gradient"><i class="fa-solid fa-check"></i> Terapkan</button>
+                                        <button type="button" id="clear_drawing" class="btn btn-danger btn-sm "><i class="fa-solid fa-xmark"></i> Bersihkan</button>
+                                        <button type="button" id="apply_drawing" class="btn btn-success btn-sm "><i class="fa-solid fa-check"></i> Terapkan</button>
                                     </div>
                                 </div>
                             </div>
@@ -268,7 +268,7 @@ $usia = $registrasi->diff($tanggal_lahir);
                                 <div class="card-footer" id="cancel_changes" style="display: none;">
                                     <div class="d-grid">
                                         <div class="btn-group">
-                                            <button type="button" id="cancel_drawing" class="btn btn-danger btn-sm bg-gradient"><i class="fa-solid fa-xmark"></i> Batalkan Perubahan</button>
+                                            <button type="button" id="cancel_drawing" class="btn btn-danger btn-sm "><i class="fa-solid fa-xmark"></i> Batalkan Perubahan</button>
                                         </div>
                                     </div>
                                 </div>
@@ -290,8 +290,8 @@ $usia = $registrasi->diff($tanggal_lahir);
             <div>
                 <hr>
                 <div class="d-grid gap-2 d-lg-flex justify-content-lg-end mb-3">
-                    <button class="btn btn-body  bg-gradient" type="button" onclick="window.open(`<?= base_url('/operasi/spko/export/' . $operasi['id_sp_operasi']) ?>`)"><i class="fa-solid fa-print"></i> Cetak Form</button>
-                    <button class="btn btn-primary bg-gradient" type="submit" id="submitBtn"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
+                    <button class="btn btn-body  " type="button" onclick="window.open(`<?= base_url('/operasi/spko/export/' . $operasi['id_sp_operasi']) ?>`)"><i class="fa-solid fa-print"></i> Cetak Form</button>
+                    <button class="btn btn-primary " type="submit" id="submitBtn"><i class="fa-solid fa-floppy-disk"></i> Simpan</button>
                 </div>
             </div>
             <?= form_close(); ?>

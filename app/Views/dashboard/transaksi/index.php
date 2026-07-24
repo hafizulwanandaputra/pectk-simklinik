@@ -33,7 +33,7 @@
                 </span>
             </div>
             <div class="d-flex flex-row">
-                <button id="closeOffcanvasBtn2" type="button" class="btn btn-success bg-gradient ms-2" data-bs-dismiss="offcanvas" aria-label="Close"><i class="fa-solid fa-angles-right"></i></button>
+                <button id="closeOffcanvasBtn2" type="button" class="btn btn-success  ms-2" data-bs-dismiss="offcanvas" aria-label="Close"><i class="fa-solid fa-angles-right"></i></button>
             </div>
         </div>
         <div class="offcanvas-body p-1">
@@ -80,9 +80,9 @@
                             <div class="input-group input-group-sm w-auto">
                                 <input type="date" id="tanggalFilter" class="form-control" <?= (session()->get('auto_date') == 1) ? 'value="' . date('Y-m-d') . '"' : ''; ?>>
                                 <?php if (session()->get('auto_date') == 1) : ?>
-                                    <button class="btn btn-primary btn-sm bg-gradient" type="button" id="setTodayTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Kembali ke Hari Ini"><i class="fa-solid fa-calendar-day"></i></button>
+                                    <button class="btn btn-primary btn-sm " type="button" id="setTodayTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Kembali ke Hari Ini"><i class="fa-solid fa-calendar-day"></i></button>
                                 <?php else : ?>
-                                    <button class="btn btn-danger btn-sm bg-gradient " type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
+                                    <button class="btn btn-danger btn-sm  " type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
                                 <?php endif; ?>
                             </div>
                             <div class="input-group input-group-sm flex-grow-1">
@@ -141,7 +141,7 @@
             <div class=" rounded">
                 <?php if (session()->get('role') != 'Admisi') : ?>
                     <div class="d-grid gap-2">
-                        <button id="collapseList" class="btn btn-primary btn-sm bg-gradient  rounded-bottom-0" type="button" data-bs-toggle="collapse" data-bs-target="#transaksiFormContainer" aria-expanded="false" aria-controls="transaksiFormContainer">
+                        <button id="collapseList" class="btn btn-primary btn-sm   rounded-bottom-0" type="button" data-bs-toggle="collapse" data-bs-target="#transaksiFormContainer" aria-expanded="false" aria-controls="transaksiFormContainer">
                             <i class="fa-solid fa-plus"></i> Tambah Transaksi
                         </button>
                     </div>
@@ -159,7 +159,7 @@
                                                 <div class="invalid-feedback"></div>
                                             </div>
                                             <div class="d-grid gap-2 d-lg-flex justify-content-lg-end">
-                                                <button type="submit" id="submitButton1" class="btn btn-primary bg-gradient btn-sm" disabled>
+                                                <button type="submit" id="submitButton1" class="btn btn-primary  btn-sm" disabled>
                                                     <i class="fa-solid fa-plus"></i> Tambah
                                                 </button>
                                             </div>
@@ -177,7 +177,7 @@
                                                 <div class="invalid-feedback"></div>
                                             </div>
                                             <div class="d-grid gap-2 d-lg-flex justify-content-lg-end">
-                                                <button type="submit" id="submitButton2" class="btn btn-primary bg-gradient btn-sm" disabled>
+                                                <button type="submit" id="submitButton2" class="btn btn-primary  btn-sm" disabled>
                                                     <i class="fa-solid fa-plus"></i> Tambah
                                                 </button>
                                             </div>
@@ -198,7 +198,7 @@
                                             <div class="invalid-feedback"></div>
                                         </div>
                                         <div class="d-grid gap-2 d-lg-flex justify-content-lg-end">
-                                            <button type="submit" id="submitButton3" class="btn btn-primary bg-gradient btn-sm" disabled>
+                                            <button type="submit" id="submitButton3" class="btn btn-primary  btn-sm" disabled>
                                                 <i class="fa-solid fa-plus"></i> Tambah
                                             </button>
                                         </div>
@@ -269,9 +269,9 @@
                             </div>
                             <hr>
                             <div class="d-grid gap-2 d-flex flex-wrap justify-content-end">
-                                <button type="button" class="btn btn-body btn-sm bg-gradient placeholder" style="width: 4em;" disabled aria-disabled="true"></button>
+                                <button type="button" class="btn btn-body btn-sm  placeholder" style="width: 4em;" disabled aria-disabled="true"></button>
                                 <?php if (session()->get('role') != 'Admisi') : ?>
-                                    <button type="button" class="btn btn-danger btn-sm bg-gradient placeholder" style="width: 4em;" disabled aria-disabled="true"></button>
+                                    <button type="button" class="btn btn-danger btn-sm  placeholder" style="width: 4em;" disabled aria-disabled="true"></button>
                                 <?php endif; ?>
                             </div>
                         </li>
@@ -292,10 +292,10 @@
                         <h6 class="mb-0 fw-normal" id="deleteSubmessage"></h6>
                         <div class="row gx-2 pt-4">
                             <div class="col d-grid">
-                                <button type="button" class="btn btn-lg btn-body bg-gradient fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Batal</button>
+                                <button type="button" class="btn btn-lg btn-body  fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Batal</button>
                             </div>
                             <div class="col d-grid">
-                                <button type="button" class="btn btn-lg btn-danger bg-gradient fs-6 mb-0 rounded-4" id="confirmDeleteBtn">Hapus</button>
+                                <button type="button" class="btn btn-lg btn-danger  fs-6 mb-0 rounded-4" id="confirmDeleteBtn">Hapus</button>
                             </div>
                         </div>
                     </div>
@@ -370,9 +370,9 @@
                 </div>
                 <hr>
                 <div class="d-grid gap-2 d-flex flex-wrap justify-content-end">
-                    <button type="button" class="btn btn-body btn-sm bg-gradient placeholder" style="width: 4em;" disabled aria-disabled="true"></button>
+                    <button type="button" class="btn btn-body btn-sm  placeholder" style="width: 4em;" disabled aria-disabled="true"></button>
                                 <?php if (session()->get('role') != 'Admisi') : ?>
-                                    <button type="button" class="btn btn-danger btn-sm bg-gradient placeholder" style="width: 4em;" disabled aria-disabled="true"></button>
+                                    <button type="button" class="btn btn-danger btn-sm  placeholder" style="width: 4em;" disabled aria-disabled="true"></button>
                                 <?php endif; ?>
                 </div>
             </li>
@@ -649,14 +649,14 @@
                         <hr>
                         <div class="d-grid gap-2 d-flex flex-wrap justify-content-end">
                             <?php if (session()->get('role') == 'Admisi') : ?>
-                                <button type="button" class="btn btn-body btn-sm bg-gradient " onclick="window.open('<?= base_url('transaksi/struk') ?>/${transaksi.id_transaksi}');">
+                                <button type="button" class="btn btn-body btn-sm  " onclick="window.open('<?= base_url('transaksi/struk') ?>/${transaksi.id_transaksi}');">
                                     <i class="fa-solid fa-print"></i> Kuitansi
                                 </button>
                             <?php else : ?>
-                                <button type="button" class="btn btn-body btn-sm bg-gradient " onclick="window.location.href = '<?= base_url('transaksi/detailtransaksi') ?>/${transaksi.id_transaksi}';">
+                                <button type="button" class="btn btn-body btn-sm  " onclick="window.location.href = '<?= base_url('transaksi/detailtransaksi') ?>/${transaksi.id_transaksi}';">
                                     <i class="fa-solid fa-circle-info"></i> Detail
                                 </button>
-                                <button type="button" class="btn btn-danger btn-sm bg-gradient  delete-btn" data-id="${transaksi.id_transaksi}" data-name="${transaksi.nama_pasien}" data-date="${transaksi.tgl_transaksi}" ${statusButtons}>
+                                <button type="button" class="btn btn-danger btn-sm   delete-btn" data-id="${transaksi.id_transaksi}" data-name="${transaksi.nama_pasien}" data-date="${transaksi.tgl_transaksi}" ${statusButtons}>
                                     <i class="fa-solid fa-trash"></i> Hapus
                                 </button>
                             <?php endif; ?>
@@ -673,7 +673,7 @@
                 if (currentPage > 1) {
                     $('#paginationNav ul').append(`
                     <li class="page-item">
-                        <a class="page-link bg-gradient date" href="#" data-page="${currentPage - 1}">
+                        <a class="page-link  date" href="#" data-page="${currentPage - 1}">
                             <i class="fa-solid fa-angle-left"></i>
                         </a>
                     </li>
@@ -683,29 +683,29 @@
                 if (totalPages > 5) {
                     $('#paginationNav ul').append(`
                     <li class="page-item ${currentPage === 1 ? 'active' : ''}">
-                        <a class="page-link bg-gradient date" href="#" data-page="1">1</a>
+                        <a class="page-link  date" href="#" data-page="1">1</a>
                     </li>
                 `);
 
                     if (currentPage > 3) {
-                        $('#paginationNav ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">…</span></li>');
+                        $('#paginationNav ul').append('<li class="page-item disabled"><span class="page-link ">…</span></li>');
                     }
 
                     for (let i = Math.max(2, currentPage - 1); i <= Math.min(totalPages - 1, currentPage + 1); i++) {
                         $('#paginationNav ul').append(`
                         <li class="page-item ${i === currentPage ? 'active' : ''}">
-                            <a class="page-link bg-gradient date" href="#" data-page="${i}">${i}</a>
+                            <a class="page-link  date" href="#" data-page="${i}">${i}</a>
                         </li>
                     `);
                     }
 
                     if (currentPage < totalPages - 2) {
-                        $('#paginationNav ul').append('<li class="page-item disabled"><span class="page-link bg-gradient">…</span></li>');
+                        $('#paginationNav ul').append('<li class="page-item disabled"><span class="page-link ">…</span></li>');
                     }
 
                     $('#paginationNav ul').append(`
                     <li class="page-item ${currentPage === totalPages ? 'active' : ''}">
-                        <a class="page-link bg-gradient date" href="#" data-page="${totalPages}">${totalPages}</a>
+                        <a class="page-link  date" href="#" data-page="${totalPages}">${totalPages}</a>
                     </li>
                 `);
                 } else {
@@ -713,7 +713,7 @@
                     for (let i = 1; i <= totalPages; i++) {
                         $('#paginationNav ul').append(`
                         <li class="page-item ${i === currentPage ? 'active' : ''}">
-                            <a class="page-link bg-gradient date" href="#" data-page="${i}">${i}</a>
+                            <a class="page-link  date" href="#" data-page="${i}">${i}</a>
                         </li>
                     `);
                     }
@@ -722,7 +722,7 @@
                 if (currentPage < totalPages) {
                     $('#paginationNav ul').append(`
                     <li class="page-item">
-                        <a class="page-link bg-gradient date" href="#" data-page="${currentPage + 1}">
+                        <a class="page-link  date" href="#" data-page="${currentPage + 1}">
                             <i class="fa-solid fa-angle-right"></i>
                         </a>
                     </li>

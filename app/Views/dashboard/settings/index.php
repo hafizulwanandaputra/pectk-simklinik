@@ -216,10 +216,10 @@
                     <h6 class="mb-0 fw-normal" id="deleteSubmessage"></h6>
                     <div class="row gx-2 pt-4">
                         <div class="col d-grid">
-                            <button type="button" class="btn btn-lg btn-body bg-gradient fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Batal</button>
+                            <button type="button" class="btn btn-lg btn-body  fs-6 mb-0 rounded-4" data-bs-dismiss="modal">Batal</button>
                         </div>
                         <div class="col d-grid">
-                            <button type="button" class="btn btn-lg btn-danger bg-gradient fs-6 mb-0 rounded-4" id="confirmDeleteBtn">Hapus</button>
+                            <button type="button" class="btn btn-lg btn-danger  fs-6 mb-0 rounded-4" id="confirmDeleteBtn">Hapus</button>
                         </div>
                     </div>
                 </div>
@@ -249,16 +249,16 @@
                     <!-- Progress bar -->
                     <div class="mb-1 mt-1 w-100" id="uploadProgressDiv">
                         <div class="progress" style="border-top: 1px solid var(--bs-border-color-translucent); border-bottom: 1px solid var(--bs-border-color-translucent); border-left: 1px solid var(--bs-border-color-translucent); border-right: 1px solid var(--bs-border-color-translucent);">
-                            <div class="progress-bar progress-bar-striped progress-bar-animated bg-gradient" role="progressbar" style="width: 0%; transition: none;" id="uploadProgressBar"></div>
+                            <div class="progress-bar progress-bar-striped progress-bar-animated " role="progressbar" style="width: 0%; transition: none;" id="uploadProgressBar"></div>
                         </div>
                     </div>
                     <div class="d-flex justify-content-between w-100">
                         <div>
-                            <button type="button" id="cancelButton" class="btn btn-danger bg-gradient" style="display: none;" disabled>
+                            <button type="button" id="cancelButton" class="btn btn-danger " style="display: none;" disabled>
                                 <i class="fa-solid fa-xmark"></i> Batalkan
                             </button>
                         </div>
-                        <button type="submit" id="submitButton" class="btn btn-primary bg-gradient">
+                        <button type="submit" id="submitButton" class="btn btn-primary ">
                             <i class="fa-solid fa-file-arrow-up"></i> Unggah
                         </button>
                     </div>
