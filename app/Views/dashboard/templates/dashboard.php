@@ -645,13 +645,13 @@ $isApple = in_array($platform, [
                             <ul class="nav nav-pills flex-column">
                                 <?php if (!(in_array(session()->get('role'), ['Satpam', 'Monitor Antrean']))) : ?>
                                     <li class="nav-item">
-                                        <span style="font-size: 0.95em;" class="nav-link px-2 py-1 link-success" role="button">
+                                        <span style="font-size: 0.95em;" class="nav-link px-2 py-1" role="button">
                                             <div class="d-flex align-items-between">
                                                 <label for="auto_date" class="d-flex align-items-start w-100" role="button">
                                                     <div style="min-width: 24px; max-width: 24px; text-align: center;">
                                                         <i class="fa-solid fa-calendar-days"></i>
                                                     </div>
-                                                    <div class="ms-2 link-body-emphasis">
+                                                    <div class="ms-2">
                                                         Tanggal Hari Ini
                                                     </div>
                                                 </label>
@@ -665,24 +665,24 @@ $isApple = in_array($platform, [
                                     </li>
                                 <?php endif; ?>
                                 <li class="nav-item">
-                                    <a style="font-size: 0.95em;" class="nav-link nav-link-offcanvas px-2 py-1 link-success" href="<?= base_url('/settings'); ?>">
+                                    <a style="font-size: 0.95em;" class="nav-link nav-link-offcanvas px-2 py-1" href="<?= base_url('/settings'); ?>">
                                         <div class="d-flex align-items-start">
                                             <div style="min-width: 24px; max-width: 24px; text-align: center;">
                                                 <i class="fa-solid fa-gear"></i>
                                             </div>
-                                            <div class="ms-2 link-body-emphasis">
+                                            <div class="ms-2">
                                                 Pengaturan
                                             </div>
                                         </div>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a style="font-size: 0.95em;" id="logoutButton" class="nav-link px-2 py-1 link-success" href="#">
+                                    <a style="font-size: 0.95em;" id="logoutButton" class="nav-link px-2 py-1" href="#">
                                         <div class="d-flex align-items-start link-danger">
                                             <div style="min-width: 24px; max-width: 24px; text-align: center;">
                                                 <i class="fa-solid fa-right-from-bracket"></i>
                                             </div>
-                                            <div class="ms-2 link-body-emphasis">
+                                            <div class="ms-2">
                                                 Keluar
                                             </div>
                                         </div>
@@ -720,12 +720,12 @@ $isApple = in_array($platform, [
                     <div id="sidebarMenu2" class="position-sticky sidebar-sticky p-1">
                         <ul class="nav nav-pills flex-column">
                             <li class="nav-item">
-                                <a style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'home') ? 'active bg-success activeLinkSideBar' : '' ?>" href=" <?= base_url('/home'); ?>">
-                                    <div class="d-flex align-items-start <?= ($activeSegment === 'home') ? 'text-white' : 'link-success' ?>">
+                                <a style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'home') ? 'active activeLinkSideBar' : '' ?>" href=" <?= base_url('/home'); ?>">
+                                    <div class="d-flex align-items-start">
                                         <div style="min-width: 24px; max-width: 24px; text-align: center;">
                                             <i class="fa-solid fa-house"></i>
                                         </div>
-                                        <div class="flex-fill mx-2 <?= ($activeSegment === 'home') ? 'text-white' : 'link-body-emphasis' ?>">
+                                        <div class="flex-fill mx-2">
                                             Beranda
                                         </div>
                                     </div>
@@ -733,24 +733,24 @@ $isApple = in_array($platform, [
                             </li>
                             <?php if (session()->get('role') == "Admin" || session()->get('role') == "Admisi" || session()->get('role') == "Manajer") : ?>
                                 <li class="nav-item">
-                                    <a style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'antrean') ? 'active bg-success activeLinkSideBar' : '' ?>" href=" <?= base_url('/antrean'); ?>">
-                                        <div class="d-flex align-items-start <?= ($activeSegment === 'antrean') ? 'text-white' : 'link-success' ?>">
+                                    <a style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'antrean') ? 'active activeLinkSideBar' : '' ?>" href=" <?= base_url('/antrean'); ?>">
+                                        <div class="d-flex align-items-start">
                                             <div style="min-width: 24px; max-width: 24px; text-align: center;">
                                                 <i class="fa-solid fa-user-large"></i>
                                             </div>
-                                            <div class="flex-fill mx-2 <?= ($activeSegment === 'antrean') ? 'text-white' : 'link-body-emphasis' ?>">
+                                            <div class="flex-fill mx-2">
                                                 Antrean
                                             </div>
                                         </div>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'pasien') ? 'active bg-success activeLinkSideBar' : '' ?>" href=" <?= base_url('/pasien'); ?>">
-                                        <div class="d-flex align-items-start <?= ($activeSegment === 'pasien') ? 'text-white' : 'link-success' ?>">
+                                    <a style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'pasien') ? 'active activeLinkSideBar' : '' ?>" href=" <?= base_url('/pasien'); ?>">
+                                        <div class="d-flex align-items-start">
                                             <div style="min-width: 24px; max-width: 24px; text-align: center;">
                                                 <i class="fa-solid fa-user-injured"></i>
                                             </div>
-                                            <div class="flex-fill mx-2 <?= ($activeSegment === 'pasien') ? 'text-white' : 'link-body-emphasis' ?>">
+                                            <div class="flex-fill mx-2">
                                                 Pasien
                                             </div>
                                         </div>
@@ -759,24 +759,24 @@ $isApple = in_array($platform, [
                             <?php endif; ?>
                             <?php if (session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admin" || session()->get('role') == "Admisi" || session()->get('role') == "Manajer") : ?>
                                 <li class="nav-item">
-                                    <a style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'rawatjalan') ? 'active bg-success activeLinkSideBar' : '' ?>" href=" <?= base_url('/rawatjalan'); ?>">
-                                        <div class="d-flex align-items-start <?= ($activeSegment === 'rawatjalan') ? 'text-white' : 'link-success' ?>">
+                                    <a style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'rawatjalan') ? 'active activeLinkSideBar' : '' ?>" href=" <?= base_url('/rawatjalan'); ?>">
+                                        <div class="d-flex align-items-start">
                                             <div style="min-width: 24px; max-width: 24px; text-align: center;">
                                                 <i class="fa-solid fa-hospital-user"></i>
                                             </div>
-                                            <div class="flex-fill mx-2 <?= ($activeSegment === 'rawatjalan') ? 'text-white' : 'link-body-emphasis' ?>">
+                                            <div class="flex-fill mx-2">
                                                 Rawat Jalan
                                             </div>
                                         </div>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'operasi') ? 'active bg-success activeLinkSideBar' : '' ?>" href=" <?= base_url('/operasi'); ?>">
-                                        <div class="d-flex align-items-start <?= ($activeSegment === 'operasi') ? 'text-white' : 'link-success' ?>">
+                                    <a style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'operasi') ? 'active activeLinkSideBar' : '' ?>" href=" <?= base_url('/operasi'); ?>">
+                                        <div class="d-flex align-items-start">
                                             <div style="min-width: 24px; max-width: 24px; text-align: center;">
                                                 <i class="fa-solid fa-stethoscope"></i>
                                             </div>
-                                            <div class="flex-fill mx-2 <?= ($activeSegment === 'operasi') ? 'text-white' : 'link-body-emphasis' ?>">
+                                            <div class="flex-fill mx-2">
                                                 Pasien Operasi
                                             </div>
                                         </div>
@@ -785,12 +785,12 @@ $isApple = in_array($platform, [
                             <?php endif; ?>
                             <?php if (session()->get('role') == "Dokter" || session()->get('role') == "Admin" || session()->get('role') == "Admisi" || session()->get('role') == "Manajer") : ?>
                                 <li class="nav-item">
-                                    <span style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'lpoperasikatarak' || $activeSegment === 'lpoperasipterigium' || $activeSegment === 'lpoperasi') ? 'active bg-success' : '' ?>" role="button" data-bs-toggle="collapse" data-bs-target="#submenu-laporan-operasi">
-                                        <div class="d-flex align-items-start <?= ($activeSegment === 'lpoperasikatarak' || $activeSegment === 'lpoperasipterigium' || $activeSegment === 'lpoperasi') ? 'text-white' : 'link-success' ?>">
+                                    <span style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'lpoperasikatarak' || $activeSegment === 'lpoperasipterigium' || $activeSegment === 'lpoperasi') ? 'active' : '' ?>" role="button" data-bs-toggle="collapse" data-bs-target="#submenu-laporan-operasi">
+                                        <div class="d-flex align-items-start">
                                             <div style="min-width: 24px; max-width: 24px; text-align: center;">
                                                 <i class="fa-solid fa-file-medical"></i>
                                             </div>
-                                            <div class="flex-fill mx-2 <?= ($activeSegment === 'lpoperasikatarak' || $activeSegment === 'lpoperasipterigium' || $activeSegment === 'lpoperasi') ? 'text-white' : 'link-body-emphasis' ?>">
+                                            <div class="flex-fill mx-2">
                                                 Laporan Operasi
                                             </div>
                                             <div style="min-width: 16px; max-width: 16px; text-align: center;">
@@ -802,8 +802,8 @@ $isApple = in_array($platform, [
                                 <div id="submenu-laporan-operasi" class="collapse <?= ($activeSegment === 'lpoperasikatarak' || $activeSegment === 'lpoperasipterigium' || $activeSegment === 'lpoperasi') ? 'show' : '' ?>">
                                     <ul class="nav nav-pills flex-column my-1">
                                         <li class="nav-item" style="margin-left: calc(24px + 0.5rem);">
-                                            <a class="nav-link px-2 py-1 <?= ($activeSegment === 'lpoperasikatarak') ? 'active bg-success activeLinkSideBar' : '' ?>" href="<?= base_url('/lpoperasikatarak'); ?>">
-                                                <div class="d-flex align-items-start <?= ($activeSegment === 'lpoperasikatarak') ? 'text-white' : 'link-body-emphasis' ?>">
+                                            <a class="nav-link px-2 py-1 <?= ($activeSegment === 'lpoperasikatarak') ? 'active activeLinkSideBar' : '' ?>" href="<?= base_url('/lpoperasikatarak'); ?>">
+                                                <div class="d-flex align-items-start">
                                                     <div class="flex-fill fw-normal" style="font-size: 0.75em;">
                                                         Katarak
                                                     </div>
@@ -811,8 +811,8 @@ $isApple = in_array($platform, [
                                             </a>
                                         </li>
                                         <li class="nav-item" style="margin-left: calc(24px + 0.5rem);">
-                                            <a class="nav-link px-2 py-1 <?= ($activeSegment === 'lpoperasipterigium') ? 'active bg-success activeLinkSideBar' : '' ?>" href="<?= base_url('/lpoperasipterigium'); ?>">
-                                                <div class="d-flex align-items-start <?= ($activeSegment === 'lpoperasipterigium') ? 'text-white' : 'link-body-emphasis' ?>">
+                                            <a class="nav-link px-2 py-1 <?= ($activeSegment === 'lpoperasipterigium') ? 'active activeLinkSideBar' : '' ?>" href="<?= base_url('/lpoperasipterigium'); ?>">
+                                                <div class="d-flex align-items-start">
                                                     <div class="flex-fill fw-normal" style="font-size: 0.75em;">
                                                         Pterigium
                                                     </div>
@@ -820,8 +820,8 @@ $isApple = in_array($platform, [
                                             </a>
                                         </li>
                                         <li class="nav-item" style="margin-left: calc(24px + 0.5rem);">
-                                            <a class="nav-link px-2 py-1 <?= ($activeSegment === 'lpoperasi') ? 'active bg-success activeLinkSideBar' : '' ?>" href="<?= base_url('/lpoperasi'); ?>">
-                                                <div class="d-flex align-items-start <?= ($activeSegment === 'lpoperasi') ? 'text-white' : 'link-body-emphasis' ?>">
+                                            <a class="nav-link px-2 py-1 <?= ($activeSegment === 'lpoperasi') ? 'active activeLinkSideBar' : '' ?>" href="<?= base_url('/lpoperasi'); ?>">
+                                                <div class="d-flex align-items-start">
                                                     <div class="flex-fill fw-normal" style="font-size: 0.75em;">
                                                         Lainnya
                                                     </div>
@@ -833,12 +833,12 @@ $isApple = in_array($platform, [
                             <?php endif; ?>
                             <?php if (session()->get('role') == "Dokter" || session()->get('role') == "Admin" || session()->get('role') == "Admisi" || session()->get('role') == "Kasir" || session()->get('role') == "Manajer") : ?>
                                 <li class="nav-item">
-                                    <span style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'frmperiksapasien' || $activeSegment === 'frmsetujukedokteran' || $activeSegment === 'frmsetujuanestesi' || $activeSegment === 'frmsetujuphaco') ? 'active bg-success' : '' ?>" role="button" data-bs-toggle="collapse" data-bs-target="#submenu-formulir">
-                                        <div class="d-flex align-items-start <?= ($activeSegment === 'frmperiksapasien' || $activeSegment === 'frmsetujukedokteran' || $activeSegment === 'frmsetujuanestesi' || $activeSegment === 'frmsetujuphaco') ? 'text-white' : 'link-success' ?>">
+                                    <span style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'frmperiksapasien' || $activeSegment === 'frmsetujukedokteran' || $activeSegment === 'frmsetujuanestesi' || $activeSegment === 'frmsetujuphaco') ? 'active' : '' ?>" role="button" data-bs-toggle="collapse" data-bs-target="#submenu-formulir">
+                                        <div class="d-flex align-items-start">
                                             <div style="min-width: 24px; max-width: 24px; text-align: center;">
                                                 <i class="fa-solid fa-file-contract"></i>
                                             </div>
-                                            <div class="flex-fill mx-2 <?= ($activeSegment === 'frmperiksapasien' || $activeSegment === 'frmsetujukedokteran' || $activeSegment === 'frmsetujuanestesi' || $activeSegment === 'frmsetujuphaco') ? 'text-white' : 'link-body-emphasis' ?>">
+                                            <div class="flex-fill mx-2">
                                                 Formulir
                                             </div>
                                             <div style="min-width: 16px; max-width: 16px; text-align: center;">
@@ -851,8 +851,8 @@ $isApple = in_array($platform, [
                                     <ul class="nav nav-pills flex-column my-1">
                                         <?php if (session()->get('role') == "Kasir" || session()->get('role') == "Admisi") : ?>
                                             <li class="nav-item" style="margin-left: calc(24px + 0.5rem);">
-                                                <a class="nav-link px-2 py-1 <?= ($activeSegment === 'frmperiksapasien') ? 'active bg-success activeLinkSideBar' : '' ?>" href="<?= base_url('/frmperiksapasien'); ?>">
-                                                    <div class="d-flex align-items-start <?= ($activeSegment === 'frmperiksapasien') ? 'text-white' : 'link-body-emphasis' ?>">
+                                                <a class="nav-link px-2 py-1 <?= ($activeSegment === 'frmperiksapasien') ? 'active activeLinkSideBar' : '' ?>" href="<?= base_url('/frmperiksapasien'); ?>">
+                                                    <div class="d-flex align-items-start">
                                                         <div class="flex-fill fw-normal" style="font-size: 0.75em;">
                                                             Pemeriksaan Pasien
                                                         </div>
@@ -862,8 +862,8 @@ $isApple = in_array($platform, [
                                         <?php endif; ?>
                                         <?php if (session()->get('role') != "Kasir") : ?>
                                             <li class="nav-item" style="margin-left: calc(24px + 0.5rem);">
-                                                <a class="nav-link px-2 py-1 <?= ($activeSegment === 'frmsetujukedokteran') ? 'active bg-success activeLinkSideBar' : '' ?>" href="<?= base_url('/frmsetujukedokteran'); ?>">
-                                                    <div class="d-flex align-items-start <?= ($activeSegment === 'frmsetujukedokteran') ? 'text-white' : 'link-body-emphasis' ?>">
+                                                <a class="nav-link px-2 py-1 <?= ($activeSegment === 'frmsetujukedokteran') ? 'active activeLinkSideBar' : '' ?>" href="<?= base_url('/frmsetujukedokteran'); ?>">
+                                                    <div class="d-flex align-items-start ">
                                                         <div class="flex-fill fw-normal" style="font-size: 0.75em;">
                                                             Persetujuan Tindakan Kedokteran
                                                         </div>
@@ -871,8 +871,8 @@ $isApple = in_array($platform, [
                                                 </a>
                                             </li>
                                             <li class="nav-item" style="margin-left: calc(24px + 0.5rem);">
-                                                <a class="nav-link px-2 py-1 <?= ($activeSegment === 'frmsetujuanestesi') ? 'active bg-success activeLinkSideBar' : '' ?>" href="<?= base_url('/frmsetujuanestesi'); ?>">
-                                                    <div class="d-flex align-items-start <?= ($activeSegment === 'frmsetujuanestesi') ? 'text-white' : 'link-body-emphasis' ?>">
+                                                <a class="nav-link px-2 py-1 <?= ($activeSegment === 'frmsetujuanestesi') ? 'active activeLinkSideBar' : '' ?>" href="<?= base_url('/frmsetujuanestesi'); ?>">
+                                                    <div class="d-flex align-items-start">
                                                         <div class="flex-fill fw-normal" style="font-size: 0.75em;">
                                                             Persetujuan Tindakan Anestesi
                                                         </div>
@@ -880,8 +880,8 @@ $isApple = in_array($platform, [
                                                 </a>
                                             </li>
                                             <li class="nav-item" style="margin-left: calc(24px + 0.5rem);">
-                                                <a class="nav-link px-2 py-1 <?= ($activeSegment === 'frmsetujuphaco') ? 'active bg-success activeLinkSideBar' : '' ?>" href="<?= base_url('/frmsetujuphaco'); ?>">
-                                                    <div class="d-flex align-items-start <?= ($activeSegment === 'frmsetujuphaco') ? 'text-white' : 'link-body-emphasis' ?>">
+                                                <a class="nav-link px-2 py-1 <?= ($activeSegment === 'frmsetujuphaco') ? 'active activeLinkSideBar' : '' ?>" href="<?= base_url('/frmsetujuphaco'); ?>">
+                                                    <div class="d-flex align-items-start">
                                                         <div class="flex-fill fw-normal" style="font-size: 0.75em;">
                                                             Persetujuan Tindakan Phacoemulsifikasi
                                                         </div>
@@ -894,12 +894,12 @@ $isApple = in_array($platform, [
                             <?php endif; ?>
                             <?php if (session()->get('role') == "Dokter" || session()->get('role') == "Perawat" || session()->get('role') == "Admin" || session()->get('role') == "Admisi" || session()->get('role') == "Manajer") : ?>
                                 <li class="nav-item">
-                                    <span style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'rujukan' || $activeSegment === 'sakitmata' || $activeSegment === 'istirahat' || $activeSegment === 'butawarna' || $activeSegment === 'frmtolakmedis') ? 'active bg-success' : '' ?>" role="button" data-bs-toggle="collapse" data-bs-target="#submenu-surat">
-                                        <div class="d-flex align-items-start <?= ($activeSegment === 'rujukan' || $activeSegment === 'sakitmata' || $activeSegment === 'istirahat' || $activeSegment === 'butawarna' || $activeSegment === 'frmtolakmedis') ? 'text-white' : 'link-success' ?>">
+                                    <span style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'rujukan' || $activeSegment === 'sakitmata' || $activeSegment === 'istirahat' || $activeSegment === 'butawarna' || $activeSegment === 'frmtolakmedis') ? 'active' : '' ?>" role="button" data-bs-toggle="collapse" data-bs-target="#submenu-surat">
+                                        <div class="d-flex align-items-start">
                                             <div style="min-width: 24px; max-width: 24px; text-align: center;">
                                                 <i class="fa-solid fa-envelope"></i>
                                             </div>
-                                            <div class="flex-fill mx-2 <?= ($activeSegment === 'rujukan' || $activeSegment === 'sakitmata' || $activeSegment === 'istirahat' || $activeSegment === 'butawarna' || $activeSegment === 'frmtolakmedis') ? 'text-white' : 'link-body-emphasis' ?>">
+                                            <div class="flex-fill mx-2">
                                                 Surat
                                             </div>
                                             <div style="min-width: 16px; max-width: 16px; text-align: center;">
@@ -912,8 +912,8 @@ $isApple = in_array($platform, [
                                     <ul class="nav nav-pills flex-column my-1">
                                         <?php if (session()->get('role') != "Perawat") : ?>
                                             <li class="nav-item" style="margin-left: calc(24px + 0.5rem);">
-                                                <a class="nav-link px-2 py-1 <?= ($activeSegment === 'rujukan') ? 'active bg-success activeLinkSideBar' : '' ?>" href="<?= base_url('/rujukan'); ?>">
-                                                    <div class="d-flex align-items-start <?= ($activeSegment === 'rujukan') ? 'text-white' : 'link-body-emphasis' ?>">
+                                                <a class="nav-link px-2 py-1 <?= ($activeSegment === 'rujukan') ? 'active activeLinkSideBar' : '' ?>" href="<?= base_url('/rujukan'); ?>">
+                                                    <div class="d-flex align-items-start">
                                                         <div class="flex-fill fw-normal" style="font-size: 0.75em;">
                                                             Rujukan
                                                         </div>
@@ -922,8 +922,8 @@ $isApple = in_array($platform, [
                                             </li>
                                         <?php endif; ?>
                                         <li class="nav-item" style="margin-left: calc(24px + 0.5rem);">
-                                            <a class="nav-link px-2 py-1 <?= ($activeSegment === 'sakitmata') ? 'active bg-success activeLinkSideBar' : '' ?>" href="<?= base_url('/sakitmata'); ?>">
-                                                <div class="d-flex align-items-start <?= ($activeSegment === 'sakitmata') ? 'text-white' : 'link-body-emphasis' ?>">
+                                            <a class="nav-link px-2 py-1 <?= ($activeSegment === 'sakitmata') ? 'active activeLinkSideBar' : '' ?>" href="<?= base_url('/sakitmata'); ?>">
+                                                <div class="d-flex align-items-start">
                                                     <div class="flex-fill fw-normal" style="font-size: 0.75em;">
                                                         Keterangan Sakit Mata
                                                     </div>
@@ -931,8 +931,8 @@ $isApple = in_array($platform, [
                                             </a>
                                         </li>
                                         <li class="nav-item" style="margin-left: calc(24px + 0.5rem);">
-                                            <a class="nav-link px-2 py-1 <?= ($activeSegment === 'istirahat') ? 'active bg-success activeLinkSideBar' : '' ?>" href="<?= base_url('/istirahat'); ?>">
-                                                <div class="d-flex align-items-start <?= ($activeSegment === 'istirahat') ? 'text-white' : 'link-body-emphasis' ?>">
+                                            <a class="nav-link px-2 py-1 <?= ($activeSegment === 'istirahat') ? 'active activeLinkSideBar' : '' ?>" href="<?= base_url('/istirahat'); ?>">
+                                                <div class="d-flex align-items-start">
                                                     <div class="flex-fill fw-normal" style="font-size: 0.75em;">
                                                         Keterangan Istirahat
                                                     </div>
@@ -940,8 +940,8 @@ $isApple = in_array($platform, [
                                             </a>
                                         </li>
                                         <li class="nav-item" style="margin-left: calc(24px + 0.5rem);">
-                                            <a class="nav-link px-2 py-1 <?= ($activeSegment === 'butawarna') ? 'active bg-success activeLinkSideBar' : '' ?>" href="<?= base_url('/butawarna'); ?>">
-                                                <div class="d-flex align-items-start <?= ($activeSegment === 'butawarna') ? 'text-white' : 'link-body-emphasis' ?>">
+                                            <a class="nav-link px-2 py-1 <?= ($activeSegment === 'butawarna') ? 'active activeLinkSideBar' : '' ?>" href="<?= base_url('/butawarna'); ?>">
+                                                <div class="d-flex align-items-start">
                                                     <div class="flex-fill fw-normal" style="font-size: 0.75em;">
                                                         Keterangan Buta Warna
                                                     </div>
@@ -949,8 +949,8 @@ $isApple = in_array($platform, [
                                             </a>
                                         </li>
                                         <li class="nav-item" style="margin-left: calc(24px + 0.5rem);">
-                                            <a class="nav-link px-2 py-1 <?= ($activeSegment === 'frmtolakmedis') ? 'active bg-success activeLinkSideBar' : '' ?>" href="<?= base_url('/frmtolakmedis'); ?>">
-                                                <div class="d-flex align-items-start <?= ($activeSegment === 'frmtolakmedis') ? 'text-white' : 'link-body-emphasis' ?>">
+                                            <a class="nav-link px-2 py-1 <?= ($activeSegment === 'frmtolakmedis') ? 'active activeLinkSideBar' : '' ?>" href="<?= base_url('/frmtolakmedis'); ?>">
+                                                <div class="d-flex align-items-start">
                                                     <div class="flex-fill fw-normal" style="font-size: 0.75em;">
                                                         Penolakan Tindakan Medis
                                                     </div>
@@ -962,84 +962,84 @@ $isApple = in_array($platform, [
                             <?php endif; ?>
                             <?php if (session()->get('role') == "Apoteker" || session()->get('role') == "Admin" || session()->get('role') == "Manajer") : ?>
                                 <li class="nav-item">
-                                    <a style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'supplier') ? 'active bg-success activeLinkSideBar' : '' ?>" href=" <?= base_url('/supplier'); ?>">
-                                        <div class="d-flex align-items-start <?= ($activeSegment === 'supplier') ? 'text-white' : 'link-success' ?>">
+                                    <a style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'supplier') ? 'active activeLinkSideBar' : '' ?>" href=" <?= base_url('/supplier'); ?>">
+                                        <div class="d-flex align-items-start">
                                             <div style="min-width: 24px; max-width: 24px; text-align: center;">
                                                 <i class="fa-solid fa-truck-field"></i>
                                             </div>
-                                            <div class="flex-fill mx-2 <?= ($activeSegment === 'supplier') ? 'text-white' : 'link-body-emphasis' ?>">
+                                            <div class="flex-fill mx-2">
                                                 Pemasok
                                             </div>
                                         </div>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'obat') ? 'active bg-success activeLinkSideBar' : '' ?>" href=" <?= base_url('/obat'); ?>">
-                                        <div class="d-flex align-items-start <?= ($activeSegment === 'obat') ? 'text-white' : 'link-success' ?>">
+                                    <a style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'obat') ? 'active activeLinkSideBar' : '' ?>" href=" <?= base_url('/obat'); ?>">
+                                        <div class="d-flex align-items-start">
                                             <div style="min-width: 24px; max-width: 24px; text-align: center;">
                                                 <i class="fa-solid fa-prescription-bottle-medical"></i>
                                             </div>
-                                            <div class="flex-fill mx-2 <?= ($activeSegment === 'obat') ? 'text-white' : 'link-body-emphasis' ?>">
+                                            <div class="flex-fill mx-2">
                                                 Obat
                                             </div>
                                         </div>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'batchobat') ? 'active bg-success activeLinkSideBar' : '' ?>" href=" <?= base_url('/batchobat'); ?>">
-                                        <div class="d-flex align-items-start <?= ($activeSegment === 'batchobat') ? 'text-white' : 'link-success' ?>">
+                                    <a style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'batchobat') ? 'active activeLinkSideBar' : '' ?>" href=" <?= base_url('/batchobat'); ?>">
+                                        <div class="d-flex align-items-start">
                                             <div style="min-width: 24px; max-width: 24px; text-align: center;">
                                                 <i class="fa-solid fa-boxes-stacked"></i>
                                             </div>
-                                            <div class="flex-fill mx-2 <?= ($activeSegment === 'batchobat') ? 'text-white' : 'link-body-emphasis' ?>">
+                                            <div class="flex-fill mx-2">
                                                 Faktur Obat
                                             </div>
                                         </div>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'opnameobat') ? 'active bg-success activeLinkSideBar' : '' ?>" href=" <?= base_url('/opnameobat'); ?>">
-                                        <div class="d-flex align-items-start <?= ($activeSegment === 'opnameobat') ? 'text-white' : 'link-success' ?>">
+                                    <a style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'opnameobat') ? 'active activeLinkSideBar' : '' ?>" href=" <?= base_url('/opnameobat'); ?>">
+                                        <div class="d-flex align-items-start">
                                             <div style="min-width: 24px; max-width: 24px; text-align: center;">
                                                 <i class="fa-solid fa-file-invoice"></i>
                                             </div>
-                                            <div class="flex-fill mx-2 <?= ($activeSegment === 'opnameobat') ? 'text-white' : 'link-body-emphasis' ?>">
+                                            <div class="flex-fill mx-2">
                                                 Laporan Stok Obat
                                             </div>
                                         </div>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'resepluar') ? 'active bg-success activeLinkSideBar' : '' ?>" href=" <?= base_url('/resepluar'); ?>">
-                                        <div class="d-flex align-items-start <?= ($activeSegment === 'resepluar') ? 'text-white' : 'link-success' ?>">
+                                    <a style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'resepluar') ? 'active activeLinkSideBar' : '' ?>" href=" <?= base_url('/resepluar'); ?>">
+                                        <div class="d-flex align-items-start">
                                             <div style="min-width: 24px; max-width: 24px; text-align: center;">
                                                 <i class="fa-solid fa-prescription"></i>
                                             </div>
-                                            <div class="flex-fill mx-2 <?= ($activeSegment === 'resepluar') ? 'text-white' : 'link-body-emphasis' ?>">
+                                            <div class="flex-fill mx-2">
                                                 Resep Luar
                                             </div>
                                         </div>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'resep') ? 'active bg-success activeLinkSideBar' : '' ?>" href=" <?= base_url('/resep'); ?>">
-                                        <div class="d-flex align-items-start <?= ($activeSegment === 'resep') ? 'text-white' : 'link-success' ?>">
+                                    <a style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'resep') ? 'active activeLinkSideBar' : '' ?>" href=" <?= base_url('/resep'); ?>">
+                                        <div class="d-flex align-items-start">
                                             <div style="min-width: 24px; max-width: 24px; text-align: center;">
                                                 <i class="fa-solid fa-prescription"></i>
                                             </div>
-                                            <div class="flex-fill mx-2 <?= ($activeSegment === 'resep') ? 'text-white' : 'link-body-emphasis' ?>">
+                                            <div class="flex-fill mx-2">
                                                 Resep Dokter
                                             </div>
                                         </div>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'bmhp') ? 'active bg-success activeLinkSideBar' : '' ?>" href=" <?= base_url('/bmhp'); ?>">
-                                        <div class="d-flex align-items-start <?= ($activeSegment === 'bmhp') ? 'text-white' : 'link-success' ?>">
+                                    <a style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'bmhp') ? 'active activeLinkSideBar' : '' ?>" href=" <?= base_url('/bmhp'); ?>">
+                                        <div class="d-flex align-items-start">
                                             <div style="min-width: 24px; max-width: 24px; text-align: center;">
                                                 <i class="fa-solid fa-ban"></i>
                                             </div>
-                                            <div class="flex-fill mx-2 <?= ($activeSegment === 'bmhp') ? 'text-white' : 'link-body-emphasis' ?>">
+                                            <div class="flex-fill mx-2">
                                                 Barang Medis Habis Pakai
                                             </div>
                                         </div>
@@ -1048,12 +1048,12 @@ $isApple = in_array($platform, [
                             <?php endif; ?>
                             <?php if (session()->get('role') == "Apoteker" || session()->get('role') == "Admin" || session()->get('role') == "Manajer") : ?>
                                 <li class="nav-item">
-                                    <span style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'laporanresep' || $activeSegment === 'laporanreseptahunan') ? 'active bg-success' : '' ?>" role="button" data-bs-toggle="collapse" data-bs-target="#submenu-laporanresep">
-                                        <div class="d-flex align-items-start <?= ($activeSegment === 'laporanresep' || $activeSegment === 'laporanreseptahunan') ? 'text-white' : 'link-success' ?>">
+                                    <span style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'laporanresep' || $activeSegment === 'laporanreseptahunan') ? 'active' : '' ?>" role="button" data-bs-toggle="collapse" data-bs-target="#submenu-laporanresep">
+                                        <div class="d-flex align-items-start">
                                             <div style="min-width: 24px; max-width: 24px; text-align: center;">
                                                 <i class="fa-solid fa-file-prescription"></i>
                                             </div>
-                                            <div class="flex-fill mx-2 <?= ($activeSegment === 'laporanresep' || $activeSegment === 'laporanreseptahunan') ? 'text-white' : 'link-body-emphasis' ?>">
+                                            <div class="flex-fill mx-2">
                                                 Laporan Resep
                                             </div>
                                             <div style="min-width: 16px; max-width: 16px; text-align: center;">
@@ -1065,8 +1065,8 @@ $isApple = in_array($platform, [
                                 <div id="submenu-laporanresep" class="collapse <?= ($activeSegment === 'laporanresep' || $activeSegment === 'laporanreseptahunan') ? 'show' : '' ?>">
                                     <ul class="nav nav-pills flex-column my-1">
                                         <li class="nav-item" style="margin-left: calc(24px + 0.5rem);">
-                                            <a class="nav-link px-2 py-1 <?= ($activeSegment === 'laporanresep') ? 'active bg-success activeLinkSideBar' : '' ?>" href="<?= base_url('/laporanresep'); ?>">
-                                                <div class="d-flex align-items-start <?= ($activeSegment === 'laporanresep') ? 'text-white' : 'link-body-emphasis' ?>">
+                                            <a class="nav-link px-2 py-1 <?= ($activeSegment === 'laporanresep') ? 'active activeLinkSideBar' : '' ?>" href="<?= base_url('/laporanresep'); ?>">
+                                                <div class="d-flex align-items-start">
                                                     <div class="flex-fill fw-normal" style="font-size: 0.75em;">
                                                         Harian dan Bulanan
                                                     </div>
@@ -1074,8 +1074,8 @@ $isApple = in_array($platform, [
                                             </a>
                                         </li>
                                         <li class="nav-item" style="margin-left: calc(24px + 0.5rem);">
-                                            <a class="nav-link px-2 py-1 <?= ($activeSegment === 'laporanreseptahunan') ? 'active bg-success activeLinkSideBar' : '' ?>" href="<?= base_url('/laporanreseptahunan'); ?>">
-                                                <div class="d-flex align-items-start <?= ($activeSegment === 'laporanreseptahunan') ? 'text-white' : 'link-body-emphasis' ?>">
+                                            <a class="nav-link px-2 py-1 <?= ($activeSegment === 'laporanreseptahunan') ? 'active activeLinkSideBar' : '' ?>" href="<?= base_url('/laporanreseptahunan'); ?>">
+                                                <div class="d-flex align-items-start">
                                                     <div class="flex-fill fw-normal" style="font-size: 0.75em;">
                                                         Tahunan
                                                     </div>
@@ -1087,12 +1087,12 @@ $isApple = in_array($platform, [
                             <?php endif; ?>
                             <?php if (session()->get('role') == "Kasir" || session()->get('role') == "Dokter" || session()->get('role') == "Admin" || session()->get('role') == "Manajer") : ?>
                                 <li class="nav-item">
-                                    <a style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'layanan') ? 'active bg-success activeLinkSideBar' : '' ?>" href=" <?= base_url('/layanan'); ?>">
-                                        <div class="d-flex align-items-start <?= ($activeSegment === 'layanan') ? 'text-white' : 'link-success' ?>">
+                                    <a style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'layanan') ? 'active activeLinkSideBar' : '' ?>" href=" <?= base_url('/layanan'); ?>">
+                                        <div class="d-flex align-items-start">
                                             <div style="min-width: 24px; max-width: 24px; text-align: center;">
                                                 <i class="fa-solid fa-user-nurse"></i>
                                             </div>
-                                            <div class="flex-fill mx-2 <?= ($activeSegment === 'layanan') ? 'text-white' : 'link-body-emphasis' ?>">
+                                            <div class="flex-fill mx-2">
                                                 Layanan
                                             </div>
                                         </div>
@@ -1101,12 +1101,12 @@ $isApple = in_array($platform, [
                             <?php endif; ?>
                             <?php if (session()->get('role') == "Admisi" || session()->get('role') == "Kasir" || session()->get('role') == "Admin" || session()->get('role') == "Manajer") : ?>
                                 <li class="nav-item">
-                                    <a style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'transaksi') ? 'active bg-success activeLinkSideBar' : '' ?>" href=" <?= base_url('/transaksi'); ?>">
-                                        <div class="d-flex align-items-start <?= ($activeSegment === 'transaksi') ? 'text-white' : 'link-success' ?>">
+                                    <a style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'transaksi') ? 'active activeLinkSideBar' : '' ?>" href=" <?= base_url('/transaksi'); ?>">
+                                        <div class="d-flex align-items-start">
                                             <div style="min-width: 24px; max-width: 24px; text-align: center;">
                                                 <i class="fa-solid fa-cash-register"></i>
                                             </div>
-                                            <div class="flex-fill mx-2 <?= ($activeSegment === 'transaksi') ? 'text-white' : 'link-body-emphasis' ?>">
+                                            <div class="flex-fill mx-2">
                                                 Kasir
                                             </div>
                                         </div>
@@ -1115,12 +1115,12 @@ $isApple = in_array($platform, [
                             <?php endif; ?>
                             <?php if (session()->get('role') == "Admin" || session()->get('role') == "Admisi" || session()->get('role') == "Apoteker" || session()->get('role') == "Manajer") : ?>
                                 <li class="nav-item">
-                                    <a style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'unduhdokumen') ? 'active bg-success activeLinkSideBar' : '' ?>" href=" <?= base_url('/unduhdokumen'); ?>">
-                                        <div class="d-flex align-items-start <?= ($activeSegment === 'unduhdokumen') ? 'text-white' : 'link-success' ?>">
+                                    <a style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'unduhdokumen') ? 'active activeLinkSideBar' : '' ?>" href=" <?= base_url('/unduhdokumen'); ?>">
+                                        <div class="d-flex align-items-start">
                                             <div style="min-width: 24px; max-width: 24px; text-align: center;">
                                                 <i class="fa-solid fa-file-arrow-down"></i>
                                             </div>
-                                            <div class="flex-fill mx-2 <?= ($activeSegment === 'unduhdokumen') ? 'text-white' : 'link-body-emphasis' ?>">
+                                            <div class="flex-fill mx-2">
                                                 Unduh Dokumen
                                             </div>
                                         </div>
@@ -1129,12 +1129,12 @@ $isApple = in_array($platform, [
                             <?php endif; ?>
                             <?php if (session()->get('role') == "Admin" || session()->get('role') == "Manajer") : ?>
                                 <li class="nav-item">
-                                    <span style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'loket' || $activeSegment === 'jaminan' || $activeSegment === 'tindakanoperasi' || $activeSegment === 'poliklinik') ? 'active bg-success' : '' ?>" role="button" data-bs-toggle="collapse" data-bs-target="#submenu-masterdata">
-                                        <div class="d-flex align-items-start <?= ($activeSegment === 'loket' || $activeSegment === 'jaminan' || $activeSegment === 'tindakanoperasi' || $activeSegment === 'poliklinik') ? 'text-white' : 'link-success' ?>">
+                                    <span style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'loket' || $activeSegment === 'jaminan' || $activeSegment === 'tindakanoperasi' || $activeSegment === 'poliklinik') ? 'active' : '' ?>" role="button" data-bs-toggle="collapse" data-bs-target="#submenu-masterdata">
+                                        <div class="d-flex align-items-start">
                                             <div style="min-width: 24px; max-width: 24px; text-align: center;">
                                                 <i class="fa-solid fa-database"></i>
                                             </div>
-                                            <div class="flex-fill mx-2 <?= ($activeSegment === 'loket' || $activeSegment === 'jaminan' || $activeSegment === 'tindakanoperasi' || $activeSegment === 'poliklinik') ? 'text-white' : 'link-body-emphasis' ?>">
+                                            <div class="flex-fill mx-2">
                                                 Master Data
                                             </div>
                                             <div style="min-width: 16px; max-width: 16px; text-align: center;">
@@ -1146,8 +1146,8 @@ $isApple = in_array($platform, [
                                 <div id="submenu-masterdata" class="collapse <?= ($activeSegment === 'loket' || $activeSegment === 'jaminan' || $activeSegment === 'tindakanoperasi' || $activeSegment === 'poliklinik') ? 'show' : '' ?>">
                                     <ul class="nav nav-pills flex-column my-1">
                                         <li class="nav-item" style="margin-left: calc(24px + 0.5rem);">
-                                            <a class="nav-link px-2 py-1 <?= ($activeSegment === 'loket') ? 'active bg-success activeLinkSideBar' : '' ?>" href="<?= base_url('/loket'); ?>">
-                                                <div class="d-flex align-items-start <?= ($activeSegment === 'loket') ? 'text-white' : 'link-body-emphasis' ?>">
+                                            <a class="nav-link px-2 py-1 <?= ($activeSegment === 'loket') ? 'active activeLinkSideBar' : '' ?>" href="<?= base_url('/loket'); ?>">
+                                                <div class="d-flex align-items-start">
                                                     <div class="flex-fill fw-normal" style="font-size: 0.75em;">
                                                         Loket
                                                     </div>
@@ -1155,8 +1155,8 @@ $isApple = in_array($platform, [
                                             </a>
                                         </li>
                                         <li class="nav-item" style="margin-left: calc(24px + 0.5rem);">
-                                            <a class="nav-link px-2 py-1 <?= ($activeSegment === 'jaminan') ? 'active bg-success activeLinkSideBar' : '' ?>" href="<?= base_url('/jaminan'); ?>">
-                                                <div class="d-flex align-items-start <?= ($activeSegment === 'jaminan') ? 'text-white' : 'link-body-emphasis' ?>">
+                                            <a class="nav-link px-2 py-1 <?= ($activeSegment === 'jaminan') ? 'active activeLinkSideBar' : '' ?>" href="<?= base_url('/jaminan'); ?>">
+                                                <div class="d-flex align-items-start">
                                                     <div class="flex-fill fw-normal" style="font-size: 0.75em;">
                                                         Jaminan
                                                     </div>
@@ -1164,8 +1164,8 @@ $isApple = in_array($platform, [
                                             </a>
                                         </li>
                                         <li class="nav-item" style="margin-left: calc(24px + 0.5rem);">
-                                            <a class="nav-link px-2 py-1 <?= ($activeSegment === 'tindakanoperasi') ? 'active bg-success activeLinkSideBar' : '' ?>" href="<?= base_url('/tindakanoperasi'); ?>">
-                                                <div class="d-flex align-items-start <?= ($activeSegment === 'tindakanoperasi') ? 'text-white' : 'link-body-emphasis' ?>">
+                                            <a class="nav-link px-2 py-1 <?= ($activeSegment === 'tindakanoperasi') ? 'active activeLinkSideBar' : '' ?>" href="<?= base_url('/tindakanoperasi'); ?>">
+                                                <div class="d-flex align-items-start">
                                                     <div class="flex-fill fw-normal" style="font-size: 0.75em;">
                                                         Tindakan Operasi
                                                     </div>
@@ -1173,8 +1173,8 @@ $isApple = in_array($platform, [
                                             </a>
                                         </li>
                                         <li class="nav-item" style="margin-left: calc(24px + 0.5rem);">
-                                            <a class="nav-link px-2 py-1 <?= ($activeSegment === 'poliklinik') ? 'active bg-success activeLinkSideBar' : '' ?>" href="<?= base_url('/poliklinik'); ?>">
-                                                <div class="d-flex align-items-start <?= ($activeSegment === 'poliklinik') ? 'text-white' : 'link-body-emphasis' ?>">
+                                            <a class="nav-link px-2 py-1 <?= ($activeSegment === 'poliklinik') ? 'active activeLinkSideBar' : '' ?>" href="<?= base_url('/poliklinik'); ?>">
+                                                <div class="d-flex align-items-start">
                                                     <div class="flex-fill fw-normal" style="font-size: 0.75em;">
                                                         Ruangan Poliklinik
                                                     </div>
@@ -1184,12 +1184,12 @@ $isApple = in_array($platform, [
                                     </ul>
                                 </div>
                                 <li class="nav-item">
-                                    <a style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'admin') ? 'active bg-success activeLinkSideBar' : '' ?>" href=" <?= base_url('/admin'); ?>">
-                                        <div class="d-flex align-items-start <?= ($activeSegment === 'admin') ? 'text-white' : 'link-success' ?>">
+                                    <a style="font-size: 0.95em;" class="nav-link px-2 py-1 <?= ($activeSegment === 'admin') ? 'active activeLinkSideBar' : '' ?>" href=" <?= base_url('/admin'); ?>">
+                                        <div class="d-flex align-items-start">
                                             <div style="min-width: 24px; max-width: 24px; text-align: center;">
                                                 <i class="fa-solid fa-users"></i>
                                             </div>
-                                            <div class="flex-fill mx-2 <?= ($activeSegment === 'admin') ? 'text-white' : 'link-body-emphasis' ?>">
+                                            <div class="flex-fill mx-2">
                                                 Pengguna
                                             </div>
                                         </div>
