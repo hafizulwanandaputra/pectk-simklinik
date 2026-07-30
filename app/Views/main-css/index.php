@@ -535,19 +535,6 @@
         }
     }
 
-    .nav-scroll {
-        overflow-x: auto;
-        overflow-y: hidden;
-        flex-wrap: nowrap;
-        scrollbar-gutter: stable;
-        padding-bottom: .25rem;
-        /* ruang untuk scrollbar */
-    }
-
-    .nav-scroll::-webkit-scrollbar {
-        height: 6px;
-    }
-
     .nav-pills {
         --bs-nav-pills-link-active-color: var(--bs-body-color);
         --bs-nav-pills-link-active-bg: rgba(0, 0, 0, 0.15);
