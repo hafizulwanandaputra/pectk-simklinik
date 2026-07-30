@@ -16,10 +16,10 @@
             <ul class="list-group no-fluid-content-list-group list-group-flush">
                 <li class="list-group-item px-2 border-top-0 border-end-0 border-start-0 bg-body-secondary" style="--bs-bg-opacity: 0;">
                     <div class="no-fluid-content">
-                        <nav>
+                        <nav class="rounded-3 bg-gradient border p-1 transparent-blur">
                             <div class="nav nav-pills nav-justified flex-nowrap overflow-auto" id="nav-tab" role="tablist">
-                                <button class="nav-link py-1 text-nowrap active" id="resepharian-container-tab" data-bs-toggle="tab" data-bs-target="#resepharian-container" type="button" role="tab" aria-controls="resepharian-container" aria-selected="true">Harian</button>
-                                <button class="nav-link py-1 text-nowrap" id="resepbulanan-container-tab" data-bs-toggle="tab" data-bs-target="#resepbulanan-container" type="button" role="tab" aria-controls="resepbulanan-container" aria-selected="false">Bulanan</button>
+                                <button class="nav-link py-1 rounded-2 text-nowrap active" id="resepharian-container-tab" data-bs-toggle="tab" data-bs-target="#resepharian-container" type="button" role="tab" aria-controls="resepharian-container" aria-selected="true">Harian</button>
+                                <button class="nav-link py-1 rounded-2 text-nowrap" id="resepbulanan-container-tab" data-bs-toggle="tab" data-bs-target="#resepbulanan-container" type="button" role="tab" aria-controls="resepbulanan-container" aria-selected="false">Bulanan</button>
                             </div>
                         </nav>
                         <div class="pt-2" id="tanggal_form">

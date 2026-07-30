@@ -391,6 +391,10 @@
         }
     }
 
+    .dropdown-menu {
+        background-image: var(--bs-gradient);
+    }
+
     .dropdown-item:hover,
     .dropdown-item:focus {
         --bs-dropdown-link-hover-bg: var(--bs-body-color);
@@ -529,6 +533,19 @@
             -webkit-backdrop-filter: blur(2px);
             backdrop-filter: blur(2px);
         }
+    }
+
+    .nav-scroll {
+        overflow-x: auto;
+        overflow-y: hidden;
+        flex-wrap: nowrap;
+        scrollbar-gutter: stable;
+        padding-bottom: .25rem;
+        /* ruang untuk scrollbar */
+    }
+
+    .nav-scroll::-webkit-scrollbar {
+        height: 6px;
     }
 
     .nav-pills {

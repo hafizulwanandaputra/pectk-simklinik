@@ -48,10 +48,10 @@
             <ul class="list-group no-fluid-content-list-group list-group-flush">
                 <li class="list-group-item px-2 border-top-0 border-end-0 border-start-0 bg-body-secondary" style="--bs-bg-opacity: 0;">
                     <div class="no-fluid-content">
-                        <nav>
+                        <nav class="rounded-3 bg-gradient border p-1 transparent-blur">
                             <div class="nav nav-pills nav-justified flex-nowrap overflow-auto" id="nav-tab" role="tablist">
-                                <button class="nav-link py-1 active" id="pasien-container-tab" data-bs-toggle="tab" data-bs-target="#pasien-container" type="button" role="tab" aria-controls="pasien-container" aria-selected="true">Identitas Pasien</button>
-                                <button class="nav-link py-1" id="rawatjalan-container-tab" data-bs-toggle="tab" data-bs-target="#rawatjalan-container" type="button" role="tab" aria-controls="rawatjalan-container" aria-selected="false">Rawat Jalan (<span id="totalRecords">0</span>)</button>
+                                <button class="nav-link py-1 rounded-2 active" id="pasien-container-tab" data-bs-toggle="tab" data-bs-target="#pasien-container" type="button" role="tab" aria-controls="pasien-container" aria-selected="true">Identitas Pasien</button>
+                                <button class="nav-link py-1 rounded-pi2ll" id="rawatjalan-container-tab" data-bs-toggle="tab" data-bs-target="#rawatjalan-container" type="button" role="tab" aria-controls="rawatjalan-container" aria-selected="false">Rawat Jalan (<span id="totalRecords">0</span>)</button>
                             </div>
                         </nav>
                         <div class="pt-2" id="tanggal_form" style="display: none;">

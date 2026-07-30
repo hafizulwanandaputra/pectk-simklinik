@@ -81,9 +81,9 @@ $usia = $registrasi->diff($tanggal_lahir);
             <ul class="list-group no-fluid-content-list-group list-group-flush">
                 <li class="list-group-item px-2 border-top-0 border-end-0 border-start-0 bg-body-secondary" style="--bs-bg-opacity: 0;">
                     <div class="no-fluid-content">
-                        <nav class="nav nav-pills flex-nowrap overflow-auto">
+                        <nav class="nav nav-pills flex-nowrap overflow-auto rounded-3 bg-gradient border p-1 transparent-blur">
                             <?php foreach ($listRawatJalan as $list) : ?>
-                                <a class="nav-link py-1 <?= ($activeSegment === $list['id_lp_operasi']) ? 'active activeLink' : '' ?>" href="<?= base_url('lpoperasi/details/' . $list['id_lp_operasi']); ?>">
+                                <a class="nav-link py-1 rounded-2 <?= ($activeSegment === $list['id_lp_operasi']) ? 'active activeLink' : '' ?>" href="<?= base_url('lpoperasi/details/' . $list['id_lp_operasi']); ?>">
                                     <div class="text-center">
                                         <div class="text-nowrap lh-sm"><?= $list['nomor_registrasi']; ?></div>
                                         <div class="text-nowrap lh-sm date" style="font-size: 0.75em;"><?= $list['tanggal_registrasi'] ?></div>

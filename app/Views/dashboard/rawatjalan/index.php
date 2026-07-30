@@ -21,11 +21,11 @@
             <ul class="list-group no-fluid-content-list-group list-group-flush">
                 <li class="list-group-item px-2 border-top-0 border-end-0 border-start-0 bg-body-secondary" style="--bs-bg-opacity: 0;">
                     <div class="no-fluid-content">
-                        <nav>
+                        <nav class="rounded-3 bg-gradient border p-1 transparent-blur">
                             <div class="nav nav-pills nav-justified flex-nowrap overflow-auto" id="nav-tab" role="tablist">
-                                <button class="nav-link py-1 text-nowrap active" id="tanggal-container-tab" data-bs-toggle="tab" data-bs-target="#tanggal-container" type="button" role="tab" aria-controls="tanggal-container" aria-selected="true">Tanggal</button>
-                                <button class="nav-link py-1 text-nowrap" id="no_rm-container-tab" data-bs-toggle="tab" data-bs-target="#no_rm-container" type="button" role="tab" aria-controls="no_rm-container" aria-selected="false">Nomor Rekam Medis</button>
-                                <button class="nav-link py-1 text-nowrap" id="nama-container-tab" data-bs-toggle="tab" data-bs-target="#nama-container" type="button" role="tab" aria-controls="nama-container" aria-selected="false">Nama</button>
+                                <button class="nav-link py-1 rounded-2 text-nowrap active" id="tanggal-container-tab" data-bs-toggle="tab" data-bs-target="#tanggal-container" type="button" role="tab" aria-controls="tanggal-container" aria-selected="true">Tanggal</button>
+                                <button class="nav-link py-1 rounded-2 text-nowrap" id="no_rm-container-tab" data-bs-toggle="tab" data-bs-target="#no_rm-container" type="button" role="tab" aria-controls="no_rm-container" aria-selected="false">Nomor Rekam Medis</button>
+                                <button class="nav-link py-1 rounded-2 text-nowrap" id="nama-container-tab" data-bs-toggle="tab" data-bs-target="#nama-container" type="button" role="tab" aria-controls="nama-container" aria-selected="false">Nama</button>
                             </div>
                         </nav>
                         <div id="tanggal_form" class="pt-2">
