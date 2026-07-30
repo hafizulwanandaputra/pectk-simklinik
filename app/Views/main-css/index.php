@@ -269,20 +269,21 @@
 
     .btn-body {
         --bs-btn-color: #000;
-        --bs-btn-bg: #f8f9fa;
         --bs-btn-border-color: #dee2e6;
         --bs-btn-hover-color: #000;
-        --bs-btn-hover-bg: #e9ecef;
+        --bs-btn-hover-bg: rgba(0, 0, 0, 0.1);
         --bs-btn-hover-border-color: #dee2e6;
         --bs-btn-focus-shadow-rgb: 211, 212, 213;
         --bs-btn-active-color: #000;
-        --bs-btn-active-bg: #ced4da;
+        --bs-btn-active-bg: rgba(0, 0, 0, 0.2);
         --bs-btn-active-border-color: #dee2e6;
         --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
         --bs-btn-disabled-color: #000;
-        --bs-btn-disabled-bg: #f8f9fa;
+        --bs-btn-disabled-bg: transparent;
         --bs-btn-disabled-border-color: #dee2e6;
         background-image: var(--bs-gradient);
+        backdrop-filter: blur(0);
+        -webkit-backdrop-filter: blur(0);
     }
 
     .btn-outline-body {
@@ -533,6 +534,11 @@
             -webkit-backdrop-filter: blur(2px);
             backdrop-filter: blur(2px);
         }
+
+        .btn-body {
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
+        }
     }
 
     .nav-pills {
@@ -578,18 +584,17 @@
 
     [data-bs-theme=dark] .btn-body {
         --bs-btn-color: #fff;
-        --bs-btn-bg: #2b3035;
         --bs-btn-border-color: #495057;
         --bs-btn-hover-color: #fff;
-        --bs-btn-hover-bg: #343a40;
+        --bs-btn-hover-bg: rgba(255, 255, 255, 0.1);
         --bs-btn-hover-border-color: #495057;
         --bs-btn-focus-shadow-rgb: 66, 70, 73;
         --bs-btn-active-color: #fff;
-        --bs-btn-active-bg: #495057;
+        --bs-btn-active-bg: rgba(255, 255, 255, 0.2);
         --bs-btn-active-border-color: #495057;
         --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
         --bs-btn-disabled-color: #fff;
-        --bs-btn-disabled-bg: #2b3035;
+        --bs-btn-disabled-bg: transparent;
         --bs-btn-disabled-border-color: #495057;
     }
 
