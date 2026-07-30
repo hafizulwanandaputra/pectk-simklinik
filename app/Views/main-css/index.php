@@ -553,6 +553,11 @@
         color: var(--bs-body-color);
     }
 
+    .nav-link.disabled,
+    .nav-link:disabled {
+        color: rgba(var(--bs-body-color-rgb), 0.5);
+    }
+
     .btn-close-black {
         filter: none;
     }
