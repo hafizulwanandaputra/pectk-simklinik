@@ -142,7 +142,7 @@
             </div>
         </div>
 
-        <div class="card shadow-sm  overflow-auto">
+        <div class="card   overflow-auto">
             <div class="card-body p-0 m-0 table-responsive">
                 <table class="table table-sm mb-0" style="width:100%; font-size: 0.75em;">
                     <thead>
