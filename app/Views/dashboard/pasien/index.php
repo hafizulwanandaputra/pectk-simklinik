@@ -37,7 +37,7 @@
             <ul class="list-group no-fluid-content-list-group list-group-flush">
                 <li class="list-group-item px-2 border-top-0 border-end-0 border-start-0 bg-body-secondary" style="--bs-bg-opacity: 0;">
                     <div class="no-fluid-content">
-                        <div class="d-flex flex-column flex-lg-row gap-2">
+                        <div class="d-flex flex-column flex-lg-row gap-2 mb-2">
                             <div class="input-group input-group-sm flex-grow-1">
                                 <input type="search" id="searchInput" class="form-control" placeholder="Cari nomor rekam medis, nama pasien, nomor identitas, atau nomor BPJS">
                             </div>
@@ -45,6 +45,10 @@
                                 <input type="date" id="tanggalFilter" class="form-control rounded-start" placeholder="Tanggal lahir (dd-mm-yyyy)">
                                 <button class="btn btn-danger btn-sm  " type="button" id="clearTglButton" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Bersihkan Tanggal"><i class="fa-solid fa-xmark"></i></button>
                             </div>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <input type="checkbox" class="btn-check" id="cekKosong" name="kosong" autocomplete="off">
+                            <label class="btn btn-body btn-sm text-truncate" for="cekKosong">Tampilkan Hanya Pasien dengan Data yang Belum Diisi</label>
                         </div>
                     </div>
                 </li>
@@ -236,6 +240,7 @@
     async function fetchPasien() {
         const search = $('#searchInput').val();
         const tanggal_lahir = $('#tanggalFilter').val();
+        const kosong = $('#cekKosong').is(':checked');
         const offset = (currentPage - 1) * limit;
 
         // Show the spinner
@@ -252,6 +257,7 @@
                 params: {
                     search: search,
                     tanggal_lahir: tanggal_lahir,
+                    kosong: kosong,
                     limit: limit,
                     offset: offset
                 }
@@ -553,7 +559,7 @@
             fetchPasien();
         });
 
-        $('#tanggalFilter').on('change', function() {
+        $('#tanggalFilter, #cekKosong').on('change', function() {
             currentPage = 1;
             fetchPasien();
         });
@@ -796,25 +802,14 @@
         $(document).on('click', '#confirmAddBtn', async function(ə) {
             ə.preventDefault();
             $('#addModal button').prop('disabled', true);
-            $('#confirmAddBtn').html(`<?= $this->include('spinner/spinner'); ?> Memeriksa Data Pasien Kosong...`);
+            $('#confirmAddBtn').html(`<?= $this->include('spinner/spinner'); ?> Memeriksa Data Pasien yang Belum Diisi...`);
             try {
                 const response = await axios.post('<?= base_url('pasien/cekkososng') ?>');
                 if (response.data.cekkosong === false) {
                     $('#addForm').submit();
                     $('#confirmAddBtn').html(`<?= $this->include('spinner/spinner'); ?> Menambahkan Pasien...`);
                 } else if (response.data.cekkosong === true) {
-                    // ambil array no_rm
-                    const daftarNoRM = response.data.no_rm;
-
-                    // buat <ul> dari array
-                    let ulHtml = '<ul class="mb-0">';
-                    daftarNoRM.forEach(noRM => {
-                        ulHtml += `<li>${noRM}</li>`;
-                    });
-                    ulHtml += '</ul>';
-
-                    // tampilkan di toast atau modal
-                    showFailedToast(`${response.data.message}${ulHtml}`);
+                    showFailedToast(`${response.data.message}`);
                     $('#addModal button').prop('disabled', false);
                     $('#confirmAddBtn').html('Tambah Pasien');
                     $('#addModal').modal('hide');

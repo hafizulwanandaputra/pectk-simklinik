@@ -53,6 +53,7 @@ class Pasien extends BaseController
             // Mengambil parameter pencarian, limit, offset, dan status dari query string
             $search = $this->request->getGet('search');
             $tanggal_lahir = $this->request->getGet('tanggal_lahir');
+            $kosong = filter_var($this->request->getGet('kosong'), FILTER_VALIDATE_BOOLEAN);
             $limit = $this->request->getGet('limit');
             $offset = $this->request->getGet('offset');
 
@@ -78,6 +79,14 @@ class Pasien extends BaseController
                 // Terapkan filter pencarian
                 $PasienModel->groupStart()
                     ->like('tanggal_lahir', $tanggal_lahir)
+                    ->groupEnd();
+            }
+
+            // Menerapkan filter pencarian berdasarkan kosong
+            if ($kosong) {
+                // Terapkan filter pencarian
+                $PasienModel->groupStart()
+                    ->where('nama_pasien', null)
                     ->groupEnd();
             }
 
@@ -200,13 +209,12 @@ class Pasien extends BaseController
             if ($total_pasien_kosong > 0) {
                 return $this->response->setJSON([
                     'cekkosong' => true,
-                    'message' => 'Ada ' . number_format($total_pasien_kosong, 0, ',', '.') . ' pasien dengan data kosong. Silahkan lengkapi data pasien dengan nomor rekam medis berikut:',
-                    'no_rm' => array_column($no_rm_kosong, 'no_rm')
+                    'message' => 'Ada ' . number_format($total_pasien_kosong, 0, ',', '.') . ' pasien dengan data yang belum diisi. Aktifkan penapisan "Tampilkan Hanya Pasien dengan Data yang Belum Diisi" untuk menampilkan daftar pasien dengan data yang belum diisi.',
                 ]);
             } else {
                 return $this->response->setJSON([
                     'cekkosong' => false,
-                    'message' => 'Tidak ada pasien dengan data kosong.',
+                    'message' => 'Tidak ada pasien dengan data yang belum diisi.',
                     'no_rm' => NULL
                 ]);
             }
