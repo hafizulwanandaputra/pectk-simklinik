@@ -29,7 +29,7 @@ $db = db_connect();
     }
 
     .nomor-antrean {
-        font-size: 5rem;
+        font-size: 4.6rem;
         font-weight: 900;
     }
 
