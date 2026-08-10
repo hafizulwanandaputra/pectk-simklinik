@@ -576,7 +576,7 @@ $isApple = in_array($platform, [
                         <div class="me-2 d-none d-lg-block text-end">
                             <div class="d-flex flex-column">
                                 <div class="text-nowrap fw-medium lh-sm" style="font-size: 0.75em;"><?= session()->get('fullname') ?></div>
-                                <div class="text-nowrap lh-sm" style="font-size: 0.7em;">@<?= session()->get('username') ?> • <span class="date<?= ((in_array(session()->get('role'), ['Satpam', 'Monitor Antrean', 'Monitor Antrean Poliklinik']) && $activeSegment === 'home')) ? ' d-none' : ''; ?>"><?= $_SERVER['REMOTE_ADDR'] ?></span></div>
+                                <div class="text-nowrap lh-sm" style="font-size: 0.7em;">@<?= session()->get('username') ?><span class="date<?= ((in_array(session()->get('role'), ['Satpam', 'Monitor Antrean', 'Monitor Antrean Poliklinik']) && $activeSegment === 'home')) ? ' d-none' : ''; ?>"> • <?= $_SERVER['REMOTE_ADDR'] ?></span></div>
                             </div>
                         </div>
                         <div class="rounded-pill bg-body profilephotosidebar d-flex justify-content-center align-items-center profilephotonavbar">
