@@ -21,7 +21,7 @@ class FRMPeriksaPasien extends BaseController
     }
     public function index()
     {
-        if (session()->get('role') == 'Admisi' || session()->get('role') == 'Kasir') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Admisi' || session()->get('role') == 'Kasir' || session()->get('role') == 'Manajer') {
             // Menyiapkan data untuk tampilan
             $data = [
                 'title' => 'Formulir Pemeriksaan Pasien - ' . $this->systemName,
@@ -38,7 +38,7 @@ class FRMPeriksaPasien extends BaseController
 
     public function frmperiksapasienlist()
     {
-        if (session()->get('role') == 'Admisi' || session()->get('role') == 'Kasir') {
+        if (session()->get('role') == 'Admin' || session()->get('role') == 'Dokter' || session()->get('role') == 'Admisi' || session()->get('role') == 'Kasir' || session()->get('role') == 'Manajer') {
 
             $db = db_connect();
 

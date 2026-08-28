@@ -849,17 +849,15 @@ $isApple = in_array($platform, [
                                 </li>
                                 <div id="submenu-formulir" class="collapse <?= ($activeSegment === 'frmperiksapasien' || $activeSegment === 'frmsetujukedokteran' || $activeSegment === 'frmsetujuanestesi' || $activeSegment === 'frmsetujuphaco') ? 'show' : '' ?>">
                                     <ul class="nav nav-pills flex-column my-1">
-                                        <?php if (session()->get('role') == "Kasir" || session()->get('role') == "Admisi") : ?>
-                                            <li class="nav-item" style="margin-left: calc(24px + 0.5rem);">
-                                                <a class="nav-link px-2 py-1 <?= ($activeSegment === 'frmperiksapasien') ? 'active activeLinkSideBar' : '' ?>" href="<?= base_url('/frmperiksapasien'); ?>">
-                                                    <div class="d-flex align-items-start">
-                                                        <div class="flex-fill fw-normal" style="font-size: 0.75em;">
-                                                            Pemeriksaan Pasien
-                                                        </div>
+                                        <li class="nav-item" style="margin-left: calc(24px + 0.5rem);">
+                                            <a class="nav-link px-2 py-1 <?= ($activeSegment === 'frmperiksapasien') ? 'active activeLinkSideBar' : '' ?>" href="<?= base_url('/frmperiksapasien'); ?>">
+                                                <div class="d-flex align-items-start">
+                                                    <div class="flex-fill fw-normal" style="font-size: 0.75em;">
+                                                        Pemeriksaan Pasien
                                                     </div>
-                                                </a>
-                                            </li>
-                                        <?php endif; ?>
+                                                </div>
+                                            </a>
+                                        </li>
                                         <?php if (session()->get('role') != "Kasir") : ?>
                                             <li class="nav-item" style="margin-left: calc(24px + 0.5rem);">
                                                 <a class="nav-link px-2 py-1 <?= ($activeSegment === 'frmsetujukedokteran') ? 'active activeLinkSideBar' : '' ?>" href="<?= base_url('/frmsetujukedokteran'); ?>">
