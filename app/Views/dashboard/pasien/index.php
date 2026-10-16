@@ -59,13 +59,13 @@
         <div class="no-fluid-content">
             <div class=" rounded">
                 <div class="d-grid gap-2">
-                    <button class="btn btn-primary btn-sm   rounded-bottom-0" type="button" id="addButton">
+                    <button class="btn btn-primary btn-sm mb-2" type="button" id="addButton">
                         <i class="fa-solid fa-plus"></i> Tambah Pasien
                     </button>
                 </div>
-                <div id="pasienContainer" class="list-group rounded-top-0 ">
+                <div id="pasienContainer" class="list-group">
                     <?php for ($i = 0; $i < 12; $i++) : ?>
-                        <span class="list-group-item border-top-0 pb-3 pt-3" style="cursor: wait;">
+                        <span class="list-group-item pb-3 pt-3" style="cursor: wait;">
                             <div class="d-flex">
                                 <div class="align-self-center w-100">
                                     <h5 class="card-title d-flex justify-content-start placeholder-glow">
@@ -270,7 +270,7 @@
             if (data.total === 0) {
                 $('#paginationNav ul').empty();
                 $('#pasienContainer').append(
-                    '<li class="list-group-item border-top-0 bg-body-tertiary pb-3 pt-3">' +
+                    '<li class="list-group-item bg-body-tertiary pb-3 pt-3">' +
                     '    <h1 class="display-4 text-muted mb-0" style="font-weight: 200;">Data Kosong</h1>' +
                     '</li>'
                 );
@@ -306,7 +306,7 @@
                     const telpon = pasien.telpon ? `<span class="isian-teks date">${pasien.telpon}</span>` : `<span class="isian-teks opacity-50 fst-italic user-select-none">Tidak ada</span>`;
                     const delete_status = pasien.jumlah_rawat_jalan_daftar > 0 ? `disabled` : ``;
                     const pasienElement = `
-                <span class="list-group-item border-top-0 pb-3 pt-3">
+                <span class="list-group-item pb-3 pt-3">
                     <div class="d-flex">
                         <div class="align-self-center w-100">
                             <h5 class="card-title d-flex date justify-content-between">

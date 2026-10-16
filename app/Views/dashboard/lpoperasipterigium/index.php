@@ -56,12 +56,12 @@
             <div class=" rounded">
                 <?php if (session()->get('role') != 'Admisi') : ?>
                     <div class="d-grid gap-2">
-                        <button id="collapseList" class="btn btn-primary btn-sm   rounded-bottom-0" type="button" data-bs-toggle="collapse" data-bs-target="#lPOperasiPterigiumFormContainer" aria-expanded="false" aria-controls="lPOperasiPterigiumFormContainer">
+                        <button id="collapseList" class="btn btn-primary btn-sm mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#lPOperasiPterigiumFormContainer" aria-expanded="false" aria-controls="lPOperasiPterigiumFormContainer">
                             <i class="fa-solid fa-plus"></i> Tambah Laporan
                         </button>
                     </div>
-                    <ul id="lPOperasiPterigiumFormContainer" class="list-group rounded-0 collapse">
-                        <li class="list-group-item border-top-0 bg-body-tertiary">
+                    <ul id="lPOperasiPterigiumFormContainer" class="list-group mb-2 collapse">
+                        <li class="list-group-item bg-body-tertiary">
                             <form id="lPOperasiPterigiumForm" enctype="multipart/form-data" class="d-flex flex-column gap-2">
                                 <div class="flex-fill">
                                     <select class="form-select form-select-sm" id="nomor_registrasi" name="nomor_registrasi" aria-label="nomor_registrasi">
@@ -80,7 +80,7 @@
                 <?php endif; ?>
                 <ul id="lPOperasiPterigiumContainer" class="list-group <?= (session()->get('role') != 'Admisi') ? 'rounded-top-0' : ''; ?>">
                     <?php for ($i = 0; $i < 12; $i++) : ?>
-                        <li class="list-group-item <?= (session()->get('role') != 'Admisi') ? 'border-top-0' : ''; ?> pb-3 pt-3" style="cursor: wait;">
+                        <li class="list-group-item pb-3 pt-3" style="cursor: wait;">
                             <div class="d-flex">
                                 <div class="align-self-center w-100">
                                     <h5 class="card-title d-flex placeholder-glow">
@@ -177,7 +177,7 @@
     let currentPage = 1;
     let transaksiId = null;
     var placeholder = `
-            <li class="list-group-item <?= (session()->get('role') != 'Admisi') ? 'border-top-0' : ''; ?> pb-3 pt-3" style="cursor: wait;">
+            <li class="list-group-item pb-3 pt-3" style="cursor: wait;">
                 <div class="d-flex">
                     <div class="align-self-center w-100">
                         <h5 class="card-title d-flex placeholder-glow">
@@ -355,7 +355,7 @@
             if (data.total === 0) {
                 $('#paginationNav ul').empty();
                 $('#lPOperasiPterigiumContainer').append(
-                    '<li class="list-group-item <?= (session()->get('role') != 'Admisi') ? 'border-top-0' : ''; ?> pb-3 pt-3">' +
+                    '<li class="list-group-item pb-3 pt-3">' +
                     '    <h1 class="display-4 text-muted mb-0" style="font-weight: 200;">Data Kosong</h1>' +
                     '</li>'
                 );
@@ -383,7 +383,7 @@
                         `<span class="isian-teks">${lp_operasi_pterigium.asisten}</span>` :
                         `<span class="isian-teks opacity-50 fst-italic user-select-none">Belum ada</span>`;
                     const lPOperasiPterigiumElement = `
-                    <li class="list-group-item <?= (session()->get('role') != 'Admisi') ? 'border-top-0' : ''; ?> pb-3 pt-3">
+                    <li class="list-group-item pb-3 pt-3">
                         <div class="d-flex">
                             <div class="align-self-center w-100">
                                 <h5 class="card-title d-flex date justify-content-start">

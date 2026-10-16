@@ -31,7 +31,7 @@
         <div class="filter-bg"></div>
         <div class="filter-content px-2 pt-2">
             <ul class="list-group no-fluid-content-list-group list-group-flush">
-                <li class="list-group-item px-2 border-top-0 border-end-0 border-start-0 bg-body-secondary" style="--bs-bg-opacity: 0;">
+                <li class="list-group-item px-2 border-end-0 border-start-0 bg-body-secondary" style="--bs-bg-opacity: 0;">
                     <div class="no-fluid-content">
                         <div class="d-flex flex-column flex-lg-row gap-2">
                             <div class="input-group input-group-sm w-auto">
@@ -55,12 +55,12 @@
         <div class="no-fluid-content">
             <div class=" rounded">
                 <div class="d-grid gap-2">
-                    <button id="collapseList" class="btn btn-primary btn-sm   rounded-bottom-0" type="button" data-bs-toggle="collapse" data-bs-target="#FRMTolakFormContainer" aria-expanded="false" aria-controls="FRMTolakFormContainer">
+                    <button id="collapseList" class="btn btn-primary btn-sm mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#FRMTolakFormContainer" aria-expanded="false" aria-controls="FRMTolakFormContainer">
                         <i class="fa-solid fa-plus"></i> Tambah Surat
                     </button>
                 </div>
-                <ul id="FRMTolakFormContainer" class="list-group rounded-0 collapse">
-                    <li class="list-group-item border-top-0 bg-body-tertiary">
+                <ul id="FRMTolakFormContainer" class="list-group mb-2 collapse">
+                    <li class="list-group-item bg-body-tertiary">
                         <form id="FRMTolakForm" enctype="multipart/form-data" class="d-flex flex-column gap-2">
                             <div class="flex-fill">
                                 <select class="form-select form-select-sm" id="nomor_registrasi" name="nomor_registrasi" aria-label="nomor_registrasi">
@@ -76,9 +76,9 @@
                         </form>
                     </li>
                 </ul>
-                <ul id="FRMTolakContainer" class="list-group rounded-top-0">
+                <ul id="FRMTolakContainer" class="list-group">
                     <?php for ($i = 0; $i < 12; $i++) : ?>
-                        <li class="list-group-item border-top-0 pb-3 pt-3" style="cursor: wait;">
+                        <li class="list-group-item pb-3 pt-3" style="cursor: wait;">
                             <div class="d-flex">
                                 <div class="align-self-center w-100">
                                     <h5 class="card-title d-flex placeholder-glow">
@@ -160,7 +160,7 @@
     let currentPage = 1;
     let transaksiId = null;
     var placeholder = `
-            <li class="list-group-item border-top-0 pb-3 pt-3" style="cursor: wait;">
+            <li class="list-group-item pb-3 pt-3" style="cursor: wait;">
                 <div class="d-flex">
                     <div class="align-self-center w-100">
                         <h5 class="card-title d-flex placeholder-glow">
@@ -322,7 +322,7 @@
             if (data.total === 0) {
                 $('#paginationNav ul').empty();
                 $('#FRMTolakContainer').append(
-                    '<li class="list-group-item <?= (session()->get('role') != 'Admisi') ? 'border-top-0' : ''; ?> pb-3 pt-3">' +
+                    '<li class="list-group-item pb-3 pt-3">' +
                     '    <h1 class="display-4 text-muted mb-0" style="font-weight: 200;">Data Kosong</h1>' +
                     '</li>'
                 );
@@ -344,7 +344,7 @@
                         `<span class="isian-teks">${form_penolakan_tindakan.hubungan}${hubungan_lain}</span>` :
                         `<span class="isian-teks opacity-50 fst-italic user-select-none">Belum ada</span>`;
                     const FRMTolakElement = `
-                    <li class="list-group-item border-top-0 pb-3 pt-3">
+                    <li class="list-group-item pb-3 pt-3">
                         <div class="d-flex">
                             <div class="align-self-center w-100">
                                 <h5 class="card-title d-flex date justify-content-start">

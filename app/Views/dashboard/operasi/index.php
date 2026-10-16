@@ -84,12 +84,12 @@
         <div class="no-fluid-content">
             <div class=" rounded">
                 <div class="d-grid gap-2">
-                    <button id="collapseList" class="btn btn-primary btn-sm   rounded-bottom-0" type="button" data-bs-toggle="collapse" data-bs-target="#spOperasiFormContainer" aria-expanded="false" aria-controls="spOperasiFormContainer">
+                    <button id="collapseList" class="btn btn-primary btn-sm mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#spOperasiFormContainer" aria-expanded="false" aria-controls="spOperasiFormContainer">
                         <i class="fa-solid fa-plus"></i> Tambah Pasien Operasi
                     </button>
                 </div>
-                <ul id="spOperasiFormContainer" class="list-group rounded-0 collapse">
-                    <li class="list-group-item border-top-0 bg-body-tertiary">
+                <ul id="spOperasiFormContainer" class="list-group mb-2 collapse">
+                    <li class="list-group-item bg-body-tertiary">
                         <form id="spOperasiForm" enctype="multipart/form-data" class="d-flex flex-column gap-2">
                             <div class="flex-fill">
                                 <select class="form-select form-select-sm" id="nomor_registrasi" name="nomor_registrasi" aria-label="nomor_registrasi">
@@ -105,9 +105,9 @@
                         </form>
                     </li>
                 </ul>
-                <ul id="spOperasiContainer" class="list-group rounded-top-0 ">
+                <ul id="spOperasiContainer" class="list-group">
                     <?php for ($i = 0; $i < 12; $i++) : ?>
-                        <li class="list-group-item border-top-0 pb-3 pt-3" style="cursor: wait;">
+                        <li class="list-group-item pb-3 pt-3" style="cursor: wait;">
                             <div class="d-flex">
                                 <div class="align-self-center w-100">
                                     <h5 class="card-title d-flex placeholder-glow">
@@ -242,7 +242,7 @@
     let currentPage = 1;
     let transaksiId = null;
     var placeholder = `
-            <li class="list-group-item border-top-0 pb-3 pt-3" style="cursor: wait;">
+            <li class="list-group-item pb-3 pt-3" style="cursor: wait;">
                 <div class="d-flex">
                     <div class="align-self-center w-100">
                         <h5 class="card-title d-flex placeholder-glow">
@@ -455,7 +455,7 @@
             if (data.total === 0) {
                 $('#paginationNav ul').empty();
                 $('#spOperasiContainer').append(
-                    '<li class="list-group-item border-top-0 pb-3 pt-3">' +
+                    '<li class="list-group-item pb-3 pt-3">' +
                     '    <h1 class="display-4 text-muted mb-0" style="font-weight: 200;">Data Kosong</h1>' +
                     '</li>'
                 );
@@ -487,7 +487,7 @@
                         statusBadge = `<span class="badge bg-danger">Batal</span>`;
                     }
                     const sp_operasiElement = `
-                    <li class="list-group-item border-top-0 pb-3 pt-3">
+                    <li class="list-group-item pb-3 pt-3">
                         <div class="d-flex">
                             <div class="align-self-center w-100">
                                 <h5 class="card-title d-flex date justify-content-start">

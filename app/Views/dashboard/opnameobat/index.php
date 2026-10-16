@@ -24,7 +24,7 @@
         <div class="filter-bg"></div>
         <div class="filter-content px-2 pt-2">
             <ul class="list-group no-fluid-content-list-group list-group-flush">
-                <li class="list-group-item px-2 border-top-0 border-end-0 border-start-0 bg-body-secondary" style="--bs-bg-opacity: 0;">
+                <li class="list-group-item px-2 border-end-0 border-start-0 bg-body-secondary" style="--bs-bg-opacity: 0;">
                     <div class="no-fluid-content">
                         <div class="input-group input-group-sm mb-2">
                             <input type="date" id="tanggalFilter" class="form-control" <?= (session()->get('auto_date') == 1) ? 'value="' . date('Y-m-d') . '"' : ''; ?>>
@@ -49,14 +49,14 @@
             <div class=" rounded">
                 <form id="opnameObatForm" enctype="multipart/form-data">
                     <div class="d-grid gap-2">
-                        <button type="submit" id="addButton" class="btn btn-primary btn-sm   rounded-bottom-0">
+                        <button type="submit" id="addButton" class="btn btn-primary btn-sm mb-2">
                             <i class="fa-solid fa-plus"></i> Buat Laporan Baru
                         </button>
                     </div>
                 </form>
-                <ul id="opnameObatContainer" class="list-group rounded-top-0 ">
+                <ul id="opnameObatContainer" class="list-group">
                     <?php for ($i = 0; $i < 12; $i++) : ?>
-                        <li class="list-group-item border-top-0 pb-3 pt-3" style="cursor: wait;">
+                        <li class="list-group-item pb-3 pt-3" style="cursor: wait;">
                             <div class="d-flex">
                                 <div class="align-self-center w-100">
                                     <h5 class="card-title d-flex justify-content-start placeholder-glow">
@@ -108,7 +108,7 @@
     let currentPage = 1;
     let pembelianObatId = null;
     var placeholder = `
-            <li class="list-group-item border-top-0 pb-3 pt-3" style="cursor: wait;">
+            <li class="list-group-item pb-3 pt-3" style="cursor: wait;">
                 <div class="d-flex">
                     <div class="align-self-center w-100">
                         <h5 class="card-title d-flex justify-content-start placeholder-glow">
@@ -195,7 +195,7 @@
             if (data.total === 0) {
                 $('#paginationNav ul').empty();
                 $('#opnameObatContainer').append(
-                    '<li class="list-group-item border-top-0 pb-3 pt-3">' +
+                    '<li class="list-group-item pb-3 pt-3">' +
                     '    <h1 class="display-4 text-muted mb-0" style="font-weight: 200;">Data Kosong</h1>' +
                     '</li>'
                 );
@@ -203,7 +203,7 @@
                 data.opname_obat.forEach(function(opname_obat) {
                     const sisa_stok = parseInt(opname_obat.sisa_stok);
                     const opnameObatElement = `
-            <li class="list-group-item border-top-0 pb-3 pt-3">
+            <li class="list-group-item pb-3 pt-3">
                 <div class="d-flex">
                     <div class="align-self-center w-100">
                         <h5 class="card-title d-flex date justify-content-between">

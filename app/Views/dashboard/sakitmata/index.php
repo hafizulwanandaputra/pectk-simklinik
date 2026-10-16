@@ -61,12 +61,12 @@
             <div class=" rounded">
                 <?php if (session()->get('role') != 'Admisi') : ?>
                     <div class="d-grid gap-2">
-                        <button id="collapseList" class="btn btn-primary btn-sm   rounded-bottom-0" type="button" data-bs-toggle="collapse" data-bs-target="#SakitMataFormContainer" aria-expanded="false" aria-controls="SakitMataFormContainer">
+                        <button id="collapseList" class="btn btn-primary btn-sm mb-2" type="button" data-bs-toggle="collapse" data-bs-target="#SakitMataFormContainer" aria-expanded="false" aria-controls="SakitMataFormContainer">
                             <i class="fa-solid fa-plus"></i> Tambah Surat
                         </button>
                     </div>
-                    <ul id="SakitMataFormContainer" class="list-group rounded-0 collapse">
-                        <li class="list-group-item border-top-0 bg-body-tertiary">
+                    <ul id="SakitMataFormContainer" class="list-group mb-2 collapse">
+                        <li class="list-group-item bg-body-tertiary">
                             <div class="row g-3">
                                 <form id="SakitMataForm" enctype="multipart/form-data" class="d-flex flex-column gap-2">
                                     <div class="flex-fill">
@@ -85,9 +85,9 @@
                         </li>
                     </ul>
                 <?php endif; ?>
-                <ul id="SakitMataContainer" class="list-group <?= (session()->get('role') != 'Admisi') ? 'rounded-top-0' : ''; ?>">
+                <ul id="SakitMataContainer" class="list-group">
                     <?php for ($i = 0; $i < 12; $i++) : ?>
-                        <li class="list-group-item <?= (session()->get('role') != 'Admisi') ? 'border-top-0' : ''; ?> pb-3 pt-3" style="cursor: wait;">
+                        <li class="list-group-item pb-3 pt-3" style="cursor: wait;">
                             <div class="d-flex">
                                 <div class="align-self-center w-100">
                                     <h5 class="card-title d-flex placeholder-glow">
@@ -160,7 +160,7 @@
     let currentPage = 1;
     let transaksiId = null;
     var placeholder = `
-            <li class="list-group-item <?= (session()->get('role') != 'Admisi') ? 'border-top-0' : ''; ?> pb-3 pt-3" style="cursor: wait;">
+            <li class="list-group-item pb-3 pt-3" style="cursor: wait;">
                 <div class="d-flex">
                     <div class="align-self-center w-100">
                         <h5 class="card-title d-flex placeholder-glow">
@@ -316,7 +316,7 @@
             if (data.total === 0) {
                 $('#paginationNav ul').empty();
                 $('#SakitMataContainer').append(
-                    '<li class="list-group-item <?= (session()->get('role') != 'Admisi') ? 'border-top-0' : ''; ?> pb-3 pt-3">' +
+                    '<li class="list-group-item pb-3 pt-3">' +
                     '    <h1 class="display-4 text-muted mb-0" style="font-weight: 200;">Data Kosong</h1>' +
                     '</li>'
                 );
@@ -336,7 +336,7 @@
                     }
 
                     const SakitMataElement = `
-                    <li class="list-group-item <?= (session()->get('role') != 'Admisi') ? 'border-top-0' : ''; ?> pb-3 pt-3">
+                    <li class="list-group-item pb-3 pt-3">
                         <div class="d-flex">
                             <div class="align-self-center w-100">
                                 <h5 class="card-title d-flex date justify-content-start">

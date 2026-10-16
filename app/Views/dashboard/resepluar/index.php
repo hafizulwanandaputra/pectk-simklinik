@@ -24,7 +24,7 @@
         <div class="filter-bg"></div>
         <div class="filter-content px-2 pt-2">
             <ul class="list-group no-fluid-content-list-group list-group-flush">
-                <li class="list-group-item px-2 border-top-0 border-end-0 border-start-0 bg-body-secondary" style="--bs-bg-opacity: 0;">
+                <li class="list-group-item px-2 border-end-0 border-start-0 bg-body-secondary" style="--bs-bg-opacity: 0;">
                     <div class="no-fluid-content">
                         <div class="d-flex flex-column flex-lg-row gap-2 mb-2">
                             <div class="input-group input-group-sm w-auto">
@@ -87,13 +87,13 @@
         <div class="no-fluid-content">
             <div class=" rounded">
                 <div class="d-grid gap-2">
-                    <button class="btn btn-primary btn-sm   rounded-bottom-0" type="button" id="addButton">
+                    <button class="btn btn-primary btn-sm mb-2" type="button" id="addButton">
                         <i class="fa-solid fa-plus"></i> Tambah Resep Luar
                     </button>
                 </div>
-                <ul id="resepContainer" class="list-group rounded-top-0 ">
+                <ul id="resepContainer" class="list-group">
                     <?php for ($i = 0; $i < 12; $i++) : ?>
-                        <li class="list-group-item border-top-0 pb-3 pt-3" style="cursor: wait;">
+                        <li class="list-group-item pb-3 pt-3" style="cursor: wait;">
                             <div class="d-flex">
                                 <div class="align-self-center w-100">
                                     <h5 class="card-title d-flex placeholder-glow">
@@ -287,7 +287,7 @@
     let currentPage = 1;
     let pembelianObatId = null;
     var placeholder = `
-            <li class="list-group-item border-top-0 pb-3 pt-3" style="cursor: wait;">
+            <li class="list-group-item pb-3 pt-3" style="cursor: wait;">
                 <div class="d-flex">
                     <div class="align-self-center w-100">
                         <h5 class="card-title d-flex placeholder-glow">
@@ -437,7 +437,7 @@
             if (data.total === 0) {
                 $('#paginationNav ul').empty();
                 $('#resepContainer').append(
-                    '<li class="list-group-item border-top-0 pb-3 pt-3">' +
+                    '<li class="list-group-item pb-3 pt-3">' +
                     '    <h1 class="display-4 text-muted mb-0" style="font-weight: 200;">Data Kosong</h1>' +
                     '</li>'
                 );
@@ -488,7 +488,7 @@
                         '<span class="isian-teks opacity-50 fst-italic user-select-none">Tidak ada</span>' :
                         `<span class="isian-teks date">${resep.tanggal_lahir}</span>`;
                     const resepElement = `
-            <li class="list-group-item border-top-0 pb-3 pt-3">
+            <li class="list-group-item pb-3 pt-3">
                 <div class="d-flex">
                     <div class="align-self-center w-100">
                         <h5 class="card-title d-flex date justify-content-start">

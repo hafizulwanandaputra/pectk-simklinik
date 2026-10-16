@@ -154,6 +154,49 @@
         background-image: var(--bs-gradient);
     }
 
+    .form-control,
+    .form-select {
+        border-radius: var(--bs-border-radius-lg);
+    }
+
+    .form-control-sm,
+    .form-select-sm {
+        border-radius: var(--bs-border-radius);
+    }
+
+    .form-control-lg,
+    .form-select-lg {
+        border-radius: var(--bs-border-radius-xl);
+    }
+
+    .input-group-text {
+        border-radius: var(--bs-border-radius-lg);
+    }
+
+    .input-group-sm>.form-control,
+    .input-group-sm>.form-select,
+    .input-group-sm>.input-group-text,
+    .input-group-sm>.btn {
+        border-radius: var(--bs-border-radius);
+    }
+
+    .input-group-lg>.form-control,
+    .input-group-lg>.form-select,
+    .input-group-lg>.input-group-text,
+    .input-group-lg>.btn {
+        border-radius: var(--bs-border-radius-xl);
+    }
+
+    .pagination,
+    .pagination-sm {
+        --bs-pagination-border-radius: var(--bs-border-radius-lg);
+    }
+
+    .accordion {
+        --bs-accordion-border-radius: var(--bs-border-radius-lg);
+        --bs-accordion-inner-border-radius: calc(var(--bs-border-radius-lg) - (var(--bs-border-width)));
+    }
+
     div.dt-buttons {
         display: flex;
     }
@@ -253,6 +296,52 @@
         text-align: center;
         white-space: nowrap;
         -webkit-overflow-scrolling: touch;
+    }
+
+    .alert {
+        --bs-alert-border-radius: var(--bs-border-radius-lg);
+    }
+
+    .toast {
+        --bs-toast-border-radius: var(--bs-border-radius-lg);
+    }
+
+    .card {
+        --bs-card-border-radius: var(--bs-border-radius-lg);
+        --bs-card-inner-border-radius: calc(var(--bs-border-radius-lg) - (var(--bs-border-width)));
+    }
+
+    .list-group {
+        --bs-list-group-border-radius: var(--bs-border-radius-lg);
+    }
+
+    .modal {
+        --bs-modal-border-radius: var(--bs-border-radius-xl);
+        --bs-modal-inner-border-radius: calc(var(--bs-border-radius-xl) - (var(--bs-border-width)));
+    }
+
+    .dropdown-menu {
+        --bs-dropdown-padding-x: 0.5rem;
+        --bs-dropdown-padding-y: 0.25rem;
+        --bs-dropdown-border-radius: var(--bs-border-radius-lg);
+    }
+
+    .dropdown-item {
+        margin-top: 0.25rem;
+        margin-bottom: 0.25rem;
+        border-radius: var(--bs-border-radius);
+    }
+
+    .btn {
+        --bs-btn-border-radius: var(--bs-border-radius-lg);
+    }
+
+    .btn-sm {
+        --bs-btn-border-radius: var(--bs-border-radius);
+    }
+
+    .btn-lg {
+        --bs-btn-border-radius: var(--bs-border-radius-xl);
     }
 
     .btn-primary,
