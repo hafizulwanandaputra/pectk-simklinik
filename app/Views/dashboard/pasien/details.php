@@ -334,13 +334,13 @@
                 <div class="tab-pane" id="rawatjalan-container" role="tabpanel" aria-labelledby="rawatjalan-container-tab" tabindex="0">
                     <div class=" rounded">
                         <div class="d-grid gap-2">
-                            <button class="btn btn-primary btn-sm   rounded-bottom-0" type="button" id="addRajalButton">
+                            <button class="btn btn-primary btn-sm mb-2" type="button" id="addRajalButton">
                                 <i class="fa-solid fa-plus"></i> Registrasi Rawat Jalan
                             </button>
                         </div>
-                        <ul id="rajalContainer" class="list-group rounded-top-0 ">
+                        <ul id="rajalContainer" class="list-group">
                             <?php for ($i = 0; $i < 12; $i++) : ?>
-                                <li class="list-group-item border-top-0 pb-3 pt-3" style="cursor: wait;">
+                                <li class="list-group-item pb-3 pt-3" style="cursor: wait;">
                                     <div class="d-flex">
                                         <div class="align-self-center w-100">
                                             <h5 class="card-title d-flex justify-content-start placeholder-glow">
@@ -631,7 +631,7 @@
     let currentPage = 1;
     let rajalId = null;
     var placeholder = `
-                                <li class="list-group-item border-top-0 pb-3 pt-3" style="cursor: wait;">
+                                <li class="list-group-item pb-3 pt-3" style="cursor: wait;">
                                     <div class="d-flex">
                                         <div class="align-self-center w-100">
                                             <h5 class="card-title d-flex justify-content-start placeholder-glow">
@@ -1301,7 +1301,7 @@
             if (data.total === 0) {
                 $('#paginationNav ul').empty();
                 $('#rajalContainer').append(
-                    '<li class="list-group-item border-top-0 pb-3 pt-3">' +
+                    '<li class="list-group-item pb-3 pt-3">' +
                     '    <h1 class="display-4 text-muted" style="font-weight: 200;">Data Kosong</h1>' +
                     '</li>'
                 );
@@ -1399,7 +1399,7 @@
                         isian_ok = ``;
                     }
                     const rajalElement = `
-            <li class="list-group-item border-top-0 pb-3 pt-3">
+            <li class="list-group-item pb-3 pt-3">
                 <div class="d-flex">
                     <div class="align-self-center w-100">
                         <h5 class="card-title d-flex date justify-content-between">
