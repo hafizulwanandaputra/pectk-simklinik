@@ -198,11 +198,13 @@ $db = db_connect();
                 </div>
                 <div class="row row-cols-1 row-cols-lg-2 g-2">
                     <div class="col full-card-height">
-                        <div class="card  h-100">
-                            <div class="card-header">
-                                <div class="fw-bold nama-loket" id="nama_loket_1"><em>Loket Tutup</em></div>
-                                <div class="fs-1">Nomor antrean:</div>
-                                <h1 class="mb-0 date nomor-antrean" id="nomor_antrean_label_1"><i class="fa-solid fa-minus"></i></h1>
+                        <div class="card h-100" style="border: 2px solid var(--bs-body-color); border-radius: 2.5rem;">
+                            <div class="card-header bg-body-secondary" style="border-bottom: 2px solid var(--bs-body-color); border-radius: 2.5rem 2.5rem 0 0;">
+                                <div class="mx-2">
+                                    <div class="fw-bold nama-loket" id="nama_loket_1"><em>Loket Tutup</em></div>
+                                    <div class="fs-1">Nomor antrean:</div>
+                                    <h1 class="mb-0 date nomor-antrean" id="nomor_antrean_label_1"><i class="fa-solid fa-minus"></i></h1>
+                                </div>
                             </div>
                             <div class="card-body p-0 overflow-hidden">
                                 <ul class="list-group list-group-flush" id="list_antrean_monitor_1">
@@ -211,14 +213,16 @@ $db = db_connect();
                         </div>
                     </div>
                     <div class="col full-card-height">
-                        <div class="card  h-100">
-                            <div class="card-header">
-                                <div class="nama-loket" id="nama_loket_2"><em>Loket Tutup</em></div>
-                                <div class="fs-1">Nomor antrean:</div>
-                                <h1 class="mb-0 date nomor-antrean" id="nomor_antrean_label_2"><i class="fa-solid fa-minus"></i></h1>
+                        <div class="card h-100" style="border: 2px solid var(--bs-body-color); border-radius: 2.5rem;">
+                            <div class="card-header bg-body-secondary" style="border-bottom: 2px solid var(--bs-body-color); border-radius: 2.5rem 2.5rem 0 0;">
+                                <div class="mx-2">
+                                    <div class="nama-loket" id="nama_loket_2"><em>Loket Tutup</em></div>
+                                    <div class="fs-1">Nomor antrean:</div>
+                                    <h1 class="mb-0 date nomor-antrean" id="nomor_antrean_label_2"><i class="fa-solid fa-minus"></i></h1>
+                                </div>
                             </div>
                             <div class="card-body p-0 overflow-hidden">
-                                <ul class="list-group list-group-flush" id="list_antrean_monitor_2">
+                                <ul class="list-group list-group-flush" id="list_antrean_monitor_2" style="--bs-list-group-border-color: var(--bs-body-color);">
                                 </ul>
                             </div>
                         </div>

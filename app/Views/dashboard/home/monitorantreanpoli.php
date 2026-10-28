@@ -220,9 +220,9 @@ $db = db_connect();
                 </div>
                 <div class="row row-cols-1 g-2">
                     <div class="col full-card-height">
-                        <div class="card  h-100">
-                            <div class="card-header">
-                                <div id="nama_poli"><i class="fa-solid fa-minus"></i></div>
+                        <div class="card h-100" style="border: 2px solid var(--bs-body-color); border-radius: 2.5rem;">
+                            <div class="card-header bg-body-secondary" style="border-bottom: 2px solid var(--bs-body-color); border-radius: 2.5rem 2.5rem 0 0;">
+                                <div id="nama_poli" class="mx-2"><i class="fa-solid fa-minus"></i></div>
                             </div>
                             <div class="card-body overflow-hidden">
                                 <div class="d-flex justify-content-between">
