@@ -21,12 +21,9 @@ $isApple = in_array($platform, [
     <link href="<?= base_url(); ?>favicon.png" rel="apple-touch-icon" />
     <link href="https://getbootstrap.com/docs/5.3/examples/cover/cover.css" rel="stylesheet">
     <?= $this->include('main-css/index'); ?>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wdth,wght@0,75..100,100..900;1,75..100,100..900&display=swap" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/css/JawiDubai.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/fonts/HwpSansMono/HwpSansMono.css" rel="stylesheet">
-    <link href="<?= base_url(); ?>assets_public/fonts/Giphurs/Giphurs.css" rel="stylesheet">
+    <link href="<?= base_url(); ?>assets_public/fonts/Roboto/Roboto.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/fontawesome/css/all.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-4.0.0.min.js"></script>
     <script>
@@ -149,13 +146,13 @@ $isApple = in_array($platform, [
     </script>
     <style>
         :root {
-            --bs-font-sans-serif: "Giphurs", "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            --bs-font-sans-serif: "Roboto", system-ui, -apple-system, "Segoe UI", "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
             --bs-font-monospace: "HWP Sans Mono Web", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
         }
 
         @supports (font-variation-settings: normal) {
             :root {
-                --bs-font-sans-serif: "GiphursVariable", "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+                --bs-font-sans-serif: "RobotoVariable", system-ui, -apple-system, "Segoe UI", "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
             }
         }
 

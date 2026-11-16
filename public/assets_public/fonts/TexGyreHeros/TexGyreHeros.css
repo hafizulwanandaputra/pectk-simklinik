@@ -1,0 +1,31 @@
+@font-face {
+    font-family: "TexGyreHeros";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("texgyreheros-regular.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "TexGyreHeros";
+    font-style: italic;
+    font-weight: 400;
+    font-display: swap;
+    src: url("texgyreheros-italic.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "TexGyreHeros";
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url("texgyreheros-bold.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "TexGyreHeros";
+    font-style: italic;
+    font-weight: 700;
+    font-display: swap;
+    src: url("texgyreheros-bolditalic.woff2") format("woff2");
+}
