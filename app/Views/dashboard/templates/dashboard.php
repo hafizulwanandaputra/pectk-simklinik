@@ -220,40 +220,7 @@ $isApple = in_array($platform, [
             user-select: text;
         }
 
-        <?php if ($isApple) : ?>:root {
-            --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-            --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-            --gold: #ffe680;
-            /* Emas lebih terang */
-            --silver: #bfbfbf;
-            /* Perak lebih terang */
-            --bronze: #e7bd98;
-            /* Perunggu lebih terang */
-        }
-
-        html,
-        body,
-        input,
-        select,
-        textarea,
-        button {
-            font-variant-numeric: proportional-nums;
-        }
-
-        input[type="number"],
-        input[type="date"],
-        input[type="datetime-local"],
-        input[type="time"],
-        input[type="month"],
-        input[type="week"] {
-            font-variant-numeric: tabular-nums;
-        }
-
-        .date {
-            font-variant-numeric: tabular-nums;
-        }
-
-        <?php else : ?> :root {
+        :root {
             --bs-font-sans-serif: "Giphurs", "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
             --bs-font-monospace: "HWP Sans Mono Web", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
             --gold: #ffe680;
@@ -295,7 +262,7 @@ $isApple = in_array($platform, [
             font-feature-settings: "cv06" on, "cv09" on, "cv14" on, "cv22" on, "cv24" on;
         }
 
-        <?php endif; ?>input[type="password"] {
+        input[type="password"] {
             font-family: var(--bs-font-monospace);
         }
 
