@@ -26,7 +26,7 @@ $isApple = in_array($platform, [
     <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wdth,wght@0,75..100,100..900;1,75..100,100..900&display=swap" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/css/JawiDubai.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/fonts/HwpSansMono/HwpSansMono.css" rel="stylesheet">
-    <link href="<?= base_url(); ?>assets_public/fonts/Inter/Inter.css" rel="stylesheet">
+    <link href="<?= base_url(); ?>assets_public/fonts/Giphurs/Giphurs.css" rel="stylesheet">
     <link href="<?= base_url(); ?>assets_public/fontawesome/css/all.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-4.0.0.min.js"></script>
     <script>
@@ -176,13 +176,13 @@ $isApple = in_array($platform, [
         }
 
         <?php else : ?> :root {
-            --bs-font-sans-serif: "Inter", "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            --bs-font-sans-serif: "Giphurs", "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
             --bs-font-monospace: "HWP Sans Mono Web", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
         }
 
         @supports (font-variation-settings: normal) {
             :root {
-                --bs-font-sans-serif: "InterVariable", "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+                --bs-font-sans-serif: "GiphursVariable", "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
             }
         }
 
@@ -193,7 +193,7 @@ $isApple = in_array($platform, [
         textarea,
         button {
             font-variant-numeric: proportional-nums;
-            font-feature-settings: "calt" off, "cv05" on;
+            font-feature-settings: "cv06" on, "cv09" on, "cv14" on, "cv22" on, "cv24" on;
         }
 
         input[type="number"],
@@ -203,12 +203,12 @@ $isApple = in_array($platform, [
         input[type="month"],
         input[type="week"] {
             font-variant-numeric: tabular-nums;
-            font-feature-settings: "cv05" on;
+            font-feature-settings: "cv06" on, "cv09" on, "cv14" on, "cv22" on, "cv24" on;
         }
 
         .date {
             font-variant-numeric: tabular-nums;
-            font-feature-settings: "cv05" on;
+            font-feature-settings: "cv06" on, "cv09" on, "cv14" on, "cv22" on, "cv24" on;
         }
 
         <?php endif; ?>input[type="password"] {
