@@ -166,7 +166,7 @@ $isApple = in_array($platform, [
         textarea,
         button {
             font-variant-numeric: proportional-nums;
-            font-feature-settings: "cv06" on, "cv09" on, "cv14" on, "cv22" on, "cv24" on;
+            font-feature-settings: "cv06" on, "cv09" on, "cv11" on, "cv12" on, "cv14" on, "cv17" on, "cv21" on, "cv22" on, "cv24" on;
         }
 
         input[type="number"],
@@ -176,12 +176,12 @@ $isApple = in_array($platform, [
         input[type="month"],
         input[type="week"] {
             font-variant-numeric: tabular-nums;
-            font-feature-settings: "cv06" on, "cv09" on, "cv14" on, "cv22" on, "cv24" on;
+            font-feature-settings: "cv06" on, "cv09" on, "cv11" on, "cv12" on, "cv14" on, "cv17" on, "cv21" on, "cv22" on, "cv24" on;
         }
 
         .date {
             font-variant-numeric: tabular-nums;
-            font-feature-settings: "cv06" on, "cv09" on, "cv14" on, "cv22" on, "cv24" on;
+            font-feature-settings: "cv06" on, "cv09" on, "cv11" on, "cv12" on, "cv14" on, "cv17" on, "cv21" on, "cv22" on, "cv24" on;
         }
 
         input[type="password"] {
