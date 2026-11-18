@@ -3,7 +3,12 @@ $db = db_connect();
 ?>
 <?= $this->extend('dashboard/templates/dashboard'); ?>
 <?= $this->section('css'); ?>
+<link href="<?= base_url(); ?>assets_public/fonts/DSEG/DSEG.css" rel="stylesheet">
 <style>
+    .jam-digital {
+        font-family: 'DSEG7 Classic', sans-serif;
+    }
+
     .no-fluid-content {
         --bs-gutter-x: 0;
         --bs-gutter-y: 0;
@@ -95,6 +100,7 @@ $db = db_connect();
     }
 
     #waktu2 {
+        font-family: 'DSEG7 Classic Mini', sans-serif;
         font-size: 28pt;
     }
 
@@ -294,7 +300,7 @@ $db = db_connect();
         $('#tanggal1').text(now.format('dddd, D MMMM YYYY'));
         $('#tanggal2').text(now.format('UTCZ • dddd, D MMMM YYYY'));
         $('#waktu1').text(now.format('HH.mm.ss (UTCZ)'));
-        $('#waktu2').text(now.format('HH.mm.ss'));
+        $('#waktu2').text(now.format('HH . mm . ss'));
     }
 
     // Ambil daftar voice Google Indonesia
